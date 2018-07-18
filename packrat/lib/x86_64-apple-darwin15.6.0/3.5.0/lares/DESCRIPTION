@@ -1,0 +1,11 @@
+Package: lares
+Type: Package
+Title: lares - Analytics & Machine Learning
+Version: 4.0
+Author: Bernardo Lares
+Maintainer: The package maintainer <laresbernardo@gmail.com>
+Description: Personal Library for Analytics and Machine Learning
+License: Private
+Encoding: UTF-8
+LazyData: true
+Built: R 3.5.0; ; 2018-07-18 17:05:08 UTC; unix
