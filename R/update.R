@@ -1,5 +1,5 @@
 # Update the library
-update <- function(local = FALSE) {
+updateLares <- function(local = FALSE) {
   
   suppressMessages(require(devtools))
   suppressMessages(require(config))
