@@ -1,5 +1,4 @@
-# Update lares' library
-
+# Update the library
 update <- function(local = FALSE) {
   
   suppressMessages(require(devtools))
@@ -11,7 +10,7 @@ update <- function(local = FALSE) {
   if (local == TRUE) {
     devtools::install("~/Dropbox (Personal)/Documentos/R/Github/lares")
   } else {
-    devtools::install_bitbucket("laresbernardo/lares") 
+    devtools::install_github("laresbernardo/lares") 
   }
   
   message(paste(Sys.time(), "| Duration:", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
