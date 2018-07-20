@@ -368,11 +368,12 @@ mplot_full <- function(tag, score, splits = 8, subtitle = NA, model_name = NA,
   
   require(ggplot2)
   require(gridExtra)
+
   options(warn=-1)
   
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
-    stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
+    stop(message(paste("Currently, tag has", length(tag), "rows and score has", length(score))))
   }
   
   p1 <- lares::mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
