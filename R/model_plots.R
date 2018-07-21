@@ -1,7 +1,7 @@
 ##################################
 # Density plot for binaries
 mplot_density <- function(tag, score, model_name = NA, subtitle = NA, 
-                          save = FALSE, file_name = "viz_distribution.png") {
+                          save = FALSE, subdir = NA,file_name = "viz_distribution.png") {
   
   require(ggplot2)
   require(gridExtra)
@@ -47,6 +47,11 @@ mplot_density <- function(tag, score, model_name = NA, subtitle = NA,
     p1 <- p1 + labs(caption = model_name)
   }
   
+  if (!is.na(subdir)) {
+    dir.create(file.path(getwd(), subdir))
+    file_name <- paste(subdir, file_name, sep="/")
+  }
+  
   if(save == TRUE) {
     png(file_name, height = 1800, width = 2100, res = 300)
     grid.arrange(
@@ -68,7 +73,7 @@ mplot_density <- function(tag, score, model_name = NA, subtitle = NA,
 ##################################
 # Variables Importances
 mplot_importance <- function(var, imp, colours = NA, limit = 15, model_name = NA, subtitle = NA,
-                             save = FALSE, file_name = "viz_importance.png", subdir = NA) {
+                             save = FALSE, subdir = NA, file_name = "viz_importance.png") {
   
   require(ggplot2)
   require(gridExtra)
@@ -116,11 +121,13 @@ mplot_importance <- function(var, imp, colours = NA, limit = 15, model_name = NA
     p <- p + labs(subtitle = subtitle)
   }  
   
-  if(save == TRUE) {
-    if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir))
-      file_name <- paste(subdir, file_name, sep="/")
-    }
+  if (!is.na(subdir)) {
+    dir.create(file.path(getwd(), subdir))
+    file_name <- paste(subdir, file_name, sep="/")
+  }
+  
+  if (save == TRUE) {
+    p <- p + ggsave(file_name, width = 6, height = 6)
   }
   
   return(p)
@@ -130,7 +137,7 @@ mplot_importance <- function(var, imp, colours = NA, limit = 15, model_name = NA
 ##################################
 # ROC Curve
 mplot_roc <- function(tag, score, model_name = NA, subtitle = NA, interval = 0.2, plotly = FALSE,
-                      save = FALSE, file_name = "viz_roc.png") {
+                      save = FALSE, subdir = NA, file_name = "viz_roc.png") {
   
   require(pROC)
   require(ggplot2)
@@ -193,7 +200,7 @@ mplot_roc <- function(tag, score, model_name = NA, subtitle = NA, interval = 0.2
 ##################################
 # Cuts by quantiles
 mplot_cuts <- function(score, splits = 10, subtitle = NA, model_name = NA, 
-                       save = FALSE, file_name = "viz_ncuts.png") {
+                       save = FALSE, subdir = NA, file_name = "viz_ncuts.png") {
   
   require(ggplot2)
   
