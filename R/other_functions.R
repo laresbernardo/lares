@@ -165,8 +165,8 @@ dist2d <- function(a,b,c) {
 # Nicely format numerical values
 formatNum <- function(x, decimals = 2, type = 1) {
   if (type == 1) {
-    format(round(as.numeric(x), decimals), nsmall=decimals, big.mark=".", small.mark = ",")  
+    format(round(as.numeric(x), decimals), nsmall=decimals, big.mark=".", decimal.mark = ",")
   } else {
-    format(round(as.numeric(x), decimals), nsmall=decimals, big.mark=",", small.mark = ".")  
+    format(round(as.numeric(x), decimals), nsmall=decimals, big.mark=",", decimal.mark = ".") 
   }
 }
