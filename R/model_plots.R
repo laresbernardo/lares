@@ -250,8 +250,8 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
                              save = FALSE, subdir = NA, file_name = "viz_ncuts_error.png") {
   
   require(ggplot2)
-  require(gridExtra)
   require(scales)
+  require(gridExtra)
   
   if (splits > 25) {
     stop("You should try with less splits!")
@@ -274,7 +274,7 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
     geom_col(fill="deepskyblue") + 
     xlab('') + theme_minimal() + ylab('Absolute Error') + 
     geom_text(vjust = 1.5, size = 2.7, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
-    labs(subtitle = paste("Cuts by absolute error")) +
+    labs(subtitle = paste("Cuts and distribution by absolute error")) +
     scale_y_continuous(labels = comma)
   
   # Second: percentual errors
@@ -290,8 +290,14 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
     geom_col(fill="deepskyblue") + 
     xlab('') + theme_minimal() + ylab('% Error') + 
     geom_text(vjust = 1.5, size = 2.7, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
-    labs(subtitle = paste("Cuts by percentual error")) +
+    labs(subtitle = paste("Cuts and distribution by absolute percentual error")) +
     scale_y_continuous(labels = comma)
+  
+  # Third: errors distribution
+  pd_error <- ggplot(df) + 
+    geom_density(aes(x=p_error), fill="deepskyblue", alpha = 0.7) +
+    xlab('') + ylab('Error Density') + theme_minimal() +
+    scale_x_continuous(labels=function(x) paste0(x,"%"))
   
   if(!is.na(title)) {
     p_abs <- p_abs + labs(title = title)
@@ -306,7 +312,21 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
     file_name <- paste(subdir, file_name, sep="/")
   }
   
-  return(grid.arrange(p_abs, p_per))
+  if(save == TRUE) {
+    png(file_name, height = 1800, width = 2100, res = 300)
+    grid.arrange(
+      p_abs, pd_error, p_per,
+      heights = c(2,1,2),
+      ncol = 1, nrow = 3)
+    dev.off()
+  }
+  
+  return(
+    grid.arrange(
+      p_abs, pd_error, p_per,
+      heights = c(2,1,2),
+      ncol = 1, nrow = 3)
+  )
   
 }
 
@@ -457,6 +477,7 @@ mplot_full <- function(tag, score, splits = 8, subtitle = NA, model_name = NA,
   
   require(ggplot2)
   require(gridExtra)
+  require(dplyr)
 
   options(warn=-1)
   
@@ -525,6 +546,7 @@ mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA,
   
   require(ggplot2)
   require(scales)
+  #require(gridExtra)
   
   results <- data.frame(tag = tag, score = score, dist = 0)
   for (i in 1:nrow(results)) { 
@@ -544,7 +566,9 @@ mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA,
          colour = "Deviation") +
     geom_text(aes(x = Inf, y = -Inf, hjust = 1, vjust = -1, label = labels), size = 3.1) +
     scale_x_continuous(labels = comma) +
-    scale_y_continuous(labels = comma)
+    scale_y_continuous(labels = comma) +
+    theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
+    guides(colour = guide_colorbar(barwidth = 0.9, barheight = 4.5))
   
   if(!is.na(subtitle)) {
     p <- p + labs(subtitle = subtitle)
@@ -553,6 +577,8 @@ mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA,
   if(!is.na(model_name)) {
     p <- p + labs(caption = model_name)
   }
+  
+  #p <- ggExtra::ggMarginal(p, fill="navy", alpha = 0.5, size = 9)
   
   if (save == TRUE) {
     p <- p + ggsave(file_name, width = 6, height = 6)
