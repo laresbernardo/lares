@@ -153,8 +153,8 @@ ip_country <- function(ip) {
 }
 
 # Distance from specific point to line
-dist2d <- function(a,b,c) {
-  # a is the point
+dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
+  # a is the point from which we want to measure the distance
   # b and c are two points from the line
   v1 <- b - c
   v2 <- a - b
