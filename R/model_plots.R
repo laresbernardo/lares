@@ -240,7 +240,7 @@ mplot_cuts <- function(score, splits = 10, subtitle = NA, model_name = NA,
 ##################################
 # Split and compare quantiles
 mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA, facet = NA, 
-                         save = FALSE, file_name = "viz_splits.png") {
+                         save = FALSE, subdir = NA, file_name = "viz_splits.png") {
   
   require(ggplot2)
   require(dplyr)
@@ -437,19 +437,15 @@ mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA,
     paste("Adj R2 = ", signif(summary(fit)$adj.r.squared, 4)),
     paste("Pval =", signif(summary(fit)$coef[2,4], 5)), sep="\n")
   
-  p <- ggplot(results, aes(x = tag, y = score, colour=dist)) +
+  p <- ggplot(results, aes(x = tag, y = score, colour = dist)) +
     geom_abline(slope = 1, intercept = 0, alpha = 0.5, colour = "orange", size=0.6) +
     geom_point() + theme_minimal() + coord_equal() + 
     labs(title = "Linear Regression Results",
          x = "Real value", y = "Predicted value",
          colour = "Deviation") +
-    annotate("text", hjust = 0, size = 3.1,
-             x = max(results$tag) * 0.85, 
-             y = min(results$score) * 1.1,
-             label = labels) +
+    geom_text(aes(x = Inf, y = -Inf, hjust = 1, vjust = -1, label = labels), size = 3.1) +
     scale_x_continuous(labels = comma) +
-    scale_y_continuous(labels = comma) +
-    scale_colour_continuous(labels = comma)
+    scale_y_continuous(labels = comma)
   
   if(!is.na(subtitle)) {
     p <- p + labs(subtitle = subtitle)
