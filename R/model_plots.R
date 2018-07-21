@@ -245,36 +245,60 @@ mplot_cuts <- function(score, splits = 10, subtitle = NA, model_name = NA,
 
 
 ##################################
-# Cuts by quantiles for error
-mplot_cuts_error <- function(error, splits = 10, subtitle = NA, model_name = NA, 
+# Cuts by quantiles on absolut and percentual errors
+mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = NA, 
                              save = FALSE, subdir = NA, file_name = "viz_ncuts_error.png") {
   
   require(ggplot2)
+  require(gridExtra)
+  require(scales)
   
   if (splits > 25) {
     stop("You should try with less splits!")
   }
   
-  deciles <- quantile(error, 
-                      probs = seq((1/splits), 1, length = splits), 
-                      names = TRUE)
-  deciles <- data.frame(cbind(Deciles=row.names(as.data.frame(deciles)),
-                              Threshold=as.data.frame(deciles)))
+  df <- data.frame(tag = tag, score = score) %>%
+    mutate(real_error = tag - score,
+           abs_error = abs(real_error),
+           p_error = 100 * abs(real_error/tag))
   
-  p <- ggplot(deciles, 
-              aes(x = reorder(Deciles, deciles), y = deciles * 100, 
-                  label = round(100 * deciles, 1))) + 
+  # First: absolute errors
+  deciles_abs <- quantile(df$abs_error, 
+                          probs = seq((1/splits), 1, length = splits), 
+                          names = TRUE)
+  deciles_abs <- data.frame(cbind(Deciles=row.names(as.data.frame(deciles_abs)),
+                                  Threshold=as.data.frame(deciles_abs)))
+  p_abs <- ggplot(deciles_abs, 
+                  aes(x = reorder(Deciles, deciles_abs), y = deciles_abs * 100, 
+                      label = signif(deciles_abs, 3))) +
     geom_col(fill="deepskyblue") + 
-    xlab('') + theme_minimal() + ylab('Error') + 
+    xlab('') + theme_minimal() + ylab('Absolute Error') + 
     geom_text(vjust = 1.5, size = 3, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
-    labs(title = paste("Cuts by error: using", splits, "equal-sized buckets"))
+    labs(subtitle = paste("Cuts by absolute error: using", splits, "equal-sized buckets")) +
+    scale_y_continuous(labels = comma)
   
-  if(!is.na(subtitle)) {
-    p <- p + labs(subtitle = subtitle)
+  # Second: percentual errors
+  deciles_per <- quantile(df$p_error, 
+                          probs = seq((1/splits), 1, length = splits), 
+                          names = TRUE)
+  deciles_per <- data.frame(cbind(Deciles=row.names(as.data.frame(deciles_per)),
+                                  Threshold=as.data.frame(deciles_per)))
+  
+  p_per <- ggplot(deciles_per, 
+                  aes(x = reorder(Deciles, deciles_per), y = deciles_per, 
+                      label = signif(deciles_per, 3))) +
+    geom_col(fill="deepskyblue") + 
+    xlab('') + theme_minimal() + ylab('% Error') + 
+    geom_text(vjust = 1.5, size = 3, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
+    labs(subtitle = paste("Cuts by percentual error: using", splits, "equal-sized buckets")) +
+    scale_y_continuous(labels = comma)
+  
+  if(!is.na(title)) {
+    p_abs <- p_abs + labs(title = title)
   } 
   
   if(!is.na(model_name)) {
-    p <- p + labs(caption = model_name)
+    p_per <- p_per + labs(caption = model_name)
   }
   
   if (!is.na(subdir)) {
@@ -282,11 +306,7 @@ mplot_cuts_error <- function(error, splits = 10, subtitle = NA, model_name = NA,
     file_name <- paste(subdir, file_name, sep="/")
   }
   
-  if (save == TRUE) {
-    p <- p + ggsave(file_name, width = 6, height = 6)
-  }
-  
-  return(p)
+  return(grid.arrange(p_abs, p_per))
   
 }
 
