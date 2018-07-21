@@ -158,8 +158,8 @@ dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
   # b and c are two points from the line
   v1 <- b - c
   v2 <- a - b
-  m <- cbind(v1,v2)
-  d <- abs(det(m))/sqrt(sum(v1*v1))
+  m <- cbind(v1, v2)
+  d <- abs(det(m)) / sqrt(sum(v1 * v1))
 }
 
 # Nicely format numerical values

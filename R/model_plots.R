@@ -177,6 +177,11 @@ mplot_roc <- function(tag, score, model_name = NA, subtitle = NA, interval = 0.2
     p <- ggplotly(p)
   }
   
+  if (!is.na(subdir)) {
+    dir.create(file.path(getwd(), subdir))
+    file_name <- paste(subdir, file_name, sep="/")
+  }
+  
   if (save == TRUE) {
     p <- p + ggsave(file_name, width = 6, height = 6)
   }
@@ -216,6 +221,11 @@ mplot_cuts <- function(score, splits = 10, subtitle = NA, model_name = NA,
   
   if(!is.na(model_name)) {
     p <- p + labs(caption = model_name)
+  }
+  
+  if (!is.na(subdir)) {
+    dir.create(file.path(getwd(), subdir))
+    file_name <- paste(subdir, file_name, sep="/")
   }
   
   if (save == TRUE) {
@@ -282,6 +292,11 @@ mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA,
   if(!is.na(facet)) {
     p <- p + facet_grid(. ~ facet, scales = "free")
   }  
+  
+  if (!is.na(subdir)) {
+    dir.create(file.path(getwd(), subdir))
+    file_name <- paste(subdir, file_name, sep="/")
+  }
   
   if (save == TRUE) {
     p <- p + ggsave(file_name, width = 6, height = 6)
@@ -402,4 +417,52 @@ mplot_full <- function(tag, score, splits = 8, subtitle = NA, model_name = NA,
       widths = c(1.3,1),
       layout_matrix = rbind(c(1,2), c(1,2), c(1,3), c(4,3)))
   ) 
+}
+
+##################################
+# Linear regression plot
+mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA, 
+                         save = FALSE, file_name = "viz_metrics.png", subdir = NA) {
+  
+  require(ggplot2)
+  require(scales)
+  
+  results <- data.frame(tag = tag, score = score, dist = 0)
+  for (i in 1:nrow(results)) { 
+    results$dist[i] <- lares::dist2d(c(results$tag[i],results$score[i]), c(0,0), c(1,1)) 
+  }
+  
+  fit <- lm(tag ~ score)
+  labels <- paste(
+    paste("Adj R2 = ", signif(summary(fit)$adj.r.squared, 4)),
+    paste("Pval =", signif(summary(fit)$coef[2,4], 5)), sep="\n")
+  
+  p <- ggplot(results, aes(x = tag, y = score, colour=dist)) +
+    geom_abline(slope = 1, intercept = 0, alpha = 0.5, colour = "orange", size=0.6) +
+    geom_point() + theme_minimal() + coord_equal() + 
+    labs(title = "Linear Regression Results",
+         x = "Real value", y = "Predicted value",
+         colour = "Deviation") +
+    annotate("text", hjust = 0, size = 3.1,
+             x = max(results$tag) * 0.85, 
+             y = min(results$score) * 1.1,
+             label = labels) +
+    scale_x_continuous(labels = comma) +
+    scale_y_continuous(labels = comma) +
+    scale_colour_continuous(labels = comma)
+  
+  if(!is.na(subtitle)) {
+    p <- p + labs(subtitle = subtitle)
+  }  
+  
+  if(!is.na(model_name)) {
+    p <- p + labs(caption = model_name)
+  }
+  
+  if (save == TRUE) {
+    p <- p + ggsave(file_name, width = 6, height = 6)
+  }
+  
+  return(p)
+  
 }
