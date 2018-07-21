@@ -269,12 +269,12 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
   deciles_abs <- data.frame(cbind(Deciles=row.names(as.data.frame(deciles_abs)),
                                   Threshold=as.data.frame(deciles_abs)))
   p_abs <- ggplot(deciles_abs, 
-                  aes(x = reorder(Deciles, deciles_abs), y = deciles_abs * 100, 
+                  aes(x = reorder(Deciles, deciles_abs), y = deciles_abs, 
                       label = signif(deciles_abs, 3))) +
     geom_col(fill="deepskyblue") + 
     xlab('') + theme_minimal() + ylab('Absolute Error') + 
-    geom_text(vjust = 1.5, size = 3, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
-    labs(subtitle = paste("Cuts by absolute error: using", splits, "equal-sized buckets")) +
+    geom_text(vjust = 1.5, size = 2.7, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
+    labs(subtitle = paste("Cuts by absolute error")) +
     scale_y_continuous(labels = comma)
   
   # Second: percentual errors
@@ -289,8 +289,8 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
                       label = signif(deciles_per, 3))) +
     geom_col(fill="deepskyblue") + 
     xlab('') + theme_minimal() + ylab('% Error') + 
-    geom_text(vjust = 1.5, size = 3, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
-    labs(subtitle = paste("Cuts by percentual error: using", splits, "equal-sized buckets")) +
+    geom_text(vjust = 1.5, size = 2.7, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
+    labs(subtitle = paste("Cuts by percentual error")) +
     scale_y_continuous(labels = comma)
   
   if(!is.na(title)) {
@@ -465,32 +465,57 @@ mplot_full <- function(tag, score, splits = 8, subtitle = NA, model_name = NA,
     stop(message(paste("Currently, tag has", length(tag), "rows and score has", length(score))))
   }
   
-  p1 <- lares::mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
-  p2 <- lares::mplot_splits(tag = tag, score = score, splits = splits)
-  p3 <- lares::mplot_roc(tag = tag, score = score)
-  p4 <- lares::mplot_cuts(score = score)
-  
-  if(save == TRUE) {
+  # Categorical Models
+  if (length(unique(tag)) <= 6) {
+    p1 <- lares::mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
+    p2 <- lares::mplot_splits(tag = tag, score = score, splits = splits)
+    p3 <- lares::mplot_roc(tag = tag, score = score)
+    p4 <- lares::mplot_cuts(score = score) 
     
-    if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir))
-      file_name <- paste(subdir, file_name, sep="/")
+    if(save == TRUE) {
+      
+      if (!is.na(subdir)) {
+        dir.create(file.path(getwd(), subdir))
+        file_name <- paste(subdir, file_name, sep="/")
+      }
+      
+      png(file_name, height = 2000, width = 3200, res = 300)
+      grid.arrange(
+        p1, p2, p3, p4,
+        widths = c(1.3,1),
+        layout_matrix = rbind(c(1,2), c(1,2), c(1,3), c(4,3)))
+      dev.off()
     }
     
-    png(file_name, height = 2000, width = 3200, res = 300)
-    grid.arrange(
-      p1, p2, p3, p4,
-      widths = c(1.3,1),
-      layout_matrix = rbind(c(1,2), c(1,2), c(1,3), c(4,3)))
-    dev.off()
+    return(
+      grid.arrange(
+        p1, p2, p3, p4,
+        widths = c(1.3,1),
+        layout_matrix = rbind(c(1,2), c(1,2), c(1,3), c(4,3)))
+    ) 
+    
+  } else {
+    
+    # Numerical models
+    p1 <- lares::mplot_lineal(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
+    p2 <- lares::mplot_cuts_error(tag = tag, score = score, splits = splits)
+    
+    if(save == TRUE) {
+      
+      if (!is.na(subdir)) {
+        dir.create(file.path(getwd(), subdir))
+        file_name <- paste(subdir, file_name, sep="/")
+      }
+      
+      png(file_name, height = 2000, width = 3200, res = 300)
+      grid.arrange(grid.arrange(p1, p2, widths = c(1.2,1)))
+      dev.off()
+    }
+    
+    return(grid.arrange(p1, p2, widths = c(1.2,1))
+           
+    ) 
   }
-  
-  return(
-    grid.arrange(
-      p1, p2, p3, p4,
-      widths = c(1.3,1),
-      layout_matrix = rbind(c(1,2), c(1,2), c(1,3), c(4,3)))
-  ) 
 }
 
 ##################################
