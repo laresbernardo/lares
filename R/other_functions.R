@@ -151,3 +151,22 @@ ip_country <- function(ip) {
   } 
   return(countries)
 }
+
+# Distance from specific point to line
+dist2d <- function(a,b,c) {
+  # a is the point
+  # b and c are two points from the line
+  v1 <- b - c
+  v2 <- a - b
+  m <- cbind(v1,v2)
+  d <- abs(det(m))/sqrt(sum(v1*v1))
+}
+
+# Nicely format numerical values
+formatNum <- function(x, decimals = 2, type = 1) {
+  if (type == 1) {
+    format(round(as.numeric(x), decimals), nsmall=decimals, big.mark=".")  
+  } else {
+    format(round(as.numeric(x), decimals), nsmall=decimals, big.mark=",")  
+  }
+}
