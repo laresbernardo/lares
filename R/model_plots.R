@@ -198,7 +198,7 @@ mplot_roc <- function(tag, score, model_name = NA, subtitle = NA, interval = 0.2
 }
 
 ##################################
-# Cuts by quantiles
+# Cuts by quantiles for score
 mplot_cuts <- function(score, splits = 10, subtitle = NA, model_name = NA, 
                        save = FALSE, subdir = NA, file_name = "viz_ncuts.png") {
   
@@ -221,6 +221,53 @@ mplot_cuts <- function(score, splits = 10, subtitle = NA, model_name = NA,
     xlab('') + theme_minimal() + ylab('Score') + 
     geom_text(vjust = 1.5, size = 3, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
     labs(title = paste("Cuts by score: using", splits, "equal-sized buckets"))
+  
+  if(!is.na(subtitle)) {
+    p <- p + labs(subtitle = subtitle)
+  } 
+  
+  if(!is.na(model_name)) {
+    p <- p + labs(caption = model_name)
+  }
+  
+  if (!is.na(subdir)) {
+    dir.create(file.path(getwd(), subdir))
+    file_name <- paste(subdir, file_name, sep="/")
+  }
+  
+  if (save == TRUE) {
+    p <- p + ggsave(file_name, width = 6, height = 6)
+  }
+  
+  return(p)
+  
+}
+
+
+##################################
+# Cuts by quantiles for error
+mplot_cuts_error <- function(error, splits = 10, subtitle = NA, model_name = NA, 
+                             save = FALSE, subdir = NA, file_name = "viz_ncuts_error.png") {
+  
+  require(ggplot2)
+  
+  if (splits > 25) {
+    stop("You should try with less splits!")
+  }
+  
+  deciles <- quantile(error, 
+                      probs = seq((1/splits), 1, length = splits), 
+                      names = TRUE)
+  deciles <- data.frame(cbind(Deciles=row.names(as.data.frame(deciles)),
+                              Threshold=as.data.frame(deciles)))
+  
+  p <- ggplot(deciles, 
+              aes(x = reorder(Deciles, deciles), y = deciles * 100, 
+                  label = round(100 * deciles, 1))) + 
+    geom_col(fill="deepskyblue") + 
+    xlab('') + theme_minimal() + ylab('Error') + 
+    geom_text(vjust = 1.5, size = 3, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
+    labs(title = paste("Cuts by error: using", splits, "equal-sized buckets"))
   
   if(!is.na(subtitle)) {
     p <- p + labs(subtitle = subtitle)
