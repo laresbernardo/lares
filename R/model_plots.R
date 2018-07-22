@@ -99,7 +99,6 @@ mplot_density <- function(tag, score, model_name = NA, subtitle = NA,
     if (save == TRUE) {
       p <- p + ggsave(file_name, width = 6, height = 6)
     }
-    
     return(p)
   }
 }
