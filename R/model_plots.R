@@ -304,7 +304,7 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
   df <- data.frame(tag = tag, score = score) %>%
     mutate(real_error = tag - score,
            abs_error = abs(real_error),
-           p_error = 100 * abs(real_error/tag))
+           p_error = 100 * real_error/tag)
   
   # First: absolute errors
   deciles_abs <- quantile(df$abs_error, 
@@ -322,7 +322,7 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
     scale_y_continuous(labels = comma)
   
   # Second: percentual errors
-  deciles_per <- quantile(df$p_error, 
+  deciles_per <- quantile(abs(df$p_error), 
                           probs = seq((1/splits), 1, length = splits), 
                           names = TRUE)
   deciles_per <- data.frame(cbind(Deciles=row.names(as.data.frame(deciles_per)),
@@ -334,7 +334,7 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
     geom_col(fill="deepskyblue") + 
     xlab('') + theme_minimal() + ylab('% Error') + 
     geom_text(vjust = 1.5, size = 2.7, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
-    labs(subtitle = paste("Cuts and distribution by absolute percentual error")) +
+    labs(subtitle = paste("Cuts and distribution by absolute porcentual error")) +
     scale_y_continuous(labels = comma)
   
   # Third: errors distribution
@@ -348,7 +348,7 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
   } 
   
   if(!is.na(model_name)) {
-    p_per <- p_per + labs(caption = model_name)
+    pd_error <- pd_error + labs(caption = model_name)
   }
   
   if (!is.na(subdir)) {
@@ -357,10 +357,10 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
   }
   
   if(save == TRUE) {
-    png(file_name, height = 1800, width = 2100, res = 300)
+    png(file_name, height = 1800, width = 1800, res = 300)
     grid.arrange(
       p_abs, p_per, pd_error,
-      heights = c(2,2,1),
+      heights = c(1.8,1.8,1),
       ncol = 1, nrow = 3)
     dev.off()
   }
@@ -640,5 +640,6 @@ mplot_full <- function(tag, score, splits = 8, subtitle = NA, model_name = NA,
       widths = c(0.45, 0.55),
       layout_matrix = rbind(c(1,3), c(2,3)))
     )
+    
   }
 }
