@@ -541,7 +541,7 @@ mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA,
   p <- ggplot(results, aes(x = tag, y = score, colour = dist)) +
     geom_abline(slope = 1, intercept = 0, alpha = 0.5, colour = "orange", size=0.6) +
     geom_point() + theme_minimal() + coord_equal() + 
-    labs(title = "Regression Model Results",
+    labs(title = "Linear Regression Model Results",
          x = "Real value", y = "Predicted value",
          colour = "Deviation") +
     geom_text(aes(x = Inf, y = -Inf, hjust = 1, vjust = -1, label = labels), size = 3.1) +
