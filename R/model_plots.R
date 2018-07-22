@@ -341,7 +341,8 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
   pd_error <- ggplot(df) + 
     geom_density(aes(x=p_error), fill="deepskyblue", alpha = 0.7) +
     xlab('') + ylab('Error Density') + theme_minimal() +
-    scale_x_continuous(labels=function(x) paste0(x,"%"))
+    scale_x_continuous(labels=function(x) paste0(x,"%")) +
+    geom_vline(xintercept = 0, alpha = 0.5, colour = "navy", linetype = "dotted")
   
   if(!is.na(title)) {
     p_abs <- p_abs + labs(title = title)
