@@ -21,7 +21,7 @@ mplot_density <- function(tag, score, model_name = NA, subtitle = NA,
                    alpha = 0.6, adjust = 0.25) + 
       guides(fill = guide_legend(title="Tag")) + 
       xlim(0, 100) + 
-      labs(title = "Score distribution for binary model",
+      labs(title = "Classification Model Results",
            y = "Density by tag", x = "Score")
     
     p2 <- ggplot(out) + theme_minimal() + 
@@ -540,7 +540,7 @@ mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA,
   p <- ggplot(results, aes(x = tag, y = score, colour = dist)) +
     geom_abline(slope = 1, intercept = 0, alpha = 0.5, colour = "orange", size=0.6) +
     geom_point() + theme_minimal() + coord_equal() + 
-    labs(title = "Linear Regression Results",
+    labs(title = "Regression Model Results",
          x = "Real value", y = "Predicted value",
          colour = "Deviation") +
     geom_text(aes(x = Inf, y = -Inf, hjust = 1, vjust = -1, label = labels), size = 3.1) +
