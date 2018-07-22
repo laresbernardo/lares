@@ -78,8 +78,8 @@ mplot_density <- function(tag, score, model_name = NA, subtitle = NA,
                    alpha = 0.6, adjust = 0.25) + 
       labs(title = "Values density distribution",
            y = "Density", 
-           x = "Continuous values")
-    scale_x_continuous(labels = comma) +
+           x = "Continuous values") +
+      scale_x_continuous(labels = comma) +
       theme(legend.title=element_blank())
     
     
