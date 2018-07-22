@@ -1,5 +1,5 @@
-##################################
-# Density plot for binaries
+################################################################
+# Density plot for discrete and continuous values
 mplot_density <- function(tag, score, model_name = NA, subtitle = NA, 
                           save = FALSE, subdir = NA,file_name = "viz_distribution.png") {
   
@@ -11,66 +11,101 @@ mplot_density <- function(tag, score, model_name = NA, subtitle = NA,
     stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
   }
   
-  if (length(unique(tag)) != 2) {
-    stop("This function is for binary models. You should only have 2 unique values for the tag value!")
+  if (length(unique(tag)) <= 6) {
+    
+    out <- data.frame(tag = as.character(tag),
+                      score = as.numeric(score))
+    
+    p1 <- ggplot(out) + theme_minimal() +
+      geom_density(aes(x = 100 * score, group = tag, fill = as.character(tag)), 
+                   alpha = 0.6, adjust = 0.25) + 
+      guides(fill = guide_legend(title="Tag")) + 
+      xlim(0, 100) + 
+      labs(title = "Score distribution for binary model",
+           y = "Density by tag", x = "Score")
+    
+    p2 <- ggplot(out) + theme_minimal() + 
+      geom_density(aes(x = 100 * score), 
+                   alpha = 0.9, adjust = 0.25, fill = "deepskyblue") + 
+      labs(x = "", y = "Density")
+    
+    p3 <- ggplot(out) + theme_minimal() + 
+      geom_line(aes(x = score * 100, y = 100 * (1 - ..y..), color = as.character(tag)), 
+                stat = 'ecdf', size = 1) +
+      geom_line(aes(x = score * 100, y = 100 * (1 - ..y..)), 
+                stat = 'ecdf', size = 0.5, colour = "black", linetype="dotted") +
+      ylab('Cumulative') + xlab('') + guides(color=FALSE)
+    
+    if(!is.na(subtitle)) {
+      p1 <- p1 + labs(subtitle = subtitle)
+    }
+    
+    if(!is.na(model_name)) {
+      p1 <- p1 + labs(caption = model_name)
+    }
+    
+    if (!is.na(subdir)) {
+      dir.create(file.path(getwd(), subdir))
+      file_name <- paste(subdir, file_name, sep="/")
+    }
+    
+    if(save == TRUE) {
+      png(file_name, height = 1800, width = 2100, res = 300)
+      grid.arrange(
+        p1, p2, p3, 
+        ncol = 2, nrow = 2, heights = 2:1,
+        layout_matrix = rbind(c(1,1), c(2,3)))
+      dev.off()
+    }
+    
+    return(
+      grid.arrange(
+        p1, p2, p3, 
+        ncol = 2, nrow = 2, heights = 2:1,
+        layout_matrix = rbind(c(1,1), c(2,3))))
+    
+  } else {
+    
+    require(scales)
+    
+    df <- data.frame(
+      rbind(cbind(values = tag, type = "Real"), 
+            cbind(values = score, type = "Regression")))
+    df$values <- as.numeric(as.character(df$values))
+    
+    p <- ggplot(df) + theme_minimal() +
+      geom_density(aes(x = values, fill = as.character(type)), 
+                   alpha = 0.6, adjust = 0.25) + 
+      labs(title = "Values density distribution",
+           y = "Density", 
+           x = "Continuous values")
+    scale_x_continuous(labels = comma) +
+      theme(legend.title=element_blank())
+    
+    
+    if(!is.na(model_name)) {
+      p <- p + labs(caption = model_name)
+    }
+    
+    if(!is.na(subtitle)) {
+      p <- p + labs(subtitle = subtitle)
+    }  
+    
+    if (!is.na(subdir)) {
+      dir.create(file.path(getwd(), subdir))
+      file_name <- paste(subdir, file_name, sep="/")
+    }
+    
+    if (save == TRUE) {
+      p <- p + ggsave(file_name, width = 6, height = 6)
+    }
+    
+    return(p)
   }
-  
-  out <- data.frame(tag = as.character(tag),
-                    score = as.numeric(score),
-                    norm_score = lares::normalize(as.numeric(score)))
-  
-  p1 <- ggplot(out) + theme_minimal() +
-    geom_density(aes(x = 100 * score, group = tag, fill = as.character(tag)), 
-                 alpha = 0.6, adjust = 0.25) + 
-    guides(fill = guide_legend(title="Tag")) + 
-    xlim(0, 100) + 
-    labs(title = "Score distribution for binary model",
-         y = "Density by tag", x = "Score")
-  
-  p2 <- ggplot(out) + theme_minimal() + 
-    geom_density(aes(x = 100 * score), 
-                 alpha = 0.9, adjust = 0.25, fill = "deepskyblue") + 
-    labs(x = "", y = "Density")
-  
-  p3 <- ggplot(out) + theme_minimal() + 
-    geom_line(aes(x = score * 100, y = 100 * (1 - ..y..), color = as.character(tag)), 
-              stat = 'ecdf', size = 1) +
-    geom_line(aes(x = score * 100, y = 100 * (1 - ..y..)), 
-              stat = 'ecdf', size = 0.5, colour = "black", linetype="dotted") +
-    ylab('Cumulative') + xlab('') + guides(color=FALSE)
-  
-  if(!is.na(subtitle)) {
-    p1 <- p1 + labs(subtitle = subtitle)
-  }
-  
-  if(!is.na(model_name)) {
-    p1 <- p1 + labs(caption = model_name)
-  }
-  
-  if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir))
-    file_name <- paste(subdir, file_name, sep="/")
-  }
-  
-  if(save == TRUE) {
-    png(file_name, height = 1800, width = 2100, res = 300)
-    grid.arrange(
-      p1, p2, p3, 
-      ncol = 2, nrow = 2, heights = 2:1,
-      layout_matrix = rbind(c(1,1), c(2,3)))
-    dev.off()
-  }
-  
-  return(
-    grid.arrange(
-      p1, p2, p3, 
-      ncol = 2, nrow = 2, heights = 2:1,
-      layout_matrix = rbind(c(1,1), c(2,3))))
-  
 }
 
 
-##################################
+################################################################
 # Variables Importances
 mplot_importance <- function(var, imp, colours = NA, limit = 15, model_name = NA, subtitle = NA,
                              save = FALSE, subdir = NA, file_name = "viz_importance.png") {
@@ -134,7 +169,7 @@ mplot_importance <- function(var, imp, colours = NA, limit = 15, model_name = NA
   
 }
 
-##################################
+#################################################
 # ROC Curve
 mplot_roc <- function(tag, score, model_name = NA, subtitle = NA, interval = 0.2, plotly = FALSE,
                       save = FALSE, subdir = NA, file_name = "viz_roc.png") {
@@ -197,7 +232,7 @@ mplot_roc <- function(tag, score, model_name = NA, subtitle = NA, interval = 0.2
   
 }
 
-##################################
+#################################################
 # Cuts by quantiles for score
 mplot_cuts <- function(score, splits = 10, subtitle = NA, model_name = NA, 
                        save = FALSE, subdir = NA, file_name = "viz_ncuts.png") {
@@ -206,6 +241,11 @@ mplot_cuts <- function(score, splits = 10, subtitle = NA, model_name = NA,
   
   if (splits > 25) {
     stop("You should try with less splits!")
+  }
+  
+  if (length(tag) != length(score)) {
+    message("The tag and score vectors should be the same length.")
+    stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
   }
   
   deciles <- quantile(score, 
@@ -244,7 +284,7 @@ mplot_cuts <- function(score, splits = 10, subtitle = NA, model_name = NA,
 }
 
 
-##################################
+#################################################
 # Cuts by quantiles on absolut and percentual errors
 mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = NA, 
                              save = FALSE, subdir = NA, file_name = "viz_ncuts_error.png") {
@@ -255,6 +295,11 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
   
   if (splits > 25) {
     stop("You should try with less splits!")
+  }
+  
+  if (length(tag) != length(score)) {
+    message("The tag and score vectors should be the same length.")
+    stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
   }
   
   df <- data.frame(tag = tag, score = score) %>%
@@ -315,23 +360,23 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
   if(save == TRUE) {
     png(file_name, height = 1800, width = 2100, res = 300)
     grid.arrange(
-      p_abs, pd_error, p_per,
-      heights = c(2,1,2),
+      p_abs, p_per, pd_error,
+      heights = c(2,2,1),
       ncol = 1, nrow = 3)
     dev.off()
   }
   
   return(
     grid.arrange(
-      p_abs, pd_error, p_per,
-      heights = c(2,1,2),
+      p_abs, p_per, pd_error,
+      heights = c(2,2,1),
       ncol = 1, nrow = 3)
   )
   
 }
 
 
-##################################
+#################################################
 # Split and compare quantiles
 mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA, facet = NA, 
                          save = FALSE, subdir = NA, file_name = "viz_splits.png") {
@@ -401,7 +446,7 @@ mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA,
 }
 
 
-##################################
+#################################################
 # AUC and LogLoss Plots
 mplot_metrics <- function(results, subtitle = NA, model_name = NA, 
                           save = FALSE, file_name = "viz_metrics.png", subdir = NA) {
@@ -466,11 +511,63 @@ mplot_metrics <- function(results, subtitle = NA, model_name = NA,
   }
   
   return(grid.arrange(ll, au, ncol = 1, nrow = 2))
-
+  
 }
 
 
-##################################
+#################################################
+# Linear regression plot
+mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA, 
+                         save = FALSE, file_name = "viz_lineal.png", subdir = NA) {
+  
+  require(ggplot2)
+  require(scales)
+  
+  if (length(tag) != length(score)) {
+    message("The tag and score vectors should be the same length.")
+    stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
+  }
+  
+  results <- data.frame(tag = tag, score = score, dist = 0)
+  for (i in 1:nrow(results)) { 
+    results$dist[i] <- lares::dist2d(c(results$tag[i],results$score[i]), c(0,0), c(1,1)) 
+  }
+  
+  fit <- lm(tag ~ score)
+  labels <- paste(
+    paste("Adj R2 = ", signif(summary(fit)$adj.r.squared, 4)),
+    paste("Pval =", signif(summary(fit)$coef[2,4], 5)), sep="\n")
+  
+  p <- ggplot(results, aes(x = tag, y = score, colour = dist)) +
+    geom_abline(slope = 1, intercept = 0, alpha = 0.5, colour = "orange", size=0.6) +
+    geom_point() + theme_minimal() + coord_equal() + 
+    labs(title = "Linear Regression Results",
+         x = "Real value", y = "Predicted value",
+         colour = "Deviation") +
+    geom_text(aes(x = Inf, y = -Inf, hjust = 1, vjust = -1, label = labels), size = 3.1) +
+    scale_x_continuous(labels = comma) +
+    scale_y_continuous(labels = comma) +
+    theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
+    guides(colour = guide_colorbar(barwidth = 0.9, barheight = 4.5))
+  
+  if(!is.na(subtitle)) {
+    p <- p + labs(subtitle = subtitle)
+  }  
+  
+  if(!is.na(model_name)) {
+    p <- p + labs(caption = model_name)
+  }
+  
+  if (save == TRUE) {
+    p <- p + ggsave(file_name, width = 6, height = 6)
+  }
+  
+  return(p)
+  
+}
+
+
+#################################################
 # MPLOTS Score Full Report (without importances)
 mplot_full <- function(tag, score, splits = 8, subtitle = NA, model_name = NA, 
                        save = FALSE, file_name = "viz_full.png", subdir = NA) {
@@ -478,7 +575,7 @@ mplot_full <- function(tag, score, splits = 8, subtitle = NA, model_name = NA,
   require(ggplot2)
   require(gridExtra)
   require(dplyr)
-
+  
   options(warn=-1)
   
   if (length(tag) != length(score)) {
@@ -519,7 +616,8 @@ mplot_full <- function(tag, score, splits = 8, subtitle = NA, model_name = NA,
     
     # Numerical models
     p1 <- lares::mplot_lineal(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
-    p2 <- lares::mplot_cuts_error(tag = tag, score = score, splits = splits)
+    p2 <- lares::mplot_density(tag = tag, score = score)
+    p3 <- lares::mplot_cuts_error(tag = tag, score = score, splits = splits)
     
     if(save == TRUE) {
       
@@ -529,61 +627,19 @@ mplot_full <- function(tag, score, splits = 8, subtitle = NA, model_name = NA,
       }
       
       png(file_name, height = 2000, width = 3200, res = 300)
-      grid.arrange(grid.arrange(p1, p2, widths = c(1.2,1)))
+      grid.arrange(
+        p1, p2, p3,
+        heights = c(0.7, 0.3),
+        widths = c(0.45, 0.55),
+        layout_matrix = rbind(c(1,3), c(2,3)))
       dev.off()
     }
     
-    return(grid.arrange(p1, p2, widths = c(1.2,1))
-           
-    ) 
+    return(grid.arrange(
+      p1, p2, p3,
+      heights = c(0.7, 0.3),
+      widths = c(0.45, 0.55),
+      layout_matrix = rbind(c(1,3), c(2,3)))
+    )
   }
-}
-
-##################################
-# Linear regression plot
-mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA, 
-                         save = FALSE, file_name = "viz_metrics.png", subdir = NA) {
-  
-  require(ggplot2)
-  require(scales)
-  #require(gridExtra)
-  
-  results <- data.frame(tag = tag, score = score, dist = 0)
-  for (i in 1:nrow(results)) { 
-    results$dist[i] <- lares::dist2d(c(results$tag[i],results$score[i]), c(0,0), c(1,1)) 
-  }
-  
-  fit <- lm(tag ~ score)
-  labels <- paste(
-    paste("Adj R2 = ", signif(summary(fit)$adj.r.squared, 4)),
-    paste("Pval =", signif(summary(fit)$coef[2,4], 5)), sep="\n")
-  
-  p <- ggplot(results, aes(x = tag, y = score, colour = dist)) +
-    geom_abline(slope = 1, intercept = 0, alpha = 0.5, colour = "orange", size=0.6) +
-    geom_point() + theme_minimal() + coord_equal() + 
-    labs(title = "Linear Regression Results",
-         x = "Real value", y = "Predicted value",
-         colour = "Deviation") +
-    geom_text(aes(x = Inf, y = -Inf, hjust = 1, vjust = -1, label = labels), size = 3.1) +
-    scale_x_continuous(labels = comma) +
-    scale_y_continuous(labels = comma) +
-    theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
-    guides(colour = guide_colorbar(barwidth = 0.9, barheight = 4.5))
-  
-  if(!is.na(subtitle)) {
-    p <- p + labs(subtitle = subtitle)
-  }  
-  
-  if(!is.na(model_name)) {
-    p <- p + labs(caption = model_name)
-  }
-  
-  #p <- ggExtra::ggMarginal(p, fill="navy", alpha = 0.5, size = 9)
-  
-  if (save == TRUE) {
-    p <- p + ggsave(file_name, width = 6, height = 6)
-  }
-  
-  return(p)
-  
 }
