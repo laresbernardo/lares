@@ -182,6 +182,9 @@ one_hot_encoding_commas <- function(df, variables, sep=","){
     x <- unlist(strsplit(x, sep))
     x <- paste(variable, x, sep="_")
     new_columns <- sort(unique(as.character(x)))
+    if (length(new_columns) >= 15) {
+      message(paste("You are using more than 15 unique values on this variable:", variable))
+    }
     for (i in seq_along(new_columns)){
       df$temp <- NA
       df$temp <- ifelse(grepl(new_columns[i], df[[variable]]), TRUE, FALSE)
