@@ -402,12 +402,31 @@ mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA,
   
   df <- data.frame(tag, score, facet)
   npersplit <- round(nrow(df)/splits)
-  names <- df %>% 
-    mutate(quantile = ntile(score, splits)) %>% group_by(quantile) %>%
-    summarise(n = n(), 
-              max_score = round(100 * max(score), 1), 
-              min_score = round(100 * min(score), 1)) %>%
-    mutate(quantile_tag = paste0(quantile," (",min_score,"-",max_score,")"))
+  
+  # For continuous tag values
+  if (length(unique(tag))) {
+    names <- df %>% 
+      mutate(tag = as.numeric(tag), 
+             quantile = ntile(tag, splits)) %>% group_by(quantile) %>%
+      summarise(n = n(), 
+                max_score = round(max(tag), 1), 
+                min_score = round(min(tag), 1)) %>%
+      mutate(quantile_tag = paste0(quantile," (",min_score,"-",max_score,")"))
+    df <- df %>% 
+      #mutate(score = score/100, tag = tag/100) %>%
+      mutate(quantile = ntile(tag, splits)) %>%
+      left_join(names, by = c("quantile")) %>% mutate(tag = quantile_tag) %>% 
+      select(-quantile, -n, -max_score, -min_score)
+    
+  } else {
+    # For categorical tag values
+    names <- df %>% 
+      mutate(quantile = ntile(score, splits)) %>% group_by(quantile) %>%
+      summarise(n = n(), 
+                max_score = round(100 * max(score), 1), 
+                min_score = round(100 * min(score), 1)) %>%
+      mutate(quantile_tag = paste0(quantile," (",min_score,"-",max_score,")")) 
+  }
   
   p <- df %>% 
     mutate(quantile = ntile(score, splits)) %>% 
@@ -547,7 +566,7 @@ mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA,
   p <- ggplot(results, aes(x = tag, y = score, colour = dist)) +
     geom_abline(slope = 1, intercept = 0, alpha = 0.5, colour = "orange", size=0.6) +
     geom_point() + theme_minimal() + coord_equal() + 
-    labs(title = "Linear Regression Model Results",
+    labs(title = "Regression Model Results",
          x = "Real value", y = "Predicted value",
          colour = "Deviation") +
     geom_text(aes(x = Inf, y = -Inf, hjust = 1, vjust = -1, label = labels), size = 3.1) +
