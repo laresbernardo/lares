@@ -542,7 +542,7 @@ mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA,
   fit <- lm(tag ~ score)
   labels <- paste(
     paste("Adj R2 = ", signif(summary(fit)$adj.r.squared, 4)),
-    paste("Pval =", signif(summary(fit)$coef[2,4], 5)), sep="\n")
+    paste("Pval =", signif(summary(fit)$coef[2,4], 3)), sep="\n")
   
   p <- ggplot(results, aes(x = tag, y = score, colour = dist)) +
     geom_abline(slope = 1, intercept = 0, alpha = 0.5, colour = "orange", size=0.6) +
