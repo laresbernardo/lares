@@ -19,6 +19,7 @@ msplit <- function(df, size = 0.7, seed = NA, print=T) {
     print(summary) 
   }
   
+  
   sets <- list(train=train, test=test, summary=summary, split_size=size)
   
   return(sets)
@@ -52,27 +53,38 @@ loglossBinary = function(tag, score, eps = 1e-15) {
 
 ####################################################################
 # H2O function to run autoML and return a list of usefull results
-h2o_automl <- function(df, split = 0.7, seed = 0, max_time = 5*60, max_models = 25, 
-                       export = FALSE, project = "Machine Learning Model") {
+h2o_automl <- function(df, 
+                       split = 0.7, 
+                       seed = 0, 
+                       max_time = 5*60, 
+                       max_models = 25, 
+                       export = FALSE, 
+                       project = "Machine Learning Model") {
   
   require(h2o)
-  require(pROC)
   
   options(warn=-1)
   
   start <- Sys.time()
   
-  df <- data.frame(df)
+  df <- data.frame(df) %>% filter(!is.na(tag))
   
   if(!"tag" %in% colnames(df)){
     stop("You should have a 'tag' column in your data.frame!")
   }
   
+  type <- ifelse(length(unique(df$tag)) <= 6, "Classifier", "Regression")
+  
   # Split and train
   splits <- lares::msplit(df, size = split, seed = seed)
   train <- splits$train
   test <- splits$test
-  print(table(train$tag))
+  if (type == "Classifier") {
+    print(table(train$tag)) 
+  }
+  if (type == "Regression") {
+    print(summary(train$tag)) 
+  }
   
   # Train model
   h2o.init(nthreads = -1, port=54321, min_mem_size="8g")
@@ -94,28 +106,52 @@ h2o_automl <- function(df, split = 0.7, seed = 0, max_time = 5*60, max_models = 
   
   # Calculations and variables
   scores <- predict(m, as.h2o(test))
-  results <- list(
-    project = project,
-    model = m,
-    scores = data.frame(
-      index = c(1:nrow(test)),
-      tag = as.vector(test$tag),
-      score = as.vector(scores[,3]),
-      norm_score = lares::normalize(as.vector(scores[,3]))),
-    scoring_history = data.frame(m@model$scoring_history),
-    datasets = list(test = test, train = train),
-    parameters = m@parameters,
-    importance = data.frame(h2o.varimp(m)),
-    auc_test = NA, #h2o.auc(m, valid=TRUE)
-    logloss_test = NA,
-    model_name = as.vector(m@model_id),
-    algorithm = m@algorithm,
-    leaderboard = aml@leaderboard,
-    seed = seed)
-  roc <- pROC::roc(results$scores$tag, results$scores$score, ci=T)
-  results$auc_test <- roc$auc
-  results$logloss_test <- lares::loglossBinary(tag = results$scores$tag, 
-                                               score = results$scores$score)
+  
+  # CLASSIFICATION MODELS
+  if (type == "Classifier") {
+    require(pROC)
+    results <- list(
+      project = project,
+      model = m,
+      scores = data.frame(
+        index = c(1:nrow(test)),
+        tag = as.vector(test$tag),
+        score = as.vector(scores[,3]),
+        norm_score = lares::normalize(as.vector(scores[,3]))),
+      scoring_history = data.frame(m@model$scoring_history),
+      datasets = list(test = test, train = train),
+      parameters = m@parameters,
+      importance = data.frame(h2o.varimp(m)),
+      auc_test = NA, #h2o.auc(m, valid=TRUE)
+      logloss_test = NA,
+      model_name = as.vector(m@model_id),
+      algorithm = m@algorithm,
+      leaderboard = aml@leaderboard,
+      seed = seed)
+    roc <- pROC::roc(results$scores$tag, results$scores$score, ci=T)
+    results$auc_test <- roc$auc
+    results$logloss_test <- lares::loglossBinary(tag = results$scores$tag, 
+                                                 score = results$scores$score)
+  } 
+  
+  if (type == "Regression") {
+    results <- list(
+      project = project,
+      model = m,
+      scores = data.frame(
+        index = c(1:nrow(test)),
+        tag = as.vector(test$tag),
+        score = as.vector(scores$predict)),
+      scoring_history = data.frame(m@model$scoring_history),
+      datasets = list(test = test, train = train),
+      parameters = m@parameters,
+      importance = data.frame(h2o.varimp(m)),
+      model_name = as.vector(m@model_id),
+      algorithm = m@algorithm,
+      leaderboard = aml@leaderboard
+    )
+  }
+
   message(paste0("Training duration: ", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
   
   if (export == TRUE) {
