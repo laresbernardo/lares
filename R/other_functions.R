@@ -170,3 +170,23 @@ formatNum <- function(x, decimals = 2, type = 1) {
     format(round(as.numeric(x), decimals), nsmall=decimals, big.mark=",", decimal.mark = ".") 
   }
 }
+
+# One hot encoding for a variable with comma separated values
+one_hot_encoding_commas <- function(df, variables, sep=","){
+  # Note that variables must be provided in strings
+  for (var in seq_along(variables)) {
+    variable <- variables[var]
+    df[df==""|is.na(df)] <- "NAs" # Handling missingness
+    x <- as.character(unique(df[[variable]]))
+    x <- gsub(" ", "", toString(x)) # So it can split on strings like "A1,A2" and "A1, A2"
+    x <- unlist(strsplit(x, sep))
+    x <- paste(variable, x, sep="_")
+    new_columns <- sort(unique(as.character(x)))
+    for (i in seq_along(new_columns)){
+      df$temp <- NA
+      df$temp <- ifelse(grepl(new_columns[i], df[[variable]]), TRUE, FALSE)
+      colnames(df)[colnames(df) == "temp"] <- new_columns[i]
+    }
+  }
+  return(df)
+}
