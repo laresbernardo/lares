@@ -305,9 +305,7 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
     mutate(real_error = tag - score,
            abs_error = abs(real_error),
            p_error = 100 * real_error/tag) %>%
-    filter(!is.finite(real_error), 
-           !is.finite(abs_error),
-           !is.finite(p_error))
+    filter(abs(p_error) <= 100)
   
   # First: absolute errors
   deciles_abs <- quantile(df$abs_error, 
