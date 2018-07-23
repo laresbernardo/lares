@@ -70,17 +70,21 @@ mplot_density <- function(tag, score, model_name = NA, subtitle = NA,
     
     df <- data.frame(
       rbind(cbind(values = tag, type = "Real"), 
-            cbind(values = score, type = "Regression")))
+            cbind(values = score, type = "Model")))
     df$values <- as.numeric(as.character(df$values))
     
     p <- ggplot(df) + theme_minimal() +
       geom_density(aes(x = values, fill = as.character(type)), 
                    alpha = 0.6, adjust = 0.25) + 
-      labs(title = "Values density distribution",
+      labs(title = "Values distribution",
            y = "Density", 
            x = "Continuous values") +
       scale_x_continuous(labels = comma) +
-      theme(legend.title=element_blank())
+      guides(fill = guide_legend(size = 1)) +
+      theme(legend.title=element_blank(),
+            #legend.position = "bottom",
+            legend.position = c(0.85, 1.1), 
+            legend.direction = "horizontal")
     
     
     if(!is.na(model_name)) {
@@ -630,7 +634,7 @@ mplot_full <- function(tag, score, splits = 8, subtitle = NA, model_name = NA,
       png(file_name, height = 2000, width = 3200, res = 300)
       grid.arrange(
         p1, p2, p3,
-        heights = c(0.7, 0.3),
+        heights = c(0.6, 0.4),
         widths = c(0.45, 0.55),
         layout_matrix = rbind(c(1,3), c(2,3)))
       dev.off()
@@ -638,7 +642,7 @@ mplot_full <- function(tag, score, splits = 8, subtitle = NA, model_name = NA,
     
     return(grid.arrange(
       p1, p2, p3,
-      heights = c(0.7, 0.3),
+      heights = c(0.6, 0.4),
       widths = c(0.45, 0.55),
       layout_matrix = rbind(c(1,3), c(2,3)))
     )
