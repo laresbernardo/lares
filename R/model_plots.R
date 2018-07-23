@@ -83,8 +83,9 @@ mplot_density <- function(tag, score, model_name = NA, subtitle = NA,
       guides(fill = guide_legend(size = 1)) +
       theme(legend.title=element_blank(),
             #legend.position = "bottom",
-            legend.position = c(0.85, 1.1), 
-            legend.direction = "horizontal")
+            legend.position = c(0.82, 1.1), 
+            legend.direction = "horizontal",
+            legend.spacing.x = unit(0.1, 'cm'))
     
     
     if(!is.na(model_name)) {
