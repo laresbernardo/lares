@@ -1,9 +1,13 @@
 # library(lares)
 
-## Fresh library install
+This is my personal library used to automate and fasten my everyday work on Analysis and Machine Learning tasks. You are most welcome to install, use, and comment on any of its code and functionalities. Feel free to add me on [Linkedin](https://www.linkedin.com/in/laresbernardo/) too!
+
+##Getting Started
+
+### Fresh library install
 ```devtools::install_github("laresbernardo/lares")```
 
-## Update library
+### Update library
 ```
 lares::updateLares() # From Github repository (Bitbucket discontinued)
 lares::updateLares(local=T) # Personal and local files, not necessarily deployed
