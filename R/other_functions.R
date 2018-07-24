@@ -38,7 +38,7 @@ nas = function(df, print = TRUE) {
        ylab=c("Histogram of missing data","Pattern"))
 }
 
-# Insurance Companies' colours to use in ggplot as scale_fill_manual
+# Custom colours to use in ggplot as scale_fill_manual
 gg_fill_customs <- function () {
 
   suppressMessages(require(ggplot2))
@@ -63,7 +63,7 @@ gg_fill_customs <- function () {
   return(scale_fill_manual(values=values))
 }
 
-# Insurance Companies' colours to use in ggplot as scale_color_manual
+# Custom colours to use in ggplot as scale_color_manual
 gg_colour_customs <- function () {
 
   suppressMessages(require(ggplot2))
@@ -85,6 +85,31 @@ gg_colour_customs <- function () {
               "movilred"="#FF1493",
               "web"="#290452",
               "f1"="#290452")
+  return(scale_color_manual(values=values))
+}
+
+# Custom colours to use in ggplot as scale_color_manual on texts
+gg_text_customs <- function () {
+  
+  suppressMessages(require(ggplot2))
+  
+  values <- c("ALLIANZ"="#000",
+              "EQUIDAD"="#000",
+              "COLPATRIA"="#000",
+              "DEL ESTADO"="#000",
+              "SURAMERICANA"="#000",
+              "MAPFRE"="#000",
+              "LA PREVISORA"="#000",
+              "AIG"="#000",
+              "GENERALI"="#000",
+              "SOLIDARIA"="#000",
+              "LIBERTY"="#000",
+              "BOLIVAR"="#000",
+              "CIA"="#000",
+              "puntored"="#000",
+              "movilred"="#000",
+              "web"="#FFF",
+              "f1"="#FFF")
   return(scale_color_manual(values=values))
 }
 
