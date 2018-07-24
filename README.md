@@ -5,7 +5,7 @@
 
 ## Update library
 ```
-lares::updateLares() # From repository. Set user and file (config.yml) if necessary
+lares::updateLares() # From Github repository (Bitbucket discontinued)
 lares::updateLares(local=T) # Personal and local files, not necessarily deployed
 ```
 
