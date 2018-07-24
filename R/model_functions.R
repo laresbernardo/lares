@@ -278,3 +278,8 @@ mae <- function(tag, score){
   error <- tag - score
   mean(abs(error))
 }
+# Mean Squared Error
+mse <- function(sm){ 
+  error <- tag - score
+  mean(error^2)
+}
