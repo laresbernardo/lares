@@ -80,7 +80,11 @@ gg_colour_customs <- function () {
               "SOLIDARIA"="#E69500",
               "LIBERTY"="#4E629A",
               "BOLIVAR"="#F0F206",
-              "CIA"="#8ACBE5")
+              "CIA"="#8ACBE5",
+              "puntored"="#FFFF00",
+              "movilred"="#FF1493",
+              "web"="#290452",
+              "f1"="#290452")
   return(scale_color_manual(values=values))
 }
 
