@@ -561,7 +561,10 @@ mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA,
   fit <- lm(tag ~ score)
   labels <- paste(
     paste("Adj R2 = ", signif(summary(fit)$adj.r.squared, 4)),
-    paste("Pval =", signif(summary(fit)$coef[2,4], 3)), sep="\n")
+    #paste("Pval =", signif(summary(fit)$coef[2,4], 3)), 
+    paste("RMSE =", signif(lares::rmse(results$tag, results$score), 4)), 
+    paste("MAE =", signif(lares::mae(results$tag, results$score), 4)), 
+    sep="\n")
   
   p <- ggplot(results, aes(x = tag, y = score, colour = dist)) +
     geom_abline(slope = 1, intercept = 0, alpha = 0.5, colour = "orange", size=0.6) +
@@ -569,7 +572,7 @@ mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA,
     labs(title = "Regression Model Results",
          x = "Real value", y = "Predicted value",
          colour = "Deviation") +
-    geom_text(aes(x = Inf, y = -Inf, hjust = 1, vjust = -1, label = labels), size = 3.1) +
+    annotate("text", x = Inf, y = -Inf, hjust = 1, vjust = 0, label = labels, size = 2.8) +
     scale_x_continuous(labels = comma) +
     scale_y_continuous(labels = comma) +
     theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
