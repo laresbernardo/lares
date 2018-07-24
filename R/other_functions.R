@@ -58,8 +58,8 @@ gg_fill_customs <- function () {
               "CIA"="#8ACBE5",
               "puntored"="#FFFF00",
               "movilred"="#FF1493",
-              "web"="#B22222",
-              "f1"="#B22222")
+              "web"="#290452",
+              "f1"="#290452")
   return(scale_fill_manual(values=values))
 }
 
