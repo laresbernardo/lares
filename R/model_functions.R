@@ -265,3 +265,16 @@ iter_seeds <- function(tries = 10, data) {
   }
   return(seeds)
 }
+
+####################################################################
+# Some metrics to measure performance
+# Root Mean Squared Error
+rmse <- function(tag, score){
+  error <- tag - score
+  sqrt(mean(error^2))
+}
+# Mean Absolute Error
+mae <- function(tag, score){
+  error <- tag - score
+  mean(abs(error))
+}
