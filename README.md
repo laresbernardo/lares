@@ -1,6 +1,6 @@
 # library(lares)
 
-<p>This is my personal library used to automate and fasten my everyday work on **Analysis and Machine Learning** tasks. You are most welcome to install, use, and comment on any of its code and functionalities. Feel free to add me on [Linkedin](https://www.linkedin.com/in/laresbernardo/) too!</p>
+This is my personal library used to automate and fasten my everyday work on **Analysis and Machine Learning** tasks. You are most welcome to install, use, and comment on any of its code and functionalities. Feel free to add me on [Linkedin](https://www.linkedin.com/in/laresbernardo/) too!
 
 
 ##Getting Started
