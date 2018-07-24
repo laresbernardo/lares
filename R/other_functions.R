@@ -93,23 +93,23 @@ gg_text_customs <- function () {
   
   suppressMessages(require(ggplot2))
   
-  values <- c("ALLIANZ"="#000",
-              "EQUIDAD"="#000",
-              "COLPATRIA"="#000",
-              "DEL ESTADO"="#000",
-              "SURAMERICANA"="#000",
-              "MAPFRE"="#000",
-              "LA PREVISORA"="#000",
-              "AIG"="#000",
-              "GENERALI"="#000",
-              "SOLIDARIA"="#000",
-              "LIBERTY"="#000",
-              "BOLIVAR"="#000",
-              "CIA"="#000",
-              "puntored"="#000",
-              "movilred"="#000",
-              "web"="#FFF",
-              "f1"="#FFF")
+  values <- c("ALLIANZ"="#000000",
+              "EQUIDAD"="#000000",
+              "COLPATRIA"="#000000",
+              "DEL ESTADO"="#000000",
+              "SURAMERICANA"="#000000",
+              "MAPFRE"="#000000",
+              "LA PREVISORA"="#000000",
+              "AIG"="#000000",
+              "GENERALI"="#000000",
+              "SOLIDARIA"="#000000",
+              "LIBERTY"="#000000",
+              "BOLIVAR"="#000000",
+              "CIA"="#000000",
+              "puntored"="#000000",
+              "movilred"="#000000",
+              "web"="#FFFFFF",
+              "f1"="#FFFFFF")
   return(scale_color_manual(values=values))
 }
 
