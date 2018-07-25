@@ -10,10 +10,7 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Br
 
   if (valid[["user"]] %in% c("bernardo", "rstudio")) {
     
-    current_wd <- getwd()
-    setwd(token_dir)
-    load("token_pers.rds")
-    setwd(current_wd)
+    load(paste0(token_dir, "/token_pers.rds"))
 
     x <- drop_search("Portfolio LC.xlsx", dtoken = token)
     file <- "temp.xlsx"
@@ -376,17 +373,14 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
 
   if (wd == "personal") {
     token_dir <- "/Users/bernardo/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio"
-    setwd(token_dir)
   }
 
   if (wd == "server") {
     token_dir = "~bernardo/Mails"
-    setwd(token_dir)
   }
   
   if (wd == "matrix") {
     token_dir = "~/creds"
-    setwd(token_dir)
   }
 
   if (!wd %in% c("personal", "server", "matrix")) {
