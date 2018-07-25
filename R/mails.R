@@ -1,6 +1,8 @@
 # Send emails with attachments using Sendgrid
 
-mailSend = function(body, subject, attachment = NULL, to = credentials$to, from = credentials$from, creds = NA) {
+mailSend = function(body, subject, attachment = NULL, 
+                    to = credentials$to, from = credentials$from, 
+                    creds = NA) {
 
   suppressMessages(require(mailR))
   suppressMessages(require(config))

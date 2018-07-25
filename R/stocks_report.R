@@ -390,9 +390,10 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
     setwd(wd)
   }
   
-  # Data extraction and calculations
+  # Data extraction
   data <- get_stocks(token_dir = token_dir)
   message("1. Data downloaded...")
+  # Data wrangling and calculations
   hist <- get_stocks_hist(symbols = data$portfolio$Symbol, from = data$portfolio$StartDate)
   daily <- stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = data$transactions)
   stocks_perf <- stocks_performance(daily, cash_in = data$cash, cash_fix = cash_fix)
@@ -407,22 +408,25 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
   # Export and save data
   write.csv(stocks_perf,"mydaily.csv",row.names = F)
   write.csv(portfolio_perf,"myportfolio.csv",row.names = F)
+  message("4. CSVs exported...")
   # Send report with lares::mailSend() function
-  mailSend(body = paste(" "), subject = paste("Portfolio:", max(daily$Date)),
-           attachment = c("portf_daily_change.png",
-                          "portf_stocks_change.png",
-                          "portf_stocks_histchange.png",
-                          "portf_distribution.png",
-                          "myportfolio.csv",
-                          "mydaily.csv"),
+  files <- c("portf_daily_change.png",
+             "portf_stocks_change.png",
+             "portf_stocks_histchange.png",
+             "portf_distribution.png",
+             "myportfolio.csv",
+             "mydaily.csv")
+  mailSend(body = max(daily$Date), 
+           subject = paste("Portfolio:", max(daily$Date)),
+           attachment = files,
            to = "laresbernardo@gmail.com", 
            from = 'RServer <bernardo.lares@comparamejor.com>', creds = wd)
-  message("4. Email sent. DONE!")
-
-  # Clear all out
-  #rm(list = ls())
-  #graphics.off()
-
+  message("4. Email sent...")
+  # Clean everything up and delete files created
+  file.remove(files)
+  graphics.off()
+  rm(list = ls())
+  message("5. All's clean and done!")
   setwd(current_wd)
 
 }
