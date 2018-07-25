@@ -386,7 +386,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0) {
   }
   
   if (wd == "matrix") {
-    token_dir = "~/personal/IB"
+    token_dir = "~personal/IB"
     setwd(token_dir)
   }
 
