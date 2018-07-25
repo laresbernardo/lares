@@ -1,13 +1,13 @@
 # Send emails with attachments using Sendgrid
 
-mailSend = function(body, subject, attachment = NULL, to = dw$to, from = dw$from) {
+mailSend = function(body, subject, attachment = NULL, to = dw$to, from = dw$from, creds = NA) {
 
   suppressMessages(require(mailR))
   suppressMessages(require(config))
 
   wd <- getwd()
   setwd("~/Dropbox (ID)/CM Data Science/Library")
-  dw <- config::get("sendgrid")
+  dw <- config::get("sendgrid", dir = creds)
   setwd(wd)
 
   smtp <- list(host.name = dw$host,

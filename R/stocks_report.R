@@ -394,15 +394,18 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
   
   # Data extraction and calculations
   data <- get_stocks(token_dir = token_dir)
+  message("1. Data downloaded...")
   hist <- get_stocks_hist(symbols = data$portfolio$Symbol, from = data$portfolio$StartDate)
   daily <- stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = data$transactions)
   stocks_perf <- stocks_performance(daily, cash_in = data$cash, cash_fix = cash_fix)
   portfolio_perf <- portfolio_performance(portfolio = data$portfolio, daily = daily)
+  message("2. Calculations ready...")
   # Visualizations
   portfolio_daily_plot(stocks_perf)
   stocks_total_plot(stocks_perf, portfolio_perf, daily, trans = data$transactions, cash = data$cash)
   stocks_daily_plot(portfolio = data$portfolio, daily)
   portfolio_distr_plot(portfolio_perf, daily)
+  message("3. All visuals plotted...")
   # Export and save data
   write.csv(stocks_perf,"mydaily.csv",row.names = F)
   write.csv(portfolio_perf,"myportfolio.csv",row.names = F)
@@ -416,6 +419,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
                           "mydaily.csv"),
            to = "laresbernardo@gmail.com", 
            from = 'RServer <bernardo.lares@comparamejor.com>')
+  message("4. Email sent. DONE!")
 
   # Clear all out
   #rm(list = ls())
