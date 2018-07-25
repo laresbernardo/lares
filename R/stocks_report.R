@@ -6,10 +6,9 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Br
   suppressMessages(require(xlsx))
   suppressMessages(require(dplyr))
 
-
   valid <- Sys.info()
 
-  if (valid[["user"]] %in% c("bernardo")) {
+  if (valid[["user"]] %in% c("bernardo", "rstudio")) {
 
     setwd(token_dir)
     load("token_pers.rds")
@@ -33,9 +32,7 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Br
     symbols <- data.frame(Symbols = as.character(symbols), StartDate = as.Date(started$Date))
     port <- data.frame(cbind(port, StartDate = symbols$StartDate))
 
-    results <- list("portfolio" = port,
-                    "transactions" = trans,
-                    "cash" = cash)
+    results <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
 
     file.remove(file)
 
@@ -369,7 +366,7 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
   return(grid.arrange(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3)))
 }
 
-stocks_report <- function(wd = "personal", cash_fix = 0) {
+stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
 
   #detach(package:plyr)
 
@@ -386,18 +383,18 @@ stocks_report <- function(wd = "personal", cash_fix = 0) {
   }
   
   if (wd == "matrix") {
-    token_dir = "~personal/IB"
+    token_dir = "~/personal/IB"
     setwd(token_dir)
   }
 
-  if (!wd %in% c("personal", "server")) {
+  if (!wd %in% c("personal", "server", "matrix")) {
     wd <- readline(prompt="Set a working directory for the images output: ")
     token_dir <- wd
     setwd(wd)
   }
   
   # Data extraction and calculations
-  data <- get_stocks(token_dir=token_dir)
+  data <- get_stocks(token_dir = token_dir)
   hist <- get_stocks_hist(symbols = data$portfolio$Symbol, from = data$portfolio$StartDate)
   daily <- stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = data$transactions)
   stocks_perf <- stocks_performance(daily, cash_in = data$cash, cash_fix = cash_fix)
@@ -418,7 +415,8 @@ stocks_report <- function(wd = "personal", cash_fix = 0) {
                           "portf_distribution.png",
                           "myportfolio.csv",
                           "mydaily.csv"),
-           to = "laresbernardo@gmail.com", from = 'RServer <bernardo.lares@comparamejor.com>')
+           to = "laresbernardo@gmail.com", 
+           from = 'RServer <bernardo.lares@comparamejor.com>')
 
   # Clear all out
   #rm(list = ls())
