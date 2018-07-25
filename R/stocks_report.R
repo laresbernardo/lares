@@ -416,7 +416,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
                           "myportfolio.csv",
                           "mydaily.csv"),
            to = "laresbernardo@gmail.com", 
-           from = 'RServer <bernardo.lares@comparamejor.com>', creds = token_dir)
+           from = 'RServer <bernardo.lares@comparamejor.com>', creds = wd)
   message("4. Email sent. DONE!")
 
   # Clear all out
