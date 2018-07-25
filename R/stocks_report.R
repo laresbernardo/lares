@@ -373,14 +373,17 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
 
   if (wd == "personal") {
     token_dir <- "/Users/bernardo/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio"
+    setwd(token_dir)
   }
 
   if (wd == "server") {
     token_dir = "~bernardo/Mails"
+    setwd(token_dir)
   }
   
   if (wd == "matrix") {
     token_dir = "~/creds"
+    setwd("~/personal/IB")
   }
 
   if (!wd %in% c("personal", "server", "matrix")) {
