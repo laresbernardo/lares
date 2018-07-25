@@ -5,7 +5,7 @@ mailSend = function(body, subject, attachment = NULL, to = credentials$to, from 
   suppressMessages(require(mailR))
   suppressMessages(require(config))
 
-  credentials <- config::get("sendgrid", dir = creds)
+  credentials <- lares::get_credentials(from="sendgrid", dir = creds)
 
   smtp <- list(host.name = credentials$host,
                port = credentials$port,
