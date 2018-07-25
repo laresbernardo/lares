@@ -9,9 +9,11 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Br
   valid <- Sys.info()
 
   if (valid[["user"]] %in% c("bernardo", "rstudio")) {
-
+    
+    current_wd <- getwd()
     setwd(token_dir)
     load("token_pers.rds")
+    setwd(current_wd)
 
     x <- drop_search("Portfolio LC.xlsx", dtoken = token)
     file <- "temp.xlsx"
