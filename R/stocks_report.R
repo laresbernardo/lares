@@ -384,6 +384,11 @@ stocks_report <- function(wd = "personal", cash_fix = 0) {
     token_dir = "~bernardo/Mails"
     setwd(token_dir)
   }
+  
+  if (wd == "matrix") {
+    token_dir = "~/personal/IB"
+    setwd(token_dir)
+  }
 
   if (!wd %in% c("personal", "server")) {
     wd <- readline(prompt="Set a working directory for the images output: ")
