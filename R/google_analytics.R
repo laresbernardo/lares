@@ -11,7 +11,6 @@ ga_query <- function(account = "comparamejor",
   
   require(googleAuthR)
   require(googleAnalyticsR)
-  creds <- ifelse(grepl("matrix", creds), "matrix", creds)
   
   vars <- lares::get_credentials(from = account, dir = creds)
   ga_id <- vars$ga_id
@@ -19,10 +18,10 @@ ga_query <- function(account = "comparamejor",
   if (is.na(creds)) {
     token <- vars$token_name
   } else {
-    if (creds == "matrix_test") {
+    if (creds == "matrix") {
       token <- paste0("~/creds", substr(vars$token_name, 2, 100))
     } else {
-      if (creds == "matrix") {
+      if (creds == "/srv/creds") {
         token <- paste0(creds, substr(vars$token_name, 2, 100))
       } else
         token <- vars$token_name
