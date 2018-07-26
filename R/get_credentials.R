@@ -12,6 +12,7 @@ get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
              "bitbucket",
              "typeform",
              "google_api",
+             "google_analytics",
              "twitter")
 
   if (is.na(dir)) { dir <- "~/Dropbox (ID)/CM Data Science/Library" }
