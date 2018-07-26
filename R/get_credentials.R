@@ -1,6 +1,6 @@
 # Load parameters and credentials
 
-get_credentials <- function(from=NA, dir=NA) {
+get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
 
   froms <- c("dummy",
              "production",
@@ -19,13 +19,13 @@ get_credentials <- function(from=NA, dir=NA) {
   if (dir == "juan") { dir <- "C:/Users/1107051878/Desktop/Personal/Estudio JER/R" }
   if (dir == "matrix") { dir <- "~/creds" }
 
-  file <- paste0(dir,"/config.yml")
+  file <- paste0(dir,"/",filename)
 
   # Check if the credential type asked exists
   if (from %in% froms) {
     # Check if the cretendials .yml file exists
     if (!file.exists(file)) {
-      message("Please, try again by defining where your config.yml file with the credentials is!")
+      message("Please, try again by defining where your YML file with the credentials is!")
     } else {
       # Bring credentials
       require(config)
