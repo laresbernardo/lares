@@ -370,13 +370,8 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
   current_wd <- getwd()
 
   if (wd == "personal") {
-    token_dir <- "/Users/bernardo/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio"
-    setwd(token_dir)
-  }
-
-  if (wd == "server") {
-    token_dir = "~bernardo/Mails"
-    setwd(token_dir)
+    token_dir <- "/Users/bernardo/Dropbox (Personal)/Documentos/Docs/Data"
+    setwd("/Users/bernardo/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio")
   }
   
   if (wd == "matrix") {
@@ -384,8 +379,8 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
     setwd("~/personal/IB")
   }
 
-  if (!wd %in% c("personal", "server", "matrix")) {
-    wd <- readline(prompt="Set a working directory for the images output: ")
+  if (!wd %in% c("personal", "matrix")) {
+    wd <- readline(prompt="Set a working directory for the images output and config.yml file: ")
     token_dir <- wd
     setwd(wd)
   }
@@ -423,10 +418,10 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
            from = 'RServer <bernardo.lares@comparamejor.com>', creds = wd)
   message("4. Email sent...")
   # Clean everything up and delete files created
+  setwd(current_wd)
   file.remove(files)
   graphics.off()
   rm(list = ls())
   message("5. All's clean and done!")
-  setwd(current_wd)
 
 }

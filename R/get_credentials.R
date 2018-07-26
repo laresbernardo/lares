@@ -15,6 +15,7 @@ get_credentials <- function(from=NA, dir=NA) {
              "twitter")
 
   if (is.na(dir)) { dir <- "~/Dropbox (ID)/CM Data Science/Library" }
+  if (dir == "personal") { dir <- "~/Dropbox (Personal)/Documentos/Docs/Data" }
   if (dir == "juan") { dir <- "C:/Users/1107051878/Desktop/Personal/Estudio JER/R" }
   if (dir == "matrix") { dir <- "~/creds" }
 
