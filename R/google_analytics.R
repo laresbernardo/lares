@@ -17,7 +17,7 @@ ga_query <- function(account = "comparamejor",
   
   if (creds == "matrix") {
     gar_auth(token = sub("(.{2})(.*)", "\\1creds\\/\\2", vars$token_name))
-  } if(is.na(creds)) {
+  } else if(is.na(creds)) {
     gar_auth(token = vars$token_name) 
   } else {
     gar_auth(token = vars$token_name) 
