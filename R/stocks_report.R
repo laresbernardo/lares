@@ -370,8 +370,8 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
   current_wd <- getwd()
 
   if (wd == "personal") {
-    token_dir <- "/Users/bernardo/Dropbox (Personal)/Documentos/Docs/Data"
-    setwd("/Users/bernardo/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio")
+    token_dir <- "~/Dropbox (Personal)/Documentos/Docs/Data"
+    setwd("~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio")
   }
   
   if (wd == "matrix") {
@@ -380,7 +380,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
   }
 
   if (!wd %in% c("personal", "matrix")) {
-    wd <- readline(prompt="Set a working directory for the images output and config.yml file: ")
+    wd <- readline(prompt="Set the working directory where your YML file is: ")
     token_dir <- wd
     setwd(wd)
   }
@@ -423,5 +423,4 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
   graphics.off()
   rm(list = ls())
   message("5. All's clean and done!")
-  
 }
