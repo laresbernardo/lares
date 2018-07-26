@@ -419,9 +419,9 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
   message("4. Email sent...")
   # Clean everything up and delete files created
   setwd(current_wd)
-  file.remove(files)
+  if (wd != "personal") { file.remove(files) }
   graphics.off()
   rm(list = ls())
   message("5. All's clean and done!")
-
+  
 }
