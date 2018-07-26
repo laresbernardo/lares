@@ -11,6 +11,7 @@ ga_query <- function(account = "comparamejor",
   
   require(googleAuthR)
   require(googleAnalyticsR)
+  creds <- ifelse(grepl("matrix", creds), "matrix", creds)
   
   vars <- lares::get_credentials(from = account, dir = creds)
   ga_id <- vars$ga_id
