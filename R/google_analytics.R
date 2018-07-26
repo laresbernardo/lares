@@ -27,6 +27,7 @@ ga_query <- function(account = "comparamejor",
         token <- vars$token_name
     }
   }
+  message(paste("Token to use:", token))
   googleAuthR::gar_auth(token)
   
   return(
