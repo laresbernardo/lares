@@ -19,14 +19,12 @@ ga_query <- function(account = "comparamejor",
     token <- vars$token_name
   } else {
     if (creds == "matrix") {
-      #token <- paste0("/srv/creds", substr(vars$token_name, 2, 100))
-      token <- "/srv/creds"
+      token <- paste0("~/creds", substr(vars$token_name, 2, 100))
     } else {
       token <- vars$token_name
     }
   }
-  message(paste("Looking for token in:", token))
-  gar_auth(token)
+  googleAuthR::gar_auth(token)
   
   return(
     googleAnalyticsR::google_analytics(
