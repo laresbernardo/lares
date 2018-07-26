@@ -1,46 +1,28 @@
-# Authenticate
-ga_auth <- function(account = "comparamejor", creds = NA) {
-  
-  if(account == "comparamejor") {
-    credentials <- lares::get_credentials(from = "google_analytics", dir = creds)
-    client_id <- credentials$client_id
-    client_secret <- credentials$client_secret
-    message(paste("Client ID:",credentials$client_id))
-    message(paste("Client Secret:",credentials$client_secret))
-  } else {
-    stop("You must provide a valid account!")
-  }
-  
-  require(googleAuthR)
-  options(googleAuthR.client_id = client_id, 
-          googleAuthR.client_secret = client_secret,
-          googleAuthR.scopes.selected = "https://analyticsreporting.googleapis.com")
-  gar_auth()
-}
-
 # Queries
-ga_query <- function(account = "comparamejor", creds = NA,
+ga_query <- function(account = "comparamejor", 
+                     creds = NA,
                      metrics = "sessions",
+                     dimensions = "date",
                      start = as.character(lubridate::floor_date(Sys.Date(), "month")), 
                      end = as.character(Sys.Date())) {
   
-  if(account == "comparamejor") {
-    ga_id <- "174483551"
-  } else {
-    stop("You must provide a valid account!")
-  }
+  account <- paste("google_analytics", account, sep="_")
+  message(paste("Account:", account))
   
   require(googleAuthR)
   require(googleAnalyticsR)
+  vars <- lares::get_credentials(from = account, dir = creds)
+  ga_id <- vars$ga_id
+  gar_auth(token = vars$token_name)
   
-  if(creds == "matrix") {
-    gar_auth(token = "~/creds/ga.httr-oauth")
-  }
-  
-  google_analytics(
+  return(
+    google_analytics(
     ga_id, 
-    start = start,
-    end = as.character(Sys.Date()),
-    metrics = metrics)
+    date_range = c(start, end),
+    metrics = metrics,
+    dimensions = dimensions)
+  )
   
+  googleAuth(revoke = TRUE)
+
 }

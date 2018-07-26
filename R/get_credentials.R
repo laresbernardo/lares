@@ -1,5 +1,4 @@
 # Load parameters and credentials
-
 get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
 
   froms <- c("dummy",
@@ -12,7 +11,8 @@ get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
              "bitbucket",
              "typeform",
              "google_api",
-             "google_analytics",
+             "google_analytics_somosf1",
+             "google_analytics_comparamejor",
              "twitter")
 
   if (is.na(dir)) { dir <- "~/Dropbox (ID)/CM Data Science/Library" }
