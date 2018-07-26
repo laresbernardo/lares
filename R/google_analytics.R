@@ -22,7 +22,8 @@ ga_query <- function(account = "comparamejor",
   return(
     google_analytics(
     ga_id, 
-    date_range = c(start, end),
+    start = start,
+    end = end,
     metrics = metrics,
     dimensions = dimensions)
   )
