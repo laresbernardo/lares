@@ -15,7 +15,6 @@ ga_query <- function(account = "comparamejor",
   vars <- lares::get_credentials(from = account, dir = creds)
   ga_id <- vars$ga_id
   
-  gar_auth(token = vars$token_name)
   if (creds == "matrix") {
     gar_auth(token = sub("(.{2})(.*)", "\\1creds\\/\\2", vars$token_name))
   } else {
