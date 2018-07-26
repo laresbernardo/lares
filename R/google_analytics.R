@@ -18,10 +18,13 @@ ga_query <- function(account = "comparamejor",
   if (is.na(creds)) {
     token <- vars$token_name
   } else {
-    if (creds == "matrix") {
+    if (creds == "matrix_test") {
       token <- paste0("~/creds", substr(vars$token_name, 2, 100))
     } else {
-      token <- vars$token_name
+      if (creds == "matrix") {
+        token <- paste0(creds, substr(vars$token_name, 2, 100))
+      } else
+        token <- vars$token_name
     }
   }
   googleAuthR::gar_auth(token)
