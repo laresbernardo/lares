@@ -13,10 +13,11 @@ ga_query <- function(account = "comparamejor",
   require(googleAnalyticsR)
   vars <- lares::get_credentials(from = account, dir = creds)
   ga_id <- vars$ga_id
+  
   if (creds == "matrix") {
     gar_auth(token = sub("(.{2})(.*)", "\\1creds\\/\\2", vars$token_name))
   } else {
-    gar_auth(token = vars$token_name) 
+    gar_auth(token = vars$token_name)
   }
   
   return(
