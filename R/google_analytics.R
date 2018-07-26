@@ -18,7 +18,7 @@ ga_query <- function(account = "comparamejor",
   if (is.na(creds)) {
     token <- vars$token_name
   } else {
-    if (creds == "matrix") {
+    if (creds == "/srv/creds") {
       token <- paste0(creds, substr(vars$token_name, 2, 100))
     } else {
       token <- vars$token_name
