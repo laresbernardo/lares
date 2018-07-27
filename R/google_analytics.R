@@ -1,48 +1,28 @@
-# Queries
-ga_query <- function(account = "comparamejor", 
-                     creds = NA,
-                     metrics = "sessions",
-                     dimensions = "date",
-                     start = lubridate::floor_date(Sys.Date(), "month"), 
-                     end = Sys.Date()) {
+# Queries on Google Analytics
+queryGA <- function(account = "comparamejor",
+                    creds = NA, token_dir = NA,
+                    metrics = "sessions",
+                    dimensions = "date",
+                    start = lubridate::floor_date(Sys.Date(), "month"),
+                    end = Sys.Date()){
   
   account <- paste("google_analytics", account, sep="_")
-  message(paste("Account:", account))
-  
-  require(googleAuthR)
-  require(googleAnalyticsR)
-  
+  message(paste0("Account:", account))
   vars <- lares::get_credentials(from = account, dir = creds)
-  ga_id <- vars$ga_id
   
-  if (is.na(creds)) {
-    token <- vars$token_name
-  } else {
-    if (creds == "matrix") {
-      token <- paste0("/creds/", vars$token_name)
-    } else {
-      if (creds == "/srv/creds/") {
-        token <- paste0("/srv/creds/", vars$token_name)
-      } else {
-        if (!is.na(creds)) {
-          token <- paste0(creds, "/", vars$token_name)
-        } else {
-          token <- paste0("~/", vars$token_name)   
-        }
-      }
-    }
-  }
-  message(paste("Token to use:", token))
-  googleAuthR::gar_auth(token)
+  # Authenticate with local file
+  require(googleAuthR)
+  token <- paste0(token_dir, "/", vars$token_name)
+  message(paste("Token:", token))
+  gar_auth(token)
   
-  return(
-    googleAnalyticsR::google_analytics(
-      ga_id, 
-      date_range = c(start, end),
-      metrics = metrics,
-      dimensions = dimensions)
-  )
-  
-  googleAuth(revoke = TRUE)
-  
+  # Query on Google Analytics
+  require(googleAnalyticsR)
+  google_analytics(
+    vars$ga_id, 
+    date_range = c(start, end),
+    metrics = metrics,
+    dimensions = dimensions)
 }
+
+# queryGA(creds = "creds", token_dir = "creds")
