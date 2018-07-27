@@ -19,12 +19,12 @@ ga_query <- function(account = "comparamejor",
     token <- vars$token_name
   } else {
     if (creds == "matrix") {
-      token <- paste0("~/creds", substr(vars$token_name, 2, 100))
+      token <- paste0("/creds", substr(vars$token_name, 2, 100))
     } else {
-      if (creds == "/srv/creds") {
-        token <- paste0(creds, substr(vars$token_name, 2, 100))
+      if (creds == "/srv/creds/") {
+        token <- paste0("/srv/creds/", substr(vars$token_name, 2, 100))
       } else
-        token <- vars$token_name
+        token <- paste0("~/", vars$token_name)
     }
   }
   message(paste("Token to use:", token))
