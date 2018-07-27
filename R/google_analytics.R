@@ -23,8 +23,13 @@ ga_query <- function(account = "comparamejor",
     } else {
       if (creds == "/srv/creds/") {
         token <- paste0("/srv/creds/", vars$token_name)
-      } else
-        token <- paste0("~/", vars$token_name)
+      } else {
+        if (!is.na(creds)) {
+          token <- paste0(creds, "/", vars$token_name)
+        } else {
+          token <- paste0("~/", vars$token_name)   
+        }
+      }
     }
   }
   message(paste("Token to use:", token))
