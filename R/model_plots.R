@@ -379,7 +379,7 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
 
 #################################################
 # Split and compare quantiles
-mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA, facet = NA, 
+mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA,
                          save = FALSE, subdir = NA, file_name = "viz_splits.png") {
   
   require(ggplot2)
@@ -395,7 +395,7 @@ mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA,
     stop("You should try with less splits!")
   }
   
-  df <- data.frame(tag, score, facet)
+  df <- data.frame(tag, score)
   npersplit <- round(nrow(df)/splits)
   
   # For continuous tag values
@@ -424,8 +424,8 @@ mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA,
   
   p <- df %>% 
     mutate(quantile = ntile(score, splits)) %>% 
-    group_by(quantile, facet, tag) %>% tally() %>%
-    ungroup() %>% group_by(facet, tag) %>% 
+    group_by(quantile, tag) %>% tally() %>%
+    ungroup() %>% group_by(tag) %>% 
     arrange(desc(quantile)) %>%
     mutate(p = round(100*n/sum(n),2),
            cum = cumsum(100*n/sum(n))) %>%
@@ -446,10 +446,6 @@ mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA,
   if(!is.na(model_name)) {
     p <- p + labs(caption = model_name)
   }
-  
-  if(!is.na(facet)) {
-    p <- p + facet_grid(. ~ facet, scales = "free")
-  }  
   
   if (!is.na(subdir)) {
     dir.create(file.path(getwd(), subdir))
