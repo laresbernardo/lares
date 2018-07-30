@@ -7,12 +7,11 @@ queryGA <- function(account = "comparamejor",
                     end = Sys.Date()){
   
   account <- paste("google_analytics", account, sep="_")
-  message(paste0("Account:", account))
   vars <- lares::get_credentials(from = account, dir = creds)
-  
+
   # Authenticate with local file
   require(googleAuthR)
-  token <- paste0(token_dir, "/", vars$token_name)
+  if (!is.na(token_dir)) { token <- paste0(token_dir, "/", vars$token_name) } else { token <- vars$token_name }
   message(paste("Token:", token))
   gar_auth(token)
   

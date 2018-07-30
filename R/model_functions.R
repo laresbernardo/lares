@@ -130,8 +130,9 @@ h2o_automl <- function(df,
       seed = seed)
     roc <- pROC::roc(results$scores$tag, results$scores$score, ci=T)
     results$auc_test <- roc$auc
-    results$logloss_test <- lares::loglossBinary(tag = results$scores$tag, 
-                                                 score = results$scores$score)
+    if (length(unique(test$tag)) == 2) {
+      results$logloss_test <- lares::loglossBinary(tag = results$scores$tag, score = results$scores$score) 
+    }
   } 
   
   if (type == "Regression") {
