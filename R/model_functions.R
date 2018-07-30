@@ -88,6 +88,9 @@ h2o_automl <- function(df,
     }
   } else {
     # If we already have a default split for train and test (train_test)
+    if ((!unique(train_test) %in% c('train', 'test')) & (length(unique(train_test)) != 2)) {
+      stop("Your train_test column should have 'train' and 'test' values only!")
+    }
     train <- df %>% filter(train_test == "train")
     test <- df %>% filter(train_test == "test")
   }
