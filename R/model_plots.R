@@ -247,11 +247,6 @@ mplot_cuts <- function(score, splits = 10, subtitle = NA, model_name = NA,
     stop("You should try with less splits!")
   }
   
-  if (length(tag) != length(score)) {
-    message("The tag and score vectors should be the same length.")
-    stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
-  }
-  
   deciles <- quantile(score, 
                       probs = seq((1/splits), 1, length = splits), 
                       names = TRUE)
