@@ -88,8 +88,8 @@ h2o_automl <- function(df,
     }
   } else {
     # If we already have a default split for train and test (train_test)
-    train <- df %>% filter(train_test == "train") %>% select(-train_test)
-    test <- df %>% filter(train_test == "test") %>% select(-train_test)
+    train <- df %>% filter(train_test == "train")
+    test <- df %>% filter(train_test == "test")
   }
   
   
