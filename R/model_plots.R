@@ -399,7 +399,7 @@ mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA,
   npersplit <- round(nrow(df)/splits)
   
   # For continuous tag values
-  if (length(unique(tag))) {
+  if (length(unique(tag)) < 6) {
     names <- df %>% 
       mutate(tag = as.numeric(tag), 
              quantile = ntile(tag, splits)) %>% group_by(quantile) %>%
