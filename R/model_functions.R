@@ -54,39 +54,46 @@ loglossBinary = function(tag, score, eps = 1e-15) {
 ####################################################################
 # H2O function to run autoML and return a list of usefull results
 h2o_automl <- function(df, 
-                       split = 0.7, 
-                       seed = 0, 
-                       max_time = 5*60, 
-                       max_models = 25, 
-                       export = FALSE, 
+                       train_test = NA,   # Column name with 'test' and 'train' values
+                       split = 0.7,       # Test / Train split relation
+                       seed = 0,          # For random stuff and reproducibility
+                       max_time = 5*60,   # For how long we want to iterate
+                       max_models = 25,   # How many models we wish to try
+                       export = FALSE,    # Save results into our system
                        project = "Machine Learning Model") {
-  
+  require(dplyr)
   require(h2o)
-  
   options(warn=-1)
   
   start <- Sys.time()
-  
+
   df <- data.frame(df) %>% filter(!is.na(tag))
+  type <- ifelse(length(unique(df$tag)) <= 6, "Classifier", "Regression")
   
+  ####### Validations to proceed #######
   if(!"tag" %in% colnames(df)){
     stop("You should have a 'tag' column in your data.frame!")
   }
   
-  type <- ifelse(length(unique(df$tag)) <= 6, "Classifier", "Regression")
-  
-  # Split and train
-  splits <- lares::msplit(df, size = split, seed = seed)
-  train <- splits$train
-  test <- splits$test
-  if (type == "Classifier") {
-    print(table(train$tag)) 
+  ####### Split datasets for training and testing #######
+  if (is.na(train_test)) {
+    splits <- lares::msplit(df, size = split, seed = seed)
+    train <- splits$train
+    test <- splits$test
+    if (type == "Classifier") {
+      print(table(train$tag)) 
+    }
+    if (type == "Regression") {
+      print(summary(train$tag)) 
+    }
+  } else {
+    # If we already have a default split for train and test (train_test)
+    train <- df %>% filter(train_test == "train") %>% select(-train_test)
+    test <- df %>% filter(train_test == "test") %>% select(-train_test)
   }
-  if (type == "Regression") {
-    print(summary(train$tag)) 
-  }
   
-  # Train model
+  
+  ####### Train model #######
   h2o.init(nthreads = -1, port=54321, min_mem_size="8g")
   #h2o.shutdown()
   h2o.removeAll()
