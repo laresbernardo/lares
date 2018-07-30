@@ -399,7 +399,7 @@ mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA,
   npersplit <- round(nrow(df)/splits)
   
   # For continuous tag values
-  if (length(unique(tag)) < 6) {
+  if (length(unique(tag)) > 6) {
     names <- df %>% 
       mutate(tag = as.numeric(tag), 
              quantile = ntile(tag, splits)) %>% group_by(quantile) %>%
@@ -408,7 +408,6 @@ mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA,
                 min_score = round(min(tag), 1)) %>%
       mutate(quantile_tag = paste0(quantile," (",min_score,"-",max_score,")"))
     df <- df %>% 
-      #mutate(score = score/100, tag = tag/100) %>%
       mutate(quantile = ntile(tag, splits)) %>%
       left_join(names, by = c("quantile")) %>% mutate(tag = quantile_tag) %>% 
       select(-quantile, -n, -max_score, -min_score)
