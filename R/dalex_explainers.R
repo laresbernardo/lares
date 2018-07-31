@@ -60,3 +60,19 @@ dalex_residuals <- function (explainer) {
   grid.arrange(p1, p2, nrow = 2)
   
 }
+# dalex_residuals(explainer)
+
+############## Check specific important variables ############## 
+dalex_variable <- function (explainer, variable) {
+  
+  require(DALEX)
+  
+  var <- explainer$data[[variable]]
+  type <- ifelse(is.numeric(var), "pdp", "factor")
+  message("Calculating... this might take some time!")
+  pdp <- variable_response(explainer, variable = variable, type = type)
+  
+  return(plot(pdp))
+  
+}
+# dalex_variable(explainer, "Sex")
