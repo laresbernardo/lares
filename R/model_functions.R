@@ -93,6 +93,7 @@ h2o_automl <- function(df,
     }
     train <- df %>% filter(train_test == "train")
     test <- df %>% filter(train_test == "test")
+    print(table(train_test))
   }
   
   
