@@ -24,6 +24,7 @@ dalex_explainer <- function(df, model, label = "lares::h2o_automl") {
 }
 # explainer <- dalex_explainer(results$datasets$train, results$model)
 
+
 ############## Local interpretations ############## 
 dalex_local <- function(explainer, row, plot = TRUE, print = TRUE) {
   
@@ -61,6 +62,7 @@ dalex_residuals <- function (explainer) {
   
 }
 # dalex_residuals(explainer)
+
 
 ############## Check specific important variables ############## 
 dalex_variable <- function (explainer, variable) {
