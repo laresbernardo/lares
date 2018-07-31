@@ -65,13 +65,24 @@ dalex_residuals <- function (explainer) {
 
 
 ############## Check specific important variables ############## 
-dalex_variable <- function (explainer, variable) {
+dalex_variable <- function (explainer, variable, force_class = NA) {
   
   require(DALEX)
   
   var <- explainer$data[[variable]]
-  type <- ifelse(is.numeric(var), "pdp", "factor")
-  message("Calculating... this might take some time!")
+  if (is.na(force_class)) {
+    type <- ifelse(is.numeric(var), "pdp", "factor") 
+  } else {
+    types <- c('factor','numeric','character')
+    if (!force_class %in% types) {
+      stop("Please, try any of the following:", paste(shQuote(types), collapse=", "))
+    } else {
+      type <- force_class
+    }
+  }
+  message(paste0("Calculating and plotting ", 
+                 variable, "'s response as a ", type, 
+                 "... this might take some time!"))
   pdp <- variable_response(explainer, variable = variable, type = type)
   
   return(plot(pdp))
