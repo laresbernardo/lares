@@ -33,9 +33,9 @@ queryDW = function(query, which=c("seguros"), creds = NA) {
 
   options(warn=-1)
 
-  suppressMessages(require(dplyr))
-  suppressMessages(require(RPostgreSQL))
-  suppressMessages(require(config))
+  require(dplyr)
+  require(RPostgreSQL)
+  require(config)
 
   dw <- lares::get_credentials(from = "warehouse", dir = creds)
 
