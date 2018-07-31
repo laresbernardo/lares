@@ -69,21 +69,22 @@ dalex_variable <- function (explainer, variable, force_class = NA) {
   
   require(DALEX)
   
-  var <- explainer$data[[variable]]
-  if (is.na(force_class)) {
-    type <- ifelse(is.numeric(var), "pdp", "factor") 
+  classes <- c('factor','numeric')
+  if (force_class %in% classes) {
+    class(explainer$data[[variable]]) <- force_class
+    message("Change class to ", force_class)
   } else {
-    types <- c('factor','numeric','character')
-    if (!force_class %in% types) {
-      stop("Please, try any of the following:", paste(shQuote(types), collapse=", "))
-    } else {
-      type <- force_class
+    if (!is.na(force_class)) {
+      stop("Try using force_class: ", paste(shQuote(classes), collapse=", ")) 
     }
   }
-  message(paste0("Calculating and plotting ", 
-                 variable, "'s response as a ", type, 
-                 "... this might take some time!"))
-  pdp <- variable_response(explainer, variable = variable, type = type)
+  
+  if (is.numeric(explainer$data[[variable]]) & 
+      length(unique(explainer$data[[variable]])) > 6) {
+    message(paste0("Calculating and plotting ", variable, "'s response... this might take some time!"))
+  }
+  
+  pdp <- variable_response(explainer, variable = variable, type = "pdp")
   
   return(plot(pdp))
   

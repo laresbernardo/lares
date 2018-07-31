@@ -27,15 +27,15 @@ year_month = function(date) {
 # Analyze NAs in a data.frame
 nas = function(df, print = TRUE) {
 
-  suppressMessages(require(dplyr))
-  suppressMessages(require(VIM))
-  suppressMessages(require(funModeling))
+  require(dplyr)
+  require(VIM)
+  require(funModeling)
 
   nas <- df_status(df, print=FALSE) %>% filter(q_na > 0) %>% arrange(desc(q_na))
   subset <- subset(df, select=c(nas$variable))
-  aggr(subset, col=c('navyblue','red'), numbers=TRUE, sortVars=TRUE,
-       labels=names(data), cex.axis=.7, gap=2,
-       ylab=c("Histogram of missing data","Pattern"))
+  VIM::aggr(subset, col=c('navyblue','red'), numbers=TRUE, sortVars=TRUE,
+            labels=names(data), cex.axis=.7, gap=2,
+            ylab=c("Histogram of missing data","Pattern"))
 }
 
 # Custom colours to use in ggplot as scale_fill_manual
