@@ -91,7 +91,7 @@ h2o_automl <- function(df,
     if ((!unique(train_test) %in% c('train', 'test')) & (length(unique(train_test)) != 2)) {
       stop("Your train_test column should have 'train' and 'test' values only!")
     }
-    train <- df %>% filter(train_train == "train")
+    train <- df %>% filter(train_test == "train")
     test <- df %>% filter(train_test == "test")
     print(table(train_test))
   }
