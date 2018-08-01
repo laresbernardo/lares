@@ -17,3 +17,5 @@ lares::updateLares(local=T) # Personal and local files, not necessarily deployed
 - DataScience+: [Classification Models Results](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all)
 
 - DataScience+: [Regression Models Results](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models)
+
+- DataScience+: [AutoML and DALEX for ML Results Interpretation](https://datascienceplus.com/understanding-titanic-dataset-with-h2os-automl-dalex-and-lares-library/)
