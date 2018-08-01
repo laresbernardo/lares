@@ -431,8 +431,8 @@ mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA,
            cum = cumsum(100*n/sum(n))) %>%
     left_join(names, by = c("quantile")) %>%
     ggplot(aes(x = as.character(tag), y = p, label = as.character(p),
-               fill = as.character(quantile_tag))) + theme_minimal() +
-    geom_col(position = "stack") +
+               fill = reorder(as.character(quantile_tag),quantile))) +
+    geom_col(position = "stack") + theme_minimal() +
     geom_text(size = 3, position = position_stack(vjust = 0.5), check_overlap = TRUE) +
     xlab("Tag") + ylab("Total Percentage by Tag") +
     guides(fill = guide_legend(title=paste0("~",npersplit," p/split"))) +
