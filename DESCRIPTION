@@ -3,18 +3,17 @@ Type: Package
 Title: Analytics & Machine Learning Library
 Version: 4.1
 Author: Bernardo Lares
-Maintainer: The package maintainer <laresbernardo@gmail.com>
-Description: Personal Library for Analytics and Machine Learning
+Maintainer: Bernardo Lares <laresbernardo@gmail.com>
+Description: Personal Library for Analytics and Machine Learning tasks
 License: Private
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0
 Imports: httr,
     jsonlite,
     rlist,
     ggplot2,
     DALEX,
-    gridextra,
+    gridExtra,
     reshape2,
     dplyr,
     googlesheets,
@@ -25,7 +24,7 @@ Imports: httr,
     png,
     config,
     mailR,
-    H2O,
+    h2o,
     pROC,
     scales,
     plotly,
@@ -48,3 +47,6 @@ Imports: httr,
     magick,
     opencv
 Remotes: ropenscilabs/opencv
+URL: https://github.com/laresbernardo/lares
+BugReports: https://github.com/laresbernardo/lares/issues
+RoxygenNote: 6.1.0

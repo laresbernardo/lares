@@ -4,13 +4,15 @@
 \alias{queryDW}
 \title{PostgreSQL Queries on Redshift Database (read-write)}
 \usage{
-queryDW(query, which = c("seguros"), creds = NA)
+queryDW(query, which = "seguros", creds = NA)
 }
 \arguments{
 \item{query}{Character. SQL Query}
 
+\item{which}{Character. Which database do you wish to connect to: seguros, tabunga...}
+
 \item{creds}{Character. Credential's user (see get_credentials)}
 }
 \description{
-This function lets the user query our Redshift Database
+This function lets the user query our Data Warehouse Database
 }

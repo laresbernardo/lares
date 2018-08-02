@@ -4,7 +4,7 @@
 \alias{freqs}
 \title{Frequencies Calculations}
 \usage{
-freqs(vector, ..., plot = F)
+freqs(vector, ...)
 }
 \arguments{
 \item{vector}{Vector to group, count, and mutate}

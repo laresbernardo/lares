@@ -1,5 +1,13 @@
-# Functions to get geographical data
-
+####################################################################
+#' Get Google's Geodata given the Addresses
+#' 
+#' This function lets the user obtain Google's Geodata on given addresses
+#' 
+#' @param address Character Vector. Addresses you wish to query
+#' @param country Character. Default Country if known
+#' @param index Character Vector. If you wish to keep an id on each address, set this values
+#' @param creds Character. Credential's user (see get_credentials)
+#' @export
 geodataAddress <- function(address, country = "Colombia", index = NA, creds = NA) {
   
   getGeoDetails <- function(address){   
@@ -82,11 +90,16 @@ geodataAddress <- function(address, country = "Colombia", index = NA, creds = NA
   return(done)
 }
 
-# geodataAddress(c("test malo", "Comparamejor, bogota", "CC Santa Fe, Caracas"))
-# geodataAddress("CR 98 D # 62 A 21 - SUR ET 2 BRR ATALAYAS, BOGOTA D.C., COLOMBIA")
-# geodataAddress(address="CL 4 D BIS # 5 35 - SUR BRR DANUBIO AZUL, COLOMBIA")
 
-
+####################################################################
+#' Get Colombia's Stratum given the Coordinates
+#' 
+#' This function lets the user obtain Colombia's stratum given the coordinates of an address
+#' 
+#' @param lon Numeric Vector. Longitudes
+#' @param lat Numeric Vector. Latitudes
+#' @param label Character Vector. If you wish to keep an id on each address, set this values
+#' @export
 geoStratum <- function(lon, lat, label = NA) {
   # Manzanas: http://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/social/estrato/MapServer?f=jsapi
   url <- URLencode(paste0(
@@ -109,7 +122,3 @@ geoStratum <- function(lon, lat, label = NA) {
     message("Stratum not found for those coordinates!")
   }
 }
-
-# geoStratum(lon=-74.05205, lat=4.699264, label="Mi casa")
-# dir <- lares::geodataAddress("Calle 116 20 50, Bogota")
-# print(lares::geoStratum(lon = dir$lon, lat = dir$lat, label = dir$search))
