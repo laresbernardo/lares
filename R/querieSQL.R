@@ -24,9 +24,8 @@ queryDummy = function(query, creds = NA) {
   q <- fetch(q, n = -1)
   dbDisconnect(con)
   message(paste("Query duration:", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
-
-  return(q)
   setwd(wd)
+  return(q)
 }
 
 
@@ -36,14 +35,10 @@ queryDummy = function(query, creds = NA) {
 #' This function lets the user query our Data Warehouse Database
 #' 
 #' @param query Character. SQL Query
-#' @param which Character. Which database do you wish to connect to?
+#' @param which Character. Which database do you wish to connect to: seguros, tabunga...
 #' @param creds Character. Credential's user (see get_credentials)
 #' @export
 queryDW = function(query, which = "seguros", creds = NA) {
-
-  # Possible Whichs:
-    # seguros
-    # tabunga
 
   options(warn=-1)
 
@@ -64,9 +59,8 @@ queryDW = function(query, which = "seguros", creds = NA) {
   q <- fetch(q, n = -1)
   dbDisconnect(con)
   message(paste("Query duration:", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
-
-  return(q)
   setwd(wd)
+  return(q)
 }
 
 
@@ -96,7 +90,6 @@ queryProduc = function(query, creds = NA) {
   q <- fetch(q, n = -1)
   dbDisconnect(con)
   message(paste("Query duration:", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
-
-  return(q)
   setwd(wd)
+  return(q)
 }
