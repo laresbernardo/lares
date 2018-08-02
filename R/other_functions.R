@@ -5,7 +5,7 @@
 #' 
 #' @param vector Vector to group, count, and mutate
 #' @export
-freqs = function(vector, ..., plot=F) {
+freqs = function(vector, ...) {
 
   require(dplyr)
 

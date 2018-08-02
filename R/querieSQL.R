@@ -33,12 +33,13 @@ queryDummy = function(query, creds = NA) {
 ####################################################################
 #' PostgreSQL Queries on Redshift Database (read-write)
 #' 
-#' This function lets the user query our Redshift Database
+#' This function lets the user query our Data Warehouse Database
 #' 
 #' @param query Character. SQL Query
+#' @param which Character. Which database do you wish to connect to?
 #' @param creds Character. Credential's user (see get_credentials)
 #' @export
-queryDW = function(query, which=c("seguros"), creds = NA) {
+queryDW = function(query, which = "seguros", creds = NA) {
 
   # Possible Whichs:
     # seguros
@@ -81,9 +82,9 @@ queryProduc = function(query, creds = NA) {
 
   options(warn=-1)
 
-  suppressMessages(require(dplyr))
-  suppressMessages(require(RPostgreSQL))
-  suppressMessages(require(config))
+  require(dplyr)
+  require(RPostgreSQL)
+  require(config)
 
   dw <- lares::get_credentials(from = "production", dir = creds)
 
