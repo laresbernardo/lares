@@ -9,7 +9,9 @@ updateLares(local = FALSE, force = FALSE, restart = FALSE)
 \arguments{
 \item{local}{Boolean. Install package with local files (TRUE) or Github repository}
 
-\item{local}{Boolean. Force install if needed}
+\item{force}{Boolean. Force install if needed}
+
+\item{restart}{Boolean. Restart session after re-installing the library}
 }
 \description{
 This function lets the user update from repository or local source.

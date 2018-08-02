@@ -4,7 +4,8 @@
 #' This function lets the user update from repository or local source.
 #'
 #' @param local Boolean. Install package with local files (TRUE) or Github repository
-#' @param local Boolean. Force install if needed
+#' @param force Boolean. Force install if needed
+#' @param restart Boolean. Restart session after re-installing the library
 #' @export
 updateLares <- function(local = FALSE, force = FALSE, restart = FALSE) {
   
