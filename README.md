@@ -12,7 +12,7 @@ This is my personal library used to automate and fasten my everyday work on **An
 lares::updateLares() # From Github repository (Bitbucket discontinued)
 lares::updateLares(local=T) # Personal and local files, not necessarily deployed
 ```
-Everytime you update the library, I recommend restarting your session: close RStudio and reopen it.
+Everytime you update the library, I recommend restarting your session: close RStudio and reopen it. You can also set the restart = TRUE parameter on updateLares function.
 
 ## Some posts published using the library
 - DataScience+: [Classification Models Results](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all)
