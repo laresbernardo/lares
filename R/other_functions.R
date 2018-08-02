@@ -3,12 +3,13 @@
 #' 
 #' This function lets the user group, count and calculate percentages and cumulatives
 #' 
+#' @param vector Vector to group, count, and mutate
 #' @export
-freqs = function(data, ..., plot=F) {
+freqs = function(vector, ..., plot=F) {
 
-  suppressMessages(require(dplyr))
+  require(dplyr)
 
-  output <- data %>%
+  output <- vector %>%
     dplyr::group_by_(.dots = lazyeval::lazy_dots(...)) %>%
     dplyr::tally() %>% dplyr::arrange(desc(n)) %>%
     dplyr::mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
@@ -21,11 +22,12 @@ freqs = function(data, ..., plot=F) {
 #' 
 #' This function lets the user convert a year month format into YYYY-MM
 #' 
+#' @param date Date. Date we wish to transform into format YYYY-MM format
 #' @export
 year_month = function(date) {
 
-  suppressMessages(require(lubridate))
-  suppressMessages(require(stringr))
+  require(lubridate)
+  require(stringr)
 
   return(paste(
     year(date),
@@ -40,32 +42,44 @@ year_month = function(date) {
 #' This function lets the user analyze NAs in a data.frame using 
 #' VIM and funModeling libraries
 #' 
+#' @param df Dataframe. Dataframe to study
+#' @param print Boolean. Do you wish to print results?
 #' @export
-nas = function(df, print = TRUE) {
+nas = function(df, print = FALSE) {
 
   require(dplyr)
   require(VIM)
   require(funModeling)
 
-  nas <- df_status(df, print=FALSE) %>% filter(q_na > 0) %>% arrange(desc(q_na))
+  nas <- df_status(df, print = print) %>% 
+    filter(q_na > 0) %>% 
+    arrange(desc(q_na))
+  
   subset <- subset(df, select=c(nas$variable))
-  VIM::aggr(subset, col=c('navyblue','red'), numbers=TRUE, sortVars=TRUE,
-            labels=names(data), cex.axis=.7, gap=2,
+  
+  VIM::aggr(subset, 
+            col=c('navyblue','red'), 
+            numbers=TRUE, 
+            sortVars=TRUE,
+            labels=names(data), 
+            cex.axis=.7, 
+            gap=2,
             ylab=c("Histogram of missing data","Pattern"))
 }
 
 
 ####################################################################
-#' Count all categories on factor variables
+#' Count Categories on a Dataframe
 #' 
-#' This function lets the user count all distinct categories on factor variables
-#' 
+#' This function lets the user count unique values in a categorical dataframe
+#'
+#' @param df Categorical Vector
 #' @export
 categoryCounter <- function (df) {
 
-  suppressMessages(require(dplyr))
+  require(dplyr)
 
-  cats <- df %>% select_if(is.factor)
+  cats <- df %>% select_if(is.character)
   result <- c()
 
   for (i in 1:ncol(cats)) {
@@ -84,8 +98,19 @@ categoryCounter <- function (df) {
 #' 
 #' This function lets the user reduce categorical values in a vector
 #' 
+#' @param vector Categorical Vector
+#' @param nmin Integer. Number of minimum times a value is repeated
+#' @param pmin Numerical. Porcentage of minimum times a value is repeated
+#' @param pcummax Numerical. Top cumulative porcentage of most repeated values
+#' @param top Integer. Keep the n most frequently repeated values
+#' @param other_label Character. Which value do you wish to replace the filtered values with?
 #' @export
-categ_reducer <- function(vector, nmin = 0, pmin = 0, pcummax = 100, top = NA, other_label = "other") {
+categ_reducer <- function(vector, 
+                          nmin = 0, 
+                          pmin = 0, 
+                          pcummax = 100, 
+                          top = NA, 
+                          other_label = "other") {
   require(dplyr)
   df <- data.frame(name = vector) %>% lares::freqs(., name)
   if (!is.na(top)) {
@@ -103,6 +128,7 @@ categ_reducer <- function(vector, nmin = 0, pmin = 0, pcummax = 100, top = NA, o
 #' 
 #' This function lets the user normalize numerical values into the 0 to 1 range
 #' 
+#' @param x Numeric Vector. Numbers to be transformed into normalized vector
 #' @export
 normalize <- function(x) {
   if (is.numeric(x)) {
@@ -116,7 +142,11 @@ normalize <- function(x) {
 
 ####################################################################
 #' Convert a vector into a comma separated text
+#' 
 #' Convert a vector into a comma separated text
+#' 
+#' @param vector Vector. Vector with more than 1 observation
+#' @param sep Character. String text wished to insert between values
 #' @export
 vector2text <- function(vector, sep=", ") {
   output <- paste(shQuote(vector), collapse=sep)
@@ -127,13 +157,14 @@ vector2text <- function(vector, sep=", ") {
 ####################################################################
 #' Clean text
 #' 
-#' This function lets the user clean text
+#' This function lets the user clean text into getting only alphanumeric 
+#' characters and no accents/symbols on letters.
 #' 
+#' @param text. Character Vector
 #' @export
-cleanText <- function(d) {
-  d <- as.character(d)
-  # Only alphanumeric characters and no accents/symbols on letters
-  output <- tolower(gsub("[^[:alnum:] ]", "", iconv(d, from="UTF-8", to="ASCII//TRANSLIT")))
+cleanText <- function(text) {
+  text <- as.character(text)
+  output <- tolower(gsub("[^[:alnum:] ]", "", iconv(text, from="UTF-8", to="ASCII//TRANSLIT")))
   return(output)
 }
 
@@ -143,6 +174,7 @@ cleanText <- function(d) {
 #' 
 #' This function lets the user find a country from a given IP Address
 #' 
+#' @param ip Vector. Vector with all IP's we wish to search
 #' @export
 ip_country <- function(ip) {
   require(rvest)

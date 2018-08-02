@@ -2,10 +2,13 @@
 % Please edit documentation in R/other_functions.R
 \name{categoryCounter}
 \alias{categoryCounter}
-\title{Count all categories on factor variables}
+\title{Count Categories on a Dataframe}
 \usage{
 categoryCounter(df)
 }
+\arguments{
+\item{df}{Categorical Vector}
+}
 \description{
-This function lets the user count all distinct categories on factor variables
+This function lets the user count unique values in a categorical dataframe
 }

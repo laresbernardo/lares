@@ -4,7 +4,12 @@
 \alias{nas}
 \title{Analyze NAs in a data.frame}
 \usage{
-nas(df, print = TRUE)
+nas(df, print = FALSE)
+}
+\arguments{
+\item{df}{Dataframe. Dataframe to study}
+
+\item{print}{Boolean. Do you wish to print results?}
 }
 \description{
 This function lets the user analyze NAs in a data.frame using 

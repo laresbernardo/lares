@@ -2,12 +2,15 @@
 % Please edit documentation in R/other_functions.R
 \name{vector2text}
 \alias{vector2text}
-\title{Convert a vector into a comma separated text
-Convert a vector into a comma separated text}
+\title{Convert a vector into a comma separated text}
 \usage{
 vector2text(vector, sep = ", ")
 }
+\arguments{
+\item{vector}{Vector. Vector with more than 1 observation}
+
+\item{sep}{Character. String text wished to insert between values}
+}
 \description{
-Convert a vector into a comma separated text
 Convert a vector into a comma separated text
 }

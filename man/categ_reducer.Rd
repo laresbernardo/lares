@@ -7,6 +7,19 @@
 categ_reducer(vector, nmin = 0, pmin = 0, pcummax = 100, top = NA,
   other_label = "other")
 }
+\arguments{
+\item{vector}{Categorical Vector}
+
+\item{nmin}{Integer. Number of minimum times a value is repeated}
+
+\item{pmin}{Numerical. Porcentage of minimum times a value is repeated}
+
+\item{pcummax}{Numerical. Top cumulative porcentage of most repeated values}
+
+\item{top}{Integer. Keep the n most frequently repeated values}
+
+\item{other_label}{Character. Which value do you wish to replace the filtered values with?}
+}
 \description{
 This function lets the user reduce categorical values in a vector
 }

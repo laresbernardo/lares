@@ -4,7 +4,10 @@
 \alias{freqs}
 \title{Frequencies Calculations}
 \usage{
-freqs(data, ..., plot = F)
+freqs(vector, ..., plot = F)
+}
+\arguments{
+\item{vector}{Vector to group, count, and mutate}
 }
 \description{
 This function lets the user group, count and calculate percentages and cumulatives

@@ -6,6 +6,9 @@
 \usage{
 year_month(date)
 }
+\arguments{
+\item{date}{Date. Date we wish to transform into format YYYY-MM format}
+}
 \description{
 This function lets the user convert a year month format into YYYY-MM
 }

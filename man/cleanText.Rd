@@ -4,8 +4,12 @@
 \alias{cleanText}
 \title{Clean text}
 \usage{
-cleanText(d)
+cleanText(text)
+}
+\arguments{
+\item{text.}{Character Vector}
 }
 \description{
-This function lets the user clean text
+This function lets the user clean text into getting only alphanumeric 
+characters and no accents/symbols on letters.
 }

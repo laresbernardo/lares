@@ -6,6 +6,9 @@
 \usage{
 ip_country(ip)
 }
+\arguments{
+\item{ip}{Vector. Vector with all IP's we wish to search}
+}
 \description{
 This function lets the user find a country from a given IP Address
 }
