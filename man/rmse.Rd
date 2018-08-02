@@ -2,12 +2,15 @@
 % Please edit documentation in R/model_functions.R
 \name{rmse}
 \alias{rmse}
-\title{Root Mean Squared Error
-Root Mean Squared Error}
+\title{Root Mean Squared Error}
 \usage{
 rmse(tag, score)
 }
+\arguments{
+\item{tag}{Vector. Real known label}
+
+\item{score}{Vector. Predicted value or model's result}
+}
 \description{
-Root Mean Squared Error
-Root Mean Squared Error
+This function lets the user calculate Root Mean Squared Error
 }

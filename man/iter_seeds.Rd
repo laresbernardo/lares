@@ -2,12 +2,16 @@
 % Please edit documentation in R/model_functions.R
 \name{iter_seeds}
 \alias{iter_seeds}
-\title{Iterate and Search for Best Seed
-Iterate and Search for Best Seed}
+\title{Iterate and Search for Best Seed}
 \usage{
-iter_seeds(tries = 10, data)
+iter_seeds(df, tries = 10)
+}
+\arguments{
+\item{df}{Dataframe. Dataframe with all your data you wish to model (see h2o_automl's df)}
+
+\item{tries}{Integer. How many seed do you wish to try?}
 }
 \description{
-Iterate and Search for Best Seed
-Iterate and Search for Best Seed
+This functions lets the user iterate and search for best seed. Note that if
+the results change a lot, you are having a high variance in your data.
 }

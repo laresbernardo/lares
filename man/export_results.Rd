@@ -2,13 +2,24 @@
 % Please edit documentation in R/model_functions.R
 \name{export_results}
 \alias{export_results}
-\title{Export RDS, TXT, POJO, MOJO and all results from h2o_automl
-Export RDS, TXT, POJO, MOJO and all results from h2o_automl}
+\title{Export h2o_automl's Results}
 \usage{
 export_results(results, txt = TRUE, rds = TRUE, pojo = TRUE,
   mojo = TRUE, subdir = NA)
 }
+\arguments{
+\item{results}{Object. h2o_automl output}
+
+\item{txt}{Boolean. Do you wish to export the txt results?}
+
+\item{rds}{Boolean. Do you wish to export the RDS results?}
+
+\item{pojo}{Boolean. Do you wish to export the POJO results?}
+
+\item{mojo}{Boolean. Do you wish to export the MOJO results?}
+
+\item{subdir}{Character. In which directory do you wish to save the results?}
+}
 \description{
-Export RDS, TXT, POJO, MOJO and all results from h2o_automl
 Export RDS, TXT, POJO, MOJO and all results from h2o_automl
 }

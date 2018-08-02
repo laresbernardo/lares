@@ -2,12 +2,15 @@
 % Please edit documentation in R/model_functions.R
 \name{mse}
 \alias{mse}
-\title{Mean Squared Error
-Mean Squared Error}
+\title{Mean Squared Error}
 \usage{
-mse(sm)
+mse(tag, score)
+}
+\arguments{
+\item{tag}{Vector. Real known label}
+
+\item{score}{Vector. Predicted value or model's result}
 }
 \description{
-Mean Squared Error
-Mean Squared Error
+This function lets the user calculate Mean Squared Error
 }

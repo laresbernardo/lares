@@ -36,10 +36,17 @@ msplit <- function(df, size = 0.7, seed = NA, print=T) {
 
 }
 
+
 ####################################################################
 #' Loggarithmic Loss Function for Binary Models
-#' Loggarithmic Loss Function for Binary Models
-#' @return LogLoss calculation
+#'
+#' This function calculates Loggarithmic Loss for Binary Models
+#' You can define a seed to get the same results every time, but has a default value.
+#' You can prevent it from printing the split counter result.
+#'
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param eps Numeric. Epsilon value
 #' @export
 loglossBinary = function(tag, score, eps = 1e-15) {
   
@@ -65,17 +72,30 @@ loglossBinary = function(tag, score, eps = 1e-15) {
 
 
 ####################################################################
-#' H2O's AutoML
-#' H2O's AutoML
-#' @return All In One Model Generator
+#' Automated H2O's AutoML
+#'
+#' This function lets the user create a robust and fast model, using H2O's AutoML
+#' function. The result is a list with the best model, its parameters, datasets,
+#' performance metrics, variables importances, and others. 
+#'
+#' @param df Dataframe. Dataframe containing all your data, including the independent variable labeled as 'tag'
+#' @param train_test Character. If needed, df's column name with 'test' and 'train' values to split
+#' @param split Numeric. Value between 0 and 1 to split as train/test datasets. Value is for training set.
+#' @param seed Numeric. Seed for random stuff and reproducibility
+#' @param thresh Integer. Threshold for selecting binary or regression models: this number is the max unique values we should have in 'tag'
+#' @param max_time Numeric. Max seconds you wish for the function to iterate
+#' @param max_models Numeric. Max models you wish for the function to create
+#' @param export Boolean. Do you wish to save results into your working directory?
+#' @param project Character. Your project's name
 #' @export
 h2o_automl <- function(df, 
-                       train_test = NA,   # Column name with 'test' and 'train' values
-                       split = 0.7,       # Test / Train split relation
-                       seed = 0,          # For random stuff and reproducibility
-                       max_time = 5*60,   # For how long we want to iterate
-                       max_models = 25,   # How many models we wish to try
-                       export = FALSE,    # Save results into our system
+                       train_test = NA,
+                       split = 0.7,
+                       seed = 0,
+                       thresh = 6,
+                       max_time = 5*60,
+                       max_models = 25,
+                       export = FALSE,
                        project = "Machine Learning Model") {
   require(dplyr)
   require(h2o)
@@ -84,7 +104,7 @@ h2o_automl <- function(df,
   start <- Sys.time()
 
   df <- data.frame(df) %>% filter(!is.na(tag))
-  type <- ifelse(length(unique(df$tag)) <= 6, "Classifier", "Regression")
+  type <- ifelse(length(unique(df$tag)) <= as.integer(thresh), "Classifier", "Regression")
   
   ####### Validations to proceed #######
   if(!"tag" %in% colnames(df)){
@@ -193,8 +213,12 @@ h2o_automl <- function(df,
 
 
 ####################################################################
+#' Select Model from h2o_automl's Leaderboard
+#' 
 #' Select wich model from the h2o_automl function to use
-#' Select wich model from the h2o_automl function to use
+#' 
+#' @param results Object. h2o_automl output
+#' @param which_model Integer. Which model from the leaderboard you wish to use?
 #' @export
 h2o_selectmodel <- function(results, which_model = 1) {
   
@@ -228,10 +252,23 @@ h2o_selectmodel <- function(results, which_model = 1) {
 
 
 ####################################################################
+#' Export h2o_automl's Results
+#' 
 #' Export RDS, TXT, POJO, MOJO and all results from h2o_automl
-#' Export RDS, TXT, POJO, MOJO and all results from h2o_automl
+#' 
+#' @param results Object. h2o_automl output
+#' @param txt Boolean. Do you wish to export the txt results?
+#' @param rds Boolean. Do you wish to export the RDS results?
+#' @param pojo Boolean. Do you wish to export the POJO results?
+#' @param mojo Boolean. Do you wish to export the MOJO results?
+#' @param subdir Character. In which directory do you wish to save the results?
 #' @export
-export_results <- function(results, txt = TRUE, rds = TRUE, pojo = TRUE, mojo = TRUE, subdir = NA) {
+export_results <- function(results, 
+                           txt = TRUE, 
+                           rds = TRUE, 
+                           pojo = TRUE, 
+                           mojo = TRUE, 
+                           subdir = NA) {
   
   require(h2o)
   options(warn=-1)
@@ -286,15 +323,20 @@ export_results <- function(results, txt = TRUE, rds = TRUE, pojo = TRUE, mojo = 
 
 ####################################################################
 #' Iterate and Search for Best Seed
-#' Iterate and Search for Best Seed
+#' 
+#' This functions lets the user iterate and search for best seed. Note that if
+#' the results change a lot, you are having a high variance in your data.
+#' 
+#' @param df Dataframe. Dataframe with all your data you wish to model (see h2o_automl's df)
+#' @param tries Integer. How many seed do you wish to try?
 #' @export
-iter_seeds <- function(tries = 10, data) {
+iter_seeds <- function(df, tries = 10) {
   require(h2o)
   
   seeds <- data.frame()
   
   for (i in 1:tries) {
-    iter <- lares::h2o_automl(data, seed = i)
+    iter <- lares::h2o_automl(df, seed = i)
     seeds <- rbind(seeds, cbind(seed = as.integer(i), auc = iter$auc_test))
     seeds <- arrange(seeds, desc(auc))
     print(seeds)
@@ -304,7 +346,11 @@ iter_seeds <- function(tries = 10, data) {
 
 ####################################################################
 #' Root Mean Squared Error
-#' Root Mean Squared Error
+#' 
+#' This function lets the user calculate Root Mean Squared Error
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
 #' @export
 rmse <- function(tag, score){
   error <- tag - score
@@ -314,7 +360,11 @@ rmse <- function(tag, score){
 
 ####################################################################
 #' Mean Absolute Error
-#' Mean Absolute Error
+#' 
+#' This function lets the user calculate Mean Absolute Error
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
 #' @export
 mae <- function(tag, score){
   error <- tag - score
@@ -324,9 +374,13 @@ mae <- function(tag, score){
 
 ####################################################################
 #' Mean Squared Error
-#' Mean Squared Error
+#' 
+#' This function lets the user calculate Mean Squared Error
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
 #' @export
-mse <- function(sm){ 
+mse <- function(tag, score){ 
   error <- tag - score
   mean(error^2)
 }

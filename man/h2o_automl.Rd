@@ -2,17 +2,33 @@
 % Please edit documentation in R/model_functions.R
 \name{h2o_automl}
 \alias{h2o_automl}
-\title{H2O's AutoML
-H2O's AutoML}
+\title{Automated H2O's AutoML}
 \usage{
-h2o_automl(df, train_test = NA, split = 0.7, seed = 0, max_time = 5
-  * 60, max_models = 25, export = FALSE,
+h2o_automl(df, train_test = NA, split = 0.7, seed = 0, thresh = 6,
+  max_time = 5 * 60, max_models = 25, export = FALSE,
   project = "Machine Learning Model")
 }
-\value{
-All In One Model Generator
+\arguments{
+\item{df}{Dataframe. Dataframe containing all your data, including the independent variable labeled as 'tag'}
+
+\item{train_test}{Character. If needed, df's column name with 'test' and 'train' values to split}
+
+\item{split}{Numeric. Value between 0 and 1 to split as train/test datasets. Value is for training set.}
+
+\item{seed}{Numeric. Seed for random stuff and reproducibility}
+
+\item{thresh}{Integer. Threshold for selecting binary or regression models: this number is the max unique values we should have in 'tag'}
+
+\item{max_time}{Numeric. Max seconds you wish for the function to iterate}
+
+\item{max_models}{Numeric. Max models you wish for the function to create}
+
+\item{export}{Boolean. Do you wish to save results into your working directory?}
+
+\item{project}{Character. Your project's name}
 }
 \description{
-H2O's AutoML
-H2O's AutoML
+This function lets the user create a robust and fast model, using H2O's AutoML
+function. The result is a list with the best model, its parameters, datasets,
+performance metrics, variables importances, and others.
 }

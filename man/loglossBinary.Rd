@@ -2,15 +2,19 @@
 % Please edit documentation in R/model_functions.R
 \name{loglossBinary}
 \alias{loglossBinary}
-\title{Loggarithmic Loss Function for Binary Models
-Loggarithmic Loss Function for Binary Models}
+\title{Loggarithmic Loss Function for Binary Models}
 \usage{
 loglossBinary(tag, score, eps = 1e-15)
 }
-\value{
-LogLoss calculation
+\arguments{
+\item{tag}{Vector. Real known label}
+
+\item{score}{Vector. Predicted value or model's result}
+
+\item{eps}{Numeric. Epsilon value}
 }
 \description{
-Loggarithmic Loss Function for Binary Models
-Loggarithmic Loss Function for Binary Models
+This function calculates Loggarithmic Loss for Binary Models
+You can define a seed to get the same results every time, but has a default value.
+You can prevent it from printing the split counter result.
 }

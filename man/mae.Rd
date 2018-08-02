@@ -2,12 +2,15 @@
 % Please edit documentation in R/model_functions.R
 \name{mae}
 \alias{mae}
-\title{Mean Absolute Error
-Mean Absolute Error}
+\title{Mean Absolute Error}
 \usage{
 mae(tag, score)
 }
+\arguments{
+\item{tag}{Vector. Real known label}
+
+\item{score}{Vector. Predicted value or model's result}
+}
 \description{
-Mean Absolute Error
-Mean Absolute Error
+This function lets the user calculate Mean Absolute Error
 }
