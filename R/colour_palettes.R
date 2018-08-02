@@ -1,8 +1,6 @@
 ####################################################################
 #' Custom colours to use in ggplot as scale_color_manual
-#'
 #' This function lets the user use some default colours
-#'
 #' @export
 gg_colour_customs <- function () {
   
@@ -39,9 +37,7 @@ gg_colour_customs <- function () {
 
 ####################################################################
 #' Custom colours to use in ggplot as scale_color_manual on texts
-#'
 #' This function lets the user use some default colours
-#'
 #' @export
 gg_text_customs <- function () {
   
@@ -78,9 +74,7 @@ gg_text_customs <- function () {
 
 ####################################################################
 #' Custom colours to use in ggplot as scale_fill_manual
-#'
 #' This function lets the user use some default colours
-#'
 #' @export
 gg_fill_customs <- function () {
   

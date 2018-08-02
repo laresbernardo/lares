@@ -1,7 +1,21 @@
-################################################################
-# Density plot for discrete and continuous values
-mplot_density <- function(tag, score, model_name = NA, subtitle = NA, 
-                          save = FALSE, subdir = NA,file_name = "viz_distribution.png") {
+####################################################################
+#' Density plot for discrete and continuous values
+#' Density plot for discrete and continuous values
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param model_name Character. Model's name
+#' @param subtitle Character. Subtitle to show in plot
+#' @param save Boolean. Save output plot into working directory
+#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param file_name Character. File name as you wish to save the plot
+#' @export
+mplot_density <- function(tag, 
+                          score, 
+                          model_name = NA, 
+                          subtitle = NA, 
+                          save = FALSE, 
+                          subdir = NA,
+                          file_name = "viz_distribution.png") {
   
   require(ggplot2)
   require(gridExtra)
@@ -109,10 +123,28 @@ mplot_density <- function(tag, score, model_name = NA, subtitle = NA,
 }
 
 
-################################################################
-# Variables Importances
-mplot_importance <- function(var, imp, colours = NA, limit = 15, model_name = NA, subtitle = NA,
-                             save = FALSE, subdir = NA, file_name = "viz_importance.png") {
+####################################################################
+#' Variables Importances
+#' Variables Importances
+#' @param var Vector. Variable or column's names
+#' @param imp Vector. Importance of said variables. Must have same length as var
+#' @param colours If possitive and negative contribution is known
+#' @param limit Integer. Limit how many variavles you wish to plot
+#' @param model_name Character. Model's name
+#' @param subtitle Character. Subtitle to show in plot
+#' @param save Boolean. Save output plot into working directory
+#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param file_name Character. File name as you wish to save the plot
+#' @export
+mplot_importance <- function(var, 
+                             imp, 
+                             colours = NA, 
+                             limit = 15, 
+                             model_name = NA, 
+                             subtitle = NA,
+                             save = FALSE, 
+                             subdir = NA, 
+                             file_name = "viz_importance.png") {
   
   require(ggplot2)
   require(gridExtra)
@@ -173,10 +205,29 @@ mplot_importance <- function(var, imp, colours = NA, limit = 15, model_name = NA
   
 }
 
-#################################################
-# ROC Curve
-mplot_roc <- function(tag, score, model_name = NA, subtitle = NA, interval = 0.2, plotly = FALSE,
-                      save = FALSE, subdir = NA, file_name = "viz_roc.png") {
+
+####################################################################
+#' ROC Curve
+#' ROC Curve with AUC value and 95% confidence range
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param model_name Character. Model's name
+#' @param subtitle Character. Subtitle to show in plot
+#' @param interval Numeric. Interval for breaks in plot
+#' @param plotly Boolean. Use plotly for plot's output for an interactive plot
+#' @param save Boolean. Save output plot into working directory
+#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param file_name Character. File name as you wish to save the plot
+#' @export
+mplot_roc <- function(tag, 
+                      score, 
+                      model_name = NA, 
+                      subtitle = NA, 
+                      interval = 0.2, 
+                      plotly = FALSE,
+                      save = FALSE, 
+                      subdir = NA, 
+                      file_name = "viz_roc.png") {
   
   require(pROC)
   require(ggplot2)
@@ -236,10 +287,25 @@ mplot_roc <- function(tag, score, model_name = NA, subtitle = NA, interval = 0.2
   
 }
 
-#################################################
-# Cuts by quantiles for score
-mplot_cuts <- function(score, splits = 10, subtitle = NA, model_name = NA, 
-                       save = FALSE, subdir = NA, file_name = "viz_ncuts.png") {
+
+####################################################################
+#' Cuts by quantiles for score
+#' Cuts by quantiles for score
+#' @param score Vector. Predicted value or model's result
+#' @param splits Integer. Numer of separations to plot
+#' @param model_name Character. Model's name
+#' @param subtitle Character. Subtitle to show in plot
+#' @param save Boolean. Save output plot into working directory
+#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param file_name Character. File name as you wish to save the plot
+#' @export
+mplot_cuts <- function(score, 
+                       splits = 10, 
+                       model_name = NA, 
+                       subtitle = NA, 
+                       save = FALSE, 
+                       subdir = NA, 
+                       file_name = "viz_ncuts.png") {
   
   require(ggplot2)
   
@@ -283,10 +349,26 @@ mplot_cuts <- function(score, splits = 10, subtitle = NA, model_name = NA,
 }
 
 
-#################################################
-# Cuts by quantiles on absolut and percentual errors
-mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = NA, 
-                             save = FALSE, subdir = NA, file_name = "viz_ncuts_error.png") {
+####################################################################
+#' Cuts by quantiles on absolut and percentual errors
+#' Cuts by quantiles on absolut and percentual errors
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param splits Integer. Numer of separations to plot
+#' @param title Character. Title to show in plot
+#' @param model_name Character. Model's name
+#' @param save Boolean. Save output plot into working directory
+#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param file_name Character. File name as you wish to save the plot
+#' @export
+mplot_cuts_error <- function(tag, 
+                             score, 
+                             splits = 10, 
+                             title = NA, 
+                             model_name = NA, 
+                             save = FALSE, 
+                             subdir = NA, 
+                             file_name = "viz_ncuts_error.png") {
   
   require(ggplot2)
   require(scales)
@@ -377,10 +459,26 @@ mplot_cuts_error <- function(tag, score, splits = 10, title = NA, model_name = N
 }
 
 
-#################################################
-# Split and compare quantiles
-mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA,
-                         save = FALSE, subdir = NA, file_name = "viz_splits.png") {
+####################################################################
+#' Split and compare quantiles
+#' Split and compare quantiles
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param splits Integer. Numer of separations to plot
+#' @param subtitle Character. Subitle to show in plot
+#' @param model_name Character. Model's name
+#' @param save Boolean. Save output plot into working directory
+#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param file_name Character. File name as you wish to save the plot
+#' @export
+mplot_splits <- function(tag, 
+                         score, 
+                         splits = 5, 
+                         subtitle = NA, 
+                         model_name = NA,
+                         save = FALSE, 
+                         subdir = NA, 
+                         file_name = "viz_splits.png") {
   
   require(ggplot2)
   require(dplyr)
@@ -461,10 +559,22 @@ mplot_splits <- function(tag, score, splits = 5, subtitle = NA, model_name = NA,
 }
 
 
-#################################################
-# AUC and LogLoss Plots
-mplot_metrics <- function(results, subtitle = NA, model_name = NA, 
-                          save = FALSE, file_name = "viz_metrics.png", subdir = NA) {
+####################################################################
+#' AUC and LogLoss Plots
+#' AUC and LogLoss Plots
+#' @param results Object. Results object from h2o_automl function
+#' @param subtitle Character. Subitle to show in plot
+#' @param model_name Character. Model's name
+#' @param save Boolean. Save output plot into working directory
+#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param file_name Character. File name as you wish to save the plot
+#' @export
+mplot_metrics <- function(results, 
+                          subtitle = NA, 
+                          model_name = NA, 
+                          save = FALSE, 
+                          subdir = NA,
+                          file_name = "viz_metrics.png") {
   
   require(ggplot2)
   require(gridExtra)
@@ -530,10 +640,24 @@ mplot_metrics <- function(results, subtitle = NA, model_name = NA,
 }
 
 
-#################################################
-# Linear regression plot
-mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA, 
-                         save = FALSE, file_name = "viz_lineal.png", subdir = NA) {
+####################################################################
+#' Linear regression plot
+#' Linear regression plot
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param subtitle Character. Subitle to show in plot
+#' @param model_name Character. Model's name
+#' @param save Boolean. Save output plot into working directory
+#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param file_name Character. File name as you wish to save the plot
+#' @export
+mplot_lineal <- function(tag, 
+                         score, 
+                         subtitle = NA, 
+                         model_name = NA, 
+                         save = FALSE, 
+                         subdir = NA,
+                         file_name = "viz_lineal.png") {
   
   require(ggplot2)
   require(scales)
@@ -585,10 +709,26 @@ mplot_lineal <- function(tag, score, subtitle = NA, model_name = NA,
 }
 
 
-#################################################
-# MPLOTS Score Full Report (without importances)
-mplot_full <- function(tag, score, splits = 8, subtitle = NA, model_name = NA, 
-                       save = FALSE, file_name = "viz_full.png", subdir = NA) {
+####################################################################
+#' MPLOTS Score Full Report (without importances)
+#' MPLOTS Score Full Report (without importances)
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param splits Integer. Numer of separations to plot
+#' @param subtitle Character. Subitle to show in plot
+#' @param model_name Character. Model's name
+#' @param save Boolean. Save output plot into working directory
+#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param file_name Character. File name as you wish to save the plot
+#' @export
+mplot_full <- function(tag, 
+                       score, 
+                       splits = 8, 
+                       subtitle = NA, 
+                       model_name = NA, 
+                       save = FALSE, 
+                       subdir = NA,
+                       file_name = "viz_full.png") {
   
   require(ggplot2)
   require(gridExtra)

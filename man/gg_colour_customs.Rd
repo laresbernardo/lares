@@ -2,10 +2,12 @@
 % Please edit documentation in R/colour_palettes.R
 \name{gg_colour_customs}
 \alias{gg_colour_customs}
-\title{Custom colours to use in ggplot as scale_color_manual}
+\title{Custom colours to use in ggplot as scale_color_manual
+This function lets the user use some default colours}
 \usage{
 gg_colour_customs()
 }
 \description{
+Custom colours to use in ggplot as scale_color_manual
 This function lets the user use some default colours
 }
