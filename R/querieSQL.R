@@ -59,7 +59,6 @@ queryDW = function(query, which = "seguros", creds = NA) {
   q <- fetch(q, n = -1)
   dbDisconnect(con)
   message(paste("Query duration:", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
-  setwd(wd)
   return(q)
 }
 
