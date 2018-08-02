@@ -1,4 +1,10 @@
-# Update the library
+####################################################################
+#' Update the library
+#'
+#' This function lets the user update from repository or local source.
+#'
+#' @param local If set to TRUE then it will install package with local files
+#' @export
 updateLares <- function(local = FALSE) {
   
   suppressMessages(require(devtools))
