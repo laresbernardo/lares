@@ -6,7 +6,7 @@
 #' @param local Boolean. Install package with local files (TRUE) or Github repository
 #' @param local Boolean. Force install if needed
 #' @export
-updateLares <- function(local = FALSE, force = FALSE) {
+updateLares <- function(local = FALSE, force = FALSE, restart = TRUE) {
   
   suppressMessages(require(devtools))
   suppressMessages(require(config))
@@ -19,6 +19,8 @@ updateLares <- function(local = FALSE, force = FALSE) {
   } else {
     devtools::install_github("laresbernardo/lares", force = force) 
   }
-  
+  if (restart == TRUE) {
+    .rs.restartR()
+  }
   message(paste(Sys.time(), "| Duration:", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
 }
