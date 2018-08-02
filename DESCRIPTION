@@ -1,7 +1,7 @@
 Package: lares
 Type: Package
 Title: Analytics & Machine Learning Library
-Version: 4.0
+Version: 4.1
 Author: Bernardo Lares
 Maintainer: The package maintainer <laresbernardo@gmail.com>
 Description: Personal Library for Analytics and Machine Learning
