@@ -2,8 +2,8 @@
 % Please edit documentation in R/model_plots.R
 \name{mplot_cuts}
 \alias{mplot_cuts}
-\title{Cuts by quantiles for score
-Cuts by quantiles for score}
+\title{Cuts by quantiles for score plot
+Cuts by quantiles for score plot}
 \usage{
 mplot_cuts(score, splits = 10, model_name = NA, subtitle = NA,
   save = FALSE, subdir = NA, file_name = "viz_ncuts.png")
@@ -23,7 +23,10 @@ mplot_cuts(score, splits = 10, model_name = NA, subtitle = NA,
 
 \item{file_name}{Character. File name as you wish to save the plot}
 }
+\value{
+Cuts by quantiles for score plot
+}
 \description{
-Cuts by quantiles for score
-Cuts by quantiles for score
+Cuts by quantiles for score plot
+Cuts by quantiles for score plot
 }

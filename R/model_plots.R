@@ -8,6 +8,7 @@
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @return Density plot for discrete and continuous values
 #' @export
 mplot_density <- function(tag, 
                           score, 
@@ -124,8 +125,8 @@ mplot_density <- function(tag,
 
 
 ####################################################################
-#' Variables Importances
-#' Variables Importances
+#' Variables Importances Plot
+#' Variables Importances Plot
 #' @param var Vector. Variable or column's names
 #' @param imp Vector. Importance of said variables. Must have same length as var
 #' @param colours If possitive and negative contribution is known
@@ -135,6 +136,7 @@ mplot_density <- function(tag,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @return Variables Importances Plot
 #' @export
 mplot_importance <- function(var, 
                              imp, 
@@ -207,8 +209,8 @@ mplot_importance <- function(var,
 
 
 ####################################################################
-#' ROC Curve
-#' ROC Curve with AUC value and 95% confidence range
+#' ROC Curve Plot
+#' ROC Curve with AUC value and 95\% confidence range Plot
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param model_name Character. Model's name
@@ -218,6 +220,7 @@ mplot_importance <- function(var,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @return ROC Curve with AUC value and 95% confidence range Plot
 #' @export
 mplot_roc <- function(tag, 
                       score, 
@@ -289,8 +292,8 @@ mplot_roc <- function(tag,
 
 
 ####################################################################
-#' Cuts by quantiles for score
-#' Cuts by quantiles for score
+#' Cuts by quantiles for score plot
+#' Cuts by quantiles for score plot
 #' @param score Vector. Predicted value or model's result
 #' @param splits Integer. Numer of separations to plot
 #' @param model_name Character. Model's name
@@ -298,6 +301,7 @@ mplot_roc <- function(tag,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @return Cuts by quantiles for score plot
 #' @export
 mplot_cuts <- function(score, 
                        splits = 10, 
