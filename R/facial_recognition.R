@@ -1,5 +1,12 @@
-# FACE RECOGNITION LIBRARY
-
+####################################################################
+#' Facial Recognition: Take a Selfie
+#' 
+#' This function lets the user take a selfie with its front laptop cam. 
+#' This tools doesn't work well with RStudio sometimes. Try running it in your Terminal.
+#' 
+#' @param save Boolean. Save output as an image
+#' @param print Boolean. Print output
+#' @export
 fr_takeselfie <- function(save=FALSE, print=FALSE) {
 
   options(warn = 0)
@@ -21,6 +28,14 @@ fr_takeselfie <- function(save=FALSE, print=FALSE) {
   }
 }
 
+
+####################################################################
+#' Facial Recognition: Live Cam
+#' 
+#' This function lets the user establish a live recoring with its front laptop cam. 
+#' This tools doesn't work well with RStudio sometimes. Try running it in your Terminal.
+#' 
+#' @export
 fr_live <- function() {
 
   if (!c("opencv") %in% installed.packages()) {
@@ -63,6 +78,14 @@ fr_live <- function() {
 }
 
 
+####################################################################
+#' Facial Recognition: Face Counter
+#' 
+#' This function lets the user detect and count faces in an image.
+#' This tools doesn't work well with RStudio sometimes. Try running it in your Terminal.
+#' 
+#' @param img Character. Image file
+#' @export
 fr_facecounter <- function(img) {
 
   if (!c("opencv") %in% installed.packages()) {
@@ -91,6 +114,17 @@ fr_getimage <- function(img_url=NA) {
   }
 }
 
+
+####################################################################
+#' Facial Recognition: Send Image
+#' 
+#' This tools doesn't work well with RStudio sometimes. Try running it in your Terminal.
+#' 
+#' @param type Integer
+#' @param body Character. Body
+#' @param endpoint Character. Endpoint URL
+#' @param key Character. Key
+#' @export
 fr_sendimage <- function(type, body, endpoint, key) {
 
   require(httr)
@@ -110,6 +144,15 @@ fr_sendimage <- function(type, body, endpoint, key) {
   }
 }
 
+
+####################################################################
+#' Facial Recognition: Plot Face
+#' 
+#' This tools doesn't work well with RStudio sometimes. Try running it in your Terminal.
+#' 
+#' @param img_url Character. Image's URL
+#' @param df Dataframe
+#' @export
 fr_plotface <- function(img_url, df) {
 
   require(magick)
@@ -162,6 +205,15 @@ fr_plotface <- function(img_url, df) {
   rect(xleft, ybottom, xright, ytop, col=NA, border="magenta", lwd=2)
 }
 
+
+####################################################################
+#' Facial Recognition: Get REsults
+#' 
+#' This tools doesn't work well with RStudio sometimes. Try running it in your Terminal.
+#' 
+#' @param imgUrl Character. Image's URL
+#' @param print Boolean. Print results
+#' @export
 fr_getresult <- function(imgUrl, print=T) {
   require(httr)
   require(jpeg)
@@ -186,6 +238,17 @@ fr_getresult <- function(imgUrl, print=T) {
   return(l)
 }
 
+
+####################################################################
+#' Facial Recognition: Compare faces
+#' 
+#' This tools doesn't work well with RStudio sometimes. Try running it in your Terminal.
+#' 
+#' @param img1Url Character. Image's URL for first subject
+#' @param img1Url Character. Image's URL for second subject
+#' @param print1 Boolean. Print first result
+#' @param print1 Boolean. Print second result
+#' @export
 fr_compare <- function(img1Url, img2Url, print1=F, print2=F) {
 
   require(httr)
@@ -261,7 +324,6 @@ fr_compare <- function(img1Url, img2Url, print1=F, print2=F) {
 #df <- fr_getresult("https://www.air-tan.com/wp-content/uploads/2016/05/sunglasses.jpg")
 #df$data$value[grepl("lasses", df$data$value)]
 #df$data$value[grepl("male", df$data$value)]
-
 
 # Images for examples:
 # cedula_ven <- "https://i.imgur.com/RwUaXwe.jpg"
