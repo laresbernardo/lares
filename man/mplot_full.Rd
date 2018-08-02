@@ -2,8 +2,8 @@
 % Please edit documentation in R/model_plots.R
 \name{mplot_full}
 \alias{mplot_full}
-\title{MPLOTS Score Full Report (without importances)
-MPLOTS Score Full Report (without importances)}
+\title{MPLOTS Score Full Report Plots
+MPLOTS Score Full Report Plots}
 \usage{
 mplot_full(tag, score, splits = 8, subtitle = NA, model_name = NA,
   save = FALSE, subdir = NA, file_name = "viz_full.png")
@@ -26,6 +26,6 @@ mplot_full(tag, score, splits = 8, subtitle = NA, model_name = NA,
 \item{file_name}{Character. File name as you wish to save the plot}
 }
 \description{
-MPLOTS Score Full Report (without importances)
-MPLOTS Score Full Report (without importances)
+MPLOTS Score Full Report Plots
+MPLOTS Score Full Report Plots
 }

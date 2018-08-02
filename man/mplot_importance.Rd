@@ -28,9 +28,6 @@ mplot_importance(var, imp, colours = NA, limit = 15, model_name = NA,
 
 \item{file_name}{Character. File name as you wish to save the plot}
 }
-\value{
-Variables Importances Plot
-}
 \description{
 Variables Importances Plot
 Variables Importances Plot

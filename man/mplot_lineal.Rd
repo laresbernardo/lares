@@ -2,8 +2,8 @@
 % Please edit documentation in R/model_plots.R
 \name{mplot_lineal}
 \alias{mplot_lineal}
-\title{Linear regression plot
-Linear regression plot}
+\title{Linear Regression Results Plot
+Linear Regression Results Plot}
 \usage{
 mplot_lineal(tag, score, subtitle = NA, model_name = NA,
   save = FALSE, subdir = NA, file_name = "viz_lineal.png")
@@ -24,6 +24,6 @@ mplot_lineal(tag, score, subtitle = NA, model_name = NA,
 \item{file_name}{Character. File name as you wish to save the plot}
 }
 \description{
-Linear regression plot
-Linear regression plot
+Linear Regression Results Plot
+Linear Regression Results Plot
 }

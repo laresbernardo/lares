@@ -8,7 +8,6 @@
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
-#' @return Density plot for discrete and continuous values
 #' @export
 mplot_density <- function(tag, 
                           score, 
@@ -136,7 +135,6 @@ mplot_density <- function(tag,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
-#' @return Variables Importances Plot
 #' @export
 mplot_importance <- function(var, 
                              imp, 
@@ -220,7 +218,6 @@ mplot_importance <- function(var,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
-#' @return ROC Curve with AUC value and 95% confidence range Plot
 #' @export
 mplot_roc <- function(tag, 
                       score, 
@@ -301,7 +298,6 @@ mplot_roc <- function(tag,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
-#' @return Cuts by quantiles for score plot
 #' @export
 mplot_cuts <- function(score, 
                        splits = 10, 
@@ -354,8 +350,8 @@ mplot_cuts <- function(score,
 
 
 ####################################################################
-#' Cuts by quantiles on absolut and percentual errors
-#' Cuts by quantiles on absolut and percentual errors
+#' Cuts by quantiles on absolut and percentual errors plot
+#' Cuts by quantiles on absolut and percentual errors plot
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param splits Integer. Numer of separations to plot
@@ -464,8 +460,8 @@ mplot_cuts_error <- function(tag,
 
 
 ####################################################################
-#' Split and compare quantiles
-#' Split and compare quantiles
+#' Split and compare quantiles plot
+#' Split and compare quantiles plot
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param splits Integer. Numer of separations to plot
@@ -645,8 +641,8 @@ mplot_metrics <- function(results,
 
 
 ####################################################################
-#' Linear regression plot
-#' Linear regression plot
+#' Linear Regression Results Plot
+#' Linear Regression Results Plot
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param subtitle Character. Subitle to show in plot
@@ -714,8 +710,8 @@ mplot_lineal <- function(tag,
 
 
 ####################################################################
-#' MPLOTS Score Full Report (without importances)
-#' MPLOTS Score Full Report (without importances)
+#' MPLOTS Score Full Report Plots
+#' MPLOTS Score Full Report Plots
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param splits Integer. Numer of separations to plot

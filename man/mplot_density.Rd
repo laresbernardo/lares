@@ -23,9 +23,6 @@ mplot_density(tag, score, model_name = NA, subtitle = NA,
 
 \item{file_name}{Character. File name as you wish to save the plot}
 }
-\value{
-Density plot for discrete and continuous values
-}
 \description{
 Density plot for discrete and continuous values
 Density plot for discrete and continuous values

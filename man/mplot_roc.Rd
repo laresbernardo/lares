@@ -28,9 +28,6 @@ mplot_roc(tag, score, model_name = NA, subtitle = NA, interval = 0.2,
 
 \item{file_name}{Character. File name as you wish to save the plot}
 }
-\value{
-ROC Curve with AUC value and 95% confidence range Plot
-}
 \description{
 ROC Curve Plot
 ROC Curve with AUC value and 95\% confidence range Plot
