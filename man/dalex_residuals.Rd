@@ -2,10 +2,10 @@
 % Please edit documentation in R/dalex_explainers.R
 \name{dalex_residuals}
 \alias{dalex_residuals}
-\title{DALEX residuals}
+\title{DALEX Residuals}
 \usage{
 dalex_residuals(explainer)
 }
 \description{
-DALEX residuals
+DALEX library function for residuals
 }

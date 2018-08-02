@@ -2,12 +2,17 @@
 % Please edit documentation in R/other_functions.R
 \name{one_hot_encoding_commas}
 \alias{one_hot_encoding_commas}
-\title{One hot encoding for a variable with comma separated values
-One hot encoding for a variable with comma separated values}
+\title{One Hot Encoding for a Vector with Comma Separated Values}
 \usage{
 one_hot_encoding_commas(df, variables, sep = ",")
 }
+\arguments{
+\item{df}{Vector or Dataframe. Contains different variables in each column, separated by a specific character}
+
+\item{variables}{Character. Which variables should we split into new columns}
+
+\item{sep}{Character. Which character separates the elements}
+}
 \description{
-One hot encoding for a variable with comma separated values
-One hot encoding for a variable with comma separated values
+This function lets the user do one hot encoding on a variable with comma separated values
 }

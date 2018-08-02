@@ -2,13 +2,11 @@
 % Please edit documentation in R/other_functions.R
 \name{categ_reducer}
 \alias{categ_reducer}
-\title{Reduce categorical values
-Reduce categorical values}
+\title{Reduce categorical values}
 \usage{
 categ_reducer(vector, nmin = 0, pmin = 0, pcummax = 100, top = NA,
   other_label = "other")
 }
 \description{
-Reduce categorical values
-Reduce categorical values
+This function lets the user reduce categorical values in a vector
 }

@@ -1,7 +1,7 @@
 ####################################################################
-#' DALEX explainer
+#' DALEX Explainer
 #' 
-#' DALEX explainer
+#' DALEX library function to create an explainer object
 #' 
 #' @export
 dalex_explainer <- function(df, model, model_name = "lares::h2o_automl", pred = NA) {
@@ -33,9 +33,9 @@ dalex_explainer <- function(df, model, model_name = "lares::h2o_automl", pred = 
 
 
 ####################################################################
-#' DALEX local
+#' DALEX Local
 #' 
-#' DALEX local
+#' DALEX library function for local interpretations
 #' 
 #' @export
 dalex_local <- function(explainer, row, plot = TRUE, print = TRUE) {
@@ -59,9 +59,9 @@ dalex_local <- function(explainer, row, plot = TRUE, print = TRUE) {
 
 
 ####################################################################
-#' DALEX residuals
+#' DALEX Residuals
 #' 
-#' DALEX residuals
+#' DALEX library function for residuals
 #' 
 #' @export
 dalex_residuals <- function (explainer) {
@@ -80,9 +80,10 @@ dalex_residuals <- function (explainer) {
 
 
 ####################################################################
-#' DALEX PDP
+#' DALEX Partial Dependency Plots (PDP)
 #' 
-#' DALEX PDP
+#' DALEX library function for creating Partial Dependency Plots and study
+#' variable's responses vs independent vector.
 #' 
 #' @export
 dalex_variable <- function (explainer, variable, force_class = NA) {

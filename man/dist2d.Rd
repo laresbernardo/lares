@@ -2,12 +2,18 @@
 % Please edit documentation in R/other_functions.R
 \name{dist2d}
 \alias{dist2d}
-\title{Distance from specific point to line
-Distance from specific point to line}
+\title{Distance from specific point to line}
 \usage{
 dist2d(a, b = c(0, 0), c = c(1, 1))
 }
+\arguments{
+\item{a}{Vector. Coordinates of the point from which we want to measure the distance}
+
+\item{b}{Vector. Coordinates of 1st point over the line}
+
+\item{c}{Vector. Coordinates of 2st point over the line}
+}
 \description{
-Distance from specific point to line
-Distance from specific point to line
+This function lets the user calculate the mathematical linear distance 
+Between a specific point and a line (given geometrical 3 points)
 }

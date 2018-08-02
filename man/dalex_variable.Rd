@@ -2,10 +2,11 @@
 % Please edit documentation in R/dalex_explainers.R
 \name{dalex_variable}
 \alias{dalex_variable}
-\title{DALEX PDP}
+\title{DALEX Partial Dependency Plots (PDP)}
 \usage{
 dalex_variable(explainer, variable, force_class = NA)
 }
 \description{
-DALEX PDP
+DALEX library function for creating Partial Dependency Plots and study
+variable's responses vs independent vector.
 }

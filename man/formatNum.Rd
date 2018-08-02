@@ -2,12 +2,17 @@
 % Please edit documentation in R/other_functions.R
 \name{formatNum}
 \alias{formatNum}
-\title{Nicely format numerical values
-Nicely format numerical values}
+\title{Nicely Format Numerical Values}
 \usage{
 formatNum(x, decimals = 2, type = 1)
 }
+\arguments{
+\item{x}{Numerical Vector}
+
+\item{decimals}{Integer. Amount of decimals to display}
+
+\item{type}{Integer. 1 for International standards. 2 for American Standards.}
+}
 \description{
-Nicely format numerical values
-Nicely format numerical values
+This function lets the user format numerical values nicely
 }

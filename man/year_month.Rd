@@ -2,12 +2,10 @@
 % Please edit documentation in R/other_functions.R
 \name{year_month}
 \alias{year_month}
-\title{Convert year month format YYYY-MM
-Convert year month format YYYY-MM}
+\title{Convert year month format YYYY-MM}
 \usage{
 year_month(date)
 }
 \description{
-Convert year month format YYYY-MM
-Convert year month format YYYY-MM
+This function lets the user convert a year month format into YYYY-MM
 }

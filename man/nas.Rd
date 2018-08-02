@@ -2,12 +2,11 @@
 % Please edit documentation in R/other_functions.R
 \name{nas}
 \alias{nas}
-\title{Analyze NAs in a data.frame
-Analyze NAs in a data.frame}
+\title{Analyze NAs in a data.frame}
 \usage{
 nas(df, print = TRUE)
 }
 \description{
-Analyze NAs in a data.frame
-Analyze NAs in a data.frame
+This function lets the user analyze NAs in a data.frame using 
+VIM and funModeling libraries
 }

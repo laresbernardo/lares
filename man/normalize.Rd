@@ -2,12 +2,10 @@
 % Please edit documentation in R/other_functions.R
 \name{normalize}
 \alias{normalize}
-\title{Normalize values
-Normalize values}
+\title{Normalize values}
 \usage{
 normalize(x)
 }
 \description{
-Normalize values
-Normalize values
+This function lets the user normalize numerical values into the 0 to 1 range
 }

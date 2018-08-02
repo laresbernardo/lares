@@ -1,6 +1,8 @@
 ####################################################################
-#' Group by, count and percentages
-#' Group by, count and percentages
+#' Frequencies Calculations
+#' 
+#' This function lets the user group, count and calculate percentages and cumulatives
+#' 
 #' @export
 freqs = function(data, ..., plot=F) {
 
@@ -16,7 +18,9 @@ freqs = function(data, ..., plot=F) {
 
 ####################################################################
 #' Convert year month format YYYY-MM
-#' Convert year month format YYYY-MM
+#' 
+#' This function lets the user convert a year month format into YYYY-MM
+#' 
 #' @export
 year_month = function(date) {
 
@@ -32,7 +36,10 @@ year_month = function(date) {
 
 ####################################################################
 #' Analyze NAs in a data.frame
-#' Analyze NAs in a data.frame
+#' 
+#' This function lets the user analyze NAs in a data.frame using 
+#' VIM and funModeling libraries
+#' 
 #' @export
 nas = function(df, print = TRUE) {
 
@@ -50,7 +57,9 @@ nas = function(df, print = TRUE) {
 
 ####################################################################
 #' Count all categories on factor variables
-#' Count all categories on factor variables
+#' 
+#' This function lets the user count all distinct categories on factor variables
+#' 
 #' @export
 categoryCounter <- function (df) {
 
@@ -72,7 +81,9 @@ categoryCounter <- function (df) {
 
 ####################################################################
 #' Reduce categorical values
-#' Reduce categorical values
+#' 
+#' This function lets the user reduce categorical values in a vector
+#' 
 #' @export
 categ_reducer <- function(vector, nmin = 0, pmin = 0, pcummax = 100, top = NA, other_label = "other") {
   require(dplyr)
@@ -89,11 +100,17 @@ categ_reducer <- function(vector, nmin = 0, pmin = 0, pcummax = 100, top = NA, o
 
 ####################################################################
 #' Normalize values
-#' Normalize values
+#' 
+#' This function lets the user normalize numerical values into the 0 to 1 range
+#' 
 #' @export
 normalize <- function(x) {
- x <- (x-min(x)) / (max(x)-min(x))
- return(x)
+  if (is.numeric(x)) {
+    x <- (x-min(x)) / (max(x)-min(x))
+    return(x) 
+  } else {
+    stop("Try with a numerical vector!")
+  }
 }
 
 
@@ -109,7 +126,9 @@ vector2text <- function(vector, sep=", ") {
 
 ####################################################################
 #' Clean text
-#' Clean text
+#' 
+#' This function lets the user clean text
+#' 
 #' @export
 cleanText <- function(d) {
   d <- as.character(d)
@@ -121,7 +140,9 @@ cleanText <- function(d) {
 
 ####################################################################
 #' Find country from a given IP
-#' Find country from a given IP
+#' 
+#' This function lets the user find a country from a given IP Address
+#' 
 #' @export
 ip_country <- function(ip) {
   require(rvest)
@@ -145,11 +166,15 @@ ip_country <- function(ip) {
 
 ####################################################################
 #' Distance from specific point to line
-#' Distance from specific point to line
+#' 
+#' This function lets the user calculate the mathematical linear distance 
+#' Between a specific point and a line (given geometrical 3 points)
+#' 
+#' @param a Vector. Coordinates of the point from which we want to measure the distance
+#' @param b Vector. Coordinates of 1st point over the line
+#' @param c Vector. Coordinates of 2st point over the line
 #' @export
 dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
-  # a is the point from which we want to measure the distance
-  # b and c are two points from the line
   v1 <- b - c
   v2 <- a - b
   m <- cbind(v1, v2)
@@ -158,8 +183,13 @@ dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
 
 
 ####################################################################
-#' Nicely format numerical values
-#' Nicely format numerical values
+#' Nicely Format Numerical Values
+#' 
+#' This function lets the user format numerical values nicely
+#' 
+#' @param x Numerical Vector
+#' @param decimals Integer. Amount of decimals to display
+#' @param type Integer. 1 for International standards. 2 for American Standards.  
 #' @export
 formatNum <- function(x, decimals = 2, type = 1) {
   if (type == 1) {
@@ -171,8 +201,13 @@ formatNum <- function(x, decimals = 2, type = 1) {
 
 
 ####################################################################
-#' One hot encoding for a variable with comma separated values
-#' One hot encoding for a variable with comma separated values
+#' One Hot Encoding for a Vector with Comma Separated Values
+#' 
+#' This function lets the user do one hot encoding on a variable with comma separated values
+#' 
+#' @param df Vector or Dataframe. Contains different variables in each column, separated by a specific character
+#' @param variables Character. Which variables should we split into new columns
+#' @param sep Character. Which character separates the elements
 #' @export
 one_hot_encoding_commas <- function(df, variables, sep=","){
   # Note that variables must be provided in strings
