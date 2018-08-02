@@ -1,4 +1,9 @@
-# Custom colours to use in ggplot as scale_color_manual
+####################################################################
+#' Custom colours to use in ggplot as scale_color_manual
+#'
+#' This function lets the user use some default colours
+#'
+#' @export
 gg_colour_customs <- function () {
   
   suppressMessages(require(ggplot2))
@@ -31,7 +36,13 @@ gg_colour_customs <- function () {
   return(scale_color_manual(values=values))
 }
 
-# Custom colours to use in ggplot as scale_color_manual on texts
+
+####################################################################
+#' Custom colours to use in ggplot as scale_color_manual on texts
+#'
+#' This function lets the user use some default colours
+#'
+#' @export
 gg_text_customs <- function () {
   
   suppressMessages(require(ggplot2))
@@ -62,4 +73,43 @@ gg_text_customs <- function () {
               "good"="limegreen",
               "bad"="red2")
   return(scale_color_manual(values=values))
+}
+
+
+####################################################################
+#' Custom colours to use in ggplot as scale_fill_manual
+#'
+#' This function lets the user use some default colours
+#'
+#' @export
+gg_fill_customs <- function () {
+  
+  suppressMessages(require(ggplot2))
+  
+  values <- c("ALLIANZ"="#0038A8",
+              "EQUIDAD"="#52CF44",
+              "COLPATRIA"="#EE0606",
+              "DEL ESTADO"="#F37000",
+              "SURAMERICANA"="#1F6D8C",
+              "MAPFRE"="#34000D",
+              "LA PREVISORA"="#6F9A45",
+              "AIG"="#C71585",
+              "GENERALI"="#B21F1F",
+              "SOLIDARIA"="#E69500",
+              "LIBERTY"="#4E629A",
+              "BOLIVAR"="#F0F206",
+              "CIA"="#8ACBE5",
+              "puntored"="#FFFF00",
+              "movilred"="#FF1493",
+              "web"="#290452",
+              "f1"="#FFFFFF",
+              "M"="steelblue2",
+              "F"="lightpink2",
+              "TRUE"="limegreen",
+              "FALSE"="red2",
+              "1"="limegreen",
+              "0"="red2",
+              "good"="limegreen",
+              "bad"="red2")
+  return(scale_fill_manual(values=values))
 }

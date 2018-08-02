@@ -1,4 +1,6 @@
-############## DALEX explainer ############## 
+####################################################################
+#' DALEX explainer
+#' @export
 dalex_explainer <- function(df, model, model_name = "lares::h2o_automl", pred = NA) {
   require(DALEX) 
   
@@ -28,7 +30,9 @@ dalex_explainer <- function(df, model, model_name = "lares::h2o_automl", pred = 
 # explainer <- dalex_explainer(results$datasets$train, results$model)
 
 
-############## Local interpretations ############## 
+####################################################################
+#' DALEX local
+#' @export
 dalex_local <- function(explainer, row, plot = TRUE, print = TRUE) {
   
   require(DALEX)
@@ -50,7 +54,9 @@ dalex_local <- function(explainer, row, plot = TRUE, print = TRUE) {
 # local <- dalex_local(explainer, results$datasets$train[15,], plot = TRUE, print = FALSE)
 
 
-############## Model's residuals ############## 
+####################################################################
+#' DALEX residuals
+#' @export
 dalex_residuals <- function (explainer) {
   
   require(DALEX)
@@ -67,7 +73,9 @@ dalex_residuals <- function (explainer) {
 # dalex_residuals(explainer)
 
 
-############## Check specific important variables ############## 
+####################################################################
+#' DALEX PDP
+#' @export
 dalex_variable <- function (explainer, variable, force_class = NA) {
   
   require(DALEX)

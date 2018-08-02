@@ -1,6 +1,6 @@
-# Package "lares" functions
-
-# Group by, count and percentages
+####################################################################
+#' Group by, count and percentages
+#' @export
 freqs = function(data, ..., plot=F) {
 
   suppressMessages(require(dplyr))
@@ -12,7 +12,10 @@ freqs = function(data, ..., plot=F) {
   return(output)
 }
 
-# Convert year month format YYYY-MM
+
+####################################################################
+#' Convert year month format YYYY-MM
+#' @export
 year_month = function(date) {
 
   suppressMessages(require(lubridate))
@@ -24,7 +27,10 @@ year_month = function(date) {
     sep="-"))
 }
 
-# Analyze NAs in a data.frame
+
+####################################################################
+#' Analyze NAs in a data.frame
+#' @export
 nas = function(df, print = TRUE) {
 
   require(dplyr)
@@ -38,32 +44,10 @@ nas = function(df, print = TRUE) {
             ylab=c("Histogram of missing data","Pattern"))
 }
 
-# Custom colours to use in ggplot as scale_fill_manual
-gg_fill_customs <- function () {
 
-  suppressMessages(require(ggplot2))
-
-  values <- c("ALLIANZ"="#0038A8",
-              "EQUIDAD"="#52CF44",
-              "COLPATRIA"="#EE0606",
-              "DEL ESTADO"="#F37000",
-              "SURAMERICANA"="#1F6D8C",
-              "MAPFRE"="#34000D",
-              "LA PREVISORA"="#6F9A45",
-              "AIG"="#C71585",
-              "GENERALI"="#B21F1F",
-              "SOLIDARIA"="#E69500",
-              "LIBERTY"="#4E629A",
-              "BOLIVAR"="#F0F206",
-              "CIA"="#8ACBE5",
-              "puntored"="#FFFF00",
-              "movilred"="#FF1493",
-              "web"="#290452",
-              "f1"="#290452")
-  return(scale_fill_manual(values=values))
-}
-
-# Count all categories on factor variables
+####################################################################
+#' Count all categories on factor variables
+#' @export
 categoryCounter <- function (df) {
 
   suppressMessages(require(dplyr))
@@ -81,7 +65,10 @@ categoryCounter <- function (df) {
   return(result)
 }
 
-# Reduce categorical values
+
+####################################################################
+#' Reduce categorical values
+#' @export
 categ_reducer <- function(vector, nmin = 0, pmin = 0, pcummax = 100, top = NA, other_label = "other") {
   require(dplyr)
   df <- data.frame(name = vector) %>% lares::freqs(., name)
@@ -94,20 +81,28 @@ categ_reducer <- function(vector, nmin = 0, pmin = 0, pcummax = 100, top = NA, o
   return(vector)
 }
 
-# Normalize values
+
+####################################################################
+#' Normalize values
+#' @export
 normalize <- function(x) {
  x <- (x-min(x)) / (max(x)-min(x))
  return(x)
 }
 
-# Convert a vector into a comma separated text
+
+####################################################################
+#' Convert a vector into a comma separated text
+#' @export
 vector2text <- function(vector, sep=", ") {
   output <- paste(shQuote(vector), collapse=sep)
   return(output)
 }
 
 
-# Clean text
+####################################################################
+#' Clean text
+#' @export
 cleanText <- function(d) {
   d <- as.character(d)
   # Only alphanumeric characters and no accents/symbols on letters
@@ -115,7 +110,10 @@ cleanText <- function(d) {
   return(output)
 }
 
-# Find country from a given IP
+
+####################################################################
+#' Find country from a given IP
+#' @export
 ip_country <- function(ip) {
   require(rvest)
   require(dplyr)
@@ -135,7 +133,10 @@ ip_country <- function(ip) {
   return(countries)
 }
 
-# Distance from specific point to line
+
+####################################################################
+#' Distance from specific point to line
+#' @export
 dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
   # a is the point from which we want to measure the distance
   # b and c are two points from the line
@@ -145,7 +146,10 @@ dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
   d <- abs(det(m)) / sqrt(sum(v1 * v1))
 }
 
-# Nicely format numerical values
+
+####################################################################
+#' Nicely format numerical values
+#' @export
 formatNum <- function(x, decimals = 2, type = 1) {
   if (type == 1) {
     format(round(as.numeric(x), decimals), nsmall=decimals, big.mark=".", decimal.mark = ",")
@@ -154,7 +158,10 @@ formatNum <- function(x, decimals = 2, type = 1) {
   }
 }
 
-# One hot encoding for a variable with comma separated values
+
+####################################################################
+#' One hot encoding for a variable with comma separated values
+#' @export
 one_hot_encoding_commas <- function(df, variables, sep=","){
   # Note that variables must be provided in strings
   for (var in seq_along(variables)) {
