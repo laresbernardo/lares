@@ -1,5 +1,10 @@
-########## Stocks and Portfolio Performance Report ##########
-
+####################################################################
+#' Get Personal Portfolio's Data
+#' 
+#' This function lets me download my personal Excel with my Portfolio data
+#' 
+#' @param token_dir Character. Directory containing personal Dropbox token file
+#' @export
 get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio") {
 
   suppressMessages(require(rdrop2))
@@ -41,6 +46,17 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Br
 
 }
 
+
+####################################################################
+#' Download Stocks Historical Data
+#' 
+#' This function lets the user download stocks historical data
+#' 
+#' @param symbols Character Vector. List of symbols to download historical data. Example: c('VTI','TSLA')
+#' @param from Date. Since when do you wish to download historical data
+#' @param today Boolean. Do you wish to additionaly download today's quote?
+#' @param verbose Boolean. Print results and progress while downloading?
+#' @export
 get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365, today = TRUE, verbose = TRUE) {
 
   suppressMessages(require(quantmod))
@@ -116,12 +132,20 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365, today = TRUE
 }
 
 
+####################################################################
+#' Fix Historical Data on Stocks
+#' 
+#' This function lets the user fix downloaded stock data into a usefull format
+#' 
+#' @param dailys Dataframe. Daily values. Structure: "Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted"
+#' @param dividends Dataframe. Dividends. Structure: "Symbol", "Date", "Div", "DivReal"
+#' @param transactions Dataframe. Transactions. Structure: "ID", "Inv", "Symbol", "Date", "Quant", "Value", "Amount", "Description"
+#' @export
 stocks_hist_fix <- function (dailys, dividends, transactions) {
 
-  suppressMessages(require(dplyr))
-  suppressMessages(require(lubridate))
-
-
+  require(dplyr)
+  require(lubridate)
+  
   dailys_structure <- c("Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted")
   dividends_structure <- c("Symbol", "Date", "Div", "DivReal")
   trans_structure <- c("ID", "Inv", "Symbol", "Date", "Quant", "Value", "Amount", "Description")
@@ -174,6 +198,15 @@ stocks_hist_fix <- function (dailys, dividends, transactions) {
 }
 
 
+####################################################################
+#' Stocks Overall Performance
+#' 
+#' This function lets the user calculate stocks performance
+#' 
+#' @param dailys Dataframe. Daily values. Structure: "Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted", "Quant", "Value", "Amount", "Expenses", "Stocks", "Div", "DivReal", "DailyDiv", "DailyValue", "RelChangeP", "RelChangeUSD"
+#' @param cash_in Dataframe. Deposits and withdrawals. Structure: "ID", "Date", "Cash"
+#' @param cash_fix Numeric. If you wish to algebraically sum a value to your cash balance
+#' @export
 stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
 
   suppressMessages(require(dplyr))
@@ -217,6 +250,15 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
 
 }
 
+
+####################################################################
+#' Portfolio Overall Performance
+#' 
+#' This function lets the user calculate portfolio performance
+#' 
+#' @param portfolio Dataframe. Structure: "Symbol", "Stocks", "StockIniValue", "InvPerc", "Type", "Trans", "StartDate"
+#' @param daily Dataframe. Daily data
+#' @export
 portfolio_performance <- function(portfolio, daily) {
 
   suppressMessages(require(dplyr))
@@ -248,13 +290,20 @@ portfolio_performance <- function(portfolio, daily) {
 
 }
 
+
 ################# PLOTTING FUNCTIONS #################
 
+####################################################################
+#' Portfolio Daily Plot
+#' 
+#' This function lets the user plot his portfolio daily change
+#' 
+#' @param stocks_perf Dataframe. Output of the stocks_performance function
+#' @export
 portfolio_daily_plot <- function(stocks_perf) {
 
-  suppressMessages(require(dplyr))
-  suppressMessages(require(ggplot2))
-
+  require(dplyr)
+  require(ggplot2)
 
   plot <- stocks_perf %>%
     dplyr::filter(Date != "2018-05-24") %>%
@@ -278,11 +327,21 @@ portfolio_daily_plot <- function(stocks_perf) {
 }
 
 
+####################################################################
+#' Stocks Total Performance Plot
+#' 
+#' This function lets the user plot his stocks total performance
+#' 
+#' @param stocks_perf Dataframe. Output of the stocks_performance function
+#' @param portfolio_perf Dataframe. Output of the portfolio_performance function
+#' @param daily Dataframe. Daily data
+#' @param trans Dataframe. Transactions data
+#' @param cash Dataframe. Cash data
+#' @export
 stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
 
-  suppressMessages(require(dplyr))
-  suppressMessages(require(ggplot2))
-
+  require(dplyr)
+  require(ggplot2)
 
   plot <- portfolio_perf %>%
     mutate(shapeflag = ifelse(DifUSD < 0, 25, 24)) %>%
@@ -314,11 +373,19 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
 
 }
 
+
+####################################################################
+#' Stocks Daily Plot
+#' 
+#' This function lets the user plot stocks daily change
+#' 
+#' @param portfolio Dataframe. Output of the stocks_performance function
+#' @param daily Dataframe. Daily data
+#' @export
 stocks_daily_plot <- function (portfolio, daily) {
 
-  suppressMessages(require(dplyr))
-  suppressMessages(require(ggplot2))
-
+  require(dplyr)
+  require(ggplot2)
 
   plot <- daily %>%
     left_join(portfolio %>% select(Symbol,Type), by='Symbol') %>%
@@ -339,12 +406,20 @@ stocks_daily_plot <- function (portfolio, daily) {
 
 }
 
+
+####################################################################
+#' Portfolio's Distribution
+#' 
+#' This function lets the user plot his portfolio's distribution
+#' 
+#' @param portfolio_perf Dataframe. Output of the portfolio_performance function
+#' @param daily Dataframe. Daily data
+#' @export
 portfolio_distr_plot <- function (portfolio_perf, daily) {
 
-  suppressMessages(require(dplyr))
-  suppressMessages(require(ggplot2))
-  suppressMessages(require(gridExtra))
-
+  require(dplyr)
+  require(ggplot2)
+  require(gridExtra)
 
   plot_stocks <- ggplot(portfolio_perf) + theme_minimal() +
     geom_bar(aes(x="",y=DailyValue, fill=Symbol), width=1, stat="identity") +
@@ -365,7 +440,18 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
   return(grid.arrange(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3)))
 }
 
-stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
+
+####################################################################
+#' Portfolio's Full Report with Plots and Email
+#' 
+#' This function lets the user create his portfolio's full report with plots and email sent
+#' 
+#' @param wd Character. Where do you wish to save the plots?
+#' @param cash_fix Numeric. If you wish to algebraically sum a value to your cash balance
+#' @param mail Boolean Do you wish to send the email?
+#' @param creds Character. Credential's user (see get_credentials)
+#' @export
+stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA) {
 
   current_wd <- getwd()
 
@@ -404,23 +490,25 @@ stocks_report <- function(wd = "personal", cash_fix = 0, creds = NA) {
   write.csv(stocks_perf,"mydaily.csv",row.names = F)
   write.csv(portfolio_perf,"myportfolio.csv",row.names = F)
   message("4. CSVs exported...")
-  # Send report with lares::mailSend() function
-  files <- c("portf_daily_change.png",
-             "portf_stocks_change.png",
-             "portf_stocks_histchange.png",
-             "portf_distribution.png",
-             "myportfolio.csv",
-             "mydaily.csv")
-  mailSend(body = max(daily$Date), 
-           subject = paste("Portfolio:", max(daily$Date)),
-           attachment = files,
-           to = "laresbernardo@gmail.com", 
-           from = 'RServer <bernardo.lares@comparamejor.com>', creds = wd)
-  message("4. Email sent...")
+  if (mail == TRUE) {
+    # Send report with lares::mailSend() function
+    files <- c("portf_daily_change.png",
+               "portf_stocks_change.png",
+               "portf_stocks_histchange.png",
+               "portf_distribution.png",
+               "myportfolio.csv",
+               "mydaily.csv")
+    mailSend(body = max(daily$Date), 
+             subject = paste("Portfolio:", max(daily$Date)),
+             attachment = files,
+             to = "laresbernardo@gmail.com", 
+             from = 'RServer <bernardo.lares@comparamejor.com>', creds = wd)
+    message("5. Email sent...") 
+  }
   # Clean everything up and delete files created
   setwd(current_wd)
   if (wd != "personal") { file.remove(files) }
   graphics.off()
   rm(list = ls())
-  message("5. All's clean and done!")
+  message("All's clean and done!")
 }
