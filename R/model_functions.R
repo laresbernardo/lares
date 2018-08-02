@@ -10,6 +10,7 @@
 #' @param seed Seed for random split
 #' @param print Print summary results
 #' @return A list with both datasets, summary, and split rate
+#' @export
 msplit <- function(df, size = 0.7, seed = NA, print=T) {
   
   if (!is.na(seed)) {
