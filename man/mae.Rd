@@ -2,10 +2,12 @@
 % Please edit documentation in R/model_functions.R
 \name{mae}
 \alias{mae}
-\title{Mean Absolute Error}
+\title{Mean Absolute Error
+Mean Absolute Error}
 \usage{
 mae(tag, score)
 }
 \description{
+Mean Absolute Error
 Mean Absolute Error
 }

@@ -2,11 +2,13 @@
 % Please edit documentation in R/model_functions.R
 \name{export_results}
 \alias{export_results}
-\title{Export RDS, TXT, POJO, MOJO and all results from h2o_automl}
+\title{Export RDS, TXT, POJO, MOJO and all results from h2o_automl
+Export RDS, TXT, POJO, MOJO and all results from h2o_automl}
 \usage{
 export_results(results, txt = TRUE, rds = TRUE, pojo = TRUE,
   mojo = TRUE, subdir = NA)
 }
 \description{
+Export RDS, TXT, POJO, MOJO and all results from h2o_automl
 Export RDS, TXT, POJO, MOJO and all results from h2o_automl
 }

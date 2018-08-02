@@ -2,10 +2,12 @@
 % Please edit documentation in R/other_functions.R
 \name{formatNum}
 \alias{formatNum}
-\title{Nicely format numerical values}
+\title{Nicely format numerical values
+Nicely format numerical values}
 \usage{
 formatNum(x, decimals = 2, type = 1)
 }
 \description{
+Nicely format numerical values
 Nicely format numerical values
 }

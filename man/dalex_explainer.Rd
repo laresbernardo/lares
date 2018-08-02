@@ -2,10 +2,12 @@
 % Please edit documentation in R/dalex_explainers.R
 \name{dalex_explainer}
 \alias{dalex_explainer}
-\title{DALEX explainer}
+\title{DALEX explainer
+DALEX explainer}
 \usage{
 dalex_explainer(df, model, model_name = "lares::h2o_automl", pred = NA)
 }
 \description{
+DALEX explainer
 DALEX explainer
 }

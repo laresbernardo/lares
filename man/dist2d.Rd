@@ -2,10 +2,12 @@
 % Please edit documentation in R/other_functions.R
 \name{dist2d}
 \alias{dist2d}
-\title{Distance from specific point to line}
+\title{Distance from specific point to line
+Distance from specific point to line}
 \usage{
 dist2d(a, b = c(0, 0), c = c(1, 1))
 }
 \description{
+Distance from specific point to line
 Distance from specific point to line
 }

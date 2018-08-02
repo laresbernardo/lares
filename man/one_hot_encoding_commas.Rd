@@ -2,10 +2,12 @@
 % Please edit documentation in R/other_functions.R
 \name{one_hot_encoding_commas}
 \alias{one_hot_encoding_commas}
-\title{One hot encoding for a variable with comma separated values}
+\title{One hot encoding for a variable with comma separated values
+One hot encoding for a variable with comma separated values}
 \usage{
 one_hot_encoding_commas(df, variables, sep = ",")
 }
 \description{
+One hot encoding for a variable with comma separated values
 One hot encoding for a variable with comma separated values
 }

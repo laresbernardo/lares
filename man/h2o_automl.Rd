@@ -2,12 +2,17 @@
 % Please edit documentation in R/model_functions.R
 \name{h2o_automl}
 \alias{h2o_automl}
-\title{H2O's AutoML}
+\title{H2O's AutoML
+H2O's AutoML}
 \usage{
 h2o_automl(df, train_test = NA, split = 0.7, seed = 0, max_time = 5
   * 60, max_models = 25, export = FALSE,
   project = "Machine Learning Model")
 }
+\value{
+All In One Model Generator
+}
 \description{
+H2O's AutoML
 H2O's AutoML
 }

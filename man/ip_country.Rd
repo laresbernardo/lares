@@ -2,10 +2,12 @@
 % Please edit documentation in R/other_functions.R
 \name{ip_country}
 \alias{ip_country}
-\title{Find country from a given IP}
+\title{Find country from a given IP
+Find country from a given IP}
 \usage{
 ip_country(ip)
 }
 \description{
+Find country from a given IP
 Find country from a given IP
 }

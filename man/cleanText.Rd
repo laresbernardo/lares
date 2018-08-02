@@ -2,10 +2,12 @@
 % Please edit documentation in R/other_functions.R
 \name{cleanText}
 \alias{cleanText}
-\title{Clean text}
+\title{Clean text
+Clean text}
 \usage{
 cleanText(d)
 }
 \description{
+Clean text
 Clean text
 }

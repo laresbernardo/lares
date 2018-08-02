@@ -38,9 +38,12 @@ msplit <- function(df, size = 0.7, seed = NA, print=T) {
 
 ####################################################################
 #' Loggarithmic Loss Function for Binary Models
+#' Loggarithmic Loss Function for Binary Models
+#' @return LogLoss calculation
 #' @export
-# Note: 0.69315 - the classification is neutral; it assigns equal probability to both classes
 loglossBinary = function(tag, score, eps = 1e-15) {
+  
+  # Note: 0.69315 - the classification is neutral; it assigns equal probability to both classes
   
   if (length(unique(tag)) != 2) {
     stop("Your 'tag' vector is not binary!")
@@ -63,6 +66,8 @@ loglossBinary = function(tag, score, eps = 1e-15) {
 
 ####################################################################
 #' H2O's AutoML
+#' H2O's AutoML
+#' @return All In One Model Generator
 #' @export
 h2o_automl <- function(df, 
                        train_test = NA,   # Column name with 'test' and 'train' values
@@ -189,6 +194,7 @@ h2o_automl <- function(df,
 
 ####################################################################
 #' Select wich model from the h2o_automl function to use
+#' Select wich model from the h2o_automl function to use
 #' @export
 h2o_selectmodel <- function(results, which_model = 1) {
   
@@ -222,6 +228,7 @@ h2o_selectmodel <- function(results, which_model = 1) {
 
 
 ####################################################################
+#' Export RDS, TXT, POJO, MOJO and all results from h2o_automl
 #' Export RDS, TXT, POJO, MOJO and all results from h2o_automl
 #' @export
 export_results <- function(results, txt = TRUE, rds = TRUE, pojo = TRUE, mojo = TRUE, subdir = NA) {
@@ -279,6 +286,7 @@ export_results <- function(results, txt = TRUE, rds = TRUE, pojo = TRUE, mojo = 
 
 ####################################################################
 #' Iterate and Search for Best Seed
+#' Iterate and Search for Best Seed
 #' @export
 iter_seeds <- function(tries = 10, data) {
   require(h2o)
@@ -296,6 +304,7 @@ iter_seeds <- function(tries = 10, data) {
 
 ####################################################################
 #' Root Mean Squared Error
+#' Root Mean Squared Error
 #' @export
 rmse <- function(tag, score){
   error <- tag - score
@@ -305,6 +314,7 @@ rmse <- function(tag, score){
 
 ####################################################################
 #' Mean Absolute Error
+#' Mean Absolute Error
 #' @export
 mae <- function(tag, score){
   error <- tag - score
@@ -313,6 +323,7 @@ mae <- function(tag, score){
 
 
 ####################################################################
+#' Mean Squared Error
 #' Mean Squared Error
 #' @export
 mse <- function(sm){ 

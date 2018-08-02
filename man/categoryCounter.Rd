@@ -2,10 +2,12 @@
 % Please edit documentation in R/other_functions.R
 \name{categoryCounter}
 \alias{categoryCounter}
-\title{Count all categories on factor variables}
+\title{Count all categories on factor variables
+Count all categories on factor variables}
 \usage{
 categoryCounter(df)
 }
 \description{
+Count all categories on factor variables
 Count all categories on factor variables
 }

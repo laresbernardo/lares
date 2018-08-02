@@ -2,10 +2,12 @@
 % Please edit documentation in R/model_functions.R
 \name{h2o_selectmodel}
 \alias{h2o_selectmodel}
-\title{Select wich model from the h2o_automl function to use}
+\title{Select wich model from the h2o_automl function to use
+Select wich model from the h2o_automl function to use}
 \usage{
 h2o_selectmodel(results, which_model = 1)
 }
 \description{
+Select wich model from the h2o_automl function to use
 Select wich model from the h2o_automl function to use
 }

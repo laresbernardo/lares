@@ -2,10 +2,12 @@
 % Please edit documentation in R/other_functions.R
 \name{freqs}
 \alias{freqs}
-\title{Group by, count and percentages}
+\title{Group by, count and percentages
+Group by, count and percentages}
 \usage{
 freqs(data, ..., plot = F)
 }
 \description{
+Group by, count and percentages
 Group by, count and percentages
 }

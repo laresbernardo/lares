@@ -1,5 +1,6 @@
 ####################################################################
 #' Group by, count and percentages
+#' Group by, count and percentages
 #' @export
 freqs = function(data, ..., plot=F) {
 
@@ -15,6 +16,7 @@ freqs = function(data, ..., plot=F) {
 
 ####################################################################
 #' Convert year month format YYYY-MM
+#' Convert year month format YYYY-MM
 #' @export
 year_month = function(date) {
 
@@ -29,6 +31,7 @@ year_month = function(date) {
 
 
 ####################################################################
+#' Analyze NAs in a data.frame
 #' Analyze NAs in a data.frame
 #' @export
 nas = function(df, print = TRUE) {
@@ -46,6 +49,7 @@ nas = function(df, print = TRUE) {
 
 
 ####################################################################
+#' Count all categories on factor variables
 #' Count all categories on factor variables
 #' @export
 categoryCounter <- function (df) {
@@ -68,6 +72,7 @@ categoryCounter <- function (df) {
 
 ####################################################################
 #' Reduce categorical values
+#' Reduce categorical values
 #' @export
 categ_reducer <- function(vector, nmin = 0, pmin = 0, pcummax = 100, top = NA, other_label = "other") {
   require(dplyr)
@@ -84,6 +89,7 @@ categ_reducer <- function(vector, nmin = 0, pmin = 0, pcummax = 100, top = NA, o
 
 ####################################################################
 #' Normalize values
+#' Normalize values
 #' @export
 normalize <- function(x) {
  x <- (x-min(x)) / (max(x)-min(x))
@@ -93,6 +99,7 @@ normalize <- function(x) {
 
 ####################################################################
 #' Convert a vector into a comma separated text
+#' Convert a vector into a comma separated text
 #' @export
 vector2text <- function(vector, sep=", ") {
   output <- paste(shQuote(vector), collapse=sep)
@@ -101,6 +108,7 @@ vector2text <- function(vector, sep=", ") {
 
 
 ####################################################################
+#' Clean text
 #' Clean text
 #' @export
 cleanText <- function(d) {
@@ -112,6 +120,7 @@ cleanText <- function(d) {
 
 
 ####################################################################
+#' Find country from a given IP
 #' Find country from a given IP
 #' @export
 ip_country <- function(ip) {
@@ -136,6 +145,7 @@ ip_country <- function(ip) {
 
 ####################################################################
 #' Distance from specific point to line
+#' Distance from specific point to line
 #' @export
 dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
   # a is the point from which we want to measure the distance
@@ -149,6 +159,7 @@ dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
 
 ####################################################################
 #' Nicely format numerical values
+#' Nicely format numerical values
 #' @export
 formatNum <- function(x, decimals = 2, type = 1) {
   if (type == 1) {
@@ -160,6 +171,7 @@ formatNum <- function(x, decimals = 2, type = 1) {
 
 
 ####################################################################
+#' One hot encoding for a variable with comma separated values
 #' One hot encoding for a variable with comma separated values
 #' @export
 one_hot_encoding_commas <- function(df, variables, sep=","){

@@ -2,10 +2,15 @@
 % Please edit documentation in R/model_functions.R
 \name{loglossBinary}
 \alias{loglossBinary}
-\title{Loggarithmic Loss Function for Binary Models}
+\title{Loggarithmic Loss Function for Binary Models
+Loggarithmic Loss Function for Binary Models}
 \usage{
 loglossBinary(tag, score, eps = 1e-15)
 }
+\value{
+LogLoss calculation
+}
 \description{
+Loggarithmic Loss Function for Binary Models
 Loggarithmic Loss Function for Binary Models
 }
