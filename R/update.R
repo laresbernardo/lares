@@ -6,7 +6,7 @@
 #' @param local Boolean. Install package with local files (TRUE) or Github repository
 #' @param local Boolean. Force install if needed
 #' @export
-updateLares <- function(local = FALSE, force = FALSE, restart = TRUE) {
+updateLares <- function(local = FALSE, force = FALSE, restart = FALSE) {
   
   suppressMessages(require(devtools))
   suppressMessages(require(config))
