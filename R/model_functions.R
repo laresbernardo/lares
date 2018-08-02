@@ -1,5 +1,15 @@
 ####################################################################
-# Split a dataframe for training and testing sets
+#' Split a dataframe for training and testing sets
+#'
+#' This function splits automatically a dataframe into train and test datasets.
+#' You can define a seed to get the same results every time, but has a default value.
+#' You can prevent it from printing the split counter result.
+#'
+#' @param df Dataframe to split
+#' @param size Split rate
+#' @param seed Seed for random split
+#' @param print Print summary results
+#' @return A list with both datasets, summary, and split rate
 msplit <- function(df, size = 0.7, seed = NA, print=T) {
   
   if (!is.na(seed)) {
@@ -18,8 +28,7 @@ msplit <- function(df, size = 0.7, seed = NA, print=T) {
   if (print == TRUE) {
     print(summary) 
   }
-  
-  
+
   sets <- list(train=train, test=test, summary=summary, split_size=size)
   
   return(sets)
