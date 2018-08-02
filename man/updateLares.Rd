@@ -4,7 +4,7 @@
 \alias{updateLares}
 \title{Update the library}
 \usage{
-updateLares(local = FALSE, force = FALSE)
+updateLares(local = FALSE, force = FALSE, restart = FALSE)
 }
 \arguments{
 \item{local}{Boolean. Install package with local files (TRUE) or Github repository}

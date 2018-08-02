@@ -82,7 +82,8 @@ loglossBinary = function(tag, score, eps = 1e-15) {
 #' @param train_test Character. If needed, df's column name with 'test' and 'train' values to split
 #' @param split Numeric. Value between 0 and 1 to split as train/test datasets. Value is for training set.
 #' @param seed Numeric. Seed for random stuff and reproducibility
-#' @param thresh Integer. Threshold for selecting binary or regression models: this number is the max unique values we should have in 'tag'
+#' @param thresh Integer. Threshold for selecting binary or regression models: this number is the threshold 
+#' of unique values we should have in 'tag' (more than: regression; less than: classification)
 #' @param max_time Numeric. Max seconds you wish for the function to iterate
 #' @param max_models Numeric. Max models you wish for the function to create
 #' @param export Boolean. Do you wish to save results into your working directory?
