@@ -2,8 +2,7 @@
 % Please edit documentation in R/model_plots.R
 \name{mplot_metrics}
 \alias{mplot_metrics}
-\title{AUC and LogLoss Plots
-AUC and LogLoss Plots}
+\title{AUC and LogLoss Plots}
 \usage{
 mplot_metrics(results, subtitle = NA, model_name = NA, save = FALSE,
   subdir = NA, file_name = "viz_metrics.png")
@@ -22,6 +21,5 @@ mplot_metrics(results, subtitle = NA, model_name = NA, save = FALSE,
 \item{file_name}{Character. File name as you wish to save the plot}
 }
 \description{
-AUC and LogLoss Plots
-AUC and LogLoss Plots
+This function can plot AUC and LogLoss Plots from a h2o_automl results object
 }

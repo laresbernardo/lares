@@ -2,8 +2,7 @@
 % Please edit documentation in R/model_plots.R
 \name{mplot_roc}
 \alias{mplot_roc}
-\title{ROC Curve Plot
-ROC Curve with AUC value and 95\% confidence range Plot}
+\title{ROC Curve Plot}
 \usage{
 mplot_roc(tag, score, model_name = NA, subtitle = NA, interval = 0.2,
   plotly = FALSE, save = FALSE, subdir = NA,
@@ -29,6 +28,5 @@ mplot_roc(tag, score, model_name = NA, subtitle = NA, interval = 0.2,
 \item{file_name}{Character. File name as you wish to save the plot}
 }
 \description{
-ROC Curve Plot
-ROC Curve with AUC value and 95\% confidence range Plot
+This function plots ROC Curves with AUC values with 95\% confidence range
 }

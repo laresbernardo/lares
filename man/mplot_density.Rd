@@ -2,8 +2,7 @@
 % Please edit documentation in R/model_plots.R
 \name{mplot_density}
 \alias{mplot_density}
-\title{Density plot for discrete and continuous values
-Density plot for discrete and continuous values}
+\title{Density plot for discrete and continuous values}
 \usage{
 mplot_density(tag, score, model_name = NA, subtitle = NA,
   save = FALSE, subdir = NA, file_name = "viz_distribution.png")
@@ -24,6 +23,5 @@ mplot_density(tag, score, model_name = NA, subtitle = NA,
 \item{file_name}{Character. File name as you wish to save the plot}
 }
 \description{
-Density plot for discrete and continuous values
-Density plot for discrete and continuous values
+This function plots discrete and continuous values results
 }

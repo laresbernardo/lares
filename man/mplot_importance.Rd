@@ -2,8 +2,7 @@
 % Please edit documentation in R/model_plots.R
 \name{mplot_importance}
 \alias{mplot_importance}
-\title{Variables Importances Plot
-Variables Importances Plot}
+\title{Variables Importances Plot}
 \usage{
 mplot_importance(var, imp, colours = NA, limit = 15, model_name = NA,
   subtitle = NA, save = FALSE, subdir = NA,
@@ -29,6 +28,5 @@ mplot_importance(var, imp, colours = NA, limit = 15, model_name = NA,
 \item{file_name}{Character. File name as you wish to save the plot}
 }
 \description{
-Variables Importances Plot
-Variables Importances Plot
+This function plots Variable Importances
 }

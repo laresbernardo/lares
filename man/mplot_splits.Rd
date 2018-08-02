@@ -2,8 +2,7 @@
 % Please edit documentation in R/model_plots.R
 \name{mplot_splits}
 \alias{mplot_splits}
-\title{Split and compare quantiles plot
-Split and compare quantiles plot}
+\title{Split and compare quantiles plot}
 \usage{
 mplot_splits(tag, score, splits = 5, subtitle = NA, model_name = NA,
   save = FALSE, subdir = NA, file_name = "viz_splits.png")
@@ -26,6 +25,6 @@ mplot_splits(tag, score, splits = 5, subtitle = NA, model_name = NA,
 \item{file_name}{Character. File name as you wish to save the plot}
 }
 \description{
-Split and compare quantiles plot
-Split and compare quantiles plot
+This function lets us split and compare quantiles on a given prediction to
+compare different categorical values vs scores grouped by equal sized buckets.
 }

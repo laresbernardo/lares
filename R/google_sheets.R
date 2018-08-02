@@ -1,9 +1,15 @@
-# Fast read and write Google Sheets functions
-
-# Read in a Google Sheet
+####################################################################
+#' Google Sheets Reading
+#' 
+#' This function lets the user read any Google Sheet's data
+#' 
+#' @param title Character. Textual title of Google Sheet
+#' @param ws Character. Working sheet to import
+#' @param server Boolean. Authenticate manualy
+#' @export
 readGS = function(title, ws, server=FALSE) {
-  suppressMessages(require(googlesheets))
-  suppressMessages(require(dplyr))
+  require(googlesheets)
+  require(dplyr)
   
   if (server==TRUE) {
     options(httr_oob_default = TRUE)
@@ -17,7 +23,17 @@ readGS = function(title, ws, server=FALSE) {
   
 }
 
-# Write in a Google Sheet
+####################################################################
+#' Google Sheets Writing
+#' 
+#' This function lets the user write on any Google Sheet
+#' 
+#' @param data Data Frame. Data to export to Google Sheet 
+#' @param title Character. Textual title of Google Sheet
+#' @param ws Character. Working sheet to export to
+#' @param cell Character. In which cell should we paste the data (upper left cell)
+#' @param server Boolean. Authenticate manualy
+#' @export
 writeGS = function(data, title, ws, cell='A1', server=FALSE) {
 
   suppressMessages(require(googlesheets))

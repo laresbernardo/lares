@@ -1,4 +1,15 @@
-# Queries on Google Analytics
+####################################################################
+#' Queries on Google Analytics
+#' 
+#' This function lets the user query Google Analytics with its API
+#' 
+#' @param account Character. Personal named accounts
+#' @param creds Character. Credential's user (see get_credentials)
+#' @param metrics Character. Which metrics we sih to bring
+#' @param dimensions Character. Which dimensions we sih to bring
+#' @param start Date. Start date for the report
+#' @param end Date. End date for the report
+#' @export
 queryGA <- function(account = "comparamejor",
                     creds = NA, token_dir = NA,
                     metrics = "sessions",
@@ -23,5 +34,3 @@ queryGA <- function(account = "comparamejor",
     metrics = metrics,
     dimensions = dimensions)
 }
-
-# queryGA(creds = "creds", token_dir = "creds")

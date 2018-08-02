@@ -3,7 +3,7 @@
 #'
 #' This function lets the user update from repository or local source.
 #'
-#' @param local If set to TRUE then it will install package with local files
+#' @param local Boolean. Install package with local files (TRUE) or Github repository
 #' @export
 updateLares <- function(local = FALSE) {
   

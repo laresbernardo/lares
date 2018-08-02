@@ -1,6 +1,8 @@
 ####################################################################
 #' Density plot for discrete and continuous values
-#' Density plot for discrete and continuous values
+#' 
+#' This function plots discrete and continuous values results
+#' 
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param model_name Character. Model's name
@@ -125,7 +127,9 @@ mplot_density <- function(tag,
 
 ####################################################################
 #' Variables Importances Plot
-#' Variables Importances Plot
+#' 
+#' This function plots Variable Importances
+#' 
 #' @param var Vector. Variable or column's names
 #' @param imp Vector. Importance of said variables. Must have same length as var
 #' @param colours If possitive and negative contribution is known
@@ -208,7 +212,9 @@ mplot_importance <- function(var,
 
 ####################################################################
 #' ROC Curve Plot
-#' ROC Curve with AUC value and 95\% confidence range Plot
+#' 
+#' This function plots ROC Curves with AUC values with 95\% confidence range
+#' 
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param model_name Character. Model's name
@@ -290,7 +296,9 @@ mplot_roc <- function(tag,
 
 ####################################################################
 #' Cuts by quantiles for score plot
-#' Cuts by quantiles for score plot
+#' 
+#' This function cuts by quantiles any score or prediction
+#' 
 #' @param score Vector. Predicted value or model's result
 #' @param splits Integer. Numer of separations to plot
 #' @param model_name Character. Model's name
@@ -351,7 +359,9 @@ mplot_cuts <- function(score,
 
 ####################################################################
 #' Cuts by quantiles on absolut and percentual errors plot
-#' Cuts by quantiles on absolut and percentual errors plot
+#' 
+#' This function cuts by quantiles on absolut and percentual errors
+#' 
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param splits Integer. Numer of separations to plot
@@ -461,7 +471,10 @@ mplot_cuts_error <- function(tag,
 
 ####################################################################
 #' Split and compare quantiles plot
-#' Split and compare quantiles plot
+#' 
+#' This function lets us split and compare quantiles on a given prediction to
+#' compare different categorical values vs scores grouped by equal sized buckets.
+#' 
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param splits Integer. Numer of separations to plot
@@ -561,7 +574,9 @@ mplot_splits <- function(tag,
 
 ####################################################################
 #' AUC and LogLoss Plots
-#' AUC and LogLoss Plots
+#' 
+#' This function can plot AUC and LogLoss Plots from a h2o_automl results object
+#' 
 #' @param results Object. Results object from h2o_automl function
 #' @param subtitle Character. Subitle to show in plot
 #' @param model_name Character. Model's name
@@ -642,7 +657,9 @@ mplot_metrics <- function(results,
 
 ####################################################################
 #' Linear Regression Results Plot
-#' Linear Regression Results Plot
+#' 
+#' This function plots a Linear Regression Result
+#' 
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param subtitle Character. Subitle to show in plot
@@ -711,7 +728,11 @@ mplot_lineal <- function(tag,
 
 ####################################################################
 #' MPLOTS Score Full Report Plots
-#' MPLOTS Score Full Report Plots
+#' 
+#' This function plots a whole dashboard with a model's results. It will automatically
+#' detect if it's a categorical or regression's model by checking how many different
+#' unique values the independent variable (tag) has.
+#' 
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param splits Integer. Numer of separations to plot

@@ -2,12 +2,10 @@
 % Please edit documentation in R/dalex_explainers.R
 \name{dalex_local}
 \alias{dalex_local}
-\title{DALEX local
-DALEX local}
+\title{DALEX local}
 \usage{
 dalex_local(explainer, row, plot = TRUE, print = TRUE)
 }
 \description{
-DALEX local
 DALEX local
 }

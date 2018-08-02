@@ -2,8 +2,7 @@
 % Please edit documentation in R/model_plots.R
 \name{mplot_cuts_error}
 \alias{mplot_cuts_error}
-\title{Cuts by quantiles on absolut and percentual errors plot
-Cuts by quantiles on absolut and percentual errors plot}
+\title{Cuts by quantiles on absolut and percentual errors plot}
 \usage{
 mplot_cuts_error(tag, score, splits = 10, title = NA,
   model_name = NA, save = FALSE, subdir = NA,
@@ -27,6 +26,5 @@ mplot_cuts_error(tag, score, splits = 10, title = NA,
 \item{file_name}{Character. File name as you wish to save the plot}
 }
 \description{
-Cuts by quantiles on absolut and percentual errors plot
-Cuts by quantiles on absolut and percentual errors plot
+This function cuts by quantiles on absolut and percentual errors
 }

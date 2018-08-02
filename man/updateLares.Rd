@@ -7,7 +7,7 @@
 updateLares(local = FALSE)
 }
 \arguments{
-\item{local}{If set to TRUE then it will install package with local files}
+\item{local}{Boolean. Install package with local files (TRUE) or Github repository}
 }
 \description{
 This function lets the user update from repository or local source.
