@@ -11,11 +11,11 @@ LazyData: true
 Imports: httr,
     jsonlite,
     rlist,
+    dplyr,
     ggplot2,
     DALEX,
     gridExtra,
     reshape2,
-    dplyr,
     googlesheets,
     googleAuthR,
     googleAnalyticsR,
@@ -44,8 +44,7 @@ Imports: httr,
     rtweet,
     rtypeform,
     devtools,
-    magick,
-    opencv
+    magick
 Remotes: ropenscilabs/opencv
 URL: https://github.com/laresbernardo/lares
 BugReports: https://github.com/laresbernardo/lares/issues
