@@ -5,8 +5,8 @@
 #' 
 #' @param account Character. Personal named accounts
 #' @param creds Character. Credential's user (see get_credentials)
-#' @param metrics Character. Which metrics we sih to bring
-#' @param dimensions Character. Which dimensions we sih to bring
+#' @param metrics Character. Which metrics we wish to bring. More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets
+#' @param dimensions Character. Which dimensions we wish to bring More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets
 #' @param start Date. Start date for the report
 #' @param end Date. End date for the report
 #' @export

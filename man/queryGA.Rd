@@ -13,9 +13,9 @@ queryGA(account = "comparamejor", creds = NA, token_dir = NA,
 
 \item{creds}{Character. Credential's user (see get_credentials)}
 
-\item{metrics}{Character. Which metrics we sih to bring}
+\item{metrics}{Character. Which metrics we wish to bring. More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets}
 
-\item{dimensions}{Character. Which dimensions we sih to bring}
+\item{dimensions}{Character. Which dimensions we wish to bring More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets}
 
 \item{start}{Date. Start date for the report}
 
