@@ -147,7 +147,7 @@ normalize <- function(x) {
 #' 
 #' @param vector Vector. Vector with more than 1 observation
 #' @param sep Character. String text wished to insert between values
-#' @param sep Boolean. Bring simple quotes for each observation (useful for SQL)
+#' @param quotes Boolean. Bring simple quotes for each observation (useful for SQL)
 #' @export
 vector2text <- function(vector, sep=", ", quotes = TRUE) {
   output <- paste(shQuote(vector), collapse=sep)
