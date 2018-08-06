@@ -37,12 +37,10 @@ Imports: httr,
     rdrop2,
     xlsx,
     plyr,
-    anytime,
     SnowballC,
     wordcloud,
     RColorBrewer,
     rtweet,
-    rtypeform,
     devtools
 Remotes: ropenscilabs/opencv
 URL: https://github.com/laresbernardo/lares
