@@ -27,12 +27,14 @@ gg_colour_customs <- function () {
               "f1"="#FFFFFF",
               "M"="steelblue2",
               "F"="lightpink2",
-              "TRUE"="limegreen",
+              "TRUE"="springgreen3",
               "FALSE"="red2",
-              "1"="limegreen",
+              "1"="springgreen3",
               "0"="red2",
-              "good"="limegreen",
-              "bad"="red2")
+              "good"="springgreen3",
+              "bad"="red2",
+              "bueno"="springgreen3",
+              "malo"="red2")
   return(scale_color_manual(values=values))
 }
 
@@ -66,12 +68,14 @@ gg_text_customs <- function () {
               "f1"="#FFFFFF",
               "M"="steelblue2",
               "F"="lightpink2",
-              "TRUE"="limegreen",
+              "TRUE"="springgreen3",
               "FALSE"="red2",
-              "1"="limegreen",
+              "1"="springgreen3",
               "0"="red2",
-              "good"="limegreen",
-              "bad"="red2")
+              "good"="springgreen3",
+              "bad"="red2",
+              "bueno"="springgreen3",
+              "malo"="red2")
   return(scale_color_manual(values=values))
 }
 
@@ -105,11 +109,13 @@ gg_fill_customs <- function () {
               "f1"="#FFFFFF",
               "M"="steelblue2",
               "F"="lightpink2",
-              "TRUE"="limegreen",
+              "TRUE"="springgreen3",
               "FALSE"="red2",
-              "1"="limegreen",
+              "1"="springgreen3",
               "0"="red2",
-              "good"="limegreen",
-              "bad"="red2")
+              "good"="springgreen3",
+              "bad"="red2",
+              "bueno"="springgreen3",
+              "malo"="red2")
   return(scale_fill_manual(values=values))
 }
