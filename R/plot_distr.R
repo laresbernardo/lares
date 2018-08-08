@@ -69,7 +69,8 @@ plot_distr <- function(data, target, values,
   
   distr <- df %>% group_by(targets) %>% 
     tally() %>% arrange(desc(n)) %>% 
-    mutate(p = round(100*n/sum(n),2), pcum=cumsum(p))
+    mutate(p = round(100*n/sum(n),2), 
+           pcum = cumsum(p))
   
   count <- ggplot(freqs, aes(x=reorder(as.character(value), order), y=n, fill=targets, label=n, ymax=max(n)*1.1)) + 
     geom_col(position = "dodge") +

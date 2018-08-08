@@ -4,12 +4,16 @@
 \alias{auto_preprocess}
 \title{Auto-Preprocessing data for a Machine Learning Model}
 \usage{
-auto_preprocess(df, num2fac = 7, print = FALSE)
+auto_preprocess(df, num2fac = 7, print = FALSE, return = "results")
 }
 \arguments{
 \item{df}{Dataframe. Dataframe to format, transform and input}
 
-\item{num2fac}{Integer. Threshold for unique values on a numeri variable to transform to factor}
+\item{num2fac}{Integer. Threshold for unique values on a numerical variable 
+to transform into factor}
+
+\item{return}{Character. Select if you wish the preprocessed data 'results' or 
+recipe 'function' result}
 }
 \description{
 This function helps us preprocess data automatically.
