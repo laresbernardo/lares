@@ -13,11 +13,6 @@ auto_preprocess <- function(df, num2fac = 7, print = FALSE) {
   require(tidyr)
   require(dplyr)
   
-  returns <- c('results','function')
-  if (!return %in% returns) {
-    stop(paste("Please try one of theses return parameters:",lares::vector2text(returns)))
-  }
-  
   # Which columns to transform
   string_2_factor_names <- df %>% 
     select_if(is.character) %>% 
