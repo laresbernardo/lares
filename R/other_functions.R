@@ -37,38 +37,6 @@ year_month = function(date) {
 
 
 ####################################################################
-#' Analyze NAs in a data.frame
-#' 
-#' This function lets the user analyze NAs in a data.frame using 
-#' VIM and funModeling libraries
-#' 
-#' @param df Dataframe. Dataframe to study
-#' @param print Boolean. Do you wish to print results?
-#' @export
-nas = function(df, print = FALSE) {
-
-  require(dplyr)
-  require(VIM)
-  require(funModeling)
-
-  nas <- df_status(df, print = print) %>% 
-    filter(q_na > 0) %>% 
-    arrange(desc(q_na))
-  
-  subset <- subset(df, select=c(nas$variable))
-  
-  VIM::aggr(subset, 
-            col=c('navyblue','red'), 
-            numbers=TRUE, 
-            sortVars=TRUE,
-            labels=names(data), 
-            cex.axis=.7, 
-            gap=2,
-            ylab=c("Histogram of missing data","Pattern"))
-}
-
-
-####################################################################
 #' Count Categories on a Dataframe
 #' 
 #' This function lets the user count unique values in a categorical dataframe
