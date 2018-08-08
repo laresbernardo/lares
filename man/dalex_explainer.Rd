@@ -6,6 +6,15 @@
 \usage{
 dalex_explainer(df, model, model_name = "lares::h2o_automl", pred = NA)
 }
+\arguments{
+\item{df}{Dataframe}
+
+\item{model}{Model. Use a H2O Model by default. If another, use pred parameter}
+
+\item{model_name}{Character. Name of your model}
+
+\item{pred}{Function. Custom function for calculation predictions}
+}
 \description{
 DALEX library function to create an explainer object
 }

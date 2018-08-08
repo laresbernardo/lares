@@ -3,6 +3,10 @@
 #' 
 #' DALEX library function to create an explainer object
 #' 
+#' @param df Dataframe
+#' @param model Model. Use a H2O Model by default. If another, use pred parameter
+#' @param model_name Character. Name of your model
+#' @param pred Function. Custom function for calculation predictions
 #' @export
 dalex_explainer <- function(df, model, model_name = "lares::h2o_automl", pred = NA) {
   require(DALEX) 
@@ -37,6 +41,10 @@ dalex_explainer <- function(df, model, model_name = "lares::h2o_automl", pred = 
 #' 
 #' DALEX library function for local interpretations
 #' 
+#' @param explainer Object. Result from dalex_explainer function
+#' @param row Dataframe. An observation which you want to study
+#' @param plot Boolean. Do you wish to see the results plot?
+#' @param print Boolean. Do you wish to see the results table?
 #' @export
 dalex_local <- function(explainer, row, plot = TRUE, print = TRUE) {
   
@@ -63,6 +71,7 @@ dalex_local <- function(explainer, row, plot = TRUE, print = TRUE) {
 #' 
 #' DALEX library function for residuals
 #' 
+#' @param explainer Object. Result from dalex_explainer function
 #' @export
 dalex_residuals <- function (explainer) {
   
@@ -85,6 +94,9 @@ dalex_residuals <- function (explainer) {
 #' DALEX library function for creating Partial Dependency Plots and study
 #' variable's responses vs independent vector.
 #' 
+#' @param explainer Object. Result from dalex_explainer function
+#' @param variable Character. Which character do you wish to study?
+#' @param force_class Character. If you wish to force a class on your variable, which one do you need?
 #' @export
 dalex_variable <- function (explainer, variable, force_class = NA) {
   

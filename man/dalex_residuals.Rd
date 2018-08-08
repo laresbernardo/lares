@@ -6,6 +6,9 @@
 \usage{
 dalex_residuals(explainer)
 }
+\arguments{
+\item{explainer}{Object. Result from dalex_explainer function}
+}
 \description{
 DALEX library function for residuals
 }

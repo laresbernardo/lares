@@ -6,6 +6,15 @@
 \usage{
 dalex_local(explainer, row, plot = TRUE, print = TRUE)
 }
+\arguments{
+\item{explainer}{Object. Result from dalex_explainer function}
+
+\item{row}{Dataframe. An observation which you want to study}
+
+\item{plot}{Boolean. Do you wish to see the results plot?}
+
+\item{print}{Boolean. Do you wish to see the results table?}
+}
 \description{
 DALEX library function for local interpretations
 }
