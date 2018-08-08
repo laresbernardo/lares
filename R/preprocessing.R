@@ -35,7 +35,7 @@ auto_preprocess <- function(df, num2fac = 7, print = FALSE) {
     prep(stringsAsFactors = FALSE)
   
   output <- list(processed = bake(rec, df),
-                 processor = rec)
+                 processor = function(df) { bake(rec, df) })
   
   if (print == TRUE) {
     print(glimpse(output$processed))

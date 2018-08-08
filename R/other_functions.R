@@ -237,14 +237,14 @@ one_hot_encoding_commas <- function(df, variables, sep=","){
 
 
 ####################################################################
-#' Balance Data by Resampling: Under-Over Sampling
+#' Balance Binary Data by Resampling: Under-Over Sampling
 #' 
 #' This function lets the user balance a given data.frame by resampling
-#' with a given relation. 
+#' with a given relation rate and a binary feature.
 #' 
 #' @param df Vector or Dataframe. Contains different variables in each column, separated by a specific character
-#' @param variable Character. Which variable should we use to resample df
-#' @param rate Numeric. How many X for every Y we need? Default: 1 (same of both)
+#' @param variable Character. Which binary variable should we use to resample df
+#' @param rate Numeric. How many X for every Y we need? Default: 1
 #' @param seed Numeric. Seed to replicate and obtain same values
 #' @export
 balance_data <- function(df, variable, rate = 1, seed = 0) {
@@ -258,8 +258,8 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
   if (nrow(tags) != 2) {
     stop("You should use a variable with only 2 unique values!")
   } else {
-    ones <- df %>% filter(tag == as.character(tags[1,1]))
-    zeros <- df %>% filter(tag == as.character(tags[2,1])) %>% 
+    ones <- df %>% filter(as.character(tag) == as.character(tags[1,1]))
+    zeros <- df %>% filter(as.character(tag) == as.character(tags[2,1])) %>% 
       sample_n(rate * nrow(ones))
     balanced <- rbind(ones, zeros)
     return(balanced)
