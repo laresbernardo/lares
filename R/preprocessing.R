@@ -4,12 +4,10 @@
 #' This function helps us preprocess data automatically.
 #' 
 #' @param df Dataframe. Dataframe to format, transform and input
-#' @param num2fac Integer. Threshold for unique values on a numerical variable 
-#' to transform into factor
-#' @param return Character. Select if you wish the preprocessed data 'results' or 
-#' recipe 'function' result
+#' @param num2fac Integer. Threshold for unique values on a numerical variable to transform into factor
+#' @param print Boolean. Print results summary
 #' @export
-auto_preprocess <- function(df, num2fac = 7, print = FALSE, return = "results") {
+auto_preprocess <- function(df, num2fac = 7, print = FALSE) {
   
   require(recipes)
   require(tidyr)
@@ -41,16 +39,13 @@ auto_preprocess <- function(df, num2fac = 7, print = FALSE, return = "results") 
     step_modeimpute(all_nominal()) %>%
     prep(stringsAsFactors = FALSE)
   
-  if (return == "results") {
-    processed <- bake(rec, df) 
-    if (print == TRUE) {
-      print(glimpse(processed))
-    }
-    return(processed)    
+  output <- list(processed = bake(rec, df),
+                 processor = rec)
+  
+  if (print == TRUE) {
+    print(glimpse(output$processed))
   }
   
-  if (return == "function") {
-    return(rec)    
-  }
+  return(output)
   
 }
