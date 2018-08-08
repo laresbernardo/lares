@@ -34,11 +34,12 @@ auto_preprocess <- function(df, num2fac = 7, print = FALSE) {
     step_modeimpute(all_nominal()) %>%
     prep(stringsAsFactors = FALSE)
   
-  output <- list(processed = bake(rec, df),
-                 processor = function(df) { 
-                   recipes::bake(rec, df) 
-                 }
-  )
+  baker <- function(df) { 
+    recipes::bake(rec, df) 
+  }
+  
+  output <- list(processed = baker(df),
+                 processor = baker)
   
   if (print == TRUE) {
     print(glimpse(output$processed))

@@ -68,7 +68,7 @@ plot_distr <- function(data, target, values,
   }
   
   distr <- df %>% group_by(targets) %>% 
-    tally() %>% arrange(desc(n)) %>% 
+    tally() %>% arrange(n) %>% 
     mutate(p = round(100*n/sum(n),2), 
            pcum = cumsum(p))
   
@@ -83,14 +83,20 @@ plot_distr <- function(data, target, values,
     count <- count + theme(axis.text.x = element_text(angle = 45, hjust=1))
   }
   
-  prop <- ggplot(freqs, aes(x=reorder(as.character(value), -order), y=p/100, fill=targets, label=p)) + 
+  prop <- ggplot(freqs, aes(x = reorder(as.character(value), -order), 
+                            y = as.numeric(p/100),
+                            fill = targets,
+                            label = p)) + 
     geom_col(position = "fill") +
-    geom_hline(yintercept = distr$pcum[1:(nrow(distr)-1)]/100, colour = "purple", linetype = "dotted", alpha = 0.8) +
-    geom_text(check_overlap = TRUE, position = position_stack(vjust = 0.5), size = 3.2) +
+    geom_text(check_overlap = TRUE, size = 3.2,
+              position = position_stack(vjust = 0.5)) +
+    geom_hline(yintercept = distr$pcum[1:(nrow(distr)-1)]/100, 
+               colour = "purple", linetype = "dotted", alpha = 0.8) +
     scale_fill_brewer(palette = "Blues") + 
-    theme_minimal() + coord_flip() + 
-    labs(x = "Proportions", y = "") + guides(fill=FALSE) + 
+    theme_minimal() + coord_flip() + guides(fill=FALSE) + 
+    labs(x = "Proportions", y = "") + 
     labs(caption = paste("Variables:", targets_name, "vs.", variable_name))
+
   
   if (length(unique(value)) > top) {
     count <- count + labs(caption = paste("Showing the", top, "most frequent values"))
