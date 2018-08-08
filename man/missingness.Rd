@@ -2,18 +2,18 @@
 % Please edit documentation in R/missings.R
 \name{missingness}
 \alias{missingness}
-\title{Calculate missingness (%) on a data.frame}
+\title{Calculate missingness percentage on a data.frame}
 \usage{
 missingness(df, plot = FALSE, bins = 25)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe to study}
 
-\item{bins}{Integer. Number of breaks on plotted histogram}
+\item{plot}{Boolean. Do you wish to print results in a simple histogram?}
 
-\item{print}{Boolean. Do you wish to print results in a simple histogram?}
+\item{bins}{Integer. Number of breaks on plotted histogram}
 }
 \description{
-This function lets the user calculate the porcentage of NAs or
+This function lets the user calculate the percentage of NAs or
 missingness in a data.frame.
 }

@@ -1,11 +1,11 @@
 ####################################################################
-#' Calculate missingness (%) on a data.frame
+#' Calculate missingness percentage on a data.frame
 #' 
-#' This function lets the user calculate the porcentage of NAs or
+#' This function lets the user calculate the percentage of NAs or
 #' missingness in a data.frame.
 #' 
 #' @param df Dataframe. Dataframe to study
-#' @param print Boolean. Do you wish to print results in a simple histogram?
+#' @param plot Boolean. Do you wish to print results in a simple histogram?
 #' @param bins Integer. Number of breaks on plotted histogram
 #' @export
 missingness <- function(df, plot = FALSE, bins = 25) {
@@ -21,7 +21,11 @@ missingness <- function(df, plot = FALSE, bins = 25) {
   colnames(m) <- c("variable", "missingness")
   
   if (plot == TRUE) {
-    hist(missing_tbl$value, breaks = bins)
+    hist(m$missingness, 
+         breaks = bins,
+         xlab = "Missing values (%)", 
+         main = "Distribution of Missing Values by Percentages", 
+         col = "lightgreen")
   }
   
   return(m)
@@ -38,7 +42,7 @@ missingness <- function(df, plot = FALSE, bins = 25) {
 #' @param df Dataframe. Dataframe to study
 #' @param print Boolean. Do you wish to print results?
 #' @export
-nas = function(df, print = FALSE) {
+nas <- function(df, print = FALSE) {
   
   require(dplyr)
   require(VIM)
