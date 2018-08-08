@@ -4,14 +4,14 @@
 \alias{missingness}
 \title{Calculate missingness percentage on a data.frame}
 \usage{
-missingness(df, plot = FALSE, bins = 25)
+missingness(df, print = FALSE, bins = 10)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe to study}
 
-\item{plot}{Boolean. Do you wish to print results in a simple histogram?}
-
 \item{bins}{Integer. Number of breaks on plotted histogram}
+
+\item{plot}{Boolean. Do you wish to print results in a simple histogram?}
 }
 \description{
 This function lets the user calculate the percentage of NAs or

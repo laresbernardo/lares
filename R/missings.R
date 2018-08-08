@@ -8,7 +8,7 @@
 #' @param plot Boolean. Do you wish to print results in a simple histogram?
 #' @param bins Integer. Number of breaks on plotted histogram
 #' @export
-missingness <- function(df, plot = FALSE, bins = 25) {
+missingness <- function(df, print = FALSE, bins = 10) {
   
   require(tidyr)
   require(dplyr)
@@ -20,7 +20,7 @@ missingness <- function(df, plot = FALSE, bins = 25) {
     filter(value > 0) 
   colnames(m) <- c("variable", "missingness")
   
-  if (plot == TRUE) {
+  if (print == TRUE) {
     hist(m$missingness, 
          breaks = bins,
          xlab = "Missing values (%)", 

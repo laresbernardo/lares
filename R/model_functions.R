@@ -103,6 +103,7 @@ h2o_automl <- function(df,
   options(warn=-1)
   
   start <- Sys.time()
+  message(paste(start,"| Started process..."))
 
   df <- data.frame(df) %>% filter(!is.na(tag))
   type <- ifelse(length(unique(df$tag)) <= as.integer(thresh), "Classifier", "Regression")
@@ -119,6 +120,7 @@ h2o_automl <- function(df,
     test <- splits$test
     if (type == "Classifier") {
       print(table(train$tag)) 
+      train$tag <- as.factor(as.character(train$tag))
     }
     if (type == "Regression") {
       print(summary(train$tag)) 
