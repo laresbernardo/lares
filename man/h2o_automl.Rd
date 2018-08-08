@@ -5,7 +5,7 @@
 \title{Automated H2O's AutoML}
 \usage{
 h2o_automl(df, train_test = NA, split = 0.7, seed = 0, thresh = 6,
-  max_time = 5 * 60, max_models = 25, export = FALSE,
+  max_time = 5 * 60, max_models = 25, alarm = TRUE, export = FALSE,
   project = "Machine Learning Model")
 }
 \arguments{
@@ -23,6 +23,8 @@ of unique values we should have in 'tag' (more than: regression; less than: clas
 \item{max_time}{Numeric. Max seconds you wish for the function to iterate}
 
 \item{max_models}{Numeric. Max models you wish for the function to create}
+
+\item{alarm}{Boolean. Ping an alarm when ready!}
 
 \item{export}{Boolean. Do you wish to save results into your working directory?}
 

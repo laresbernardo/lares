@@ -86,6 +86,7 @@ loglossBinary = function(tag, score, eps = 1e-15) {
 #' of unique values we should have in 'tag' (more than: regression; less than: classification)
 #' @param max_time Numeric. Max seconds you wish for the function to iterate
 #' @param max_models Numeric. Max models you wish for the function to create
+#' @param alarm Boolean. Ping an alarm when ready!
 #' @param export Boolean. Do you wish to save results into your working directory?
 #' @param project Character. Your project's name
 #' @export
@@ -96,10 +97,12 @@ h2o_automl <- function(df,
                        thresh = 6,
                        max_time = 5*60,
                        max_models = 25,
+                       alarm = TRUE,
                        export = FALSE,
                        project = "Machine Learning Model") {
   require(dplyr)
   require(h2o)
+  require(beepr)
   options(warn=-1)
   
   start <- Sys.time()
@@ -210,6 +213,9 @@ h2o_automl <- function(df,
     lares::export_results(results)
   }
   
+  if (alarm == TRUE) {
+    beepr::beep()
+  }
   return(results)
   
 }
