@@ -1,11 +1,26 @@
 ####################################################################
-# Study the distribution of a targets variable and another variable
-# Similar to the funModeling::corrplot function
+#' Plot Target's Distribution vs Another Variable
+#' 
+#' Study the distribution of a target variable vs another variable. This
+#' function is quite similar to the funModeling's corrplot function.
+#' 
+#' @param data Dataframe
+#' @param target Character. Name of the Main -target- variable
+#' @param values Character. Name of the Secondary variable
+#' @param top Integer. Filter and plot only top n values if needed
+#' @param breaks Integer. Number of splits if needed
+#' @param abc Boolean. Do you wish to sort by alphabetical order?
+#' @param na.rm Boolean. Ignore NAs if needed
+#' @param print Boolean. Print the table's result
+#' @param save Boolean. Save the output plot in our working directory
+#' @param subdir Character. Into which subdirectory do you wish to save the plot to?
+#' @export
 plot_distr <- function(data, target, values, 
-                       top = 10, breaks = 10, 
+                       top = 10, 
+                       breaks = 10, 
                        abc = FALSE,
                        na.rm = FALSE, 
-                       print_table = FALSE,
+                       print = FALSE,
                        save = FALSE, subdir = NA) {
   
   require(ggplot2)
@@ -80,7 +95,7 @@ plot_distr <- function(data, target, values,
     count <- count + labs(caption = paste("Showing the", top, "most frequent values"))
   }
   
-  if (print_table == TRUE) {
+  if (print == TRUE) {
     print(freqs %>% select(-order))
   }
   
