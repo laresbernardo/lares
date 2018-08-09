@@ -8,7 +8,7 @@
 #' @param target Character. Name of the Main -target- variable
 #' @param values Character. Name of the Secondary variable
 #' @param top Integer. Filter and plot only top n values if needed
-#' @param breaks Integer. Number of splits if needed
+#' @param breaks Integer. Number of splits for numerical values
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
 #' @param na.rm Boolean. Ignore NAs if needed
 #' @param print Boolean. Print the table's result
@@ -106,7 +106,6 @@ plot_distr <- function(data, target, values,
     theme_minimal() + coord_flip() + guides(fill=FALSE) + 
     labs(x = "Proportions", y = "") + 
     labs(caption = paste("Variables:", targets_name, "vs.", variable_name))
-  
   
   if (length(unique(value)) > top) {
     count <- count + labs(caption = paste("Showing the", top, "most frequent values"))

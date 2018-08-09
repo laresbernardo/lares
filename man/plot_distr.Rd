@@ -16,7 +16,7 @@ plot_distr(data, target, values, top = 10, breaks = 10, abc = FALSE,
 
 \item{top}{Integer. Filter and plot only top n values if needed}
 
-\item{breaks}{Integer. Number of splits if needed}
+\item{breaks}{Integer. Number of splits for numerical values}
 
 \item{abc}{Boolean. Do you wish to sort by alphabetical order?}
 
