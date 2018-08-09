@@ -39,18 +39,14 @@ plot_distr <- function(data, target, values,
     stop(message(paste("Currently, targets has",length(targets),"rows and value has",length(value))))
   }
   
-  print(length(unique(value)))
-  if (length(unique(value)) >= breaks) {
-    stop(paste0("You can't split", values, " in ", breaks, "! Try with", length(unique(value)), "instead"))
-    #breaks <- length(unique(value))
+  if (length(unique(value)) <= breaks & !is.numeric(value)) {
+    message(paste0("You can't split ", values, " in ", breaks, 
+                   "! Trying with", length(unique(value)), " instead..."))
+    breaks <- length(unique(value))
   }
   
   if (length(unique(targets)) > 9) {
     stop("You should use a targets variable with max 9 different value!")
-  }
-  
-  if (sum(is.na(value)) > 0 & na.rm == TRUE) {
-    breaks <- breaks + 1
   }
   
   if (is.numeric(value)) {
@@ -66,6 +62,9 @@ plot_distr <- function(data, target, values,
   
   if (na.rm == TRUE) {
     df <- df[complete.cases(df), ]
+    if (sum(is.na(df$value)) > 0) {
+      breaks <- breaks + 1 
+    }
   }
   
   freqs <- df %>% group_by(value, targets) %>% 
