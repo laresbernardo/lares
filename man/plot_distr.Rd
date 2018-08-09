@@ -4,8 +4,9 @@
 \alias{plot_distr}
 \title{Plot Target's Distribution vs Another Variable}
 \usage{
-plot_distr(data, target, values, top = 10, breaks = 10, abc = FALSE,
-  na.rm = FALSE, print = FALSE, save = FALSE, subdir = NA)
+plot_distr(data, target, values, top = 10, breaks = 10,
+  custom_colours = FALSE, abc = FALSE, na.rm = FALSE,
+  print = FALSE, save = FALSE, subdir = NA)
 }
 \arguments{
 \item{data}{Dataframe}
@@ -14,9 +15,11 @@ plot_distr(data, target, values, top = 10, breaks = 10, abc = FALSE,
 
 \item{values}{Character. Name of the Secondary variable}
 
-\item{top}{Integer. Filter and plot only top n values if needed}
+\item{top}{Integer. Filter and plot the most n frequent for categorical values}
 
 \item{breaks}{Integer. Number of splits for numerical values}
+
+\item{custom_colours}{Boolean. Use custom colours function?}
 
 \item{abc}{Boolean. Do you wish to sort by alphabetical order?}
 

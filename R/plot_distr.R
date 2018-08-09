@@ -9,6 +9,7 @@
 #' @param values Character. Name of the Secondary variable
 #' @param top Integer. Filter and plot the most n frequent for categorical values
 #' @param breaks Integer. Number of splits for numerical values
+#' @param custom_colours Boolean. Use custom colours function?
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
 #' @param na.rm Boolean. Ignore NAs if needed
 #' @param print Boolean. Print the table's result
@@ -18,6 +19,7 @@
 plot_distr <- function(data, target, values, 
                        top = 10, 
                        breaks = 10, 
+                       custom_colours = FALSE,
                        abc = FALSE,
                        na.rm = FALSE, 
                        print = FALSE,
@@ -41,7 +43,7 @@ plot_distr <- function(data, target, values,
   
   if (length(unique(value)) <= breaks & !is.numeric(value)) {
     message(paste0("You can't split ", values, " in ", breaks, 
-                   "! Trying with", length(unique(value)), " instead..."))
+                   "! Trying with ", length(unique(value)), " instead..."))
     breaks <- length(unique(value))
   }
   
@@ -53,7 +55,7 @@ plot_distr <- function(data, target, values,
     value <- cut(value, quantile(value, prob = seq(0, 1, length = breaks), type = 7, na.rm = T))
   }
   
-  if (length(unique(value)) > top & is.character(value)) {
+  if (length(unique(value)) > top & (is.character(value) | is.factor(value))) {
     top <- min(rbind(top, breaks))
     value <- lares::categ_reducer(value, top = top)
   }
@@ -78,15 +80,16 @@ plot_distr <- function(data, target, values,
   }
   
   distr <- df %>% group_by(targets) %>% 
-    tally() %>% arrange(n) %>% 
+    tally() %>% arrange(-n) %>% 
     mutate(p = round(100*n/sum(n),2), 
            pcum = cumsum(p))
   
-  count <- ggplot(freqs, aes(x=reorder(as.character(value), order), y=n, fill=targets, label=n, ymax=max(n)*1.1)) + 
+  count <- ggplot(freqs, aes(x=reorder(as.character(value), order), y=n, 
+                             fill=tolower(as.character(targets)), 
+                             label=n, ymax=max(n)*1.1)) + 
     geom_col(position = "dodge") +
     geom_text(check_overlap = TRUE, position = position_dodge(0.9), size=3, vjust = -0.15) +
-    scale_fill_brewer(palette = "Blues") + theme_minimal() + 
-    labs(x = "", y = "Counter") + 
+    labs(x = "", y = "Counter") + theme_minimal() + 
     theme(legend.position="top", legend.title=element_blank())
   
   if (length(unique(value)) >= 10) {
@@ -95,20 +98,28 @@ plot_distr <- function(data, target, values,
   
   prop <- ggplot(freqs, aes(x = reorder(as.character(value), -order), 
                             y = as.numeric(p/100),
-                            fill = targets,
+                            fill=tolower(as.character(targets)), 
                             label = p)) + 
     geom_col(position = "fill") +
     geom_text(check_overlap = TRUE, size = 3.2,
               position = position_stack(vjust = 0.5)) +
     geom_hline(yintercept = distr$pcum[1:(nrow(distr)-1)]/100, 
                colour = "purple", linetype = "dotted", alpha = 0.8) +
-    scale_fill_brewer(palette = "Blues") + 
     theme_minimal() + coord_flip() + guides(fill=FALSE) + 
     labs(x = "Proportions", y = "") + 
     labs(caption = paste("Variables:", targets_name, "vs.", variable_name))
   
   if (length(unique(value)) > top) {
-    count <- count + labs(caption = paste("Showing the", top, "most frequent values"))
+    showed <- max(c(length(unique(value)), top))
+    count <- count + labs(caption = paste("Showing only the top", showed, "frequent values"))
+  }
+  
+  if (custom_colours == TRUE) {
+    count <- count + gg_fill_customs()
+    prop <- prop + gg_fill_customs()
+  } else {
+    count <- count + scale_fill_brewer(palette = "Blues")
+    prop <- prop + scale_fill_brewer(palette = "Blues")
   }
   
   if (print == TRUE) {

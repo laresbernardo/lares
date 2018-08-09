@@ -8,75 +8,36 @@ gg_colour_customs <- function () {
   
   suppressMessages(require(ggplot2))
   
-  values <- c("ALLIANZ"="#0038A8",
-              "EQUIDAD"="#52CF44",
-              "COLPATRIA"="#EE0606",
-              "DEL ESTADO"="#F37000",
-              "SURAMERICANA"="#1F6D8C",
-              "MAPFRE"="#34000D",
-              "LA PREVISORA"="#6F9A45",
-              "AIG"="#C71585",
-              "GENERALI"="#B21F1F",
-              "SOLIDARIA"="#E69500",
-              "LIBERTY"="#4E629A",
-              "BOLIVAR"="#F0F206",
-              "CIA"="#8ACBE5",
+  values <- c("allianz"="#0038A8",
+              "equidad"="#52CF44",
+              "colpatria"="#EE0606",
+              "del estado"="#F37000",
+              "suramericana"="#1F6D8C",
+              "mapfre"="#34000D",
+              "la previsora"="#6F9A45",
+              "aig"="#C71585",
+              "generali"="#B21F1F",
+              "solidaria"="#E69500",
+              "liberty"="#4E629A",
+              "bolivar"="#F0F206",
+              "cia"="#8ACBE5",
               "puntored"="#FFFF00",
               "movilred"="#FF1493",
               "web"="#FFFFFF",
               "f1"="#FFFFFF",
-              "M"="steelblue2",
-              "F"="lightpink2",
-              "TRUE"="springgreen3",
-              "FALSE"="red2",
+              "m"="steelblue2",
+              "f"="lightpink2",
+              "true"="springgreen3",
+              "false"="red2",
               "1"="springgreen3",
               "0"="red2",
               "good"="springgreen3",
               "bad"="red2",
               "bueno"="springgreen3",
-              "malo"="red2")
-  return(scale_color_manual(values=values))
-}
-
-
-####################################################################
-#' Custom colours to use in ggplot as scale_color_manual on texts
-#' 
-#' This function lets the user use some default colours
-#' 
-#' @export
-gg_text_customs <- function () {
-  
-  suppressMessages(require(ggplot2))
-  
-  values <- c("ALLIANZ"="#000000",
-              "EQUIDAD"="#000000",
-              "COLPATRIA"="#000000",
-              "DEL ESTADO"="#000000",
-              "SURAMERICANA"="#000000",
-              "MAPFRE"="#000000",
-              "LA PREVISORA"="#000000",
-              "AIG"="#000000",
-              "GENERALI"="#000000",
-              "SOLIDARIA"="#000000",
-              "LIBERTY"="#000000",
-              "BOLIVAR"="#000000",
-              "CIA"="#000000",
-              "puntored"="#000000",
-              "movilred"="#000000",
-              "web"="#FFFFFF",
-              "f1"="#FFFFFF",
-              "M"="steelblue2",
-              "F"="lightpink2",
-              "TRUE"="springgreen3",
-              "FALSE"="red2",
-              "1"="springgreen3",
-              "0"="red2",
-              "good"="springgreen3",
-              "bad"="red2",
-              "bueno"="springgreen3",
-              "malo"="red2")
-  return(scale_color_manual(values=values))
+              "malo"="red2",
+              "buenos"="springgreen3",
+              "malos"="red2")
+  return(scale_color_manual(values = values))
 }
 
 
@@ -90,32 +51,77 @@ gg_fill_customs <- function () {
   
   suppressMessages(require(ggplot2))
   
-  values <- c("ALLIANZ"="#0038A8",
-              "EQUIDAD"="#52CF44",
-              "COLPATRIA"="#EE0606",
-              "DEL ESTADO"="#F37000",
-              "SURAMERICANA"="#1F6D8C",
-              "MAPFRE"="#34000D",
-              "LA PREVISORA"="#6F9A45",
-              "AIG"="#C71585",
-              "GENERALI"="#B21F1F",
-              "SOLIDARIA"="#E69500",
-              "LIBERTY"="#4E629A",
-              "BOLIVAR"="#F0F206",
-              "CIA"="#8ACBE5",
+  values <- c("allianz"="#0038A8",
+              "equidad"="#52CF44",
+              "colpatria"="#EE0606",
+              "del estado"="#F37000",
+              "suramericana"="#1F6D8C",
+              "mapfre"="#34000D",
+              "la previsora"="#6F9A45",
+              "aig"="#C71585",
+              "generali"="#B21F1F",
+              "solidaria"="#E69500",
+              "liberty"="#4E629A",
+              "bolivar"="#F0F206",
+              "cia"="#8ACBE5",
               "puntored"="#FFFF00",
               "movilred"="#FF1493",
-              "web"="#290452",
+              "web"="#FFFFFF",
               "f1"="#FFFFFF",
-              "M"="steelblue2",
-              "F"="lightpink2",
-              "TRUE"="springgreen3",
-              "FALSE"="red2",
+              "m"="steelblue2",
+              "f"="lightpink2",
+              "true"="springgreen3",
+              "false"="red2",
               "1"="springgreen3",
               "0"="red2",
               "good"="springgreen3",
               "bad"="red2",
               "bueno"="springgreen3",
-              "malo"="red2")
-  return(scale_fill_manual(values=values))
+              "malo"="red2",
+              "buenos"="springgreen3",
+              "malos"="red2")
+  return(scale_fill_manual(values = values))
+}
+
+
+####################################################################
+#' Custom colours to use in ggplot as scale_color_manual on texts
+#' 
+#' This function lets the user use some default colours
+#' 
+#' @export
+gg_text_customs <- function () {
+  
+  suppressMessages(require(ggplot2))
+  
+  black <- "#000000"
+  white <- "#FFFFFF"
+  values <- c("allianz" = black,
+              "equidad" = black,
+              "colpatria" = black,
+              "del estado" = black,
+              "suramericana" = black,
+              "mapfre" = black,
+              "la previsora" = black,
+              "aig" = black,
+              "generali" = black,
+              "solidaria" = black,
+              "liberty" = black,
+              "bolivar" = black,
+              "cia" = black,
+              "puntored" = black,
+              "movilred" = black,
+              "web" = white,
+              "f1" = white,
+              "m" = white,
+              "f" = black,
+              "true" = black,
+              "false" = black,
+              "1" = black,
+              "0" = black,
+              "good" = black,
+              "bad" = black,
+              "bueno" = black,
+              "malo" = black)
+  return(scale_color_manual(values = values))
 }
