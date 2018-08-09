@@ -17,11 +17,22 @@ queryGA <- function(account = "comparamejor",
                     start = lubridate::floor_date(Sys.Date(), "month"),
                     end = Sys.Date()){
   
+  require(googleAuthR)
+  
+  #FIRST TIME
+  # options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics"),
+  #         googleAuthR.client_id = "XXX",
+  #         googleAuthR.client_secret = "XXX")
+  # gar_auth()
+  
   account <- paste("google_analytics", account, sep="_")
   vars <- lares::get_credentials(from = account, dir = creds)
+  
+  options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics"),
+          googleAuthR.client_id = vars$client_id,
+          googleAuthR.client_secret = vars$client_secret)
 
   # Authenticate with local file
-  require(googleAuthR)
   if (!is.na(token_dir)) { token <- paste0(token_dir, "/", vars$token_name) } else { token <- vars$token_name }
   message(paste("Token:", token))
   gar_auth(token)

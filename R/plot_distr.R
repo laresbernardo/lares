@@ -21,7 +21,8 @@ plot_distr <- function(data, target, values,
                        abc = FALSE,
                        na.rm = FALSE, 
                        print = FALSE,
-                       save = FALSE, subdir = NA) {
+                       save = FALSE, 
+                       subdir = NA) {
   
   require(ggplot2)
   require(gridExtra)
@@ -38,8 +39,18 @@ plot_distr <- function(data, target, values,
     stop(message(paste("Currently, targets has",length(targets),"rows and value has",length(value))))
   }
   
+  print(length(unique(value)))
+  if (length(unique(value)) >= breaks) {
+    stop(paste0("You can't split", values, " in ", breaks, "! Try with", length(unique(value)), "instead"))
+    #breaks <- length(unique(value))
+  }
+  
   if (length(unique(targets)) > 9) {
     stop("You should use a targets variable with max 9 different value!")
+  }
+  
+  if (sum(is.na(value)) > 0 & na.rm == TRUE) {
+    breaks <- breaks + 1
   }
   
   if (is.numeric(value)) {
@@ -96,7 +107,7 @@ plot_distr <- function(data, target, values,
     theme_minimal() + coord_flip() + guides(fill=FALSE) + 
     labs(x = "Proportions", y = "") + 
     labs(caption = paste("Variables:", targets_name, "vs.", variable_name))
-
+  
   
   if (length(unique(value)) > top) {
     count <- count + labs(caption = paste("Showing the", top, "most frequent values"))
