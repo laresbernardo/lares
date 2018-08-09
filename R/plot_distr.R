@@ -7,7 +7,7 @@
 #' @param data Dataframe
 #' @param target Character. Name of the Main -target- variable
 #' @param values Character. Name of the Secondary variable
-#' @param top Integer. Filter and plot only top n values if needed
+#' @param top Integer. Filter and plot the most n frequent for categorical values
 #' @param breaks Integer. Number of splits for numerical values
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
 #' @param na.rm Boolean. Ignore NAs if needed
@@ -53,8 +53,8 @@ plot_distr <- function(data, target, values,
     value <- cut(value, quantile(value, prob = seq(0, 1, length = breaks), type = 7, na.rm = T))
   }
   
-  if (length(unique(value)) > top) {
-    top <- ifelse(breaks > top, breaks, top)
+  if (length(unique(value)) > top & is.character()) {
+    top <- min(rbind(top, breaks))
     value <- lares::categ_reducer(value, top = top)
   }
   
