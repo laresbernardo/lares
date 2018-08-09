@@ -53,7 +53,7 @@ plot_distr <- function(data, target, values,
     value <- cut(value, quantile(value, prob = seq(0, 1, length = breaks), type = 7, na.rm = T))
   }
   
-  if (length(unique(value)) > top & is.character()) {
+  if (length(unique(value)) > top & is.character(value)) {
     top <- min(rbind(top, breaks))
     value <- lares::categ_reducer(value, top = top)
   }
