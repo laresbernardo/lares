@@ -56,8 +56,7 @@ plot_distr <- function(data, target, values,
   }
   
   if (length(unique(value)) > top & (is.character(value) | is.factor(value))) {
-    top <- min(rbind(top, breaks))
-    value <- lares::categ_reducer(value, top = top)
+    value <- lares::categ_reducer(value, top = min(rbind(top, breaks)))
   }
   
   df <- data.frame(targets = targets, value = value)
