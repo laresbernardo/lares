@@ -10,9 +10,9 @@ queryDummy = function(query, creds = NA) {
 
   options(warn=-1)
 
-  require(dplyr)
-  require(RPostgreSQL)
-  require(config)
+  suppressMessages(require(dplyr))
+  suppressMessages(require(RPostgreSQL))
+  suppressMessages(require(config))
 
   dw <- lares::get_credentials(from="dummy", dir = creds)
 
@@ -41,9 +41,9 @@ queryDW = function(query, which = "seguros", creds = NA) {
 
   options(warn=-1)
 
-  require(dplyr)
-  require(RPostgreSQL)
-  require(config)
+  suppressMessages(require(dplyr))
+  suppressMessages(require(RPostgreSQL))
+  suppressMessages(require(config))
 
   dw <- lares::get_credentials(from = "warehouse", dir = creds)
 
@@ -74,9 +74,9 @@ queryProduc = function(query, creds = NA) {
 
   options(warn=-1)
 
-  require(dplyr)
-  require(RPostgreSQL)
-  require(config)
+  suppressMessages(require(dplyr))
+  suppressMessages(require(RPostgreSQL))
+  suppressMessages(require(config))
 
   dw <- lares::get_credentials(from = "production", dir = creds)
 
