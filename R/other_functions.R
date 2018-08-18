@@ -133,10 +133,14 @@ vector2text <- function(vector, sep=", ", quotes = TRUE) {
 #' characters and no accents/symbols on letters.
 #' 
 #' @param text. Character Vector
+#' @param spaces Boolean. Keep spaces?
 #' @export
-cleanText <- function(text) {
+cleanText <- function(text, spaces = TRUE) {
   text <- as.character(text)
   output <- tolower(gsub("[^[:alnum:] ]", "", iconv(text, from="UTF-8", to="ASCII//TRANSLIT")))
+  if (spaces == FALSE) {
+    output <- gsub(" ", "", output)
+  }
   return(output)
 }
 
@@ -194,8 +198,14 @@ dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
 #' @param x Numerical Vector
 #' @param decimals Integer. Amount of decimals to display
 #' @param type Integer. 1 for International standards. 2 for American Standards.  
+#' @param scientific Boolean. Scientific notation
 #' @export
-formatNum <- function(x, decimals = 2, type = 1) {
+formatNum <- function(x, decimals = 2, type = 1, scientific = FALSE) {
+  if (scientific == FALSE) {
+    options(scipen=999)
+  } else {
+    formatC(numb, format = "e", digits = 2)
+  }
   if (type == 1) {
     format(round(as.numeric(x), decimals), nsmall=decimals, big.mark=".", decimal.mark = ",")
   } else {

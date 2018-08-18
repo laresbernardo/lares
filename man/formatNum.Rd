@@ -4,7 +4,7 @@
 \alias{formatNum}
 \title{Nicely Format Numerical Values}
 \usage{
-formatNum(x, decimals = 2, type = 1)
+formatNum(x, decimals = 2, type = 1, scientific = FALSE)
 }
 \arguments{
 \item{x}{Numerical Vector}
@@ -12,6 +12,8 @@ formatNum(x, decimals = 2, type = 1)
 \item{decimals}{Integer. Amount of decimals to display}
 
 \item{type}{Integer. 1 for International standards. 2 for American Standards.}
+
+\item{scientific}{Boolean. Scientific notation}
 }
 \description{
 This function lets the user format numerical values nicely

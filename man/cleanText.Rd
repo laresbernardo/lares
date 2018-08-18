@@ -4,9 +4,11 @@
 \alias{cleanText}
 \title{Clean text}
 \usage{
-cleanText(text)
+cleanText(text, spaces = TRUE)
 }
 \arguments{
+\item{spaces}{Boolean. Keep spaces?}
+
 \item{text.}{Character Vector}
 }
 \description{

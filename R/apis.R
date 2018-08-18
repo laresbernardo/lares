@@ -17,7 +17,7 @@ bring_api <- function(url) {
   char <- rawToChar(get$content)
   import <- data.frame(fromJSON(char))
   import <- jsonlite::flatten(import)
-  data.frame(rlist::list.cbind(lapply(import, unlist(as.character))))
+  import <- data.frame(rlist::list.cbind(lapply(import, unlist(as.character))))
 
   # Further transformations
   import[import == "list()"] <- NA

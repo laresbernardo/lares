@@ -29,11 +29,11 @@ msplit <- function(df, size = 0.7, seed = NA, print=T) {
   if (print == TRUE) {
     print(summary) 
   }
-
+  
   sets <- list(train=train, test=test, summary=summary, split_size=size)
   
   return(sets)
-
+  
 }
 
 
@@ -58,7 +58,11 @@ loglossBinary = function(tag, score, eps = 1e-15) {
   
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
-    stop(message(paste("Currently, tag has", length(tag),"rows and score has", length(score))))
+    stop(message(paste("Currently, tag has", 
+                       length(tag),
+                       "rows and score has", 
+                       length(score)))
+    )
   }
   
   if (!is.numeric(tag)) {
@@ -74,20 +78,31 @@ loglossBinary = function(tag, score, eps = 1e-15) {
 ####################################################################
 #' Automated H2O's AutoML
 #'
-#' This function lets the user create a robust and fast model, using H2O's AutoML
-#' function. The result is a list with the best model, its parameters, datasets,
-#' performance metrics, variables importances, and others. 
+#' This function lets the user create a robust and fast model, using 
+#' H2O's AutoML function. The result is a list with the best model, 
+#' its parameters, datasets, performance metrics, variables 
+#' importances, and others. 
 #'
-#' @param df Dataframe. Dataframe containing all your data, including the independent variable labeled as 'tag'
-#' @param train_test Character. If needed, df's column name with 'test' and 'train' values to split
-#' @param split Numeric. Value between 0 and 1 to split as train/test datasets. Value is for training set.
+#' @param df Dataframe. Dataframe containing all your data, including 
+#' the independent variable labeled as 'tag'
+#' @param train_test Character. If needed, df's column name with 'test' 
+#' and 'train' values to split
+#' @param split Numeric. Value between 0 and 1 to split as train/test 
+#' datasets. Value is for training set.
 #' @param seed Numeric. Seed for random stuff and reproducibility
-#' @param thresh Integer. Threshold for selecting binary or regression models: this number is the threshold 
-#' of unique values we should have in 'tag' (more than: regression; less than: classification)
-#' @param max_time Numeric. Max seconds you wish for the function to iterate
-#' @param max_models Numeric. Max models you wish for the function to create
+#' @param thresh Integer. Threshold for selecting binary or regression 
+#' models: this number is the threshold 
+#' of unique values we should have in 'tag' (more than: regression; 
+#' less than: classification)
+#' @param max_time Numeric. Max seconds you wish for the function 
+#' to iterate
+#' @param max_models Numeric. Max models you wish for the function 
+#' to create
 #' @param alarm Boolean. Ping an alarm when ready!
-#' @param export Boolean. Do you wish to save results into your working directory?
+#' @param export Boolean. Do you wish to save results into your 
+#' working directory?
+#' @param plot Boolean. Do you want to plot the results with 
+#' lares::mplot_full function?
 #' @param project Character. Your project's name
 #' @export
 h2o_automl <- function(df, 
@@ -99,6 +114,7 @@ h2o_automl <- function(df,
                        max_models = 25,
                        alarm = TRUE,
                        export = FALSE,
+                       plot = FALSE,
                        project = "Machine Learning Model") {
   require(dplyr)
   require(h2o)
@@ -107,7 +123,7 @@ h2o_automl <- function(df,
   
   start <- Sys.time()
   message(paste(start,"| Started process..."))
-
+  
   df <- data.frame(df) %>% filter(!is.na(tag))
   type <- ifelse(length(unique(df$tag)) <= as.integer(thresh), "Classifier", "Regression")
   
@@ -206,16 +222,24 @@ h2o_automl <- function(df,
       leaderboard = aml@leaderboard
     )
   }
-
+  
   message(paste0("Training duration: ", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
   
   if (export == TRUE) {
     lares::export_results(results)
   }
   
+  if (plot == TRUE) {
+    lares::mplot_full(tag = results$scores$tag,
+                      score = results$scores$score,
+                      subtitle = results$project,
+                      model_name = results$model_name)
+  }
+  
   if (alarm == TRUE) {
     beepr::beep()
   }
+  
   return(results)
   
 }
