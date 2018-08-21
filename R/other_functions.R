@@ -132,7 +132,7 @@ vector2text <- function(vector, sep=", ", quotes = TRUE) {
 #' This function lets the user clean text into getting only alphanumeric 
 #' characters and no accents/symbols on letters.
 #' 
-#' @param text. Character Vector
+#' @param text Character Vector
 #' @param spaces Boolean. Keep spaces?
 #' @export
 cleanText <- function(text, spaces = TRUE) {

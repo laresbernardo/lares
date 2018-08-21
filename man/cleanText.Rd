@@ -7,9 +7,9 @@
 cleanText(text, spaces = TRUE)
 }
 \arguments{
-\item{spaces}{Boolean. Keep spaces?}
+\item{text}{Character Vector}
 
-\item{text.}{Character Vector}
+\item{spaces}{Boolean. Keep spaces?}
 }
 \description{
 This function lets the user clean text into getting only alphanumeric 
