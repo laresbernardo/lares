@@ -12,8 +12,8 @@
 #' @export
 time_forecast <- function(time, values, n_future = 15, plot = TRUE, 
                           project = "Simple Forecast using Machine Learning") {
-  library(timetk)
-  library(tidyquant)
+  require(timetk)
+  require(tidyquant)
   
   if (length(time) != length(values)) {
     stop("The parameters 'time' and 'values' should have the same length")

@@ -5,7 +5,7 @@
 #' 
 #' @param vector Vector to group, count, and mutate
 #' @export
-freqs = function(vector, ...) {
+freqs <- function(vector, ...) {
 
   require(dplyr)
 
@@ -20,11 +20,11 @@ freqs = function(vector, ...) {
 ####################################################################
 #' Convert year month format YYYY-MM
 #' 
-#' This function lets the user convert a year month format into YYYY-MM
+#' This function lets the user convert a date into YYYY-MM format
 #' 
-#' @param date Date. Date we wish to transform into format YYYY-MM format
+#' @param date Date. Date we wish to transform 
 #' @export
-year_month = function(date) {
+year_month <- function(date) {
 
   require(lubridate)
   require(stringr)
@@ -32,6 +32,25 @@ year_month = function(date) {
   return(paste(
     year(date),
     str_pad(month(date), 2, pad = "0"),
+    sep="-"))
+}
+
+
+####################################################################
+#' Convert year week format YYYY-WW
+#' 
+#' This function lets the user convert a date into YYYY-WW format
+#' 
+#' @param date Date. Date we wish to transform
+#' @export
+year_week <- function(date) {
+  
+  require(lubridate)
+  require(stringr)
+  
+  return(paste(
+    year(date),
+    str_pad(week(date), 2, pad = "0"),
     sep="-"))
 }
 
