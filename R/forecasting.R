@@ -43,8 +43,8 @@ time_forecast <- function(time, values, n_future = 15, plot = TRUE,
   message("Predicted range: ", rects$start, " to ", rects$end)
   forecast <- df %>%
     ggplot(aes(x = date, y = amount)) + 
-    labs(title = project, y = "Amount",
-         subtitle = "Using basic multivariate linear regression") +
+    labs(title = project, y = "Amount", x = "",
+         subtitle = "Using simple multivariate linear regression") +
     # Training data
     geom_line(color = palette_light()[[1]]) +
     geom_point(color = palette_light()[[1]]) +
