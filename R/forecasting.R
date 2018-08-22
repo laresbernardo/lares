@@ -47,8 +47,8 @@ time_forecast <- function(time, values, n_future = 15, use_last = TRUE, plot = T
     predictions_tbl <- tibble(time = future_idx, amount = pred) 
   } else {
     augmented_h2o <- augmented %>% dplyr::rename(tag = amount)
-    fit_auto <- lares::h2o_automl(df = augmented_h2o, alarm = FALSE)
-    pred <- h2o.predict(fit_auto$model, as.h2o(new_data_tbl), project = project)
+    fit_auto <- lares::h2o_automl(df = augmented_h2o, alarm = FALSE, project = project)
+    pred <- h2o.predict(fit_auto$model, as.h2o(new_data_tbl))
     predictions_tbl <- tibble(time = future_idx, amount = as.vector(pred))
   }
   
@@ -82,8 +82,20 @@ time_forecast <- function(time, values, n_future = 15, use_last = TRUE, plot = T
     print(forecast)
   }
   
-  output <- list(data = rbind(df, predictions_tbl),
-                 model = ifelse(automl == TRUE, fit_auto, fit_lm))
+  if (automl == TRUE) {
+    results <- fit_auto
+    score <- fit_auto$model$scores$score
+  } else {
+    results <- fit_lm
+    score <- fit_lmt$model$fitted.values
+  }
+  
+  df_final <- rbind(df, predictions_tbl)
+  tag <- df$amount
+  errors <- lares::errors(tag, score)
+  
+  output <- list(data = df_final, model = results, errors = errors)
+  
   return(output)
   
 }
