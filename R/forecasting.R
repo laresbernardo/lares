@@ -9,9 +9,10 @@
 #' @param n_future Integer. How many steps do you wish to forecast?
 #' @param use_last Boolena. Use last observation?
 #' @param plot Boolean. If you wish to plot your results
+#' @param automl Boolean. Use lares::h2o_automl()
 #' @param project Character. Name of your forecast project for plot title
 #' @export
-time_forecast <- function(time, values, n_future = 15, use_last = TRUE, plot = TRUE, 
+time_forecast <- function(time, values, n_future = 15, use_last = TRUE, plot = TRUE, automl = FALSE, 
                           project = "Simple Forecast using Machine Learning") {
   require(timetk)
   require(tidyquant)
@@ -23,24 +24,33 @@ time_forecast <- function(time, values, n_future = 15, use_last = TRUE, plot = T
   df <- data.frame(time = time, amount = values)
   if (use_last == FALSE) {
     df <- arrange(df, desc(time)) %>% slice(-1)
+    n_future <- n_future + 1
   }
   
   # STEP 1: AUGMENT TIME SERIES SIGNATURE
   augmented <- df %>% tk_augment_timeseries_signature()
+  augmented <- mutate(augmented, 
+                      month.lbl = as.character(month.lbl),
+                      wday.lbl = as.character(wday.lbl))
   
-  # STEP 2: MODEL - Linear regression model used, but can use any model
-  fit_lm <- lm(amount ~ ., data = select(augmented, -c(time)))
-  summary <- summary(fit_lm)
-  
-  # STEP 3: BUILD FUTURE (NEW) DATA
+  # STEP 2: BUILD FUTURE (NEW) DATA
   idx <- augmented %>% tk_index()
   future_idx <- idx %>% tk_make_future_timeseries(n_future = n_future)
-  new_data_tbl <- future_idx %>% tk_get_timeseries_signature()
+  new_data_tbl <- future_idx %>% tk_get_timeseries_signature() %>%
+    mutate(month.lbl = as.character(month.lbl),
+           wday.lbl = as.character(wday.lbl))
   
-  # STEP 4: PREDICT THE NEW DATA
-  # Make predictions
-  pred <- predict(fit_lm, newdata = select(new_data_tbl, -c(index)))
-  predictions_tbl <- tibble(time = future_idx, amount = pred)
+  # STEP 3: MODEL
+  if (automl == FALSE) {
+    fit_lm <- lm(amount ~ ., data = select(augmented, -c(time)))
+    pred <- predict(fit_lm, newdata = select(new_data_tbl, -c(index)))
+    predictions_tbl <- tibble(time = future_idx, amount = pred) 
+  } else {
+    augmented_h2o <- augmented %>% dplyr::rename(tag = amount)
+    fit_auto <- lares::h2o_automl(df = augmented_h2o, alarm = FALSE)
+    pred <- h2o.predict(fit_auto$model, as.h2o(new_data_tbl))
+    predictions_tbl <- tibble(time = future_idx, amount = as.vector(pred))
+  }
   
   # STEP 5: COMPARE ACTUAL VS PREDICTIONS
   rects <- data.frame(start = min(future_idx), end = max(future_idx))
@@ -48,7 +58,7 @@ time_forecast <- function(time, values, n_future = 15, use_last = TRUE, plot = T
   forecast <- df %>%
     ggplot(aes(x = time, y = amount)) + 
     labs(title = project, y = "Amount", x = "",
-         subtitle = "Using simple multivariate linear regression") +
+         subtitle = "Using simple multivariate regression") +
     # Training data
     geom_line(color = palette_light()[[1]]) +
     geom_point(color = palette_light()[[1]]) +
@@ -73,8 +83,7 @@ time_forecast <- function(time, values, n_future = 15, use_last = TRUE, plot = T
   }
   
   output <- list(data = rbind(df, predictions_tbl),
-                 model = fit_lm,
-                 summary = summary)
+                 model = ifelse(automl == TRUE, fit_auto, fit_lm))
   return(output)
   
 }

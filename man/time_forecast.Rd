@@ -5,7 +5,8 @@
 \title{Simple Forecast}
 \usage{
 time_forecast(time, values, n_future = 15, use_last = TRUE,
-  plot = TRUE, project = "Simple Forecast using Machine Learning")
+  plot = TRUE, automl = FALSE,
+  project = "Simple Forecast using Machine Learning")
 }
 \arguments{
 \item{time}{POSIX. Vector with dates or time values}
@@ -17,6 +18,8 @@ time_forecast(time, values, n_future = 15, use_last = TRUE,
 \item{use_last}{Boolena. Use last observation?}
 
 \item{plot}{Boolean. If you wish to plot your results}
+
+\item{automl}{Boolean. Use lares::h2o_automl()}
 
 \item{project}{Character. Name of your forecast project for plot title}
 }
