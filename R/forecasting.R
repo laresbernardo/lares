@@ -87,12 +87,11 @@ time_forecast <- function(time, values, n_future = 15, use_last = TRUE, plot = T
     score <- fit_auto$model$scores$score
   } else {
     results <- fit_lm
-    score <- fit_lmt$model$fitted.values
+    score <- fit_lm$model$fitted.values
   }
   
   df_final <- rbind(df, predictions_tbl)
-  tag <- df$amount
-  errors <- lares::errors(tag, score)
+  errors <- lares::errors(df$amount, score)
   
   output <- list(data = df_final, model = results, errors = errors)
   
