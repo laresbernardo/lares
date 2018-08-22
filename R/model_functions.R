@@ -429,5 +429,7 @@ mse <- function(tag, score){
 #' @export
 mape <- function(tag, score){ 
   error <- (tag - score) / tag
-  mean(abs(error))
+  error <- error[!is.infinite(error)]
+  tag <- tag[tag != 0]
+  mean(abs(error/tag))
 }
