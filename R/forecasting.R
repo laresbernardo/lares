@@ -7,10 +7,11 @@
 #' @param time POSIX. Vector with dates or time values
 #' @param values Numeric. Vector with numerical values
 #' @param n_future Integer. How many steps do you wish to forecast?
+#' @param use_last Boolena. Use last observation?
 #' @param plot Boolean. If you wish to plot your results
 #' @param project Character. Name of your forecast project for plot title
 #' @export
-time_forecast <- function(time, values, n_future = 15, plot = TRUE, 
+time_forecast <- function(time, values, n_future = 15, use_last = TRUE, plot = TRUE, 
                           project = "Simple Forecast using Machine Learning") {
   require(timetk)
   require(tidyquant)
@@ -19,14 +20,17 @@ time_forecast <- function(time, values, n_future = 15, plot = TRUE,
     stop("The parameters 'time' and 'values' should have the same length")
   }
   
-  df <- data.frame(date = time, amount = values)
+  df <- data.frame(time = time, amount = values)
+  if (use_last == FALSE) {
+    df <- arrange(df, desc(time)) %>% slice(-1)
+  }
   
   # STEP 1: AUGMENT TIME SERIES SIGNATURE
   augmented <- df %>% tk_augment_timeseries_signature()
   
   # STEP 2: MODEL - Linear regression model used, but can use any model
-  fit_lm <- lm(amount ~ ., data = select(augmented, -c(date, diff)))
-  #summary(fit_lm)
+  fit_lm <- lm(amount ~ ., data = select(augmented, -c(time)))
+  summary <- summary(fit_lm)
   
   # STEP 3: BUILD FUTURE (NEW) DATA
   idx <- augmented %>% tk_index()
@@ -35,14 +39,14 @@ time_forecast <- function(time, values, n_future = 15, plot = TRUE,
   
   # STEP 4: PREDICT THE NEW DATA
   # Make predictions
-  pred <- predict(fit_lm, newdata = select(new_data_tbl, -c(index, diff)))
-  predictions_tbl <- tibble(date  = future_idx, amount = pred)
+  pred <- predict(fit_lm, newdata = select(new_data_tbl, -c(index)))
+  predictions_tbl <- tibble(time = future_idx, amount = pred)
   
   # STEP 5: COMPARE ACTUAL VS PREDICTIONS
   rects <- data.frame(start = min(future_idx), end = max(future_idx))
   message("Predicted range: ", rects$start, " to ", rects$end)
   forecast <- df %>%
-    ggplot(aes(x = date, y = amount)) + 
+    ggplot(aes(x = time, y = amount)) + 
     labs(title = project, y = "Amount", x = "",
          subtitle = "Using simple multivariate linear regression") +
     # Training data
@@ -68,7 +72,9 @@ time_forecast <- function(time, values, n_future = 15, plot = TRUE,
     print(forecast)
   }
   
-  output <- rbind(df, predictions_tbl)
+  output <- list(data = rbind(df, predictions_tbl),
+                 model = fit_lm,
+                 summary = summary)
   return(output)
   
 }

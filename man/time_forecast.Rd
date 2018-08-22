@@ -4,8 +4,8 @@
 \alias{time_forecast}
 \title{Simple Forecast}
 \usage{
-time_forecast(time, values, n_future = 15, plot = TRUE,
-  project = "Simple Forecast using Machine Learning")
+time_forecast(time, values, n_future = 15, use_last = TRUE,
+  plot = TRUE, project = "Simple Forecast using Machine Learning")
 }
 \arguments{
 \item{time}{POSIX. Vector with dates or time values}
@@ -13,6 +13,8 @@ time_forecast(time, values, n_future = 15, plot = TRUE,
 \item{values}{Numeric. Vector with numerical values}
 
 \item{n_future}{Integer. How many steps do you wish to forecast?}
+
+\item{use_last}{Boolena. Use last observation?}
 
 \item{plot}{Boolean. If you wish to plot your results}
 
