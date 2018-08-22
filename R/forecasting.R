@@ -82,18 +82,19 @@ time_forecast <- function(time, values, n_future = 15, use_last = TRUE, plot = T
     print(forecast)
   }
   
+  df_final <- rbind(df, predictions_tbl)
+  
   if (automl == TRUE) {
-    results <- fit_auto
-    score <- fit_auto$model$scores$score
+    model <- fit_auto
+    score <- fit_auto$scores$score
   } else {
-    results <- fit_lm
-    score <- fit_lm$model$fitted.values
+    model <- fit_lm
+    score <- fit_lm$fitted.values
   }
   
-  df_final <- rbind(df, predictions_tbl)
-  errors <- lares::errors(df$amount, score)
-  
-  output <- list(data = df_final, model = results, errors = errors)
+  output <- list(data = df_final, 
+                 model = model, 
+                 errors = lares::errors(df$amount, score))
   
   return(output)
   
