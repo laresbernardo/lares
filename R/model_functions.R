@@ -433,3 +433,20 @@ mape <- function(tag, score){
   tag <- tag[tag != 0]
   mean(abs(error/tag))
 }
+
+####################################################################
+#' Calculate Errors
+#' 
+#' This function lets the user calculate all errors simultaneously.
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @export
+errors <- function(tag, score){ 
+  data.frame(
+    rmse = lares::rmse(tag, score),
+    mae = lares::mae(tag, score),
+    mse = lares::mse(tag, score),
+    mape = lares::mape(tag, score)
+  )
+}
