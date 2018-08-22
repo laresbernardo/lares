@@ -48,7 +48,7 @@ time_forecast <- function(time, values, n_future = 15, use_last = TRUE, plot = T
   } else {
     augmented_h2o <- augmented %>% dplyr::rename(tag = amount)
     fit_auto <- lares::h2o_automl(df = augmented_h2o, alarm = FALSE)
-    pred <- h2o.predict(fit_auto$model, as.h2o(new_data_tbl))
+    pred <- h2o.predict(fit_auto$model, as.h2o(new_data_tbl), project = project)
     predictions_tbl <- tibble(time = future_idx, amount = as.vector(pred))
   }
   
@@ -58,7 +58,7 @@ time_forecast <- function(time, values, n_future = 15, use_last = TRUE, plot = T
   forecast <- df %>%
     ggplot(aes(x = time, y = amount)) + 
     labs(title = project, y = "Amount", x = "",
-         subtitle = "Using simple multivariate regression") +
+         subtitle = "Using simple multivariate regressions on time series with Machine Learning") +
     # Training data
     geom_line(color = palette_light()[[1]]) +
     geom_point(color = palette_light()[[1]]) +

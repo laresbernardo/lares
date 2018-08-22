@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_functions.R
 \name{mse}
 \alias{mse}
-\title{Mean Squared Error}
+\title{Mean Squared Error (MSE)}
 \usage{
 mse(tag, score)
 }

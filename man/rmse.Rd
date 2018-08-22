@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_functions.R
 \name{rmse}
 \alias{rmse}
-\title{Root Mean Squared Error}
+\title{Root Mean Squared Error (RMSE)}
 \usage{
 rmse(tag, score)
 }

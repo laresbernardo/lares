@@ -378,7 +378,7 @@ iter_seeds <- function(df, tries = 10) {
 }
 
 ####################################################################
-#' Root Mean Squared Error
+#' Root Mean Squared Error (RMSE)
 #' 
 #' This function lets the user calculate Root Mean Squared Error
 #' 
@@ -392,7 +392,7 @@ rmse <- function(tag, score){
 
 
 ####################################################################
-#' Mean Absolute Error
+#' Mean Absolute Error (MAE)
 #' 
 #' This function lets the user calculate Mean Absolute Error
 #' 
@@ -406,7 +406,7 @@ mae <- function(tag, score){
 
 
 ####################################################################
-#' Mean Squared Error
+#' Mean Squared Error (MSE)
 #' 
 #' This function lets the user calculate Mean Squared Error
 #' 
@@ -416,4 +416,18 @@ mae <- function(tag, score){
 mse <- function(tag, score){ 
   error <- tag - score
   mean(error^2)
+}
+
+
+####################################################################
+#' Mean Absolute Percentage Error (MAPE)
+#' 
+#' This function lets the user calculate Mean Squared Error
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @export
+mape <- function(tag, score){ 
+  error <- (tag - score) / tag
+  mean(abs(error))
 }
