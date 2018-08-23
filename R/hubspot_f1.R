@@ -54,14 +54,12 @@ f1_contacts <- function(creds = NA) {
     "credit_value",
     "vehicle_brand",
     "vehicle_model",
-    "vehicle_commercial",
     "vehicle_commercial_value",
     "vehicle_line",
     "vehicle_class",
     "vehicle_service_type",
     "vehicle_use",
     "sale_value",
-    "sale",
     "credit_entity",
     "credit_installments",
     "payment_day",
@@ -96,7 +94,6 @@ f1_contacts <- function(creds = NA) {
     "company_phone_ext",
     "monthly_incomes",
     "monthly_outcomes",
-    "patrimony",
     "total_assets",
     "total_liabilities",
     "reference1_firstname",
@@ -160,6 +157,9 @@ f1_contacts <- function(creds = NA) {
   contacts <- lares::bring_api(URL)
   colnames(contacts) <- gsub("contacts_properties_|_value", "", colnames(contacts))
   contacts <- contacts %>%
+    dplyr::rename(credit_value = credit,
+                  vehicle_commercial_value = vehicle_commercial,
+                  sale_value = sale) %>%
     mutate_at(vars(contains('timestamp')), funs(hsdates(.))) %>%
     mutate_at(vars(contains('date')), funs(hsdates(.))) %>%
     mutate_at(vars(contains('addedAt')), funs(hsdates(.))) %>% 
