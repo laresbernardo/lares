@@ -12,8 +12,9 @@
 #' @param automl Boolean. Use lares::h2o_automl()
 #' @param project Character. Name of your forecast project for plot title
 #' @export
-time_forecast <- function(time, values, n_future = 15, use_last = TRUE, plot = TRUE, automl = FALSE, 
-                          project = "Simple Forecast using Machine Learning") {
+forecast_ml <- function(time, values, n_future = 15, use_last = TRUE, automl = FALSE, 
+                        plot_forecast = TRUE, plot_model = FALSE,
+                        project = "Simple Forecast using Machine Learning") {
   require(timetk)
   require(tidyquant)
   
@@ -78,8 +79,17 @@ time_forecast <- function(time, values, n_future = 15, use_last = TRUE, plot = T
                 ymax = max(df$amount) * 1.02), 
               color = "transparent", fill = "orange", alpha = 0.3)
   
-  if (plot == TRUE) {
+  if (plot_forecast == TRUE) {
     print(forecast)
+  }
+  
+  if (plot_model == TRUE) {
+    Sys.sleep(1)
+    lares::mplot_full(
+      tag = df$amount, 
+      score = predictions_tbl$amount[1:length(df$amount)],
+      subtitle = project)
+    Sys.sleep(4)
   }
   
   df_final <- rbind(df, predictions_tbl)
