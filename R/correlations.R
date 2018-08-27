@@ -23,7 +23,7 @@ corr <- function(df, method = "pearson") {
   rs <- cor(d, use = "pairwise.complete.obs", method = method)
   rs <- signif(rs, 4)
   rs <- as.data.frame(rs)
-  rs <- final[complete.cases(final), ]
+  rs <- rs[complete.cases(rs), ]
   
   return(rs)
   
