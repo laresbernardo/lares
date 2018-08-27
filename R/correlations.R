@@ -44,6 +44,7 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE) {
   rs <- corr(df, method = method)
   d <- data.frame(variables = colnames(rs), corr = rs[, c(var)])
   d <- d[(d$corr < 1 & !is.na(d$corr)),]
+  d <- d[order(-d$corr),]
   
   if (plot == TRUE) {
     plot <- d %>% 
