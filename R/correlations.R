@@ -9,7 +9,17 @@
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @export
 corr <- function(df, method = "pearson") {
-  d <- select_if(df, is.numeric)
+  library(dplyr)
+  
+  transformable <- apply(df, 2, function(x) length(unique(x)))
+  which <- names(transformable[transformable==2])
+  dfn <- df[,colnames(df) %in% which]
+  
+  non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x))-1)
+  numeric <- select_if(df, is.numeric)
+  
+  d <- cbind(numeric, non_numeric[!colnames(non_numeric) %in% colnames(numeric)])
+
   rs <- cor(d, use = "pairwise.complete.obs", method = method)
   rs <- signif(rs, 4)
   rs <- as.data.frame(rs)
