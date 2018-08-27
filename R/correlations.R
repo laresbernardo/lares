@@ -21,9 +21,7 @@ corr <- function(df, method = "pearson") {
   d <- cbind(numeric, non_numeric[!colnames(non_numeric) %in% colnames(numeric)])
 
   rs <- cor(d, use = "pairwise.complete.obs", method = method)
-  rs <- signif(rs, 4)
-  rs <- as.data.frame(rs)
-  rs <- rs[complete.cases(rs), ]
+  rs <- as.data.frame(signif(rs, 4))
   
   return(rs)
   
@@ -45,7 +43,7 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE) {
   
   rs <- corr(df, method = method)
   d <- data.frame(variables = colnames(rs), corr = rs[, c(var)])
-  d <- d[d$corr < 1,]
+  d <- d[(d$corr < 1 & !is.na(d$corr)),]
   
   if (plot == TRUE) {
     plot <- d %>% 
