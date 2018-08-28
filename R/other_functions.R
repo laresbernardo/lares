@@ -298,3 +298,30 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
     return(balanced)
   }
 }
+
+
+####################################################################
+#' List files in a directory
+#' 
+#' This function lets the user list all files on a given directory.
+#' It also lets filter files which contains a string.
+#' 
+#' @param folder Character. Directory which contains files
+#' @param recursive Boolean. Should the listing recurse into directories?
+#' @param type Character. String to use for filtering files
+#' @param export Boolean. Do you wish to export a txt file?
+#' @export
+listfiles <- function(folder, recursive = TRUE, type = NA, export = FALSE) {
+  if (!file.exists(folder)) {
+    stop("That directory doesn't exist; please try again!")
+  }
+  files <- list.files(folder, recursive = recursive)
+  files <- gsub("_", " ", files)
+  if (!is.na(type)) {
+    files <- files[grepl(type, files)] 
+  }
+  if (export == TRUE) {
+    write.table(files, file = "files.txt", quote = FALSE, row.names = FALSE) 
+  }
+  return(files)
+}
