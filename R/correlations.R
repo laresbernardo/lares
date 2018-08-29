@@ -29,6 +29,9 @@ corr <- function(df, method = "pearson") {
   keep <- sapply(rs, function(x) !all(is.na(x)))
   cor <- rs[keep,keep]
   
+  # Change NAs with zeroes
+  cor[is.na(cor)] <- 0
+  
   return(cor)
   
 }
