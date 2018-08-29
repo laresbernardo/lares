@@ -72,8 +72,8 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE,
   if (plot == TRUE) {
     plot <- d %>% 
       mutate(pos = ifelse(corr > 0, TRUE, FALSE)) %>%
-      ggplot(aes(reorder(variables, corr), corr, 
-                 fill = pos, label = 100 * corr)) +
+      ggplot(aes(x = reorder(variables, abs(corr)), 
+                 y = abs(corr), fill = pos, label = 100 * corr)) +
       geom_hline(aes(yintercept=0), alpha = 0.5) +
       geom_col(width = 0.1) + coord_flip() + theme_minimal() +
       geom_label(hjust = 0.5, size = 2.6, inherit.aes = TRUE, colour = "white") +
@@ -85,7 +85,6 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE,
     if (!is.na(top)) { plot <- plot + labs(subtitle = paste(
       "Plotting top", top, "out of", original_n, "numeric/binary variables"))
     }
-    
     print(plot)
   }
   
