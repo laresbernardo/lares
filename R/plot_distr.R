@@ -95,7 +95,7 @@ plot_distr <- function(data, target, values,
     count <- count + theme(axis.text.x = element_text(angle = 45, hjust=1))
   }
   
-  prop <- ggplot(freqs, aes(x = reorder(as.character(value), -order), 
+  prop <- ggplot(freqs, aes(x = value, 
                             y = as.numeric(p/100),
                             fill=tolower(as.character(targets)), 
                             label = p)) + 

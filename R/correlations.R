@@ -23,14 +23,14 @@ corr <- function(df, method = "pearson", plot = FALSE) {
   
   # Correlations
   rs <- cor(d, use = "pairwise.complete.obs", method = method)
-  cor[is.na(cor)] <- 0
-  cor_output <- round(data.frame(cor), 4)
+  rs[is.na(rs)] <- 0
+  cor <- round(data.frame(rs), 4)
   
   if (plot == TRUE) {
-    lares::corr_plot(cor_output)
+    lares::corr_plot(cor)
   }
   
-  return(cor_output)
+  return(cor)
   
 }
 
@@ -52,11 +52,13 @@ corr_plot <- function(df, method = "pearson", order = "FPC", type = "square") {
   require(corrplot)
   
   corr <- lares::corr(df, method)
+  
   return(
     corrplot(as.matrix(corr),
              order = order,
              method = type, 
-             type = "lower")
+             type = "lower",
+             diag = FALSE)
   )
 }
 
