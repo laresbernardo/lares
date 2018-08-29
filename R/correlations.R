@@ -53,14 +53,14 @@ corr_plot <- function(df, method = "pearson", order = "FPC",
   
   require(corrplot)
   
-  corr <- lares::corr(df, method)
+  c <- lares::corr(df, method)
   
   if (zeroes == FALSE) {
-    corr <- corr[corr$corr != 0,]
+    c <- c[c$corr != 0, ]
   }
   
   return(
-    corrplot(as.matrix(corr),
+    corrplot(as.matrix(c),
              order = order,
              method = type, 
              type = "lower",
