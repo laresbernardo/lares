@@ -11,19 +11,25 @@
 corr <- function(df, method = "pearson") {
   library(dplyr)
   
+  # Which character columns may be used as numeric?
   transformable <- apply(df, 2, function(x) length(unique(x)))
   which <- names(transformable[transformable==2])
   dfn <- df[,colnames(df) %in% which]
   
+  # Join everything
   non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x))-1)
   numeric <- select_if(df, is.numeric)
-  
   d <- cbind(numeric, non_numeric[!colnames(non_numeric) %in% colnames(numeric)])
 
+  # Correlations
   rs <- cor(d, use = "pairwise.complete.obs", method = method)
   rs <- as.data.frame(signif(rs, 4))
   
-  return(rs)
+  # Delete rows filled with NAs
+  keep <- sapply(rs, function(x) !all(is.na(x)))
+  cor <- rs[keep,]
+  
+  return(cor)
   
 }
 
