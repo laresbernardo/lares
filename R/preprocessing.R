@@ -12,10 +12,15 @@ auto_preprocess <- function(df, num2fac = 7, print = FALSE) {
   require(recipes)
   require(tidyr)
   require(dplyr)
+  require(caret)
+  
+  # Remove nearly zero variance columns
+  NZV <- caret::nearZeroVar(df, freqCut = 99/1)
+  df <- select(df, -NZV)
   
   # Which columns to transform
   string_2_factor_names <- df %>% 
-    select_if(Negate(is.numeric)) %>% 
+    select_if(is.character) %>% 
     names()
   num_2_factor_names <- df %>% 
     select_if(is.numeric) %>% 
@@ -28,14 +33,19 @@ auto_preprocess <- function(df, num2fac = 7, print = FALSE) {
   
   # Create recipe's recipe for imputations
   rec <- recipe(~ ., data = df) %>%
-    step_string2factor(string_2_factor_names) %>%
     step_num2factor(num_2_factor_names) %>%
     step_meanimpute(all_numeric()) %>%
-    step_modeimpute(all_nominal()) %>%
-    prep(stringsAsFactors = FALSE)
+    step_modeimpute(all_nominal())
   
-  baker <- function(df) { 
-    recipes::bake(rec, df) 
+  if (length(string_2_factor_names) > 0) {
+    rec <- rec %>%
+      step_string2factor(string_2_factor_names)
+  }
+  
+  rec <- rec %>% prep(stringsAsFactors = FALSE)
+  
+  baker <- function(x) { 
+    recipes::bake(rec, x) 
   }
   
   output <- list(processed = baker(df),
