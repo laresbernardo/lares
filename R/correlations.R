@@ -46,12 +46,18 @@ corr <- function(df, method = "pearson", plot = FALSE) {
 #' Any of: c("original", "AOE", "FPC", "hclust", "alphabet")
 #' @param type Character. The visualization method of correlation matrix to be used. 
 #' Any of c("circle", "square", "ellipse", "number", "pie", "shade" and "color")
+#' @param zeroes Do you wish to plot zeroes too?
 #' @export
-corr_plot <- function(df, method = "pearson", order = "FPC", type = "square") {
+corr_plot <- function(df, method = "pearson", order = "FPC", 
+                      type = "square", zeroes = FALSE) {
   
   require(corrplot)
   
   corr <- lares::corr(df, method)
+  
+  if (zeroes == FALSE) {
+    corr <- corr[corr$corr != 0]
+  }
   
   return(
     corrplot(as.matrix(corr),
