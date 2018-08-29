@@ -45,15 +45,19 @@ corr <- function(df, method = "pearson") {
 #'
 #' @param df Dataframe.
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
+#' @param order Character. The ordering method of the correlation matrix.
+#' Any of: c("original", "AOE", "FPC", "hclust", "alphabet")
+#' @param type Character. The visualization method of correlation matrix to be used. 
+#' Any of c("circle", "square", "ellipse", "number", "pie", "shade" and "color")
 #' @export
-corr_plot <- function(df, method = "pearson") {
+corr_plot <- function(df, method = "pearson", order = "FPC", type = "square") {
   
   require(corrplot)
   
   corr <- lares::corr(df, method)
-  
-  corrplot(as.matrix(corr), 
-           method = "square", 
+  corrplot(as.matrix(corr),
+           order = order,
+           method = type, 
            type = "lower")
 }
 
