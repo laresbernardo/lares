@@ -52,11 +52,14 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE,
                      top = NA, zeroes = FALSE) {
   
   require(ggplot2)
+  require(scales)
   
   rs <- corr(df, method = method)
   d <- data.frame(variables = colnames(rs), corr = rs[, c(var)])
   d <- d[(d$corr < 1 & !is.na(d$corr)),]
   d <- d[order(-abs(d$corr)), ]
+  
+  original_n <- nrow(d)
   
   if (zeroes == FALSE) {
     d <- d[d$corr != 0, ]
@@ -69,15 +72,19 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE,
   if (plot == TRUE) {
     plot <- d %>% 
       mutate(pos = ifelse(corr > 0, TRUE, FALSE)) %>%
-      ggplot(aes(reorder(variables, corr), 100*corr, 
-                 fill = pos, label = 100*corr)) +
+      ggplot(aes(reorder(variables, corr), corr, 
+                 fill = pos, label = 100 * corr)) +
       geom_hline(aes(yintercept=0), alpha = 0.5) +
       geom_col(width = 0.1) + coord_flip() + theme_minimal() +
       geom_label(hjust = 0.5, size = 2.6, inherit.aes = TRUE, colour = "white") +
       scale_fill_discrete(name = "", breaks = c("TRUE","FALSE")) +
       guides(fill = FALSE) +
       labs(title=paste("Correlation of", var, "vs other variables"), 
-           x = "", y = "Correlation [-100, 100]")
+           x = "", y = "Correlation") +
+      scale_y_continuous(labels = scales::percent)
+    if (!is.na(top)) { plot <- plot + labs(subtitle = paste(
+      "Plotting top", top, "out of", original_n, "variables"))
+    }
     
     print(plot)
   }
