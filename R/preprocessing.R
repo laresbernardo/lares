@@ -15,7 +15,7 @@ auto_preprocess <- function(df, num2fac = 7, print = FALSE) {
   
   # Which columns to transform
   string_2_factor_names <- df %>% 
-    select_if(is.character) %>% 
+    select_if(Negate(is.numeric)) %>% 
     names()
   num_2_factor_names <- df %>% 
     select_if(is.numeric) %>% 
