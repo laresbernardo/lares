@@ -20,25 +20,17 @@ corr <- function(df, method = "pearson", plot = FALSE) {
   non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x))-1)
   numeric <- select_if(df, is.numeric)
   d <- cbind(numeric, non_numeric[!colnames(non_numeric) %in% colnames(numeric)])
-
+  
   # Correlations
   rs <- cor(d, use = "pairwise.complete.obs", method = method)
-  
-  # Delete rows/columns filled with NAs
-  keep <- apply(rs, 2, function(x) { !all(is.na(x))} )
-  cor <- rs[keep,keep]
-  
-  # Change NAs with zeroes
   cor[is.na(cor)] <- 0
-  
-  # Significant digits
-  cor <- signif(cor, 4)
+  cor_output <- round(data.frame(cor), 4)
   
   if (plot == TRUE) {
-    lares::corr_plot(cor)
+    lares::corr_plot(cor_output)
   }
   
-  return(data.frame(cor))
+  return(cor_output)
   
 }
 
@@ -62,9 +54,9 @@ corr_plot <- function(df, method = "pearson", order = "FPC", type = "square") {
   corr <- lares::corr(df, method)
   return(
     corrplot(as.matrix(corr),
-           order = order,
-           method = type, 
-           type = "lower")
+             order = order,
+             method = type, 
+             type = "lower")
   )
 }
 
