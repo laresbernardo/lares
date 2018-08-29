@@ -4,7 +4,7 @@
 \alias{corr_var}
 \title{Correlation between variable and dataframe}
 \usage{
-corr_var(df, var, method = "pearson", plot = TRUE)
+corr_var(df, var, method = "pearson", plot = TRUE, zeroes = FALSE)
 }
 \arguments{
 \item{df}{Dataframe.}
@@ -12,6 +12,10 @@ corr_var(df, var, method = "pearson", plot = TRUE)
 \item{var}{Character. Name of the variable to correlate}
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
+
+\item{plot}{Boolean. Do you wish to plot the result?}
+
+\item{zeroes}{Do you wish to keep zeroes in correlations too?}
 }
 \description{
 This function correlates a whole dataframe with a single feature.

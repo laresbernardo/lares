@@ -9,6 +9,7 @@
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @export
 corr <- function(df, method = "pearson", plot = FALSE) {
+  
   library(dplyr)
   
   # Which character columns may be used as numeric?
@@ -36,40 +37,6 @@ corr <- function(df, method = "pearson", plot = FALSE) {
 
 
 ####################################################################
-#' Correlation plot
-#'
-#' This function correlates a whole dataframe with a single feature.
-#'
-#' @param df Dataframe.
-#' @param method Character. Any of: c("pearson", "kendall", "spearman")
-#' @param order Character. The ordering method of the correlation matrix.
-#' Any of: c("original", "AOE", "FPC", "hclust", "alphabet")
-#' @param type Character. The visualization method of correlation matrix to be used. 
-#' Any of c("circle", "square", "ellipse", "number", "pie", "shade" and "color")
-#' @param zeroes Do you wish to plot zeroes too?
-#' @export
-corr_plot <- function(df, method = "pearson", order = "FPC", 
-                      type = "square", zeroes = FALSE) {
-  
-  require(corrplot)
-  
-  c <- lares::corr(df, method)
-  
-  if (zeroes == FALSE) {
-    c <- c[c$corr != 0, ]
-  }
-  
-  return(
-    corrplot(as.matrix(c),
-             order = order,
-             method = type, 
-             type = "lower",
-             diag = FALSE)
-  )
-}
-
-
-####################################################################
 #' Correlation between variable and dataframe
 #'
 #' This function correlates a whole dataframe with a single feature.
@@ -77,8 +44,10 @@ corr_plot <- function(df, method = "pearson", order = "FPC",
 #' @param df Dataframe.
 #' @param var Character. Name of the variable to correlate
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
+#' @param plot Boolean. Do you wish to plot the result?
+#' @param zeroes Do you wish to keep zeroes in correlations too?
 #' @export
-corr_var <- function(df, var, method = "pearson", plot = TRUE) {
+corr_var <- function(df, var, method = "pearson", plot = TRUE, zeroes = FALSE) {
   
   require(ggplot2)
   
@@ -86,6 +55,10 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE) {
   d <- data.frame(variables = colnames(rs), corr = rs[, c(var)])
   d <- d[(d$corr < 1 & !is.na(d$corr)),]
   d <- d[order(-abs(d$corr)), ]
+  
+  if (zeroes == FALSE) {
+    d <- d[d$corr != 0, ]
+  }
   
   if (plot == TRUE) {
     plot <- d %>% 
@@ -105,4 +78,33 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE) {
   
   return(d)
   
+}
+
+
+
+####################################################################
+#' Correlation plot
+#'
+#' This function correlates a whole dataframe with a single feature.
+#'
+#' @param df Dataframe.
+#' @param method Character. Any of: c("pearson", "kendall", "spearman")
+#' @param order Character. The ordering method of the correlation matrix.
+#' Any of: c("original", "AOE", "FPC", "hclust", "alphabet")
+#' @param type Character. The visualization method of correlation matrix to be used. 
+#' Any of c("circle", "square", "ellipse", "number", "pie", "shade" and "color")
+#' @export
+corr_plot <- function(df, method = "pearson", order = "FPC", type = "square") {
+  
+  require(corrplot)
+  
+  c <- lares::corr(df, method)
+  
+  return(
+    corrplot(as.matrix(c),
+             order = order,
+             method = type, 
+             type = "lower",
+             diag = FALSE)
+  )
 }

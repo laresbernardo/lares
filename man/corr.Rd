@@ -4,7 +4,7 @@
 \alias{corr}
 \title{Correlation table}
 \usage{
-corr(df, method = "pearson")
+corr(df, method = "pearson", plot = FALSE)
 }
 \arguments{
 \item{df}{Dataframe. It doesn't matter if it's got non-numerical
