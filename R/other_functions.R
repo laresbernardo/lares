@@ -282,7 +282,7 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
   
   set.seed(seed)
   
-  colnames(df[,variable]) <- "tag"
+  df <- rename(df, tag = variable)
   tags <- unique(df$tag)
   
   if (length(unique(df$tag)) != 2) {
@@ -294,7 +294,7 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
       sample_n(rate * nrow(ones))
     balanced <- rbind(ones, zeros)
     message(paste("Into:",lares::vector2text(table(balanced$tag), sep = " x ", quotes = F)))
-    colnames(balanced[,"tag"]) <- variable
+    balanced <- rename_at(balanced, vars("tag"), funs(paste0(variable)))
     return(balanced)
   }
 }
