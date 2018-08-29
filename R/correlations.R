@@ -8,7 +8,7 @@
 #' columns: they will be filtered!
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @export
-corr <- function(df, method = "pearson") {
+corr <- function(df, method = "pearson", plot = FALSE) {
   library(dplyr)
   
   # Which character columns may be used as numeric?
@@ -23,7 +23,6 @@ corr <- function(df, method = "pearson") {
 
   # Correlations
   rs <- cor(d, use = "pairwise.complete.obs", method = method)
-  rs <- as.data.frame(signif(rs, 4))
   
   # Delete rows/columns filled with NAs
   keep <- sapply(rs, function(x) !all(is.na(x)))
@@ -32,10 +31,16 @@ corr <- function(df, method = "pearson") {
   # Change NAs with zeroes
   cor[is.na(cor)] <- 0
   
+  # Significant digits
+  cor <- as.data.frame(signif(cor, 4))
+  
+  if (plot == TRUE) {
+    lares::corr_plot(cor)
+  }
+  
   return(cor)
   
 }
-
 
 
 ####################################################################
@@ -55,10 +60,12 @@ corr_plot <- function(df, method = "pearson", order = "FPC", type = "square") {
   require(corrplot)
   
   corr <- lares::corr(df, method)
-  corrplot(as.matrix(corr),
+  return(
+    corrplot(as.matrix(corr),
            order = order,
            method = type, 
            type = "lower")
+  )
 }
 
 
