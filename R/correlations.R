@@ -25,12 +25,33 @@ corr <- function(df, method = "pearson") {
   rs <- cor(d, use = "pairwise.complete.obs", method = method)
   rs <- as.data.frame(signif(rs, 4))
   
-  # Delete rows filled with NAs
+  # Delete rows/columns filled with NAs
   keep <- sapply(rs, function(x) !all(is.na(x)))
-  cor <- rs[keep,]
+  cor <- rs[keep,keep]
   
   return(cor)
   
+}
+
+
+
+####################################################################
+#' Correlation plot
+#'
+#' This function correlates a whole dataframe with a single feature.
+#'
+#' @param df Dataframe.
+#' @param method Character. Any of: c("pearson", "kendall", "spearman")
+#' @export
+corr_plot <- function(df, method = "pearson") {
+  
+  require(corrplot)
+  
+  corr <- lares::corr(df, method)
+  
+  corrplot(as.matrix(corr), 
+           method = "square", 
+           type = "lower")
 }
 
 
