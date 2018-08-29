@@ -56,7 +56,7 @@ corr_plot <- function(df, method = "pearson", order = "FPC",
   corr <- lares::corr(df, method)
   
   if (zeroes == FALSE) {
-    corr <- corr[corr$corr != 0]
+    corr <- corr[corr$corr != 0,]
   }
   
   return(
