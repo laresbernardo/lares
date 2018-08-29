@@ -38,17 +38,18 @@ plot_distr <- function(data, target, values,
   
   if (length(targets) != length(value)) {
     message("The targets and value vectors should be the same length.")
-    stop(message(paste("Currently, targets has",length(targets),"rows and value has",length(value))))
+    stop(message(paste("Currently, targets has", length(targets),
+                       "rows and value has", length(value))))
   }
   
-  if (length(unique(value)) <= breaks & !is.numeric(value)) {
+  if (length(unique(value)) > breaks & !is.numeric(value)) {
     message(paste0("You can't split ", values, " in ", breaks, 
-                   "! Trying with ", length(unique(value)), " instead..."))
+                   "! Trying with less instead..."))
     breaks <- length(unique(value))
   }
   
   if (length(unique(targets)) > 9) {
-    stop("You should use a targets variable with max 9 different value!")
+    stop("You should use a 'target' variable with max 9 different value!")
   }
   
   if (is.numeric(value)) {
@@ -79,7 +80,7 @@ plot_distr <- function(data, target, values,
   }
   
   distr <- df %>% group_by(targets) %>% 
-    tally() %>% arrange(-n) %>% 
+    tally() %>% arrange(n) %>% 
     mutate(p = round(100*n/sum(n),2), 
            pcum = cumsum(p))
   
@@ -95,10 +96,11 @@ plot_distr <- function(data, target, values,
     count <- count + theme(axis.text.x = element_text(angle = 45, hjust=1))
   }
   
-  prop <- ggplot(freqs, aes(x = value, 
-                            y = as.numeric(p/100),
-                            fill=tolower(as.character(targets)), 
-                            label = p)) + 
+  prop <- ggplot(freqs, 
+                 aes(x = value, 
+                     y = as.numeric(p/100),
+                     fill=tolower(as.character(targets)), 
+                     label = p)) + 
     geom_col(position = "fill") +
     geom_text(check_overlap = TRUE, size = 3.2,
               position = position_stack(vjust = 0.5)) +

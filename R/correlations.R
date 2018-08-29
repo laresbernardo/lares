@@ -45,9 +45,11 @@ corr <- function(df, method = "pearson", plot = FALSE) {
 #' @param var Character. Name of the variable to correlate
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @param plot Boolean. Do you wish to plot the result?
+#' @param top Integer. If you want to plot the top correlations, define how many
 #' @param zeroes Do you wish to keep zeroes in correlations too?
 #' @export
-corr_var <- function(df, var, method = "pearson", plot = TRUE, zeroes = FALSE) {
+corr_var <- function(df, var, method = "pearson", plot = TRUE, 
+                     top = NA, zeroes = FALSE) {
   
   require(ggplot2)
   
@@ -58,6 +60,10 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE, zeroes = FALSE) {
   
   if (zeroes == FALSE) {
     d <- d[d$corr != 0, ]
+  }
+  
+  if (!is.na(top)) {
+    d <- d[1:as.integer(top), ]
   }
   
   if (plot == TRUE) {
@@ -71,7 +77,7 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE, zeroes = FALSE) {
       scale_fill_discrete(name = "", breaks = c("TRUE","FALSE")) +
       guides(fill = FALSE) +
       labs(title=paste("Correlation of", var, "vs other variables"), 
-           x = "", y = "Correlation")
+           x = "", y = "Correlation [-100, 100]")
     
     print(plot)
   }
