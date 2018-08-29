@@ -25,20 +25,20 @@ corr <- function(df, method = "pearson", plot = FALSE) {
   rs <- cor(d, use = "pairwise.complete.obs", method = method)
   
   # Delete rows/columns filled with NAs
-  keep <- apply(rs, 2, function(x) {all(is.na(x))})
+  keep <- apply(rs, 2, function(x) { !all(is.na(x))} )
   cor <- rs[keep,keep]
   
   # Change NAs with zeroes
   cor[is.na(cor)] <- 0
   
   # Significant digits
-  cor <- as.data.frame(signif(cor, 4))
+  cor <- signif(cor, 4)
   
   if (plot == TRUE) {
     lares::corr_plot(cor)
   }
   
-  return(cor)
+  return(data.frame(cor))
   
 }
 
