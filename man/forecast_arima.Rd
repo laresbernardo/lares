@@ -19,7 +19,8 @@ Between 7 and 10 days recommmended}
 
 \item{wd_excluded}{Character vector. Which weekdays are excluded in 
 your training set. If there are, please define know which ones. Example:
-c('Sunday','Thursday')}
+c('Sunday','Thursday'). If set to 'auto' then it will detect automatically
+which weekdays have no data and forcast without these days.}
 
 \item{plot}{Boolean. If you wish to plot your results}
 
@@ -29,5 +30,5 @@ c('Sunday','Thursday')}
 }
 \description{
 This function automates the ARIMA iterations and modeling for 
-forecasting. For the moment, units can only be days.
+time forecasting. For the moment, units can only be days.
 }

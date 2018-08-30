@@ -2,7 +2,7 @@
 % Please edit documentation in R/forecasting.R
 \name{forecast_ml}
 \alias{forecast_ml}
-\title{Simple Forecast using ML}
+\title{Machine Learning Forecast}
 \usage{
 forecast_ml(time, values, n_future = 15, use_last = TRUE,
   automl = FALSE, plot_forecast = TRUE, plot_model = FALSE,
