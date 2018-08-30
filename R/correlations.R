@@ -113,10 +113,10 @@ corr_plot <- function(df, method = "pearson", order = "FPC", type = "square") {
   c <- lares::corr(df, method)
   
   return(
-    corrplot(as.matrix(c),
-             order = order,
-             method = type, 
-             type = "lower",
-             diag = FALSE)
+    corrplot::corrplot(as.matrix(c),
+                       order = order,
+                       method = type, 
+                       type = "lower",
+                       diag = FALSE)
   )
 }
