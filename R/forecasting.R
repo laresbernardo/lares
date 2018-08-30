@@ -89,8 +89,9 @@ forecast_arima <- function(time, values, n_future = 30,
       scale_color_manual(values=c("orange", "navy","purple")) +
       geom_rect(data = rects, inherit.aes = FALSE, 
                 aes(
-                  xmin = start, xmax = end, ymin = 0,
-                  ymax = max(plotdata$values) * 1.02), 
+                  xmin = start, xmax = end, 
+                  ymin = min(plotdata$values),
+                  ymax = max(plotdata$values)), 
                 color = "transparent", fill = "grey", alpha = 0.25)
     if (!is.na(project)) {
       output$plot <- output$plot +
