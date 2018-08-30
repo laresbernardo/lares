@@ -1,5 +1,105 @@
 ####################################################################
-#' Simple Forecast
+#' ARIMA Forecast
+#' 
+#' This function automates the ARIMA iterations and modeling for 
+#' forecasting. For the moment, units can only be days.
+#' 
+#' @param time POSIX. Vector with date values
+#' @param values Numeric. Vector with numerical values
+#' @param n_future Integer. How many steps do you wish to forecast?
+#' @param ARMA Integer. How many days should the model look backfor ARMA?
+#' Between 7 and 10 days recommmended
+#' @param wd_excluded Character vector. Which weekdays are excluded in 
+#' your training set. If there are, please define know which ones. Example:
+#' c('Sunday','Thursday')
+#' @param plot Boolean. If you wish to plot your results
+#' @param plot_days Integer. How many days back you wish to plot?
+#' @param project Character. Name of your forecast project
+#' @export
+forecast_arima <- function(time, values, n_future = 30, 
+                           ARMA = 8, wd_excluded = NA,
+                           plot = TRUE, plot_days = 90,
+                           project = NA){
+  
+  require(forecast)
+  require(lubridate)
+  
+  arma <- c(1:ARMA)
+  combs <- expand.grid(arma, arma)
+  aic <- data.frame(
+    AR = combs[,1], 
+    MA = combs[,2], 
+    cals = rep(0, nrow(combs)))
+  
+  # Which AR and MA minimize our AIC
+  message("Iterating for best AR / MA combinations; there are ", ARMA*ARMA, "!")
+  for(i in 1:nrow(aic)){
+    Tmodel <- Arima(values, order = c(aic$AR[i], 1, aic$MA[i]))
+    aic$cals[i] <- Tmodel$aic
+  }
+  AR <- aic$AR[which.min(aic$cals)]
+  MA <- aic$MA[which.min(aic$cals)]
+  message(paste("Best combination:", AR, "and", MA))
+  aic_ARIMA <- min(aic$cals)
+  model <- Arima(values, order = c(AR, 1, MA))
+  train <- data.frame(time, values, 
+                      pred = model$fitted, 
+                      resid = model$residuals)
+  
+  # Forecast
+  future_dates <- seq.Date(max(time) + 1, max(time) %m+% days(n_future), by=1)
+  if (!is.na(wd_excluded)) {
+    exclude <- lares::vector2text(wd_excluded, quotes = FALSE)
+    future_dates <- future_dates[!weekdays(future_dates) %in% exclude]
+    n_future <- length(future_dates)
+  }
+  f <- forecast(model, h = n_future)
+  frows <- length(f$fitted)
+  test <- data.frame(time = future_dates, pred = f$fitted[(frows-n_future+1):frows])
+  
+  # Outut list with all results
+  output <- list(model = model,
+                 metrics = accuracy(model),
+                 forecast = test,
+                 train = train)
+  
+  # Plot results
+  if (nrow(train) > last_days) {
+    train <- train[1:last_days, ] 
+  }
+  
+  if (plot == TRUE) {
+    require(ggplot2)
+    plotdata <- data.frame(
+      rbind(
+        data.frame(date = train$time, values = train$values, type = "Real"),
+        data.frame(date = train$time, values = train$pred, type = "Model"),
+        data.frame(date = test$time, values = test$pred, type = "Forecast")
+      ))
+    output$plot <- ggplot(plotdata, aes(date)) +
+      geom_smooth(aes(y = values), method = 'loess', alpha = 0.5) +
+      geom_line(aes(y = values, colour = type)) +
+      labs(x = "Date", y = "Counter", colour = "") + 
+      theme_minimal() + theme(legend.position = "top") +
+      ggtitle("Real & Fitted Model vs Forecast (ARIMA)",
+              subtitle = paste("Bias", signif(sum(train$resid)/nrow(train), 2), "|",
+                               "MAE", signif(output$metrics[3], 3), "|",
+                               "RMSE", signif(output$metrics[2], 3))) +
+      scale_color_manual(values=c("orange", "navy","purple"))
+    if (!is.na(project)) {
+      output$plot <- output$plot +
+        labs(caption = project)
+    }
+    plot(output$plot)
+  }
+  
+  return(output)
+  
+}
+
+
+####################################################################
+#' Simple Forecast using ML
 #' 
 #' This function lets the user create a forecast setting a time series
 #' and a numerical value.
@@ -7,7 +107,7 @@
 #' @param time POSIX. Vector with dates or time values
 #' @param values Numeric. Vector with numerical values
 #' @param n_future Integer. How many steps do you wish to forecast?
-#' @param use_last Boolena. Use last observation?
+#' @param use_last Boolean. Use last observation?
 #' @param plot Boolean. If you wish to plot your results
 #' @param automl Boolean. Use lares::h2o_automl()
 #' @param project Character. Name of your forecast project for plot title

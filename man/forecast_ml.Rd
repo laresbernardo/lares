@@ -2,7 +2,7 @@
 % Please edit documentation in R/forecasting.R
 \name{forecast_ml}
 \alias{forecast_ml}
-\title{Simple Forecast}
+\title{Simple Forecast using ML}
 \usage{
 forecast_ml(time, values, n_future = 15, use_last = TRUE,
   automl = FALSE, plot_forecast = TRUE, plot_model = FALSE,
@@ -15,7 +15,7 @@ forecast_ml(time, values, n_future = 15, use_last = TRUE,
 
 \item{n_future}{Integer. How many steps do you wish to forecast?}
 
-\item{use_last}{Boolena. Use last observation?}
+\item{use_last}{Boolean. Use last observation?}
 
 \item{automl}{Boolean. Use lares::h2o_automl()}
 
