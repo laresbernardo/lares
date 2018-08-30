@@ -11,15 +11,15 @@
 #' Between 7 and 10 days recommmended
 #' @param wd_excluded Character vector. Which weekdays are excluded in 
 #' your training set. If there are, please define know which ones. Example:
-#' c('Sunday','Thursday')
+#' c('Sunday','Thursday'). If set to 'auto' then it will detect automatically
+#' which weekdays have no data and forcast without these days.
 #' @param plot Boolean. If you wish to plot your results
 #' @param plot_days Integer. How many days back you wish to plot?
 #' @param project Character. Name of your forecast project
 #' @export
 forecast_arima <- function(time, values, n_future = 30, 
                            ARMA = 8, wd_excluded = NA,
-                           plot = TRUE, plot_days = 90,
-                           project = NA){
+                           plot = TRUE, plot_days = 90, project = NA){
   
   require(forecast)
   require(lubridate)
@@ -49,12 +49,18 @@ forecast_arima <- function(time, values, n_future = 30,
   # Forecast
   future_dates <- seq.Date(max(time) + 1, max(time) %m+% days(n_future), by=1)
   if (!is.na(wd_excluded)) {
+    if (wd_excluded == "auto") {
+      weekdays <- data.frame(table(weekdays(time)))
+      weekdays_real <- c(weekdays(seq.Date(Sys.Date(), Sys.Date()+6, by=1)))
+      wd_excluded <- weekdays_real[!weekdays_real %in% weekdays$Var1]
+    }
     exclude <- lares::vector2text(wd_excluded, quotes = FALSE)
     future_dates <- future_dates[!weekdays(future_dates) %in% exclude]
     n_future <- length(future_dates)
-  }
+  } 
   f <- forecast(model, h = n_future)
-  test <- data.frame(time = future_dates, pred = f$fitted[1:length(future_dates)])
+  frows <- length(future_dates)
+  test <- data.frame(time = future_dates, pred = f$fitted[1:frows])
   
   # Outut list with all results
   output <- list(model = model,
@@ -102,6 +108,7 @@ forecast_arima <- function(time, values, n_future = 30,
   return(output)
   
 }
+
 
 
 ####################################################################
