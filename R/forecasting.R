@@ -54,8 +54,7 @@ forecast_arima <- function(time, values, n_future = 30,
     n_future <- length(future_dates)
   }
   f <- forecast(model, h = n_future)
-  frows <- length(f$fitted)
-  test <- data.frame(time = future_dates, pred = f$fitted[(frows-n_future+1):frows])
+  test <- data.frame(time = future_dates, pred = f$fitted[1:length(future_dates)])
   
   # Outut list with all results
   output <- list(model = model,
