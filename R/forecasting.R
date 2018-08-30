@@ -4,6 +4,15 @@
 #' This function automates the ARIMA iterations and modeling for 
 #' time forecasting. For the moment, units can only be days.
 #' 
+#' The ARIMA method is appropriate only for a time series that is 
+#' stationary (i.e., its mean, variance, and autocorrelation should 
+#' be approximately constant through time) and it is recommended 
+#' that there are at least 50 observations in the input data.
+#' 
+#' One thing to keep in mind when we think about ARIMA models is 
+#' given by the great power to capture very complex patters of 
+#' temporal correlation (Cochrane, 1997: 25)
+#' 
 #' @param time POSIX. Vector with date values
 #' @param values Numeric. Vector with numerical values
 #' @param n_future Integer. How many steps do you wish to forecast?
@@ -23,6 +32,10 @@ forecast_arima <- function(time, values, n_future = 30,
   
   require(forecast)
   require(lubridate)
+  
+  if (length(time) < 50) {
+    message("It is ecommended that there are at least 50 observations in the input data")
+  }
   
   arma <- c(1:ARMA)
   combs <- expand.grid(arma, arma)
