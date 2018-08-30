@@ -76,6 +76,7 @@ forecast_arima <- function(time, values, n_future = 30,
         data.frame(date = train$time, values = train$pred, type = "Model"),
         data.frame(date = test$time, values = test$pred, type = "Forecast")
       ))
+    rects <- data.frame(start = min(future_dates), end = max(future_dates))
     output$plot <- ggplot(plotdata, aes(date)) +
       geom_smooth(aes(y = values), method = 'loess', alpha = 0.5) +
       geom_line(aes(y = values, colour = type)) +
@@ -85,7 +86,12 @@ forecast_arima <- function(time, values, n_future = 30,
               subtitle = paste("Bias", signif(sum(train$resid)/nrow(train), 2), "|",
                                "MAE", signif(output$metrics[3], 3), "|",
                                "RMSE", signif(output$metrics[2], 3))) +
-      scale_color_manual(values=c("orange", "navy","purple"))
+      scale_color_manual(values=c("orange", "navy","purple")) +
+      geom_rect(data = rects, inherit.aes = FALSE, 
+                aes(
+                  xmin = start, xmax = end, ymin = 0,
+                  ymax = max(plotdata$values) * 1.02), 
+                color = "transparent", fill = "grey", alpha = 0.25)
     if (!is.na(project)) {
       output$plot <- output$plot +
         labs(caption = project)
@@ -99,7 +105,7 @@ forecast_arima <- function(time, values, n_future = 30,
 
 
 ####################################################################
-#' Simple Forecast using ML
+#' Machine Learning Forecast
 #' 
 #' This function lets the user create a forecast setting a time series
 #' and a numerical value.
