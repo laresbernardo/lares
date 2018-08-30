@@ -53,6 +53,7 @@ forecast_arima <- function(time, values, n_future = 30,
       weekdays <- data.frame(table(weekdays(time)))
       weekdays_real <- c(weekdays(seq.Date(Sys.Date(), Sys.Date()+6, by=1)))
       wd_excluded <- weekdays_real[!weekdays_real %in% weekdays$Var1]
+      message("Automatically excluding ", lares::vector2text(wd_excluded))
     }
     exclude <- lares::vector2text(wd_excluded, quotes = FALSE)
     future_dates <- future_dates[!weekdays(future_dates) %in% exclude]
