@@ -2,7 +2,7 @@
 #' ARIMA Forecast
 #' 
 #' This function automates the ARIMA iterations and modeling for 
-#' forecasting. For the moment, units can only be days.
+#' time forecasting. For the moment, units can only be days.
 #' 
 #' @param time POSIX. Vector with date values
 #' @param values Numeric. Vector with numerical values
@@ -64,8 +64,8 @@ forecast_arima <- function(time, values, n_future = 30,
                  train = train)
   
   # Plot results
-  if (nrow(train) > last_days) {
-    train <- train[1:last_days, ] 
+  if (nrow(train) > plot_days) {
+    train <- train[1:plot_days, ] 
   }
   
   if (plot == TRUE) {
