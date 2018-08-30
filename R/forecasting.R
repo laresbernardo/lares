@@ -46,7 +46,7 @@ forecast_arima <- function(time, values, n_future = 30,
   
   # Which AR and MA minimize our AIC
   message("Iterating for best AR / MA combinations; there are ", ARMA*ARMA, "!")
-  if (length(time) > 100) { method <- "ML" } else { method <- "CSS" }
+  if (length(time) > 500) { method <- "ML" } else { method <- "CSS" }
   for(i in 1:nrow(aic)){
     Tmodel <- Arima(values, order = c(aic$AR[i], 1, aic$MA[i]), method = method)
     aic$cals[i] <- Tmodel$aic
