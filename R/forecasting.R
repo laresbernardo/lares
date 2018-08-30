@@ -56,12 +56,11 @@ forecast_arima <- function(time, values, n_future = 30,
       message("Automatically excluding ", lares::vector2text(wd_excluded))
     }
     exclude <- lares::vector2text(wd_excluded, quotes = FALSE)
-    future_dates <- future_dates[!weekdays(future_dates) %in% exclude]
+    future_dates <- future_dates[!weekdays(future_dates) %in% wd_excluded]
     n_future <- length(future_dates)
   } 
   f <- forecast(model, h = n_future)
-  frows <- length(future_dates)
-  test <- data.frame(time = future_dates, pred = f$fitted[1:frows])
+  test <- data.frame(time = future_dates, pred = f$fitted[1:length(future_dates)])
   
   # Outut list with all results
   output <- list(model = model,
