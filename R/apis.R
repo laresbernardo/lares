@@ -1,5 +1,5 @@
 ####################################################################
-#' Bring API data as JSON and transform it into data.frame
+#' Get API (JSON) and Transform into data.frame
 #' 
 #' This function lets the user bring API data as JSON format and transform it 
 #' into data.frame. Designed initially for Hubspot but may work on other API

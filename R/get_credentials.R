@@ -8,10 +8,13 @@
 #' @param filename Character. YML with credentials to read
 #' @export
 get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
-
+  
   froms <- c("dummy",
              "production",
              "warehouse",
+             "dummy_cm",
+             "production_cm",
+             "warehouse_cm",
              "sendgrid",
              "redshift",
              "hubspot",
@@ -37,7 +40,6 @@ get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
       message("Please, try again by defining where your YML file with the credentials is!")
     } else {
       # Bring credentials
-      require(config)
       wd <- getwd()
       setwd(dir)
       credentials <- config::get(from)

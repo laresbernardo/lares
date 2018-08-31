@@ -1,6 +1,21 @@
 ####################################################################
 # Simple Wordcloud
-textCloud <- function(text, lang = "english", exclude = c(), seed = 0, print = T, keep_spaces = FALSE) {
+#' 
+#' Study the distribution of a target variable vs another variable. This
+#' function is quite similar to the funModeling's corrplot function.
+#' 
+#' @param text Character vector
+#' @param lang Character. Language in text (used for stop words)
+#' @param exclude Character vector. Which word do you wish to exclude?
+#' @param seed Numeric. Seed for re-producible plots
+#' @param print Boolean. Plot results as textcloud?
+#' @param keep_spaces Boolean. If you wish to keep spaces in each line
+#' to keep unique compount words, separated with spaces, set to TRUE. 
+#' For example, 'LA ALAMEDA' will be set as 'LA_ALAMEDA' and treated as
+#' a single word.
+#' @export
+textCloud <- function(text, lang = "english", exclude = c(), seed = 0, 
+                      print = T, keep_spaces = FALSE) {
   
   require("tm")
   require("SnowballC")

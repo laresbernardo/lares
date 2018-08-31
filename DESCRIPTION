@@ -1,10 +1,10 @@
 Package: lares
 Type: Package
-Title: Analytics & Machine Learning Library
+Title: Analytics, Data Mining & Machine Learning Library
 Version: 4.1
 Author: Bernardo Lares
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
-Description: Personal Library for Analytics and Machine Learning tasks
+Description: Personal Library for Analytics, Data Mining and Machine Learning Tasks
 License: Private
 Encoding: UTF-8
 LazyData: true

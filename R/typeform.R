@@ -1,3 +1,15 @@
+####################################################################
+#' Download typeform data
+#'
+#' This function lets the user download surveys results from a
+#' Typeform account.
+#'
+#' @param account Character. Which of the accounts in config.yml 
+#' do you wish to use?
+#' @param form Character. Define which form you wish to import. Should
+#' be the same as the form's name at the online platform
+#' @param creds Character. Credential's user (see get_credentials)
+#' @export
 typeform_download <- function(account = "tabunga", form, creds = NA) {
   
   require(rtypeform)

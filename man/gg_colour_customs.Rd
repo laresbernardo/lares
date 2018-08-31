@@ -7,5 +7,5 @@
 gg_colour_customs()
 }
 \description{
-This function lets the user use some default colours
+This function lets the user use pre-defined default colours
 }

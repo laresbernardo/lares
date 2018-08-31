@@ -2,7 +2,7 @@
 % Please edit documentation in R/apis.R
 \name{bring_api}
 \alias{bring_api}
-\title{Bring API data as JSON and transform it into data.frame}
+\title{Get API (JSON) and Transform into data.frame}
 \usage{
 bring_api(url)
 }
