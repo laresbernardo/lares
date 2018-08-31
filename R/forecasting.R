@@ -41,16 +41,15 @@ forecast_arima <- function(time, values, n_future = 30,
     message("It is ecommended that there are at least 50 observations in the input data")
   }
   
+  # Which AR and MA values minimize our AIC
   arma <- c(1:ARMA)
   combs <- expand.grid(arma, arma)
   aic <- data.frame(
     AR = combs[,1], 
     MA = combs[,2], 
     cals = rep(0, nrow(combs)))
-  
-  # Which AR and MA minimize our AIC
   message("Iterating for best AR / MA combinations; there are ", ARMA*ARMA, "!")
-  if (length(time) > 500) { method <- "ML" } else { method <- "CSS" }
+  # if (length(time) > 1000) { method <- "ML" } else { method <- "CSS" }
   for(i in 1:nrow(aic)){
     Tmodel <- Arima(values, order = c(aic$AR[i], 1, aic$MA[i]), method = method)
     aic$cals[i] <- Tmodel$aic
