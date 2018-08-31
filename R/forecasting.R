@@ -40,7 +40,11 @@ forecast_arima <- function(time, values, n_future = 30,
   values <- values[!values == 0]
   
   if (length(time) < 50) {
-    message("It is ecommended that there are at least 50 observations in the input data")
+    message("It is recommended that there are at least 50 observations in the input data")
+  }
+  
+  if (Sys.Date() %in% time) {
+    message("It is recommended that you do NOT use today's data for training your data")
   }
   
   if (n_future == -1) {
