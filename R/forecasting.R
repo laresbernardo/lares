@@ -33,6 +33,10 @@ forecast_arima <- function(time, values, n_future = 30,
   require(forecast)
   require(lubridate)
   
+  # ARIMA doesn't use zeroes!
+  time <- time[!values == 0]
+  values <- values[!values == 0]
+  
   if (length(time) < 50) {
     message("It is ecommended that there are at least 50 observations in the input data")
   }
