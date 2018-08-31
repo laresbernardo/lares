@@ -77,11 +77,11 @@ forecast_arima <- function(time, values, n_future = 30,
                       resid = model$residuals)
     
   # Forecast
-  future_dates <- seq.Date(max(time) + 1, max(time) %m+% days(n_future), by=1)
+  future_dates <- seq.Date(max(time) + 1, max(time) + 1 %m+% days(n_future), by = 1)
   if (!is.na(wd_excluded)) {
     if (wd_excluded == "auto") {
       weekdays <- data.frame(table(weekdays(time)))
-      weekdays_real <- c(weekdays(seq.Date(Sys.Date(), Sys.Date()+6, by=1)))
+      weekdays_real <- c(weekdays(seq.Date(Sys.Date(), Sys.Date() + 6, by = 1)))
       wd_excluded <- weekdays_real[!weekdays_real %in% weekdays$Var1]
       message("Automatically excluding ", lares::vector2text(wd_excluded))
     }
