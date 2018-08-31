@@ -17,7 +17,7 @@
 #' @param values Numeric. Vector with numerical values
 #' @param n_future Integer. How many steps do you wish to forecast?
 #' @param ARMA Integer. How many days should the model look backfor ARMA?
-#' Between 7 and 10 days recommmended. If set to 0 then it will forecast
+#' Between 5 and 10 days recommmended. If set to 0 then it will forecast
 #' until the end of max date's month; if set to -1, until the end of 
 #' max date's following month
 #' @param wd_excluded Character vector. Which weekdays are excluded in 
@@ -55,7 +55,7 @@ forecast_arima <- function(time, values, n_future = 30,
   }
   
   # Which AR and MA values minimize our AIC
-  arma <- c(1:ARMA)
+  arma <- c(5:ARMA)
   combs <- expand.grid(arma, arma)
   aic <- data.frame(
     AR = combs[,1], 
@@ -71,11 +71,11 @@ forecast_arima <- function(time, values, n_future = 30,
   MA <- aic$MA[which.min(aic$cals)]
   message(paste("Best combination:", AR, "and", MA))
   aic_ARIMA <- min(aic$cals)
-  model <- Arima(values, order = c(AR, 1, MA))
+  model <- Arima(values, order = c(AR, 1, MA), method = "ML")
   train <- data.frame(time, values, 
                       pred = model$fitted, 
                       resid = model$residuals)
-  
+    
   # Forecast
   future_dates <- seq.Date(max(time) + 1, max(time) %m+% days(n_future), by=1)
   if (!is.na(wd_excluded)) {
@@ -90,7 +90,7 @@ forecast_arima <- function(time, values, n_future = 30,
     n_future <- length(future_dates)
   } 
   f <- forecast(model, h = n_future)
-  test <- data.frame(time = future_dates, pred = f$fitted[1:length(future_dates)])
+  test <- data.frame(time = future_dates, pred = f$mean)
   
   # Outut list with all results
   output <- list(model = model,
@@ -100,7 +100,7 @@ forecast_arima <- function(time, values, n_future = 30,
   
   # Plot results
   if (nrow(train) > plot_days) {
-    train <- train[1:plot_days, ] 
+    train <- train[(nrow(train)-plot_days):nrow(train), ] 
   }
   
   if (plot == TRUE) {
@@ -118,7 +118,7 @@ forecast_arima <- function(time, values, n_future = 30,
       labs(x = "Date", y = "Counter", colour = "") + 
       theme_minimal() + theme(legend.position = "top") +
       ggtitle("Real & Fitted Model vs Forecast (ARIMA)",
-              subtitle = paste("Bias", signif(sum(train$resid)/nrow(train), 2), "|",
+              subtitle = paste("AIC", signif(output$model$aic, 4), "|",
                                "MAE", signif(output$metrics[3], 3), "|",
                                "RMSE", signif(output$metrics[2], 3))) +
       scale_color_manual(values=c("orange", "navy","purple")) +
@@ -251,4 +251,4 @@ forecast_ml <- function(time, values, n_future = 15, use_last = TRUE, automl = F
   
   return(output)
   
-}
+}  
