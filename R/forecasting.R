@@ -90,7 +90,7 @@ forecast_arima <- function(time, values, n_future = 30,
     n_future <- length(future_dates)
   } 
   f <- forecast(model, h = n_future)
-  test <- data.frame(time = future_dates, pred = f$mean)
+  test <- data.frame(time = future_dates, pred = f$mean, data.frame(f)[,-1])
   
   # Outut list with all results
   output <- list(model = model,
