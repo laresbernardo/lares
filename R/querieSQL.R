@@ -37,7 +37,7 @@ queryDummy = function(query, creds = NA) {
 #' @param which Character. Which database do you wish to connect to: seguros, tabunga...
 #' @param creds Character. Credential's user (see get_credentials)
 #' @export
-queryDW = function(query, which = "seguros", creds = NA) {
+queryDW = function(query, which = "soat", creds = NA) {
 
   options(warn=-1)
 
@@ -47,8 +47,8 @@ queryDW = function(query, which = "seguros", creds = NA) {
 
   dw <- lares::get_credentials(from = "warehouse", dir = creds)
 
-  dbname <- ifelse(which == "seguros", dw$database_seguros,
-                   ifelse(which == "tabunga", dw$database_tabunga, NA))
+  dbname <- ifelse(which == "soat", dw$database_soat,
+                   ifelse(which == "creditos", dw$database_creditos, NA))
 
   drv <- dbDriver(dw$driver)
   con <- dbConnect(drv, host=dw$server, dbname=dbname,
