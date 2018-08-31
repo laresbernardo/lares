@@ -528,8 +528,8 @@ mplot_splits <- function(tag,
     names <- df %>% 
       mutate(quantile = ntile(score, splits)) %>% group_by(quantile) %>%
       summarise(n = n(), 
-                max_score = round(100 * max(score), 1), 
-                min_score = round(100 * min(score), 1)) %>%
+                max_score = signif(max(score), 2), 
+                min_score = signif(min(score), 2)) %>%
       mutate(quantile_tag = paste0(quantile," (",min_score,"-",max_score,")")) 
   }
   

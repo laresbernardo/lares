@@ -32,3 +32,13 @@ which weekdays have no data and forcast without these days.}
 This function automates the ARIMA iterations and modeling for 
 time forecasting. For the moment, units can only be days.
 }
+\details{
+The ARIMA method is appropriate only for a time series that is 
+stationary (i.e., its mean, variance, and autocorrelation should 
+be approximately constant through time) and it is recommended 
+that there are at least 50 observations in the input data.
+
+One thing to keep in mind when we think about ARIMA models is 
+given by the great power to capture very complex patters of 
+temporal correlation (Cochrane, 1997: 25)
+}
