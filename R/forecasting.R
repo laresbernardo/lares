@@ -48,10 +48,10 @@ forecast_arima <- function(time, values, n_future = 30,
   }
   
   if (n_future == -1) {
-    n_future <- ceiling_date(Sys.Date(), "month") + months(1) - days(1) - Sys.Date() 
+    n_future <- ceiling_date(Sys.Date(), "month") + months(1) - Sys.Date() 
   }
   if (n_future == 0) {
-    n_future <- ceiling_date(Sys.Date(), "month") - days(1) - Sys.Date()
+    n_future <- ceiling_date(Sys.Date(), "month") - Sys.Date()
   }
   
   # Which AR and MA values minimize our AIC
@@ -77,7 +77,7 @@ forecast_arima <- function(time, values, n_future = 30,
                       resid = model$residuals)
     
   # Forecast
-  future_dates <- seq.Date(max(time) + 1, max(time) + 1 %m+% days(n_future), by = 1)
+  future_dates <- seq.Date(max(time) + 1, max(time) %m+% days(n_future), by = 1)
   if (!is.na(wd_excluded)) {
     if (wd_excluded == "auto") {
       weekdays <- data.frame(table(weekdays(time)))
@@ -99,12 +99,14 @@ forecast_arima <- function(time, values, n_future = 30,
                  train = train)
   
   # Plot results
-  if (nrow(train) > plot_days) {
-    train <- train[(nrow(train)-plot_days):nrow(train), ] 
-  }
-  
   if (plot == TRUE) {
+    
     require(ggplot2)
+    
+    if (nrow(train) > plot_days) {
+      train <- train[(nrow(train)-plot_days):nrow(train), ] 
+    }
+    
     plotdata <- data.frame(
       rbind(
         data.frame(date = train$time, values = train$values, type = "Real"),
@@ -112,6 +114,7 @@ forecast_arima <- function(time, values, n_future = 30,
         data.frame(date = test$time, values = test$pred, type = "Forecast")
       ))
     rects <- data.frame(start = min(future_dates), end = max(future_dates))
+    
     output$plot <- ggplot(plotdata, aes(date)) +
       geom_smooth(aes(y = values), method = 'loess', alpha = 0.5) +
       geom_line(aes(y = values, colour = type)) +
