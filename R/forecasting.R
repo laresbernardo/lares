@@ -17,7 +17,9 @@
 #' @param values Numeric. Vector with numerical values
 #' @param n_future Integer. How many steps do you wish to forecast?
 #' @param ARMA Integer. How many days should the model look backfor ARMA?
-#' Between 7 and 10 days recommmended
+#' Between 7 and 10 days recommmended. If set to 0 then it will forecast
+#' until the end of max date's month; if set to -1, until the end of 
+#' max date's following month
 #' @param wd_excluded Character vector. Which weekdays are excluded in 
 #' your training set. If there are, please define know which ones. Example:
 #' c('Sunday','Thursday'). If set to 'auto' then it will detect automatically
@@ -39,6 +41,13 @@ forecast_arima <- function(time, values, n_future = 30,
   
   if (length(time) < 50) {
     message("It is ecommended that there are at least 50 observations in the input data")
+  }
+  
+  if (n_future == -1) {
+    n_future <- ceiling_date(Sys.Date(), "month") + months(1) - days(1) - Sys.Date() 
+  }
+  if (n_future == 0) {
+    n_future <- ceiling_date(Sys.Date(), "month") - days(1) - Sys.Date()
   }
   
   # Which AR and MA values minimize our AIC
