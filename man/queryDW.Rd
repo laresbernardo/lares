@@ -4,7 +4,7 @@
 \alias{queryDW}
 \title{PostgreSQL Queries on Redshift Database (read-write)}
 \usage{
-queryDW(query, which = "seguros", creds = NA)
+queryDW(query, which = "soat", creds = NA)
 }
 \arguments{
 \item{query}{Character. SQL Query}

@@ -15,7 +15,7 @@ forecast_arima(time, values, n_future = 30, ARMA = 8,
 \item{n_future}{Integer. How many steps do you wish to forecast?}
 
 \item{ARMA}{Integer. How many days should the model look backfor ARMA?
-Between 7 and 10 days recommmended. If set to 0 then it will forecast
+Between 5 and 10 days recommmended. If set to 0 then it will forecast
 until the end of max date's month; if set to -1, until the end of 
 max date's following month}
 
