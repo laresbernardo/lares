@@ -319,18 +319,23 @@ listfiles <- function(folder, recursive = TRUE, regex = NA, images = FALSE, expo
   }
   
   files <- list.files(folder, recursive = recursive)
-  info <- file.info(paste0(folder, "/", files))
+  address <- paste0(folder, "/", files)
+  info <- file.info(address)
   files <- gsub("_", " ", files)
   
-  df <- data.frame(filename = files, info)
-  
-  imgs <- "jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF"
-  if (images == TRUE) {
-    df <- df[grep(imgs, df$filename),] 
-  }
+  df <- data.frame(filename = files, address, info)
   
   if (!is.na(regex)) {
     df <- df[grep(regex, df$filename),] 
+  }
+  
+  if (images == TRUE) {
+    if (nrow(df) > 250) {
+      message("This might take a while!") 
+    }
+    require(exifr)
+    exif <- read_exif(folder, recursive = TRUE)
+    df <- data.frame(df, exif)
   }
   
   if (export == TRUE) {
@@ -339,8 +344,10 @@ listfiles <- function(folder, recursive = TRUE, regex = NA, images = FALSE, expo
   
   # Further calculus
   df$size <- as.integer(df$size/1024)
+  imgs <- "jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF"
   df$image <- ifelse(grep(imgs, df$filename), TRUE, FALSE)
   row.names(df) <- NULL
+  df$address <- NULL
   
   return(df)
   
