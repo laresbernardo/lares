@@ -333,7 +333,7 @@ listfiles <- function(folder, recursive = TRUE, regex = NA, images = FALSE, expo
   
   if (images == TRUE) {
     if (nrow(df) > 250) {
-      message("This might take a while!") 
+      message(paste("This might take a while. Analzing around", nrow(df), "files!"))
     }
     require(exifr)
     require(dplyr)
