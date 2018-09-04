@@ -35,7 +35,7 @@
 #' @param project Character. Name of your forecast project
 #' @export
 forecast_arima <- function(time, values, n_future = 30, 
-                           ARMA = 8, ARMA_min = 5, 
+                           ARMA = 8, ARMA_min = 5,
                            AR = NA, MA = NA,
                            wd_excluded = NA,
                            plot = TRUE, plot_days = 90, project = NA){

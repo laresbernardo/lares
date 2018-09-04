@@ -4,16 +4,19 @@
 \alias{listfiles}
 \title{List files in a directory}
 \usage{
-listfiles(folder, recursive = TRUE, type = NA, export = FALSE)
+listfiles(folder, recursive = TRUE, regex = NA, images = FALSE,
+  export = FALSE)
 }
 \arguments{
 \item{folder}{Character. Directory which contains files}
 
 \item{recursive}{Boolean. Should the listing recurse into directories?}
 
-\item{type}{Character. String to use for filtering files}
+\item{regex}{Character. String to use for filtering files}
 
-\item{export}{Boolean. Do you wish to export a txt file?}
+\item{images}{Boolean. Bring only image files?}
+
+\item{export}{Boolean. Do you wish to export list as txt file?}
 }
 \description{
 This function lets the user list all files on a given directory.
