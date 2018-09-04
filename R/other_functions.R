@@ -335,7 +335,7 @@ listfiles <- function(folder, recursive = TRUE, regex = NA, images = FALSE, expo
     }
     require(exifr)
     exif <- read_exif(folder, recursive = TRUE)
-    df <- data.frame(df, exif)
+    df <- exif
   }
   
   if (export == TRUE) {
