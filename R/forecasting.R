@@ -16,10 +16,16 @@
 #' @param time POSIX. Vector with date values
 #' @param values Numeric. Vector with numerical values
 #' @param n_future Integer. How many steps do you wish to forecast?
-#' @param ARMA Integer. How many days should the model look backfor ARMA?
+#' @param ARMA Integer. How many days should the model look back for ARMA?
 #' Between 5 and 10 days recommmended. If set to 0 then it will forecast
 #' until the end of max date's month; if set to -1, until the end of 
 #' max date's following month
+#' @param ARMA_min Integer. How many days should the model look back for ARMA?
+#' Between 5 and 10 days recommmended. If set to 0 then it will forecast
+#' until the end of max date's month; if set to -1, until the end of 
+#' max date's following month
+#' @param AR Integer. Force AR value if known
+#' @param MA Integer. Force MA value if known
 #' @param wd_excluded Character vector. Which weekdays are excluded in 
 #' your training set. If there are, please define know which ones. Example:
 #' c('Sunday','Thursday'). If set to 'auto' then it will detect automatically
@@ -29,7 +35,9 @@
 #' @param project Character. Name of your forecast project
 #' @export
 forecast_arima <- function(time, values, n_future = 30, 
-                           ARMA = 8, wd_excluded = NA,
+                           ARMA = 8, ARMA_min = 5, 
+                           AR = NA, MA = NA,
+                           wd_excluded = NA,
                            plot = TRUE, plot_days = 90, project = NA){
   
   require(forecast)
@@ -55,22 +63,25 @@ forecast_arima <- function(time, values, n_future = 30,
   }
   
   # Which AR and MA values minimize our AIC
-  arma <- c(5:ARMA)
-  combs <- expand.grid(arma, arma)
-  aic <- data.frame(
-    AR = combs[,1], 
-    MA = combs[,2], 
-    cals = rep(0, nrow(combs)))
-  message("Iterating for best AR / MA combinations; there are ", nrow(aic), "!")
-  # if (length(time) > 1000) { method <- "ML" } else { method <- "CSS" }
-  for(i in 1:nrow(aic)){
-    Tmodel <- Arima(values, order = c(aic$AR[i], 1, aic$MA[i]), method = "ML")
-    aic$cals[i] <- Tmodel$aic
+  if (is.na(AR) & is.na(MA)) {
+    arma <- c(ARMA_min:ARMA)
+    combs <- expand.grid(arma, arma)
+    aic <- data.frame(
+      AR = combs[,1], 
+      MA = combs[,2], 
+      cals = rep(0, nrow(combs)))
+    message("Iterating for best AR / MA combinations; there are ", nrow(aic), "!")
+    # if (length(time) > 1000) { method <- "ML" } else { method <- "CSS" }
+    for(i in 1:nrow(aic)){
+      Tmodel <- Arima(values, order = c(aic$AR[i], 1, aic$MA[i]), method = "ML")
+      aic$cals[i] <- Tmodel$aic
+    }
+    AR <- aic$AR[which.min(aic$cals)]
+    MA <- aic$MA[which.min(aic$cals)]
+    message(paste("Best combination:", AR, "and", MA))
+    aic_ARIMA <- min(aic$cals)
   }
-  AR <- aic$AR[which.min(aic$cals)]
-  MA <- aic$MA[which.min(aic$cals)]
-  message(paste("Best combination:", AR, "and", MA))
-  aic_ARIMA <- min(aic$cals)
+  
   model <- Arima(values, order = c(AR, 1, MA), method = "ML")
   train <- data.frame(time, values, 
                       pred = model$fitted, 

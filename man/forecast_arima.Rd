@@ -4,8 +4,9 @@
 \alias{forecast_arima}
 \title{ARIMA Forecast}
 \usage{
-forecast_arima(time, values, n_future = 30, ARMA = 8,
-  wd_excluded = NA, plot = TRUE, plot_days = 90, project = NA)
+forecast_arima(time, values, n_future = 30, ARMA = 8, ARMA_min = 5,
+  AR = NA, MA = NA, wd_excluded = NA, plot = TRUE,
+  plot_days = 90, project = NA)
 }
 \arguments{
 \item{time}{POSIX. Vector with date values}
@@ -14,10 +15,19 @@ forecast_arima(time, values, n_future = 30, ARMA = 8,
 
 \item{n_future}{Integer. How many steps do you wish to forecast?}
 
-\item{ARMA}{Integer. How many days should the model look backfor ARMA?
+\item{ARMA}{Integer. How many days should the model look back for ARMA?
 Between 5 and 10 days recommmended. If set to 0 then it will forecast
 until the end of max date's month; if set to -1, until the end of 
 max date's following month}
+
+\item{ARMA_min}{Integer. How many days should the model look back for ARMA?
+Between 5 and 10 days recommmended. If set to 0 then it will forecast
+until the end of max date's month; if set to -1, until the end of 
+max date's following month}
+
+\item{AR}{Integer. Force AR value if known}
+
+\item{MA}{Integer. Force MA value if known}
 
 \item{wd_excluded}{Character vector. Which weekdays are excluded in 
 your training set. If there are, please define know which ones. Example:
