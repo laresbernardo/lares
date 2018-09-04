@@ -324,6 +324,8 @@ listfiles <- function(folder, recursive = TRUE, regex = NA, images = FALSE, expo
   files <- gsub("_", " ", files)
   
   df <- data.frame(filename = files, address, info)
+  df$size <- as.integer(df$size/1024)
+  imgs <- "jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF"
   
   if (!is.na(regex)) {
     df <- df[grep(regex, df$filename),] 
@@ -334,18 +336,17 @@ listfiles <- function(folder, recursive = TRUE, regex = NA, images = FALSE, expo
       message("This might take a while!") 
     }
     require(exifr)
-    exif <- read_exif(folder, recursive = TRUE)
-    df <- exif
+    require(dplyr)
+    df <- read_exif(folder, recursive = TRUE)
+    df <- df[,colSums(is.na(df)) < nrow(df)]
+    df <- select(df, -starts_with("ProfileDescription"), 
+                 -ends_with("TRC"), -starts_with("Zip"))
   }
   
   if (export == TRUE) {
     write.table(df$filename, file = "files.txt", quote = FALSE, row.names = FALSE) 
   }
   
-  # Further calculus
-  df$size <- as.integer(df$size/1024)
-  imgs <- "jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF"
-  df$image <- ifelse(grep(imgs, df$filename), TRUE, FALSE)
   row.names(df) <- NULL
   df$address <- NULL
   
