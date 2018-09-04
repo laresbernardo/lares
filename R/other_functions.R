@@ -336,12 +336,26 @@ listfiles <- function(folder, recursive = TRUE, regex = NA, images = FALSE, expo
       message(paste("This might take a while... Analizing around", 
                     lares::formatNum(nrow(df), decimals = 0), "files!"))
     }
+    
     require(exifr)
     require(dplyr)
-    df <- read_exif(folder, recursive = TRUE)
+    require(lubridate)
+    
+    tags <- c("FileName", "SourceFile",
+              "CreateDate", "DateTimeOriginal", "FileModifyDate",
+              "FileTypeExtension", "Megapixels",
+              "ImageSize", "ImageWidth", "ImageHeight", 
+              "GPSLongitude", "GPSLatitude",
+              "Rotation", "Flash", "Duration")
+    
+    df <- read_exif(folder, recursive = TRUE, tags = tolower(tags)) %>% 
+      select(one_of(tags)) %>%
+      mutate(DateTimeOriginal = ymd_hms(DateTimeOriginal),
+             CreateDate = ymd_hms(CreateDate),
+             FileModifyDate = ymd_hms(FileModifyDate))
+    
     df <- df[,colSums(is.na(df)) < nrow(df)]
-    df <- select(df, -starts_with("ProfileDescription"), 
-                 -ends_with("TRC"), -starts_with("Zip"))
+    
   }
   
   if (export == TRUE) {
