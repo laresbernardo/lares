@@ -136,7 +136,10 @@ forecast_arima <- function(time, values, n_future = 30,
       geom_smooth(aes(y = values), method = 'loess', alpha = 0.5) +
       geom_line(aes(y = values, colour = type)) +
       labs(x = "Date", y = "Counter", colour = "") + 
-      theme_minimal() + theme(legend.position = "top") +
+      theme_minimal() + 
+      theme(legend.position = "top",
+            axis.text.x=element_text(angle=60, hjust=1)) +
+      scale_x_date(date_breaks = "1 month", date_labels =  "%Y %b") +
       ggtitle("Real & Fitted Model vs Forecast (ARIMA)",
               subtitle = paste("AIC", signif(output$model$aic, 4), "|",
                                "MAE", signif(output$metrics[3], 3), "|",
