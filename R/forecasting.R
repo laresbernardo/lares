@@ -9,6 +9,12 @@
 #' be approximately constant through time) and it is recommended 
 #' that there are at least 50 observations in the input data.
 #' 
+#'  The model consists of two parts, an autoregressive (AR) part 
+#'  and a moving average (MA) part. The AR part involves regressing 
+#'  the variable on its own lagged (i.e., past) values. The MA part 
+#'  involves modeling the error term as a linear combination of error 
+#'  terms occurring contemporaneously and at various times in the past.
+#' 
 #' One thing to keep in mind when we think about ARIMA models is 
 #' given by the great power to capture very complex patters of 
 #' temporal correlation (Cochrane, 1997: 25)
@@ -135,7 +141,7 @@ forecast_arima <- function(time, values, n_future = 30,
               subtitle = paste("AIC", signif(output$model$aic, 4), "|",
                                "MAE", signif(output$metrics[3], 3), "|",
                                "RMSE", signif(output$metrics[2], 3), "|",
-                               "AR & MA:", AR, "-", MA)) +
+                               "ARIMA:", AR, "- 1 -", MA)) +
       scale_color_manual(values=c("orange", "navy","purple")) +
       geom_rect(data = rects, inherit.aes = FALSE, 
                 aes(
