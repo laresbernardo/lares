@@ -134,7 +134,8 @@ forecast_arima <- function(time, values, n_future = 30,
       ggtitle("Real & Fitted Model vs Forecast (ARIMA)",
               subtitle = paste("AIC", signif(output$model$aic, 4), "|",
                                "MAE", signif(output$metrics[3], 3), "|",
-                               "RMSE", signif(output$metrics[2], 3))) +
+                               "RMSE", signif(output$metrics[2], 3),
+                               "AR&MA:", AR, "-", MA)) +
       scale_color_manual(values=c("orange", "navy","purple")) +
       geom_rect(data = rects, inherit.aes = FALSE, 
                 aes(
