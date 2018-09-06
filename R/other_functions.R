@@ -30,7 +30,7 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
       plot <- ungroup(output)
       
       if (rm.na == TRUE) {
-        plot <- na.omit(plot)
+        plot <- plot[complete.cases(plot), ]
       }
       
       # Create some dynamic aesthetics
