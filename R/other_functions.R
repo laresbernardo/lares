@@ -21,49 +21,54 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
   
   if (plot == TRUE) {
     
-    require(ggplot2)
-    require(scales)
-    options(warn=-1)
-    
-    plot <- ungroup(output)
-    
-    if (rm.na == TRUE) {
-      plot <- na.omit(plot)
+    if (ncol(output) - 3 <= 2) { 
+      
+      require(ggplot2)
+      require(scales)
+      options(warn=-1)
+      
+      plot <- ungroup(output)
+      
+      if (rm.na == TRUE) {
+        plot <- na.omit(plot)
+      }
+      
+      # Create some dynamic aesthetics
+      plot$labels <- paste0(plot$n," (",plot$p,"%)")
+      plot$label_colours <- ifelse(plot$n > mean(range(plot$n)), "m", "f")
+      plot$label_hjust <- ifelse(plot$n < min(plot$n) + diff(range(plot$n)) * 0.25, -0.1, 1.05)
+      variable <- colnames(plot)[1]
+      colnames(plot)[1] <- "names"
+      
+      # Two features
+      if (ncol(output) - 3 == 2) { 
+        facet_name <- colnames(plot)[2]
+        colnames(plot)[1] <- "facet"
+        colnames(plot)[2] <- "names"
+        plot$facet[is.na(plot$facet)] <- "NA"
+      }
+      
+      p <- ggplot(plot, aes(x = reorder(as.character(names), n),
+                            y = n, label = labels, 
+                            fill = p)) +
+        geom_col(alpha=0.9, width = 0.8) +
+        geom_text(aes(
+          hjust = label_hjust,
+          colour = label_colours), size = 2.6) + lares::gg_text_customs() +
+        coord_flip() + theme_minimal() + guides(colour = FALSE) +
+        labs(x = "", y = "Counter", fill = "[%]",
+             title = paste("Frequencies and Percentages:", variable)) +
+        scale_fill_gradient(low = "lightskyblue2", high = "navy")
+      
+      if (ncol(output) - 3 == 2) { 
+        p <- p + facet_grid(as.character(facet) ~ .) + 
+          labs(subtitle = paste("Inside the facet grids:", facet_name)) +
+          theme_light()
+      }
+      print(p)
+    } else {
+      message("Sorry, but we are not able to plot more than two feature for now...")
     }
-    
-    # Create some dynamic aesthetics
-    plot$labels <- paste0(plot$n," (",plot$p,"%)")
-    plot$label_colours <- ifelse(plot$n > mean(range(plot$n)), "m", "f")
-    plot$label_hjust <- ifelse(plot$n < min(plot$n) + diff(range(plot$n)) * 0.25, -0.1, 1.05)
-    variable <- colnames(plot)[1]
-    colnames(plot)[1] <- "names"
-    
-    # Two features
-    if (ncol(output) - 3 == 2) { 
-      facet_name <- colnames(plot)[2]
-      colnames(plot)[1] <- "facet"
-      colnames(plot)[2] <- "names"
-      plot$facet[is.na(plot$facet)] <- "NA"
-    }
-    
-    p <- ggplot(plot, aes(x = reorder(as.character(names), n),
-                          y = n, label = labels, 
-                          fill = p)) +
-      geom_col(alpha=0.9, width = 0.8) +
-      geom_text(aes(
-        hjust = label_hjust,
-        colour = label_colours), size = 2.6) + lares::gg_text_customs() +
-      coord_flip() + theme_minimal() + guides(colour = FALSE) +
-      labs(x = "", y = "Counter", fill = "[%]",
-           title = paste("Frequencies and Percentages:", variable)) +
-      scale_fill_gradient(low = "lightskyblue2", high = "navy")
-    
-    if (ncol(output) - 3 == 2) { 
-      p <- p + facet_grid(as.character(facet) ~ .) + 
-        labs(subtitle = paste("Inside the facet grids:", facet_name)) +
-        theme_light()
-    }
-    print(p)
   }
   
   return(output)
