@@ -11,7 +11,8 @@ formatNum(x, decimals = 2, type = 1, scientific = FALSE)
 
 \item{decimals}{Integer. Amount of decimals to display}
 
-\item{type}{Integer. 1 for International standards. 2 for American Standards.}
+\item{type}{Integer. 1 for International standards. 2 for 
+American Standards.}
 
 \item{scientific}{Boolean. Scientific notation}
 }

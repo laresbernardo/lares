@@ -7,7 +7,8 @@
 dist2d(a, b = c(0, 0), c = c(1, 1))
 }
 \arguments{
-\item{a}{Vector. Coordinates of the point from which we want to measure the distance}
+\item{a}{Vector. Coordinates of the point from which we want to 
+measure the distance}
 
 \item{b}{Vector. Coordinates of 1st point over the line}
 

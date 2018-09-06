@@ -2,13 +2,19 @@
 % Please edit documentation in R/other_functions.R
 \name{freqs}
 \alias{freqs}
-\title{Frequencies Calculations}
+\title{Frequencies Calculations and Plot}
 \usage{
-freqs(vector, ...)
+freqs(vector, ..., plot = FALSE, rm.na = FALSE)
 }
 \arguments{
 \item{vector}{Vector to group, count, and mutate}
+
+\item{plot}{Boolean. Do you wish to see a plot?}
+
+\item{rm.na}{Boolean. Remove NAs from plot?}
 }
 \description{
-This function lets the user group, count and calculate percentages and cumulatives
+This function lets the user group, count, calculate 
+percentages and cumulatives. It also plots if needed. 
+Perfect for using with dplyr pipes.
 }

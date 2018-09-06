@@ -7,8 +7,10 @@
 normalize(x)
 }
 \arguments{
-\item{x}{Numeric Vector. Numbers to be transformed into normalized vector}
+\item{x}{Numeric Vector. Numbers to be transformed into 
+normalized vector}
 }
 \description{
-This function lets the user normalize numerical values into the 0 to 1 range
+This function lets the user normalize numerical values into 
+the 0 to 1 range
 }

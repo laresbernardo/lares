@@ -10,5 +10,6 @@ categoryCounter(df)
 \item{df}{Categorical Vector}
 }
 \description{
-This function lets the user count unique values in a categorical dataframe
+This function lets the user count unique values in a categorical 
+dataframe
 }

@@ -139,7 +139,7 @@ forecast_arima <- function(time, values, n_future = 30,
       theme_minimal() + 
       theme(legend.position = "top",
             axis.text.x=element_text(angle=60, hjust=1)) +
-      scale_x_date(date_breaks = "1 month", date_labels =  "%Y %b") +
+      scale_x_date(date_breaks = "1 month", date_labels =  "%b-%Y") +
       ggtitle("Real & Fitted Model vs Forecast (ARIMA)",
               subtitle = paste("AIC", signif(output$model$aic, 4), "|",
                                "MAE", signif(output$metrics[3], 3), "|",

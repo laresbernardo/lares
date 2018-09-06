@@ -1,19 +1,73 @@
 ####################################################################
-#' Frequencies Calculations
+#' Frequencies Calculations and Plot
 #' 
-#' This function lets the user group, count and calculate percentages and cumulatives
+#' This function lets the user group, count, calculate 
+#' percentages and cumulatives. It also plots if needed. 
+#' Perfect for using with dplyr pipes.
 #' 
 #' @param vector Vector to group, count, and mutate
+#' @param plot Boolean. Do you wish to see a plot?
+#' @param rm.na Boolean. Remove NAs from plot?
 #' @export
-freqs <- function(vector, ...) {
-
+freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
+  
   require(dplyr)
-
+  require(lazyeval)
+  
   output <- vector %>%
-    dplyr::group_by_(.dots = lazyeval::lazy_dots(...)) %>%
-    dplyr::tally() %>% dplyr::arrange(desc(n)) %>%
-    dplyr::mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
+    group_by_(.dots = lazy_dots(...)) %>%
+    tally() %>% arrange(desc(n)) %>%
+    mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
+  
+  if (plot == TRUE) {
+    
+    require(ggplot2)
+    require(scales)
+    options(warn=-1)
+    
+    plot <- ungroup(output)
+    
+    if (rm.na == TRUE) {
+      plot <- na.omit(plot)
+    }
+    
+    # Create some dynamic aesthetics
+    plot$labels <- paste0(plot$n," (",plot$p,"%)")
+    plot$label_colours <- ifelse(plot$n > mean(range(plot$n)), "m", "f")
+    plot$label_hjust <- ifelse(plot$n < min(plot$n) + diff(range(plot$n)) * 0.25, -0.1, 1.05)
+    variable <- colnames(plot)[1]
+    colnames(plot)[1] <- "names"
+    
+    # Two features
+    if (ncol(output) - 3 == 2) { 
+      facet_name <- colnames(plot)[2]
+      colnames(plot)[1] <- "facet"
+      colnames(plot)[2] <- "names"
+      plot$facet[is.na(plot$facet)] <- "NA"
+    }
+    
+    p <- ggplot(plot, aes(x = reorder(as.character(names), n),
+                          y = n, label = labels, 
+                          fill = p)) +
+      geom_col(alpha=0.9, width = 0.8) +
+      geom_text(aes(
+        hjust = label_hjust,
+        colour = label_colours), size = 2.6) + lares::gg_text_customs() +
+      coord_flip() + theme_minimal() + guides(colour = FALSE) +
+      labs(x = "", y = "Counter", fill = "[%]",
+           title = paste("Frequencies and Percentages:", variable)) +
+      scale_fill_gradient(low = "lightskyblue2", high = "navy")
+    
+    if (ncol(output) - 3 == 2) { 
+      p <- p + facet_grid(as.character(facet) ~ .) + 
+        labs(subtitle = paste("Inside the facet grids:", facet_name)) +
+        theme_light()
+    }
+    print(p)
+  }
+  
   return(output)
+  
 }
 
 
@@ -25,10 +79,10 @@ freqs <- function(vector, ...) {
 #' @param date Date. Date we wish to transform 
 #' @export
 year_month <- function(date) {
-
+  
   require(lubridate)
   require(stringr)
-
+  
   return(paste(
     lubridate::year(date),
     str_pad(lubridate::month(date), 2, pad = "0"),
@@ -58,17 +112,18 @@ year_week <- function(date) {
 ####################################################################
 #' Count Categories on a Dataframe
 #' 
-#' This function lets the user count unique values in a categorical dataframe
+#' This function lets the user count unique values in a categorical 
+#' dataframe
 #'
 #' @param df Categorical Vector
 #' @export
 categoryCounter <- function (df) {
-
+  
   require(dplyr)
-
+  
   cats <- df %>% select_if(is.character)
   result <- c()
-
+  
   for (i in 1:ncol(cats)) {
     x <- freqs(cats, cats[,i])
     y <- colnames(cats)[i]
@@ -88,9 +143,11 @@ categoryCounter <- function (df) {
 #' @param vector Categorical Vector
 #' @param nmin Integer. Number of minimum times a value is repeated
 #' @param pmin Numerical. Porcentage of minimum times a value is repeated
-#' @param pcummax Numerical. Top cumulative porcentage of most repeated values
+#' @param pcummax Numerical. Top cumulative porcentage of most 
+#' repeated values
 #' @param top Integer. Keep the n most frequently repeated values
-#' @param other_label Character. Which value do you wish to replace the filtered values with?
+#' @param other_label Character. Which value do you wish to replace 
+#' the filtered values with?
 #' @export
 categ_reducer <- function(vector, 
                           nmin = 0, 
@@ -105,7 +162,8 @@ categ_reducer <- function(vector,
   } else {
     top <- df %>% filter(n >= nmin & p >= pmin & p <= pcummax) 
   }
-  vector <- ifelse(vector %in% top$name, as.character(vector), other_label)
+  vector <- ifelse(vector %in% top$name, 
+                   as.character(vector), other_label)
   return(vector)
 }
 
@@ -113,9 +171,11 @@ categ_reducer <- function(vector,
 ####################################################################
 #' Normalize values
 #' 
-#' This function lets the user normalize numerical values into the 0 to 1 range
+#' This function lets the user normalize numerical values into 
+#' the 0 to 1 range
 #' 
-#' @param x Numeric Vector. Numbers to be transformed into normalized vector
+#' @param x Numeric Vector. Numbers to be transformed into 
+#' normalized vector
 #' @export
 normalize <- function(x) {
   if (is.numeric(x)) {
@@ -134,7 +194,8 @@ normalize <- function(x) {
 #' 
 #' @param vector Vector. Vector with more than 1 observation
 #' @param sep Character. String text wished to insert between values
-#' @param quotes Boolean. Bring simple quotes for each observation (useful for SQL)
+#' @param quotes Boolean. Bring simple quotes for each 
+#' observation (useful for SQL)
 #' @export
 vector2text <- function(vector, sep=", ", quotes = TRUE) {
   output <- paste(shQuote(vector), collapse=sep)
@@ -156,7 +217,8 @@ vector2text <- function(vector, sep=", ", quotes = TRUE) {
 #' @export
 cleanText <- function(text, spaces = TRUE) {
   text <- as.character(text)
-  output <- tolower(gsub("[^[:alnum:] ]", "", iconv(text, from="UTF-8", to="ASCII//TRANSLIT")))
+  output <- tolower(gsub("[^[:alnum:] ]", "", 
+                         iconv(text, from="UTF-8", to="ASCII//TRANSLIT")))
   if (spaces == FALSE) {
     output <- gsub(" ", "", output)
   }
@@ -197,7 +259,8 @@ ip_country <- function(ip) {
 #' This function lets the user calculate the mathematical linear distance 
 #' Between a specific point and a line (given geometrical 3 points)
 #' 
-#' @param a Vector. Coordinates of the point from which we want to measure the distance
+#' @param a Vector. Coordinates of the point from which we want to 
+#' measure the distance
 #' @param b Vector. Coordinates of 1st point over the line
 #' @param c Vector. Coordinates of 2st point over the line
 #' @export
@@ -216,7 +279,8 @@ dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
 #' 
 #' @param x Numerical Vector
 #' @param decimals Integer. Amount of decimals to display
-#' @param type Integer. 1 for International standards. 2 for American Standards.  
+#' @param type Integer. 1 for International standards. 2 for 
+#' American Standards.  
 #' @param scientific Boolean. Scientific notation
 #' @export
 formatNum <- function(x, decimals = 2, type = 1, scientific = FALSE) {
@@ -226,9 +290,11 @@ formatNum <- function(x, decimals = 2, type = 1, scientific = FALSE) {
     formatC(numb, format = "e", digits = 2)
   }
   if (type == 1) {
-    format(round(as.numeric(x), decimals), nsmall=decimals, big.mark=".", decimal.mark = ",")
+    format(round(as.numeric(x), decimals), nsmall=decimals, 
+           big.mark=".", decimal.mark = ",")
   } else {
-    format(round(as.numeric(x), decimals), nsmall=decimals, big.mark=",", decimal.mark = ".") 
+    format(round(as.numeric(x), decimals), nsmall=decimals, 
+           big.mark=",", decimal.mark = ".") 
   }
 }
 
@@ -236,9 +302,11 @@ formatNum <- function(x, decimals = 2, type = 1, scientific = FALSE) {
 ####################################################################
 #' One Hot Encoding for a Vector with Comma Separated Values
 #' 
-#' This function lets the user do one hot encoding on a variable with comma separated values
+#' This function lets the user do one hot encoding on a variable with 
+#' comma separated values
 #' 
-#' @param df Vector or Dataframe. Contains different variables in each column, separated by a specific character
+#' @param df Vector or Dataframe. Contains different variables in each 
+#' column, separated by a specific character
 #' @param variables Character. Which variables should we split into new columns
 #' @param sep Character. Which character separates the elements
 #' @export

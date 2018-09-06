@@ -11,7 +11,8 @@ vector2text(vector, sep = ", ", quotes = TRUE)
 
 \item{sep}{Character. String text wished to insert between values}
 
-\item{quotes}{Boolean. Bring simple quotes for each observation (useful for SQL)}
+\item{quotes}{Boolean. Bring simple quotes for each 
+observation (useful for SQL)}
 }
 \description{
 Convert a vector into a comma separated text
