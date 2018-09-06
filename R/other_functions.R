@@ -35,8 +35,12 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
       
       # Create some dynamic aesthetics
       plot$labels <- paste0(plot$n," (",plot$p,"%)")
-      plot$label_colours <- ifelse(plot$n > mean(range(plot$n)), "m", "f")
-      plot$label_hjust <- ifelse(plot$n < min(plot$n) + diff(range(plot$n)) * 0.25, -0.1, 1.05)
+      plot$label_colours <- ifelse(plot$p > mean(range(plot$p)), "m", "f")
+      lim <- 0.35
+      plot$label_hjust <- ifelse(
+        plot$n < min(plot$n) + diff(range(plot$n)) * lim, -0.1, 1.05)
+      plot$label_colours <- ifelse(
+        plot$label_colours == "m" & plot$label_hjust < lim, "f", plot$label_colours)
       variable <- colnames(plot)[1]
       colnames(plot)[1] <- "names"
       
