@@ -4,12 +4,19 @@
 \alias{auto_preprocess}
 \title{Auto-Preprocessing data for a Machine Learning Model}
 \usage{
-auto_preprocess(df, num2fac = 7, print = FALSE)
+auto_preprocess(df, num2fac = 7, ohe = FALSE, scale = FALSE,
+  print = FALSE)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe to format, transform and input}
 
-\item{num2fac}{Integer. Threshold for unique values on a numerical variable to transform into factor}
+\item{num2fac}{Integer. Threshold for unique values on a 
+numerical variable to transform into factor}
+
+\item{ohe}{Boolean. One hot encoding on variables with 3 or
+more cateogries?}
+
+\item{scale}{Boolean. Scale the data (normalized)}
 
 \item{print}{Boolean. Print results summary}
 }

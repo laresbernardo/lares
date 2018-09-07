@@ -4,10 +4,14 @@
 #' This function helps us preprocess data automatically.
 #' 
 #' @param df Dataframe. Dataframe to format, transform and input
-#' @param num2fac Integer. Threshold for unique values on a numerical variable to transform into factor
+#' @param num2fac Integer. Threshold for unique values on a 
+#' numerical variable to transform into factor
+#' @param ohe Boolean. One hot encoding on variables with 3 or
+#' more cateogries?
+#' @param scale Boolean. Scale the data (normalized)
 #' @param print Boolean. Print results summary
 #' @export
-auto_preprocess <- function(df, num2fac = 7, print = FALSE) {
+auto_preprocess <- function(df, num2fac = 7, ohe = FALSE, scale = FALSE, print = FALSE) {
   
   require(recipes)
   require(tidyr)
@@ -36,6 +40,16 @@ auto_preprocess <- function(df, num2fac = 7, print = FALSE) {
     step_num2factor(num_2_factor_names) %>%
     step_meanimpute(all_numeric()) %>%
     step_modeimpute(all_nominal())
+  
+  if (ohe == TRUE) {
+    rec <- rec %>% 
+      step_dummy(all_nominal(), -all_outcomes())
+  }
+  
+  if (scale == TRUE) {
+    rec <- rec %>% 
+      step_scale(all_predictors(), -all_outcomes())
+  }
   
   if (length(string_2_factor_names) > 0) {
     rec <- rec %>%
