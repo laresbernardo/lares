@@ -18,6 +18,9 @@ more cateogries?}
 
 \item{scale}{Boolean. Scale the data (normalized)}
 
+\item{logs}{Boolean. Automatically calculate log(values) for numerical
+variables (not binaries)}
+
 \item{print}{Boolean. Print results summary}
 }
 \description{
