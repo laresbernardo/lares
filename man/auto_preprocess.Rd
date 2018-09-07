@@ -4,8 +4,8 @@
 \alias{auto_preprocess}
 \title{Auto-Preprocessing data for a Machine Learning Model}
 \usage{
-auto_preprocess(df, num2fac = 7, ohe = FALSE, scale = FALSE,
-  print = FALSE)
+auto_preprocess(df, num2fac = 7, impute = FALSE, ohe = FALSE,
+  scale = FALSE, logs = FALSE, print = FALSE)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe to format, transform and input}

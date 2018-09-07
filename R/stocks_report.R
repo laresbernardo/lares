@@ -10,6 +10,7 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Br
   suppressMessages(require(rdrop2))
   suppressMessages(require(xlsx))
   suppressMessages(require(dplyr))
+  options("getSymbols.yahoo.warning"=FALSE)
 
   valid <- Sys.info()
 

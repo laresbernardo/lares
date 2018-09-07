@@ -9,10 +9,12 @@
 #' @param ohe Boolean. One hot encoding on variables with 3 or
 #' more cateogries?
 #' @param scale Boolean. Scale the data (normalized)
+#' @param logs Boolean. Automatically calculate log(values) for numerical
+#' variables (not binaries)
 #' @param print Boolean. Print results summary
 #' @export
-auto_preprocess <- function(df, num2fac = 7, impute = FALSE, 
-                            ohe = FALSE, scale = FALSE, print = FALSE) {
+auto_preprocess <- function(df, num2fac = 7, impute = FALSE, ohe = FALSE, 
+                            scale = FALSE, logs = FALSE, print = FALSE) {
   
   require(recipes)
   require(tidyr)
@@ -44,14 +46,19 @@ auto_preprocess <- function(df, num2fac = 7, impute = FALSE,
       step_modeimpute(all_nominal())
   }
   
-  if (ohe == TRUE) {
-    rec <- rec %>% 
-      step_dummy(all_nominal(), -all_outcomes())
+  if (logs == TRUE) {
+    rec <- rec %>%
+      mutate_if(is.numeric, funs(log(.)))
   }
   
   if (scale == TRUE) {
     rec <- rec %>% 
-      step_scale(all_predictors(), -all_outcomes())
+      step_scale(all_numeric(), -all_outcomes())
+  }
+  
+  if (ohe == TRUE) {
+    rec <- rec %>% 
+      step_dummy(all_nominal(), -all_outcomes())
   }
   
   rec <- rec %>% prep(stringsAsFactors = FALSE)
