@@ -51,16 +51,18 @@ corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE) {
 #' @param var Character. Name of the variable to correlate
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @param plot Boolean. Do you wish to plot the result?
+#' @param logs Boolean. Automatically calculate log(values) for numerical
+#' variables (not binaries)
 #' @param top Integer. If you want to plot the top correlations, define how many
 #' @param zeroes Do you wish to keep zeroes in correlations too?
 #' @export
 corr_var <- function(df, var, method = "pearson", plot = TRUE, 
-                     top = NA, zeroes = FALSE) {
+                     logs = TRUE, top = NA, zeroes = FALSE) {
   
   require(ggplot2)
   require(scales)
   
-  rs <- corr(df, method = method)
+  rs <- lares::corr(df, method = method, logs = logs)
   d <- data.frame(variables = colnames(rs), corr = rs[, c(var)])
   d <- d[(d$corr < 1 & !is.na(d$corr)),]
   d <- d[order(-abs(d$corr)), ]

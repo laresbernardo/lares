@@ -4,8 +4,8 @@
 \alias{corr_var}
 \title{Correlation between variable and dataframe}
 \usage{
-corr_var(df, var, method = "pearson", plot = TRUE, top = NA,
-  zeroes = FALSE)
+corr_var(df, var, method = "pearson", plot = TRUE, logs = TRUE,
+  top = NA, zeroes = FALSE)
 }
 \arguments{
 \item{df}{Dataframe.}
@@ -15,6 +15,9 @@ corr_var(df, var, method = "pearson", plot = TRUE, top = NA,
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
 
 \item{plot}{Boolean. Do you wish to plot the result?}
+
+\item{logs}{Boolean. Automatically calculate log(values) for numerical
+variables (not binaries)}
 
 \item{top}{Integer. If you want to plot the top correlations, define how many}
 
