@@ -4,13 +4,18 @@
 \alias{corr}
 \title{Correlation table}
 \usage{
-corr(df, method = "pearson", plot = FALSE)
+corr(df, method = "pearson", logs = TRUE, plot = FALSE)
 }
 \arguments{
 \item{df}{Dataframe. It doesn't matter if it's got non-numerical
 columns: they will be filtered!}
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
+
+\item{logs}{Boolean. Automatically calculate log(values) for numerical
+variables (not binaries)}
+
+\item{plot}{Boolean. Do you wish to see a plot?}
 }
 \description{
 This function correlates a whole dataframe, filtering automatically

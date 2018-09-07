@@ -7,8 +7,11 @@
 #' @param df Dataframe. It doesn't matter if it's got non-numerical
 #' columns: they will be filtered!
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
+#' @param logs Boolean. Automatically calculate log(values) for numerical
+#' variables (not binaries)
+#' @param plot Boolean. Do you wish to see a plot?
 #' @export
-corr <- function(df, method = "pearson", plot = FALSE) {
+corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE) {
   
   library(dplyr)
   
@@ -20,6 +23,9 @@ corr <- function(df, method = "pearson", plot = FALSE) {
   # Join everything
   non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x))-1)
   numeric <- select_if(df, is.numeric)
+  if (logs == TRUE) {
+    numeric <- mutate_all(numeric, funs(log = log(.)))
+  }
   d <- cbind(numeric, non_numeric[!colnames(non_numeric) %in% colnames(numeric)])
   
   # Correlations
