@@ -11,7 +11,8 @@
 #' @param scale Boolean. Scale the data (normalized)
 #' @param print Boolean. Print results summary
 #' @export
-auto_preprocess <- function(df, num2fac = 7, ohe = FALSE, scale = FALSE, print = FALSE) {
+auto_preprocess <- function(df, num2fac = 7, impute = FALSE, 
+                            ohe = FALSE, scale = FALSE, print = FALSE) {
   
   require(recipes)
   require(tidyr)
@@ -23,9 +24,7 @@ auto_preprocess <- function(df, num2fac = 7, ohe = FALSE, scale = FALSE, print =
   df <- select(df, -NZV)
   
   # Which columns to transform
-  string_2_factor_names <- df %>% 
-    select_if(is.character) %>% 
-    names()
+  df <- df %>% mutate_if(is.character, funs(as.factor(.)))
   num_2_factor_names <- df %>% 
     select_if(is.numeric) %>% 
     summarise_all(funs(n_distinct(.))) %>% 
@@ -37,9 +36,13 @@ auto_preprocess <- function(df, num2fac = 7, ohe = FALSE, scale = FALSE, print =
   
   # Create recipe's recipe for imputations
   rec <- recipe(~ ., data = df) %>%
-    step_num2factor(num_2_factor_names) %>%
-    step_meanimpute(all_numeric()) %>%
-    step_modeimpute(all_nominal())
+    step_num2factor(num_2_factor_names)
+  
+  if (impute == TRUE) {
+    rec <- rec %>%
+      step_meanimpute(all_numeric()) %>%
+      step_modeimpute(all_nominal())
+  }
   
   if (ohe == TRUE) {
     rec <- rec %>% 
@@ -49,11 +52,6 @@ auto_preprocess <- function(df, num2fac = 7, ohe = FALSE, scale = FALSE, print =
   if (scale == TRUE) {
     rec <- rec %>% 
       step_scale(all_predictors(), -all_outcomes())
-  }
-  
-  if (length(string_2_factor_names) > 0) {
-    rec <- rec %>%
-      step_string2factor(string_2_factor_names)
   }
   
   rec <- rec %>% prep(stringsAsFactors = FALSE)
