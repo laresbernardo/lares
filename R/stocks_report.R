@@ -29,9 +29,6 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Br
     cash <- read.xlsx(file, sheetName = 'Fondos', header=TRUE, colClasses=NA)
     trans <- read.xlsx(file, sheetName = 'Transacciones', header=TRUE, colClasses=NA)
     port <- read.xlsx(file, sheetName = 'Portafolio', header=TRUE, colClasses=NA)
-    symbols <- data.frame(Symbols = as.character(port$Symbol), StartDate = port$StartDate)
-    port <- data.frame(cbind(port, StartDate = symbols$StartDate))
-
     results <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
 
     file.remove(file)
