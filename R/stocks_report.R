@@ -10,7 +10,6 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Br
   suppressMessages(require(rdrop2))
   suppressMessages(require(xlsx))
   suppressMessages(require(dplyr))
-  suppressMessages(require(lubridate))
   options("getSymbols.yahoo.warning"=FALSE)
 
   valid <- Sys.info()
@@ -30,7 +29,7 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Br
     cash <- read.xlsx(file, sheetName = 'Fondos', header=TRUE, colClasses=NA)
     trans <- read.xlsx(file, sheetName = 'Transacciones', header=TRUE, colClasses=NA)
     port <- read.xlsx(file, sheetName = 'Portafolio', header=TRUE, colClasses=NA)
-    symbols <- data.frame(Symbols = as.character(port$Symbol), StartDate = date(port$Date))
+    symbols <- data.frame(Symbols = as.character(port$Symbol), StartDate = port$Date)
     port <- data.frame(cbind(port, StartDate = symbols$StartDate))
 
     results <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
