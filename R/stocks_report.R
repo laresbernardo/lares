@@ -31,10 +31,7 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Br
     port <- read.xlsx(file, sheetName = 'Portafolio', header=TRUE, colClasses=NA)
 
     symbols <- na.omit(port$Symbol)
-    started <- trans %>% group_by(Symbol) %>%
-      mutate(Invested = sum(Amount)) %>% filter(ID == min(ID)) %>%
-      arrange(desc(Invested)) %>% select(Symbol, Date)
-    symbols <- data.frame(Symbols = as.character(symbols), StartDate = as.Date(started$Date))
+    symbols <- data.frame(Symbols = as.character(trans$Symbol), StartDate = as.Date(trans$Date))
     port <- data.frame(cbind(port, StartDate = symbols$StartDate))
 
     results <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
