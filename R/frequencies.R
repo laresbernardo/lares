@@ -12,8 +12,7 @@
 freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
   
   require(dplyr)
-  require(lazyeval)
-  
+
   output <- vector %>%
     group_by_(.dots = lazy_dots(...)) %>%
     tally() %>% arrange(desc(n)) %>%
