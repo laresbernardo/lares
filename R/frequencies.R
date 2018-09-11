@@ -14,7 +14,7 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
   require(dplyr)
 
   output <- vector %>%
-    group_by_(.dots = lazy_dots(...)) %>%
+    group_by_(.dots = lazyeval::lazy_dots(...)) %>%
     tally() %>% arrange(desc(n)) %>%
     mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
   
