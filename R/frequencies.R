@@ -12,7 +12,7 @@
 freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
   
   require(dplyr)
-
+  
   output <- vector %>%
     group_by_(.dots = lazyeval::lazy_dots(...)) %>%
     tally() %>% arrange(desc(n)) %>%
@@ -20,7 +20,7 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
   
   if (plot == TRUE) {
     
-    if (ncol(output) - 3 <= 2) { 
+    if (ncol(output) - 3 <= 3) { 
       
       require(ggplot2)
       require(scales)
@@ -50,6 +50,16 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
         colnames(plot)[2] <- "names"
         plot$facet[is.na(plot$facet)] <- "NA"
       }
+      # When three features
+      if (ncol(output) - 3 == 3) { 
+        facet_name1 <- colnames(plot)[2]
+        facet_name2 <- colnames(plot)[3]
+        colnames(plot)[1] <- "facet2"
+        colnames(plot)[2] <- "facet1"
+        colnames(plot)[3] <- "names"
+        plot$facet2[is.na(plot$facet2)] <- "NA"
+        plot$facet1[is.na(plot$facet1)] <- "NA"
+      }
       
       # Plot base
       p <- ggplot(plot, aes(x = reorder(as.character(names), n),
@@ -70,10 +80,20 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
           labs(subtitle = paste("Inside the facet grids:", facet_name)) +
           theme_light()
       }
+      # When three features
+      if (ncol(output) - 3 == 2) { 
+        if (length(unique(facet_name2)) > 3) {
+          stop("Please, try with a (third) variable with 3 or less cateogries!")
+        }
+        p <- p + facet_grid(as.character(facet2) ~ as.character(facet1)) + 
+          labs(title = paste("Frequencies and Percentages:", facet_name1, "and", variable),
+               subtitle = paste("Inside the facet grids:", facet_name2)) +
+          theme_light()
+      }
       print(p)
     } else {
       # When more than two features
-      message("Sorry, but we are not able to plot more than two feature for now...")
+      message("Sorry, but we are not able to plot more than 3 feature for now...")
     }
   }
   
