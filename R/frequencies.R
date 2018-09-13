@@ -81,7 +81,7 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
           theme_light()
       }
       # When three features
-      if (ncol(output) - 3 == 2) { 
+      if (ncol(output) - 3 == 3) { 
         if (length(unique(facet_name2)) > 3) {
           stop("Please, try with a (third) variable with 3 or less cateogries!")
         }
