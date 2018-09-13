@@ -33,8 +33,9 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
       }
       
       # Create some dynamic aesthetics
-      plot$labels <- paste0(plot$n," (",plot$p,"%)")
-      plot$label_colours <- ifelse(plot$p > mean(range(plot$p)) * 1.1, "m", "f")
+      plot$labels <- paste0(lares::formatNum(plot$n, decimals = 0),
+                            " (", signif(plot$p, 4), "%)")
+      plot$label_colours <- ifelse(plot$p > mean(range(plot$p)) * 1.05, "m", "f")
       lim <- 0.35
       plot$label_hjust <- ifelse(
         plot$n < min(plot$n) + diff(range(plot$n)) * lim, -0.1, 1.05)
@@ -63,8 +64,7 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
       
       # Plot base
       p <- ggplot(plot, aes(x = reorder(as.character(names), n),
-                            y = n, label = labels, 
-                            fill = p)) +
+                            y = n, label = labels, fill = p)) +
         geom_col(alpha=0.9, width = 0.8) +
         geom_text(aes(
           hjust = label_hjust,
