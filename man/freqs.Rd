@@ -7,14 +7,17 @@
 freqs(vector, ..., plot = FALSE, rm.na = FALSE)
 }
 \arguments{
-\item{vector}{Vector to group, count, and mutate}
+\item{vector}{Data.frame}
 
-\item{plot}{Boolean. Do you wish to see a plot?}
+\item{...}{Variables. Variables you wish to process. Order matters.}
 
-\item{rm.na}{Boolean. Remove NAs from plot?}
+\item{plot}{Boolean. Do you want to see a plot? Three variables tops.}
+
+\item{rm.na}{Boolean. Remove NA values in the plot? (not in 
+numerical output - use dplyr::filter(!is.na(...)) if needed)}
 }
 \description{
 This function lets the user group, count, calculate 
 percentages and cumulatives. It also plots if needed. 
-Perfect for using with dplyr pipes.
+Perfect for inside with dplyr's pipes.
 }
