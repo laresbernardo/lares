@@ -3,11 +3,13 @@
 #' 
 #' This function lets the user group, count, calculate 
 #' percentages and cumulatives. It also plots if needed. 
-#' Perfect for using with dplyr pipes.
+#' Perfect for inside with dplyr's pipes.
 #' 
-#' @param vector Vector to group, count, and mutate
-#' @param plot Boolean. Do you wish to see a plot?
-#' @param rm.na Boolean. Remove NAs from plot?
+#' @param vector Data.frame
+#' @param ... Variables. Variables you wish to process. Order matters.
+#' @param plot Boolean. Do you want to see a plot? Three variables tops.
+#' @param rm.na Boolean. Remove NA values in the plot? (not in 
+#' numerical output - use dplyr::filter(!is.na(...)) if needed)
 #' @export
 freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
   
@@ -35,7 +37,7 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
       # Create some dynamic aesthetics
       plot$labels <- paste0(lares::formatNum(plot$n, decimals = 0),
                             " (", signif(plot$p, 4), "%)")
-      plot$label_colours <- ifelse(plot$p > mean(range(plot$p)) * 1.05, "m", "f")
+      plot$label_colours <- ifelse(plot$p > mean(range(plot$p)) * 0.9, "m", "f")
       lim <- 0.35
       plot$label_hjust <- ifelse(
         plot$n < min(plot$n) + diff(range(plot$n)) * lim, -0.1, 1.05)
