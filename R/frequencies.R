@@ -93,7 +93,7 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
       print(p)
     } else {
       # When more than two features
-      message("Sorry, but we are not able to plot more than 3 feature for now...")
+      message("Sorry, but trying to plot more than 3 features is as complex as it sounds...")
     }
   }
   
