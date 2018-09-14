@@ -36,7 +36,7 @@ corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA) {
   cor <- round(data.frame(rs), 4)
   
   # Top N
-  if (top > 0) {
+  if (!is.na(top)) {
     imp <- cor %>% 
       summarise_all(funs(mean(.))) %>% t() %>% 
       data.frame(variable=row.names(.), mean=abs(.)) %>%
