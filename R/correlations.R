@@ -34,6 +34,7 @@ corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA) {
   rs <- cor(d, use = "pairwise.complete.obs", method = method)
   rs[is.na(rs)] <- 0
   cor <- round(data.frame(rs), 4)
+  row.names(cor) <- colnames(cor)
   
   # Top N
   if (!is.na(top)) {
