@@ -9,7 +9,7 @@
 #' @param ... Variables. Variables you wish to process. Order matters.
 #' @param plot Boolean. Do you want to see a plot? Three variables tops.
 #' @param rm.na Boolean. Remove NA values in the plot? (not filtered for 
-#' numerical output; use dplyr::filter(!is.na(...)) if needed)
+#' numerical output; use na.omit() or filter() if needed)
 #' @export
 freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
   

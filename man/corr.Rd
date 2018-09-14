@@ -4,7 +4,7 @@
 \alias{corr}
 \title{Correlation table}
 \usage{
-corr(df, method = "pearson", logs = TRUE, plot = FALSE)
+corr(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA)
 }
 \arguments{
 \item{df}{Dataframe. It doesn't matter if it's got non-numerical
@@ -16,6 +16,9 @@ columns: they will be filtered!}
 variables (not binaries)}
 
 \item{plot}{Boolean. Do you wish to see a plot?}
+
+\item{top}{Integer. Select top N most relevant variables? Filtered 
+and sorted by mean of each variable's correlations}
 }
 \description{
 This function correlates a whole dataframe, filtering automatically

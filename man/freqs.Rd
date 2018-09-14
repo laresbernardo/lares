@@ -14,7 +14,7 @@ freqs(vector, ..., plot = FALSE, rm.na = FALSE)
 \item{plot}{Boolean. Do you want to see a plot? Three variables tops.}
 
 \item{rm.na}{Boolean. Remove NA values in the plot? (not filtered for 
-numerical output; use dplyr::filter(!is.na(...)) if needed)}
+numerical output; use na.omit() or filter() if needed)}
 }
 \description{
 This function lets the user group, count, calculate 

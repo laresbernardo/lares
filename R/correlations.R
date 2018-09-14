@@ -10,8 +10,10 @@
 #' @param logs Boolean. Automatically calculate log(values) for numerical
 #' variables (not binaries)
 #' @param plot Boolean. Do you wish to see a plot?
+#' @param top Integer. Select top N most relevant variables? Filtered 
+#' and sorted by mean of each variable's correlations
 #' @export
-corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE) {
+corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA) {
   
   library(dplyr)
   
@@ -33,6 +35,18 @@ corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE) {
   rs[is.na(rs)] <- 0
   cor <- round(data.frame(rs), 4)
   
+  # Top N
+  if (top > 0) {
+    imp <- cor %>% 
+      summarise_all(funs(mean(.))) %>% t() %>% 
+      data.frame(variable=row.names(.), mean=abs(.)) %>%
+      arrange(desc(abs(mean)))
+    which <- as.vector(imp$variable[1:top])
+    cor <- cor %>% select(one_of(which)) %>% 
+      filter(row.names(.) %in% which)
+  }
+  
+  # Plot
   if (plot == TRUE) {
     lares::corr_plot(cor)
   }
