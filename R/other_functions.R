@@ -363,3 +363,22 @@ listfiles <- function(folder, recursive = TRUE, regex = NA, images = FALSE, expo
   return(df)
   
 }
+
+####################################################################
+#' Replace Values With
+#' 
+#' This function lets the user replace all specific values in a 
+#' vector or data.frame into another value.
+#' 
+#' @param df Data.frame
+#' @param original String. Original text you wish to replace
+#' @param change String. Values you wish to replace the originals with
+#' @export
+replace <- function(df, original, change) {
+  data.frame(
+    lapply(df, function(x) {
+      gsub(original, change, x) 
+    }
+    )
+  )
+}
