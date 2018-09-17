@@ -374,7 +374,7 @@ listfiles <- function(folder, recursive = TRUE, regex = NA, images = FALSE, expo
 #' @param original String. Original text you wish to replace
 #' @param change String. Values you wish to replace the originals with
 #' @export
-replace <- function(df, original, change) {
+replaceall <- function(df, original, change) {
   data.frame(
     lapply(df, function(x) {
       gsub(original, change, x) 
