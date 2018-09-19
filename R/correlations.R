@@ -13,7 +13,7 @@
 #' @param top Integer. Select top N most relevant variables? Filtered 
 #' and sorted by mean of each variable's correlations
 #' @export
-corr <- function(df, method = "pearson", logs = FALSE, plot = FALSE, top = NA) {
+corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA) {
   
   library(dplyr)
   
@@ -38,7 +38,7 @@ corr <- function(df, method = "pearson", logs = FALSE, plot = FALSE, top = NA) {
   
   # Plot
   if (plot == TRUE) {
-    lares::corr_plot(cor)
+    lares::corr_plot(cor, logs = FALSE)
   }
   
   return(cor)
@@ -117,12 +117,14 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE,
 #' Any of: c("original", "AOE", "FPC", "hclust", "alphabet")
 #' @param type Character. The visualization method of correlation matrix to be used. 
 #' Any of c("circle", "square", "ellipse", "number", "pie", "shade" and "color")
+#' @param logs Boolean. Automatically calculate log(values) for numerical
+#' variables (not binaries) and plot them
 #' @export
-corr_plot <- function(df, method = "pearson", order = "FPC", type = "square") {
+corr_plot <- function(df, method = "pearson", order = "FPC", type = "square", logs = TRUE) {
   
   require(corrplot)
   
-  c <- lares::corr(df, method, logs = TRUE)
+  c <- lares::corr(df, method, logs = logs)
   
   return(
     corrplot::corrplot(as.matrix(c),
