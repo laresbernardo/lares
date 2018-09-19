@@ -447,14 +447,12 @@ numerical <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA) {
   which <- names(transformable[transformable==2])
   dfn <- df[,colnames(df) %in% which]
   
-  # Transformations
-  if (logs == TRUE) {
-    numeric <- mutate_all(numeric, funs(log = log(.)))
-  }
-  
   # Join everything
   non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x))-1)
   numeric <- select_if(df, is.numeric)
+  if (logs == TRUE) {
+    numeric <- mutate_if(numeric, is.numeric, funs(log = log(.)))
+  }
   d <- cbind(numeric, non_numeric[!colnames(non_numeric) %in% colnames(numeric)])
   
   if (!is.na(natransform)) {
