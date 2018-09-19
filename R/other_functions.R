@@ -429,7 +429,7 @@ removenarows <- function(df, all = TRUE) {
 #' 
 #' @param df Data.frame
 #' @param dropnacols Boolean. Drop columns with only NA values?
-#' @param logs Boolean. Calculate logs for numerical columns?
+#' @param logs Boolean. Calculate log(x)+1 for numerical columns?
 #' @param natransform String. "mean" or 0 to impute NA values. If
 #' set to NA no calculation will run.
 #' @export
@@ -451,7 +451,7 @@ numerical <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA) {
   non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x))-1)
   numeric <- select_if(df, is.numeric)
   if (logs == TRUE) {
-    numeric <- mutate_if(numeric, is.numeric, funs(log = log(.)))
+    numeric <- mutate_if(numeric, is.numeric, funs(log = log(.)+1))
   }
   d <- cbind(numeric, non_numeric[!colnames(non_numeric) %in% colnames(numeric)])
   

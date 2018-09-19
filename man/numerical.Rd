@@ -11,7 +11,7 @@ numerical(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
 
 \item{dropnacols}{Boolean. Drop columns with only NA values?}
 
-\item{logs}{Boolean. Calculate logs for numerical columns?}
+\item{logs}{Boolean. Calculate log(x)+1 for numerical columns?}
 
 \item{natransform}{String. "mean" or 0 to impute NA values. If
 set to NA no calculation will run.}
