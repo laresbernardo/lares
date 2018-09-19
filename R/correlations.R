@@ -13,7 +13,7 @@
 #' @param top Integer. Select top N most relevant variables? Filtered 
 #' and sorted by mean of each variable's correlations
 #' @export
-corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA) {
+corr <- function(df, method = "pearson", logs = FALSE, plot = FALSE, top = NA) {
   
   library(dplyr)
   
@@ -122,7 +122,7 @@ corr_plot <- function(df, method = "pearson", order = "FPC", type = "square") {
   
   require(corrplot)
   
-  c <- lares::corr(df, method)
+  c <- lares::corr(df, method, logs = TRUE)
   
   return(
     corrplot::corrplot(as.matrix(c),

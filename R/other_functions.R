@@ -450,7 +450,7 @@ numerical <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA) {
   numeric <- select_if(df, is.numeric)
   if (logs == TRUE) {
     numeric <- data.frame(mutate_if(numeric, is.numeric, funs(log = log(.))))
-    is.na(numeric) <- do.call(cbind,lapply(numeric, is.infinite))
+    is.na(numeric) <- do.call(cbind, lapply(numeric, is.infinite))
   }
   # Join everything
   d <- cbind(numeric, non_numeric[!colnames(non_numeric) %in% colnames(numeric)])
