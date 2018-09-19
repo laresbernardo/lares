@@ -17,18 +17,7 @@ corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA) {
   
   library(dplyr)
   
-  # Which character columns may be used as numeric?
-  transformable <- apply(df, 2, function(x) length(unique(x)))
-  which <- names(transformable[transformable==2])
-  dfn <- df[,colnames(df) %in% which]
-  
-  # Join everything
-  non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x)))
-  numeric <- select_if(df, is.numeric)
-  if (logs == TRUE) {
-    numeric <- mutate_all(numeric, funs(log = log(.)))
-  }
-  d <- cbind(numeric, non_numeric[!colnames(non_numeric) %in% colnames(numeric)])
+  d <- lares::numerical(df, logs = TRUE)
   
   # Correlations
   rs <- cor(d, use = "pairwise.complete.obs", method = method)

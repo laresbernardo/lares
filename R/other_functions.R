@@ -419,3 +419,57 @@ removenarows <- function(df, all = TRUE) {
     return(df[complete.cases(df), ])
   }
 }
+
+
+####################################################################
+#' Filter only Numerical Values and
+#' 
+#' This function lets the user remove all rows that have some or
+#' all values as NAs
+#' 
+#' @param df Data.frame
+#' @param dropnacols Boolean. Drop columns with only NA values?
+#' @param logs Boolean. Calculate logs for numerical columns?
+#' @param natransform String. "mean" or 0 to impute NA values. If
+#' set to NA no calculation will run.
+#' @export
+numerical <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA) {
+  
+  require(dplyr)
+  
+  # Drop ALL NAs columns
+  if (dropnacols == TRUE) {
+    df <- lares::removenacols(df, all = TRUE) 
+  }
+  
+  # Which character columns may be used as numeric?
+  transformable <- apply(df, 2, function(x) length(unique(x)))
+  which <- names(transformable[transformable==2])
+  dfn <- df[,colnames(df) %in% which]
+  
+  # Transformations
+  if (logs == TRUE) {
+    numeric <- mutate_all(numeric, funs(log = log(.)))
+  }
+  
+  # Join everything
+  non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x))-1)
+  numeric <- select_if(df, is.numeric)
+  d <- cbind(numeric, non_numeric[!colnames(non_numeric) %in% colnames(numeric)])
+  
+  if (!is.na(natransform)) {
+    if (natransform == 0) {
+      d[is.na(d)] <- 0 
+    }
+    if (natransform == "mean") {
+      for(i in 1:ncol(d)){
+        if (median(d[,i], na.rm = TRUE) != 0) {
+          d[is.na(d[,i]), i] <- mean(d[,i], na.rm = TRUE) 
+        } else {
+          d[is.na(d[,i]), i] <- 0
+        }
+      }
+    }
+  }
+  return(d)
+}
