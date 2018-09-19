@@ -23,7 +23,7 @@ corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA) {
   dfn <- df[,colnames(df) %in% which]
   
   # Join everything
-  non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x))-1)
+  non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x)))
   numeric <- select_if(df, is.numeric)
   if (logs == TRUE) {
     numeric <- mutate_all(numeric, funs(log = log(.)))

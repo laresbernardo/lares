@@ -382,3 +382,40 @@ replaceall <- function(df, original, change) {
     )
   )
 }
+
+
+####################################################################
+#' Remove/Drop Columns in which ALL or SOME values are NAs
+#' 
+#' This function lets the user remove all columns that have some or
+#' all values as NAs
+#' 
+#' @param df Data.frame
+#' @param all Boolean. Remove columns which contains ONLY NA values.
+#' If set to FALSE, columns which contains at least one NA will be removed
+#' @export
+removenacols <- function(df, all = TRUE) {
+  if (all == TRUE) {
+    return(df[,colSums(is.na(df)) != nrow(df)]) 
+  } else {
+    return(df[,complete.cases(t(df))] )
+  }
+}
+
+####################################################################
+#' Remove/Drop Rows in which ALL or SOME values are NAs
+#' 
+#' This function lets the user remove all rows that have some or
+#' all values as NAs
+#' 
+#' @param df Data.frame
+#' @param all Boolean. Remove rows which contains ONLY NA values.
+#' If set to FALSE, rows which contains at least one NA will be removed
+#' @export
+removenarows <- function(df, all = TRUE) {
+  if (all == TRUE) {
+    return(df[rowSums(is.na(df)) != ncol(df), ]) 
+  } else {
+    return(df[complete.cases(df), ])
+  }
+}
