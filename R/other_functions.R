@@ -446,14 +446,12 @@ numerical <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA) {
   transformable <- apply(df, 2, function(x) length(unique(x)))
   which <- names(transformable[transformable==2])
   dfn <- df[,colnames(df) %in% which]
-  
-  # Join everything
   non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x))-1)
   numeric <- select_if(df, is.numeric)
   if (logs == TRUE) {
     numeric <- data.frame(mutate_if(numeric, is.numeric, funs(log = log(.))))
-    numeric[is.infinite(numeric)] <- 0
   }
+  # Join everything
   d <- cbind(numeric, non_numeric[!colnames(non_numeric) %in% colnames(numeric)])
   
   if (!is.na(natransform)) {
