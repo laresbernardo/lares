@@ -543,6 +543,6 @@ stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRU
   # Clean everything up and delete files created
   unlink(tempdir, recursive = FALSE)
   graphics.off()
-  rm(list = ls())
   setwd(current_wd)
+  rm(list = ls())
 }
