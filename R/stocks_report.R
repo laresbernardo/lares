@@ -448,7 +448,7 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
   t1 <- tableGrob(portfolio_perf %>% 
                     mutate(Perc = paste0(lares::formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),"%"),
                            DailyValue = lares::formatNum(DailyValue, 2),
-                           DifPer = paste0(lares::formatNum(DifPer, 2),"%")) %>%
+                           DifPer = paste0(lares::formatNum(DifPer, 2))) %>%
                     select(Symbol, Type, DailyValue, Perc, DifPer), rows=NULL,
                   cols = c("Stock","Stock Type","Today's Value","% Portaf","Growth %"))
   t2 <- tableGrob(portfolio_perf %>% group_by(Type) %>%
