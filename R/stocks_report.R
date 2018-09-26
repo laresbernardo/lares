@@ -463,14 +463,15 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
 #' 
 #' @param wd Character. Where do you wish to save the plots?
 #' @param cash_fix Numeric. If you wish to algebraically sum a value to your cash balance
+#' @param html Boolean. HTML output for the report?
 #' @param mail Boolean Do you wish to send the email?
 #' @param creds Character. Credential's user (see get_credentials)
 #' @export
-stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA) {
+stocks_report <- function(wd = "personal", cash_fix = 0, html = FALSE, mail = TRUE, creds = NA) {
   
   options("getSymbols.warning4.0"=FALSE)
   options(warn=-1)
-  
+
   current_wd <- getwd()
 
   if (wd == "personal") {
@@ -489,6 +490,9 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
     setwd(wd)
   }
   
+  setwd(current_wd)
+  tempdir <- tempdir()
+  
   # Data extraction
   data <- lares::get_stocks(token_dir = token_dir)
   message("1. Data downloaded...")
@@ -499,23 +503,50 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   portfolio_perf <- lares::portfolio_performance(portfolio = data$portfolio, daily = daily)
   message("2. Calculations ready...")
   # Visualizations
-  lares::portfolio_daily_plot(stocks_perf)
-  lares::stocks_total_plot(stocks_perf, portfolio_perf, daily, trans = data$transactions, cash = data$cash)
-  lares::stocks_daily_plot(portfolio = data$portfolio, daily)
-  lares::portfolio_distr_plot(portfolio_perf, daily)
+  setwd(tempdir)
+  p1 <- lares::portfolio_daily_plot(stocks_perf)
+  p2 <- lares::stocks_total_plot(stocks_perf, portfolio_perf, daily, trans = data$transactions, cash = data$cash)
+  p3 <- lares::stocks_daily_plot(portfolio = data$portfolio, daily)
+  p4 <- lares::portfolio_distr_plot(portfolio_perf, daily)
   message("3. All visuals plotted...")
   # Export and save data
   write.csv(stocks_perf,"mydaily.csv",row.names = F)
   write.csv(portfolio_perf,"myportfolio.csv",row.names = F)
   message("4. CSVs exported...")
+  # HTML report
+  if (html == TRUE) {
+    require(rmarkdown)
+    htmlreport <- "stocksReport.html"
+    htmlreportready <- paste0("docs/", htmlreport)
+    params <- list(portf_daily_change = p1,
+                   portf_stocks_change = p2,
+                   portf_stocks_histchange = p3,
+                   portf_distribution = p4,
+                   portfolio_perf = portfolio_perf)
+    setwd(current_wd)
+    invisible(
+      file.copy(
+        from = paste0(current_wd,"/docs/stocksReport.Rmd"), 
+        to = tempdir, 
+        overwrite = TRUE, recursive = FALSE, copy.mode = TRUE))
+    setwd(tempdir)
+    rmarkdown::render("stocksReport.Rmd", 
+                      output_file = htmlreport,
+                      params = params,
+                      envir = new.env(parent = globalenv()),
+                      quiet = TRUE)
+  }
   if (mail == TRUE) {
-    # Send report with lares::mailSend() function
-    files <- c("portf_daily_change.png",
-               "portf_stocks_change.png",
-               "portf_stocks_histchange.png",
-               "portf_distribution.png",
-               "myportfolio.csv",
-               "mydaily.csv")
+    if (html == TRUE) {
+      files <- "stocksReport.html"
+    } else {
+      files <- c("portf_daily_change.png",
+                 "portf_stocks_change.png",
+                 "portf_stocks_histchange.png",
+                 "portf_distribution.png",
+                 "myportfolio.csv",
+                 "mydaily.csv")
+    }
     lares::mailSend(body = max(daily$Date), 
                     subject = paste("Portfolio:", max(daily$Date)),
                     attachment = files,
@@ -525,7 +556,9 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   }
   # Clean everything up and delete files created
   setwd(current_wd)
+  if (file.exists(htmlreportready)) file.remove(htmlreportready)
   if (wd != "personal") { file.remove(files) }
+  unlink(tempdir, recursive = FALSE)
   graphics.off()
   rm(list = ls())
   message("All's clean and done!")

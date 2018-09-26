@@ -4,13 +4,15 @@
 \alias{stocks_report}
 \title{Portfolio's Full Report with Plots and Email}
 \usage{
-stocks_report(wd = "personal", cash_fix = 0, mail = TRUE,
-  creds = NA)
+stocks_report(wd = "personal", cash_fix = 0, html = FALSE,
+  mail = TRUE, creds = NA)
 }
 \arguments{
 \item{wd}{Character. Where do you wish to save the plots?}
 
 \item{cash_fix}{Numeric. If you wish to algebraically sum a value to your cash balance}
+
+\item{html}{Boolean. HTML output for the report?}
 
 \item{mail}{Boolean Do you wish to send the email?}
 
