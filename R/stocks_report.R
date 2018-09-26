@@ -26,9 +26,9 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Docs/Data") {
                     dtoken = token))
 
     # Transaccions historical data
-    cash <- read.xlsx(file, sheet = 'Fondos', skipEmptyRows=TRUE)
-    trans <- read.xlsx(file, sheet = 'Transacciones', skipEmptyRows=TRUE)
-    port <- read.xlsx(file, sheet = 'Portafolio', skipEmptyRows=TRUE)
+    cash <- read.xlsx(file, sheet = 'Fondos', skipEmptyRows=TRUE, detectDates=TRUE)
+    trans <- read.xlsx(file, sheet = 'Transacciones', skipEmptyRows=TRUE, detectDates=TRUE)
+    port <- read.xlsx(file, sheet = 'Portafolio', skipEmptyRows=TRUE, detectDates=TRUE)
     results <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
 
   } else { message("User is not authorized to run this function in this device :(") }
@@ -435,18 +435,26 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
   suppressMessages(require(gridExtra))
 
   plot_stocks <- ggplot(portfolio_perf) + theme_minimal() +
-    geom_bar(aes(x="",y=DailyValue, fill=Symbol), width=1, stat="identity") +
-    coord_polar("y", start=0)
+    geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
+    coord_polar("y", start = 0) + scale_y_continuous(labels=scales::comma) +
+    labs(x = '', y = "Portfolio's Stocks Dimentions")
   plot_areas <- ggplot(portfolio_perf) + theme_minimal() +
-    geom_bar(aes(x="",y=100*DailyValue/sum(DailyValue), fill=Type), width=1, stat="identity") +
-    coord_polar("y", start=0)
-  t1 <- tableGrob(portfolio_perf %>% mutate(Perc = lares::formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2)) %>%
-                    select(Symbol, Type, DailyValue, Perc, DifPer), cols = NULL, rows=NULL)
+    geom_bar(aes(x = "", y = DailyValue/sum(DailyValue), fill = Type), width = 1, stat = "identity") +
+    coord_polar("y", start = 0) + scale_y_continuous(labels = scales::percent) +
+    labs(x = '', y = "Portfolio's Stocks Type Distribution")
+  t1 <- tableGrob(portfolio_perf %>% 
+                    mutate(Perc = paste0(lares::formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),"%"),
+                           DailyValue = lares::formatNum(DailyValue, 2),
+                           DifPer = paste0(lares::formatNum(DifPer, 2),"%")) %>%
+                    select(Symbol, Type, DailyValue, Perc, DifPer), rows=NULL,
+                  cols = c("Stock","Stock Type","Today's Value","% Portaf","Growth %"))
   t2 <- tableGrob(portfolio_perf %>% group_by(Type) %>%
-                    dplyr::summarise(DailyValue = sum(DailyValue),
-                                     Perc = lares::formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
-                                     DifPer = lares::formatNum(100*sum(DailyValue)/sum(Invested)-100,2)) %>%
-                    select(Type, DailyValue, Perc, DifPer) %>% arrange(desc(Perc)), cols = NULL, rows=NULL)
+                    dplyr::summarise(Perc = lares::formatNum(100*sum(DailyValue)/sum(portfolio_perf$DailyValue),2),
+                                     DifPer = lares::formatNum(100*sum(DailyValue)/sum(Invested)-100,2),
+                                     DailyValue = lares::formatNum(sum(DailyValue))) %>%
+                    select(Type, DailyValue, Perc, DifPer) %>% 
+                    arrange(desc(Perc)), rows=NULL,
+                  cols = c("Stock Type","Today's Value","% Portaf","Growth %"))
   png("portf_distribution.png", width=700, height=500)
   grid.arrange(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3))
   dev.off()
@@ -455,7 +463,7 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
 
 
 ####################################################################
-#' Create Full Portfolio HTML Report
+#' Portfolio's Full Report in HTML
 #' 
 #' This function lets the user create his portfolio's full report in HTML using
 #' the library's results
