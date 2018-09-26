@@ -30,6 +30,7 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Docs/Data") {
     trans <- read.xlsx(file, sheet = 'Transacciones', skipEmptyRows=TRUE, detectDates=TRUE)
     port <- read.xlsx(file, sheet = 'Portafolio', skipEmptyRows=TRUE, detectDates=TRUE)
     results <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
+    file.remove(file)
 
   } else { message("User is not authorized to run this function in this device :(") }
 
@@ -465,6 +466,61 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
 
 
 ####################################################################
+#' Portfolio's Calculations and Plots
+#' 
+#' This function lets the user create his portfolio's calculations and
+#' plots for further study.
+#' 
+#' @param data List. Containing the following dataframes: portfolio,
+#' transactions, cash. They have to follow the original xlsx format
+#' @param cash_fix Numeric. If you wish to algebraically sum a value to your cash balance
+#' @export
+stocks_objects <- function(data, cash_fix = 0) {
+  
+  tabs <- c('portfolio','transactions','cash')
+  if (sum(names(data) %in% tabs) != 3) {
+    not <- names(data)[!names(data) %in% tabs]
+    stop(paste("The following objects are obligatory too:", lares::vector2text(not)))
+  }
+  
+  current_wd <- getwd()
+  tempdir <- tempdir()
+  setwd(tempdir)
+  
+  # Data wrangling and calculations
+  message("Downloading historical and live data for each Stock...")
+  hist <- lares::get_stocks_hist(symbols = data$portfolio$Symbol, from = data$portfolio$StartDate)
+  daily <- lares::stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = data$transactions)
+  stocks_perf <- lares::stocks_performance(daily, cash_in = data$cash, cash_fix = cash_fix)
+  portfolio_perf <- lares::portfolio_performance(portfolio = data$portfolio, daily = daily)
+  message("1. Calculations ready...")
+  
+  # Visualizations
+  p1 <- lares::portfolio_daily_plot(stocks_perf)
+  p2 <- lares::stocks_total_plot(stocks_perf, portfolio_perf, daily, trans = data$transactions, cash = data$cash)
+  p3 <- lares::stocks_daily_plot(portfolio = data$portfolio, daily)
+  p4 <- lares::portfolio_distr_plot(portfolio_perf, daily)
+  graphics.off()
+  message("2. Visuals plotted...")
+  
+  # Consolidation
+  results <- list(p_portf_daily_change = p1,
+                  p_portf_stocks_change = p2,
+                  p_portf_stocks_histchange = p3,
+                  p_portf_distribution = p4,
+                  df_portfolio_perf = portfolio_perf,
+                  df_stocks_perf = stocks_perf,
+                  df_daily = daily,
+                  df_hist = hist)
+  unlink(tempdir, recursive = FALSE)
+  setwd(current_wd)
+  message("3. All results ready!")
+  
+  return(results)
+  
+}
+
+####################################################################
 #' Portfolio's Full Report in HTML
 #' 
 #' This function lets the user create his portfolio's full report in HTML using
@@ -472,7 +528,7 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
 #' 
 #' @param results List. Containing the following objects: portf_daily_change, 
 #' portf_stocks_change, portf_stocks_histchange, portf_distribution & portfolio_perf.
-#' These objects have to be in this same order.
+#' You can use simply use the lares::stocks_objects(data) if you didn't mess with the order!
 #' @param dir Character. Directory for report's output
 #' @export
 stocks_html <- function(results, dir = NA) {
@@ -482,6 +538,7 @@ stocks_html <- function(results, dir = NA) {
   
   dir <- ifelse(is.na(dir), getwd(), dir)
   
+  # Can be more accurate with names but works for me!
   params <- list(portf_daily_change = results[[1]],
                  portf_stocks_change = results[[2]],
                  portf_stocks_histchange = results[[3]],
@@ -502,12 +559,13 @@ stocks_html <- function(results, dir = NA) {
                     quiet = TRUE)  
   
   invisible(file.remove(paste0(dir, "/stocksReport.Rmd")))
+  message("HTML report created...")
   
 }
 
 
 ####################################################################
-#' Portfolio's Full Report with Plots and Email
+#' Portfolio's Full Report and Email
 #' 
 #' This function lets the user create his portfolio's full report with plots and email sent
 #' 
@@ -517,7 +575,7 @@ stocks_html <- function(results, dir = NA) {
 #' @param mail Boolean Do you wish to send the email?
 #' @param creds Character. Credential's user (see get_credentials) for sending mail
 #' @export
-stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRUE, creds = NA) {
+stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA) {
   
   options(warn=-1)
   suppressMessages(require(dplyr))
@@ -526,6 +584,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRU
   token_dir <- case_when(wd == "personal" ~ "~/Dropbox (Personal)/Documentos/Docs/Data",
                          wd == "matrix" ~ "~/creds")
   if (is.na(token_dir)) {
+    # For Sendgrid credentials:
     token_dir <- readline(prompt="Set the working directory where your YML file is: ")
   }
   
@@ -533,48 +592,17 @@ stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRU
   tempdir <- tempdir()
   setwd(tempdir)
 
-  # Data extraction
+  # Data extraction and processing
   data <- lares::get_stocks(token_dir = token_dir)
-  message("1. Data downloaded...")
-  # Data wrangling and calculations
-  hist <- lares::get_stocks_hist(symbols = data$portfolio$Symbol, from = data$portfolio$StartDate)
-  daily <- lares::stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = data$transactions)
-  stocks_perf <- lares::stocks_performance(daily, cash_in = data$cash, cash_fix = cash_fix)
-  portfolio_perf <- lares::portfolio_performance(portfolio = data$portfolio, daily = daily)
-  message("2. Calculations ready...")
-  # Visualizations
-  p1 <- lares::portfolio_daily_plot(stocks_perf)
-  p2 <- lares::stocks_total_plot(stocks_perf, portfolio_perf, daily, trans = data$transactions, cash = data$cash)
-  p3 <- lares::stocks_daily_plot(portfolio = data$portfolio, daily)
-  p4 <- lares::portfolio_distr_plot(portfolio_perf, daily)
-  message("3. All visuals plotted...")
-  # Export and save data
-  write.csv(stocks_perf,"mydaily.csv",row.names = F)
-  write.csv(portfolio_perf,"myportfolio.csv",row.names = F)
-  results <- list(portf_daily_change = p1,
-                  portf_stocks_change = p2,
-                  portf_stocks_histchange = p3,
-                  portf_distribution = p4,
-                  portfolio_perf = portfolio_perf)
-  message("4. Results consolidated...")
+  results <- lares::stocks_objects(data)
+  
   # HTML report
-  if (html == TRUE) {
-    stocks_html(results, dir = tempdir)
-    message("5. HTML report created...")
-  }
+  stocks_html(results, dir = tempdir)
+  
   if (mail == TRUE) {
-    if (html == TRUE) {
-      files <- "stocksReport.html"
-    } else {
-      files <- c("portf_daily_change.png",
-                 "portf_stocks_change.png",
-                 "portf_stocks_histchange.png",
-                 "portf_distribution.png",
-                 "myportfolio.csv",
-                 "mydaily.csv")
-    }
-    lares::mailSend(body = max(daily$Date), 
-                    subject = paste("Portfolio:", max(daily$Date)),
+    files <- "stocksReport.html"
+    lares::mailSend(body = " ", 
+                    subject = paste("Portfolio:", max(results$df_daily$Date)),
                     attachment = files,
                     to = "laresbernardo@gmail.com", 
                     from = 'AutoReport <laresbernardo@gmail.com>', creds = wd)
@@ -586,3 +614,9 @@ stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRU
   setwd(current_wd)
   rm(list = ls())
 }
+
+####################################################################
+# df <- get_stocks() # Get data from my Dropbox
+# dfp <- stocks_objects(df) # Make calculations and plots
+# stocks_html(dfp) # Create HTML report
+# stocks_report() # Send report to my mail

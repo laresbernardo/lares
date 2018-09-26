@@ -2,21 +2,21 @@
 % Please edit documentation in R/stocks_report.R
 \name{stocks_report}
 \alias{stocks_report}
-\title{Portfolio's Full Report with Plots and Email}
+\title{Portfolio's Full Report and Email}
 \usage{
-stocks_report(wd = "personal", cash_fix = 0, html = TRUE,
-  mail = TRUE, creds = NA)
+stocks_report(wd = "personal", cash_fix = 0, mail = TRUE,
+  creds = NA)
 }
 \arguments{
 \item{wd}{Character. Where do you wish to save the plots?}
 
 \item{cash_fix}{Numeric. If you wish to algebraically sum a value to your cash balance}
 
-\item{html}{Boolean. HTML output for the report?}
-
 \item{mail}{Boolean Do you wish to send the email?}
 
 \item{creds}{Character. Credential's user (see get_credentials) for sending mail}
+
+\item{html}{Boolean. HTML output for the report?}
 }
 \description{
 This function lets the user create his portfolio's full report with plots and email sent

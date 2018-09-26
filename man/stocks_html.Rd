@@ -2,14 +2,14 @@
 % Please edit documentation in R/stocks_report.R
 \name{stocks_html}
 \alias{stocks_html}
-\title{Create Full Portfolio HTML Report}
+\title{Portfolio's Full Report in HTML}
 \usage{
 stocks_html(results, dir = NA)
 }
 \arguments{
 \item{results}{List. Containing the following objects: portf_daily_change, 
 portf_stocks_change, portf_stocks_histchange, portf_distribution & portfolio_perf.
-These objects have to be in this same order.}
+You can use simply use the lares::stocks_objects(data) if you didn't mess with the order!}
 
 \item{dir}{Character. Directory for report's output}
 }
