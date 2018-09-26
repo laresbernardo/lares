@@ -5,11 +5,10 @@
 #' 
 #' @param token_dir Character. Directory containing personal Dropbox token file
 #' @export
-get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio",
-                       dir = NA) {
+get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio") {
 
   suppressMessages(require(rdrop2))
-  suppressMessages(require(xlsx))
+  suppressMessages(require(openxlsx))
   suppressMessages(require(dplyr))
   
   valid <- Sys.info()
@@ -26,9 +25,9 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Br
                   dtoken = token)
 
     # Transaccions historical data
-    cash <- read.xlsx(file, sheetName = 'Fondos', header=TRUE, colClasses=NA)
-    trans <- read.xlsx(file, sheetName = 'Transacciones', header=TRUE, colClasses=NA)
-    port <- read.xlsx(file, sheetName = 'Portafolio', header=TRUE, colClasses=NA)
+    cash <- read.xlsx(file, sheet = 'Fondos', skipEmptyRows=TRUE)
+    trans <- read.xlsx(file, sheet = 'Transacciones', skipEmptyRows=TRUE)
+    port <- read.xlsx(file, sheet = 'Portafolio', skipEmptyRows=TRUE)
     results <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
 
   } else { message("User is not authorized to run this function in this device :(") }
