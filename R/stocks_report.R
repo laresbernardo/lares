@@ -311,7 +311,7 @@ portfolio_daily_plot <- function(stocks_perf) {
     geom_bar(aes(x=Date, y=RelPer, fill=color), stat='identity', width=1) +
     geom_line(aes(x=Date, y=TotalPer/(1.05*max(stocks_perf$TotalPer))), alpha=0.5) +
     geom_hline(yintercept = 0, alpha=0.5, color="black") +
-    guides(fill=FALSE) + theme_bw() + ylab('% Daily Var') +
+    guides(fill=FALSE) + theme_minimal() + ylab('% Daily Var') +
     scale_x_date(date_minor_breaks = "1 month", date_labels = "%b%y") +
     scale_y_continuous(breaks=seq(-100, 100, 0.5),
                        sec.axis = sec_axis(~.*(1.05*max(stocks_perf$TotalPer)), name = "% Portfolio Var", breaks=seq(-100, 100, 2))) +
@@ -405,7 +405,7 @@ stocks_daily_plot <- function (portfolio, daily) {
     arrange(Date) %>% group_by(Symbol) %>%
     mutate(Hist = RelChangePHist,
            BuySell = ifelse(Expenses > 0, TRUE, FALSE)) %>%
-    ggplot() + theme_bw() + ylab('% Change since Start') +
+    ggplot() + theme_minimal() + ylab('% Change since Start') +
     geom_hline(yintercept = 0, alpha=0.8, color="black") +
     geom_line(aes(x=Date, y=Hist, color=Symbol), alpha=0.5, size=1) +
     facet_grid(Type ~ ., scales = "free", switch = "both") +
