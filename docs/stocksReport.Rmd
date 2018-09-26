@@ -1,5 +1,5 @@
 ---
-title: "Stocks Report"
+title: "Portfolio Complete Report"
 output: html_document
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 params:
@@ -30,7 +30,7 @@ print(params$portf_daily_change)
 ```{r echo = FALSE, warning = FALSE}
 kable(params$portfolio_perf, row.names = FALSE) %>%
   kable_styling() %>% 
-  scroll_box(width = "100%", height = "200px")
+  scroll_box(width = "100%", height = "500px")
 ```
 
 ## Stocks Growth
@@ -42,3 +42,5 @@ print(params$portf_stocks_change)
 ```{r fig.width = 10, fig.height = 6, echo = FALSE}
 grid::grid.draw(params$portf_distribution)
 ```
+
+>`r Sys.time()`

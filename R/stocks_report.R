@@ -5,14 +5,13 @@
 #' 
 #' @param token_dir Character. Directory containing personal Dropbox token file
 #' @export
-get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio") {
+get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio",
+                       dir = NA) {
 
   suppressMessages(require(rdrop2))
   suppressMessages(require(xlsx))
   suppressMessages(require(dplyr))
-  options("getSymbols.yahoo.warning"=FALSE)
-  options("getSymbols.warning4.0"=FALSE)
-
+  
   valid <- Sys.info()
 
   if (valid[["user"]] %in% c("bernardo", "rstudio")) {
@@ -31,8 +30,6 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Br
     trans <- read.xlsx(file, sheetName = 'Transacciones', header=TRUE, colClasses=NA)
     port <- read.xlsx(file, sheetName = 'Portafolio', header=TRUE, colClasses=NA)
     results <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
-
-    file.remove(file)
 
   } else { message("User is not authorized to run this function in this device :(") }
 
@@ -57,6 +54,7 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365, today = TRUE
   suppressMessages(require(dplyr))
   suppressMessages(require(lubridate))
   suppressMessages(require(jsonlite))
+  options("getSymbols.warning4.0"=FALSE)
 
   options(warn=-1)
 
@@ -301,8 +299,8 @@ portfolio_performance <- function(portfolio, daily) {
 #' @export
 portfolio_daily_plot <- function(stocks_perf) {
 
-  require(dplyr)
-  require(ggplot2)
+  suppressMessages(require(dplyr))
+  suppressMessages(require(ggplot2))
 
   plot <- stocks_perf %>%
     dplyr::mutate(color = ifelse(RelPer > 0, "Pos", "Neg")) %>%
@@ -340,9 +338,9 @@ portfolio_daily_plot <- function(stocks_perf) {
 #' @export
 stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
 
-  require(dplyr)
-  require(ggplot2)
-  require(scales)
+  suppressMessages(require(dplyr))
+  suppressMessages(require(ggplot2))
+  suppressMessages(require(scales))
   
   tops <- max(rbind(portfolio_perf$Invested, portfolio_perf$DailyValue))
   summary <- rbind(
@@ -398,8 +396,8 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
 #' @export
 stocks_daily_plot <- function (portfolio, daily) {
 
-  require(dplyr)
-  require(ggplot2)
+  suppressMessages(require(dplyr))
+  suppressMessages(require(ggplot2))
 
   plot <- daily %>%
     left_join(portfolio %>% select(Symbol,Type), by='Symbol') %>%
@@ -432,9 +430,9 @@ stocks_daily_plot <- function (portfolio, daily) {
 #' @export
 portfolio_distr_plot <- function (portfolio_perf, daily) {
 
-  require(dplyr)
-  require(ggplot2)
-  require(gridExtra)
+  suppressMessages(require(dplyr))
+  suppressMessages(require(ggplot2))
+  suppressMessages(require(gridExtra))
 
   plot_stocks <- ggplot(portfolio_perf) + theme_minimal() +
     geom_bar(aes(x="",y=DailyValue, fill=Symbol), width=1, stat="identity") +
@@ -465,34 +463,24 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
 #' @param cash_fix Numeric. If you wish to algebraically sum a value to your cash balance
 #' @param html Boolean. HTML output for the report?
 #' @param mail Boolean Do you wish to send the email?
-#' @param creds Character. Credential's user (see get_credentials)
+#' @param creds Character. Credential's user (see get_credentials) for sending mail
 #' @export
 stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRUE, creds = NA) {
   
-  options("getSymbols.warning4.0"=FALSE)
   options(warn=-1)
-
+  suppressMessages(require(dplyr))
+  
+  # Set token for Dropbox download
+  token_dir <- case_when(wd == "personal" ~ "~/Dropbox (Personal)/Documentos/Docs/Data",
+                         wd == "matrix" ~ "~/creds")
+  if (is.na(token_dir)) {
+    token_dir <- readline(prompt="Set the working directory where your YML file is: ")
+  }
+  
   current_wd <- getwd()
-
-  if (wd == "personal") {
-    token_dir <- "~/Dropbox (Personal)/Documentos/Docs/Data"
-    setwd("~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio")
-  }
-  
-  if (wd == "matrix") {
-    token_dir = "~/creds"
-    setwd("~/personal/IB")
-  }
-
-  if (!wd %in% c("personal", "matrix")) {
-    wd <- readline(prompt="Set the working directory where your YML file is: ")
-    token_dir <- wd
-    setwd(wd)
-  }
-  
-  setwd(current_wd)
   tempdir <- tempdir()
-  
+  setwd(tempdir)
+
   # Data extraction
   data <- lares::get_stocks(token_dir = token_dir)
   message("1. Data downloaded...")
@@ -503,7 +491,6 @@ stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRU
   portfolio_perf <- lares::portfolio_performance(portfolio = data$portfolio, daily = daily)
   message("2. Calculations ready...")
   # Visualizations
-  setwd(tempdir)
   p1 <- lares::portfolio_daily_plot(stocks_perf)
   p2 <- lares::stocks_total_plot(stocks_perf, portfolio_perf, daily, trans = data$transactions, cash = data$cash)
   p3 <- lares::stocks_daily_plot(portfolio = data$portfolio, daily)
@@ -523,18 +510,18 @@ stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRU
                    portf_stocks_histchange = p3,
                    portf_distribution = p4,
                    portfolio_perf = portfolio_perf)
-    setwd(current_wd)
     invisible(
       file.copy(
-        from = paste0(current_wd,"/docs/stocksReport.Rmd"), 
+        from = "/docs/stocksReport.Rmd",
         to = tempdir, 
-        overwrite = TRUE, recursive = FALSE, copy.mode = TRUE))
-    setwd(tempdir)
+        overwrite = TRUE, recursive = FALSE, copy.mode = TRUE)
+    )
     rmarkdown::render("stocksReport.Rmd", 
                       output_file = htmlreport,
                       params = params,
                       envir = new.env(parent = globalenv()),
                       quiet = TRUE)
+    message("5. HTML report created...")
   }
   if (mail == TRUE) {
     if (html == TRUE) {
@@ -551,15 +538,22 @@ stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRU
                     subject = paste("Portfolio:", max(daily$Date)),
                     attachment = files,
                     to = "laresbernardo@gmail.com", 
-                    from = 'RServer <bernardo.lares@comparamejor.com>', creds = wd)
-    message("5. Email sent...") 
+                    from = 'AutoReport <laresbernardo@gmail.com>', creds = wd)
+    message("SENT: Report sent succesfull!") 
   }
   # Clean everything up and delete files created
-  setwd(current_wd)
   if (file.exists(htmlreportready)) file.remove(htmlreportready)
   if (wd != "personal") { file.remove(files) }
   unlink(tempdir, recursive = FALSE)
   graphics.off()
   rm(list = ls())
-  message("All's clean and done!")
+  setwd(current_wd)
 }
+
+
+devtools::use_vignette("study1")
+
+
+
+list.files(find.package("lares", lib.loc=NULL, quiet = TRUE))
+
