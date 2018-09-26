@@ -388,7 +388,7 @@ stocks_daily_plot <- function (portfolio, daily) {
   plot <- daily %>%
     left_join(portfolio %>% select(Symbol,Type), by='Symbol') %>%
     arrange(Date) %>% group_by(Symbol) %>%
-    mutate(Hist = cumsum(RelChangePHist),
+    mutate(Hist = RelChangePHist,
            BuySell = ifelse(Expenses > 0, TRUE, FALSE)) %>%
     ggplot() + theme_bw() + ylab('% Change since Start') +
     geom_hline(yintercept = 0, alpha=0.8, color="black") +
@@ -397,7 +397,8 @@ stocks_daily_plot <- function (portfolio, daily) {
     scale_y_continuous(position = "right") +
     geom_point(aes(x=Date, y=Hist, fill=BuySell, alpha=BuySell, size=Amount)) +
     scale_size(range = c(0, 3.2)) +
-    labs(title = 'Daily Portfolio\'s Stocks Change (%) since Start') +
+    labs(title = 'Daily Portfolio\'s Stocks Change (%) since Start',
+         subtitle = 'Note that the real weighted change is not shown') +
     ggsave("portf_stocks_histchange.png", width = 10, height = 8, dpi = 300)
 
   return(plot)
