@@ -113,7 +113,7 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365, today = TRUE
           divs <- rbind(divs, div)
         }
         if (verbose == TRUE) {
-          message(paste(symbol," since ",start_date,": done ",round(100*i/length(symbols),1),"% (",i,"/",length(symbols),")",sep=""))
+          message(paste(symbol," since ",start_date,": done ",lares::formatNum(100*i/length(symbols),1),"% (",i,"/",length(symbols),")",sep=""))
         }
       }
     } else { message("The parameters 'symbols' and 'start_dates' should be the same length.") }
@@ -311,14 +311,15 @@ portfolio_daily_plot <- function(stocks_perf) {
     geom_bar(aes(x=Date, y=RelPer, fill=color), stat='identity', width=1) +
     geom_line(aes(x=Date, y=TotalPer/(1.05*max(stocks_perf$TotalPer))), alpha=0.5) +
     geom_hline(yintercept = 0, alpha=0.5, color="black") +
-    guides(fill=FALSE) + theme_minimal() + ylab('% Daily Var') +
+    guides(fill=FALSE) + theme_minimal() +
     scale_x_date(date_minor_breaks = "1 month", date_labels = "%b%y") +
     scale_y_continuous(breaks=seq(-100, 100, 0.5),
                        sec.axis = sec_axis(~.*(1.05*max(stocks_perf$TotalPer)), name = "% Portfolio Var", breaks=seq(-100, 100, 2))) +
-    labs(title = 'Daily Portfolio\'s Stocks Change (%) since Start',
+    labs(y = '% Daily Var', x = '',
+         title = 'Daily Portfolio\'s Stocks Change (%) since Start',
          subtitle = paste(stocks_perf$Date[1]," (Includes Expenses): ",
-                          stocks_perf$TotalPer[1],"% ($",round(stocks_perf$DailyStocks[1] - sum(stocks_perf$DailyTrans)),") | $",
-                          round(stocks_perf$CumPortfolio[1]), sep="")) +
+                          stocks_perf$TotalPer[1],"% ($",lares::formatNum(stocks_perf$DailyStocks[1] - sum(stocks_perf$DailyTrans)),") | $",
+                          lares::formatNum(stocks_perf$CumPortfolio[1]), sep="")) +
     ggsave("portf_daily_change.png", width = 10, height = 6, dpi = 300)
 
   return(plot)
@@ -369,11 +370,11 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
               size = 2.9, hjust = -.2, vjust = 1.2) +
     geom_text(aes(label = paste0("$", lares::formatNum(DailyValue, 1)), y = box, x = Symbol), 
               size = 3, hjust = -.1, vjust = -0.2) +
-    geom_text(aes(label = paste0(Stocks, " @$", round(DailyValue/Stocks, 2)), y = box, x = Symbol), 
+    geom_text(aes(label = paste0(Stocks, " @$", lares::formatNum(DailyValue/Stocks, 2)), y = box, x = Symbol), 
               size = 2, hjust = -.1, vjust = 1.5) +
     geom_text(aes(label = paste0("$", lares::formatNum(Invested,1)), y = 0, x = Symbol), 
               size = 2, hjust = 0, vjust = -0.2) +
-    geom_text(aes(label = paste0("@$", round(Invested/Stocks, 2)), 
+    geom_text(aes(label = paste0("@$", lares::formatNum(Invested/Stocks, 2)), 
                   y = 0, x = Symbol), size = 2, hjust = 0, vjust = 1.5) +
     annotate("label", x = length(unique(portfolio_perf$Stocks))*0.25, y = tops*0.5, 
              label = lares::vector2text(summary,"\n",quotes = F), size = 3.5, hjust = 0, alpha=0.55) +
@@ -441,12 +442,12 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
   plot_areas <- ggplot(portfolio_perf) + theme_minimal() +
     geom_bar(aes(x="",y=100*DailyValue/sum(DailyValue), fill=Type), width=1, stat="identity") +
     coord_polar("y", start=0)
-  t1 <- tableGrob(portfolio_perf %>% mutate(Perc = round(100*DailyValue/sum(portfolio_perf$DailyValue),2)) %>%
+  t1 <- tableGrob(portfolio_perf %>% mutate(Perc = lares::formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2)) %>%
                     select(Symbol, Type, DailyValue, Perc, DifPer), cols = NULL, rows=NULL)
   t2 <- tableGrob(portfolio_perf %>% group_by(Type) %>%
                     dplyr::summarise(DailyValue = sum(DailyValue),
-                                     Perc = round(100*DailyValue/sum(portfolio_perf$DailyValue),2),
-                                     DifPer = round(100*sum(DailyValue)/sum(Invested)-100,2)) %>%
+                                     Perc = lares::formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
+                                     DifPer = lares::formatNum(100*sum(DailyValue)/sum(Invested)-100,2)) %>%
                     select(Type, DailyValue, Perc, DifPer) %>% arrange(desc(Perc)), cols = NULL, rows=NULL)
   png("portf_distribution.png",width=700,height=500)
   grid.arrange(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3))
