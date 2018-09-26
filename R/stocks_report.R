@@ -316,7 +316,7 @@ portfolio_daily_plot <- function(stocks_perf) {
     labs(y = '% Daily Var', x = '',
          title = 'Daily Portfolio\'s Stocks Change (%) since Start',
          subtitle = paste(stocks_perf$Date[1]," (Includes Expenses): ",
-                          stocks_perf$TotalPer[1],"% ($",lares::formatNum(stocks_perf$DailyStocks[1] - sum(stocks_perf$DailyTrans)),") | $",
+                          stocks_perf$TotalPer[1],"% ($",lares::formatNum(stocks_perf$DailyStocks[1] - sum(stocks_perf$DailyTrans),0),") | $",
                           lares::formatNum(stocks_perf$CumPortfolio[1]), sep="")) +
     ggsave("portf_daily_change.png", width = 8, height = 5, dpi = 300)
 
@@ -348,7 +348,7 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
     paste0("Stocks: $", lares::formatNum(sum(stocks_perf$DailyStocks[1]))," & Cash: $", stocks_perf$CumCash[1]),
     paste0("Stocks Investment: $", lares::formatNum(sum(trans$Amount,na.rm=T))),
     paste0("ROI: ", lares::formatNum(stocks_perf$TotalPer[1], 2),"% ($",
-           lares::formatNum(stocks_perf$DailyStocks[1]),")"),
+           lares::formatNum(stocks_perf$DailyStocks[1] - sum(stocks_perf$DailyTrans),1),")"),
     paste0("Dividends: $", lares::formatNum(sum(daily$DailyDiv),0)," & Expenses: $", 
            lares::formatNum(sum(daily$Expenses),0)))
   
