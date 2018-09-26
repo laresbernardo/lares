@@ -29,7 +29,7 @@ print(params$portf_daily_change)
 ## Portfolio Performance
 ```{r echo = FALSE, warning = FALSE}
 kable(params$portfolio_perf, row.names = FALSE) %>%
-  kable_styling() %>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>% 
   scroll_box(width = "100%", height = "500px")
 ```
 
@@ -39,7 +39,7 @@ print(params$portf_stocks_change)
 ```
 
 ## Portfolio Distribution
-```{r fig.width = 10, fig.height = 6, echo = FALSE}
+```{r fig.width = 10, fig.height = 8, echo = FALSE}
 grid::grid.draw(params$portf_distribution)
 ```
 

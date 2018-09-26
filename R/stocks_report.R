@@ -318,7 +318,7 @@ portfolio_daily_plot <- function(stocks_perf) {
          subtitle = paste(stocks_perf$Date[1]," (Includes Expenses): ",
                           stocks_perf$TotalPer[1],"% ($",lares::formatNum(stocks_perf$DailyStocks[1] - sum(stocks_perf$DailyTrans)),") | $",
                           lares::formatNum(stocks_perf$CumPortfolio[1]), sep="")) +
-    ggsave("portf_daily_change.png", width = 10, height = 6, dpi = 300)
+    ggsave("portf_daily_change.png", width = 8, height = 5, dpi = 300)
 
   return(plot)
 
@@ -413,7 +413,7 @@ stocks_daily_plot <- function (portfolio, daily) {
     scale_size(range = c(0, 3.2)) +
     labs(title = 'Daily Portfolio\'s Stocks Change (%) since Start',
          subtitle = 'Note that the real weighted change is not shown') +
-    ggsave("portf_stocks_histchange.png", width = 10, height = 8, dpi = 300)
+    ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300)
 
   return(plot)
 
@@ -447,10 +447,52 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
                                      Perc = lares::formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
                                      DifPer = lares::formatNum(100*sum(DailyValue)/sum(Invested)-100,2)) %>%
                     select(Type, DailyValue, Perc, DifPer) %>% arrange(desc(Perc)), cols = NULL, rows=NULL)
-  png("portf_distribution.png",width=700,height=500)
+  png("portf_distribution.png", width=700, height=500)
   grid.arrange(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3))
   dev.off()
   return(grid.arrange(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3)))
+}
+
+
+####################################################################
+#' Create Full Portfolio HTML Report
+#' 
+#' This function lets the user create his portfolio's full report in HTML using
+#' the library's results
+#' 
+#' @param results List. Containing the following objects: portf_daily_change, 
+#' portf_stocks_change, portf_stocks_histchange, portf_distribution & portfolio_perf.
+#' These objects have to be in this same order.
+#' @param dir Character. Directory for report's output
+#' @export
+stocks_html <- function(results, dir = NA) {
+  
+  suppressMessages(require(rmarkdown))
+  suppressMessages(require(dplyr))
+  
+  dir <- ifelse(is.na(dir), getwd(), dir)
+  
+  params <- list(portf_daily_change = results[[1]],
+                 portf_stocks_change = results[[2]],
+                 portf_stocks_histchange = results[[3]],
+                 portf_distribution = results[[4]],
+                 portfolio_perf = results[[5]])
+  
+  invisible(file.copy(
+    from = system.file("docs", "stocksReport.Rmd", package = "lares"),
+    to = dir, 
+    overwrite = TRUE, 
+    recursive = FALSE, 
+    copy.mode = TRUE))
+  
+  rmarkdown::render("stocksReport.Rmd", 
+                    output_file = "stocksReport.html",
+                    params = params,
+                    envir = new.env(parent = globalenv()),
+                    quiet = TRUE)  
+  
+  invisible(file.remove(paste0(dir, "/stocksReport.Rmd")))
+  
 }
 
 
@@ -499,27 +541,15 @@ stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRU
   # Export and save data
   write.csv(stocks_perf,"mydaily.csv",row.names = F)
   write.csv(portfolio_perf,"myportfolio.csv",row.names = F)
-  message("4. CSVs exported...")
+  results <- list(portf_daily_change = p1,
+                  portf_stocks_change = p2,
+                  portf_stocks_histchange = p3,
+                  portf_distribution = p4,
+                  portfolio_perf = portfolio_perf)
+  message("4. Results consolidated...")
   # HTML report
   if (html == TRUE) {
-    require(rmarkdown)
-    htmlreport <- "stocksReport.html"
-    params <- list(portf_daily_change = p1,
-                   portf_stocks_change = p2,
-                   portf_stocks_histchange = p3,
-                   portf_distribution = p4,
-                   portfolio_perf = portfolio_perf)
-    invisible(
-      file.copy(
-        from = system.file("docs", "stocksReport.Rmd", package = "lares"),
-        to = tempdir, 
-        overwrite = TRUE, recursive = FALSE, copy.mode = TRUE)
-    )
-    rmarkdown::render("stocksReport.Rmd", 
-                      output_file = htmlreport,
-                      params = params,
-                      envir = new.env(parent = globalenv()),
-                      quiet = TRUE)
+    stocks_html(results, dir = tempdir)
     message("5. HTML report created...")
   }
   if (mail == TRUE) {

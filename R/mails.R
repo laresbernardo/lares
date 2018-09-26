@@ -17,8 +17,8 @@ mailSend = function(body,
                     from = credentials$from, 
                     creds = NA) {
 
-  require(mailR)
-  require(config)
+  suppressMessages(require(mailR))
+  suppressMessages(require(config))
 
   credentials <- lares::get_credentials(from="sendgrid", dir = creds)
 
