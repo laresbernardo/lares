@@ -5,7 +5,7 @@
 #' 
 #' @param token_dir Character. Directory containing personal Dropbox token file
 #' @export
-get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio") {
+get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Docs/Data") {
 
   suppressMessages(require(rdrop2))
   suppressMessages(require(openxlsx))
@@ -19,10 +19,11 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Br
 
     x <- drop_search("Portfolio LC.xlsx", dtoken = token)
     file <- "temp.xlsx"
-    drop_download(x$matches[[1]]$metadata$path_lower,
-                  local_path = file,
-                  overwrite = TRUE,
-                  dtoken = token)
+    invisible(
+      drop_download(x$matches[[1]]$metadata$path_lower,
+                    local_path = file,
+                    overwrite = TRUE,
+                    dtoken = token))
 
     # Transaccions historical data
     cash <- read.xlsx(file, sheet = 'Fondos', skipEmptyRows=TRUE)
