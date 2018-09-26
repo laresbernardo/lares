@@ -467,7 +467,7 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
 #' @param mail Boolean Do you wish to send the email?
 #' @param creds Character. Credential's user (see get_credentials)
 #' @export
-stocks_report <- function(wd = "personal", cash_fix = 0, html = FALSE, mail = TRUE, creds = NA) {
+stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRUE, creds = NA) {
   
   options("getSymbols.warning4.0"=FALSE)
   options(warn=-1)
