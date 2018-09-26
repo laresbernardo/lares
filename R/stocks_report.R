@@ -184,7 +184,8 @@ stocks_hist_fix <- function (dailys, dividends, transactions) {
     mutate(StartUSD = Value[Date == min(Date)],
            RelChangeP = 100 - (100 * lag(Close) / Close),
            RelChangeUSD = Stocks * (Close - lag(Close)) - Expenses,
-           RelChangePHist = 100 - (100 * StartUSD / Close),
+           RelChangePHist = ifelse(Date == min(Date), 0, 
+                                   100 - (100 * StartUSD / Close)),
            RelChangeUSDHist = Stocks * (Close - StartUSD) - sum(Expenses)) %>%
     arrange(desc(Date)) %>%
     mutate_if(is.numeric, funs(round(., 2)))
