@@ -238,7 +238,7 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
     mutate(DailyCash = ifelse(is.na(Cash), 0, Cash),
            CumCash = cumsum(DailyCash) - cumsum(DailyTrans) + cumsum(DailyDiv) + cash_fix,
            CumPortfolio = CumCash + DailyStocks,
-           TotalUSD = cumsum(DailyTrans) - DailyStocks,
+           TotalUSD = DailyStocks - cumsum(DailyTrans),
            TotalPer = round(100 * DailyStocks / (cumsum(DailyTrans)), 2) - 100) %>%
     select(Date,CumPortfolio,TotalUSD,TotalPer,RelUSD,RelPer,DailyStocks,
            DailyTrans,DailyDiv,CumDiv,DailyCash,CumCash) %>% arrange(desc(Date)) %>%
