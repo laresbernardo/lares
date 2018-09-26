@@ -5,7 +5,8 @@
 \title{Get Personal Portfolio's Data}
 \usage{
 
-  get_stocks(token_dir = "~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio")
+  get_stocks(token_dir = "~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio",
+  dir = NA)
 }
 \arguments{
 \item{token_dir}{Character. Directory containing personal Dropbox token file}

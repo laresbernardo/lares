@@ -4,7 +4,7 @@
 \alias{stocks_report}
 \title{Portfolio's Full Report with Plots and Email}
 \usage{
-stocks_report(wd = "personal", cash_fix = 0, html = FALSE,
+stocks_report(wd = "personal", cash_fix = 0, html = TRUE,
   mail = TRUE, creds = NA)
 }
 \arguments{
@@ -16,7 +16,7 @@ stocks_report(wd = "personal", cash_fix = 0, html = FALSE,
 
 \item{mail}{Boolean Do you wish to send the email?}
 
-\item{creds}{Character. Credential's user (see get_credentials)}
+\item{creds}{Character. Credential's user (see get_credentials) for sending mail}
 }
 \description{
 This function lets the user create his portfolio's full report with plots and email sent
