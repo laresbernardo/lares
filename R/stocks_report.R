@@ -11,6 +11,7 @@ get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Interactive Br
   suppressMessages(require(xlsx))
   suppressMessages(require(dplyr))
   options("getSymbols.yahoo.warning"=FALSE)
+  options("getSymbols.warning4.0"=FALSE)
 
   valid <- Sys.info()
 
@@ -180,8 +181,11 @@ stocks_hist_fix <- function (dailys, dividends, transactions) {
     mutate(DailyValue = Close * Stocks) %>%
     arrange(desc(Date), desc(DailyValue)) %>%
     arrange(Date) %>% group_by(Symbol) %>%
-    mutate(RelChangeP = 100 - (100 * lag(Close) / Close),
-           RelChangeUSD = Stocks * (Close - lag(Close)) - Expenses) %>%
+    mutate(StartUSD = Value[Date == min(Date)],
+           RelChangeP = 100 - (100 * lag(Close) / Close),
+           RelChangeUSD = Stocks * (Close - lag(Close)) - Expenses,
+           RelChangePHist = 100 - (100 * StartUSD / Close),
+           RelChangeUSDHist = Stocks * (Close - StartUSD) - sum(Expenses)) %>%
     arrange(desc(Date)) %>%
     mutate_if(is.numeric, funs(round(., 2)))
   df[is.na(df)] <- 0
@@ -206,7 +210,8 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
 
   dailys_structure <- c("Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted",
                         "Quant", "Value", "Amount", "Expenses", "Stocks", "Div", "DivReal",
-                        "DailyDiv", "DailyValue", "RelChangeP", "RelChangeUSD")
+                        "DailyDiv", "DailyValue", "RelChangeP", "RelChangeUSD", 
+                        "RelChangePHist", "RelChangeUSDHist")
 
   cash_structure <- c("ID", "Date", "Cash")
 
@@ -383,7 +388,7 @@ stocks_daily_plot <- function (portfolio, daily) {
   plot <- daily %>%
     left_join(portfolio %>% select(Symbol,Type), by='Symbol') %>%
     arrange(Date) %>% group_by(Symbol) %>%
-    mutate(Hist = cumsum(RelChangeP),
+    mutate(Hist = cumsum(RelChangePHist),
            BuySell = ifelse(Expenses > 0, TRUE, FALSE)) %>%
     ggplot() + theme_bw() + ylab('% Change since Start') +
     geom_hline(yintercept = 0, alpha=0.8, color="black") +
@@ -445,7 +450,10 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
 #' @param creds Character. Credential's user (see get_credentials)
 #' @export
 stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA) {
-
+  
+  options("getSymbols.warning4.0"=FALSE)
+  options(warn=-1)
+  
   current_wd <- getwd()
 
   if (wd == "personal") {
@@ -465,19 +473,19 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   }
   
   # Data extraction
-  data <- get_stocks(token_dir = token_dir)
+  data <- lares::get_stocks(token_dir = token_dir)
   message("1. Data downloaded...")
   # Data wrangling and calculations
-  hist <- get_stocks_hist(symbols = data$portfolio$Symbol, from = data$portfolio$StartDate)
-  daily <- stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = data$transactions)
-  stocks_perf <- stocks_performance(daily, cash_in = data$cash, cash_fix = cash_fix)
-  portfolio_perf <- portfolio_performance(portfolio = data$portfolio, daily = daily)
+  hist <- lares::get_stocks_hist(symbols = data$portfolio$Symbol, from = data$portfolio$StartDate)
+  daily <- lares::stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = data$transactions)
+  stocks_perf <- lares::stocks_performance(daily, cash_in = data$cash, cash_fix = cash_fix)
+  portfolio_perf <- lares::portfolio_performance(portfolio = data$portfolio, daily = daily)
   message("2. Calculations ready...")
   # Visualizations
-  portfolio_daily_plot(stocks_perf)
-  stocks_total_plot(stocks_perf, portfolio_perf, daily, trans = data$transactions, cash = data$cash)
-  stocks_daily_plot(portfolio = data$portfolio, daily)
-  portfolio_distr_plot(portfolio_perf, daily)
+  lares::portfolio_daily_plot(stocks_perf)
+  lares::stocks_total_plot(stocks_perf, portfolio_perf, daily, trans = data$transactions, cash = data$cash)
+  lares::stocks_daily_plot(portfolio = data$portfolio, daily)
+  lares::portfolio_distr_plot(portfolio_perf, daily)
   message("3. All visuals plotted...")
   # Export and save data
   write.csv(stocks_perf,"mydaily.csv",row.names = F)
