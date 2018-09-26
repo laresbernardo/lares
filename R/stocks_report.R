@@ -305,7 +305,6 @@ portfolio_daily_plot <- function(stocks_perf) {
   require(ggplot2)
 
   plot <- stocks_perf %>%
-    dplyr::filter(Date != "2018-05-24") %>%
     dplyr::mutate(color = ifelse(RelPer > 0, "Pos", "Neg")) %>%
     ggplot() +
     geom_area(aes(x=Date, y=TotalPer/(1.05*max(stocks_perf$TotalPer))), alpha=0.2) +
@@ -313,6 +312,7 @@ portfolio_daily_plot <- function(stocks_perf) {
     geom_line(aes(x=Date, y=TotalPer/(1.05*max(stocks_perf$TotalPer))), alpha=0.5) +
     geom_hline(yintercept = 0, alpha=0.5, color="black") +
     guides(fill=FALSE) + theme_bw() + ylab('% Daily Var') +
+    scale_x_date(date_minor_breaks = "1 month", date_labels = "%b%y") +
     scale_y_continuous(breaks=seq(-100, 100, 0.5),
                        sec.axis = sec_axis(~.*(1.05*max(stocks_perf$TotalPer)), name = "% Portfolio Var", breaks=seq(-100, 100, 2))) +
     labs(title = 'Daily Portfolio\'s Stocks Change (%) since Start',
@@ -341,31 +341,45 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
 
   require(dplyr)
   require(ggplot2)
+  require(scales)
+  
+  tops <- max(rbind(portfolio_perf$Invested, portfolio_perf$DailyValue))
+  summary <- rbind(
+    paste0("Portfolio: $", lares::formatNum(stocks_perf$CumPortfolio[1])," | ", max(daily$Date)),
+    paste0("Stocks: $", lares::formatNum(sum(stocks_perf$DailyStocks[1]))," & Cash: $", stocks_perf$CumCash[1]),
+    paste0("Stocks Investment: $", lares::formatNum(sum(trans$Amount,na.rm=T))),
+    paste0("ROI: ", lares::formatNum(stocks_perf$TotalPer[1], 2),"% ($",
+           lares::formatNum(stocks_perf$DailyStocks[1]),")"),
+    paste0("Dividends: $", lares::formatNum(sum(daily$DailyDiv),0)," & Expenses: $", 
+           lares::formatNum(sum(daily$Expenses),0)))
 
   plot <- portfolio_perf %>%
-    mutate(shapeflag = ifelse(DifUSD < 0, 25, 24)) %>%
-    ggplot() + theme_bw() +
-    geom_col(aes(x=reorder(Symbol,-Invested), y=Invested, fill=Symbol, group = 1)) +
-    geom_col(aes(x=Symbol, y=Invested + DifUSD, fill=Symbol), alpha=0.5) +
-    geom_point(aes(x=Symbol, y= Invested + DifUSD, shape=shapeflag)) +
+    mutate(shapeflag = ifelse(DifUSD < 0, 25, 24),
+           box = -tops/5.5) %>%
+    ggplot() + theme_minimal() +
+    geom_hline(yintercept = 0, colour = "black") +
+    geom_col(aes(x = reorder(Symbol, Invested), y = Invested, fill = Symbol, group = 1)) +
+    geom_col(aes(x = Symbol, y = Invested + DifUSD, fill=Symbol), alpha=0.5) +
+    geom_col(aes(x = Symbol, y = box), fill="grey", alpha=0.5) +
+    geom_point(aes(x = Symbol, y = Invested + DifUSD, shape = shapeflag)) +
     scale_shape_identity() +
-    geom_text(aes(label = paste0("$",round(DifUSD,1),sep=""), y = Invested + DifUSD + 200, x = Symbol), size = 3) +
-    geom_text(aes(label = paste(DifPer,"%",sep=""), y = Invested + DifUSD + 400, x = Symbol), size = 3) +
-    geom_text(aes(label = paste0("$",Invested,sep=""), y = 350, x = Symbol), size = 3) +
-    geom_text(aes(label = paste0(Stocks,"@ $",round(Invested/Stocks,2)), y = 150, x = Symbol), size = 2) +
-    geom_text(aes(label = paste0("$",Invested+DifUSD,sep=""), y = (Invested + DifUSD - 200), x = Symbol), size = 2.5) +
-    geom_text(aes(label = paste0(Stocks,"@ $",round((Invested+DifUSD)/Stocks,2)), y = (Invested + DifUSD - 400), x = Symbol), size = 2) +
-    geom_text(aes(label = paste("Portfolio: $",stocks_perf$CumPortfolio[1]," | ",max(daily$Date),sep=""),
-                  y = max(portfolio_perf$Invested),x = daily$Symbol[3]), size = 4, hjust = 0) +
-    geom_text(aes(label = paste("Stocks: $",sum(stocks_perf$DailyStocks[1])," & Cash: $",stocks_perf$CumCash[1],sep=""),
-                  y = max(portfolio_perf$Invested)*0.97, x = daily$Symbol[3]), size = 3, hjust = 0) +
-    geom_text(aes(label = paste("Stocks Investment: $",sum(trans$Amount)," (out of $",sum(cash$Cash),")",sep=""),
-                  y = max(portfolio_perf$Invested)*0.94, x = daily$Symbol[3]), size = 3, hjust = 0) +
-    geom_text(aes(label = paste("Retorno: ",stocks_perf$TotalPer[1],"% ($",round(stocks_perf$DailyStocks[1],2),")",sep=""),
-                  y = max(portfolio_perf$Invested)*0.91, x = daily$Symbol[3]), size = 3, hjust = 0) +
-    geom_text(aes(label = paste("Dividends: $",sum(daily$DailyDiv),", Expenses: $",sum(daily$Expenses),sep=""),
-                  y = max(portfolio_perf$Invested)*0.88, x = daily$Symbol[3]), size = 3, hjust = 0) +
-    ylab("Amount Invested") + xlab("Stocks") + guides(fill=FALSE) + ylab('$') +
+    geom_text(aes(label = paste0("$",lares::formatNum(DifUSD,1)), y = Invested + DifUSD, x = Symbol), 
+              size = 2.9, hjust = -.2, vjust = -0.2) +
+    geom_text(aes(label = paste0(DifPer, "%"), y = Invested + DifUSD, x = Symbol), 
+              size = 2.9, hjust = -.2, vjust = 1.2) +
+    geom_text(aes(label = paste0("$", lares::formatNum(DailyValue, 1)), y = box, x = Symbol), 
+              size = 3, hjust = -.1, vjust = -0.2) +
+    geom_text(aes(label = paste0(Stocks, " @$", round(DailyValue/Stocks, 2)), y = box, x = Symbol), 
+              size = 2, hjust = -.1, vjust = 1.5) +
+    geom_text(aes(label = paste0("$", lares::formatNum(Invested,1)), y = 0, x = Symbol), 
+              size = 2, hjust = 0, vjust = -0.2) +
+    geom_text(aes(label = paste0("@$", round(Invested/Stocks, 2)), 
+                  y = 0, x = Symbol), size = 2, hjust = 0, vjust = 1.5) +
+    annotate("label", x = length(unique(portfolio_perf$Stocks))*0.25, y = tops*0.5, 
+             label = lares::vector2text(summary,"\n",quotes = F), size = 3.5, hjust = 0, alpha=0.55) +
+    scale_y_continuous(limits = c(NA, tops*1.1)) + 
+    labs(y='', x='', title="Stocks Distribution and Growth") +
+    guides(fill=FALSE) + coord_flip() +
     ggsave("portf_stocks_change.png", width = 8, height = 8, dpi = 300)
 
   return(plot)
@@ -501,11 +515,11 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
                "portf_distribution.png",
                "myportfolio.csv",
                "mydaily.csv")
-    mailSend(body = max(daily$Date), 
-             subject = paste("Portfolio:", max(daily$Date)),
-             attachment = files,
-             to = "laresbernardo@gmail.com", 
-             from = 'RServer <bernardo.lares@comparamejor.com>', creds = wd)
+    lares::mailSend(body = max(daily$Date), 
+                    subject = paste("Portfolio:", max(daily$Date)),
+                    attachment = files,
+                    to = "laresbernardo@gmail.com", 
+                    from = 'RServer <bernardo.lares@comparamejor.com>', creds = wd)
     message("5. Email sent...") 
   }
   # Clean everything up and delete files created

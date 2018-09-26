@@ -223,6 +223,7 @@ formatNum <- function(x, decimals = 2, type = 1, scientific = FALSE) {
     format(round(as.numeric(x), decimals), nsmall=decimals, 
            big.mark=",", decimal.mark = ".") 
   }
+  return(trimws(x))
 }
 
 
