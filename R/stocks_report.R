@@ -538,7 +538,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRU
                     attachment = files,
                     to = "laresbernardo@gmail.com", 
                     from = 'AutoReport <laresbernardo@gmail.com>', creds = wd)
-    message("SENT: Report sent succesfull!") 
+    message("Report sent succesfully!") 
   }
   # Clean everything up and delete files created
   unlink(tempdir, recursive = FALSE)
