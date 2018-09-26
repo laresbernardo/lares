@@ -352,7 +352,7 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
            lares::formatNum(stocks_perf$DailyStocks[1]),")"),
     paste0("Dividends: $", lares::formatNum(sum(daily$DailyDiv),0)," & Expenses: $", 
            lares::formatNum(sum(daily$Expenses),0)))
-
+  
   plot <- portfolio_perf %>%
     mutate(shapeflag = ifelse(DifUSD < 0, 25, 24),
            box = -tops/5.5) %>%

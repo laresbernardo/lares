@@ -214,14 +214,14 @@ formatNum <- function(x, decimals = 2, type = 1, scientific = FALSE) {
   if (scientific == FALSE) {
     options(scipen=999)
   } else {
-    formatC(numb, format = "e", digits = 2)
+    x <- formatC(numb, format = "e", digits = 2)
   }
   if (type == 1) {
-    format(round(as.numeric(x), decimals), nsmall=decimals, 
-           big.mark=".", decimal.mark = ",")
+    x <- format(round(as.numeric(x), decimals), nsmall=decimals, 
+                big.mark=".", decimal.mark = ",")
   } else {
-    format(round(as.numeric(x), decimals), nsmall=decimals, 
-           big.mark=",", decimal.mark = ".") 
+    x <- format(round(as.numeric(x), decimals), nsmall=decimals, 
+                big.mark=",", decimal.mark = ".") 
   }
   return(trimws(x))
 }
