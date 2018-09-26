@@ -504,7 +504,6 @@ stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRU
   if (html == TRUE) {
     require(rmarkdown)
     htmlreport <- "stocksReport.html"
-    htmlreportready <- paste0("docs/", htmlreport)
     params <- list(portf_daily_change = p1,
                    portf_stocks_change = p2,
                    portf_stocks_histchange = p3,
@@ -512,7 +511,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRU
                    portfolio_perf = portfolio_perf)
     invisible(
       file.copy(
-        from = "/docs/stocksReport.Rmd",
+        from = system.file("docs", "stocksReport.Rmd", package = "lares"),
         to = tempdir, 
         overwrite = TRUE, recursive = FALSE, copy.mode = TRUE)
     )
@@ -542,18 +541,8 @@ stocks_report <- function(wd = "personal", cash_fix = 0, html = TRUE, mail = TRU
     message("SENT: Report sent succesfull!") 
   }
   # Clean everything up and delete files created
-  if (file.exists(htmlreportready)) file.remove(htmlreportready)
-  if (wd != "personal") { file.remove(files) }
   unlink(tempdir, recursive = FALSE)
   graphics.off()
   rm(list = ls())
   setwd(current_wd)
 }
-
-
-devtools::use_vignette("study1")
-
-
-
-list.files(find.package("lares", lib.loc=NULL, quiet = TRUE))
-
