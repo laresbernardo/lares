@@ -3,39 +3,46 @@
 #' 
 #' This function lets me download my personal Excel with my Portfolio data
 #' 
-#' @param token_dir Character. Directory containing personal Dropbox token file
+#' @param filename Characeter. Import a local Excel file
 #' @export
-get_stocks <- function(token_dir="~/Dropbox (Personal)/Documentos/Docs/Data") {
-
-  suppressMessages(require(rdrop2))
-  suppressMessages(require(openxlsx))
-  suppressMessages(require(dplyr))
+get_stocks <- function(filename = NA) {
   
-  valid <- Sys.info()
-
-  if (valid[["user"]] %in% c("bernardo", "rstudio")) {
-    
-    load(paste0(token_dir, "/token_pers.rds"))
-
-    x <- drop_search("Portfolio LC.xlsx", dtoken = token)
-    file <- "temp.xlsx"
-    invisible(
-      drop_download(x$matches[[1]]$metadata$path_lower,
-                    local_path = file,
-                    overwrite = TRUE,
-                    dtoken = token))
-
-    # Transaccions historical data
+  require(openxlsx)
+  
+  processFile <- function(file) {
     cash <- read.xlsx(file, sheet = 'Fondos', skipEmptyRows=TRUE, detectDates=TRUE)
     trans <- read.xlsx(file, sheet = 'Transacciones', skipEmptyRows=TRUE, detectDates=TRUE)
     port <- read.xlsx(file, sheet = 'Portafolio', skipEmptyRows=TRUE, detectDates=TRUE)
-    results <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
-    file.remove(file)
-
-  } else { message("User is not authorized to run this function in this device :(") }
-
-  return(results)
-
+    mylist <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
+    return(mylist)
+  }
+  
+  if (!is.na(filename)) {
+    if (file.exists(filename)) {
+      results <- processFile(filename)
+    } else {
+      stop("Error: that file doesn't exist or it's not in your working directory!")
+    }
+  } else {
+    # Personal use: downloads my file from Dropbox
+    valid <- Sys.info()
+    if (valid[["user"]] %in% c("bernardo", "rstudio")) {
+      require(rdrop2)
+      token_dir <- "~/Dropbox (Personal)/Documentos/Docs/Data"
+      load(paste0(token_dir, "/token_pers.rds"))
+      x <- drop_search("Portfolio LC.xlsx", dtoken = token)
+      file <- "temp.xlsx"
+      invisible(
+        drop_download(x$matches[[1]]$metadata$path_lower,
+                      local_path = file,
+                      overwrite = TRUE,
+                      dtoken = token))
+      results <- processFile(file)
+      file.remove(file)
+    }
+  }
+  message("Imported succesfully!")
+  return(results)   
 }
 
 
