@@ -5,14 +5,18 @@
 \title{Download Stocks Historical Data}
 \usage{
 get_stocks_hist(symbols = NA, from = Sys.Date() - 365, today = TRUE,
-  verbose = TRUE)
+  tax = 30, verbose = TRUE)
 }
 \arguments{
-\item{symbols}{Character Vector. List of symbols to download historical data. Example: c('VTI','TSLA')}
+\item{symbols}{Character Vector. List of symbols to download historical data. 
+Example: c('VTI','TSLA')}
 
 \item{from}{Date. Since when do you wish to download historical data}
 
 \item{today}{Boolean. Do you wish to additionaly download today's quote?}
+
+\item{tax}{Numeric. How much does of your dividends does the taxes take? 
+Range from 0 to 99}
 
 \item{verbose}{Boolean. Print results and progress while downloading?}
 }

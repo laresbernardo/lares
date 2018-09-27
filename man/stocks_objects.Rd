@@ -4,11 +4,20 @@
 \alias{stocks_objects}
 \title{Portfolio's Calculations and Plots}
 \usage{
-stocks_objects(data)
+stocks_objects(data, cash_fix = 0, tax = 30, expenses = 7)
 }
 \arguments{
 \item{data}{List. Containing the following dataframes: portfolio,
 transactions, cash. They have to follow the original xlsx format}
+
+\item{cash_fix}{Numeric. If you wish to algebraically sum a value 
+to your cash balance}
+
+\item{tax}{Numeric. How much does of your dividends does the taxes take? 
+Range from 0 to 99}
+
+\item{expenses}{Numeric. How much does that bank or broker charges per
+transaction? Absolute value.}
 }
 \description{
 This function lets the user create his portfolio's calculations and

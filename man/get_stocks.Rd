@@ -4,10 +4,10 @@
 \alias{get_stocks}
 \title{Get Personal Portfolio's Data}
 \usage{
-get_stocks(token_dir = "~/Dropbox (Personal)/Documentos/Docs/Data")
+get_stocks(filename = NA)
 }
 \arguments{
-\item{token_dir}{Character. Directory containing personal Dropbox token file}
+\item{filename}{Characeter. Import a local Excel file}
 }
 \description{
 This function lets me download my personal Excel with my Portfolio data

@@ -370,7 +370,8 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
   tops <- max(rbind(portfolio_perf$Invested, portfolio_perf$DailyValue))
   summary <- rbind(
     paste0("Portfolio: $", lares::formatNum(stocks_perf$CumPortfolio[1])," | ", max(daily$Date)),
-    paste0("Stocks: $", lares::formatNum(sum(stocks_perf$DailyStocks[1]))," & Cash: $", stocks_perf$CumCash[1]),
+    paste0("Stocks: $", lares::formatNum(sum(stocks_perf$DailyStocks[1]),1)," & Cash: $", 
+           lares::formatNum(stocks_perf$CumCash[1],1)),
     paste0("Stocks Investment: $", lares::formatNum(sum(trans$Amount,na.rm=T))),
     paste0("ROI: ", lares::formatNum(stocks_perf$TotalPer[1], 2),"% ($",
            lares::formatNum(stocks_perf$TotalUSD[1],0),")"),
@@ -399,7 +400,7 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
               size = 2, hjust = 0, vjust = -0.2) +
     geom_text(aes(label = paste0("@$", lares::formatNum(Invested/Stocks, 2)), 
                   y = 0, x = Symbol), size = 2, hjust = 0, vjust = 1.5) +
-    annotate("label", x = length(unique(portfolio_perf$Stocks))*0.25, y = tops*0.5, 
+    annotate("label", x = length(unique(portfolio_perf$Stocks))*0.25, y = tops*0.6, 
              label = lares::vector2text(summary,"\n",quotes = F), size = 3.5, hjust = 0, alpha=0.55) +
     scale_y_continuous(limits = c(NA, tops*1.1)) + 
     labs(y='', x='', title="Stocks Distribution and Growth") +
@@ -468,7 +469,7 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
     coord_polar("y", start = 0) + scale_y_continuous(labels = scales::percent) +
     labs(x = '', y = "Portfolio's Stocks Type Distribution")
   t1 <- tableGrob(portfolio_perf %>% 
-                    mutate(Perc = paste0(lares::formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),"%"),
+                    mutate(Perc = lares::formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
                            DailyValue = lares::formatNum(DailyValue, 2),
                            DifPer = paste0(lares::formatNum(DifPer, 2))) %>%
                     select(Symbol, Type, DailyValue, Perc, DifPer), rows=NULL,

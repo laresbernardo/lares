@@ -7,11 +7,16 @@
 stocks_performance(dailys, cash_in, cash_fix = 0)
 }
 \arguments{
-\item{dailys}{Dataframe. Daily values. Structure: "Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted", "Quant", "Value", "Amount", "Expenses", "Stocks", "Div", "DivReal", "DailyDiv", "DailyValue", "RelChangeP", "RelChangeUSD"}
+\item{dailys}{Dataframe. Daily values. Structure: "Date", "Symbol", 
+"Open", "High", "Low", "Close", "Volume", "Adjusted", "Quant", 
+"Value", "Amount", "Expenses", "Stocks", "Div", "DivReal", "DailyDiv", 
+"DailyValue", "RelChangeP", 
+"RelChangeUSD"}
 
 \item{cash_in}{Dataframe. Deposits and withdrawals. Structure: "ID", "Date", "Cash"}
 
-\item{cash_fix}{Numeric. If you wish to algebraically sum a value to your cash balance}
+\item{cash_fix}{Numeric. If you wish to algebraically sum a value 
+to your cash balance}
 }
 \description{
 This function lets the user calculate stocks performance

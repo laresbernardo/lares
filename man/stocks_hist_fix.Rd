@@ -4,15 +4,22 @@
 \alias{stocks_hist_fix}
 \title{Fix Historical Data on Stocks}
 \usage{
-stocks_hist_fix(dailys, dividends, transactions)
+stocks_hist_fix(dailys, dividends, transactions, expenses = 7)
 }
 \arguments{
-\item{dailys}{Dataframe. Daily values. Structure: "Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted"}
+\item{dailys}{Dataframe. Daily values. Structure: "Date", "Symbol", 
+"Open", "High", "Low", "Close", "Volume", "Adjusted"}
 
-\item{dividends}{Dataframe. Dividends. Structure: "Symbol", "Date", "Div", "DivReal"}
+\item{dividends}{Dataframe. Dividends. Structure: "Symbol", "Date", 
+"Div", "DivReal"}
 
-\item{transactions}{Dataframe. Transactions. Structure: "ID", "Inv", "Symbol", "Date", "Quant", "Value", "Amount", "Description"}
+\item{transactions}{Dataframe. Transactions. Structure: "ID", "Inv", 
+"Symbol", "Date", "Quant", "Value", "Amount", "Description"}
+
+\item{expenses}{Numeric. How much does that bank or broker charges per
+transaction? Absolute value.}
 }
 \description{
-This function lets the user fix downloaded stock data into a usefull format
+This function lets the user fix downloaded stock data into a usefull 
+format output
 }
