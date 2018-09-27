@@ -329,19 +329,22 @@ portfolio_daily_plot <- function(stocks_perf) {
   plot <- stocks_perf %>%
     dplyr::mutate(color = ifelse(RelPer > 0, "Pos", "Neg")) %>%
     ggplot() +
-    geom_area(aes(x=Date, y=TotalPer/(1.05*max(stocks_perf$TotalPer))), alpha=0.2) +
+    geom_area(aes(x=Date, y=TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.2) +
     geom_bar(aes(x=Date, y=RelPer, fill=color), stat='identity', width=1) +
-    geom_line(aes(x=Date, y=TotalPer/(1.05*max(stocks_perf$TotalPer))), alpha=0.5) +
-    geom_hline(yintercept = 0, alpha=0.5, color="black") +
+    geom_line(aes(x=Date, y=TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.5) +
+    geom_hline(yintercept = 0, alpha = 0.5, color="black") +
     guides(fill=FALSE) + theme_minimal() +
     scale_x_date(date_minor_breaks = "1 month", date_labels = "%b%y") +
     scale_y_continuous(breaks=seq(-100, 100, 0.5),
-                       sec.axis = sec_axis(~.*(1.05*max(stocks_perf$TotalPer)), name = "% Portfolio Var", breaks=seq(-100, 100, 2))) +
+                       sec.axis = sec_axis(~.*(0.5 * max(stocks_perf$TotalPer)), 
+                                           name = "% Portfolio Var", 
+                                           breaks = seq(-100, 100, 2))) +
     labs(y = '% Daily Var', x = '',
          title = 'Daily Portfolio\'s Growth (%) since Start',
          subtitle = paste(stocks_perf$Date[1]," (Includes Expenses): ",
                           lares::formatNum(stocks_perf$TotalPer[1],2),"% ($",
-                          lares::formatNum(stocks_perf$DailyStocks[1] - sum(stocks_perf$DailyTrans),0),") | $",
+                          lares::formatNum(stocks_perf$DailyStocks[1] - 
+                                             sum(stocks_perf$DailyTrans),0),") | $",
                           lares::formatNum(stocks_perf$CumPortfolio[1]), sep="")) +
     ggsave("portf_daily_change.png", width = 8, height = 5, dpi = 300)
 
@@ -372,7 +375,7 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
     paste0("Portfolio: $", lares::formatNum(stocks_perf$CumPortfolio[1])," | ", max(daily$Date)),
     paste0("Stocks: $", lares::formatNum(sum(stocks_perf$DailyStocks[1]),1)," & Cash: $", 
            lares::formatNum(stocks_perf$CumCash[1],1)),
-    paste0("Stocks Investment: $", lares::formatNum(sum(trans$Amount,na.rm=T))),
+    paste0("Stocks Investment: $", lares::formatNum(sum(trans$Amount,na.rm=T),1)),
     paste0("ROI: ", lares::formatNum(stocks_perf$TotalPer[1], 2),"% ($",
            lares::formatNum(stocks_perf$TotalUSD[1],0),")"),
     paste0("Dividends: $", lares::formatNum(sum(daily$DailyDiv),0)," & Expenses: $", 
