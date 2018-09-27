@@ -39,7 +39,7 @@ print(params$portf_stocks_change)
 ```
 
 ## Stocks Daily Change
-```{r fig.width = 10, fig.height = 5, echo = FALSE}
+```{r fig.width = 10, fig.height = 7, echo = FALSE}
 print(params$portf_stocks_histchange)
 ```
 
