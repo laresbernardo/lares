@@ -51,12 +51,16 @@ get_stocks <- function(filename = NA) {
 #' 
 #' This function lets the user download stocks historical data
 #' 
-#' @param symbols Character Vector. List of symbols to download historical data. Example: c('VTI','TSLA')
+#' @param symbols Character Vector. List of symbols to download historical data. 
+#' Example: c('VTI','TSLA')
 #' @param from Date. Since when do you wish to download historical data
 #' @param today Boolean. Do you wish to additionaly download today's quote?
+#' @param tax Numeric. How much does of your dividends does the taxes take? 
+#' Range from 0 to 99
 #' @param verbose Boolean. Print results and progress while downloading?
 #' @export
-get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365, today = TRUE, verbose = TRUE) {
+get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365, 
+                             today = TRUE, tax = 30, verbose = TRUE) {
 
   suppressMessages(require(quantmod))
   suppressMessages(require(dplyr))
@@ -115,7 +119,7 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365, today = TRUE
           div <-  data.frame(Symbol = rep(symbol, nrow(d)),
                              Date = ymd(row.names(data.frame(d))),
                              Div = as.vector(d),
-                             DivReal = as.vector(d)*0.7)
+                             DivReal = as.vector(d)*(100-tax))
           divs <- rbind(divs, div)
         }
         if (verbose == TRUE) {
@@ -135,13 +139,19 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365, today = TRUE
 ####################################################################
 #' Fix Historical Data on Stocks
 #' 
-#' This function lets the user fix downloaded stock data into a usefull format
+#' This function lets the user fix downloaded stock data into a usefull 
+#' format output
 #' 
-#' @param dailys Dataframe. Daily values. Structure: "Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted"
-#' @param dividends Dataframe. Dividends. Structure: "Symbol", "Date", "Div", "DivReal"
-#' @param transactions Dataframe. Transactions. Structure: "ID", "Inv", "Symbol", "Date", "Quant", "Value", "Amount", "Description"
+#' @param dailys Dataframe. Daily values. Structure: "Date", "Symbol", 
+#' "Open", "High", "Low", "Close", "Volume", "Adjusted"
+#' @param dividends Dataframe. Dividends. Structure: "Symbol", "Date", 
+#' "Div", "DivReal"
+#' @param transactions Dataframe. Transactions. Structure: "ID", "Inv", 
+#' "Symbol", "Date", "Quant", "Value", "Amount", "Description"
+#' @param expenses Numeric. How much does that bank or broker charges per
+#' transaction? Absolute value.
 #' @export
-stocks_hist_fix <- function (dailys, dividends, transactions) {
+stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
 
   require(dplyr)
   require(lubridate)
@@ -173,7 +183,7 @@ stocks_hist_fix <- function (dailys, dividends, transactions) {
                 mutate(Date = as.Date(Date), Symbol = as.character(Symbol)) %>%
                 select(Symbol, Date, Quant, Value, Amount),
               by = c('Symbol','Date')) %>%
-    mutate(Expenses = ifelse(is.na(Quant), 0, 7)) %>%
+    mutate(Expenses = ifelse(is.na(Quant), 0, expenses)) %>%
     dplyr::group_by(Symbol) %>%
     mutate(Quant = ifelse(is.na(Quant), 0, Quant),
            Stocks = cumsum(Quant)) %>%
@@ -207,9 +217,14 @@ stocks_hist_fix <- function (dailys, dividends, transactions) {
 #' 
 #' This function lets the user calculate stocks performance
 #' 
-#' @param dailys Dataframe. Daily values. Structure: "Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted", "Quant", "Value", "Amount", "Expenses", "Stocks", "Div", "DivReal", "DailyDiv", "DailyValue", "RelChangeP", "RelChangeUSD"
+#' @param dailys Dataframe. Daily values. Structure: "Date", "Symbol", 
+#' "Open", "High", "Low", "Close", "Volume", "Adjusted", "Quant", 
+#' "Value", "Amount", "Expenses", "Stocks", "Div", "DivReal", "DailyDiv", 
+#' "DailyValue", "RelChangeP", 
+#' "RelChangeUSD"
 #' @param cash_in Dataframe. Deposits and withdrawals. Structure: "ID", "Date", "Cash"
-#' @param cash_fix Numeric. If you wish to algebraically sum a value to your cash balance
+#' @param cash_fix Numeric. If you wish to algebraically sum a value 
+#' to your cash balance
 #' @export
 stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
 
@@ -323,7 +338,7 @@ portfolio_daily_plot <- function(stocks_perf) {
     scale_y_continuous(breaks=seq(-100, 100, 0.5),
                        sec.axis = sec_axis(~.*(1.05*max(stocks_perf$TotalPer)), name = "% Portfolio Var", breaks=seq(-100, 100, 2))) +
     labs(y = '% Daily Var', x = '',
-         title = 'Daily Portfolio\'s Stocks Change (%) since Start',
+         title = 'Daily Portfolio\'s Growth (%) since Start',
          subtitle = paste(stocks_perf$Date[1]," (Includes Expenses): ",
                           lares::formatNum(stocks_perf$TotalPer[1],2),"% ($",
                           lares::formatNum(stocks_perf$DailyStocks[1] - sum(stocks_perf$DailyTrans),0),") | $",
@@ -480,9 +495,14 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
 #' 
 #' @param data List. Containing the following dataframes: portfolio,
 #' transactions, cash. They have to follow the original xlsx format
-#' @param cash_fix Numeric. If you wish to algebraically sum a value to your cash balance
+#' @param cash_fix Numeric. If you wish to algebraically sum a value 
+#' to your cash balance
+#' @param tax Numeric. How much does of your dividends does the taxes take? 
+#' Range from 0 to 99
+#' @param expenses Numeric. How much does that bank or broker charges per
+#' transaction? Absolute value.
 #' @export
-stocks_objects <- function(data, cash_fix = 0) {
+stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   
   tabs <- c('portfolio','transactions','cash')
   if (sum(names(data) %in% tabs) != 3) {
@@ -496,15 +516,18 @@ stocks_objects <- function(data, cash_fix = 0) {
   
   # Data wrangling and calculations
   message("Downloading historical and live data for each Stock...")
-  hist <- lares::get_stocks_hist(symbols = data$portfolio$Symbol, from = data$portfolio$StartDate)
-  daily <- lares::stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = data$transactions)
+  hist <- lares::get_stocks_hist(symbols = data$portfolio$Symbol, 
+                                 from = data$portfolio$StartDate, tax = tax)
+  daily <- lares::stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, 
+                                  transactions = data$transactions, expenses = expenses)
   stocks_perf <- lares::stocks_performance(daily, cash_in = data$cash, cash_fix = cash_fix)
   portfolio_perf <- lares::portfolio_performance(portfolio = data$portfolio, daily = daily)
   message("1. Calculations ready...")
   
   # Visualizations
   p1 <- lares::portfolio_daily_plot(stocks_perf)
-  p2 <- lares::stocks_total_plot(stocks_perf, portfolio_perf, daily, trans = data$transactions, cash = data$cash)
+  p2 <- lares::stocks_total_plot(stocks_perf, portfolio_perf, daily, 
+                                 trans = data$transactions, cash = data$cash)
   p3 <- lares::stocks_daily_plot(portfolio = data$portfolio, daily)
   p4 <- lares::portfolio_distr_plot(portfolio_perf, daily)
   graphics.off()
