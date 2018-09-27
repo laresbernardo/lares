@@ -38,6 +38,11 @@ kable(params$portfolio_perf, row.names = FALSE) %>%
 print(params$portf_stocks_change)
 ```
 
+## Stocks Daily Change
+```{r fig.width = 10, fig.height = 5, echo = FALSE}
+print(params$portf_stocks_histchange)
+```
+
 ## Portfolio Distribution
 ```{r fig.width = 10, fig.height = 8, echo = FALSE}
 grid::grid.draw(params$portf_distribution)
