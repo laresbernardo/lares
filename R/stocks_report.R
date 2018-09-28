@@ -119,7 +119,7 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365,
           div <-  data.frame(Symbol = rep(symbol, nrow(d)),
                              Date = ymd(row.names(data.frame(d))),
                              Div = as.vector(d),
-                             DivReal = as.vector(d)*(100-tax))
+                             DivReal = as.vector(d)*(100-tax)/100)
           divs <- rbind(divs, div)
         }
         if (verbose == TRUE) {
@@ -375,7 +375,6 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
     paste0("Portfolio: $", lares::formatNum(stocks_perf$CumPortfolio[1])," | ", max(daily$Date)),
     paste0("Stocks: $", lares::formatNum(sum(stocks_perf$DailyStocks[1]),1)," & Cash: $", 
            lares::formatNum(stocks_perf$CumCash[1],1)),
-    paste0("Stocks Investment: $", lares::formatNum(sum(trans$Amount,na.rm=T),1)),
     paste0("ROI: ", lares::formatNum(stocks_perf$TotalPer[1], 2),"% ($",
            lares::formatNum(stocks_perf$TotalUSD[1],0),")"),
     paste0("Dividends: $", lares::formatNum(sum(daily$DailyDiv),0)," & Expenses: $", 
