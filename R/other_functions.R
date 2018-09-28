@@ -242,7 +242,7 @@ one_hot_encoding_commas <- function(df, variables, sep=","){
   # Note that variables must be provided in strings
   for (var in seq_along(variables)) {
     variable <- variables[var]
-    df[df==""|is.na(df)] <- "NAs" # Handling missingness
+    df[as.character(df) == "" | is.na(df)] <- "NAs" # Handling missingness
     x <- as.character(unique(df[[variable]]))
     x <- gsub(" ", "", toString(x)) # So it can split on strings like "A1,A2" and "A1, A2"
     x <- unlist(strsplit(x, sep))
