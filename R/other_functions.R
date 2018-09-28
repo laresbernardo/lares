@@ -233,27 +233,27 @@ formatNum <- function(x, decimals = 2, type = 1, scientific = FALSE) {
 #' This function lets the user do one hot encoding on a variable with 
 #' comma separated values
 #' 
-#' @param df Vector or Dataframe. Contains different variables in each 
-#' column, separated by a specific character
-#' @param variables Character. Which variables should we split into new columns
-#' @param sep Character. Which character separates the elements
+#' @param df Dataframe. May contain one or more columns with comma separated
+#' values which will be separated as one hot encoding
+#' @param variables Character. Which variables should split into new columns?
+#' @param sep Character. Which character separates the elements?
 #' @export
 one_hot_encoding_commas <- function(df, variables, sep=","){
   # Note that variables must be provided in strings
   for (var in seq_along(variables)) {
     variable <- variables[var]
     df[as.character(df) == "" | is.na(df)] <- "NAs" # Handling missingness
-    x <- as.character(unique(df[[variable]]))
-    x <- gsub(" ", "", toString(x)) # So it can split on strings like "A1,A2" and "A1, A2"
-    x <- unlist(strsplit(x, sep))
-    x <- paste(variable, x, sep="_")
-    new_columns <- sort(unique(as.character(x)))
+    x <- as.character(df[[variable]])
+    x <- gsub(", ", ",", toString(x)) # So it can split on strings like "A1,A2" and "A1, A2"
+    vals <- unique(unlist(strsplit(x, sep)))
+    x <- paste(variable, vals, sep="_")
+    new_columns <- sort(as.character(x))
     if (length(new_columns) >= 15) {
       message(paste("You are using more than 15 unique values on this variable:", variable))
     }
     for (i in seq_along(new_columns)){
       df$temp <- NA
-      df$temp <- ifelse(grepl(new_columns[i], df[[variable]]), TRUE, FALSE)
+      df$temp <- ifelse(grepl(vals[i], df[[variable]]), TRUE, FALSE)
       colnames(df)[colnames(df) == "temp"] <- new_columns[i]
     }
   }

@@ -7,12 +7,12 @@
 one_hot_encoding_commas(df, variables, sep = ",")
 }
 \arguments{
-\item{df}{Vector or Dataframe. Contains different variables in each 
-column, separated by a specific character}
+\item{df}{Dataframe. May contain one or more columns with comma separated
+values which will be separated as one hot encoding}
 
-\item{variables}{Character. Which variables should we split into new columns}
+\item{variables}{Character. Which variables should split into new columns?}
 
-\item{sep}{Character. Which character separates the elements}
+\item{sep}{Character. Which character separates the elements?}
 }
 \description{
 This function lets the user do one hot encoding on a variable with 
