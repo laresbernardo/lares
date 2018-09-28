@@ -19,6 +19,6 @@ Everytime you update the library, I recommend restarting your session: close RSt
 
 - DataScience+: [Visualizations for Regression Models Results](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models)
 
-- DataScience+: [AutoML and DALEX for Dataset Understanding](https://datascienceplus.com/understanding-titanic-dataset-with-h2os-automl-dalex-and-lares-library/)
+- DataScience+: [AutoML and DALEX for Dataset Understanding](https://datascienceplus.com/understanding-titanic-dataset-with-h2os-automl-dalex-and-lares-library)
 
-- DataScience+: [Portfolio's Performance and Report]()
+- DataScience+: [Portfolio's Performance and Report](https://datascienceplus.com/visualize-your-portfolios-performance-and-generate-a-nice-report-with-r)
