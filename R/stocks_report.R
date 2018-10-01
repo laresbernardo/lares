@@ -626,7 +626,6 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   setwd(tempdir)
 
   # Data extraction and processing
-  data <- lares::get_stocks(token_dir = token_dir)
   results <- lares::stocks_objects(data)
   
   # HTML report
