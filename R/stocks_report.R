@@ -67,6 +67,7 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365,
   suppressMessages(require(lubridate))
   suppressMessages(require(jsonlite))
   options("getSymbols.warning4.0"=FALSE)
+  options("getSymbols.yahoo.warning"=FALSE)
 
   options(warn=-1)
 
@@ -626,6 +627,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   setwd(tempdir)
 
   # Data extraction and processing
+  data <- lares::get_stocks()
   results <- lares::stocks_objects(data)
   
   # HTML report
