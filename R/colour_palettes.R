@@ -36,7 +36,11 @@ gg_colour_customs <- function () {
               "bueno"="springgreen3",
               "malo"="red2",
               "buenos"="springgreen3",
-              "malos"="red2")
+              "malos"="red2",
+              "spring"="springgreen3",
+              "summer"="red2",
+              "fall"="orange",
+              "winter"="steelblue2")
   return(scale_color_manual(values = values))
 }
 
@@ -79,7 +83,11 @@ gg_fill_customs <- function () {
               "bueno"="springgreen3",
               "malo"="red2",
               "buenos"="springgreen3",
-              "malos"="red2")
+              "malos"="red2",
+              "spring"="springgreen3",
+              "summer"="red2",
+              "fall"="orange",
+              "winter"="steelblue2")
   return(scale_fill_manual(values = values))
 }
 
@@ -122,6 +130,10 @@ gg_text_customs <- function () {
               "good" = black,
               "bad" = black,
               "bueno" = black,
-              "malo" = black)
+              "malo" = black,
+              "spring" = white,
+              "summer" = white,
+              "fall" = black,
+              "winter" = black)
   return(scale_color_manual(values = values))
 }
