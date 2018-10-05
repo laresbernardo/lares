@@ -489,24 +489,23 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
 #' Imperial follows the MM/DD/YYYY pattern.
 #' @export
 dateformat <- function(dates, metric = FALSE) {
+  
   suppressMessages(require(dplyr))
   suppressMessages(require(stringr))
   suppressMessages(require(lubridate))
   options(warn=-1)
-  
+
   dates <- gsub(" .*", "", dates)
-  
-  x <- dates
-  x <- x[!is.na(x)]
+  x <- dates[!is.na(dates)][1]
   
   # Is it in integer format?
-  int <- as.integer(as.character(x[1]))
+  int <- as.integer(as.character(x))
   if (int %in% 30000:60000) {
     dates <- as.Date(as.integer(as.character(dates)), origin='1900-01-01')
   } else {
-    lasts <- str_sub(x[1], start= -4)
+    lasts <- str_sub(x, start= -4)
     lasts <- as.integer(lares::cleanText(lasts))
-    firsts <- str_sub(x[1], start= 4)
+    firsts <- str_sub(x, start= 4)
     if (metric == FALSE) {
       # Does dates end in year?
       if (lasts %in% 1900:3000 | lasts %in% 101:1300) {
@@ -527,5 +526,5 @@ dateformat <- function(dates, metric = FALSE) {
       }
     }
   }
-  return(lubridate::date(dates))
+  return(dates)
 }
