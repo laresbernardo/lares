@@ -124,16 +124,13 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365,
           divs <- rbind(divs, div)
         }
         if (verbose == TRUE) {
-          message(paste(symbol," since ",start_date,": done ",lares::formatNum(100*i/length(symbols),1),"% (",i,"/",length(symbols),")",sep=""))
+          message(paste0(symbol, " since ", start_date," (", i, "/", length(symbols),")"))
         }
       }
     } else { message("The parameters 'symbols' and 'start_dates' should be the same length.") }
   } else { message("You need to define which stocks to bring. Use the 'stocks=' parameter.") }
-
   results <- list("values" = data, "dividends" = divs)
-  message(paste("Until", max(as.Date(as.character(results$values$Date)))[1]))
   return(results)
-
 }
 
 
@@ -614,14 +611,6 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   options(warn=-1)
   suppressMessages(require(dplyr))
   
-  # Set token for Dropbox download
-  token_dir <- case_when(wd == "personal" ~ "~/Dropbox (Personal)/Documentos/Docs/Data",
-                         wd == "matrix" ~ "~/creds")
-  if (is.na(token_dir)) {
-    # For Sendgrid credentials:
-    token_dir <- readline(prompt="Set the working directory where your YML file is: ")
-  }
-  
   current_wd <- getwd()
   tempdir <- tempdir()
   setwd(tempdir)
@@ -633,6 +622,12 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   # HTML report
   stocks_html(results, dir = tempdir)
   
+  # Set token for Sendgrid credentials:
+  token_dir <- case_when(wd == "personal" ~ "~/Dropbox (Personal)/Documentos/Docs/Data",
+                         wd == "matrix" ~ "~/creds")
+  if (is.na(token_dir)) {
+    token_dir <- readline(prompt="Set the working directory where your YML file is: ")
+  }
   if (mail == TRUE) {
     files <- "stocksReport.html"
     lares::mailSend(body = " ", 
@@ -650,7 +645,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
 }
 
 ####################################################################
-# df <- get_stocks() # Get data from my Dropbox
-# dfp <- stocks_objects(df) # Make calculations and plots
+# df <- lares::get_stocks() # Get data from my Dropbox
+# dfp <- lares::stocks_objects(df) # Make calculations and plots
 # stocks_html(dfp) # Create HTML report
 # stocks_report() # Send report to my mail
