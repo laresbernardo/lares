@@ -487,43 +487,46 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
 #' @param metric Boolean. Metric or Imperial inputs. The main 
 #' difference is that Metric follows the DD/MM/YYYY pattern, and 
 #' Imperial follows the MM/DD/YYYY pattern.
+#' @param origin Date. When importing from Excel, integers usually
+#' have 1900-01-01 as origin. In R, origin is 1970-01-01.
 #' @export
-dateformat <- function(dates, metric = FALSE) {
+dateformat <- function(dates, metric = FALSE, origin = '1900-01-01') {
   
   suppressMessages(require(dplyr))
   suppressMessages(require(stringr))
   suppressMessages(require(lubridate))
   options(warn=-1)
-
+  
   dates <- gsub(" .*", "", dates)
   x <- dates[!is.na(dates)][1]
   
   # Is it in integer format?
   int <- as.integer(as.character(x))
   if (int %in% 30000:60000) {
-    dates <- as.Date(as.integer(as.character(dates)), origin='1900-01-01')
+    dates <- as.Date(as.integer(as.character(dates)), origin=origin)
   } else {
-    lasts <- str_sub(x, start= -4)
-    lasts <- as.integer(lares::cleanText(lasts))
-    firsts <- str_sub(x, start= 4)
+    comps <- unlist(strsplit(x, "/|-|\\."))
+    lasts <- as.integer(comps[3])
+    firsts <- as.integer(comps[1])
+    firstlast <- nchar(paste0(firsts, lasts))
     if (metric == FALSE) {
-      # Does dates end in year?
-      if (lasts %in% 1900:3000 | lasts %in% 101:1300) {
+      # Does dates end in year? 
+      if (nchar(lasts) == 4 | firstlast <= 4) {
         dates <- lubridate::mdy(dates)
       }
       # Does dates start in year?
-      if (firsts %in% 1900:3000) {
-        dates <- lubridate::ymd(dates)
+      if (nchar(firsts) == 4) {
+        dates <- lubridate::ydm(dates)
       } 
     } else {
-      # Does dates end in year?
-      if (lasts %in% 1900:3000 | lasts %in% 101:1300) {
-        dates <- lubridate::mdy(dates)
+      # Does dates end in year? 
+      if (nchar(lasts) == 4 | firstlast <= 4) {
+        dates <- lubridate::dmy(dates)
       }
       # Does dates start in year?
-      if (firsts %in% 1900:3000) {
+      if (nchar(firsts) == 4) {
         dates <- lubridate::ymd(dates)
-      }
+      } 
     }
   }
   return(dates)

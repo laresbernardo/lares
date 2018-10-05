@@ -4,12 +4,15 @@
 \alias{dateformat}
 \title{Transform any date input into Date}
 \usage{
-dateformat(dates, metric = FALSE)
+dateformat(dates, metric = FALSE, origin = "1900-01-01")
 }
 \arguments{
 \item{metric}{Boolean. Metric or Imperial inputs. The main 
 difference is that Metric follows the DD/MM/YYYY pattern, and 
 Imperial follows the MM/DD/YYYY pattern.}
+
+\item{origin}{Date. When importing from Excel, integers usually
+have 1900-01-01 as origin. In R, origin is 1970-01-01.}
 
 \item{date}{Vector. Dates in any of the permitted formats}
 }
