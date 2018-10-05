@@ -526,5 +526,5 @@ dateformat <- function(dates, metric = FALSE) {
       }
     }
   }
-  return(date(dates))
+  return(lubridate::date(dates))
 }
