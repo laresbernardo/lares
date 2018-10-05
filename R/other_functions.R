@@ -434,7 +434,7 @@ removenarows <- function(df, all = TRUE) {
 #' @param natransform String. "mean" or 0 to impute NA values. If
 #' set to NA no calculation will run.
 #' @export
-numerical <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA) {
+numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA) {
   
   require(dplyr)
   
@@ -471,4 +471,60 @@ numerical <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA) {
     }
   }
   return(d)
+}
+
+
+####################################################################
+#' Transform any date input into Date
+#' 
+#' This function lets the user transform any date input format into
+#' a conventional R date format. The following formats are some of 
+#' the permitted: 10-05-2019, 2019-10-05 5/22/2015, 9:45:03 AM, 
+#' 42348.44, 9/2/18 23:16, 10-05-19
+#' 
+#' 
+#' @param date Vector. Dates in any of the permitted formats
+#' @param metric Boolean. Metric or Imperial inputs. The main 
+#' difference is that Metric follows the DD/MM/YYYY pattern, and 
+#' Imperial follows the MM/DD/YYYY pattern.
+#' @export
+dateformat <- function(dates, metric = FALSE) {
+  require(dplyr)
+  require(stringr)
+  require(lubridate)
+  
+  dates <- gsub(" .*", "", dates)
+  
+  x <- dates
+  x <- x[!is.na(x)]
+  
+  # Is it in integer format?
+  int <- as.integer(as.character(x[1]))
+  if (int %in% 30000:60000) {
+    dates <- as.Date(as.integer(as.character(dates)), origin='1900-01-01')
+  } else {
+    lasts <- str_sub(x[1], start= -4)
+    lasts <- as.integer(lares::cleanText(lasts))
+    firsts <- str_sub(x[1], start= 4)
+    if (metric == FALSE) {
+      # Does dates end in year?
+      if (lasts %in% 1900:3000 | lasts %in% 101:1300) {
+        dates <- lubridate::mdy(dates)
+      }
+      # Does dates start in year?
+      if (firsts %in% 1900:3000) {
+        dates <- lubridate::ymd(dates)
+      } 
+    } else {
+      # Does dates end in year?
+      if (lasts %in% 1900:3000 | lasts %in% 101:1300) {
+        dates <- lubridate::mdy(dates)
+      }
+      # Does dates start in year?
+      if (firsts %in% 1900:3000) {
+        dates <- lubridate::ymd(dates)
+      }
+    }
+  }
+  return(date(dates))
 }
