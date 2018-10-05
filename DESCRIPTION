@@ -9,6 +9,7 @@ License: Private
 Encoding: UTF-8
 LazyData: true
 Imports: httr,
+    devtools,
     jsonlite,
     rlist,
     dplyr,
@@ -18,7 +19,6 @@ Imports: httr,
     googlesheets,
     googleAuthR,
     googleAnalyticsR,
-    RJSONIO,
     jpeg,
     png,
     config,
@@ -26,19 +26,17 @@ Imports: httr,
     h2o,
     pROC,
     scales,
-    plotly,
     lubridate,
     stringr,
     rvest,
     RPostgreSQL,
     rdrop2,
-    xlsx,
+    openxlsx,
     plyr,
     SnowballC,
     wordcloud,
     RColorBrewer,
     rtweet,
-    devtools,
     forecast,
     kableExtra,
     rmarkdown
@@ -46,6 +44,5 @@ Remotes: ropenscilabs/opencv
 URL: https://github.com/laresbernardo/lares
 BugReports: https://github.com/laresbernardo/lares/issues
 RoxygenNote: 6.1.0
-Suggests: knitr,
-    rmarkdown
+Suggests: knitr
 VignetteBuilder: knitr
