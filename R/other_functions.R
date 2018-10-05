@@ -489,9 +489,10 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
 #' Imperial follows the MM/DD/YYYY pattern.
 #' @export
 dateformat <- function(dates, metric = FALSE) {
-  require(dplyr)
-  require(stringr)
-  require(lubridate)
+  suppressMessages(require(dplyr))
+  suppressMessages(require(stringr))
+  suppressMessages(require(lubridate))
+  options(warn=-1)
   
   dates <- gsub(" .*", "", dates)
   
