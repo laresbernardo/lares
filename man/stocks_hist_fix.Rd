@@ -14,7 +14,7 @@ stocks_hist_fix(dailys, dividends, transactions, expenses = 7)
 "Div", "DivReal"}
 
 \item{transactions}{Dataframe. Transactions. Structure: "ID", "Inv", 
-"Symbol", "Date", "Quant", "Value", "Amount", "Description"}
+"CODE", "Symbol", "Date", "Quant", "Value", "Amount", "Description"}
 
 \item{expenses}{Numeric. How much does that bank or broker charges per
 transaction? Absolute value.}

@@ -145,7 +145,7 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365,
 #' @param dividends Dataframe. Dividends. Structure: "Symbol", "Date", 
 #' "Div", "DivReal"
 #' @param transactions Dataframe. Transactions. Structure: "ID", "Inv", 
-#' "Symbol", "Date", "Quant", "Value", "Amount", "Description"
+#' "CODE", "Symbol", "Date", "Quant", "Value", "Amount", "Description"
 #' @param expenses Numeric. How much does that bank or broker charges per
 #' transaction? Absolute value.
 #' @export
@@ -156,7 +156,7 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
   
   dailys_structure <- c("Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted")
   dividends_structure <- c("Symbol", "Date", "Div", "DivReal")
-  trans_structure <- c("ID", "Inv", "Symbol", "Date", "Quant", "Value", "Amount", "Description")
+  trans_structure <- c("ID", "Inv", "CODE", "Symbol", "Date", "Quant", "Value", "Amount", "Description")
 
   if (colnames(dailys) != dailys_structure) {
     stop(paste("The structure of the 'dailys' table should be:",
@@ -174,11 +174,11 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
   }
 
   df <- dailys %>%
-    mutate(Date = as.Date(Date), Symbol = as.character(Symbol)) %>%
+    mutate(Date = as.Date(as.character(Date)), Symbol = as.character(Symbol)) %>%
     arrange(Date, Symbol) %>%
     # Add transactions daily data
     left_join(transactions %>%
-                mutate(Date = as.Date(Date), Symbol = as.character(Symbol)) %>%
+                mutate(Date = as.Date(as.character(Date)), Symbol = as.character(Symbol)) %>%
                 select(Symbol, Date, Quant, Value, Amount),
               by = c('Symbol','Date')) %>%
     mutate(Expenses = ifelse(is.na(Quant), 0, expenses)) %>%
@@ -187,7 +187,7 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
            Stocks = cumsum(Quant)) %>%
     # Add dividends daily data
     left_join(dividends %>%
-                mutate(Date = as.Date(Date), Symbol = as.character(Symbol)),
+                mutate(Date = as.Date(as.character(Date)), Symbol = as.character(Symbol)),
               by = c('Symbol','Date')) %>%
     mutate(DailyDiv = ifelse(is.na(DivReal), 0, Stocks * DivReal)) %>%
     # Some other cumulative calculations
@@ -202,8 +202,8 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
                                    100 - (100 * StartUSD / Close)),
            RelChangeUSDHist = Stocks * (Close - StartUSD) - sum(Expenses)) %>%
     arrange(desc(Date)) %>%
-    mutate_if(is.numeric, funs(round(., 2)))
-  df[is.na(df)] <- 0
+    mutate_if(is.numeric, funs(round(., 2))) %>% ungroup() %>%
+    mutate_at(vars(-contains("Date")), funs(replace(., is.na(.), 0)))
 
   return(df)
 
@@ -644,8 +644,13 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   rm(list = ls())
 }
 
-####################################################################
+######################### SHORT #####################################
 # df <- lares::get_stocks() # Get data from my Dropbox
 # dfp <- lares::stocks_objects(df) # Make calculations and plots
 # stocks_html(dfp) # Create HTML report
 # stocks_report() # Send report to my mail
+
+######################### LONG #####################################
+# df <- lares::get_stocks() # Get data from my Dropbox
+# hist <- lares::get_stocks_hist(symbols = df$portfolio$Symbol, from = df$portfolio$StartDate)
+# daily <- lares::stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = df$transactions)
