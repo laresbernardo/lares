@@ -4,8 +4,9 @@
 #' This function lets me download my personal Excel with my Portfolio data
 #' 
 #' @param filename Characeter. Import a local Excel file
+#' @param token_dir Character. Where is my personal token for Dropbox connection?
 #' @export
-get_stocks <- function(filename = NA) {
+get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Documentos/Docs/Data") {
   
   require(openxlsx)
   
@@ -24,24 +25,21 @@ get_stocks <- function(filename = NA) {
       stop("Error: that file doesn't exist or it's not in your working directory!")
     }
   } else {
-    # Personal use: downloads my file from Dropbox
+    require(rdrop2)
     valid <- Sys.info()
-    if (valid[["user"]] %in% c("bernardo", "rstudio")) {
-      require(rdrop2)
-      token_dir <- "~/Dropbox (Personal)/Documentos/Docs/Data"
-      load(paste0(token_dir, "/token_pers.rds"))
-      x <- drop_search("Portfolio LC.xlsx", dtoken = token)
-      file <- "temp.xlsx"
-      invisible(
-        drop_download(x$matches[[1]]$metadata$path_lower,
-                      local_path = file,
-                      overwrite = TRUE,
-                      dtoken = token))
-      results <- processFile(file)
-      file.remove(file)
-    }
+    token_dir <- token_dir
+    load(paste0(token_dir, "/token_pers.rds"))
+    x <- drop_search("Portfolio LC.xlsx", dtoken = token)
+    file <- "temp.xlsx"
+    invisible(
+      drop_download(x$matches[[1]]$metadata$path_lower,
+                    local_path = file,
+                    overwrite = TRUE,
+                    dtoken = token))
+    results <- processFile(file)
+    file.remove(file)
   }
-  message("Imported succesfully!")
+  message(paste0(toupper(valid[["login"]]),": file imported succesfully!"))
   return(results)   
 }
 
