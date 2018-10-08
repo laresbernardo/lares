@@ -1,5 +1,7 @@
 # library(lares)
 
+[![saythanks](https://img.shields.io/badge/say-thanks-1EAEDB.svg)](https://saythanks.io/to/laresbernardo)
+
 This is my personal library used to automate and speed my everyday work on **Analysis and Machine Learning** tasks. You are most welcome to install, use, and comment on any of its code and functionalities. Feel free to contact me and/or add me on [Linkedin](https://www.linkedin.com/in/laresbernardo/)!
 
 ## Getting Started
