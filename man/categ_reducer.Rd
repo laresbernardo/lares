@@ -4,11 +4,13 @@
 \alias{categ_reducer}
 \title{Reduce categorical values}
 \usage{
-categ_reducer(vector, nmin = 0, pmin = 0, pcummax = 100, top = NA,
+categ_reducer(df, ..., nmin = 0, pmin = 0, pcummax = 100, top = NA,
   other_label = "other")
 }
 \arguments{
-\item{vector}{Categorical Vector}
+\item{df}{Categorical Vector}
+
+\item{...}{Variables. Which variable do you wish to reduce?}
 
 \item{nmin}{Integer. Number of minimum times a value is repeated}
 
@@ -23,5 +25,6 @@ repeated values}
 the filtered values with?}
 }
 \description{
-This function lets the user reduce categorical values in a vector
+This function lets the user reduce categorical values in a vector. 
+It is tidyverse friendly for use on pipelines
 }

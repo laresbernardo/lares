@@ -65,9 +65,11 @@ categoryCounter <- function (df) {
 ####################################################################
 #' Reduce categorical values
 #' 
-#' This function lets the user reduce categorical values in a vector
+#' This function lets the user reduce categorical values in a vector. 
+#' It is tidyverse friendly for use on pipelines
 #' 
-#' @param vector Categorical Vector
+#' @param df Categorical Vector
+#' @param ... Variables. Which variable do you wish to reduce?
 #' @param nmin Integer. Number of minimum times a value is repeated
 #' @param pmin Numerical. Porcentage of minimum times a value is repeated
 #' @param pcummax Numerical. Top cumulative porcentage of most 
@@ -76,22 +78,33 @@ categoryCounter <- function (df) {
 #' @param other_label Character. Which value do you wish to replace 
 #' the filtered values with?
 #' @export
-categ_reducer <- function(vector, 
+categ_reducer <- function(df, ...,
                           nmin = 0, 
                           pmin = 0, 
                           pcummax = 100, 
                           top = NA, 
                           other_label = "other") {
+  
   require(dplyr)
-  df <- data.frame(name = vector) %>% lares::freqs(., name)
+  
+  dff <- df %>%
+    group_by_(.dots = lazyeval::lazy_dots(...)) %>%
+    tally() %>% arrange(desc(n)) %>%
+    mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
+  
   if (!is.na(top)) {
-    top <- df %>% slice(1:top)
+    tops <- dff %>% slice(1:top)
   } else {
-    top <- df %>% filter(n >= nmin & p >= pmin & p <= pcummax) 
+    tops <- dff %>% filter(n >= nmin & p >= pmin & p <= pcummax) 
   }
-  vector <- ifelse(vector %in% top$name, 
-                   as.character(vector), other_label)
-  return(vector)
+  
+  name <- as.name(names(dff[,1]))
+  vector <- df[[name]]
+  output <- ifelse(vector %in% unlist(tops[,1]), as.character(vector), other_label)
+  df[[name]] <- output
+  
+  return(output)
+  
 }
 
 
