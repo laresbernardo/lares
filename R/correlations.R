@@ -17,7 +17,7 @@ corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA) {
   
   library(dplyr)
   
-  d <- lares::numerical(df, logs = logs)
+  d <- lares::numericalonly(df, logs = logs)
   
   # Correlations
   rs <- cor(d, use = "pairwise.complete.obs", method = method)
