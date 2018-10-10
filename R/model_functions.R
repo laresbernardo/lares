@@ -306,11 +306,14 @@ export_results <- function(results,
   require(h2o)
   options(warn=-1)
   
+  # We create a directory to save all our results
+  subdirname <- paste0(round(100*results$auc_test, 2), "-", results$model_name)  
   if (!is.na(subdir)) {
-    subdir <- paste0(subdir, "/", round(100*results$auc_test, 2), "-", results$model_name)
+    subdir <- paste0(subdir, "/", subdirname)
   } else {
-    subdir <- paste0(round(100*results$auc_test, 2), "-", results$model_name)  
+    subdir <- subdirname
   }
+  dir.create(subdir)
   
   # Export Results List
   if (rds == TRUE) {
