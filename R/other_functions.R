@@ -548,3 +548,23 @@ pass <- function(df, fun) {
   fun(df)
   return(df) 
 }
+
+
+####################################################################
+#' What's my IP
+#' 
+#' This function lets the user find his IP quickly
+#' 
+#' @export
+myip <- function(){
+  
+  if (!"ipify" %in% installed.packages()) {
+    devtools::install_github("gregce/ipify")
+  }
+  
+  require(devtools)
+  require(ipify)
+  
+  myip <- ipify::get_ip()
+  return(myip)
+}
