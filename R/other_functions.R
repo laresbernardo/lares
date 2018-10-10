@@ -100,7 +100,9 @@ categ_reducer <- function(df, ...,
   
   name <- as.name(names(dff[,1]))
   vector <- df[[name]]
-  output <- ifelse(vector %in% unlist(tops[,1]), as.character(vector), other_label)
+  output <- ifelse(vector %in% unlist(tops[,1]), 
+                   as.factor(as.character(vector)), 
+                   other_label)
   df[[name]] <- output
   
   return(df)
