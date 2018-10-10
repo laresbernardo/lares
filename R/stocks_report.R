@@ -26,7 +26,6 @@ get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Document
     }
   } else {
     require(rdrop2)
-    valid <- Sys.info()
     token_dir <- token_dir
     load(paste0(token_dir, "/token_pers.rds"))
     x <- drop_search("Portfolio LC.xlsx", dtoken = token)
@@ -39,7 +38,7 @@ get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Document
     results <- processFile(file)
     file.remove(file)
   }
-  message(paste0(toupper(valid[["login"]]),": file imported succesfully!"))
+  message("File imported succesfully!")
   return(results)   
 }
 
