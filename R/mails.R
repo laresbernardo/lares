@@ -27,9 +27,13 @@ mailSend = function(body,
                user.name = credentials$uid,
                passwd = credentials$pwd,
                ssl = TRUE, tls = TRUE)
-  send.mail(from = from, to = to,  subject = subject,
+  
+  invisible(
+    send.mail(from = from, to = to,  subject = subject,
             body = paste(body),
             html = TRUE, inline = TRUE, smtp = smtp,
             authenticate = TRUE, send = TRUE,
             attach.files = attachment)
+  )
+  message(paste("Email sent to", to))
 }
