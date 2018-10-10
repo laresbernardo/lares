@@ -646,7 +646,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
 # df <- lares::get_stocks() # Get data from my Dropbox
 # dfp <- lares::stocks_objects(df) # Make calculations and plots
 # stocks_html(dfp) # Create HTML report
-# stocks_report() # Send report to my mail
+# stocks_report() # Create and send report to my mail
 
 ######################### LONG #####################################
 # df <- lares::get_stocks() # Get data from my Dropbox
