@@ -5,7 +5,8 @@
 \title{Cuts by quantiles for score plot}
 \usage{
 mplot_cuts(score, splits = 10, model_name = NA, subtitle = NA,
-  save = FALSE, subdir = NA, file_name = "viz_ncuts.png")
+  table = FALSE, save = FALSE, subdir = NA,
+  file_name = "viz_ncuts.png")
 }
 \arguments{
 \item{score}{Vector. Predicted value or model's result}
@@ -15,6 +16,8 @@ mplot_cuts(score, splits = 10, model_name = NA, subtitle = NA,
 \item{model_name}{Character. Model's name}
 
 \item{subtitle}{Character. Subtitle to show in plot}
+
+\item{table}{Boolean. Do you wish to return a table with results?}
 
 \item{save}{Boolean. Save output plot into working directory}
 

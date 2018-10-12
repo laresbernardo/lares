@@ -57,7 +57,9 @@ plot_distr <- function(data, target, values,
   }
   
   if (length(unique(value)) > top & (is.character(value) | is.factor(value))) {
-    value <- lares::categ_reducer(data.frame(value), value, top = min(rbind(top, breaks)))
+    value <- as.vector(
+      lares::categ_reducer(data.frame(value), value, top = min(rbind(top, breaks)))
+    )
   }
   
   df <- data.frame(targets = targets, value = value)
@@ -81,21 +83,24 @@ plot_distr <- function(data, target, values,
   
   distr <- df %>% group_by(targets) %>% 
     tally() %>% arrange(n) %>% 
-    mutate(p = round(100*n/sum(n),2), 
-           pcum = cumsum(p))
+    mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
   
+  # Counter plot
   count <- ggplot(freqs, aes(x=reorder(as.character(value), order), y=n, 
                              fill=tolower(as.character(targets)), 
                              label=n, ymax=max(n)*1.1)) + 
     geom_col(position = "dodge") +
-    geom_text(check_overlap = TRUE, position = position_dodge(0.9), size=3, vjust = -0.15) +
+    geom_text(check_overlap = TRUE, 
+              position = position_dodge(0.9), 
+              size=3, vjust = -0.15) +
     labs(x = "", y = "Counter") + theme_minimal() + 
     theme(legend.position="top", legend.title=element_blank())
-  
-  if (length(unique(value)) >= 10) {
+  # Give an angle to labels when more than...
+  if (length(unique(value)) >= 7) {
     count <- count + theme(axis.text.x = element_text(angle = 45, hjust=1))
   }
   
+  # Percentages plot
   prop <- ggplot(freqs, 
                  aes(x = value, 
                      y = as.numeric(p/100),
@@ -110,11 +115,13 @@ plot_distr <- function(data, target, values,
     labs(x = "Proportions", y = "") + 
     labs(caption = paste("Variables:", targets_name, "vs.", variable_name))
   
+  # Show limit caption when more values than top
   if (length(unique(value)) > top) {
     showed <- max(c(length(unique(value)), top))
     count <- count + labs(caption = paste("Showing only the top", showed, "frequent values"))
   }
   
+  # Custom colours if wanted...
   if (custom_colours == TRUE) {
     count <- count + gg_fill_customs()
     prop <- prop + gg_fill_customs()
@@ -123,25 +130,23 @@ plot_distr <- function(data, target, values,
     prop <- prop + scale_fill_brewer(palette = "Blues")
   }
   
+  # Print table with results?
   if (print == TRUE) {
     print(freqs %>% select(-order))
-  }
-  
-  if (save == TRUE) {
-    
-    file_name <- paste0("viz_distr_", targets_name, ".vs.", variable_name, ".png")
-    
-    if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir))
-      file_name <- paste(subdir, file_name, sep="/")
-    }
-    
-    png(file_name, height = 1500, width = 2000, res = 300)
-    grid.arrange(count, prop, ncol = 1, nrow = 2)
-    dev.off()
   }
   
   # Plot the result
   return(grid.arrange(count, prop, ncol = 1, nrow = 2))
   
+  # Export and save plot
+  if (save == TRUE) {
+    file_name <- paste0("viz_distr_", targets_name, ".vs.", variable_name, ".png")
+    if (!is.na(subdir)) {
+      dir.create(file.path(getwd(), subdir))
+      file_name <- paste(subdir, file_name, sep="/")
+    }
+    png(file_name, height = 1500, width = 2000, res = 300)
+    grid.arrange(count, prop, ncol = 1, nrow = 2)
+    dev.off()
+  }
 }

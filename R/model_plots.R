@@ -303,6 +303,7 @@ mplot_roc <- function(tag,
 #' @param splits Integer. Numer of separations to plot
 #' @param model_name Character. Model's name
 #' @param subtitle Character. Subtitle to show in plot
+#' @param table Boolean. Do you wish to return a table with results?
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
@@ -311,6 +312,7 @@ mplot_cuts <- function(score,
                        splits = 10, 
                        model_name = NA, 
                        subtitle = NA, 
+                       table = FALSE,
                        save = FALSE, 
                        subdir = NA, 
                        file_name = "viz_ncuts.png") {
@@ -324,11 +326,11 @@ mplot_cuts <- function(score,
   deciles <- quantile(score, 
                       probs = seq((1/splits), 1, length = splits), 
                       names = TRUE)
-  deciles <- data.frame(cbind(Deciles=row.names(as.data.frame(deciles)),
-                              Threshold=as.data.frame(deciles)))
+  deciles <- data.frame(cbind(range = row.names(as.data.frame(deciles)),
+                              cuts = as.data.frame(deciles)))
   
   p <- ggplot(deciles, 
-              aes(x = reorder(Deciles, deciles), y = deciles * 100, 
+              aes(x = reorder(range, deciles), y = deciles * 100, 
                   label = round(100 * deciles, 1))) + 
     geom_col(fill="deepskyblue") + 
     xlab('') + theme_minimal() + ylab('Score') + 
@@ -352,8 +354,11 @@ mplot_cuts <- function(score,
     p <- p + ggsave(file_name, width = 6, height = 6)
   }
   
-  return(p)
-  
+  if(table == TRUE){
+    return(deciles)
+  } else {
+    return(p) 
+  }
 }
 
 

@@ -87,6 +87,11 @@ categ_reducer <- function(df, ...,
   
   require(dplyr)
   
+  # dots <- function(...) {match.call(expand.dots = FALSE)}
+  # if(dots == 1) {
+  #   df <- data.frame(x=x)
+  # }
+  
   dff <- df %>%
     group_by_(.dots = lazyeval::lazy_dots(...)) %>%
     tally() %>% arrange(desc(n)) %>%
