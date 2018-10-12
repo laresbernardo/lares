@@ -327,7 +327,7 @@ mplot_cuts <- function(score,
                       probs = seq((1/splits), 1, length = splits), 
                       names = TRUE)
   deciles <- data.frame(cbind(range = row.names(as.data.frame(deciles)),
-                              cuts = as.data.frame(deciles)))
+                              cuts = as.data.frame(cuts=deciles)))
   
   p <- ggplot(deciles, 
               aes(x = reorder(range, deciles), y = deciles * 100, 
