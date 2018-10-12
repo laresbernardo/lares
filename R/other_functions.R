@@ -556,12 +556,11 @@ dateformat <- function(dates, metric = FALSE, origin = '1900-01-01') {
 #' Pass Through a dplyr's Pipeline
 #' 
 #' This function lets the user print, save or do something inside a
-#' pipeline without affecting the output (or pipeline).
-#' 
+#' pipeline without affecting the output or pipeline.
 #' 
 #' @param df Dataframe
 #' @param fun Function. What function do you wish to run? For example:
-#' pass(. %>% ncol %>% print)
+#' pass(. \%>\% ncol \%>\% print)
 #' @export
 pass <- function(df, fun) { 
   fun(df)

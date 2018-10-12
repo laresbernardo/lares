@@ -10,9 +10,9 @@ pass(df, fun)
 \item{df}{Dataframe}
 
 \item{fun}{Function. What function do you wish to run? For example:
-pass(. %>% ncol %>% print)}
+pass(. \%>\% ncol \%>\% print)}
 }
 \description{
 This function lets the user print, save or do something inside a
-pipeline without affecting the output (or pipeline).
+pipeline without affecting the output or pipeline.
 }

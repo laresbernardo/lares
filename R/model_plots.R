@@ -326,12 +326,13 @@ mplot_cuts <- function(score,
   deciles <- quantile(score, 
                       probs = seq((1/splits), 1, length = splits), 
                       names = TRUE)
-  deciles <- data.frame(cbind(range = row.names(as.data.frame(deciles)),
-                              cuts = as.data.frame(cuts=deciles)))
+  deciles <- data.frame(range = row.names(as.data.frame(deciles)),
+                        cuts = as.vector(signif(deciles, 6)))
+  rownames(deciles) <- NULL
   
   p <- ggplot(deciles, 
-              aes(x = reorder(range, deciles), y = deciles * 100, 
-                  label = round(100 * deciles, 1))) + 
+              aes(x = reorder(range, cuts), y = cuts * 100, 
+                  label = round(100 * cuts, 1))) + 
     geom_col(fill="deepskyblue") + 
     xlab('') + theme_minimal() + ylab('Score') + 
     geom_text(vjust = 1.5, size = 3, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
