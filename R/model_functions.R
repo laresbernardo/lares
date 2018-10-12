@@ -292,13 +292,15 @@ h2o_selectmodel <- function(results, which_model = 1) {
 #' @param results Object. h2o_automl output
 #' @param txt Boolean. Do you wish to export the txt results?
 #' @param rds Boolean. Do you wish to export the RDS results?
-#' @param pojo Boolean. Do you wish to export the POJO results?
-#' @param mojo Boolean. Do you wish to export the MOJO results?
+#' @param binary Boolean. Do you wish to export the Binary model?
+#' @param pojo Boolean. Do you wish to export the POJO model?
+#' @param mojo Boolean. Do you wish to export the MOJO model?
 #' @param subdir Character. In which directory do you wish to save the results?
 #' @export
 export_results <- function(results, 
                            txt = TRUE, 
                            rds = TRUE, 
+                           binary = TRUE,
                            pojo = TRUE, 
                            mojo = TRUE, 
                            subdir = NA) {
@@ -326,6 +328,11 @@ export_results <- function(results,
   }
   if (mojo == TRUE) {
     h2o.download_mojo(results$model, path=subdir)  
+  }
+  
+  # Export Binary
+  if (mojo == TRUE) {
+    h2o.saveModel(results$model, path=subdir, force=TRUE)
   }
   
   if (txt == TRUE) {

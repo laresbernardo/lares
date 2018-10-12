@@ -4,8 +4,8 @@
 \alias{export_results}
 \title{Export h2o_automl's Results}
 \usage{
-export_results(results, txt = TRUE, rds = TRUE, pojo = TRUE,
-  mojo = TRUE, subdir = NA)
+export_results(results, txt = TRUE, rds = TRUE, binary = TRUE,
+  pojo = TRUE, mojo = TRUE, subdir = NA)
 }
 \arguments{
 \item{results}{Object. h2o_automl output}
@@ -14,9 +14,11 @@ export_results(results, txt = TRUE, rds = TRUE, pojo = TRUE,
 
 \item{rds}{Boolean. Do you wish to export the RDS results?}
 
-\item{pojo}{Boolean. Do you wish to export the POJO results?}
+\item{binary}{Boolean. Do you wish to export the Binary model?}
 
-\item{mojo}{Boolean. Do you wish to export the MOJO results?}
+\item{pojo}{Boolean. Do you wish to export the POJO model?}
+
+\item{mojo}{Boolean. Do you wish to export the MOJO model?}
 
 \item{subdir}{Character. In which directory do you wish to save the results?}
 }
