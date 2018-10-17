@@ -81,6 +81,8 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE,
     d <- d[1:as.integer(top), ]
   }
   
+  d <- d[complete.cases(d), ]
+  
   if (plot == TRUE) {
     plot <- d %>% 
       mutate(pos = ifelse(corr > 0, TRUE, FALSE)) %>%
