@@ -322,6 +322,7 @@ mplot_cuts <- function(score,
                        file_name = "viz_ncuts.png") {
   
   require(ggplot2)
+  options(warn=-1)
   
   if (splits > 25) {
     stop("You should try with less splits!")
