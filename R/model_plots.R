@@ -32,8 +32,12 @@ mplot_density <- function(tag,
     out <- data.frame(tag = as.character(tag),
                       score = as.numeric(score))
     
+    if (max(out$score) < 1) {
+      out$score <- score * 100
+    }
+    
     p1 <- ggplot(out) + theme_minimal() +
-      geom_density(aes(x = 100 * score, group = tag, fill = as.character(tag)), 
+      geom_density(aes(x = score, group = tag, fill = as.character(tag)), 
                    alpha = 0.6, adjust = 0.25) + 
       guides(fill = guide_legend(title="Tag")) + 
       xlim(0, 100) + 
@@ -41,14 +45,14 @@ mplot_density <- function(tag,
            y = "Density by tag", x = "Score")
     
     p2 <- ggplot(out) + theme_minimal() + 
-      geom_density(aes(x = 100 * score), 
+      geom_density(aes(x = score), 
                    alpha = 0.9, adjust = 0.25, fill = "deepskyblue") + 
       labs(x = "", y = "Density")
     
     p3 <- ggplot(out) + theme_minimal() + 
-      geom_line(aes(x = score * 100, y = 100 * (1 - ..y..), color = as.character(tag)), 
+      geom_line(aes(x = score, y = (1 - ..y..), color = as.character(tag)), 
                 stat = 'ecdf', size = 1) +
-      geom_line(aes(x = score * 100, y = 100 * (1 - ..y..)), 
+      geom_line(aes(x = score, y = (1 - ..y..)), 
                 stat = 'ecdf', size = 0.5, colour = "black", linetype="dotted") +
       ylab('Cumulative') + xlab('') + guides(color=FALSE)
     
