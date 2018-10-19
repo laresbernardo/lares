@@ -557,14 +557,13 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
 #' @param results List. Containing the following objects: portf_daily_change, 
 #' portf_stocks_change, portf_stocks_histchange, portf_distribution & portfolio_perf.
 #' You can use simply use the lares::stocks_objects(data) if you didn't mess with the order!
-#' @param dir Character. Directory for report's output
 #' @export
-stocks_html <- function(results, dir = NA) {
+stocks_html <- function(results) {
   
   suppressMessages(require(rmarkdown))
   suppressMessages(require(dplyr))
   
-  dir <- ifelse(is.na(dir), getwd(), dir)
+  dir <- getwd()
   
   # Can be more accurate with names but works for me!
   params <- list(portf_daily_change = results[[1]],

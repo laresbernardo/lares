@@ -8,41 +8,37 @@ Description: Personal Library for Analytics, Data Mining and Machine Learning Ta
 License: Private
 Encoding: UTF-8
 LazyData: true
-Imports: httr,
-    devtools,
-    jsonlite,
-    rlist,
-    dplyr,
-    ggplot2,
-    gridExtra,
-    reshape2,
-    googlesheets,
-    googleAuthR,
-    googleAnalyticsR,
-    jpeg,
-    png,
+Imports: 
     config,
-    mailR,
-    h2o,
-    pROC,
-    scales,
-    lubridate,
-    stringr,
-    rvest,
-    RPostgreSQL,
-    rdrop2,
-    openxlsx,
-    plyr,
-    SnowballC,
-    wordcloud,
-    RColorBrewer,
-    rtweet,
+    devtools,
     forecast,
+    googleAnalyticsR,
+    googleAuthR,
+    googlesheets,
+    gridExtra,
+    h2o,
     kableExtra,
-    rmarkdown
+    knitr,
+    mailR,
+    openxlsx,
+    png,
+    pROC,
+    RColorBrewer,
+    rdrop2,
+    reshape2,
+    rlist,
+    rmarkdown,
+    RPostgreSQL,
+    rtweet,
+    scales,
+    SnowballC,
+    tidyverse,
+    wordcloud
+Suggests:
+    shiny,
+    shinydashboard
 Remotes: ropenscilabs/opencv
 URL: https://github.com/laresbernardo/lares
 BugReports: https://github.com/laresbernardo/lares/issues
 RoxygenNote: 6.1.0
-Suggests: knitr
 VignetteBuilder: knitr
