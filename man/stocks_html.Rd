@@ -4,14 +4,12 @@
 \alias{stocks_html}
 \title{Portfolio's Full Report in HTML}
 \usage{
-stocks_html(results, dir = NA)
+stocks_html(results)
 }
 \arguments{
 \item{results}{List. Containing the following objects: portf_daily_change, 
 portf_stocks_change, portf_stocks_histchange, portf_distribution & portfolio_perf.
 You can use simply use the lares::stocks_objects(data) if you didn't mess with the order!}
-
-\item{dir}{Character. Directory for report's output}
 }
 \description{
 This function lets the user create his portfolio's full report in HTML using

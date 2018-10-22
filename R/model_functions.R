@@ -460,3 +460,63 @@ errors <- function(tag, score){
     mape = lares::mape(tag, score)
   )
 }
+
+####################################################################
+#' H2O Predict using MOJO file
+#' 
+#' This function lets the user predict using the h2o .zip file 
+#' containing the MOJO files. Note that it works with the files 
+#' generated when using the function lares::export_results()
+#' 
+#' @param df Dataframe. Data to insert into the model
+#' @param score model_path. 
+#' @export
+h2o_predict_MOJO <- function(df, model_path, sample = NA){
+  
+  require(jsonlite)
+  require(h2o)
+  
+  zip <- normalizePath(paste0(model_path, "/", gsub(".*-","",model_path), ".zip"))
+  
+  if(sample > 0) {
+    json <- toJSON(df[1:sample, ])
+  } else {
+    json <- toJSON(df)
+  }
+  
+  score_MOJO <- as.vector(unlist(data.frame(h2o.predict_json(zip, json)[,3])[2,]))
+  
+  return(score_MOJO)
+  
+}
+
+
+####################################################################
+#' H2O Predict using Binary file
+#' 
+#' This function lets the user predict using the h2o binary file.
+#' Note that it works with the files generated when using the 
+#' function lares::export_results(). Recommendation: use the 
+#' h2o_predict_MOJO() function when possible - it let's you change
+#' h2o's version without problem.
+#' 
+#' @param df Dataframe. Data to insert into the model
+#' @param score model_path. 
+#' @export
+h2o_predict_binary <- function(df, model_path, sample = NA){
+  
+  require(jsonlite)
+  require(h2o)
+  
+  binary <- normalizePath(paste(model_path, gsub(".*-", "", model_path), sep="/"))
+  model <- h2o.loadModel(binary)
+  
+  if(sample > 0) {
+    df <- df[1:sample, ]
+  }
+  
+  score_binary <- as.vector(predict(model, as.h2o(df))[,3])
+  
+  return(score_binary)
+  
+}
