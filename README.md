@@ -4,7 +4,6 @@
 
 This is my personal library used to automate and speed my everyday work on **Analysis and Machine Learning** tasks. You are most welcome to install, use, and comment on any of its code and functionalities. Feel free to contact me and/or add me on [Linkedin](https://www.linkedin.com/in/laresbernardo/)!
 
------
 ## Install the package
 
 ```devtools::install_github("laresbernardo/lares")```
@@ -17,7 +16,6 @@ lares::updateLares() # From Github repository (Bitbucket discontinued)
 lares::updateLares(local=T) # Personal and local files, not necessarily deployed
 ```
 
------
 ## See the library in action!
 - DataScience+: [Visualizations for Classification Models Results](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all)
 
@@ -27,8 +25,7 @@ lares::updateLares(local=T) # Personal and local files, not necessarily deployed
 
 - DataScience+: [Portfolio's Performance and Report](https://datascienceplus.com/visualize-your-portfolios-performance-and-generate-a-nice-report-with-r)
 
------
 ## Getting help
 
 If you encounter a clear bug, please share with us a minimal reproducible example
-on [Github](https://github.com/laresbernardo/lares/issues) and I'll take care of it. For questions and other matters, you can [contact me](<laresbernardo@gmail.com>) directly.
+on [Github](https://github.com/laresbernardo/lares/issues) and I'll take care of it. For questions and other matters, you can [email me](mailto:webmaster@example.com "email me") directly.
