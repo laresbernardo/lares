@@ -469,7 +469,8 @@ errors <- function(tag, score){
 #' generated when using the function lares::export_results()
 #' 
 #' @param df Dataframe. Data to insert into the model
-#' @param score model_path. 
+#' @param model_path Character. Relative model_path directory
+#' @param sample Integer. How many rows should the function predict?
 #' @export
 h2o_predict_MOJO <- function(df, model_path, sample = NA){
   
@@ -478,7 +479,7 @@ h2o_predict_MOJO <- function(df, model_path, sample = NA){
   
   zip <- paste0(model_path, "/", gsub(".*-","",model_path), ".zip")
   
-  if(sample > 0) {
+  if(!is.na(sample)) {
     json <- toJSON(df[1:sample, ])
   } else {
     json <- toJSON(df)
@@ -501,7 +502,8 @@ h2o_predict_MOJO <- function(df, model_path, sample = NA){
 #' h2o's version without problem.
 #' 
 #' @param df Dataframe. Data to insert into the model
-#' @param score model_path. 
+#' @param model_path Character. Relative model_path directory
+#' @param sample Integer. How many rows should the function predict?
 #' @export
 h2o_predict_binary <- function(df, model_path, sample = NA){
   
@@ -511,7 +513,7 @@ h2o_predict_binary <- function(df, model_path, sample = NA){
   binary <- paste(model_path, gsub(".*-", "", model_path), sep="/")
   model <- h2o.loadModel(binary)
   
-  if(sample > 0) {
+  if(!is.na(sample)) {
     df <- df[1:sample, ]
   }
   

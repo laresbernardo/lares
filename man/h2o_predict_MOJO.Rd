@@ -9,7 +9,9 @@ h2o_predict_MOJO(df, model_path, sample = NA)
 \arguments{
 \item{df}{Dataframe. Data to insert into the model}
 
-\item{score}{model_path.}
+\item{model_path}{Character. Relative model_path directory}
+
+\item{sample}{Integer. How many rows should the function predict?}
 }
 \description{
 This function lets the user predict using the h2o .zip file 
