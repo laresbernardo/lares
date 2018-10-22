@@ -476,7 +476,7 @@ h2o_predict_MOJO <- function(df, model_path, sample = NA){
   require(jsonlite)
   require(h2o)
   
-  zip <- normalizePath(paste0(model_path, "/", gsub(".*-","",model_path), ".zip"))
+  zip <- paste0(model_path, "/", gsub(".*-","",model_path), ".zip")
   
   if(sample > 0) {
     json <- toJSON(df[1:sample, ])
@@ -508,7 +508,7 @@ h2o_predict_binary <- function(df, model_path, sample = NA){
   require(jsonlite)
   require(h2o)
   
-  binary <- normalizePath(paste(model_path, gsub(".*-", "", model_path), sep="/"))
+  binary <- paste(model_path, gsub(".*-", "", model_path), sep="/")
   model <- h2o.loadModel(binary)
   
   if(sample > 0) {
