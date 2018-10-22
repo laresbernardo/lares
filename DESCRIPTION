@@ -21,7 +21,6 @@ Imports:
     knitr,
     mailR,
     openxlsx,
-    png,
     pROC,
     RColorBrewer,
     rdrop2,
@@ -35,8 +34,15 @@ Imports:
     tidyverse,
     wordcloud
 Suggests:
+    anytime,
+    DALEX,
+    funModeling,
+    ipify,
+    opencv,
+    png,
     shiny,
-    shinydashboard
+    shinydashboard,
+    VIM
 Remotes: ropenscilabs/opencv
 URL: https://github.com/laresbernardo/lares
 BugReports: https://github.com/laresbernardo/lares/issues
