@@ -523,3 +523,42 @@ h2o_predict_binary <- function(df, model_path, sample = NA){
   return(score_binary)
   
 }
+
+
+####################################################################
+#' H2O Predict using API Service
+#' 
+#' This function lets the user get the score from an API service
+#' 
+#' @param df Dataframe/Vector. Data to insert into the model
+#' @param api Character. API's URL
+#' @export
+h2o_predict_API <- function(df, api) {
+  
+  require(httr)
+  require(dplyr)
+  require(lares)
+  
+  post <- function(df, api) {
+    df <- df %>%
+      removenacols() %>% 
+      select(-contains("tag"))
+    x <- POST(
+      api, 
+      add_headers('Content-Type'='application/json'), 
+      body = as.list(df), 
+      encode = "json", 
+      verbose())
+    return(content(x)$probabilityToOne)
+  }
+  
+  batch <- c()
+  for (i in 1:nrow(df)) {
+    x <- df[i,]
+    score <- post(x, api)
+    batch <- rbind(batch, score)
+  }
+  
+  return(as.vector(batch))
+  
+}
