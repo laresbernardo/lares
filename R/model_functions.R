@@ -124,7 +124,7 @@ h2o_automl <- function(df,
   start <- Sys.time()
   message(paste(start,"| Started process..."))
   
-  df <- data.frame(df) %>% filter(!is.na(tag))
+  df <- data.frame(df) %>% filter(!is.na(tag)) %>% mutate_if(is.character, as.factor)
   type <- ifelse(length(unique(df$tag)) <= as.integer(thresh), "Classifier", "Regression")
   
   ####### Validations to proceed #######
@@ -509,6 +509,7 @@ h2o_predict_binary <- function(df, model_path, sample = NA){
   
   require(jsonlite)
   require(h2o)
+  options(warn=-1)
   
   binary <- paste(model_path, gsub(".*-", "", model_path), sep="/")
   model <- h2o.loadModel(binary)
