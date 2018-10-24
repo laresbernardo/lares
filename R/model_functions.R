@@ -339,6 +339,7 @@ export_results <- function(results,
     tags <- c(as.character(results$datasets$test$tag), as.character(results$datasets$train$tag))
     tags_test <- results$datasets$test
     tags_train <- results$datasets$train
+    random_sample <- sample(1:nrow(results$scores), 10)
     
     results_txt <- list(
       "Project" = results$project,
@@ -355,9 +356,9 @@ export_results <- function(results,
       "Variable Importance" = results$importance,
       "Model Results" = results$model,
       "Models Leaderboard" = results$leaderboard,
-      "10 Scoring examples" = cbind(real = results$scores$tag[1:10],
-                                    score = results$scores$score[1:10], 
-                                    results$datasets$test[1:10, names(results$datasets$test) != "tag"])
+      "10 Scoring examples" = cbind(real = results$scores$tag[random_sample],
+                                    score = results$scores$score[random_sample], 
+                                    results$datasets$test[random_sample, names(results$datasets$test) != "tag"])
     )
     capture.output(results_txt, file = paste0(subdir, "/results.txt"))
   }
