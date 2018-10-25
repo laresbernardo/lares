@@ -142,7 +142,7 @@ plot_distr <- function(data, target, values,
   if (save == TRUE) {
     file_name <- paste0("viz_distr_", targets_name, ".vs.", variable_name, ".png")
     if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir))
+      dir.create(file.path(getwd(), subdir), recursive = T)
       file_name <- paste(subdir, file_name, sep="/")
     }
     png(file_name, height = 1500, width = 2000, res = 300)

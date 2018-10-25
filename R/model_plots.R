@@ -65,7 +65,7 @@ mplot_density <- function(tag,
     }
     
     if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir))
+      dir.create(file.path(getwd(), subdir), recursive = T)
       file_name <- paste(subdir, file_name, sep="/")
     }
     
@@ -117,7 +117,7 @@ mplot_density <- function(tag,
     }  
     
     if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir))
+      dir.create(file.path(getwd(), subdir), recursive = T)
       file_name <- paste(subdir, file_name, sep="/")
     }
     
@@ -201,7 +201,7 @@ mplot_importance <- function(var,
   }  
   
   if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir))
+    dir.create(file.path(getwd(), subdir), recursive = T)
     file_name <- paste(subdir, file_name, sep="/")
   }
   
@@ -285,7 +285,7 @@ mplot_roc <- function(tag,
   }
   
   if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir))
+    dir.create(file.path(getwd(), subdir), recursive = T)
     file_name <- paste(subdir, file_name, sep="/")
   }
   
@@ -352,7 +352,7 @@ mplot_cuts <- function(score,
   }
   
   if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir))
+    dir.create(file.path(getwd(), subdir), recursive = T)
     file_name <- paste(subdir, file_name, sep="/")
   }
   
@@ -457,7 +457,7 @@ mplot_cuts_error <- function(tag,
   }
   
   if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir))
+    dir.create(file.path(getwd(), subdir), recursive = T)
     file_name <- paste(subdir, file_name, sep="/")
   }
   
@@ -570,7 +570,7 @@ mplot_splits <- function(tag,
   }
   
   if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir))
+    dir.create(file.path(getwd(), subdir), recursive = T)
     file_name <- paste(subdir, file_name, sep="/")
   }
   
@@ -652,7 +652,7 @@ mplot_metrics <- function(results,
   if (save == TRUE) {
     
     if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir))
+      dir.create(file.path(getwd(), subdir), recursive = T)
       file_name <- paste(subdir, file_name, sep="/")
     }
     
@@ -783,7 +783,7 @@ mplot_full <- function(tag,
     if(save == TRUE) {
       
       if (!is.na(subdir)) {
-        dir.create(file.path(getwd(), subdir))
+        dir.create(file.path(getwd(), subdir), recursive = T)
         file_name <- paste(subdir, file_name, sep="/")
       }
       
@@ -812,7 +812,7 @@ mplot_full <- function(tag,
     if(save == TRUE) {
       
       if (!is.na(subdir)) {
-        dir.create(file.path(getwd(), subdir))
+        dir.create(file.path(getwd(), subdir), recursive = T)
         file_name <- paste(subdir, file_name, sep="/")
       }
       

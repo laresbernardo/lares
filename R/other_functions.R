@@ -297,17 +297,26 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
   
   set.seed(seed)
   
-  df <- rename(df, tag = variable)
+  names(df)[names(df) == variable] <- 'tag'
   tags <- unique(df$tag)
   
-  if (length(unique(df$tag)) != 2) {
+  if (length(tags) != 2) {
     stop("You should use a variable with only 2 unique values!")
   } else {
-    message(paste("Resampled from:",lares::vector2text(table(df$tag), sep = " x ", quotes = F)))
-    ones <- df %>% filter(tag == tags[1])
-    zeros <- df %>% filter(tag == tags[2]) %>% 
-      sample_n(rate * nrow(ones))
+    message(paste("Resampled from:", lares::vector2text(table(df$tag), sep = " x ", quotes = F)))
+    
+    ones <- df %>% filter(tag %in% as.character(tags[1]))
+    zeros <- df %>% filter(tag %in% as.character(tags[2]))
+    
+    if (nrow(ones) <= nrow(zeros)) {
+      message(paste("Reducing size for:", tags[2]))
+      zeros <- sample_n(zeros, rate * nrow(ones)) 
+    } else {
+      message(paste("Reducing size for:", tags[1]))
+      ones <- sample_n(ones, rate * nrow(zeros)) 
+    }
     balanced <- rbind(ones, zeros)
+    
     message(paste("Into:",lares::vector2text(table(balanced$tag), sep = " x ", quotes = F)))
     balanced <- rename_at(balanced, vars("tag"), funs(paste0(variable)))
     return(balanced)
