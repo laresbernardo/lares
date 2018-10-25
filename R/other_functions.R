@@ -586,3 +586,32 @@ myip <- function(){
   myip <- ipify::get_ip()
   return(myip)
 }
+
+
+####################################################################
+#' Plot Result with Nothing to Plot
+#' 
+#' This function lets the user print a plot without plot, with a 
+#' customizable message. It is quite useful for Shiny renderPlot when
+#' using filters and no data is returned.
+#' 
+#' @param message Character. What message do you wish to show?
+#' @export
+noPlot <- function(message = "Nothing to show here!") {
+  require(ggplot2)
+  p <- ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 
+    geom_label() + theme_minimal() +
+    theme(axis.line=element_blank(),
+          axis.text.x=element_blank(),
+          axis.text.y=element_blank(),
+          axis.ticks=element_blank(),
+          axis.title.x=element_blank(),
+          axis.title.y=element_blank(),
+          legend.position="none",
+          panel.background=element_blank(),
+          panel.border=element_blank(),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          plot.background=element_blank())
+  return(p)
+}

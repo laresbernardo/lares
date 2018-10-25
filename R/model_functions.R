@@ -486,10 +486,14 @@ h2o_predict_MOJO <- function(df, model_path, sample = NA){
     json <- toJSON(df)
   }
   
-  score_MOJO <- as.vector(unlist(data.frame(h2o.predict_json(zip, json)[,3])[2,]))
+  x <- h2o.predict_json(zip, json)
   
-  return(score_MOJO)
-  
+  if (length(x$error) >= 1) {
+    stop("Error:", x$error)
+  } else {
+    score_MOJO <- as.vector(unlist(data.frame(x[,3])[2,])) 
+    return(score_MOJO)
+  }
 }
 
 
@@ -562,4 +566,20 @@ h2o_predict_API <- function(df, api) {
   
   return(as.vector(batch))
   
+}
+
+
+####################################################################
+#' H2O Predict using H2O Model Object
+#' 
+#' This function lets the user get scores from a H2O Model Object
+#' 
+#' @param df Dataframe/Vector. Data to insert into the model
+#' @param model H2o Object. Model
+#' @export
+h2o_predict_model <- function(df, model){
+  require(h2o)
+  #model <- h2o.getModel(as.vector(aml@leaderboard$model_id[1]))
+  scores <- predict(model, as.h2o(df))
+  return(scores)
 }
