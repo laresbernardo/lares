@@ -96,7 +96,7 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE,
       labs(title=paste("Correlation of", var, "vs other variables"), 
            x = "", y = "Correlation") +
       scale_y_continuous(labels = scales::percent)
-    if (!is.na(top) & top > original_n) { 
+    if (!is.na(top) & top < original_n) { 
       plot <- plot + 
         labs(subtitle = paste(
           "Plotting top", top, "out of", original_n, "numeric/binary variables"))
