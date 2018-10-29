@@ -87,7 +87,7 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365,
         values <- getSymbols(symbol, env=NULL, from=start_date, src="yahoo") %>% data.frame()
         values <- cbind(row.names(values), as.character(symbol), values)
         colnames(values) <- c("Date","Symbol","Open","High","Low","Close","Volume","Adjusted")
-        values <- mutate(values, Adjusted = rowMeans(select(values, High, Close), na.rm = TRUE))
+        values <- mutate(values, Adjusted = rowMeans(dplyr::select(values, High, Close), na.rm = TRUE))
         row.names(values) <- NULL
         
         # Add right now's data
@@ -643,8 +643,8 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
 ######################### SHORT #####################################
 # df <- lares::get_stocks() # Get data from my Dropbox
 # dfp <- lares::stocks_objects(df) # Make calculations and plots
-# stocks_html(dfp) # Create HTML report
-# stocks_report() # Create and send report to my mail
+# lares::stocks_html(dfp) # Create HTML report
+# lares::stocks_report() # Create and send report to my mail
 
 ######################### LONG #####################################
 # df <- lares::get_stocks() # Get data from my Dropbox
