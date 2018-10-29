@@ -9,13 +9,15 @@
 #' @param to Character. Email of the person who will recevie the email
 #' @param from Character. Email of the person who send the email
 #' @param creds Character. Credential's user (see get_credentials)
+#' @param quite Boolean. Keep quite or display messages?
 #' @export
 mailSend = function(body, 
                     subject, 
                     attachment = NULL, 
                     to = credentials$to, 
                     from = credentials$from, 
-                    creds = NA) {
+                    creds = NA,
+                    quite = FALSE) {
 
   suppressMessages(require(mailR))
   suppressMessages(require(config))
@@ -35,5 +37,8 @@ mailSend = function(body,
             authenticate = TRUE, send = TRUE,
             attach.files = attachment)
   )
-  message(paste("Email sent to", to))
+  
+  if(quite == FALSE) {
+    message(paste("Email sent to", to)) 
+  }
 }

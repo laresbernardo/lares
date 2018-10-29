@@ -4,12 +4,14 @@
 \alias{stocks_daily_plot}
 \title{Stocks Daily Plot}
 \usage{
-stocks_daily_plot(portfolio, daily)
+stocks_daily_plot(portfolio, daily, group = TRUE)
 }
 \arguments{
-\item{portfolio}{Dataframe. Output of the stocks_performance function}
+\item{portfolio}{Dataframe. Output of the portfolio_perf function}
 
 \item{daily}{Dataframe. Daily data}
+
+\item{group}{Boolean. Group stocks by stocks type?}
 }
 \description{
 This function lets the user plot stocks daily change

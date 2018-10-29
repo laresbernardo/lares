@@ -5,7 +5,7 @@
 \title{Send Emails with Attachments (Sendgrid)}
 \usage{
 mailSend(body, subject, attachment = NULL, to = credentials$to,
-  from = credentials$from, creds = NA)
+  from = credentials$from, creds = NA, quite = FALSE)
 }
 \arguments{
 \item{body}{Character. Body for the email}
@@ -19,6 +19,8 @@ mailSend(body, subject, attachment = NULL, to = credentials$to,
 \item{from}{Character. Email of the person who send the email}
 
 \item{creds}{Character. Credential's user (see get_credentials)}
+
+\item{quite}{Boolean. Keep quite or display messages?}
 }
 \description{
 This function lets the user send Emails with Attachments using Sendgrid

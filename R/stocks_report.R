@@ -14,6 +14,7 @@ get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Document
     cash <- read.xlsx(file, sheet = 'Fondos', skipEmptyRows=TRUE, detectDates=TRUE)
     trans <- read.xlsx(file, sheet = 'Transacciones', skipEmptyRows=TRUE, detectDates=TRUE)
     port <- read.xlsx(file, sheet = 'Portafolio', skipEmptyRows=TRUE, detectDates=TRUE)
+    port <- port[port$Stocks != 0,]
     mylist <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
     return(mylist)
   }
@@ -176,7 +177,7 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
     # Add transactions daily data
     left_join(transactions %>%
                 mutate(Date = as.Date(as.character(Date)), Symbol = as.character(Symbol)) %>%
-                select(Symbol, Date, Quant, Value, Amount),
+                dplyr::select(Symbol, Date, Quant, Value, Amount),
               by = c('Symbol','Date')) %>%
     mutate(Expenses = ifelse(is.na(Quant), 0, expenses)) %>%
     dplyr::group_by(Symbol) %>%
@@ -252,14 +253,14 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
     mutate(RelPer = round(100 * RelUSD / DailyStocks, 2),
            CumDiv = cumsum(DailyDiv),
            CumExpen = cumsum(DailyExpen)) %>%
-    left_join(cash_in %>% select(Date, Cash), by = c('Date')) %>%
+    left_join(cash_in %>% dplyr::select(Date, Cash), by = c('Date')) %>%
     mutate(DailyCash = ifelse(is.na(Cash), 0, Cash),
            CumCash = cumsum(DailyCash) - cumsum(DailyTrans) + cumsum(DailyDiv) + cash_fix,
            CumPortfolio = CumCash + DailyStocks,
            TotalUSD = DailyStocks - cumsum(DailyTrans),
            TotalPer = round(100 * DailyStocks / (cumsum(DailyTrans)), 2) - 100) %>%
-    select(Date,CumPortfolio,TotalUSD,TotalPer,RelUSD,RelPer,DailyStocks,
-           DailyTrans,DailyDiv,CumDiv,DailyCash,CumCash) %>% arrange(desc(Date)) %>%
+    dplyr::select(Date,CumPortfolio,TotalUSD,TotalPer,RelUSD,RelPer,DailyStocks,
+                  DailyTrans,DailyDiv,CumDiv,DailyCash,CumCash) %>% arrange(desc(Date)) %>%
     mutate_if(is.numeric, funs(round(., 2)))
   
   return(result)
@@ -293,14 +294,14 @@ portfolio_performance <- function(portfolio, daily) {
     arrange(desc(DivPerc))
   
   result <- left_join(portfolio %>% mutate(Symbol = as.character(Symbol)), daily[1:nrow(portfolio),] %>%
-                        select(Symbol,DailyValue), by = c('Symbol')) %>%
+                        dplyr::select(Symbol,DailyValue), by = c('Symbol')) %>%
     mutate(DifUSD = DailyValue - Invested, DifPer = round(100 * DifUSD / Invested,2),
            StockValue = DailyValue / Stocks,
            InvPerc = 100 * InvPerc,
            RealPerc = round(100 * DailyValue/sum(DailyValue), 2)) %>%
     left_join(divIn, by = c('Symbol')) %>%
     mutate_if(is.numeric, funs(round(., 2))) %>%
-    select(Symbol:StockIniValue, StockValue, InvPerc, RealPerc, everything())
+    dplyr::select(Symbol:StockIniValue, StockValue, InvPerc, RealPerc, everything())
   
   return(result)
   
@@ -414,29 +415,40 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
 #' 
 #' This function lets the user plot stocks daily change
 #' 
-#' @param portfolio Dataframe. Output of the stocks_performance function
+#' @param portfolio Dataframe. Output of the portfolio_perf function
 #' @param daily Dataframe. Daily data
+#' @param group Boolean. Group stocks by stocks type?
 #' @export
-stocks_daily_plot <- function (portfolio, daily) {
+stocks_daily_plot <- function (portfolio, daily, group = TRUE) {
   
   suppressMessages(require(dplyr))
   suppressMessages(require(ggplot2))
+  suppressMessages(require(ggrepel))
   
-  plot <- daily %>%
-    left_join(portfolio %>% select(Symbol,Type), by='Symbol') %>%
+  plot <- d <- daily %>%
+    left_join(portfolio_perf %>% dplyr::select(Symbol,Type), by='Symbol') %>%
     arrange(Date) %>% group_by(Symbol) %>%
     mutate(Hist = RelChangePHist,
-           BuySell = ifelse(Expenses > 0, TRUE, FALSE)) %>%
-    ggplot() + theme_minimal() + ylab('% Change since Start') +
+           BuySell = ifelse(Amount > 0, "Bought", ifelse(Amount < 0, "Sold", NA)))
+  labels <- d %>% filter(Date == max(Date))
+  amounts <- d %>% filter(Amount != 0) %>%
+    mutate(label = paste0(round(Amount/1000,1),"K"))
+  days <- as.integer(difftime(range(d$Date)[2], range(d$Date)[1], units = "days"))
+  plot <- ggplot(d) + theme_bw() + ylab('% Change since Start') +
     geom_hline(yintercept = 0, alpha=0.8, color="black") +
-    geom_line(aes(x=Date, y=Hist, color=Symbol), alpha=0.5, size=1) +
-    facet_grid(Type ~ ., scales = "free", switch = "both") +
+    geom_line(aes(x=Date, y=Hist, color=Symbol), alpha=0.9, size=0.5) +
+    geom_point(aes(x=Date, y=Hist, size=abs(Amount)), alpha=0.6, colour="black") +
     scale_y_continuous(position = "right") +
-    geom_point(aes(x=Date, y=Hist, fill=BuySell, alpha=BuySell, size=Amount)) +
-    scale_size(range = c(0, 3.2)) +
-    labs(title = 'Daily Portfolio\'s Stocks Change (%) since Start',
-         subtitle = 'Note that the real weighted change is not shown') +
-    ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300)
+    scale_size(range = c(0, 3.2)) + guides(size=F, colour=F) + 
+    xlim(min(d$Date), max(d$Date) + round(days*0.08)) +
+    labs(title = 'Daily Portfolio\'s Stocks Change (%) since Start', x = '',
+         subtitle = 'Note that the real weighted change is not shown', colour = '') +
+    geom_label_repel(data=amounts, aes(x=Date, y=Hist, label=label), size=2) +
+    geom_label(data=labels, aes(x=Date, y=Hist, label=Symbol), size=2.5, hjust=-0.2, alpha=0.6)
+  if (group == TRUE) {
+    plot <- plot + facet_grid(Type ~ ., scales = "free", switch = "both") 
+  }
+  plot + ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300)
   
   return(plot)
   
@@ -469,13 +481,13 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
                     mutate(Perc = lares::formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
                            DailyValue = lares::formatNum(DailyValue, 2),
                            DifPer = paste0(lares::formatNum(DifPer, 2))) %>%
-                    select(Symbol, Type, DailyValue, Perc, DifPer), rows=NULL,
+                    dplyr::select(Symbol, Type, DailyValue, Perc, DifPer), rows=NULL,
                   cols = c("Stock","Stock Type","Today's Value","% Portaf","Growth %"))
   t2 <- tableGrob(portfolio_perf %>% group_by(Type) %>%
                     dplyr::summarise(Perc = lares::formatNum(100*sum(DailyValue)/sum(portfolio_perf$DailyValue),2),
                                      DifPer = lares::formatNum(100*sum(DailyValue)/sum(Invested)-100,2),
                                      DailyValue = lares::formatNum(sum(DailyValue))) %>%
-                    select(Type, DailyValue, Perc, DifPer) %>% 
+                    dplyr::select(Type, DailyValue, Perc, DifPer) %>% 
                     arrange(desc(Perc)), rows=NULL,
                   cols = c("Stock Type","Today's Value","% Portaf","Growth %"))
   png("portf_distribution.png", width=700, height=500)
@@ -616,7 +628,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   results <- lares::stocks_objects(data)
   
   # HTML report
-  lares::stocks_html(results, dir = temp)
+  lares::stocks_html(results)
   
   # Set token for Sendgrid credentials:
   token_dir <- case_when(wd == "personal" ~ "~/Dropbox (Personal)/Documentos/Docs/Data",
@@ -630,8 +642,9 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
                     subject = paste("Portfolio:", max(results$df_daily$Date)),
                     attachment = files,
                     to = "laresbernardo@gmail.com", 
-                    from = 'AutoReport <laresbernardo@gmail.com>', creds = wd)
-    message("Report sent succesfully!") 
+                    from = 'AutoReport <laresbernardo@gmail.com>', 
+                    creds = wd,
+                    quite = FALSE)
   }
   # Clean everything up and delete files created
   unlink(temp, recursive = FALSE)

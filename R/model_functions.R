@@ -157,22 +157,22 @@ h2o_automl <- function(df,
   
   
   ####### Train model #######
-  h2o.init(nthreads = -1, port=54321, min_mem_size="8g")
+  h2o::h2o.init(nthreads = -1, port=54321, min_mem_size="8g")
   #h2o.shutdown()
-  h2o.removeAll()
-  aml <- h2o.automl(x = setdiff(names(df), "tag"), 
-                    y = "tag",
-                    training_frame = as.h2o(train),
-                    leaderboard_frame = as.h2o(test),
-                    max_runtime_secs = max_time,
-                    max_models = max_models,
-                    exclude_algos = c("StackedEnsemble","DeepLearning"),
-                    nfolds = 5, 
-                    seed = seed)
+  h2o::h2o.removeAll()
+  aml <- h2o::h2o.automl(x = setdiff(names(df), "tag"), 
+                         y = "tag",
+                         training_frame = as.h2o(train),
+                         leaderboard_frame = as.h2o(test),
+                         max_runtime_secs = max_time,
+                         max_models = max_models,
+                         exclude_algos = c("StackedEnsemble","DeepLearning"),
+                         nfolds = 5, 
+                         seed = seed)
   print(aml@leaderboard[,1:3])
   
   # Select model (Best one by default)
-  m <- h2o.getModel(as.vector(aml@leaderboard$model_id[1]))  
+  m <- h2o::h2o.getModel(as.vector(aml@leaderboard$model_id[1]))  
   
   # Calculations and variables
   scores <- predict(m, as.h2o(test))
