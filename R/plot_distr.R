@@ -42,24 +42,16 @@ plot_distr <- function(data, target, values,
                        "rows and value has", length(value))))
   }
   
-  if (length(unique(value)) > breaks & !is.numeric(value)) {
-    message(paste0("You can't split ", values, " in ", breaks, 
-                   "! Trying with less instead..."))
-    breaks <- length(unique(value))
+  if (length(unique(value)) > top & !is.numeric(value)) {
+    message(paste("The variable", values, "has", length(unique(value)), "different values!"))
   }
   
   if (length(unique(targets)) > 9) {
-    stop("You should use a 'target' variable with max 9 different value!")
+    stop("You should use a 'target' variable with max 8 different values!")
   }
   
   if (is.numeric(value)) {
     value <- cut(value, quantile(value, prob = seq(0, 1, length = breaks), type = 7, na.rm = T))
-  }
-  
-  if (length(unique(value)) > top & (is.character(value) | is.factor(value))) {
-    value <- as.vector(
-      lares::categ_reducer(data.frame(value), value, top = min(rbind(top, breaks)))
-    )
   }
   
   df <- data.frame(targets = targets, value = value)
@@ -77,6 +69,13 @@ plot_distr <- function(data, target, values,
     mutate(row = row_number(),
            order = ifelse(grepl("\\(|\\)", value), 
                           as.numeric(as.character(substr(gsub(",.*", "", value), 2, 100))), row))
+  
+  if(length(unique(value)) > top & !is.numeric(value)) {
+    message(paste("Filtering the", top, "most frequent values. Use `top` to overrule."))
+    which <- df %>% group_by(value) %>% tally() %>% arrange(desc(n)) %>% slice(1:top)
+    freqs <- freqs %>% filter(value %in% which$value)
+  }
+  
   if (abc == TRUE) {
     freqs <- freqs %>% mutate(order = rank(as.character(value)))
   }
@@ -117,8 +116,7 @@ plot_distr <- function(data, target, values,
   
   # Show limit caption when more values than top
   if (length(unique(value)) > top) {
-    showed <- max(c(length(unique(value)), top))
-    count <- count + labs(caption = paste("Showing only the top", showed, "frequent values"))
+    count <- count + labs(caption = paste("Showing the", top, "most frequent values"))
   }
   
   # Custom colours if wanted...

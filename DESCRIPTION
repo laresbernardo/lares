@@ -10,8 +10,10 @@ Encoding: UTF-8
 LazyData: true
 Imports: 
     config,
+    corrplot,
     devtools,
     forecast,
+    ggrepel,
     googleAnalyticsR,
     googleAuthR,
     googlesheets,
