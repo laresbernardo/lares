@@ -11,6 +11,8 @@
 #' @param breaks Integer. Number of splits for numerical values
 #' @param custom_colours Boolean. Use custom colours function?
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
+#' @param truncate Integer. Truncate until the n character for categorical values
+#' @param clean Boolean. Use lares::cleanText for categorical values
 #' @param na.rm Boolean. Ignore NAs if needed
 #' @param print Boolean. Print the table's result
 #' @param save Boolean. Save the output plot in our working directory
@@ -21,6 +23,8 @@ plot_distr <- function(data, target, values,
                        breaks = 10, 
                        custom_colours = FALSE,
                        abc = FALSE,
+                       truncate = 0,
+                       clean = FALSE,
                        na.rm = FALSE, 
                        print = FALSE,
                        save = FALSE, 
@@ -44,6 +48,14 @@ plot_distr <- function(data, target, values,
   
   if (length(unique(value)) > top & !is.numeric(value)) {
     message(paste("The variable", values, "has", length(unique(value)), "different values!"))
+  }
+  
+  if (truncate > 0 & !is.numeric(value)) {
+    value <- substr(value, 1, truncate)
+  }
+  
+  if (clean == TRUE & !is.numeric(value)) {
+    value <- lares::cleanText(value, spaces = F)
   }
   
   if (length(unique(targets)) > 9) {
