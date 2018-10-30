@@ -426,7 +426,7 @@ stocks_daily_plot <- function (portfolio, daily, group = TRUE) {
   suppressMessages(require(ggrepel))
   
   plot <- d <- daily %>%
-    left_join(portfolio_perf %>% dplyr::select(Symbol,Type), by='Symbol') %>%
+    left_join(portfolio %>% dplyr::select(Symbol,Type), by='Symbol') %>%
     arrange(Date) %>% group_by(Symbol) %>%
     mutate(Hist = RelChangePHist,
            BuySell = ifelse(Amount > 0, "Bought", ifelse(Amount < 0, "Sold", NA)))
