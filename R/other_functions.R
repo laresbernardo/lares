@@ -104,10 +104,11 @@ categ_reducer <- function(df, ...,
   }
   
   name <- as.name(names(dff[,1]))
-  vector <- df[[name]]
-  df[[name]] <- ifelse(vector %in% unlist(tops[,1]), 
-                       as.character(vector), 
+  vector <- df %>% select(as.character(name))
+  new_vector <- ifelse(vector[[as.character(name)]] %in% tops[[as.character(name)]], 
+                       as.character(vector[[as.character(name)]]), 
                        other_label)
+  df[[as.character(name)]] <- new_vector
   
   return(df)
   
