@@ -21,11 +21,11 @@
 plot_distr <- function(data, target, values, 
                        top = 10, 
                        breaks = 10, 
-                       custom_colours = FALSE,
                        abc = FALSE,
                        truncate = 0,
                        clean = FALSE,
                        na.rm = FALSE, 
+                       custom_colours = FALSE,
                        print = FALSE,
                        save = FALSE, 
                        subdir = NA) {
@@ -33,6 +33,7 @@ plot_distr <- function(data, target, values,
   require(ggplot2)
   require(gridExtra)
   require(dplyr)
+  options(scipen=999)
   
   targets <- data[[target]]
   value <- data[[values]]
@@ -62,8 +63,19 @@ plot_distr <- function(data, target, values,
     stop("You should use a 'target' variable with max 8 different values!")
   }
   
+  # if (is.numeric(value) & quant == FALSE) {
+  #   seqs <- signif(seq(min(value, na.rm = TRUE), max(value, na.rm = TRUE), length.out = breaks),4)
+  #   labels <- paste(seqs, lead(seqs), sep="-")
+  #   value <- cut(value, breaks = seqs, labels = labels[-length(labels)], 
+  #                ordered_result = TRUE, include.lowest = TRUE)
+  # }
+  
   if (is.numeric(value)) {
-    value <- cut(value, quantile(value, prob = seq(0, 1, length = breaks), type = 7, na.rm = T))
+    quant <- quantile(value, prob = seq(0, 1, length = breaks), na.rm = T)
+    if (length(unique(quant)) != breaks) {
+      message(paste("When dividing", values, "into", breaks, "quantiles,", length(unique(quant)), "groups are created."))
+    }
+    value <- cut(value, unique(quant))
   }
   
   df <- data.frame(targets = targets, value = value)
@@ -155,7 +167,7 @@ plot_distr <- function(data, target, values,
       dir.create(file.path(getwd(), subdir), recursive = T)
       file_name <- paste(subdir, file_name, sep="/")
     }
-    png(file_name, height = 1500, width = 2000, res = 300)
+    png(file_name, height = 600, width = 800, res = 300)
     grid.arrange(count, prop, ncol = 1, nrow = 2)
     dev.off()
   }

@@ -9,6 +9,7 @@ License: Private
 Encoding: UTF-8
 LazyData: true
 Imports: 
+    beepr,
     config,
     corrplot,
     devtools,
