@@ -22,6 +22,7 @@
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom rdrop2 drop_auth drop_dir drop_download drop_search drop_upload
 #' @importFrom rmarkdown render
+#' @importFrom recipes recipe step_num2factor step_meanimpute all_numeric step_modeimpute
 #' @import reshape2
 #' @import rlist   
 #' @importFrom rtweet create_token search_tweets
