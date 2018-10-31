@@ -1,6 +1,6 @@
 Package: lares
 Type: Package
-Title: Analytics, Data Mining & Machine Learning Library
+Title: Analytics, Visualization & Machine Learning Library
 Version: 4.1
 Author: Bernardo Lares
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
@@ -10,6 +10,7 @@ Encoding: UTF-8
 LazyData: true
 Imports: 
     beepr,
+    DBI,
     config,
     corrplot,
     devtools,

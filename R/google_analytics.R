@@ -31,9 +31,13 @@ queryGA <- function(account = "comparamejor",
   options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics"),
           googleAuthR.client_id = vars$client_id,
           googleAuthR.client_secret = vars$client_secret)
-
+  
   # Authenticate with local file
-  if (!is.na(token_dir)) { token <- paste0(token_dir, "/", vars$token_name) } else { token <- vars$token_name }
+  if (!is.na(token_dir)) { 
+    token <- paste0(token_dir, "/", vars$token_name) 
+  } else { 
+    token <- vars$token_name 
+  }
   message(paste("Token:", token))
   gar_auth(token)
   
