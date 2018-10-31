@@ -172,6 +172,6 @@ plot_distr <- function(data, target, values,
     dev.off()
   }
   
-  # Plot the result
+  # Plot the result 
   return(grid.arrange(count, prop, ncol = 1, nrow = 2))
 }
