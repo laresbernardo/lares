@@ -245,9 +245,9 @@ fr_getresult <- function(imgUrl, print=T) {
 #' This tools doesn't work well with RStudio sometimes. Try running it in your Terminal.
 #' 
 #' @param img1Url Character. Image's URL for first subject
-#' @param img1Url Character. Image's URL for second subject
+#' @param img2Url Character. Image's URL for second subject
 #' @param print1 Boolean. Print first result
-#' @param print1 Boolean. Print second result
+#' @param print2 Boolean. Print second result
 #' @export
 fr_compare <- function(img1Url, img2Url, print1=F, print2=F) {
 

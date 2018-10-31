@@ -5,7 +5,7 @@
 #' missingness in a data.frame.
 #' 
 #' @param df Dataframe. Dataframe to study
-#' @param plot Boolean. Do you wish to print results in a simple histogram?
+#' @param print Boolean. Do you wish to print results in a simple histogram?
 #' @param bins Integer. Number of breaks on plotted histogram
 #' @export
 missingness <- function(df, print = FALSE, bins = 10) {

@@ -9,11 +9,11 @@ fr_compare(img1Url, img2Url, print1 = F, print2 = F)
 \arguments{
 \item{img1Url}{Character. Image's URL for first subject}
 
+\item{img2Url}{Character. Image's URL for second subject}
+
 \item{print1}{Boolean. Print first result}
 
-\item{img1Url}{Character. Image's URL for second subject}
-
-\item{print1}{Boolean. Print second result}
+\item{print2}{Boolean. Print second result}
 }
 \description{
 This tools doesn't work well with RStudio sometimes. Try running it in your Terminal.

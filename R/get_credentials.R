@@ -39,7 +39,7 @@ get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
     if (!file.exists(file)) {
       message("Please, try again by defining where your YML file with the credentials is!")
     } else {
-      # Bring credentials
+      require(config)
       wd <- getwd()
       setwd(dir)
       credentials <- config::get(from)
@@ -47,6 +47,7 @@ get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
       return(credentials)
     }
   } else {
-    message(paste("Not a valid 'from' value. Try any of the following:\n", paste(shQuote(froms), collapse="\n ")))
+    message(paste("Not a valid 'from' value. Try any of the following:\n", 
+                  paste(shQuote(froms), collapse="\n ")))
   }
 }

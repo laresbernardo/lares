@@ -7,11 +7,12 @@
 #' @param ws Character. Working sheet to import
 #' @param server Boolean. Authenticate manualy
 #' @export
-readGS = function(title, ws, server=FALSE) {
+readGS <- function(title, ws, server=FALSE) {
+  
   require(googlesheets)
   require(dplyr)
   
-  if (server==TRUE) {
+  if (server == TRUE) {
     options(httr_oob_default = TRUE)
     gs_auth(new_user = TRUE)
   }
@@ -34,12 +35,12 @@ readGS = function(title, ws, server=FALSE) {
 #' @param cell Character. In which cell should we paste the data (upper left cell)
 #' @param server Boolean. Authenticate manualy
 #' @export
-writeGS = function(data, title, ws, cell='A1', server=FALSE) {
+writeGS <- function(data, title, ws, cell='A1', server=FALSE) {
 
   suppressMessages(require(googlesheets))
   suppressMessages(require(dplyr))
 
-  if (server==TRUE) {
+  if (server == TRUE) {
     options(httr_oob_default = TRUE)
     gs_auth(new_user = TRUE)
   }

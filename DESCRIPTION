@@ -1,11 +1,11 @@
 Package: lares
 Type: Package
 Title: Analytics, Visualization & Machine Learning Library
-Version: 4.1
+Version: 4.2
 Author: Bernardo Lares
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
-Description: R Library for Analytics, Data Mining and Machine Learning Tasks
-License: Private
+Description: R Library for Analytics, Visualization, Data Mining and Machine Learning tasks.
+License: AGPL-3
 Encoding: UTF-8
 LazyData: true
 Imports: 
@@ -18,13 +18,13 @@ Imports:
     forecast,
     ggrepel,
     ggplot2,
-    googleAnalyticsR,
     googleAuthR,
     googlesheets,
     gridExtra,
     h2o,
     kableExtra,
     knitr,
+    jsonlite,
     lubridate,
     mailR,
     openxlsx,
@@ -46,7 +46,8 @@ Suggests:
     anytime,
     DALEX,
     funModeling,
-    png,
+    googleAnalyticsR,
+    plotly,
     shiny,
     shinydashboard,
     VIM

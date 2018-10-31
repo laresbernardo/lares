@@ -9,9 +9,9 @@ missingness(df, print = FALSE, bins = 10)
 \arguments{
 \item{df}{Dataframe. Dataframe to study}
 
-\item{bins}{Integer. Number of breaks on plotted histogram}
+\item{print}{Boolean. Do you wish to print results in a simple histogram?}
 
-\item{plot}{Boolean. Do you wish to print results in a simple histogram?}
+\item{bins}{Integer. Number of breaks on plotted histogram}
 }
 \description{
 This function lets the user calculate the percentage of NAs or

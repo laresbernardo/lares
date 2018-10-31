@@ -1,3 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.httr-oauth$
+^CONTRIBUTE\.md$
+^\.travis\.yml$

@@ -5,6 +5,7 @@
 #' 
 #' @param account Character. Personal named accounts
 #' @param creds Character. Credential's user (see get_credentials)
+#' @param token_dir Character. Credential's user (see get_credentials)
 #' @param metrics Character. Which metrics we wish to bring. More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets
 #' @param dimensions Character. Which dimensions we wish to bring More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets
 #' @param start Date. Start date for the report
@@ -39,9 +40,12 @@ queryGA <- function(account = "comparamejor",
     token <- vars$token_name 
   }
   message(paste("Token:", token))
-  gar_auth(token)
+  googleAuthR::gar_auth(token)
   
   # Query on Google Analytics
+  if (!"googleAnalyticsR" %in% installed.packages()) {
+    install.packages('googleAnalyticsR')
+  }
   suppressMessages(require(googleAnalyticsR))
   google_analytics(
     vars$ga_id, 

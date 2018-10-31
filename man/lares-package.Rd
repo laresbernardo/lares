@@ -4,9 +4,9 @@
 \name{lares-package}
 \alias{lares}
 \alias{lares-package}
-\title{lares: Analytics, Visualization & Machine Learning Library}
+\title{lares: R library for Analytics, Visualization & Machine Learning Tasks}
 \description{
-R Library for Analytics, Data Mining and Machine Learning Tasks
+R Library for Analytics, Visualization, Data Mining and Machine Learning tasks.
 }
 \seealso{
 Useful links:

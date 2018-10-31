@@ -13,6 +13,8 @@ auto_preprocess(df, num2fac = 7, impute = FALSE, ohe = FALSE,
 \item{num2fac}{Integer. Threshold for unique values on a 
 numerical variable to transform into factor}
 
+\item{impute}{Boolena. Impute missing values with means?}
+
 \item{ohe}{Boolean. One hot encoding on variables with 3 or
 more cateogries?}
 

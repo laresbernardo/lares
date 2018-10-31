@@ -191,7 +191,7 @@ ip_country <- function(ip) {
   for(i in 1:length(ip)) {
     message(paste("Searching for", ip[i]))
     url <- paste0("https://db-ip.com/", ip[i])
-    scrap <- read_html(url) %>% html_nodes('.card-body tr') %>% html_text()
+    scrap <- rvest::read_html(url) %>% rvest::html_nodes('.card-body tr') %>% rvest::html_text()
     country <- gsub("Country", "", trimws(scrap[grepl("Country", scrap)]))
     result <- cbind(ip = ip[i], country = country)
     countries <- rbind(countries, result)
@@ -512,7 +512,7 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
 #' 42348.44, 9/2/18 23:16, 10-05-19
 #' 
 #' 
-#' @param date Vector. Dates in any of the permitted formats
+#' @param dates Vector. Dates in any of the permitted formats
 #' @param metric Boolean. Metric or Imperial inputs. The main 
 #' difference is that Metric follows the DD/MM/YYYY pattern, and 
 #' Imperial follows the MM/DD/YYYY pattern.

@@ -12,10 +12,10 @@ bring_api <- function(url) {
   require(jsonlite)
   require(rlist)
 
-  get <- GET(url = url)
+  get <- httr::GET(url = url)
   message(paste0("Status: ", ifelse(get$status_code == 200, "OK", "ERROR")))
   char <- rawToChar(get$content)
-  import <- data.frame(fromJSON(char))
+  import <- data.frame(jsonlite::fromJSON(char))
   import <- jsonlite::flatten(import)
   import <- data.frame(rlist::list.cbind(lapply(import, unlist(as.character))))
 

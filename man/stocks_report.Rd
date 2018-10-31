@@ -15,8 +15,6 @@ stocks_report(wd = "personal", cash_fix = 0, mail = TRUE,
 \item{mail}{Boolean Do you wish to send the email?}
 
 \item{creds}{Character. Credential's user (see get_credentials) for sending mail}
-
-\item{html}{Boolean. HTML output for the report?}
 }
 \description{
 This function lets the user create his portfolio's full report with plots and email sent

@@ -19,9 +19,11 @@ forecast_ml(time, values, n_future = 15, use_last = TRUE,
 
 \item{automl}{Boolean. Use lares::h2o_automl()}
 
-\item{project}{Character. Name of your forecast project for plot title}
+\item{plot_forecast}{Boolean. If you wish to plot your results}
 
-\item{plot}{Boolean. If you wish to plot your results}
+\item{plot_model}{Boolean. If you wish to plot your model's results}
+
+\item{project}{Character. Name of your forecast project for plot title}
 }
 \description{
 This function lets the user create a forecast setting a time series

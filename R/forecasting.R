@@ -175,12 +175,17 @@ forecast_arima <- function(time, values, n_future = 30,
 #' @param values Numeric. Vector with numerical values
 #' @param n_future Integer. How many steps do you wish to forecast?
 #' @param use_last Boolean. Use last observation?
-#' @param plot Boolean. If you wish to plot your results
 #' @param automl Boolean. Use lares::h2o_automl()
+#' @param plot_forecast Boolean. If you wish to plot your results
+#' @param plot_model Boolean. If you wish to plot your model's results
 #' @param project Character. Name of your forecast project for plot title
 #' @export
-forecast_ml <- function(time, values, n_future = 15, use_last = TRUE, automl = FALSE, 
-                        plot_forecast = TRUE, plot_model = FALSE,
+forecast_ml <- function(time, values, 
+                        n_future = 15, 
+                        use_last = TRUE, 
+                        automl = FALSE, 
+                        plot_forecast = TRUE, 
+                        plot_model = FALSE,
                         project = "Simple Forecast using Machine Learning") {
   require(timetk)
   require(tidyquant)

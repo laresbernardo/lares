@@ -24,7 +24,7 @@ geodataAddress <- function(address, country = "Colombia", index = NA, creds = NA
     api <- c$api_01 # Free Personal API: api_02
     ctry <- paste0("&components=country:", country) # Not working for some reason
     url <- URLencode(paste(url, address, ctry, "&key=", api, sep = ""))
-    x <- fromJSON(url, simplify = FALSE)
+    x <- fromJSON(url, simplifyVector = FALSE)
     
     # Return Na's if we didn't get a match:
     if (x$status != "OK"){
@@ -111,7 +111,7 @@ geoStratum <- function(lon, lat, label = NA) {
     "returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&",
     "gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&",
     "returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=pjson"))
-  x <- fromJSON(url, simplify = FALSE)
+  x <- fromJSON(url, simplifyVector = FALSE)
   if (length(x$features) > 0) {
     out <- data.frame(lon = lon, lat=lat, stratum = x$features[[1]]$attributes$ESTRATO)
     if (!is.na(label)) {

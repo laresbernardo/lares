@@ -6,6 +6,7 @@
 #' @param df Dataframe. Dataframe to format, transform and input
 #' @param num2fac Integer. Threshold for unique values on a 
 #' numerical variable to transform into factor
+#' @param impute Boolena. Impute missing values with means?
 #' @param ohe Boolean. One hot encoding on variables with 3 or
 #' more cateogries?
 #' @param scale Boolean. Scale the data (normalized)
@@ -30,7 +31,7 @@ auto_preprocess <- function(df, num2fac = 7, impute = FALSE, ohe = FALSE,
   num_2_factor_names <- df %>% 
     select_if(is.numeric) %>% 
     summarise_all(funs(n_distinct(.))) %>% 
-    gather(.) %>% 
+    tidyr::gather(.) %>% 
     arrange(value) %>% 
     filter(value <= num2fac) %>% 
     pull(key) %>% 

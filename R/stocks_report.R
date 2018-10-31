@@ -610,7 +610,6 @@ stocks_html <- function(results) {
 #' 
 #' @param wd Character. Where do you wish to save the plots?
 #' @param cash_fix Numeric. If you wish to algebraically sum a value to your cash balance
-#' @param html Boolean. HTML output for the report?
 #' @param mail Boolean Do you wish to send the email?
 #' @param creds Character. Credential's user (see get_credentials) for sending mail
 #' @export
