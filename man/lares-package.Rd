@@ -6,8 +6,7 @@
 \alias{lares-package}
 \title{lares: Analytics, Visualization & Machine Learning Library}
 \description{
-To start using lares you can start by the vignette:
-`browseVignettes(package = "lares")`
+R Library for Analytics, Data Mining and Machine Learning Tasks
 }
 \seealso{
 Useful links:
