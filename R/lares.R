@@ -31,8 +31,6 @@
 #' @import SnowballC 
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file installed.packages write.table
 #' @importFrom wordcloud textplot wordlayout
-#' @importFrom datasets trees
-#' @importFrom grDevicesdev.off graphics.off
 #' @importFrom graphics box hist plot points rasterImage rect
 "_PACKAGE"
 
