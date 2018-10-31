@@ -3,3 +3,4 @@
 ^\.httr-oauth$
 ^CONTRIBUTE\.md$
 ^\.travis\.yml$
+^\.Rprofile$

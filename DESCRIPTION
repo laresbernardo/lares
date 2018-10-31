@@ -31,7 +31,6 @@ Imports:
     pROC,
     RColorBrewer,
     rdrop2,
-    recipes,
     reshape2,
     rlist,
     rJava,
@@ -48,6 +47,7 @@ Suggests:
     funModeling,
     googleAnalyticsR,
     plotly,
+    recipes,
     shiny,
     shinydashboard,
     VIM 
