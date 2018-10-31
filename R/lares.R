@@ -26,8 +26,8 @@
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom rdrop2 drop_auth drop_dir drop_download drop_search drop_upload
 #' @importFrom rmarkdown render
-# @importFrom recipes recipe step_num2factor step_meanimpute all_numeric step_modeimpute 
-# all_nominal step_scale all_outcomes step_dummy prep
+#' @importFrom recipes recipe step_num2factor step_meanimpute all_numeric step_modeimpute 
+#' all_nominal step_scale all_outcomes step_dummy prep
 #' @import reshape2
 #' @import rlist   
 #' @importFrom rtweet create_token search_tweets
@@ -36,7 +36,7 @@
 #' @importFrom stats na.omit sd median dist end lm predict reorder start
 #' @import SnowballC 
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
-#' installed.packages write.table install.packages
+#' installed.packages write.table install.packages remove.packages
 #' @importFrom wordcloud textplot wordlayout
 "_PACKAGE"
 
@@ -52,10 +52,10 @@ if(getRversion() >= "2.15.1")
       "add_headers","addedAt","amount","associatedCompanyIds","associatedVids","auc",
       "canonical_vid","cats[, i]", "ceiling_date","color","contacts_canonical_vid",
       "contacts_form_submissions","contacts_identity_profiles", "google_analytics",
-      "contacts_is_contact","contacts_merge_audits","contacts_portal_id",
+      "contacts_is_contact","contacts_merge_audits","contacts_portal_id", "read_html",
       "contacts_profile_token","contacts_profile_url","contacts_vid","content",
       "content_transformer","createdate","credit","cuts","date_of_birth","days","dealId",
-      "dealstage","df_status","form_submissions","gather","ceiling_date",
+      "dealstage","df_status","form_submissions","gather","ceiling_date", "html_node",
       "getDividends","getSymbols","get_questionnaire","get_typeforms", "endfx",
       "hasMore","has_more","identification_date","identity_profiles","ggplotly",
       "image_darknet_detect","image_darknet_model","image_info","image_read","index",

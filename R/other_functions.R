@@ -625,3 +625,30 @@ noPlot <- function(message = "Nothing to show here!") {
           plot.background=element_blank())
   return(p)
 }
+
+
+####################################################################
+#' Install latest version of H2O
+#' 
+#' This function lets the user un-install the current version of
+#' H2O installed and update to latest stable version.
+#' 
+#' @param run Boolean. Do you want to run and start an H2O cluster?
+#' @export
+h2o_update <- function(run = TRUE){
+  require(rvest)
+  url <- "http://h2o-release.s3.amazonaws.com/h2o/latest_stable.html"
+  end <- read_html(url) %>% html_node("head") %>% 
+    as.character() %>% gsub(".*url=","",.) %>% gsub("/index.html.*","",.)
+  newurl <- paste0(gsub("/h2o/.*","",url), end, "/R")
+  # The following commands remove any previously installed H2O version
+  if ("package:h2o" %in% search()) { detach("package:h2o", unload = TRUE) }
+  if ("h2o" %in% rownames(installed.packages())) { remove.packages("h2o") }
+  # Now we download, install and initialize the H2O package for R.
+  message(paste("Installing h2o from", newurl))
+  install.packages("h2o", type="source", repos=newurl)
+  if(run == TRUE){
+    library(h2o)
+    h2o.init()
+  }
+}
