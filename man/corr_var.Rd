@@ -5,7 +5,8 @@
 \title{Correlation between variable and dataframe}
 \usage{
 corr_var(df, var, method = "pearson", plot = TRUE, logs = TRUE,
-  top = NA, zeroes = FALSE)
+  top = NA, zeroes = FALSE, save = FALSE, subdir = NA,
+  file_name = "viz_corrvar.png")
 }
 \arguments{
 \item{df}{Dataframe.}
@@ -22,6 +23,12 @@ variables (not binaries)}
 \item{top}{Integer. If you want to plot the top correlations, define how many}
 
 \item{zeroes}{Do you wish to keep zeroes in correlations too?}
+
+\item{save}{Boolean. Save output plot into working directory}
+
+\item{subdir}{Character. Sub directory on which you wish to save the plot}
+
+\item{file_name}{Character. File name as you wish to save the plot}
 }
 \description{
 This function correlates a whole dataframe with a single feature.

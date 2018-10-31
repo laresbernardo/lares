@@ -59,9 +59,14 @@ corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA) {
 #' variables (not binaries)
 #' @param top Integer. If you want to plot the top correlations, define how many
 #' @param zeroes Do you wish to keep zeroes in correlations too?
+#' @param save Boolean. Save output plot into working directory
+#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param file_name Character. File name as you wish to save the plot
 #' @export
 corr_var <- function(df, var, method = "pearson", plot = TRUE, 
-                     logs = TRUE, top = NA, zeroes = FALSE) {
+                     logs = TRUE, top = NA, zeroes = FALSE,
+                     save = FALSE, subdir = NA,
+                     file_name = "viz_corrvar.png") {
   
   require(ggplot2)
   require(scales)
@@ -104,6 +109,15 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE,
     print(plot)
   }
   
+  if (!is.na(subdir)) {
+    options(warn=-1)
+    dir.create(file.path(getwd(), subdir), recursive = T)
+    file_name <- paste(subdir, file_name, sep="/")
+  }
+  if (save == TRUE) {
+    plot <- plot + ggsave(file_name, width = 6, height = 6)
+  }
+  
   return(d)
   
 }
@@ -127,14 +141,12 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE,
 corr_plot <- function(df, method = "pearson", order = "FPC", type = "square", logs = TRUE) {
   
   require(corrplot)
-  
   c <- lares::corr(df, method, logs = logs)
-  
-  return(
-    corrplot::corrplot(as.matrix(c),
-                       order = order,
-                       method = type, 
-                       type = "lower",
-                       diag = FALSE)
-  )
+  plot <- corrplot::corrplot(
+    as.matrix(c),
+    order = order,
+    method = type, 
+    type = "lower",
+    diag = FALSE)
+  return(plot)
 }

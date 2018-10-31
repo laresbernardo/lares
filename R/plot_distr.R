@@ -157,18 +157,21 @@ plot_distr <- function(data, target, values,
     print(freqs %>% select(-order))
   }
   
-  # Plot the result
-  return(grid.arrange(count, prop, ncol = 1, nrow = 2))
-  
   # Export and save plot
+  file_name <- paste0("viz_distr_", 
+                      lares::cleanText(targets_name), ".vs.", 
+                      lares::cleanText(variable_name), ".png")
+  if (!is.na(subdir)) {
+    options(warn=-1)
+    dir.create(file.path(getwd(), subdir), recursive = T)
+    file_name <- paste(subdir, file_name, sep="/")
+  }
   if (save == TRUE) {
-    file_name <- paste0("viz_distr_", targets_name, ".vs.", variable_name, ".png")
-    if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = T)
-      file_name <- paste(subdir, file_name, sep="/")
-    }
-    png(file_name, height = 600, width = 800, res = 300)
-    grid.arrange(count, prop, ncol = 1, nrow = 2)
+    png(file_name, height = 800, width = 1000, res = 150)
+    gridExtra::grid.arrange(count, prop, ncol = 1, nrow = 2)
     dev.off()
   }
+  
+  # Plot the result
+  return(grid.arrange(count, prop, ncol = 1, nrow = 2))
 }
