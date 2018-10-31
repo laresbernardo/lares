@@ -50,7 +50,7 @@ Suggests:
     plotly,
     shiny,
     shinydashboard,
-    VIM
+    VIM 
 Remotes: ropenscilabs/opencv
 URL: https://github.com/laresbernardo/lares
 BugReports: https://github.com/laresbernardo/lares/issues
