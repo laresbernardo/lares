@@ -18,12 +18,12 @@ mailSend = function(body,
                     from = credentials$from, 
                     creds = NA,
                     quite = FALSE) {
-
+  
   suppressMessages(require(mailR))
   suppressMessages(require(config))
-
+  
   credentials <- lares::get_credentials(from="sendgrid", dir = creds)
-
+  
   smtp <- list(host.name = credentials$host,
                port = credentials$port,
                user.name = credentials$uid,
@@ -31,11 +31,11 @@ mailSend = function(body,
                ssl = TRUE, tls = TRUE)
   
   invisible(
-    send.mail(from = from, to = to,  subject = subject,
-            body = paste(body),
-            html = TRUE, inline = TRUE, smtp = smtp,
-            authenticate = TRUE, send = TRUE,
-            attach.files = attachment)
+    send.mail(from = from, to = to, subject = subject,
+              body = paste(body),
+              html = TRUE, inline = TRUE, smtp = smtp,
+              authenticate = TRUE, send = TRUE,
+              attach.files = attachment)
   )
   
   if(quite == FALSE) {

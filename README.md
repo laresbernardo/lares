@@ -1,6 +1,6 @@
 # lares: R Package for Analysis and Machine Learning
 
-[![saythanks](https://img.shields.io/badge/say-thanks-1EAEDB.svg)](https://saythanks.io/to/laresbernardo) [![Build Status](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares)
+[![Build Status](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares) [![saythanks](https://img.shields.io/badge/say-thanks-1EAEDB.svg)](https://saythanks.io/to/laresbernardo)
 
 This is my personal library used to automate and speed my everyday work on **Analysis and Machine Learning** tasks. You are most welcome to install, use, and comment on any of its code and functionalities. Feel free to contact me and/or add me on [Linkedin](https://www.linkedin.com/in/laresbernardo/)! Let me know where did you got my contact from ;)
 

@@ -31,7 +31,6 @@ Imports:
     pROC,
     RColorBrewer,
     rdrop2,
-    recipes,
     reshape2,
     rlist,
     rJava,
