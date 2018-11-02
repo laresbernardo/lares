@@ -18,9 +18,9 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
   vars <- quos(...)
   
   output <- vector %>%
-    group_by(!!!vars) %>%
-    tally() %>% arrange(desc(n)) %>%
-    mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
+    group_by_(!!!vars) %>%
+    tally_() %>% arrange_(desc(n)) %>%
+    mutate_(p = round(100*n/sum(n),2), pcum = cumsum(p))
   
   if (plot == TRUE) {
     

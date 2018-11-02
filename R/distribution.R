@@ -23,23 +23,23 @@
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @export
-plot_distr <- function(data, ...,
-                       type = 1,
-                       top = 10, 
-                       breaks = 10, 
-                       na.rm = FALSE, 
-                       force = "none",
-                       trim = 0,
-                       clean = FALSE,
-                       abc = FALSE,
-                       custom_colours = FALSE,
-                       print = FALSE,
-                       save = FALSE, 
-                       subdir = NA) {
+distr <- function(data, ...,
+                  type = 1,
+                  top = 10, 
+                  breaks = 10, 
+                  na.rm = FALSE, 
+                  force = "none",
+                  trim = 0,
+                  clean = FALSE,
+                  abc = FALSE,
+                  custom_colours = FALSE,
+                  print = FALSE,
+                  save = FALSE, 
+                  subdir = NA) {
   
+  require(dplyr)
   require(ggplot2)
   require(gridExtra)
-  require(dplyr)
   options(scipen=999)
   
   vars <- quos(...)
@@ -51,9 +51,9 @@ plot_distr <- function(data, ...,
     }
   }
   
-  targets <- data %>% select(!!!vars) %>% .[,1]
+  targets <- data %>% select_(!!!vars) %>% .[,1]
   target <- colnames(targets)
-  value <- data %>% select(!!!vars) %>% .[,2]
+  value <- data %>% select_(!!!vars) %>% .[,2]
   values <- colnames(value)
   
   targets_name <- colnames(data[target[1]])
@@ -130,7 +130,7 @@ plot_distr <- function(data, ...,
   if(length(unique(value)) > top & !is.numeric(value)) {
     message(paste("Filtering the", top, "most frequent values. Use `top` to overrule."))
     which <- df %>% group_by(value) %>% tally() %>% arrange(desc(n)) %>% slice(1:top)
-    freqs <- freqs %>% filter(value %in% which$value)
+    freqs <- freqs %>% filter_(value %in% which$value)
   }
   
   if (abc == TRUE) {
@@ -209,7 +209,7 @@ plot_distr <- function(data, ...,
   
   # Return table with results?
   if (print == TRUE) {
-    return(freqs %>% select(-order))
+    return(freqs %>% select_(-order))
   }
   
   # Plot the results and save if needed
