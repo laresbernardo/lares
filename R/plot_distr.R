@@ -5,32 +5,33 @@
 #' function is quite similar to the funModeling's corrplot function.
 #' 
 #' @param data Dataframe
-#' @param target Character. Name of the Main -target- variable
-#' @param values Character. Name of the Secondary variable
-#' @param top Integer. Filter and plot the most n frequent for categorical values
-#' @param breaks Integer. Number of splits for numerical values
+#' @param ... Variables. Main (target) and secondary (values) variables to group by
 #' @param type Integer. 1 for both plots, 2 for counter plot only, 3 por 
 #' percentages plot only.
+#' @param top Integer. Filter and plot the most n frequent for categorical values
+#' @param breaks Integer. Number of splits for numerical values
+#' @param na.rm Boolean. Ignore NAs if needed
 #' @param force Character. Force class on the values data. Choose between 'none',
 #' 'character', 'numeric', 'date'
-#' @param custom_colours Boolean. Use custom colours function?
+#' @param trim Integer. Trim words until the nth character for categorical values 
+#' (applies for both, target and values)
+#' @param clean Boolean. Use lares::cleanText for categorical values (applies 
+#' for both, target and values)
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
-#' @param trim Integer. Trim words until the nth character for categorical values
-#' @param clean Boolean. Use lares::cleanText for categorical values
-#' @param na.rm Boolean. Ignore NAs if needed
+#' @param custom_colours Boolean. Use custom colours function?
 #' @param print Boolean. Print the table's result
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @export
-plot_distr <- function(data, target, values, 
+plot_distr <- function(data, ...,
+                       type = 1,
                        top = 10, 
                        breaks = 10, 
-                       type = 1,
+                       na.rm = FALSE, 
                        force = "none",
-                       abc = FALSE,
                        trim = 0,
                        clean = FALSE,
-                       na.rm = FALSE, 
+                       abc = FALSE,
                        custom_colours = FALSE,
                        print = FALSE,
                        save = FALSE, 
@@ -41,8 +42,19 @@ plot_distr <- function(data, target, values,
   require(dplyr)
   options(scipen=999)
   
-  targets <- data[[target]]
-  value <- data[[values]]
+  vars <- quos(...)
+  if (length(vars) != 2) {
+    if (length(vars) < 2) {
+      stop("Please, select two variables to continue...") 
+    } else {
+      stop("Please, select only two variables to continue...") 
+    }
+  }
+  
+  targets <- data %>% select(!!!vars) %>% .[,1]
+  target <- colnames(targets)
+  value <- data %>% select(!!!vars) %>% .[,2]
+  values <- colnames(value)
   
   targets_name <- colnames(data[target[1]])
   variable_name <- colnames(data[values[1]])
@@ -53,26 +65,38 @@ plot_distr <- function(data, target, values,
                        "rows and value has", length(value))))
   }
   
-  if (force == "character" & is.numeric(value)) {
-    value <- as.character(value)
+  if (force != "none") {
+    if (force == "character" & is.numeric(value)) {
+      value <- as.character(value)
+    }
+    if (force == "numeric" & !is.numeric(value)) {
+      value <- as.numeric(value)
+    }
+    if (force == "date") {
+      value <- as.Date(value, origin = '1970-01-01')
+    }
   }
-  if (force == "numeric" & !is.numeric(value)) {
-    value <- as.numeric(value)
+  
+  if (trim > 0) {
+    if (!is.numeric(value)) {
+      value <- substr(value, 1, trim)
+    }
+    if (!is.numeric(targets)) {
+      targets <- substr(targets, 1, trim)
+    }
   }
-  if (force == "date") {
-    value <- as.Date(value, origin = '1970-01-01')
+  
+  if (clean == TRUE) {
+    if (!is.numeric(value)) {
+      value <- lares::cleanText(value, spaces = F)
+    }
+    if (!is.numeric(targets)) {
+      targets <- lares::cleanText(targets, spaces = F)
+    }
   }
   
   if (length(unique(value)) > top & !is.numeric(value)) {
     message(paste("The variable", values, "has", length(unique(value)), "different values!"))
-  }
-  
-  if (trim > 0 & !is.numeric(value)) {
-    value <- substr(value, 1, trim)
-  }
-  
-  if (clean == TRUE & !is.numeric(value)) {
-    value <- lares::cleanText(value, spaces = F)
   }
   
   if (length(unique(targets)) > 9) {
@@ -127,7 +151,8 @@ plot_distr <- function(data, target, values,
                 position = position_dodge(0.9), 
                 size=3, vjust = -0.15) +
       labs(x = "", y = "Counter") + theme_minimal() + 
-      theme(legend.position="top", legend.title=element_blank())
+      theme(legend.position="top", legend.title=element_blank()) +
+      labs(caption = paste("Variables:", targets_name, "vs.", variable_name))
     # Give an angle to labels when more than...
     if (length(unique(value)) >= 7) {
       count <- count + theme(axis.text.x = element_text(angle = 45, hjust=1))
@@ -153,8 +178,9 @@ plot_distr <- function(data, target, values,
       geom_hline(yintercept = distr$pcum[1:(nrow(distr)-1)]/100, 
                  colour = "purple", linetype = "dotted", alpha = 0.8) +
       theme_minimal() + coord_flip() +
-      labs(x = "Proportions", y = "") + 
-      labs(caption = paste("Variables:", targets_name, "vs.", variable_name))
+      labs(x = "Proportions", y = "", fill="") + 
+      labs(caption = paste("Variables:", targets_name, "vs.", variable_name)) +
+      theme(legend.position="top", legend.title=element_blank())
     # Show limit caption when more values than top
     if (length(unique(value)) > top) {
       count <- count + labs(caption = paste("Showing the", top, "most frequent values"))
@@ -189,8 +215,9 @@ plot_distr <- function(data, target, values,
   # Plot the results and save if needed
   if (type == 1) {
     prop <- prop + guides(fill=FALSE)
+    count <- count + labs(caption="")
     if (save == TRUE) {
-      png(file_name, height = 800, width = 1000, res = 150)
+      png(file_name, height = 1000, width = 1300, res = 200)
       gridExtra::grid.arrange(count, prop, ncol = 1, nrow = 2)
       dev.off()
     }
@@ -199,7 +226,6 @@ plot_distr <- function(data, target, values,
   if (type == 2) {
     if (save == TRUE) {
       count <- count + 
-        labs(caption = paste("Variables:", targets_name, "vs.", variable_name)) +
         ggsave(file_name, width = 8, height = 6)
     }
     return(count)
@@ -207,7 +233,6 @@ plot_distr <- function(data, target, values,
   if (type == 3) {
     if (save == TRUE) {
       prop <- prop + 
-        theme(legend.position="top", legend.title=element_blank()) +
         ggsave(file_name, width = 8, height = 6)
     }
     return(prop)

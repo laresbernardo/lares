@@ -64,7 +64,7 @@ if(getRversion() >= "2.15.1")
       "ocv_camera","ocv_copyto","ocv_face","ocv_facemask","ocv_read","ocv_video",
       "ocv_write","p","p_error","palette_light","portalId","portal_id","pos","get_ip",
       "prediction_breakdown","q_na","quantile_tag","question","rbind.fill","readJPEG",
-      "readPNG","read_exif","real_error","removeNumbers","removePunctuation","lazy_dots",
+      "readPNG","read_exif","real_error","removeNumbers","removePunctuation",
       "removeWords","sale","send.mail","shapeflag","stateChanges","step_done","stopwords",
       "str_pad","stripWhitespace","tableGrob","tag","test_auc","test_ll","theme_tq",
       "tk_augment_timeseries_signature","tk_get_timeseries_signature","tk_index",

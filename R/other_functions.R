@@ -86,15 +86,11 @@ categ_reducer <- function(df, ...,
                           other_label = "other") {
   
   require(dplyr)
-  require(lazyeval)
   
-  # dots <- function(...) {match.call(expand.dots = FALSE)}
-  # if(dots == 1) {
-  #   df <- data.frame(x=x)
-  # }
+  vars <- quos(...)
   
   dff <- df %>%
-    group_by_(.dots = lazyeval::lazy_dots(...)) %>%
+    group_by(!!!vars) %>%
     tally() %>% arrange(desc(n)) %>%
     mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
   
