@@ -86,6 +86,7 @@ categ_reducer <- function(df, ...,
                           other_label = "other") {
   
   require(dplyr)
+  require(lazyeval)
   
   # dots <- function(...) {match.call(expand.dots = FALSE)}
   # if(dots == 1) {
@@ -191,7 +192,7 @@ ip_country <- function(ip) {
   for(i in 1:length(ip)) {
     message(paste("Searching for", ip[i]))
     url <- paste0("https://db-ip.com/", ip[i])
-    scrap <- rvest::read_html(url) %>% rvest::html_nodes('.card-body tr') %>% rvest::html_text()
+    scrap <- read_html(url) %>% html_nodes('.card-body tr') %>% html_text()
     country <- gsub("Country", "", trimws(scrap[grepl("Country", scrap)]))
     result <- cbind(ip = ip[i], country = country)
     countries <- rbind(countries, result)
@@ -585,14 +586,10 @@ pass <- function(df, fun) {
 #' 
 #' @export
 myip <- function(){
-  
   if (!"ipify" %in% installed.packages()) {
     devtools::install_github("gregce/ipify")
   }
-  
-  require(devtools)
   require(ipify)
-  
   myip <- ipify::get_ip()
   return(myip)
 }

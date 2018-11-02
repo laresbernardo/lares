@@ -4,9 +4,10 @@
 \alias{plot_distr}
 \title{Plot Target's Distribution vs Another Variable}
 \usage{
-plot_distr(data, target, values, top = 10, breaks = 10, abc = FALSE,
-  truncate = 0, clean = FALSE, na.rm = FALSE,
-  custom_colours = FALSE, print = FALSE, save = FALSE, subdir = NA)
+plot_distr(data, target, values, top = 10, breaks = 10, type = 1,
+  force = "none", abc = FALSE, trim = 0, clean = FALSE,
+  na.rm = FALSE, custom_colours = FALSE, print = FALSE,
+  save = FALSE, subdir = NA)
 }
 \arguments{
 \item{data}{Dataframe}
@@ -19,9 +20,15 @@ plot_distr(data, target, values, top = 10, breaks = 10, abc = FALSE,
 
 \item{breaks}{Integer. Number of splits for numerical values}
 
+\item{type}{Integer. 1 for both plots, 2 for counter plot only, 3 por 
+percentages plot only.}
+
+\item{force}{Character. Force class on the values data. Choose between 'none',
+'character', 'numeric', 'date'}
+
 \item{abc}{Boolean. Do you wish to sort by alphabetical order?}
 
-\item{truncate}{Integer. Truncate until the n character for categorical values}
+\item{trim}{Integer. Trim words until the nth character for categorical values}
 
 \item{clean}{Boolean. Use lares::cleanText for categorical values}
 

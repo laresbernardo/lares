@@ -29,7 +29,7 @@
 # @importFrom recipes recipe step_num2factor step_meanimpute all_numeric step_modeimpute
 # all_nominal step_scale all_outcomes step_dummy prep
 #' @import reshape2
-#' @import rlist   
+#' @import rlist
 #' @importFrom rtweet create_token search_tweets
 #' @importFrom scales percent comma
 #' @importFrom stats cor quantile complete.cases
@@ -52,19 +52,19 @@ if(getRversion() >= "2.15.1")
       "add_headers","addedAt","amount","associatedCompanyIds","associatedVids","auc",
       "canonical_vid","cats[, i]", "ceiling_date","color","contacts_canonical_vid",
       "contacts_form_submissions","contacts_identity_profiles", "google_analytics",
-      "contacts_is_contact","contacts_merge_audits","contacts_portal_id", "read_html",
+      "contacts_is_contact","contacts_merge_audits","contacts_portal_id","read_html",
       "contacts_profile_token","contacts_profile_url","contacts_vid","content",
       "content_transformer","createdate","credit","cuts","date_of_birth","days","dealId",
-      "dealstage","df_status","form_submissions","gather","ceiling_date", "html_node",
-      "getDividends","getSymbols","get_questionnaire","get_typeforms", "endfx",
+      "dealstage","df_status","form_submissions","gather","ceiling_date","html_node","html_nodes",
+      "getDividends","getSymbols","get_questionnaire","get_typeforms", "endfx","html_text",
       "hasMore","has_more","identification_date","identity_profiles","ggplotly",
       "image_darknet_detect","image_darknet_model","image_info","image_read","index",
       "is_contact","key","label","label_colours","label_hjust","max_score","merge_audits",
       "merged_vids","min_score","model_performance","month.lbl","numb","ocv_bitmap",
       "ocv_camera","ocv_copyto","ocv_face","ocv_facemask","ocv_read","ocv_video",
-      "ocv_write","p","p_error","palette_light","portalId","portal_id","pos",
+      "ocv_write","p","p_error","palette_light","portalId","portal_id","pos","get_ip",
       "prediction_breakdown","q_na","quantile_tag","question","rbind.fill","readJPEG",
-      "readPNG","read_exif","real_error","removeNumbers","removePunctuation",
+      "readPNG","read_exif","real_error","removeNumbers","removePunctuation","lazy_dots",
       "removeWords","sale","send.mail","shapeflag","stateChanges","step_done","stopwords",
       "str_pad","stripWhitespace","tableGrob","tag","test_auc","test_ll","theme_tq",
       "tk_augment_timeseries_signature","tk_get_timeseries_signature","tk_index",

@@ -9,9 +9,13 @@
 #' @param values Character. Name of the Secondary variable
 #' @param top Integer. Filter and plot the most n frequent for categorical values
 #' @param breaks Integer. Number of splits for numerical values
+#' @param type Integer. 1 for both plots, 2 for counter plot only, 3 por 
+#' percentages plot only.
+#' @param force Character. Force class on the values data. Choose between 'none',
+#' 'character', 'numeric', 'date'
 #' @param custom_colours Boolean. Use custom colours function?
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
-#' @param truncate Integer. Truncate until the n character for categorical values
+#' @param trim Integer. Trim words until the nth character for categorical values
 #' @param clean Boolean. Use lares::cleanText for categorical values
 #' @param na.rm Boolean. Ignore NAs if needed
 #' @param print Boolean. Print the table's result
@@ -21,8 +25,10 @@
 plot_distr <- function(data, target, values, 
                        top = 10, 
                        breaks = 10, 
+                       type = 1,
+                       force = "none",
                        abc = FALSE,
-                       truncate = 0,
+                       trim = 0,
                        clean = FALSE,
                        na.rm = FALSE, 
                        custom_colours = FALSE,
@@ -47,12 +53,22 @@ plot_distr <- function(data, target, values,
                        "rows and value has", length(value))))
   }
   
+  if (force == "character" & is.numeric(value)) {
+    value <- as.character(value)
+  }
+  if (force == "numeric" & !is.numeric(value)) {
+    value <- as.numeric(value)
+  }
+  if (force == "date") {
+    value <- as.Date(value, origin = '1970-01-01')
+  }
+  
   if (length(unique(value)) > top & !is.numeric(value)) {
     message(paste("The variable", values, "has", length(unique(value)), "different values!"))
   }
   
-  if (truncate > 0 & !is.numeric(value)) {
-    value <- substr(value, 1, truncate)
+  if (trim > 0 & !is.numeric(value)) {
+    value <- substr(value, 1, trim)
   }
   
   if (clean == TRUE & !is.numeric(value)) {
@@ -62,13 +78,6 @@ plot_distr <- function(data, target, values,
   if (length(unique(targets)) > 9) {
     stop("You should use a 'target' variable with max 8 different values!")
   }
-  
-  # if (is.numeric(value) & quant == FALSE) {
-  #   seqs <- signif(seq(min(value, na.rm = TRUE), max(value, na.rm = TRUE), length.out = breaks),4)
-  #   labels <- paste(seqs, lead(seqs), sep="-")
-  #   value <- cut(value, breaks = seqs, labels = labels[-length(labels)], 
-  #                ordered_result = TRUE, include.lowest = TRUE)
-  # }
   
   if (is.numeric(value)) {
     quant <- quantile(value, prob = seq(0, 1, length = breaks), na.rm = T)
@@ -109,69 +118,98 @@ plot_distr <- function(data, target, values,
     mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
   
   # Counter plot
-  count <- ggplot(freqs, aes(x=reorder(as.character(value), order), y=n, 
-                             fill=tolower(as.character(targets)), 
-                             label=n, ymax=max(n)*1.1)) + 
-    geom_col(position = "dodge") +
-    geom_text(check_overlap = TRUE, 
-              position = position_dodge(0.9), 
-              size=3, vjust = -0.15) +
-    labs(x = "", y = "Counter") + theme_minimal() + 
-    theme(legend.position="top", legend.title=element_blank())
-  # Give an angle to labels when more than...
-  if (length(unique(value)) >= 7) {
-    count <- count + theme(axis.text.x = element_text(angle = 45, hjust=1))
+  if(type %in% c(1,2)) {
+    count <- ggplot(freqs, aes(x=reorder(as.character(value), order), y=n, 
+                               fill=tolower(as.character(targets)), 
+                               label=n, ymax=max(n)*1.1)) + 
+      geom_col(position = "dodge") +
+      geom_text(check_overlap = TRUE, 
+                position = position_dodge(0.9), 
+                size=3, vjust = -0.15) +
+      labs(x = "", y = "Counter") + theme_minimal() + 
+      theme(legend.position="top", legend.title=element_blank())
+    # Give an angle to labels when more than...
+    if (length(unique(value)) >= 7) {
+      count <- count + theme(axis.text.x = element_text(angle = 45, hjust=1))
+    } 
+    # Custom colours if wanted...
+    if (custom_colours == TRUE) {
+      count <- count + gg_fill_customs()
+    } else {
+      count <- count + scale_fill_brewer(palette = "Blues")
+    }
   }
   
   # Percentages plot
-  prop <- ggplot(freqs, 
-                 aes(x = value, 
-                     y = as.numeric(p/100),
-                     fill=tolower(as.character(targets)), 
-                     label = p)) + 
-    geom_col(position = "fill") +
-    geom_text(check_overlap = TRUE, size = 3.2,
-              position = position_stack(vjust = 0.5)) +
-    geom_hline(yintercept = distr$pcum[1:(nrow(distr)-1)]/100, 
-               colour = "purple", linetype = "dotted", alpha = 0.8) +
-    theme_minimal() + coord_flip() + guides(fill=FALSE) + 
-    labs(x = "Proportions", y = "") + 
-    labs(caption = paste("Variables:", targets_name, "vs.", variable_name))
-  
-  # Show limit caption when more values than top
-  if (length(unique(value)) > top) {
-    count <- count + labs(caption = paste("Showing the", top, "most frequent values"))
+  if(type %in% c(1,3)) {
+    prop <- ggplot(freqs, 
+                   aes(x = value, 
+                       y = as.numeric(p/100),
+                       fill=tolower(as.character(targets)), 
+                       label = p)) + 
+      geom_col(position = "fill") +
+      geom_text(check_overlap = TRUE, size = 3.2,
+                position = position_stack(vjust = 0.5)) +
+      geom_hline(yintercept = distr$pcum[1:(nrow(distr)-1)]/100, 
+                 colour = "purple", linetype = "dotted", alpha = 0.8) +
+      theme_minimal() + coord_flip() +
+      labs(x = "Proportions", y = "") + 
+      labs(caption = paste("Variables:", targets_name, "vs.", variable_name))
+    # Show limit caption when more values than top
+    if (length(unique(value)) > top) {
+      count <- count + labs(caption = paste("Showing the", top, "most frequent values"))
+    }
+    # Custom colours if wanted...
+    if (custom_colours == TRUE) {
+      prop <- prop + gg_fill_customs()
+    } else {
+      prop <- prop + scale_fill_brewer(palette = "Blues")
+    }
   }
   
-  # Custom colours if wanted...
-  if (custom_colours == TRUE) {
-    count <- count + gg_fill_customs()
-    prop <- prop + gg_fill_customs()
-  } else {
-    count <- count + scale_fill_brewer(palette = "Blues")
-    prop <- prop + scale_fill_brewer(palette = "Blues")
-  }
-  
-  # Print table with results?
-  if (print == TRUE) {
-    print(freqs %>% select(-order))
-  }
-  
-  # Export and save plot
-  file_name <- paste0("viz_distr_", 
-                      lares::cleanText(targets_name), ".vs.", 
-                      lares::cleanText(variable_name), ".png")
-  if (!is.na(subdir)) {
-    options(warn=-1)
-    dir.create(file.path(getwd(), subdir), recursive = T)
-    file_name <- paste(subdir, file_name, sep="/")
-  }
+  # Export file name and folder
   if (save == TRUE) {
-    png(file_name, height = 800, width = 1000, res = 150)
-    gridExtra::grid.arrange(count, prop, ncol = 1, nrow = 2)
-    dev.off()
+    file_name <- paste0(
+      "viz_distr_", 
+      lares::cleanText(targets_name), ".vs.", 
+      lares::cleanText(variable_name), 
+      case_when(type == 2 ~ "_c", type == 3 ~ "_p", TRUE ~ ""),".png")
+    if (!is.na(subdir)) {
+      options(warn=-1)
+      dir.create(file.path(getwd(), subdir), recursive = T)
+      file_name <- paste(subdir, file_name, sep="/")
+    }
   }
   
-  # Plot the result 
-  return(grid.arrange(count, prop, ncol = 1, nrow = 2))
+  # Return table with results?
+  if (print == TRUE) {
+    return(freqs %>% select(-order))
+  }
+  
+  # Plot the results and save if needed
+  if (type == 1) {
+    prop <- prop + guides(fill=FALSE)
+    if (save == TRUE) {
+      png(file_name, height = 800, width = 1000, res = 150)
+      gridExtra::grid.arrange(count, prop, ncol = 1, nrow = 2)
+      dev.off()
+    }
+    return(grid.arrange(count, prop, ncol = 1, nrow = 2)) 
+  }
+  if (type == 2) {
+    if (save == TRUE) {
+      count <- count + 
+        labs(caption = paste("Variables:", targets_name, "vs.", variable_name)) +
+        ggsave(file_name, width = 8, height = 6)
+    }
+    return(count)
+  }
+  if (type == 3) {
+    if (save == TRUE) {
+      prop <- prop + 
+        theme(legend.position="top", legend.title=element_blank()) +
+        ggsave(file_name, width = 8, height = 6)
+    }
+    return(prop)
+  }
 }
