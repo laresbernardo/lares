@@ -38,10 +38,12 @@ Imports:
     rmarkdown,
     RPostgreSQL,
     rtweet,
+    rvest,
     scales,
     SnowballC,
     tidyverse,
-    wordcloud
+    wordcloud,
+    xml2
 Suggests:
     anytime,
     DALEX,

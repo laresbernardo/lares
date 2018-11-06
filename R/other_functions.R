@@ -583,8 +583,10 @@ pass <- function(df, fun) {
 #' 
 #' @export
 myip <- function(){
-  #require(rvest)
-  ip <- read_html("https://api.ipify.org/") %>% html_text()
+  # require(rvest)
+  # require(xml2)
+  ipify <- "https://api.ipify.org/"
+  ip <- xml2::read_html(ipify) %>% rvest::html_text()
   return(ip)
 }
 
@@ -633,7 +635,7 @@ h2o_update <- function(run = TRUE){
   # require(rvest)
   
   url <- "http://h2o-release.s3.amazonaws.com/h2o/latest_stable.html"
-  end <- read_html(url) %>% html_node("head") %>% 
+  end <- xml2::read_html(url) %>% rvest::html_node("head") %>% 
     as.character() %>% gsub(".*url=","",.) %>% gsub("/index.html.*","",.)
   newurl <- paste0(gsub("/h2o/.*","",url), end, "/R")
   # The following commands remove any previously installed H2O version
