@@ -583,11 +583,9 @@ pass <- function(df, fun) {
 #' 
 #' @export
 myip <- function(){
-  if (!"ipify" %in% installed.packages()) {
-    devtools::install_github("gregce/ipify")
-  }
-  myip <- ipify::get_ip()
-  return(myip)
+  #require(rvest)
+  ip <- read_html("https://api.ipify.org/") %>% html_text()
+  return(ip)
 }
 
 

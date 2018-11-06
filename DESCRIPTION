@@ -47,7 +47,6 @@ Suggests:
     DALEX,
     funModeling,
     googleAnalyticsR,
-    ipify,
     plotly,
     shiny,
     shinydashboard,
