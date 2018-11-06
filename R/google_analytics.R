@@ -18,7 +18,8 @@ queryGA <- function(account = "comparamejor",
                     start = lubridate::floor_date(Sys.Date(), "month"),
                     end = Sys.Date()){
   
-  suppressMessages(require(googleAuthR))
+  # require(googleAuthR)
+  # require(googleAnalyticsR)
   
   #FIRST TIME
   # options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics"),
@@ -46,7 +47,6 @@ queryGA <- function(account = "comparamejor",
   if (!"googleAnalyticsR" %in% installed.packages()) {
     install.packages('googleAnalyticsR')
   }
-  suppressMessages(require(googleAnalyticsR))
   google_analytics(
     vars$ga_id, 
     date_range = c(start, end),

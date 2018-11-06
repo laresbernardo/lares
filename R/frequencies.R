@@ -1,9 +1,8 @@
 ####################################################################
 #' Frequencies Calculations and Plot
 #' 
-#' This function lets the user group, count, calculate 
-#' percentages and cumulatives. It also plots if needed. 
-#' Perfect for inside with dplyr's pipes.
+#' This function lets the user group, count, calculate percentages 
+#' and cumulatives. It also plots results if needed. Tidyverse friendly.
 #' 
 #' @param vector Data.frame
 #' @param ... Variables. Variables you wish to process. Order matters.
@@ -13,21 +12,25 @@
 #' @export
 freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
   
-  require(dplyr)
+  # require(dplyr)
+  # require(ggplot2)
+  # require(scales)
   
   vars <- quos(...)
   
   output <- vector %>%
-    group_by_(!!!vars) %>%
-    tally_() %>% arrange_(desc(n)) %>%
-    mutate_(p = round(100*n/sum(n),2), pcum = cumsum(p))
+    group_by(!!!vars) %>% 
+    tally() %>% arrange(desc(n)) %>%
+    mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
   
   if (plot == TRUE) {
     
+    if (nrow(output) >= 20) {
+      message("Recommendation: use the `lares::distr` function instead")
+    }
+    
     if (ncol(output) - 3 <= 3) { 
-      
-      require(ggplot2)
-      require(scales)
+  
       options(warn=-1)
       
       plot <- ungroup(output)
@@ -98,9 +101,7 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
     } else {
       # When more than two features
       message("Sorry, but trying to plot more than 3 features is as complex as it sounds...")
-    }
-  }
-  
+    } 
+  }    
   return(output)
-  
 }

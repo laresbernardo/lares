@@ -9,7 +9,6 @@
 #' @param pred Function. Custom function for calculation predictions
 #' @export
 dalex_explainer <- function(df, model, model_name = "lares::h2o_automl", pred = NA) {
-  require(DALEX) 
   
   x_valid <- as.data.frame(df) %>% select(-tag)
   y_valid <- as.integer(df$tag)
@@ -47,9 +46,7 @@ dalex_explainer <- function(df, model, model_name = "lares::h2o_automl", pred = 
 #' @param print Boolean. Do you wish to see the results table?
 #' @export
 dalex_local <- function(explainer, row, plot = TRUE, print = TRUE) {
-  
-  require(DALEX)
-  
+
   individual <- row %>% as.data.frame()
   breakdown <- prediction_breakdown(explainer, observation = individual)
   
@@ -74,10 +71,7 @@ dalex_local <- function(explainer, row, plot = TRUE, print = TRUE) {
 #' @param explainer Object. Result from dalex_explainer function
 #' @export
 dalex_residuals <- function (explainer) {
-  
-  require(DALEX)
-  require(gridExtra)
-  
+
   resids <- model_performance(explainer)
   
   p1 <- plot(resids)
@@ -99,8 +93,6 @@ dalex_residuals <- function (explainer) {
 #' @param force_class Character. If you wish to force a class on your variable, which one do you need?
 #' @export
 dalex_variable <- function (explainer, variable, force_class = NA) {
-  
-  require(DALEX)
   
   classes <- c('factor','numeric')
   if (force_class %in% classes) {

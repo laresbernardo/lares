@@ -36,13 +36,13 @@
 #' @importFrom stats na.omit sd median dist end lm predict reorder start
 #' @import SnowballC 
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
-#' installed.packages write.table install.packages remove.packages
+#' installed.packages write.table install.packages remove.packages object.size
 #' @importFrom wordcloud textplot wordlayout
 "_PACKAGE"
 
 if(getRversion() >= "2.15.1")  
   utils::globalVariables(
-    c(".","..y..",".rs.restartR","Amount","Cash","Close","Corpus","CreateDate","CumCash",
+    c(".","..y..","%>%","!!!",".rs.restartR","Amount","Cash","Close","Corpus","CreateDate","CumCash",
       "CumDiv","CumPortfolio","DailyCash","DailyDiv","DailyExpen","DailyStocks",
       "DailyTrans","DailyValue","Date","DateTimeOriginal","Deciles","DifPer","DifUSD",
       "DivIncome","DivPerc","DivReal","Expenses","FileModifyDate","GET","High","Hist",
@@ -70,4 +70,5 @@ if(getRversion() >= "2.15.1")
       "tk_augment_timeseries_signature","tk_get_timeseries_signature","tk_index",
       "tk_make_future_timeseries","tm_map","toJSON","token","train_auc","train_ll",
       "trees","type","upload_file","value","values","variable_response","variables",
-      "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","wordcloud","x","y"))
+      "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","wordcloud","x","y",
+      "cols","nums","char","logic","counter","metric"))

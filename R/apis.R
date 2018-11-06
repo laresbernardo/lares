@@ -8,11 +8,7 @@
 #' @export
 bring_api <- function(url) {
 
-  require(httr)
-  require(jsonlite)
-  require(rlist)
-
-  get <- httr::GET(url = url)
+  get <- GET(url = url)
   message(paste0("Status: ", ifelse(get$status_code == 200, "OK", "ERROR")))
   char <- rawToChar(get$content)
   import <- data.frame(jsonlite::fromJSON(char))

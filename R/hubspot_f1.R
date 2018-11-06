@@ -9,9 +9,10 @@
 #' @param creds Character. Credential's user (see get_credentials)
 #' @export
 f1_contacts <- function(creds = NA) {
-  require(lares)
-  require(httr)
-  require(dplyr)
+  
+  # require(lares)
+  # require(httr)
+  # require(dplyr)
   
   hsdates <- function(date) {
     as.character(

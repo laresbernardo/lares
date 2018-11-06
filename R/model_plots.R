@@ -19,8 +19,9 @@ mplot_density <- function(tag,
                           subdir = NA,
                           file_name = "viz_distribution.png") {
   
-  require(ggplot2)
-  require(gridExtra)
+  # require(ggplot2)
+  # require(gridExtra)
+  # require(scales)
   
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
@@ -85,8 +86,6 @@ mplot_density <- function(tag,
         layout_matrix = rbind(c(1,1), c(2,3))))
     
   } else {
-    
-    require(scales)
     
     df <- data.frame(
       rbind(cbind(values = tag, type = "Real"), 
@@ -154,8 +153,8 @@ mplot_importance <- function(var,
                              subdir = NA, 
                              file_name = "viz_importance.png") {
   
-  require(ggplot2)
-  require(gridExtra)
+  # require(ggplot2)
+  # require(gridExtra)
   options(warn=-1)
   
   if (length(var) != length(imp)) {
@@ -239,8 +238,9 @@ mplot_roc <- function(tag,
                       subdir = NA, 
                       file_name = "viz_roc.png") {
   
-  require(pROC)
-  require(ggplot2)
+  # require(pROC)
+  # require(ggplot2)
+  # require(plotly)
   
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
@@ -280,7 +280,6 @@ mplot_roc <- function(tag,
   }
   
   if (plotly == TRUE) {
-    require(plotly)
     p <- ggplotly(p)
   }
   
@@ -321,7 +320,7 @@ mplot_cuts <- function(score,
                        subdir = NA, 
                        file_name = "viz_ncuts.png") {
   
-  require(ggplot2)
+  # require(ggplot2)
   options(warn=-1)
   
   if (splits > 25) {
@@ -391,9 +390,9 @@ mplot_cuts_error <- function(tag,
                              subdir = NA, 
                              file_name = "viz_ncuts_error.png") {
   
-  require(ggplot2)
-  require(scales)
-  require(gridExtra)
+  # require(ggplot2)
+  # require(scales)
+  # require(gridExtra)
   
   if (splits > 25) {
     stop("You should try with less splits!")
@@ -504,9 +503,9 @@ mplot_splits <- function(tag,
                          subdir = NA, 
                          file_name = "viz_splits.png") {
   
-  require(ggplot2)
-  require(dplyr)
-  require(RColorBrewer)
+  # require(ggplot2)
+  # require(dplyr)
+  # require(RColorBrewer)
   
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
@@ -602,8 +601,8 @@ mplot_metrics <- function(results,
                           subdir = NA,
                           file_name = "viz_metrics.png") {
   
-  require(ggplot2)
-  require(gridExtra)
+  # require(ggplot2)
+  # require(gridExtra)
   
   plots_data <- data.frame(
     trees = results$model@model$scoring_history$number_of_trees,
@@ -687,8 +686,8 @@ mplot_lineal <- function(tag,
                          subdir = NA,
                          file_name = "viz_lineal.png") {
   
-  require(ggplot2)
-  require(scales)
+  # require(ggplot2)
+  # require(scales)
   
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
@@ -762,9 +761,9 @@ mplot_full <- function(tag,
                        subdir = NA,
                        file_name = "viz_full.png") {
   
-  require(ggplot2)
-  require(gridExtra)
-  require(dplyr)
+  # require(ggplot2)
+  # require(gridExtra)
+  # require(dplyr)
   
   options(warn=-1)
   
@@ -831,6 +830,5 @@ mplot_full <- function(tag,
       widths = c(0.45, 0.55),
       layout_matrix = rbind(c(1,3), c(2,3)))
     )
-    
   }
 }

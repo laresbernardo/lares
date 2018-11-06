@@ -11,7 +11,7 @@
 #' @export
 object_detection <- function(filename, threshold = 0.2, type = "faster") {
   
-  require(image.darknet)
+  # require(image.darknet)
   
   path <- getwd()
   file <- paste0(path, "/", filename)

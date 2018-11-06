@@ -9,6 +9,8 @@
 #' @export
 get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
   
+  # require(config)
+  
   froms <- c("dummy",
              "production",
              "warehouse",
@@ -39,7 +41,6 @@ get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
     if (!file.exists(file)) {
       message("Please, try again by defining where your YML file with the credentials is!")
     } else {
-      require(config)
       wd <- getwd()
       setwd(dir)
       credentials <- config::get(from)

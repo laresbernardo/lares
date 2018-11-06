@@ -46,8 +46,9 @@ forecast_arima <- function(time, values, n_future = 30,
                            wd_excluded = NA,
                            plot = TRUE, plot_days = 90, project = NA){
   
-  require(forecast)
-  require(lubridate)
+  # require(forecast)
+  # require(lubridate)
+  # require(ggplot2)
   
   # ARIMA doesn't use zeroes!
   time <- time[!values == 0]
@@ -118,8 +119,6 @@ forecast_arima <- function(time, values, n_future = 30,
   # Plot results
   if (plot == TRUE) {
     
-    require(ggplot2)
-    
     if (nrow(train) > plot_days) {
       train <- train[(nrow(train)-plot_days):nrow(train), ] 
     }
@@ -187,8 +186,9 @@ forecast_ml <- function(time, values,
                         plot_forecast = TRUE, 
                         plot_model = FALSE,
                         project = "Simple Forecast using Machine Learning") {
-  require(timetk)
-  require(tidyquant)
+
+  # require(timetk)
+  # require(tidyquant)
   
   if (length(time) != length(values)) {
     stop("The parameters 'time' and 'values' should have the same length")

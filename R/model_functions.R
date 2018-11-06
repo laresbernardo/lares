@@ -116,9 +116,10 @@ h2o_automl <- function(df,
                        export = FALSE,
                        plot = FALSE,
                        project = "Machine Learning Model") {
-  require(dplyr)
-  require(h2o)
-  require(beepr)
+  # require(dplyr)
+  # require(h2o)
+  # require(beepr)
+  # require(pROC)
   options(warn=-1)
   
   start <- Sys.time()
@@ -179,7 +180,6 @@ h2o_automl <- function(df,
   
   # CLASSIFICATION MODELS
   if (type == "Classifier") {
-    require(pROC)
     results <- list(
       project = project,
       model = m,
@@ -255,8 +255,8 @@ h2o_automl <- function(df,
 #' @export
 h2o_selectmodel <- function(results, which_model = 1) {
   
-  require(h2o)
-  require(pROC)
+  # require(h2o)
+  # require(pROC)
   
   # Select model (Best one by default)
   m <- h2o.getModel(as.vector(results$leaderboard$model_id[which_model]))  
@@ -305,7 +305,7 @@ export_results <- function(results,
                            mojo = TRUE, 
                            subdir = NA) {
   
-  require(h2o)
+  # require(h2o)
   options(warn=-1)
   
   # We create a directory to save all our results
@@ -375,7 +375,8 @@ export_results <- function(results,
 #' @param tries Integer. How many seed do you wish to try?
 #' @export
 iter_seeds <- function(df, tries = 10) {
-  require(h2o)
+  
+  # require(h2o)
   
   seeds <- data.frame()
   
@@ -475,8 +476,8 @@ errors <- function(tag, score){
 #' @export
 h2o_predict_MOJO <- function(df, model_path, sample = NA){
   
-  require(jsonlite)
-  require(h2o)
+  # require(jsonlite)
+  # require(h2o)
   
   zip <- paste0(model_path, "/", gsub(".*-","",model_path), ".zip")
   
@@ -512,8 +513,8 @@ h2o_predict_MOJO <- function(df, model_path, sample = NA){
 #' @export
 h2o_predict_binary <- function(df, model_path, sample = NA){
   
-  require(jsonlite)
-  require(h2o)
+  # require(jsonlite)
+  # require(h2o)
   options(warn=-1)
   
   binary <- paste(model_path, gsub(".*-", "", model_path), sep="/")
@@ -540,9 +541,8 @@ h2o_predict_binary <- function(df, model_path, sample = NA){
 #' @export
 h2o_predict_API <- function(df, api) {
   
-  require(httr)
-  require(dplyr)
-  require(lares)
+  # require(httr)
+  # require(dplyr)
   
   post <- function(df, api) {
     df <- df %>%
@@ -578,7 +578,7 @@ h2o_predict_API <- function(df, api) {
 #' @param model H2o Object. Model
 #' @export
 h2o_predict_model <- function(df, model){
-  require(h2o)
+  # require(h2o)
   #model <- h2o.getModel(as.vector(aml@leaderboard$model_id[1]))
   scores <- predict(model, as.h2o(df))
   return(scores)

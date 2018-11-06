@@ -12,8 +12,8 @@ geodataAddress <- function(address, country = "Colombia", index = NA, creds = NA
   
   getGeoDetails <- function(address){   
     
-    require(RJSONIO)
-    require(rlist)
+    # require(RJSONIO)
+    # require(rlist)
     
     options(warn=-1)
     

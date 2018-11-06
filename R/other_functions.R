@@ -7,8 +7,8 @@
 #' @export
 year_month <- function(date) {
   
-  require(lubridate)
-  require(stringr)
+  # require(lubridate)
+  # require(stringr)
   
   return(paste(
     lubridate::year(date),
@@ -26,8 +26,8 @@ year_month <- function(date) {
 #' @export
 year_week <- function(date) {
   
-  require(lubridate)
-  require(stringr)
+  # require(lubridate)
+  # require(stringr)
   
   return(paste(
     lubridate::year(date),
@@ -46,7 +46,7 @@ year_week <- function(date) {
 #' @export
 categoryCounter <- function (df) {
   
-  require(dplyr)
+  # require(dplyr)
   
   cats <- df %>% select_if(is.character)
   result <- c()
@@ -85,7 +85,7 @@ categ_reducer <- function(df, ...,
                           top = NA, 
                           other_label = "other") {
   
-  require(dplyr)
+  # require(dplyr)
   
   vars <- quos(...)
   
@@ -178,8 +178,9 @@ cleanText <- function(text, spaces = TRUE) {
 #' @param ip Vector. Vector with all IP's we wish to search
 #' @export
 ip_country <- function(ip) {
-  require(rvest)
-  require(dplyr)
+
+  # require(rvest)
+  # require(dplyr)
   
   ip <- ip[!is.na(ip)]
   ip <- ip[grep("^172\\.|^192\\.168\\.|^10\\.", ip, invert = T)]
@@ -291,7 +292,7 @@ one_hot_encoding_commas <- function(df, variables, sep=","){
 #' @export
 balance_data <- function(df, variable, rate = 1, seed = 0) {
   
-  require(dplyr)
+  # require(dplyr)
   
   set.seed(seed)
   
@@ -336,6 +337,10 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
 #' @export
 listfiles <- function(folder, recursive = TRUE, regex = NA, images = FALSE, export = FALSE) {
   
+  # require(dplyr)
+  # require(lubridate)
+  # require(exifr)
+  
   if (!file.exists(folder)) {
     stop("That directory doesn't exist; please try again!")
   }
@@ -358,10 +363,6 @@ listfiles <- function(folder, recursive = TRUE, regex = NA, images = FALSE, expo
       message(paste("This might take a while... Analizing around", 
                     lares::formatNum(nrow(df), decimals = 0), "files!"))
     }
-    
-    require(exifr)
-    require(dplyr)
-    require(lubridate)
     
     tags <- c("FileName", "SourceFile",
               "CreateDate", "DateTimeOriginal", "FileModifyDate",
@@ -462,7 +463,7 @@ removenarows <- function(df, all = TRUE) {
 #' @export
 numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA) {
   
-  require(dplyr)
+  # require(dplyr)
   
   # Drop ALL NAs columns
   if (dropnacols == TRUE) {
@@ -518,9 +519,9 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
 #' @export
 dateformat <- function(dates, metric = FALSE, origin = '1900-01-01') {
   
-  suppressMessages(require(dplyr))
-  suppressMessages(require(stringr))
-  suppressMessages(require(lubridate))
+  # require(dplyr)
+  # require(stringr)
+  # require(lubridate)
   options(warn=-1)
   
   dates <- gsub(" .*", "", dates)
@@ -585,7 +586,6 @@ myip <- function(){
   if (!"ipify" %in% installed.packages()) {
     devtools::install_github("gregce/ipify")
   }
-  require(ipify)
   myip <- ipify::get_ip()
   return(myip)
 }
@@ -601,7 +601,9 @@ myip <- function(){
 #' @param message Character. What message do you wish to show?
 #' @export
 noPlot <- function(message = "Nothing to show here!") {
-  require(ggplot2)
+  
+  # require(ggplot2)
+  
   p <- ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 
     geom_label() + theme_minimal() +
     theme(axis.line=element_blank(),
@@ -629,7 +631,9 @@ noPlot <- function(message = "Nothing to show here!") {
 #' @param run Boolean. Do you want to run and start an H2O cluster?
 #' @export
 h2o_update <- function(run = TRUE){
-  require(rvest)
+  
+  # require(rvest)
+  
   url <- "http://h2o-release.s3.amazonaws.com/h2o/latest_stable.html"
   end <- read_html(url) %>% html_node("head") %>% 
     as.character() %>% gsub(".*url=","",.) %>% gsub("/index.html.*","",.)
@@ -641,7 +645,7 @@ h2o_update <- function(run = TRUE){
   message(paste("Installing h2o from", newurl))
   install.packages("h2o", type="source", repos=newurl)
   if(run == TRUE){
-    library(h2o)
+    # require(h2o)
     h2o.init()
   }
 }

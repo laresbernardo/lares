@@ -12,8 +12,8 @@
 #' @export
 typeform_download <- function(account = "tabunga", form, creds = NA) {
   
-  require(rtypeform)
-  require(dplyr)
+  # require(rtypeform)
+  # require(dplyr)
   
   accounts <- c("tabunga")
   

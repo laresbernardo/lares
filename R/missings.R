@@ -10,8 +10,8 @@
 #' @export
 missingness <- function(df, print = FALSE, bins = 10) {
   
-  require(tidyr)
-  require(dplyr)
+  # require(tidyr)
+  # require(dplyr)
   
   m <- df %>%
     summarize_all(.funs = ~ sum(is.na(.)) / length(.)) %>%
@@ -44,9 +44,9 @@ missingness <- function(df, print = FALSE, bins = 10) {
 #' @export
 nas <- function(df, print = FALSE) {
   
-  require(dplyr)
-  require(VIM)
-  require(funModeling)
+  # require(dplyr)
+  # require(VIM)
+  # require(funModeling)
   
   nas <- df_status(df, print = print) %>% 
     filter(q_na > 0) %>% 

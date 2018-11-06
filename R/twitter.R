@@ -1,7 +1,7 @@
 get_tweets <- function(q, n = 10000, creds = NA) {
   
-  require(config)
-  require(rtweet)
+  # require(config)
+  # require(rtweet)
   
   c <- lares::get_credentials(from = "twitter", dir = creds)
   

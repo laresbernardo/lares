@@ -8,12 +8,12 @@
 #' @export
 hs_contacts <- function(limit=1000, creds = NA) {
   
-  suppressMessages(require(httr))
-  suppressMessages(require(jsonlite))
-  suppressMessages(require(dplyr))
-  suppressMessages(require(plyr))
-  suppressMessages(require(rlist))
-  suppressMessages(require(anytime))
+  # require(httr)
+  # require(jsonlite)
+  # require(dplyr)
+  # require(plyr)
+  # require(rlist)
+  # require(anytime)
   
   options(warn=-1)
   
@@ -97,11 +97,11 @@ hs_contacts <- function(limit=1000, creds = NA) {
 #' @export
 hs_deals <- function(limit=10000, creds = NA) {
   
-  suppressMessages(require(httr))
-  suppressMessages(require(jsonlite))
-  suppressMessages(require(dplyr))
-  suppressMessages(require(plyr))
-  suppressMessages(require(rlist))
+  # require(httr)
+  # require(jsonlite)
+  # require(dplyr)
+  # require(plyr)
+  # require(rlist)
   
   options(warn=-1)
   

@@ -1,11 +1,13 @@
 ####################################################################
-#' Plot Target's Distribution vs Another Variable
+#' Compare Variables with their Distributions
 #' 
-#' Study the distribution of a target variable vs another variable. This
-#' function is quite similar to the funModeling's corrplot function.
+#' Compare the distribution of a target variable vs another variable. This 
+#' function automatically splits into quantiles for numerical variables.
+#' Custom and tidyverse friendly.
 #' 
 #' @param data Dataframe
-#' @param ... Variables. Main (target) and secondary (values) variables to group by
+#' @param ... Variables. Main (target variable) and secondary (values 
+#' variable) to group by
 #' @param type Integer. 1 for both plots, 2 for counter plot only, 3 por 
 #' percentages plot only.
 #' @param top Integer. Filter and plot the most n frequent for categorical values
@@ -19,7 +21,7 @@
 #' for both, target and values)
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
 #' @param custom_colours Boolean. Use custom colours function?
-#' @param print Boolean. Print the table's result
+#' @param results Boolean. Return results data.frame?
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @export
@@ -33,31 +35,28 @@ distr <- function(data, ...,
                   clean = FALSE,
                   abc = FALSE,
                   custom_colours = FALSE,
-                  print = FALSE,
+                  results = FALSE,
                   save = FALSE, 
                   subdir = NA) {
-  
-  require(dplyr)
-  require(ggplot2)
-  require(gridExtra)
+
   options(scipen=999)
   
   vars <- quos(...)
   if (length(vars) != 2) {
     if (length(vars) < 2) {
-      stop("Please, select two variables to continue...") 
+      stop(paste("Please, select two variables to continue",
+                 "or use `lares::freqs(..., plot=T)` instead."))
     } else {
       stop("Please, select only two variables to continue...") 
     }
   }
   
-  targets <- data %>% select_(!!!vars) %>% .[,1]
-  target <- colnames(targets)
-  value <- data %>% select_(!!!vars) %>% .[,2]
-  values <- colnames(value)
-  
-  targets_name <- colnames(data[target[1]])
-  variable_name <- colnames(data[values[1]])
+  targets <- data %>% select(!!!vars[[1]])
+  value <- data %>% select(!!!vars[[2]])
+  targets_name <- colnames(targets)
+  variable_name <- colnames(value)
+  targets <- unlist(targets)
+  value <- unlist(value)
   
   if (length(targets) != length(value)) {
     message("The targets and value vectors should be the same length.")
@@ -106,11 +105,11 @@ distr <- function(data, ...,
   if (is.numeric(value)) {
     quant <- quantile(value, prob = seq(0, 1, length = breaks), na.rm = T)
     if (length(unique(quant)) != breaks) {
-      message(paste("When dividing", values, "into", breaks, "quantiles,", length(unique(quant)), "groups are created."))
+      message(paste("When dividing", variable_name, "into", breaks, "quantiles,", length(unique(quant)), "groups are created."))
     }
     value <- cut(value, unique(quant))
   }
-  
+
   df <- data.frame(targets = targets, value = value)
   
   if (na.rm == TRUE) {
@@ -120,7 +119,8 @@ distr <- function(data, ...,
     }
   }
   
-  freqs <- df %>% group_by(value, targets) %>% 
+  freqs <- df %>% 
+    group_by(value, targets) %>% 
     tally() %>% arrange(desc(n)) %>% 
     mutate(p = round(100*n/sum(n),2)) %>% ungroup() %>%
     mutate(row = row_number(),
@@ -130,29 +130,28 @@ distr <- function(data, ...,
   if(length(unique(value)) > top & !is.numeric(value)) {
     message(paste("Filtering the", top, "most frequent values. Use `top` to overrule."))
     which <- df %>% group_by(value) %>% tally() %>% arrange(desc(n)) %>% slice(1:top)
-    freqs <- freqs %>% filter_(value %in% which$value)
+    freqs <- freqs %>% filter(value %in% which$value)
   }
   
   if (abc == TRUE) {
     freqs <- freqs %>% mutate(order = rank(as.character(value)))
   }
   
-  distr <- df %>% group_by(targets) %>% 
-    tally() %>% arrange(n) %>% 
-    mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
+  caption <- paste0("Variables: ", targets_name, " vs. ", variable_name, 
+                    ". Obs: ", lares::formatNum(nrow(df), 0))
   
   # Counter plot
   if(type %in% c(1,2)) {
-    count <- ggplot(freqs, aes(x=reorder(as.character(value), order), y=n, 
+    count <- ggplot(freqs, aes(
+      x=reorder(as.character(value), order), y=n, 
                                fill=tolower(as.character(targets)), 
                                label=n, ymax=max(n)*1.1)) + 
       geom_col(position = "dodge") +
       geom_text(check_overlap = TRUE, 
                 position = position_dodge(0.9), 
                 size=3, vjust = -0.15) +
-      labs(x = "", y = "Counter") + theme_minimal() + 
-      theme(legend.position="top", legend.title=element_blank()) +
-      labs(caption = paste("Variables:", targets_name, "vs.", variable_name))
+      labs(x = "", y = "Counter", fill = targets_name, caption = caption) + 
+      theme_minimal() + theme(legend.position = "top")
     # Give an angle to labels when more than...
     if (length(unique(value)) >= 7) {
       count <- count + theme(axis.text.x = element_text(angle = 45, hjust=1))
@@ -167,10 +166,13 @@ distr <- function(data, ...,
   
   # Percentages plot
   if(type %in% c(1,3)) {
+    distr <- df %>% group_by(targets) %>% 
+      tally() %>% arrange(n) %>% 
+      mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
     prop <- ggplot(freqs, 
                    aes(x = value, 
                        y = as.numeric(p/100),
-                       fill=tolower(as.character(targets)), 
+                       fill=as.character(targets), 
                        label = p)) + 
       geom_col(position = "fill") +
       geom_text(check_overlap = TRUE, size = 3.2,
@@ -178,9 +180,8 @@ distr <- function(data, ...,
       geom_hline(yintercept = distr$pcum[1:(nrow(distr)-1)]/100, 
                  colour = "purple", linetype = "dotted", alpha = 0.8) +
       theme_minimal() + coord_flip() +
-      labs(x = "Proportions", y = "", fill="") + 
-      labs(caption = paste("Variables:", targets_name, "vs.", variable_name)) +
-      theme(legend.position="top", legend.title=element_blank())
+      labs(x = "Proportions", y = "", fill = targets_name, caption = caption) +
+      theme(legend.position = "top")
     # Show limit caption when more values than top
     if (length(unique(value)) > top) {
       count <- count + labs(caption = paste("Showing the", top, "most frequent values"))
@@ -207,34 +208,35 @@ distr <- function(data, ...,
     }
   }
   
-  # Return table with results?
-  if (print == TRUE) {
-    return(freqs %>% select_(-order))
-  }
-  
   # Plot the results and save if needed
   if (type == 1) {
     prop <- prop + guides(fill=FALSE)
-    count <- count + labs(caption="")
+    count <- count + labs(caption=targets_name)
     if (save == TRUE) {
       png(file_name, height = 1000, width = 1300, res = 200)
       gridExtra::grid.arrange(count, prop, ncol = 1, nrow = 2)
       dev.off()
     }
-    return(grid.arrange(count, prop, ncol = 1, nrow = 2)) 
+    invisible(gridExtra::grid.arrange(count, prop, ncol = 1, nrow = 2))
   }
   if (type == 2) {
     if (save == TRUE) {
       count <- count + 
         ggsave(file_name, width = 8, height = 6)
     }
-    return(count)
+    plot(count)
   }
   if (type == 3) {
     if (save == TRUE) {
       prop <- prop + 
         ggsave(file_name, width = 8, height = 6)
     }
-    return(prop)
+    plot(prop)
+  }
+  
+  # Return table with results?
+  if (results == TRUE) {
+    table <- freqs %>% select(-order)
+    return(table)
   }
 }

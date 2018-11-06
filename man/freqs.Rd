@@ -17,7 +17,6 @@ freqs(vector, ..., plot = FALSE, rm.na = FALSE)
 numerical output; use na.omit() or filter() if needed)}
 }
 \description{
-This function lets the user group, count, calculate 
-percentages and cumulatives. It also plots if needed. 
-Perfect for inside with dplyr's pipes.
+This function lets the user group, count, calculate percentages 
+and cumulatives. It also plots results if needed. Tidyverse friendly.
 }

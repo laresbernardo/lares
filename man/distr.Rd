@@ -2,16 +2,18 @@
 % Please edit documentation in R/distribution.R
 \name{distr}
 \alias{distr}
-\title{Plot Target's Distribution vs Another Variable}
+\title{Compare Variables with their Distributions}
 \usage{
 distr(data, ..., type = 1, top = 10, breaks = 10, na.rm = FALSE,
   force = "none", trim = 0, clean = FALSE, abc = FALSE,
-  custom_colours = FALSE, print = FALSE, save = FALSE, subdir = NA)
+  custom_colours = FALSE, results = FALSE, save = FALSE,
+  subdir = NA)
 }
 \arguments{
 \item{data}{Dataframe}
 
-\item{...}{Variables. Main (target) and secondary (values) variables to group by}
+\item{...}{Variables. Main (target variable) and secondary (values 
+variable) to group by}
 
 \item{type}{Integer. 1 for both plots, 2 for counter plot only, 3 por 
 percentages plot only.}
@@ -35,13 +37,14 @@ for both, target and values)}
 
 \item{custom_colours}{Boolean. Use custom colours function?}
 
-\item{print}{Boolean. Print the table's result}
+\item{results}{Boolean. Return results data.frame?}
 
 \item{save}{Boolean. Save the output plot in our working directory}
 
 \item{subdir}{Character. Into which subdirectory do you wish to save the plot to?}
 }
 \description{
-Study the distribution of a target variable vs another variable. This
-function is quite similar to the funModeling's corrplot function.
+Compare the distribution of a target variable vs another variable. This 
+function automatically splits into quantiles for numerical variables.
+Custom and tidyverse friendly.
 }

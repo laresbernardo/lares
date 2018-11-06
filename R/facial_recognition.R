@@ -9,6 +9,7 @@
 #' @export
 fr_takeselfie <- function(save=FALSE, print=FALSE) {
 
+  # require(opencv)
   options(warn = 0)
 
   if (!c("opencv") %in% installed.packages()) {
@@ -17,8 +18,7 @@ fr_takeselfie <- function(save=FALSE, print=FALSE) {
                   "Then, run 'devtools::install_github('ropenscilabs/opencv')' in R\n",
                   "NOTE: Works best in the terminal (RStudio doesn't like the popup window)"))
   }
-
-  require(opencv)
+  
   webcam <- ocv_camera()
   if (save == TRUE) {
     ocv_write(webcam, 'selfie.jpg')
@@ -38,14 +38,14 @@ fr_takeselfie <- function(save=FALSE, print=FALSE) {
 #' @export
 fr_live <- function() {
 
+  # require(opencv)
+  
   if (!c("opencv") %in% installed.packages()) {
     warning(paste("No 'opencv' library installed yet!\n",
                   "First, run 'brew install opencv' in your terminal\n",
                   "Then, run 'devtools::install_github('ropenscilabs/opencv')' in R\n",
                   "NOTE: Works best in the terminal (RStudio doesn't like the popup window)"))
   }
-
-  require(opencv)
 
   test <- ocv_camera()
   bitmap <- ocv_bitmap(test)
@@ -88,14 +88,15 @@ fr_live <- function() {
 #' @export
 fr_facecounter <- function(img) {
 
+  # require(opencv)
+  # require(httr)
+  
   if (!c("opencv") %in% installed.packages()) {
     warning(paste("No 'opencv' library installed yet!\n",
                   "First, run 'brew install opencv' in your terminal\n",
                   "Then, run 'devtools::install_github('ropenscilabs/opencv')' in R\n",
                   "NOTE: Works best in the terminal (RStudio doesn't like the popup window)"))
   }
-
-  require(opencv)
 
   pic <- ocv_read(img)
   l <- list()
@@ -105,7 +106,6 @@ fr_facecounter <- function(img) {
 }
 
 fr_getimage <- function(img_url=NA) {
-  require(httr)
   if (!is.na(img_url)) {
     f <- tempfile()
     download.file(img_url, f, mode="wb")
@@ -127,8 +127,8 @@ fr_getimage <- function(img_url=NA) {
 #' @export
 fr_sendimage <- function(type, body, endpoint, key) {
 
-  require(httr)
-  require(reshape2)
+  # require(httr)
+  # require(reshape2)
 
   content_type <- ifelse(type == 1, 'application/octet-stream', 'application/json')
   response <- POST(url = endpoint, body = body,
@@ -155,7 +155,9 @@ fr_sendimage <- function(type, body, endpoint, key) {
 #' @export
 fr_plotface <- function(img_url, df) {
 
-  require(magick)
+  # require(magick)
+  # require(jpeg)
+  # require(png)
 
   # Image characteristics
   img1props <- image_info(image_read(img_url))
@@ -165,12 +167,10 @@ fr_plotface <- function(img_url, df) {
   pic <- upload_file(f)
 
   if (grepl("jpeg|jpg",img_url)) {
-    require(jpeg)
     img1 <- readJPEG(f)
   }
 
   if (grepl("png",img_url)) {
-    require(png)
     img1 <- readPNG(f)
   }
 
@@ -215,10 +215,11 @@ fr_plotface <- function(img_url, df) {
 #' @param print Boolean. Print results
 #' @export
 fr_getresult <- function(imgUrl, print=T) {
-  require(httr)
-  require(jpeg)
-  require(reshape2)
-  require(magick)
+  
+  # require(httr)
+  # require(jpeg)
+  # require(reshape2)
+  # require(magick)
 
   options(warn=-1)
 
@@ -251,9 +252,9 @@ fr_getresult <- function(imgUrl, print=T) {
 #' @export
 fr_compare <- function(img1Url, img2Url, print1=F, print2=F) {
 
-  require(httr)
-  require(jpeg)
-  require(reshape2)
+  # require(httr)
+  # require(jpeg)
+  # require(reshape2)
 
   options(warn=-1)
 

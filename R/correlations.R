@@ -15,8 +15,6 @@
 #' @export
 corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA) {
   
-  library(dplyr)
-  
   d <- lares::numericalonly(df, logs = logs)
   
   # Correlations
@@ -67,9 +65,6 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE,
                      logs = TRUE, top = NA, zeroes = FALSE,
                      save = FALSE, subdir = NA,
                      file_name = "viz_corrvar.png") {
-  
-  require(ggplot2)
-  require(scales)
   
   rs <- lares::corr(df, method = method, logs = logs)
   d <- data.frame(variables = colnames(rs), corr = rs[, c(var)])
@@ -140,7 +135,6 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE,
 #' @export
 corr_plot <- function(df, method = "pearson", order = "FPC", type = "square", logs = TRUE) {
   
-  require(corrplot)
   c <- lares::corr(df, method, logs = logs)
   plot <- corrplot::corrplot(
     as.matrix(c),

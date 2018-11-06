@@ -17,10 +17,10 @@
 textCloud <- function(text, lang = "english", exclude = c(), seed = 0, 
                       print = T, keep_spaces = FALSE) {
   
-  require("tm")
-  require("SnowballC")
-  require("wordcloud")
-  require("RColorBrewer")
+  # require("tm")
+  # require("SnowballC")
+  # require("wordcloud")
+  # require("RColorBrewer")
   
   set.seed(seed)
   options(warn=-1)

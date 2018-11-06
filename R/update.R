@@ -9,8 +9,8 @@
 #' @export
 updateLares <- function(local = FALSE, force = FALSE, restart = FALSE) {
   
-  suppressMessages(require(devtools))
-  suppressMessages(require(config))
+  # require(devtools)
+  # require(config)
   
   start <- Sys.time()
   message(paste(start,"| Started installation..."))

@@ -9,8 +9,8 @@
 #' @export
 readGS <- function(title, ws, server=FALSE) {
   
-  require(googlesheets)
-  require(dplyr)
+  # require(googlesheets)
+  # require(dplyr)
   
   if (server == TRUE) {
     options(httr_oob_default = TRUE)
@@ -37,8 +37,8 @@ readGS <- function(title, ws, server=FALSE) {
 #' @export
 writeGS <- function(data, title, ws, cell='A1', server=FALSE) {
 
-  suppressMessages(require(googlesheets))
-  suppressMessages(require(dplyr))
+  # require(googlesheets)
+  # require(dplyr)
 
   if (server == TRUE) {
     options(httr_oob_default = TRUE)

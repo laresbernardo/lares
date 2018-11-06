@@ -6,8 +6,6 @@
 #' @export
 gg_colour_customs <- function () {
   
-  suppressMessages(require(ggplot2))
-  
   values <- c("allianz"="#0038A8",
               "equidad"="#52CF44",
               "colpatria"="#EE0606",
@@ -53,8 +51,6 @@ gg_colour_customs <- function () {
 #' @export
 gg_fill_customs <- function () {
   
-  suppressMessages(require(ggplot2))
-  
   values <- c("allianz"="#0038A8",
               "equidad"="#52CF44",
               "colpatria"="#EE0606",
@@ -99,8 +95,6 @@ gg_fill_customs <- function () {
 #' 
 #' @export
 gg_text_customs <- function () {
-  
-  suppressMessages(require(ggplot2))
   
   black <- "#000000"
   white <- "#FFFFFF"
