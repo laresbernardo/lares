@@ -1,5 +1,5 @@
 ####################################################################
-#' Dataset columns and rows counter
+#' Dataset columns and rows structure
 #' 
 #' This function lets the user to check quickly the structure of a
 #' dataset (data.frame). It returns multiple counters for useful metrics,
@@ -11,11 +11,11 @@
 #' @param plot Boolean. Do you wish to see a plot?
 #' @param subtitle Character. Add subtitle to plot
 #' @export
-dfInfo <- function (df, 
+df_str <- function (df, 
                     return = "numbers", 
                     plot = TRUE, 
                     subtitle = ""){
-
+  
   # require(dplyr)
   # require(ggplot2)
   
@@ -23,13 +23,14 @@ dfInfo <- function (df,
   
   names <- list(
     cols = colnames(df),
-    nums = cols[unlist(lapply(df, is.numeric))],
-    char = cols[unlist(lapply(df, is.character))],
-    factor = cols[unlist(lapply(df, is.factor))],
-    logic = cols[unlist(lapply(df, is.logical))],
-    time = cols[!cols %in% c(nums, char, factor, logic)],
-    allnas = cols[sapply(df, function(x) all(is.na(x)))]
-  )
+    nums = colnames(df)[unlist(lapply(df, is.numeric))],
+    char = colnames(df)[unlist(lapply(df, is.character))],
+    factor = colnames(df)[unlist(lapply(df, is.factor))],
+    logic = colnames(df)[unlist(lapply(df, is.logical))])
+  names[["time"]] <- names$cols[!colnames(df) %in% c(
+    names$nums, names$char, names$factor, names$logic)]
+  names[["allnas"]] <- names$cols[sapply(df, function(x) all(is.na(x)))]
+
   numbers <- data.frame(
     "Total Observations" = nrow(df) * ncol(df),
     "Total Rows" = nrow(df),
