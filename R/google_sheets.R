@@ -5,14 +5,14 @@
 #' 
 #' @param title Character. Textual title of Google Sheet
 #' @param ws Character. Working sheet to import
-#' @param server Boolean. Authenticate manualy
+#' @param first_time Boolean. Authenticate manualy
 #' @export
-readGS <- function(title, ws, server=FALSE) {
+readGS <- function(title, ws, first_time=FALSE) {
   
   # require(googlesheets)
   # require(dplyr)
   
-  if (server == TRUE) {
+  if (first_time == TRUE) {
     options(httr_oob_default = TRUE)
     gs_auth(new_user = TRUE)
   }
@@ -33,14 +33,14 @@ readGS <- function(title, ws, server=FALSE) {
 #' @param title Character. Textual title of Google Sheet
 #' @param ws Character. Working sheet to export to
 #' @param cell Character. In which cell should we paste the data (upper left cell)
-#' @param server Boolean. Authenticate manualy
+#' @param first_time Boolean. Authenticate manualy
 #' @export
-writeGS <- function(data, title, ws, cell='A1', server=FALSE) {
+writeGS <- function(data, title, ws, cell='A1', first_time=FALSE) {
 
   # require(googlesheets)
   # require(dplyr)
 
-  if (server == TRUE) {
+  if (first_time == TRUE) {
     options(httr_oob_default = TRUE)
     gs_auth(new_user = TRUE)
   }

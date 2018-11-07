@@ -4,7 +4,7 @@
 \alias{writeGS}
 \title{Google Sheets Writing}
 \usage{
-writeGS(data, title, ws, cell = "A1", server = FALSE)
+writeGS(data, title, ws, cell = "A1", first_time = FALSE)
 }
 \arguments{
 \item{data}{Data Frame. Data to export to Google Sheet}
@@ -15,7 +15,7 @@ writeGS(data, title, ws, cell = "A1", server = FALSE)
 
 \item{cell}{Character. In which cell should we paste the data (upper left cell)}
 
-\item{server}{Boolean. Authenticate manualy}
+\item{first_time}{Boolean. Authenticate manualy}
 }
 \description{
 This function lets the user write on any Google Sheet

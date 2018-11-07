@@ -4,14 +4,14 @@
 \alias{readGS}
 \title{Google Sheets Reading}
 \usage{
-readGS(title, ws, server = FALSE)
+readGS(title, ws, first_time = FALSE)
 }
 \arguments{
 \item{title}{Character. Textual title of Google Sheet}
 
 \item{ws}{Character. Working sheet to import}
 
-\item{server}{Boolean. Authenticate manualy}
+\item{first_time}{Boolean. Authenticate manualy}
 }
 \description{
 This function lets the user read any Google Sheet's data
