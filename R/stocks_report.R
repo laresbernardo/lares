@@ -93,7 +93,7 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365,
         
         # Add right now's data
         if (today == TRUE) {
-          getQuote <- function(ticks) {
+          quote <- function(ticks) {
             qRoot <- "https://query1.finance.yahoo.com/v7/finance/quote?fields=symbol,longName,regularMarketPrice,regularMarketChange,regularMarketTime&formatted=false&symbols="
             z <- fromJSON(paste(qRoot, paste(ticks, collapse=","), sep=""))
             z <- z$quoteResponse$result[,c("symbol", "regularMarketTime", "regularMarketPrice", "regularMarketChange", "longName")]
@@ -103,7 +103,7 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365,
             z$Time <- as.POSIXct(z$Time, origin = '1970-01-01 00:00:00')
             return(z)
           }
-          now <- getQuote(symbol)
+          now <- quote(symbol)
           now <- data.frame(Date = as.character(as.Date(now$Time)), Symbol = symbol,
                             Open = now$Price, High = now$Price, Low = now$Price, Close = now$Price,
                             Volume = 0, Adjusted = now$Price)
@@ -113,7 +113,7 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365,
         data <- rbind(data, values)
         
         # Dividends if case
-        d <- getDividends(as.character(symbol), from = start_date)
+        d <- quantmod::getDividends(as.character(symbol), from = start_date)
         if (nrow(d) > 0) {
           div <-  data.frame(Symbol = rep(symbol, nrow(d)),
                              Date = ymd(row.names(data.frame(d))),
@@ -637,12 +637,12 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   if (mail == TRUE) {
     files <- "stocksReport.html"
     mailSend(body = " ", 
-                    subject = paste("Portfolio:", max(results$df_daily$Date)),
-                    attachment = files,
-                    to = "laresbernardo@gmail.com", 
-                    from = 'AutoReport <laresbernardo@gmail.com>', 
-                    creds = wd,
-                    quite = FALSE)
+             subject = paste("Portfolio:", max(results$df_daily$Date)),
+             attachment = files,
+             to = "laresbernardo@gmail.com", 
+             from = 'AutoReport <laresbernardo@gmail.com>', 
+             creds = wd,
+             quite = FALSE)
   }
   # Clean everything up and delete files created
   unlink(temp, recursive = FALSE)

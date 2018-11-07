@@ -29,6 +29,7 @@ Imports:
     mailR,
     openxlsx,
     pROC,
+    quantmod,
     RColorBrewer,
     rdrop2,
     reshape2,

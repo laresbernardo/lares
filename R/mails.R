@@ -22,7 +22,7 @@ mailSend = function(body,
   # require(mailR)
   # require(config)
   
-  credentials <- lares::get_credentials(from="sendgrid", dir = creds)
+  credentials <- get_credentials(from="sendgrid", dir = creds)
   
   smtp <- list(host.name = credentials$host,
                port = credentials$port,
@@ -31,11 +31,12 @@ mailSend = function(body,
                ssl = TRUE, tls = TRUE)
   
   invisible(
-    send.mail(from = from, to = to, subject = subject,
-              body = paste(body),
-              html = TRUE, inline = TRUE, smtp = smtp,
-              authenticate = TRUE, send = TRUE,
-              attach.files = attachment)
+    mailR::send.mail(
+      from = from, to = to, subject = subject,
+      body = paste(body),
+      html = TRUE, inline = TRUE, smtp = smtp,
+      authenticate = TRUE, send = TRUE,
+      attach.files = attachment)
   )
   
   if(quite == FALSE) {

@@ -25,7 +25,7 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
   
   if (plot == TRUE) {
     
-    if (nrow(output) >= 20) {
+    if (nrow(output) >= 20 & length(vars) >= 2) {
       message("Recommendation: use the `lares::distr` function instead")
     }
     
