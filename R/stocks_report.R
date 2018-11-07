@@ -337,10 +337,10 @@ portfolio_daily_plot <- function(stocks_perf) {
     labs(y = '% Daily Var', x = '',
          title = 'Daily Portfolio\'s Growth (%) since Start',
          subtitle = paste(stocks_perf$Date[1]," (Includes Expenses): ",
-                          lares::formatNum(stocks_perf$TotalPer[1],2),"% ($",
-                          lares::formatNum(stocks_perf$DailyStocks[1] - 
+                          formatNum(stocks_perf$TotalPer[1],2),"% ($",
+                          formatNum(stocks_perf$DailyStocks[1] - 
                                              sum(stocks_perf$DailyTrans),0),") | $",
-                          lares::formatNum(stocks_perf$CumPortfolio[1]), sep="")) +
+                          formatNum(stocks_perf$CumPortfolio[1]), sep="")) +
     ggsave("portf_daily_change.png", width = 8, height = 5, dpi = 300)
   
   return(plot)
@@ -367,13 +367,13 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
   
   tops <- max(rbind(portfolio_perf$Invested, portfolio_perf$DailyValue))
   summary <- rbind(
-    paste0("Portfolio: $", lares::formatNum(stocks_perf$CumPortfolio[1])," | ", max(daily$Date)),
-    paste0("Stocks: $", lares::formatNum(sum(stocks_perf$DailyStocks[1]),1)," & Cash: $", 
-           lares::formatNum(stocks_perf$CumCash[1],1)),
-    paste0("ROI: ", lares::formatNum(stocks_perf$TotalPer[1], 2),"% ($",
-           lares::formatNum(stocks_perf$TotalUSD[1],0),")"),
-    paste0("Dividends: $", lares::formatNum(sum(daily$DailyDiv),0)," & Expenses: $", 
-           lares::formatNum(sum(daily$Expenses),0)))
+    paste0("Portfolio: $", formatNum(stocks_perf$CumPortfolio[1])," | ", max(daily$Date)),
+    paste0("Stocks: $", formatNum(sum(stocks_perf$DailyStocks[1]),1)," & Cash: $", 
+           formatNum(stocks_perf$CumCash[1],1)),
+    paste0("ROI: ", formatNum(stocks_perf$TotalPer[1], 2),"% ($",
+           formatNum(stocks_perf$TotalUSD[1],0),")"),
+    paste0("Dividends: $", formatNum(sum(daily$DailyDiv),0)," & Expenses: $", 
+           formatNum(sum(daily$Expenses),0)))
   
   plot <- portfolio_perf %>%
     mutate(shapeflag = ifelse(DifUSD < 0, 25, 24),
@@ -385,20 +385,20 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
     geom_col(aes(x = Symbol, y = box), fill="grey", alpha=0.5) +
     geom_point(aes(x = Symbol, y = Invested + DifUSD, shape = shapeflag)) +
     scale_shape_identity() +
-    geom_text(aes(label = paste0("$",lares::formatNum(DifUSD,1)), y = Invested + DifUSD, x = Symbol), 
+    geom_text(aes(label = paste0("$",formatNum(DifUSD,1)), y = Invested + DifUSD, x = Symbol), 
               size = 2.9, hjust = -.2, vjust = -0.2) +
     geom_text(aes(label = paste0(DifPer, "%"), y = Invested + DifUSD, x = Symbol), 
               size = 2.9, hjust = -.2, vjust = 1.2) +
-    geom_text(aes(label = paste0("$", lares::formatNum(DailyValue, 1)), y = box, x = Symbol), 
+    geom_text(aes(label = paste0("$", formatNum(DailyValue, 1)), y = box, x = Symbol), 
               size = 3, hjust = -.1, vjust = -0.2) +
-    geom_text(aes(label = paste0(Stocks, " @$", lares::formatNum(DailyValue/Stocks, 2)), y = box, x = Symbol), 
+    geom_text(aes(label = paste0(Stocks, " @$", formatNum(DailyValue/Stocks, 2)), y = box, x = Symbol), 
               size = 2, hjust = -.1, vjust = 1.5) +
-    geom_text(aes(label = paste0("$", lares::formatNum(Invested,1)), y = 0, x = Symbol), 
+    geom_text(aes(label = paste0("$", formatNum(Invested,1)), y = 0, x = Symbol), 
               size = 2, hjust = 0, vjust = -0.2) +
-    geom_text(aes(label = paste0("@$", lares::formatNum(Invested/Stocks, 2)), 
+    geom_text(aes(label = paste0("@$", formatNum(Invested/Stocks, 2)), 
                   y = 0, x = Symbol), size = 2, hjust = 0, vjust = 1.5) +
     annotate("label", x = length(unique(portfolio_perf$Stocks))*0.25, y = tops*0.6, 
-             label = lares::vector2text(summary,"\n",quotes = F), size = 3.5, hjust = 0, alpha=0.55) +
+             label = vector2text(summary,"\n",quotes = F), size = 3.5, hjust = 0, alpha=0.55) +
     scale_y_continuous(limits = c(NA, tops*1.1)) + 
     labs(y='', x='', title="Stocks Distribution and Growth") +
     guides(fill=FALSE) + coord_flip() +
@@ -477,15 +477,15 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
     coord_polar("y", start = 0) + scale_y_continuous(labels = scales::percent) +
     labs(x = '', y = "Portfolio's Stocks Type Distribution")
   t1 <- tableGrob(portfolio_perf %>% 
-                    mutate(Perc = lares::formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
-                           DailyValue = lares::formatNum(DailyValue, 2),
-                           DifPer = paste0(lares::formatNum(DifPer, 2))) %>%
+                    mutate(Perc = formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
+                           DailyValue = formatNum(DailyValue, 2),
+                           DifPer = paste0(formatNum(DifPer, 2))) %>%
                     dplyr::select(Symbol, Type, DailyValue, Perc, DifPer), rows=NULL,
                   cols = c("Stock","Stock Type","Today's Value","% Portaf","Growth %"))
   t2 <- tableGrob(portfolio_perf %>% group_by(Type) %>%
-                    dplyr::summarise(Perc = lares::formatNum(100*sum(DailyValue)/sum(portfolio_perf$DailyValue),2),
-                                     DifPer = lares::formatNum(100*sum(DailyValue)/sum(Invested)-100,2),
-                                     DailyValue = lares::formatNum(sum(DailyValue))) %>%
+                    dplyr::summarise(Perc = formatNum(100*sum(DailyValue)/sum(portfolio_perf$DailyValue),2),
+                                     DifPer = formatNum(100*sum(DailyValue)/sum(Invested)-100,2),
+                                     DailyValue = formatNum(sum(DailyValue))) %>%
                     dplyr::select(Type, DailyValue, Perc, DifPer) %>% 
                     arrange(desc(Perc)), rows=NULL,
                   cols = c("Stock Type","Today's Value","% Portaf","Growth %"))
@@ -516,7 +516,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   tabs <- c('portfolio','transactions','cash')
   if (sum(names(data) %in% tabs) != 3) {
     not <- names(data)[!names(data) %in% tabs]
-    stop(paste("The following objects are obligatory too:", lares::vector2text(not)))
+    stop(paste("The following objects are obligatory too:", vector2text(not)))
   }
   
   current_wd <- getwd()
@@ -525,20 +525,20 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   
   # Data wrangling and calculations
   message("Downloading historical and live data for each Stock...")
-  hist <- lares::get_stocks_hist(symbols = data$portfolio$Symbol, 
+  hist <- get_stocks_hist(symbols = data$portfolio$Symbol, 
                                  from = data$portfolio$StartDate, tax = tax)
-  daily <- lares::stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, 
+  daily <- stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, 
                                   transactions = data$transactions, expenses = expenses)
-  stocks_perf <- lares::stocks_performance(daily, cash_in = data$cash, cash_fix = cash_fix)
-  portfolio_perf <- lares::portfolio_performance(portfolio = data$portfolio, daily = daily)
+  stocks_perf <- stocks_performance(daily, cash_in = data$cash, cash_fix = cash_fix)
+  portfolio_perf <- portfolio_performance(portfolio = data$portfolio, daily = daily)
   message("1. Calculations ready...")
   
   # Visualizations
-  p1 <- lares::portfolio_daily_plot(stocks_perf)
-  p2 <- lares::stocks_total_plot(stocks_perf, portfolio_perf, daily, 
+  p1 <- portfolio_daily_plot(stocks_perf)
+  p2 <- stocks_total_plot(stocks_perf, portfolio_perf, daily, 
                                  trans = data$transactions, cash = data$cash)
-  p3 <- lares::stocks_daily_plot(portfolio = data$portfolio, daily)
-  p4 <- lares::portfolio_distr_plot(portfolio_perf, daily)
+  p3 <- stocks_daily_plot(portfolio = data$portfolio, daily)
+  p4 <- portfolio_distr_plot(portfolio_perf, daily)
   graphics.off()
   message("2. Visuals plotted...")
   
@@ -567,7 +567,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
 #' 
 #' @param results List. Containing the following objects: portf_daily_change, 
 #' portf_stocks_change, portf_stocks_histchange, portf_distribution & portfolio_perf.
-#' You can use simply use the lares::stocks_objects(data) if you didn't mess with the order!
+#' You can use simply use the stocks_objects(data) if you didn't mess with the order!
 #' @export
 stocks_html <- function(results) {
   
@@ -622,11 +622,11 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   setwd(temp)
   
   # Data extraction and processing
-  data <- lares::get_stocks()
-  results <- lares::stocks_objects(data)
+  data <- get_stocks()
+  results <- stocks_objects(data)
   
   # HTML report
-  lares::stocks_html(results)
+  stocks_html(results)
   
   # Set token for Sendgrid credentials:
   token_dir <- case_when(wd == "personal" ~ "~/Dropbox (Personal)/Documentos/Docs/Data",
@@ -636,7 +636,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   }
   if (mail == TRUE) {
     files <- "stocksReport.html"
-    lares::mailSend(body = " ", 
+    mailSend(body = " ", 
                     subject = paste("Portfolio:", max(results$df_daily$Date)),
                     attachment = files,
                     to = "laresbernardo@gmail.com", 
@@ -652,12 +652,12 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
 }
 
 ######################### SHORT #####################################
-# df <- lares::get_stocks() # Get data from my Dropbox
-# dfp <- lares::stocks_objects(df) # Make calculations and plots
-# lares::stocks_html(dfp) # Create HTML report
-# lares::stocks_report() # Create and send report to my mail
+# df <- get_stocks() # Get data from my Dropbox
+# dfp <- stocks_objects(df) # Make calculations and plots
+# stocks_html(dfp) # Create HTML report
+# stocks_report() # Create and send report to my mail
 
 ######################### LONG #####################################
-# df <- lares::get_stocks() # Get data from my Dropbox
-# hist <- lares::get_stocks_hist(symbols = df$portfolio$Symbol, from = df$portfolio$StartDate)
-# daily <- lares::stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = df$transactions)
+# df <- get_stocks() # Get data from my Dropbox
+# hist <- get_stocks_hist(symbols = df$portfolio$Symbol, from = df$portfolio$StartDate)
+# daily <- stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = df$transactions)

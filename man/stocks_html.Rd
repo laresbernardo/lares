@@ -9,7 +9,7 @@ stocks_html(results)
 \arguments{
 \item{results}{List. Containing the following objects: portf_daily_change, 
 portf_stocks_change, portf_stocks_histchange, portf_distribution & portfolio_perf.
-You can use simply use the lares::stocks_objects(data) if you didn't mess with the order!}
+You can use simply use the stocks_objects(data) if you didn't mess with the order!}
 }
 \description{
 This function lets the user create his portfolio's full report in HTML using
