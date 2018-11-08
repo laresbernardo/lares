@@ -6,13 +6,13 @@
 #' a plot, and a list of column names for each of the column metrics.
 #' 
 #' @param df Dataframe
-#' @param return Character. Return "numbers" for counters and percetnages or 
-#' "names" for column names of each of the cateogries
+#' @param return Character. Return "skimr" for skim results, "numbers" for
+#' numbers, or "names" for column names of each of the cateogries
 #' @param plot Boolean. Do you wish to see a plot?
 #' @param subtitle Character. Add subtitle to plot
 #' @export
 df_str <- function (df, 
-                    return = "numbers", 
+                    return = "skimr", 
                     plot = TRUE, 
                     subtitle = ""){
   
@@ -73,8 +73,11 @@ df_str <- function (df,
       geom_text(size = 3, hjust = 1.1)  
     print(plot)
   }
+  if (return == "skimr") {
+    return(skimr::skim(df))
+  }
   if (return == "numbers") {
-    return(intro2 %>% select(-type)) 
+    return(intro2 %>% select(-type))
   }
   if (return == "names") {
     return(names) 

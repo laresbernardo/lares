@@ -705,7 +705,7 @@ mplot_lineal <- function(tag,
     results$dist[i] <- lares::dist2d(c(results$tag[i],results$score[i]), c(0,0), c(1,1)) 
   }
   
-  fit <- lm(tag ~ score)
+  fit <- lm(results$score ~ results$tag)
   labels <- paste(
     paste("Adj R2 = ", signif(summary(fit)$adj.r.squared, 4)),
     #paste("Pval =", signif(summary(fit)$coef[2,4], 3)), 
@@ -729,12 +729,9 @@ mplot_lineal <- function(tag,
     p <- p + geom_smooth("lm", alpha = 0.8) 
   }
   
-  # Draw reference line if there is a correlation
-  rsq <- summary(fit)$r.squared
+  # Draw reference line for correlation
   slope <- summary(fit)$coefficients[2]
-  if(rsq > 0.5){
-    p <- p + geom_abline(slope = slope, intercept = 0, alpha = 0.5, colour = "orange", size=0.6)
-  }
+  p <- p + geom_abline(slope = slope, intercept = 0, alpha = 0.5, colour = "orange", size=0.6)
   
   if(!is.na(subtitle)) {
     p <- p + labs(subtitle = subtitle)

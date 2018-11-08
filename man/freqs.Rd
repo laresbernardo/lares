@@ -4,7 +4,8 @@
 \alias{freqs}
 \title{Frequencies Calculations and Plot}
 \usage{
-freqs(vector, ..., plot = FALSE, rm.na = FALSE)
+freqs(vector, ..., plot = FALSE, rm.na = FALSE, save = FALSE,
+  subdir = NA)
 }
 \arguments{
 \item{vector}{Data.frame}
@@ -15,6 +16,10 @@ freqs(vector, ..., plot = FALSE, rm.na = FALSE)
 
 \item{rm.na}{Boolean. Remove NA values in the plot? (not filtered for 
 numerical output; use na.omit() or filter() if needed)}
+
+\item{save}{Boolean. Save the output plot in our working directory}
+
+\item{subdir}{Character. Into which subdirectory do you wish to save the plot to?}
 }
 \description{
 This function lets the user group, count, calculate percentages 

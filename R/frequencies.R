@@ -9,8 +9,10 @@
 #' @param plot Boolean. Do you want to see a plot? Three variables tops.
 #' @param rm.na Boolean. Remove NA values in the plot? (not filtered for 
 #' numerical output; use na.omit() or filter() if needed)
+#' @param save Boolean. Save the output plot in our working directory
+#' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @export
-freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
+freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE, save = FALSE, subdir = NA) {
   
   # require(dplyr)
   # require(ggplot2)
@@ -30,7 +32,7 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
     }
     
     if (ncol(output) - 3 <= 3) { 
-  
+      
       options(warn=-1)
       
       plot <- ungroup(output)
@@ -102,6 +104,19 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE) {
       # When more than two features
       message("Sorry, but trying to plot more than 3 features is as complex as it sounds...")
     } 
-  }    
+    
+    # Export file name and folder for plot
+    if (save == TRUE) {
+      names <- vector2text(cleanText(as.character(vars), spaces = FALSE), 
+                           sep=".vs.", quotes = FALSE)
+      file_name <- paste0("viz_freqs_", names, ".png")
+      if (!is.na(subdir)) {
+        options(warn=-1)
+        dir.create(file.path(getwd(), subdir), recursive = T)
+        file_name <- paste(subdir, file_name, sep="/")
+      }
+      p <- p + ggsave(file_name, width = 8, height = 6)
+    }
+  }
   return(output)
 }

@@ -4,13 +4,13 @@
 \alias{df_str}
 \title{Dataset columns and rows structure}
 \usage{
-df_str(df, return = "numbers", plot = TRUE, subtitle = "")
+df_str(df, return = "skimr", plot = TRUE, subtitle = "")
 }
 \arguments{
 \item{df}{Dataframe}
 
-\item{return}{Character. Return "numbers" for counters and percetnages or 
-"names" for column names of each of the cateogries}
+\item{return}{Character. Return "skimr" for skim results, "numbers" for
+numbers, or "names" for column names of each of the cateogries}
 
 \item{plot}{Boolean. Do you wish to see a plot?}
 

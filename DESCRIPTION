@@ -41,6 +41,7 @@ Imports:
     rtweet,
     rvest,
     scales,
+    skimr,
     SnowballC,
     tidyverse,
     wordcloud,

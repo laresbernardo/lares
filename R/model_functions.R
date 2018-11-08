@@ -176,21 +176,30 @@ h2o_automl <- function(df,
   
   # Calculations and variables
   scores <- predict(m, as.h2o(test))
+  scores_df <- as.vector(predict(m, as.h2o(df))[,1])
+  imp <- data.frame(h2o.varimp(m)) %>%
+  {if ("names" %in% colnames(.)) 
+    dplyr::rename(., "variable" = "names", "importance" = "coefficients") else .
+  } %>%
+  {if ("percentage" %in% colnames(.)) 
+    dplyr::rename(., "importance" = "percentage") else .
+  }
   
   # CLASSIFICATION MODELS
   if (type == "Classifier") {
     results <- list(
       project = project,
       model = m,
-      scores = data.frame(
+      scores_test = data.frame(
         index = c(1:nrow(test)),
         tag = as.vector(test$tag),
         score = as.vector(scores[,3]),
         norm_score = lares::normalize(as.vector(scores[,3]))),
+      scores_df = scores_df,
       scoring_history = data.frame(m@model$scoring_history),
       datasets = list(test = test, train = train),
       parameters = m@parameters,
-      importance = data.frame(h2o.varimp(m)),
+      importance = imp,
       auc_test = NA, #h2o.auc(m, valid=TRUE)
       logloss_test = NA,
       model_name = as.vector(m@model_id),
@@ -208,14 +217,16 @@ h2o_automl <- function(df,
     results <- list(
       project = project,
       model = m,
-      scores = data.frame(
+      scores_test = data.frame(
         index = c(1:nrow(test)),
         tag = as.vector(test$tag),
         score = as.vector(scores$predict)),
+      scores_df = scores_df,
       scoring_history = data.frame(m@model$scoring_history),
       datasets = list(test = test, train = train),
       parameters = m@parameters,
-      importance = data.frame(h2o.varimp(m)),
+      importance = imp,
+      rmse = h2o::h2o.rmse(m),
       model_name = as.vector(m@model_id),
       algorithm = m@algorithm,
       leaderboard = aml@leaderboard
@@ -294,6 +305,7 @@ h2o_selectmodel <- function(results, which_model = 1) {
 #' @param binary Boolean. Do you wish to export the Binary model?
 #' @param pojo Boolean. Do you wish to export the POJO model?
 #' @param mojo Boolean. Do you wish to export the MOJO model?
+#' @param sample_size Integer. How many example rows do you want to show?
 #' @param subdir Character. In which directory do you wish to save the results?
 #' @export
 export_results <- function(results, 
@@ -302,13 +314,15 @@ export_results <- function(results,
                            binary = TRUE,
                            pojo = TRUE, 
                            mojo = TRUE, 
+                           sample_size = 10,
                            subdir = NA) {
   
   # require(h2o)
   options(warn=-1)
   
   # We create a directory to save all our results
-  subdirname <- paste0(round(100*results$auc_test, 2), "-", results$model_name)  
+  first <- paste0(round(100*results$auc_test, 2), signif(results$rmse, 4))
+  subdirname <- paste0(first, "_", results$model_name)  
   if (!is.na(subdir)) {
     subdir <- paste0(subdir, "/", subdirname)
   } else {
@@ -338,7 +352,7 @@ export_results <- function(results,
     tags <- c(as.character(results$datasets$test$tag), as.character(results$datasets$train$tag))
     tags_test <- results$datasets$test
     tags_train <- results$datasets$train
-    random_sample <- sample(1:nrow(results$scores), 10)
+    random_sample <- sample(1:nrow(results$scores_test), sample_size)
     
     results_txt <- list(
       "Project" = results$project,
@@ -355,8 +369,8 @@ export_results <- function(results,
       "Variable Importance" = results$importance,
       "Model Results" = results$model,
       "Models Leaderboard" = results$leaderboard,
-      "10 Scoring examples" = cbind(real = results$scores$tag[random_sample],
-                                    score = results$scores$score[random_sample], 
+      "10 Scoring examples" = cbind(real = results$scores_test$tag[random_sample],
+                                    score = results$scores_test$score[random_sample], 
                                     results$datasets$test[random_sample, names(results$datasets$test) != "tag"])
     )
     capture.output(results_txt, file = paste0(subdir, "/results.txt"))
