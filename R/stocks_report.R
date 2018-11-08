@@ -85,7 +85,7 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365,
         symbol <- as.character(symbols[i])
         start_date <- as.character(from[i])
         
-        values <- getSymbols(symbol, env=NULL, from=start_date, src="yahoo") %>% data.frame()
+        values <- quantmod::getSymbols(symbol, env=NULL, from=start_date, src="yahoo") %>% data.frame()
         values <- cbind(row.names(values), as.character(symbol), values)
         colnames(values) <- c("Date","Symbol","Open","High","Low","Close","Volume","Adjusted")
         values <- mutate(values, Adjusted = rowMeans(dplyr::select(values, High, Close), na.rm = TRUE))
@@ -476,19 +476,22 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
     geom_bar(aes(x = "", y = DailyValue/sum(DailyValue), fill = Type), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels = scales::percent) +
     labs(x = '', y = "Portfolio's Stocks Type Distribution")
-  t1 <- tableGrob(portfolio_perf %>% 
-                    mutate(Perc = formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
-                           DailyValue = formatNum(DailyValue, 2),
-                           DifPer = paste0(formatNum(DifPer, 2))) %>%
-                    dplyr::select(Symbol, Type, DailyValue, Perc, DifPer), rows=NULL,
-                  cols = c("Stock","Stock Type","Today's Value","% Portaf","Growth %"))
-  t2 <- tableGrob(portfolio_perf %>% group_by(Type) %>%
-                    dplyr::summarise(Perc = formatNum(100*sum(DailyValue)/sum(portfolio_perf$DailyValue),2),
-                                     DifPer = formatNum(100*sum(DailyValue)/sum(Invested)-100,2),
-                                     DailyValue = formatNum(sum(DailyValue))) %>%
-                    dplyr::select(Type, DailyValue, Perc, DifPer) %>% 
-                    arrange(desc(Perc)), rows=NULL,
-                  cols = c("Stock Type","Today's Value","% Portaf","Growth %"))
+  t1 <- gridExtra::tableGrob(
+    portfolio_perf %>% 
+      mutate(Perc = formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
+             DailyValue = formatNum(DailyValue, 2),
+             DifPer = paste0(formatNum(DifPer, 2))) %>%
+      dplyr::select(Symbol, Type, DailyValue, Perc, DifPer), rows=NULL,
+    cols = c("Stock","Stock Type","Today's Value","% Portaf","Growth %"))
+  t2 <- gridExtra::tableGrob(
+    portfolio_perf %>% 
+      group_by(Type) %>%
+      dplyr::summarise(Perc = formatNum(100*sum(DailyValue)/sum(portfolio_perf$DailyValue),2),
+                       DifPer = formatNum(100*sum(DailyValue)/sum(Invested)-100,2),
+                       DailyValue = formatNum(sum(DailyValue))) %>%
+      dplyr::select(Type, DailyValue, Perc, DifPer) %>% 
+      arrange(desc(Perc)), rows=NULL,
+    cols = c("Stock Type","Today's Value","% Portaf","Growth %"))
   png("portf_distribution.png", width=700, height=500)
   grid.arrange(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3))
   dev.off()

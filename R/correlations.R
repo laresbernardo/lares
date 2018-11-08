@@ -15,6 +15,8 @@
 #' @export
 corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA) {
   
+  options(warn=-1)
+  
   d <- lares::numericalonly(df, logs = logs)
   
   # Correlations

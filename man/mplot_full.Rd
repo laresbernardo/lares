@@ -4,8 +4,9 @@
 \alias{mplot_full}
 \title{MPLOTS Score Full Report Plots}
 \usage{
-mplot_full(tag, score, splits = 8, subtitle = NA, model_name = NA,
-  save = FALSE, subdir = NA, file_name = "viz_full.png")
+mplot_full(tag, score, splits = 8, thresh = 5, subtitle = NA,
+  model_name = NA, save = FALSE, subdir = NA,
+  file_name = "viz_full.png")
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -13,6 +14,10 @@ mplot_full(tag, score, splits = 8, subtitle = NA, model_name = NA,
 \item{score}{Vector. Predicted value or model's result}
 
 \item{splits}{Integer. Numer of separations to plot}
+
+\item{thresh}{Integer. Threshold for selecting binary or regression 
+models: this number is the threshold of unique values we should 
+have in 'tag' (more than: regression; less than: classification)}
 
 \item{subtitle}{Character. Subitle to show in plot}
 

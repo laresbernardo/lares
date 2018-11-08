@@ -178,7 +178,7 @@ cleanText <- function(text, spaces = TRUE) {
 #' @param ip Vector. Vector with all IP's we wish to search
 #' @export
 ip_country <- function(ip) {
-
+  
   # require(rvest)
   # require(dplyr)
   
@@ -285,9 +285,11 @@ one_hot_encoding_commas <- function(df, variables, sep=","){
 #' This function lets the user balance a given data.frame by resampling
 #' with a given relation rate and a binary feature.
 #' 
-#' @param df Vector or Dataframe. Contains different variables in each column, separated by a specific character
+#' @param df Vector or Dataframe. Contains different variables in each 
+#' column, separated by a specific character
 #' @param variable Character. Which binary variable should we use to resample df
-#' @param rate Numeric. How many X for every Y we need? Default: 1
+#' @param rate Numeric. How many X for every Y we need? Default: 1. If there are
+#' more than 2 unique values, rate will represent percentage for number of rows
 #' @param seed Numeric. Seed to replicate and obtain same values
 #' @export
 balance_data <- function(df, variable, rate = 1, seed = 0) {
@@ -300,26 +302,31 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
   tags <- unique(df$tag)
   
   if (length(tags) != 2) {
-    stop("You should use a variable with only 2 unique values!")
+    # For numerical resampling:
+    samp <- round(rate * nrow(df))
+    balanced <- sample_n(df, samp)
+    if (nrow(df) != samp) {
+      message(paste("Resampled from", nrow(df), "to", samp, "rows")) 
+    }
   } else {
+    # For binary resampling:
     message(paste("Resampled from:", lares::vector2text(table(df$tag), sep = " x ", quotes = F)))
-    
     ones <- df %>% filter(tag %in% as.character(tags[1]))
     zeros <- df %>% filter(tag %in% as.character(tags[2]))
     
     if (nrow(ones) <= nrow(zeros)) {
       message(paste("Reducing size for:", tags[2]))
-      zeros <- sample_n(zeros, rate * nrow(ones)) 
+      zeros <- sample_n(zeros, round(rate * nrow(ones)))
     } else {
       message(paste("Reducing size for:", tags[1]))
-      ones <- sample_n(ones, rate * nrow(zeros)) 
+      ones <- sample_n(ones, round(rate * nrow(zeros)))
     }
     balanced <- rbind(ones, zeros)
-    
     message(paste("Into:",lares::vector2text(table(balanced$tag), sep = " x ", quotes = F)))
-    balanced <- rename_at(balanced, vars("tag"), funs(paste0(variable)))
-    return(balanced)
   }
+  
+  balanced <- rename_at(balanced, vars("tag"), funs(paste0(variable)))
+  return(balanced)
 }
 
 
@@ -473,7 +480,8 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
   # Which character columns may be used as numeric?
   transformable <- apply(df, 2, function(x) length(unique(x)))
   which <- names(transformable[transformable==2])
-  dfn <- df[,colnames(df) %in% which]
+  dfn <- data.frame(df[,colnames(df) %in% which])
+  colnames(dfn) <- which
   non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x))-1)
   numeric <- select_if(df, is.numeric)
   if (logs == TRUE) {

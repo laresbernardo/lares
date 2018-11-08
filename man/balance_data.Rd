@@ -7,11 +7,13 @@
 balance_data(df, variable, rate = 1, seed = 0)
 }
 \arguments{
-\item{df}{Vector or Dataframe. Contains different variables in each column, separated by a specific character}
+\item{df}{Vector or Dataframe. Contains different variables in each 
+column, separated by a specific character}
 
 \item{variable}{Character. Which binary variable should we use to resample df}
 
-\item{rate}{Numeric. How many X for every Y we need? Default: 1}
+\item{rate}{Numeric. How many X for every Y we need? Default: 1. If there are
+more than 2 unique values, rate will represent percentage for number of rows}
 
 \item{seed}{Numeric. Seed to replicate and obtain same values}
 }

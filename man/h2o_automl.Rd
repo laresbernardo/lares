@@ -4,7 +4,7 @@
 \alias{h2o_automl}
 \title{Automated H2O's AutoML}
 \usage{
-h2o_automl(df, train_test = NA, split = 0.7, seed = 0, thresh = 6,
+h2o_automl(df, train_test = NA, split = 0.7, seed = 0, thresh = 5,
   max_time = 5 * 60, max_models = 25, alarm = TRUE, export = FALSE,
   plot = FALSE, project = "Machine Learning Model")
 }
@@ -21,9 +21,8 @@ datasets. Value is for training set.}
 \item{seed}{Numeric. Seed for random stuff and reproducibility}
 
 \item{thresh}{Integer. Threshold for selecting binary or regression 
-models: this number is the threshold 
-of unique values we should have in 'tag' (more than: regression; 
-less than: classification)}
+models: this number is the threshold of unique values we should 
+have in 'tag' (more than: regression; less than: classification)}
 
 \item{max_time}{Numeric. Max seconds you wish for the function 
 to iterate}

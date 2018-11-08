@@ -4,13 +4,17 @@
 \alias{mplot_density}
 \title{Density plot for discrete and continuous values}
 \usage{
-mplot_density(tag, score, model_name = NA, subtitle = NA,
+mplot_density(tag, score, thresh = 5, model_name = NA, subtitle = NA,
   save = FALSE, subdir = NA, file_name = "viz_distribution.png")
 }
 \arguments{
 \item{tag}{Vector. Real known label}
 
 \item{score}{Vector. Predicted value or model's result}
+
+\item{thresh}{Integer. Threshold for selecting binary or regression 
+models: this number is the threshold of unique values we should 
+have in 'tag' (more than: regression; less than: classification)}
 
 \item{model_name}{Character. Model's name}
 

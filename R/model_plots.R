@@ -5,6 +5,9 @@
 #' 
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
+#' @param thresh Integer. Threshold for selecting binary or regression 
+#' models: this number is the threshold of unique values we should 
+#' have in 'tag' (more than: regression; less than: classification)
 #' @param model_name Character. Model's name
 #' @param subtitle Character. Subtitle to show in plot
 #' @param save Boolean. Save output plot into working directory
@@ -13,6 +16,7 @@
 #' @export
 mplot_density <- function(tag, 
                           score, 
+                          thresh = 5,
                           model_name = NA, 
                           subtitle = NA, 
                           save = FALSE, 
@@ -28,7 +32,7 @@ mplot_density <- function(tag,
     stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
   }
   
-  if (length(unique(tag)) <= 6) {
+  if (length(unique(tag)) <= thresh) {
     
     out <- data.frame(tag = as.character(tag),
                       score = as.numeric(score))
@@ -407,7 +411,7 @@ mplot_cuts_error <- function(tag,
     mutate(real_error = tag - score,
            abs_error = abs(real_error),
            p_error = 100 * real_error/tag) %>%
-    filter(abs(p_error) <= 100)
+    filter(abs(p_error) <= 150)
   
   # First: absolute errors
   deciles_abs <- quantile(df$abs_error, 
@@ -672,6 +676,7 @@ mplot_metrics <- function(results,
 #' 
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
+#' @param regression Boolean. Plot with geom_smooth's lm regression?
 #' @param subtitle Character. Subitle to show in plot
 #' @param model_name Character. Model's name
 #' @param save Boolean. Save output plot into working directory
@@ -680,6 +685,7 @@ mplot_metrics <- function(results,
 #' @export
 mplot_lineal <- function(tag, 
                          score, 
+                         regression = FALSE,
                          subtitle = NA, 
                          model_name = NA, 
                          save = FALSE, 
@@ -708,16 +714,27 @@ mplot_lineal <- function(tag,
     sep="\n")
   
   p <- ggplot(results, aes(x = tag, y = score, colour = dist)) +
-    geom_abline(slope = 1, intercept = 0, alpha = 0.5, colour = "orange", size=0.6) +
-    geom_point() + theme_minimal() + coord_equal() + 
+    geom_point() + theme_minimal() + 
     labs(title = "Regression Model Results",
          x = "Real value", y = "Predicted value",
          colour = "Deviation") +
-    annotate("text", x = Inf, y = -Inf, hjust = 1, vjust = 0, label = labels, size = 2.8) +
+    annotate("text", x = Inf, y = -Inf, hjust = 1, vjust = -0.05, label = labels, size = 2.8) +
     scale_x_continuous(labels = comma) +
     scale_y_continuous(labels = comma) +
+    scale_colour_continuous(labels = comma) +
     theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
     guides(colour = guide_colorbar(barwidth = 0.9, barheight = 4.5))
+  
+  if (regression == TRUE) {
+    p <- p + geom_smooth("lm", alpha = 0.8) 
+  }
+  
+  # Draw reference line if there is a correlation
+  rsq <- summary(fit)$r.squared
+  slope <- summary(fit)$coefficients[2]
+  if(rsq > 0.5){
+    p <- p + geom_abline(slope = slope, intercept = 0, alpha = 0.5, colour = "orange", size=0.6)
+  }
   
   if(!is.na(subtitle)) {
     p <- p + labs(subtitle = subtitle)
@@ -746,6 +763,9 @@ mplot_lineal <- function(tag,
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param splits Integer. Numer of separations to plot
+#' @param thresh Integer. Threshold for selecting binary or regression 
+#' models: this number is the threshold of unique values we should 
+#' have in 'tag' (more than: regression; less than: classification)
 #' @param subtitle Character. Subitle to show in plot
 #' @param model_name Character. Model's name
 #' @param save Boolean. Save output plot into working directory
@@ -755,6 +775,7 @@ mplot_lineal <- function(tag,
 mplot_full <- function(tag, 
                        score, 
                        splits = 8, 
+                       thresh = 5,
                        subtitle = NA, 
                        model_name = NA, 
                        save = FALSE, 
@@ -773,7 +794,7 @@ mplot_full <- function(tag,
   }
   
   # Categorical Models
-  if (length(unique(tag)) <= 6) {
+  if (length(unique(tag)) <= thresh) {
     p1 <- lares::mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
     p2 <- lares::mplot_splits(tag = tag, score = score, splits = splits)
     p3 <- lares::mplot_roc(tag = tag, score = score)

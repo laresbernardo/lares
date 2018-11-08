@@ -91,9 +91,8 @@ loglossBinary = function(tag, score, eps = 1e-15) {
 #' datasets. Value is for training set.
 #' @param seed Numeric. Seed for random stuff and reproducibility
 #' @param thresh Integer. Threshold for selecting binary or regression 
-#' models: this number is the threshold 
-#' of unique values we should have in 'tag' (more than: regression; 
-#' less than: classification)
+#' models: this number is the threshold of unique values we should 
+#' have in 'tag' (more than: regression; less than: classification)
 #' @param max_time Numeric. Max seconds you wish for the function 
 #' to iterate
 #' @param max_models Numeric. Max models you wish for the function 
@@ -109,7 +108,7 @@ h2o_automl <- function(df,
                        train_test = NA,
                        split = 0.7,
                        seed = 0,
-                       thresh = 6,
+                       thresh = 5,
                        max_time = 5*60,
                        max_models = 25,
                        alarm = TRUE,
