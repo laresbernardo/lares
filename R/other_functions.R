@@ -657,3 +657,53 @@ h2o_update <- function(run = TRUE){
     h2o.init()
   }
 }
+
+####################################################################
+#' Install latest version of H2O
+#' 
+#' This function lets the user un-install the current version of
+#' H2O installed and update to latest stable version.
+#' 
+#' @param p ggplot2 object. Plot to export
+#' @param name Character. File's name or sufix if vars is not null
+#' @param vars Vector. Variables in plot
+#' @param sep Character. Separator for variables
+#' @param width Numeric. Plot's width on file
+#' @param height Numeric. Plot's height on file
+#' @param subdir Character. Into which subdirectory do you wish to save the plot to?
+#' @param quiet Boolean. Display succesful message with filename when saved?
+#' @export
+export_plot <- function(p, 
+                        name = "plot", 
+                        vars = NA, 
+                        sep = ".vs.", 
+                        width = 8, 
+                        height = 6, 
+                        subdir = NA,
+                        quiet = FALSE) {
+  
+  # File name
+  if (!is.na(vars)) {
+    names <- vector2text(
+      cleanText(as.character(vars), spaces = FALSE), sep=sep, quotes = FALSE)
+    file_name <- paste0(name, "_", names, ".png")  
+  } else {
+    file_name <- paste0(name, ".png")  
+  }
+  
+  # Create directory if needed
+  if (!is.na(subdir)) {
+    options(warn=-1)
+    dir.create(file.path(getwd(), subdir), recursive = T)
+    file_name <- paste(subdir, file_name, sep="/")
+  }
+  
+  # Export plot to file
+  p <- p + ggsave(file_name, width = width, height = height)
+  
+  if (quiet == FALSE) {
+    message(paste("Plot saved as", file_name)) 
+  }
+  
+}
+
