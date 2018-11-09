@@ -10,7 +10,8 @@ project <- "My Personal Project"
 wd <- "/Users/bernardo/Desktop"
 trainingfile <- "Sample.csv"
 variable <- "variable"
-save <- TRUE
+save <- FALSE
+subdir <- NA
 seed <- 0
 
 ############## 1. Import libraries and data
@@ -59,10 +60,12 @@ results <- h2o_automl(df, max_time = 60, project = project, seed = seed)
 # Let's take a look at the results:
 mplot_importance(results$importance$variable,
                  results$importance$importance,
-                 subtitle = project, save = save, subdir = subdir)
+                 subtitle = project, save = save, subdir = subdir,
+                 model_name = results$model_name)
 mplot_full(tag = results$scores_test$tag,
            score = results$scores_test$score,
-           subtitle = project, save = save, subdir = subdir)
+           subtitle = project, save = save, subdir = subdir,
+           model_name = results$model_name)
 
 # Further study on particular intereseting variables:
 freqs(s, variable, plot = T, save = save, subdir = subdir)

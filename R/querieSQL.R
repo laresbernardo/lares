@@ -16,7 +16,7 @@ queryDummy = function(query, creds = NA) {
 
   dw <- lares::get_credentials(from="dummy", dir = creds)
 
-  drv <- dbDriver(dw$driver)
+  drv <- RPostgreSQL::PostgreSQL()
   con <- dbConnect(drv, host=dw$server, dbname=dw$database,
                    port=dw$port, user=dw$uid, password=dw$pwd)
   start <- Sys.time()
@@ -50,7 +50,7 @@ queryDW = function(query, which = "soat", creds = NA) {
   dbname <- ifelse(which == "soat", dw$database_soat,
                    ifelse(which == "creditos", dw$database_creditos, NA))
 
-  drv <- dbDriver(dw$driver)
+  drv <- RPostgreSQL::PostgreSQL()
   con <- dbConnect(drv, host=dw$server, dbname=dbname,
                    port=dw$port, user=dw$uid, password=dw$pwd)
   start <- Sys.time()
@@ -80,7 +80,7 @@ queryProduc = function(query, creds = NA) {
 
   dw <- lares::get_credentials(from = "production", dir = creds)
 
-  drv <- dbDriver(dw$driver)
+  drv <- RPostgreSQL::PostgreSQL()
   con <- dbConnect(drv, host=dw$server, dbname=dw$database,
                    port=dw$port, user=dw$uid, password=dw$pwd)
   start <- Sys.time()

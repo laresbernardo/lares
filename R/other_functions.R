@@ -12,7 +12,7 @@ year_month <- function(date) {
   
   return(paste(
     lubridate::year(date),
-    str_pad(lubridate::month(date), 2, pad = "0"),
+    stringr::str_pad(lubridate::month(date), 2, pad = "0"),
     sep="-"))
 }
 
@@ -31,7 +31,7 @@ year_week <- function(date) {
   
   return(paste(
     lubridate::year(date),
-    str_pad(lubridate::week(date), 2, pad = "0"),
+    stringr::str_pad(lubridate::week(date), 2, pad = "0"),
     sep="-"))
 }
 

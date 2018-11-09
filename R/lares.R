@@ -72,4 +72,4 @@ if(getRversion() >= "2.15.1")
       "tk_make_future_timeseries","tm_map","toJSON","token","train_auc","train_ll",
       "trees","type","upload_file","value","values","variable_response","variables",
       "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","wordcloud","x","y",
-      "cols","nums","char","logic","counter","metric"))
+      "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos","name","where"))

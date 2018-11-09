@@ -43,6 +43,7 @@ Imports:
     scales,
     skimr,
     SnowballC,
+    stringr,
     tidyverse,
     wordcloud,
     xml2
