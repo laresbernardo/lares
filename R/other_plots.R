@@ -54,7 +54,7 @@ plot_timeline <- function(event, start, end,
   
   # Plot timeline
   p <- ggplot(cvlong, aes(x=value, y=name, label=where)) + 
-    geom_vline(xintercept = max(date(cv$End)), alpha = 0.8, linetype="dotted") +
+    geom_vline(xintercept = max(date(df$End)), alpha = 0.8, linetype="dotted") +
     labs(title = title, subtitle = subtitle, 
          x = "", y = "", colour = "") +
     theme(panel.background = element_rect(fill="white", colour=NA),

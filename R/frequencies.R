@@ -25,7 +25,7 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE, save = FALSE, subdir
     tally() %>% arrange(desc(n)) %>%
     mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
   
-  if (plot == TRUE) {
+  if (plot == TRUE | save == TRUE) {
     
     if (nrow(output) >= 20 & length(vars) >= 2) {
       message("Recommendation: use the `lares::distr` function instead")
@@ -99,7 +99,9 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE, save = FALSE, subdir
                subtitle = paste("Inside the facet grids:", facet_name2)) +
           theme_light()
       }
-      print(p)
+      if (plot == TRUE) {
+        plot(p)        
+      }
     } else {
       # When more than two features
       message("Sorry, but trying to plot more than 3 features is as complex as it sounds...")
@@ -107,15 +109,7 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE, save = FALSE, subdir
     
     # Export file name and folder for plot
     if (save == TRUE) {
-      names <- vector2text(cleanText(as.character(vars), spaces = FALSE), 
-                           sep=".vs.", quotes = FALSE)
-      file_name <- paste0("viz_freqs_", names, ".png")
-      if (!is.na(subdir)) {
-        options(warn=-1)
-        dir.create(file.path(getwd(), subdir), recursive = T)
-        file_name <- paste(subdir, file_name, sep="/")
-      }
-      p <- p + ggsave(file_name, width = 8, height = 6)
+      export_plot(p, "viz_freqs", vars, subdir = subdir)
     }
   }
   return(output)
