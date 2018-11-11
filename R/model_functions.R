@@ -206,10 +206,10 @@ h2o_automl <- function(df,
       algorithm = m@algorithm,
       leaderboard = aml@leaderboard,
       seed = seed)
-    roc <- pROC::roc(results$scores$tag, results$scores$score, ci=T)
+    roc <- pROC::roc(results$scores_test$tag, results$scores_test$score, ci=T)
     results$auc_test <- roc$auc
     if (length(unique(test$tag)) == 2) {
-      results$logloss_test <- lares::loglossBinary(tag = results$scores$tag, score = results$scores$score) 
+      results$logloss_test <- lares::loglossBinary(tag = results$scores_test$tag, score = results$scores_test$score) 
     }
   } 
   
@@ -240,8 +240,8 @@ h2o_automl <- function(df,
   }
   
   if (plot == TRUE) {
-    lares::mplot_full(tag = results$scores$tag,
-                      score = results$scores$score,
+    lares::mplot_full(tag = results$scores_test$tag,
+                      score = results$scores_test$score,
                       subtitle = results$project,
                       model_name = results$model_name)
   }
@@ -288,8 +288,8 @@ h2o_selectmodel <- function(results, which_model = 1) {
     algorithm = m@algorithm)
   roc <- pROC::roc(output$scores$tag, output$scores$score, ci=T)
   output$auc_test <- roc$auc
-  output$logloss_test <- lares::loglossBinary(tag = results$scores$tag, 
-                                              score = results$scores$score)
+  output$logloss_test <- lares::loglossBinary(tag = results$scores_test$tag, 
+                                              score = results$scores_test$score)
   return(output)
 }
 
