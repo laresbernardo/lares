@@ -45,8 +45,8 @@ plot_timeline <- function(event, start,
     label_pos = rep(df$Start + floor((df$End-df$Start)/2) , 2))
 
   # Plot timeline
-  maxdate <- as.Date(max(df$End))
-  p <- ggplot(cvlong, aes(x=value, y=reorder(name, -pos), label=where)) + 
+  maxdate <- max(df$End)
+  p <- ggplot(cvlong, aes(x=value, y=reorder(name, -pos), label=where, group=pos)) + 
     geom_vline(xintercept = maxdate, alpha = 0.8, linetype="dotted") +
     labs(title = title, subtitle = subtitle, 
          x = "", y = "", colour = "") +
