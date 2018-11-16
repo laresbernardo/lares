@@ -36,7 +36,7 @@
 #' @importFrom stats na.omit sd median dist end lm predict reorder start
 #' @import SnowballC 
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
-#' installed.packages write.table install.packages remove.packages object.size
+#' installed.packages write.table install.packages remove.packages object.size type.convert
 #' @importFrom wordcloud textplot wordlayout
 "_PACKAGE"
 
@@ -73,4 +73,4 @@ if(getRversion() >= "2.15.1")
       "trees","type","upload_file","value","values","variable_response","variables",
       "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","wordcloud","x","y",
       "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos",
-      "name","where"))
+      "name","where","is.Date","is.POSIXct","is.POSIXlt"))

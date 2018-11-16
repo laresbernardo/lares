@@ -210,7 +210,9 @@ f1_contacts <- function(creds = NA, limit = 1000) {
     select(-contacts_identity_profiles, -contacts_profile_url, 
            -contacts_profile_token, -contacts_portal_id,
            -contacts_canonical_vid, -contacts_is_contact, 
-           -contacts_merge_audits) %>%
+           -contacts_merge_audits, -contacts_form_submissions,
+           -contains("files_payroll"), -contains("file_identification"), 
+           -contains("files_labour")) %>%
     select(contacts_vid, step_done, one_of(properties), everything()) %>%
     dplyr::rename(., "vid" = "contacts_vid")
   
@@ -227,6 +229,14 @@ f1_contacts <- function(creds = NA, limit = 1000) {
   #   mutate_at(vars(contains('date')), funs(hsdates(.)))
   # colnames(last_property)[!colnames(last_property) %in% colnames(contacts)]
 
+  # Final format
+  contacts <- type.convert(contacts)
+  posixs <- vector2text(c("timestamp","addedAt","_date", "createdate", "lastmodifieddate"), sep="|", quotes = F)
+  dates <- vector2text(c("date_of_birth","identification_date"), sep="|", quotes = F)
+  contacts <- contacts %>%
+    mutate_at(vars(grep(posixs, colnames(.))), funs(as.POSIXct)) %>% 
+    mutate_at(vars(grep(dates, colnames(.))), funs(as.Date))
+  
   return(contacts) 
   
 }

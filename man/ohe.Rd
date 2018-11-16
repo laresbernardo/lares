@@ -4,13 +4,16 @@
 \alias{ohe}
 \title{One Hot Encoding (Dummy Variables)}
 \usage{
-ohe(df, redundant = FALSE, summary = TRUE, limit = 20, sep = "_")
+ohe(df, redundant = FALSE, trim = 0, summary = TRUE, limit = 20,
+  sep = "_")
 }
 \arguments{
 \item{df}{Dataframe}
 
 \item{redundant}{Boolean. Should we keep redundat columns? i.e. It the
 column only has two different values, should we keep both new columns?}
+
+\item{trim}{Integer. Trim names until the nth character}
 
 \item{summary}{Boolean. Print a summary of the operations?}
 

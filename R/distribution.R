@@ -51,16 +51,17 @@ distr <- function(data, ...,
   # Functions
   force_class <- function(value, class = "none") {
     if (class != "none") {
-      if (class == "character" & is.numeric(value)) {
+      if (grepl("char|fact", class) & is.numeric(value)) {
         value <- as.character(value)
       }
-      if (class == "numeric" & !is.numeric(value)) {
+      if (grepl("num|int", class) & !is.numeric(value)) {
         value <- as.numeric(value)
       }
-      if (class == "date") {
+      if (grepl("dat|day|time", class)) {
+        value <- gsub(" .*", "", as.character(value))
         value <- lubridate::date(value)
       }
-    } 
+    }
     return(value)
   }
   
@@ -76,7 +77,7 @@ distr <- function(data, ...,
     return(value)
   }
   
-  fxclean <- function(value, clean, targets = NA) {
+  fxclean <- function(value, clean = FALSE, targets = NA) {
     if (clean == TRUE) {
       if (!is.numeric(value)) {
         value <- lares::cleanText(value, spaces = F)
@@ -88,7 +89,7 @@ distr <- function(data, ...,
     return(value)
   }
   
-  fxna_rm <- function(df, na.rm){
+  fxna_rm <- function(df, na.rm = FALSE){
     if (na.rm == TRUE) {
       df <- df[complete.cases(df), ]
     }
@@ -100,7 +101,7 @@ distr <- function(data, ...,
   if (length(vars) == 1) {
     value <- data %>% select(!!!vars[[1]])
     variable_name <- colnames(value)
-    value <- unlist(value)
+    value <- do.call("c", value) # keep classes
     value <- force_class(value, force)
     value <- fxtrim(value, trim)
     value <- fxclean(value, clean)
@@ -111,13 +112,13 @@ distr <- function(data, ...,
     if (is.numeric(value) | is.Date(value) | is.POSIXct(value) | is.POSIXlt(value)) {
       # Continuous and date values
       if (is.numeric(value)) {
-        p <- ggplot(df, aes(x = value)) +
+        p <- ggplot(df, aes(x = value)) + 
           scale_x_continuous(labels = scales::comma)
       } else {
         p <- ggplot(df, aes(x = date(value)))
       }
       p <- p + theme_minimal() +
-        geom_density(fill = "deepskyblue", alpha = 0.7) +
+        geom_density(fill = "deepskyblue", alpha = 0.7, adjust = 1/3) +
         labs(y = "", x = "",
              title = paste("Density Distribution"),
              subtitle = paste("Variable:", variable_name))
@@ -138,13 +139,13 @@ distr <- function(data, ...,
     
     targets <- data %>% select(!!!vars[[1]])
     targets_name <- colnames(targets)
-    targets <- unlist(targets)
+    targets <- do.call("c", targets)
     value <- data %>% select(!!!vars[[2]])
     variable_name <- colnames(value)
     # Transformations
-    value <- unlist(value)
+    value <- do.call("c", value)
     value <- force_class(value, force)
-    value <- fxtrim(value, targets, trim)
+    value <- fxtrim(value, trim)
     value <- fxclean(value, clean)
     
     if (length(targets) != length(value)) {
@@ -153,11 +154,7 @@ distr <- function(data, ...,
                          "rows and value has", length(value))))
     }
     
-    if (length(unique(value)) > top & !is.numeric(value)) {
-      message(paste("The variable", values, "has", length(unique(value)), "different values!"))
-    }
-    
-    if (length(unique(targets)) > 9) {
+    if (length(unique(targets)) >= 8) {
       stop("You should use a 'target' variable with max 8 different values!")
     }
     
@@ -186,7 +183,14 @@ distr <- function(data, ...,
     if(length(unique(value)) > top & !is.numeric(value)) {
       message(paste("Filtering the", top, "most frequent values. Use `top` to overrule."))
       which <- df %>% group_by(value) %>% tally() %>% arrange(desc(n)) %>% slice(1:top)
-      freqs <- freqs %>% filter(value %in% which$value)
+      freqs <- freqs %>%
+        mutate(value = ifelse(value %in% which$value, as.character(value), "OTHERS")) %>%
+        group_by(value, targets) %>% select(-row, -order) %>%
+        summarise(n = sum(n)) %>%
+        mutate(p = round(100*n/sum(n),2)) %>%
+        ungroup() %>% arrange(desc(n)) %>%
+        mutate(row = row_number(), 
+               order = row_number())
     }
     
     if (abc == TRUE) {
@@ -221,12 +225,10 @@ distr <- function(data, ...,
     }
     
     # Percentages plot
-    if(type %in% c(1,3)) {
-      distr <- df %>% group_by(targets) %>% 
-        tally() %>% arrange(n) %>% 
-        mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
+    if (type %in% c(1,3)) {
+      distr <- df %>% freqs(targets)
       prop <- ggplot(freqs, 
-                     aes(x = value, 
+                     aes(x = reorder(value, -order), 
                          y = as.numeric(p/100),
                          fill=as.character(targets), 
                          label = p)) + 
@@ -237,7 +239,7 @@ distr <- function(data, ...,
                    colour = "purple", linetype = "dotted", alpha = 0.8) +
         theme_minimal() + coord_flip() +
         labs(x = "Proportions", y = "", fill = targets_name, caption = caption) +
-        theme(legend.position = "top")
+        theme(legend.position = "top") + ylim(0, 1)
       # Show limit caption when more values than top
       if (length(unique(value)) > top) {
         count <- count + labs(caption = paste("Showing the", top, "most frequent values"))

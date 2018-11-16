@@ -8,19 +8,22 @@
 #' columns: they will be filtered!
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
+#' @param redundant Boolean. Should we keep redundat columns? i.e. It the
+#' column only has two different values, should we keep both new columns?
 #' @param logs Boolean. Automatically calculate log(values) for numerical
 #' variables (not binaries)
 #' @param plot Boolean. Do you wish to see a plot?
 #' @param top Integer. Select top N most relevant variables? Filtered 
 #' and sorted by mean of each variable's correlations
 #' @export
-corr <- function(df, method = "pearson", dummy = TRUE, logs = TRUE, plot = FALSE, top = NA) {
+corr <- function(df, method = "pearson", dummy = TRUE, redundant = TRUE, 
+                 logs = TRUE, plot = FALSE, top = NA) {
   
   options(warn=-1)
   
   # One hot encoding for categorical features
   if (dummy == TRUE) {
-    df <- ohe(df, summary = FALSE, redundant = FALSE)
+    df <- ohe(df, summary = FALSE, redundant = redundant)
   }
   
   # Select only numerical features and create log+1 for each one
