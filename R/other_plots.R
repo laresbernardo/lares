@@ -31,25 +31,23 @@ plot_timeline <- function(event, start,
   df <- data.frame(
     Role = as.character(event), 
     Place = as.character(label), 
-    Start = date(start), 
-    End = date(end),
-    Type = group) %>% 
-    mutate(Start = date(Start), End = date(End))
-  
+    Start = lubridate::date(start), 
+    End = lubridate::date(end),
+    Type = group)
+
   # Duplicate data for ggplot's geom_lines
   cvlong <- data.frame(
+    pos = rep(as.numeric(rownames(df)),2),
     name = rep(as.character(df$Role),2),
     type = rep(as.character(df$Type),2),
     where = rep(as.character(df$Place),2),
-    value = c(date(df$Start), date(df$End)),
+    value = c(df$Start, df$End),
     label_pos = rep(df$Start + floor((df$End-df$Start)/2) , 2))
-  
-  # Order matters
-  cvlong$name <- factor(cvlong$name, levels = rev(df$Role))
 
   # Plot timeline
-  p <- ggplot(cvlong, aes(x=value, y=name, label=where)) + 
-    geom_vline(xintercept = max(date(df$End)), alpha = 0.8, linetype="dotted") +
+  maxdate <- as.Date(max(df$End))
+  p <- ggplot(cvlong, aes(x=value, y=reorder(name, -pos), label=where)) + 
+    geom_vline(xintercept = maxdate, alpha = 0.8, linetype="dotted") +
     labs(title = title, subtitle = subtitle, 
          x = "", y = "", colour = "") +
     theme(panel.background = element_rect(fill="white", colour=NA),
