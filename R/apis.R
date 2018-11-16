@@ -5,21 +5,25 @@
 #' into data.frame. Designed initially for Hubspot but may work on other API
 #' 
 #' @param url Character. API's URL
+#' @param status Boolean. Display status message?
 #' @export
-bring_api <- function(url) {
-
-  get <- GET(url = url)
-  message(paste0("Status: ", ifelse(get$status_code == 200, "OK", "ERROR")))
+bring_api <- function(url, status = TRUE) {
+  
+  get <- httr::GET(url = url)
+  if (status == TRUE) {
+    message(paste0("Status: ", ifelse(get$status_code == 200, "OK", "ERROR"))) 
+  }
   char <- rawToChar(get$content)
-  import <- data.frame(jsonlite::fromJSON(char))
-  import <- jsonlite::flatten(import)
-  import <- data.frame(rlist::list.cbind(lapply(import, unlist(as.character))))
-
-  # Further transformations
-  import[import == "list()"] <- NA
-  import[import == "integer(0)"] <- 0
-  colnames(import) <- gsub("\\.", "_", colnames(import))
-
-  return(import)
-
+  json <- jsonlite::fromJSON(char)
+  
+  if (length(json$contacts) > 0) {
+    import <- data.frame(json)
+    import <- jsonlite::flatten(import)
+    import <- data.frame(rlist::list.cbind(lapply(import, unlist(as.character))))
+    # Further transformations
+    import[import == "list()"] <- NA
+    import[import == "integer(0)"] <- 0
+    colnames(import) <- gsub("\\.", "_", colnames(import))  
+    return(import)
+  } else { return(NA) }
 }

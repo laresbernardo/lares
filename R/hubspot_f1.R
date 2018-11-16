@@ -7,12 +7,11 @@
 #' value for each parameter (column).
 #'
 #' @param creds Character. Credential's user (see get_credentials)
+#' @param limit Integer. Limit the amount of contacts to return
 #' @export
-f1_contacts <- function(creds = NA) {
-  
-  # require(lares)
-  # require(httr)
-  # require(dplyr)
+f1_contacts <- function(creds = NA, limit = 1000) {
+
+  options(warn=-1)
   
   hsdates <- function(date) {
     as.character(
@@ -51,7 +50,10 @@ f1_contacts <- function(creds = NA) {
     "country",
     "home_country",
     "mobilephone",
+    # CREDITS
     "amount_requested",
+    "loan_use",
+    "payroll_deduction",
     "credit_value",
     "vehicle_brand",
     "vehicle_model",
@@ -72,7 +74,6 @@ f1_contacts <- function(creds = NA) {
     "contract_type",
     "economic_activity",
     "independent_type",
-    "independent_participation",
     "residence_months",
     "housing_type",
     "stratum",
@@ -127,6 +128,7 @@ f1_contacts <- function(creds = NA) {
     "ip_state",
     "ip_country",
     "hs_ip_timezone",
+    "currentlyinworkflow",
     "hs_analytics_average_page_views",
     "hs_analytics_num_visits",
     "hs_social_last_engagement",
@@ -146,7 +148,8 @@ f1_contacts <- function(creds = NA) {
     "hs_analytics_first_touch_converting_campaign",
     "hs_analytics_last_timestamp",
     "hs_analytics_last_visit_timestamp",
-    "hs_analytics_last_touch_converting_campaign")
+    "hs_analytics_last_touch_converting_campaign",
+    "form_submissions")
   
   credentials <- lares::get_credentials("hubspot", dir = creds)
   
@@ -155,7 +158,19 @@ f1_contacts <- function(creds = NA) {
   API <- "https://api.hubapi.com/contacts/v1/lists/all/contacts/all?"
   hapikey <- paste0("hapikey=", credentials$token)
   URL <- paste0(API, properties_string, hapikey)
-  contacts <- lares::bring_api(URL)
+  contacts <- lares::bring_api(URL, status = TRUE)
+  while (!as.logical(contacts$has_more[nrow(contacts)]) | nrow(contacts) <= limit - 20) {
+    offset <- contacts$vid_offset[nrow(contacts)]
+    URLi <- paste0(URL, "&vidOffset=", offset)
+    contactsi <- bring_api(URLi, status = FALSE)
+    if (!is.na(contactsi)) {
+      contacts <- dplyr::bind_rows(contacts, contactsi)
+      message(paste(nrow(contacts),"contacts ready..."))   
+    } else { break }
+  }
+  message(paste(nrow(contacts),"total contacts imported!"))
+  
+  contacts$has_more <- contacts$vid_offset <- NULL
   colnames(contacts) <- gsub("contacts_properties_|_value", "", colnames(contacts))
   contacts <- contacts %>%
     dplyr::rename(credit_value = credit,
@@ -171,33 +186,47 @@ f1_contacts <- function(creds = NA) {
     grepl("146f9e71-b10e-4f7d-b0ef-8b65b122301f", contacts$contacts_form_submissions), "datos_personales",
     ifelse(grepl("851c6046-201a-4df9-8dab-8f2bf6a67a23", contacts$contacts_form_submissions), "pre_solicitud", 
            ifelse(grepl("4442aa58-bd8a-4c3f-9710-cb3f6ecb0096", contacts$contacts_form_submissions), "solicitud", 
-                  ifelse(grepl("d9377981-7def-4489-9e2d-09b4b6ab755f", contacts$contacts_form_submissions), "documentos", NA))))
+                  ifelse(grepl("d9377981-7def-4489-9e2d-09b4b6ab755f", contacts$contacts_form_submissions), "documentos",
+                         ifelse(grepl("e81e2002-b382-4c9d-90a4-75e6f6615132", contacts$contacts_form_submissions), "lead_soat",
+                                ifelse(grepl("4533ec08-dc7d-4c9e-8b5d-f521b6e6f28c", contacts$contacts_form_submissions), "blog_suscripcion",
+                                       ifelse(grepl("7c8b4b79-f851-4f86-a00f-45d7dec89385", contacts$contacts_form_submissions), "contacto",
+                                              NA)))))))
+  contacts$last_form_filled_credit <- ifelse(
+    grepl("e81e2002-b382-4c9d-90a4-75e6f6615132", contacts$contacts_form_submissions), "0_lead_soat",
+    ifelse(grepl("146f9e71-b10e-4f7d-b0ef-8b65b122301f", contacts$contacts_form_submissions), "1_datos_personales",
+           ifelse(grepl("851c6046-201a-4df9-8dab-8f2bf6a67a23", contacts$contacts_form_submissions), "2_pre_solicitud", 
+                  ifelse(grepl("4442aa58-bd8a-4c3f-9710-cb3f6ecb0096", contacts$contacts_form_submissions), "3_solicitud", 
+                         ifelse(grepl("d9377981-7def-4489-9e2d-09b4b6ab755f", contacts$contacts_form_submissions), "4_documentos",
+                                NA)))))
   contacts$step_done <- ifelse(
     !is.na(contacts$file_identification) & 
       !is.na(contacts$files_labour_certificate) & 
       !is.na(contacts$files_payroll), "documentos",
     ifelse(!is.na(contacts$credit_installments), "solicitud",
            ifelse(!is.na(contacts$economic_activity), "pre_solicitud",
-                  ifelse(!is.na(contacts$firstname), "datos_personales"))))
+                  ifelse(!is.na(contacts$firstname), "datos_personales", "lead"))))
   
   contacts <- contacts %>%
-    select(-contacts_form_submissions, -contacts_identity_profiles, 
-           -contacts_profile_url, -contacts_profile_token, -contacts_portal_id,
-           -contacts_canonical_vid, -contacts_is_contact, -contacts_merge_audits) %>%
+    select(-contacts_identity_profiles, -contacts_profile_url, 
+           -contacts_profile_token, -contacts_portal_id,
+           -contacts_canonical_vid, -contacts_is_contact, 
+           -contacts_merge_audits) %>%
     select(contacts_vid, step_done, one_of(properties), everything()) %>%
     dplyr::rename(., "vid" = "contacts_vid")
   
   # # One contact
-  # API <- "https://api.hubapi.com/contacts/v1/contact/vid/1051/profile?"
+  # API <- "https://api.hubapi.com/contacts/v1/contact/vid/609651/profile?"
   # hapikey <- paste0("hapikey=", credentials$token)
   # URL <- paste0(API, hapikey)
-  # get <- GET(url = URL)
+  # get <- httr::GET(url = URL)
   # message(paste0("Status: ", ifelse(get$status_code == 200, "OK", "ERROR")))
   # char <- rawToChar(get$content)
+  # import <- jsonlite::fromJSON(char)
   # last_property <- data.frame(lapply(import$properties, `[[`, 1)) %>%
   #   mutate_at(vars(contains('timestamp')), funs(hsdates(.))) %>%
   #   mutate_at(vars(contains('date')), funs(hsdates(.)))
-  
+  # colnames(last_property)[!colnames(last_property) %in% colnames(contacts)]
+
   return(contacts) 
   
 }

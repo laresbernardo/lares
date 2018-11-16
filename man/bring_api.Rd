@@ -4,10 +4,12 @@
 \alias{bring_api}
 \title{Get API (JSON) and Transform into data.frame}
 \usage{
-bring_api(url)
+bring_api(url, status = TRUE)
 }
 \arguments{
 \item{url}{Character. API's URL}
+
+\item{status}{Boolean. Display status message?}
 }
 \description{
 This function lets the user bring API data as JSON format and transform it 

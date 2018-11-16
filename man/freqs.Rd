@@ -4,13 +4,17 @@
 \alias{freqs}
 \title{Frequencies Calculations and Plot}
 \usage{
-freqs(vector, ..., plot = FALSE, rm.na = FALSE, save = FALSE,
-  subdir = NA)
+freqs(vector, ..., results = TRUE, variable_name = NA, plot = FALSE,
+  rm.na = FALSE, save = FALSE, subdir = NA)
 }
 \arguments{
 \item{vector}{Data.frame}
 
 \item{...}{Variables. Variables you wish to process. Order matters.}
+
+\item{results}{Boolean. Return results in a dataframe?}
+
+\item{variable_name}{Character. Overwrite the main variable's name}
 
 \item{plot}{Boolean. Do you want to see a plot? Three variables tops.}
 

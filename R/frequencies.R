@@ -6,13 +6,16 @@
 #' 
 #' @param vector Data.frame
 #' @param ... Variables. Variables you wish to process. Order matters.
+#' @param results Boolean. Return results in a dataframe?
+#' @param variable_name Character. Overwrite the main variable's name
 #' @param plot Boolean. Do you want to see a plot? Three variables tops.
 #' @param rm.na Boolean. Remove NA values in the plot? (not filtered for 
 #' numerical output; use na.omit() or filter() if needed)
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @export
-freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE, save = FALSE, subdir = NA) {
+freqs <- function(vector, ..., results = TRUE, variable_name = NA, 
+                  plot = FALSE, rm.na = FALSE, save = FALSE, subdir = NA) {
   
   # require(dplyr)
   # require(ggplot2)
@@ -80,7 +83,9 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE, save = FALSE, subdir
           colour = label_colours), size = 2.6) + lares::gg_text_customs() +
         coord_flip() + theme_minimal() + guides(colour = FALSE) +
         labs(x = "", y = "Counter", fill = "[%]",
-             title = paste("Frequencies and Percentages:", variable)) +
+             title = paste("Frequencies and Percentages"),
+             subtitle = paste(
+               "Variable:", ifelse(!is.na(variable_name), variable_name, variable))) +
         scale_fill_gradient(low = "lightskyblue2", high = "navy")
       
       # When two features
@@ -99,9 +104,7 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE, save = FALSE, subdir
                subtitle = paste("Inside the facet grids:", facet_name2)) +
           theme_light()
       }
-      if (plot == TRUE) {
-        plot(p)        
-      }
+      plot(p)
     } else {
       # When more than two features
       message("Sorry, but trying to plot more than 3 features is as complex as it sounds...")
@@ -112,5 +115,9 @@ freqs <- function(vector, ..., plot = FALSE, rm.na = FALSE, save = FALSE, subdir
       export_plot(p, "viz_freqs", vars, subdir = subdir)
     }
   }
-  return(output)
+  
+  if (results == TRUE) {
+    return(output) 
+  }
+  
 }

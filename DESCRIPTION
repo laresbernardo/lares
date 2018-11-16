@@ -22,6 +22,7 @@ Imports:
     googlesheets,
     gridExtra,
     h2o,
+    httr,
     kableExtra,
     knitr,
     jsonlite,
