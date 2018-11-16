@@ -7,17 +7,24 @@
 #' @param df Dataframe. It doesn't matter if it's got non-numerical
 #' columns: they will be filtered!
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
+#' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
 #' @param logs Boolean. Automatically calculate log(values) for numerical
 #' variables (not binaries)
 #' @param plot Boolean. Do you wish to see a plot?
 #' @param top Integer. Select top N most relevant variables? Filtered 
 #' and sorted by mean of each variable's correlations
 #' @export
-corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA) {
+corr <- function(df, method = "pearson", dummy = TRUE, logs = TRUE, plot = FALSE, top = NA) {
   
   options(warn=-1)
   
-  d <- lares::numericalonly(df, logs = logs)
+  # One hot encoding for categorical features
+  if (dummy == TRUE) {
+    df <- ohe(df, summary = FALSE, redundant = FALSE)
+  }
+  
+  # Select only numerical features and create log+1 for each one
+  d <- numericalonly(df, logs = logs)
   
   # Correlations
   rs <- cor(d, use = "pairwise.complete.obs", method = method)
@@ -27,18 +34,19 @@ corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA) {
   
   # Top N
   if (!is.na(top)) {
+    message(paste("Returning the top", top, "variables only..."))
     imp <- cor %>% 
       summarise_all(funs(mean(.))) %>% t() %>% 
       data.frame(variable=row.names(.), mean=abs(.)) %>%
       arrange(desc(abs(mean)))
     which <- as.vector(imp$variable[1:top])
     cor <- cor %>% select(one_of(which)) %>% 
-      filter(row.names(.) %in% which)
+      filter(row.names(.) %in% which) 
   }
   
   # Plot
   if (plot == TRUE) {
-    lares::corr_plot(cor, logs = FALSE)
+    corr_plot(cor, logs = FALSE)
   }
   
   return(cor)
@@ -63,12 +71,29 @@ corr <- function(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA) {
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @export
-corr_var <- function(df, var, method = "pearson", plot = TRUE, 
-                     logs = TRUE, top = NA, zeroes = FALSE,
-                     save = FALSE, subdir = NA,
+corr_var <- function(df, var, 
+                     method = "pearson", 
+                     plot = TRUE, 
+                     logs = TRUE, 
+                     top = NA, 
+                     zeroes = FALSE,
+                     save = FALSE, 
+                     subdir = NA,
                      file_name = "viz_corrvar.png") {
   
-  rs <- lares::corr(df, method = method, logs = logs)
+  # Calculate correlations
+  rs <- corr(df, method = method, logs = logs)
+  
+  # Check if main variable exists
+  if (!var %in% colnames(rs)) {
+    message("Your input `",var, "` is not a valid variable because that column doesn't exist!")
+    maybes <- colnames(rs)[grepl(var, colnames(rs))]
+    if (length(maybes) > 0) {
+      message(paste("Maybe you meant one of these:", vector2text(maybes)))
+    }
+    stop()
+  }
+  
   d <- data.frame(variables = colnames(rs), corr = rs[, c(var)])
   d <- d[(d$corr < 1 & !is.na(d$corr)),]
   d <- d[order(-abs(d$corr)), ]
@@ -77,6 +102,13 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE,
   
   if (zeroes == FALSE) {
     d <- d[d$corr != 0, ]
+  }
+  
+  # Limit automatically when more than 30 observations
+  if (is.na(top) & nrow(d) > 30) {
+    top <- 30
+    message(paste("Automatically reduced results to the top", top, "variables.",
+                  "Use the 'top' parameter to override this limit."))
   }
   
   if (!is.na(top)) {
@@ -100,8 +132,7 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE,
       scale_y_continuous(labels = scales::percent)
     if (!is.na(top) & top < original_n) { 
       plot <- plot + 
-        labs(subtitle = paste(
-          "Plotting top", top, "out of", original_n, "numeric/binary variables"))
+        labs(subtitle = paste("Plotting top", top, "out of", original_n, "numeric/binary variables"))
     }
     print(plot)
   }
@@ -137,7 +168,7 @@ corr_var <- function(df, var, method = "pearson", plot = TRUE,
 #' @export
 corr_plot <- function(df, method = "pearson", order = "FPC", type = "square", logs = TRUE) {
   
-  c <- lares::corr(df, method, logs = logs)
+  c <- corr(df, method, logs = logs)
   plot <- corrplot::corrplot(
     as.matrix(c),
     order = order,

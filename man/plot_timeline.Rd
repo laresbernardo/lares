@@ -4,7 +4,7 @@
 \alias{plot_timeline}
 \title{Density plot for discrete and continuous values}
 \usage{
-plot_timeline(event, start, end, label = NA, group = NA,
+plot_timeline(event, start, end = start + 1, label = NA, group = NA,
   title = "Curriculum Vitae Timeline", subtitle = "Bernardo Lares",
   size = 7, colour = "orange", save = FALSE, subdir = NA)
 }
@@ -13,7 +13,7 @@ plot_timeline(event, start, end, label = NA, group = NA,
 
 \item{start}{Vector. Start date.}
 
-\item{end}{Vector. End date.}
+\item{end}{Vector. End date. Only one day be default if not defined}
 
 \item{label}{Vector. Place, institution, or label.}
 

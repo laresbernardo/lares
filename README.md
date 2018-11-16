@@ -25,6 +25,9 @@ lares::updateLares(local=T) # Personal and local files, not necessarily deployed
 
 - DataScience+: [Portfolio's Performance and Report](https://datascienceplus.com/visualize-your-portfolios-performance-and-generate-a-nice-report-with-r)
 
+- DataScience+: [Plot timelines with Gantt charts](https://datascienceplus.com/visualize-your-cvs-timeline-with-r-gantt-style/)
+
+
 ## Getting help
 
 If you encounter a clear bug, please share with us a minimal reproducible example

@@ -470,11 +470,9 @@ removenarows <- function(df, all = TRUE) {
 #' @export
 numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA) {
   
-  # require(dplyr)
-  
   # Drop ALL NAs columns
   if (dropnacols == TRUE) {
-    df <- lares::removenacols(df, all = TRUE) 
+    df <- removenacols(df, all = TRUE) 
   }
   
   # Which character columns may be used as numeric?
@@ -483,11 +481,17 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
   dfn <- data.frame(df[,colnames(df) %in% which])
   colnames(dfn) <- which
   non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x))-1)
+  # Which are already numeric?
   numeric <- select_if(df, is.numeric)
+  
+  # Calculate logs
   if (logs == TRUE) {
-    numeric <- data.frame(mutate_if(numeric, is.numeric, funs(log = log(.))))
+    # Non binary numeric features
+    whichlog <- colnames(numeric)[!colnames(numeric) %in% which]
+    numeric <- numeric %>% mutate_at(vars(whichlog), funs(log = log(. + 1)))
     is.na(numeric) <- do.call(cbind, lapply(numeric, is.infinite))
   }
+  
   # Join everything
   d <- cbind(numeric, non_numeric[!colnames(non_numeric) %in% colnames(numeric)])
   

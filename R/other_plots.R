@@ -5,7 +5,7 @@
 #' 
 #' @param event Vector. Event, role, label, or row.
 #' @param start Vector. Start date.
-#' @param end Vector. End date.
+#' @param end Vector. End date. Only one day be default if not defined
 #' @param label Vector. Place, institution, or label.
 #' @param group Vector. Academic, Work, Extracurricular...
 #' @param title Character. Title for the plot
@@ -15,17 +15,16 @@
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @export
-plot_timeline <- function(event, start, end, 
-                          label = NA, group = NA, 
+plot_timeline <- function(event, start, 
+                          end = start + 1, 
+                          label = NA, 
+                          group = NA, 
                           title = "Curriculum Vitae Timeline", 
                           subtitle = "Bernardo Lares",
                           size = 7,
                           colour = "orange",
                           save = FALSE,
                           subdir = NA) {
-  # require(dplyr)
-  # require(ggplot2)
-  # require(lubridate)
   options(warn=-1)
   
   # Let's gather all the data
@@ -37,9 +36,6 @@ plot_timeline <- function(event, start, end,
     Type = group) %>% 
     mutate(Start = date(Start), End = date(End))
   
-  # If NA in End date, fill with today
-  df$End[is.na(df$End)] <- Sys.Date()
-  
   # Duplicate data for ggplot's geom_lines
   cvlong <- data.frame(
     name = rep(as.character(df$Role),2),
@@ -50,8 +46,7 @@ plot_timeline <- function(event, start, end,
   
   # Order matters
   cvlong$name <- factor(cvlong$name, levels = rev(df$Role))
-  cvlong$type <- factor(cvlong$type, levels = c("Work Experience","Academic","Extra"))
-  
+
   # Plot timeline
   p <- ggplot(cvlong, aes(x=value, y=name, label=where)) + 
     geom_vline(xintercept = max(date(df$End)), alpha = 0.8, linetype="dotted") +

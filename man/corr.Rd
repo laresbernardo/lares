@@ -4,13 +4,16 @@
 \alias{corr}
 \title{Correlation table}
 \usage{
-corr(df, method = "pearson", logs = TRUE, plot = FALSE, top = NA)
+corr(df, method = "pearson", dummy = TRUE, logs = TRUE,
+  plot = FALSE, top = NA)
 }
 \arguments{
 \item{df}{Dataframe. It doesn't matter if it's got non-numerical
 columns: they will be filtered!}
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
+
+\item{dummy}{Boolean. Should One Hot Encoding be applied to categorical columns?}
 
 \item{logs}{Boolean. Automatically calculate log(values) for numerical
 variables (not binaries)}

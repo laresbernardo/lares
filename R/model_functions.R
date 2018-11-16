@@ -48,7 +48,7 @@ msplit <- function(df, size = 0.7, seed = NA, print=T) {
 #' @param score Vector. Predicted value or model's result
 #' @param eps Numeric. Epsilon value
 #' @export
-loglossBinary = function(tag, score, eps = 1e-15) {
+loglossBinary <- function(tag, score, eps = 1e-15) {
   
   # Note: 0.69315 - the classification is neutral; it assigns equal probability to both classes
   
@@ -201,6 +201,7 @@ h2o_automl <- function(df,
       parameters = m@parameters,
       importance = imp,
       auc_test = NA, #h2o.auc(m, valid=TRUE)
+      errors_test = NA,
       logloss_test = NA,
       model_name = as.vector(m@model_id),
       algorithm = m@algorithm,
@@ -209,6 +210,8 @@ h2o_automl <- function(df,
     roc <- pROC::roc(results$scores_test$tag, results$scores_test$score, ci=T)
     results$auc_test <- roc$auc
     if (length(unique(test$tag)) == 2) {
+      results$errors_test <- errors(tag = results$scores_test$tag, 
+                                    score = results$scores_test$score) 
       results$logloss_test <- lares::loglossBinary(tag = results$scores_test$tag, score = results$scores_test$score) 
     }
   } 
@@ -283,11 +286,14 @@ h2o_selectmodel <- function(results, which_model = 1) {
       norm_score = lares::normalize(as.vector(scores[,3]))),
     importance = data.frame(h2o.varimp(m)),
     auc_test = NA,
+    errors_test = NA,
     logloss_test = NA,
     model_name = as.vector(m@model_id),
     algorithm = m@algorithm)
   roc <- pROC::roc(output$scores$tag, output$scores$score, ci=T)
   output$auc_test <- roc$auc
+  output$errors_test <- lares::errors(tag = results$scores_test$tag, 
+                                      score = results$scores_test$score)
   output$logloss_test <- lares::loglossBinary(tag = results$scores_test$tag, 
                                               score = results$scores_test$score)
   return(output)
@@ -365,6 +371,7 @@ export_results <- function(results,
              "Total"=length(tags)),
       "Metrics" = 
         list("Test AUC" = results$auc_test,
+             "Test Errors" = results$errors_test,
              "Test LogLoss" = results$logloss_test),
       "Variable Importance" = results$importance,
       "Model Results" = results$model,
