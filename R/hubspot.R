@@ -140,7 +140,7 @@ hs_deals <- function(limit=10000, creds = NA) {
     x[x == "integer(0)"] <- 0
     x <- select(x, -portalId, -hasMore, -imports, -stateChanges, -associatedCompanyIds, -offset)
     dealstagesAPI <- paste0("https://api.hubapi.com/deals/v1/pipelines?hapikey=",token)
-    get <- GET(url = dealstagesAPI)
+    get <- httr::GET(url = dealstagesAPI)
     dealstages <- fromJSON(rawToChar(get$content))
     dealstages <- dealstages$stages[[1]]
     dealstages <- data.frame(code = as.character(dealstages$stageId),

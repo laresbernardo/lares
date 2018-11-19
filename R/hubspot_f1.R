@@ -32,13 +32,13 @@ f1_contacts <- function(creds = NA, limit = 1000) {
     "secondname",
     "lastname",
     "secondlastname",
+    "date_of_birth",
     "identification",
     "identification_date",
     "identification_department",
     "identification_type",
     "identification_city",
     "identification_country",
-    "date_of_birth",
     "birth_city",
     "birth_department",
     "country_birth",
@@ -53,6 +53,7 @@ f1_contacts <- function(creds = NA, limit = 1000) {
     # CREDITS
     "amount_requested",
     "loan_use",
+    "debt_payees_counter",
     "payroll_deduction",
     "credit_value",
     "vehicle_brand",
@@ -149,6 +150,7 @@ f1_contacts <- function(creds = NA, limit = 1000) {
     "hs_analytics_last_timestamp",
     "hs_analytics_last_visit_timestamp",
     "hs_analytics_last_touch_converting_campaign",
+    "hs_email_optout",
     "form_submissions")
   
   credentials <- lares::get_credentials("hubspot", dir = creds)
@@ -191,6 +193,7 @@ f1_contacts <- function(creds = NA, limit = 1000) {
                                 ifelse(grepl("4533ec08-dc7d-4c9e-8b5d-f521b6e6f28c", contacts$contacts_form_submissions), "blog_suscripcion",
                                        ifelse(grepl("7c8b4b79-f851-4f86-a00f-45d7dec89385", contacts$contacts_form_submissions), "contacto",
                                               NA)))))))
+  
   contacts$last_form_filled_credit <- ifelse(
     grepl("e81e2002-b382-4c9d-90a4-75e6f6615132", contacts$contacts_form_submissions), "0_lead_soat",
     ifelse(grepl("146f9e71-b10e-4f7d-b0ef-8b65b122301f", contacts$contacts_form_submissions), "1_datos_personales",
@@ -198,9 +201,10 @@ f1_contacts <- function(creds = NA, limit = 1000) {
                   ifelse(grepl("4442aa58-bd8a-4c3f-9710-cb3f6ecb0096", contacts$contacts_form_submissions), "3_solicitud", 
                          ifelse(grepl("d9377981-7def-4489-9e2d-09b4b6ab755f", contacts$contacts_form_submissions), "4_documentos",
                                 NA)))))
+  
   contacts$step_done <- ifelse(
-    !is.na(contacts$file_identification) & 
-      !is.na(contacts$files_labour_certificate) & 
+    !is.na(contacts$file_identification) | 
+      !is.na(contacts$files_labour_certificate) | 
       !is.na(contacts$files_payroll), "documentos",
     ifelse(!is.na(contacts$credit_installments), "solicitud",
            ifelse(!is.na(contacts$economic_activity), "pre_solicitud",
@@ -216,18 +220,18 @@ f1_contacts <- function(creds = NA, limit = 1000) {
     select(contacts_vid, step_done, one_of(properties), everything()) %>%
     dplyr::rename(., "vid" = "contacts_vid")
   
-  # # One contact
-  # API <- "https://api.hubapi.com/contacts/v1/contact/vid/609651/profile?"
-  # hapikey <- paste0("hapikey=", credentials$token)
-  # URL <- paste0(API, hapikey)
-  # get <- httr::GET(url = URL)
-  # message(paste0("Status: ", ifelse(get$status_code == 200, "OK", "ERROR")))
-  # char <- rawToChar(get$content)
-  # import <- jsonlite::fromJSON(char)
-  # last_property <- data.frame(lapply(import$properties, `[[`, 1)) %>%
-  #   mutate_at(vars(contains('timestamp')), funs(hsdates(.))) %>%
-  #   mutate_at(vars(contains('date')), funs(hsdates(.)))
-  # colnames(last_property)[!colnames(last_property) %in% colnames(contacts)]
+  # One contact
+  API <- "https://api.hubapi.com/contacts/v1/contact/vid/1016501/profile?"
+  hapikey <- paste0("hapikey=", credentials$token)
+  URL <- paste0(API, hapikey)
+  get <- httr::GET(url = URL)
+  message(paste0("Status: ", ifelse(get$status_code == 200, "OK", "ERROR")))
+  char <- rawToChar(get$content)
+  import <- jsonlite::fromJSON(char)
+  last_property <- data.frame(lapply(import$properties, `[[`, 1)) %>%
+    mutate_at(vars(contains('timestamp')), funs(hsdates(.))) %>%
+    mutate_at(vars(contains('date')), funs(hsdates(.)))
+  colnames(last_property)[!colnames(last_property) %in% properties]
 
   # Final format
   contacts <- type.convert(contacts)

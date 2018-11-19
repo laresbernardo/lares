@@ -15,6 +15,9 @@
 #' @export
 ohe <- function(df, redundant = FALSE, trim = 0, summary = TRUE, limit = 20, sep = "_") {
   
+  # Further improvement: when high levels, convert most frequent and transform to
+  # feature_others for the least frequent values.
+  
   types <- data.frame(name = colnames(df), 
                       type = unlist(lapply(lapply(df, class), `[[`, 1)))
   converted <- not_converted <- no_variance <- c()

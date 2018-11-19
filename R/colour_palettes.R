@@ -128,6 +128,8 @@ gg_text_customs <- function () {
               "spring" = white,
               "summer" = white,
               "fall" = black,
-              "winter" = black)
+              "winter" = black,
+              "w" = white,
+              "b" = black)
   return(scale_color_manual(values = values))
 }

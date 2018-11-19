@@ -711,3 +711,20 @@ export_plot <- function(p,
   
 }
 
+
+####################################################################
+#' Calculate cuts by quantiles
+#' 
+#' This function lets the user quickly calculate cuts for quantiles
+#' 
+#' @param values Vector. Values to calculate quantile cuts
+#' @param splits Integer. How many cuts should split the values?
+#' @export
+quants <- function(values, splits = 10) {
+  cuts <- quantile(values, 
+                   probs = seq((1/splits), 1, length = splits), 
+                   names = TRUE)
+  cuts <- data.frame(deciles = names(cuts), cut = cuts)
+  row.names(cuts) <- NULL
+  return(cuts)
+}

@@ -99,17 +99,11 @@ mplot_density <- function(tag,
     p <- ggplot(df) + theme_minimal() +
       geom_density(aes(x = values, fill = as.character(type)), 
                    alpha = 0.6, adjust = 0.25) + 
-      labs(title = "Values distribution",
-           y = "Density", 
-           x = "Continuous values") +
+      labs(y = "Density", x = "Continuous values") +
       scale_x_continuous(labels = comma) +
-      guides(fill = guide_legend(size = 1)) +
+      guides(fill = guide_legend(override.aes = list(size=1))) +
       theme(legend.title=element_blank(),
-            #legend.position = "bottom",
-            legend.position = c(0.82, 1.1), 
-            legend.direction = "horizontal",
-            legend.spacing.x = unit(0.1, 'cm'))
-    
+            legend.position = "top")
     
     if(!is.na(model_name)) {
       p <- p + labs(caption = model_name)
@@ -394,10 +388,6 @@ mplot_cuts_error <- function(tag,
                              subdir = NA, 
                              file_name = "viz_ncuts_error.png") {
   
-  # require(ggplot2)
-  # require(scales)
-  # require(gridExtra)
-  
   if (splits > 25) {
     stop("You should try with less splits!")
   }
@@ -413,36 +403,38 @@ mplot_cuts_error <- function(tag,
            p_error = 100 * real_error/tag) %>%
     filter(abs(p_error) <= 150)
   
+  # Useful function
+  quants <- function(values, splits = 10, just = 0.3) {
+    cuts <- quantile(values, 
+                     probs = seq((1/splits), 1, length = splits), 
+                     names = TRUE)
+    cuts <- data.frame(deciles = names(cuts), cut = cuts)
+    thresh <- max(cuts$cut) / 2
+    cuts$gg_pos <- ifelse(cuts$cut > thresh, 1 + just, -just)
+    cuts$colour <- ifelse(cuts$gg_pos < 0, "f", "m")
+    row.names(cuts) <- NULL
+    return(cuts)
+  }
+  
   # First: absolute errors
-  deciles_abs <- quantile(df$abs_error, 
-                          probs = seq((1/splits), 1, length = splits), 
-                          names = TRUE)
-  deciles_abs <- data.frame(cbind(Deciles=row.names(as.data.frame(deciles_abs)),
-                                  Threshold=as.data.frame(deciles_abs)))
-  p_abs <- ggplot(deciles_abs, 
-                  aes(x = reorder(Deciles, deciles_abs), y = deciles_abs, 
-                      label = signif(deciles_abs, 3))) +
+  deciles_abs <- quants(df$abs_error, splits = splits, just = 0.3)
+  p_abs <- ggplot(deciles_abs, aes(x = reorder(deciles, cut), y = cut, label = signif(cut, 3))) +
     geom_col(fill="deepskyblue") + 
     xlab('') + theme_minimal() + ylab('Absolute Error') + 
-    geom_text(vjust = 1.5, size = 2.7, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
+    geom_text(aes(vjust = gg_pos, colour = colour), size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute error")) +
-    scale_y_continuous(labels = comma)
+    scale_y_continuous(labels = comma) + guides(colour=F) +
+    gg_text_customs()
   
   # Second: percentual errors
-  deciles_per <- quantile(abs(df$p_error), 
-                          probs = seq((1/splits), 1, length = splits), 
-                          names = TRUE)
-  deciles_per <- data.frame(cbind(Deciles=row.names(as.data.frame(deciles_per)),
-                                  Threshold=as.data.frame(deciles_per)))
-  
-  p_per <- ggplot(deciles_per, 
-                  aes(x = reorder(Deciles, deciles_per), y = deciles_per, 
-                      label = signif(deciles_per, 3))) +
+  deciles_perabs <- quants(abs(df$p_error), splits = splits, just = 0.3)
+  p_per <- ggplot(deciles_perabs, aes(x = reorder(deciles, cut), y = cut, label = signif(cut, 3))) +
     geom_col(fill="deepskyblue") + 
-    xlab('') + theme_minimal() + ylab('% Error') + 
-    geom_text(vjust = 1.5, size = 2.7, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
-    labs(subtitle = paste("Cuts and distribution by absolute porcentual error")) +
-    scale_y_continuous(labels = comma)
+    xlab('') + theme_minimal() + ylab('Percetage Error') + 
+    geom_text(aes(vjust = gg_pos, colour = colour), size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
+    labs(subtitle = paste("Cuts and distribution by absolute percentage error")) +
+    scale_y_continuous(labels = comma) + guides(colour=F) +
+    gg_text_customs()
   
   # Third: errors distribution
   pd_error <- ggplot(df) + 
@@ -506,10 +498,6 @@ mplot_splits <- function(tag,
                          save = FALSE, 
                          subdir = NA, 
                          file_name = "viz_splits.png") {
-  
-  # require(ggplot2)
-  # require(dplyr)
-  # require(RColorBrewer)
   
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
@@ -605,9 +593,6 @@ mplot_metrics <- function(results,
                           subdir = NA,
                           file_name = "viz_metrics.png") {
   
-  # require(ggplot2)
-  # require(gridExtra)
-  
   plots_data <- data.frame(
     trees = results$model@model$scoring_history$number_of_trees,
     train_ll = results$model@model$scoring_history$training_logloss,
@@ -691,10 +676,7 @@ mplot_lineal <- function(tag,
                          save = FALSE, 
                          subdir = NA,
                          file_name = "viz_lineal.png") {
-  
-  # require(ggplot2)
-  # require(scales)
-  
+
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
     stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
@@ -730,8 +712,10 @@ mplot_lineal <- function(tag,
   }
   
   # Draw reference line for correlation
+  intercept <- summary(fit)$coefficients[1]
   slope <- summary(fit)$coefficients[2]
-  p <- p + geom_abline(slope = slope, intercept = 0, alpha = 0.5, colour = "orange", size=0.6)
+  p <- p + geom_abline(slope = slope, intercept = intercept, 
+                       alpha = 0.5, colour = "orange", size=0.6)
   
   if(!is.na(subtitle)) {
     p <- p + labs(subtitle = subtitle)

@@ -73,4 +73,4 @@ if(getRversion() >= "2.15.1")
       "trees","type","upload_file","value","values","variable_response","variables",
       "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","wordcloud","x","y",
       "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos",
-      "name","where","is.Date","is.POSIXct","is.POSIXlt"))
+      "name","where","is.Date","is.POSIXct","is.POSIXlt","deciles","gg_pos","colour"))

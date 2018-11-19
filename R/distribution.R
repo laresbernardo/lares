@@ -101,7 +101,7 @@ distr <- function(data, ...,
   if (length(vars) == 1) {
     value <- data %>% select(!!!vars[[1]])
     variable_name <- colnames(value)
-    value <- do.call("c", value) # keep classes
+    value <- value[,1] # do.call("c", value)
     value <- force_class(value, force)
     value <- fxtrim(value, trim)
     value <- fxclean(value, clean)
@@ -139,11 +139,11 @@ distr <- function(data, ...,
     
     targets <- data %>% select(!!!vars[[1]])
     targets_name <- colnames(targets)
-    targets <- do.call("c", targets)
+    targets <- targets[,1]
     value <- data %>% select(!!!vars[[2]])
     variable_name <- colnames(value)
     # Transformations
-    value <- do.call("c", value)
+    value <- value[,1] # do.call("c", value)
     value <- force_class(value, force)
     value <- fxtrim(value, trim)
     value <- fxclean(value, clean)
@@ -235,14 +235,18 @@ distr <- function(data, ...,
         geom_col(position = "fill") +
         geom_text(check_overlap = TRUE, size = 3.2,
                   position = position_stack(vjust = 0.5)) +
-        geom_hline(yintercept = distr$pcum[1:(nrow(distr)-1)]/100, 
-                   colour = "purple", linetype = "dotted", alpha = 0.8) +
         theme_minimal() + coord_flip() +
         labs(x = "Proportions", y = "", fill = targets_name, caption = caption) +
         theme(legend.position = "top") + ylim(0, 1)
       # Show limit caption when more values than top
       if (length(unique(value)) > top) {
         count <- count + labs(caption = paste("Showing the", top, "most frequent values"))
+      }
+      # Show a reference line if levels = 2; quite useful when data is unbalanced (not 50/50)
+      if (length(unique(targets)) == 2) {
+        prop <- prop +
+          geom_hline(yintercept = (100-distr$pcum[1])/100, 
+                     colour = "purple", linetype = "dotted", alpha = 0.8)
       }
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
