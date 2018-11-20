@@ -30,7 +30,7 @@ ohe <- function(df, redundant = FALSE, trim = 0, summary = TRUE, limit = 20, sep
       vector_values <- df[toString(types[i, "name"])]
       vector_values <- vector_values %>% 
         mutate_all(as.character) %>%
-        replace(., is.na(.), '.NA')
+        replace(., is.na(.), 'NAs')
       vector_values[,1] <- paste0(sep, vector_values[,1])
       
       # Columns with no variance or same amount of unique values as rows
@@ -70,7 +70,7 @@ ohe <- function(df, redundant = FALSE, trim = 0, summary = TRUE, limit = 20, sep
     message(paste("Automatically dropped columns with 0% or 100% variance:", vector2text(no_variance)))
   }
   
-  df <- df[, c(!colnames(df) %in% c(no_variance))]
+  df <- df[, c(!colnames(df) %in% c(no_variance, converted))]
   
   return(df)
   

@@ -226,7 +226,6 @@ distr <- function(data, ...,
     
     # Percentages plot
     if (type %in% c(1,3)) {
-      distr <- df %>% freqs(targets)
       prop <- ggplot(freqs, 
                      aes(x = reorder(value, -order), 
                          y = as.numeric(p/100),
@@ -244,6 +243,7 @@ distr <- function(data, ...,
       }
       # Show a reference line if levels = 2; quite useful when data is unbalanced (not 50/50)
       if (length(unique(targets)) == 2) {
+        distr <- df %>% freqs(targets)
         prop <- prop +
           geom_hline(yintercept = (100-distr$pcum[1])/100, 
                      colour = "purple", linetype = "dotted", alpha = 0.8)
