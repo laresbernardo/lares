@@ -20,7 +20,7 @@ ohe <- function(df, redundant = FALSE, trim = 0, summary = TRUE, limit = 20, sep
   
   types <- data.frame(name = colnames(df), 
                       type = unlist(lapply(lapply(df, class), `[[`, 1)))
-  converted <- not_converted <- no_variance <- c()
+  converted <- converted_binary <- not_converted <- no_variance <- c()
   
   for (i in 1:ncol(df)) {
     vector_type <- types[i, "type"]
@@ -40,7 +40,7 @@ ohe <- function(df, redundant = FALSE, trim = 0, summary = TRUE, limit = 20, sep
       # Columns with 2 possible values
       if (vector_levels == 2) {
         df[,c(vector_name)] <- as.integer(as.factor(df[,c(vector_name)]))-1
-        converted <- rbind(converted, vector_name)
+        converted_binary <- rbind(converted_binary, vector_name)
       }
       # Columns with more than 2 with variance
       if (!colnames(vector_values) %in% c(converted, no_variance)) {
