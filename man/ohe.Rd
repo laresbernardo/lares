@@ -4,8 +4,8 @@
 \alias{ohe}
 \title{One Hot Encoding (Dummy Variables)}
 \usage{
-ohe(df, redundant = FALSE, trim = 0, summary = TRUE, limit = 20,
-  sep = "_")
+ohe(df, redundant = FALSE, trim = 0, summary = TRUE,
+  variance = 0.95, limit = 10, other_label = "OTHER", sep = "_")
 }
 \arguments{
 \item{df}{Dataframe}
@@ -17,8 +17,13 @@ column only has two different values, should we keep both new columns?}
 
 \item{summary}{Boolean. Print a summary of the operations?}
 
-\item{limit}{Integer. Limit OHE to columns which have equal or less 
-different values than this parameter's value. Default: 20}
+\item{variance}{Numeric. Drop columns with more than n variance. Range: 0-1}
+
+\item{limit}{Integer. Limit OHE to n columns. Automatically, the
+function will select the n most frequent values}
+
+\item{other_label}{Character. With which text do you wish to replace 
+the filtered values with?}
 
 \item{sep}{Character. Separator's string}
 }

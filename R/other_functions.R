@@ -75,7 +75,7 @@ categoryCounter <- function (df) {
 #' @param pcummax Numerical. Top cumulative porcentage of most 
 #' repeated values
 #' @param top Integer. Keep the n most frequently repeated values
-#' @param other_label Character. Which value do you wish to replace 
+#' @param other_label Character. With which text do you wish to replace 
 #' the filtered values with?
 #' @export
 categ_reducer <- function(df, ...,

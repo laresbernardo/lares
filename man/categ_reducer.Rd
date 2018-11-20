@@ -21,7 +21,7 @@ repeated values}
 
 \item{top}{Integer. Keep the n most frequently repeated values}
 
-\item{other_label}{Character. Which value do you wish to replace 
+\item{other_label}{Character. With which text do you wish to replace 
 the filtered values with?}
 }
 \description{
