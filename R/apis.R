@@ -9,17 +9,17 @@
 #' @export
 bring_api <- function(url, status = TRUE) {
   
-  get <- httr::GET(url = url)
+  get <- GET(url = url)
   if (status == TRUE) {
     message(paste0("Status: ", ifelse(get$status_code == 200, "OK", "ERROR"))) 
   }
   char <- rawToChar(get$content)
-  json <- jsonlite::fromJSON(char)
+  json <- fromJSON(char)
   
   if (length(json$contacts) > 0) {
     import <- data.frame(json)
-    import <- jsonlite::flatten(import)
-    import <- data.frame(rlist::list.cbind(lapply(import, unlist(as.character))))
+    import <- flatten(import)
+    import <- data.frame(list.cbind(lapply(import, unlist(as.character))))
     # Further transformations
     import[import == "list()"] <- NA
     import[import == "integer(0)"] <- 0

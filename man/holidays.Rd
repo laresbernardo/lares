@@ -7,10 +7,10 @@
 holidays(years = year(Sys.Date()), countries = "Colombia")
 }
 \arguments{
-\item{years}{Integer or vector. For which year do you wish to import
+\item{years}{Character or vector. For which year(s) do you wish to import
 holiday dates?}
 
-\item{countries}{Character or vector. For which countries should the 
+\item{countries}{Character or vector. For which country(ies) should the 
 holidays be imported?}
 }
 \description{

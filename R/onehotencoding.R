@@ -170,16 +170,19 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
       values <- ymd_hms(values)
       result$date_hour <- hour(values)  
       result$date_minute <- minute(values)  
+      results$date_minutetotal <- as.integer(difftime(
+        as.POSIXct(values, format = '%H:%M'), 
+        as.POSIXct('00:00', format = '%H:%M'), units = 'min'))
       result$date_second <- second(values)  
     }
     
     if (holidays == TRUE) {
-      if (ncol(holidays_dates) == 5) {
-        cols <- paste0("date_",c("national","observance","season",tolower(country)))
+      if (ncol(holidays_dates) == 6) {
+        cols <- paste0("date_",c("national","observance","season","other",tolower(country)))
         holidays_dates <- holidays_dates %>% 
           mutate(dummy=TRUE) %>% tidyr::spread(country, dummy)
       } else {
-        cols <- cols[1:3]
+        cols <- cols[1:4]
       }
       colnames(holidays_dates)[-1] <- cols
       result$values_date <- as.Date(values)
@@ -209,9 +212,9 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
 #' This function lets the user automatically scrap holiday dates from
 #' any country and year within +- 5 years. Thanks to timeanddate.com!
 #'
-#' @param years Integer or vector. For which year do you wish to import
+#' @param years Character or vector. For which year(s) do you wish to import
 #' holiday dates?
-#' @param countries Character or vector. For which countries should the 
+#' @param countries Character or vector. For which country(ies) should the 
 #' holidays be imported?
 #' @export
 holidays <- function(years = year(Sys.Date()), countries = "Colombia") {
@@ -232,7 +235,8 @@ holidays <- function(years = year(Sys.Date()), countries = "Colombia") {
     result <- data.frame(holiday = holidays$Date) %>%
       mutate(national = grepl("National|Federal", holidays$Holiday.Type),
              observance = grepl("Observance", holidays$Holiday.Type),
-             season = grepl("Season", holidays$Holiday.Type)) %>%
+             season = grepl("Season", holidays$Holiday.Type),
+             other = !grepl("National|Federal|Observance|Season", holidays$Holiday.Type)) %>%
       if (length(unique(countries)) > 1) { mutate(., country = combs$country[i]) } else .
     results <- rbind(results, result)
   } 

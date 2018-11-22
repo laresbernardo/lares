@@ -8,6 +8,8 @@
 #' columns: they will be filtered!
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
+#' @param dates Boolean. Do you want the function to create more features
+#' out of the date/time columns?
 #' @param redundant Boolean. Should we keep redundat columns? i.e. It the
 #' column only has two different values, should we keep both new columns?
 #' @param logs Boolean. Automatically calculate log(values) for numerical
@@ -16,14 +18,14 @@
 #' @param top Integer. Select top N most relevant variables? Filtered 
 #' and sorted by mean of each variable's correlations
 #' @export
-corr <- function(df, method = "pearson", dummy = TRUE, redundant = TRUE, 
-                 logs = TRUE, plot = FALSE, top = NA) {
+corr <- function(df, method = "pearson", dummy = TRUE, dates = TRUE, 
+                 redundant = TRUE, logs = FALSE, plot = FALSE, top = NA) {
   
   options(warn=-1)
   
   # One hot encoding for categorical features
   if (dummy == TRUE) {
-    df <- ohe(df, summary = FALSE, redundant = redundant)
+    df <- ohe(df, summary = FALSE, redundant = redundant, dates = dates)
   }
   
   # Select only numerical features and create log+1 for each one
@@ -135,7 +137,8 @@ corr_var <- function(df, var,
       scale_y_continuous(labels = scales::percent)
     if (!is.na(top) & top < original_n) { 
       plot <- plot + 
-        labs(subtitle = paste("Plotting top", top, "out of", original_n, "variables (original+dummy)"))
+        labs(subtitle = paste("Plotting top", top, "out of", 
+                              original_n, "variables (original+dummy)"))
     }
     print(plot)
   }
@@ -172,11 +175,10 @@ corr_var <- function(df, var,
 corr_plot <- function(df, method = "pearson", order = "FPC", type = "square", logs = TRUE) {
   
   c <- corr(df, method, logs = logs)
-  plot <- corrplot::corrplot(
-    as.matrix(c),
-    order = order,
-    method = type, 
-    type = "lower",
-    diag = FALSE)
+  plot <- corrplot(as.matrix(c),
+                   order = order,
+                   method = type, 
+                   type = "lower",
+                   diag = FALSE)
   return(plot)
 }

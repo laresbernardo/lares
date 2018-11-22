@@ -4,8 +4,8 @@
 \alias{corr}
 \title{Correlation table}
 \usage{
-corr(df, method = "pearson", dummy = TRUE, redundant = TRUE,
-  logs = TRUE, plot = FALSE, top = NA)
+corr(df, method = "pearson", dummy = TRUE, dates = TRUE,
+  redundant = TRUE, logs = FALSE, plot = FALSE, top = NA)
 }
 \arguments{
 \item{df}{Dataframe. It doesn't matter if it's got non-numerical
@@ -14,6 +14,9 @@ columns: they will be filtered!}
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
 
 \item{dummy}{Boolean. Should One Hot Encoding be applied to categorical columns?}
+
+\item{dates}{Boolean. Do you want the function to create more features
+out of the date/time columns?}
 
 \item{redundant}{Boolean. Should we keep redundat columns? i.e. It the
 column only has two different values, should we keep both new columns?}
