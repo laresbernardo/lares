@@ -7,9 +7,10 @@
 #' value for each parameter (column).
 #'
 #' @param creds Character. Credential's user (see get_credentials)
-#' @param limit Integer. Limit the amount of contacts to return
+#' @param limit Integer. Limit the amount of contacts to return. 
+#' Multiples of 20 or round up will occur.
 #' @export
-f1_contacts <- function(creds = NA, limit = 1000) {
+f1_contacts <- function(creds = NA, limit = 250) {
 
   options(warn=-1)
   
@@ -157,7 +158,7 @@ f1_contacts <- function(creds = NA, limit = 1000) {
   
   # ALL Contacts with properties
   properties_string <- paste(rbind("property=", properties, "&"), collapse="")
-  API <- "https://api.hubapi.com/contacts/v1/lists/all/contacts/all?"
+  API <- "https://api.hubapi.com/contacts/v1/lists/all/contacts/recent?"
   hapikey <- paste0("hapikey=", credentials$token)
   URL <- paste0(API, properties_string, hapikey)
   contacts <- lares::bring_api(URL, status = TRUE)
@@ -176,8 +177,8 @@ f1_contacts <- function(creds = NA, limit = 1000) {
   colnames(contacts) <- gsub("contacts_properties_|_value", "", colnames(contacts))
   contacts <- contacts %>%
     dplyr::rename(credit_value = credit,
-                  vehicle_commercial_value = vehicle_commercial,
-                  sale_value = sale) %>%
+                  #sale_value = sale,
+                  vehicle_commercial_value = vehicle_commercial) %>%
     mutate_at(vars(contains('timestamp')), funs(hsdates(.))) %>%
     mutate_at(vars(contains('date')), funs(hsdates(.))) %>%
     mutate_at(vars(contains('addedAt')), funs(hsdates(.))) %>% 

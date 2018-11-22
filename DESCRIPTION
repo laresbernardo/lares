@@ -1,7 +1,7 @@
 Package: lares
 Type: Package
 Title: Analytics, Visualization & Machine Learning Library
-Version: 4.2
+Version: 4.3
 Author: Bernardo Lares
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
 Description: R Library for Analytics, Visualization, Data Mining and Machine Learning tasks.

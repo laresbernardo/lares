@@ -62,13 +62,13 @@ df_str <- function (df,
       filter(!metric %in% c("Memory.Usage")) %>%
       ggplot(aes(x=reorder(metric, as.integer(counter)), 
                  y=p, fill=type, 
-                 label=lares::formatNum(counter, 0))) + 
+                 label=formatNum(counter, 0))) + 
       geom_col() + coord_flip() + 
       theme_minimal() + guides(fill=FALSE) +
       labs(title = "Dataset columns and rows counter", 
            subtitle = subtitle,
            x = "", y = "% of total", fill="", 
-           caption = paste("Memory Usage:", lares::formatNum(numbers$Memory.Usage/(1024*1024)),"Mb")) +
+           caption = paste("Memory Usage:", formatNum(numbers$Memory.Usage/(1024*1024)),"Mb")) +
       facet_grid(type ~., scales = "free") + 
       geom_text(size = 3, hjust = 1.1)  
     print(plot)

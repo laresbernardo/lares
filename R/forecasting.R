@@ -101,9 +101,9 @@ forecast_arima <- function(time, values, n_future = 30,
       weekdays <- data.frame(table(weekdays(time)))
       weekdays_real <- c(weekdays(seq.Date(Sys.Date(), Sys.Date() + 6, by = 1)))
       wd_excluded <- weekdays_real[!weekdays_real %in% weekdays$Var1]
-      message("Automatically excluding ", lares::vector2text(wd_excluded))
+      message("Automatically excluding ", vector2text(wd_excluded))
     }
-    exclude <- lares::vector2text(wd_excluded, quotes = FALSE)
+    exclude <- vector2text(wd_excluded, quotes = FALSE)
     future_dates <- future_dates[!weekdays(future_dates) %in% wd_excluded]
     n_future <- length(future_dates)
   } 
@@ -220,7 +220,7 @@ forecast_ml <- function(time, values,
     predictions_tbl <- tibble(time = future_idx, amount = pred) 
   } else {
     augmented_h2o <- augmented %>% dplyr::rename(tag = amount)
-    fit_auto <- lares::h2o_automl(df = augmented_h2o, alarm = FALSE, project = project)
+    fit_auto <- h2o_automl(df = augmented_h2o, alarm = FALSE, project = project)
     pred <- h2o.predict(fit_auto$model, as.h2o(new_data_tbl))
     predictions_tbl <- tibble(time = future_idx, amount = as.vector(pred))
   }
@@ -257,7 +257,7 @@ forecast_ml <- function(time, values,
   
   if (plot_model == TRUE) {
     Sys.sleep(1)
-    lares::mplot_full(
+    mplot_full(
       tag = df$amount, 
       score = predictions_tbl$amount[1:length(df$amount)],
       subtitle = project)
@@ -276,7 +276,7 @@ forecast_ml <- function(time, values,
   
   output <- list(data = df_final, 
                  model = model, 
-                 errors = lares::errors(df$amount, score))
+                 errors = errors(df$amount, score))
   
   return(output)
   

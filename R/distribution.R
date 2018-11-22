@@ -80,10 +80,10 @@ distr <- function(data, ...,
   fxclean <- function(value, clean = FALSE, targets = NA) {
     if (clean == TRUE) {
       if (!is.numeric(value)) {
-        value <- lares::cleanText(value, spaces = F)
+        value <- cleanText(value, spaces = F)
       }
       if (!is.numeric(targets) & !is.na(targets)) {
-        targets <- lares::cleanText(targets, spaces = F)
+        targets <- cleanText(targets, spaces = F)
       } 
     }
     return(value)
@@ -198,7 +198,7 @@ distr <- function(data, ...,
     }
     
     caption <- paste0("Variables: ", targets_name, " vs. ", variable_name, 
-                      ". Obs: ", lares::formatNum(nrow(df), 0))
+                      ". Obs: ", formatNum(nrow(df), 0))
     
     # Counter plot
     if(type %in% c(1,2)) {
@@ -260,8 +260,8 @@ distr <- function(data, ...,
     if (save == TRUE) {
       file_name <- paste0(
         "viz_distr_", 
-        lares::cleanText(targets_name), ".vs.", 
-        lares::cleanText(variable_name), 
+        cleanText(targets_name), ".vs.", 
+        cleanText(variable_name), 
         case_when(type == 2 ~ "_c", type == 3 ~ "_p", TRUE ~ ""),".png")
       if (!is.na(subdir)) {
         options(warn=-1)

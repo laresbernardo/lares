@@ -684,15 +684,15 @@ mplot_lineal <- function(tag,
   
   results <- data.frame(tag = tag, score = score, dist = 0)
   for (i in 1:nrow(results)) { 
-    results$dist[i] <- lares::dist2d(c(results$tag[i],results$score[i]), c(0,0), c(1,1)) 
+    results$dist[i] <- dist2d(c(results$tag[i],results$score[i]), c(0,0), c(1,1)) 
   }
   
   fit <- lm(results$score ~ results$tag)
   labels <- paste(
     paste("Adj R2 = ", signif(summary(fit)$adj.r.squared, 4)),
     #paste("Pval =", signif(summary(fit)$coef[2,4], 3)), 
-    paste("RMSE =", signif(lares::rmse(results$tag, results$score), 4)), 
-    paste("MAE =", signif(lares::mae(results$tag, results$score), 4)), 
+    paste("RMSE =", signif(rmse(results$tag, results$score), 4)), 
+    paste("MAE =", signif(mae(results$tag, results$score), 4)), 
     sep="\n")
   
   p <- ggplot(results, aes(x = tag, y = score, colour = dist)) +
@@ -776,10 +776,10 @@ mplot_full <- function(tag,
   
   # Categorical Models
   if (length(unique(tag)) <= thresh) {
-    p1 <- lares::mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
-    p2 <- lares::mplot_splits(tag = tag, score = score, splits = splits)
-    p3 <- lares::mplot_roc(tag = tag, score = score)
-    p4 <- lares::mplot_cuts(score = score) 
+    p1 <- mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
+    p2 <- mplot_splits(tag = tag, score = score, splits = splits)
+    p3 <- mplot_roc(tag = tag, score = score)
+    p4 <- mplot_cuts(score = score) 
     
     if(save == TRUE) {
       
@@ -806,9 +806,9 @@ mplot_full <- function(tag,
   } else {
     
     # Numerical models
-    p1 <- lares::mplot_lineal(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
-    p2 <- lares::mplot_density(tag = tag, score = score)
-    p3 <- lares::mplot_cuts_error(tag = tag, score = score, splits = splits)
+    p1 <- mplot_lineal(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
+    p2 <- mplot_density(tag = tag, score = score)
+    p3 <- mplot_cuts_error(tag = tag, score = score, splits = splits)
     
     if(save == TRUE) {
       

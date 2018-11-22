@@ -16,5 +16,5 @@ h2o_predict_MOJO(df, model_path, sample = NA)
 \description{
 This function lets the user predict using the h2o .zip file 
 containing the MOJO files. Note that it works with the files 
-generated when using the function lares::export_results()
+generated when using the function export_results()
 }

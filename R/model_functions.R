@@ -101,7 +101,7 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' @param export Boolean. Do you wish to save results into your 
 #' working directory?
 #' @param plot Boolean. Do you want to plot the results with 
-#' lares::mplot_full function?
+#' mplot_full function?
 #' @param project Character. Your project's name
 #' @export
 h2o_automl <- function(df, 
@@ -134,7 +134,7 @@ h2o_automl <- function(df,
   
   ####### Split datasets for training and testing #######
   if (is.na(train_test)) {
-    splits <- lares::msplit(df, size = split, seed = seed)
+    splits <- msplit(df, size = split, seed = seed)
     train <- splits$train
     test <- splits$test
     if (type == "Classifier") {
@@ -194,7 +194,7 @@ h2o_automl <- function(df,
         index = c(1:nrow(test)),
         tag = as.vector(test$tag),
         score = as.vector(scores[,3]),
-        norm_score = lares::normalize(as.vector(scores[,3]))),
+        norm_score = normalize(as.vector(scores[,3]))),
       scores_df = scores_df,
       scoring_history = data.frame(m@model$scoring_history),
       datasets = list(test = test, train = train),
@@ -212,7 +212,7 @@ h2o_automl <- function(df,
     if (length(unique(test$tag)) == 2) {
       results$errors_test <- errors(tag = results$scores_test$tag, 
                                     score = results$scores_test$score) 
-      results$logloss_test <- lares::loglossBinary(tag = results$scores_test$tag, score = results$scores_test$score) 
+      results$logloss_test <- loglossBinary(tag = results$scores_test$tag, score = results$scores_test$score) 
     }
   } 
   
@@ -239,11 +239,11 @@ h2o_automl <- function(df,
   message(paste0("Training duration: ", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
   
   if (export == TRUE) {
-    lares::export_results(results)
+    export_results(results)
   }
   
   if (plot == TRUE) {
-    lares::mplot_full(tag = results$scores_test$tag,
+    mplot_full(tag = results$scores_test$tag,
                       score = results$scores_test$score,
                       subtitle = results$project,
                       model_name = results$model_name)
@@ -283,7 +283,7 @@ h2o_selectmodel <- function(results, which_model = 1) {
       index = c(1:nrow(results$datasets$test)),
       tag = as.vector(results$datasets$test$tag),
       score = as.vector(scores[,3]),
-      norm_score = lares::normalize(as.vector(scores[,3]))),
+      norm_score = normalize(as.vector(scores[,3]))),
     importance = data.frame(h2o.varimp(m)),
     auc_test = NA,
     errors_test = NA,
@@ -292,9 +292,9 @@ h2o_selectmodel <- function(results, which_model = 1) {
     algorithm = m@algorithm)
   roc <- pROC::roc(output$scores$tag, output$scores$score, ci=T)
   output$auc_test <- roc$auc
-  output$errors_test <- lares::errors(tag = results$scores_test$tag, 
+  output$errors_test <- errors(tag = results$scores_test$tag, 
                                       score = results$scores_test$score)
-  output$logloss_test <- lares::loglossBinary(tag = results$scores_test$tag, 
+  output$logloss_test <- loglossBinary(tag = results$scores_test$tag, 
                                               score = results$scores_test$score)
   return(output)
 }
@@ -401,7 +401,7 @@ iter_seeds <- function(df, tries = 10) {
   seeds <- data.frame()
   
   for (i in 1:tries) {
-    iter <- lares::h2o_automl(df, seed = i)
+    iter <- h2o_automl(df, seed = i)
     seeds <- rbind(seeds, cbind(seed = as.integer(i), auc = iter$auc_test))
     seeds <- arrange(seeds, desc(auc))
     print(seeds)
@@ -476,10 +476,10 @@ mape <- function(tag, score){
 #' @export
 errors <- function(tag, score){ 
   data.frame(
-    rmse = lares::rmse(tag, score),
-    mae = lares::mae(tag, score),
-    mse = lares::mse(tag, score),
-    mape = lares::mape(tag, score)
+    rmse = rmse(tag, score),
+    mae = mae(tag, score),
+    mse = mse(tag, score),
+    mape = mape(tag, score)
   )
 }
 
@@ -488,7 +488,7 @@ errors <- function(tag, score){
 #' 
 #' This function lets the user predict using the h2o .zip file 
 #' containing the MOJO files. Note that it works with the files 
-#' generated when using the function lares::export_results()
+#' generated when using the function export_results()
 #' 
 #' @param df Dataframe. Data to insert into the model
 #' @param model_path Character. Relative model_path directory
@@ -523,7 +523,7 @@ h2o_predict_MOJO <- function(df, model_path, sample = NA){
 #' 
 #' This function lets the user predict using the h2o binary file.
 #' Note that it works with the files generated when using the 
-#' function lares::export_results(). Recommendation: use the 
+#' function export_results(). Recommendation: use the 
 #' h2o_predict_MOJO() function when possible - it let's you change
 #' h2o's version without problem.
 #' 

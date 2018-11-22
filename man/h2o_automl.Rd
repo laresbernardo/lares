@@ -36,7 +36,7 @@ to create}
 working directory?}
 
 \item{plot}{Boolean. Do you want to plot the results with 
-lares::mplot_full function?}
+mplot_full function?}
 
 \item{project}{Character. Your project's name}
 }
