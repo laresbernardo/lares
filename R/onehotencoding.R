@@ -143,7 +143,7 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
     }
   } else {
     if (!class(dates) == "data.frame") {
-      dates <- data.frame(date = dates)
+      dates <- data.frame(df = dates)
     }
   }
   
@@ -152,7 +152,7 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
     search_dates[] <- sapply(search_dates, function(x) gsub(" .*", "", as.character(x)))
     alldates <- as.Date(unlist(search_dates, use.names = FALSE))
     years <- sort(unique(year(alldates)))
-    holidays_dates <- holidays(years, countries = country)
+    holidays_dates <- holidays(countries = country, years)
     colnames(holidays_dates)[1] <- "values_date"
   }
   
@@ -170,15 +170,16 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
       values <- ymd_hms(values)
       result$date_hour <- hour(values)  
       result$date_minute <- minute(values)  
-      results$date_minutetotal <- as.integer(difftime(
-        as.POSIXct(values, format = '%H:%M'), 
-        as.POSIXct('00:00', format = '%H:%M'), units = 'min'))
+      result$date_minutes <- as.integer(difftime(
+        values, floor_date(values, unit="day"), units="mins"))
       result$date_second <- second(values)  
+      result$date_seconds <- as.integer(difftime(
+        values, floor_date(values, unit="day"), units="secs"))
     }
     
     if (holidays == TRUE) {
+      cols <- paste0("date_",c("national","observance","season","other",tolower(country)))
       if (ncol(holidays_dates) == 6) {
-        cols <- paste0("date_",c("national","observance","season","other",tolower(country)))
         holidays_dates <- holidays_dates %>% 
           mutate(dummy=TRUE) %>% tidyr::spread(country, dummy)
       } else {
@@ -193,6 +194,7 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
     }
     
     colnames(result)[-1] <- gsub("date_", paste0(col_name,"_"), colnames(result)[-1])
+    colnames(result) <- gsub("df_", "", colnames(result))
     results <- results %>% bind_cols(result)
     
   }
@@ -217,7 +219,7 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
 #' @param countries Character or vector. For which country(ies) should the 
 #' holidays be imported?
 #' @export
-holidays <- function(years = year(Sys.Date()), countries = "Colombia") {
+holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
   
   # Further improvement: let the user use moran than +- 5 years
   

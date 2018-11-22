@@ -18,7 +18,7 @@
 #' @param top Integer. Select top N most relevant variables? Filtered 
 #' and sorted by mean of each variable's correlations
 #' @export
-corr <- function(df, method = "pearson", dummy = TRUE, dates = TRUE, 
+corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE, 
                  redundant = TRUE, logs = FALSE, plot = FALSE, top = NA) {
   
   options(warn=-1)
@@ -87,7 +87,7 @@ corr_var <- function(df, var,
                      file_name = "viz_corrvar.png") {
   
   # Calculate correlations
-  rs <- corr(df, method = method, logs = logs)
+  rs <- corr(df, method = method, logs = logs, dates = FALSE)
   
   # Check if main variable exists
   if (!var %in% colnames(rs)) {
@@ -155,7 +155,6 @@ corr_var <- function(df, var,
   return(d)
   
 }
-
 
 
 ####################################################################

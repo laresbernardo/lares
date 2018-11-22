@@ -4,14 +4,14 @@
 \alias{holidays}
 \title{Holidays in your Country}
 \usage{
-holidays(years = year(Sys.Date()), countries = "Colombia")
+holidays(countries = "Colombia", years = year(Sys.Date()))
 }
 \arguments{
-\item{years}{Character or vector. For which year(s) do you wish to import
-holiday dates?}
-
 \item{countries}{Character or vector. For which country(ies) should the 
 holidays be imported?}
+
+\item{years}{Character or vector. For which year(s) do you wish to import
+holiday dates?}
 }
 \description{
 This function lets the user automatically scrap holiday dates from
