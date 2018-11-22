@@ -19,7 +19,8 @@
 #' h2o.predict_json h2o.saveModel h2o.varimp
 #' @importFrom jsonlite fromJSON toJSON
 #' @importFrom kableExtra kable
-#' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd minute hour %m+% 
+#' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd 
+#' minute hour second %m+% 
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom pROC roc ci
@@ -65,7 +66,7 @@ if(getRversion() >= "2.15.1")
       "ocv_camera","ocv_copyto","ocv_face","ocv_facemask","ocv_read","ocv_video",
       "ocv_write","p","p_error","palette_light","portalId","portal_id","pos","get_ip",
       "prediction_breakdown","q_na","quantile_tag","question","rbind.fill","readJPEG",
-      "readPNG","read_exif","real_error","removeNumbers","removePunctuation",
+      "readPNG","read_exif","real_error","removeNumbers","removePunctuation","dummy",
       "removeWords","sale","send.mail","shapeflag","stateChanges","step_done","stopwords",
       "str_pad","stripWhitespace","tableGrob","tag","test_auc","test_ll","theme_tq",
       "tk_augment_timeseries_signature","tk_get_timeseries_signature","tk_index",

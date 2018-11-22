@@ -7,8 +7,8 @@
 li_profile(token = NA)
 }
 \arguments{
-\item{token}{Object. li_auth() output}
+\item{token}{Object. OAuth Authentication: li_auth()'s output}
 }
 \description{
-This function brings a list with my personal Linkedin data
+This function brings a list with your personal LinkedIn data
 }

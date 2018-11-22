@@ -45,6 +45,7 @@ Imports:
     skimr,
     SnowballC,
     stringr,
+    tidyr,
     tidyverse,
     wordcloud,
     xml2

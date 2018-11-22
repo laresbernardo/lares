@@ -9,10 +9,11 @@ li_auth(app_name = NA, client_id = NA, client_secret = NA)
 \arguments{
 \item{app_name}{Character. Your App's given name}
 
-\item{client_id}{Character. Client ID}
+\item{client_id}{Character. Your App's client ID}
 
-\item{client_secret}{Character. Client secret}
+\item{client_secret}{Character. Your App's client secret}
 }
 \description{
-This function authenticates and creates a token for LinkedIN's API REST
+This function authenticates and creates a token for LinkedIn's 
+API REST
 }

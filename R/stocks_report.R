@@ -8,9 +8,6 @@
 #' @export
 get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Documentos/Docs/Data") {
   
-  # require(openxlsx)
-  # require(rdrop2)
-  
   processFile <- function(file) {
     cash <- read.xlsx(file, sheet = 'Fondos', skipEmptyRows=TRUE, detectDates=TRUE)
     trans <- read.xlsx(file, sheet = 'Transacciones', skipEmptyRows=TRUE, detectDates=TRUE)
@@ -60,10 +57,6 @@ get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Document
 get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365, 
                              today = TRUE, tax = 30, verbose = TRUE) {
   
-  # require(quantmod)
-  # require(dplyr)
-  # require(lubridate)
-  # require(jsonlite)
   options("getSymbols.warning4.0"=FALSE)
   options("getSymbols.yahoo.warning"=FALSE)
   
@@ -149,9 +142,6 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365,
 #' @export
 stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
   
-  # require(dplyr)
-  # require(lubridate)
-  
   dailys_structure <- c("Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted")
   dividends_structure <- c("Symbol", "Date", "Div", "DivReal")
   trans_structure <- c("ID", "Inv", "CODE", "Symbol", "Date", "Quant", "Value", "Amount", "Description")
@@ -224,8 +214,6 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
 #' @export
 stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
   
-  # require(dplyr)
-  
   dailys_structure <- c("Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted",
                         "Quant", "Value", "Amount", "Expenses", "Stocks", "Div", "DivReal",
                         "DailyDiv", "DailyValue", "RelChangeP", "RelChangeUSD", 
@@ -278,8 +266,6 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
 #' @export
 portfolio_performance <- function(portfolio, daily) {
   
-  # require(dplyr)
-  
   portf_structure <- c("Symbol", "Stocks", "StockIniValue", "InvPerc", "Type", "Trans", "StartDate")
   
   if (colnames(portfolio) != portf_structure) {
@@ -317,9 +303,6 @@ portfolio_performance <- function(portfolio, daily) {
 #' @param stocks_perf Dataframe. Output of the stocks_performance function
 #' @export
 portfolio_daily_plot <- function(stocks_perf) {
-  
-  # require(dplyr)
-  # require(ggplot2)
   
   plot <- stocks_perf %>%
     dplyr::mutate(color = ifelse(RelPer > 0, "Pos", "Neg")) %>%
@@ -360,10 +343,6 @@ portfolio_daily_plot <- function(stocks_perf) {
 #' @param cash Dataframe. Cash data
 #' @export
 stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
-  
-  # require(dplyr)
-  # require(ggplot2)
-  # require(scales)
   
   tops <- max(rbind(portfolio_perf$Invested, portfolio_perf$DailyValue))
   summary <- rbind(
@@ -420,10 +399,6 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
 #' @export
 stocks_daily_plot <- function (portfolio, daily, group = TRUE) {
   
-  # require(dplyr)
-  # require(ggplot2)
-  # require(ggrepel)
-  
   plot <- d <- daily %>%
     left_join(portfolio %>% dplyr::select(Symbol,Type), by='Symbol') %>%
     arrange(Date) %>% group_by(Symbol) %>%
@@ -463,10 +438,6 @@ stocks_daily_plot <- function (portfolio, daily, group = TRUE) {
 #' @param daily Dataframe. Daily data
 #' @export
 portfolio_distr_plot <- function (portfolio_perf, daily) {
-  
-  # require(dplyr)
-  # require(ggplot2)
-  # require(gridExtra)
   
   plot_stocks <- ggplot(portfolio_perf) + theme_minimal() +
     geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
@@ -516,6 +487,8 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
 #' @export
 stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   
+  options(warn=-1)
+  
   tabs <- c('portfolio','transactions','cash')
   if (sum(names(data) %in% tabs) != 3) {
     not <- names(data)[!names(data) %in% tabs]
@@ -534,7 +507,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
                                   transactions = data$transactions, expenses = expenses)
   stocks_perf <- stocks_performance(daily, cash_in = data$cash, cash_fix = cash_fix)
   portfolio_perf <- portfolio_performance(portfolio = data$portfolio, daily = daily)
-  message("1. Calculations ready...")
+  message("Calculations ready...")
   
   # Visualizations
   p1 <- portfolio_daily_plot(stocks_perf)
@@ -543,7 +516,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   p3 <- stocks_daily_plot(portfolio = data$portfolio, daily)
   p4 <- portfolio_distr_plot(portfolio_perf, daily)
   graphics.off()
-  message("2. Visuals plotted...")
+  message("Visuals plotted...")
   
   # Consolidation
   results <- list(p_portf_daily_change = p1,
@@ -556,7 +529,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
                   df_hist = hist)
   unlink(tempdir, recursive = FALSE)
   setwd(current_wd)
-  message("3. All results ready!")
+  message("All results are ready to export!")
   
   return(results)
   
@@ -574,9 +547,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
 #' @export
 stocks_html <- function(results) {
   
-  # require(rmarkdown)
-  # require(dplyr)
-  
+  options(warn=-1)
   dir <- getwd()
   
   # Can be more accurate with names but works for me!
@@ -600,7 +571,7 @@ stocks_html <- function(results) {
                     quiet = TRUE)  
   
   invisible(file.remove(paste0(dir, "/stocksReport.Rmd")))
-  message("HTML report created...")
+  message("HTML report created successfully")
   
 }
 
@@ -617,7 +588,6 @@ stocks_html <- function(results) {
 #' @export
 stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA) {
   
-  # require(dplyr)
   options(warn=-1)
   
   current_wd <- getwd()

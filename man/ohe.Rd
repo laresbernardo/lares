@@ -4,28 +4,40 @@
 \alias{ohe}
 \title{One Hot Encoding (Dummy Variables)}
 \usage{
-ohe(df, redundant = FALSE, trim = 0, summary = TRUE,
-  variance = 0.95, limit = 10, other_label = "OTHER", sep = "_")
+ohe(df, redundant = FALSE, dates = FALSE, holidays = FALSE,
+  country = "Colombia", trim = 0, limit = 10, variance = 0.9,
+  other_label = "OTHER", sep = "_", summary = TRUE)
 }
 \arguments{
 \item{df}{Dataframe}
 
-\item{redundant}{Boolean. Should we keep redundat columns? i.e. It the
+\item{redundant}{Boolean. Should we keep redundat columns? i.e. If the
 column only has two different values, should we keep both new columns?}
+
+\item{dates}{Boolean. Do you want the function to create more features
+out of the date/time columns?}
+
+\item{holidays}{Boolean. Include holidays as new columns?}
+
+\item{country}{Character or vector. For which countries should the holidays
+be included?}
 
 \item{trim}{Integer. Trim names until the nth character}
 
-\item{summary}{Boolean. Print a summary of the operations?}
+\item{limit}{Integer. Limit one hot encoding to the n most frequent 
+values of each column}
 
-\item{variance}{Numeric. Drop columns with more than n variance. Range: 0-1}
-
-\item{limit}{Integer. Limit OHE to n columns. Automatically, the
-function will select the n most frequent values}
+\item{variance}{Numeric. Drop columns with more than n variance. 
+Range: 0-1. For example: if a variable contains 91 unique different
+values out of 100 observations, this column will be suppressed if 
+value is set to 0.9}
 
 \item{other_label}{Character. With which text do you wish to replace 
 the filtered values with?}
 
 \item{sep}{Character. Separator's string}
+
+\item{summary}{Boolean. Print a summary of the operations?}
 }
 \description{
 This function lets the user automatically transform a dataframe with

@@ -1,11 +1,12 @@
 ####################################################################
 #' OAuth Linkedin
 #'
-#' This function authenticates and creates a token for LinkedIN's API REST
+#' This function authenticates and creates a token for LinkedIn's 
+#' API REST
 #'
 #' @param app_name Character. Your App's given name
-#' @param client_id Character. Client ID
-#' @param client_secret Character. Client secret
+#' @param client_id Character. Your App's client ID
+#' @param client_secret Character. Your App's client secret
 #' @export
 li_auth <- function(app_name = NA, client_id = NA, client_secret = NA){
   
@@ -29,9 +30,9 @@ li_auth <- function(app_name = NA, client_id = NA, client_secret = NA){
 ####################################################################
 #' Get My Personal LinkedIn Data
 #'
-#' This function brings a list with my personal Linkedin data
+#' This function brings a list with your personal LinkedIn data
 #'
-#' @param token Object. li_auth() output
+#' @param token Object. OAuth Authentication: li_auth()'s output
 #' @export
 li_profile <- function(token = NA) {
   
@@ -43,7 +44,7 @@ li_profile <- function(token = NA) {
   profile_fields <- ":(id,first-name,email-address,last-name,headline,picture-url,industry,summary,specialties,positions:(id,title,summary,start-date,end-date,is-current,company:(id,name,type,size,industry,ticker)),educations:(id,school-name,field-of-study,start-date,end-date,degree,activities,notes),associations,interests,num-recommenders,date-of-birth,publications:(id,title,publisher:(name),authors:(id,name),date,url,summary),patents:(id,title,summary,number,status:(id,name),office:(name),inventors:(id,name),date,url),languages:(id,language:(name),proficiency:(level,name)),skills:(id,skill:(name)),certifications:(id,name,authority:(name),number,start-date,end-date),courses:(id,name,number),recommendations-received:(id,recommendation-type,recommendation-text,recommender),honors-awards,three-current-positions,three-past-positions,volunteer)"
   
   url <- paste0(base_url, "~",profile_fields,"?format=json")
-  get <- GET(url, config = token)
+  get <- httr::GET(url, config = token)
   char <- rawToChar(get$content)
   json <- jsonlite::fromJSON(char)
   
