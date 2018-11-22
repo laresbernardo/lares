@@ -135,7 +135,7 @@ corr_var <- function(df, var,
       scale_y_continuous(labels = scales::percent)
     if (!is.na(top) & top < original_n) { 
       plot <- plot + 
-        labs(subtitle = paste("Plotting top", top, "out of", original_n, "numeric/binary variables"))
+        labs(subtitle = paste("Plotting top", top, "out of", original_n, "variables (original+dummy)"))
     }
     print(plot)
   }

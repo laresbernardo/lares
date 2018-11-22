@@ -46,7 +46,6 @@ Imports:
     SnowballC,
     stringr,
     tidyr,
-    tidyverse,
     wordcloud,
     xml2
 Suggests:

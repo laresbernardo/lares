@@ -221,16 +221,16 @@ holidays <- function(years = year(Sys.Date()), countries = "Colombia") {
   results <- c()
   year <- year(Sys.Date())
   years <- years[years %in% ((year-5):(year+5))]
-  combs <- expand.grid(years, countries) %>% rename(year = "Var1", country = "Var2")
+  combs <- expand.grid(years, countries) %>% dplyr::rename(year = "Var1", country = "Var2")
   for (i in 1:nrow(combs)) {
     message(paste0("Extracting ", combs$country[i], "'s holidays for ", combs$year[i]))
     url <- paste0("https://www.timeanddate.com/holidays/", tolower(combs$country[i]), "/", combs$year[i])
-    holidays <- read_html(url)
-    holidays <- holidays %>% html_nodes(".tb-hover") %>% html_table() %>% data.frame(.) %>% .[-1,]
+    holidays <- xml2::read_html(url)
+    holidays <- holidays %>% html_nodes(".tb-hover") %>% html_table() %>% data.frame(.) %>% .[-1,1:4]
     holidays$Date <- paste(holidays$Date, combs$year[i])
-    holidays$Date <- as.Date(holidays$Date, format = "%d %b %Y")
+    holidays$Date <- as.Date(holidays$Date, tryFormats = c("%d %b %Y", "%b %d %Y"))
     result <- data.frame(holiday = holidays$Date) %>%
-      mutate(national = grepl("National", holidays$Holiday.Type),
+      mutate(national = grepl("National|Federal", holidays$Holiday.Type),
              observance = grepl("Observance", holidays$Holiday.Type),
              season = grepl("Season", holidays$Holiday.Type)) %>%
       if (length(unique(countries)) > 1) { mutate(., country = combs$country[i]) } else .

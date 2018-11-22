@@ -30,18 +30,19 @@
 # @importFrom recipes recipe step_num2factor step_meanimpute all_numeric step_modeimpute
 # all_nominal step_scale all_outcomes step_dummy prep
 #' @import reshape2
+#' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text 
 #' @import rlist
 #' @importFrom rtweet create_token search_tweets
 #' @importFrom scales percent comma
-#' @importFrom stats cor quantile complete.cases
-#' @importFrom stats na.omit sd median dist end lm predict reorder start
+#' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict reorder start
 #' @import SnowballC 
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
 #' installed.packages write.table install.packages remove.packages object.size type.convert
 #' @importFrom wordcloud textplot wordlayout
+#' @importFrom xml2 read_html
 "_PACKAGE"
 
-if(getRversion() >= "2.15.1")  
+if(getRversion() >= "2.15.1")
   utils::globalVariables(
     c(".","..y..","%>%","!!!",".rs.restartR","Amount","Cash","Close","Corpus","CreateDate","CumCash",
       "CumDiv","CumPortfolio","DailyCash","DailyDiv","DailyExpen","DailyStocks","GET",
@@ -58,7 +59,6 @@ if(getRversion() >= "2.15.1")
       "content_transformer","createdate","credit","cuts","date_of_birth","days","dealId",
       "dealstage","df_status","form_submissions","gather","ceiling_date",
       "getDividends","getSymbols","get_questionnaire","get_typeforms", "endfx",
-      "read_html","html_node","html_nodes","html_text","html_table","html_attr","html_attrs",
       "hasMore","has_more","identification_date","identity_profiles","ggplotly",
       "image_darknet_detect","image_darknet_model","image_info","image_read","index",
       "is_contact","key","label","label_colours","label_hjust","max_score","merge_audits",
