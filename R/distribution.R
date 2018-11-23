@@ -158,15 +158,17 @@ distr <- function(data, ...,
       stop("You should use a 'target' variable with max 8 different values!")
     }
     
-    if (na.rm == TRUE & sum(is.na(value)) > 0) { breaks <- breaks + 1 }
-    breaks <- breaks + 1
+    # if (na.rm == TRUE & sum(is.na(value)) > 0) { 
+    #   breaks <- breaks + 1 
+    # }
     
     if (is.numeric(value)) {
-      quant <- quantile(value, prob = seq(0, 1, length = breaks), na.rm = T)
-      if (length(unique(quant)) != breaks) {
-        message(paste("When dividing", variable_name, "into", breaks-1, "quantiles,", length(unique(quant)), "groups are created."))
+      quant <- quants(value, breaks, return = "cuts")
+      if (nrow(quant) != breaks) {
+        message(paste("When dividing", variable_name, "into", breaks, "quantiles,", 
+                      nrow(quant), "cuts/groups are possible."))
       }
-      value <- cut(value, unique(quant))
+      value <- quants(value, breaks, return = "results")
     }
     
     df <- data.frame(targets = targets, value = value)

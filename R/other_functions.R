@@ -719,12 +719,27 @@ export_plot <- function(p,
 #' 
 #' @param values Vector. Values to calculate quantile cuts
 #' @param splits Integer. How many cuts should split the values?
+#' @param return Character. Return "results" or "cuts"
 #' @export
-quants <- function(values, splits = 10) {
+quants <- function(values, splits = 10, return = "cuts") {
+  if (splits > length(unique(values[!is.na(values)]))-1) {
+    stop("There are not enough observations to split the data in ", splits)
+  }
   cuts <- quantile(values, 
-                   probs = seq((1/splits), 1, length = splits), 
-                   names = TRUE)
-  cuts <- data.frame(deciles = names(cuts), cut = cuts)
+                   probs = seq(0, 1, length = splits+1), 
+                   na.rm = TRUE)
+  decimals <- min(nchar(values), na.rm = TRUE)+1
+  decimals <- ifelse(decimals >= 10, 10, decimals)
+  labels <- cut(values, unique(cuts), 
+                dig.lab = decimals, 
+                include.lowest = TRUE)
+  cuts <- data.frame(percentile = names(cuts)[-1], 
+                     cut = cuts[-1], 
+                     label = sort(unique(labels)))
   row.names(cuts) <- NULL
-  return(cuts)
+  if (return == "cuts") {
+    return(cuts) 
+  } else {
+    return(labels)
+  }
 }

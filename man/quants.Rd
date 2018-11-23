@@ -4,12 +4,14 @@
 \alias{quants}
 \title{Calculate cuts by quantiles}
 \usage{
-quants(values, splits = 10)
+quants(values, splits = 10, return = "cuts")
 }
 \arguments{
 \item{values}{Vector. Values to calculate quantile cuts}
 
 \item{splits}{Integer. How many cuts should split the values?}
+
+\item{return}{Character. Return "results" or "cuts"}
 }
 \description{
 This function lets the user quickly calculate cuts for quantiles
