@@ -65,9 +65,12 @@ corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE,
 #' This function correlates a whole dataframe with a single feature.
 #'
 #' @param df Dataframe.
-#' @param var Character. Name of the variable to correlate
+#' @param ... Object. Name of the variable to correlate
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
-#' @param plot Boolean. Do you wish to plot the result?
+#' @param trim Integer. Trim words until the nth character for categorical values 
+#' (applies for both, target and values)
+#' @param plot Boolean. Do you wish to plot the result? If set to TRUE, the
+#' function will return only the plot and not the result's data
 #' @param logs Boolean. Automatically calculate log(values) for numerical
 #' variables (not binaries)
 #' @param top Integer. If you want to plot the top correlations, define how many
@@ -76,9 +79,10 @@ corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE,
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @export
-corr_var <- function(df, var, 
+corr_var <- function(df, ..., 
                      method = "pearson", 
-                     plot = TRUE, 
+                     trim = 0,
+                     plot = TRUE,
                      logs = TRUE, 
                      top = NA, 
                      zeroes = FALSE,
@@ -86,12 +90,16 @@ corr_var <- function(df, var,
                      subdir = NA,
                      file_name = "viz_corrvar.png") {
   
+  vars <- quos(...)
+  
   # Calculate correlations
-  rs <- corr(df, method = method, logs = logs, dates = FALSE)
+  rs <- corr(df, method = method, logs = logs, dates = TRUE)
+  var <- as.character(vars[[1]])[2]
   
   # Check if main variable exists
   if (!var %in% colnames(rs)) {
-    message("Your input `",var, "` is not a valid variable because that column doesn't exist!")
+    message(paste("The variable", var, "is not a valid input because that column",
+                  "doesn't exist or probably was transformed!"))
     maybes <- colnames(rs)[grepl(var, colnames(rs))]
     if (length(maybes) > 0) {
       message(paste("Maybe you meant one of these:", vector2text(maybes)))
@@ -122,8 +130,13 @@ corr_var <- function(df, var,
   
   d <- d[complete.cases(d), ]
   
+  # Shorten up the long names of some variables
+  if (trim > 0) {
+    d$variables <- substr(d$variables, 1, trim)
+  }
+  
   if (plot == TRUE) {
-    plot <- d %>% 
+    p <- d %>% 
       mutate(pos = ifelse(corr > 0, TRUE, FALSE)) %>%
       ggplot(aes(x = reorder(variables, abs(corr)), 
                  y = abs(corr), fill = pos, label = 100 * corr)) +
@@ -136,11 +149,10 @@ corr_var <- function(df, var,
            x = "", y = "Correlation") +
       scale_y_continuous(labels = scales::percent)
     if (!is.na(top) & top < original_n) { 
-      plot <- plot + 
+      p <- p + 
         labs(subtitle = paste("Plotting top", top, "out of", 
-                              original_n, "variables (original+dummy)"))
+                              original_n, "variables (original + dummy)"))
     }
-    print(plot)
   }
   
   if (!is.na(subdir)) {
@@ -149,11 +161,14 @@ corr_var <- function(df, var,
     file_name <- paste(subdir, file_name, sep="/")
   }
   if (save == TRUE) {
-    plot <- plot + ggsave(file_name, width = 6, height = 6)
+    p <- p + ggsave(file_name, width = 6, height = 6)
   }
   
-  return(d)
-  
+  if (plot == TRUE) {
+    return(p)
+  } else {
+    return(d)  
+  }
 }
 
 

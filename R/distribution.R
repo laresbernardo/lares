@@ -73,6 +73,7 @@ distr <- function(data, ...,
       if (!is.numeric(targets) & !is.na(targets)) {
         targets <- substr(targets, 1, trim)
       }
+      message(paste("Chopping everything to", trim, "characters..."))
     }
     return(value)
   }
@@ -96,7 +97,6 @@ distr <- function(data, ...,
     return(df)
   }
   
-  
   # When we only have one variable
   if (length(vars) == 1) {
     value <- data %>% select(!!!vars[[1]])
@@ -109,6 +109,9 @@ distr <- function(data, ...,
     df <- data.frame(value = value, dummy = 0)
     df <- fxna_rm(df, na.rm)
     
+    is.Date <- function(x) inherits(x, "Date")    
+    is.POSIXct <- function(x) inherits(x, "POSIXct")
+    is.POSIXlt <- function(x) inherits(x, "POSIXlt")
     if (is.numeric(value) | is.Date(value) | is.POSIXct(value) | is.POSIXlt(value)) {
       # Continuous and date values
       if (is.numeric(value)) {
@@ -121,7 +124,8 @@ distr <- function(data, ...,
         geom_density(fill = "deepskyblue", alpha = 0.7, adjust = 1/3) +
         labs(y = "", x = "",
              title = paste("Density Distribution"),
-             subtitle = paste("Variable:", variable_name))
+             subtitle = paste("Variable:", variable_name),
+             caption = paste("Obs:", nrow(df)))
       print(p)
     } else {
       # Discrete values
@@ -154,23 +158,44 @@ distr <- function(data, ...,
                          "rows and value has", length(value))))
     }
     
+    # For num-num distributions or too many unique target variables
     if (length(unique(targets)) >= 8) {
-      stop("You should use a 'target' variable with max 8 different values!")
-    }
-    
-    # if (na.rm == TRUE & sum(is.na(value)) > 0) { 
-    #   breaks <- breaks + 1 
-    # }
-    
-    if (is.numeric(value)) {
-      quant <- quants(value, breaks, return = "cuts")
-      if (nrow(quant) != breaks) {
-        message(paste("When dividing", variable_name, "into", breaks, "quantiles,", 
-                      nrow(quant), "cuts/groups are possible."))
+      if (is.numeric(targets) & is.numeric(value)) {
+        df <- data.frame(x = targets, y = value)
+        df <- fxna_rm(df, na.rm = TRUE)
+        p <- ggplot(df, aes(x = x, y = y)) +
+          stat_density_2d(aes(fill = ..level..), geom = "polygon") +
+          theme_minimal() +
+          labs(title = "2D Distribution Plot",
+               subtitle = paste("For", variable_name, "vs.", targets_name),
+               caption = paste("Obs:", nrow(df)))
+        return(p)  
       }
-      value <- quants(value, breaks, return = "results")
+      stop("You should use a 'target' variable with max 8 different values.")
     }
     
+    # Only n numeric values, really numeric?
+    if (is.numeric(value) & length(unique(value)) <= 8) {
+      value <- force_class(value, class = "char")
+    }
+    
+    # Turn numeric variables into quantiles
+    if (is.numeric(value)) {
+      breaks <- ifelse(top != 10, top, breaks)
+      value <- quants(value, breaks, return = "results")
+      cuts <- length(unique(value[!is.na(value)]))
+      if (cuts != breaks) {
+        message(paste("When dividing", variable_name, "into", breaks, "quantiles,", 
+                      cuts, "cuts/groups are possible."))
+      }
+      top <- top + 1
+    }
+    
+    # Caption for plots
+    caption <- paste0("Variables: ", targets_name, " vs. ", variable_name,
+                      ". Obs: ", formatNum(nrow(df), 0))
+    
+    # Finally, we have our data.frame
     df <- data.frame(targets = targets, value = value)
     df <- fxna_rm(df, na.rm)
     
@@ -181,7 +206,6 @@ distr <- function(data, ...,
       mutate(row = row_number(),
              order = ifelse(grepl("\\(|\\)", value), 
                             as.numeric(as.character(substr(gsub(",.*", "", value), 2, 100))), row))
-    
     if(length(unique(value)) > top & !is.numeric(value)) {
       message(paste("Filtering the", top, "most frequent values. Use `top` to overrule."))
       which <- df %>% group_by(value) %>% tally() %>% arrange(desc(n)) %>% slice(1:top)
@@ -195,12 +219,10 @@ distr <- function(data, ...,
                order = row_number())
     }
     
+    # Sort values alphabetically or ascending if numeric
     if (abc == TRUE) {
       freqs <- freqs %>% mutate(order = rank(as.character(value)))
     }
-    
-    caption <- paste0("Variables: ", targets_name, " vs. ", variable_name, 
-                      ". Obs: ", formatNum(nrow(df), 0))
     
     # Counter plot
     if(type %in% c(1,2)) {
@@ -213,7 +235,8 @@ distr <- function(data, ...,
                   position = position_dodge(0.9), 
                   size=3, vjust = -0.15) +
         labs(x = "", y = "Counter", fill = targets_name, caption = caption) + 
-        theme_minimal() + theme(legend.position = "top")
+        theme_minimal() + theme(legend.position = "top") +
+        theme(axis.title.y = element_text(size = rel(0.5), angle = 90))
       # Give an angle to labels when more than...
       if (length(unique(value)) >= 7) {
         count <- count + theme(axis.text.x = element_text(angle = 45, hjust=1))
@@ -238,7 +261,8 @@ distr <- function(data, ...,
                   position = position_stack(vjust = 0.5)) +
         theme_minimal() + coord_flip() +
         labs(x = "Proportions", y = "", fill = targets_name, caption = caption) +
-        theme(legend.position = "top") + ylim(0, 1)
+        theme(legend.position = "top") + ylim(0, 1) +
+        theme(axis.title.y = element_text(size = rel(0.8), angle = 90))
       # Show limit caption when more values than top
       if (length(unique(value)) > top) {
         count <- count + labs(caption = paste("Showing the", top, "most frequent values"))

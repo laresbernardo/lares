@@ -23,6 +23,7 @@
 #' the filtered values with?
 #' @param sep Character. Separator's string
 #' @param summary Boolean. Print a summary of the operations?
+#' @aliases ohse
 #' @export
 ohe <- function(df, redundant = FALSE, 
                 dates = FALSE, holidays = FALSE, country = "Colombia",

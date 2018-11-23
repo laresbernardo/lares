@@ -4,18 +4,22 @@
 \alias{corr_var}
 \title{Correlation between variable and dataframe}
 \usage{
-corr_var(df, var, method = "pearson", plot = TRUE, logs = TRUE,
-  top = NA, zeroes = FALSE, save = FALSE, subdir = NA,
-  file_name = "viz_corrvar.png")
+corr_var(df, ..., method = "pearson", trim = 0, plot = TRUE,
+  logs = TRUE, top = NA, zeroes = FALSE, save = FALSE,
+  subdir = NA, file_name = "viz_corrvar.png")
 }
 \arguments{
 \item{df}{Dataframe.}
 
-\item{var}{Character. Name of the variable to correlate}
+\item{...}{Object. Name of the variable to correlate}
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
 
-\item{plot}{Boolean. Do you wish to plot the result?}
+\item{trim}{Integer. Trim words until the nth character for categorical values 
+(applies for both, target and values)}
+
+\item{plot}{Boolean. Do you wish to plot the result? If set to TRUE, the
+function will return only the plot and not the result's data}
 
 \item{logs}{Boolean. Automatically calculate log(values) for numerical
 variables (not binaries)}

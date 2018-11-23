@@ -725,6 +725,7 @@ quants <- function(values, splits = 10, return = "cuts") {
   if (splits > length(unique(values[!is.na(values)]))-1) {
     stop("There are not enough observations to split the data in ", splits)
   }
+  value <- as.numeric(as.character(values))
   cuts <- quantile(values, 
                    probs = seq(0, 1, length = splits+1), 
                    na.rm = TRUE)

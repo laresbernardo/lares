@@ -2,6 +2,7 @@
 % Please edit documentation in R/onehotencoding.R
 \name{ohe}
 \alias{ohe}
+\alias{ohse}
 \title{One Hot Encoding (Dummy Variables)}
 \usage{
 ohe(df, redundant = FALSE, dates = FALSE, holidays = FALSE,
