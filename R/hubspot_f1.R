@@ -8,10 +8,10 @@
 #'
 #' @param creds Character. Credential's user (see get_credentials)
 #' @param limit Integer. Limit the amount of contacts to return. 
-#' Multiples of 20 or round up will occur.
+#' Multiples of 100 or round up will occur.
 #' @export
-f1_contacts <- function(creds = NA, limit = 250) {
-
+f1_contacts <- function(creds = NA, limit = 500) {
+  
   options(warn=-1)
   
   hsdates <- function(date) {
@@ -159,12 +159,14 @@ f1_contacts <- function(creds = NA, limit = 250) {
   # ALL Contacts with properties
   properties_string <- paste(rbind("property=", properties, "&"), collapse="")
   API <- "https://api.hubapi.com/contacts/v1/lists/all/contacts/recent?"
-  hapikey <- paste0("hapikey=", credentials$token)
+  hapikey <- paste0("hapikey=", credentials$token, "&count=100")
   URL <- paste0(API, properties_string, hapikey)
-  contacts <- lares::bring_api(URL, status = TRUE)
-  while (!as.logical(contacts$has_more[nrow(contacts)]) | nrow(contacts) <= limit - 20) {
-    offset <- contacts$vid_offset[nrow(contacts)]
-    URLi <- paste0(URL, "&vidOffset=", offset)
+  contacts <- bring_api(URL, status = TRUE)
+  message(paste(nrow(contacts),"contacts ready..."))   
+  while (!as.logical(contacts$has_more[1]) | nrow(contacts) < limit) {
+    vidoffset <- contacts$vid_offset[nrow(contacts)]
+    timeoffset <- contacts$time_offset[nrow(contacts)]
+    URLi <- paste0(URL, "&vidOffset=", vidoffset, "&timeOffset=",timeoffset)
     contactsi <- bring_api(URLi, status = FALSE)
     if (!is.na(contactsi)) {
       contacts <- dplyr::bind_rows(contacts, contactsi)
@@ -221,19 +223,19 @@ f1_contacts <- function(creds = NA, limit = 250) {
     select(contacts_vid, step_done, one_of(properties), everything()) %>%
     dplyr::rename(., "vid" = "contacts_vid")
   
-  # One contact
-  API <- "https://api.hubapi.com/contacts/v1/contact/vid/1016501/profile?"
-  hapikey <- paste0("hapikey=", credentials$token)
-  URL <- paste0(API, hapikey)
-  get <- httr::GET(url = URL)
-  message(paste0("Status: ", ifelse(get$status_code == 200, "OK", "ERROR")))
-  char <- rawToChar(get$content)
-  import <- jsonlite::fromJSON(char)
-  last_property <- data.frame(lapply(import$properties, `[[`, 1)) %>%
-    mutate_at(vars(contains('timestamp')), funs(hsdates(.))) %>%
-    mutate_at(vars(contains('date')), funs(hsdates(.)))
-  colnames(last_property)[!colnames(last_property) %in% properties]
-
+  # # One contact
+  # API <- "https://api.hubapi.com/contacts/v1/contact/vid/1016501/profile?"
+  # hapikey <- paste0("hapikey=", credentials$token)
+  # URL <- paste0(API, hapikey)
+  # get <- httr::GET(url = URL)
+  # message(paste0("Status: ", ifelse(get$status_code == 200, "OK", "ERROR")))
+  # char <- rawToChar(get$content)
+  # import <- jsonlite::fromJSON(char)
+  # last_property <- data.frame(lapply(import$properties, `[[`, 1)) %>%
+  #   mutate_at(vars(contains('timestamp')), funs(hsdates(.))) %>%
+  #   mutate_at(vars(contains('date')), funs(hsdates(.)))
+  # colnames(last_property)[!colnames(last_property) %in% properties]
+  
   # Final format
   contacts <- type.convert(contacts)
   posixs <- vector2text(c("timestamp","addedAt","_date", "createdate", "lastmodifieddate"), sep="|", quotes = F)

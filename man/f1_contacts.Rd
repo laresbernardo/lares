@@ -4,13 +4,13 @@
 \alias{f1_contacts}
 \title{Hubspot contacts (Somos F1)}
 \usage{
-f1_contacts(creds = NA, limit = 250)
+f1_contacts(creds = NA, limit = 500)
 }
 \arguments{
 \item{creds}{Character. Credential's user (see get_credentials)}
 
 \item{limit}{Integer. Limit the amount of contacts to return. 
-Multiples of 20 or round up will occur.}
+Multiples of 100 or round up will occur.}
 }
 \description{
 This function brings all contacts from Somos F1's Hubspot account. 
