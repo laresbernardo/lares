@@ -12,7 +12,7 @@ wish to get the history from? i.e, USD/COP, EUR/USD...}
 
 \item{from}{Date. From date}
 
-\item{ftorom}{Date. To date}
+\item{to}{Date. To date}
 }
 \description{
 This function lets the user download historical currency exchange
