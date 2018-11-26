@@ -132,7 +132,6 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
                        holidays = FALSE, country = "Colombia",
                        currency_pair = NA,
                        summary = TRUE) {
-  
   options(warn=-1)
   results <- c()
   date_cols <- df_str(dates, return="names", plot=F)$time
@@ -152,7 +151,7 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
   
   if (!class(dates) == "data.frame" & iters == 1) {
     dates <- data.frame(values_date = dates)
-    date_cols[col] <- "values_date"
+    date_cols <- "values_date"
   }
   
   if (holidays == TRUE | !is.na(currency_pair)) {

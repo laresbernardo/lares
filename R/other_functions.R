@@ -758,14 +758,29 @@ quants <- function(values, splits = 10, return = "cuts") {
 #' @param to Date. To date
 #' @export
 get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date()) {
+  
+  options("getSymbols.warning4.0"=FALSE)
   string <- paste0(toupper(cleanText(currency_pair)),"=X")
-  x <- invisible(
-    data.frame(
-      getSymbols(
-        string, 
-        env = NULL,
-        from = from, to = to,
-        src = "yahoo")))
+  
+  if (from == to) {
+    to <- from + 1
+  }
+  
+  if (Sys.Date() == from) {
+    x <- getQuote(string, auto.assign = FALSE)
+    rownames(x) <- Sys.Date()
+    x$`Trade Time` <- NULL
+  } else {
+    x <- data.frame(getSymbols(
+      string, 
+      env = NULL,
+      from = from, to = to,
+      src = "yahoo"))
+    if (substr(rownames(x),1,1)[1] == "X") {
+      x <- x[1,]
+      rownames(x) <- Sys.Date()
+    }
+  }
   rate <- data.frame(date = as.Date(rownames(x)), rate=x[,1])
   return(rate)
 }

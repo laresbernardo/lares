@@ -25,7 +25,7 @@
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom pROC roc ci
-#' @importFrom quantmod getDividends getSymbols
+#' @importFrom quantmod getDividends getSymbols getQuote 
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom rdrop2 drop_auth drop_dir drop_download drop_search drop_upload
 #' @importFrom rmarkdown render
