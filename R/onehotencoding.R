@@ -124,12 +124,16 @@ ohe <- function(df, redundant = FALSE,
 #' @param holidays Boolean. Include holidays as new columns?
 #' @param country Character or vector. For which countries should the holidays
 #' be included?
+#' @param currency_pair Character. Which currency exchange do you
+#' wish to get the history from? i.e, USD/COP, EUR/USD...
 #' @param summary Boolean. Print a summary of the operations?
 #' @export
 date_feats <- function(dates, keep_originals = FALSE, only = NA,
                        holidays = FALSE, country = "Colombia",
+                       currency_pair = NA,
                        summary = TRUE) {
   
+  options(warn=-1)
   results <- c()
   date_cols <- df_str(dates, return="names", plot=F)$time
   
@@ -138,23 +142,34 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
   }
   
   iters <- ifelse(date_cols == "df", 1, length(date_cols))[1]
-  if (iters > 1) { 
+  if (!is.na(iters)) {
     if (summary == TRUE) {
-      message(paste("Processing", iters, "date/time columns:", vector2text(date_cols)))
+      message(paste("Processing", iters, "date/time columns:", vector2text(date_cols))) 
     }
   } else {
-    if (!class(dates) == "data.frame") {
-      dates <- data.frame(df = dates)
-    }
+    return(dates)
   }
   
-  if (holidays == TRUE) {
+  if (!class(dates) == "data.frame" & iters == 1) {
+    dates <- data.frame(values_date = dates)
+    date_cols[col] <- "values_date"
+  }
+  
+  if (holidays == TRUE | !is.na(currency_pair)) {
     search_dates <- dates[, c(colnames(dates) %in% date_cols)]
     search_dates[] <- sapply(search_dates, function(x) gsub(" .*", "", as.character(x)))
     alldates <- as.Date(unlist(search_dates, use.names = FALSE))
+  }
+  
+  if (holidays == TRUE) {
     years <- sort(unique(year(alldates)))
     holidays_dates <- holidays(countries = country, years)
     colnames(holidays_dates)[1] <- "values_date"
+  }
+  
+  if (!is.na(currency_pair)) {
+    currency <- get_currency(currency_pair, from = min(alldates), to = max(alldates))
+    colnames(currency) <- c("values_date", tolower(cleanText(currency_pair)))
   }
   
   for (col in 1:iters) {
@@ -166,6 +181,7 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
     result$date_month <- month(values)
     result$date_day <- day(values)
     result$date_week <- week(values)
+    result$date_weekday <- strftime(values,'%A')
     
     if (!is.na(ymd_hms(values[1]))) {
       values <- ymd_hms(values)
@@ -190,12 +206,15 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
       result$values_date <- as.Date(values)
       result <- result %>% 
         left_join(holidays_dates, by="values_date") %>% 
-        select(-contains("values_date")) %>%
         mutate_at(vars(cols), funs(replace(., which(is.na(.)), FALSE)))
     }
     
+    if (!is.na(currency_pair)) {
+      result <- result %>% left_join(currency, by = "values_date")
+    }
+    
     colnames(result)[-1] <- gsub("date_", paste0(col_name,"_"), colnames(result)[-1])
-    colnames(result) <- gsub("df_", "", colnames(result))
+    colnames(result) <- gsub("values_date_", "", colnames(result))
     results <- results %>% bind_cols(result)
     
   }

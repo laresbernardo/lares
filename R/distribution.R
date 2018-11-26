@@ -167,8 +167,11 @@ distr <- function(data, ...,
           stat_density_2d(aes(fill = ..level..), geom = "polygon") +
           theme_minimal() +
           labs(title = "2D Distribution Plot",
+               x = targets_name, y = variable_name,
                subtitle = paste("For", variable_name, "vs.", targets_name),
-               caption = paste("Obs:", nrow(df)))
+               caption = paste("Obs:", nrow(df))) +
+          scale_x_continuous(labels = scales::comma) +
+          scale_y_continuous(labels = scales::comma)
         return(p)  
       }
       stop("You should use a 'target' variable with max 8 different values.")
@@ -236,7 +239,7 @@ distr <- function(data, ...,
                   size=3, vjust = -0.15) +
         labs(x = "", y = "Counter", fill = targets_name, caption = caption) + 
         theme_minimal() + theme(legend.position = "top") +
-        theme(axis.title.y = element_text(size = rel(0.5), angle = 90))
+        theme(axis.title.y = element_text(size = rel(0.8), angle = 90))
       # Give an angle to labels when more than...
       if (length(unique(value)) >= 7) {
         count <- count + theme(axis.text.x = element_text(angle = 45, hjust=1))

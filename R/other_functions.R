@@ -744,3 +744,28 @@ quants <- function(values, splits = 10, return = "cuts") {
     return(labels)
   }
 }
+
+
+####################################################################
+#' Download Historical Currency Exchange Rate
+#' 
+#' This function lets the user download historical currency exchange
+#' rate between two currencies
+#' 
+#' @param currency_pair Character. Which currency exchange do you
+#' wish to get the history from? i.e, USD/COP, EUR/USD...
+#' @param from Date. From date
+#' @param to Date. To date
+#' @export
+get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date()) {
+  string <- paste0(toupper(cleanText(currency_pair)),"=X")
+  x <- invisible(
+    data.frame(
+      getSymbols(
+        string, 
+        env = NULL,
+        from = from, to = to,
+        src = "yahoo")))
+  rate <- data.frame(date = as.Date(rownames(x)), rate=x[,1])
+  return(rate)
+}

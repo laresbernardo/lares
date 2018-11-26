@@ -5,7 +5,8 @@
 \title{One Hot Encoding for Date/Time Variables (Dummy Variables)}
 \usage{
 date_feats(dates, keep_originals = FALSE, only = NA,
-  holidays = FALSE, country = "Colombia", summary = TRUE)
+  holidays = FALSE, country = "Colombia", currency_pair = NA,
+  summary = TRUE)
 }
 \arguments{
 \item{dates}{Vector or dataframe. Non-date/time columns will be 
@@ -21,6 +22,9 @@ non are explicitly defined, all will be processed}
 
 \item{country}{Character or vector. For which countries should the holidays
 be included?}
+
+\item{currency_pair}{Character. Which currency exchange do you
+wish to get the history from? i.e, USD/COP, EUR/USD...}
 
 \item{summary}{Boolean. Print a summary of the operations?}
 }

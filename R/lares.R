@@ -25,6 +25,7 @@
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom pROC roc ci
+#' @importFrom quantmod getDividends getSymbols
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom rdrop2 drop_auth drop_dir drop_download drop_search drop_upload
 #' @importFrom rmarkdown render
@@ -45,7 +46,7 @@
 
 if(getRversion() >= "2.15.1")
   globalVariables(
-    c(".","..y..","%>%","!!!",".rs.restartR","Amount","Cash","Close","Corpus","CreateDate","CumCash",
+    c(".","..y..","!!!",".rs.restartR","Amount","Cash","Close","Corpus","CreateDate","CumCash",
       "CumDiv","CumPortfolio","DailyCash","DailyDiv","DailyExpen","DailyStocks","GET",
       "DailyTrans","DailyValue","Date","DateTimeOriginal","Deciles","DifPer","DifUSD",
       "DivIncome","DivPerc","DivReal","Expenses","FileModifyDate","GET","High","Hist",
@@ -59,7 +60,7 @@ if(getRversion() >= "2.15.1")
       "contacts_profile_token","contacts_profile_url","contacts_vid","content",
       "content_transformer","createdate","credit","cuts","date_of_birth","days","dealId",
       "dealstage","df_status","form_submissions","gather","ceiling_date","trim",
-      "getDividends","getSymbols","get_questionnaire","get_typeforms", "endfx",
+      "get_questionnaire","get_typeforms", "endfx","to",
       "hasMore","has_more","identification_date","identity_profiles","ggplotly",
       "image_darknet_detect","image_darknet_model","image_info","image_read","index",
       "is_contact","key","label","label_colours","label_hjust","max_score","merge_audits",
