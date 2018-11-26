@@ -19,7 +19,6 @@
 #' h2o.predict_json h2o.saveModel h2o.varimp
 #' @importFrom httr GET POST oauth_endpoint oauth_app oauth1.0_token
 #' @importFrom jsonlite fromJSON toJSON flatten
-#' @importFrom kableExtra kable
 #' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd 
 #' minute hour second %m+% floor_date 
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
