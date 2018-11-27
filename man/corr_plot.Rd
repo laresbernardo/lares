@@ -5,7 +5,7 @@
 \title{Correlation plot}
 \usage{
 corr_plot(df, method = "pearson", order = "FPC", type = "square",
-  logs = TRUE)
+  logs = FALSE)
 }
 \arguments{
 \item{df}{Dataframe.}
@@ -15,8 +15,10 @@ corr_plot(df, method = "pearson", order = "FPC", type = "square",
 \item{order}{Character. The ordering method of the correlation matrix.
 Any of: c("original", "AOE", "FPC", "hclust", "alphabet")}
 
-\item{type}{Character. The visualization method of correlation matrix to be used. 
-Any of c("circle", "square", "ellipse", "number", "pie", "shade" and "color")}
+\item{type}{Character. The visualization method of correlation matrix 
+to be used. 
+Any of c("circle", "square", "ellipse", "number", "pie", "shade" 
+and "color")}
 
 \item{logs}{Boolean. Automatically calculate log(values) for numerical
 variables (not binaries) and plot them}

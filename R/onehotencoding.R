@@ -12,6 +12,8 @@
 #' @param holidays Boolean. Include holidays as new columns?
 #' @param country Character or vector. For which countries should the holidays
 #' be included?
+#' @param currency_pair Character. Which currency exchange do you
+#' wish to get the history from? i.e, USD/COP, EUR/USD...
 #' @param trim Integer. Trim names until the nth character
 #' @param limit Integer. Limit one hot encoding to the n most frequent 
 #' values of each column
@@ -23,17 +25,20 @@
 #' the filtered values with?
 #' @param sep Character. Separator's string
 #' @param summary Boolean. Print a summary of the operations?
-#' @aliases ohse
 #' @export
 ohe <- function(df, redundant = FALSE, 
                 dates = FALSE, holidays = FALSE, country = "Colombia",
-                trim = 0, limit = 10, variance = 0.9, 
+                currency_pair = NA, trim = 0, limit = 10, variance = 0.9, 
                 other_label = "OTHER", sep = "_", summary = TRUE) {
   
   # Create features out of date/time variables
   if (dates == TRUE) {
-    df_dates <- date_feats(df, holidays = holidays, country = country, summary = summary)
-    df <- cbind(df, df_dates)
+    df_dates <- date_feats(df, holidays = holidays, country = country, 
+                           currency_pair = currency_pair, 
+                           summary = summary)
+    if (ncol(df_dates) != ncol(df)) {
+      df <- cbind(df, df_dates) 
+    }
   }
   
   # Dummy variables that will be filled
@@ -51,14 +56,15 @@ ohe <- function(df, redundant = FALSE,
     vector_levels <- length(unique(df[,c(vector_name)]))
     vector_values <- df[toString(types[i, "name"])]
     
-    # Columns with no variance or too much variance (unique values vs observations)
-    if (vector_levels <= 1 | 
-        vector_levels >= variance * length(vector_values[!is.na(vector_values),1])) {
-      no_variance <- rbind(no_variance, vector_name)
-    }
-    
     # Non numeric or date/time variables
     if (!vector_type %in% c("integer","numeric","POSIXct","POSIXt","Date")) {
+      
+      # Columns with no variance or too much variance (unique values vs observations)
+      if (vector_levels <= 1 | 
+          vector_levels >= variance * length(vector_values[!is.na(vector_values),1])) {
+        no_variance <- rbind(no_variance, vector_name)
+      }
+      
       vector_values <- vector_values %>% 
         mutate_all(as.character) %>%
         replace(., is.na(.), 'NAs')
@@ -95,11 +101,15 @@ ohe <- function(df, redundant = FALSE,
   # Summary
   if (summary == TRUE) {
     total_converted <- rbind(converted, converted_binary)
-    message(paste("One Hot Encoding applied to", length(total_converted), 
-                  "variables:", vector2text(total_converted)))
-    message(paste0("Automatically dropped ", length(no_variance), 
-                   " columns with 0% or +", round(variance*100),
-                   "% variance: ", vector2text(no_variance)))
+    if (length(total_converted) > 1) {
+      message(paste("One Hot Encoding applied to", length(total_converted), 
+                    "variables:", vector2text(total_converted))) 
+    }
+    if (length(no_variance) > 1) {
+      message(paste0("Automatically dropped ", length(no_variance), 
+                     " columns with 0% or +", round(variance*100),
+                     "% variance: ", vector2text(no_variance))) 
+    }
   }
   
   # Return only useful columns
@@ -135,6 +145,10 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
   options(warn=-1)
   results <- c()
   date_cols <- df_str(dates, return="names", plot=F)$time
+  
+  if (length(date_cols) == 0) {
+    return(dates)
+  }
   
   if (!is.na(only)) {
     date_cols <- date_cols[date_cols %in% only]

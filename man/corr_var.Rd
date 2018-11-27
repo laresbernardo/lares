@@ -15,8 +15,8 @@ corr_var(df, ..., method = "pearson", trim = 0, plot = TRUE,
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
 
-\item{trim}{Integer. Trim words until the nth character for categorical values 
-(applies for both, target and values)}
+\item{trim}{Integer. Trim words until the nth character for 
+categorical values (applies for both, target and values)}
 
 \item{plot}{Boolean. Do you wish to plot the result? If set to TRUE, the
 function will return only the plot and not the result's data}
@@ -24,13 +24,15 @@ function will return only the plot and not the result's data}
 \item{logs}{Boolean. Automatically calculate log(values) for numerical
 variables (not binaries)}
 
-\item{top}{Integer. If you want to plot the top correlations, define how many}
+\item{top}{Integer. If you want to plot the top correlations, 
+define how many}
 
 \item{zeroes}{Do you wish to keep zeroes in correlations too?}
 
 \item{save}{Boolean. Save output plot into working directory}
 
-\item{subdir}{Character. Sub directory on which you wish to save the plot}
+\item{subdir}{Character. Sub directory on which you wish to 
+save the plot}
 
 \item{file_name}{Character. File name as you wish to save the plot}
 }

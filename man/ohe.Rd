@@ -2,12 +2,11 @@
 % Please edit documentation in R/onehotencoding.R
 \name{ohe}
 \alias{ohe}
-\alias{ohse}
 \title{One Hot Encoding (Dummy Variables)}
 \usage{
 ohe(df, redundant = FALSE, dates = FALSE, holidays = FALSE,
-  country = "Colombia", trim = 0, limit = 10, variance = 0.9,
-  other_label = "OTHER", sep = "_", summary = TRUE)
+  country = "Colombia", currency_pair = NA, trim = 0, limit = 10,
+  variance = 0.9, other_label = "OTHER", sep = "_", summary = TRUE)
 }
 \arguments{
 \item{df}{Dataframe}
@@ -22,6 +21,9 @@ out of the date/time columns?}
 
 \item{country}{Character or vector. For which countries should the holidays
 be included?}
+
+\item{currency_pair}{Character. Which currency exchange do you
+wish to get the history from? i.e, USD/COP, EUR/USD...}
 
 \item{trim}{Integer. Trim names until the nth character}
 

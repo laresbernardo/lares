@@ -67,16 +67,18 @@ corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE,
 #' @param df Dataframe.
 #' @param ... Object. Name of the variable to correlate
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
-#' @param trim Integer. Trim words until the nth character for categorical values 
-#' (applies for both, target and values)
+#' @param trim Integer. Trim words until the nth character for 
+#' categorical values (applies for both, target and values)
 #' @param plot Boolean. Do you wish to plot the result? If set to TRUE, the
 #' function will return only the plot and not the result's data
 #' @param logs Boolean. Automatically calculate log(values) for numerical
 #' variables (not binaries)
-#' @param top Integer. If you want to plot the top correlations, define how many
+#' @param top Integer. If you want to plot the top correlations, 
+#' define how many
 #' @param zeroes Do you wish to keep zeroes in correlations too?
 #' @param save Boolean. Save output plot into working directory
-#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param subdir Character. Sub directory on which you wish to 
+#' save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @export
 corr_var <- function(df, ..., 
@@ -181,12 +183,15 @@ corr_var <- function(df, ...,
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @param order Character. The ordering method of the correlation matrix.
 #' Any of: c("original", "AOE", "FPC", "hclust", "alphabet")
-#' @param type Character. The visualization method of correlation matrix to be used. 
-#' Any of c("circle", "square", "ellipse", "number", "pie", "shade" and "color")
+#' @param type Character. The visualization method of correlation matrix 
+#' to be used. 
+#' Any of c("circle", "square", "ellipse", "number", "pie", "shade" 
+#' and "color")
 #' @param logs Boolean. Automatically calculate log(values) for numerical
 #' variables (not binaries) and plot them
 #' @export
-corr_plot <- function(df, method = "pearson", order = "FPC", type = "square", logs = TRUE) {
+corr_plot <- function(df, method = "pearson", order = "FPC", 
+                      type = "square", logs = FALSE) {
   
   c <- corr(df, method, logs = logs)
   plot <- corrplot(as.matrix(c),
