@@ -1,5 +1,5 @@
 ####################################################################
-#' One Hot Encoding (Dummy Variables)
+#' One Hot Smart Encoding (Dummy Variables)
 #'
 #' This function lets the user automatically transform a dataframe with
 #' categorical columns into numerical by one hot encoding technic.
@@ -26,7 +26,7 @@
 #' @param sep Character. Separator's string
 #' @param summary Boolean. Print a summary of the operations?
 #' @export
-ohe <- function(df, redundant = FALSE, 
+ohse <- function(df, redundant = FALSE, 
                 dates = FALSE, holidays = FALSE, country = "Colombia",
                 currency_pair = NA, trim = 0, limit = 10, variance = 0.9, 
                 other_label = "OTHER", sep = "_", summary = TRUE) {

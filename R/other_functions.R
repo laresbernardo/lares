@@ -536,11 +536,30 @@ dateformat <- function(dates, metric = FALSE, origin = '1900-01-01') {
   # require(lubridate)
   options(warn=-1)
   
+  # Delete hours
   dates <- gsub(" .*", "", dates)
-  x <- dates[!is.na(dates)][1]
   
   # Is it in integer format?
+  x <- dates[!is.na(dates)][1]
   int <- as.integer(as.character(x))
+  
+  # When date is not an integer:
+  if (is.na(int)) {
+    
+    year <- ifelse(nchar(x) == 10, "Y", "y")
+    sym <- ifelse(grepl("/", x),"/","-")
+    pattern <- stringr::str_locate_all(x, "/")[[1]][,1]
+    
+    if(sum(pattern == c(3,6)) == 2) {
+      return(as.Date(dates, format = paste0("%m",sym,"%d",sym,"%",year)))
+    } else {
+      return(as.Date(dates, format = paste0("%",year,sym,"%m",sym,"%d")))
+    }
+  } else {
+    return(as.Date(date))
+  }
+  
+  # When date is an integer:
   if (int %in% 30000:60000) {
     dates <- as.Date(as.integer(as.character(dates)), origin=origin)
   } else {
@@ -549,23 +568,23 @@ dateformat <- function(dates, metric = FALSE, origin = '1900-01-01') {
     firsts <- as.integer(comps[1])
     firstlast <- nchar(paste0(firsts, lasts))
     if (metric == FALSE) {
-      # Does dates end in year? 
+      # Does dates end in year?
       if (nchar(lasts) == 4 | firstlast <= 4) {
         dates <- lubridate::mdy(dates)
       }
       # Does dates start in year?
       if (nchar(firsts) == 4) {
         dates <- lubridate::ydm(dates)
-      } 
+      }
     } else {
-      # Does dates end in year? 
+      # Does dates end in year?
       if (nchar(lasts) == 4 | firstlast <= 4) {
         dates <- lubridate::dmy(dates)
       }
       # Does dates start in year?
       if (nchar(firsts) == 4) {
         dates <- lubridate::ymd(dates)
-      } 
+      }
     }
   }
   return(dates)

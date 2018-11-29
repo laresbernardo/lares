@@ -4,8 +4,8 @@
 \alias{get_stocks_hist}
 \title{Download Stocks Historical Data}
 \usage{
-get_stocks_hist(symbols = NA, from = Sys.Date() - 365, today = TRUE,
-  tax = 30, verbose = TRUE)
+get_stocks_hist(symbols = NA, from = NA, today = TRUE, tax = 30,
+  verbose = TRUE)
 }
 \arguments{
 \item{symbols}{Character Vector. List of symbols to download historical data. 

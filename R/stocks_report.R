@@ -54,24 +54,24 @@ get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Document
 #' Range from 0 to 99
 #' @param verbose Boolean. Print results and progress while downloading?
 #' @export
-get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365, 
-                             today = TRUE, tax = 30, verbose = TRUE) {
-  
-  options("getSymbols.warning4.0"=FALSE)
-  options("getSymbols.yahoo.warning"=FALSE)
+get_stocks_hist <- function(symbols = NA, 
+                            from = NA, 
+                            today = TRUE, 
+                            tax = 30, 
+                            verbose = TRUE) {
   
   options(warn=-1)
+  options("getSymbols.warning4.0"=FALSE)
+  options("getSymbols.yahoo.warning"=FALSE)
+  data <- divs <- c()
   
   if (!is.na(symbols)) {
     
-    if (from == Sys.Date() - 365) {
-      from <- rep(from, each = length(symbols))
+    if (is.na(from)) {
+      from <- rep(Sys.Date() - 365, each = length(symbols))
     }
     
     if (length(from) == length(symbols)) {
-      
-      data <- c()
-      divs <- c()
       
       for(i in 1:length(symbols)) {
         
@@ -118,7 +118,7 @@ get_stocks_hist <- function (symbols = NA, from = Sys.Date() - 365,
           message(paste0(symbol, " since ", start_date," (", i, "/", length(symbols),")"))
         }
       }
-    } else { message("The parameters 'symbols' and 'start_dates' should be the same length.") }
+    } else { message("The parameters 'symbols' and 'from' should be the same length.") }
   } else { message("You need to define which stocks to bring. Use the 'stocks=' parameter.") }
   results <- list("values" = data, "dividends" = divs)
   return(results)
@@ -502,21 +502,28 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   # Data wrangling and calculations
   message("Downloading historical and live data for each Stock...")
   hist <- get_stocks_hist(symbols = data$portfolio$Symbol, 
-                                 from = data$portfolio$StartDate, tax = tax)
-  daily <- stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, 
-                                  transactions = data$transactions, expenses = expenses)
-  stocks_perf <- stocks_performance(daily, cash_in = data$cash, cash_fix = cash_fix)
-  portfolio_perf <- portfolio_performance(portfolio = data$portfolio, daily = daily)
+                          from = data$portfolio$StartDate, 
+                          tax = tax)
+  daily <- stocks_hist_fix(dailys = hist$values, 
+                           dividends = hist$dividends, 
+                           transactions = data$transactions, 
+                           expenses = expenses)
+  stocks_perf <- stocks_performance(daily, 
+                                    cash_in = data$cash, 
+                                    cash_fix = cash_fix)
+  portfolio_perf <- portfolio_performance(portfolio = data$portfolio, 
+                                          daily = daily)
   message("Calculations ready...")
   
   # Visualizations
   p1 <- portfolio_daily_plot(stocks_perf)
   p2 <- stocks_total_plot(stocks_perf, portfolio_perf, daily, 
-                                 trans = data$transactions, cash = data$cash)
+                          trans = data$transactions, 
+                          cash = data$cash)
   p3 <- stocks_daily_plot(portfolio = data$portfolio, daily)
   p4 <- portfolio_distr_plot(portfolio_perf, daily)
   graphics.off()
-  message("Visuals plotted...")
+  message("Graphics ready...")
   
   # Consolidation
   results <- list(p_portf_daily_change = p1,
@@ -529,7 +536,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
                   df_hist = hist)
   unlink(tempdir, recursive = FALSE)
   setwd(current_wd)
-  message("All results are ready to export!")
+  message("All results are ready to export")
   
   return(results)
   

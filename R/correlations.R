@@ -25,7 +25,7 @@ corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE,
   
   # One hot encoding for categorical features
   if (dummy == TRUE) {
-    df <- ohe(df, summary = FALSE, redundant = redundant, dates = dates)
+    df <- ohse(df, summary = FALSE, redundant = redundant, dates = dates)
   }
   
   # Select only numerical features and create log+1 for each one
@@ -97,6 +97,9 @@ corr_var <- function(df, ...,
   # Calculate correlations
   rs <- corr(df, method = method, logs = logs, dates = TRUE)
   var <- as.character(vars[[1]])[2]
+  rs <- rs %>% 
+    select(-contains(paste0(var,"_log"))) %>%
+    filter(!grepl(paste0(var,"_log"), row.names(.)))
   
   # Check if main variable exists
   if (!var %in% colnames(rs)) {
