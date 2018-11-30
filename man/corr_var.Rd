@@ -5,8 +5,8 @@
 \title{Correlation between variable and dataframe}
 \usage{
 corr_var(df, ..., method = "pearson", trim = 0, plot = TRUE,
-  logs = TRUE, top = NA, zeroes = FALSE, save = FALSE,
-  subdir = NA, file_name = "viz_corrvar.png")
+  logs = TRUE, top = NA, ceiling = 100, zeroes = FALSE,
+  save = FALSE, subdir = NA, file_name = "viz_corrvar.png")
 }
 \arguments{
 \item{df}{Dataframe.}
@@ -26,6 +26,8 @@ variables (not binaries)}
 
 \item{top}{Integer. If you want to plot the top correlations, 
 define how many}
+
+\item{ceiling}{Numeric. Remove all correlations above... Range: (0-100]}
 
 \item{zeroes}{Do you wish to keep zeroes in correlations too?}
 
