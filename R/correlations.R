@@ -69,6 +69,8 @@ corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE,
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @param trim Integer. Trim words until the nth character for 
 #' categorical values (applies for both, target and values)
+#' @param clean Boolean. Use lares::cleanText for categorical values (applies 
+#' for both, target and values)
 #' @param plot Boolean. Do you wish to plot the result? If set to TRUE, the
 #' function will return only the plot and not the result's data
 #' @param logs Boolean. Automatically calculate log(values) for numerical
@@ -85,6 +87,7 @@ corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE,
 corr_var <- function(df, ..., 
                      method = "pearson", 
                      trim = 0,
+                     clean = FALSE,
                      plot = TRUE,
                      logs = TRUE, 
                      top = NA, 
@@ -145,6 +148,7 @@ corr_var <- function(df, ...,
   # Shorten up the long names of some variables
   if (trim > 0) {
     d$variables <- substr(d$variables, 1, trim)
+    message(paste("Trimmed all name values into", trim, "characters"))
   }
   
   if (plot == TRUE) {

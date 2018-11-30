@@ -227,9 +227,9 @@ date_feats <- function(dates,
           result$values_date_minute <- minute(values)  
           result$values_date_minutes <- as.integer(difftime(
             values, floor_date(values, unit="day"), units="mins"))
-          result$values_date_second <- second(values)  
-          result$values_date_seconds <- as.integer(difftime(
-            values, floor_date(values, unit="day"), units="secs"))
+          result$values_date_second <- second(values)
+          # result$values_date_seconds <- as.integer(difftime(
+          #   values, floor_date(values, unit="day"), units="secs"))
         }
       }
       
@@ -247,6 +247,7 @@ date_feats <- function(dates,
         result <- result %>% left_join(currency, by = "values_date")
       }
       
+      col_name <- ifelse(col > 1, paste0(col_name,"_"), "")
       colnames(result)[-1] <- gsub("values_date_", paste0(col_name,"_"), colnames(result)[-1])
       results <- results %>% 
         bind_cols(result) %>%
