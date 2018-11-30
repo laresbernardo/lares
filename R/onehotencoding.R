@@ -182,6 +182,7 @@ date_feats <- function(dates,
   }
   
   if (holidays == TRUE | !is.na(currency_pair)) {
+    invisible(Sys.setlocale("LC_TIME", "C"))
     search_dates <- dates[, c(colnames(dates) %in% date_cols)]
     search_dates[] <- sapply(search_dates, function(x) gsub(" .*", "", as.character(x)))
     alldates <- as.Date(unlist(search_dates, use.names = FALSE))
@@ -220,6 +221,8 @@ date_feats <- function(dates,
         result$values_date_day <- day(values)
         result$values_date_week <- week(values)
         result$values_date_weekday <- strftime(values,'%A')
+        result$values_date_year_day <- as.integer(difftime(
+          values, floor_date(values, unit="year"), units="day"))
         
         if (!is.na(ymd_hms(values[1]))) {
           values <- ymd_hms(values)
