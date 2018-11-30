@@ -779,6 +779,7 @@ quants <- function(values, splits = 10, return = "cuts") {
 get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date()) {
   
   options("getSymbols.warning4.0"=FALSE)
+  options("getSymbols.yahoo.warning"=FALSE)
   string <- paste0(toupper(cleanText(currency_pair)),"=X")
   
   if (from == to) {
@@ -788,7 +789,7 @@ get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date())
   if (Sys.Date() == from) {
     x <- getQuote(string, auto.assign = FALSE)
     rownames(x) <- Sys.Date()
-    x$`Trade Time` <- NULL
+    x[,1] <- NULL
   } else {
     x <- data.frame(getSymbols(
       string, 

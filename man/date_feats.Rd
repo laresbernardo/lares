@@ -4,7 +4,7 @@
 \alias{date_feats}
 \title{One Hot Encoding for Date/Time Variables (Dummy Variables)}
 \usage{
-date_feats(dates, keep_originals = FALSE, only = NA,
+date_feats(dates, keep_originals = FALSE, only = NA, features = TRUE,
   holidays = FALSE, country = "Colombia", currency_pair = NA,
   summary = TRUE)
 }
@@ -17,6 +17,8 @@ kept in the results?}
 
 \item{only}{Character or vector. Which columns do you wish to process? If
 non are explicitly defined, all will be processed}
+
+\item{features}{Create features out of date/time columns?}
 
 \item{holidays}{Boolean. Include holidays as new columns?}
 

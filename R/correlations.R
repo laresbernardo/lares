@@ -75,6 +75,7 @@ corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE,
 #' variables (not binaries)
 #' @param top Integer. If you want to plot the top correlations, 
 #' define how many
+#' @param ceiling Numeric. Remove all correlations above... Range: (0-100]
 #' @param zeroes Do you wish to keep zeroes in correlations too?
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to 
@@ -87,6 +88,7 @@ corr_var <- function(df, ...,
                      plot = TRUE,
                      logs = TRUE, 
                      top = NA, 
+                     ceiling = 100, 
                      zeroes = FALSE,
                      save = FALSE, 
                      subdir = NA,
@@ -127,6 +129,11 @@ corr_var <- function(df, ...,
     top <- 30
     message(paste("Automatically reduced results to the top", top, "variables.",
                   "Use the 'top' parameter to override this limit."))
+  }
+  
+  if (ceiling < 100) {
+    d <- d[abs(d$corr) < ceiling/100, ]
+    message(paste0("Removing all correlations greater than ", ceiling, "% (absolute)"))
   }
   
   if (!is.na(top)) {

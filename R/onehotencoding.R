@@ -26,14 +26,23 @@
 #' @param sep Character. Separator's string
 #' @param summary Boolean. Print a summary of the operations?
 #' @export
-ohse <- function(df, redundant = FALSE, 
-                dates = FALSE, holidays = FALSE, country = "Colombia",
-                currency_pair = NA, trim = 0, limit = 10, variance = 0.9, 
-                other_label = "OTHER", sep = "_", summary = TRUE) {
+ohse <- function(df, 
+                 redundant = FALSE, 
+                 dates = FALSE, 
+                 holidays = FALSE, country = "Colombia",
+                 currency_pair = NA, 
+                 trim = 0, 
+                 limit = 10, variance = 0.9, 
+                 other_label = "OTHER", sep = "_", 
+                 summary = TRUE) {
+  
+  df <- data.frame(df)
   
   # Create features out of date/time variables
-  if (dates == TRUE) {
-    df_dates <- date_feats(df, holidays = holidays, country = country, 
+  if (dates == TRUE | holidays == TRUE | !is.na(currency_pair)) {
+    df_dates <- date_feats(df, keep_originals = FALSE,
+                           features = dates,
+                           holidays = holidays, country = country, 
                            currency_pair = currency_pair, 
                            summary = summary)
     if (ncol(df_dates) != ncol(df)) {
@@ -60,8 +69,8 @@ ohse <- function(df, redundant = FALSE,
     if (!vector_type %in% c("integer","numeric","POSIXct","POSIXt","Date")) {
       
       # Columns with no variance or too much variance (unique values vs observations)
-      if (vector_levels <= 1 | 
-          vector_levels >= variance * length(vector_values[!is.na(vector_values),1])) {
+      if (vector_levels <= 1 | vector_levels >= variance * 
+          length(vector_values[!is.na(vector_values),1])) {
         no_variance <- rbind(no_variance, vector_name)
       }
       
@@ -114,6 +123,7 @@ ohse <- function(df, redundant = FALSE,
   
   # Return only useful columns
   df <- df[, c(!colnames(df) %in% c(no_variance, converted))]
+  
   return(df)
   
 }
@@ -131,6 +141,7 @@ ohse <- function(df, redundant = FALSE,
 #' kept in the results?
 #' @param only Character or vector. Which columns do you wish to process? If
 #' non are explicitly defined, all will be processed
+#' @param features Create features out of date/time columns?
 #' @param holidays Boolean. Include holidays as new columns?
 #' @param country Character or vector. For which countries should the holidays
 #' be included?
@@ -138,7 +149,9 @@ ohse <- function(df, redundant = FALSE,
 #' wish to get the history from? i.e, USD/COP, EUR/USD...
 #' @param summary Boolean. Print a summary of the operations?
 #' @export
-date_feats <- function(dates, keep_originals = FALSE, only = NA,
+date_feats <- function(dates, 
+                       keep_originals = FALSE, only = NA,
+                       features = TRUE,
                        holidays = FALSE, country = "Colombia",
                        currency_pair = NA,
                        summary = TRUE) {
@@ -171,65 +184,74 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
   if (holidays == TRUE | !is.na(currency_pair)) {
     search_dates <- dates[, c(colnames(dates) %in% date_cols)]
     search_dates[] <- sapply(search_dates, function(x) gsub(" .*", "", as.character(x)))
-    alldates <- as.Date(unlist(search_dates, use.names = FALSE))
+    alldates <- date(unlist(search_dates, use.names = FALSE))
+    alldates <- alldates[!is.na(alldates)]
   }
   
   if (holidays == TRUE) {
     years <- sort(unique(year(alldates)))
     holidays_dates <- holidays(countries = country, years)
     colnames(holidays_dates)[1] <- "values_date"
-  }
-  
-  if (!is.na(currency_pair)) {
-    currency <- get_currency(currency_pair, from = min(alldates), to = max(alldates))
-    colnames(currency) <- c("values_date", tolower(cleanText(currency_pair)))
-  }
-  
-  for (col in 1:iters) {
-    col_name <- date_cols[col]
-    result <- dates %>% select(!!as.name(col_name)) 
-    values <- as.POSIXlt(result[,1], origin = "1970-01-01")
-    
-    result$date_year <- year(values)
-    result$date_month <- month(values)
-    result$date_day <- day(values)
-    result$date_week <- week(values)
-    result$date_weekday <- strftime(values,'%A')
-    
-    if (!is.na(ymd_hms(values[1]))) {
-      values <- ymd_hms(values)
-      result$date_hour <- hour(values)  
-      result$date_minute <- minute(values)  
-      result$date_minutes <- as.integer(difftime(
-        values, floor_date(values, unit="day"), units="mins"))
-      result$date_second <- second(values)  
-      result$date_seconds <- as.integer(difftime(
-        values, floor_date(values, unit="day"), units="secs"))
+    holidays_dates[,1] <- as.character(holidays_dates[,1])
+    cols <- paste0("values_date_holiday_",c("national","observance","season","other",tolower(country)))
+    if (ncol(holidays_dates) == 6) {
+      holidays_dates <- holidays_dates %>% 
+        mutate(dummy=TRUE) %>% 
+        tidyr::spread(country, dummy)
+    } else { 
+      cols <- cols[1:4] 
     }
-    
-    if (holidays == TRUE) {
-      cols <- paste0("date_",c("national","observance","season","other",tolower(country)))
-      if (ncol(holidays_dates) == 6) {
-        holidays_dates <- holidays_dates %>% 
-          mutate(dummy=TRUE) %>% tidyr::spread(country, dummy)
-      } else {
-        cols <- cols[1:4]
+    colnames(holidays_dates)[-1] <- cols
+  }
+  
+  # Features creator
+  if (features == TRUE | !is.na(currency_pair) | holidays == TRUE) {
+    for (col in 1:iters) {
+      
+      col_name <- date_cols[col]
+      result <- dates %>% select(!!as.name(col_name))
+      values <- as.POSIXlt(result[,1], origin = "1970-01-01")
+      result$values_date <- as.character(as.Date(values))
+      
+      # Features creator
+      if (features == TRUE) {
+        result$values_date_year <- year(values)
+        result$values_date_month <- month(values)
+        result$values_date_day <- day(values)
+        result$values_date_week <- week(values)
+        result$values_date_weekday <- strftime(values,'%A')
+        
+        if (!is.na(ymd_hms(values[1]))) {
+          values <- ymd_hms(values)
+          result$values_date_hour <- hour(values)  
+          result$values_date_minute <- minute(values)  
+          result$values_date_minutes <- as.integer(difftime(
+            values, floor_date(values, unit="day"), units="mins"))
+          result$values_date_second <- second(values)  
+          result$values_date_seconds <- as.integer(difftime(
+            values, floor_date(values, unit="day"), units="secs"))
+        }
       }
-      colnames(holidays_dates)[-1] <- cols
-      result$values_date <- as.Date(values)
-      result <- result %>% 
-        left_join(holidays_dates, by="values_date") %>% 
-        mutate_at(vars(cols), funs(replace(., which(is.na(.)), FALSE)))
+      
+      # Holidays data
+      if (holidays == TRUE) {
+        result <- result %>% left_join(holidays_dates, by="values_date") %>% 
+          mutate_at(vars(cols), funs(replace(., which(is.na(.)), FALSE)))
+      }
+      
+      # Currencies data
+      if (!is.na(currency_pair)) {
+        currency <- get_currency(currency_pair, from = min(alldates), to = max(alldates))
+        colnames(currency) <- c("values_date", paste0("values_date_", tolower(cleanText(currency_pair))))
+        currency[,1] <- as.character(currency[,1])
+        result <- result %>% left_join(currency, by = "values_date")
+      }
+      
+      colnames(result)[-1] <- gsub("values_date_", paste0(col_name,"_"), colnames(result)[-1])
+      results <- results %>% 
+        bind_cols(result) %>%
+        select(-contains("values_date"))
     }
-    
-    if (!is.na(currency_pair)) {
-      result <- result %>% left_join(currency, by = "values_date")
-    }
-    
-    colnames(result)[-1] <- gsub("date_", paste0(col_name,"_"), colnames(result)[-1])
-    colnames(result) <- gsub("values_date_", "", colnames(result))
-    results <- results %>% bind_cols(result)
-    
   }
   
   if (keep_originals == FALSE) {
@@ -254,8 +276,9 @@ date_feats <- function(dates, keep_originals = FALSE, only = NA,
 #' @export
 holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
   
-  # Further improvement: let the user use moran than +- 5 years
+  # Further improvement: let the user bring more than +-5 years
   
+  invisible(Sys.setlocale("LC_TIME", "C"))
   results <- c()
   year <- year(Sys.Date())
   years <- years[years %in% ((year-5):(year+5))]
@@ -266,7 +289,12 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
     holidays <- xml2::read_html(url)
     holidays <- holidays %>% html_nodes(".tb-hover") %>% html_table() %>% data.frame(.) %>% .[-1,1:4]
     holidays$Date <- paste(holidays$Date, combs$year[i])
-    holidays$Date <- as.Date(holidays$Date, tryFormats = c("%d %b %Y", "%b %d %Y"))
+    first <- as.numeric(as.character(substr(holidays$Date,1,1)))
+    if (!is.na(first)) {
+      holidays$Date <- as.Date(holidays$Date, format = c("%d %b %Y"))
+    } else {
+      holidays$Date <- as.Date(holidays$Date, format = c("%b %d %Y"))
+    }
     result <- data.frame(holiday = holidays$Date) %>%
       mutate(national = grepl("National|Federal", holidays$Holiday.Type),
              observance = grepl("Observance", holidays$Holiday.Type),
