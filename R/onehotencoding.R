@@ -184,7 +184,7 @@ date_feats <- function(dates,
   if (holidays == TRUE | !is.na(currency_pair)) {
     search_dates <- dates[, c(colnames(dates) %in% date_cols)]
     search_dates[] <- sapply(search_dates, function(x) gsub(" .*", "", as.character(x)))
-    alldates <- date(unlist(search_dates, use.names = FALSE))
+    alldates <- as.Date(unlist(search_dates, use.names = FALSE))
     alldates <- alldates[!is.na(alldates)]
   }
   
@@ -247,8 +247,8 @@ date_feats <- function(dates,
         result <- result %>% left_join(currency, by = "values_date")
       }
       
-      col_name <- ifelse(col > 1, paste0(col_name,"_"), "")
-      colnames(result)[-1] <- gsub("values_date_", paste0(col_name,"_"), colnames(result)[-1])
+      col_name <- ifelse(date_cols == "values_date", "", paste0(col_name,"_"))
+      colnames(result)[-1] <- gsub("values_date_", col_name, colnames(result)[-1])
       results <- results %>% 
         bind_cols(result) %>%
         select(-contains("values_date"))
