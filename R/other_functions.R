@@ -786,6 +786,10 @@ get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date())
     to <- from + 1
   }
   
+  if (to > Sys.Date()) {
+    to <- Sys.Date()
+  }
+  
   if (Sys.Date() == from) {
     x <- getQuote(string, auto.assign = FALSE)
     rownames(x) <- Sys.Date()
