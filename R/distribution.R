@@ -114,18 +114,17 @@ distr <- function(data, ...,
     is.POSIXlt <- function(x) inherits(x, "POSIXlt")
     if (is.numeric(value) | is.Date(value) | is.POSIXct(value) | is.POSIXlt(value)) {
       # Continuous and date values
-      if (is.numeric(value)) {
-        p <- ggplot(df, aes(x = value)) + 
-          scale_x_continuous(labels = scales::comma)
+      if (!is.numeric(value)) {
+        p <- ggplot(df, aes(x = value))
       } else {
         p <- ggplot(df, aes(x = date(value)))
       }
       p <- p + theme_minimal() +
         geom_density(fill = "deepskyblue", alpha = 0.7, adjust = 1/3) +
-        labs(y = "", x = "",
+        labs(y = "", x = "", fill = "Density",
              title = paste("Density Distribution"),
              subtitle = paste("Variable:", variable_name),
-             caption = paste("Obs:", nrow(df)))
+             caption = paste("Obs:", variable_name(nrow(df), 0)))
       print(p)
     } else {
       # Discrete values

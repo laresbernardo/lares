@@ -83,3 +83,61 @@ plot_timeline <- function(event, start,
   # Add interactive plotly with more info when you hover over each role
   
 }
+
+
+####################################################################
+#' Density plot for discrete and continuous values
+#' 
+#' This function plots discrete and continuous values results
+#' 
+#' @param df Dataframe Event, role, label, or row.
+#' @param var Variable to group, count and plot
+#' @param table Boolean. Print results as table?
+#' @param save Boolean. Save the output plot in our working directory
+#' @param subdir Character. Into which subdirectory do you wish to save the plot to?
+#' @export
+gg_pie <- function(df, var, table = FALSE, save = FALSE, subdir = NA){
+  
+  variable <- enquo(var)
+  
+  title <- paste("Pie chart for", as.character(variable)[2])
+  caption <- paste("Obs:", formatNum(nrow(df),0))
+  
+  n <- df %>% freqs(!!!variable)
+  
+  if(nrow(n) > 6){
+    geom_label <- function(...){
+      ggrepel::geom_label_repel(...)
+    }
+  } 
+  
+  if (table) { print(n) }
+  
+  p <- ggplot(n, aes(x = "", y = reorder(p, n), 
+                     fill = as.character(!!!variable), label = p)) + 
+    geom_col() + 
+    geom_label(position = position_stack(vjust = 0.4), 
+               show.legend = FALSE, size = 2.5) + 
+    coord_polar("y") +
+    labs(title = title, caption = caption) +
+    theme_minimal() + 
+    theme(legend.title = element_blank(),
+          panel.grid = element_blank(),
+          axis.text = element_blank(),
+          axis.title = element_blank(),
+          legend.position = "bottom") +
+    scale_fill_brewer(palette="Set3")
+  
+  # Export file name and folder for plot
+  if (save == TRUE) {
+    file_name <- paste0("viz_pie_",as.character(variable)[2],".png")
+    if (!is.na(subdir)) {
+      options(warn=-1)
+      dir.create(file.path(getwd(), subdir), recursive = T)
+      file_name <- paste(subdir, file_name, sep="/")
+    }
+    p <- p + ggsave(file_name, width = 8, height = 6)
+    message(paste("Saved plot as", file_name))
+  }
+  return(p)
+}

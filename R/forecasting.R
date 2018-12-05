@@ -112,7 +112,7 @@ forecast_arima <- function(time, values, n_future = 30,
   
   # Outut list with all results
   output <- list(model = model,
-                 metrics = accuracy(model),
+                 metrics = forecast::accuracy(model),
                  forecast = test,
                  train = train)
   
