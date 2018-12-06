@@ -811,10 +811,10 @@ get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date())
 
 
 ####################################################################
-#' Download Historical Currency Exchange Rate
+#' Convert JSON string to vector (data.frame with 1 row)
 #' 
-#' This function lets the user download historical currency exchange
-#' rate between two currencies
+#' This function lets the user transform a JSON string into vector 
+#' (data.frame with 1 row)
 #' 
 #' @param json Character. JSON string. Example of a string: '{"feat1": 
 #' null, "feat2": "M"}'

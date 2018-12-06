@@ -2,14 +2,15 @@
 % Please edit documentation in R/other_functions.R
 \name{json2vector}
 \alias{json2vector}
-\title{Download Historical Currency Exchange Rate}
+\title{Convert JSON string to vector (data.frame with 1 row)}
 \usage{
 json2vector(json)
 }
 \arguments{
-\item{json}{Character. JSON string. Example: '{"feat1": null, "feat2": "M"}'}
+\item{json}{Character. JSON string. Example of a string: '{"feat1": 
+null, "feat2": "M"}'}
 }
 \description{
-This function lets the user download historical currency exchange
-rate between two currencies
+This function lets the user transform a JSON string into vector 
+(data.frame with 1 row)
 }
