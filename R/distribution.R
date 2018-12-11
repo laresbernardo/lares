@@ -128,11 +128,13 @@ distr <- function(data, ...,
       print(p)
     } else {
       # Discrete values
-      df %>% freqs(value, plot = T, results = F, variable_name = variable_name)
+      df %>% freqs(value, plot = T, results = F, 
+                   variable_name = variable_name, 
+                   abc = abc, top = top)
     }
     # Return table with results?
     if (results == TRUE) {
-      output <- df %>% freqs(value)
+      output <- df %>% freqs(value, top = top)
       return(output)
     }
   }

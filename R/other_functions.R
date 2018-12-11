@@ -814,7 +814,7 @@ get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date())
 #' Convert JSON string to vector (data.frame with 1 row)
 #' 
 #' This function lets the user transform a JSON string into vector 
-#' (data.frame with 1 row)
+#' (data.frame with 1 row). You can also pass a Python's dictionary.
 #' 
 #' @param json Character. JSON string. Example of a string: '{"feat1": 
 #' null, "feat2": "M"}'
@@ -822,6 +822,9 @@ get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date())
 json2vector <- function(json) {
   string <- paste0("[", gsub('"',"\"", json), "]")
   string <- gsub("'",'"', string)
+  string <- gsub("None","null", string)
+  string <- gsub("True","true", string)
+  string <- gsub("False","false", string)
   vector <- fromJSON(string)
   df <- data.frame(t(unlist(vector)))
   return(df)

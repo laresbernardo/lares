@@ -12,5 +12,5 @@ null, "feat2": "M"}'}
 }
 \description{
 This function lets the user transform a JSON string into vector 
-(data.frame with 1 row)
+(data.frame with 1 row). You can also pass a Python's dictionary.
 }

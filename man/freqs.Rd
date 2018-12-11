@@ -5,7 +5,8 @@
 \title{Frequencies Calculations and Plot}
 \usage{
 freqs(vector, ..., results = TRUE, variable_name = NA, plot = FALSE,
-  rm.na = FALSE, save = FALSE, subdir = NA)
+  rm.na = FALSE, top = 40, abc = FALSE, save = FALSE,
+  subdir = NA)
 }
 \arguments{
 \item{vector}{Data.frame}
@@ -21,9 +22,16 @@ freqs(vector, ..., results = TRUE, variable_name = NA, plot = FALSE,
 \item{rm.na}{Boolean. Remove NA values in the plot? (not filtered for 
 numerical output; use na.omit() or filter() if needed)}
 
+\item{top}{Integer. Filter and plot the most n frequent for 
+categorical values. Set to NA to return all values}
+
+\item{abc}{Boolean. Do you wish to sort by alphabetical order? If set
+to FALSE then frequency will sort the values}
+
 \item{save}{Boolean. Save the output plot in our working directory}
 
-\item{subdir}{Character. Into which subdirectory do you wish to save the plot to?}
+\item{subdir}{Character. Into which subdirectory do you wish to 
+save the plot to?}
 }
 \description{
 This function lets the user group, count, calculate percentages 
