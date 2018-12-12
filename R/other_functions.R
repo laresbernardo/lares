@@ -829,3 +829,44 @@ json2vector <- function(json) {
   df <- data.frame(t(unlist(vector)))
   return(df)
 }
+
+
+####################################################################
+#' Progressbar for for loops
+#' 
+#' This function lets the user view a progressbar for a 'for' loop. 
+#' Taken from https://github.com/STATWORX/helfRlein/blob/master/R/statusbar.R
+#' 
+#' @param run Iterator. for loop or an integer with the current loop number
+#' @param max.run Number. Maximum number of loops
+#' @param percent.max Integer. Indicates how wide the progress bar is printed
+#' @param info String. With additionaly information to be printed 
+#' at the end of the line. The default is \code{run}.
+#' @export
+statusbar <- function (run, max.run, percent.max = 40L, info = run){
+ 
+  if (length(run) > 1) {
+    stop("run needs to be of length one!")
+  }
+  
+  if (length(max.run) == 0) {
+    stop("max.run has length 0")
+  }
+  
+  if (length(max.run) > 1) {
+    percent <- which(run == max.run) / length(max.run)
+  } else {
+    percent <- run / max.run
+  }
+  
+  percent.step <- round(percent * percent.max, 0)
+  progress <- paste0("[",
+                     paste0(rep("=", percent.step), collapse = ""),
+                     paste0(rep(" ", percent.max - percent.step), collapse = ""),
+                     "] ",
+                     sprintf("%7.1f", percent * 100, 2),
+                     "% - ",
+                     info)
+  cat("\r", progress)
+  flush.console()
+}

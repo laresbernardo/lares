@@ -1,13 +1,14 @@
-# lares: R Package for Analysis and Machine Learning
-
+# lares <img src="https://i.imgur.com/t1eMhcc.png" width=150 align="right" />
+### R Package for Analytics and Machine Learning
 [![Build Status](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares) [![saythanks](https://img.shields.io/badge/say-thanks-1EAEDB.svg)](https://saythanks.io/to/laresbernardo)
+----
 
-This is my personal library used to automate and speed my everyday work on **Analysis and Machine Learning** tasks. You are most welcome to install, use, and comment on any of its code and functionalities. Feel free to contact me and/or add me on [Linkedin](https://www.linkedin.com/in/laresbernardo/)! Let me know where did you got my contact from ;)
+`lares` is a personal library used to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. It also simplifies the installation process of libraries, distribution, and reproducible research. You are most welcome to install, use, and comment on any of its code and functionalities. Feel free to contact me and/or add me on [Linkedin](https://www.linkedin.com/in/laresbernardo/)! Do let me know where did you got my contact from ;)
 
 ## Install the package
 
 ```devtools::install_github("laresbernardo/lares")```
-
+  
 I do not have planned to post `lares` library to CRAN yet, but who knows what might happen!
 
 ### Update the package
@@ -30,5 +31,4 @@ lares::updateLares(local=T) # Personal and local files, not necessarily deployed
 
 ## Getting help
 
-If you encounter a clear bug, please share with us a minimal reproducible example
-on [Github](https://github.com/laresbernardo/lares/issues) and I'll take care of it. For questions and other matters, you can [email me](mailto:webmaster@example.com "email me") directly.
+If you encounter a clear bug, please share with us a reproducible example on [Github](https://github.com/laresbernardo/lares/issues) and I'll take care of it. For inquiries, and other matters, you can [email me](mailto:laresbernardo@gmail.com "email me") directly.

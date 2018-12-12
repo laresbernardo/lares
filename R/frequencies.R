@@ -36,7 +36,7 @@ freqs <- function(vector, ..., results = TRUE,
     
     # Use only the most n frequent values/combinations only
     values <- output[,1]
-    if(nrow(values) < top | !is.na(top)) {
+    if(nrow(values) > top | !is.na(top)) {
       message(paste0("Filtering the top ", top, " (out of ", formatNum(nrow(values), 0),
                      ") frequent values. Use the 'top' parameter if you want to overrule."))
       output <- output[1:top, ]
