@@ -247,7 +247,7 @@ distr <- function(data, ...,
       } 
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
-        count <- count + gg_fill_customs()
+        count <- count + gg_fill_customs() + gg_text_customs()
       } else {
         count <- count + scale_fill_brewer(palette = "Blues")
       }
@@ -280,7 +280,7 @@ distr <- function(data, ...,
       }
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
-        prop <- prop + gg_fill_customs()
+        prop <- prop + gg_fill_customs() + gg_text_customs()
       } else {
         prop <- prop + scale_fill_brewer(palette = "Blues")
       }

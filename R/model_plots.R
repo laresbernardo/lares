@@ -683,6 +683,8 @@ mplot_lineal <- function(tag,
   }
   
   results <- data.frame(tag = tag, score = score, dist = 0)
+  results <- results[complete.cases(results), ]
+  
   for (i in 1:nrow(results)) { 
     results$dist[i] <- dist2d(c(results$tag[i],results$score[i]), c(0,0), c(1,1)) 
   }
