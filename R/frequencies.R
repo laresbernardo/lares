@@ -102,13 +102,14 @@ freqs <- function(vector, ..., results = TRUE,
         geom_col(alpha=0.9, width = 0.8) +
         geom_text(aes(
           hjust = label_hjust,
-          colour = label_colours), size = 2.6) + lares::gg_text_customs() +
+          colour = label_colours), size = 2.6) + 
         coord_flip() + theme_minimal() + guides(colour = FALSE) +
         labs(x = "", y = "Counter", fill = "[%]",
              title = paste("Frequencies and Percentages"),
              subtitle = paste(
                "Variable:", ifelse(!is.na(variable_name), variable_name, variable))) +
-        scale_fill_gradient(low = "lightskyblue2", high = "navy")
+        scale_fill_gradient(low = "lightskyblue2", high = "navy") +
+        gg_text_customs()
       
       # When two features
       if (ncol(output) - 3 == 3) { 

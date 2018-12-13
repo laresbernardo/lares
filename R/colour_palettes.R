@@ -6,39 +6,47 @@
 #' @export
 gg_colour_customs <- function () {
   
-  values <- c("allianz"="#0038A8",
-              "equidad"="#52CF44",
-              "colpatria"="#EE0606",
-              "del estado"="#F37000",
-              "suramericana"="#1F6D8C",
-              "mapfre"="#34000D",
-              "la previsora"="#6F9A45",
-              "aig"="#C71585",
-              "generali"="#B21F1F",
-              "solidaria"="#E69500",
-              "liberty"="#4E629A",
-              "bolivar"="#F0F206",
-              "cia"="#8ACBE5",
-              "puntored"="#FFFF00",
-              "movilred"="#FF1493",
-              "web"="#290452",
-              "f1"="#290452",
-              "m"="steelblue2",
-              "f"="lightpink2",
-              "true"="springgreen3",
-              "false"="red2",
-              "1"="springgreen3",
-              "0"="red2",
-              "good"="springgreen3",
-              "bad"="red2",
-              "bueno"="springgreen3",
-              "malo"="red2",
-              "buenos"="springgreen3",
-              "malos"="red2",
-              "spring"="springgreen3",
-              "summer"="red2",
-              "fall"="orange",
-              "winter"="steelblue2")
+  red <- "tomato"
+  green <- "mediumspringgreen"
+  pink <- "lightpink2"
+  blue <- "steelblue2"
+  orange <- "orange"
+  
+  values <- c("allianz" = "#0038A8",
+              "equidad" = "#52CF44",
+              "colpatria" = "#EE0606",
+              "del estado" = "#F37000",
+              "suramericana" = "#1F6D8C",
+              "mapfre" = "#34000D",
+              "la previsora" = "#6F9A45",
+              "aig" = "#C71585",
+              "generali" = "#B21F1F",
+              "solidaria" = "#E69500",
+              "liberty" = "#4E629A",
+              "bolivar" = "#F0F206",
+              "cia" = "#8ACBE5",
+              "puntored" = "#FFFF00",
+              "movilred" = "#FF1493",
+              "web" = "#290452",
+              "f1" = "#290452",
+              "m" = blue,
+              "f" = pink,
+              "true" = green,
+              "false" = red,
+              "TRUE" = green,
+              "FALSE" = red,
+              "1" = green,
+              "0" = red,
+              "good" = green,
+              "bad" = red,
+              "bueno" = green,
+              "malo" = red,
+              "buenos" = green,
+              "malos" = red,
+              "spring" = green,
+              "summer" = red,
+              "fall" = orange,
+              "winter" = blue)
   return(scale_color_manual(values = values))
 }
 
@@ -51,39 +59,47 @@ gg_colour_customs <- function () {
 #' @export
 gg_fill_customs <- function () {
   
-  values <- c("allianz"="#0038A8",
-              "equidad"="#52CF44",
-              "colpatria"="#EE0606",
-              "del estado"="#F37000",
-              "suramericana"="#1F6D8C",
-              "mapfre"="#34000D",
-              "la previsora"="#6F9A45",
-              "aig"="#C71585",
-              "generali"="#B21F1F",
-              "solidaria"="#E69500",
-              "liberty"="#4E629A",
-              "bolivar"="#F0F206",
-              "cia"="#8ACBE5",
-              "puntored"="#FFFF00",
-              "movilred"="#FF1493",
-              "web"="#290452",
-              "f1"="#290452",
-              "m"="steelblue2",
-              "f"="lightpink2",
-              "true"="springgreen3",
-              "false"="red2",
-              "1"="springgreen3",
-              "0"="red2",
-              "good"="springgreen3",
-              "bad"="red2",
-              "bueno"="springgreen3",
-              "malo"="red2",
-              "buenos"="springgreen3",
-              "malos"="red2",
-              "spring"="springgreen3",
-              "summer"="red2",
-              "fall"="orange",
-              "winter"="steelblue2")
+  red <- "tomato"
+  green <- "mediumspringgreen"
+  pink <- "lightpink2"
+  blue <- "steelblue2"
+  orange <- "orange"
+  
+  values <- c("allianz" = "#0038A8",
+              "equidad" = "#52CF44",
+              "colpatria" = "#EE0606",
+              "del estado" = "#F37000",
+              "suramericana" = "#1F6D8C",
+              "mapfre" = "#34000D",
+              "la previsora" = "#6F9A45",
+              "aig" = "#C71585",
+              "generali" = "#B21F1F",
+              "solidaria" = "#E69500",
+              "liberty" = "#4E629A",
+              "bolivar" = "#F0F206",
+              "cia" = "#8ACBE5",
+              "puntored" = "#FFFF00",
+              "movilred" = "#FF1493",
+              "web" = "#290452",
+              "f1" = "#290452",
+              "m" = blue,
+              "f" = pink,
+              "true" = green,
+              "false" = red,
+              "TRUE" = green,
+              "FALSE" = red,
+              "1" = green,
+              "0" = red,
+              "good" = green,
+              "bad" = red,
+              "bueno" = green,
+              "malo" = red,
+              "buenos" = green,
+              "malos" = red,
+              "spring" = green,
+              "summer" = red,
+              "fall" = orange,
+              "winter" = blue)
   return(scale_fill_manual(values = values))
 }
 
@@ -98,6 +114,7 @@ gg_text_customs <- function () {
   
   black <- "#000000"
   white <- "#FFFFFF"
+  
   values <- c("allianz" = black,
               "equidad" = black,
               "colpatria" = black,
@@ -119,6 +136,8 @@ gg_text_customs <- function () {
               "f" = black,
               "true" = black,
               "false" = black,
+              "TRUE"= black,
+              "FALSE"= black,
               "1" = black,
               "0" = black,
               "good" = black,
