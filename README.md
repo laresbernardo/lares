@@ -1,4 +1,4 @@
-# lares <img src="https://i.imgur.com/t1eMhcc.png" width=150 align="right" />
+# lares <img src="/inst/docs/lares_logo.png" width = 150 align = "right" />
 ### R Package for Analytics and Machine Learning
 [![Build Status](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares) [![saythanks](https://img.shields.io/badge/say-thanks-1EAEDB.svg)](https://saythanks.io/to/laresbernardo)
 ----

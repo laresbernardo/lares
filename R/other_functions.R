@@ -870,3 +870,33 @@ statusbar <- function (run, max.run, percent.max = 40L, info = run){
   cat("\r", progress)
   flush.console()
 }
+
+
+####################################################################
+#' Right: Last n characters
+#' 
+#' This function lets the user extract the last n characters of a
+#' string or vector of strings.
+#' 
+#' @param string String or Vector
+#' @param n Integer. How many characters from right to left?
+#' @export
+right <- function(string, n){
+  r <- substr(x, nchar(x) - n + 1, nchar(x))
+  return(r)
+}
+
+
+####################################################################
+#' Left: First n characters
+#' 
+#' This function lets the user extract the first n characters of a
+#' string or vector of strings.
+#' 
+#' @param string String or Vector
+#' @param n Integer. How many characters from left to right?
+#' @export
+left <- function(string, n){
+  l <- substr(x, 1, n)
+  return(l)
+}

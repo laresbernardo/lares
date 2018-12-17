@@ -52,6 +52,7 @@ Suggests:
     DALEX,
     funModeling,
     googleAnalyticsR,
+    gtrendsR,
     plotly,
     shiny,
     shinydashboard,
