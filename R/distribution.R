@@ -232,14 +232,15 @@ distr <- function(data, ...,
     if(type %in% c(1,2)) {
       count <- ggplot(freqs, aes(
         x=reorder(as.character(value), order), y=n, 
-        fill=tolower(as.character(targets)), 
+        fill=tolower(as.character(targets)),
+        colour=tolower(as.character(targets)), 
         label=n, ymax=max(n)*1.1)) + 
         geom_col(position = "dodge") +
         geom_text(check_overlap = TRUE, 
                   position = position_dodge(0.9), 
                   size=3, vjust = -0.15) +
         labs(x = "", y = "Counter", fill = targets_name, caption = caption) + 
-        theme_minimal() + theme(legend.position = "top") +
+        theme_minimal() + theme(legend.position = "top") + guides(colour = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90))
       # Give an angle to labels when more than...
       if (length(unique(value)) >= 7) {
@@ -259,13 +260,14 @@ distr <- function(data, ...,
                      aes(x = reorder(value, -order), 
                          y = as.numeric(p/100),
                          fill=as.character(targets), 
-                         label = p)) + 
+                         label = p, 
+                         colour = tolower(as.character(targets)))) + 
         geom_col(position = "fill") +
         geom_text(check_overlap = TRUE, size = 3.2,
                   position = position_stack(vjust = 0.5)) +
         theme_minimal() + coord_flip() +
         labs(x = "Proportions", y = "", fill = targets_name, caption = caption) +
-        theme(legend.position = "top") + ylim(0, 1) +
+        theme(legend.position = "top") + ylim(0, 1) + guides(colour = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90))
       # Show limit caption when more values than top
       if (length(unique(value)) > top) {

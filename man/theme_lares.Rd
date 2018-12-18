@@ -4,12 +4,19 @@
 \alias{theme_lares}
 \title{lares Theme for ggplot2}
 \usage{
-theme_lares(labels = TRUE, colours = TRUE)
+theme_lares(labels = FALSE, colours = TRUE, cont = FALSE,
+  xcommas = FALSE, ycommas = FALSE)
 }
 \arguments{
 \item{labels}{Boolean. Add labels to plot?}
 
 \item{colours}{Boolean. Personalize colour palettes?}
+
+\item{cont}{Boolean. Is the value continuous? Discrete by default}
+
+\item{xcommas}{Boolean. Nice format for x continuous values?}
+
+\item{ycommas}{Boolean. Nice format for y continuous values?}
 }
 \description{
 This function sets some default values into ggplot2 outputs. This
