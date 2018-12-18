@@ -9,7 +9,7 @@
 
 ```devtools::install_github("laresbernardo/lares")```
   
-I do not have planned to post `lares` library to CRAN yet, but who knows what might happen!
+I currently don't have planned to post `lares` library to CRAN yet, but who knows what might happen!
 
 ### Update the package
 ```

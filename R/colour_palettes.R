@@ -1,4 +1,112 @@
 ####################################################################
+#' lares Theme for ggplot2
+#' 
+#' This function sets some default values into ggplot2 outputs. This
+#' function is almost as using gg_colour_customs() + gg_fill_customs() 
+#' + gg_text_customs, but these won't be mantained any longer.
+#' 
+#' @param labels Boolean. Add labels to plot?
+#' @param colours Boolean. Personalize colour palettes?
+#' @param cont Boolean. Is the value continuous? Discrete by default
+#' @param xcommas Boolean. Nice format for x continuous values?
+#' @param ycommas Boolean. Nice format for y continuous values?
+#' @export
+theme_lares <- function(labels = FALSE, colours = TRUE, cont = FALSE,
+                        xcommas = FALSE, ycommas = FALSE) {
+  
+  r <- list(theme_minimal())
+  
+  if (labels) {
+    r <- c(r, geom_label(show.legend = FALSE, size = 3))
+  }
+  
+  if (xcommas) {
+    r <- c(r, scale_x_continuous(labels = comma))
+  }
+  if (ycommas) {
+    r <- c(r, scale_y_continuous(labels = comma))
+  }
+  
+  if (colours) {
+    red <- "tomato"
+    green <- "#3DA4AB" #"mediumspringgreen"
+    pink <- "lightpink2"
+    blue <- "#0E9AA7"
+    orange <- "#FE8A71"
+    black <- "#000000"
+    white <- "#FFFFFF"
+    grey <- "azure4"
+    
+    colours_list <- data.frame(rbind(
+      c("allianz", "#0038A8", black),
+      c("equidad", "#52CF44", black),
+      c("colpatria", "#EE0606", black),
+      c("del estado", "#F37000", black),
+      c("suramericana", "#1F6D8C", black),
+      c("mapfre", "#34000D", black),
+      c("la previsora", "#6F9A45", black),
+      c("aig", "#C71585", black),
+      c("generali", "#B21F1F", black),
+      c("solidaria", "#E69500", black),
+      c("liberty", "#4E629A", black),
+      c("bolivar", "#F0F206", black),
+      c("cia", "#8ACBE5", black),
+      c("puntored", "#FFFF00", grey),
+      c("movilred", "#FF1493", black),
+      c("moviired", "#FF1493", black),
+      c("web", "#290452", white),
+      c("somosf1", "#290452", white),
+      c("f1", "#290452", white),
+      c("Funnel-SOAT4_desktop", "#290452", white),
+      c("red", grey, black),
+      c("m", blue, white),
+      c("f", pink, black),
+      c("true", green, black),
+      c("false", red, black),
+      c("TRUE", green, black),
+      c("FALSE", red, black),
+      c("1", green, black),
+      c("0", red, black),
+      c("good", green, black),
+      c("bad", red, black),
+      c("bueno", green, black),
+      c("malo", red, black),
+      c("spring", green, white),
+      c("summer", red, white),
+      c("fall", orange, black),
+      c("winter", blue, black)
+    ))
+    colnames(colours_list) <- c("values","fill","colour")
+    
+    scale_fill_lares <- function(){
+      values <- as.character(t(colours_list$fill)[1,])
+      names(values) <- colours_list$values
+      structure(list(scale_fill_manual(values = values)))
+    }
+    
+    scale_colour_lares <- function(){
+      values <- as.character(t(colours_list$colour)[1,])
+      names(values) <- colours_list$values
+      structure(list(scale_color_manual(values = values)))
+    }
+    
+    if (cont) {
+      scale_colour_lares <- function(){
+        # https://www.color-hex.com/color-palette/69673
+        pal_lares <- c("#817b7b", "#0e9aa7", "#3da4ab", "#f6cd61", "#fe8a71")
+        structure(list(scale_color_gradientn(colours = pal_lares)))
+      } 
+    }
+    
+    r <- c(r, scale_fill_lares(), scale_colour_lares())
+  }
+  
+  return(r)
+  
+}
+
+
+####################################################################
 #' Custom colours to use in ggplot as scale_color_manual
 #' 
 #' This function lets the user use pre-defined default colours
