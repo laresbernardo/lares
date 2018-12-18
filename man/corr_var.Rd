@@ -5,7 +5,7 @@
 \title{Correlation between variable and dataframe}
 \usage{
 corr_var(df, ..., method = "pearson", trim = 0, clean = FALSE,
-  plot = TRUE, logs = TRUE, top = NA, ceiling = 100,
+  plot = TRUE, logs = FALSE, top = NA, ceiling = 100,
   zeroes = FALSE, save = FALSE, subdir = NA,
   file_name = "viz_corrvar.png")
 }

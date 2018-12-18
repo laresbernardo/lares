@@ -7,9 +7,6 @@
 #' @export
 year_month <- function(date) {
   
-  # require(lubridate)
-  # require(stringr)
-  
   return(paste(
     lubridate::year(date),
     stringr::str_pad(lubridate::month(date), 2, pad = "0"),
@@ -25,9 +22,6 @@ year_month <- function(date) {
 #' @param date Date. Date we wish to transform
 #' @export
 year_week <- function(date) {
-  
-  # require(lubridate)
-  # require(stringr)
   
   return(paste(
     lubridate::year(date),
@@ -45,8 +39,6 @@ year_week <- function(date) {
 #' @param df Categorical Vector
 #' @export
 categoryCounter <- function (df) {
-  
-  # require(dplyr)
   
   cats <- df %>% select_if(is.character)
   result <- c()
@@ -84,8 +76,6 @@ categ_reducer <- function(df, ...,
                           pcummax = 100, 
                           top = NA, 
                           other_label = "other") {
-  
-  # require(dplyr)
   
   vars <- quos(...)
   
@@ -310,7 +300,7 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
     }
   } else {
     # For binary resampling:
-    message(paste("Resampled from:", lares::vector2text(table(df$tag), sep = " x ", quotes = F)))
+    message(paste("Resampled from:", vector2text(formatNum(table(df$tag),0), sep = " x ", quotes = F)))
     ones <- df %>% filter(tag %in% as.character(tags[1]))
     zeros <- df %>% filter(tag %in% as.character(tags[2]))
     
@@ -322,7 +312,7 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
       ones <- sample_n(ones, round(rate * nrow(zeros)))
     }
     balanced <- rbind(ones, zeros)
-    message(paste("Into:",lares::vector2text(table(balanced$tag), sep = " x ", quotes = F)))
+    message(paste("Into:", vector2text(formatNum(table(balanced$tag),0), sep = " x ", quotes = F)))
   }
   
   balanced <- rename_at(balanced, vars("tag"), funs(paste0(variable)))

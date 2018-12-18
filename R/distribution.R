@@ -232,11 +232,11 @@ distr <- function(data, ...,
     if(type %in% c(1,2)) {
       count <- ggplot(freqs, aes(
         x=reorder(as.character(value), order), y=n, 
-        fill=tolower(as.character(targets)),
-        colour=tolower(as.character(targets)), 
+        fill=tolower(as.character(targets)), 
         label=n, ymax=max(n)*1.1)) + 
         geom_col(position = "dodge") +
-        geom_text(check_overlap = TRUE, 
+        geom_text(colour = "black",
+                  check_overlap = TRUE, 
                   position = position_dodge(0.9), 
                   size=3, vjust = -0.15) +
         labs(x = "", y = "Counter", fill = targets_name, caption = caption) + 
@@ -248,27 +248,29 @@ distr <- function(data, ...,
       } 
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
-        count <- count + gg_fill_customs() + gg_text_customs()
+        count <- count + gg_fill_customs()
       } else {
         count <- count + scale_fill_brewer(palette = "Blues")
       }
     }
     
-    # Percentages plot
+    # Proportions (%) plot
     if (type %in% c(1,3)) {
       prop <- ggplot(freqs, 
                      aes(x = reorder(value, -order), 
                          y = as.numeric(p/100),
-                         fill=as.character(targets), 
-                         label = p, 
-                         colour = tolower(as.character(targets)))) + 
+                         fill = tolower(as.character(targets)),
+                         label = p)) + 
         geom_col(position = "fill") +
-        geom_text(check_overlap = TRUE, size = 3.2,
-                  position = position_stack(vjust = 0.5)) +
+        geom_text(aes(colour = ifelse(
+          custom_colours, tolower(as.character(targets)), "none")),
+          check_overlap = TRUE, size = 3.2,
+          position = position_stack(vjust = 0.5)) +
         theme_minimal() + coord_flip() +
         labs(x = "Proportions", y = "", fill = targets_name, caption = caption) +
         theme(legend.position = "top") + ylim(0, 1) + guides(colour = FALSE) +
-        theme(axis.title.y = element_text(size = rel(0.8), angle = 90))
+        theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
+        gg_text_customs()
       # Show limit caption when more values than top
       if (length(unique(value)) > top) {
         count <- count + labs(caption = paste("Showing the", top, "most frequent values"))
@@ -282,7 +284,7 @@ distr <- function(data, ...,
       }
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
-        prop <- prop + gg_fill_customs() + gg_text_customs()
+        prop <- prop + gg_fill_customs()
       } else {
         prop <- prop + scale_fill_brewer(palette = "Blues")
       }

@@ -7,6 +7,8 @@
 #' @param df Dataframe
 #' @param redundant Boolean. Should we keep redundat columns? i.e. If the
 #' column only has two different values, should we keep both new columns?
+#' @param drops Boolean. Drop automatically some useless features?
+#' @param ignore Vector or character. Which column should be ignored?
 #' @param dates Boolean. Do you want the function to create more features
 #' out of the date/time columns?
 #' @param holidays Boolean. Include holidays as new columns?
@@ -28,6 +30,8 @@
 #' @export
 ohse <- function(df, 
                  redundant = FALSE, 
+                 drops = TRUE,
+                 ignore = NA,
                  dates = FALSE, 
                  holidays = FALSE, country = "Colombia",
                  currency_pair = NA, 
@@ -37,6 +41,13 @@ ohse <- function(df,
                  summary = TRUE) {
   
   df <- data.frame(df)
+  
+  # Leave some columns out of the logic
+  if (!is.na(ignore)) {
+    message("Omitting transformations for ", vector2text(ignore))
+    ignored <- df %>% select(one_of(ignore))
+    df <- df %>% select(-one_of(ignore))
+  }
   
   # Create features out of date/time variables
   if (dates == TRUE | holidays == TRUE | !is.na(currency_pair)) {
@@ -54,7 +65,7 @@ ohse <- function(df,
   no_need_to_convert <- converted <- converted_binary <- not_converted <- no_variance <- c()
   
   # Name and type of variables
-  cols <- lares::df_str(df, "names", plot=F)
+  cols <- df_str(df, "names", plot = F)
   types <- data.frame(name = colnames(df), 
                       type = unlist(lapply(lapply(df, class), `[[`, 1)))
   
@@ -114,7 +125,7 @@ ohse <- function(df,
       message(paste("One Hot Encoding applied to", length(total_converted), 
                     "variables:", vector2text(total_converted))) 
     }
-    if (length(no_variance) > 1) {
+    if (length(no_variance) > 1 & drops) {
       message(paste0("Automatically dropped ", length(no_variance), 
                      " columns with 0% or +", round(variance*100),
                      "% variance: ", vector2text(no_variance))) 
@@ -122,7 +133,14 @@ ohse <- function(df,
   }
   
   # Return only useful columns
-  df <- df[, c(!colnames(df) %in% c(no_variance, converted))]
+  if (drops) {
+    df <- df[, c(!colnames(df) %in% c(no_variance, converted))] 
+  }
+  
+  # Bind ignored untouched columns
+  if (!is.na(ignore)) {
+    df <- data.frame(ignored, df)
+  }
   
   return(df)
   

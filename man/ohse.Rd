@@ -4,15 +4,20 @@
 \alias{ohse}
 \title{One Hot Smart Encoding (Dummy Variables)}
 \usage{
-ohse(df, redundant = FALSE, dates = FALSE, holidays = FALSE,
-  country = "Colombia", currency_pair = NA, trim = 0, limit = 10,
-  variance = 0.9, other_label = "OTHER", sep = "_", summary = TRUE)
+ohse(df, redundant = FALSE, drops = TRUE, ignore = NA,
+  dates = FALSE, holidays = FALSE, country = "Colombia",
+  currency_pair = NA, trim = 0, limit = 10, variance = 0.9,
+  other_label = "OTHER", sep = "_", summary = TRUE)
 }
 \arguments{
 \item{df}{Dataframe}
 
 \item{redundant}{Boolean. Should we keep redundat columns? i.e. If the
 column only has two different values, should we keep both new columns?}
+
+\item{drops}{Boolean. Drop automatically some useless features?}
+
+\item{ignore}{Vector or character. Which column should be ignored?}
 
 \item{dates}{Boolean. Do you want the function to create more features
 out of the date/time columns?}

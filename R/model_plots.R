@@ -778,7 +778,8 @@ mplot_full <- function(tag,
   
   # Categorical Models
   if (length(unique(tag)) <= thresh) {
-    p1 <- mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
+    p1 <- mplot_density(tag = tag, score = score, 
+                        subtitle = subtitle, model_name = model_name)
     p2 <- mplot_splits(tag = tag, score = score, splits = splits)
     p3 <- mplot_roc(tag = tag, score = score)
     p4 <- mplot_cuts(score = score) 

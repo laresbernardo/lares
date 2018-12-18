@@ -115,11 +115,9 @@ h2o_automl <- function(df,
                        export = FALSE,
                        plot = FALSE,
                        project = "Machine Learning Model") {
-  # require(dplyr)
-  # require(h2o)
-  # require(beepr)
-  # require(pROC)
+  
   options(warn=-1)
+  
   
   start <- Sys.time()
   message(paste(start,"| Started process..."))
@@ -157,9 +155,9 @@ h2o_automl <- function(df,
   
   
   ####### Train model #######
-  h2o::h2o.init(nthreads = -1, port=54321, min_mem_size="8g")
+  h2o.init(nthreads = -1, port=54321, min_mem_size="8g")
   #h2o.shutdown()
-  h2o::h2o.removeAll()
+  h2o.removeAll()
   aml <- h2o::h2o.automl(x = setdiff(names(df), "tag"), 
                          y = "tag",
                          training_frame = as.h2o(train),
@@ -238,18 +236,19 @@ h2o_automl <- function(df,
   
   message(paste0("Training duration: ", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
   
-  if (export == TRUE) {
+  if (export) {
     export_results(results)
+    message("Results and model files exported succesfully!")
   }
   
-  if (plot == TRUE) {
+  if (plot) {
     mplot_full(tag = results$scores_test$tag,
                       score = results$scores_test$score,
                       subtitle = results$project,
                       model_name = results$model_name)
   }
   
-  if (alarm == TRUE) {
+  if (alarm) {
     beepr::beep()
   }
   
@@ -267,9 +266,6 @@ h2o_automl <- function(df,
 #' @param which_model Integer. Which model from the leaderboard you wish to use?
 #' @export
 h2o_selectmodel <- function(results, which_model = 1) {
-  
-  # require(h2o)
-  # require(pROC)
   
   # Select model (Best one by default)
   m <- h2o.getModel(as.vector(results$leaderboard$model_id[which_model]))  
@@ -325,10 +321,14 @@ export_results <- function(results,
   
   # require(h2o)
   options(warn=-1)
+  h2o.init(nthreads = -1, port=54321, min_mem_size="8g")
+  
   
   # We create a directory to save all our results
-  first <- paste0(round(100*results$auc_test, 2), signif(results$rmse, 4))
-  subdirname <- paste0(first, "_", results$model_name)  
+  first <- ifelse(length(unique(results$scores_test$tag)) > 6,
+                  signif(results$errors_test$rmse, 4),
+                  round(100*results$auc_test, 2))
+  subdirname <- paste0(first, "-", results$model_name)  
   if (!is.na(subdir)) {
     subdir <- paste0(subdir, "/", subdirname)
   } else {
@@ -395,8 +395,6 @@ export_results <- function(results,
 #' @param tries Integer. How many seed do you wish to try?
 #' @export
 iter_seeds <- function(df, tries = 10) {
-  
-  # require(h2o)
   
   seeds <- data.frame()
   
@@ -496,9 +494,7 @@ errors <- function(tag, score){
 #' @export
 h2o_predict_MOJO <- function(df, model_path, sample = NA){
   
-  # require(jsonlite)
-  # require(h2o)
-  
+  df <- as.data.frame(df)
   zip <- paste0(model_path, "/", gsub(".*-","",model_path), ".zip")
   
   if(!is.na(sample)) {
@@ -533,8 +529,6 @@ h2o_predict_MOJO <- function(df, model_path, sample = NA){
 #' @export
 h2o_predict_binary <- function(df, model_path, sample = NA){
   
-  # require(jsonlite)
-  # require(h2o)
   options(warn=-1)
   
   binary <- paste(model_path, gsub(".*-", "", model_path), sep="/")
@@ -560,9 +554,6 @@ h2o_predict_binary <- function(df, model_path, sample = NA){
 #' @param api Character. API's URL
 #' @export
 h2o_predict_API <- function(df, api) {
-  
-  # require(httr)
-  # require(dplyr)
   
   post <- function(df, api) {
     df <- df %>%
@@ -598,7 +589,7 @@ h2o_predict_API <- function(df, api) {
 #' @param model H2o Object. Model
 #' @export
 h2o_predict_model <- function(df, model){
-  # require(h2o)
+  
   #model <- h2o.getModel(as.vector(aml@leaderboard$model_id[1]))
   scores <- predict(model, as.h2o(df))
   return(scores)

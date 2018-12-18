@@ -263,6 +263,7 @@ gg_text_customs <- function () {
               "fall" = black,
               "winter" = black,
               "w" = white,
-              "b" = black)
+              "b" = black,
+              "none" = black)
   return(scale_color_manual(values = values))
 }
