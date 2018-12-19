@@ -225,7 +225,7 @@ distr <- function(data, ...,
     
     # Sort values alphabetically or ascending if numeric
     if (abc == TRUE) {
-      freqs <- freqs %>% mutate(order = rank(as.character(value)))
+      freqs <- freqs %>% mutate(order = rank(value))
     }
     
     # Counter plot

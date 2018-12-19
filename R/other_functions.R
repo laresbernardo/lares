@@ -743,15 +743,15 @@ quants <- function(values, splits = 10, return = "summary") {
   labels <- cut(values, unique(cuts), 
                 dig.lab = decimals, 
                 include.lowest = TRUE)
+  if (return == "labels") {
+    return(labels) 
+  }
   if (return == "summary") {
     output <- data.frame(percentile = names(cuts)[-1], cut = cuts[-1]) %>%
       mutate(label = paste0("(", signif(lag(cut),4), "-", signif(cut,4),"]"),
              label = gsub("\\(NA", paste0("[", signif(min(cut), 4)), label),
              label = factor(label, levels = unique(label), ordered = T))
     return(output) 
-  }
-  if (return == "labels") {
-    return(labls) 
   }
 }
 
