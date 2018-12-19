@@ -751,7 +751,7 @@ quants <- function(values, splits = 10, return = "summary") {
     return(output) 
   }
   if (return == "labels") {
-    return(output) 
+    return(labls) 
   }
 }
 
