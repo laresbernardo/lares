@@ -728,9 +728,9 @@ export_plot <- function(p,
 #' 
 #' @param values Vector. Values to calculate quantile cuts
 #' @param splits Integer. How many cuts should split the values?
-#' @param return Character. Return "results" or "cuts"
+#' @param return Character. Return "summary" or "labels"
 #' @export
-quants <- function(values, splits = 10, return = "cuts") {
+quants <- function(values, splits = 10, return = "summary") {
   if (splits > length(unique(values[!is.na(values)]))-1) {
     stop("There are not enough observations to split the data in ", splits)
   }
@@ -738,19 +738,20 @@ quants <- function(values, splits = 10, return = "cuts") {
   cuts <- quantile(values, 
                    probs = seq(0, 1, length = splits+1), 
                    na.rm = TRUE)
-  decimals <- min(nchar(values), na.rm = TRUE)+1
-  decimals <- ifelse(decimals >= 10, 10, decimals)
+  decimals <- min(nchar(values), na.rm = TRUE) + 1
+  decimals <- ifelse(decimals >= 5, 5, decimals)
   labels <- cut(values, unique(cuts), 
                 dig.lab = decimals, 
                 include.lowest = TRUE)
-  cuts <- data.frame(percentile = names(cuts)[-1], 
-                     cut = cuts[-1], 
-                     label = sort(unique(labels)))
-  row.names(cuts) <- NULL
-  if (return == "cuts") {
-    return(cuts) 
-  } else {
-    return(labels)
+  if (return == "summary") {
+    output <- data.frame(percentile = names(cuts)[-1], cut = cuts[-1]) %>%
+      mutate(label = paste0("(", signif(lag(cut),4), "-", signif(cut,4),"]"),
+             label = gsub("\\(NA", paste0("[", signif(min(cut), 4)), label),
+             label = factor(label, levels = unique(label), ordered = T))
+    return(output) 
+  }
+  if (return == "labels") {
+    return(output) 
   }
 }
 
