@@ -11,7 +11,6 @@ LazyData: true
 Imports: 
     beepr,
     DBI,
-    caret,
     config,
     corrplot,
     devtools,
@@ -50,6 +49,7 @@ Imports:
     xml2
 Suggests:
     anytime,
+    caret,
     DALEX,
     funModeling,
     googleAnalyticsR,

@@ -186,7 +186,7 @@ distr <- function(data, ...,
     # Turn numeric variables into quantiles
     if (is.numeric(value)) {
       breaks <- ifelse(top != 10, top, breaks)
-      value <- quants(value, breaks, return = "results")
+      value <- quants(value, breaks, return = "labels")
       cuts <- length(unique(value[!is.na(value)]))
       if (cuts != breaks) {
         message(paste("When dividing", variable_name, "into", breaks, "quantiles,", 
