@@ -124,7 +124,7 @@ distr <- function(data, ...,
         labs(y = "", x = "", fill = "Density",
              title = paste("Density Distribution"),
              subtitle = paste("Variable:", variable_name),
-             caption = paste("Obs:", variable_name(nrow(df), 0)))
+             caption = paste("Obs:", formatNum(nrow(df), 0)))
       print(p)
     } else {
       # Discrete values
