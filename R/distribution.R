@@ -231,9 +231,9 @@ distr <- function(data, ...,
     # Counter plot
     if(type %in% c(1,2)) {
       count <- ggplot(freqs, aes(
-        x=reorder(as.character(value), order), y=n, 
-        fill=tolower(as.character(targets)), 
-        label=n, ymax=max(n)*1.1)) + 
+        x = reorder(as.character(value), order), y=n, 
+        fill = tolower(as.character(targets)), 
+        label = n, ymax = max(n) * 1.1)) + 
         geom_col(position = "dodge") +
         geom_text(colour = "black",
                   check_overlap = TRUE, 
@@ -256,19 +256,22 @@ distr <- function(data, ...,
     
     # Proportions (%) plot
     if (type %in% c(1,3)) {
-      prop <- ggplot(freqs, 
-                     aes(x = reorder(value, -order), 
-                         y = as.numeric(p/100),
-                         fill = tolower(as.character(targets)),
-                         label = p)) + 
+      prop <- freqs %>%
+        group_by(value) %>%
+        mutate(size = sum(n)/sum(freqs$n)) %>%
+        ggplot(aes(x = reorder(value, -order), 
+                   y = as.numeric(p/100),
+                   fill = tolower(as.character(targets)),
+                   label = p)) + 
         geom_col(position = "fill") +
-        geom_text(aes(colour = ifelse(
-          custom_colours, tolower(as.character(targets)), "none")),
-          check_overlap = TRUE, size = 3.2,
-          position = position_stack(vjust = 0.5)) +
+        geom_text(aes(size = size,
+                      colour = ifelse(custom_colours, tolower(as.character(targets)), "none")),
+                  check_overlap = TRUE,
+                  position = position_stack(vjust = 0.5)) +
+        scale_size(range = c(1.8, 3.5)) +
         theme_minimal() + coord_flip() +
         labs(x = "Proportions", y = "", fill = targets_name, caption = caption) +
-        theme(legend.position = "top") + ylim(0, 1) + guides(colour = FALSE) +
+        theme(legend.position = "top") + ylim(0, 1) + guides(colour = FALSE, size = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
         gg_text_customs()
       # Show limit caption when more values than top
@@ -278,9 +281,12 @@ distr <- function(data, ...,
       # Show a reference line if levels = 2; quite useful when data is unbalanced (not 50/50)
       if (length(unique(targets)) == 2) {
         distr <- df %>% freqs(targets)
+        h <- signif(100 - distr$pcum[1], 3)
         prop <- prop +
-          geom_hline(yintercept = (100-distr$pcum[1])/100, 
-                     colour = "purple", linetype = "dotted", alpha = 0.8)
+          geom_hline(yintercept = h/100, colour = "purple", 
+                     linetype = "dotted", alpha = 0.8) +
+          geom_label(aes(0, h/100, label = h, vjust = -0.05), 
+                     size = 2.3, fill="white", alpha = 0.8)
       }
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
