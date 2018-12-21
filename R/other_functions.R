@@ -766,12 +766,14 @@ quants <- function(values, splits = 10, return = "summary") {
 #' wish to get the history from? i.e, USD/COP, EUR/USD...
 #' @param from Date. From date
 #' @param to Date. To date
+#' @param fill Boolean. Fill weekends and non-quoted dates with 
+#' previous values?
 #' @export
-get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date()) {
+get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date(), fill = FALSE) {
   
-  options("getSymbols.warning4.0"=FALSE)
-  options("getSymbols.yahoo.warning"=FALSE)
-  string <- paste0(toupper(cleanText(currency_pair)),"=X")
+  options("getSymbols.warning4.0" = FALSE)
+  options("getSymbols.yahoo.warning" = FALSE)
+  string <- paste0(toupper(cleanText(currency_pair)), "=X")
   
   if (from == to) {
     to <- from + 1
@@ -796,8 +798,20 @@ get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date())
       rownames(x) <- Sys.Date()
     }
   }
+  
   rate <- data.frame(date = as.Date(rownames(x)), rate=x[,1])
+  
+  if (fill) {
+    rate <- data.frame(date = as.character(
+      as.Date((as.Date(from)-5):Sys.Date(), origin="1970-01-01"))) %>%
+      left_join(rate %>% mutate(date = as.character(date)), "date") %>%
+      tidyr::fill(rate, .direction = "down") %>%
+      mutate(date = as.Date(date)) %>%
+      filter(date >= as.Date(from))
+  }
+  
   return(rate)
+  
 }
 
 
