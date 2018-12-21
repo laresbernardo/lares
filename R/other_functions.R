@@ -802,10 +802,12 @@ get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date(),
   rate <- data.frame(date = as.Date(rownames(x)), rate=x[,1])
   
   if (fill) {
+    options(warn=-1)
     rate <- data.frame(date = as.character(
-      as.Date((as.Date(from)-5):Sys.Date(), origin="1970-01-01"))) %>%
+      as.Date(as.Date(from):Sys.Date(), origin="1970-01-01"))) %>%
       left_join(rate %>% mutate(date = as.character(date)), "date") %>%
       tidyr::fill(rate, .direction = "down") %>%
+      tidyr::fill(rate, .direction = "up") %>%
       mutate(date = as.Date(date)) %>%
       filter(date >= as.Date(from))
   }
