@@ -914,7 +914,7 @@ left <- function(string, n){
 #' 
 #' This function lets the user import an Excel file's tabs into a list
 #' 
-#' @param file String. Excel's lilename
+#' @param file String. Excel's name
 #' @export
 importxlsx <- function(file) {
   sheets <- getSheetNames(file)
@@ -924,4 +924,43 @@ importxlsx <- function(file) {
     mylist[[i]] <- sheet
   }
   return(mylist)
+}
+
+
+####################################################################
+#' Download Dropbox File by File's Name
+#' 
+#' This function lets the user download a file from Dropbox, specifying
+#' its name and using a previously created token.
+#' 
+#' @param filename String. File's name
+#' @param token_rds String. Tokens directory, must be a RDS file.
+#' @param xlsx Boolean. Is it an Excel file? Will be returned as a list
+#' for each tab.
+#' @export
+db_file <- function(filename, token_rds, xlsx = TRUE){
+  
+  if (file.exists(token_rds)) {
+    token <- readRDS(token_rds) # Example "/creds/token_f1.rds"
+  } else {
+    stop(paste("It seems that your token is not there or doesn't exist...",
+               "\nYou can get a new token as follows:",
+               "\nx <- rdrop2::drop_auth(); saveRDS(x, 'token.rds')"))
+  }
+  
+  x <- drop_search(filename, dtoken = token)
+  file <- "temp.xlsx"
+  invisible(
+    drop_download(x$matches[[1]]$metadata$path_lower, 
+                  local_path = file, 
+                  overwrite = TRUE, 
+                  dtoken = token))
+  
+  if (xlsx) {
+    results <- importxlsx(file) 
+    invisible(file.remove(file))
+    return(results)
+  } else {
+    return(message("File downloaded succesfully"))
+  }
 }

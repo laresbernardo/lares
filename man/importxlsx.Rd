@@ -7,7 +7,7 @@
 importxlsx(file)
 }
 \arguments{
-\item{file}{String. Excel's lilename}
+\item{file}{String. Excel's name}
 }
 \description{
 This function lets the user import an Excel file's tabs into a list
