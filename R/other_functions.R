@@ -918,10 +918,14 @@ left <- function(string, n){
 #' @export
 importxlsx <- function(file) {
   sheets <- getSheetNames(file)
-  mylist <- list()
-  for (i in 1:length(sheets)) {
-    sheet <- read.xlsx(file, sheet = i, skipEmptyRows=TRUE, detectDates=TRUE)  
-    mylist[[i]] <- sheet
+  if (length(sheets) > 1) {
+    mylist <- list()
+    for (i in 1:length(sheets)) {
+      sheet <- read.xlsx(file, sheet = i, skipEmptyRows=TRUE, detectDates=TRUE)  
+      mylist[[i]] <- sheet
+    } 
+  } else {
+    mylist <- read.xlsx(file, sheet = sheets, skipEmptyRows=TRUE, detectDates=TRUE)  
   }
   return(mylist)
 }
@@ -938,7 +942,11 @@ importxlsx <- function(file) {
 #' @param xlsx Boolean. Is it an Excel file? Will be returned as a list
 #' for each tab.
 #' @export
-db_file <- function(filename, token_rds, xlsx = TRUE){
+db_file <- function(filename, token_rds = NA, xlsx = TRUE){
+  
+  if (is.na(token_rds)) {
+    token_rds <- "~/Dropbox (Personal)/Documentos/Docs/Data/token_pers.rds"
+  }
   
   if (file.exists(token_rds)) {
     token <- readRDS(token_rds) # Example "/creds/token_f1.rds"
