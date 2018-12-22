@@ -4,7 +4,7 @@
 \alias{db_file}
 \title{Download Dropbox File by File's Name}
 \usage{
-db_file(filename, token_rds, xlsx = TRUE)
+db_file(filename, token_rds = NA, xlsx = TRUE)
 }
 \arguments{
 \item{filename}{String. File's name}
