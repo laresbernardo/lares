@@ -22,7 +22,7 @@
 #' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd 
 #' minute hour second %m+% floor_date 
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
-#' renameWorksheet saveWorkbook sheets write.xlsx
+#' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom pROC roc ci
 #' @importFrom quantmod getDividends getSymbols getQuote 
 #' @importFrom RColorBrewer brewer.pal
@@ -56,7 +56,7 @@ if(getRversion() >= "2.15.1")
       "canonical_vid","cats[, i]", "ceiling_date","color","contacts_canonical_vid",
       "contacts_form_submissions","contacts_identity_profiles", "google_analytics",
       "contacts_is_contact","contacts_merge_audits","contacts_portal_id","model.matrix",
-      "contacts_profile_token","contacts_profile_url","contacts_vid","content",
+      "contacts_profile_token","contacts_profile_url","contacts_vid","content","size",
       "content_transformer","createdate","credit","cuts","date_of_birth","days","dealId",
       "dealstage","df_status","form_submissions","gather","ceiling_date","trim",
       "get_questionnaire","get_typeforms", "endfx","to",

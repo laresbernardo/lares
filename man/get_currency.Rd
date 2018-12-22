@@ -4,7 +4,8 @@
 \alias{get_currency}
 \title{Download Historical Currency Exchange Rate}
 \usage{
-get_currency(currency_pair, from = Sys.Date() - 99, to = Sys.Date())
+get_currency(currency_pair, from = Sys.Date() - 99, to = Sys.Date(),
+  fill = FALSE)
 }
 \arguments{
 \item{currency_pair}{Character. Which currency exchange do you
@@ -13,6 +14,9 @@ wish to get the history from? i.e, USD/COP, EUR/USD...}
 \item{from}{Date. From date}
 
 \item{to}{Date. To date}
+
+\item{fill}{Boolean. Fill weekends and non-quoted dates with 
+previous values?}
 }
 \description{
 This function lets the user download historical currency exchange

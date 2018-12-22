@@ -907,3 +907,21 @@ left <- function(string, n){
   l <- substr(x, 1, n)
   return(l)
 }
+
+
+####################################################################
+#' Import Excel File with All Its Tabs
+#' 
+#' This function lets the user import an Excel file's tabs into a list
+#' 
+#' @param file String. Excel's lilename
+#' @export
+importxlsx <- function(file) {
+  sheets <- getSheetNames(file)
+  mylist <- list()
+  for (i in 1:length(sheets)) {
+    sheet <- read.xlsx(file, sheet = i, skipEmptyRows=TRUE, detectDates=TRUE)  
+    mylist[[i]] <- sheet
+  }
+  return(mylist)
+}
