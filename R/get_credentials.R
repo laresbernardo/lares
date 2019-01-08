@@ -32,6 +32,7 @@ get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
   if (dir == "personal") { dir <- "~/Dropbox (Personal)/Documentos/Docs/Data" }
   if (dir == "juan") { dir <- "~/Documents/somosf1/analitica" }
   if (dir == "matrix") { dir <- "/srv/creds" }
+  if (dir == "alex") { dir <- "/Users/alexswift/Documents" }
 
   file <- paste0(dir,"/",filename)
 

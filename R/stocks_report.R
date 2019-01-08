@@ -447,14 +447,14 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
     geom_bar(aes(x = "", y = DailyValue/sum(DailyValue), fill = Type), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels = scales::percent) +
     labs(x = '', y = "Portfolio's Stocks Type Distribution")
-  t1 <- gridExtra::tableGrob(
+  t1 <- tableGrob(
     portfolio_perf %>% 
       mutate(Perc = formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
              DailyValue = formatNum(DailyValue, 2),
              DifPer = paste0(formatNum(DifPer, 2))) %>%
       dplyr::select(Symbol, Type, DailyValue, Perc, DifPer), rows=NULL,
     cols = c("Stock","Stock Type","Today's Value","% Portaf","Growth %"))
-  t2 <- gridExtra::tableGrob(
+  t2 <- tableGrob(
     portfolio_perf %>% 
       group_by(Type) %>%
       dplyr::summarise(Perc = formatNum(100*sum(DailyValue)/sum(portfolio_perf$DailyValue),2),
