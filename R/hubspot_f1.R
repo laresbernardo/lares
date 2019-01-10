@@ -57,6 +57,8 @@ f1_contacts <- function(limit = 1000, creds = NA) {
     "debt_payees_counter",
     "payroll_deduction",
     "credit_value",
+    "disbursed",
+    "monthly_rate",
     "vehicle_brand",
     "vehicle_model",
     "vehicle_commercial_value",

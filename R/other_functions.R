@@ -519,15 +519,22 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
 #' @param origin Date. When importing from Excel, integers usually
 #' have 1900-01-01 as origin. In R, origin is 1970-01-01.
 #' @export
-dateformat <- function(dates, metric = FALSE, origin = '1900-01-01') {
+dateformat <- function(dates, metric = TRUE, origin = '1900-01-01') {
   
-  # require(dplyr)
-  # require(stringr)
-  # require(lubridate)
+  #require(dplyr)
+  #require(stringr)
+  #require(lubridate)
   options(warn=-1)
   
+  # Check if all values are NA
+  if(length(dates) == sum(is.na(dates))){
+    message("No dates where transformed becase all values are NA")
+    return(dates)
+  }
+  
   # Delete hours
-  dates <- gsub(" .*", "", dates)
+  dates <- gsub(" .*", "", as.character(dates))
+  dates <- gsub("\\..*", "", as.character(dates))
   
   # Is it in integer format?
   x <- dates[!is.na(dates)][1]
@@ -538,15 +545,13 @@ dateformat <- function(dates, metric = FALSE, origin = '1900-01-01') {
     
     year <- ifelse(nchar(x) == 10, "Y", "y")
     sym <- ifelse(grepl("/", x),"/","-")
-    pattern <- stringr::str_locate_all(x, "/")[[1]][,1]
+    pattern <- str_locate_all(x, "/")[[1]][,1]
     
     if(sum(pattern == c(3,6)) == 2) {
       return(as.Date(dates, format = paste0("%m",sym,"%d",sym,"%",year)))
     } else {
       return(as.Date(dates, format = paste0("%",year,sym,"%m",sym,"%d")))
     }
-  } else {
-    return(as.Date(date))
   }
   
   # When date is an integer:

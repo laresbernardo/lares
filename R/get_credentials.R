@@ -28,11 +28,12 @@ get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
              "google_analytics_comparamejor",
              "twitter")
 
-  if (is.na(dir)) { dir <- "~/Dropbox (ID)/CM Data Science/Library" }
+  if (is.na(dir)) { dir <- "~/Dropbox (ID)/F1 Data Science/Shiny/creds" }
   if (dir == "personal") { dir <- "~/Dropbox (Personal)/Documentos/Docs/Data" }
   if (dir == "juan") { dir <- "~/Documents/somosf1/analitica" }
   if (dir == "matrix") { dir <- "/srv/creds" }
   if (dir == "alex") { dir <- "/Users/alexswift/Documents" }
+  if (dir == "fer") { dir <- "/Users/fernandosucre/Documents" }
 
   file <- paste0(dir,"/",filename)
 
