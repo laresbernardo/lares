@@ -29,13 +29,17 @@ theme_lares <- function(labels = FALSE, colours = TRUE, cont = FALSE,
   
   if (colours) {
     red <- "tomato"
-    green <- "#3DA4AB" #"mediumspringgreen"
+    green <- "#3DA4AB" 
     pink <- "lightpink2"
     blue <- "#0E9AA7"
     orange <- "#FE8A71"
     black <- "#000000"
     white <- "#FFFFFF"
     grey <- "azure4"
+    megblue <- "#071D49"
+    megyellow <- "#EBB600"
+    meggrey1 <- "#F2F1F0"
+    meggrey2 <- "#9A9A9A"
     
     colours_list <- data.frame(rbind(
       c("allianz", "#0038A8", black),
@@ -74,7 +78,11 @@ theme_lares <- function(labels = FALSE, colours = TRUE, cont = FALSE,
       c("spring", green, white),
       c("summer", red, white),
       c("fall", orange, black),
-      c("winter", blue, black)
+      c("winter", blue, black),
+      c("meg1", megblue, white),
+      c("meg2", megyellow, black),
+      c("meg3", meggrey1, black),
+      c("meg4", meggrey2, white)
     ))
     colnames(colours_list) <- c("values","fill","colour")
     

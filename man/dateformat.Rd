@@ -4,7 +4,7 @@
 \alias{dateformat}
 \title{Transform any date input into Date}
 \usage{
-dateformat(dates, metric = FALSE, origin = "1900-01-01")
+dateformat(dates, metric = TRUE, origin = "1900-01-01")
 }
 \arguments{
 \item{dates}{Vector. Dates in any of the permitted formats}

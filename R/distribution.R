@@ -15,7 +15,7 @@
 #' @param na.rm Boolean. Ignore NAs if needed
 #' @param force Character. Force class on the values data. Choose between 'none',
 #' 'character', 'numeric', 'date'
-#' @param trim Integer. Trim words until the nth character for categorical values 
+#' @param trim Integer. Trim labels until the nth character for categorical values 
 #' (applies for both, target and values)
 #' @param clean Boolean. Use lares::cleanText for categorical values (applies 
 #' for both, target and values)
@@ -114,7 +114,7 @@ distr <- function(data, ...,
     is.POSIXlt <- function(x) inherits(x, "POSIXlt")
     if (is.numeric(value) | is.Date(value) | is.POSIXct(value) | is.POSIXlt(value)) {
       # Continuous and date values
-      if (!is.numeric(value)) {
+      if (is.numeric(value)) {
         p <- ggplot(df, aes(x = value))
       } else {
         p <- ggplot(df, aes(x = date(value)))
@@ -125,6 +125,9 @@ distr <- function(data, ...,
              title = paste("Density Distribution"),
              subtitle = paste("Variable:", variable_name),
              caption = paste("Obs:", formatNum(nrow(df), 0)))
+      if (top != 10) {
+        p <- p + xlim(0, top)
+      }
       print(p)
     } else {
       # Discrete values

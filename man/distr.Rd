@@ -27,7 +27,7 @@ percentages plot only.}
 \item{force}{Character. Force class on the values data. Choose between 'none',
 'character', 'numeric', 'date'}
 
-\item{trim}{Integer. Trim words until the nth character for categorical values 
+\item{trim}{Integer. Trim labels until the nth character for categorical values 
 (applies for both, target and values)}
 
 \item{clean}{Boolean. Use lares::cleanText for categorical values (applies 

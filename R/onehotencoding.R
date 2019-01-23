@@ -311,6 +311,10 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
     holidays <- xml2::read_html(url)
     holidays <- holidays %>% html_nodes(".tb-hover") %>% html_table() %>% data.frame(.) %>% .[-1,1:4]
     holidays$Date <- paste(holidays$Date, combs$year[i])
+    if (sum(grepl("de",holidays$Date)) > 0) {
+      invisible(Sys.setlocale("LC_TIME", "es_ES"))
+      holidays$Date <- gsub("de ","", holidays$Date)
+    }
     first <- as.numeric(as.character(substr(holidays$Date,1,1)))
     if (!is.na(first)) {
       holidays$Date <- as.Date(holidays$Date, format = c("%d %b %Y"))
