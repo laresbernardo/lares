@@ -75,6 +75,8 @@ corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE,
 #' function will return only the plot and not the result's data
 #' @param logs Boolean. Automatically calculate log(values) for numerical
 #' variables (not binaries)
+#' @param dates Boolean. Do you want the function to create more features
+#' out of the date/time columns?
 #' @param top Integer. If you want to plot the top correlations, 
 #' define how many
 #' @param ceiling Numeric. Remove all correlations above... Range: (0-100]
@@ -90,6 +92,7 @@ corr_var <- function(df, ...,
                      clean = FALSE,
                      plot = TRUE,
                      logs = FALSE, 
+                     dates = TRUE,
                      top = NA, 
                      ceiling = 100, 
                      zeroes = FALSE,
@@ -100,7 +103,7 @@ corr_var <- function(df, ...,
   vars <- quos(...)
   
   # Calculate correlations
-  rs <- corr(df, method = method, logs = logs, dates = TRUE)
+  rs <- corr(df, method = method, logs = logs, dates = dates)
   var <- as.character(vars[[1]])[2]
   rs <- rs %>% 
     select(-contains(paste0(var,"_log"))) %>%

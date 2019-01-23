@@ -51,13 +51,15 @@ ohse <- function(df,
   
   # Create features out of date/time variables
   if (dates == TRUE | holidays == TRUE | !is.na(currency_pair)) {
-    df_dates <- date_feats(df, keep_originals = FALSE,
+    df_dates <- date_feats(df, 
+                           keep_originals = TRUE,
                            features = dates,
-                           holidays = holidays, country = country, 
+                           holidays = holidays, 
+                           country = country, 
                            currency_pair = currency_pair, 
                            summary = summary)
     if (ncol(df_dates) != ncol(df)) {
-      df <- cbind(df, df_dates) 
+      df <- left_join(df, df_dates, "date") 
     }
   }
   
