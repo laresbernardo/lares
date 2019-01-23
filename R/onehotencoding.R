@@ -42,13 +42,6 @@ ohse <- function(df,
   
   df <- data.frame(df)
   
-  # Leave some columns out of the logic
-  if (!is.na(ignore)) {
-    message("Omitting transformations for ", vector2text(ignore))
-    ignored <- df %>% select(one_of(ignore))
-    df <- df %>% select(-one_of(ignore))
-  }
-  
   # Create features out of date/time variables
   if (dates == TRUE | holidays == TRUE | !is.na(currency_pair)) {
     df_dates <- date_feats(df, 
@@ -61,6 +54,13 @@ ohse <- function(df,
     if (ncol(df_dates) != ncol(df)) {
       df <- left_join(df, df_dates, "date") 
     }
+  }
+  
+  # Leave some columns out of the logic
+  if (!is.na(ignore)) {
+    message("Omitting transformations for ", vector2text(ignore))
+    ignored <- df %>% select(one_of(ignore))
+    df <- df %>% select(-one_of(ignore))
   }
   
   # Dummy variables that will be filled
@@ -236,11 +236,13 @@ date_feats <- function(dates,
       
       # Features creator
       if (features == TRUE) {
+        invisible(Sys.setlocale("LC_TIME", "C"))
         result$values_date_year <- year(values)
         result$values_date_month <- month(values)
         result$values_date_day <- day(values)
         result$values_date_week <- week(values)
-        result$values_date_weekday <- strftime(values,'%A')
+        result$values_date_weekday <- weekdays(values, abbr = TRUE)
+        result$values_date_weekend <-  grepl("S(at|un)", result$values_date_weekday)
         result$values_date_year_day <- as.integer(difftime(
           values, floor_date(values, unit="year"), units="day"))
         
