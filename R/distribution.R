@@ -198,13 +198,12 @@ distr <- function(data, ...,
       top <- top + 1
     }
     
-    # Caption for plots
-    caption <- paste0("Variables: ", targets_name, " vs. ", variable_name,
-                      ". Obs: ", formatNum(nrow(df), 0))
-    
     # Finally, we have our data.frame
     df <- data.frame(targets = targets, value = value)
     df <- fxna_rm(df, na.rm)
+    # Caption for plots
+    caption <- paste0("Variables: ", targets_name, " vs. ", variable_name,
+                      ". Obs: ", formatNum(nrow(df), 0))
     
     freqs <- df %>% 
       group_by(value, targets) %>% 
