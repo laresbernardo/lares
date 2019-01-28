@@ -11,6 +11,8 @@
 #' @param plot Boolean. Do you want to see a plot? Three variables tops.
 #' @param rm.na Boolean. Remove NA values in the plot? (not filtered for 
 #' numerical output; use na.omit() or filter() if needed)
+#' @param title Character. Overwrite plot's title with.
+#' @param subtitle Character. Overwrite plot's subtitle with.
 #' @param top Integer. Filter and plot the most n frequent for 
 #' categorical values. Set to NA to return all values
 #' @param abc Boolean. Do you wish to sort by alphabetical order? If set
@@ -21,7 +23,8 @@
 #' @export
 freqs <- function(vector, ..., results = TRUE, 
                   variable_name = NA, 
-                  plot = FALSE, rm.na = FALSE, 
+                  plot = FALSE, rm.na = FALSE,
+                  title = NA, subtitle = NA,
                   top = 40, abc = FALSE, 
                   save = FALSE, subdir = NA) {
   
@@ -57,6 +60,7 @@ freqs <- function(vector, ..., results = TRUE,
       options(warn=-1)
       
       plot <- ungroup(output)
+      obs <- paste("Obs.:", formatNum(sum(output$n), 0))
       
       if (rm.na == TRUE) {
         plot <- plot[complete.cases(plot), ]
@@ -100,9 +104,10 @@ freqs <- function(vector, ..., results = TRUE,
         geom_text(aes(hjust = label_hjust, colour = label_colours), size = 2.6) + 
         coord_flip() + theme_minimal() + guides(colour = FALSE) +
         labs(x = "", y = "Counter", fill = "[%]",
-             title = paste("Frequencies and Percentages"),
-             subtitle = paste(
-               "Variable:", ifelse(!is.na(variable_name), variable_name, variable))) +
+             title = ifelse(is.na(title), paste("Frequencies and Percentages"), title),
+             subtitle = ifelse(is.na(subtitle), paste(
+               "Variable:", ifelse(!is.na(variable_name), variable_name, variable)), subtitle),
+             caption = obs) +
         scale_fill_gradient(low = "lightskyblue2", high = "navy") +
         theme(plot.subtitle = element_text(size = 9, face="italic")) +
         gg_text_customs()
@@ -110,7 +115,9 @@ freqs <- function(vector, ..., results = TRUE,
       # When two features
       if (ncol(output) - 3 == 3) { 
         p <- p + facet_grid(as.character(facet) ~ .) + 
-          labs(subtitle = paste("Variables:", facet_name, "grouped by", variable)) +
+          labs(subtitle = ifelse(is.na(subtitle), 
+                                 paste("Variables:", facet_name, "grouped by", variable), subtitle),
+               caption = obs) +
           theme_light() + theme(plot.subtitle = element_text(size = 9, face="italic"))
       }
       # When three features
@@ -119,8 +126,11 @@ freqs <- function(vector, ..., results = TRUE,
           stop("Please, try with a (third) variable with 3 or less cateogries!")
         }
         p <- p + facet_grid(as.character(facet2) ~ as.character(facet1)) + 
-          labs(title = paste("Frequencies and Percentages:", facet_name1, "and", variable),
-               subtitle = paste("Inside the facet grids:", facet_name2)) +
+          labs(title = ifelse(is.na(title), 
+                              paste("Frequencies and Percentages:", facet_name1, "and", variable), title),
+               subtitle = ifelse(is.na(subtitle), 
+                                 paste("Inside the facet grids:", facet_name2), subtitle),
+               caption = obs) +
           theme_light() + theme(plot.subtitle = element_text(size = 9, face="italic"))
       }
       plot(p)

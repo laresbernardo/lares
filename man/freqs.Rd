@@ -5,8 +5,8 @@
 \title{Frequencies Calculations and Plot}
 \usage{
 freqs(vector, ..., results = TRUE, variable_name = NA, plot = FALSE,
-  rm.na = FALSE, top = 40, abc = FALSE, save = FALSE,
-  subdir = NA)
+  rm.na = FALSE, title = NA, subtitle = NA, top = 40,
+  abc = FALSE, save = FALSE, subdir = NA)
 }
 \arguments{
 \item{vector}{Data.frame}
@@ -21,6 +21,10 @@ freqs(vector, ..., results = TRUE, variable_name = NA, plot = FALSE,
 
 \item{rm.na}{Boolean. Remove NA values in the plot? (not filtered for 
 numerical output; use na.omit() or filter() if needed)}
+
+\item{title}{Character. Overwrite plot's title with.}
+
+\item{subtitle}{Character. Overwrite plot's subtitle with.}
 
 \item{top}{Integer. Filter and plot the most n frequent for 
 categorical values. Set to NA to return all values}

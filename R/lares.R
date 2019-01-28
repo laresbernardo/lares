@@ -36,6 +36,7 @@
 #' @importFrom rtweet create_token search_tweets
 #' @importFrom scales percent comma
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict reorder start
+#' @importFrom stringr str_locate_all
 #' @import SnowballC 
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file globalVariables 
 #' installed.packages write.table install.packages remove.packages object.size type.convert flush.console

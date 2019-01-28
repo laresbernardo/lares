@@ -241,7 +241,7 @@ date_feats <- function(dates,
         result$values_date_month <- month(values)
         result$values_date_day <- day(values)
         result$values_date_week <- week(values)
-        result$values_date_weekday <- weekdays(values, abbr = TRUE)
+        result$values_date_weekday <- weekdays(values, abbreviate = TRUE)
         result$values_date_weekend <-  grepl("S(at|un)", result$values_date_weekday)
         result$values_date_year_day <- as.integer(difftime(
           values, floor_date(values, unit="year"), units="day"))

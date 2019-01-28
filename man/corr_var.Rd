@@ -5,8 +5,8 @@
 \title{Correlation between variable and dataframe}
 \usage{
 corr_var(df, ..., method = "pearson", trim = 0, clean = FALSE,
-  plot = TRUE, logs = FALSE, top = NA, ceiling = 100,
-  zeroes = FALSE, save = FALSE, subdir = NA,
+  plot = TRUE, logs = FALSE, dates = TRUE, top = NA,
+  ceiling = 100, zeroes = FALSE, save = FALSE, subdir = NA,
   file_name = "viz_corrvar.png")
 }
 \arguments{
@@ -27,6 +27,9 @@ function will return only the plot and not the result's data}
 
 \item{logs}{Boolean. Automatically calculate log(values) for numerical
 variables (not binaries)}
+
+\item{dates}{Boolean. Do you want the function to create more features
+out of the date/time columns?}
 
 \item{top}{Integer. If you want to plot the top correlations, 
 define how many}
