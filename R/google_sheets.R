@@ -7,7 +7,7 @@
 #' @param ws Character. Working sheet to import
 #' @param first_time Boolean. Authenticate manualy
 #' @export
-readGS <- function(title, ws, first_time=FALSE) {
+readGS <- function(title, ws = "Hoja 1", first_time = FALSE) {
   
   if (first_time == TRUE) {
     options(httr_oob_default = TRUE)
@@ -32,7 +32,7 @@ readGS <- function(title, ws, first_time=FALSE) {
 #' @param cell Character. In which cell should we paste the data (upper left cell)
 #' @param first_time Boolean. Authenticate manualy
 #' @export
-writeGS <- function(data, title, ws, cell='A1', first_time=FALSE) {
+writeGS <- function(data, title, ws = "Hoja 1", cell = 'A1', first_time = FALSE) {
 
   if (first_time == TRUE) {
     options(httr_oob_default = TRUE)
@@ -40,6 +40,7 @@ writeGS <- function(data, title, ws, cell='A1', first_time=FALSE) {
   }
 
   gs <- gs_title(title)
-  invisible(gs_edit_cells(gs, ws = ws, input = data, anchor = cell, verbose=F) %>% data.frame())
+  invisible(gs_edit_cells(
+    gs, ws = ws, input = data, anchor = cell, verbose=F) %>% data.frame())
 
 }

@@ -601,16 +601,19 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   temp <- tempdir()
   setwd(temp)
   
+  # Set token for Sendgrid credentials:
+  token_dir <- case_when(
+    wd == "personal" ~ "~/Dropbox (Personal)/Documentos/Docs/Data",
+    wd == "matrix" ~ "~/creds",
+    TRUE ~ as.character(creds))
+  
   # Data extraction and processing
-  data <- get_stocks()
+  data <- get_stocks(token_dir = token_dir)
   results <- stocks_objects(data)
   
   # HTML report
   stocks_html(results)
-  
-  # Set token for Sendgrid credentials:
-  token_dir <- case_when(wd == "personal" ~ "~/Dropbox (Personal)/Documentos/Docs/Data",
-                         wd == "matrix" ~ "~/creds")
+
   if (is.na(token_dir)) {
     token_dir <- readline(prompt="Set the working directory where your YML file is: ")
   }
@@ -621,7 +624,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
              attachment = files,
              to = "laresbernardo@gmail.com", 
              from = 'AutoReport <laresbernardo@gmail.com>', 
-             creds = wd,
+             creds = token_dir,
              quite = FALSE)
   }
   # Clean everything up and delete files created

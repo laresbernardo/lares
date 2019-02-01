@@ -4,7 +4,7 @@
 \alias{readGS}
 \title{Google Sheets Reading}
 \usage{
-readGS(title, ws, first_time = FALSE)
+readGS(title, ws = "Hoja 1", first_time = FALSE)
 }
 \arguments{
 \item{title}{Character. Textual title of Google Sheet}

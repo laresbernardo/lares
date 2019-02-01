@@ -4,7 +4,7 @@
 \alias{writeGS}
 \title{Google Sheets Writing}
 \usage{
-writeGS(data, title, ws, cell = "A1", first_time = FALSE)
+writeGS(data, title, ws = "Hoja 1", cell = "A1", first_time = FALSE)
 }
 \arguments{
 \item{data}{Data Frame. Data to export to Google Sheet}
