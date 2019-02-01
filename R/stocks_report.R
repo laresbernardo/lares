@@ -322,7 +322,7 @@ portfolio_daily_plot <- function(stocks_perf) {
          subtitle = paste(stocks_perf$Date[1]," (Includes Expenses): ",
                           formatNum(stocks_perf$TotalPer[1],2),"% ($",
                           formatNum(stocks_perf$DailyStocks[1] - 
-                                             sum(stocks_perf$DailyTrans),0),") | $",
+                                      sum(stocks_perf$DailyTrans),0),") | $",
                           formatNum(stocks_perf$CumPortfolio[1]), sep="")) +
     ggsave("portf_daily_change.png", width = 8, height = 5, dpi = 300)
   
@@ -613,15 +613,11 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   
   # HTML report
   stocks_html(results)
-
-  if (is.na(token_dir)) {
-    token_dir <- readline(prompt="Set the working directory where your YML file is: ")
-  }
+  
   if (mail == TRUE) {
-    files <- "stocksReport.html"
     mailSend(body = " ", 
              subject = paste("Portfolio:", max(results$df_daily$Date)),
-             attachment = files,
+             attachment = paste0(getwd(), "/stocksReport.html"),
              to = "laresbernardo@gmail.com", 
              from = 'AutoReport <laresbernardo@gmail.com>', 
              creds = token_dir,

@@ -332,7 +332,7 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
 #' @param images Boolean. Bring only image files?
 #' @param export Boolean. Do you wish to export list as txt file?
 #' @export
-listfiles <- function(folder, recursive = TRUE, regex = NA, images = FALSE, export = FALSE) {
+listfiles <- function(folder = "~", recursive = TRUE, regex = NA, images = FALSE, export = FALSE) {
   
   # require(dplyr)
   # require(lubridate)
