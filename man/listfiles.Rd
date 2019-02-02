@@ -4,8 +4,8 @@
 \alias{listfiles}
 \title{List files in a directory}
 \usage{
-listfiles(folder, recursive = TRUE, regex = NA, images = FALSE,
-  export = FALSE)
+listfiles(folder = "~", recursive = TRUE, regex = NA,
+  images = FALSE, export = FALSE)
 }
 \arguments{
 \item{folder}{Character. Directory which contains files}
