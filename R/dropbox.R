@@ -13,12 +13,12 @@ db_download <- function(filename, xlsx = TRUE, token_dir = NA){
   
   if (is.na(token_dir)) {
     load("~/Dropbox (Personal)/Documentos/Docs/Data/token_pers.rds")
-  }
-  if (token_dir == "matrix") {
-    load("~/creds/token_pers.rds") 
-  }
-  if (is.na(token_dir) & token_dir != "matrix") {
-    token <- drop_auth()
+  } else {
+    if (token_dir == "matrix") {
+      load("~/creds/token_pers.rds") 
+    } else {
+      token <- drop_auth()
+    }
   }
   
   x <- drop_search(filename, dtoken = token)
@@ -53,12 +53,12 @@ db_upload <- function (filename, dir, delete_file = FALSE, token_dir = NA) {
   
   if (is.na(token_dir)) {
     load("~/Dropbox (Personal)/Documentos/Docs/Data/token_pers.rds")
-  }
-  if (token_dir == "matrix") {
-    load("~/creds/token_pers.rds") 
-  }
-  if (is.na(token_dir) & token_dir != "matrix") {
-    token <- drop_auth()
+  } else {
+    if (token_dir == "matrix") {
+      load("~/creds/token_pers.rds") 
+    } else {
+      token <- drop_auth()
+    }
   }
   
   drop_upload(filename, path = dir, dtoken = token)
