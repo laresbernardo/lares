@@ -61,7 +61,7 @@ db_upload <- function (filename, dir, delete_file = FALSE, token_dir = NA) {
     }
   }
   
-  drop_upload(filename, path = dir, dtoken = token)
+  invisible(drop_upload(filename, path = dir, dtoken = token))
   
   if (delete_file == TRUE) {
     file.remove(filename)
