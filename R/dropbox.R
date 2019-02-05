@@ -22,8 +22,9 @@ db_download <- function(filename, xlsx = TRUE, token_dir = NA,
       } else {
         load(paste0(token_dir,"/", token_name))
       }
+    } else {
+      token <- drop_auth() 
     }
-    token <- drop_auth()
   }
   
   x <- drop_search(filename, dtoken = token)
@@ -67,8 +68,9 @@ db_upload <- function (filename, dir, delete_file = FALSE, token_dir = NA,
       } else {
         load(paste0(token_dir,"/", token_name))
       }
+    } else {
+      token <- drop_auth() 
     }
-    token <- drop_auth()
   }
   
   invisible(drop_upload(filename, path = dir, dtoken = token))
