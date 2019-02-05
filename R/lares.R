@@ -38,8 +38,9 @@
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict reorder start
 #' @importFrom stringr str_locate_all
 #' @import SnowballC 
-#' @importFrom utils head tail packageVersion URLencode capture.output data download.file globalVariables 
-#' installed.packages write.table install.packages remove.packages object.size type.convert flush.console
+#' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
+#' globalVariables installed.packages write.table install.packages remove.packages object.size 
+#' type.convert flush.console
 #' @importFrom wordcloud textplot wordlayout
 #' @importFrom xml2 read_html
 "_PACKAGE"

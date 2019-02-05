@@ -4,7 +4,8 @@
 \alias{db_upload}
 \title{Download Dropbox File by File's Name}
 \usage{
-db_upload(filename, dir, delete_file = FALSE, token_dir = NA)
+db_upload(filename, dir, delete_file = FALSE, token_dir = NA,
+  token_name = "token_pers.rds")
 }
 \arguments{
 \item{filename}{String. File's name}
@@ -14,6 +15,8 @@ db_upload(filename, dir, delete_file = FALSE, token_dir = NA)
 \item{delete_file}{Boolean. Delete local file after uploading?}
 
 \item{token_dir}{Character. Credential's local directory}
+
+\item{token_name}{Character. RDS file name with your token's data}
 }
 \description{
 This function lets the user download a file from Dropbox, specifying

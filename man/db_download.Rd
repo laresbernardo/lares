@@ -4,7 +4,8 @@
 \alias{db_download}
 \title{Download Dropbox File by File's Name}
 \usage{
-db_download(filename, xlsx = TRUE, token_dir = NA)
+db_download(filename, xlsx = TRUE, token_dir = NA,
+  token_name = "token_pers.rds")
 }
 \arguments{
 \item{filename}{String. File's name}
@@ -12,7 +13,9 @@ db_download(filename, xlsx = TRUE, token_dir = NA)
 \item{xlsx}{Boolean. Is it an Excel file? Can be returned as a list
 for each tab and not as a file if needed}
 
-\item{token_dir}{Character. Credential's local directory}
+\item{token_dir}{Character. RDS with token local directory}
+
+\item{token_name}{Character. RDS file name with your token's data}
 }
 \description{
 This function lets the user download a file from Dropbox, specifying
