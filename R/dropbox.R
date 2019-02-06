@@ -45,7 +45,7 @@ db_download <- function(filename, xlsx = TRUE, token_dir = NA,
 }
 
 ####################################################################
-#' Download Dropbox File by File's Name
+#' Upload Dropbox File
 #' 
 #' This function lets the user download a file from Dropbox, specifying
 #' its name and using a previously created token.

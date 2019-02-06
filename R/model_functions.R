@@ -614,57 +614,64 @@ h2o_predict_model <- function(df, model){
 mmetrics <- function(tag, score, thresh = 0.5, plot = FALSE, size = 2.5, roc = FALSE){
   
   metrics <- list()
+  type <- ifelse(length(unique(tag)) <= 10, "Classification", "Regression")
   
-  # Confusion Matrix
-  new <- ifelse(score >= thresh, 1, 0)
-  conf_mat <- table(Real = c(tag, 0, 1) , Pred = c(new, 0, 1))
-  total <- sum(conf_mat)
-  trues <- sum(diag(conf_mat))
-  falses <- total - trues
-  
-  ACC <- signif(trues / total, 5)
-  metrics[["accuracy"]] <- ACC
-  
-  if (length(unique(tag)) == 2) {
-    dic <- c("AUC: Area Under the Curve",
-             "PPV: Precision = Positive Predictive Value",
-             "TPR: Sensitivity = Recall = Hit rate = True Positive Rate",
-             "TNR: Specificity = Selectivity = True Negative Rate")
-    ROC <- pROC::roc(tag, score, ci=T)
-    AUC <- signif(ROC$auc, 5)
-    PPV <- signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[1,2]), 5)
-    TPR <- signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]), 5)
-    TNR <- signif(conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]), 5)
-    metrics[["AUC"]] <- PPV
-    metrics[["precision"]] <- PPV
-    metrics[["recall"]] <- TPR
-    metrics[["specificity"]] <- TNR
-    metrics[["dictionary"]] <- dic
+  if (type == "Classification") {
+    new <- ifelse(score >= thresh, 1, 0)
+    conf_mat <- table(Real = c(tag, 0, 1) , Pred = c(new, 0, 1))
+    total <- sum(conf_mat)
+    trues <- sum(diag(conf_mat))
+    falses <- total - trues
     
-    if (plot) {
+    ACC <- signif(trues / total, 5)
+    metrics[["accuracy"]] <- ACC
+    
+    # For Binaries
+    if (length(unique(tag)) == 2) {
+      dic <- c("AUC: Area Under the Curve",
+               "PPV: Precision = Positive Predictive Value",
+               "TPR: Sensitivity = Recall = Hit rate = True Positive Rate",
+               "TNR: Specificity = Selectivity = True Negative Rate",
+               "Logloss (Error): Logarithmic loss")
+      ROC <- pROC::roc(tag, score, ci=T)
+      metrics[["AUC"]] <- signif(ROC$auc, 5)
+      metrics[["precision"]] <- signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[1,2]), 5)
+      metrics[["recall"]] <- signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]), 5)
+      metrics[["specificity"]] <- signif(conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]), 5)
+      metrics[["logloss"]] <- loglossBinary(tag, score)
+      metrics[["dictionary"]] <- dic
       
-      cm <- data.frame(conf_mat) %>%
-        mutate(diag = ifelse(Real == Pred, TRUE, FALSE))
-      plot_cf <- ggplot(cm, aes(
-        x = reorder(as.character(Real), diag), 
-        y = as.character(Pred), 
-        size = as.numeric(Freq), colour = diag,
-        label = formatNum(Freq, 0))) +
-        scale_size(range = c(1, size*max(cm$Freq))) +
-        geom_point(alpha = 0.9) + theme_minimal() +
-        geom_text(colour = "white", size = 3) +
-        guides(fill=FALSE, size=FALSE, colour=FALSE) +
-        labs(x="Real values", y="Predicted values",
-             title = "Confusion Matrix")
-      metrics[["plot_ConfMat"]] <- plot_cf
-      plot(plot_cf)
+      if (plot) {
+        cm <- data.frame(conf_mat) %>%
+          mutate(diag = ifelse(Real == Pred, TRUE, FALSE))
+        plot_cf <- ggplot(cm, aes(
+          x = reorder(as.character(Real), diag), 
+          y = as.character(Pred), 
+          size = as.numeric(Freq), colour = diag,
+          label = formatNum(Freq, 0))) +
+          scale_size(range = c(1, size*max(cm$Freq))) +
+          geom_point(alpha = 0.9) + theme_minimal() +
+          geom_text(colour = "white", size = 3) +
+          guides(fill=FALSE, size=FALSE, colour=FALSE) +
+          labs(x="Real values", y="Predicted values",
+               title = "Confusion Matrix")
+        metrics[["plot_ConfMat"]] <- plot_cf
+        plot(plot_cf)
+      }
+      
+      if (roc) {
+        plot_roc <- invisible(mplot_roc(tag, score))
+        metrics[["plot_ROC"]] <- plot_roc
+        plot(plot_roc)
+      }
+      
     }
-    if (roc) {
-      plot_roc <- invisible(mplot_roc(tag, score))
-      metrics[["plot_ROC"]] <- plot_roc
-      plot(plot_roc)
-    }
+    metrics[["confusion_matrix"]] <- conf_mat
   }
-  metrics[["confusion_matrix"]] <- conf_mat
+  
+  if (type == "Regression") {
+    # Needs further improvements
+    metrics[["errors"]] <- errors(tag, score)
+  }
   return(metrics)
 }

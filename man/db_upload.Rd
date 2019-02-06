@@ -2,7 +2,7 @@
 % Please edit documentation in R/dropbox.R
 \name{db_upload}
 \alias{db_upload}
-\title{Download Dropbox File by File's Name}
+\title{Upload Dropbox File}
 \usage{
 db_upload(filename, dir, delete_file = FALSE, token_dir = NA,
   token_name = "token_pers.rds")
