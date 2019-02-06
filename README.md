@@ -28,6 +28,12 @@ lares::updateLares(local=T) # Personal and local files, not necessarily deployed
 
 - DataScience+: [Plot timelines with Gantt charts](https://datascienceplus.com/visualize-your-cvs-timeline-with-r-gantt-style/)
 
+## What else is there?
+
+You can type `lares::` in **RStudio** and you will see all the functions that are available within the package. Also, there is the `?` helper to get a short explanation on each function and its parameters. If you want to check all the documentation, run `help(package = lares)`.
+
+### These are the function the library currently have...
+`r lsf.str("package:lares")`
 
 ## Getting help
 

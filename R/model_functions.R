@@ -594,3 +594,77 @@ h2o_predict_model <- function(df, model){
   scores <- predict(model, as.h2o(df))
   return(scores)
 }
+
+
+####################################################################
+#' Classification Model Metrics
+#' 
+#' This function lets the user get a confusion matrix and accuracy, and 
+#' for for binary classification models: AUC, Precision, Sensitivity, and
+#' Specificity.
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param thresh Numeric. Value which splits the results for the 
+#' confusion matrix.
+#' @param plot Boolean. Plot a Confusion Matrix graph?
+#' @param size Numeric. Change bubble's size if needed
+#' @param roc Boolean. Plot ROC Curce with AUC?
+#' @export
+mmetrics <- function(tag, score, thresh = 0.5, plot = FALSE, size = 2.5, roc = FALSE){
+  
+  metrics <- list()
+  
+  # Confusion Matrix
+  new <- ifelse(score >= thresh, 1, 0)
+  conf_mat <- table(Real = c(tag, 0, 1) , Pred = c(new, 0, 1))
+  total <- sum(conf_mat)
+  trues <- sum(diag(conf_mat))
+  falses <- total - trues
+  
+  ACC <- signif(trues / total, 5)
+  metrics[["accuracy"]] <- ACC
+  
+  if (length(unique(tag)) == 2) {
+    dic <- c("AUC: Area Under the Curve",
+             "PPV: Precision = Positive Predictive Value",
+             "TPR: Sensitivity = Recall = Hit rate = True Positive Rate",
+             "TNR: Specificity = Selectivity = True Negative Rate")
+    ROC <- pROC::roc(tag, score, ci=T)
+    AUC <- signif(ROC$auc, 5)
+    PPV <- signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[1,2]), 5)
+    TPR <- signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]), 5)
+    TNR <- signif(conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]), 5)
+    metrics[["AUC"]] <- PPV
+    metrics[["precision"]] <- PPV
+    metrics[["recall"]] <- TPR
+    metrics[["specificity"]] <- TNR
+    metrics[["dictionary"]] <- dic
+    
+    if (plot) {
+      
+      cm <- data.frame(conf_mat) %>%
+        mutate(diag = ifelse(Real == Pred, TRUE, FALSE))
+      plot_cf <- ggplot(cm, aes(
+        x = reorder(as.character(Real), diag), 
+        y = as.character(Pred), 
+        size = as.numeric(Freq), colour = diag,
+        label = formatNum(Freq, 0))) +
+        scale_size(range = c(1, size*max(cm$Freq))) +
+        geom_point(alpha = 0.9) + theme_minimal() +
+        geom_text(colour = "white", size = 3) +
+        guides(fill=FALSE, size=FALSE, colour=FALSE) +
+        labs(x="Real values", y="Predicted values",
+             title = "Confusion Matrix")
+      metrics[["plot_ConfMat"]] <- plot_cf
+      plot(plot_cf)
+    }
+    if (roc) {
+      plot_roc <- invisible(mplot_roc(tag, score))
+      metrics[["plot_ROC"]] <- plot_roc
+      plot(plot_roc)
+    }
+  }
+  metrics[["confusion_matrix"]] <- conf_mat
+  return(metrics)
+}
