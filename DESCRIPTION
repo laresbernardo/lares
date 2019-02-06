@@ -1,10 +1,10 @@
 Package: lares
 Type: Package
-Title: Analytics, Visualization & Machine Learning Library
+Title: Analytics, Data Mining & Machine Learning
 Version: 4.4
 Author: Bernardo Lares
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
-Description: R Library for Analytics, Visualization, Data Mining and Machine Learning tasks.
+Description: R library for better/faster analytics, visualization, data mining, and machine learning tasks.
 License: AGPL-3
 Encoding: UTF-8
 LazyData: true
@@ -50,7 +50,6 @@ Imports:
 Suggests:
     anytime,
     caret,
-    cronR,
     DALEX,
     googleAnalyticsR,
     gtrendsR,
@@ -58,8 +57,6 @@ Suggests:
     shiny,
     shinydashboard,
     VIM 
-Remotes: ropenscilabs/opencv
 URL: https://github.com/laresbernardo/lares
 BugReports: https://github.com/laresbernardo/lares/issues
 RoxygenNote: 6.1.0
-VignetteBuilder: knitr

@@ -6,7 +6,7 @@
 \alias{lares-package}
 \title{lares: R library for Analytics, Visualization & Machine Learning Tasks}
 \description{
-R Library for Analytics, Visualization, Data Mining and Machine Learning tasks.
+R library for better/faster analytics, visualization, data mining, and machine learning tasks.
 }
 \seealso{
 Useful links:

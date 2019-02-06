@@ -1,9 +1,9 @@
-# lares <img src="/inst/docs/lares_logo.png" width = 150 align = "right" />
+# lares <img src="https://i.imgur.com/X8vtJS6.png" width = 150 align = "right" />
 ### R Package for Analytics and Machine Learning
 [![Build Status](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares) [![saythanks](https://img.shields.io/badge/say-thanks-1EAEDB.svg)](https://saythanks.io/to/laresbernardo)
 ----
 
-`lares` is a personal library used to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. It also simplifies the installation process of libraries, distribution, and reproducible research. You are most welcome to install, use, and comment on any of its code and functionalities. Feel free to contact me and/or add me on [Linkedin](https://www.linkedin.com/in/laresbernardo/)! Do let me know where did you got my contact from ;)
+`lares` is a library used to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. It also simplifies the installation process of libraries, distribution, and reproducible research. You are most welcome to install, use, and comment on any of its code and functionalities. Feel free to contact me and/or add me on [Linkedin](https://www.linkedin.com/in/laresbernardo/)! Do let me know where did you got my contact from ;)
 
 ## Install the package
 
