@@ -7,12 +7,14 @@
 
 ## Install the package
 
-```devtools::install_github("laresbernardo/lares")```
+```{r}
+devtools::install_github("laresbernardo/lares")
+```
   
 I currently don't have planned to post `lares` library to CRAN yet, but who knows what might happen!
 
 ### Update the package
-```
+```{r}
 lares::updateLares() # From Github repository (Bitbucket discontinued)
 lares::updateLares(local=T) # Personal and local files, not necessarily deployed
 ```
@@ -30,13 +32,8 @@ lares::updateLares(local=T) # Personal and local files, not necessarily deployed
 
 ## What else is there?
 
-You can type `lares::` in **RStudio** and you will see all the functions that are available within the package. If in doubt, you can use the `?` function (i.e. `?lares::function`) and the **Help** tab will display a short explanation on each function and its parameters. If you want to check all the documentation, simply run `help(package = lares)`.
+You can type `lares::` in **RStudio** and you will see a pop-up with all the functions that are currently available within the package. If in doubt, you can use the `?` function (i.e. `?lares::function`) and the **Help** tab will display a short explanation on each function and its parameters. If you want to check all the documentation, simply run `help(package = lares)`.
 
-### These are the function the library currently have...
-```{r}
-lsf.str("package:lares")
-```
-
-## Getting help
+### Getting further help
 
 If you encounter a clear bug, please share with us a reproducible example on [Github](https://github.com/laresbernardo/lares/issues) and I'll take care of it. For inquiries, and other matters, you can [email me](mailto:laresbernardo@gmail.com "email me") directly.
