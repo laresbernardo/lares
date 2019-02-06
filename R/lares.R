@@ -35,7 +35,8 @@
 #' @import rlist
 #' @importFrom rtweet create_token search_tweets
 #' @importFrom scales percent comma
-#' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict reorder start
+#' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
+#' reorder start kmeans var
 #' @importFrom stringr str_locate_all
 #' @import SnowballC 
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
@@ -61,7 +62,7 @@ if(getRversion() >= "2.15.1")
       "contacts_profile_token","contacts_profile_url","contacts_vid","content","size",
       "content_transformer","createdate","credit","cuts","date_of_birth","days","dealId",
       "dealstage","df_status","form_submissions","gather","ceiling_date","trim",
-      "get_questionnaire","get_typeforms","endfx","to","Real","Pred","Freq",
+      "get_questionnaire","get_typeforms","endfx","to","Real","Pred","Freq","force_n",
       "hasMore","has_more","identification_date","identity_profiles","ggplotly",
       "image_darknet_detect","image_darknet_model","image_info","image_read","index",
       "is_contact","key","label","label_colours","label_hjust","max_score","merge_audits",
@@ -78,4 +79,4 @@ if(getRversion() >= "2.15.1")
       "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","wordcloud","x","y",
       "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos",
       "name","where","is.Date","is.POSIXct","is.POSIXlt","deciles","gg_pos","colour",
-      "..level.."))
+      "..level..","cluster"))
