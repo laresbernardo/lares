@@ -20,10 +20,14 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = FALSE,
   results <- list()
   
   # There should not be NAs
-  if (drop_na) { df <- df %>% removenarows(all=FALSE) }
   if (sum(is.na(df)) > 0) {
-    stop(paste("There should be no NAs in your dataframe!",
-               "You can manually fix it or set drop_na to TRUE to remove these rows.", sep="\n"))
+    if (drop_na) { 
+      df <- df %>% removenarows(all=FALSE) 
+      message("Automatically removed rows with NA. To overtwrite: fix NAs and set drop_na = FALSE")
+    } else {
+      stop(paste("There should be no NAs in your dataframe!",
+                 "You can manually fix it or set drop_na to TRUE to remove these rows.", sep="\n")) 
+    }
   }
   
   # Only numerical values
