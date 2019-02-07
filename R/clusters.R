@@ -73,6 +73,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = FALSE,
     fit <- kmeans(df, k)
     # Append cluster assignment
     df <- data.frame(df, cluster = as.factor(fit$cluster))
+    results[["df"]] <- df
     # Get cluster means
     clusters <- df %>% 
       group_by(cluster) %>% 
