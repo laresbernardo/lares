@@ -15,10 +15,11 @@
 #' two variables by name or column position.
 #' @param seed Numeric. Seed for reproducibility
 #' @export
-clusterKmeans <- function(df, k = NA, limit = 20, drop_na = FALSE, 
+clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE, 
                           ohse = TRUE, norm = TRUE, comb = c(1,2),
                           seed = 123){
   
+  options(warn=-1)
   results <- list()
   
   # There should not be NAs
@@ -84,12 +85,19 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = FALSE,
     results[["clusters"]] <- clusters
     # Plot clusters
     axisnames <- colnames(df[,comb])
-    centers <- clusters[,-1][,comb]
+    centers <- data.frame(
+      cluster = clusters$cluster, 
+      clusters[,-1][,comb],
+      size = clusters$n)
     clusters_plot <- ggplot(df, aes(
       x=df[,comb[1]], y=df[,comb[2]], colour = df$cluster)) + 
-      geom_point() + theme_minimal() +
-      geom_point(data=centers, aes_string(x=colnames(centers)[1], y=colnames(centers)[2]), 
-                 shape=18, colour="black") +
+      geom_point() + theme_minimal() + guides(size = FALSE) +
+      geom_text(data = centers, 
+                aes_string(x = colnames(centers)[2], 
+                           y = colnames(centers)[3], 
+                           label = "cluster", 
+                           size = "size"), 
+                colour = "black", fontface = "bold") +
       labs(title = "Clusters Plot",
            subtitle = paste("Number of clusters selected:", k),
            x = axisnames[1], y = axisnames[2],

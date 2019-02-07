@@ -4,7 +4,7 @@
 \alias{clusterKmeans}
 \title{K-Means Clustering Automated}
 \usage{
-clusterKmeans(df, k = NA, limit = 20, drop_na = FALSE, ohse = TRUE,
+clusterKmeans(df, k = NA, limit = 20, drop_na = TRUE, ohse = TRUE,
   norm = TRUE, comb = c(1, 2), seed = 123)
 }
 \arguments{
