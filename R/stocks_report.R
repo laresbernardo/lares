@@ -588,7 +588,7 @@ stocks_html <- function(results) {
 #' 
 #' This function lets the user create his portfolio's full report with plots and email sent
 #' 
-#' @param wd Character. Where do you wish to save the plots?
+#' @param wd Character. Where do you wish to save the results (plots and report)?
 #' @param cash_fix Numeric. If you wish to algebraically sum a value to your cash balance
 #' @param mail Boolean Do you wish to send the email?
 #' @param creds Character. Credential's user (see get_credentials) for sending mail
@@ -597,14 +597,19 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   
   options(warn=-1)
   
+  # Setting up working directory
   current_wd <- getwd()
-  temp <- tempdir()
+  if (dir.exists(wd)) {
+    temp <- wd
+  } else {
+    temp <- tempdir() 
+  }
   setwd(temp)
   
   # Set token for Sendgrid credentials:
   token_dir <- case_when(
     wd == "personal" ~ "~/Dropbox (Personal)/Documentos/Docs/Data",
-    wd == "matrix" ~ "~/creds",
+    wd %in% c("matrix","server") ~ "~/creds",
     TRUE ~ as.character(creds))
   
   # Data extraction and processing
@@ -623,10 +628,12 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
              creds = token_dir,
              quite = FALSE)
   }
+  
+  setwd(current_wd)
+  
   # Clean everything up and delete files created
   unlink(temp, recursive = FALSE)
   graphics.off()
-  setwd(current_wd)
   rm(list = ls())
 }
 
