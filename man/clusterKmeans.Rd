@@ -4,21 +4,23 @@
 \alias{clusterKmeans}
 \title{K-Means Clustering Automated}
 \usage{
-clusterKmeans(df, force_n = NA, limit = 20, ohse = TRUE,
+clusterKmeans(df, k = NA, limit = 20, ohse = TRUE, norm = TRUE,
   comb = c(1, 2))
 }
 \arguments{
 \item{df}{Dataframe}
 
-\item{force_n}{Integer. Number of clusters}
+\item{k}{Integer. Number of clusters}
 
 \item{limit}{Integer. How many clusters should be considered?}
 
 \item{ohse}{Boolean. Do you wish to automatically run one hot
 encoding to non-numerical columns?}
 
-\item{comb}{Vector. Which columns do you wish to plot? Select which 2
-by name or position.}
+\item{norm}{Boolean. Should the data be normalized?}
+
+\item{comb}{Vector. Which columns do you wish to plot? Select which
+two variables by name or column position.}
 }
 \description{
 This function lets the user cluster a whole data.frame automatically.
