@@ -7,15 +7,24 @@
 #' @param df Dataframe
 #' @param k Integer. Number of clusters
 #' @param limit Integer. How many clusters should be considered?
+#' @param drop_na Boolean. Should NA rows be removed?
 #' @param ohse Boolean. Do you wish to automatically run one hot
 #' encoding to non-numerical columns?
 #' @param norm Boolean. Should the data be normalized?
 #' @param comb Vector. Which columns do you wish to plot? Select which
 #' two variables by name or column position.
 #' @export
-clusterKmeans <- function(df, k = NA, limit = 20, ohse = TRUE, norm = TRUE, comb = c(1,2)){
+clusterKmeans <- function(df, k = NA, limit = 20, drop_na = FALSE, 
+                          ohse = TRUE, norm = TRUE, comb = c(1,2)){
   
   results <- list()
+  
+  # There should not be NAs
+  if (drop_na) { df <- df %>% removenarows(all=FALSE) }
+  if (sum(is.na(df)) > 0) {
+    stop(paste("There should be no NAs in your dataframe!",
+               "You can manually fix it or set drop_na to TRUE to remove these rows.", sep="\n"))
+  }
   
   # Only numerical values
   nums <- df_str(df, return = "names", plot = F)$nums
@@ -76,8 +85,8 @@ clusterKmeans <- function(df, k = NA, limit = 20, ohse = TRUE, norm = TRUE, comb
                  shape=18, colour="black") +
       labs(title = "Clusters Plot",
            subtitle = paste("Number of clusters selected:", k),
-           x = axisnames[2], y = axisnames[1],
-           colour = "Cluster")
+           x = axisnames[1], y = axisnames[2],
+           colour = "Cluster") + coord_flip()
     results[["clusters_plot"]] <- clusters_plot
   }
   return(results)
