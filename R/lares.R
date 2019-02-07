@@ -79,4 +79,4 @@ if(getRversion() >= "2.15.1")
       "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","wordcloud","x","y",
       "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos",
       "name","where","is.Date","is.POSIXct","is.POSIXlt","deciles","gg_pos","colour",
-      "..level..","cluster"))
+      "..level..","cluster","drop_na"))
