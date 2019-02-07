@@ -5,7 +5,7 @@
 \title{K-Means Clustering Automated}
 \usage{
 clusterKmeans(df, k = NA, limit = 20, drop_na = FALSE, ohse = TRUE,
-  norm = TRUE, comb = c(1, 2))
+  norm = TRUE, comb = c(1, 2), seed = 123)
 }
 \arguments{
 \item{df}{Dataframe}
@@ -23,6 +23,8 @@ encoding to non-numerical columns?}
 
 \item{comb}{Vector. Which columns do you wish to plot? Select which
 two variables by name or column position.}
+
+\item{seed}{Numeric. Seed for reproducibility}
 }
 \description{
 This function lets the user cluster a whole data.frame automatically.

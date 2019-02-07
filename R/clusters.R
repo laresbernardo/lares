@@ -13,9 +13,11 @@
 #' @param norm Boolean. Should the data be normalized?
 #' @param comb Vector. Which columns do you wish to plot? Select which
 #' two variables by name or column position.
+#' @param seed Numeric. Seed for reproducibility
 #' @export
 clusterKmeans <- function(df, k = NA, limit = 20, drop_na = FALSE, 
-                          ohse = TRUE, norm = TRUE, comb = c(1,2)){
+                          ohse = TRUE, norm = TRUE, comb = c(1,2),
+                          seed = 123){
   
   results <- list()
   
@@ -69,7 +71,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = FALSE,
     results[["nclusters_plot"]] <- nclusters_plot
     
     # K-Means Cluster Analysis
-    set.seed(21132)
+    set.seed(seed)
     fit <- kmeans(df, k)
     # Append cluster assignment
     df <- data.frame(df, cluster = as.factor(fit$cluster))

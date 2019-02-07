@@ -8,7 +8,7 @@ stocks_report(wd = "personal", cash_fix = 0, mail = TRUE,
   creds = NA)
 }
 \arguments{
-\item{wd}{Character. Where do you wish to save the plots?}
+\item{wd}{Character. Where do you wish to save the results (plots and report)?}
 
 \item{cash_fix}{Numeric. If you wish to algebraically sum a value to your cash balance}
 
