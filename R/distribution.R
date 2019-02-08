@@ -241,9 +241,10 @@ distr <- function(data, ...,
                   check_overlap = TRUE, 
                   position = position_dodge(0.9), 
                   size=3, vjust = -0.15) +
-        labs(x = "", y = "Counter", fill = targets_name, caption = caption) + 
+        labs(x = "", y = "Counter [#]", fill = targets_name, caption = caption) + 
         theme_minimal() + theme(legend.position = "top") + guides(colour = FALSE) +
-        theme(axis.title.y = element_text(size = rel(0.8), angle = 90))
+        theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
+        scale_y_continuous(labels = scales::comma)
       # Give an angle to labels when more than...
       if (length(unique(value)) >= 7) {
         count <- count + theme(axis.text.x = element_text(angle = 45, hjust=1))
@@ -272,7 +273,7 @@ distr <- function(data, ...,
                   position = position_stack(vjust = 0.5)) +
         scale_size(range = c(1.8, 3.5)) +
         theme_minimal() + coord_flip() +
-        labs(x = "Proportions", y = "", fill = targets_name, caption = caption) +
+        labs(x = "Proportions [%]", y = "", fill = targets_name, caption = caption) +
         theme(legend.position = "top") + ylim(0, 1) + guides(colour = FALSE, size = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
         gg_text_customs()

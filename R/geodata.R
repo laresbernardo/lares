@@ -122,3 +122,64 @@ geoStratum <- function(lon, lat, label = NA) {
     message("Stratum not found for those coordinates!")
   }
 }
+
+
+####################################################################
+#' Check, Cross, and Plot Coordinates with Polygons
+#' 
+#' This function checks a series of coordinates and return a join
+#' with the information of each coordinate and its respective grid.
+#' Note that the coords and shapes coordinates MUST have the same 
+#' lon/lat reference system for it to work succesfully.
+#' 
+#' @param coords Dataframe. Dataframe containing at least langitud 
+#' and latitud data
+#' @param shapes SpatialPolygonsDataFrame. 
+#' @param plot Boolean. Return plot with coordinates inside the grid?
+#' @export
+geoGrid <- function(coords, shapes, plot = FALSE) {
+  cols <- colnames(coords)
+  if (sum(grepl("lon|lat", cols)) != 2) {
+    stop("Your coords dataframe must contain longitude and latitude!")
+  }
+  cols[grep("lon",cols)] <- "longitude"
+  cols[grep("lat",cols)] <- "latitude"
+  colnames(coords) <- cols
+  coordinates(coords) <- c("longitude", "latitude")  
+  coords_sample <- head(coordinates(coords))
+  shapes_sample <- head(shapes@polygons[[2]]@Polygons[[1]]@coords)
+  
+  proj4string <- "+proj=utm +units=mm"
+  project(shapes_sample, proj4string)
+  
+  # The coords and shapes coordinates MUST have the same lon/lat reference system
+  proj4string(coords) <- proj4string(shapes)
+  inside.park <- !is.na(over(coords, as(shapes, "SpatialPolygons")))
+  
+  # What fraction of coords are inside a shape?
+  frac <- round(100*mean(inside.park), 2)
+  fracmsg <- paste0("Fraction of coords inside the grid: ", frac,"%")
+  message(fracmsg)
+  cross <- over(coords, shapes)
+  crossed <- which(!is.na(cross[,1]))
+  
+  # Join data and return results
+  results <- data.frame(coords, cross)
+  
+  # Plot map and coordinates
+  if (plot) {
+    plot <- ggplot() + 
+      geom_polygon(data = shapes, aes(x=long, y=lat, group=group), 
+                   colour="black", fill="white", alpha=0)  +
+      geom_point(data = results[crossed,], aes(x=longitude, y=latitude),
+                 colour="deepskyblue2", alpha=0.3) +
+      labs(title = "Coordinates & Grid",
+           subtitle = fracmsg,
+           x = "Longitude", y = "Latitude") +
+      theme_bw()
+    results <- list(
+      results = results,
+      plot = plot)
+  }
+  return(results)
+}
