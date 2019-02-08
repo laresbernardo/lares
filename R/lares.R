@@ -27,7 +27,7 @@
 #' @importFrom quantmod getDividends getSymbols getQuote 
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom rdrop2 drop_auth drop_dir drop_download drop_search drop_upload
-#' @importFrom rgdal project
+#' @importFrom rgdal project readOGR
 #' @import rlist
 #' @importFrom rmarkdown render
 # @importFrom recipes recipe step_num2factor step_meanimpute all_numeric step_modeimpute
@@ -36,7 +36,7 @@
 #' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text 
 #' @importFrom rtweet create_token search_tweets
 #' @importFrom scales percent comma
-#' @importFrom sp over coordinates proj4string proj4string<- coordinates<-
+#' @importFrom sp over coordinates proj4string proj4string<- coordinates<- spTransform
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
 #' reorder start kmeans var
 #' @importFrom stringr str_locate_all
@@ -82,4 +82,4 @@ if(getRversion() >= "2.15.1")
       "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos",
       "name","where","is.Date","is.POSIXct","is.POSIXlt","deciles","gg_pos","colour",
       "..level..","cluster","drop_na","shapes","coords","long","lat","group","longitude",
-      "latitude","as"))
+      "latitude","as","CRS"))

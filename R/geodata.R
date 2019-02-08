@@ -135,9 +135,10 @@ geoStratum <- function(lon, lat, label = NA) {
 #' @param coords Dataframe. Dataframe containing at least langitud 
 #' and latitud data
 #' @param shapes SpatialPolygonsDataFrame. 
+#' @param transform Boolean. Transform and fix coordinates system?
 #' @param plot Boolean. Return plot with coordinates inside the grid?
 #' @export
-geoGrid <- function(coords, shapes, plot = FALSE) {
+geoGrid <- function(coords, shapes, transform = FALSE, plot = FALSE) {
   cols <- colnames(coords)
   if (sum(grepl("lon|lat", cols)) != 2) {
     stop("Your coords dataframe must contain longitude and latitude!")
@@ -146,6 +147,11 @@ geoGrid <- function(coords, shapes, plot = FALSE) {
   cols[grep("lat",cols)] <- "latitude"
   colnames(coords) <- cols
   coordinates(coords) <- c("longitude", "latitude")  
+  
+  if (transform) {
+    shapes <- spTransform(shapes, CRS("+proj=longlat +datum=WGS84"))
+  }
+  
   coords_sample <- head(coordinates(coords))
   shapes_sample <- head(shapes@polygons[[2]]@Polygons[[1]]@coords)
   
@@ -169,17 +175,15 @@ geoGrid <- function(coords, shapes, plot = FALSE) {
   # Plot map and coordinates
   if (plot) {
     plot <- ggplot() + 
-      geom_polygon(data = shapes, aes(x=long, y=lat, group=group), 
-                   colour="black", fill="white", alpha=0)  +
       geom_point(data = results[crossed,], aes(x=longitude, y=latitude),
                  colour="deepskyblue2", alpha=0.3) +
+      geom_polygon(data = shapes, aes(x=long, y=lat, group=group), 
+                   colour="black", fill="white", alpha=0)  +
       labs(title = "Coordinates & Grid",
            subtitle = fracmsg,
            x = "Longitude", y = "Latitude") +
       theme_bw()
-    results <- list(
-      results = results,
-      plot = plot)
+    results <- list(results = results, plot = plot)
   }
   return(results)
 }
