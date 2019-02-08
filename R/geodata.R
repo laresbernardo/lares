@@ -137,8 +137,10 @@ geoStratum <- function(lon, lat, label = NA) {
 #' @param shapes SpatialPolygonsDataFrame. 
 #' @param transform Boolean. Transform and fix coordinates system?
 #' @param plot Boolean. Return plot with coordinates inside the grid?
+#' @param all Boolean. Include all coordinates in plot, i.e. only the 
+#' ones who are inside the grids?
 #' @export
-geoGrid <- function(coords, shapes, transform = FALSE, plot = FALSE) {
+geoGrid <- function(coords, shapes, transform = FALSE, plot = FALSE, all = FALSE) {
   cols <- colnames(coords)
   if (sum(grepl("lon|lat", cols)) != 2) {
     stop("Your coords dataframe must contain longitude and latitude!")
@@ -156,7 +158,7 @@ geoGrid <- function(coords, shapes, transform = FALSE, plot = FALSE) {
   shapes_sample <- head(shapes@polygons[[2]]@Polygons[[1]]@coords)
   
   proj4string <- "+proj=utm +units=mm"
-  project(shapes_sample, proj4string)
+  rgdal::project(shapes_sample, proj4string)
   
   # The coords and shapes coordinates MUST have the same lon/lat reference system
   proj4string(coords) <- proj4string(shapes)
@@ -174,8 +176,13 @@ geoGrid <- function(coords, shapes, transform = FALSE, plot = FALSE) {
   
   # Plot map and coordinates
   if (plot) {
+    if (!all) {
+      toplot <- results[crossed,]
+    } else {
+      toplot <- results
+    }
     plot <- ggplot() + 
-      geom_point(data = results[crossed,], aes(x=longitude, y=latitude),
+      geom_point(data = toplot, aes(x=longitude, y=latitude),
                  colour="deepskyblue2", alpha=0.3) +
       geom_polygon(data = shapes, aes(x=long, y=lat, group=group), 
                    colour="black", fill="white", alpha=0)  +

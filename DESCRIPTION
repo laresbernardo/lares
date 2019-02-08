@@ -33,7 +33,6 @@ Imports:
     RColorBrewer,
     rdrop2,
     reshape2,
-    rgdal,
     rlang,
     rlist,
     rJava,
