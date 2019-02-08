@@ -36,7 +36,7 @@
 #' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text 
 #' @importFrom rtweet create_token search_tweets
 #' @importFrom scales percent comma
-#' @importFrom sp over coordinates proj4string<- coordinates<-
+#' @importFrom sp over coordinates proj4string proj4string<- coordinates<-
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
 #' reorder start kmeans var
 #' @importFrom stringr str_locate_all
