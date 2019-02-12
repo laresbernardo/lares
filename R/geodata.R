@@ -213,13 +213,13 @@ plotMap <- function(map, fix_coords = FALSE) {
   #require(rgdal)
   if (!class(map)[1] == "SpatialPolygonsDataFrame") {
     message("Importing shapefile...")
-    mapas <- readOGR(dsn = file.path(map))
+    map <- readOGR(dsn = file.path(map))
   }
   if (fix_coords) {
     message("Fixing coordinates format...")
-    mapas <- spTransform(map, CRS("+proj=longlat +datum=WGS84")) 
+    map <- spTransform(map, CRS("+proj=longlat +datum=WGS84")) 
   }
-  plot <- ggplot() + geom_polygon(data = mapas, aes(
+  plot <- ggplot() + geom_polygon(data = map, aes(
     x = long, y = lat, group = group), 
     colour = "black", fill = "white", alpha = 0.1) +
     labs(x = "Longitude", y = "Latitude") +
