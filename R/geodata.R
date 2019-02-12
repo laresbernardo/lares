@@ -227,3 +227,21 @@ plotMap <- function(map, fix_coords = FALSE) {
     theme_minimal()
   return(plot)
 }
+
+
+####################################################################
+#' Convert from degrees to numeric coordinates
+#' 
+#' This function converts degrees (DMS) coordinates into numerical. 
+#' Note that the sign (S or W) should be assigned manually if needed.
+#' 
+#' @param coord Character vector. Cooridnate in format c("DD MM SS")
+#' @param sep Character. Separator
+#' @export
+deg2num <- function(coord, sep=" ") {
+  z <- data.frame(stringr::str_split_fixed(as.character(coord), sep, 3)) %>% 
+    mutate_all(as.numeric)
+  colnames(z) <- c("days","minutes","seconds")
+    mutate(num = days + minutes/60 + seconds/3600)
+  return(z$num)
+}
