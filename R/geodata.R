@@ -157,10 +157,10 @@ geoGrid <- function(coords, shapes, fix_coords = FALSE, plot = FALSE, all = FALS
   coords_sample <- head(coordinates(coords))
   shapes_sample <- head(shapes@polygons[[2]]@Polygons[[1]]@coords)
   
-  proj4string <- "+proj=utm +units=mm"
-  if (!"rgdal" %in% installed.packages()) {
-    install.packages('rgdal')
+  if (!"rgdal" %in% (.packages())){
+    stop("The following library should be loaded. Please run: library(rgdal)")
   }
+  proj4string <- "+proj=utm +units=mm"
   project(shapes_sample, proj4string)
   
   # The coords and shapes coordinates MUST have the same lon/lat reference system
@@ -209,8 +209,9 @@ geoGrid <- function(coords, shapes, fix_coords = FALSE, plot = FALSE, all = FALS
 #' @param fix_coords Boolean. Transform and fix coordinates system?
 #' @export
 plotMap <- function(map, fix_coords = FALSE) {
-  #require(sp)
-  #require(rgdal)
+  if (!"rgdal" %in% (.packages())){
+    stop("The following library should be loaded. Please run: library(rgdal)")
+  }
   if (!class(map)[1] == "SpatialPolygonsDataFrame") {
     message("Importing shapefile...")
     map <- readOGR(dsn = file.path(map))
