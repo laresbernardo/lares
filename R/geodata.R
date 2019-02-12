@@ -135,12 +135,12 @@ geoStratum <- function(lon, lat, label = NA) {
 #' @param coords Dataframe. Dataframe containing at least langitud 
 #' and latitud data
 #' @param shapes SpatialPolygonsDataFrame. 
-#' @param transform Boolean. Transform and fix coordinates system?
+#' @param fix_coords Boolean. Transform and fix coordinates system?
 #' @param plot Boolean. Return plot with coordinates inside the grid?
 #' @param all Boolean. Include all coordinates in plot, i.e. only the 
 #' ones who are inside the grids?
 #' @export
-geoGrid <- function(coords, shapes, transform = FALSE, plot = FALSE, all = FALSE) {
+geoGrid <- function(coords, shapes, fix_coords = FALSE, plot = FALSE, all = FALSE) {
   cols <- colnames(coords)
   if (sum(grepl("lon|lat", cols)) != 2) {
     stop("Your coords dataframe must contain longitude and latitude!")
@@ -150,7 +150,7 @@ geoGrid <- function(coords, shapes, transform = FALSE, plot = FALSE, all = FALSE
   colnames(coords) <- cols
   coordinates(coords) <- c("longitude", "latitude")  
   
-  if (transform) {
+  if (fix_coords) {
     shapes <- spTransform(shapes, CRS("+proj=longlat +datum=WGS84"))
   }
   
@@ -196,4 +196,33 @@ geoGrid <- function(coords, shapes, transform = FALSE, plot = FALSE, all = FALSE
     results <- list(results = results, plot = plot)
   }
   return(results)
+}
+
+
+####################################################################
+#' Plot Map or Shapefile
+#' 
+#' This function returns a simple plot from a SpatialPolygonsDataFrame
+#' imported or a .shp file
+#' 
+#' @param map SpatialPolygonsDataFrame or .shp directory
+#' @param fix_coords Boolean. Transform and fix coordinates system?
+#' @export
+plotMap <- function(map, fix_coords = FALSE) {
+  #require(sp)
+  #require(rgdal)
+  if (!class(map)[1] == "SpatialPolygonsDataFrame") {
+    message("Importing shapefile...")
+    map <- readOGR(dsn = file.path(shp))
+  }
+  if (fix_coords) {
+    message("Fixing coordinates format...")
+    mapas <- spTransform(mapas, CRS("+proj=longlat +datum=WGS84")) 
+  }
+  plot <- ggplot() + geom_polygon(data = mapas, aes(
+    x = long, y = lat, group = group), 
+    colour = "black", fill = "white", alpha = 0.1) +
+    labs(x = "Longitude", y = "Latitude") +
+    theme_minimal()
+  return(plot)
 }

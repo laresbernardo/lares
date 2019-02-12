@@ -54,6 +54,7 @@ Suggests:
     DALEX,
     googleAnalyticsR,
     gtrendsR,
+    highcharter,
     plotly,
     shiny,
     shinydashboard,
