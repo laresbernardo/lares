@@ -158,7 +158,10 @@ geoGrid <- function(coords, shapes, transform = FALSE, plot = FALSE, all = FALSE
   shapes_sample <- head(shapes@polygons[[2]]@Polygons[[1]]@coords)
   
   proj4string <- "+proj=utm +units=mm"
-  rgdal::project(shapes_sample, proj4string)
+  if (!"rgdal" %in% installed.packages()) {
+    install.packages('rgdal')
+  }
+  project(shapes_sample, proj4string)
   
   # The coords and shapes coordinates MUST have the same lon/lat reference system
   proj4string(coords) <- proj4string(shapes)
