@@ -81,4 +81,4 @@ if(getRversion() >= "2.15.1")
       "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos",
       "name","where","is.Date","is.POSIXct","is.POSIXlt","deciles","gg_pos","colour",
       "..level..","cluster","drop_na","shapes","coords","long","lat","group","longitude",
-      "latitude","as","CRS","project","readOGR","shp","minutes","seconds"))
+      "latitude","as","CRS","project","readOGR","shp","minutes","seconds","Volume"))
