@@ -61,4 +61,4 @@ Suggests:
     VIM 
 URL: https://github.com/laresbernardo/lares
 BugReports: https://github.com/laresbernardo/lares/issues
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
