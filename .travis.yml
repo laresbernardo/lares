@@ -5,4 +5,4 @@ addons:
   apt:
     packages:
       - libudunits2-dev
-      - libgdal1i
+      - libgdal-dev
