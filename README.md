@@ -30,6 +30,8 @@ lares::updateLares(local=T) # Personal and local files, not necessarily deployed
 
 - DataScience+: [Plot timelines with Gantt charts](https://datascienceplus.com/visualize-your-cvs-timeline-with-r-gantt-style/)
 
+- RMarkdown: [Frequencies, Distributions, and Variable Correlation](http://rpubs.com/laresbernardo/freqs-distr-corr_var)
+
 ## What else is there?
 
 You can type `lares::` in **RStudio** and you will see a pop-up with all the functions that are currently available within the package. If in doubt, you can use the `?` function (i.e. `?lares::function`) and the **Help** tab will display a short explanation on each function and its parameters. If you want to check all the documentation, simply run `help(package = lares)`.
