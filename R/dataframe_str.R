@@ -16,9 +16,7 @@ df_str <- function (df,
                     plot = TRUE, 
                     subtitle = ""){
   
-  # require(dplyr)
-  # require(ggplot2)
-  
+  options(warn=-1)
   df <- data.frame(df)
   
   names <- list(
