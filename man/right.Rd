@@ -4,7 +4,7 @@
 \alias{right}
 \title{Right: Last n characters}
 \usage{
-right(string, n)
+right(string, n = 1)
 }
 \arguments{
 \item{string}{String or Vector}

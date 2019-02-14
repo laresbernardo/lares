@@ -4,7 +4,7 @@
 \alias{left}
 \title{Left: First n characters}
 \usage{
-left(string, n)
+left(string, n = 1)
 }
 \arguments{
 \item{string}{String or Vector}

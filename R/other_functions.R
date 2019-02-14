@@ -893,8 +893,9 @@ statusbar <- function (run, max.run, percent.max = 40L, info = run){
 #' @param string String or Vector
 #' @param n Integer. How many characters from right to left?
 #' @export
-right <- function(string, n){
-  r <- substr(x, nchar(x) - n + 1, nchar(x))
+right <- function(string, n = 1){
+  string <- as.character(string)
+  r <- substr(string, nchar(string) - n + 1, nchar(string))
   return(r)
 }
 
@@ -908,8 +909,9 @@ right <- function(string, n){
 #' @param string String or Vector
 #' @param n Integer. How many characters from left to right?
 #' @export
-left <- function(string, n){
-  l <- substr(x, 1, n)
+left <- function(string, n = 1){
+  string <- as.character(string)
+  l <- substr(string, 1, n)
   return(l)
 }
 

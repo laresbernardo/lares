@@ -44,15 +44,21 @@ ohse <- function(df,
   
   # Create features out of date/time variables
   if (dates == TRUE | holidays == TRUE | !is.na(currency_pair)) {
-    df_dates <- date_feats(df, 
-                           keep_originals = TRUE,
-                           features = dates,
-                           holidays = holidays, 
-                           country = country, 
-                           currency_pair = currency_pair, 
-                           summary = summary)
-    if (ncol(df_dates) != ncol(df)) {
-      df <- left_join(df, df_dates, "date") 
+    times <- df_str(df, return = "names", plot = F)$time
+    if (length(times) <= 1) {
+      df_dates <- date_feats(df, 
+                             keep_originals = TRUE,
+                             features = dates,
+                             holidays = holidays, 
+                             country = country, 
+                             currency_pair = currency_pair, 
+                             summary = summary)
+      
+      if (ncol(df_dates) != ncol(df)) {
+        df <- df %>% left_join(df_dates, by = as.character(times[1]))
+      } 
+    } else {
+      message("Can't join more than one date feature yet!")
     }
   }
   
