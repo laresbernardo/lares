@@ -23,10 +23,6 @@ mplot_density <- function(tag,
                           subdir = NA,
                           file_name = "viz_distribution.png") {
   
-  # require(ggplot2)
-  # require(gridExtra)
-  # require(scales)
-  
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
     stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
@@ -151,8 +147,6 @@ mplot_importance <- function(var,
                              subdir = NA, 
                              file_name = "viz_importance.png") {
   
-  # require(ggplot2)
-  # require(gridExtra)
   options(warn=-1)
   
   if (length(var) != length(imp)) {
@@ -764,11 +758,7 @@ mplot_full <- function(tag,
                        save = FALSE, 
                        subdir = NA,
                        file_name = "viz_full.png") {
-  
-  # require(ggplot2)
-  # require(gridExtra)
-  # require(dplyr)
-  
+
   options(warn=-1)
   
   if (length(tag) != length(score)) {

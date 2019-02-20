@@ -41,6 +41,7 @@ distr <- function(data, ...,
   
   options(scipen=999)
   
+  data <- data.frame(data)
   vars <- quos(...)
   
   # Validate if we can continue with given data:

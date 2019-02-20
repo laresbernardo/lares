@@ -564,7 +564,6 @@ stocks_html <- function(results) {
                  portf_stocks_histchange = results[[3]],
                  portf_distribution = results[[4]],
                  portfolio_perf = results[[5]])
-  
   invisible(file.copy(
     from = system.file("docs", "stocksReport.Rmd", package = "lares"),
     to = dir, 
@@ -597,7 +596,7 @@ stocks_html <- function(results) {
 stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA) {
   
   options(warn=-1)
-  
+
   # Setting up working directory
   current_wd <- getwd()
   if (dir.exists(wd)) {
