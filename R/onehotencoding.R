@@ -55,7 +55,7 @@ ohse <- function(df,
                              summary = summary)
       
       if (ncol(df_dates) != ncol(df)) {
-        df <- df %>% left_join(df_dates, by = as.character(times[1]))
+        df <- df %>% left_join(df_dates, by = as.character(times[1])) %>% distinct()
       } 
     } else {
       message("Can't join more than one date feature yet!")
