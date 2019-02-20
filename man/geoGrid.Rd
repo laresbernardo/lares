@@ -4,14 +4,13 @@
 \alias{geoGrid}
 \title{Check, Cross, and Plot Coordinates with Polygons}
 \usage{
-geoGrid(coords, shapes, fix_coords = FALSE, plot = FALSE,
-  all = FALSE)
+geoGrid(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE)
 }
 \arguments{
 \item{coords}{Dataframe. Dataframe containing at least langitud 
 and latitud data}
 
-\item{shapes}{SpatialPolygonsDataFrame.}
+\item{map}{SpatialPolygonsDataFrame or .shp directory}
 
 \item{fix_coords}{Boolean. Transform and fix coordinates system?}
 

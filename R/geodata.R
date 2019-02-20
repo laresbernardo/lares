@@ -134,13 +134,23 @@ geoStratum <- function(lon, lat, label = NA) {
 #' 
 #' @param coords Dataframe. Dataframe containing at least langitud 
 #' and latitud data
-#' @param shapes SpatialPolygonsDataFrame. 
+#' @param map SpatialPolygonsDataFrame or .shp directory
 #' @param fix_coords Boolean. Transform and fix coordinates system?
 #' @param plot Boolean. Return plot with coordinates inside the grid?
 #' @param all Boolean. Include all coordinates in plot, i.e. only the 
 #' ones who are inside the grids?
 #' @export
-geoGrid <- function(coords, shapes, fix_coords = FALSE, plot = FALSE, all = FALSE) {
+geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE) {
+  
+  if (!"rgdal" %in% (.packages())){
+    stop("The following library should be loaded. Please run: library(rgdal)")
+  }
+  
+  if (!class(map)[1] == "SpatialPolygonsDataFrame") {
+    message("Importing shapefile...")
+    map <- readOGR(dsn = file.path(map))
+  }
+  
   cols <- colnames(coords)
   if (sum(grepl("lon|lat", cols)) != 2) {
     stop("Your coords dataframe must contain longitude and latitude!")
@@ -151,27 +161,23 @@ geoGrid <- function(coords, shapes, fix_coords = FALSE, plot = FALSE, all = FALS
   coordinates(coords) <- c("longitude", "latitude")  
   
   if (fix_coords) {
-    shapes <- spTransform(shapes, CRS("+proj=longlat +datum=WGS84"))
+    map <- spTransform(map, CRS("+proj=longlat +datum=WGS84"))
   }
   
   coords_sample <- head(coordinates(coords))
-  shapes_sample <- head(shapes@polygons[[2]]@Polygons[[1]]@coords)
-  
-  if (!"rgdal" %in% (.packages())){
-    stop("The following library should be loaded. Please run: library(rgdal)")
-  }
+  shapes_sample <- head(map@polygons[[2]]@Polygons[[1]]@coords)
   proj4string <- "+proj=utm +units=mm"
   project(shapes_sample, proj4string)
   
   # The coords and shapes coordinates MUST have the same lon/lat reference system
-  proj4string(coords) <- proj4string(shapes)
-  inside.park <- !is.na(over(coords, as(shapes, "SpatialPolygons")))
+  proj4string(coords) <- proj4string(map)
+  inside.park <- !is.na(over(coords, as(map, "SpatialPolygons")))
   
   # What fraction of coords are inside a shape?
   frac <- round(100*mean(inside.park), 2)
   fracmsg <- paste0("Fraction of coords inside the grid: ", frac,"%")
   message(fracmsg)
-  cross <- over(coords, shapes)
+  cross <- over(coords, map)
   crossed <- which(!is.na(cross[,1]))
   
   # Join data and return results
@@ -187,7 +193,7 @@ geoGrid <- function(coords, shapes, fix_coords = FALSE, plot = FALSE, all = FALS
     plot <- ggplot() + 
       geom_point(data = toplot, aes(x=longitude, y=latitude),
                  colour="deepskyblue2", alpha=0.3) +
-      geom_polygon(data = shapes, aes(x=long, y=lat, group=group), 
+      geom_polygon(data = map, aes(x=long, y=lat, group=group), 
                    colour="black", fill="white", alpha=0)  +
       labs(title = "Coordinates & Grid",
            subtitle = fracmsg,
