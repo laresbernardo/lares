@@ -37,7 +37,7 @@ mplot_density <- function(tag,
     out <- data.frame(tag = as.character(tag),
                       score = as.numeric(score))
     
-    if (max(out$score) < 1) {
+    if (max(out$score) <= 1) {
       out$score <- score * 100
     }
     
