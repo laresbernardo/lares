@@ -637,8 +637,8 @@ model_metrics <- function(tag, score, thresh = 0.5,
   
   if (type == "Classification") {
     new <- ifelse(score >= thresh, 1, 0)
-    conf_mat <- table(Real = as.character(results$scores_test$tag), 
-                      Pred = as.character(results$scores_test$score))
+    conf_mat <- table(Real = as.character(tag), 
+                      Pred = as.character(score))
     total <- sum(conf_mat)
     trues <- sum(diag(conf_mat))
     falses <- total - trues
