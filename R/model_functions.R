@@ -191,14 +191,21 @@ h2o_automl <- function(df,
   
   # CLASSIFICATION MODELS
   if (type == "Classifier") {
+    
+    if (length(unique(train$tag)) == 2) {
+      # Binaries
+      scores <- scores[,2]
+    } else {
+      # More than 2 cateogies
+      scores <- scores[,1]
+    }
+    
     results <- list(
       project = project,
       model = m,
       scores_test = data.frame(
         tag = as.vector(test$tag),
-        score = ifelse(length(unique(train$tag)) == 2, 
-                       as.vector(scores[,3]), 
-                       as.vector(scores[,1]))),
+        score = scores),
       metrics = NA,
       datasets = list(test = test, train = train),
       parameters = m@parameters,
@@ -224,7 +231,10 @@ h2o_automl <- function(df,
       results$errors_test <- errors(
         tag = results$scores_test$tag, 
         score = results$scores_test$score) 
-      results$auc_test <- roc$auc
+      results$auc_test <- pROC::roc(
+        results$scores_test$tag, 
+        results$scores_test$score, ci=T)
+      
     } else {
       results$logloss_test <- NULL
       results$errors_test <- NULL
@@ -636,7 +646,10 @@ model_metrics <- function(tag, score, thresh = 0.5,
   type <- ifelse(length(unique(tag)) <= 10, "Classification", "Regression")
   
   if (type == "Classification") {
-    new <- ifelse(score >= thresh, 1, 0)
+    if (is.numeric(score)) {
+      tag <- as.numeric(tag)
+      score <- ifelse(score >= thresh, 1, 0) 
+    }
     conf_mat <- table(Real = as.character(tag), 
                       Pred = as.character(score))
     total <- sum(conf_mat)

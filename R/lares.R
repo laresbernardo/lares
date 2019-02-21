@@ -54,7 +54,7 @@ if(getRversion() >= "2.15.1")
       "DailyTrans","DailyValue","Date","DateTimeOriginal","Deciles","DifPer","DifUSD",
       "DivIncome","DivPerc","DivReal","Expenses","FileModifyDate","GET","High","Hist",
       "InvPerc","Invested","POST","Perc","Quant","RealPerc","RelChangePHist","RelChangeUSD",
-      "RelPer","RelUSD","StartUSD","StockIniValue","StockValue","Stocks","Symbol",
+      "RelPer","RelUSD","StartUSD","StockIniValue","StockValue","Stocks","Symbol","results",
       "TermDocumentMatrix","TotalPer","TotalUSD","Type","Value","VectorSource","accuracy",
       "add_headers","addedAt","amount","associatedCompanyIds","associatedVids","auc",
       "canonical_vid","cats[, i]", "ceiling_date","color","contacts_canonical_vid",
