@@ -170,7 +170,7 @@ h2o_automl <- function(df,
   print(aml@leaderboard[,1:3])
   
   # Select model (Best one by default)
-  m <- h2o::h2o.getModel(as.vector(aml@leaderboard$model_id[1]))  
+  m <- h2o.getModel(as.vector(aml@leaderboard$model_id[1]))  
   
   # Calculations and variables
   scores <- predict(m, as.h2o(test))
@@ -191,10 +191,9 @@ h2o_automl <- function(df,
       scores_test = data.frame(
         index = c(1:nrow(test)),
         tag = as.vector(test$tag),
-        score = as.vector(scores[,3]),
-        norm_score = normalize(as.vector(scores[,3]))),
-      scores_df = scores_df,
-      scoring_history = data.frame(m@model$scoring_history),
+        score = ifelse(unique(test$tag) == 2, 
+                       as.vector(scores[,3]), 
+                       as.vector(scores[,1]))),
       datasets = list(test = test, train = train),
       parameters = m@parameters,
       importance = imp,
@@ -204,14 +203,12 @@ h2o_automl <- function(df,
       model_name = as.vector(m@model_id),
       algorithm = m@algorithm,
       leaderboard = aml@leaderboard,
+      scoring_history = data.frame(m@model$scoring_history),
+      scores_df = scores_df,
       seed = seed)
-    roc <- pROC::roc(results$scores_test$tag, results$scores_test$score, ci=T)
-    results$auc_test <- roc$auc
-    if (length(unique(test$tag)) == 2) {
-      results$errors_test <- errors(tag = results$scores_test$tag, 
-                                    score = results$scores_test$score) 
-      results$logloss_test <- loglossBinary(tag = results$scores_test$tag, score = results$scores_test$score) 
-    }
+    results$metrics <- model_metrics(
+      tag = results$scores_test$tag, 
+      score = results$scores_test$score)
   } 
   
   if (type == "Regression") {
@@ -243,9 +240,9 @@ h2o_automl <- function(df,
   
   if (plot) {
     mplot_full(tag = results$scores_test$tag,
-                      score = results$scores_test$score,
-                      subtitle = results$project,
-                      model_name = results$model_name)
+               score = results$scores_test$score,
+               subtitle = results$project,
+               model_name = results$model_name)
   }
   
   if (alarm) {
@@ -611,14 +608,16 @@ h2o_predict_model <- function(df, model){
 #' @param size Numeric. Change bubble's size if needed
 #' @param roc Boolean. Plot ROC Curce with AUC?
 #' @export
-mmetrics <- function(tag, score, thresh = 0.5, plot = FALSE, size = 2.5, roc = FALSE){
+model_metrics <- function(tag, score, thresh = 0.5, 
+                          plot = FALSE, size = 2.5, roc = FALSE){
   
   metrics <- list()
   type <- ifelse(length(unique(tag)) <= 10, "Classification", "Regression")
   
   if (type == "Classification") {
     new <- ifelse(score >= thresh, 1, 0)
-    conf_mat <- table(Real = c(tag, 0, 1) , Pred = c(new, 0, 1))
+    conf_mat <- table(Real = as.character(results$scores_test$tag), 
+                      Pred = as.character(results$scores_test$score))
     total <- sum(conf_mat)
     trues <- sum(diag(conf_mat))
     falses <- total - trues
