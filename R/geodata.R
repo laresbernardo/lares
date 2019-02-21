@@ -11,11 +11,13 @@
 #' @export
 geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, which = "api_01") {
   
-  getGeoDetails <- function(address){   
+  message("For documentarion: https://developers.google.com/maps/documentation/geocoding/usage-and-billing")
+  c <- get_credentials(from = "google_api", dir = creds)
+  message("API Geocoding user: ", as.character(c[grepl(paste0("user_",right(which, 2)), names(c))]))
+  
+  getGeoDetails <- function(address, c){   
 
     options(warn=-1)
-    
-    c <- get_credentials(from = "google_api", dir = creds)
     
     # API Documentation: https://developers.google.com/maps/documentation/geocoding
     url <- "https://maps.google.com/maps/api/geocode/json?address="
@@ -225,9 +227,9 @@ plotMap <- function(map, fix_coords = FALSE) {
     map <- spTransform(map, CRS("+proj=longlat +datum=WGS84")) 
   }
   plot <- ggplot() + geom_polygon(data = map, aes(
-    x = long, y = lat, group = group), 
+    y = long, x = lat, group = group), 
     colour = "black", fill = "white", alpha = 0.1) +
-    labs(x = "Longitude", y = "Latitude") +
+    labs(x = "Latitude", y = "Longitude") +
     theme_minimal()
   return(plot)
 }
