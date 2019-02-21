@@ -948,5 +948,5 @@ importxlsx <- function(file) {
 quiet <- function(fx) { 
   sink(tempfile()) 
   on.exit(sink()) 
-  invisible(force(x)) 
+  invisible(force(fx)) 
 } 
