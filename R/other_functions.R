@@ -936,3 +936,17 @@ importxlsx <- function(file) {
   }
   return(mylist)
 }
+
+
+####################################################################
+#' Import Excel File with All Its Tabs
+#' 
+#' This function silences (verbose) output prints. Thanks to Hadley Wickham!
+#' 
+#' @param fx Function
+#' @export
+quiet <- function(fx) { 
+  sink(tempfile()) 
+  on.exit(sink()) 
+  invisible(force(x)) 
+} 

@@ -118,12 +118,19 @@ h2o_automl <- function(df,
   
   options(warn=-1)
   
-  
   start <- Sys.time()
   message(paste(start,"| Started process..."))
   
   df <- data.frame(df) %>% filter(!is.na(tag)) %>% mutate_if(is.character, as.factor)
   type <- ifelse(length(unique(df$tag)) <= as.integer(thresh), "Classifier", "Regression")
+  
+  message("Model type: ", type)
+  if (type == "Classifier") {
+    print(data.frame(freqs(df, tag)))
+  }
+  if (type == "Regression") {
+    print(summary(df$tag)) 
+  }
   
   ####### Validations to proceed #######
   if(!"tag" %in% colnames(df)){
@@ -132,16 +139,11 @@ h2o_automl <- function(df,
   
   ####### Split datasets for training and testing #######
   if (is.na(train_test)) {
+    message("Splitting datasets...")
     splits <- msplit(df, size = split, seed = seed)
     train <- splits$train
     test <- splits$test
-    if (type == "Classifier") {
-      print(table(train$tag)) 
-      train$tag <- as.factor(as.character(train$tag))
-    }
-    if (type == "Regression") {
-      print(summary(train$tag)) 
-    }
+    
   } else {
     # If we already have a default split for train and test (train_test)
     if ((!unique(train_test) %in% c('train', 'test')) & (length(unique(train_test)) != 2)) {
@@ -155,9 +157,12 @@ h2o_automl <- function(df,
   
   
   ####### Train model #######
-  h2o.init(nthreads = -1, port=54321, min_mem_size="8g")
+  
+  quiet(h2o.init(nthreads = -1, port=54321, min_mem_size="8g"))
   #h2o.shutdown()
-  h2o.removeAll()
+  quiet(h2o.removeAll())
+  
+  message("Training models...")
   aml <- h2o::h2o.automl(x = setdiff(names(df), "tag"), 
                          y = "tag",
                          training_frame = as.h2o(train),
@@ -167,14 +172,15 @@ h2o_automl <- function(df,
                          exclude_algos = c("StackedEnsemble","DeepLearning"),
                          nfolds = 5, 
                          seed = seed)
+  message(paste("Succesfully trained", nrow(aml@leaderboard), "models:"))
   print(aml@leaderboard[,1:3])
   
   # Select model (Best one by default)
   m <- h2o.getModel(as.vector(aml@leaderboard$model_id[1]))  
   
   # Calculations and variables
-  scores <- predict(m, as.h2o(test))
-  scores_df <- as.vector(predict(m, as.h2o(df))[,1])
+  scores <- h2o_predict_model(test, m)
+  #scores_df <- as.vector(h2o_predict_model(df, m)[,1])
   imp <- data.frame(h2o.varimp(m)) %>%
   {if ("names" %in% colnames(.)) 
     dplyr::rename(., "variable" = "names", "importance" = "coefficients") else .
@@ -189,26 +195,42 @@ h2o_automl <- function(df,
       project = project,
       model = m,
       scores_test = data.frame(
-        index = c(1:nrow(test)),
         tag = as.vector(test$tag),
-        score = ifelse(unique(test$tag) == 2, 
+        score = ifelse(length(unique(train$tag)) == 2, 
                        as.vector(scores[,3]), 
                        as.vector(scores[,1]))),
+      metrics = NA,
       datasets = list(test = test, train = train),
       parameters = m@parameters,
       importance = imp,
       auc_test = NA, #h2o.auc(m, valid=TRUE)
-      errors_test = NA,
       logloss_test = NA,
+      errors_test = NA,
       model_name = as.vector(m@model_id),
       algorithm = m@algorithm,
       leaderboard = aml@leaderboard,
       scoring_history = data.frame(m@model$scoring_history),
-      scores_df = scores_df,
+      #scores_df = scores_df,
       seed = seed)
+    
     results$metrics <- model_metrics(
       tag = results$scores_test$tag, 
       score = results$scores_test$score)
+    
+    if (length(unique(train$tag)) == 2) {
+      results$logloss_test <- loglossBinary(
+        tag = results$scores_test$tag, 
+        score = results$scores_test$score) 
+      results$errors_test <- errors(
+        tag = results$scores_test$tag, 
+        score = results$scores_test$score) 
+      results$auc_test <- roc$auc
+    } else {
+      results$logloss_test <- NULL
+      results$errors_test <- NULL
+      results$auc_test <- NULL
+    }
+    
   } 
   
   if (type == "Regression") {
@@ -219,7 +241,7 @@ h2o_automl <- function(df,
         index = c(1:nrow(test)),
         tag = as.vector(test$tag),
         score = as.vector(scores$predict)),
-      scores_df = scores_df,
+      #scores_df = scores_df,
       scoring_history = data.frame(m@model$scoring_history),
       datasets = list(test = test, train = train),
       parameters = m@parameters,
@@ -586,9 +608,8 @@ h2o_predict_API <- function(df, api) {
 #' @param model H2o Object. Model
 #' @export
 h2o_predict_model <- function(df, model){
-  
   #model <- h2o.getModel(as.vector(aml@leaderboard$model_id[1]))
-  scores <- predict(model, as.h2o(df))
+  scores <- as.data.frame(predict(model, as.h2o(df)))
   return(scores)
 }
 
