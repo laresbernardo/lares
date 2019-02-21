@@ -227,7 +227,7 @@ geoMap <- function(map, fix_coords = FALSE) {
     map <- spTransform(map, CRS("+proj=longlat +datum=WGS84")) 
   }
   plot <- ggplot() + geom_polygon(data = map, aes(
-    y = long, x = lat, group = group), 
+    x = lat, y = long, group = group), 
     colour = "black", fill = "white", alpha = 0.1) +
     labs(x = "Latitude", y = "Longitude") +
     theme_minimal()
