@@ -214,8 +214,10 @@ geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE, 
 #' 
 #' @param map SpatialPolygonsDataFrame or .shp directory
 #' @param fix_coords Boolean. Transform and fix coordinates system?
+#' @param title Character. Title for the plot
+#' @param subtitle Character. Subtitle for the plot
 #' @export
-geoMap <- function(map, fix_coords = FALSE) {
+geoMap <- function(map, fix_coords = FALSE, title = NA, subtitle = NA) {
   if (!"rgdal" %in% (.packages())){
     stop("The following library should be loaded. Please run: library(rgdal)")
   }
@@ -225,13 +227,19 @@ geoMap <- function(map, fix_coords = FALSE) {
   }
   if (fix_coords) {
     message("Fixing coordinates format...")
-    map <- spTransform(map, CRS("+proj=latlong +datum=WGS84")) 
+    map <- spTransform(map, CRS("+proj=longlat +datum=WGS84")) 
   }
   plot <- ggplot() + geom_polygon(data = map, aes(
-    x = lat, y = long, group = group), 
+    x = long, y = lat, group = group), 
     colour = "black", fill = "white", alpha = 0.1) +
     labs(x = "Latitude", y = "Longitude") +
-    theme_minimal()
+    theme_bw()
+  if (!is.na(title)) {
+    plot <- plot + labs(title = title)
+  }
+  if (!is.na(subtitle)) {
+    plot <- plot + labs(subtitle = subtitle)
+  }
   return(plot)
 }
 

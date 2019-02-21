@@ -4,12 +4,16 @@
 \alias{geoMap}
 \title{Plot Map or Shapefile}
 \usage{
-geoMap(map, fix_coords = FALSE)
+geoMap(map, fix_coords = FALSE, title = NA, subtitle = NA)
 }
 \arguments{
 \item{map}{SpatialPolygonsDataFrame or .shp directory}
 
 \item{fix_coords}{Boolean. Transform and fix coordinates system?}
+
+\item{title}{Character. Title for the plot}
+
+\item{subtitle}{Character. Subtitle for the plot}
 }
 \description{
 This function returns a simple plot from a SpatialPolygonsDataFrame
