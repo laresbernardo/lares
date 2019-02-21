@@ -647,14 +647,15 @@ model_metrics <- function(tag, score, thresh = 0.5,
   
   if (type == "Classification") {
     if (is.numeric(score)) {
-      score <- ifelse(score >= thresh, 1, 0) 
+      labels <- unique(as.character(tag))
+      new <- data.frame(score = score) %>%
+        mutate(score = ifelse(score >= thresh, labels[1], labels[2])) %>%
+        .$score
     }
-    if (!is.numeric(tag)) {
-      tag <- as.numeric(tag)-1
-    }
-
+    
     conf_mat <- table(Real = as.character(tag), 
-                      Pred = as.character(score))
+                      Pred = as.character(new))
+    
     total <- sum(conf_mat)
     trues <- sum(diag(conf_mat))
     falses <- total - trues
@@ -663,7 +664,7 @@ model_metrics <- function(tag, score, thresh = 0.5,
     metrics[["accuracy"]] <- ACC
     
     # For Binaries
-    if (length(unique(tag)) == 2 & length(unique(score)) == 2) {
+    if (length(unique(tag)) == 2) {
       dic <- c("AUC: Area Under the Curve",
                "PPV: Precision = Positive Predictive Value",
                "TPR: Sensitivity = Recall = Hit rate = True Positive Rate",
