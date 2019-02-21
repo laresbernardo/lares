@@ -15,7 +15,7 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
   c <- get_credentials(from = "google_api", dir = creds)
   message("API Geocoding user: ", as.character(c[grepl(paste0("user_",right(which, 2)), names(c))]))
   
-  getGeoDetails <- function(address, c){   
+  getGeoDetails <- function(address){   
 
     options(warn=-1)
     
