@@ -647,9 +647,12 @@ model_metrics <- function(tag, score, thresh = 0.5,
   
   if (type == "Classification") {
     if (is.numeric(score)) {
-      tag <- as.numeric(tag)
       score <- ifelse(score >= thresh, 1, 0) 
     }
+    if (!is.numeric(tag)) {
+      tag <- as.numeric(tag)-1
+    }
+
     conf_mat <- table(Real = as.character(tag), 
                       Pred = as.character(score))
     total <- sum(conf_mat)
