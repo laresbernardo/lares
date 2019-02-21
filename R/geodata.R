@@ -214,7 +214,7 @@ geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE) 
 #' @param map SpatialPolygonsDataFrame or .shp directory
 #' @param fix_coords Boolean. Transform and fix coordinates system?
 #' @export
-plotMap <- function(map, fix_coords = FALSE) {
+geoMap <- function(map, fix_coords = FALSE) {
   if (!"rgdal" %in% (.packages())){
     stop("The following library should be loaded. Please run: library(rgdal)")
   }
