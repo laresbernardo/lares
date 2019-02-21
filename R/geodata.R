@@ -14,11 +14,7 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
   message("API Documentation: https://developers.google.com/maps/documentation/geocoding/usage-and-billing")
   c <- get_credentials(from = "google_api", dir = creds)
   message("API Geocoding user: ", as.character(c[grepl(paste0("user_",right(which, 2)), names(c))]))
-  
-  # Some strings that have given my issues...
-  address <- gsub("Ã\u0082Â|Ã\u0083Â", "", address)
-  address <- gsub("Ã\u0091", "Ñ", address)
-  
+
   getGeoDetails <- function(address){   
     
     options(warn=-1)
@@ -143,8 +139,9 @@ geoStratum <- function(lon, lat, label = NA) {
 #' @param plot Boolean. Return plot with coordinates inside the grid?
 #' @param all Boolean. Include all coordinates in plot, i.e. only the 
 #' ones who are inside the grids?
+#' @param alpha Numeric. Points transparency for the plot
 #' @export
-geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE) {
+geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE, alpha = 0.3) {
   
   if (!"rgdal" %in% (.packages())){
     stop("The following library should be loaded. Please run: library(rgdal)")
@@ -167,7 +164,7 @@ geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE) 
   if (fix_coords) {
     map <- spTransform(map, CRS("+proj=longlat +datum=WGS84"))
   }
-  
+
   coords_sample <- head(coordinates(coords))
   shapes_sample <- head(map@polygons[[2]]@Polygons[[1]]@coords)
   proj4string <- "+proj=utm +units=mm"
@@ -195,10 +192,10 @@ geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE) 
       toplot <- results
     }
     plot <- ggplot() + 
-      geom_point(data = toplot, aes(x=longitude, y=latitude),
-                 colour="deepskyblue2", alpha=0.3) +
-      geom_polygon(data = map, aes(x=long, y=lat, group=group), 
-                   colour="black", fill="white", alpha=0)  +
+      geom_point(data = toplot, aes(x = longitude, y = latitude),
+                 colour = "deepskyblue2", alpha = alpha) +
+      geom_polygon(data = map, aes(x = long, y = lat, group = group), 
+                   colour = "black", fill = "white", alpha = 0)  +
       labs(title = "Coordinates & Grid",
            subtitle = fracmsg,
            x = "Longitude", y = "Latitude") +
@@ -228,7 +225,7 @@ geoMap <- function(map, fix_coords = FALSE) {
   }
   if (fix_coords) {
     message("Fixing coordinates format...")
-    map <- spTransform(map, CRS("+proj=longlat +datum=WGS84")) 
+    map <- spTransform(map, CRS("+proj=latlong +datum=WGS84")) 
   }
   plot <- ggplot() + geom_polygon(data = map, aes(
     x = lat, y = long, group = group), 

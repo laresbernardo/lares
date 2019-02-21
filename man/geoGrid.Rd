@@ -4,7 +4,8 @@
 \alias{geoGrid}
 \title{Check, Cross, and Plot Coordinates with Polygons}
 \usage{
-geoGrid(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE)
+geoGrid(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE,
+  alpha = 0.3)
 }
 \arguments{
 \item{coords}{Dataframe. Dataframe containing at least langitud 
@@ -18,6 +19,8 @@ and latitud data}
 
 \item{all}{Boolean. Include all coordinates in plot, i.e. only the 
 ones who are inside the grids?}
+
+\item{alpha}{Numeric. Points transparency for the plot}
 }
 \description{
 This function checks a series of coordinates and return a join
