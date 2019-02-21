@@ -647,7 +647,7 @@ model_metrics <- function(tag, score, thresh = 0.5,
     metrics[["accuracy"]] <- ACC
     
     # For Binaries
-    if (length(unique(tag)) == 2) {
+    if (length(unique(tag)) == 2 & length(unique(score)) == 2) {
       dic <- c("AUC: Area Under the Curve",
                "PPV: Precision = Positive Predictive Value",
                "TPR: Sensitivity = Recall = Hit rate = True Positive Rate",
