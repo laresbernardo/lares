@@ -7,22 +7,20 @@
 #' @param country Character. Default Country if known
 #' @param index Character Vector. If you wish to keep an id on each address, set this values
 #' @param creds Character. Credential's user (see get_credentials)
+#' @param which Character. Which of the APIs should be used?
 #' @export
-geodataAddress <- function(address, country = "Colombia", index = NA, creds = NA) {
+geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, which = "api_01") {
   
   getGeoDetails <- function(address){   
-    
-    # require(RJSONIO)
-    # require(rlist)
-    
+
     options(warn=-1)
     
-    c <- lares::get_credentials(from = "google_api", dir = creds)
+    c <- get_credentials(from = "google_api", dir = creds)
     
     # API Documentation: https://developers.google.com/maps/documentation/geocoding
     url <- "https://maps.google.com/maps/api/geocode/json?address="
-    api <- c$api_01 # Free Personal API: api_02
-    ctry <- paste0("&components=country:", country) # Not working for some reason
+    api <- as.character(c[grepl(which, names(c))]) # api_01 is my personal free API
+    ctry <- paste0("&components=country:", country)
     url <- URLencode(paste(url, address, ctry, "&key=", api, sep = ""))
     x <- fromJSON(url, simplifyVector = FALSE)
     
@@ -32,7 +30,7 @@ geodataAddress <- function(address, country = "Colombia", index = NA, creds = NA
     }   
     # Else, extract what we need from the Google server reply into a dataframe:
     
-    # Note: We bring the first and most probable result only or prefered country
+    # Note: We bring the first and most probable result or prefered country only
     if (length(x$results) > 1) {
       country_pref <- data.frame(
         is_country = as.integer(as.character(lapply(x$results, function(x) grep(paste(",",country), x)))))
