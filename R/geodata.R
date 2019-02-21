@@ -15,6 +15,10 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
   c <- get_credentials(from = "google_api", dir = creds)
   message("API Geocoding user: ", as.character(c[grepl(paste0("user_",right(which, 2)), names(c))]))
   
+  # Some strings that have given my issues...
+  address <- gsub("Ã\u0082Â|Ã\u0083Â", "", address)
+  address <- gsub("Ã\u0091", "Ñ", address)
+  
   getGeoDetails <- function(address){   
     
     options(warn=-1)
@@ -152,11 +156,11 @@ geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE) 
   }
   
   cols <- colnames(coords)
-  if (sum(grepl("lon|lat", cols)) != 2) {
+  if (sum(grepl("lon|lat", tolower(cols))) != 2) {
     stop("Your coords dataframe must contain longitude and latitude!")
   }
-  cols[grep("lon",cols)] <- "longitude"
-  cols[grep("lat",cols)] <- "latitude"
+  cols[grep("lon",tolower(cols))] <- "longitude"
+  cols[grep("lat",tolower(cols))] <- "latitude"
   colnames(coords) <- cols
   coordinates(coords) <- c("longitude", "latitude")  
   
