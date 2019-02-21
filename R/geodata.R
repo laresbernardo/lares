@@ -11,15 +11,15 @@
 #' @export
 geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, which = "api_01") {
   
-  message("For documentarion: https://developers.google.com/maps/documentation/geocoding/usage-and-billing")
+  message("API Documentation: https://developers.google.com/maps/documentation/geocoding/usage-and-billing")
   c <- get_credentials(from = "google_api", dir = creds)
   message("API Geocoding user: ", as.character(c[grepl(paste0("user_",right(which, 2)), names(c))]))
   
   getGeoDetails <- function(address){   
-
+    
     options(warn=-1)
     
-    # API Documentation: https://developers.google.com/maps/documentation/geocoding
+    c <- get_credentials(from = "google_api", dir = creds)
     url <- "https://maps.google.com/maps/api/geocode/json?address="
     api <- as.character(c[grepl(which, names(c))]) # api_01 is my personal free API
     ctry <- paste0("&components=country:", country)
