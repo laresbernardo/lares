@@ -709,7 +709,8 @@ model_metrics <- function(tag, score, thresh = 0.5,
       labs(x="Predicted values", y="Real values",
            title = ifelse(length(unique(tag)) == 2,
                           paste("Confusion Matrix with Threshold =", thresh),
-                          paste("Confusion Matrix for", length(unique(tag)), "Categories"))) +
+                          paste("Confusion Matrix for", length(unique(tag)), "Categories")),
+           subtitle = paste0("Accuracy: ", round(100*(trues / total), 2), "%")) +
       theme(axis.text.x = element_text(angle=30, hjust=1))
     
     if (!is.na(subtitle)) {
