@@ -58,7 +58,7 @@ if(getRversion() >= "2.15.1")
       "TermDocumentMatrix","TotalPer","TotalUSD","Type","Value","VectorSource","accuracy",
       "add_headers","addedAt","amount","associatedCompanyIds","associatedVids","auc",
       "canonical_vid","cats[, i]", "ceiling_date","color","contacts_canonical_vid",
-      "contacts_form_submissions","contacts_identity_profiles", "google_analytics",
+      "contacts_form_submissions","contacts_identity_profiles", "google_analytics","perc",
       "contacts_is_contact","contacts_merge_audits","contacts_portal_id","model.matrix",
       "contacts_profile_token","contacts_profile_url","contacts_vid","content","size",
       "content_transformer","createdate","credit","cuts","date_of_birth","days","dealId",

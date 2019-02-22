@@ -4,8 +4,7 @@
 \alias{model_metrics}
 \title{Classification Model Metrics}
 \usage{
-model_metrics(tag, score, thresh = 0.5, plot = FALSE, size = 2.5,
-  roc = FALSE)
+model_metrics(tag, score, thresh = 0.5, size = 2.5, subtitle = NA)
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -15,11 +14,9 @@ model_metrics(tag, score, thresh = 0.5, plot = FALSE, size = 2.5,
 \item{thresh}{Numeric. Value which splits the results for the 
 confusion matrix.}
 
-\item{plot}{Boolean. Plot a Confusion Matrix graph?}
-
 \item{size}{Numeric. Change bubble's size if needed}
 
-\item{roc}{Boolean. Plot ROC Curce with AUC?}
+\item{subtitle}{Character. Subtitle for plots}
 }
 \description{
 This function lets the user get a confusion matrix and accuracy, and 

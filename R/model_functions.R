@@ -695,7 +695,7 @@ model_metrics <- function(tag, score, thresh = 0.5,
       mutate(perc = round(100 * Freq / sum(Freq), 2)) %>%
       mutate(label = paste0(formatNum(Freq, 0),"\n", perc,"%")) %>%
       ggplot(aes(
-        y = factor(Real, level = rev(labels)), 
+        y = factor(Real, levels = rev(labels)), 
         x = as.character(Pred), 
         fill= Freq, size=Freq, 
         label = label)) +
