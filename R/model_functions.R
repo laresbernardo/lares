@@ -162,7 +162,7 @@ h2o_automl <- function(df,
   #h2o.shutdown()
   quiet(h2o.removeAll())
   
-  message("Training models...")
+  message(ifelse(paste("Iterating until", max_models, "models or", max_time, "seconds...")))
   aml <- h2o::h2o.automl(x = setdiff(names(df), "tag"), 
                          y = "tag",
                          training_frame = as.h2o(train),

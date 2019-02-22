@@ -770,11 +770,11 @@ mplot_full <- function(tag,
   
   # Categorical Models
   if (length(unique(tag)) <= thresh) {
-    p1 <- mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
     if (!is.numeric(score)) {
-      p2 <- model_metrics(tag, score)$plot_ConfMat
-      return(grid.arrange(p1, p2, heights = c(1, 1.2))) 
+      p1 <- model_metrics(tag, score)$plot_ConfMat
+      return(p1) 
     } else{
+      p1 <- mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
       p2 <- mplot_splits(tag = tag, score = score, splits = splits)  
       p3 <- mplot_roc(tag = tag, score = score)
       p4 <- mplot_cuts(score = score) 
