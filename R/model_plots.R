@@ -30,30 +30,33 @@ mplot_density <- function(tag,
   
   if (length(unique(tag)) <= thresh) {
     
-    out <- data.frame(tag = as.character(tag),
-                      score = as.numeric(score))
+    out <- data.frame(tag = as.character(tag), score = score)
     
-    if (max(out$score) <= 1) {
-      out$score <- score * 100
+    if (is.numeric(out$score)) {
+      if (max(out$score) <= 1) {
+        out$score <- score * 100 
+      }
     }
     
     p1 <- ggplot(out) + theme_minimal() +
-      geom_density(aes(x = score, group = tag, fill = as.character(tag)), 
+      geom_density(aes(x = as.numeric(score), 
+                       group = tag, fill = as.character(tag)), 
                    alpha = 0.6, adjust = 0.25) + 
       guides(fill = guide_legend(title="Tag")) + 
-      xlim(0, 100) + 
       labs(title = "Classification Model Results",
-           y = "Density by tag", x = "Score")
+           y = "Density by tag", x = "Score") 
+    if (is.numeric(score)) {
+      p1 <- p1 + xlim(0, 100) 
+    }
     
     p2 <- ggplot(out) + theme_minimal() + 
-      geom_density(aes(x = score), 
-                   alpha = 0.9, adjust = 0.25, fill = "deepskyblue") + 
+      geom_density(aes(x = score), alpha = 0.9, adjust = 0.25, fill = "deepskyblue") + 
       labs(x = "", y = "Density")
     
     p3 <- ggplot(out) + theme_minimal() + 
-      geom_line(aes(x = score, y = (1 - ..y..), color = as.character(tag)), 
+      geom_line(aes(x = as.numeric(score), y = (1 - ..y..), color = as.character(tag)), 
                 stat = 'ecdf', size = 1) +
-      geom_line(aes(x = score, y = (1 - ..y..)), 
+      geom_line(aes(x = as.numeric(score), y = (1 - ..y..)), 
                 stat = 'ecdf', size = 0.5, colour = "black", linetype="dotted") +
       ylab('Cumulative') + xlab('') + guides(color=FALSE)
     
@@ -96,7 +99,6 @@ mplot_density <- function(tag,
       geom_density(aes(x = values, fill = as.character(type)), 
                    alpha = 0.6, adjust = 0.25) + 
       labs(y = "Density", x = "Continuous values") +
-      scale_x_continuous(labels = comma) +
       guides(fill = guide_legend(override.aes = list(size=1))) +
       theme(legend.title=element_blank(),
             legend.position = "top")
@@ -758,7 +760,7 @@ mplot_full <- function(tag,
                        save = FALSE, 
                        subdir = NA,
                        file_name = "viz_full.png") {
-
+  
   options(warn=-1)
   
   if (length(tag) != length(score)) {
@@ -768,15 +770,15 @@ mplot_full <- function(tag,
   
   # Categorical Models
   if (length(unique(tag)) <= thresh) {
-    p1 <- mplot_density(tag = tag, score = score, 
-                        subtitle = subtitle, model_name = model_name)
-    if (is.numeric(score)) {
+    p1 <- mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
+    if (!is.numeric(score)) {
       p2 <- model_metrics(tag, score)$plot_ConfMat
+      return(grid.arrange(p1, p2, heights = c(1, 1.2))) 
     } else{
       p2 <- mplot_splits(tag = tag, score = score, splits = splits)  
+      p3 <- mplot_roc(tag = tag, score = score)
+      p4 <- mplot_cuts(score = score) 
     }
-    p3 <- mplot_roc(tag = tag, score = score)
-    p4 <- mplot_cuts(score = score) 
     
     if(save == TRUE) {
       
