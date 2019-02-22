@@ -689,7 +689,10 @@ model_metrics <- function(tag, score, thresh = 0.5,
         plot_roc <- plot_roc + labs(subtitle = subtitle)
       }
       metrics[["plot_ROC"]] <- plot_roc
+    } else {
+      metrics[["ACC"]] <- signif(trues / total, 5)
     }
+    
     # CONFUSION MATRIX PLOT
     plot_cf <- data.frame(conf_mat) %>%
       mutate(perc = round(100 * Freq / sum(Freq), 2)) %>%
@@ -706,7 +709,7 @@ model_metrics <- function(tag, score, thresh = 0.5,
       labs(x="Predicted values", y="Real values",
            title = ifelse(length(unique(tag)) == 2,
                           paste("Confusion Matrix with Threshold =", thresh),
-                          "Confusion Matrix for", length(unique(tag)), "Categories")) +
+                          paste("Confusion Matrix for", length(unique(tag)), "Categories"))) +
       theme(axis.text.x = element_text(angle=30, hjust=1))
     
     if (!is.na(subtitle)) {
