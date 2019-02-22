@@ -162,7 +162,7 @@ h2o_automl <- function(df,
   #h2o.shutdown()
   quiet(h2o.removeAll())
   
-  message(ifelse(paste("Iterating until", max_models, "models or", max_time, "seconds...")))
+  message(paste("Iterating until", max_models, "models or", max_time, "seconds..."))
   aml <- h2o::h2o.automl(x = setdiff(names(df), "tag"), 
                          y = "tag",
                          training_frame = as.h2o(train),
@@ -711,7 +711,12 @@ model_metrics <- function(tag, score, thresh = 0.5,
                           paste("Confusion Matrix with Threshold =", thresh),
                           paste("Confusion Matrix for", length(unique(tag)), "Categories")),
            subtitle = paste0("Accuracy: ", round(100*(trues / total), 2), "%")) +
-      theme(axis.text.x = element_text(angle=30, hjust=1))
+      theme(axis.text.x = element_text(angle=30, hjust=0)) +
+      scale_x_discrete(position = "top") +
+      theme(axis.text.x.bottom = element_blank(), 
+            axis.ticks.x.bottom = element_blank(),
+            axis.text.y.right = element_blank(),
+            axis.ticks.y.right = element_blank())
     
     if (!is.na(subtitle)) {
       plot_cf <- plot_cf + labs(subtitle = subtitle)
