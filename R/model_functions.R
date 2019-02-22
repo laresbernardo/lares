@@ -318,9 +318,9 @@ h2o_selectmodel <- function(results, which_model = 1) {
   roc <- pROC::roc(output$scores$tag, output$scores$score, ci=T)
   output$auc_test <- roc$auc
   output$errors_test <- errors(tag = results$scores_test$tag, 
-                                      score = results$scores_test$score)
+                               score = results$scores_test$score)
   output$logloss_test <- loglossBinary(tag = results$scores_test$tag, 
-                                              score = results$scores_test$score)
+                                       score = results$scores_test$score)
   return(output)
 }
 
@@ -635,20 +635,20 @@ h2o_predict_model <- function(df, model){
 #' @param score Vector. Predicted value or model's result
 #' @param thresh Numeric. Value which splits the results for the 
 #' confusion matrix.
-#' @param plot Boolean. Plot a Confusion Matrix graph?
 #' @param size Numeric. Change bubble's size if needed
-#' @param roc Boolean. Plot ROC Curce with AUC?
+#' @param subtitle Character. Subtitle for plots
 #' @export
 model_metrics <- function(tag, score, thresh = 0.5, 
-                          plot = FALSE, size = 2.5, roc = FALSE){
+                          size = 2.5, subtitle = NA){
   
   metrics <- list()
   type <- ifelse(length(unique(tag)) <= 10, "Classification", "Regression")
   
   if (type == "Classification") {
     
+    labels <- sort(unique(as.character(tag)))
+    
     if (is.numeric(score)) {
-      labels <- unique(as.character(tag))
       new <- data.frame(score = score) %>%
         mutate(score = ifelse(score >= thresh, labels[1], labels[2])) %>%
         .$score
@@ -665,49 +665,50 @@ model_metrics <- function(tag, score, thresh = 0.5,
     trues <- sum(diag(conf_mat))
     falses <- total - trues
     
-    ACC <- signif(trues / total, 5)
-    metrics[["accuracy"]] <- ACC
-    
     # For Binaries
     if (length(unique(tag)) == 2) {
       dic <- c("AUC: Area Under the Curve",
-               "PPV: Precision = Positive Predictive Value",
+               "ACC: Accuracy",
+               "PRC: Precision = Positive Predictive Value",
                "TPR: Sensitivity = Recall = Hit rate = True Positive Rate",
                "TNR: Specificity = Selectivity = True Negative Rate",
-               "Logloss (Error): Logarithmic loss [When 0.69315 ~ 50/50]")
-      ROC <- pROC::roc(tag, score, ci=T)
-      metrics[["AUC"]] <- signif(ROC$auc, 5)
-      metrics[["precision"]] <- signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[1,2]), 5)
-      metrics[["recall"]] <- signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]), 5)
-      metrics[["specificity"]] <- signif(conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]), 5)
-      metrics[["logloss"]] <- loglossBinary(tag, score)
+               "Logloss (Error): Logarithmic loss [Neutral classification: 0.69315]")
       metrics[["dictionary"]] <- dic
-      
-      if (plot) {
-        cm <- data.frame(conf_mat) %>%
-          mutate(diag = ifelse(Real == Pred, TRUE, FALSE))
-        plot_cf <- ggplot(cm, aes(
-          x = reorder(as.character(Real), diag), 
-          y = as.character(Pred), 
-          size = as.numeric(Freq), colour = diag,
-          label = formatNum(Freq, 0))) +
-          scale_size(range = c(1, size*max(cm$Freq))) +
-          geom_point(alpha = 0.9) + theme_minimal() +
-          geom_text(colour = "white", size = 3) +
-          guides(fill=FALSE, size=FALSE, colour=FALSE) +
-          labs(x="Real values", y="Predicted values",
-               title = "Confusion Matrix")
-        metrics[["plot_ConfMat"]] <- plot_cf
-        plot(plot_cf)
-      }
-      
-      if (roc) {
-        plot_roc <- invisible(mplot_roc(tag, score))
-        metrics[["plot_ROC"]] <- plot_roc
-        plot(plot_roc)
-      }
-      
+      ROC <- pROC::roc(tag, score, ci=T)
+      metrics[["metrics"]] <- data.frame(
+        AUC = signif(ROC$auc, 5),
+        ACC = signif(trues / total, 5),
+        PRC = signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[1,2]), 5),
+        TPR = signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]), 5),
+        TNR = signif(conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]), 5),
+        Logloss = loglossBinary(tag, score)
+      )
     }
+    # CONFUSION MATRIX PLOT
+    cm <- data.frame(conf_mat) %>%
+      mutate(diag = ifelse(Real == Pred, TRUE, FALSE))
+    plot_cf <- ggplot(cm, aes(
+      x = factor(Real, level = rev(labels)), 
+      y = as.character(Pred), 
+      size = as.numeric(Freq), colour = diag,
+      label = formatNum(Freq, 0))) +
+      scale_size(range = c(1, size*max(cm$Freq))) +
+      geom_point(alpha = 0.9) + theme_minimal() +
+      geom_text(colour = "white", size = 3) +
+      guides(fill=FALSE, size=FALSE, colour=FALSE) +
+      labs(x="Real values", y="Predicted values",
+           title = "Confusion Matrix")
+    
+    # ROC CURVE PLOT
+    plot_roc <- invisible(mplot_roc(tag, score))
+    
+    if (!is.na(subtitle)) {
+      plot_cf <- plot_cf + labs(subtitle = subtitle)
+      plot_roc <- plot_roc + labs(subtitle = subtitle)
+    }
+    
+    metrics[["plot_ConfMat"]] <- plot_cf
+    metrics[["plot_ROC"]] <- plot_roc
   }
   
   if (type == "Regression") {
