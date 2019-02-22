@@ -646,15 +646,20 @@ model_metrics <- function(tag, score, thresh = 0.5,
   type <- ifelse(length(unique(tag)) <= 10, "Classification", "Regression")
   
   if (type == "Classification") {
+    
     if (is.numeric(score)) {
       labels <- unique(as.character(tag))
       new <- data.frame(score = score) %>%
         mutate(score = ifelse(score >= thresh, labels[1], labels[2])) %>%
         .$score
+    } else {
+      new <- score
     }
     
     conf_mat <- table(Real = as.character(tag), 
                       Pred = as.character(new))
+    
+    metrics[["confusion_matrix"]] <- conf_mat
     
     total <- sum(conf_mat)
     trues <- sum(diag(conf_mat))
@@ -669,7 +674,7 @@ model_metrics <- function(tag, score, thresh = 0.5,
                "PPV: Precision = Positive Predictive Value",
                "TPR: Sensitivity = Recall = Hit rate = True Positive Rate",
                "TNR: Specificity = Selectivity = True Negative Rate",
-               "Logloss (Error): Logarithmic loss")
+               "Logloss (Error): Logarithmic loss [When 0.69315 ~ 50/50]")
       ROC <- pROC::roc(tag, score, ci=T)
       metrics[["AUC"]] <- signif(ROC$auc, 5)
       metrics[["precision"]] <- signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[1,2]), 5)
@@ -703,7 +708,6 @@ model_metrics <- function(tag, score, thresh = 0.5,
       }
       
     }
-    metrics[["confusion_matrix"]] <- conf_mat
   }
   
   if (type == "Regression") {
