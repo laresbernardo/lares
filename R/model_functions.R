@@ -704,7 +704,9 @@ model_metrics <- function(tag, score, thresh = 0.5,
       scale_size(range = c(1, 3.5)) +
       guides(fill=FALSE, size=FALSE, colour=FALSE) +
       labs(x="Predicted values", y="Real values",
-           title = paste("Confusion Matrix with Threshold =", thresh)) +
+           title = ifelse(length(unique(tag)) == 2,
+                          paste("Confusion Matrix with Threshold =", thresh),
+                          "Confusion Matrix for", length(unique(tag)), "Categories")) +
       theme(axis.text.x = element_text(angle=30, hjust=1))
     
     if (!is.na(subtitle)) {
