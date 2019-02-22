@@ -683,32 +683,34 @@ model_metrics <- function(tag, score, thresh = 0.5,
         TNR = signif(conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]), 5),
         Logloss = loglossBinary(tag, score)
       )
+      # ROC CURVE PLOT
+      plot_roc <- invisible(mplot_roc(tag, score))
+      if (!is.na(subtitle)) {
+        plot_roc <- plot_roc + labs(subtitle = subtitle)
+      }
+      metrics[["plot_ROC"]] <- plot_roc
     }
     # CONFUSION MATRIX PLOT
-    cm <- data.frame(conf_mat) %>%
-      mutate(diag = ifelse(Real == Pred, TRUE, FALSE))
-    plot_cf <- ggplot(cm, aes(
-      x = factor(Real, level = rev(labels)), 
-      y = as.character(Pred), 
-      size = as.numeric(Freq), colour = diag,
-      label = formatNum(Freq, 0))) +
-      scale_size(range = c(1, size*max(cm$Freq))) +
-      geom_point(alpha = 0.9) + theme_minimal() +
-      geom_text(colour = "white", size = 3) +
+    plot_cf <- data.frame(conf_mat) %>%
+      mutate(perc = round(100 * Freq / sum(Freq), 2)) %>%
+      mutate(label = paste0(formatNum(Freq, 0),"\n", perc,"%")) %>%
+      ggplot(aes(
+        y = factor(Real, level = rev(labels)), 
+        x = as.character(Pred), 
+        fill= Freq, size=Freq, 
+        label = label)) +
+      geom_tile() + theme_minimal() +
+      geom_text(colour="white") + 
+      scale_size(range = c(1, 3.5)) +
       guides(fill=FALSE, size=FALSE, colour=FALSE) +
-      labs(x="Real values", y="Predicted values",
-           title = "Confusion Matrix")
-    
-    # ROC CURVE PLOT
-    plot_roc <- invisible(mplot_roc(tag, score))
+      labs(x="Predicted values", y="Real values",
+           title = paste("Confusion Matrix with Threshold =", thresh)) +
+      theme(axis.text.x = element_text(angle=30, hjust=1))
     
     if (!is.na(subtitle)) {
       plot_cf <- plot_cf + labs(subtitle = subtitle)
-      plot_roc <- plot_roc + labs(subtitle = subtitle)
     }
-    
     metrics[["plot_ConfMat"]] <- plot_cf
-    metrics[["plot_ROC"]] <- plot_roc
   }
   
   if (type == "Regression") {
