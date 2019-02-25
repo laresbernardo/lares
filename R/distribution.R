@@ -236,12 +236,12 @@ distr <- function(data, ...,
       count <- ggplot(freqs, aes(
         x = reorder(as.character(value), order), y=n, 
         fill = tolower(as.character(targets)), 
-        label = n, ymax = max(n) * 1.1)) + 
+        label = formatNum(n, 0), ymax = max(n) * 1.1)) + 
         geom_col(position = "dodge") +
         geom_text(colour = "black",
                   check_overlap = TRUE, 
                   position = position_dodge(0.9), 
-                  size=3, vjust = -0.15) +
+                  size = 3, vjust = -0.15) +
         labs(x = "", y = "Counter [#]", fill = targets_name, caption = caption) + 
         theme_minimal() + theme(legend.position = "top") + guides(colour = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +

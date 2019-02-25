@@ -4,7 +4,7 @@
 \alias{model_metrics}
 \title{Classification Model Metrics}
 \usage{
-model_metrics(tag, score, thresh = 0.5, size = 2.5, subtitle = NA)
+model_metrics(tag, score, thresh = 0.5, plots = TRUE, subtitle = NA)
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -14,7 +14,7 @@ model_metrics(tag, score, thresh = 0.5, size = 2.5, subtitle = NA)
 \item{thresh}{Numeric. Value which splits the results for the 
 confusion matrix.}
 
-\item{size}{Numeric. Change bubble's size if needed}
+\item{plots}{Boolean. Include plots?}
 
 \item{subtitle}{Character. Subtitle for plots}
 }

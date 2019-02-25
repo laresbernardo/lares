@@ -14,7 +14,7 @@ loglossBinary(tag, score, eps = 1e-15)
 \item{eps}{Numeric. Epsilon value}
 }
 \description{
-This function calculates Loggarithmic Loss for Binary Models
-You can define a seed to get the same results every time, but has a default value.
-You can prevent it from printing the split counter result.
+This function calculates log loss/cross-entropy loss for binary 
+models. NOTE: when result is 0.69315, the classification is neutral; 
+it assigns equal probability to both classes.
 }

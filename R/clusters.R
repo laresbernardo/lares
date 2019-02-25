@@ -2,7 +2,12 @@
 #' K-Means Clustering Automated
 #' 
 #' This function lets the user cluster a whole data.frame automatically.
-#' If needed, one hot encoding will be applied to categorical values.
+#' As you might know, the goal of kmeans is to group data points into 
+#' distinct non-overlapping subgroups. If needed, one hot encoding will 
+#' be applied to categorical values automatically with this function. 
+#' For consideration: Scale/standardize the data when applying kmeans.
+#' Also, kmeans assumes spherical shapes of clusters and doesn’t work well 
+#' when clusters are in different shapes such as elliptical clusters.
 #' 
 #' @param df Dataframe
 #' @param k Integer. Number of clusters

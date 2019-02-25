@@ -40,9 +40,9 @@ msplit <- function(df, size = 0.7, seed = NA, print=T) {
 ####################################################################
 #' Loggarithmic Loss Function for Binary Models
 #'
-#' This function calculates Loggarithmic Loss for Binary Models
-#' You can define a seed to get the same results every time, but has a default value.
-#' You can prevent it from printing the split counter result.
+#' This function calculates log loss/cross-entropy loss for binary 
+#' models. NOTE: when result is 0.69315, the classification is neutral; 
+#' it assigns equal probability to both classes.
 #'
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
@@ -50,18 +50,14 @@ msplit <- function(df, size = 0.7, seed = NA, print=T) {
 #' @export
 loglossBinary <- function(tag, score, eps = 1e-15) {
   
-  # Note: 0.69315 - the classification is neutral; it assigns equal probability to both classes
-  
   if (length(unique(tag)) != 2) {
     stop("Your 'tag' vector is not binary!")
   }
   
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
-    stop(message(paste("Currently, tag has", 
-                       length(tag),
-                       "rows and score has", 
-                       length(score)))
+    stop(message(paste("Currently, tag has", length(tag),
+                       "rows and score has", length(score)))
     )
   }
   
@@ -69,8 +65,10 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
     tag <- as.integer(tag) - 1
   }
   
-  score <- pmin(pmax(score, eps), 1-eps)
-  - (sum(tag * log(score) + (1 - tag) * log(1 - score))) / length(tag)
+  score <- pmax(pmin(score, 1 - eps), eps)
+  LogLoss <- -mean(tag * log(score) + (1 - tag) * log(1 - score))
+  
+  return(LogLoss)
   
 }
 
@@ -211,23 +209,19 @@ h2o_automl <- function(df,
       parameters = m@parameters,
       importance = imp,
       auc_test = NA, #h2o.auc(m, valid=TRUE)
-      logloss_test = NA,
       errors_test = NA,
       model_name = as.vector(m@model_id),
       algorithm = m@algorithm,
       leaderboard = aml@leaderboard,
       scoring_history = data.frame(m@model$scoring_history),
-      #scores_df = scores_df,
       seed = seed)
     
     results$metrics <- model_metrics(
       tag = results$scores_test$tag, 
-      score = results$scores_test$score)
+      score = results$scores_test$score,
+      plots = FALSE)
     
     if (length(unique(train$tag)) == 2) {
-      results$logloss_test <- loglossBinary(
-        tag = results$scores_test$tag, 
-        score = results$scores_test$score) 
       results$errors_test <- errors(
         tag = results$scores_test$tag, 
         score = results$scores_test$score) 
@@ -635,11 +629,11 @@ h2o_predict_model <- function(df, model){
 #' @param score Vector. Predicted value or model's result
 #' @param thresh Numeric. Value which splits the results for the 
 #' confusion matrix.
-#' @param size Numeric. Change bubble's size if needed
+#' @param plots Boolean. Include plots?
 #' @param subtitle Character. Subtitle for plots
 #' @export
 model_metrics <- function(tag, score, thresh = 0.5, 
-                          size = 2.5, subtitle = NA){
+                          plots = TRUE, subtitle = NA){
   
   metrics <- list()
   type <- ifelse(length(unique(tag)) <= 10, "Classification", "Regression")
@@ -684,44 +678,49 @@ model_metrics <- function(tag, score, thresh = 0.5,
         Logloss = loglossBinary(tag, score)
       )
       # ROC CURVE PLOT
-      plot_roc <- invisible(mplot_roc(tag, score))
-      if (!is.na(subtitle)) {
-        plot_roc <- plot_roc + labs(subtitle = subtitle)
+      if (plots) {
+        plot_roc <- invisible(mplot_roc(tag, score))
+        if (!is.na(subtitle)) {
+          plot_roc <- plot_roc + labs(subtitle = subtitle)
+        }
+        metrics[["plot_ROC"]] <- plot_roc
       }
-      metrics[["plot_ROC"]] <- plot_roc
+
     } else {
       metrics[["ACC"]] <- signif(trues / total, 5)
     }
     
     # CONFUSION MATRIX PLOT
-    plot_cf <- data.frame(conf_mat) %>%
-      mutate(perc = round(100 * Freq / sum(Freq), 2)) %>%
-      mutate(label = paste0(formatNum(Freq, 0),"\n", perc,"%")) %>%
-      ggplot(aes(
-        y = factor(Real, levels = rev(labels)), 
-        x = as.character(Pred), 
-        fill= Freq, size=Freq, 
-        label = label)) +
-      geom_tile() + theme_minimal() +
-      geom_text(colour="white") + 
-      scale_size(range = c(1, 3.5)) +
-      guides(fill=FALSE, size=FALSE, colour=FALSE) +
-      labs(x="Predicted values", y="Real values",
-           title = ifelse(length(unique(tag)) == 2,
-                          paste("Confusion Matrix with Threshold =", thresh),
-                          paste("Confusion Matrix for", length(unique(tag)), "Categories")),
-           subtitle = paste0("Accuracy: ", round(100*(trues / total), 2), "%")) +
-      theme(axis.text.x = element_text(angle=30, hjust=0)) +
-      scale_x_discrete(position = "top") +
-      theme(axis.text.x.bottom = element_blank(), 
-            axis.ticks.x.bottom = element_blank(),
-            axis.text.y.right = element_blank(),
-            axis.ticks.y.right = element_blank())
-    
-    if (!is.na(subtitle)) {
-      plot_cf <- plot_cf + labs(subtitle = subtitle)
+    if (plots) {
+      plot_cf <- data.frame(conf_mat) %>%
+        mutate(perc = round(100 * Freq / sum(Freq), 2)) %>%
+        mutate(label = paste0(formatNum(Freq, 0),"\n", perc,"%")) %>%
+        ggplot(aes(
+          y = factor(Real, levels = rev(labels)), 
+          x = as.character(Pred), 
+          fill= Freq, size=Freq, 
+          label = label)) +
+        geom_tile() + theme_minimal() +
+        geom_text(colour="white") + 
+        scale_size(range = c(1.2, 3.5)) +
+        guides(fill=FALSE, size=FALSE, colour=FALSE) +
+        labs(x="Predicted values", y="Real values",
+             title = ifelse(length(unique(tag)) == 2,
+                            paste("Confusion Matrix with Threshold =", thresh),
+                            paste("Confusion Matrix for", length(unique(tag)), "Categories")),
+             subtitle = paste0("Accuracy: ", round(100*(trues / total), 2), "%")) +
+        theme(axis.text.x = element_text(angle=30, hjust=0)) +
+        scale_x_discrete(position = "top") +
+        theme(axis.text.x.bottom = element_blank(), 
+              axis.ticks.x.bottom = element_blank(),
+              axis.text.y.right = element_blank(),
+              axis.ticks.y.right = element_blank())
+      
+      if (!is.na(subtitle)) {
+        plot_cf <- plot_cf + labs(subtitle = subtitle)
+      }
+      metrics[["plot_ConfMat"]] <- plot_cf 
     }
-    metrics[["plot_ConfMat"]] <- plot_cf
   }
   
   if (type == "Regression") {
