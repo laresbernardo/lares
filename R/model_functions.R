@@ -219,7 +219,7 @@ h2o_automl <- function(df,
     results$metrics <- model_metrics(
       tag = results$scores_test$tag, 
       score = results$scores_test$score,
-      plots = FALSE)
+      plots = TRUE)
     
     if (length(unique(train$tag)) == 2) {
       results$errors_test <- errors(
