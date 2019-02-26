@@ -204,7 +204,8 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
                                    100 - (100 * StartUSD / Close)),
            RelChangeUSDHist = Stocks * (Close - StartUSD) - sum(Expenses)) %>%
     arrange(desc(Date)) %>% 
-    #mutate_if(is.numeric, funs(round(., 2))) %>% ungroup() %>%
+    #mutate_if(is.numeric, funs(round(., 2))) %>% 
+    ungroup() %>%
     mutate_at(vars(-contains("Date")), funs(replace(., is.na(.), 0))) %>%
     filter(Volume > 0)
   
