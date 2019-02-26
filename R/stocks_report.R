@@ -17,24 +17,33 @@ get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Document
     return(mylist)
   }
   
-  if (!is.na(filename)) {
-    if (file.exists(filename)) {
-      results <- processFile(filename)
-    } else {
-      stop("Error: that file doesn't exist or it's not in your working directory!")
-    }
+  # FOR PERSONAL USE
+  local <- Sys.info()
+  if (local[["nodename"]] == "MacBook-Pro-de-Bernardo.local") {
+    local <- "~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio/Portfolio LC.xlsx"
+    results <- processFile(local) 
   } else {
-    token_dir <- token_dir
-    load(paste0(token_dir, "/token_pers.rds"))
-    x <- drop_search("Portfolio LC.xlsx", dtoken = token)
-    file <- "temp.xlsx"
-    invisible(
-      drop_download(x$matches[[1]]$metadata$path_lower,
-                    local_path = file,
-                    overwrite = TRUE,
-                    dtoken = token))
-    results <- processFile(file)
-    file.remove(file)
+    # FOR EVERYONE'S USE
+    if (!is.na(filename)) {
+      if (file.exists(filename)) {
+        results <- processFile(filename)
+      } else {
+        stop("Error: that file doesn't exist or it's not in your working directory!")
+      }
+    } else {
+      # FOR DROPBOX'S USE
+      token_dir <- token_dir
+      load(paste0(token_dir, "/token_pers.rds"))
+      x <- drop_search("Portfolio LC.xlsx", dtoken = token)
+      file <- "temp.xlsx"
+      invisible(
+        drop_download(x$matches[[1]]$metadata$path_lower,
+                      local_path = file,
+                      overwrite = TRUE,
+                      dtoken = token))
+      results <- processFile(file)
+      file.remove(file)
+    } 
   }
   message("File imported succesfully!")
   return(results)   
@@ -61,6 +70,11 @@ get_stocks_hist <- function(symbols = NA,
                             verbose = TRUE) {
   
   options(warn=-1)
+  
+  if (!haveInternet()) {
+    stop("You currently have NO internet connection!")
+  }
+  
   options("getSymbols.warning4.0"=FALSE)
   options("getSymbols.yahoo.warning"=FALSE)
   data <- divs <- c()
@@ -119,7 +133,7 @@ get_stocks_hist <- function(symbols = NA,
         }
       }
     } else { message("The parameters 'symbols' and 'from' should be the same length.") }
-  } else { message("You need to define which stocks to bring. Use the 'stocks=' parameter.") }
+  } else { message("You need to define which stocks to bring. Use the 'symbols=' parameter.") }
   results <- list("values" = data, "dividends" = divs)
   return(results)
 }

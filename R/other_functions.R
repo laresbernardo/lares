@@ -950,3 +950,21 @@ quiet <- function(fx) {
   on.exit(sink()) 
   invisible(force(fx)) 
 } 
+
+
+####################################################################
+#' Internet Connection Check
+#' 
+#' This function checks if your R session currently have Wifi or 
+#' Internet connection.
+#' 
+#' @export
+haveInternet <- function() {
+  if (.Platform$OS.type == "windows") {
+    ipmessage <- system("ipconfig", intern = TRUE)
+  } else {
+    ipmessage <- system("ifconfig", intern = TRUE)
+  }
+  validIP <- "((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
+  any(grep(validIP, ipmessage))
+}
