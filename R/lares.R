@@ -68,7 +68,7 @@ if(getRversion() >= "2.15.1")
       "image_darknet_detect","image_darknet_model","image_info","image_read","index",
       "is_contact","key","label","label_colours","label_hjust","max_score","merge_audits",
       "merged_vids","min_score","model_performance","month.lbl","numb","ocv_bitmap",
-      "ocv_camera","ocv_copyto","ocv_face","ocv_facemask","ocv_read","ocv_video",
+      "ocv_camera","ocv_copyto","ocv_face","ocv_facemask","ocv_read","ocv_video","Adjusted",
       "ocv_write","p","p_error","palette_light","portalId","portal_id","pos","get_ip",
       "prediction_breakdown","q_na","quantile_tag","question","rbind.fill","readJPEG",
       "readPNG","read_exif","real_error","removeNumbers","removePunctuation","dummy",

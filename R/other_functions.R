@@ -958,13 +958,15 @@ quiet <- function(fx) {
 #' This function checks if your R session currently have Wifi or 
 #' Internet connection.
 #' 
+#' @param thresh Numeric. How many seconds to consider a slow connection?  
+#' @param url Character. URL to test the readLines 1 command
 #' @export
-haveInternet <- function() {
-  if (.Platform$OS.type == "windows") {
-    ipmessage <- system("ipconfig", intern = TRUE)
-  } else {
-    ipmessage <- system("ifconfig", intern = TRUE)
+haveInternet <- function(thresh = 3, url = "http://www.google.com") {
+  start <- Sys.time()
+  if (!capabilities(what = "http/ftp")) return(FALSE)
+  test <- try(suppressWarnings(readLines(url, n = 1)), silent = TRUE)
+  if (as.numeric(Sys.time() - start) > thresh) {
+    message("Slow internet connection but available...")
   }
-  validIP <- "((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
-  any(grep(validIP, ipmessage))
+  return(!inherits(test, "try-error"))
 }

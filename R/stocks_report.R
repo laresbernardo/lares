@@ -203,7 +203,7 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
            RelChangePHist = ifelse(Date == min(Date), 0, 
                                    100 - (100 * StartUSD / Close)),
            RelChangeUSDHist = Stocks * (Close - StartUSD) - sum(Expenses)) %>%
-    arrange(desc(Date)) %>%
+    arrange(desc(Date)) %>% 
     mutate_if(is.numeric, funs(round(., 2))) %>% ungroup() %>%
     mutate_at(vars(-contains("Date")), funs(replace(., is.na(.), 0))) %>%
     filter(Volume > 0)
@@ -410,14 +410,17 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
 #' 
 #' @param portfolio Dataframe. Output of the portfolio_perf function
 #' @param daily Dataframe. Daily data
+#' @param weighted Boolean. Should variation values be weighted to the
+#' portfolio (or simply compared with initial value)?
 #' @param group Boolean. Group stocks by stocks type?
+#' @param save Boolean. Do you wish to save the plot?
 #' @export
-stocks_daily_plot <- function (portfolio, daily, group = TRUE) {
+stocks_daily_plot <- function (portfolio, daily, weighted = TRUE, group = TRUE, save = TRUE) {
   
-  plot <- d <- daily %>%
-    left_join(portfolio %>% dplyr::select(Symbol,Type), by='Symbol') %>%
+  d <- daily %>%
+    left_join(portfolio %>% dplyr::select(Symbol,Type,StockValue), by='Symbol') %>%
     arrange(Date) %>% group_by(Symbol) %>%
-    mutate(Hist = RelChangePHist,
+    mutate(Hist = if (weighted) {100*(1-cumsum(Amount)/(Stocks*Adjusted))} else {RelChangePHist},
            BuySell = ifelse(Amount > 0, "Bought", ifelse(Amount < 0, "Sold", NA)))
   labels <- d %>% filter(Date == max(Date))
   amounts <- d %>% filter(Amount != 0) %>%
@@ -431,13 +434,18 @@ stocks_daily_plot <- function (portfolio, daily, group = TRUE) {
     scale_size(range = c(0, 3.2)) + guides(size=F, colour=F) + 
     xlim(min(d$Date), max(d$Date) + round(days*0.08)) +
     labs(title = 'Daily Portfolio\'s Stocks Change (%) since Start', x = '',
-         subtitle = 'Note that the real weighted change is not shown', colour = '') +
+         subtitle = 'Showing absolute delta values since first purchase', colour = '') +
     geom_label_repel(data=amounts, aes(x=Date, y=Hist, label=label), size=2) +
     geom_label(data=labels, aes(x=Date, y=Hist, label=Symbol), size=2.5, hjust=-0.2, alpha=0.6)
-  if (group == TRUE) {
+  if (group) {
     plot <- plot + facet_grid(Type ~ ., scales = "free", switch = "both") 
   }
-  plot + ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300)
+  if (weighted) {
+    plot <- plot + labs(subtitle = "Showing real weighted portfolio delta values") 
+  }
+  if (save) {
+    plot + ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300) 
+  }
   
   return(plot)
   
@@ -535,7 +543,8 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   p2 <- stocks_total_plot(stocks_perf, portfolio_perf, daily, 
                           trans = data$transactions, 
                           cash = data$cash)
-  p3 <- stocks_daily_plot(portfolio = data$portfolio, daily)
+  p3 <- stocks_daily_plot(portfolio = data$portfolio, daily, weighted = FALSE)
+  p5 <- stocks_daily_plot(portfolio = data$portfolio, daily, weighted = TRUE)
   p4 <- portfolio_distr_plot(portfolio_perf, daily)
   graphics.off()
   message("Graphics ready...")
@@ -543,7 +552,8 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   # Consolidation
   results <- list(p_portf_daily_change = p1,
                   p_portf_stocks_change = p2,
-                  p_portf_stocks_histchange = p3,
+                  p_portf_stocks_histchange_weighted = p5,
+                  p_portf_stocks_histchange_absolute = p3,
                   p_portf_distribution = p4,
                   df_portfolio_perf = portfolio_perf,
                   df_stocks_perf = stocks_perf,
@@ -575,9 +585,10 @@ stocks_html <- function(results) {
   # Can be more accurate with names but works for me!
   params <- list(portf_daily_change = results[[1]],
                  portf_stocks_change = results[[2]],
-                 portf_stocks_histchange = results[[3]],
-                 portf_distribution = results[[4]],
-                 portfolio_perf = results[[5]])
+                 portf_stocks_histchange_weighted = results[[3]],
+                 portf_stocks_histchange_absolute = results[[4]],
+                 portf_distribution = results[[5]],
+                 portfolio_perf = results[[6]])
   invisible(file.copy(
     from = system.file("docs", "stocksReport.Rmd", package = "lares"),
     to = dir, 
