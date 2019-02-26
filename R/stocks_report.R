@@ -204,7 +204,7 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
                                    100 - (100 * StartUSD / Close)),
            RelChangeUSDHist = Stocks * (Close - StartUSD) - sum(Expenses)) %>%
     arrange(desc(Date)) %>% 
-    mutate_if(is.numeric, funs(round(., 2))) %>% ungroup() %>%
+    #mutate_if(is.numeric, funs(round(., 2))) %>% ungroup() %>%
     mutate_at(vars(-contains("Date")), funs(replace(., is.na(.), 0))) %>%
     filter(Volume > 0)
   
@@ -302,6 +302,50 @@ portfolio_performance <- function(portfolio, daily) {
     left_join(divIn, by = c('Symbol')) %>%
     mutate_if(is.numeric, funs(round(., 2))) %>%
     dplyr::select(Symbol:StockIniValue, StockValue, InvPerc, RealPerc, everything())
+  
+  return(result)
+  
+}
+
+
+####################################################################
+#' Portfolio Daily Performance
+#' 
+#' This function lets the user calculate daily portfolio performance
+#' 
+#' @param data Dataframe. Result from get_stocks()
+#' @param dailys Dataframe. Result from get_stocks_hist()
+#' @param cash_fix Numeric. If you wish to algebraically sum a value 
+#' to your cash balance
+#' @export
+portfolio_daily <- function(data, dailys, cash_fix = 0) {
+  
+  daily_fixed <- lares::stocks_hist_fix(dailys = dailys$values, 
+                                        dividends = dailys$dividends, 
+                                        transactions = data$transactions)
+  
+  mindate <- as.Date(min(as.Date(daily_fixed$Date), origin="1970-01-01"))
+  
+  result <- data.frame(Date = as.Date(mindate:Sys.Date(), origin="1970-01-01")) %>%
+    left_join(data$cash %>% select(Date, Cash) %>% rename(Deposit = Cash), "Date") %>%
+    left_join(data$transactions %>% group_by(Date) %>% summarise(Amount = sum(Amount)) %>%
+                select(Date, Amount) %>% rename(Invest = Amount), "Date") %>%
+    left_join(daily_fixed %>% group_by(Date) %>% 
+                summarise(StocksValue = sum(DailyValue), Dividend = sum(DailyDiv),
+                          Expense = sum(Expenses)) %>% 
+                select(Date, StocksValue, Dividend, Expense), "Date") %>%
+    arrange(Date) %>% replace(., is.na(.), 0) %>%
+    mutate(Deposited = cumsum(Deposit)) %>%
+    mutate(Invested = cumsum(Invest)) %>%
+    mutate(StocksValue = ifelse(StocksValue == 0, lag(StocksValue), StocksValue)) %>%
+    mutate(StocksValue = ifelse(StocksValue == 0, lag(StocksValue), StocksValue)) %>%
+    mutate(StocksValue = ifelse(StocksValue == 0, lag(StocksValue), StocksValue)) %>%
+    mutate(Dividends = cumsum(Dividend)) %>%
+    mutate(Expenses = cumsum(Expense)) %>%
+    mutate(Portfolio = (Deposited - Invested) + StocksValue + Dividends - Expenses) %>%
+    mutate(Cash = Portfolio - StocksValue - Expenses + cash_fix) %>%
+    mutate(Performance = round(100 * (1 - Invested/StocksValue), 2)) %>%
+    select(Date,Deposit,Invest,Dividend,Expense,Deposited,Invested,Dividends,Expenses,StocksValue,everything())
   
   return(result)
   
@@ -494,6 +538,37 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
 
 
 ####################################################################
+#' Portfolio's Daily Cumulative
+#' 
+#' This function lets the user plot his portfolio's daily cumulative
+#' 
+#' @param portfolio Dataframe. Results from portfolio_daily()
+#' @export
+portfolio_total_plot <- function(portfolio) {
+  
+  labels <- portfolio %>% filter(Deposit != 0)
+  caption <- paste0("Portfolio: $", formatNum(portfolio$Portfolio[nrow(portfolio)]),
+                    "\nInvested: $", formatNum(portfolio$StocksValue[nrow(portfolio)]))
+  
+  p <- data.frame(Date = rep(portfolio$Date, 2),
+                  type = c(rep("Invested", nrow(portfolio)), 
+                           rep("Cash", nrow(portfolio))),
+                  values = c(portfolio$StocksValue, portfolio$Cash)) %>%
+    ggplot() + theme_minimal() +
+    geom_area(aes(x=Date, y=values, fill=type)) + 
+    labs(title = "   Daily Total Portfolio Value", y = "", x = "", fill ="") +
+    geom_label_repel(data=labels, aes(x=Date, y=Portfolio, label=formatNum(Deposit, 0)), 
+                     vjust = -1.3, size=2.5) +
+    scale_y_continuous(position = "right", labels=scales::comma) +
+    theme(legend.position = "top", legend.justification=c(0, 1)) +
+    annotate("text", label = caption, x = max(portfolio$Date), 
+             y = 0.09*max(portfolio$Portfolio), 
+             size = 3.3, colour = "white", hjust = 1.1)
+  return(p)
+}
+
+
+####################################################################
 #' Portfolio's Calculations and Plots
 #' 
 #' This function lets the user create his portfolio's calculations and
@@ -536,6 +611,8 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
                                     cash_fix = cash_fix)
   portfolio_perf <- portfolio_performance(portfolio = data$portfolio, 
                                           daily = daily)
+  pf_daily <- portfolio_daily(data = data, dailys = hist, cash_fix = cash_fix)
+  
   message("Calculations ready...")
   
   # Visualizations
@@ -546,6 +623,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   p3 <- stocks_daily_plot(portfolio = data$portfolio, daily, weighted = FALSE)
   p5 <- stocks_daily_plot(portfolio = data$portfolio, daily, weighted = TRUE)
   p4 <- portfolio_distr_plot(portfolio_perf, daily)
+  p6 <- portfolio_total_plot(pf_daily)
   graphics.off()
   message("Graphics ready...")
   
@@ -555,7 +633,9 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
                   p_portf_stocks_histchange_weighted = p5,
                   p_portf_stocks_histchange_absolute = p3,
                   p_portf_distribution = p4,
+                  p_portfolio_daily = p6,
                   df_portfolio_perf = portfolio_perf,
+                  df_portfolio_daily = portfolio_daily,
                   df_stocks_perf = stocks_perf,
                   df_daily = daily,
                   df_hist = hist)
@@ -588,7 +668,8 @@ stocks_html <- function(results) {
                  portf_stocks_histchange_weighted = results[[3]],
                  portf_stocks_histchange_absolute = results[[4]],
                  portf_distribution = results[[5]],
-                 portfolio_perf = results[[6]])
+                 portf_daily = results[[6]],
+                 portfolio_perf = results[[7]])
   invisible(file.copy(
     from = system.file("docs", "stocksReport.Rmd", package = "lares"),
     to = dir, 
@@ -672,3 +753,5 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
 # df <- get_stocks() # Get data from my Dropbox
 # hist <- get_stocks_hist(symbols = df$portfolio$Symbol, from = df$portfolio$StartDate)
 # daily <- stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = df$transactions)
+
+
