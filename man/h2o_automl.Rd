@@ -5,8 +5,9 @@
 \title{Automated H2O's AutoML}
 \usage{
 h2o_automl(df, train_test = NA, split = 0.7, seed = 0, thresh = 5,
-  max_time = 5 * 60, max_models = 25, alarm = TRUE, export = FALSE,
-  plot = FALSE, project = "Machine Learning Model")
+  max_time = 5 * 60, max_models = 25, start_clean = TRUE,
+  alarm = TRUE, export = FALSE, plot = FALSE,
+  project = "Machine Learning Model")
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
@@ -29,6 +30,9 @@ to iterate}
 
 \item{max_models}{Numeric. Max models you wish for the function 
 to create}
+
+\item{start_clean}{Boolean. Erase everything in the current h2o 
+instance before we start to train models?}
 
 \item{alarm}{Boolean. Ping an alarm when ready!}
 

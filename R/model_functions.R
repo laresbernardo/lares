@@ -95,6 +95,8 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' to iterate
 #' @param max_models Numeric. Max models you wish for the function 
 #' to create
+#' @param start_clean Boolean. Erase everything in the current h2o 
+#' instance before we start to train models?
 #' @param alarm Boolean. Ping an alarm when ready!
 #' @param export Boolean. Do you wish to save results into your 
 #' working directory?
@@ -109,6 +111,7 @@ h2o_automl <- function(df,
                        thresh = 5,
                        max_time = 5*60,
                        max_models = 25,
+                       start_clean = TRUE,
                        alarm = TRUE,
                        export = FALSE,
                        plot = FALSE,
@@ -157,8 +160,10 @@ h2o_automl <- function(df,
   ####### Train model #######
   
   quiet(h2o.init(nthreads = -1, port=54321, min_mem_size="8g"))
+  if (start_clean) {
+    quiet(h2o.removeAll()) 
+  }
   #h2o.shutdown()
-  quiet(h2o.removeAll())
   
   message(paste("Iterating until", max_models, "models or", max_time, "seconds..."))
   aml <- h2o::h2o.automl(x = setdiff(names(df), "tag"), 
