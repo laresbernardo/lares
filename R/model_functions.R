@@ -162,6 +162,8 @@ h2o_automl <- function(df,
   quiet(h2o.init(nthreads = -1, port=54321, min_mem_size="8g"))
   if (start_clean) {
     quiet(h2o.removeAll()) 
+  } else {
+    message("Previous trained models are not being erased. Use 'start_clean' parameter if needed.")
   }
   #h2o.shutdown()
   
