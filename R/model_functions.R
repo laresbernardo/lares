@@ -179,6 +179,8 @@ h2o_automl <- function(df,
                          seed = seed)
   message(paste("Succesfully trained", nrow(aml@leaderboard), "models:"))
   print(aml@leaderboard[,1:3])
+  flow <- "http://localhost:54321/flow/index.html"
+  message("Check results in H2O Flow's nice interface: ", flow)
   
   # Select model (Best one by default)
   m <- h2o.getModel(as.vector(aml@leaderboard$model_id[1]))  
@@ -349,10 +351,8 @@ export_results <- function(results,
                            sample_size = 10,
                            subdir = NA) {
   
-  # require(h2o)
   options(warn=-1)
-  h2o.init(nthreads = -1, port=54321, min_mem_size="8g")
-  
+  quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
   
   # We create a directory to save all our results
   first <- ifelse(length(unique(results$scores_test$tag)) > 6,
