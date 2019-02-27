@@ -357,7 +357,7 @@ export_results <- function(results,
   # We create a directory to save all our results
   first <- ifelse(length(unique(results$scores_test$tag)) > 6,
                   signif(results$errors_test$rmse, 4),
-                  round(100*results$auc_test, 2))
+                  round(100*results_bm$metrics$metrics$AUC, 2))
   subdirname <- paste0(first, "-", results$model_name)  
   if (!is.na(subdir)) {
     subdir <- paste0(subdir, "/", subdirname)
@@ -385,7 +385,9 @@ export_results <- function(results,
   }
   
   if (txt == TRUE) {
-    tags <- c(as.character(results$datasets$test$tag), as.character(results$datasets$train$tag))
+    
+    tags <- c(as.character(results$datasets$test$tag), 
+              as.character(results$datasets$train$tag))
     tags_test <- results$datasets$test
     tags_train <- results$datasets$train
     random_sample <- sample(1:nrow(results$scores_test), sample_size)
@@ -399,16 +401,14 @@ export_results <- function(results,
                                      round(100*nrow(tags_train)/length(tags)), sep=" / "),
                                paste(nrow(tags_test), nrow(tags_train), sep=" vs. ")),
              "Total"=length(tags)),
-      "Metrics" = 
-        list("Test AUC" = results$auc_test,
-             "Test Errors" = results$errors_test,
-             "Test LogLoss" = results$logloss_test),
+      "Metrics" = results_bm$metrics$metrics,
       "Variable Importance" = results$importance,
       "Model Results" = results$model,
       "Models Leaderboard" = results$leaderboard,
-      "10 Scoring examples" = cbind(real = results$scores_test$tag[random_sample],
-                                    score = results$scores_test$score[random_sample], 
-                                    results$datasets$test[random_sample, names(results$datasets$test) != "tag"])
+      "10 Scoring examples" = cbind(
+        real = results$scores_test$tag[random_sample],
+        score = results$scores_test$score[random_sample], 
+        results$datasets$test[random_sample, names(results$datasets$test) != "tag"])
     )
     capture.output(results_txt, file = paste0(subdir, "/results.txt"))
   }
