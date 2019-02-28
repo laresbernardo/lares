@@ -9,7 +9,7 @@ h2o_predict_binary(df, model_path, sample = NA)
 \arguments{
 \item{df}{Dataframe. Data to insert into the model}
 
-\item{model_path}{Character. Relative model_path directory}
+\item{model_path}{Character. Relative model_path directory or zip file}
 
 \item{sample}{Integer. How many rows should the function predict?}
 }

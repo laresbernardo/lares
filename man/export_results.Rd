@@ -5,7 +5,8 @@
 \title{Export h2o_automl's Results}
 \usage{
 export_results(results, txt = TRUE, rds = TRUE, binary = TRUE,
-  pojo = TRUE, mojo = TRUE, sample_size = 10, subdir = NA)
+  pojo = TRUE, mojo = TRUE, sample_size = 10, subdir = NA,
+  save = TRUE)
 }
 \arguments{
 \item{results}{Object. h2o_automl output}
@@ -23,6 +24,8 @@ export_results(results, txt = TRUE, rds = TRUE, binary = TRUE,
 \item{sample_size}{Integer. How many example rows do you want to show?}
 
 \item{subdir}{Character. In which directory do you wish to save the results?}
+
+\item{save}{Boolean. Do you wish to save/export results?}
 }
 \description{
 Export RDS, TXT, POJO, MOJO and all results from h2o_automl

@@ -98,8 +98,10 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' @param start_clean Boolean. Erase everything in the current h2o 
 #' instance before we start to train models?
 #' @param alarm Boolean. Ping an alarm when ready!
-#' @param export Boolean. Do you wish to save results into your 
+#' @param save Boolean. Do you wish to save/export results into your 
 #' working directory?
+#' @param subdir Character. In which directory do you wish to save 
+#' the results? Working directory as default.
 #' @param plot Boolean. Do you want to plot the results with 
 #' mplot_full function?
 #' @param project Character. Your project's name
@@ -113,7 +115,8 @@ h2o_automl <- function(df,
                        max_models = 25,
                        start_clean = TRUE,
                        alarm = TRUE,
-                       export = FALSE,
+                       save = FALSE,
+                       subdir = NA,
                        plot = FALSE,
                        project = "Machine Learning Model") {
   
@@ -198,7 +201,6 @@ h2o_automl <- function(df,
   
   # CLASSIFICATION MODELS
   if (type == "Classifier") {
-    
     if (length(unique(train$tag)) == 2) {
       # Binaries
       scores <- scores[,2]
@@ -206,7 +208,6 @@ h2o_automl <- function(df,
       # More than 2 cateogies
       scores <- scores[,1]
     }
-    
     results <- list(
       project = project,
       model = m,
@@ -246,6 +247,7 @@ h2o_automl <- function(df,
     
   } 
   
+  # REGRESION MODELS
   if (type == "Regression") {
     results <- list(
       project = project,
@@ -254,7 +256,7 @@ h2o_automl <- function(df,
         index = c(1:nrow(test)),
         tag = as.vector(test$tag),
         score = as.vector(scores$predict)),
-      #scores_df = scores_df,
+      metrics = NULL,
       scoring_history = data.frame(m@model$scoring_history),
       datasets = list(test = test, train = train),
       parameters = m@parameters,
@@ -264,12 +266,17 @@ h2o_automl <- function(df,
       algorithm = m@algorithm,
       leaderboard = aml@leaderboard
     )
+    
+    results$metrics <- model_metrics(
+      tag = results$scores_test$tag, 
+      score = results$scores_test$score,
+      plots = TRUE)
   }
   
   message(paste0("Training duration: ", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
   
-  if (export) {
-    export_results(results)
+  if (save) {
+    export_results(results, subdir = subdir)
     message("Results and model files exported succesfully!")
   }
   
@@ -341,6 +348,7 @@ h2o_selectmodel <- function(results, which_model = 1) {
 #' @param mojo Boolean. Do you wish to export the MOJO model?
 #' @param sample_size Integer. How many example rows do you want to show?
 #' @param subdir Character. In which directory do you wish to save the results?
+#' @param save Boolean. Do you wish to save/export results?
 #' @export
 export_results <- function(results, 
                            txt = TRUE, 
@@ -349,69 +357,73 @@ export_results <- function(results,
                            pojo = TRUE, 
                            mojo = TRUE, 
                            sample_size = 10,
-                           subdir = NA) {
+                           subdir = NA,
+                           save = TRUE) {
   
-  options(warn=-1)
-  quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
-  
-  # We create a directory to save all our results
-  first <- ifelse(length(unique(results$scores_test$tag)) > 6,
-                  signif(results$errors_test$rmse, 4),
-                  round(100*results_bm$metrics$metrics$AUC, 2))
-  subdirname <- paste0(first, "-", results$model_name)  
-  if (!is.na(subdir)) {
-    subdir <- paste0(subdir, "/", subdirname)
-  } else {
-    subdir <- subdirname
-  }
-  dir.create(subdir)
-  
-  # Export Results List
-  if (rds == TRUE) {
-    saveRDS(results, file=paste0(subdir, "/results.rds")) 
-  }
-  
-  # Export Model as POJO & MOJO for Production
-  if (pojo == TRUE) {
-    h2o.download_pojo(results$model, path=subdir)  
-  }
-  if (mojo == TRUE) {
-    h2o.download_mojo(results$model, path=subdir)  
-  }
-  
-  # Export Binary
-  if (mojo == TRUE) {
-    h2o.saveModel(results$model, path=subdir, force=TRUE)
-  }
-  
-  if (txt == TRUE) {
+  if (save) {
     
-    tags <- c(as.character(results$datasets$test$tag), 
-              as.character(results$datasets$train$tag))
-    tags_test <- results$datasets$test
-    tags_train <- results$datasets$train
-    random_sample <- sample(1:nrow(results$scores_test), sample_size)
+    options(warn=-1)
+    quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
     
-    results_txt <- list(
-      "Project" = results$project,
-      "Model" = results$model_name,
-      "Dimensions" = 
-        list("Distribution" = table(tags),
-             "Test vs Train" = c(paste(round(100*nrow(tags_test)/length(tags)),
-                                       round(100*nrow(tags_train)/length(tags)), sep=" / "),
-                                 paste(nrow(tags_test), nrow(tags_train), sep=" vs. ")),
-             "Total" = length(tags)),
-      "Metrics" = model_metrics(results$scores_test$tag, 
-                                results$scores_test$score, plots = FALSE),
-      "Variable Importance" = results$importance,
-      "Model Results" = results$model,
-      "Models Leaderboard" = results$leaderboard,
-      "10 Scoring examples" = cbind(
-        real = results$scores_test$tag[random_sample],
-        score = results$scores_test$score[random_sample], 
-        results$datasets$test[random_sample, names(results$datasets$test) != "tag"])
-    )
-    capture.output(results_txt, file = paste0(subdir, "/results.txt"))
+    # We create a directory to save all our results
+    first <- ifelse(length(unique(results$scores_test$tag)) > 6,
+                    signif(results$errors_test$rmse, 4),
+                    round(100*results$metrics$metrics$AUC, 2))
+    subdirname <- paste0(first, "-", results$model_name)  
+    if (!is.na(subdir)) {
+      subdir <- paste0(subdir, "/", subdirname)
+    } else {
+      subdir <- subdirname
+    }
+    dir.create(subdir)
+    
+    # Export Results List
+    if (rds == TRUE) {
+      saveRDS(results, file=paste0(subdir, "/results.rds")) 
+    }
+    
+    # Export Model as POJO & MOJO for Production
+    if (pojo == TRUE) {
+      h2o.download_pojo(results$model, path=subdir)  
+    }
+    if (mojo == TRUE) {
+      h2o.download_mojo(results$model, path=subdir)  
+    }
+    
+    # Export Binary
+    if (mojo == TRUE) {
+      h2o.saveModel(results$model, path=subdir, force=TRUE)
+    }
+    
+    if (txt == TRUE) {
+      
+      tags <- c(as.character(results$datasets$test$tag), 
+                as.character(results$datasets$train$tag))
+      tags_test <- results$datasets$test
+      tags_train <- results$datasets$train
+      random_sample <- sample(1:nrow(results$scores_test), sample_size)
+      
+      results_txt <- list(
+        "Project" = results$project,
+        "Model" = results$model_name,
+        "Dimensions" = 
+          list("Distribution" = table(tags),
+               "Test vs Train" = c(paste(round(100*nrow(tags_test)/length(tags)),
+                                         round(100*nrow(tags_train)/length(tags)), sep=" / "),
+                                   paste(nrow(tags_test), nrow(tags_train), sep=" vs. ")),
+               "Total" = length(tags)),
+        "Metrics" = model_metrics(results$scores_test$tag, 
+                                  results$scores_test$score, plots = FALSE),
+        "Variable Importance" = results$importance,
+        "Model Results" = results$model,
+        "Models Leaderboard" = results$leaderboard,
+        "10 Scoring examples" = cbind(
+          real = results$scores_test$tag[random_sample],
+          score = results$scores_test$score[random_sample], 
+          results$datasets$test[random_sample, names(results$datasets$test) != "tag"])
+      )
+      capture.output(results_txt, file = paste0(subdir, "/results.txt"))
+    } 
   }
 }
 
@@ -534,6 +546,7 @@ h2o_predict_MOJO <- function(df, model_path, sample = NA){
     json <- toJSON(df)
   }
   
+  quiet(h2o.init(nthreads = -1, port=54321, min_mem_size="8g"))
   x <- h2o.predict_json(zip, json)
   
   if (length(x$error) >= 1) {
@@ -555,14 +568,20 @@ h2o_predict_MOJO <- function(df, model_path, sample = NA){
 #' h2o's version without problem.
 #' 
 #' @param df Dataframe. Data to insert into the model
-#' @param model_path Character. Relative model_path directory
+#' @param model_path Character. Relative model_path directory or zip file
 #' @param sample Integer. How many rows should the function predict?
 #' @export
 h2o_predict_binary <- function(df, model_path, sample = NA){
   
   options(warn=-1)
+  quiet(h2o.init(nthreads = -1, port=54321, min_mem_size="8g"))
   
-  binary <- paste(model_path, gsub(".*-", "", model_path), sep="/")
+  if (!right(model_path, 4) == ".zip") {
+    binary <- paste(model_path, gsub(".*-", "", model_path), sep="/")  
+  } else {
+    binary <- model_path
+  }
+  
   model <- h2o.loadModel(binary)
   
   if(!is.na(sample)) {

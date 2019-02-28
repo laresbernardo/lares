@@ -6,7 +6,7 @@
 \usage{
 h2o_automl(df, train_test = NA, split = 0.7, seed = 0, thresh = 5,
   max_time = 5 * 60, max_models = 25, start_clean = TRUE,
-  alarm = TRUE, export = FALSE, plot = FALSE,
+  alarm = TRUE, save = FALSE, subdir = NA, plot = FALSE,
   project = "Machine Learning Model")
 }
 \arguments{
@@ -36,8 +36,11 @@ instance before we start to train models?}
 
 \item{alarm}{Boolean. Ping an alarm when ready!}
 
-\item{export}{Boolean. Do you wish to save results into your 
+\item{save}{Boolean. Do you wish to save/export results into your 
 working directory?}
+
+\item{subdir}{Character. In which directory do you wish to save 
+the results? Working directory as default.}
 
 \item{plot}{Boolean. Do you want to plot the results with 
 mplot_full function?}
