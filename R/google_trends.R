@@ -24,7 +24,7 @@ trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = c()
     ptitle <- ifelse(which == "related_topics", "Related topics", "Related queries")
     colnames(gtrend_related)[2]<- "related"
     more2 <- length(unique(gtrend_related$keyword))
-    data.frame(related)
+    
     related <- gtrend_related[gtrend_related$related=="top",] %>%
       left_join(gtrend_related[gtrend_related$related=="rising",] %>% 
                   select(value, subject),"value","keyword") %>%
