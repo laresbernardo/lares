@@ -321,12 +321,12 @@ portfolio_performance <- function(portfolio, daily) {
 #' @export
 portfolio_daily <- function(data, dailys, cash_fix = 0) {
   
-  daily_fixed <- lares::stocks_hist_fix(dailys = dailys$values, 
-                                        dividends = dailys$dividends, 
-                                        transactions = data$transactions)
+  daily_fixed <- stocks_hist_fix(dailys = dailys$values, 
+                                 dividends = dailys$dividends, 
+                                 transactions = data$transactions)
   
-  mindate <- as.Date(min(as.Date(daily_fixed$Date), origin="1970-01-01"))
-  
+  mindate <- as.Date(min(as.Date(daily_fixed$Date), origin="1970-01-01"), na.rm = TRUE)
+
   result <- data.frame(Date = as.Date(mindate:Sys.Date(), origin="1970-01-01")) %>%
     left_join(data$cash %>% select(Date, Cash) %>% rename(Deposit = Cash), "Date") %>%
     left_join(data$transactions %>% group_by(Date) %>% summarise(Amount = sum(Amount)) %>%

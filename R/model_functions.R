@@ -710,7 +710,7 @@ model_metrics <- function(tag, score, thresh = 0.5,
         if (!is.na(subtitle)) {
           plot_roc <- plot_roc + labs(subtitle = subtitle)
         }
-        metrics[["plot_ROC"]] <- plot_roc
+        metrics[["plot_ROC"]] <- plot_roc + theme_lares2()
       }
 
     } else {
@@ -729,7 +729,7 @@ model_metrics <- function(tag, score, thresh = 0.5,
           label = label)) +
         geom_tile() + theme_minimal() +
         geom_text(colour="white") + 
-        scale_size(range = c(2.1, 4)) +
+        scale_size(range = c(2.1, 4)) + coord_equal() + 
         guides(fill=FALSE, size=FALSE, colour=FALSE) +
         labs(x="Predicted values", y="Real values",
              title = ifelse(length(unique(tag)) == 2,
@@ -741,7 +741,8 @@ model_metrics <- function(tag, score, thresh = 0.5,
         theme(axis.text.x.bottom = element_blank(), 
               axis.ticks.x.bottom = element_blank(),
               axis.text.y.right = element_blank(),
-              axis.ticks.y.right = element_blank())
+              axis.ticks.y.right = element_blank()) +
+        theme_lares2()
       
       if (!is.na(subtitle)) {
         plot_cf <- plot_cf + labs(subtitle = subtitle)
