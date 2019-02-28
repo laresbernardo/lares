@@ -233,6 +233,8 @@ distr <- function(data, ...,
     
     # Counter plot
     if(type %in% c(1,2)) {
+      vadj <- ifelse(type == 1, -0.15, 0.5)
+      hadj <- ifelse(type == 1, 0.5, -0.15)
       count <- ggplot(freqs, aes(
         x = reorder(as.character(value), order), y=n, 
         fill = tolower(as.character(targets)), 
@@ -241,14 +243,14 @@ distr <- function(data, ...,
         geom_text(colour = "black",
                   check_overlap = TRUE, 
                   position = position_dodge(0.9), 
-                  size = 3, vjust = -0.15) +
+                  size = 3, vjust = vadj, hjust = hadj) +
         labs(x = "", y = "Counter [#]", fill = targets_name, caption = caption) + 
         theme_minimal() + theme(legend.position = "top") + guides(colour = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
         scale_y_continuous(labels = scales::comma)
       # Give an angle to labels when more than...
       if (length(unique(value)) >= 7) {
-        count <- count + theme(axis.text.x = element_text(angle = 45, hjust=1))
+        count <- count + theme(axis.text.x = element_text(angle = 30, hjust=1))
       } 
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
@@ -320,24 +322,23 @@ distr <- function(data, ...,
       count <- count + labs(caption = "")
       if (save == TRUE) {
         png(file_name, height = 1000, width = 1300, res = 200)
-        gridExtra::grid.arrange(count, prop, ncol = 1, nrow = 2)
+        gridExtra::arrangeGrob(count, prop, ncol = 1, nrow = 2)
         dev.off()
       }
-      invisible(gridExtra::grid.arrange(count, prop, ncol = 1, nrow = 2))
+      plot <- invisible(gridExtra::grid.arrange(count, prop, ncol = 1, nrow = 2))
     }
     if (type == 2) {
+      count <- count + coord_flip()
       if (save == TRUE) {
-        count <- count + 
-          ggsave(file_name, width = 8, height = 6)
+        count <- count + ggsave(file_name, width = 8, height = 6)
       }
-      plot(count)
+      plot <- count
     }
     if (type == 3) {
       if (save == TRUE) {
-        prop <- prop + 
-          ggsave(file_name, width = 8, height = 6)
+        prop <- prop + ggsave(file_name, width = 8, height = 6)
       }
-      plot(prop)
+      plot <- prop
     }
     
     # Return table with results?
@@ -345,5 +346,10 @@ distr <- function(data, ...,
       table <- freqs %>% select(-order)
       return(table)
     }
+  }
+  if (type == 1) {
+    return(invisible(plot)) 
+  } else {
+    invisible(return(plot)) 
   }
 }

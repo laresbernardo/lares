@@ -19,6 +19,10 @@ trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = c()
   t <- !is.null(gtrend$related_topics) # Related topics
   q <- !is.null(gtrend$related_queries) # Related queries
   
+  if (!t & !q) {
+    stop("No related topics nor queries found!")
+  }
+  
   fx <- function(gtrend_related) {
     which <- colnames(gtrend_related)[2]
     ptitle <- ifelse(which == "related_topics", "Related topics", "Related queries")

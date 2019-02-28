@@ -729,7 +729,7 @@ model_metrics <- function(tag, score, thresh = 0.5,
           label = label)) +
         geom_tile() + theme_minimal() +
         geom_text(colour="white") + 
-        scale_size(range = c(1.9, 3.5)) +
+        scale_size(range = c(2.1, 4)) +
         guides(fill=FALSE, size=FALSE, colour=FALSE) +
         labs(x="Predicted values", y="Real values",
              title = ifelse(length(unique(tag)) == 2,

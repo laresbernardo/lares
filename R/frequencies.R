@@ -150,10 +150,9 @@ freqs <- function(vector, ..., results = TRUE,
       if (save == TRUE) {
         export_plot(p, "viz_freqs", vars, subdir = subdir)
       }
-      
       output <- output %>% select(-order)
-      
     }
+    return(p)
   }
   
   if (results == TRUE) {
