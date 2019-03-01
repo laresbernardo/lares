@@ -11,7 +11,7 @@
 #' @importFrom ggrepel geom_label_repel geom_text_repel
 #' @importFrom googleAuthR gar_auth
 #' @importFrom googlesheets gs_auth gs_read gs_edit_cells gs_title
-#' @importFrom graphics box hist plot points rasterImage rect
+#' @importFrom graphics box hist plot points rasterImage rect grid 
 #' @importFrom grDevices graphics.off dev.off png
 #' @importFrom gridExtra grid.arrange tableGrob 
 #' @importFrom h2o as.h2o h2o.automl h2o.accuracy h2o.getModel h2o.performance h2o.init 
