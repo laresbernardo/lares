@@ -4,10 +4,12 @@
 \alias{portfolio_total_plot}
 \title{Portfolio's Daily Cumulative}
 \usage{
-portfolio_total_plot(portfolio)
+portfolio_total_plot(portfolio, save = TRUE)
 }
 \arguments{
 \item{portfolio}{Dataframe. Results from portfolio_daily()}
+
+\item{save}{Boolean. Export plot as an image?}
 }
 \description{
 This function lets the user plot his portfolio's daily cumulative

@@ -4,7 +4,8 @@
 \alias{stocks_total_plot}
 \title{Stocks Total Performance Plot}
 \usage{
-stocks_total_plot(stocks_perf, portfolio_perf, daily, trans, cash)
+stocks_total_plot(stocks_perf, portfolio_perf, daily, trans, cash,
+  save = TRUE)
 }
 \arguments{
 \item{stocks_perf}{Dataframe. Output of the stocks_performance function}
@@ -16,6 +17,8 @@ stocks_total_plot(stocks_perf, portfolio_perf, daily, trans, cash)
 \item{trans}{Dataframe. Transactions data}
 
 \item{cash}{Dataframe. Cash data}
+
+\item{save}{Boolean. Export plot as an image?}
 }
 \description{
 This function lets the user plot his stocks total performance

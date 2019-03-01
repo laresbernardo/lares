@@ -17,7 +17,7 @@ portfolio (or simply compared with initial value)?}
 
 \item{group}{Boolean. Group stocks by stocks type?}
 
-\item{save}{Boolean. Do you wish to save the plot?}
+\item{save}{Boolean. Export plot as an image?}
 }
 \description{
 This function lets the user plot stocks daily change

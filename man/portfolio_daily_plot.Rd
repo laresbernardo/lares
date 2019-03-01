@@ -4,10 +4,12 @@
 \alias{portfolio_daily_plot}
 \title{Portfolio Daily Plot}
 \usage{
-portfolio_daily_plot(stocks_perf)
+portfolio_daily_plot(stocks_perf, save = TRUE)
 }
 \arguments{
 \item{stocks_perf}{Dataframe. Output of the stocks_performance function}
+
+\item{save}{Boolean. Export plot as an image?}
 }
 \description{
 This function lets the user plot his portfolio daily change

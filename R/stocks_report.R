@@ -350,7 +350,8 @@ portfolio_daily <- function(data, dailys, cash_fix = 0) {
     mutate(Portfolio = (Deposited - Invested) + StocksValue + Dividends - Expenses) %>%
     mutate(Cash = Portfolio - StocksValue - Expenses + cash_fix) %>%
     mutate(Performance = round(100 * (1 - Invested/StocksValue), 2)) %>%
-    select(Date,Deposit,Invest,Dividend,Expense,Deposited,Invested,Dividends,Expenses,StocksValue,everything())
+    select(Date,Deposit,Invest,Dividend,Expense,Deposited,
+           Invested,Dividends,Expenses,StocksValue,everything())
   
   return(result)
   
@@ -365,29 +366,41 @@ portfolio_daily <- function(data, dailys, cash_fix = 0) {
 #' This function lets the user plot his portfolio daily change
 #' 
 #' @param stocks_perf Dataframe. Output of the stocks_performance function
+#' @param save Boolean. Export plot as an image?
 #' @export
-portfolio_daily_plot <- function(stocks_perf) {
+portfolio_daily_plot <- function(stocks_perf, save = TRUE) {
+  
+  stocks_perf <- stocks_perf %>% 
+    # Get rid of super picks
+    filter(abs(RelPer) < 70) %>% 
+    # Add day before first date with zero data
+    rbind(tail(stocks_perf, 1) %>% mutate(Date = Date - 1, TotalPer = 0))
   
   plot <- stocks_perf %>%
+    filter(abs(RelPer) < 70) %>%
     mutate(color = ifelse(RelPer > 0, "Pos", "Neg")) %>%
     ggplot() +
     geom_area(aes(x=Date, y=TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.2) +
     geom_bar(aes(x=Date, y=RelPer, fill=color), stat='identity', width=1) +
-    geom_line(aes(x=Date, y=TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.5) +
+    geom_line(aes(x=Date, y=TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.9) +
     geom_hline(yintercept = 0, alpha = 0.5, color="black") +
     guides(fill=FALSE) + theme_minimal() +
-    scale_x_date(date_minor_breaks = "1 month", date_labels = "%b%y") +
-    scale_y_continuous(sec.axis = sec_axis(~.*(0.5 * max(stocks_perf$TotalPer)), 
-                                           name = "% Portfolio Var")) +
+    scale_x_date(date_labels = "%b%y") +
+    scale_y_continuous(
+      labels = comma,
+      sec.axis = sec_axis(~.*(0.5 * max(stocks_perf$TotalPer)), 
+                          name = "% Portfolio Var", labels = comma)) +
     labs(y = '% Daily Var', x = '',
          title = 'Daily Portfolio\'s Growth (%) since Start',
          subtitle = paste(stocks_perf$Date[1]," (Includes Expenses): ",
                           formatNum(stocks_perf$TotalPer[1],2),"% ($",
                           formatNum(stocks_perf$DailyStocks[1] - 
                                       sum(stocks_perf$DailyTrans),0),") | $",
-                          formatNum(stocks_perf$CumPortfolio[1]), sep="")) +
-    ggsave("portf_daily_change.png", width = 8, height = 5, dpi = 300)
-  
+                          formatNum(stocks_perf$CumPortfolio[1]), sep=""))
+  if (save) {
+    plot <- plot + ggsave("portf_daily_change.png", width = 8, height = 5, dpi = 300)
+  }
+
   return(plot)
   
 }
@@ -403,8 +416,9 @@ portfolio_daily_plot <- function(stocks_perf) {
 #' @param daily Dataframe. Daily data
 #' @param trans Dataframe. Transactions data
 #' @param cash Dataframe. Cash data
+#' @param save Boolean. Export plot as an image?
 #' @export
-stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
+stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, save = TRUE) {
   
   tops <- max(rbind(portfolio_perf$Invested, portfolio_perf$DailyValue))
   summary <- rbind(
@@ -440,10 +454,13 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
                   y = 0, x = Symbol), size = 2, hjust = 0, vjust = 1.5) +
     annotate("label", x = length(unique(portfolio_perf$Stocks))*0.25, y = tops*0.6, 
              label = vector2text(summary,"\n",quotes = F), size = 3.5, hjust = 0, alpha=0.55) +
-    scale_y_continuous(limits = c(NA, tops*1.1)) + 
+    scale_y_continuous(limits = c(NA, tops*1.1), labels = comma) + 
     labs(y='', x='', title="Stocks Distribution and Growth") +
-    guides(fill=FALSE) + coord_flip() +
-    ggsave("portf_stocks_change.png", width = 8, height = 8, dpi = 300)
+    guides(fill=FALSE) + coord_flip()
+  
+  if (save) {
+    plot <- plot + ggsave("portf_stocks_change.png", width = 8, height = 8, dpi = 300)
+  }
   
   return(plot)
   
@@ -460,7 +477,7 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash) {
 #' @param weighted Boolean. Should variation values be weighted to the
 #' portfolio (or simply compared with initial value)?
 #' @param group Boolean. Group stocks by stocks type?
-#' @param save Boolean. Do you wish to save the plot?
+#' @param save Boolean. Export plot as an image?
 #' @export
 stocks_daily_plot <- function (portfolio, daily, weighted = TRUE, group = TRUE, save = TRUE) {
   
@@ -491,7 +508,7 @@ stocks_daily_plot <- function (portfolio, daily, weighted = TRUE, group = TRUE, 
     plot <- plot + labs(subtitle = "Showing real weighted portfolio delta values") 
   }
   if (save) {
-    plot + ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300) 
+    ploty <- plot + ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300) 
   }
   
   return(plot)
@@ -546,31 +563,41 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
 #' This function lets the user plot his portfolio's daily cumulative
 #' 
 #' @param portfolio Dataframe. Results from portfolio_daily()
+#' @param save Boolean. Export plot as an image?
 #' @export
-portfolio_total_plot <- function(portfolio) {
+portfolio_total_plot <- function(portfolio, save = TRUE) {
   
   labels <- portfolio %>% filter(Deposit != 0)
   caption <- paste0("Portfolio: $", formatNum(portfolio$Portfolio[nrow(portfolio)]),
                     "\nInvested: $", formatNum(portfolio$StocksValue[nrow(portfolio)]))
   
-  p <- data.frame(Date = rep(portfolio$Date, 2),
+  plot <- data.frame(Date = rep(portfolio$Date, 2),
                   type = c(rep("Invested", nrow(portfolio)), 
                            rep("Cash", nrow(portfolio))),
                   values = c(portfolio$StocksValue, portfolio$Cash)) %>%
     ggplot() + theme_minimal() +
-    geom_line(aes(x=Date, y=values)) + 
-    geom_area(aes(x=Date, y=values, fill=type)) + 
+    geom_area(aes(x = Date, y = values, fill = type), 
+              colour = "black", size = 0.2, alpha = 0.95) + 
     labs(title = "   Daily Total Portfolio Value", y = "", x = "", fill ="") +
-    geom_label_repel(data=labels, aes(x=Date, y=Portfolio, label=formatNum(Deposit, 0)), 
-                     vjust = -1.3, size=2.5) +
-    scale_y_continuous(position = "right", labels=scales::comma) +
+    geom_label_repel(data=labels, 
+                     aes(x = Date, y = Portfolio, label = formatNum(Deposit, 0)), 
+                     vjust = -1.3, size = 2.5) +
+    scale_y_continuous(position = "right", labels = comma) +
     theme(legend.position = "top", legend.justification=c(0, 1)) +
     annotate("text", label = caption, x = max(portfolio$Date), 
              y = 0.09*max(portfolio$Portfolio), 
              size = 3.3, colour = "white", hjust = 1.1)
-  return(p)
+  
+  if (save) {
+    plot <- plot + ggsave("portf_total_hist.png", width = 8, height = 5, dpi = 300)
+  }
+  
+  return(plot)
+  
 }
 
+
+################# REPORTING FUNCTIONS #################
 
 ####################################################################
 #' Portfolio's Calculations and Plots
@@ -639,7 +666,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
                   p_portf_distribution = p4,
                   p_portfolio_daily = p6,
                   df_portfolio_perf = portfolio_perf,
-                  df_portfolio_daily = portfolio_daily,
+                  df_portfolio_daily = pf_daily,
                   df_stocks_perf = stocks_perf,
                   df_daily = daily,
                   df_hist = hist)
