@@ -166,7 +166,9 @@ corr_var <- function(df, ...,
       guides(fill = FALSE) +
       labs(title=paste("Correlation of", var, "vs other variables"), 
            x = "", y = "Correlation") +
-      scale_y_continuous(labels = scales::percent)
+      scale_y_continuous(labels = scales::percent) +
+      theme_lares2()
+    
     if (!is.na(top) & top < original_n) { 
       p <- p + 
         labs(subtitle = paste("Plotting top", top, "out of", 

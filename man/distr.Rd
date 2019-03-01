@@ -4,10 +4,10 @@
 \alias{distr}
 \title{Compare Variables with their Distributions}
 \usage{
-distr(data, ..., type = 1, top = 10, breaks = 10, na.rm = FALSE,
-  force = "none", trim = 0, clean = FALSE, abc = FALSE,
-  custom_colours = FALSE, results = FALSE, save = FALSE,
-  subdir = NA)
+distr(data, ..., type = 1, note = NA, top = 10, breaks = 10,
+  na.rm = FALSE, force = "none", trim = 0, clean = FALSE,
+  abc = FALSE, custom_colours = FALSE, results = FALSE,
+  save = FALSE, subdir = NA)
 }
 \arguments{
 \item{data}{Dataframe}
@@ -17,6 +17,8 @@ variable) to group by}
 
 \item{type}{Integer. 1 for both plots, 2 for counter plot only, 3 por 
 percentages plot only.}
+
+\item{note}{Character. Caption for the plot}
 
 \item{top}{Integer. Filter and plot the most n frequent for categorical values}
 

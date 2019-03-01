@@ -28,15 +28,13 @@ theme_lares2 <- function(font = "Arial Narrow", base_size = 11.5,
   
   ret <- ret + theme(plot.title = element_text(color = "black"),
                      plot.caption = element_text(color = soft_colour, face = "bold"),
-                     legend.background = element_blank(),
-                     legend.key = element_blank(),
                      legend.title = element_text(color = soft_colour, size = base_size * 0.9, face = "bold"),
                      axis.line=element_blank(),
                      text = element_text(family = font))
   
   update_geom_defaults("text", list(family = font))
   update_geom_defaults("label", list(family = font))
-  update_geom_defaults("text_repel", list(family = font))
+  #update_geom_defaults("text_repel", list(family = font))
   update_geom_defaults("point", list(colour = main_colour))
   update_geom_defaults("bar", list(fill = main_colour))
   update_geom_defaults("col", list(fill = main_colour))
@@ -89,7 +87,7 @@ theme_lares2 <- function(font = "Arial Narrow", base_size = 11.5,
   ret <- ret + theme(plot.caption=element_text(
     hjust=1, size=base_size * 0.85, margin = margin(t=base_size * 0.85), 
     family=font, face="plain"))
-  ret <- ret + theme(plot.margin=margin(15, 15, 15, 15))
+  ret <- ret + theme(plot.margin = margin(15, 15, 15, 15))
   
   return(ret)
   

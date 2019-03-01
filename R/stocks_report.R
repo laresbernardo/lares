@@ -396,7 +396,9 @@ portfolio_daily_plot <- function(stocks_perf, save = TRUE) {
                           formatNum(stocks_perf$TotalPer[1],2),"% ($",
                           formatNum(stocks_perf$DailyStocks[1] - 
                                       sum(stocks_perf$DailyTrans),0),") | $",
-                          formatNum(stocks_perf$CumPortfolio[1]), sep=""))
+                          formatNum(stocks_perf$CumPortfolio[1]), sep="")) +
+    theme_lares2()
+  
   if (save) {
     plot <- plot + ggsave("portf_daily_change.png", width = 8, height = 5, dpi = 300)
   }
@@ -456,7 +458,8 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, s
              label = vector2text(summary,"\n",quotes = F), size = 3.5, hjust = 0, alpha=0.55) +
     scale_y_continuous(limits = c(NA, tops*1.1), labels = comma) + 
     labs(y='', x='', title="Stocks Distribution and Growth") +
-    guides(fill=FALSE) + coord_flip()
+    guides(fill=FALSE) + coord_flip() +
+    theme_lares2()
   
   if (save) {
     plot <- plot + ggsave("portf_stocks_change.png", width = 8, height = 8, dpi = 300)
@@ -500,7 +503,9 @@ stocks_daily_plot <- function (portfolio, daily, weighted = TRUE, group = TRUE, 
     labs(title = 'Daily Portfolio\'s Stocks Change (%) since Start', x = '',
          subtitle = 'Showing absolute delta values since first purchase', colour = '') +
     geom_label_repel(data=amounts, aes(x=Date, y=Hist, label=label), size=2) +
-    geom_label(data=labels, aes(x=Date, y=Hist, label=Symbol), size=2.5, hjust=-0.2, alpha=0.6)
+    geom_label(data=labels, aes(x=Date, y=Hist, label=Symbol), size=2.5, hjust=-0.2, alpha=0.6) +
+    theme_lares2()
+  
   if (group) {
     plot <- plot + facet_grid(Type ~ ., scales = "free", switch = "both") 
   }
@@ -529,11 +534,11 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
   plot_stocks <- ggplot(portfolio_perf) + theme_minimal() +
     geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels=scales::comma) +
-    labs(x = '', y = "Portfolio's Stocks Dimentions")
+    labs(x = '', y = "Portfolio's Stocks Dimentions") + theme_lares2()
   plot_areas <- ggplot(portfolio_perf) + theme_minimal() +
     geom_bar(aes(x = "", y = DailyValue/sum(DailyValue), fill = Type), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels = scales::percent) +
-    labs(x = '', y = "Portfolio's Stocks Type Distribution")
+    labs(x = '', y = "Portfolio's Stocks Type Distribution") + theme_lares2()
   t1 <- tableGrob(
     portfolio_perf %>% 
       mutate(Perc = formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
@@ -550,9 +555,11 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
       dplyr::select(Type, DailyValue, Perc, DifPer) %>% 
       arrange(desc(Perc)), rows=NULL,
     cols = c("Stock Type","Today's Value","% Portaf","Growth %"))
+  
   png("portf_distribution.png", width=700, height=500)
   grid.arrange(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3))
   dev.off()
+  
   return(grid.arrange(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3)))
 }
 
@@ -583,10 +590,11 @@ portfolio_total_plot <- function(portfolio, save = TRUE) {
                      aes(x = Date, y = Portfolio, label = formatNum(Deposit, 0)), 
                      vjust = -1.3, size = 2.5) +
     scale_y_continuous(position = "right", labels = comma) +
-    theme(legend.position = "top", legend.justification=c(0, 1)) +
     annotate("text", label = caption, x = max(portfolio$Date), 
              y = 0.09*max(portfolio$Portfolio), 
-             size = 3.3, colour = "white", hjust = 1.1)
+             size = 3.3, colour = "white", hjust = 1.1) +
+    theme_lares2() +
+    theme(legend.position = "top", legend.justification=c(0, 1))
   
   if (save) {
     plot <- plot + ggsave("portf_total_hist.png", width = 8, height = 5, dpi = 300)

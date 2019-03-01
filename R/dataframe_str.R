@@ -68,7 +68,8 @@ df_str <- function (df,
            x = "", y = "% of total", fill="", 
            caption = paste("Memory Usage:", formatNum(numbers$Memory.Usage/(1024*1024)),"Mb")) +
       facet_grid(type ~., scales = "free") + 
-      geom_text(size = 3, hjust = 1.1)  
+      geom_text(size = 3, hjust = 1.1) +
+      theme_lares2()
     print(plot)
   }
   if (return == "skimr") {

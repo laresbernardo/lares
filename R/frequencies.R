@@ -117,8 +117,7 @@ freqs <- function(vector, ..., results = TRUE,
                caption = obs) +
           scale_y_continuous(labels = comma) +
           scale_fill_gradient(low = "lightskyblue2", high = "navy") +
-          theme(plot.subtitle = element_text(size = 9, face="italic")) +
-          gg_text_customs()
+          gg_text_customs() + theme_lares2() 
         
         # When two features
         if (ncol(output) - 3 == 3) { 
@@ -126,8 +125,7 @@ freqs <- function(vector, ..., results = TRUE,
             labs(subtitle = ifelse(is.na(subtitle), 
                                    paste("Variables:", facet_name, "grouped by", variable), subtitle),
                  caption = obs) +
-            theme_light() + 
-            theme(plot.subtitle = element_text(size = 9, face="italic"))
+            theme_lares2()
         }
         # When three features
         if (ncol(output) - 3 == 4) { 
@@ -140,8 +138,7 @@ freqs <- function(vector, ..., results = TRUE,
                  subtitle = ifelse(is.na(subtitle), 
                                    paste("Inside the facet grids:", facet_name2), subtitle),
                  caption = obs) +
-            theme_light() + 
-            theme(plot.subtitle = element_text(size = 9, face="italic"))
+            theme_lares2()
         }
         plot(p)
       }

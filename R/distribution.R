@@ -10,6 +10,7 @@
 #' variable) to group by
 #' @param type Integer. 1 for both plots, 2 for counter plot only, 3 por 
 #' percentages plot only.
+#' @param note Character. Caption for the plot
 #' @param top Integer. Filter and plot the most n frequent for categorical values
 #' @param breaks Integer. Number of splits for numerical values
 #' @param na.rm Boolean. Ignore NAs if needed
@@ -27,6 +28,7 @@
 #' @export
 distr <- function(data, ...,
                   type = 1,
+                  note = NA,
                   top = 10, 
                   breaks = 10, 
                   na.rm = FALSE, 
@@ -125,7 +127,8 @@ distr <- function(data, ...,
         labs(y = "", x = "", fill = "Density",
              title = paste("Density Distribution"),
              subtitle = paste("Variable:", variable_name),
-             caption = paste("Obs:", formatNum(nrow(df), 0)))
+             caption = paste("Obs:", formatNum(nrow(df), 0))) +
+        theme_lares2()
       if (top != 10) {
         p <- p + xlim(0, top)
       }
@@ -166,17 +169,19 @@ distr <- function(data, ...,
     # For num-num distributions or too many unique target variables
     if (length(unique(targets)) >= 8) {
       if (is.numeric(targets) & is.numeric(value)) {
+        subtitle <- paste0("Variables: ", variable_name, " vs. ", targets_name,
+                           ". Obs: ", formatNum(length(value), 0))
         df <- data.frame(x = targets, y = value)
         df <- fxna_rm(df, na.rm = TRUE)
         p <- ggplot(df, aes(x = x, y = y)) +
           stat_density_2d(aes(fill = ..level..), geom = "polygon") +
           theme_minimal() +
-          labs(title = "2D Distribution Plot",
+          labs(title = "2D Density Distribution",
                x = targets_name, y = variable_name,
-               subtitle = paste("For", variable_name, "vs.", targets_name),
-               caption = paste("Obs:", nrow(df))) +
-          scale_x_continuous(labels = scales::comma) +
-          scale_y_continuous(labels = scales::comma)
+               subtitle = subtitle) +
+          scale_x_continuous(labels = comma) +
+          scale_y_continuous(labels = comma) +
+          theme_lares2()
         return(p)  
       }
       stop("You should use a 'target' variable with max 8 different values.")
@@ -203,8 +208,8 @@ distr <- function(data, ...,
     df <- data.frame(targets = targets, value = value)
     df <- fxna_rm(df, na.rm)
     # Caption for plots
-    caption <- paste0("Variables: ", targets_name, " vs. ", variable_name,
-                      ". Obs: ", formatNum(nrow(df), 0))
+    subtitle <- paste0("Variables: ", targets_name, " vs. ", variable_name,". Obs: ", formatNum(nrow(df), 0))
+    caption <- ifelse(is.na(note), "", note)
     
     freqs <- df %>% 
       group_by(value, targets) %>% 
@@ -244,10 +249,11 @@ distr <- function(data, ...,
                   check_overlap = TRUE, 
                   position = position_dodge(0.9), 
                   size = 3, vjust = vadj, hjust = hadj) +
-        labs(x = "", y = "Counter [#]", fill = targets_name, caption = caption) + 
+        labs(x = "", y = "Counter [#]", fill = targets_name, caption = note) + 
         theme_minimal() + theme(legend.position = "top") + guides(colour = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
-        scale_y_continuous(labels = scales::comma)
+        scale_y_continuous(labels = comma) +
+        theme_lares2()
       # Give an angle to labels when more than...
       if (length(unique(value)) >= 7) {
         count <- count + theme(axis.text.x = element_text(angle = 30, hjust=1))
@@ -274,12 +280,13 @@ distr <- function(data, ...,
                       colour = ifelse(custom_colours, tolower(as.character(targets)), "none")),
                   check_overlap = TRUE,
                   position = position_stack(vjust = 0.5)) +
-        scale_size(range = c(1.8, 3.5)) +
+        scale_size(range = c(2.2, 3)) +
         theme_minimal() + coord_flip() +
-        labs(x = "Proportions [%]", y = "", fill = targets_name, caption = caption) +
+        labs(x = "Proportions [%]", y = "", fill = targets_name, caption = note) +
         theme(legend.position = "top") + ylim(0, 1) + guides(colour = FALSE, size = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
-        gg_text_customs()
+        gg_text_customs() +
+        theme_lares2()
       # Show limit caption when more values than top
       if (length(unique(value)) > top) {
         count <- count + labs(caption = paste("Showing the", top, "most frequent values"))
@@ -318,8 +325,11 @@ distr <- function(data, ...,
     
     # Plot the results and save if needed
     if (type == 1) {
-      prop <- prop + guides(fill=FALSE)
-      count <- count + labs(caption = "")
+      count <- count + labs(title = "Distribution and Proportions", 
+                            subtitle = subtitle, caption = "") +
+        theme(plot.margin = margin(10, 15, -15, 15))
+      prop <- prop + guides(fill=FALSE) + labs(caption = note) +
+        theme(plot.margin = margin(-5, 15, -10, 15))
       if (save == TRUE) {
         png(file_name, height = 1000, width = 1300, res = 200)
         gridExtra::arrangeGrob(count, prop, ncol = 1, nrow = 2)
@@ -347,6 +357,7 @@ distr <- function(data, ...,
       return(table)
     }
   }
+  
   if (type == 1) {
     return(invisible(plot)) 
   } else {
