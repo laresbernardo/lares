@@ -55,8 +55,8 @@ Axis title font family, face and size}
 \item{ticks}{Boolean. Ticks if \code{TRUE} add ticks}
 }
 \description{
-A precise & pristine \link{ggplot2} theme with opinionated defaults and an
-emphasis on typography.
+Based on hrbrthemes' theme_ipsum: A precise & pristine \link{ggplot2} theme
+with opinionated defaults and an emphasis on typography.
 }
 \section{Why Arial Narrow?}{
 

@@ -5,8 +5,9 @@
 #' 
 #' @param filename Characeter. Import a local Excel file
 #' @param token_dir Character. Where is my personal token for Dropbox connection?
+#' @param auto Boolean. Automatically user my local personal file? 
 #' @export
-get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Documentos/Docs/Data") {
+get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Documentos/Docs/Data", auto = TRUE) {
   
   processFile <- function(file) {
     cash <- read.xlsx(file, sheet = 'Fondos', skipEmptyRows=TRUE, detectDates=TRUE)
@@ -19,7 +20,8 @@ get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Document
   
   # FOR PERSONAL USE
   local <- Sys.info()
-  if (local[["nodename"]] == "MacBook-Pro-de-Bernardo.local") {
+  if (local[["nodename"]] == "MacBook-Pro-de-Bernardo.local" & auto == TRUE) {
+    message("Using BL's local file...")
     local <- "~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio/Portfolio LC.xlsx"
     results <- processFile(local) 
   } else {
@@ -207,7 +209,7 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
     #mutate_if(is.numeric, funs(round(., 2))) %>% 
     ungroup() %>%
     mutate_at(vars(-contains("Date")), funs(replace(., is.na(.), 0))) %>%
-    filter(Volume > 0)
+    group_by(Date, Symbol) %>% arrange(desc(Volume)) %>% slice(1) %>% ungroup()
   
   return(df)
   
@@ -265,7 +267,8 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
            TotalPer = round(100 * DailyStocks / (cumsum(DailyTrans)), 2) - 100) %>%
     dplyr::select(Date,CumPortfolio,TotalUSD,TotalPer,RelUSD,RelPer,DailyStocks,
                   DailyTrans,DailyDiv,CumDiv,DailyCash,CumCash) %>% arrange(desc(Date)) %>%
-    mutate_if(is.numeric, funs(round(., 2)))
+    mutate_if(is.numeric, funs(round(., 2))) %>%
+    distinct()
   
   return(result)
   
@@ -294,8 +297,9 @@ portfolio_performance <- function(portfolio, daily) {
                      DivPerc = round(100 * DivIncome / sum(Amount), 2)) %>%
     arrange(desc(DivPerc))
   
-  result <- left_join(portfolio %>% mutate(Symbol = as.character(Symbol)), daily[1:nrow(portfolio),] %>%
-                        dplyr::select(Symbol,DailyValue), by = c('Symbol')) %>%
+  result <- left_join(portfolio %>% mutate(Symbol = as.character(Symbol)), 
+                      daily %>% filter(Date == max(Date)) %>% select(Symbol,DailyValue), 
+                      by = c('Symbol')) %>%
     mutate(DifUSD = DailyValue - Invested, DifPer = round(100 * DifUSD / Invested,2),
            StockValue = DailyValue / Stocks,
            InvPerc = 100 * InvPerc,
@@ -365,7 +369,7 @@ portfolio_daily <- function(data, dailys, cash_fix = 0) {
 portfolio_daily_plot <- function(stocks_perf) {
   
   plot <- stocks_perf %>%
-    dplyr::mutate(color = ifelse(RelPer > 0, "Pos", "Neg")) %>%
+    mutate(color = ifelse(RelPer > 0, "Pos", "Neg")) %>%
     ggplot() +
     geom_area(aes(x=Date, y=TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.2) +
     geom_bar(aes(x=Date, y=RelPer, fill=color), stat='identity', width=1) +
@@ -373,10 +377,8 @@ portfolio_daily_plot <- function(stocks_perf) {
     geom_hline(yintercept = 0, alpha = 0.5, color="black") +
     guides(fill=FALSE) + theme_minimal() +
     scale_x_date(date_minor_breaks = "1 month", date_labels = "%b%y") +
-    scale_y_continuous(breaks=seq(-100, 100, 0.5),
-                       sec.axis = sec_axis(~.*(0.5 * max(stocks_perf$TotalPer)), 
-                                           name = "% Portfolio Var", 
-                                           breaks = seq(-100, 100, 2))) +
+    scale_y_continuous(sec.axis = sec_axis(~.*(0.5 * max(stocks_perf$TotalPer)), 
+                                           name = "% Portfolio Var")) +
     labs(y = '% Daily Var', x = '',
          title = 'Daily Portfolio\'s Growth (%) since Start',
          subtitle = paste(stocks_perf$Date[1]," (Includes Expenses): ",
@@ -556,6 +558,7 @@ portfolio_total_plot <- function(portfolio) {
                            rep("Cash", nrow(portfolio))),
                   values = c(portfolio$StocksValue, portfolio$Cash)) %>%
     ggplot() + theme_minimal() +
+    geom_line(aes(x=Date, y=values)) + 
     geom_area(aes(x=Date, y=values, fill=type)) + 
     labs(title = "   Daily Total Portfolio Value", y = "", x = "", fill ="") +
     geom_label_repel(data=labels, aes(x=Date, y=Portfolio, label=formatNum(Deposit, 0)), 
