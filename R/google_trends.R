@@ -143,6 +143,7 @@ trendsTime <- function(gtrend, title = NA) {
     ggplot(aes(x=date, y=hits, fill=legend)) +
     geom_area(alpha=0.9) + theme_lares2() + guides(fill = FALSE) +
     labs(x = "", y = "Search hits", fill = "", subtitle = "Mixed hits scale")
+  
   int3 <- gtrend$interest_over_time %>%
     mutate(hits = ifelse(hits == "<1", "0.5", as.character(hits))) %>%
     mutate(hits = as.numeric(as.character(hits))) %>%
@@ -154,7 +155,9 @@ trendsTime <- function(gtrend, title = NA) {
     labs(x = "", y = "Search hits", 
          subtitle = "Normalized hit scale",
          caption = range) +
-    geom_hline(yintercept = 100, alpha = 0.5)
+    geom_hline(yintercept = 100, alpha = 0.5) +
+    theme_lares2()
+  
   if (!is.na(title)) {
     int1 <- int1 + labs(title = title, subtitle = "Real hits scale")
   }

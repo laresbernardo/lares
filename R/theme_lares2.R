@@ -79,7 +79,7 @@ theme_lares2 <- function(font = "Arial Narrow", base_size = 11.5,
     hjust=0, size=base_size * 1, colour = soft_colour, face="bold", family=font))
   ret <- ret + theme(panel.spacing=grid::unit(2, "lines"))
   ret <- ret + theme(plot.title=element_text(
-    hjust=0, size=base_size * 1.55, margin=margin(b=base_size * 0.85), 
+    hjust=0, size=base_size * 1.45, margin=margin(b=base_size * 0.85), 
     family=font, face="bold"))
   ret <- ret + theme(plot.subtitle=element_text(
     hjust=0, size=base_size * 1, colour = soft_colour, 

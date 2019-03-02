@@ -179,7 +179,7 @@ mplot_importance <- function(var,
     coord_flip() + xlab('') + 
     ylab('Importance') + 
     geom_text(hjust = 0.5, size = 2, inherit.aes = TRUE, colour = "white") +
-    labs(title = paste0("Most Relevant Variables (showing", limit, " out of ", length(var), ")")) +
+    labs(title = paste0("Most Relevant Variables (showing top ", limit, " of ", length(var), ")")) +
     theme_lares2()
   
   if (length(unique(output$Type)) == 1) {
@@ -339,7 +339,7 @@ mplot_cuts <- function(score,
     geom_col(fill="deepskyblue") + 
     xlab('') + ylab('Score') + 
     geom_text(vjust = 1.5, size = 3, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
-    labs(title = paste("Cuts by score: using", splits, "equal-sized buckets")) +
+    labs(title = paste("Cuts by score (", splits, "equal-sized buckets")) +
     theme_lares2()
   
   if(!is.na(subtitle)) {
