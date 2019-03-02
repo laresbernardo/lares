@@ -42,6 +42,7 @@ distr <- function(data, ...,
                   subdir = NA) {
   
   options(scipen=999)
+  options(warn=-1)
   
   data <- data.frame(data)
   vars <- quos(...)
@@ -207,10 +208,11 @@ distr <- function(data, ...,
     # Finally, we have our data.frame
     df <- data.frame(targets = targets, value = value)
     df <- fxna_rm(df, na.rm)
-    # Caption for plots
+    
+    # Captions for plots
     subtitle <- paste0("Variables: ", targets_name, " vs. ", variable_name,". Obs: ", formatNum(nrow(df), 0))
     caption <- ifelse(is.na(note), "", note)
-    
+      
     freqs <- df %>% 
       group_by(value, targets) %>% 
       tally() %>% arrange(desc(n)) %>% 
@@ -287,10 +289,6 @@ distr <- function(data, ...,
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
         gg_text_customs() +
         theme_lares2()
-      # Show limit caption when more values than top
-      if (length(unique(value)) > top) {
-        count <- count + labs(caption = paste("Showing the", top, "most frequent values"))
-      }
       # Show a reference line if levels = 2; quite useful when data is unbalanced (not 50/50)
       if (length(unique(targets)) == 2) {
         distr <- df %>% freqs(targets)
@@ -338,13 +336,15 @@ distr <- function(data, ...,
       plot <- invisible(gridExtra::grid.arrange(count, prop, ncol = 1, nrow = 2))
     }
     if (type == 2) {
-      count <- count + coord_flip()
+      count <- count + coord_flip() + 
+        labs(title = "Distribution Plot", subtitle = subtitle, caption  = "")
       if (save == TRUE) {
         count <- count + ggsave(file_name, width = 8, height = 6)
       }
       plot <- count
     }
     if (type == 3) {
+      prop <- prop + labs(title = "Proportions Plot", subtitle = subtitle, caption  = "")
       if (save == TRUE) {
         prop <- prop + ggsave(file_name, width = 8, height = 6)
       }
