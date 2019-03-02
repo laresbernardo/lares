@@ -710,7 +710,7 @@ model_metrics <- function(tag, score, thresh = 0.5,
         if (!is.na(subtitle)) {
           plot_roc <- plot_roc + labs(subtitle = subtitle)
         }
-        metrics[["plot_ROC"]] <- plot_roc + theme_lares2()
+        metrics[["plot_ROC"]] <- plot_roc
       }
 
     } else {
@@ -727,7 +727,7 @@ model_metrics <- function(tag, score, thresh = 0.5,
           x = as.character(Pred), 
           fill= Freq, size=Freq, 
           label = label)) +
-        geom_tile() + theme_minimal() +
+        geom_tile() + theme_lares2() +
         geom_text(colour="white") + 
         scale_size(range = c(3, 4)) + coord_equal() + 
         guides(fill=FALSE, size=FALSE, colour=FALSE) +

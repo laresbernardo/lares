@@ -62,7 +62,7 @@ trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = c()
     plot <- related %>% 
       ggplot(aes(x = reorder(value, rank), y = rank, 
                  fill = type, label = type_label)) +
-      geom_col() + coord_flip() + theme_minimal() + 
+      geom_col() + coord_flip() + theme_lares2() + 
       geom_text(hjust = -0.1, size = 2.8) +
       labs(y = "Relevance | % Increase", subtitle = ptitle, x = "", fill = "") +
       theme(legend.position = "bottom") +
@@ -122,7 +122,7 @@ trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = c()
 #' @export
 trendsTime <- function(gtrend, title = NA) {
   
-  int1 <- plot(gtrend) + theme_minimal() + 
+  int1 <- plot(gtrend) + theme_lares2() + 
     labs(x = "", colour = "") + ylim(0, 100) +
     theme(legend.position = "top") +
     geom_hline(yintercept = 100, alpha = 0.5)
@@ -141,7 +141,7 @@ trendsTime <- function(gtrend, title = NA) {
     group_by(keyword) %>%
     mutate(legend = paste0(keyword, " (", geo, ")")) %>%
     ggplot(aes(x=date, y=hits, fill=legend)) +
-    geom_area(alpha=0.9) + theme_minimal() + guides(fill = FALSE) +
+    geom_area(alpha=0.9) + theme_lares2() + guides(fill = FALSE) +
     labs(x = "", y = "Search hits", fill = "", subtitle = "Mixed hits scale")
   int3 <- gtrend$interest_over_time %>%
     mutate(hits = ifelse(hits == "<1", "0.5", as.character(hits))) %>%

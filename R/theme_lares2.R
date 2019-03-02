@@ -69,14 +69,14 @@ theme_lares2 <- function(font = "Arial Narrow", base_size = 11.5,
   ret <- ret + theme(axis.title=element_text(
     size=base_size * 0.85, family=font,colour = soft_colour))
   ret <- ret + theme(axis.title.x=element_text(
-    hjust=xj, size=base_size * 0.85,family=font, face="bold", colour = soft_colour))
+    hjust=xj, size=base_size * 0.85, family=font, face="bold", colour = soft_colour))
   ret <- ret + theme(axis.title.y=element_text(
-    hjust=yj, size=base_size * 0.85,colour = soft_colour,family=font, face="bold"))
+    hjust=yj, size=base_size * 0.85, colour = soft_colour,family=font, face="bold"))
   ret <- ret + theme(axis.title.y.right=element_text(
     hjust=yj, size=base_size * 0.85, angle=-90,colour = soft_colour,
     family=font, face="bold"))
   ret <- ret + theme(strip.text=element_text(
-    hjust=0, size=base_size * 1,colour = soft_colour, face="plain", family=font))
+    hjust=0, size=base_size * 1, colour = soft_colour, face="bold", family=font))
   ret <- ret + theme(panel.spacing=grid::unit(2, "lines"))
   ret <- ret + theme(plot.title=element_text(
     hjust=0, size=base_size * 1.55, margin=margin(b=base_size * 0.85), 
