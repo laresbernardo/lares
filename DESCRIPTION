@@ -27,6 +27,7 @@ Imports:
     knitr,
     lubridate,
     mailR,
+    magrittr,
     openxlsx,
     pROC,
     quantmod,
