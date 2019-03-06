@@ -45,7 +45,9 @@ mplot_density <- function(tag,
       guides(fill = guide_legend(title="Tag")) + 
       labs(title = "Classification Model Results",
            y = "Density by tag", x = "Score", fill = "") + 
-      theme_lares2()
+      theme_lares2() +
+      theme(legend.position = "top",
+            legend.justification = c(0, 0))
     
     if (is.numeric(score)) {
       p1 <- p1 + xlim(0, 100) 
@@ -61,6 +63,10 @@ mplot_density <- function(tag,
       geom_line(aes(x = as.numeric(score), y = (1 - ..y..)), 
                 stat = 'ecdf', size = 0.5, colour = "black", linetype="dotted") +
       ylab('Cumulative') + xlab('') + guides(color=FALSE) + theme_lares2()
+    
+    p1 <- p1 + theme(plot.margin = margin(10, 5, 0, 5))
+    p2 <- p2 + theme(plot.margin = margin(0, 0, 5, 5))
+    p3 <- p3 + theme(plot.margin = margin(0, 5, 5, 0))
     
     if(!is.na(subtitle)) {
       p1 <- p1 + labs(subtitle = subtitle)
@@ -785,16 +791,23 @@ mplot_full <- function(tag,
   # Categorical Models
   if (length(unique(tag)) <= thresh) {
     if (!is.numeric(score)) {
-      p1 <- model_metrics(tag, score)$plot_ConfMat
+      metrics <- model_metrics(tag, score)
+      p1 <- metrics$plot_ConfMat
+      if (save == TRUE) {
+        p1 <- p1 + ggsave(file_name)
+      }
       return(p1) 
-    } else{
+    } else {
       p1 <- mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
-      p2 <- mplot_splits(tag = tag, score = score, splits = splits)  
-      p3 <- mplot_roc(tag = tag, score = score)
-      p4 <- mplot_cuts(score = score) 
+      p2 <- mplot_splits(tag = tag, score = score, splits = splits) +
+        theme(plot.margin = margin(10, 8, 0, -5))
+      p3 <- mplot_roc(tag = tag, score = score) +
+        theme(plot.margin = margin(0, 8, 5, 0))
+      p4 <- mplot_cuts(score = score) +
+        theme(plot.margin = margin(-2, 0, 5, 10))
     }
     
-    if(save == TRUE) {
+    if (save == TRUE) {
       
       if (!is.na(subdir)) {
         dir.create(file.path(getwd(), subdir), recursive = T)
