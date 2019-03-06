@@ -333,14 +333,18 @@ mplot_cuts <- function(score,
                         cuts = as.vector(signif(deciles, 6)))
   rownames(deciles) <- NULL
   
-  p <- ggplot(deciles, 
-              aes(x = reorder(range, cuts), y = cuts * 100, 
-                  label = round(100 * cuts, 1))) + 
+  p <- deciles %>%
+    mutate(label_colours = ifelse(cuts*100 < 50, "1", "m")) %>%
+    ggplot(aes(x = reorder(range, cuts), y = cuts * 100)) + 
     geom_col(fill="deepskyblue") + 
-    xlab('') + ylab('Score') + 
-    geom_text(vjust = 1.5, size = 3, inherit.aes = TRUE, colour = "white", check_overlap = TRUE) +
-    labs(title = paste("Cuts by score (", splits, "equal-sized buckets")) +
-    theme_lares2()
+    xlab('Cumulative volume') + ylab('Score') + 
+    geom_text(aes(label = round(100 * cuts, 1),
+                  colour = label_colours,
+                  vjust = ifelse(cuts*100 < 50, -0.5, 1.5)), 
+              size = 3, inherit.aes = TRUE, check_overlap = TRUE) +
+    guides(colour = FALSE) +
+    labs(title = paste0("Cuts by score (", splits, " equal-sized buckets)")) +
+    theme_lares() + theme_lares2() 
   
   if(!is.na(subtitle)) {
     p <- p + labs(subtitle = subtitle)
