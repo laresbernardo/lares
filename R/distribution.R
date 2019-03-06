@@ -123,7 +123,7 @@ distr <- function(data, ...,
       } else {
         p <- ggplot(df, aes(x = date(value)))
       }
-      p <- p + theme_minimal() +
+      p <- p + 
         geom_density(fill = "deepskyblue", alpha = 0.7, adjust = 1/3) +
         labs(y = "", x = "", fill = "Density",
              title = paste("Density Distribution"),
@@ -133,7 +133,7 @@ distr <- function(data, ...,
       if (top != 10) {
         p <- p + xlim(0, top)
       }
-      print(p)
+      return(p)
     } else {
       # Discrete values
       df %>% freqs(value, plot = T, results = F, 
@@ -176,7 +176,6 @@ distr <- function(data, ...,
         df <- fxna_rm(df, na.rm = TRUE)
         p <- ggplot(df, aes(x = x, y = y)) +
           stat_density_2d(aes(fill = ..level..), geom = "polygon") +
-          theme_minimal() +
           labs(title = "2D Density Distribution",
                x = targets_name, y = variable_name,
                subtitle = subtitle) +
@@ -252,7 +251,7 @@ distr <- function(data, ...,
                   position = position_dodge(0.9), 
                   size = 3, vjust = vadj, hjust = hadj) +
         labs(x = "", y = "Counter [#]", fill = targets_name, caption = note) + 
-        theme_minimal() + theme(legend.position = "top") + guides(colour = FALSE) +
+        theme(legend.position = "top") + guides(colour = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
         scale_y_continuous(labels = comma) +
         theme_lares2()
@@ -283,7 +282,7 @@ distr <- function(data, ...,
                   check_overlap = TRUE,
                   position = position_stack(vjust = 0.5)) +
         scale_size(range = c(2.2, 3)) +
-        theme_minimal() + coord_flip() +
+        coord_flip() +
         labs(x = "Proportions [%]", y = "", fill = targets_name, caption = note) +
         theme(legend.position = "top") + ylim(0, 1) + guides(colour = FALSE, size = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +

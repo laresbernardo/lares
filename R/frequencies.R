@@ -140,7 +140,7 @@ freqs <- function(vector, ..., results = TRUE,
                  caption = obs) +
             theme_lares2()
         }
-        plot(p)
+        return(p)
       }
       
       # Export file name and folder for plot

@@ -11,7 +11,8 @@ theme_lares2(font = "Arial Narrow", base_size = 11.5,
 \arguments{
 \item{font, base_size}{Character and numeric. Base font family and size}
 
-\item{main_colour, second_colour, soft_colour, bg_colour}{Character. Main colours for your theme}
+\item{main_colour, second_colour, soft_colour, bg_colour}{Character.
+Main colours for your theme}
 }
 \description{
 Based on hrbrthemes' theme_ipsum: A precise & pristine \link{ggplot2} theme
@@ -22,10 +23,5 @@ with opinionated defaults and an emphasis on typography.
 First and foremost, Arial Narrow is generally installed by default or readily
 available on any modern system, so it's "free"-ish; plus, it is a condensed font
 with solid default kerning pairs and geometric numbers.
-
-There is an option \code{hrbrthemes.loadfonts} which -- if set to \code{TRUE} -- will
-call \code{extrafont::loadfonts()} to register non-core fonts with R PDF & PostScript
-devices. If you are running under Windows, the package calls the same function
-to register non-core fonts with the Windows graphics device.
 }
 

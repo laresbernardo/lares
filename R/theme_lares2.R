@@ -10,16 +10,13 @@
 #' available on any modern system, so it's "free"-ish; plus, it is a condensed font
 #' with solid default kerning pairs and geometric numbers.
 #'
-#' There is an option `hrbrthemes.loadfonts` which -- if set to `TRUE` -- will
-#' call `extrafont::loadfonts()` to register non-core fonts with R PDF & PostScript
-#' devices. If you are running under Windows, the package calls the same function
-#' to register non-core fonts with the Windows graphics device.
-#'
 #' @md
 #' @param font,base_size Character and numeric. Base font family and size
-#' @param main_colour,second_colour,soft_colour,bg_colour Character. Main colours for your theme
+#' @param main_colour,second_colour,soft_colour,bg_colour Character. 
+#' Main colours for your theme
 #' @export
-theme_lares2 <- function(font = "Arial Narrow", base_size = 11.5, 
+theme_lares2 <- function(font = "Arial Narrow", 
+                         base_size = 11.5, 
                          main_colour = "darkorange3", 
                          second_colour = "deepskyblue3",
                          soft_colour = "grey30",
@@ -98,7 +95,7 @@ theme_lares2 <- function(font = "Arial Narrow", base_size = 11.5,
     margin=margin(b=base_size * 0.7),family = font, face="italic"))
   # Caption
   ret <- ret + theme(plot.caption=element_text(
-    hjust=1, size=base_size * 0.85, margin = margin(t=base_size * 0.85), 
+    hjust=1, size=base_size * 0.85, margin = margin(t=base_size * 0.9), 
     family=font, face="bold", color = soft_colour))
   # Legend 
   ret <- ret + theme(legend.title = element_text(
