@@ -22,7 +22,7 @@ theme_lares2 <- function(font = "Arial Narrow",
                          second_colour = "deepskyblue3",
                          soft_colour = "grey30",
                          bg_colour = NA,
-                         margin = 10) {
+                         margin = 15) {
   
   # Start from theme_minimal()
   ret <- theme_minimal(base_family = font, base_size = base_size)
