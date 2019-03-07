@@ -47,7 +47,8 @@ mplot_density <- function(tag,
            y = "Density by tag", x = "Score", fill = "") + 
       theme_lares2() +
       theme(legend.position = "top",
-            legend.justification = c(0, 0))
+            legend.justification = c(0, 0),
+            legend.title = element_blank())
     
     if (is.numeric(score)) {
       p1 <- p1 + xlim(0, 100) 
