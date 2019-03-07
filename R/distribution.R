@@ -133,18 +133,18 @@ distr <- function(data, ...,
       if (top != 10) {
         p <- p + xlim(0, top)
       }
-      return(p)
     } else {
       # Discrete values
-      df %>% freqs(value, plot = T, results = F, 
-                   variable_name = variable_name, 
-                   abc = abc, top = top)
+      p <- df %>% freqs(value, plot = T, results = F, 
+                        variable_name = variable_name, 
+                        abc = abc, top = top)
     }
     # Return table with results?
     if (results == TRUE) {
       output <- df %>% freqs(value, top = top)
       return(output)
     }
+    return(p)
   }
   
   # When we only have 2 variables
