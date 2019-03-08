@@ -970,3 +970,18 @@ haveInternet <- function(thresh = 3, url = "http://www.google.com") {
   }
   return(!inherits(test, "try-error"))
 }
+
+
+####################################################################
+#' Zero Variance Columns
+#' 
+#' This function quickly detectes which columns have the same value
+#' for each observation
+#' 
+#' @param df Dataframe
+#' @export
+zerovar <- function(df) {
+  out <- lapply(df, function(x) length(unique(x)))
+  want <- which(!out > 1)
+  unlist(want)
+}

@@ -49,7 +49,9 @@ freqs <- function(vector, ..., results = TRUE,
       if(nrow(values) > top) {
         if (!is.na(top)) {
           output <- output %>% slice(1:top)
-          message(paste("Filtering the top", top, "frequent values. Use the 'top' parameter to overrule."))
+          message(paste0("Filtering the top ", top, 
+                         " (out of ", nrow(values),
+                         ") frequencies; use 'top' parameter to overrule."))
           note <- paste0("(", top, " most frequent)")
         }
       } else { note <- "" }
@@ -63,7 +65,7 @@ freqs <- function(vector, ..., results = TRUE,
         output <- output %>% arrange(desc(n)) %>%
           mutate(order = row_number())
       }
-
+      
       if (ncol(output) - 3 <= 4) { 
         
         options(warn=-1)
@@ -85,10 +87,15 @@ freqs <- function(vector, ..., results = TRUE,
         plot$label_colours <- ifelse(
           plot$label_colours == "m" & plot$label_hjust < lim, "f", plot$label_colours)
         variable <- colnames(plot)[1]
-        colnames(plot)[1] <- "names"
         
+        # When one feature
+        if (ncol(output) - 3 == 2) { 
+          type <- 1
+          colnames(plot)[1] <- "names"
+        }
         # When two features
         if (ncol(output) - 3 == 3) { 
+          type <- 2
           facet_name <- colnames(plot)[2]
           colnames(plot)[1] <- "facet"
           colnames(plot)[2] <- "names"
@@ -96,6 +103,7 @@ freqs <- function(vector, ..., results = TRUE,
         }
         # When three features
         if (ncol(output) - 3 == 4) { 
+          type <- 3
           facet_name1 <- colnames(plot)[2]
           facet_name2 <- colnames(plot)[3]
           colnames(plot)[1] <- "facet2"
@@ -124,23 +132,24 @@ freqs <- function(vector, ..., results = TRUE,
           theme(legend.position="none")
         
         # When two features
-        if (ncol(output) - 3 == 3) { 
-          p <- p + facet_grid(as.character(facet) ~ ., scales = "free") + 
+        if (type == 2) { 
+          p <- p + facet_grid(as.character(facet) ~ ., scales = "free", space = "free") + 
             labs(subtitle = ifelse(is.na(subtitle), 
                                    paste("Variables:", facet_name, "grouped by", variable, note), 
                                    subtitle),
                  caption = obs)
         }
+        
         # When three features
-        if (ncol(output) - 3 == 4) { 
+        if (type == 3) { 
           if (length(unique(facet_name2)) > 3) {
             stop("Please, try with a (third) variable with 3 or less cateogries!")
           }
-          p <- p + facet_grid(as.character(facet2) ~ as.character(facet1), scales = "free") + 
-            labs(title = ifelse(is.na(title), 
-                                paste("Frequencies and Percentages:", facet_name1, "and", variable), title),
+          p <- p + facet_grid(as.character(facet2) ~ as.character(facet1), scales = "free", space = "free") + 
+            labs(title = ifelse(is.na(title), "Frequencies and Percentages:", title),
                  subtitle = ifelse(is.na(subtitle), 
-                                   paste("Inside the facet grids:", facet_name2, note), 
+                                   paste("Variables:", facet_name2, "grouped by", facet_name1, "[x] and", 
+                                         variable, "[y]", note), 
                                    subtitle),
                  caption = obs)
         }
