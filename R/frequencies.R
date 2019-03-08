@@ -70,6 +70,15 @@ freqs <- function(vector, ..., results = TRUE,
         
         options(warn=-1)
         
+        reorder_within <- function(x, by, within, fun = mean, sep = "___", ...) {
+          new_x <- paste(x, within, sep = sep)
+          stats::reorder(new_x, by, FUN = fun)
+        }
+        scale_x_reordered <- function(..., sep = "___") {
+          reg <- paste0(sep, ".+$")
+          ggplot2::scale_x_discrete(labels = function(x) gsub(reg, "", x), ...)
+        }
+        
         plot <- ungroup(output)
         obs <- paste("Obs.:", formatNum(sum(output$n), 0))
         
@@ -92,6 +101,7 @@ freqs <- function(vector, ..., results = TRUE,
         if (ncol(output) - 3 == 2) { 
           type <- 1
           colnames(plot)[1] <- "names"
+          p <- ggplot(plot, aes(x = reorder(names, -order), y = n,label = labels, fill = p))
         }
         # When two features
         if (ncol(output) - 3 == 3) { 
@@ -100,6 +110,10 @@ freqs <- function(vector, ..., results = TRUE,
           colnames(plot)[1] <- "facet"
           colnames(plot)[2] <- "names"
           plot$facet[is.na(plot$facet)] <- "NA"
+          p <- ggplot(plot, aes(
+            x = reorder_within(names, -order, facet), 
+            y = n, label = labels, fill = p)) +
+            scale_x_reordered()
         }
         # When three features
         if (ncol(output) - 3 == 4) { 
@@ -111,21 +125,18 @@ freqs <- function(vector, ..., results = TRUE,
           colnames(plot)[3] <- "names"
           plot$facet2[is.na(plot$facet2)] <- "NA"
           plot$facet1[is.na(plot$facet1)] <- "NA"
+          p <- ggplot(plot, aes(x = reorder(names, -order), y = n,label = labels, fill = p))
         }
         
         # Plot base
-        p <- ggplot(plot, aes(
-          x = reorder(names, -order), 
-          y = n, label = labels, fill = p)) +
-          geom_col(alpha=0.9, width = 0.8) +
+        p <- p + geom_col(alpha=0.9, width = 0.8) +
           geom_text(aes(hjust = label_hjust, colour = label_colours), size = 2.6) + 
           coord_flip() + theme_minimal() + guides(colour = FALSE) +
           labs(x = "", y = "Counter", fill = "[%]",
                title = ifelse(is.na(title), paste("Frequencies and Percentages"), title),
                subtitle = ifelse(is.na(subtitle), 
                                  paste("Variable:", ifelse(!is.na(variable_name), variable_name, variable), note), 
-                                 subtitle),
-               caption = obs) +
+                                 subtitle), caption = obs) +
           scale_y_continuous(labels = comma) +
           scale_fill_gradient(low = "lightskyblue2", high = "navy") +
           gg_text_customs() + theme_lares2() +
@@ -133,7 +144,8 @@ freqs <- function(vector, ..., results = TRUE,
         
         # When two features
         if (type == 2) { 
-          p <- p + facet_grid(as.character(facet) ~ ., scales = "free", space = "free") + 
+          p <- p + 
+            facet_grid(as.character(facet) ~ ., scales = "free", space = "free") + 
             labs(subtitle = ifelse(is.na(subtitle), 
                                    paste("Variables:", facet_name, "grouped by", variable, note), 
                                    subtitle),

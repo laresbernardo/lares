@@ -84,5 +84,5 @@ if(getRversion() >= "2.15.1")
       "latitude","as","CRS","project","readOGR","shp","minutes","seconds","Volume",
       "StocksValue","Dividend","Expense","Deposit","Invest","Deposited","Dividends",
       "Portfolio","start_clean","geo","hits","keyword","legend","subject","subject.x",
-      "subject.y","type_label")) 
+      "subject.y","type_label","facet")) 
 
