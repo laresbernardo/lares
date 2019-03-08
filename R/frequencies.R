@@ -25,7 +25,7 @@ freqs <- function(vector, ..., results = TRUE,
                   variable_name = NA, 
                   plot = FALSE, rm.na = FALSE,
                   title = NA, subtitle = NA,
-                  top = 40, abc = FALSE, 
+                  top = 20, abc = FALSE, 
                   save = FALSE, subdir = NA) {
   
   vars <- quos(...)
@@ -48,20 +48,22 @@ freqs <- function(vector, ..., results = TRUE,
       values <- output[,1]
       if(nrow(values) > top) {
         if (!is.na(top)) {
-          message(paste0("Filtering the top ", top, " (out of ", formatNum(nrow(values), 0),
-                         ") frequent values. Use the 'top' parameter if you want to overrule."))
-          output <- output[1:top, ]
+          output <- output %>% slice(1:top)
+          message(paste("Filtering the top", top, "frequent values. Use the 'top' parameter to overrule."))
+          note <- paste0("(", top, " most frequent)")
         }
-      }
+      } else { note <- "" }
       
       # Sort values alphabetically or ascending if numeric
       if (abc == TRUE) {
-        output <- output %>% mutate(order = rank(as.character(!!!vars)))
         message("Sorting variable(s) alphabetically")
+        output <- output %>% arrange(!!!vars, desc(n)) %>% 
+          mutate(order = row_number())
       } else {
-        output <- output %>% mutate(order = rank(-n, ties.method = "first"))
+        output <- output %>% arrange(desc(n)) %>%
+          mutate(order = row_number())
       }
-      
+
       if (ncol(output) - 3 <= 4) { 
         
         options(warn=-1)
@@ -105,40 +107,42 @@ freqs <- function(vector, ..., results = TRUE,
         
         # Plot base
         p <- ggplot(plot, aes(
-          x = reorder(as.character(names), -order), 
+          x = reorder(names, -order), 
           y = n, label = labels, fill = p)) +
           geom_col(alpha=0.9, width = 0.8) +
           geom_text(aes(hjust = label_hjust, colour = label_colours), size = 2.6) + 
           coord_flip() + theme_minimal() + guides(colour = FALSE) +
           labs(x = "", y = "Counter", fill = "[%]",
                title = ifelse(is.na(title), paste("Frequencies and Percentages"), title),
-               subtitle = ifelse(is.na(subtitle), paste(
-                 "Variable:", ifelse(!is.na(variable_name), variable_name, variable)), subtitle),
+               subtitle = ifelse(is.na(subtitle), 
+                                 paste("Variable:", ifelse(!is.na(variable_name), variable_name, variable), note), 
+                                 subtitle),
                caption = obs) +
           scale_y_continuous(labels = comma) +
           scale_fill_gradient(low = "lightskyblue2", high = "navy") +
-          gg_text_customs() + theme_lares2() 
+          gg_text_customs() + theme_lares2() +
+          theme(legend.position="none")
         
         # When two features
         if (ncol(output) - 3 == 3) { 
-          p <- p + facet_grid(as.character(facet) ~ .) + 
+          p <- p + facet_grid(as.character(facet) ~ ., scales = "free") + 
             labs(subtitle = ifelse(is.na(subtitle), 
-                                   paste("Variables:", facet_name, "grouped by", variable), subtitle),
-                 caption = obs) +
-            theme_lares2()
+                                   paste("Variables:", facet_name, "grouped by", variable, note), 
+                                   subtitle),
+                 caption = obs)
         }
         # When three features
         if (ncol(output) - 3 == 4) { 
           if (length(unique(facet_name2)) > 3) {
             stop("Please, try with a (third) variable with 3 or less cateogries!")
           }
-          p <- p + facet_grid(as.character(facet2) ~ as.character(facet1)) + 
+          p <- p + facet_grid(as.character(facet2) ~ as.character(facet1), scales = "free") + 
             labs(title = ifelse(is.na(title), 
                                 paste("Frequencies and Percentages:", facet_name1, "and", variable), title),
                  subtitle = ifelse(is.na(subtitle), 
-                                   paste("Inside the facet grids:", facet_name2), subtitle),
-                 caption = obs) +
-            theme_lares2()
+                                   paste("Inside the facet grids:", facet_name2, note), 
+                                   subtitle),
+                 caption = obs)
         }
         return(p)
       }

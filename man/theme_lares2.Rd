@@ -6,7 +6,7 @@
 \usage{
 theme_lares2(font = "Arial Narrow", base_size = 11.5,
   main_colour = "darkorange3", second_colour = "deepskyblue3",
-  soft_colour = "grey30", bg_colour = NA, margin = 10)
+  soft_colour = "grey30", bg_colour = "transparent", mg = 15)
 }
 \arguments{
 \item{font, base_size}{Character and numeric. Base font family and size}
@@ -14,7 +14,7 @@ theme_lares2(font = "Arial Narrow", base_size = 11.5,
 \item{main_colour, second_colour, soft_colour, bg_colour}{Character.
 Main colours for your theme}
 
-\item{margin}{Numeric. External margin}
+\item{mg}{Numeric. External margin}
 }
 \description{
 Based on hrbrthemes' theme_ipsum: A precise & pristine \link{ggplot2} theme

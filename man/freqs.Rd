@@ -5,7 +5,7 @@
 \title{Frequencies Calculations and Plot}
 \usage{
 freqs(vector, ..., results = TRUE, variable_name = NA, plot = FALSE,
-  rm.na = FALSE, title = NA, subtitle = NA, top = 40,
+  rm.na = FALSE, title = NA, subtitle = NA, top = 20,
   abc = FALSE, save = FALSE, subdir = NA)
 }
 \arguments{

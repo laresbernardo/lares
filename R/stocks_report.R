@@ -394,8 +394,7 @@ portfolio_daily_plot <- function(stocks_perf, save = TRUE) {
          title = 'Daily Portfolio\'s Growth (%) since Start',
          subtitle = paste(stocks_perf$Date[1]," (Includes Expenses): ",
                           formatNum(stocks_perf$TotalPer[1],2),"% ($",
-                          formatNum(stocks_perf$DailyStocks[1] - 
-                                      sum(stocks_perf$DailyTrans),0),") | $",
+                          formatNum(stocks_perf$TotalUSD[1], 0),") | $",
                           formatNum(stocks_perf$CumPortfolio[1]), sep="")) +
     theme_lares2()
   
