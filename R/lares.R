@@ -64,7 +64,7 @@ if(getRversion() >= "2.15.1")
       "content_transformer","createdate","credit","cuts","date_of_birth","days","dealId",
       "dealstage","df_status","form_submissions","gather","ceiling_date","trim",
       "get_questionnaire","get_typeforms","endfx","to","Real","Pred","Freq","force_n",
-      "hasMore","has_more","identification_date","identity_profiles","ggplotly",
+      "hasMore","has_more","identification_date","identity_profiles","ggplotly","facet2",
       "image_darknet_detect","image_darknet_model","image_info","image_read","index",
       "is_contact","key","label","label_colours","label_hjust","max_score","merge_audits",
       "merged_vids","min_score","model_performance","month.lbl","numb","ocv_bitmap",

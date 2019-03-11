@@ -4,14 +4,16 @@
 \alias{replaceall}
 \title{Replace Values With}
 \usage{
-replaceall(df, original, change)
+replaceall(df, original, change, quiet = TRUE)
 }
 \arguments{
 \item{df}{Data.frame}
 
-\item{original}{String. Original text you wish to replace}
+\item{original}{String or Vector. Original text you wish to replace}
 
-\item{change}{String. Values you wish to replace the originals with}
+\item{change}{String or Vector. Values you wish to replace the originals with}
+
+\item{quiet}{Boolean. Keep quiet? (or print replacements)}
 }
 \description{
 This function lets the user replace all specific values in a 

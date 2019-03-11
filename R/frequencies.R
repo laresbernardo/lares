@@ -49,7 +49,7 @@ freqs <- function(vector, ..., results = TRUE,
       if(nrow(values) > top) {
         if (!is.na(top)) {
           output <- output %>% slice(1:top)
-          message(paste0("Filtering the top ", top, 
+          message(paste0("Slicing the top ", top, 
                          " (out of ", nrow(values),
                          ") frequencies; use 'top' parameter to overrule."))
           note <- paste0("(", top, " most frequent)")
@@ -110,9 +110,9 @@ freqs <- function(vector, ..., results = TRUE,
           colnames(plot)[1] <- "facet"
           colnames(plot)[2] <- "names"
           plot$facet[is.na(plot$facet)] <- "NA"
-          p <- ggplot(plot, aes(
-            x = reorder_within(names, -order, facet), 
-            y = n, label = labels, fill = p)) +
+          p <- plot %>%
+            ggplot(aes(x = reorder_within(names, -order, facet), 
+                       y = n, label = labels, fill = p)) +
             scale_x_reordered()
         }
         # When three features
@@ -125,7 +125,10 @@ freqs <- function(vector, ..., results = TRUE,
           colnames(plot)[3] <- "names"
           plot$facet2[is.na(plot$facet2)] <- "NA"
           plot$facet1[is.na(plot$facet1)] <- "NA"
-          p <- ggplot(plot, aes(x = reorder(names, -order), y = n,label = labels, fill = p))
+          p <- plot %>%
+            ggplot(aes(x = reorder_within(names, n, facet2), 
+                       y = n, label = labels, fill = p)) +
+            scale_x_reordered()
         }
         
         # Plot base
@@ -157,7 +160,7 @@ freqs <- function(vector, ..., results = TRUE,
           if (length(unique(facet_name2)) > 3) {
             stop("Please, try with a (third) variable with 3 or less cateogries!")
           }
-          p <- p + facet_grid(as.character(facet2) ~ as.character(facet1), scales = "free", space = "free") + 
+          p <- p + facet_grid(as.character(facet2) ~ as.character(facet1), scales = "free") + 
             labs(title = ifelse(is.na(title), "Frequencies and Percentages:", title),
                  subtitle = ifelse(is.na(subtitle), 
                                    paste("Variables:", facet_name2, "grouped by", facet_name1, "[x] and", 
@@ -181,3 +184,4 @@ freqs <- function(vector, ..., results = TRUE,
     return(output)
   }
 }
+

@@ -396,16 +396,33 @@ listfiles <- function(folder = "~", recursive = TRUE, regex = NA, images = FALSE
 #' vector or data.frame into another value.
 #' 
 #' @param df Data.frame
-#' @param original String. Original text you wish to replace
-#' @param change String. Values you wish to replace the originals with
+#' @param original String or Vector. Original text you wish to replace
+#' @param change String or Vector. Values you wish to replace the originals with
+#' @param quiet Boolean. Keep quiet? (or print replacements)
 #' @export
-replaceall <- function(df, original, change) {
-  data.frame(
-    lapply(df, function(x) {
-      gsub(original, change, x) 
-    }
-    )
-  )
+replaceall <- function(df, original, change, quiet = TRUE) {
+  if (length(original) != length(change)) {
+    stop("Vectors original and change should have the same length!")
+  }
+  if (sum(is.na(original)) > 0) {
+    df <- df %>% replace(is.na(.), change[is.na(original)])
+    change <- change[!is.na(original)]
+    original <- original[!is.na(original)]
+  }
+  if (sum(is.null(original)) > 0) {
+    df <- df %>% replace(is.null(.), change[is.null(original)])
+    change <- change[!is.null(original)]
+    original <- original[!is.null(original)]
+  }
+  if (length(original) > 0) {
+    for (i in 1:length(original)) {
+      if (!quiet) {
+        message(paste("Transforming all", original[i], "into", change[i])) 
+      }
+      df[] <- lapply(df, function(x) gsub(original[i], change[i], x))
+    } 
+  }
+  return(df)
 }
 
 
