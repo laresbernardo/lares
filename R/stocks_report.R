@@ -384,7 +384,7 @@ portfolio_daily_plot <- function(stocks_perf, save = TRUE) {
     geom_bar(aes(x=Date, y=RelPer, fill=color), stat='identity', width=1) +
     geom_line(aes(x=Date, y=TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.9) +
     geom_hline(yintercept = 0, alpha = 0.5, color="black") +
-    guides(fill=FALSE) + theme_minimal() +
+    guides(fill=FALSE) + 
     scale_x_date(date_labels = "%b%y") +
     scale_y_continuous(
       labels = comma,
@@ -434,7 +434,7 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, s
   plot <- portfolio_perf %>%
     mutate(shapeflag = ifelse(DifUSD < 0, 25, 24),
            box = -tops/5.5) %>%
-    ggplot() + theme_minimal() +
+    ggplot() + 
     geom_hline(yintercept = 0, colour = "black") +
     geom_col(aes(x = reorder(Symbol, Invested), y = Invested, fill = Symbol, group = 1)) +
     geom_col(aes(x = Symbol, y = Invested + DifUSD, fill=Symbol), alpha=0.5) +
@@ -492,7 +492,7 @@ stocks_daily_plot <- function (portfolio, daily, weighted = TRUE, group = TRUE, 
   amounts <- d %>% filter(Amount != 0) %>%
     mutate(label = paste0(round(Amount/1000,1),"K"))
   days <- as.integer(difftime(range(d$Date)[2], range(d$Date)[1], units = "days"))
-  plot <- ggplot(d) + theme_bw() + ylab('% Change since Start') +
+  plot <- ggplot(d) + ylab('% Change since Start') +
     geom_hline(yintercept = 0, alpha=0.8, color="black") +
     geom_line(aes(x=Date, y=Hist, color=Symbol), alpha=0.9, size=0.5) +
     geom_point(aes(x=Date, y=Hist, size=abs(Amount)), alpha=0.6, colour="black") +
@@ -530,11 +530,11 @@ stocks_daily_plot <- function (portfolio, daily, weighted = TRUE, group = TRUE, 
 #' @export
 portfolio_distr_plot <- function (portfolio_perf, daily) {
   
-  plot_stocks <- ggplot(portfolio_perf) + theme_minimal() +
+  plot_stocks <- ggplot(portfolio_perf) +
     geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels=scales::comma) +
     labs(x = '', y = "Portfolio's Stocks Dimentions") + theme_lares2()
-  plot_areas <- ggplot(portfolio_perf) + theme_minimal() +
+  plot_areas <- ggplot(portfolio_perf) +
     geom_bar(aes(x = "", y = DailyValue/sum(DailyValue), fill = Type), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels = scales::percent) +
     labs(x = '', y = "Portfolio's Stocks Type Distribution") + theme_lares2()
@@ -581,7 +581,7 @@ portfolio_total_plot <- function(portfolio, save = TRUE) {
                   type = c(rep("Invested", nrow(portfolio)), 
                            rep("Cash", nrow(portfolio))),
                   values = c(portfolio$StocksValue, portfolio$Cash)) %>%
-    ggplot() + theme_minimal() +
+    ggplot() + 
     geom_area(aes(x = Date, y = values, fill = type), 
               colour = "black", size = 0.2, alpha = 0.95) + 
     labs(title = "   Daily Total Portfolio Value", y = "", x = "", fill ="") +
