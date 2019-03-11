@@ -393,7 +393,9 @@ listfiles <- function(folder = "~", recursive = TRUE, regex = NA, images = FALSE
 #' Replace Values With
 #' 
 #' This function lets the user replace all specific values in a 
-#' vector or data.frame into another value.
+#' vector or data.frame into another value. If replacing more than
+#' one value, order matters so they will be replaced in the same
+#' order that you pass them to the function.
 #' 
 #' @param df Data.frame
 #' @param original String or Vector. Original text you wish to replace

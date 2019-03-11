@@ -17,5 +17,7 @@ replaceall(df, original, change, quiet = TRUE)
 }
 \description{
 This function lets the user replace all specific values in a 
-vector or data.frame into another value.
+vector or data.frame into another value. If replacing more than
+one value, order matters so they will be replaced in the same
+order that you pass them to the function.
 }

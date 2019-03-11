@@ -37,7 +37,7 @@
 #' @importFrom scales percent comma
 #' @importFrom sp over coordinates proj4string proj4string<- coordinates<- spTransform
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
-#' reorder start kmeans var
+#' reorder start kmeans var xtabs 
 #' @importFrom stringr str_locate_all
 #' @import SnowballC 
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
