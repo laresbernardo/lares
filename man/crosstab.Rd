@@ -4,13 +4,15 @@
 \alias{crosstab}
 \title{Cross tabulation}
 \usage{
-crosstab(x, y, weight = 1, prow = FALSE, pcol = FALSE,
-  pall = FALSE, decimals = 2, keep_nas = TRUE)
+crosstab(x, y, weight = 1, order = TRUE, prow = FALSE,
+  pcol = FALSE, pall = FALSE, decimals = 2, keep_nas = TRUE)
 }
 \arguments{
 \item{x, y}{Vectors. For dependent and independent values}
 
 \item{weight}{Vector. An optional vector for a weighted cross tabulation}
+
+\item{order}{Boolean. Sort desc the whole table?}
 
 \item{prow, pcol, pall}{Boolean. Calculate percent values for rows, columns,
 or the whole table, respectively.}
