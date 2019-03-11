@@ -20,9 +20,10 @@ crosstab <- function(x, y, weight = 1,
   }
   
   if (length(weight) == 1) {
-    weight <- rep(weight, length(x))
+    weight <- rep(as.numeric(weight), length(x))
   }
   
+  weight <- as.numeric(weight)
   t <- round(xtabs(weight ~ x + y))
   tt <- data.frame(t) %>% 
     tidyr::spread(y, Freq) %>% .[,-1] %>%
