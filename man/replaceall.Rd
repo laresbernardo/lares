@@ -7,7 +7,7 @@
 replaceall(df, original, change, quiet = TRUE)
 }
 \arguments{
-\item{df}{Data.frame}
+\item{df}{Data.frame or Vector}
 
 \item{original}{String or Vector. Original text you wish to replace}
 

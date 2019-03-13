@@ -397,12 +397,21 @@ listfiles <- function(folder = "~", recursive = TRUE, regex = NA, images = FALSE
 #' one value, order matters so they will be replaced in the same
 #' order that you pass them to the function.
 #' 
-#' @param df Data.frame
+#' @param df Data.frame or Vector
 #' @param original String or Vector. Original text you wish to replace
 #' @param change String or Vector. Values you wish to replace the originals with
 #' @param quiet Boolean. Keep quiet? (or print replacements)
 #' @export
 replaceall <- function(df, original, change, quiet = TRUE) {
+  if (is.vector(df)) {
+    vector <- TRUE
+    df <- data.frame(x = df)
+    dic <- data.frame(original, change)
+    original <- dic[,1]
+    change <- dic[,2]
+  } else { 
+    vector <- FALSE 
+  }
   if (length(original) != length(change)) {
     stop("Vectors original and change should have the same length!")
   }
@@ -424,9 +433,11 @@ replaceall <- function(df, original, change, quiet = TRUE) {
       df[] <- lapply(df, function(x) gsub(original[i], change[i], x))
     } 
   }
+  if (vector) {
+    df <- df[,1]
+  }
   return(df)
 }
-
 
 ####################################################################
 #' Remove/Drop Columns in which ALL or SOME values are NAs
