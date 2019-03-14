@@ -19,6 +19,8 @@ crosstab <- function(x, y, weight = 1, order = TRUE,
                      decimals = 2, keep_nas = TRUE,
                      list = FALSE) {
   
+  options(warn=-1)
+  
   if (keep_nas) {
     x <- replaceall(x, NA, "N/A")
     y <- replaceall(y, NA, "N/A")
@@ -81,7 +83,7 @@ crosstab <- function(x, y, weight = 1, order = TRUE,
   }
   
   if (list) {
-    ret <- gather(ret) %>% 
+    ret <- tidyr::gather(ret) %>% 
       mutate(n = rep(rownames(x), ncol(x))) %>%
       select(n, key, value)
     colnames(ret) <- c("dependent", "independent", "values")
