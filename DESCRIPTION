@@ -29,7 +29,6 @@ Imports:
     lubridate,
     mailR,
     magrittr,
-    migest,
     openxlsx,
     pROC,
     quantmod,

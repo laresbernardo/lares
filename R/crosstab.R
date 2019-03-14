@@ -6,14 +6,18 @@
 #' @param x,y Vectors. For dependent and independent values
 #' @param weight Vector. An optional vector for a weighted cross tabulation
 #' @param order Boolean. Sort desc the whole table?
+#' @param total Boolean. Return total values?
 #' @param prow,pcol,pall Boolean. Calculate percent values for rows, columns,
 #' or the whole table, respectively.
 #' @param decimals Integer. How many decimals should be returned?
 #' @param keep_nas Boolean. Keep NAs and count them as well?
+#' @param list Boolean. Return as a single list?
 #' @export
-crosstab <- function(x, y, weight = 1, order = TRUE,
+crosstab <- function(x, y, weight = 1, order = TRUE, 
+                     total = TRUE,
                      prow = FALSE, pcol = FALSE, pall = FALSE, 
-                     decimals = 2, keep_nas = TRUE) {
+                     decimals = 2, keep_nas = TRUE,
+                     list = FALSE) {
   
   if (keep_nas) {
     x <- replaceall(x, NA, "N/A")
@@ -69,6 +73,18 @@ crosstab <- function(x, y, weight = 1, order = TRUE,
   
   if (order) {
     ret <- ret[rows$name, cols$name]
+  }
+  
+  if (!total) {
+    ret <- ret %>% select(-Total) %>% filter(rownames(.) != "Total")
+    rownames(ret) <- rownames(t)
+  }
+  
+  if (list) {
+    ret <- gather(ret) %>% 
+      mutate(n = rep(rownames(x), ncol(x))) %>%
+      select(n, key, value)
+    colnames(ret) <- c("dependent", "independent", "values")
   }
   
   return(ret)

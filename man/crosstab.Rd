@@ -4,8 +4,9 @@
 \alias{crosstab}
 \title{Cross tabulation}
 \usage{
-crosstab(x, y, weight = 1, order = TRUE, prow = FALSE,
-  pcol = FALSE, pall = FALSE, decimals = 2, keep_nas = TRUE)
+crosstab(x, y, weight = 1, order = TRUE, total = TRUE,
+  prow = FALSE, pcol = FALSE, pall = FALSE, decimals = 2,
+  keep_nas = TRUE, list = FALSE)
 }
 \arguments{
 \item{x, y}{Vectors. For dependent and independent values}
@@ -14,12 +15,16 @@ crosstab(x, y, weight = 1, order = TRUE, prow = FALSE,
 
 \item{order}{Boolean. Sort desc the whole table?}
 
+\item{total}{Boolean. Return total values?}
+
 \item{prow, pcol, pall}{Boolean. Calculate percent values for rows, columns,
 or the whole table, respectively.}
 
 \item{decimals}{Integer. How many decimals should be returned?}
 
 \item{keep_nas}{Boolean. Keep NAs and count them as well?}
+
+\item{list}{Boolean. Return as a single list?}
 }
 \description{
 A cross-tabulation function with output similar to STATA.

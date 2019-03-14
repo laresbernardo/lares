@@ -4,16 +4,19 @@
 \alias{plot_chord}
 \title{Chords Plot}
 \usage{
-plot_chord(origin, dest, weight = 1, title = "Chord Diagram", mg = 7)
+plot_chord(origin, dest, weight = 1, mg = 7, title = "Chord Diagram",
+  seed = 0)
 }
 \arguments{
 \item{origin, dest}{Vectors. Origin and destination vectors}
 
 \item{weight}{Vector. Weight for each chor}
 
+\item{mg}{Numeric. Margin adjust for plot in case of need'}
+
 \item{title}{Character. Title for the plot}
 
-\item{mg}{Numeric. Margin adjust for plot in case of need}
+\item{seed}{Numeric. Seed for colour replication}
 }
 \description{
 This function plots discrete and continuous values results
