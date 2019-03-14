@@ -11,6 +11,7 @@ LazyData: true
 Imports: 
     beepr,
     DBI,
+    circlize,
     config,
     corrplot,
     devtools,
@@ -28,6 +29,7 @@ Imports:
     lubridate,
     mailR,
     magrittr,
+    migest,
     openxlsx,
     pROC,
     quantmod,

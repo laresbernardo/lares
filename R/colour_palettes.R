@@ -282,3 +282,26 @@ gg_text_customs <- function () {
               "none" = black)
   return(scale_color_manual(values = values))
 }
+
+
+####################################################################
+#' Plot Palette Colours
+#' 
+#' This function plots a list of colours
+#' 
+#' @param vector Vector. List of colours
+#' @export
+plot_palette <- function(vector) {
+  data.frame(colour = vector, 
+             id = 1:length(vector)) %>%
+    ggplot(aes(x=reorder(colour, -id), 
+               y=1, label=id, fill = vector)) + 
+    geom_col() +
+    scale_fill_identity() +
+    geom_text(hjust = -0.5) +
+    coord_flip() + labs(x = "Colours", y = "") +
+    theme_lares2() + guides(fill=FALSE) +
+    theme(axis.title.x=element_blank(),
+          axis.text.x=element_blank(),
+          axis.ticks.x=element_blank())
+}

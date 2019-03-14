@@ -1,6 +1,7 @@
 #' lares: R library for Analytics, Visualization & Machine Learning Tasks
 
 #' @importFrom beepr beep
+#' @importFrom circlize CELL_META chordDiagram circos.text circos.track uh
 #' @importFrom config get
 #' @importFrom corrplot corrplot
 #' @importFrom DBI dbDriver dbConnect dbSendQuery fetch dbDisconnect

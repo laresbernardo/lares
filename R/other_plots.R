@@ -141,3 +141,63 @@ gg_pie <- function(df, var, table = FALSE, save = FALSE, subdir = NA){
   }
   return(p)
 }
+
+
+####################################################################
+#' Chords Plot
+#' 
+#' This function plots discrete and continuous values results
+#' 
+#' @param origin,dest Vectors. Origin and destination vectors
+#' @param weight Vector. Weight for each chor
+#' @param title Character. Title for the plot
+#' @param mg Numeric. Margin adjust for plot in case of need
+#' @export
+plot_chord <- function(origin, dest, weight = 1, title = "Chord Diagram", mg = 7) {
+  
+  # require(migest)
+  # require(circlize)
+  
+  if (length(origin) != length(dest)) {
+    stop("The origin and dest vectors should have the same length!")
+  }
+  
+  lares_palette <- c("#40A4D8",
+                     "#DC3220",
+                     "#EBB600",
+                     "#5D3A9B",
+                     "#1AFF1A",
+                     "#D35FB7",
+                     "#2FC9FE",
+                     "#2FFECC",
+                     "#290452",
+                     "#F66320",
+                     "#FEFE62",
+                     "#005AB5",
+                     "lightpink2",
+                     "#9A9A9A",
+                     "#00008B",
+                     "#0C7BDC",
+                     "#E1BE6A",
+                     "#40B0A6")
+  
+  graphics.off()
+  
+  df <- data.frame(orig_reg = origin, dest_reg = dest, flow = weight)
+  
+  chordDiagram(x = df, 
+               grid.col = lares_palette,
+               transparency = 0.2, directional = 1,
+               preAllocateTracks = list(track.height = uh(mg, "mm"), track.margin = c(uh(mg, "mm"), 0)),
+               direction.type = c("arrows", "diffHeight"), diffHeight  = -0.04,
+               annotationTrack = c("grid", "axis"), annotationTrackHeight = c(0.05, 0.1),
+               link.arr.type = "big.arrow", link.sort = TRUE, link.largest.ontop = TRUE)
+  
+  circos.track(track.index = 1, panel.fun = function(x, y) {
+    circos.text(CELL_META$xcenter, CELL_META$ylim[1], CELL_META$sector.index, 
+                facing = "clockwise", niceFacing = TRUE, adj = c(0.4, 0.5))
+  }, bg.border = NA)
+  
+  title(main = title, line = -1)
+  
+}
