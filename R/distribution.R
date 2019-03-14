@@ -169,7 +169,7 @@ distr <- function(data, ...,
     }
     
     # Chords plot
-    if (chords) {
+    if (chords == TRUE) {
       df <- data.frame(value = value, targets = targets)
       output <- freqs(df, targets, value)
       title <- "Frequency Chords Diagram"
@@ -346,7 +346,7 @@ distr <- function(data, ...,
         gridExtra::arrangeGrob(count, prop, ncol = 1, nrow = 2)
         dev.off()
       }
-      plot <- invisible(gridExtra::grid.arrange(count, prop, ncol = 1, nrow = 2))
+      p <- invisible(gridExtra::grid.arrange(count, prop, ncol = 1, nrow = 2))
     }
     if (type == 2) {
       count <- count + coord_flip() + 
@@ -354,14 +354,14 @@ distr <- function(data, ...,
       if (save == TRUE) {
         count <- count + ggsave(file_name, width = 8, height = 6)
       }
-      plot <- count
+      p <- count
     }
     if (type == 3) {
       prop <- prop + labs(title = "Proportions Plot", subtitle = subtitle, caption  = "")
       if (save == TRUE) {
         prop <- prop + ggsave(file_name, width = 8, height = 6)
       }
-      plot <- prop
+      p <- prop
     }
     
     # Return table with results?
@@ -372,8 +372,8 @@ distr <- function(data, ...,
   }
   
   if (type == 1) {
-    return(invisible(plot)) 
+    return(invisible(p)) 
   } else {
-    invisible(return(plot)) 
+    invisible(return(p)) 
   }
 }
