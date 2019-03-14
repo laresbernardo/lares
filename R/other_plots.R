@@ -165,7 +165,7 @@ plot_chord <- function(origin, dest, weight = 1, mg = 7, title = "Chord Diagram"
   set.seed(seed)
   graphics.off()
   
-  df <- data.frame(as.character(origin), as.character(dest), weight)
+  df <- data.frame(origin, dest, weight)
   colnames(df) <- c("orig_reg", "dest_reg", "flow")
   
   chordDiagram(x = df, 
