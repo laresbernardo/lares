@@ -5,7 +5,7 @@
 \title{Chords Plot}
 \usage{
 plot_chord(origin, dest, weight = 1, mg = 7, title = "Chord Diagram",
-  seed = 0)
+  subtitle = "", pal = NA)
 }
 \arguments{
 \item{origin, dest}{Vectors. Origin and destination vectors}
@@ -16,7 +16,9 @@ plot_chord(origin, dest, weight = 1, mg = 7, title = "Chord Diagram",
 
 \item{title}{Character. Title for the plot}
 
-\item{seed}{Numeric. Seed for colour replication}
+\item{subtitle}{Character. Subtitle for the plot}
+
+\item{pal}{Vector. Colour pallete. Order matters.}
 }
 \description{
 This function plots discrete and continuous values results

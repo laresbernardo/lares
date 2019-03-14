@@ -23,6 +23,7 @@
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
 #' @param custom_colours Boolean. Use custom colours function?
 #' @param plot Boolean. Return a plot? Otherwise, a table with results
+#' @param chords Boolean. Use a chords plot?
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @export
@@ -38,6 +39,7 @@ distr <- function(data, ...,
                   abc = FALSE,
                   custom_colours = FALSE,
                   plot = TRUE,
+                  chords = FALSE,
                   save = FALSE, 
                   subdir = NA) {
   
@@ -166,6 +168,19 @@ distr <- function(data, ...,
                          "rows and value has", length(value))))
     }
     
+    # Chords plot
+    if (chords) {
+      df <- data.frame(value = value, targets = targets)
+      output <- freqs(df, targets, value)
+      title <- "Frequency Chords Diagram"
+      subtitle <- paste("Variables:", targets_name, "to", variable_name)
+      if (plot == FALSE) {
+        return(output)
+      }
+      return(plot_chord(
+        output$targets, output$value, output$n, mg = 13, title = title, subtitle = subtitle))
+    }
+    
     # For num-num distributions or too many unique target variables
     if (length(unique(targets)) >= 8) {
       if (is.numeric(targets) & is.numeric(value)) {
@@ -210,7 +225,7 @@ distr <- function(data, ...,
     # Captions for plots
     subtitle <- paste0("Variables: ", targets_name, " vs. ", variable_name,". Obs: ", formatNum(nrow(df), 0))
     caption <- ifelse(is.na(note), "", note)
-      
+    
     freqs <- df %>% 
       group_by(value, targets) %>% 
       tally() %>% arrange(desc(n)) %>% 

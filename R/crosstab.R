@@ -84,8 +84,8 @@ crosstab <- function(x, y, weight = 1, order = TRUE,
   
   if (list) {
     ret <- tidyr::gather(ret) %>% 
-      mutate(n = rep(rownames(x), ncol(x))) %>%
-      select(n, key, value)
+      mutate(names = rep(rownames(ret), ncol(ret))) %>%
+      select(names, key, value)
     colnames(ret) <- c("dependent", "independent", "values")
   }
   

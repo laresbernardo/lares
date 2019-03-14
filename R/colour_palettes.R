@@ -305,3 +305,46 @@ plot_palette <- function(vector) {
           axis.text.x=element_blank(),
           axis.ticks.x=element_blank())
 }
+
+
+####################################################################
+#' Palette Colours
+#' 
+#' This function plots a list of colours on a specific palette
+#' 
+#' @param which Integer. Which palette?
+#' @export
+lares_pal <- function (which = 1) {
+  
+  # Check palette:
+  # plot_palette(lares_pal(1))
+  
+  if (which == 1) {
+    pal <- c("#40A4D8",
+             "#DC3220",
+             "#EBB600",
+             "#5D3A9B",
+             "#1AFF1A",
+             "#D35FB7",
+             "#2FC9FE",
+             "#2FFECC",
+             "#290452",
+             "#F66320",
+             "#FEFE62",
+             "#005AB5",
+             "lightpink2",
+             "#9A9A9A",
+             "#00008B",
+             "#0C7BDC",
+             "#E1BE6A",
+             "#40B0A6",
+             "#f29595",
+             "#7adf90",
+             "#056e00",
+             "#e40000",
+             "#8600a1",
+             "black",
+             "brown")
+  }
+  return(pal)
+}

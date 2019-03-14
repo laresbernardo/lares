@@ -150,11 +150,14 @@ gg_pie <- function(df, var, table = FALSE, save = FALSE, subdir = NA){
 #' 
 #' @param origin,dest Vectors. Origin and destination vectors
 #' @param weight Vector. Weight for each chor
-#' @param title Character. Title for the plot
 #' @param mg Numeric. Margin adjust for plot in case of need'
-#' @param seed Numeric. Seed for colour replication
+#' @param title Character. Title for the plot
+#' @param subtitle Character. Subtitle for the plot
+#' @param pal Vector. Colour pallete. Order matters.
 #' @export
-plot_chord <- function(origin, dest, weight = 1, mg = 7, title = "Chord Diagram", seed = 0) {
+plot_chord <- function(origin, dest, weight = 1, mg = 7, 
+                       title = "Chord Diagram",
+                       subtitle = "", pal = NA) {
   
   # require(circlize)
   
@@ -162,14 +165,23 @@ plot_chord <- function(origin, dest, weight = 1, mg = 7, title = "Chord Diagram"
     stop("The origin and dest vectors should have the same length!")
   }
   
-  set.seed(seed)
-  graphics.off()
-  
-  df <- data.frame(origin, dest, weight)
+  df <- data.frame(origin, dest, weight) %>%
+    mutate(origin = ifelse(origin == "", " ", as.character(origin)),
+           dest = ifelse(dest == "", " ", as.character(dest)))
   colnames(df) <- c("orig_reg", "dest_reg", "flow")
+  uniq <- unique(c(as.character(df$orig_reg), as.character(df$dest_reg)))
+  
+  if (is.na(pal)) {
+    pal <- lares_pal() 
+  }
+  
+  if (length(unique(origin)) > length(pal)) {
+    stop("Too many chords to plot and not enough colurs :(")
+  }
   
   chordDiagram(x = df, 
-               #grid.col = lares_palette[1:length(unique(df$orig_reg))],
+               grid.col = c(pal[1:length(unique(origin))], 
+                            rep("darkgrey", length(unique(dest)))),
                transparency = 0.2, directional = 1,
                preAllocateTracks = list(track.height = uh(mg, "mm"), 
                                         track.margin = c(uh(mg, "mm"), 0)),
@@ -182,6 +194,6 @@ plot_chord <- function(origin, dest, weight = 1, mg = 7, title = "Chord Diagram"
                 facing = "clockwise", niceFacing = TRUE, adj = c(0.4, 0.5))
   }, bg.border = NA)
   
-  title(main = title, line = -1)
+  title(main = title, line = -1, sub = subtitle, font.sub = 3, family = "Arial Narrow")
   
 }
