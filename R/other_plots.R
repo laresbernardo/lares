@@ -181,7 +181,7 @@ plot_chord <- function(origin, dest, weight = 1, mg = 7,
   
   chordDiagram(x = df, 
                grid.col = c(pal[1:length(unique(origin))], 
-                            rep("darkgrey", length(unique(dest)))),
+                            rep("darkgrey", length(unique(uniq))-length(unique(origin)))),
                transparency = 0.2, directional = 1,
                preAllocateTracks = list(track.height = uh(mg, "mm"), 
                                         track.margin = c(uh(mg, "mm"), 0)),
