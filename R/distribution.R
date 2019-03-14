@@ -22,7 +22,7 @@
 #' for both, target and values)
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
 #' @param custom_colours Boolean. Use custom colours function?
-#' @param results Boolean. Return results data.frame?
+#' @param plot Boolean. Return a plot? Otherwise, a table with results
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @export
@@ -37,7 +37,7 @@ distr <- function(data, ...,
                   clean = FALSE,
                   abc = FALSE,
                   custom_colours = FALSE,
-                  results = FALSE,
+                  plot = TRUE,
                   save = FALSE, 
                   subdir = NA) {
   
@@ -135,12 +135,11 @@ distr <- function(data, ...,
       }
     } else {
       # Discrete values
-      p <- df %>% freqs(value, plot = T, results = F, 
-                        variable_name = variable_name, 
-                        abc = abc, top = top)
+      p <- df %>% 
+        freqs(value, plot = T, variable_name = variable_name, abc = abc, top = top)
     }
     # Return table with results?
-    if (results == TRUE) {
+    if (plot == FALSE) {
       output <- df %>% freqs(value, top = top)
       return(output)
     }
@@ -351,8 +350,8 @@ distr <- function(data, ...,
     }
     
     # Return table with results?
-    if (results == TRUE) {
-      table <- freqs %>% select(-order)
+    if (plot == FALSE) {
+      table <- freqs %>% select(-order, -row)
       return(table)
     }
   }

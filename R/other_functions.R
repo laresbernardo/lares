@@ -345,7 +345,6 @@ listfiles <- function(folder = "~", recursive = TRUE, regex = NA, images = FALSE
   files <- list.files(folder, recursive = recursive)
   address <- paste0(folder, "/", files)
   info <- file.info(address)
-  files <- gsub("_", " ", files)
   
   df <- data.frame(filename = files, address, info)
   df$size <- as.integer(df$size/1024)

@@ -6,8 +6,8 @@
 \usage{
 distr(data, ..., type = 1, note = NA, top = 10, breaks = 10,
   na.rm = FALSE, force = "none", trim = 0, clean = FALSE,
-  abc = FALSE, custom_colours = FALSE, results = FALSE,
-  save = FALSE, subdir = NA)
+  abc = FALSE, custom_colours = FALSE, plot = TRUE, save = FALSE,
+  subdir = NA)
 }
 \arguments{
 \item{data}{Dataframe}
@@ -39,7 +39,7 @@ for both, target and values)}
 
 \item{custom_colours}{Boolean. Use custom colours function?}
 
-\item{results}{Boolean. Return results data.frame?}
+\item{plot}{Boolean. Return a plot? Otherwise, a table with results}
 
 \item{save}{Boolean. Save the output plot in our working directory}
 
