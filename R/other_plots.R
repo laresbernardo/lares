@@ -176,7 +176,7 @@ plot_chord <- function(origin, dest, weight = 1, mg = 7,
   }
   
   if (length(unique(origin)) > length(pal)) {
-    stop("Too many chords to plot and not enough colurs :(")
+    stop("Too many chords to plot and not enough colours :(")
   }
   
   chordDiagram(x = df, 

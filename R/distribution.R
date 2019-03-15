@@ -168,19 +168,6 @@ distr <- function(data, ...,
                          "rows and value has", length(value))))
     }
     
-    # Chords plot
-    if (chords == TRUE) {
-      df <- data.frame(value = value, targets = targets)
-      output <- freqs(df, targets, value)
-      title <- "Frequency Chords Diagram"
-      subtitle <- paste("Variables:", targets_name, "to", variable_name)
-      if (plot == FALSE) {
-        return(output)
-      }
-      return(plot_chord(
-        output$targets, output$value, output$n, mg = 13, title = title, subtitle = subtitle))
-    }
-    
     # For num-num distributions or too many unique target variables
     if (length(unique(targets)) >= 8) {
       if (is.numeric(targets) & is.numeric(value)) {
@@ -198,7 +185,22 @@ distr <- function(data, ...,
           theme_lares2()
         return(p)  
       }
-      stop("You should use a 'target' variable with max 8 different values.")
+      message("You should try a 'target' variable with max 8 different values.")
+      message("Automatically trying a chords plot...")
+      chords <- TRUE
+    }
+    
+    # Chords plot
+    if (chords == TRUE) {
+      df <- data.frame(value = value, targets = targets)
+      output <- freqs(df, targets, value)
+      title <- "Frequency Chords Diagram"
+      subtitle <- paste("Variables:", targets_name, "to", variable_name)
+      if (plot == FALSE) {
+        return(output)
+      }
+      return(plot_chord(
+        output$targets, output$value, output$n, mg = 13, title = title, subtitle = subtitle))
     }
     
     # Only n numeric values, really numeric?
