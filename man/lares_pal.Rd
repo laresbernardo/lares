@@ -2,12 +2,9 @@
 % Please edit documentation in R/colour_palettes.R
 \name{lares_pal}
 \alias{lares_pal}
-\title{Palette Colours}
+\title{Personal Colours Palette}
 \usage{
-lares_pal(which = 1)
-}
-\arguments{
-\item{which}{Integer. Which palette?}
+lares_pal()
 }
 \description{
 This function plots a list of colours on a specific palette

@@ -4,10 +4,14 @@
 \alias{plot_palette}
 \title{Plot Palette Colours}
 \usage{
-plot_palette(vector)
+plot_palette(fill, colour = "black", id = NA)
 }
 \arguments{
-\item{vector}{Vector. List of colours}
+\item{fill}{Vector. List of colours for fills}
+
+\item{colour}{Vector. List of colours for colours}
+
+\item{id}{Vector. ID for each color}
 }
 \description{
 This function plots a list of colours
