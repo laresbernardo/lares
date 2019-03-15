@@ -172,7 +172,7 @@ plot_chord <- function(origin, dest, weight = 1, mg = 7,
   uniq <- unique(c(as.character(df$orig_reg), as.character(df$dest_reg)))
   
   if (is.na(pal)) {
-    pal <- names(lares_pal()$palette)
+    pal <- names(lares::lares_pal()$palette)
   }
   
   if (length(unique(origin)) > length(pal)) {

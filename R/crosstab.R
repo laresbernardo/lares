@@ -74,7 +74,8 @@ crosstab <- function(x, y, weight = 1, order = TRUE,
   rownames(ret) <- c(rownames(t) ,"Total")
   
   if (order) {
-    ret <- ret[rows$name, cols$name]
+    ret <- ret[c(as.character(rows$name[rows$name!="Total"]), "Total"),
+               c(as.character(cols$name[cols$name!="Total"]), "Total")]
   }
   
   if (!total) {
