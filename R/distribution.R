@@ -194,6 +194,9 @@ distr <- function(data, ...,
     if (chords == TRUE) {
       df <- data.frame(value = value, targets = targets)
       output <- freqs(df, targets, value)
+      if (na.rm == FALSE) {
+        output <- output %>% replaceall(NA, "NA") 
+      }
       title <- "Frequency Chords Diagram"
       subtitle <- paste("Variables:", targets_name, "to", variable_name)
       if (plot == FALSE) {

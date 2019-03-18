@@ -167,7 +167,8 @@ plot_chord <- function(origin, dest, weight = 1, mg = 7,
   
   df <- data.frame(origin, dest, weight) %>%
     mutate(origin = ifelse(origin == "", " ", as.character(origin)),
-           dest = ifelse(dest == "", " ", as.character(dest)))
+           dest = ifelse(dest == "", " ", as.character(dest))) %>%
+    replaceall(NA, "NA")
   colnames(df) <- c("orig_reg", "dest_reg", "flow")
   uniq <- unique(c(as.character(df$orig_reg), as.character(df$dest_reg)))
   
