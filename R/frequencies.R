@@ -55,7 +55,7 @@ freqs <- function(vector, ..., results = TRUE,
                          " (out of ", nrow(values),
                          ") frequencies; use 'top' parameter to overrule."))
           note <- paste0("(", top, " most frequent)")
-          obs <- paste("Obs.:", formatNum(sum(output$n), 0), "(out of obs_total)")
+          obs <- paste0("Obs.: ", formatNum(sum(output$n), 0), " (out of", formatNum(obs_total, 0), ")")
         }
       } else { note <- "" }
       
