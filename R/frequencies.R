@@ -43,6 +43,8 @@ freqs <- function(vector, ..., results = TRUE,
         "Sorry, but trying to plot more than 3 features is as complex as it sounds.",
         "You should try another method to understand your analysis!"))
     } else {
+      obs_total <- sum(output$n)
+      obs <- paste("Total Obs.:", formatNum(obs_total, 0))
       
       # Use only the most n frequent values/combinations only
       values <- output[,1]
@@ -53,6 +55,7 @@ freqs <- function(vector, ..., results = TRUE,
                          " (out of ", nrow(values),
                          ") frequencies; use 'top' parameter to overrule."))
           note <- paste0("(", top, " most frequent)")
+          obs <- paste("Obs.:", formatNum(sum(output$n), 0), "(out of obs_total)")
         }
       } else { note <- "" }
       
@@ -80,7 +83,6 @@ freqs <- function(vector, ..., results = TRUE,
         }
         
         plot <- ungroup(output)
-        obs <- paste("Obs.:", formatNum(sum(output$n), 0))
         
         if (rm.na == TRUE) {
           plot <- plot[complete.cases(plot), ]
