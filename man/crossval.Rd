@@ -4,12 +4,14 @@
 \alias{crossval}
 \title{Weighted Frequency (Counter with Ponder)}
 \usage{
-crossval(df, ..., order = TRUE, compare = FALSE)
+crossval(df, ..., wt, order = TRUE, compare = FALSE)
 }
 \arguments{
 \item{df}{Data.frame. It must contain a ponder column.}
 
 \item{...}{Variables. Column(s) to calculate the weighted frequencies.}
+
+\item{wt}{Variable, numeric. Weights.}
 
 \item{order}{Boolean. Do you wish to desc sort frequencies?}
 
@@ -17,5 +19,7 @@ crossval(df, ..., order = TRUE, compare = FALSE)
 }
 \description{
 This function lets the user calculate the weighted frequency in a
-tidy friendly way.
+tidy friendly way. It will automatically detect and use the ponder
+or weight column of your dataframe to weight the frequencies; if
+not found, a simlpe frequency table will be returned.
 }

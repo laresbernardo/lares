@@ -2,9 +2,10 @@
 #' Weighted Cross Tabulation
 #' 
 #' A cross-tabulation function with output similar to STATA, tidy
-#' friendly, with weights if needed. If only one dependent variable used,
-#' crossval() will be used; if two, then both variables will be crossed; if
-#' three, both variables will be crossed with weighted values.
+#' friendly, with weights if needed. If only one dependent variable
+#' crossval() will be recommended; if two, then both variables will be 
+#' crossed; if three, both variables will be crossed with third as 
+#' weighted values.
 #' 
 #' @param df Data.frame. 
 #' @param ... Variables. Dependent and independent variables. If needed,
@@ -28,13 +29,8 @@ crosstab <- function(df, ...,
   vars <- quos(...)
   
   if (length(vars) == 1) {
-    if (sum(grepl("weight|ponder", colnames(df))) > 0) {
-      message("Weighted frequency table:")
-      ret <- df %>% crossval(!!!vars) 
-    } else {
-      message("Simple frequency table:")
-      ret <- df %>% freqs(!!!vars) 
-    }
+    message("For one variable with weights, use crossval() instead!")
+    ret <- df %>% freqs(!!!vars)
     return(ret)
   }
   
@@ -121,31 +117,40 @@ crosstab <- function(df, ...,
 #' Weighted Frequency (Counter with Ponder)
 #' 
 #' This function lets the user calculate the weighted frequency in a
-#' tidy friendly way.
+#' tidy friendly way. It will automatically detect and use the ponder
+#' or weight column of your dataframe to weight the frequencies; if
+#' not found, a simlpe frequency table will be returned.
 #' 
 #' @param df Data.frame. It must contain a ponder column.
 #' @param ... Variables. Column(s) to calculate the weighted frequencies.
+#' @param wt Variable, numeric. Weights.
 #' @param order Boolean. Do you wish to desc sort frequencies?
 #' @param compare Boolean. Compare with equal-weighted values?
 #' @export
-crossval <- function(df, ..., order = TRUE, compare = FALSE) {
+crossval <- function(df, ..., wt, order = TRUE, compare = FALSE) {
+  
   vars <- quos(...)
-  if (!"weight" %in% colnames(df)) {
-    colnames(df)[grepl("ponder", colnames(df), ignore.case = T)][1] <- "weight" 
+  weight <- enquo(wt)
+  
+  if (length(wt) == 0) {
+    stop("Please select the wt variable for weights! If not, use the freqs() function.")
   }
+  
   res <- df %>% 
-    count(!!!vars, wt = weight) %>% 
-    mutate(p = round(100*n/sum(n), 2))
+    count(!!!vars, wt = !!weight) %>% 
+    mutate(p = round(100*n/sum(n), 2)) %>%
+    {if (order) arrange(., desc(p))  else .}
   res <- res[complete.cases(res), ]
-  if (order) {
-    res <- res %>% arrange(desc(p)) 
-  }
-  colnames(res)[1:(ncol(res)-2)] <- paste0(gsub("~","",as.character(vars)),"_weighted")
+  
+  colnames(res)[(ncol(res)-1):ncol(res)] <- paste0(c("n","p"),"_",as.character(weight)[2])
+  
   if (compare) {
-    rese <- df %>% freqs(!!!vars)
-    colnames(rese)[(ncol(rese)-3):ncol(rese)] <- rev(c("p_real", "n_real","pcum_real"))
-    res <- res %>% cbind(rese[,-(1:(ncol(res)-2))]) %>% .[,-ncol(.)] %>%
-      mutate(dif_p = p_real - p)
+    rese <- df %>% freqs(!!!vars) %>% select(p, n) %>%
+      rename(p_real = p, n_real = n)
+    
+    res <- data.frame(res, rese)
   }
+  
   return(res)
+  
 }
