@@ -136,6 +136,7 @@ crossval <- function(df, ..., order = TRUE, compare = FALSE) {
   res <- df %>% 
     count(!!!vars, wt = weight) %>% 
     mutate(p = round(100*n/sum(n), 2))
+  res <- res[complete.cases(res), ]
   if (order) {
     res <- res %>% arrange(desc(p)) 
   }
