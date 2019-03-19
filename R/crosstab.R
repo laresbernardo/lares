@@ -30,8 +30,12 @@ crosstab <- function(x, y, weight = 1, order = TRUE,
     weight <- rep(weight, length(x))
   }
   
+  if (weight == 1) {
+    pall <- TRUE
+  }
+  
   weight <- as.numeric(weight)
-  t <- round(xtabs(weight ~ x + y))
+  t <- round(xtabs(weight ~ x + y), decimals)
   tt <- data.frame(t) %>% 
     tidyr::spread(y, Freq) %>% .[,-1] %>%
     mutate(n = rowSums(.)) %>%
@@ -92,4 +96,37 @@ crosstab <- function(x, y, weight = 1, order = TRUE,
   
   return(ret)
   
+}
+
+
+####################################################################
+#' Ponder Frequency (Weighted Counter)
+#' 
+#' This function lets the user calculate the weighted frequency in a
+#' tidy friendly way.
+#' 
+#' @param df Data.frame. It must contain a ponder column.
+#' @param ... Variables. Column(s) to calculate the weighted frequencies.
+#' @param order Boolean. Do you wish to desc sort frequencies?
+#' @param compare Boolean. Compare with equal-weighted values?
+#' @export
+crossval <- function(df, ..., order = TRUE, compare = TRUE) {
+  vars <- quos(...)
+  if (!"weight" %in% colnames(df)) {
+    colnames(df)[grepl("ponder", colnames(df), ignore.case = T)][1] <- "weight" 
+  }
+  res <- df %>% 
+    count(!!!vars, wt = weight) %>% 
+    mutate(p = round(100*n/sum(n), 2))
+  if (order) {
+    res <- res %>% arrange(desc(p)) 
+  }
+  colnames(res)[1:(ncol(res)-2)] <- paste0(gsub("~","",as.character(vars)),"_weighted")
+  if (compare) {
+    rese <- df %>% freqs(!!!vars)
+    colnames(rese)[(ncol(rese)-3):ncol(rese)] <- rev(c("p_real", "n_real","pcum_real"))
+    res <- res %>% cbind(rese[,-(1:(ncol(res)-2))]) %>% .[,-ncol(.)] %>%
+      mutate(dif_p = p_real - p)
+  }
+  return(res)
 }
