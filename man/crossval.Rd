@@ -2,9 +2,9 @@
 % Please edit documentation in R/crosstab.R
 \name{crossval}
 \alias{crossval}
-\title{Ponder Frequency (Weighted Counter)}
+\title{Weighted Frequency (Counter with Ponder)}
 \usage{
-crossval(df, ..., order = TRUE, compare = TRUE)
+crossval(df, ..., order = TRUE, compare = FALSE)
 }
 \arguments{
 \item{df}{Data.frame. It must contain a ponder column.}

@@ -1,10 +1,14 @@
 ####################################################################
-#' Cross tabulation
+#' Weighted Cross Tabulation
 #' 
-#' A cross-tabulation function with output similar to STATA.
+#' A cross-tabulation function with output similar to STATA, tidy
+#' friendly, with weights if needed. If only one dependent variable used,
+#' crossval() will be used; if two, then both variables will be crossed; if
+#' three, both variables will be crossed with weighted values.
 #' 
-#' @param x,y Vectors. For dependent and independent values
-#' @param weight Vector. An optional vector for a weighted cross tabulation
+#' @param df Data.frame. 
+#' @param ... Variables. Dependent and independent variables. If needed,
+#' third value should be the weight variable.
 #' @param order Boolean. Sort desc the whole table?
 #' @param total Boolean. Return total values?
 #' @param prow,pcol,pall Boolean. Calculate percent values for rows, columns,
@@ -13,25 +17,39 @@
 #' @param keep_nas Boolean. Keep NAs and count them as well?
 #' @param list Boolean. Return as a single list?
 #' @export
-crosstab <- function(x, y, weight = 1, order = TRUE, 
-                     total = TRUE,
+crosstab <- function(df, ..., 
+                     order = TRUE, total = TRUE,
                      prow = FALSE, pcol = FALSE, pall = FALSE, 
                      decimals = 2, keep_nas = TRUE,
                      list = FALSE) {
   
   options(warn=-1)
   
+  vars <- quos(...)
+  
+  if (length(vars) == 1) {
+    if (sum(grepl("weight|ponder", colnames(df))) > 0) {
+      message("Weighted frequency table:")
+      ret <- df %>% crossval(!!!vars) 
+    } else {
+      message("Simple frequency table:")
+      ret <- df %>% freqs(!!!vars) 
+    }
+    return(ret)
+  }
+  
+  df <- df %>% select(!!!vars)
+  
   if (keep_nas) {
-    x <- replaceall(x, NA, "N/A")
-    y <- replaceall(y, NA, "N/A")
+    x <- df[,1] %>% replaceall(NA, "N/A")
+    y <- df[,2] %>% replaceall(NA, "N/A")
   }
   
-  if (length(weight) == 1) {
-    weight <- rep(weight, length(x))
-  }
-  
-  if (weight == 1) {
-    pall <- TRUE
+  if (length(vars) == 2) {
+    weight <- rep(1, length(x))
+    decimals <- 0
+  } else {
+    weight <- df[,3]
   }
   
   weight <- as.numeric(weight)
@@ -100,7 +118,7 @@ crosstab <- function(x, y, weight = 1, order = TRUE,
 
 
 ####################################################################
-#' Ponder Frequency (Weighted Counter)
+#' Weighted Frequency (Counter with Ponder)
 #' 
 #' This function lets the user calculate the weighted frequency in a
 #' tidy friendly way.
@@ -110,7 +128,7 @@ crosstab <- function(x, y, weight = 1, order = TRUE,
 #' @param order Boolean. Do you wish to desc sort frequencies?
 #' @param compare Boolean. Compare with equal-weighted values?
 #' @export
-crossval <- function(df, ..., order = TRUE, compare = TRUE) {
+crossval <- function(df, ..., order = TRUE, compare = FALSE) {
   vars <- quos(...)
   if (!"weight" %in% colnames(df)) {
     colnames(df)[grepl("ponder", colnames(df), ignore.case = T)][1] <- "weight" 

@@ -2,16 +2,17 @@
 % Please edit documentation in R/crosstab.R
 \name{crosstab}
 \alias{crosstab}
-\title{Cross tabulation}
+\title{Weighted Cross Tabulation}
 \usage{
-crosstab(x, y, weight = 1, order = TRUE, total = TRUE,
-  prow = FALSE, pcol = FALSE, pall = FALSE, decimals = 2,
-  keep_nas = TRUE, list = FALSE)
+crosstab(df, ..., order = TRUE, total = TRUE, prow = FALSE,
+  pcol = FALSE, pall = FALSE, decimals = 2, keep_nas = TRUE,
+  list = FALSE)
 }
 \arguments{
-\item{x, y}{Vectors. For dependent and independent values}
+\item{df}{Data.frame.}
 
-\item{weight}{Vector. An optional vector for a weighted cross tabulation}
+\item{...}{Variables. Dependent and independent variables. If needed,
+third value should be the weight variable.}
 
 \item{order}{Boolean. Sort desc the whole table?}
 
@@ -27,5 +28,8 @@ or the whole table, respectively.}
 \item{list}{Boolean. Return as a single list?}
 }
 \description{
-A cross-tabulation function with output similar to STATA.
+A cross-tabulation function with output similar to STATA, tidy
+friendly, with weights if needed. If only one dependent variable used,
+crossval() will be used; if two, then both variables will be crossed; if
+three, both variables will be crossed with weighted values.
 }
