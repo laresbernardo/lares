@@ -14,6 +14,7 @@
 #' @param font,base_size Character and numeric. Base font family and size
 #' @param main_colour,second_colour,soft_colour,bg_colour Character. 
 #' Main colours for your theme
+#' @param legend Character. Legend position: top, right, bottom, left
 #' @param mg Numeric. External margin
 #' @export
 theme_lares2 <- function(font = "Arial Narrow", 
@@ -22,6 +23,7 @@ theme_lares2 <- function(font = "Arial Narrow",
                          second_colour = "deepskyblue3",
                          soft_colour = "grey30",
                          bg_colour = "transparent",
+                         legend = "right",
                          mg = 15) {
   
   # Start from theme_minimal()
@@ -41,11 +43,23 @@ theme_lares2 <- function(font = "Arial Narrow",
   update_geom_defaults("density", list(fill = main_colour, alpha = 0.95))
   
   # Edit some functions
+  colours_pal <- lares_pal()$palette
+  ## Scales
   scale_y_continuous <- function(...) ggplot2::scale_y_continuous(..., labels = scales::comma)
   scale_x_continuous <- function(...) ggplot2::scale_x_continuous(..., labels = scales::comma)
-  scale_colour_continuous <- function(...) ggplot2::scale_colour_gradient(
-    low = second_colour, high = main_colour, na.value = soft_colour, ...)
-  ggsave <- function(...) ggplot2::ggsave(..., bg = "transparent")
+  ## Colours
+  assign("scale_colour_discrete", function(..., values = as.vector(colours_pal)) 
+    ggplot2::scale_colour_manual(..., values = values), globalenv())
+  assign("scale_fill_discrete", function(..., values = names(colours_pal)) 
+    ggplot2::scale_fill_manual(..., values = values), globalenv())
+  assign("scale_colour_continuous", 
+         function(..., low = second_colour, high = main_colour, na.value = soft_colour, ...) 
+           ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), globalenv())
+  assign("scale_fill_continuous", 
+         function(..., low = second_colour, high = main_colour, na.value = soft_colour, ...) 
+           ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), globalenv())
+  ## Export plots
+  assign("ggsave", function(..., bg = "transparent") ggplot2::ggsave(..., bg = bg), globalenv())
   
   if (inherits(grid, "character")) {
     grid_col <- "#CCCCCC"
@@ -101,7 +115,11 @@ theme_lares2 <- function(font = "Arial Narrow",
     family=font, face="bold", color = soft_colour))
   # Legend 
   ret <- ret + theme(legend.title = element_text(
-    color = soft_colour, size = base_size * 0.9, face = "bold"))
+    color = soft_colour, size = base_size * 0.9, face = "bold"),
+    legend.position = legend,
+    legend.justification = c(ifelse(legend %in% c("top","bottom"),0,.5),
+                             ifelse(legend=="top",0,.5)),
+    legend.margin = margin(-3,0,-5,0))
   # Background
   ret <- ret + theme(
     panel.background = element_rect(fill = bg_colour, colour = NA),
