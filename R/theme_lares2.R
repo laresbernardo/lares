@@ -44,22 +44,21 @@ theme_lares2 <- function(font = "Arial Narrow",
   
   # Edit some functions
   colours_pal <- lares_pal()$palette
-  pos <- 1
   ## Scales
   scale_y_continuous <- function(...) ggplot2::scale_y_continuous(..., labels = scales::comma)
   scale_x_continuous <- function(...) ggplot2::scale_x_continuous(..., labels = scales::comma)
   ## Colours
   assign("scale_colour_discrete", function(..., values = as.vector(colours_pal)) 
-    ggplot2::scale_colour_manual(..., values = values), envir=as.environment(pos))
+    ggplot2::scale_colour_manual(..., values = values), envir=parent.frame())
   assign("scale_fill_discrete", function(..., values = names(colours_pal)) 
-    ggplot2::scale_fill_manual(..., values = values), envir=as.environment(pos))
+    ggplot2::scale_fill_manual(..., values = values), envir=parent.frame())
   assign("scale_colour_continuous", function(..., low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) 
-    ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=as.environment(pos))
+    ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=parent.frame())
   assign("scale_fill_continuous", function(...,low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) 
-    ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=as.environment(pos))
+    ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=parent.frame())
   ## Export plots
-  assign("ggsave", function(..., bg = "transparent") ggplot2::ggsave(..., bg = bg), envir=as.environment(pos))
-  assign("sentence", "That was easy.", envir=as.environment(pos))
+  assign("ggsave", function(..., bg = "transparent") ggplot2::ggsave(..., bg = bg), envir=parent.frame())
+  assign("sentence", "That was easy.", envir=parent.frame())
   
   if (inherits(grid, "character")) {
     grid_col <- "#CCCCCC"
