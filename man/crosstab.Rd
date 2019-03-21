@@ -29,7 +29,8 @@ or the whole table, respectively.}
 }
 \description{
 A cross-tabulation function with output similar to STATA, tidy
-friendly, with weights if needed. If only one dependent variable used,
-crossval() will be used; if two, then both variables will be crossed; if
-three, both variables will be crossed with weighted values.
+friendly, with weights if needed. If only one dependent variable
+crossval() will be recommended; if two, then both variables will be 
+crossed; if three, both variables will be crossed with third as 
+weighted values.
 }

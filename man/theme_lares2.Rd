@@ -6,13 +6,16 @@
 \usage{
 theme_lares2(font = "Arial Narrow", base_size = 11.5,
   main_colour = "darkorange3", second_colour = "deepskyblue3",
-  soft_colour = "grey30", bg_colour = "transparent", mg = 15)
+  soft_colour = "grey30", bg_colour = "transparent",
+  legend = "right", mg = 15)
 }
 \arguments{
 \item{font, base_size}{Character and numeric. Base font family and size}
 
 \item{main_colour, second_colour, soft_colour, bg_colour}{Character.
 Main colours for your theme}
+
+\item{legend}{Character. Legend position: top, right, bottom, left}
 
 \item{mg}{Numeric. External margin}
 }
