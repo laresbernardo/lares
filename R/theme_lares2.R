@@ -49,16 +49,16 @@ theme_lares2 <- function(font = "Arial Narrow",
   scale_x_continuous <- function(...) ggplot2::scale_x_continuous(..., labels = scales::comma)
   ## Colours
   assign("scale_colour_discrete", function(..., values = as.vector(colours_pal)) 
-    ggplot2::scale_colour_manual(..., values = values), envir=parent.frame())
+    ggplot2::scale_colour_manual(..., values = values), envir=as.environment(1))
   assign("scale_fill_discrete", function(..., values = names(colours_pal)) 
-    ggplot2::scale_fill_manual(..., values = values), envir=parent.frame())
+    ggplot2::scale_fill_manual(..., values = values), envir=as.environment(1))
   assign("scale_colour_continuous", function(..., low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) 
-    ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=parent.frame())
+    ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=as.environment(1))
   assign("scale_fill_continuous", function(...,low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) 
-    ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=parent.frame())
+    ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=as.environment(1))
   ## Export plots
-  assign("ggsave", function(..., bg = "transparent") ggplot2::ggsave(..., bg = bg), envir=parent.frame())
-  assign("sentence", "That was easy.", envir=parent.frame())
+  assign("ggsave", function(..., bg = "transparent") ggplot2::ggsave(..., bg = bg), envir=as.environment(1))
+  assign("sentence", "That was easy.", envir=as.environment(1))
   
   if (inherits(grid, "character")) {
     grid_col <- "#CCCCCC"
