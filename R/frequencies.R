@@ -53,7 +53,7 @@ freqs <- function(vector, ..., wt = NULL,
                             paste0("(weighted by ", as.character(weight)[2], ")"), "")
       
       # Use only the most n frequent values/combinations only
-      values <- unique(output[,(ncol(output)-3)],)
+      values <- unique(output[,(ncol(output)-3)])
       if(nrow(values) > top) {
         if (!is.na(top)) {
           output <- output %>% slice(1:top)
@@ -70,6 +70,7 @@ freqs <- function(vector, ..., wt = NULL,
         message("Sorting variable(s) alphabetically")
         output <- output %>% arrange(!!!vars, desc(n)) %>% 
           mutate(order = row_number())
+        note <- gsub("most frequent", "first rows", note)
       } else {
         output <- output %>% arrange(desc(n)) %>%
           mutate(order = row_number())
