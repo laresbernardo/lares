@@ -53,12 +53,12 @@ freqs <- function(vector, ..., wt = NULL,
                             paste0("(weighted by ", as.character(weight)[2], ")"), "")
       
       # Use only the most n frequent values/combinations only
-      values <- unique(output[,(colnames(output)=="n")-1])
-      if(length(values) > top) {
+      values <- unique(output[,(ncol(output)-3)],)
+      if(nrow(values) > top) {
         if (!is.na(top)) {
           output <- output %>% slice(1:top)
           message(paste0("Slicing the top ", top, 
-                         " (out of ", length(values),
+                         " (out of ", nrow(values),
                          ") frequencies; use 'top' parameter to overrule."))
           note <- paste0("(", top, " most frequent)")
           obs <- paste0("Obs.: ", formatNum(sum(output$n), 0), " (out of ", formatNum(obs_total, 0), ")")
