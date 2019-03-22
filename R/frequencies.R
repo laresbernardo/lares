@@ -6,6 +6,7 @@
 #' 
 #' @param vector Data.frame
 #' @param ... Variables. Variables you wish to process. Order matters.
+#' @param wt Variable, numeric. Weights.
 #' @param results Boolean. Return results in a dataframe?
 #' @param variable_name Character. Overwrite the main variable's name
 #' @param plot Boolean. Do you want to see a plot? Three variables tops.
@@ -21,18 +22,21 @@
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
 #' @export
-freqs <- function(vector, ..., results = TRUE, 
+freqs <- function(vector, ..., wt = NULL,
+                  results = TRUE, 
                   variable_name = NA, 
                   plot = FALSE, rm.na = FALSE,
                   title = NA, subtitle = NA,
-                  top = 20, abc = FALSE, 
+                  top = 20, abc = FALSE,
                   save = FALSE, subdir = NA) {
   
   vars <- quos(...)
+  weight <- enquo(wt)
   
   output <- vector %>%
-    group_by(!!!vars) %>% 
-    tally() %>% arrange(desc(n)) %>%
+  {if (as.character(weight)[2] == "NULL") group_by(., !!!vars) %>% tally() else 
+    count(., !!!vars, wt = !!weight)} %>%
+    arrange(desc(n)) %>%
     mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
   
   if (plot == TRUE | save == TRUE) {
@@ -45,17 +49,19 @@ freqs <- function(vector, ..., results = TRUE,
     } else {
       obs_total <- sum(output$n)
       obs <- paste("Total Obs.:", formatNum(obs_total, 0))
+      weight_text <- ifelse((as.character(weight)[2] != "NULL"), 
+                            paste0("(weighted by ", as.character(weight)[2], ")"), "")
       
       # Use only the most n frequent values/combinations only
-      values <- output[,1]
-      if(nrow(values) > top) {
+      values <- unique(output[,(colnames(output)=="n")-1])
+      if(length(values) > top) {
         if (!is.na(top)) {
           output <- output %>% slice(1:top)
           message(paste0("Slicing the top ", top, 
-                         " (out of ", nrow(values),
+                         " (out of ", length(values),
                          ") frequencies; use 'top' parameter to overrule."))
           note <- paste0("(", top, " most frequent)")
-          obs <- paste0("Obs.: ", formatNum(sum(output$n), 0), " (out of", formatNum(obs_total, 0), ")")
+          obs <- paste0("Obs.: ", formatNum(sum(output$n), 0), " (out of ", formatNum(obs_total, 0), ")")
         }
       } else { note <- "" }
       
@@ -140,7 +146,7 @@ freqs <- function(vector, ..., results = TRUE,
           labs(x = "", y = "Counter", fill = "[%]",
                title = ifelse(is.na(title), paste("Frequencies and Percentages"), title),
                subtitle = ifelse(is.na(subtitle), 
-                                 paste("Variable:", ifelse(!is.na(variable_name), variable_name, variable), note), 
+                                 paste("Variable:", ifelse(!is.na(variable_name), variable_name, variable), weight_text, note), 
                                  subtitle), caption = obs) +
           scale_y_continuous(labels = comma) +
           scale_fill_gradient(low = "lightskyblue2", high = "navy") +
@@ -152,7 +158,7 @@ freqs <- function(vector, ..., results = TRUE,
           p <- p + 
             facet_grid(as.character(facet) ~ ., scales = "free", space = "free") + 
             labs(subtitle = ifelse(is.na(subtitle), 
-                                   paste("Variables:", facet_name, "grouped by", variable, note), 
+                                   paste("Variables:", facet_name, "grouped by", variable, "\n", weight_text, note), 
                                    subtitle),
                  caption = obs)
         }
@@ -166,7 +172,7 @@ freqs <- function(vector, ..., results = TRUE,
             labs(title = ifelse(is.na(title), "Frequencies and Percentages:", title),
                  subtitle = ifelse(is.na(subtitle), 
                                    paste("Variables:", facet_name2, "grouped by", facet_name1, "[x] and", 
-                                         variable, "[y]", note), 
+                                         variable, "[y]", "\n", weight_text, note), 
                                    subtitle),
                  caption = obs)
         }
@@ -186,4 +192,3 @@ freqs <- function(vector, ..., results = TRUE,
     return(output)
   }
 }
-

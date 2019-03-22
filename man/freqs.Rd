@@ -4,14 +4,16 @@
 \alias{freqs}
 \title{Frequencies Calculations and Plot}
 \usage{
-freqs(vector, ..., results = TRUE, variable_name = NA, plot = FALSE,
-  rm.na = FALSE, title = NA, subtitle = NA, top = 20,
-  abc = FALSE, save = FALSE, subdir = NA)
+freqs(vector, ..., wt = NULL, results = TRUE, variable_name = NA,
+  plot = FALSE, rm.na = FALSE, title = NA, subtitle = NA,
+  top = 20, abc = FALSE, save = FALSE, subdir = NA)
 }
 \arguments{
 \item{vector}{Data.frame}
 
 \item{...}{Variables. Variables you wish to process. Order matters.}
+
+\item{wt}{Variable, numeric. Weights.}
 
 \item{results}{Boolean. Return results in a dataframe?}
 

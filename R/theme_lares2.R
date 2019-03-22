@@ -18,7 +18,7 @@
 #' @param mg Numeric. External margin
 #' @export
 theme_lares2 <- function(font = "Arial Narrow", 
-                         base_size = 11.5, 
+                         base_size = 12, 
                          main_colour = "darkorange3", 
                          second_colour = "deepskyblue3",
                          soft_colour = "grey30",
@@ -58,8 +58,7 @@ theme_lares2 <- function(font = "Arial Narrow",
     ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=as.environment(1))
   ## Export plots
   assign("ggsave", function(..., bg = "transparent") ggplot2::ggsave(..., bg = bg), envir=as.environment(1))
-  assign("sentence", "That was easy.", envir=as.environment(1))
-  
+
   if (inherits(grid, "character")) {
     grid_col <- "#CCCCCC"
     ret <- ret + theme(panel.grid = element_line(color = grid_col, size = 0.2))
