@@ -33,6 +33,7 @@ theme_lares2 <- function(font = "Arial Narrow",
   ret <- ret + theme(text = element_text(family = font))
   
   # Set some defaults
+  #ret <- ret + theme(geom = element_geom(fill = "main_colour"))
   update_geom_defaults("text", list(family = font))
   update_geom_defaults("label", list(family = font))
   #update_geom_defaults("text_repel", list(family = font))
@@ -47,17 +48,29 @@ theme_lares2 <- function(font = "Arial Narrow",
   ## Scales
   scale_y_continuous <- function(...) ggplot2::scale_y_continuous(..., labels = scales::comma)
   scale_x_continuous <- function(...) ggplot2::scale_x_continuous(..., labels = scales::comma)
-  ## Colours
-  assign("scale_colour_discrete", function(..., values = as.vector(colours_pal)) 
-    ggplot2::scale_colour_manual(..., values = values), envir=as.environment(1))
-  assign("scale_fill_discrete", function(..., values = names(colours_pal)) 
-    ggplot2::scale_fill_manual(..., values = values), envir=as.environment(1))
-  assign("scale_colour_continuous", function(..., low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) 
-    ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=as.environment(1))
-  assign("scale_fill_continuous", function(...,low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) 
-    ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=as.environment(1))
+  # Colours
+  scale_colour_discrete <- function(...) 
+    ggplot2::scale_colour_discrete(..., values = as.vector(colours_pal))
+  scale_fill_discrete <- function(...) 
+    ggplot2::scale_fill_discrete(..., values = names(colours_pal))
+  
+  ## USING ASSIGN - IMPROVE:
+  envir <- as.environment(1)
+  assign("scale_x_continuous", function(..., labels = scales::comma)
+    ggplot2::scale_x_continuous(..., labels = labels), envir=envir)
+  assign("scale_y_continuous", function(..., labels = scales::comma)
+    ggplot2::scale_y_continuous(..., labels = labels), envir=envir)
+  # Colours
+  assign("scale_colour_discrete", function(..., values = as.vector(colours_pal))
+    ggplot2::scale_colour_manual(..., values = values), envir=envir)
+  assign("scale_fill_discrete", function(..., values = names(colours_pal))
+    ggplot2::scale_fill_manual(..., values = values), envir=envir)
+  assign("scale_colour_continuous", function(..., low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour)
+    ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=envir)
+  assign("scale_fill_continuous", function(...,low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour)
+    ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=envir)
   ## Export plots
-  assign("ggsave", function(..., bg = "transparent") ggplot2::ggsave(..., bg = bg), envir=as.environment(1))
+  assign("ggsave", function(..., bg = "transparent") ggplot2::ggsave(..., bg = bg), envir=envir)
 
   if (inherits(grid, "character")) {
     grid_col <- "#CCCCCC"
