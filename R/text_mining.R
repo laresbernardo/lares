@@ -18,10 +18,8 @@ textCloud <- function(text, lang = "english", exclude = c(), seed = 0,
                       print = T, keep_spaces = FALSE) {
   
   # require("tm")
-  # require("SnowballC")
   # require("wordcloud")
-  # require("RColorBrewer")
-  
+
   set.seed(seed)
   options(warn=-1)
   
@@ -70,6 +68,5 @@ textCloud <- function(text, lang = "english", exclude = c(), seed = 0,
             max.words = 200, 
             random.order = FALSE, 
             rot.per = 0.2, 
-            colors = brewer.pal(8, "Paired"))
-  
+            colors = names(lares::lares_pal()$palette)[1:8])
 }

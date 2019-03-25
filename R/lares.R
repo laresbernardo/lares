@@ -39,12 +39,12 @@
 #' @importFrom sp over coordinates proj4string proj4string<- coordinates<- spTransform
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
 #' reorder start kmeans var xtabs 
-#' @importFrom stringr str_locate_all
-#' @import SnowballC 
+#' @importFrom stringr str_locate_all 
+#' @importFrom tm Corpus tm_map TermDocumentMatrix content_transformer 
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
 #' globalVariables installed.packages write.table install.packages remove.packages object.size 
 #' type.convert flush.console
-#' @importFrom wordcloud textplot wordlayout
+#' @importFrom wordcloud textplot wordlayout wordcloud
 #' @importFrom xml2 read_html
 "_PACKAGE"
 
