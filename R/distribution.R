@@ -285,7 +285,7 @@ distr <- function(data, ...,
       if (custom_colours == TRUE) {
         count <- count + gg_fill_customs()
       } else {
-        count <- count + scale_fill_discrete()
+        count <- count + scale_fill_brewer(palette = "Blues") 
       }
     }
     
@@ -320,8 +320,9 @@ distr <- function(data, ...,
       if (custom_colours == TRUE) {
         prop <- prop + gg_fill_customs()
       } else {
-        prop <- prop + scale_fill_discrete() + scale_colour_discrete()
+        prop <- prop + scale_fill_brewer(palette = "Blues") 
       }
+        
     }
     
     # Export file name and folder
