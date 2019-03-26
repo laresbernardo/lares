@@ -60,7 +60,7 @@ freqs <- function(vector, ..., wt = NULL,
           message(paste0("Slicing the top ", top, 
                          " (out of ", nrow(values),
                          ") frequencies; use 'top' parameter to overrule."))
-          note <- paste0("(", top, " most frequent)")
+          note <- paste0("[", top, " most frequent]")
           obs <- paste0("Obs.: ", formatNum(sum(output$n), 0), " (out of ", formatNum(obs_total, 0), ")")
         }
       } else { note <- "" }
@@ -147,7 +147,7 @@ freqs <- function(vector, ..., wt = NULL,
           labs(x = "", y = "Counter", fill = "[%]",
                title = ifelse(is.na(title), paste("Frequencies and Percentages"), title),
                subtitle = ifelse(is.na(subtitle), 
-                                 paste("Variable:", ifelse(!is.na(variable_name), variable_name, variable), weight_text, note), 
+                                 paste("Variable:", ifelse(!is.na(variable_name), variable_name, variable), note, weight_text), 
                                  subtitle), caption = obs) +
           scale_y_continuous(labels = comma) +
           scale_fill_gradient(low = "lightskyblue2", high = "navy") +
@@ -159,7 +159,7 @@ freqs <- function(vector, ..., wt = NULL,
           p <- p + 
             facet_grid(as.character(facet) ~ ., scales = "free", space = "free") + 
             labs(subtitle = ifelse(is.na(subtitle), 
-                                   paste("Variables:", facet_name, "grouped by", variable, "\n", weight_text, note), 
+                                   paste("Variables:", facet_name, "grouped by", variable, "\n", note, weight_text), 
                                    subtitle),
                  caption = obs)
         }
@@ -173,7 +173,7 @@ freqs <- function(vector, ..., wt = NULL,
             labs(title = ifelse(is.na(title), "Frequencies and Percentages:", title),
                  subtitle = ifelse(is.na(subtitle), 
                                    paste("Variables:", facet_name2, "grouped by", facet_name1, "[x] and", 
-                                         variable, "[y]", "\n", weight_text, note), 
+                                         variable, "[y]", "\n", note, weight_text), 
                                    subtitle),
                  caption = obs)
         }
