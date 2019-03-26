@@ -1034,7 +1034,6 @@ read.file <- function(filename, current_wd = TRUE) {
     stop("That file doesn't exist.. try with another!")
   } else {
     filetype <- gsub("\\.","", right(filename, 4))
-    message("File type: ", filetype)
     if (filetype == "csv") {
       results <- data.frame(data.table::fread(filename))
     }
