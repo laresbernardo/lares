@@ -281,8 +281,6 @@ distr <- function(data, ...,
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
         count <- count + gg_fill_customs()
-      } else {
-        count <- count + scale_fill_brewer(palette = "Blues")
       }
     }
     
@@ -294,23 +292,20 @@ distr <- function(data, ...,
         ggplot(aes(x = reorder(value, -order), 
                    y = as.numeric(p/100),
                    fill = tolower(as.character(targets)),
-                   label = p)) + 
+                   label = round(p,1))) + 
         geom_col(position = "fill") +
-        geom_text(aes(size = size,
-                      colour = ifelse(custom_colours, tolower(as.character(targets)), "none")),
-                  check_overlap = TRUE,
+        geom_text(aes(size = size, colour = tolower(as.character(targets))), 
                   position = position_stack(vjust = 0.5)) +
         scale_size(range = c(2.2, 3)) +
         coord_flip() +
         labs(x = "Proportions [%]", y = "", fill = targets_name, caption = note) +
         theme(legend.position = "top") + ylim(0, 1) + guides(colour = FALSE, size = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
-        gg_text_customs() +
         theme_lares2()
       # Show a reference line if levels = 2; quite useful when data is unbalanced (not 50/50)
       if (length(unique(targets)) == 2) {
-        distr <- df %>% freqs(targets)
-        h <- signif(100 - distr$pcum[1], 3)
+        distr <- df %>% freqs(targets) %>% arrange(targets)
+        h <- signif(100 - distr$p[1], 3)
         prop <- prop +
           geom_hline(yintercept = h/100, colour = "purple", 
                      linetype = "dotted", alpha = 0.8) +
@@ -320,8 +315,6 @@ distr <- function(data, ...,
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
         prop <- prop + gg_fill_customs()
-      } else {
-        prop <- prop + scale_fill_brewer(palette = "Blues")
       }
     }
     
@@ -345,7 +338,7 @@ distr <- function(data, ...,
                             subtitle = subtitle, caption = "") +
         theme(plot.margin = margin(10, 15, -15, 15))
       prop <- prop + guides(fill=FALSE) + labs(caption = note) +
-        theme(plot.margin = margin(-5, 15, -10, 15))
+        theme(plot.margin = margin(-5, 15, -15, 15))
       if (save == TRUE) {
         png(file_name, height = 1000, width = 1300, res = 200)
         gridExtra::arrangeGrob(count, prop, ncol = 1, nrow = 2)
