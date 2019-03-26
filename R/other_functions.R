@@ -414,6 +414,10 @@ replaceall <- function(df, original, change, quiet = TRUE) {
   if (length(original) != length(change)) {
     stop("Vectors original and change should have the same length!")
   }
+  if (length(unique(original)) != length(original)) {
+    which <- freqs(dic, original) %>% filter(n > 1) %>% .$original
+    stop("You have repeated original values to replace: ", vector2text(which))
+  }
   if (sum(is.na(original)) > 0) {
     df <- df %>% replace(is.na(.), change[is.na(original)])
     change <- change[!is.na(original)]
