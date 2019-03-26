@@ -284,6 +284,8 @@ distr <- function(data, ...,
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
         count <- count + gg_fill_customs()
+      } else {
+        count <- count + scale_fill_discrete()
       }
     }
     
@@ -317,6 +319,8 @@ distr <- function(data, ...,
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
         prop <- prop + gg_fill_customs()
+      } else {
+        prop <- prop + scale_fill_discrete() + scale_colour_discrete
       }
     }
     
