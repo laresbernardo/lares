@@ -1027,8 +1027,7 @@ zerovar <- function(df) {
 #' @export
 read.file <- function(filename, current_wd = TRUE) {
   if (current_wd) {
-    wd <- getwd()
-    filename <- paste0(wd, "/", filename) 
+    filename <- paste0(getwd(), "/", filename) 
   }
   if (!file.exists(filename)) {
     stop("That file doesn't exist.. try with another!")

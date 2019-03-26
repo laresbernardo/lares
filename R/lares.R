@@ -40,7 +40,7 @@
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
 #' reorder start kmeans var xtabs 
 #' @importFrom stringr str_locate_all 
-#' @importFrom tm Corpus tm_map TermDocumentMatrix content_transformer 
+#' @importFrom tm Corpus tm_map TermDocumentMatrix content_transformer VectorSource
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
 #' globalVariables installed.packages write.table install.packages remove.packages object.size 
 #' type.convert flush.console
