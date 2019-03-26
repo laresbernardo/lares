@@ -44,7 +44,7 @@
 #' stopwords stripWhitespace TermDocumentMatrix tm_map VectorSource
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
 #' globalVariables installed.packages write.table install.packages remove.packages object.size 
-#' type.convert flush.console
+#' type.convert flush.console read.table 
 #' @importFrom wordcloud wordcloud textplot
 #' @importFrom xml2 read_html
 "_PACKAGE"
@@ -52,37 +52,35 @@
 if(getRversion() >= "2.15.1")
   globalVariables(
     c(".","..y..","!!!",".rs.restartR","Amount","Cash","Close","CreateDate","CumCash",
-      "CumDiv","CumPortfolio","DailyCash","DailyDiv","DailyExpen","DailyStocks","GET",
+      "CumDiv","CumPortfolio","DailyCash","DailyDiv","DailyExpen","DailyStocks",
       "DailyTrans","DailyValue","Date","DateTimeOriginal","Deciles","DifPer","DifUSD",
-      "DivIncome","DivPerc","DivReal","Expenses","FileModifyDate","GET","High","Hist",
-      "InvPerc","Invested","POST","Perc","Quant","RealPerc","RelChangePHist","RelChangeUSD",
+      "DivIncome","DivPerc","DivReal","Expenses","FileModifyDate","High","Hist",
+      "InvPerc","Invested","Perc","Quant","RealPerc","RelChangePHist","RelChangeUSD",
       "RelPer","RelUSD","StartUSD","StockIniValue","StockValue","Stocks","Symbol","results",
-      "TotalPer","TotalUSD","Type","Value","accuracy",
-      "add_headers","addedAt","amount","associatedCompanyIds","associatedVids","auc",
+      "TotalPer","TotalUSD","Type","Value","readOGR","read_exif",
+      "accuracy","add_headers","addedAt","amount","associatedCompanyIds","associatedVids","auc",
       "canonical_vid","cats[, i]", "ceiling_date","color","contacts_canonical_vid",
       "contacts_form_submissions","contacts_identity_profiles", "google_analytics","perc",
       "contacts_is_contact","contacts_merge_audits","contacts_portal_id","model.matrix",
       "contacts_profile_token","contacts_profile_url","contacts_vid","content","size",
-      "createdate","credit","cuts","date_of_birth","days","dealId",
+      "createdate","credit","cuts","date_of_birth","days","dealId","send.mail","shapeflag",
       "dealstage","df_status","form_submissions","gather","ceiling_date","trim",
       "get_questionnaire","get_typeforms","endfx","to","Real","Pred","Freq","force_n",
       "hasMore","has_more","identification_date","identity_profiles","ggplotly","facet2",
       "image_darknet_detect","image_darknet_model","image_info","image_read","index",
       "is_contact","key","label","label_colours","label_hjust","max_score","merge_audits",
-      "merged_vids","min_score","model_performance","month.lbl","numb","ocv_bitmap",
-      "ocv_camera","ocv_copyto","ocv_face","ocv_facemask","ocv_read","ocv_video","Adjusted",
-      "ocv_write","p","p_error","palette_light","portalId","portal_id","pos","get_ip",
-      "prediction_breakdown","q_na","quantile_tag","question","rbind.fill","readJPEG",
-      "readPNG","read_exif","real_error","dummy","sale","send.mail","shapeflag",
-      "stateChanges","step_done","str_pad","tableGrob","tag","test_auc","test_ll","theme_tq",
+      "merged_vids","min_score","model_performance","month.lbl","numb","Adjusted",
+      "p","p_error","palette_light","portalId","portal_id","pos","get_ip",
+      "prediction_breakdown","q_na","quantile_tag","question","real_error","dummy","sale",
+      "stateChanges","step_done","str_pad","tag","test_auc","test_ll","theme_tq",
       "tk_augment_timeseries_signature","tk_get_timeseries_signature","tk_index","dfl",
-      "tk_make_future_timeseries","toJSON","token","train_auc","train_ll","dft",
+      "tk_make_future_timeseries","token","train_auc","train_ll","dft",
       "trees","type","upload_file","value","values","variable_response","variables",
-      "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","wordcloud","x","y",
+      "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","x","y",
       "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos",
-      "name","where","is.Date","is.POSIXct","is.POSIXlt","deciles","gg_pos","colour",
+      "name","where","deciles","gg_pos","colour",
       "..level..","cluster","drop_na","shapes","coords","long","lat","group","longitude",
-      "latitude","as","CRS","project","readOGR","shp","minutes","seconds","Volume",
+      "latitude","as","CRS","project","minutes","seconds","Volume",
       "StocksValue","Dividend","Expense","Deposit","Invest","Deposited","Dividends",
       "Portfolio","start_clean","geo","hits","keyword","legend","subject","subject.x",
       "subject.y","type_label","facet","Total","pal","p_real","weight")) 

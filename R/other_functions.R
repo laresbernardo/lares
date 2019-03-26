@@ -1046,12 +1046,23 @@ read.file <- function(filename, current_wd = TRUE) {
     if (filetype == "xls") {
       results <- gdata::read.xls(filename)
     }
+    if (filetype == "dat") {
+      results <- read.table(filename, header = TRUE)
+    }
     if (filetype == "sav") {
       results <- quiet(foreign::read.spss(filename, to.data.frame = T))
     }
+    if (filetype == "dta") {
+      # Stata version 5-12 .dta file
+      #results <- foreign::read.dta(filename)
+      # Stata version 13 .dta file
+      results <- readstata13::read.dta13(filename)
+    }
+    
     message(paste("Imported", filetype, "file with", 
                   formatNum(nrow(results),0), "rows x", 
                   formatNum(ncol(results),0), "columns, succesfully!"))
+    
   }
   if (nrow(results) == 0) {
     warning("There is no data in that file...")
