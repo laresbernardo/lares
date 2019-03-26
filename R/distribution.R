@@ -104,7 +104,7 @@ distr <- function(data, ...,
   }
   
   # lares' default palette colours
-  #colours_pal <- lares_pal()$palette
+  colours_pal <- lares_pal()$palette
   
   # When we only have one variable
   if (length(vars) == 1) {
@@ -284,9 +284,9 @@ distr <- function(data, ...,
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
         count <- count + gg_fill_customs()
-      } #else {
-      #  count <- count + scale_fill_brewer(palette = "Blues")
-      #}
+      } else {
+        count <- count + scale_fill_discrete(values = names(colours_pal))
+      }
     }
     
     # Proportions (%) plot
@@ -319,9 +319,11 @@ distr <- function(data, ...,
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
         prop <- prop + gg_fill_customs()
-      } #else {
-      #  prop <- prop + scale_fill_brewer(palette = "Blues")
-      #}
+      } else {
+        prop <- prop + 
+          scale_fill_discrete(values = names(colours_pal)) +
+          scale_colour_discrete(values = as.vector(colours_pal))
+      }
     }
     
     # Export file name and folder
