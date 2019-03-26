@@ -40,7 +40,8 @@
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
 #' reorder start kmeans var xtabs 
 #' @importFrom stringr str_locate_all 
-#' @importFrom tm Corpus tm_map TermDocumentMatrix content_transformer VectorSource
+#' @importFrom tm content_transformer Corpus removeNumbers removePunctuation stopwords 
+#' stripWhitespace TermDocumentMatrix tm_map VectorSource
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
 #' globalVariables installed.packages write.table install.packages remove.packages object.size 
 #' type.convert flush.console
@@ -72,9 +73,9 @@ if(getRversion() >= "2.15.1")
       "ocv_camera","ocv_copyto","ocv_face","ocv_facemask","ocv_read","ocv_video","Adjusted",
       "ocv_write","p","p_error","palette_light","portalId","portal_id","pos","get_ip",
       "prediction_breakdown","q_na","quantile_tag","question","rbind.fill","readJPEG",
-      "readPNG","read_exif","real_error","removeNumbers","removePunctuation","dummy",
-      "removeWords","sale","send.mail","shapeflag","stateChanges","step_done","stopwords",
-      "str_pad","stripWhitespace","tableGrob","tag","test_auc","test_ll","theme_tq",
+      "readPNG","read_exif","real_error","dummy",
+      "removeWords","sale","send.mail","shapeflag","stateChanges","step_done",
+      "str_pad","tableGrob","tag","test_auc","test_ll","theme_tq",
       "tk_augment_timeseries_signature","tk_get_timeseries_signature","tk_index","dfl",
       "tk_make_future_timeseries","toJSON","token","train_auc","train_ll","dft",
       "trees","type","upload_file","value","values","variable_response","variables",
