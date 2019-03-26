@@ -103,6 +103,9 @@ distr <- function(data, ...,
     return(df)
   }
   
+  # lares' default palette colours
+  #colours_pal <- lares_pal()$palette
+  
   # When we only have one variable
   if (length(vars) == 1) {
     value <- data %>% select(!!!vars[[1]])
@@ -281,7 +284,9 @@ distr <- function(data, ...,
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
         count <- count + gg_fill_customs()
-      }
+      } #else {
+      #  count <- count + scale_fill_brewer(palette = "Blues")
+      #}
     }
     
     # Proportions (%) plot
@@ -289,10 +294,9 @@ distr <- function(data, ...,
       prop <- freqs %>%
         group_by(value) %>%
         mutate(size = sum(n)/sum(freqs$n)) %>%
-        ggplot(aes(x = reorder(value, -order), 
-                   y = as.numeric(p/100),
-                   fill = tolower(as.character(targets)),
-                   label = round(p,1))) + 
+        mutate(ptag = ifelse(p < 3, "", as.character(round(p,1)))) %>%
+        ggplot(aes(x = reorder(value, -order), y = p/100, label = ptag,
+                   fill = tolower(as.character(targets)))) + 
         geom_col(position = "fill") +
         geom_text(aes(size = size, colour = tolower(as.character(targets))), 
                   position = position_stack(vjust = 0.5)) +
@@ -315,7 +319,9 @@ distr <- function(data, ...,
       # Custom colours if wanted...
       if (custom_colours == TRUE) {
         prop <- prop + gg_fill_customs()
-      }
+      } #else {
+      #  prop <- prop + scale_fill_brewer(palette = "Blues")
+      #}
     }
     
     # Export file name and folder
