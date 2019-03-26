@@ -285,7 +285,7 @@ distr <- function(data, ...,
       if (custom_colours == TRUE) {
         count <- count + gg_fill_customs()
       } else {
-        count <- count + scale_fill_discrete(values = names(colours_pal))
+        count <- count + scale_fill_discrete(names(colours_pal))
       }
     }
     
@@ -321,8 +321,8 @@ distr <- function(data, ...,
         prop <- prop + gg_fill_customs()
       } else {
         prop <- prop + 
-          scale_fill_discrete(values = names(colours_pal)) +
-          scale_colour_discrete(values = as.vector(colours_pal))
+          scale_fill_discrete(names(colours_pal)) +
+          scale_colour_discrete(as.vector(colours_pal))
       }
     }
     
