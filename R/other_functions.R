@@ -1014,3 +1014,65 @@ zerovar <- function(df) {
   want <- which(!out > 1)
   unlist(want)
 }
+
+
+####################################################################
+#' Read Files (Auto-detected)
+#' 
+#' This function lets the user import csv, xlsx, xls, sav files.
+#' 
+#' @param filename Character
+#' @param current_wd Boolean. Use current working directory before
+#' the file's name? Use this param to NOT get absolute root directory.
+#' @export
+read.file <- function(filename, current_wd = TRUE) {
+  if (current_wd) {
+    wd <- getwd()
+    filename <- paste0(wd, "/", filename) 
+  }
+  if (!file.exists(filename)) {
+    stop("That file doesn't exist.. try with another!")
+  } else {
+    filetype <- gsub("\\.","", right(filename, 4))
+    message("File type: ", filetype)
+    if (filetype == "csv") {
+      results <- data.frame(data.table::fread(filename))
+    }
+    if (filetype == "xlsx") {
+      results <- openxlsx::read.xlsx(filename)
+    }
+    if (filetype == "xls") {
+      results <- gdata::read.xls(filename)
+    }
+    if (filetype == "sav") {
+      results <- quiet(foreign::read.spss(filename, to.data.frame = T))
+    }
+    message(paste("Imported", filetype, "file with", 
+                  formatNum(nrow(results),0), "rows x", 
+                  formatNum(ncol(results),0), "columns, succesfully!"))
+  }
+  if (nrow(results) == 0) {
+    warning("There is no data in that file...")
+  }
+  return(results)
+}
+
+
+####################################################################
+#' Bind Files into Dataframe
+#' 
+#' This function imports and binds multiple files into a single 
+#' data.frame. Files must be inserted with absolute roots filenames. 
+#' 
+#' @param files Dataframe
+#' @export
+bindfiles <- function(files) {
+  alldat <- data.frame()
+  for (i in 1:length(files)) {
+    file <- files[i]
+    dfi <- read.file(file, current_wd = FALSE) 
+    alldat <- gtools::smartbind(alldat, dfi)
+    statusbar(i, length(files))
+  }
+  return(data.frame(alldat))
+}
