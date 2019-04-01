@@ -372,7 +372,7 @@ listfiles <- function(folder = "~", recursive = TRUE, regex = NA, images = FALSE
               "GPSLongitude", "GPSLatitude",
               "Rotation", "Flash", "Duration")
     
-    df <- read_exif(folder) %>% 
+    df <- read_exif(folder, recursive = TRUE) %>% 
       mutate(DateTimeOriginal = ymd_hms(DateTimeOriginal),
              CreateDate = ymd_hms(CreateDate),
              FileModifyDate = ymd_hms(FileModifyDate))
