@@ -16,8 +16,8 @@
 #' Main colours for your theme
 #' @param legend Character. Legend position: top, right, bottom, left
 #' @param mg Numeric. External margin
-#' @param pal Boolean. 1 for fill and colour palette, 2 for only colour palette,
-#' 3 for personal labels-colour palette
+#' @param pal Integer. 1 for fill and colour palette, 2 for only colour palette,
+#' 3 for personal labels-colour palette. 0 or else for nothing.
 #' @export
 theme_lares2 <- function(font = "Arial Narrow", 
                          base_size = 12, 

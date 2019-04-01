@@ -915,11 +915,11 @@ statusbar <- function (run, max.run, percent.max = 40L, info = run){
                      paste0(rep(" ", percent.max - percent.step), collapse = ""),
                      "] ",
                      sprintf("%7.1f", percent * 100, 2),
-                     "% - ",
+                     "% | ",
                      paste(info, ("       "))) 
   cat("\r", progress)
-  if(percent.max == percent.step) cat("", sep="\n\n")
   flush.console()
+  if(percent.max == percent.step) cat("", sep="\n\n")
 }
 
 
