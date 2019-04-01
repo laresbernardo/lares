@@ -727,7 +727,7 @@ model_metrics <- function(tag, score, thresh = 0.5,
           x = as.character(Pred), 
           fill= Freq, size=Freq, 
           label = label)) +
-        geom_tile() + theme_lares2(pal = 0) +
+        geom_tile() + theme_lares2() +
         geom_text(colour="white") + 
         scale_size(range = c(3, 4)) + coord_equal() + 
         guides(fill=FALSE, size=FALSE, colour=FALSE) +
@@ -742,7 +742,7 @@ model_metrics <- function(tag, score, thresh = 0.5,
               axis.ticks.x.bottom = element_blank(),
               axis.text.y.right = element_blank(),
               axis.ticks.y.right = element_blank()) +
-        theme_lares2(pal = 0)
+        theme_lares2()
       
       if (!is.na(subtitle)) {
         plot_cf <- plot_cf + labs(subtitle = subtitle)

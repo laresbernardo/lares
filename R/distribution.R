@@ -134,7 +134,7 @@ distr <- function(data, ...,
              title = paste("Density Distribution"),
              subtitle = paste("Variable:", variable_name),
              caption = paste("Obs:", formatNum(nrow(df), 0))) +
-        theme_lares2(pal = 0)
+        theme_lares2()
       if (top != 10) {
         p <- p + xlim(0, top)
       }
@@ -185,7 +185,7 @@ distr <- function(data, ...,
                subtitle = subtitle) +
           scale_x_continuous(labels = comma) +
           scale_y_continuous(labels = comma) +
-          theme_lares2(pal = 0)
+          theme_lares2()
         return(p)  
       }
       message("You should try a 'target' variable with max 8 different values.")

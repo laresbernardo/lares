@@ -151,7 +151,7 @@ freqs <- function(vector, ..., wt = NULL,
                                  subtitle), caption = obs) +
           scale_y_continuous(labels = comma) +
           scale_fill_gradient(low = "lightskyblue2", high = "navy") +
-          gg_text_customs() + theme_lares2(pal = 0) +
+          gg_text_customs() + theme_lares2() +
           theme(legend.position="none")
         
         # When two features
