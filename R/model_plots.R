@@ -339,17 +339,16 @@ mplot_cuts <- function(score,
   rownames(deciles) <- NULL
   
   p <- deciles %>%
-    mutate(label_colours = ifelse(cuts*100 < 50, "1", "m")) %>%
+    #mutate(label_colours = ifelse(cuts*100 < 50, "1", "m")) %>%
     ggplot(aes(x = reorder(range, cuts), y = cuts * 100)) + 
     geom_col(fill="deepskyblue") + 
     xlab('Cumulative volume') + ylab('Score') + 
     geom_text(aes(label = round(100 * cuts, 1),
-                  colour = label_colours,
                   vjust = ifelse(cuts*100 < 50, -0.3, 1.3)), 
-              size = 3, inherit.aes = TRUE, check_overlap = TRUE) +
+              size = 3, colour = "black", inherit.aes = TRUE, check_overlap = TRUE) +
     guides(colour = FALSE) +
     labs(title = paste0("Score cuts (", splits, " equal-sized buckets)")) +
-    theme_lares() + theme_lares2() 
+    theme_lares2()
   
   if(!is.na(subtitle)) {
     p <- p + labs(subtitle = subtitle)

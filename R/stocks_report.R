@@ -381,9 +381,9 @@ portfolio_daily_plot <- function(stocks_perf, save = TRUE) {
     filter(abs(RelPer) < 70) %>%
     mutate(color = ifelse(RelPer > 0, "Pos", "Neg")) %>%
     ggplot() +
-    geom_area(aes(x=Date, y=TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.2) +
-    geom_bar(aes(x=Date, y=RelPer, fill=color), stat='identity', width=1) +
-    geom_line(aes(x=Date, y=TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.9) +
+    geom_area(aes(x=Date, y=TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.15) +
+    geom_bar(aes(x=Date, y=RelPer, fill=color), stat='identity', width = 1) +
+    geom_line(aes(x=Date, y=TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.9, colour="black") +
     geom_hline(yintercept = 0, alpha = 0.5, color="black") +
     guides(fill=FALSE) + 
     scale_x_date(date_labels = "%b%y") +
@@ -397,7 +397,7 @@ portfolio_daily_plot <- function(stocks_perf, save = TRUE) {
                           formatNum(stocks_perf$TotalPer[1],2),"% ($",
                           formatNum(stocks_perf$TotalUSD[1], 0),") | $",
                           formatNum(stocks_perf$CumPortfolio[1]), sep="")) +
-    theme_lares2(pal = 0)
+    theme_lares2()
   
   if (save) {
     plot <- plot + ggsave("portf_daily_change.png", width = 8, height = 5, dpi = 300)
@@ -457,7 +457,7 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, s
              label = vector2text(summary,"\n",quotes = F), size = 3.5, hjust = 0, alpha = 0.55) +
     scale_y_continuous(limits = c(NA, tops*1.1), labels = comma) + 
     labs(y='', x='', title="Stocks Distribution and Growth") +
-    guides(fill=FALSE) + coord_flip() +
+    guides(fill=FALSE, colour=FALSE) + coord_flip() +
     theme_lares2(pal = 1)
   
   if (save) {
