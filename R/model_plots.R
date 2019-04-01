@@ -45,7 +45,7 @@ mplot_density <- function(tag,
       guides(fill = guide_legend(title="Tag")) + 
       labs(title = "Classification Model Results",
            y = "Density by tag", x = "Score", fill = "") + 
-      theme_lares2() +
+      theme_lares2(pal = 1) +
       theme(legend.position = "top",
             legend.justification = c(0, 0),
             legend.title = element_blank())
@@ -56,14 +56,14 @@ mplot_density <- function(tag,
     
     p2 <- ggplot(out) + 
       geom_density(aes(x = score), alpha = 0.9, adjust = 0.25, fill = "deepskyblue") + 
-      labs(x = "", y = "Density") + theme_lares2()
+      labs(x = "", y = "Density") + theme_lares2(pal = 0)
     
     p3 <- ggplot(out) + 
       geom_line(aes(x = as.numeric(score), y = (1 - ..y..), color = as.character(tag)), 
                 stat = 'ecdf', size = 1) +
       geom_line(aes(x = as.numeric(score), y = (1 - ..y..)), 
                 stat = 'ecdf', size = 0.5, colour = "black", linetype="dotted") +
-      ylab('Cumulative') + xlab('') + guides(color=FALSE) + theme_lares2()
+      ylab('Cumulative') + xlab('') + guides(color=FALSE) + theme_lares2(pal = 0)
     
     p1 <- p1 + theme(plot.margin = margin(10, 5, 0, 5))
     p2 <- p2 + theme(plot.margin = margin(0, 0, 5, 5))
@@ -111,7 +111,7 @@ mplot_density <- function(tag,
       guides(fill = guide_legend(override.aes = list(size=1))) +
       theme(legend.title=element_blank(),
             legend.position = "top") +
-      theme_lares2()
+      theme_lares2(pal = 1)
     
     if(!is.na(model_name)) {
       p <- p + labs(caption = model_name)
@@ -187,7 +187,7 @@ mplot_importance <- function(var,
     ylab('Importance') + 
     geom_text(hjust = 0.5, size = 2, inherit.aes = TRUE, colour = "white") +
     labs(title = paste0("Most Relevant Variables (showing top ", limit, " of ", length(var), ")")) +
-    theme_lares2()
+    theme_lares2(pal = 1)
   
   if (length(unique(output$Type)) == 1) {
     p <- p + geom_col(fill = colours, width = 0.2) +
@@ -275,7 +275,7 @@ mplot_roc <- function(tag,
     annotate("text", x = 0.25, y = 0.05, size = 2.8, 
              label = paste0("95% CI: ", round(100*ci[c("min"),],2),"-", 
                             round(100*ci[c("max"),],2))) +
-    theme_lares2()
+    theme_lares2(pal = 1)
   
   if(!is.na(subtitle)) {
     p <- p + labs(subtitle = subtitle)
@@ -351,7 +351,7 @@ mplot_cuts <- function(score,
               size = 3, inherit.aes = TRUE, check_overlap = TRUE) +
     guides(colour = FALSE) +
     labs(title = paste0("Cuts by score (", splits, " equal-sized buckets)")) +
-    theme_lares() + theme_lares2() 
+    theme_lares() + theme_lares2(pal = 1) 
   
   if(!is.na(subtitle)) {
     p <- p + labs(subtitle = subtitle)
@@ -437,7 +437,7 @@ mplot_cuts_error <- function(tag,
     geom_text(aes(vjust = gg_pos, colour = colour), size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute error")) +
     scale_y_continuous(labels = comma) + guides(colour=F) +
-    gg_text_customs() + theme_lares2()
+    gg_text_customs() + theme_lares2(pal = 1)
   
   # Second: percentual errors
   deciles_perabs <- quants(abs(df$p_error), splits = splits, just = 0.3)
@@ -447,7 +447,7 @@ mplot_cuts_error <- function(tag,
     geom_text(aes(vjust = gg_pos, colour = colour), size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute percentage error")) +
     scale_y_continuous(labels = comma) + guides(colour=F) +
-    gg_text_customs() + theme_lares2()
+    gg_text_customs() + theme_lares2(pal = 1)
   
   # Third: errors distribution
   pd_error <- ggplot(df) + 
@@ -455,7 +455,7 @@ mplot_cuts_error <- function(tag,
     xlab('') + ylab('Error Density') + 
     scale_x_continuous(labels=function(x) paste0(x,"%")) +
     geom_vline(xintercept = 0, alpha = 0.5, colour = "navy", linetype = "dotted") + 
-    theme_lares2()
+    theme_lares2(pal = 1)
   
   if(!is.na(title)) {
     p_abs <- p_abs + labs(title = title)
@@ -565,7 +565,7 @@ mplot_splits <- function(tag,
     guides(fill = guide_legend(title=paste0("~",npersplit," p/split"))) +
     labs(title = "Tag vs Score Splits Comparison") +
     scale_fill_brewer(palette = "Spectral") +
-    theme_lares2()
+    theme_lares2(pal = 0)
   
   if(!is.na(subtitle)) {
     p <- p + labs(subtitle = subtitle)
@@ -627,7 +627,7 @@ mplot_metrics <- function(results,
     geom_text(aes(x=trees, y=test_ll, colour="Test", 
                   label=round(test_ll,2)),
               check_overlap = TRUE, nudge_y=0.03, size=3) + 
-    theme_lares2() +
+    theme_lares2(pal = 1) +
     theme(strip.text.x = element_blank(),
           strip.background = element_rect(colour="white", fill="white"),
           legend.position=c(0.1, 0.05))
@@ -644,7 +644,7 @@ mplot_metrics <- function(results,
     geom_text(aes(x=trees, y=test_auc*100, colour="Test", 
                   label=round(test_auc*100,2)),
               check_overlap = TRUE, nudge_y=3, size=3) +
-    theme_lares2()
+    theme_lares2(pal = 1)
   
   if(!is.na(subtitle)) {
     ll <- ll + labs(subtitle = subtitle)
@@ -715,7 +715,7 @@ mplot_lineal <- function(tag,
     sep="\n")
   
   p <- ggplot(results, aes(x = tag, y = score, colour = dist)) +
-    geom_point() + theme_lares2() +
+    geom_point() + theme_lares2(pal = 1) +
     labs(title = "Regression Model Results",
          x = "Real value", y = "Predicted value",
          colour = "Deviation") +

@@ -27,7 +27,7 @@ theme_lares2 <- function(font = "Arial Narrow",
                          bg_colour = "transparent",
                          legend = "right",
                          mg = 15,
-                         pal = 1) {
+                         pal = 0) {
   
   # Start from theme_minimal()
   ret <- theme_minimal(base_family = font, base_size = base_size)
