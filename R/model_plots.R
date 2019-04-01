@@ -63,7 +63,7 @@ mplot_density <- function(tag,
                 stat = 'ecdf', size = 1) +
       geom_line(aes(x = as.numeric(score), y = (1 - ..y..)), 
                 stat = 'ecdf', size = 0.5, colour = "black", linetype="dotted") +
-      ylab('Cumulative') + xlab('') + guides(color=FALSE) + theme_lares2(pal = 0)
+      ylab('Cumulative') + xlab('') + guides(color=FALSE) + theme_lares2(pal = 2)
     
     p1 <- p1 + theme(plot.margin = margin(10, 5, 0, 5))
     p2 <- p2 + theme(plot.margin = margin(0, 0, 5, 5))
@@ -347,10 +347,10 @@ mplot_cuts <- function(score,
     xlab('Cumulative volume') + ylab('Score') + 
     geom_text(aes(label = round(100 * cuts, 1),
                   colour = label_colours,
-                  vjust = ifelse(cuts*100 < 50, -0.5, 1.5)), 
+                  vjust = ifelse(cuts*100 < 50, -0.3, 1.3)), 
               size = 3, inherit.aes = TRUE, check_overlap = TRUE) +
     guides(colour = FALSE) +
-    labs(title = paste0("Cuts by score (", splits, " equal-sized buckets)")) +
+    labs(title = paste0("Score cuts (", splits, " equal-sized buckets)")) +
     theme_lares() + theme_lares2(pal = 1) 
   
   if(!is.na(subtitle)) {
@@ -546,7 +546,9 @@ mplot_splits <- function(tag,
       summarise(n = n(), 
                 max_score = signif(max(score), 2), 
                 min_score = signif(min(score), 2)) %>%
-      mutate(quantile_tag = paste0(quantile," (",min_score,"-",max_score,")")) 
+      mutate(quantile_tag = paste0(quantile," (",
+                                   round(100*min_score,1),"-",
+                                   round(100*max_score,1),")")) 
   }
   
   p <- df %>% 
