@@ -355,6 +355,11 @@ listfiles <- function(folder = "~", recursive = TRUE, regex = NA, images = FALSE
   }
   
   if (images == TRUE) {
+    
+    if (!"exifr" %in% (.packages())){
+      stop("The following library should be loaded. Please run: library(exifr)")
+    }
+    
     if (nrow(df) > 250) {
       message(paste("This might take a while... Analizing around", 
                     lares::formatNum(nrow(df), decimals = 0), "files!"))
@@ -367,8 +372,7 @@ listfiles <- function(folder = "~", recursive = TRUE, regex = NA, images = FALSE
               "GPSLongitude", "GPSLatitude",
               "Rotation", "Flash", "Duration")
     
-    df <- read_exif(folder, recursive = TRUE, tags = tolower(tags)) %>% 
-      select(one_of(tags)) %>%
+    df <- read_exif(folder) %>% 
       mutate(DateTimeOriginal = ymd_hms(DateTimeOriginal),
              CreateDate = ymd_hms(CreateDate),
              FileModifyDate = ymd_hms(FileModifyDate))
