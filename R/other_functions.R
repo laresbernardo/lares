@@ -373,6 +373,7 @@ listfiles <- function(folder = "~", recursive = TRUE, regex = NA, images = FALSE
               "Rotation", "Flash", "Duration")
     
     df <- read_exif(folder, recursive = TRUE) %>% 
+      select(one_of(tags)) %>%
       mutate(DateTimeOriginal = ymd_hms(DateTimeOriginal),
              CreateDate = ymd_hms(CreateDate),
              FileModifyDate = ymd_hms(FileModifyDate))
@@ -915,7 +916,7 @@ statusbar <- function (run, max.run, percent.max = 40L, info = run){
                      "] ",
                      sprintf("%7.1f", percent * 100, 2),
                      "% - ",
-                     info)
+                     paste(info, ("       "))) 
   cat("\r", progress)
   flush.console()
 }

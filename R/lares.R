@@ -78,7 +78,7 @@ if(getRversion() >= "2.15.1")
       "trees","type","upload_file","value","values","variable_response","variables",
       "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","x","y",
       "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos",
-      "name","where","deciles","gg_pos","colour",
+      "name","where","deciles","gg_pos","colour","ptag",
       "..level..","cluster","drop_na","shapes","coords","long","lat","group","longitude",
       "latitude","as","CRS","project","minutes","seconds","Volume",
       "StocksValue","Dividend","Expense","Deposit","Invest","Deposited","Dividends",

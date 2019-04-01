@@ -7,7 +7,7 @@
 theme_lares2(font = "Arial Narrow", base_size = 12,
   main_colour = "darkorange3", second_colour = "deepskyblue3",
   soft_colour = "grey30", bg_colour = "transparent",
-  legend = "right", mg = 15)
+  legend = "right", mg = 15, pal = 1)
 }
 \arguments{
 \item{font, base_size}{Character and numeric. Base font family and size}
@@ -18,6 +18,9 @@ Main colours for your theme}
 \item{legend}{Character. Legend position: top, right, bottom, left}
 
 \item{mg}{Numeric. External margin}
+
+\item{pal}{Boolean. 1 for fill and colour palette, 2 for only colour palette,
+3 for personal labels-colour palette}
 }
 \description{
 Based on hrbrthemes' theme_ipsum: A precise & pristine \link{ggplot2} theme

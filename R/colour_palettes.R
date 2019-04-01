@@ -95,8 +95,7 @@ lares_pal <- function() {
     "#A52A2A" = white,
     "#000000" = white)
   
-  pal <- list(labels = colours_list, 
-              palette = colours_names)
+  pal <- list(labels = colours_list, palette = colours_names)
   return(pal)
 }
 

@@ -93,7 +93,7 @@ get_stocks_hist <- function(symbols = NA,
         
         symbol <- as.character(symbols[i])
         start_date <- as.character(from[i])
-        
+
         values <- quantmod::getSymbols(symbol, env=NULL, from=start_date, src="yahoo") %>% data.frame()
         values <- cbind(row.names(values), as.character(symbol), values)
         colnames(values) <- c("Date","Symbol","Open","High","Low","Close","Volume","Adjusted")
@@ -131,7 +131,8 @@ get_stocks_hist <- function(symbols = NA,
           divs <- rbind(divs, div)
         }
         if (verbose == TRUE) {
-          message(paste0(symbol, " since ", start_date," (", i, "/", length(symbols),")"))
+          info <- paste(symbol, "since", start_date, "   ")
+          statusbar(i, length(symbols), info = info)  
         }
       }
     } else { message("The parameters 'symbols' and 'from' should be the same length.") }
@@ -783,7 +784,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
 
 ######################### SHORT #####################################
 # df <- get_stocks() # Get data from my Dropbox
-# dfp <- stocks_objects(df) # Make calculations and plots
+# dfp <- stocks_objects(df) # Get historical data, make calculations and plots
 # stocks_html(dfp) # Create HTML report
 # stocks_report() # Create and send report to my mail
 
@@ -791,5 +792,4 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
 # df <- get_stocks() # Get data from my Dropbox
 # hist <- get_stocks_hist(symbols = df$portfolio$Symbol, from = df$portfolio$StartDate)
 # daily <- stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = df$transactions)
-
 
