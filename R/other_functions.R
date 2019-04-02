@@ -1090,7 +1090,7 @@ bindfiles <- function(files) {
   for (i in 1:length(files)) {
     file <- files[i]
     dfi <- read.file(file, current_wd = FALSE) 
-    alldat <- gtools::smartbind(alldat, dfi)
+    alldat <- rbind_full(alldat, dfi)
     statusbar(i, length(files))
   }
   return(data.frame(alldat))

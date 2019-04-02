@@ -25,7 +25,6 @@ Imports:
     googleAuthR,
     googlesheets,
     gridExtra,
-    gtools,
     h2o,
     httr,
     jsonlite,

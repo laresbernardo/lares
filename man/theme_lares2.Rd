@@ -19,8 +19,8 @@ Main colours for your theme}
 
 \item{mg}{Numeric. External margin}
 
-\item{pal}{Boolean. 1 for fill and colour palette, 2 for only colour palette,
-3 for personal labels-colour palette}
+\item{pal}{Integer. 1 for fill and colour palette, 2 for only colour palette,
+3 for personal labels-colour palette. 0 or else for nothing.}
 }
 \description{
 Based on hrbrthemes' theme_ipsum: A precise & pristine \link{ggplot2} theme

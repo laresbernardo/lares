@@ -44,7 +44,7 @@
 #' stopwords stripWhitespace TermDocumentMatrix tm_map VectorSource
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
 #' globalVariables installed.packages write.table install.packages remove.packages object.size 
-#' type.convert flush.console read.table 
+#' type.convert flush.console read.table modifyList 
 #' @importFrom wordcloud wordcloud textplot
 #' @importFrom xml2 read_html
 "_PACKAGE"
