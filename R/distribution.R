@@ -296,7 +296,7 @@ distr <- function(data, ...,
         ggplot(aes(x = reorder(value, -order), y = p/100, label = ptag,
                    fill = tolower(as.character(targets)))) + 
         geom_col(position = "fill") +
-        geom_text(aes(size = size), #colour = tolower(as.character(targets))), 
+        geom_text(aes(size = size, colour = tolower(as.character(targets))), 
                   position = position_stack(vjust = 0.5)) +
         scale_size(range = c(2.2, 3)) +
         coord_flip() +
