@@ -14,7 +14,7 @@
 #' @importFrom googlesheets gs_auth gs_read gs_edit_cells gs_title
 #' @importFrom graphics box hist plot points rasterImage rect grid 
 #' @importFrom grDevices graphics.off dev.off png
-#' @importFrom gridExtra grid.arrange tableGrob 
+#' @importFrom gridExtra grid.arrange tableGrob arrangeGrob 
 #' @importFrom h2o as.h2o h2o.automl h2o.accuracy h2o.getModel h2o.performance h2o.init 
 #' h2o.removeAll h2o.download_mojo h2o.download_pojo h2o.loadModel h2o.no_progress h2o.predict 
 #' h2o.predict_json h2o.saveModel h2o.varimp

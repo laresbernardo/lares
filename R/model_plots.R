@@ -179,13 +179,13 @@ mplot_importance <- function(var,
   p <- ggplot(output, 
               aes(x = reorder(var, imp), y = imp * 100, 
                   label = round(100 * imp, 1))) + 
-    geom_col(aes(fill = Type), width = 0.1) +
-    geom_point(aes(colour = Type), size = 6) + 
+    geom_col(aes(fill = Type), width = 0.08) +
+    geom_point(aes(colour = Type), size = 6.2) + 
     coord_flip() + xlab('') + 
     ylab('Importance') + 
-    geom_text(hjust = 0.5, size = 2, inherit.aes = TRUE, colour = "white") +
-    labs(title = paste0("Most Relevant Variables (showing top ", limit, " of ", length(var), ")")) +
-    theme_lares2(pal = 1)
+    geom_text(hjust = 0.5, size = 2.1, inherit.aes = TRUE, colour = "white") +
+    labs(title = paste0("Most Relevant Variables (top ", limit, " of ", length(var), ")")) +
+    theme_lares2()
   
   if (length(unique(output$Type)) == 1) {
     p <- p + geom_col(fill = colours, width = 0.2) +

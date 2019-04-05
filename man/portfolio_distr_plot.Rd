@@ -4,12 +4,14 @@
 \alias{portfolio_distr_plot}
 \title{Portfolio's Distribution}
 \usage{
-portfolio_distr_plot(portfolio_perf, daily)
+portfolio_distr_plot(portfolio_perf, daily, save = TRUE)
 }
 \arguments{
 \item{portfolio_perf}{Dataframe. Output of the portfolio_performance function}
 
 \item{daily}{Dataframe. Daily data}
+
+\item{save}{Boolean. Export plot as an image?}
 }
 \description{
 This function lets the user plot his portfolio's distribution

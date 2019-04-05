@@ -527,8 +527,9 @@ stocks_daily_plot <- function (portfolio, daily, weighted = TRUE, group = TRUE, 
 #' 
 #' @param portfolio_perf Dataframe. Output of the portfolio_performance function
 #' @param daily Dataframe. Daily data
+#' @param save Boolean. Export plot as an image?
 #' @export
-portfolio_distr_plot <- function (portfolio_perf, daily) {
+portfolio_distr_plot <- function (portfolio_perf, daily, save = TRUE) {
   
   plot_stocks <- ggplot(portfolio_perf) +
     geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
@@ -555,11 +556,15 @@ portfolio_distr_plot <- function (portfolio_perf, daily) {
       arrange(desc(Perc)), rows=NULL,
     cols = c("Stock Type","Today's Value","% Portaf","Growth %"))
   
-  png("portf_distribution.png", width=700, height=500)
-  grid.arrange(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3))
-  dev.off()
+  p <- arrangeGrob(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3))
   
-  return(grid.arrange(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3)))
+  if (save) {
+    png("portf_distribution.png", width=700, height=500)
+    plot(p)
+    dev.off() 
+  } else {
+    return(p)
+  }
 }
 
 

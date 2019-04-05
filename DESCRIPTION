@@ -65,6 +65,7 @@ Suggests:
     highcharter,
     plotly,
     plyr,
+    prophet,
     shiny,
     shinydashboard,
     VIM 
