@@ -704,6 +704,8 @@ stocks_html <- function(results) {
   
   options(warn=-1)
   dir <- getwd()
+  pandoc <- Sys.getenv("RSTUDIO_PANDOC")
+  Sys.setenv(RSTUDIO_PANDOC=pandoc)
   
   # Can be more accurate with names but works for me!
   params <- list(portf_daily_change = results[[1]],
