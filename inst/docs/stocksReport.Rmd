@@ -45,7 +45,7 @@ print(params$portf_daily)
 
 ## Portfolio Distribution
 ```{r fig.width = 10, fig.height = 8, echo = FALSE}
-grid::grid.draw(params$portf_distribution)
+plot(params$portf_distribution)
 ```
 
 >`r Sys.time()`
