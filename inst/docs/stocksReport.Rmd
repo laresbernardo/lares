@@ -13,8 +13,8 @@ params:
 ---
 ```{r echo = FALSE}
 # Some global stuff
-pandoc <- Sys.getenv("RSTUDIO_PANDOC")
-Sys.setenv(RSTUDIO_PANDOC=pandoc)
+#pandoc <- Sys.getenv("RSTUDIO_PANDOC")
+#Sys.setenv(RSTUDIO_PANDOC=pandoc)
 # Libraries
 suppressMessages(library(dplyr))
 suppressMessages(library(ggplot2))
