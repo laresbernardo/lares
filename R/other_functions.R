@@ -919,7 +919,7 @@ statusbar <- function (run, max.run, percent.max = 40L, info = run){
                      paste(info, ("       "))) 
   cat("\r", progress)
   flush.console()
-  if(percent.max == percent.step) cat("", sep="\n\n")
+  if(percent.max == floor(percent.step)) cat("", sep="\n\n")
 }
 
 
