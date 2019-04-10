@@ -92,7 +92,7 @@ mplot_density <- function(tag,
       dev.off()
     }
     
-    return(plot(p))
+    return(p)
     
   } else {
     
@@ -429,7 +429,7 @@ mplot_cuts_error <- function(tag,
     geom_text(aes(vjust = gg_pos, colour = colour), size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute error")) +
     scale_y_continuous(labels = comma) + guides(colour=F) +
-    gg_text_customs() + theme_lares2()
+    gg_text_customs() + theme_lares2(bg_colour = "white")
   
   # Second: percentual errors
   deciles_perabs <- quants(abs(df$p_error), splits = splits, just = 0.3)
@@ -439,7 +439,7 @@ mplot_cuts_error <- function(tag,
     geom_text(aes(vjust = gg_pos, colour = colour), size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute percentage error")) +
     scale_y_continuous(labels = comma) + guides(colour=F) +
-    gg_text_customs() + theme_lares2()
+    gg_text_customs() + theme_lares2(bg_colour = "white")
   
   # Third: errors distribution
   pd_error <- ggplot(df) + 
@@ -447,7 +447,7 @@ mplot_cuts_error <- function(tag,
     xlab('') + ylab('Error Density') + 
     scale_x_continuous(labels=function(x) paste0(x,"%")) +
     geom_vline(xintercept = 0, alpha = 0.5, colour = "navy", linetype = "dotted") + 
-    theme_lares2()
+    theme_lares2(bg_colour = "white")
   
   if(!is.na(title)) {
     p_abs <- p_abs + labs(title = title)
@@ -472,7 +472,7 @@ mplot_cuts_error <- function(tag,
     dev.off()
   }
   
-  return(plot(p))
+  return(p)
   
 }
 
@@ -821,8 +821,10 @@ mplot_full <- function(tag,
   } else {
     
     # Numerical models
-    p1 <- mplot_lineal(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
-    p2 <- mplot_density(tag = tag, score = score)
+    p1 <- mplot_lineal(tag = tag, score = score, subtitle = subtitle, model_name = model_name) +
+      theme_lares2(bg_colour = "white")
+    p2 <- mplot_density(tag = tag, score = score) + 
+      theme_lares2(bg_colour = "white")
     p3 <- mplot_cuts_error(tag = tag, score = score, splits = splits)
     
     p <- arrangeGrob(p1, p2, p3,
