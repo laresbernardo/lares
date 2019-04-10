@@ -34,7 +34,6 @@
 # all_nominal step_scale all_outcomes step_dummy prep
 #' @import reshape2
 #' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text 
-#' @importFrom rtweet create_token search_tweets
 #' @importFrom scales percent comma
 #' @importFrom sp over coordinates proj4string proj4string<- coordinates<- spTransform
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
@@ -78,7 +77,7 @@ if(getRversion() >= "2.15.1")
       "trees","type","upload_file","value","values","variable_response","variables",
       "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","x","y",
       "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos",
-      "name","where","deciles","gg_pos","colour","ptag",
+      "name","where","deciles","gg_pos","colour","ptag","create_token","search_tweets",
       "..level..","cluster","drop_na","shapes","coords","long","lat","group","longitude",
       "latitude","as","CRS","project","minutes","seconds","Volume",
       "StocksValue","Dividend","Expense","Deposit","Invest","Deposited","Dividends",

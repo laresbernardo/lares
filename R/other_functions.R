@@ -332,7 +332,7 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
 #' @param images Boolean. Bring only image files?
 #' @param export Boolean. Do you wish to export list as txt file?
 #' @export
-listfiles <- function(folder = "~", recursive = TRUE, regex = NA, images = FALSE, export = FALSE) {
+listfiles <- function(folder = getwd(), recursive = TRUE, regex = NA, images = FALSE, export = FALSE) {
   
   # require(dplyr)
   # require(lubridate)
@@ -919,7 +919,7 @@ statusbar <- function (run, max.run, percent.max = 40L, info = run){
                      paste(info, ("       "))) 
   cat("\r", progress)
   flush.console()
-  if(percent.max == floor(percent.step)) cat("", sep="\n\n")
+  if(run == max.run) cat("", sep="\n\n")
 }
 
 

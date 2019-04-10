@@ -4,7 +4,7 @@
 \alias{listfiles}
 \title{List files in a directory}
 \usage{
-listfiles(folder = "~", recursive = TRUE, regex = NA,
+listfiles(folder = getwd(), recursive = TRUE, regex = NA,
   images = FALSE, export = FALSE)
 }
 \arguments{

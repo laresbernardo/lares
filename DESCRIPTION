@@ -44,7 +44,6 @@ Imports:
     rJava,
     rmarkdown,
     RPostgreSQL,
-    rtweet,
     rvest,
     scales,
     skimr,
@@ -56,7 +55,6 @@ Imports:
     wordcloud,
     xml2
 Suggests:
-    anytime,
     caret,
     DALEX,
     exifr,
@@ -66,7 +64,7 @@ Suggests:
     plotly,
     plyr,
     prophet,
-    shiny,
+    rtweet,
     shinydashboard,
     VIM 
 URL: https://github.com/laresbernardo/lares

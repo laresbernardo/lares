@@ -11,8 +11,7 @@
 missingness <- function(df, print = FALSE, bins = 10) {
   
   # require(tidyr)
-  # require(dplyr)
-  
+
   m <- df %>%
     summarize_all(.funs = ~ sum(is.na(.)) / length(.)) %>%
     gather() %>%
