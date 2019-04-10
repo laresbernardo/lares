@@ -507,10 +507,25 @@ mape <- function(tag, score){
   mean(abs(error/tag))
 }
 
+
+####################################################################
+#' Calculate R Squared
+#' 
+#' This function lets the user calculate r squared
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @export
+rsq <- function(tag, score){ 
+  fit <- lm(score ~ tag)
+  signif(summary(fit)$adj.r.squared, 4)
+}
+
 ####################################################################
 #' Calculate Errors
 #' 
-#' This function lets the user calculate all errors simultaneously.
+#' This function lets the user calculate all errors and R squared 
+#' simultaneously.
 #' 
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
@@ -520,9 +535,11 @@ errors <- function(tag, score){
     rmse = rmse(tag, score),
     mae = mae(tag, score),
     mse = mse(tag, score),
-    mape = mape(tag, score)
+    mape = mape(tag, score),
+    rsq = rsq(tag, score)
   )
 }
+
 
 ####################################################################
 #' H2O Predict using MOJO file
