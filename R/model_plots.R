@@ -82,20 +82,17 @@ mplot_density <- function(tag,
       file_name <- paste(subdir, file_name, sep="/")
     }
     
+    p <- arrangeGrob(p1, p2, p3, 
+                     ncol = 2, nrow = 2, heights = 2:1,
+                     layout_matrix = rbind(c(1,1), c(2,3)))
+    
     if(save == TRUE) {
       png(file_name, height = 1800, width = 2100, res = 300)
-      grid.arrange(
-        p1, p2, p3, 
-        ncol = 2, nrow = 2, heights = 2:1,
-        layout_matrix = rbind(c(1,1), c(2,3)))
+      plot(p)
       dev.off()
     }
     
-    return(
-      grid.arrange(
-        p1, p2, p3, 
-        ncol = 2, nrow = 2, heights = 2:1,
-        layout_matrix = rbind(c(1,1), c(2,3))))
+    return(plot(p))
     
   } else {
     
@@ -119,12 +116,11 @@ mplot_density <- function(tag,
       p <- p + labs(subtitle = subtitle)
     }  
     
-    if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = T)
-      file_name <- paste(subdir, file_name, sep="/")
-    }
-    
     if (save == TRUE) {
+      if (!is.na(subdir)) {
+        dir.create(file.path(getwd(), subdir), recursive = T)
+        file_name <- paste(subdir, file_name, sep="/")
+      }
       p <- p + ggsave(file_name, width = 6, height = 6)
     }
     return(p)
@@ -202,12 +198,11 @@ mplot_importance <- function(var,
     p <- p + labs(subtitle = subtitle)
   }  
   
-  if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = T)
-    file_name <- paste(subdir, file_name, sep="/")
-  }
-  
   if (save == TRUE) {
+    if (!is.na(subdir)) {
+      dir.create(file.path(getwd(), subdir), recursive = T)
+      file_name <- paste(subdir, file_name, sep="/")
+    }
     p <- p + ggsave(file_name, width = 6, height = 6)
   }
   
@@ -462,26 +457,22 @@ mplot_cuts_error <- function(tag,
     pd_error <- pd_error + labs(caption = model_name)
   }
   
-  if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = T)
-    file_name <- paste(subdir, file_name, sep="/")
-  }
+  p <- arrangeGrob(
+    p_abs, p_per, pd_error,
+    heights = c(1.8,1.8,1),
+    ncol = 1, nrow = 3)
   
   if(save == TRUE) {
+    if (!is.na(subdir)) {
+      dir.create(file.path(getwd(), subdir), recursive = T)
+      file_name <- paste(subdir, file_name, sep="/")
+    }
     png(file_name, height = 1800, width = 1800, res = 300)
-    grid.arrange(
-      p_abs, p_per, pd_error,
-      heights = c(1.8,1.8,1),
-      ncol = 1, nrow = 3)
+    plot(p)
     dev.off()
   }
   
-  return(
-    grid.arrange(
-      p_abs, p_per, pd_error,
-      heights = c(2,2,1),
-      ncol = 1, nrow = 3)
-  )
+  return(plot(p))
   
 }
 
@@ -653,6 +644,8 @@ mplot_metrics <- function(results,
     au <- au + labs(caption = model_name)
   }
   
+  p <- arrangeGrob(ll, au, ncol = 1, nrow = 2)
+  
   if (save == TRUE) {
     
     if (!is.na(subdir)) {
@@ -661,11 +654,11 @@ mplot_metrics <- function(results,
     }
     
     png(file_name, height = 1800, width = 2100, res = 300)
-    grid.arrange(ll, au, ncol = 1, nrow = 2)
+    plot(p)
     dev.off()
   }
   
-  return(grid.arrange(ll, au, ncol = 1, nrow = 2))
+  return(plot(p))
   
 }
 
@@ -692,7 +685,7 @@ mplot_lineal <- function(tag,
                          save = FALSE, 
                          subdir = NA,
                          file_name = "viz_lineal.png") {
-
+  
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
     stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
@@ -814,20 +807,16 @@ mplot_full <- function(tag,
         file_name <- paste(subdir, file_name, sep="/")
       }
       
+      p <- arrangeGrob(p1, p2, p3, p4,
+                       widths = c(1.3,1),
+                       layout_matrix = rbind(c(1,2), c(1,2), c(1,3), c(4,3)))
+      
       png(file_name, height = 2000, width = 3200, res = 300)
-      grid.arrange(
-        p1, p2, p3, p4,
-        widths = c(1.3,1),
-        layout_matrix = rbind(c(1,2), c(1,2), c(1,3), c(4,3)))
+      plot(p)
       dev.off()
     }
     
-    return(
-      grid.arrange(
-        p1, p2, p3, p4,
-        widths = c(1.3,1),
-        layout_matrix = rbind(c(1,2), c(1,2), c(1,3), c(4,3)))
-    ) 
+    return(plot(p))
     
   } else {
     
@@ -836,27 +825,20 @@ mplot_full <- function(tag,
     p2 <- mplot_density(tag = tag, score = score)
     p3 <- mplot_cuts_error(tag = tag, score = score, splits = splits)
     
+    p <- arrangeGrob(p1, p2, p3,
+                     heights = c(0.6, 0.4),
+                     widths = c(0.45, 0.55),
+                     layout_matrix = rbind(c(1,3), c(2,3)))
+    
     if(save == TRUE) {
-      
       if (!is.na(subdir)) {
         dir.create(file.path(getwd(), subdir), recursive = T)
         file_name <- paste(subdir, file_name, sep="/")
       }
-      
       png(file_name, height = 2000, width = 3200, res = 300)
-      grid.arrange(
-        p1, p2, p3,
-        heights = c(0.6, 0.4),
-        widths = c(0.45, 0.55),
-        layout_matrix = rbind(c(1,3), c(2,3)))
+      plot(p)
       dev.off()
     }
-    
-    return(grid.arrange(
-      p1, p2, p3,
-      heights = c(0.6, 0.4),
-      widths = c(0.45, 0.55),
-      layout_matrix = rbind(c(1,3), c(2,3)))
-    )
+    return(plot(p))
   }
 }
