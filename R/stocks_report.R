@@ -369,7 +369,7 @@ portfolio_daily <- function(data, dailys, cash_fix = 0) {
 #' @param stocks_perf Dataframe. Output of the stocks_performance function
 #' @param save Boolean. Export plot as an image?
 #' @export
-portfolio_daily_plot <- function(stocks_perf, save = TRUE) {
+portfolio_daily_plot <- function(stocks_perf, save = FALSE) {
   
   stocks_perf <- stocks_perf %>% 
     # Get rid of super picks
@@ -420,7 +420,7 @@ portfolio_daily_plot <- function(stocks_perf, save = TRUE) {
 #' @param cash Dataframe. Cash data
 #' @param save Boolean. Export plot as an image?
 #' @export
-stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, save = TRUE) {
+stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, save = FALSE) {
   
   tops <- max(rbind(portfolio_perf$Invested, portfolio_perf$DailyValue))
   summary <- rbind(
@@ -481,7 +481,7 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, s
 #' @param group Boolean. Group stocks by stocks type?
 #' @param save Boolean. Export plot as an image?
 #' @export
-stocks_daily_plot <- function (portfolio, daily, weighted = TRUE, group = TRUE, save = TRUE) {
+stocks_daily_plot <- function (portfolio, daily, weighted = TRUE, group = TRUE, save = FALSE) {
   
   d <- daily %>%
     left_join(portfolio %>% dplyr::select(Symbol,Type), by='Symbol') %>%
@@ -529,16 +529,16 @@ stocks_daily_plot <- function (portfolio, daily, weighted = TRUE, group = TRUE, 
 #' @param daily Dataframe. Daily data
 #' @param save Boolean. Export plot as an image?
 #' @export
-portfolio_distr_plot <- function (portfolio_perf, daily, save = TRUE) {
+portfolio_distr_plot <- function (portfolio_perf, daily, save = FALSE) {
   
   plot_stocks <- ggplot(portfolio_perf) +
     geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels=scales::comma) +
-    labs(x = '', y = "Portfolio's Stocks Dimentions") + theme_lares2(pal = 1)
+    labs(x = '', y = "Portfolio's Stocks Dimentions") + theme_lares2(pal = 1, bg = "white")
   plot_areas <- ggplot(portfolio_perf) +
     geom_bar(aes(x = "", y = DailyValue/sum(DailyValue), fill = Type), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels = scales::percent) +
-    labs(x = '', y = "Portfolio's Stocks Type Distribution") + theme_lares2(pal = 1)
+    labs(x = '', y = "Portfolio's Stocks Type Distribution") + theme_lares2(pal = 1, bg = "white")
   t1 <- tableGrob(
     portfolio_perf %>% 
       mutate(Perc = formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
@@ -576,7 +576,7 @@ portfolio_distr_plot <- function (portfolio_perf, daily, save = TRUE) {
 #' @param portfolio Dataframe. Results from portfolio_daily()
 #' @param save Boolean. Export plot as an image?
 #' @export
-portfolio_total_plot <- function(portfolio, save = TRUE) {
+portfolio_total_plot <- function(portfolio, save = FALSE) {
   
   labels <- portfolio %>% filter(Deposit != 0)
   caption <- paste0("Portfolio: $", formatNum(portfolio$Portfolio[nrow(portfolio)]),
@@ -665,7 +665,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
                           cash = data$cash)
   p3 <- stocks_daily_plot(portfolio = data$portfolio, daily, weighted = FALSE)
   p5 <- stocks_daily_plot(portfolio = data$portfolio, daily, weighted = TRUE)
-  p4 <- portfolio_distr_plot(portfolio_perf, daily, save = FALSE)
+  p4 <- portfolio_distr_plot(portfolio_perf, daily)
   p6 <- portfolio_total_plot(pf_daily)
   graphics.off()
   message("Graphics ready...")
