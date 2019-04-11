@@ -531,7 +531,7 @@ rsq <- function(tag, score){
 #' @export
 rsqa <- function(tag, score){ 
   fit <- lm(score ~ tag)
-  signif(summary(fit)$adjusted.r.squared, 4)
+  signif(summary(fit)$adj.r.squared, 4)
 }
 
 
