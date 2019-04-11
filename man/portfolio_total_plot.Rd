@@ -4,7 +4,7 @@
 \alias{portfolio_total_plot}
 \title{Portfolio's Daily Cumulative}
 \usage{
-portfolio_total_plot(portfolio, save = TRUE)
+portfolio_total_plot(portfolio, save = FALSE)
 }
 \arguments{
 \item{portfolio}{Dataframe. Results from portfolio_daily()}

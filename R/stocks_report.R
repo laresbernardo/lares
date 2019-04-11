@@ -534,18 +534,19 @@ portfolio_distr_plot <- function (portfolio_perf, daily, save = FALSE) {
   plot_stocks <- ggplot(portfolio_perf) +
     geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels=scales::comma) +
-    labs(x = '', y = "Portfolio's Stocks Dimentions") + theme_lares2(pal = 1, bg = "white")
+    labs(x = '', y = "Portfolio's Stocks Dimentions") + theme_lares2(pal = 1, bg_colour = "white")
   plot_areas <- ggplot(portfolio_perf) +
     geom_bar(aes(x = "", y = DailyValue/sum(DailyValue), fill = Type), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels = scales::percent) +
-    labs(x = '', y = "Portfolio's Stocks Type Distribution") + theme_lares2(pal = 1, bg = "white")
+    labs(x = '', y = "Portfolio's Stocks Type Distribution") + theme_lares2(pal = 1, bg_colour = "white")
   t1 <- tableGrob(
     portfolio_perf %>% 
       mutate(Perc = formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
              DailyValue = formatNum(DailyValue, 2),
              DifPer = paste0(formatNum(DifPer, 2))) %>%
       dplyr::select(Symbol, Type, DailyValue, Perc, DifPer), rows=NULL,
-    cols = c("Stock","Stock Type","Today's Value","% Portaf","Growth %"))
+    cols = c("Stock","Stock Type","Today's Value","% Portaf","Growth %"),
+    theme = ttheme_minimal())
   t2 <- tableGrob(
     portfolio_perf %>% 
       group_by(Type) %>%
@@ -554,7 +555,8 @@ portfolio_distr_plot <- function (portfolio_perf, daily, save = FALSE) {
                        DailyValue = formatNum(sum(DailyValue))) %>%
       dplyr::select(Type, DailyValue, Perc, DifPer) %>% 
       arrange(desc(Perc)), rows=NULL,
-    cols = c("Stock Type","Today's Value","% Portaf","Growth %"))
+    cols = c("Stock Type","Today's Value","% Portaf","Growth %"),
+    theme = ttheme_minimal())
   
   p <- arrangeGrob(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3))
   
@@ -659,13 +661,13 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   message("Calculations ready...")
   
   # Visualizations
+  p4 <- portfolio_distr_plot(portfolio_perf, daily)
   p1 <- portfolio_daily_plot(stocks_perf)
   p2 <- stocks_total_plot(stocks_perf, portfolio_perf, daily, 
                           trans = data$transactions, 
                           cash = data$cash)
   p3 <- stocks_daily_plot(portfolio = data$portfolio, daily, weighted = FALSE)
   p5 <- stocks_daily_plot(portfolio = data$portfolio, daily, weighted = TRUE)
-  p4 <- portfolio_distr_plot(portfolio_perf, daily)
   p6 <- portfolio_total_plot(pf_daily)
   graphics.off()
   message("Graphics ready...")

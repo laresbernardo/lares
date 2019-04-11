@@ -5,7 +5,7 @@
 \title{Stocks Daily Plot}
 \usage{
 stocks_daily_plot(portfolio, daily, weighted = TRUE, group = TRUE,
-  save = TRUE)
+  save = FALSE)
 }
 \arguments{
 \item{portfolio}{Dataframe. Output of the portfolio_perf function}

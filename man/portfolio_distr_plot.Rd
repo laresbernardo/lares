@@ -4,7 +4,7 @@
 \alias{portfolio_distr_plot}
 \title{Portfolio's Distribution}
 \usage{
-portfolio_distr_plot(portfolio_perf, daily, save = TRUE)
+portfolio_distr_plot(portfolio_perf, daily, save = FALSE)
 }
 \arguments{
 \item{portfolio_perf}{Dataframe. Output of the portfolio_performance function}

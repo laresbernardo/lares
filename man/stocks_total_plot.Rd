@@ -5,7 +5,7 @@
 \title{Stocks Total Performance Plot}
 \usage{
 stocks_total_plot(stocks_perf, portfolio_perf, daily, trans, cash,
-  save = TRUE)
+  save = FALSE)
 }
 \arguments{
 \item{stocks_perf}{Dataframe. Output of the stocks_performance function}
