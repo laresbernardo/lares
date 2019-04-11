@@ -6,8 +6,8 @@
 \usage{
 theme_lares2(font = "Arial Narrow", base_size = 12,
   main_colour = "darkorange3", second_colour = "deepskyblue3",
-  soft_colour = "grey30", bg_colour = "transparent",
-  legend = "right", mg = 15, pal = 0)
+  soft_colour = "grey30", bg_colour = "white", legend = "right",
+  mg = 15, pal = 0)
 }
 \arguments{
 \item{font, base_size}{Character and numeric. Base font family and size}

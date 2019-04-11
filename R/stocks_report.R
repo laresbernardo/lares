@@ -534,11 +534,11 @@ portfolio_distr_plot <- function (portfolio_perf, daily, save = FALSE) {
   plot_stocks <- ggplot(portfolio_perf) +
     geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels=scales::comma) +
-    labs(x = '', y = "Portfolio's Stocks Dimentions") + theme_lares2(pal = 1, bg_colour = "white")
+    labs(x = '', y = "Portfolio's Stocks Dimentions") + theme_lares2(pal = 1)
   plot_areas <- ggplot(portfolio_perf) +
     geom_bar(aes(x = "", y = DailyValue/sum(DailyValue), fill = Type), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels = scales::percent) +
-    labs(x = '', y = "Portfolio's Stocks Type Distribution") + theme_lares2(pal = 1, bg_colour = "white")
+    labs(x = '', y = "Portfolio's Stocks Type Distribution") + theme_lares2(pal = 1)
   t1 <- tableGrob(
     portfolio_perf %>% 
       mutate(Perc = formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
@@ -661,7 +661,6 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   message("Calculations ready...")
   
   # Visualizations
-  p4 <- portfolio_distr_plot(portfolio_perf, daily)
   p1 <- portfolio_daily_plot(stocks_perf)
   p2 <- stocks_total_plot(stocks_perf, portfolio_perf, daily, 
                           trans = data$transactions, 
@@ -669,7 +668,8 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   p3 <- stocks_daily_plot(portfolio = data$portfolio, daily, weighted = FALSE)
   p5 <- stocks_daily_plot(portfolio = data$portfolio, daily, weighted = TRUE)
   p6 <- portfolio_total_plot(pf_daily)
-  graphics.off()
+  p4 <- portfolio_distr_plot(portfolio_perf, daily)
+
   message("Graphics ready...")
   
   # Consolidation
