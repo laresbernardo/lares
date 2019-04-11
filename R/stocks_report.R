@@ -665,7 +665,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
                           cash = data$cash)
   p3 <- stocks_daily_plot(portfolio = data$portfolio, daily, weighted = FALSE)
   p5 <- stocks_daily_plot(portfolio = data$portfolio, daily, weighted = TRUE)
-  p4 <- portfolio_distr_plot(portfolio_perf, daily)
+  p4 <- portfolio_distr_plot(portfolio_perf, daily, save = FALSE)
   p6 <- portfolio_total_plot(pf_daily)
   graphics.off()
   message("Graphics ready...")
@@ -798,4 +798,3 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
 # df <- get_stocks() # Get data from my Dropbox
 # hist <- get_stocks_hist(symbols = df$portfolio$Symbol, from = df$portfolio$StartDate)
 # daily <- stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = df$transactions)
-

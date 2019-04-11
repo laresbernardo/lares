@@ -518,8 +518,22 @@ mape <- function(tag, score){
 #' @export
 rsq <- function(tag, score){ 
   fit <- lm(score ~ tag)
-  signif(summary(fit)$adj.r.squared, 4)
+  signif(summary(fit)$r.squared, 4)
 }
+
+####################################################################
+#' Calculate Adjusted R Squared
+#' 
+#' This function lets the user calculate adjusted r squared
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @export
+rsqa <- function(tag, score){ 
+  fit <- lm(score ~ tag)
+  signif(summary(fit)$adjusted.r.squared, 4)
+}
+
 
 ####################################################################
 #' Calculate Errors
@@ -536,7 +550,8 @@ errors <- function(tag, score){
     mae = mae(tag, score),
     mse = mse(tag, score),
     mape = mape(tag, score),
-    rsq = rsq(tag, score)
+    rsq = rsq(tag, score),
+    rsqa = rsqa(tag, score)
   )
 }
 
