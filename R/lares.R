@@ -56,7 +56,7 @@ if(getRversion() >= "2.15.1")
       "DivIncome","DivPerc","DivReal","Expenses","FileModifyDate","High","Hist",
       "InvPerc","Invested","Perc","Quant","RealPerc","RelChangePHist","RelChangeUSD",
       "RelPer","RelUSD","StartUSD","StockIniValue","StockValue","Stocks","Symbol","results",
-      "TotalPer","TotalUSD","Type","Value","readOGR","read_exif",
+      "TotalPer","TotalUSD","Type","Value","readOGR","read_exif","pcum",
       "accuracy","add_headers","addedAt","amount","associatedCompanyIds","associatedVids","auc",
       "canonical_vid","cats[, i]", "ceiling_date","color","contacts_canonical_vid",
       "contacts_form_submissions","contacts_identity_profiles", "google_analytics","perc",

@@ -4,19 +4,14 @@
 \alias{crosstab}
 \title{Weighted Cross Tabulation}
 \usage{
-crosstab(df, ..., order = TRUE, total = TRUE, prow = FALSE,
-  pcol = FALSE, pall = FALSE, decimals = 2, keep_nas = TRUE,
-  list = FALSE)
+crosstab(df, ..., prow = FALSE, pcol = FALSE, pall = FALSE,
+  decimals = 2, keep_nas = TRUE, total = TRUE)
 }
 \arguments{
 \item{df}{Data.frame.}
 
 \item{...}{Variables. Dependent and independent variables. If needed,
 third value should be the weight variable.}
-
-\item{order}{Boolean. Sort desc the whole table?}
-
-\item{total}{Boolean. Return total values?}
 
 \item{prow, pcol, pall}{Boolean. Calculate percent values for rows, columns,
 or the whole table, respectively.}
@@ -25,7 +20,7 @@ or the whole table, respectively.}
 
 \item{keep_nas}{Boolean. Keep NAs and count them as well?}
 
-\item{list}{Boolean. Return as a single list?}
+\item{total}{Boolean. Return total values column?}
 }
 \description{
 A cross-tabulation function with output similar to STATA, tidy

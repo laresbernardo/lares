@@ -10,26 +10,23 @@
 #' @param df Data.frame. 
 #' @param ... Variables. Dependent and independent variables. If needed,
 #' third value should be the weight variable.
-#' @param order Boolean. Sort desc the whole table?
-#' @param total Boolean. Return total values?
 #' @param prow,pcol,pall Boolean. Calculate percent values for rows, columns,
 #' or the whole table, respectively.
 #' @param decimals Integer. How many decimals should be returned?
 #' @param keep_nas Boolean. Keep NAs and count them as well?
-#' @param list Boolean. Return as a single list?
+#' @param total Boolean. Return total values column?
 #' @export
 crosstab <- function(df, ..., 
-                     order = TRUE, total = TRUE,
                      prow = FALSE, pcol = FALSE, pall = FALSE, 
                      decimals = 2, keep_nas = TRUE,
-                     list = FALSE) {
+                     total = TRUE) {
   
   options(warn=-1)
   
   vars <- quos(...)
   
   if (length(vars) == 1) {
-    message("For one variable with weights, use crossval() instead!")
+    message("For one variable with/out weights, use freqs(var, wt=weight) instead!")
     ret <- df %>% freqs(!!!vars)
     return(ret)
   }
@@ -37,75 +34,47 @@ crosstab <- function(df, ...,
   df <- df %>% select(!!!vars)
   
   if (keep_nas) {
-    x <- df[,1] %>% replaceall(NA, "N/A")
-    y <- df[,2] %>% replaceall(NA, "N/A")
+    df <- df %>% replaceall(NA, "N/A")
   }
   
+  x <- df[,1]
+  y <- df[,2]
+  
+  if (prow) {
+    newx <- y; newy <- x
+    x <- newx; y <- newy
+  }
+  cross_name <- paste(colnames(x), "x", colnames(y))
+  
   if (length(vars) == 2) {
-    weight <- rep(1, length(x))
+    weight <- rep(1, nrow(df))
     decimals <- 0
   } else {
     weight <- df[,3]
+    cross_name <- paste0(cross_name, " (", colnames(weight), ")")
   }
   
-  weight <- as.numeric(weight)
-  t <- round(xtabs(weight ~ x + y), decimals)
-  tt <- data.frame(t) %>% 
-    tidyr::spread(y, Freq) %>% .[,-1] %>%
-    mutate(n = rowSums(.)) %>%
-    t() %>% data.frame() %>% 
-    mutate_all(function(x) as.numeric(as.character(x))) %>%
-    mutate(n = rowSums(.)) %>%
-    t() %>% data.frame() %>% 
-    mutate_all(function(x) as.numeric(as.character(x)))
-  ret <- tt
+  dfn <- data.frame(x, y, weight)
+  colnames(dfn) <- c("x","y","weight")
   
-  rows <- data.frame(name = c(rownames(t),"Total"), n = as.vector(unlist(tt[ncol(tt)]))) %>% 
-    arrange(desc(n)) %>% mutate(rank = row_number()) %>%
-    mutate(rank = ifelse(name == "Total", nrow(tt)+1, rank)) %>% arrange(rank)
-  cols <- data.frame(name = c(colnames(t),"Total"), n = as.vector(unlist(tt[nrow(tt),]))) %>% 
-    arrange(desc(n)) %>% mutate(rank = row_number()) %>%
-    mutate(rank = ifelse(name == "Total", ncol(tt)+1, rank)) %>% arrange(rank)
+  ret <- freqs(dfn, x, y, wt=weight) %>% select(-pcum, -p)
+  levels <- factor(unique(ret$x), levels = unique(ret$x))
+  tab <- tidyr::spread(ret, y, n)
+  ret <- tab[match(levels, tab$x),]
+  colnames(ret)[1] <- cross_name
   
-  # pall
+  # Create totals
+  ret <- ret %>% mutate(total = rowSums(.[-1])) 
+  if (pcol | prow) {
+    ret <- ret %>% mutate_if(is.numeric, funs(round(100*./sum(.), decimals)))
+  }
   if (pall) {
-    all <- tt[nrow(tt),ncol(tt)]
-    ret <- tt %>% mutate_all(funs(round(100*./all, decimals)))
-  }
-  
-  # prow
-  if (prow) {
-    all <- tt[,ncol(tt)]
-    ret <- tt %>%
-      mutate_all(funs(round(100*./all, decimals)))
-  }
-  
-  # pcol
-  if (pcol) {
-    all <- tt[nrow(tt),]
-    ret <- t(apply(tt, 1, function(x) 100*x/as.numeric(all))) %>%
-      data.frame() %>% 
-      mutate_all(function(x) round(as.numeric(as.character(x)), decimals))
-  }
-  
-  colnames(ret) <- c(colnames(t), "Total")
-  rownames(ret) <- c(rownames(t) ,"Total")
-  
-  if (order) {
-    ret <- ret[c(as.character(rows$name[rows$name!="Total"]), "Total"),
-               c(as.character(cols$name[cols$name!="Total"]), "Total")]
+    all <- sum(ret[,-1] %>% select(-total))
+    ret <- ret %>% mutate_if(is.numeric, funs(round(100*./all, decimals)))
   }
   
   if (!total) {
-    ret <- ret %>% select(-Total) %>% filter(rownames(.) != "Total")
-    rownames(ret) <- rownames(t)
-  }
-  
-  if (list) {
-    ret <- tidyr::gather(ret) %>% 
-      mutate(names = rep(rownames(ret), ncol(ret))) %>%
-      select(names, key, value)
-    colnames(ret) <- c("dependent", "independent", "values")
+    ret <- ret %>% select(-total)
   }
   
   return(ret)
