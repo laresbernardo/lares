@@ -187,14 +187,20 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
                 dplyr::select(Symbol, Date, Quant, Value, Amount),
               by = c('Symbol','Date')) %>%
     mutate(Expenses = ifelse(is.na(Quant), 0, expenses)) %>%
-    dplyr::group_by(Symbol) %>%
+    group_by(Symbol) %>%
     mutate(Quant = ifelse(is.na(Quant), 0, Quant),
            Stocks = cumsum(Quant)) %>%
     # Add dividends daily data
     left_join(dividends %>%
                 mutate(Date = as.Date(as.character(Date)), Symbol = as.character(Symbol)),
               by = c('Symbol','Date')) %>%
-    mutate(DailyDiv = ifelse(is.na(DivReal), 0, Stocks * DivReal)) %>%
+    mutate(DailyDiv = ifelse(is.na(DivReal), 0, Stocks * DivReal)) %>% ungroup() %>%
+    # If sold everything and then restarted...
+    group_by(Symbol) %>% 
+    mutate(group = ifelse(lead(Stocks) > 0 & Stocks == 0, 1, 0)) %>%
+    mutate(groupi = cumsum(group)) %>% ungroup() %>% 
+    mutate(Symbol = ifelse(groupi > 0, paste0(Symbol, groupi+1), Symbol)) %>% 
+    select(-group, -groupi) %>% 
     # Some other cumulative calculations
     arrange(Date) %>% group_by(Stocks) %>%
     mutate(DailyValue = Close * Stocks) %>%
@@ -495,7 +501,7 @@ stocks_daily_plot <- function (portfolio, daily, weighted = TRUE, group = TRUE, 
   plot <- ggplot(d) + ylab('% Change since Start') +
     geom_hline(yintercept = 0, alpha=0.8, color="black") +
     geom_line(aes(x=Date, y=Hist, color=Symbol), alpha=0.9, size=0.5) +
-    geom_point(aes(x=Date, y=Hist, size=abs(Amount)), alpha=0.6, colour="black") +
+    geom_point(aes(x=Date, y=Hist, size=abs(Amount), colour=BuySell), alpha=0.6) +
     scale_y_continuous(position = "right") +
     scale_size(range = c(0, 3.2)) + guides(size=F, colour=F) + 
     xlim(min(d$Date), max(d$Date) + round(days*0.08)) +

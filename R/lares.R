@@ -79,7 +79,7 @@ if(getRversion() >= "2.15.1")
       "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos",
       "name","where","deciles","gg_pos","colour","ptag","create_token","search_tweets",
       "..level..","cluster","drop_na","shapes","coords","long","lat","group","longitude",
-      "latitude","as","CRS","project","minutes","seconds","Volume",
+      "latitude","as","CRS","project","minutes","seconds","Volume","BuySell","groupi",
       "StocksValue","Dividend","Expense","Deposit","Invest","Deposited","Dividends",
       "Portfolio","start_clean","geo","hits","keyword","legend","subject","subject.x",
       "subject.y","type_label","facet","Total","pal","p_real","weight")) 
