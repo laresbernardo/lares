@@ -199,13 +199,13 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
     group_by(Symbol) %>% 
     mutate(group = ifelse(lead(Stocks) > 0 & Stocks == 0, 1, 0)) %>%
     mutate(groupi = cumsum(group)) %>% ungroup() %>% 
-    mutate(Symbol = ifelse(groupi > 0, paste0(Symbol, groupi+1), Symbol)) %>% 
+    mutate(Ticker = ifelse(groupi > 0, paste0(Symbol, groupi+1), Symbol)) %>% 
     select(-group, -groupi) %>% 
     # Some other cumulative calculations
     arrange(Date) %>% group_by(Stocks) %>%
     mutate(DailyValue = Close * Stocks) %>%
     arrange(desc(Date), desc(DailyValue)) %>%
-    arrange(Date) %>% group_by(Symbol) %>%
+    arrange(Date) %>% group_by(Ticker) %>%
     mutate(StartUSD = Value[Date == min(Date)],
            RelChangeP = 100 - (100 * lag(Close) / Close),
            RelChangeUSD = Stocks * (Close - lag(Close)) - Expenses,
@@ -216,7 +216,7 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
     #mutate_if(is.numeric, funs(round(., 2))) %>% 
     ungroup() %>%
     mutate_at(vars(-contains("Date")), funs(replace(., is.na(.), 0))) %>%
-    group_by(Date, Symbol) %>% arrange(desc(Volume)) %>% slice(1) %>% ungroup()
+    group_by(Date, Ticker) %>% arrange(desc(Volume)) %>% slice(1) %>% ungroup()
   
   return(df)
   
@@ -305,7 +305,7 @@ portfolio_performance <- function(portfolio, daily) {
     arrange(desc(DivPerc))
   
   result <- left_join(portfolio %>% mutate(Symbol = as.character(Symbol)), 
-                      daily %>% filter(Date == max(Date)) %>% select(Symbol,DailyValue), 
+                      daily %>% filter(Date == max(Date)) %>% select(Symbol,Ticker,DailyValue), 
                       by = c('Symbol')) %>%
     mutate(DifUSD = DailyValue - Invested, DifPer = round(100 * DifUSD / Invested,2),
            StockValue = DailyValue / Stocks,
@@ -313,7 +313,7 @@ portfolio_performance <- function(portfolio, daily) {
            RealPerc = round(100 * DailyValue/sum(DailyValue), 2)) %>%
     left_join(divIn, by = c('Symbol')) %>%
     mutate_if(is.numeric, funs(round(., 2))) %>%
-    dplyr::select(Symbol:StockIniValue, StockValue, InvPerc, RealPerc, everything())
+    select(Symbol:StockIniValue, Ticker, StockValue, InvPerc, RealPerc, everything())
   
   return(result)
   

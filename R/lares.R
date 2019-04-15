@@ -73,7 +73,7 @@ if(getRversion() >= "2.15.1")
       "prediction_breakdown","q_na","quantile_tag","question","real_error","dummy","sale",
       "stateChanges","step_done","str_pad","tag","test_auc","test_ll","theme_tq",
       "tk_augment_timeseries_signature","tk_get_timeseries_signature","tk_index","dfl",
-      "tk_make_future_timeseries","token","train_auc","train_ll","dft",
+      "tk_make_future_timeseries","token","train_auc","train_ll","dft","Ticker",
       "trees","type","upload_file","value","values","variable_response","variables",
       "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","x","y",
       "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos",
