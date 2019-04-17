@@ -50,9 +50,9 @@ mplot_density <- function(tag,
             legend.justification = c(0, 0),
             legend.title = element_blank())
     
-    if (is.numeric(score)) {
-      p1 <- p1 + xlim(0, 100) 
-    }
+    # if (is.numeric(score)) {
+    #   p1 <- p1 + xlim(0, 100) 
+    # }
     
     p2 <- ggplot(out) + 
       geom_density(aes(x = score), alpha = 0.9, adjust = 0.25, fill = "deepskyblue") + 
@@ -86,14 +86,6 @@ mplot_density <- function(tag,
                      ncol = 2, nrow = 2, heights = 2:1,
                      layout_matrix = rbind(c(1,1), c(2,3)))
     
-    if(save == TRUE) {
-      png(file_name, height = 1800, width = 2100, res = 300)
-      plot(p)
-      dev.off()
-    }
-    
-    return(p)
-    
   } else {
     
     df <- data.frame(
@@ -116,15 +108,17 @@ mplot_density <- function(tag,
       p <- p + labs(subtitle = subtitle)
     }  
     
-    if (save == TRUE) {
-      if (!is.na(subdir)) {
-        dir.create(file.path(getwd(), subdir), recursive = T)
-        file_name <- paste(subdir, file_name, sep="/")
-      }
-      p <- p + ggsave(file_name, width = 6, height = 6)
-    }
-    return(p)
   }
+  
+  if (save == TRUE) {
+    if (!is.na(subdir)) {
+      dir.create(file.path(getwd(), subdir), recursive = T)
+      file_name <- paste(subdir, file_name, sep="/")
+    }
+    p <- p + ggsave(file_name, width = 6, height = 6)
+  }
+  
+  return(p)
 }
 
 
@@ -268,7 +262,7 @@ mplot_roc <- function(tag,
     annotate("text", x = 0.25, y = 0.05, size = 2.8, 
              label = paste0("95% CI: ", round(100*ci[c("min"),],2),"-", 
                             round(100*ci[c("max"),],2))) +
-    theme_lares2()
+    theme_lares2(bg_colour="white")
   
   if(!is.na(subtitle)) {
     p <- p + labs(subtitle = subtitle)
@@ -821,8 +815,7 @@ mplot_full <- function(tag,
     # Numerical models
     p1 <- mplot_lineal(tag = tag, score = score, subtitle = subtitle, model_name = model_name) +
       theme_lares2(bg_colour = "white")
-    p2 <- mplot_density(tag = tag, score = score) + 
-      theme_lares2(bg_colour = "white")
+    p2 <- mplot_density(tag = tag, score = score)
     p3 <- mplot_cuts_error(tag = tag, score = score, splits = splits)
     
     p <- arrangeGrob(p1, p2, p3,
