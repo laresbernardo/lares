@@ -180,7 +180,11 @@ h2o_automl <- function(df,
                          exclude_algos = c("StackedEnsemble","DeepLearning"),
                          nfolds = 5, 
                          seed = seed)
-  message(paste("Succesfully trained", nrow(aml@leaderboard), "models:"))
+  if (nrow(aml@leaderboard) == 0) {
+    stop("No models were trained! Please set max_models to at least 1.")
+  } else {
+    message(paste("Succesfully trained", nrow(aml@leaderboard), "models:")) 
+  }
   print(aml@leaderboard[,1:3])
   flow <- "http://localhost:54321/flow/index.html"
   message("Check results in H2O Flow's nice interface: ", flow)
