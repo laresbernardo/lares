@@ -370,9 +370,15 @@ export_results <- function(results,
     quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
     
     # We create a directory to save all our results
-    first <- ifelse(length(unique(results$scores_test$tag)) > 6,
-                    signif(results$errors_test$rmse, 4),
-                    round(100*results$metrics$metrics$AUC, 2))
+    if (plot_ROC %in% names(results$metrics)) {
+      first <- round(100*results$metrics$metrics$AUC, 2)
+    } else {
+      first <- round(100*results$metrics$metrics$ACC, 2)
+    }
+    if (length(unique(results$scores_test$tag)) > 6) {
+      first <- signif(results$errors_test$rmse, 4)
+    }
+
     subdirname <- paste0(first, "-", results$model_name)  
     if (!is.na(subdir)) {
       subdir <- paste0(subdir, "/", subdirname)
