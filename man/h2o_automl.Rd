@@ -4,10 +4,10 @@
 \alias{h2o_automl}
 \title{Automated H2O's AutoML}
 \usage{
-h2o_automl(df, train_test = NA, split = 0.7, seed = 0, thresh = 5,
-  max_time = 5 * 60, max_models = 25, start_clean = TRUE,
-  alarm = TRUE, save = FALSE, subdir = NA, plot = FALSE,
-  project = "Machine Learning Model")
+h2o_automl(df, train_test = NA, split = 0.7, weight = NULL,
+  seed = 0, thresh = 5, max_time = 5 * 60, max_models = 25,
+  start_clean = TRUE, alarm = TRUE, save = FALSE, subdir = NA,
+  plot = FALSE, project = "Machine Learning Model")
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
@@ -18,6 +18,11 @@ and 'train' values to split}
 
 \item{split}{Numeric. Value between 0 and 1 to split as train/test 
 datasets. Value is for training set.}
+
+\item{weight}{Column with observation weights. Giving some observation a
+weight of zero is equivalent to excluding it from the dataset; giving an 
+observation a relative weight of 2 is equivalent to repeating that 
+row twice. Negative weights are not allowed.}
 
 \item{seed}{Numeric. Seed for random stuff and reproducibility}
 

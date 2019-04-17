@@ -87,6 +87,10 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' and 'train' values to split
 #' @param split Numeric. Value between 0 and 1 to split as train/test 
 #' datasets. Value is for training set.
+#' @param weight Column with observation weights. Giving some observation a
+#' weight of zero is equivalent to excluding it from the dataset; giving an 
+#' observation a relative weight of 2 is equivalent to repeating that 
+#' row twice. Negative weights are not allowed.
 #' @param seed Numeric. Seed for random stuff and reproducibility
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
@@ -109,6 +113,7 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 h2o_automl <- function(df, 
                        train_test = NA,
                        split = 0.7,
+                       weight = NULL,
                        seed = 0,
                        thresh = 5,
                        max_time = 5*60,
@@ -173,6 +178,7 @@ h2o_automl <- function(df,
   message(paste("Iterating until", max_models, "models or", max_time, "seconds..."))
   aml <- h2o::h2o.automl(x = setdiff(names(df), "tag"), 
                          y = "tag",
+                         weights_column = weight,
                          training_frame = as.h2o(train),
                          leaderboard_frame = as.h2o(test),
                          max_runtime_secs = max_time,
