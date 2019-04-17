@@ -101,7 +101,7 @@ theme_lares2 <- function(font = "Arial Narrow",
   ret <- ret + theme(panel.spacing=grid::unit(0.8, "lines"))
   # Plot title
   ret <- ret + theme(plot.title=element_text(
-    hjust=0, size=base_size * 1.25, margin=margin(b=base_size * 0.85), 
+    hjust=0, size=base_size * 1.2, margin=margin(b=base_size * 0.85), 
     family=font, face="bold", color = "black"))
   # Plot subtitle
   ret <- ret + theme(plot.subtitle=element_text(

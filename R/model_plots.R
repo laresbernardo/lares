@@ -787,28 +787,16 @@ mplot_full <- function(tag,
     } else {
       p1 <- mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
       p2 <- mplot_splits(tag = tag, score = score, splits = splits) +
-        theme(plot.margin = margin(10, 8, 0, -5))
+        theme(plot.margin = margin(10, 8, 5, 0))
       p3 <- mplot_roc(tag = tag, score = score) +
         theme(plot.margin = margin(0, 8, 5, 0))
       p4 <- mplot_cuts(score = score) +
-        theme(plot.margin = margin(-2, 0, 5, 10))
+        theme(plot.margin = margin(-3, 0, 5, 8))
     }
     
     p <- arrangeGrob(p1, p2, p3, p4,
                      widths = c(1.3,1),
                      layout_matrix = rbind(c(1,2), c(1,2), c(1,3), c(4,3)))
-    
-    if (save == TRUE) {
-      
-      if (!is.na(subdir)) {
-        dir.create(file.path(getwd(), subdir), recursive = T)
-        file_name <- paste(subdir, file_name, sep="/")
-      }
-      
-      png(file_name, height = 2000, width = 3200, res = 300)
-      plot(p)
-      dev.off()
-    }
     
   } else {
     
@@ -822,16 +810,18 @@ mplot_full <- function(tag,
                      heights = c(0.6, 0.4),
                      widths = c(0.45, 0.55),
                      layout_matrix = rbind(c(1,3), c(2,3)))
-    
-    if(save == TRUE) {
-      if (!is.na(subdir)) {
-        dir.create(file.path(getwd(), subdir), recursive = T)
-        file_name <- paste(subdir, file_name, sep="/")
-      }
-      png(file_name, height = 2000, width = 3200, res = 300)
-      plot(p)
-      dev.off()
-    }
   }
+  
+  if (save == TRUE) {
+    if (!is.na(subdir)) {
+      dir.create(file.path(getwd(), subdir), recursive = T)
+      file_name <- paste(subdir, file_name, sep="/")
+    }
+    png(file_name, height = 2000, width = 3200, res = 300)
+    plot(p)
+    dev.off()
+  }
+  
   plot(p)
+  
 }
