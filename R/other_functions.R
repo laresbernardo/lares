@@ -148,13 +148,16 @@ vector2text <- function(vector, sep=", ", quotes = TRUE) {
 #' 
 #' @param text Character Vector
 #' @param spaces Boolean. Keep spaces?
+#' @param lower Boolean. Transform all to lower case?
 #' @export
-cleanText <- function(text, spaces = TRUE) {
+cleanText <- function(text, spaces = TRUE, lower = TRUE) {
   text <- as.character(text)
-  output <- tolower(gsub("[^[:alnum:] ]", "", 
-                         iconv(text, from="UTF-8", to="ASCII//TRANSLIT")))
+  output <- gsub("[^[:alnum:] ]", "", iconv(text, from="UTF-8", to="ASCII//TRANSLIT"))
   if (spaces == FALSE) {
     output <- gsub(" ", "", output)
+  }
+  if (lower == TRUE) {
+    output <- tolower(output)
   }
   return(output)
 }

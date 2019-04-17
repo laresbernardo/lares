@@ -3,6 +3,7 @@
 export(balance_data)
 export(bindfiles)
 export(bring_api)
+export(calibrate)
 export(categ_reducer)
 export(categoryCounter)
 export(cleanText)

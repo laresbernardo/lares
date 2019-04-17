@@ -816,8 +816,6 @@ mplot_full <- function(tag,
       dev.off()
     }
     
-    return(plot(p))
-    
   } else {
     
     # Numerical models
@@ -841,6 +839,6 @@ mplot_full <- function(tag,
       plot(p)
       dev.off()
     }
-    return(plot(p))
   }
+  plot(p)
 }

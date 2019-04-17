@@ -490,7 +490,7 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, s
 stocks_daily_plot <- function (portfolio, daily, weighted = TRUE, group = TRUE, save = FALSE) {
   
   d <- daily %>%
-    left_join(portfolio %>% dplyr::select(Symbol,Type), by='Symbol') %>%
+    left_join(portfolio %>% select(Symbol,Type), by='Symbol') %>%
     arrange(Date) %>% group_by(Symbol) %>%
     mutate(Hist = if (weighted) {100*(1-cumsum(Amount)/(Stocks*Adjusted))} else {RelChangePHist},
            BuySell = ifelse(Amount > 0, "Bought", ifelse(Amount < 0, "Sold", NA)))

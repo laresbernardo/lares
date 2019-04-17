@@ -789,3 +789,31 @@ model_metrics <- function(tag, score, thresh = 0.5,
   }
   return(metrics)
 }
+
+
+####################################################################
+#' Calibrate Sampling Scores
+#' 
+#' This function lets the user calibrate a model's predictions when 
+#' under or over sampling methods were applied when training it.
+#' 
+#' @param score Vector. Probability predictions of the model output
+#' @param train Integer. Total row count in the training dataset
+#' @param target Integer. Total row count of the target class 
+#' in the training dataset
+#' @param train_sample Integer. Total row count in the training 
+#' dataset after sampling
+#' @param target_sample Integer. Total row count of the target 
+#' class in the training dataset after sampling
+#' @export
+calibrate <- function(score, train, target, train_sample, target_sample) {
+  score <-
+    (score * (target / train) / (target_sample / train_sample)) /
+    ((
+      (1 - score) * (1 - target / train) / (1 - target_sample / train_sample)
+    ) +
+      (
+        score * (target / train) / (target_sample / train_sample)
+      ))
+  return(score)
+}

@@ -4,12 +4,14 @@
 \alias{cleanText}
 \title{Clean text}
 \usage{
-cleanText(text, spaces = TRUE)
+cleanText(text, spaces = TRUE, lower = TRUE)
 }
 \arguments{
 \item{text}{Character Vector}
 
 \item{spaces}{Boolean. Keep spaces?}
+
+\item{lower}{Boolean. Transform all to lower case?}
 }
 \description{
 This function lets the user clean text into getting only alphanumeric 
