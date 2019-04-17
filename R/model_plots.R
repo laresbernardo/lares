@@ -800,16 +800,16 @@ mplot_full <- function(tag,
         theme(plot.margin = margin(-2, 0, 5, 10))
     }
     
+    p <- arrangeGrob(p1, p2, p3, p4,
+                     widths = c(1.3,1),
+                     layout_matrix = rbind(c(1,2), c(1,2), c(1,3), c(4,3)))
+    
     if (save == TRUE) {
       
       if (!is.na(subdir)) {
         dir.create(file.path(getwd(), subdir), recursive = T)
         file_name <- paste(subdir, file_name, sep="/")
       }
-      
-      p <- arrangeGrob(p1, p2, p3, p4,
-                       widths = c(1.3,1),
-                       layout_matrix = rbind(c(1,2), c(1,2), c(1,3), c(4,3)))
       
       png(file_name, height = 2000, width = 3200, res = 300)
       plot(p)
