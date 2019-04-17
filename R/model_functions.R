@@ -379,7 +379,7 @@ export_results <- function(results,
     } else {
       subdir <- subdirname
     }
-    dir.create(subdir)
+    dir.create(file.path(getwd(), subdir), recursive = T)
     
     # Export Results List
     if (rds == TRUE) {
