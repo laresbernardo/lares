@@ -370,7 +370,7 @@ export_results <- function(results,
     quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
     
     # We create a directory to save all our results
-    if (plot_ROC %in% names(results$metrics)) {
+    if ("plot_ROC" %in% names(results$metrics)) {
       first <- round(100*results$metrics$metrics$AUC, 2)
     } else {
       first <- round(100*results$metrics$metrics$ACC, 2)
