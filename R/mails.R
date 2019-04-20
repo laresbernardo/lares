@@ -21,7 +21,7 @@ mailSend <- function(from = "RMail <laresbernardo@gmail.com>",
                      creds = NA){
   
   options(warn = -1)
-  require(httr)
+  #require(httr)
   
   # MailGun documentation:
   # https://documentation.mailgun.com/en/latest/api-sending.html#sending
@@ -65,7 +65,7 @@ mailSend <- function(from = "RMail <laresbernardo@gmail.com>",
     }
     if ("character" %in% class(attachment)) {
       as <- "attachment"
-      file <- attachment
+      file <- as.character(attachment)
     }
     the_body[["attachment"]] <- upload_file(file) 
   } else {
@@ -80,7 +80,7 @@ mailSend <- function(from = "RMail <laresbernardo@gmail.com>",
   stop_for_status(req)
   
   # Delete temporary files created
-  if (file.exists(file) & !"character" %in% class(attachment)) file.remove(file)
+  if (file.exists(file) & as != "attachment") file.remove(file)
   
   if (!quiet) {
     message(paste(subject, "sent to", to, ifelse(!is.na(as), paste("with", as, "file"),""))) 
