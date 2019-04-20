@@ -15,7 +15,7 @@ mailSend <- function(from = "RMail <laresbernardo@gmail.com>",
                      to = "laresbernardo@gmail.com",
                      cc = NA, bcc = NA,
                      subject = "Mail from R",
-                     text = "No text...", html = NA,
+                     text = NA, html = NA,
                      attachment = NA,
                      quiet = FALSE,
                      creds = NA){

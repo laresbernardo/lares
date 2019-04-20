@@ -783,7 +783,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
   if (!is.na(mail)) {
     mailSend(to = mail, 
              subject = paste("Portfolio:", max(results$df_daily$Date)),
-             text = " ", 
+             text = " \n", 
              attachment = paste0(getwd(), "/stocksReport.html"),
              creds = token_dir,
              quiet = FALSE)
