@@ -21,7 +21,7 @@ mailSend <- function(from = "RMail <laresbernardo@gmail.com>",
                      creds = NA){
   
   options(warn = -1)
-  #require(httr) # authenticate, POST, stop_for_status, upload_file
+  require(httr)
   
   # MailGun documentation:
   # https://documentation.mailgun.com/en/latest/api-sending.html#sending
