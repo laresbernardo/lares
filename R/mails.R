@@ -52,7 +52,7 @@ mailSend <- function(from = "RMail <laresbernardo@gmail.com>",
     the_body[["html"]] <- html
   }
   
-  if (sum(is.na(attachment)) > 0) {
+  if (sum(!is.na(attachment)) > 0) {
     if ("ggplot" %in% class(attachment)) {
       as <- "png"
       file <- paste0(getwd(),"/attch.", as)
