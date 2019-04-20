@@ -4,15 +4,15 @@
 \alias{stocks_report}
 \title{Portfolio's Full Report and Email}
 \usage{
-stocks_report(wd = "personal", cash_fix = 0, mail = TRUE,
-  creds = NA)
+stocks_report(wd = "personal", cash_fix = 0,
+  mail = "laresbernardo@gmail.com", creds = NA)
 }
 \arguments{
 \item{wd}{Character. Where do you wish to save the results (plots and report)?}
 
 \item{cash_fix}{Numeric. If you wish to algebraically sum a value to your cash balance}
 
-\item{mail}{Boolean Do you wish to send the email?}
+\item{mail}{Boolean. Do you wish to send the email? Set to NA to not send email}
 
 \item{creds}{Character. Credential's user (see get_credentials) for sending mail}
 }

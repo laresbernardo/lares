@@ -749,10 +749,12 @@ stocks_html <- function(results) {
 #' 
 #' @param wd Character. Where do you wish to save the results (plots and report)?
 #' @param cash_fix Numeric. If you wish to algebraically sum a value to your cash balance
-#' @param mail Boolean Do you wish to send the email?
+#' @param mail Boolean. Do you wish to send the email? Set to NA to not send email
 #' @param creds Character. Credential's user (see get_credentials) for sending mail
 #' @export
-stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA) {
+stocks_report <- function(wd = "personal", cash_fix = 0, 
+                          mail = "laresbernardo@gmail.com", 
+                          creds = NA) {
   
   options(warn=-1)
 
@@ -778,14 +780,13 @@ stocks_report <- function(wd = "personal", cash_fix = 0, mail = TRUE, creds = NA
   # HTML report
   stocks_html(results)
   
-  if (mail == TRUE) {
-    mailSend(body = " ", 
+  if (!is.na(mail)) {
+    mailSend(to = mail, 
              subject = paste("Portfolio:", max(results$df_daily$Date)),
+             text = " ", 
              attachment = paste0(getwd(), "/stocksReport.html"),
-             to = "laresbernardo@gmail.com", 
-             from = 'AutoReport <laresbernardo@gmail.com>', 
              creds = token_dir,
-             quite = FALSE)
+             quiet = FALSE)
   }
   
   setwd(current_wd)

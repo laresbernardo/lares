@@ -14,7 +14,7 @@ queryDummy = function(query, creds = NA) {
   # require(RPostgreSQL)
   # require(config)
 
-  dw <- lares::get_credentials(from="dummy", dir = creds)
+  dw <- get_credentials(from="dummy", dir = creds)
 
   drv <- RPostgreSQL::PostgreSQL()
   con <- dbConnect(drv, host=dw$server, dbname=dw$database,
@@ -45,7 +45,7 @@ queryDW = function(query, which = "soat", creds = NA) {
   # require(RPostgreSQL)
   # require(config)
 
-  dw <- lares::get_credentials(from = "warehouse", dir = creds)
+  dw <- get_credentials(from = "warehouse", dir = creds)
 
   dbname <- ifelse(which == "soat", dw$database_soat,
                    ifelse(which == "creditos", dw$database_creditos, NA))
@@ -78,7 +78,7 @@ queryProduc = function(query, creds = NA) {
   # require(RPostgreSQL)
   # require(config)
 
-  dw <- lares::get_credentials(from = "production", dir = creds)
+  dw <- get_credentials(from = "production", dir = creds)
 
   drv <- RPostgreSQL::PostgreSQL()
   con <- dbConnect(drv, host=dw$server, dbname=dw$database,

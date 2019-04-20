@@ -18,6 +18,7 @@ get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
              "production_cm",
              "warehouse_cm",
              "sendgrid",
+             "mailgun",
              "redshift",
              "hubspot",
              "github",

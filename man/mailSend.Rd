@@ -2,26 +2,27 @@
 % Please edit documentation in R/mails.R
 \name{mailSend}
 \alias{mailSend}
-\title{Send Emails with Attachments (Sendgrid)}
+\title{Send Emails with Attachments (POST)}
 \usage{
-mailSend(body, subject, attachment = NULL, to = credentials$to,
-  from = credentials$from, creds = NA, quite = FALSE)
+mailSend(from = "RMail <laresbernardo@gmail.com>",
+  to = "laresbernardo@gmail.com", cc = NA, bcc = NA,
+  subject = "Mail from R", text = "No text...", html = NA,
+  attachment = NA, quiet = FALSE, creds = NA)
 }
 \arguments{
-\item{body}{Character. Body for the email}
+\item{from, to, cc, bcc}{Character. Emails}
 
 \item{subject}{Character. Subject for the email}
 
-\item{attachment}{Vector. All objects which will be sent as attachment}
+\item{text, html}{Character. Text or HTML to send in the body}
 
-\item{to}{Character. Email of the person who will recevie the email}
+\item{attachment}{Character, plot or data.frame. Will send the file, 
+plot as PNG or data.frame as CSV, respectively.}
 
-\item{from}{Character. Email of the person who send the email}
+\item{quiet}{Boolean. Keep quite or display messages?}
 
 \item{creds}{Character. Credential's user (see get_credentials)}
-
-\item{quite}{Boolean. Keep quite or display messages?}
 }
 \description{
-This function lets the user send Emails with Attachments using Sendgrid
+This function lets the user send Emails with Attachments using MailGun
 }
