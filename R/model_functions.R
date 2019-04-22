@@ -891,8 +891,8 @@ ROC <- function (tag, score, multis = NA) {
     roc <- pROC::roc(tag, score, ci=T)
     coords <- data.frame(
       fpr = rev(roc$specificities),
-      tpr = rev(roc$sensitivities),
-      label = "twocat")
+      tpr = rev(roc$sensitivities)) %>%
+      mutate(label = "2cats")
     ci <- data.frame(roc$ci, row.names = c("min","AUC","max"))
   } else {
     df <- data.frame(tag = tag, score = score, multis)

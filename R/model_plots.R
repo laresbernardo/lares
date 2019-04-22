@@ -239,7 +239,7 @@ mplot_roc <- function(tag,
   # require(ggplot2)
   # require(plotly)
   
-  rocs <- ROC(tag, score, multis = ifelse(!is.na(multis), multis, NA))
+  rocs <- ROC(tag, score, multis = ifelse(is.na(multis), NA, multis))
   coords <- rocs$roc
   
   if (sample < min(table(coords$label))) {
