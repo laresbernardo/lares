@@ -81,8 +81,11 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' its parameters, datasets, performance metrics, variables 
 #' importances, and other useful metrics.
 #' 
-#' Full list of algorithms: "DRF" (Random Forest and Extremely-Randomized 
-#' Trees), "GLM", "XGBoost", "GBM", "DeepLearning" and "StackedEnsemble". 
+#' Full list of algorithms: "DRF" (Distributed Random Forest, including 
+#' Random Forest (RF) and Extremely-Randomized Trees (XRT)), "GLM" 
+#' (Generalized Linear Model), "XGBoost" (eXtreme Grading Boosting), 
+#' "GBM" (Gradient Boosting Machine), "DeepLearning" (Fully-connected 
+#' multi-layer artificial neural network) and "StackedEnsemble". 
 #'
 #' @param df Dataframe. Dataframe containing all your data, including 
 #' the independent variable labeled as 'tag'
@@ -173,11 +176,13 @@ h2o_automl <- function(df,
   # BALANCE TRAINING SET
   if (type == "Classifier" & balance == TRUE) {
     total <- nrow(train)
+    cats <- length(unique(train$tag))
     min <- train %>% freqs(tag) %>% .$n %>% min()
-    rel <- paste0(round(100*min*length(unique(train$tag))/total, 1), "%")
+    rel <- round(100*min*cats/total, 1)
     train <- train %>% group_by(tag) %>% sample_n(min)
-    message(paste("Training set balanced:", min, "observations for each category.",
-                  rel, "of training data not used"))
+    message(paste0("Training set balanced: ", min, 
+                   " observations for each (",cats,") category; using ",
+                   rel, "% of training data..."))
   }
   
   ####### Train model #######

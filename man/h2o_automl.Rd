@@ -66,6 +66,9 @@ its parameters, datasets, performance metrics, variables
 importances, and other useful metrics.
 }
 \details{
-Full list of algorithms: "DRF" (Random Forest and Extremely-Randomized 
-Trees), "GLM", "XGBoost", "GBM", "DeepLearning" and "StackedEnsemble".
+Full list of algorithms: "DRF" (Distributed Random Forest, including 
+Random Forest (RF) and Extremely-Randomized Trees (XRT)), "GLM" 
+(Generalized Linear Model), "XGBoost" (eXtreme Grading Boosting), 
+"GBM" (Gradient Boosting Machine), "DeepLearning" (Fully-connected 
+multi-layer artificial neural network) and "StackedEnsemble".
 }
