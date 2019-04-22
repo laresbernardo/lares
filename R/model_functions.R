@@ -219,8 +219,14 @@ h2o_automl <- function(df,
   m <- h2o.getModel(as.vector(aml@leaderboard$model_id[1]))  
   
   # Calculations and variables
-  scores <- h2o_predict_model(test, m)
-  #scores_df <- as.vector(h2o_predict_model(df, m)[,1])
+  scores <- quiet(h2o_predict_model(test, m))
+  if (length(unique(train$tag)) == 2) {
+    scores <- scores[,2]
+  } else {
+    colnames(scores)[1] <- "scores"
+  }
+  
+  # Variables importances
   imp <- data.frame(h2o.varimp(m)) %>%
   {if ("names" %in% colnames(.)) 
     dplyr::rename(., "variable" = "names", "importance" = "coefficients") else .
@@ -231,19 +237,12 @@ h2o_automl <- function(df,
   
   # CLASSIFICATION MODELS
   if (type == "Classifier") {
-    if (length(unique(train$tag)) == 2) {
-      # Binaries
-      scores <- scores[,2]
-    } else {
-      # More than 2 cateogies
-      scores <- scores[,1]
-    }
     results <- list(
       project = project,
       model = m,
       scores_test = data.frame(
         tag = as.vector(test$tag),
-        score = scores),
+        scores),
       metrics = NA,
       datasets = list(test = test, train = train),
       parameters = m@parameters,
