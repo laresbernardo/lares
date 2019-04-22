@@ -217,6 +217,7 @@ mplot_importance <- function(var,
 #' (only used when more than 2 categories coexist)
 #' @param sample Integer. Number of samples to use for rendering plot.
 #' @param model_name Character. Model's name
+#' @param subtitle Character. Subtitle to show in plot
 #' @param interval Numeric. Interval for breaks in plot
 #' @param plotly Boolean. Use plotly for plot's output for an interactive plot
 #' @param save Boolean. Save output plot into working directory
@@ -238,11 +239,17 @@ mplot_roc <- function(tag,
   # require(ggplot2)
   # require(plotly)
   
-  rocs <- ROC(tag, score, multis = ifelse(is.na(multis), NA, multis))
+  if (is.na(multis)) {
+    rocs <- ROC(tag, score)
+  } else {
+    rocs <- ROC(tag, score, multis)
+  }
+  
   coords <- rocs$roc
+  ci <- rocs$ci
   
   if (sample < min(table(coords$label))) {
-    coords <- coords %>% sample_n(sample)
+    coords <- coords %>% group_by(label) %>% sample_n(sample)
     message("ROC Curve Plot rendered with sampled data...")
   }
   
@@ -257,8 +264,8 @@ mplot_roc <- function(tag,
     scale_y_continuous(name = "Sensitivity [True Positive Rate]", limits = c(0,1), 
                        breaks = seq(0, 1, interval), expand = c(0.001, 0.001),
                        labels=scale) +
-    theme(axis.ticks = element_line(color = "grey80")) +
     coord_equal() +
+    theme(axis.ticks = element_line(color = "grey80")) +
     labs(title = "ROC Curve: AUC", colour = "Label") +
     annotate("text", x = 0.25, y = 0.10, size = 4.2, 
              label = paste("AUC =", round(100*ci[c("AUC"),],2))) +

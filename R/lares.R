@@ -70,7 +70,7 @@ if(getRversion() >= "2.15.1")
       "image_darknet_detect","image_darknet_model","image_info","image_read","index",
       "is_contact","key","label","label_colours","label_hjust","max_score","merge_audits",
       "merged_vids","min_score","model_performance","month.lbl","numb","Adjusted",
-      "p","p_error","palette_light","portalId","portal_id","pos","get_ip",
+      "p","p_error","palette_light","portalId","portal_id","pos","get_ip","score",
       "prediction_breakdown","q_na","quantile_tag","question","real_error","dummy","sale",
       "stateChanges","step_done","str_pad","tag","test_auc","test_ll","theme_tq",
       "tk_augment_timeseries_signature","tk_get_timeseries_signature","tk_index","dfl",

@@ -4,7 +4,7 @@
 \alias{mplot_roc}
 \title{ROC Curve Plot}
 \usage{
-mplot_roc(tag, score, multis = NA, sample = 400, model_name = NA,
+mplot_roc(tag, score, multis = NA, sample = 1000, model_name = NA,
   subtitle = NA, interval = 0.2, plotly = FALSE, save = FALSE,
   subdir = NA, file_name = "viz_roc.png")
 }

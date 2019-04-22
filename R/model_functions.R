@@ -223,7 +223,7 @@ h2o_automl <- function(df,
   if (length(unique(train$tag)) == 2) {
     scores <- scores[,2]
   } else {
-    colnames(scores)[1] <- "scores"
+    colnames(scores)[1] <- "score"
   }
   
   # Variables importances
@@ -916,4 +916,5 @@ ROC <- function (tag, score, multis = NA) {
   if (!is.na(multis)) {
     ret[["rocs"]] <- rocs  
   }
+  return(ret)
 }
