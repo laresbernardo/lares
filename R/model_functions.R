@@ -172,9 +172,12 @@ h2o_automl <- function(df,
   }
   # BALANCE TRAINING SET
   if (type == "Classifier" & balance == TRUE) {
+    total <- nrow(train)
     min <- train %>% freqs(tag) %>% .$n %>% min()
+    rel <- paste0(round(100*min*length(unique(train$tag))/total, 1), "%")
     train <- train %>% group_by(tag) %>% sample_n(min)
-    message(paste("Balanced training set:", min, "samples for each category"))
+    message(paste("Training set balanced:", min, "observations for each category.",
+                  rel, "of training data not used"))
   }
   
   ####### Train model #######
