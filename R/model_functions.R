@@ -721,12 +721,14 @@ h2o_predict_model <- function(df, model){
 #' 
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
+#' @param multis Data.frame. Containing columns with each category score 
+#' (only used when more than 2 categories coexist)
 #' @param thresh Numeric. Value which splits the results for the 
 #' confusion matrix.
 #' @param plots Boolean. Include plots?
 #' @param subtitle Character. Subtitle for plots
 #' @export
-model_metrics <- function(tag, score, thresh = 0.5, 
+model_metrics <- function(tag, score, multis = NA, thresh = 0.5, 
                           plots = TRUE, subtitle = NA){
   
   metrics <- list()
@@ -771,17 +773,21 @@ model_metrics <- function(tag, score, thresh = 0.5,
         TNR = signif(conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]), 5),
         Logloss = loglossBinary(tag, score)
       )
-      # ROC CURVE PLOT
-      if (plots) {
-        plot_roc <- invisible(mplot_roc(tag, score))
-        if (!is.na(subtitle)) {
-          plot_roc <- plot_roc + labs(subtitle = subtitle)
-        }
-        metrics[["plot_ROC"]] <- plot_roc
-      }
-
     } else {
       metrics[["ACC"]] <- signif(trues / total, 5)
+    }
+    
+    # ROC CURVE PLOT
+    if (plots) {
+      if (length(unique(tag)) == 2) {
+        plot_roc <- invisible(mplot_roc(tag, score)) 
+      } else {
+        plot_roc <- invisible(mplot_roc(tag, score, multis)) 
+      }
+      if (!is.na(subtitle)) {
+        plot_roc <- plot_roc + labs(subtitle = subtitle)
+      }
+      metrics[["plot_ROC"]] <- plot_roc
     }
     
     # CONFUSION MATRIX PLOT

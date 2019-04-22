@@ -208,10 +208,14 @@ mplot_importance <- function(var,
 ####################################################################
 #' ROC Curve Plot
 #' 
-#' This function plots ROC Curves with AUC values with 95\% confidence range
+#' This function plots ROC Curves with AUC values with 95\% confidence 
+#' range. It also works for multi-categorical models.
 #' 
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
+#' @param multis Data.frame. Containing columns with each category score 
+#' (only used when more than 2 categories coexist)
+#' @param sample Integer. Number of samples to use for rendering plot.
 #' @param model_name Character. Model's name
 #' @param subtitle Character. Subtitle to show in plot
 #' @param interval Numeric. Interval for breaks in plot
@@ -222,6 +226,8 @@ mplot_importance <- function(var,
 #' @export
 mplot_roc <- function(tag, 
                       score, 
+                      multis = NA,
+                      sample = 300,
                       model_name = NA, 
                       subtitle = NA, 
                       interval = 0.2, 
@@ -239,30 +245,65 @@ mplot_roc <- function(tag,
     stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
   }
   
-  roc <- pROC::roc(tag, score, ci=T)
-  coords <- data.frame(
-    x = rev(roc$specificities),
-    y = rev(roc$sensitivities))
-  ci <- data.frame(roc$ci, row.names = c("min","AUC","max"))
+  if (!is.numeric(score) & is.na(multis)) {
+    stop("You should use the multis paramter to add each category score")
+  }
   
+  if (is.na(multis)) {
+    roc <- pROC::roc(tag, score, ci=T)
+    coords <- data.frame(
+      x = rev(roc$specificities),
+      y = rev(roc$sensitivities),
+      label = "twocat")
+    ci <- data.frame(roc$ci, row.names = c("min","AUC","max"))
+  } else {
+    df <- data.frame(tag = tag, score = score, multis)
+    cols <- colnames(df)
+    coords <- c(); rocs <- list()
+    for (i in 1:(length(cols)-2)) {
+      which <- colnames(df)[2+i]
+      label <- ifelse(df[,1] == which,1,0)
+      roci <- pROC::roc(label, df[,c(which)], ci = TRUE)
+      rocs[[paste(cols[i+2])]] <- roci
+      iter <- data.frame(x = rev(roci$specificities),
+                         y = rev(roci$sensitivities),
+                         label = paste(round(100*roci$auc,2), which, sep="% | "))
+      coords <- rbind(coords, iter)
+    }
+    ci <- data.frame(lapply(rocs, "[[", "ci")) %>%
+      mutate(mean = rowMeans(.)) %>% select(mean)
+    row.names(ci) <- c("min","AUC","max")
+  }
   
-  p <- ggplot(coords, aes(x = x, y = y)) +
-    geom_line(colour = "deepskyblue", size = 1) +
-    geom_point(colour = "blue3", size = 0.9, alpha = 0.4) +
+  if (sample < min(table(coords$label))) {
+    coords <- coords %>% group_by(label) %>% sample_n(sample) 
+    message("ROC Curve Plot rendered with sampled data...")
+  }
+  
+  scale <- function(x) sprintf("%.1f", x)
+  p <- ggplot(coords, aes(x = x, y = y, group=label)) +
+    geom_line(colour = "deepskyblue", size = 0.8) +
+    geom_point(aes(colour=label), size = 0.7, alpha = 0.8) +
     geom_segment(aes(x = 0, y = 1, xend = 1, yend = 0), alpha = 0.2, linetype = "dotted") + 
     scale_x_reverse(name = "1 - Specificity [False Positive Rate]", limits = c(1,0), 
-                    breaks = seq(0, 1, interval), expand = c(0.001,0.001)) + 
+                    breaks = seq(0, 1, interval), expand = c(0.001,0.001),
+                    labels=scale) + 
     scale_y_continuous(name = "Sensitivity [True Positive Rate]", limits = c(0,1), 
-                       breaks = seq(0, 1, interval), expand = c(0.001, 0.001)) +
+                       breaks = seq(0, 1, interval), expand = c(0.001, 0.001),
+                       labels=scale) +
     theme(axis.ticks = element_line(color = "grey80")) +
-    coord_equal() + 
-    ggtitle("ROC Curve: AUC") +
+    coord_equal() +
+    labs(title = "ROC Curve: AUC", colour = "Label") +
     annotate("text", x = 0.25, y = 0.10, size = 4.2, 
              label = paste("AUC =", round(100*ci[c("AUC"),],2))) +
     annotate("text", x = 0.25, y = 0.05, size = 2.8, 
              label = paste0("95% CI: ", round(100*ci[c("min"),],2),"-", 
                             round(100*ci[c("max"),],2))) +
-    theme_lares2(bg_colour="white")
+    theme_lares2(bg_colour="white", pal=2)
+  
+  if (is.na(multis)) {
+    p <- p + guides(colour = FALSE)
+  }
   
   if(!is.na(subtitle)) {
     p <- p + labs(subtitle = subtitle)

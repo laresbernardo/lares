@@ -4,12 +4,16 @@
 \alias{model_metrics}
 \title{Classification Model Metrics}
 \usage{
-model_metrics(tag, score, thresh = 0.5, plots = TRUE, subtitle = NA)
+model_metrics(tag, score, multis = NA, thresh = 0.5, plots = TRUE,
+  subtitle = NA)
 }
 \arguments{
 \item{tag}{Vector. Real known label}
 
 \item{score}{Vector. Predicted value or model's result}
+
+\item{multis}{Data.frame. Containing columns with each category score 
+(only used when more than 2 categories coexist)}
 
 \item{thresh}{Numeric. Value which splits the results for the 
 confusion matrix.}

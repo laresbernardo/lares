@@ -4,14 +4,19 @@
 \alias{mplot_roc}
 \title{ROC Curve Plot}
 \usage{
-mplot_roc(tag, score, model_name = NA, subtitle = NA, interval = 0.2,
-  plotly = FALSE, save = FALSE, subdir = NA,
-  file_name = "viz_roc.png")
+mplot_roc(tag, score, multis = NA, sample = 300, model_name = NA,
+  subtitle = NA, interval = 0.2, plotly = FALSE, save = FALSE,
+  subdir = NA, file_name = "viz_roc.png")
 }
 \arguments{
 \item{tag}{Vector. Real known label}
 
 \item{score}{Vector. Predicted value or model's result}
+
+\item{multis}{Data.frame. Containing columns with each category score 
+(only used when more than 2 categories coexist)}
+
+\item{sample}{Integer. Number of samples to use for rendering plot.}
 
 \item{model_name}{Character. Model's name}
 
@@ -28,5 +33,6 @@ mplot_roc(tag, score, model_name = NA, subtitle = NA, interval = 0.2,
 \item{file_name}{Character. File name as you wish to save the plot}
 }
 \description{
-This function plots ROC Curves with AUC values with 95\% confidence range
+This function plots ROC Curves with AUC values with 95\% confidence 
+range. It also works for multi-categorical models.
 }
