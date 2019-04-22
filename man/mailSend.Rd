@@ -6,8 +6,8 @@
 \usage{
 mailSend(from = "RMail <laresbernardo@gmail.com>",
   to = "laresbernardo@gmail.com", cc = NA, bcc = NA,
-  subject = "Mail from R", text = "No text...", html = NA,
-  attachment = NA, quiet = FALSE, creds = NA)
+  subject = "Mail from R", text = NA, html = NA, attachment = NA,
+  quiet = FALSE, creds = NA)
 }
 \arguments{
 \item{from, to, cc, bcc}{Character. Emails}

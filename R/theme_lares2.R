@@ -57,7 +57,7 @@ theme_lares2 <- function(font = "Arial Narrow",
   # assign("scale_fill_discrete", function(..., values = names(colours_pal)) ggplot2::scale_fill_manual(..., values = values), envir=envir)
   # assign("scale_colour_continuous", function(..., low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=envir)
   # assign("scale_fill_continuous", function(...,low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=envir)
-  assign("ggsave", function(..., bg = "transparent") ggplot2::ggsave(..., bg = bg), envir=envir)
+  assign("ggsave", function(..., bg = bg_colour) ggplot2::ggsave(..., bg = bg), envir=envir)
   
   if (inherits(grid, "character")) {
     grid_col <- "#CCCCCC"

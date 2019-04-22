@@ -87,3 +87,6 @@ mailSend <- function(from = "RMail <laresbernardo@gmail.com>",
   }
   
 }
+
+# l <- list(x = c(1,2), y=c(5,6,7,8), x=c(1,1))
+# l[["x"]]

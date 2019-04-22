@@ -5,9 +5,11 @@
 \title{Automated H2O's AutoML}
 \usage{
 h2o_automl(df, train_test = NA, split = 0.7, weight = NULL,
-  seed = 0, thresh = 5, max_time = 5 * 60, max_models = 25,
-  start_clean = TRUE, alarm = TRUE, save = FALSE, subdir = NA,
-  plot = FALSE, project = "Machine Learning Model")
+  balance = TRUE, seed = 0, thresh = 5, max_time = 5 * 60,
+  max_models = 25, start_clean = TRUE,
+  exclude_algos = c("StackedEnsemble", "DeepLearning"), alarm = TRUE,
+  save = FALSE, subdir = NA, plot = FALSE,
+  project = "Machine Learning Model")
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
@@ -24,6 +26,8 @@ weight of zero is equivalent to excluding it from the dataset; giving an
 observation a relative weight of 2 is equivalent to repeating that 
 row twice. Negative weights are not allowed.}
 
+\item{balance}{Boolean. Auto-balance train dataset with under-sampling?}
+
 \item{seed}{Numeric. Seed for random stuff and reproducibility}
 
 \item{thresh}{Integer. Threshold for selecting binary or regression 
@@ -38,6 +42,9 @@ to create}
 
 \item{start_clean}{Boolean. Erase everything in the current h2o 
 instance before we start to train models?}
+
+\item{exclude_algos}{Vector of character strings. Algorithms to 
+skip during the model-building phase.}
 
 \item{alarm}{Boolean. Ping an alarm when ready!}
 
@@ -56,5 +63,9 @@ mplot_full function?}
 This function lets the user create a robust and fast model, using 
 H2O's AutoML function. The result is a list with the best model, 
 its parameters, datasets, performance metrics, variables 
-importances, and others.
+importances, and other useful metrics.
+}
+\details{
+Full list of algorithms: "DRF" (Random Forest and Extremely-Randomized 
+Trees), "GLM", "XGBoost", "GBM", "DeepLearning" and "StackedEnsemble".
 }

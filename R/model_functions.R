@@ -79,7 +79,10 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' This function lets the user create a robust and fast model, using 
 #' H2O's AutoML function. The result is a list with the best model, 
 #' its parameters, datasets, performance metrics, variables 
-#' importances, and others. 
+#' importances, and other useful metrics.
+#' 
+#' Full list of algorithms: "DRF" (Random Forest and Extremely-Randomized 
+#' Trees), "GLM", "XGBoost", "GBM", "DeepLearning" and "StackedEnsemble". 
 #'
 #' @param df Dataframe. Dataframe containing all your data, including 
 #' the independent variable labeled as 'tag'
@@ -91,6 +94,7 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' weight of zero is equivalent to excluding it from the dataset; giving an 
 #' observation a relative weight of 2 is equivalent to repeating that 
 #' row twice. Negative weights are not allowed.
+#' @param balance Boolean. Auto-balance train dataset with under-sampling?
 #' @param seed Numeric. Seed for random stuff and reproducibility
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
@@ -101,6 +105,8 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' to create
 #' @param start_clean Boolean. Erase everything in the current h2o 
 #' instance before we start to train models?
+#' @param exclude_algos Vector of character strings. Algorithms to 
+#' skip during the model-building phase.
 #' @param alarm Boolean. Ping an alarm when ready!
 #' @param save Boolean. Do you wish to save/export results into your 
 #' working directory?
@@ -114,11 +120,13 @@ h2o_automl <- function(df,
                        train_test = NA,
                        split = 0.7,
                        weight = NULL,
+                       balance = TRUE,
                        seed = 0,
                        thresh = 5,
                        max_time = 5*60,
                        max_models = 25,
                        start_clean = TRUE,
+                       exclude_algos = c("StackedEnsemble","DeepLearning"),
                        alarm = TRUE,
                        save = FALSE,
                        subdir = NA,
@@ -152,7 +160,6 @@ h2o_automl <- function(df,
     splits <- msplit(df, size = split, seed = seed)
     train <- splits$train
     test <- splits$test
-    
   } else {
     # If we already have a default split for train and test (train_test)
     if ((!unique(train_test) %in% c('train', 'test')) & (length(unique(train_test)) != 2)) {
@@ -163,7 +170,12 @@ h2o_automl <- function(df,
     test$tag <- NULL
     print(table(train_test))
   }
-  
+  # BALANCE TRAINING SET
+  if (type == "Classifier" & balance == TRUE) {
+    min <- train %>% freqs(tag) %>% .$n %>% min()
+    train <- train %>% group_by(tag) %>% sample_n(min)
+    message(paste("Balanced training set:", min, "samples for each category"))
+  }
   
   ####### Train model #######
   
@@ -183,7 +195,7 @@ h2o_automl <- function(df,
                          leaderboard_frame = as.h2o(test),
                          max_runtime_secs = max_time,
                          max_models = max_models,
-                         exclude_algos = c("StackedEnsemble","DeepLearning"),
+                         exclude_algos = exclude_algos,
                          nfolds = 5, 
                          seed = seed)
   if (nrow(aml@leaderboard) == 0) {
