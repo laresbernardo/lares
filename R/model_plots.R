@@ -227,7 +227,7 @@ mplot_importance <- function(var,
 mplot_roc <- function(tag, 
                       score, 
                       multis = NA,
-                      sample = 300,
+                      sample = 400,
                       model_name = NA, 
                       subtitle = NA, 
                       interval = 0.2, 
@@ -236,44 +236,11 @@ mplot_roc <- function(tag,
                       subdir = NA, 
                       file_name = "viz_roc.png") {
   
-  # require(pROC)
   # require(ggplot2)
   # require(plotly)
   
-  if (length(tag) != length(score)) {
-    message("The tag and score vectors should be the same length.")
-    stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
-  }
-  
-  if (!is.numeric(score) & is.na(multis)) {
-    stop("You should use the multis paramter to add each category score")
-  }
-  
-  if (is.na(multis)) {
-    roc <- pROC::roc(tag, score, ci=T)
-    coords <- data.frame(
-      x = rev(roc$specificities),
-      y = rev(roc$sensitivities),
-      label = "twocat")
-    ci <- data.frame(roc$ci, row.names = c("min","AUC","max"))
-  } else {
-    df <- data.frame(tag = tag, score = score, multis)
-    cols <- colnames(df)
-    coords <- c(); rocs <- list()
-    for (i in 1:(length(cols)-2)) {
-      which <- colnames(df)[2+i]
-      label <- ifelse(df[,1] == which,1,0)
-      roci <- pROC::roc(label, df[,c(which)], ci = TRUE)
-      rocs[[paste(cols[i+2])]] <- roci
-      iter <- data.frame(x = rev(roci$specificities),
-                         y = rev(roci$sensitivities),
-                         label = paste(round(100*roci$auc,2), which, sep="% | "))
-      coords <- rbind(coords, iter)
-    }
-    ci <- data.frame(lapply(rocs, "[[", "ci")) %>%
-      mutate(mean = rowMeans(.)) %>% select(mean)
-    row.names(ci) <- c("min","AUC","max")
-  }
+  rocs <- ROC(tag, score, multis = ifelse(!is.na(multis), multis, NA))
+  coords <- rocs$roc
   
   if (sample < min(table(coords$label))) {
     coords <- coords %>% group_by(label) %>% sample_n(sample) 
@@ -281,7 +248,7 @@ mplot_roc <- function(tag,
   }
   
   scale <- function(x) sprintf("%.1f", x)
-  p <- ggplot(coords, aes(x = x, y = y, group=label)) +
+  p <- ggplot(coords, aes(x = fpr, y = tpr, group=label)) +
     geom_line(colour = "deepskyblue", size = 0.8) +
     geom_point(aes(colour=label), size = 0.7, alpha = 0.8) +
     geom_segment(aes(x = 0, y = 1, xend = 1, yend = 0), alpha = 0.2, linetype = "dotted") + 

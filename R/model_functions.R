@@ -254,26 +254,28 @@ h2o_automl <- function(df,
       leaderboard = aml@leaderboard,
       scoring_history = data.frame(m@model$scoring_history),
       seed = seed)
-    
-    results$metrics <- model_metrics(
-      tag = results$scores_test$tag, 
-      score = results$scores_test$score,
-      plots = TRUE)
-    
+      
     if (length(unique(train$tag)) == 2) {
+      results$metrics <- model_metrics(
+        tag = results$scores_test$tag, 
+        score = results$scores_test$score,
+        plots = TRUE)
       results$errors_test <- errors(
         tag = results$scores_test$tag, 
         score = results$scores_test$score) 
       results$auc_test <- pROC::roc(
         results$scores_test$tag, 
         results$scores_test$score, ci=T)
-      
     } else {
+      results$metrics <- model_metrics(
+        tag = results$scores_test$tag, 
+        score = results$scores_test$score,
+        multis = results$scores_test %>% select(-tag, -scores),
+        plots = TRUE)
       results$logloss_test <- NULL
       results$errors_test <- NULL
       results$auc_test <- NULL
     }
-    
   } 
   
   # REGRESION MODELS
@@ -857,4 +859,61 @@ calibrate <- function(score, train, target, train_sample, target_sample) {
         score * (target / train) / (target_sample / train_sample)
       ))
   return(score)
+}
+
+
+####################################################################
+#' ROC Curves
+#' 
+#' This function calculates ROC Curves and AUC values with 95\% confidence 
+#' range. It also works for multi-categorical models.
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param multis Data.frame. Containing columns with each category score 
+#' (only used when more than 2 categories coexist)
+#' @export
+ROC <- function (tag, score, multis = NA) {
+  
+  # require(pROC)
+  # require(dplyr)
+  
+  if (length(tag) != length(score)) {
+    message("The tag and score vectors should be the same length.")
+    stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
+  }
+  
+  if (!is.numeric(score) & is.na(multis)) {
+    stop("You should use the multis parameter to add each category's score")
+  }
+  
+  if (is.na(multis)) {
+    roc <- pROC::roc(tag, score, ci=T)
+    coords <- data.frame(
+      fpr = rev(roc$specificities),
+      tpr = rev(roc$sensitivities),
+      label = "twocat")
+    ci <- data.frame(roc$ci, row.names = c("min","AUC","max"))
+  } else {
+    df <- data.frame(tag = tag, score = score, multis)
+    cols <- colnames(df)
+    coords <- c(); rocs <- list()
+    for (i in 1:(length(cols)-2)) {
+      which <- colnames(df)[2+i]
+      label <- ifelse(df[,1] == which,1,0)
+      roci <- pROC::roc(label, df[,c(which)], ci = TRUE)
+      rocs[[paste(cols[i+2])]] <- roci
+      iter <- data.frame(fpr = rev(roci$specificities),
+                         tpr = rev(roci$sensitivities),
+                         label = paste(round(100*roci$auc,2), which, sep="% | "))
+      coords <- rbind(coords, iter)
+    }
+    ci <- data.frame(lapply(rocs, "[[", "ci")) %>%
+      mutate(mean = rowMeans(.)) %>% select(mean)
+    row.names(ci) <- c("min","AUC","max")
+  }
+  ret <- list(ci = ci, roc = coords)
+  if (!is.na(multis)) {
+    ret[["rocs"]] <- rocs  
+  }
 }
