@@ -217,7 +217,6 @@ mplot_importance <- function(var,
 #' (only used when more than 2 categories coexist)
 #' @param sample Integer. Number of samples to use for rendering plot.
 #' @param model_name Character. Model's name
-#' @param subtitle Character. Subtitle to show in plot
 #' @param interval Numeric. Interval for breaks in plot
 #' @param plotly Boolean. Use plotly for plot's output for an interactive plot
 #' @param save Boolean. Save output plot into working directory
@@ -227,7 +226,7 @@ mplot_importance <- function(var,
 mplot_roc <- function(tag, 
                       score, 
                       multis = NA,
-                      sample = 400,
+                      sample = 1000,
                       model_name = NA, 
                       subtitle = NA, 
                       interval = 0.2, 
@@ -243,7 +242,7 @@ mplot_roc <- function(tag,
   coords <- rocs$roc
   
   if (sample < min(table(coords$label))) {
-    coords <- coords %>% group_by(label) %>% sample_n(sample) 
+    coords <- coords %>% sample_n(sample)
     message("ROC Curve Plot rendered with sampled data...")
   }
   

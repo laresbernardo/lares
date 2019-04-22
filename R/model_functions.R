@@ -270,7 +270,7 @@ h2o_automl <- function(df,
       results$metrics <- model_metrics(
         tag = results$scores_test$tag, 
         score = results$scores_test$score,
-        multis = results$scores_test %>% select(-tag, -scores),
+        multis = results$scores_test %>% select(-tag, -score),
         plots = TRUE)
       results$logloss_test <- NULL
       results$errors_test <- NULL
