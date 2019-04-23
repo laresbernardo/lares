@@ -25,6 +25,13 @@ crosstab <- function(df, ...,
   
   vars <- quos(...)
   
+  names <- gsub("~","",as.character(vars))
+  xname <- names[1]
+  yname <- names[2]
+  if (length(vars) == 3) {
+    wname <- names[3] 
+  }
+  
   if (length(vars) == 1) {
     message("For one variable with/out weights, use freqs(var, wt=weight) instead!")
     ret <- df %>% freqs(!!!vars)
@@ -41,17 +48,18 @@ crosstab <- function(df, ...,
   y <- df[,2]
   
   if (prow) {
-    newx <- y; newy <- x
-    x <- newx; y <- newy
+    newx <- y; newy <- x; newxname <- yname; newyname <- xname;  
+    x <- newx; y <- newy; xname <- newxname; yname <- yewxname
   }
-  cross_name <- paste(colnames(x), "x", colnames(y))
+  
+  cross_name <- paste(xname, "x", yname)
   
   if (length(vars) == 2) {
     weight <- rep(1, nrow(df))
     decimals <- 0
   } else {
     weight <- df[,3]
-    cross_name <- paste0(cross_name, " (", colnames(weight), ")")
+    cross_name <- paste0(cross_name, " (", wname, ")")
   }
   
   dfn <- data.frame(x, y, weight)
@@ -62,6 +70,9 @@ crosstab <- function(df, ...,
   tab <- tidyr::spread(ret, y, n)
   ret <- tab[match(levels, tab$x),]
   colnames(ret)[1] <- cross_name
+  
+  order <- c(colnames(ret)[1], as.character(levels))
+  ret <- ret[,order]
   
   # Create totals
   ret <- ret %>% mutate(total = rowSums(.[-1])) 
@@ -80,3 +91,4 @@ crosstab <- function(df, ...,
   return(ret)
   
 }
+

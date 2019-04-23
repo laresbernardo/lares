@@ -254,7 +254,7 @@ h2o_automl <- function(df,
       leaderboard = aml@leaderboard,
       scoring_history = data.frame(m@model$scoring_history),
       seed = seed)
-      
+    
     if (length(unique(train$tag)) == 2) {
       results$metrics <- model_metrics(
         tag = results$scores_test$tag, 
@@ -405,7 +405,7 @@ export_results <- function(results,
     if (length(unique(results$scores_test$tag)) > 6) {
       first <- signif(results$errors_test$rmse, 4)
     }
-
+    
     subdirname <- paste0(first, "-", results$model_name)  
     if (!is.na(subdir)) {
       subdir <- paste0(subdir, "/", subdirname)
@@ -730,8 +730,7 @@ h2o_predict_model <- function(df, model){
 #' @param plots Boolean. Include plots?
 #' @param subtitle Character. Subtitle for plots
 #' @export
-model_metrics <- function(tag, score, multis = NA, thresh = 0.5, 
-                          plots = TRUE, subtitle = NA){
+model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, subtitle = NA){
   
   metrics <- list()
   type <- ifelse(length(unique(tag)) <= 10, "Classification", "Regression")
@@ -739,54 +738,74 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5,
   if (type == "Classification") {
     
     labels <- sort(unique(as.character(tag)))
+    tag <- as.character(tag)
     
     if (is.numeric(score)) {
       new <- data.frame(score = score) %>%
-        mutate(score = ifelse(score >= thresh, labels[1], labels[2])) %>%
-        .$score
+        mutate(new = ifelse(score >= thresh, labels[1], labels[2])) %>% .$new
     } else {
       new <- score
     }
     
+    dic <- c("AUC: Area Under the Curve",
+             "ACC: Accuracy",
+             "PRC: Precision = Positive Predictive Value",
+             "TPR: Sensitivity = Recall = Hit rate = True Positive Rate",
+             "TNR: Specificity = Selectivity = True Negative Rate",
+             "Logloss (Error): Logarithmic loss [Neutral classification: 0.69315]")
+    metrics[["dictionary"]] <- dic
+    
     conf_mat <- table(Real = as.character(tag), 
                       Pred = as.character(new))
-    
-    metrics[["confusion_matrix"]] <- conf_mat
-    
     total <- sum(conf_mat)
     trues <- sum(diag(conf_mat))
     falses <- total - trues
     
     # For Binaries
-    if (length(unique(tag)) == 2) {
-      dic <- c("AUC: Area Under the Curve",
-               "ACC: Accuracy",
-               "PRC: Precision = Positive Predictive Value",
-               "TPR: Sensitivity = Recall = Hit rate = True Positive Rate",
-               "TNR: Specificity = Selectivity = True Negative Rate",
-               "Logloss (Error): Logarithmic loss [Neutral classification: 0.69315]")
-      metrics[["dictionary"]] <- dic
-      ROC <- pROC::roc(tag, score, ci=T)
-      metrics[["metrics"]] <- data.frame(
-        AUC = signif(ROC$auc, 5),
-        ACC = signif(trues / total, 5),
-        PRC = signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[1,2]), 5),
-        TPR = signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]), 5),
-        TNR = signif(conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]), 5),
-        Logloss = loglossBinary(tag, score))
+    if (length(labels) == 2) {
+      metrics[["confusion_matrix"]] <- conf_mat
+      ROC <- pROC::roc(tag, as.numeric(score), ci=T)
+      nums <- data.frame(
+        AUC = ROC$auc,
+        ACC = trues / total,
+        PRC = conf_mat[2,2] / (conf_mat[2,2] + conf_mat[1,2]),
+        TPR = conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]),
+        TNR = conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]),
+        Logloss = loglossBinary(tag, as.numeric(score)))
     } else {
-      dic <- c("AUC: Mean Area Under the Curves",
-               "ACC: Global Accuracy")
-      metrics[["dictionary"]] <- dic
-      AUCs <- ROC(tag, score, multis)$ci
-      metrics[["metrics"]] <- data.frame(
-        AUC = AUCs,
-        ACC = signif(trues / total, 5))
+      # For Multi-Categories
+      df <- data.frame(tag, score)
+      metrics[["confusion_matrix"]] <- df %>% 
+        rename(real = tag, pred = score) %>%
+        crosstab(real, pred, total = FALSE)
+      AUCs <- t(ROC(tag, score, multis)$ci)[,2]
+      nums <- c()
+      for (i in 1:length(labels)) {
+        tagi <- ifelse(tag == labels[i], 1, 0)
+        predi <- as.numeric(ifelse(score == labels[i], 1, 0))
+        conf_mati <- table(Real = as.character(tagi), 
+                           Pred = as.character(predi))
+        total <- sum(conf_mati)
+        trues <- sum(diag(conf_mati))
+        falses <- total - trues
+        numsi <- data.frame(
+          tag = labels[i],
+          ACC = trues / total,
+          PRC = conf_mati[2,2] / (conf_mati[2,2] + conf_mati[1,2]),
+          TPR = conf_mati[2,2] / (conf_mati[2,2] + conf_mati[2,1]),
+          TNR = conf_mati[1,1] / (conf_mati[1,1] + conf_mati[1,2]),
+          Logloss = loglossBinary(tagi, as.numeric(predi)))
+        nums <- rbind(nums, numsi)
+      }
+      nums$AUC <- AUCs[1:length(labels)]
+      nums <- left_join(freqs(df %>% select(tag), tag), nums, "tag") %>% 
+        select(tag, n, p, AUC, ACC:Logloss)
     }
+    metrics[["metrics"]] <- nums %>% mutate_if(is.numeric, funs(signif(., 5)))
     
     # ROC CURVE PLOT
-    if (plots) {
-      if (length(unique(tag)) == 2) {
+    if (plots == TRUE) {
+      if (length(labels) == 2) {
         plot_roc <- invisible(mplot_roc(tag, score)) 
       } else {
         plot_roc <- invisible(mplot_roc(tag, score, multis)) 
@@ -795,10 +814,8 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5,
         plot_roc <- plot_roc + labs(subtitle = subtitle)
       }
       metrics[["plot_ROC"]] <- plot_roc
-    }
-    
-    # CONFUSION MATRIX PLOT
-    if (plots) {
+      
+      # CONFUSION MATRIX PLOT
       plot_cf <- data.frame(conf_mat) %>%
         mutate(perc = round(100 * Freq / sum(Freq), 2)) %>%
         mutate(label = paste0(formatNum(Freq, 0),"\n", perc,"%")) %>%
@@ -809,13 +826,14 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5,
           label = label)) +
         geom_tile() + theme_lares2() +
         geom_text(colour="white") + 
-        scale_size(range = c(3, 4)) + coord_equal() + 
+        scale_size(range = c(3.1, 4.5)) + coord_equal() + 
         guides(fill=FALSE, size=FALSE, colour=FALSE) +
         labs(x="Predicted values", y="Real values",
-             title = ifelse(length(unique(tag)) == 2,
-                            paste("Confusion Matrix with Threshold =", thresh),
-                            paste("Confusion Matrix for", length(unique(tag)), "Categories")),
-             subtitle = paste0("Accuracy: ", round(100*(trues / total), 2), "%")) +
+             title = ifelse(length(labels) == 2,
+                            paste("Confusion Matrix", 
+                                  ifelse(thresh!=0.5, paste("with Threshold =", thresh), "")),
+                            paste("Confusion Matrix for", length(labels), "Categories")),
+             subtitle = paste0("ACC: ", round(100*(trues / total), 2), "%")) +
         theme(axis.text.x = element_text(angle=30, hjust=0)) +
         scale_x_discrete(position = "top") +
         theme(axis.text.x.bottom = element_blank(), 
@@ -889,7 +907,8 @@ ROC <- function (tag, score, multis = NA) {
   }
   
   if (!is.numeric(score) & is.na(multis)) {
-    stop("You should use the multis parameter to add each category's score")
+    score <- as.numeric(score) 
+    #stop("You should use the multis parameter to add each category's score")
   }
   
   if (is.na(multis)) {
