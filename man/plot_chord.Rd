@@ -4,7 +4,7 @@
 \alias{plot_chord}
 \title{Chords Plot}
 \usage{
-plot_chord(origin, dest, weight = 1, mg = 7, title = "Chord Diagram",
+plot_chord(origin, dest, weight = 1, mg = 3, title = "Chord Diagram",
   subtitle = "", pal = NA)
 }
 \arguments{

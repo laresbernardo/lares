@@ -83,5 +83,6 @@ if(getRversion() >= "2.15.1")
       "latitude","as","CRS","project","minutes","seconds","Volume","BuySell","groupi",
       "StocksValue","Dividend","Expense","Deposit","Invest","Deposited","Dividends",
       "Portfolio","start_clean","geo","hits","keyword","legend","subject","subject.x",
-      "subject.y","type_label","facet","Total","pal","p_real","weight")) 
+      "subject.y","type_label","facet","Total","pal","p_real","weight","ACC","AUC",
+      "Logloss","yewxname")) 
 
