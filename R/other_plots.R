@@ -155,7 +155,7 @@ gg_pie <- function(df, var, table = FALSE, save = FALSE, subdir = NA){
 #' @param subtitle Character. Subtitle for the plot
 #' @param pal Vector. Colour pallete. Order matters.
 #' @export
-plot_chord <- function(origin, dest, weight = 1, mg = 7, 
+plot_chord <- function(origin, dest, weight = 1, mg = 3, 
                        title = "Chord Diagram",
                        subtitle = "", pal = NA) {
   
@@ -180,9 +180,11 @@ plot_chord <- function(origin, dest, weight = 1, mg = 7,
     stop("Too many chords to plot and not enough colours :(")
   }
   
+  col <- c(pal[1:length(unique(origin))], 
+           rep("darkgrey", length(unique(uniq))-length(unique(origin))))
+  
   chordDiagram(x = df, 
-               grid.col = c(pal[1:length(unique(origin))], 
-                            rep("darkgrey", length(unique(uniq))-length(unique(origin)))),
+               grid.col = col,
                transparency = 0.2, directional = 1,
                preAllocateTracks = list(track.height = uh(mg, "mm"), 
                                         track.margin = c(uh(mg, "mm"), 0)),
@@ -190,11 +192,8 @@ plot_chord <- function(origin, dest, weight = 1, mg = 7,
                annotationTrack = c("grid", "axis"), annotationTrackHeight = c(0.05, 0.1),
                link.arr.type = "big.arrow", link.sort = TRUE, link.largest.ontop = TRUE)
   
-  circos.track(track.index = 1, panel.fun = function(x, y) {
-    circos.text(CELL_META$xcenter, CELL_META$ylim[1], CELL_META$sector.index, 
-                facing = "clockwise", niceFacing = TRUE, adj = c(0.4, 0.5))
-  }, bg.border = NA)
-  
   title(main = title, line = -1, sub = subtitle, font.sub = 3, family = "Arial Narrow")
+  legend("bottomright", pch = 15, col = col, legend = unique(origin), 
+         bg = "transparent", box.lty = 0, cex = 0.8)
   
 }
