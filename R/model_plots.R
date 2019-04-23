@@ -266,13 +266,14 @@ mplot_roc <- function(tag,
                        labels=scale) +
     coord_equal() +
     theme(axis.ticks = element_line(color = "grey80")) +
-    labs(title = "ROC Curve: AUC", colour = "Label") +
+    labs(title = "ROC Curve: AUC", colour = "") +
+    guides(colour = guide_legend(ncol = 3)) +
     annotate("text", x = 0.25, y = 0.10, size = 4.2, 
              label = paste("AUC =", round(100*ci[c("AUC"),],2))) +
     annotate("text", x = 0.25, y = 0.05, size = 2.8, 
              label = paste0("95% CI: ", round(100*ci[c("min"),],2),"-", 
                             round(100*ci[c("max"),],2))) +
-    theme_lares2(bg_colour="white", pal=2)
+    theme_lares2(bg_colour = "white", pal = 2, legend = "bottom")
   
   if (is.na(multis)) {
     p <- p + guides(colour = FALSE)
