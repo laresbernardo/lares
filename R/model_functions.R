@@ -865,6 +865,10 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
         rename(Real = tag, Pred = score) %>%
         crosstab(Real, Pred, total = FALSE)
       AUCs <- t(ROC(tag, score, multis)$ci)[,2]
+      m <- data.frame(
+        AUC = mean(AUCs[1:length(labels)]),
+        ACC = trues / total)
+      metrics[["metrics"]] <- signif(m, 5)
       nums <- c()
       for (i in 1:length(labels)) {
         tagi <- ifelse(tag == labels[i], 1, 0)
@@ -887,7 +891,7 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
       nums <- left_join(freqs(df %>% select(tag), tag), nums, "tag") %>% 
         select(tag, n, p, AUC, ACC:Logloss)
     }
-    metrics[["metrics"]] <- nums %>% mutate_if(is.numeric, funs(signif(., 5)))
+    metrics[["metrics_tags"]] <- nums %>% mutate_if(is.numeric, funs(signif(., 5)))
     
     # ROC CURVE PLOT
     if (plots == TRUE) {
