@@ -773,10 +773,15 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5,
         PRC = signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[1,2]), 5),
         TPR = signif(conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]), 5),
         TNR = signif(conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]), 5),
-        Logloss = loglossBinary(tag, score)
-      )
+        Logloss = loglossBinary(tag, score))
     } else {
-      metrics[["ACC"]] <- signif(trues / total, 5)
+      dic <- c("AUC: Mean Area Under the Curves",
+               "ACC: Global Accuracy")
+      metrics[["dictionary"]] <- dic
+      AUCs <- ROC(tag, score, multis)$ci
+      metrics[["metrics"]] <- data.frame(
+        AUC = AUCs,
+        ACC = signif(trues / total, 5))
     }
     
     # ROC CURVE PLOT
@@ -908,8 +913,7 @@ ROC <- function (tag, score, multis = NA) {
                          label = paste(round(100*roci$auc,2), which, sep="% | "))
       coords <- rbind(coords, iter)
     }
-    ci <- data.frame(lapply(rocs, "[[", "ci")) %>%
-      mutate(mean = rowMeans(.)) %>% select(mean)
+    ci <- data.frame(lapply(rocs, "[[", "ci")) %>% mutate(mean = rowMeans(.))
     row.names(ci) <- c("min","AUC","max")
   }
   ret <- list(ci = ci, roc = coords)

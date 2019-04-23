@@ -241,12 +241,13 @@ mplot_roc <- function(tag,
   
   if (is.na(multis)) {
     rocs <- ROC(tag, score)
+    ci <- rocs$ci
   } else {
     rocs <- ROC(tag, score, multis)
+    ci <- rocs$ci$mean
   }
-  
   coords <- rocs$roc
-  ci <- rocs$ci
+  
   
   if (sample < min(table(coords$label))) {
     coords <- coords %>% group_by(label) %>% sample_n(sample)
@@ -267,7 +268,7 @@ mplot_roc <- function(tag,
     coord_equal() +
     theme(axis.ticks = element_line(color = "grey80")) +
     labs(title = "ROC Curve: AUC", colour = "") +
-    guides(colour = guide_legend(ncol = 3)) +
+    guides(colour = guide_legend(ncol = 2)) +
     annotate("text", x = 0.25, y = 0.10, size = 4.2, 
              label = paste("AUC =", round(100*ci[c("AUC"),],2))) +
     annotate("text", x = 0.25, y = 0.05, size = 2.8, 
