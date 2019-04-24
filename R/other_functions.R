@@ -785,7 +785,7 @@ quants <- function(values, splits = 10, return = "summary") {
                    probs = seq(0, 1, length = splits+1), 
                    na.rm = TRUE)
   decimals <- min(nchar(values), na.rm = TRUE) + 1
-  decimals <- ifelse(decimals >= 5, 5, decimals)
+  decimals <- ifelse(decimals >= 4, 4, decimals)
   labels <- cut(values, unique(cuts), 
                 dig.lab = decimals, 
                 include.lowest = TRUE)

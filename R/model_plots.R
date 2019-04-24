@@ -840,3 +840,110 @@ mplot_full <- function(tag,
   plot(p)
   
 }
+
+
+####################################################################
+#' Cumulative Gain Plot
+#' 
+#' The cumulative gains plot, often named ‘gains plot’, helps us 
+#' answer the question: When we apply the model and select the best 
+#' X deciles, what % of the actual target class observations can we 
+#' expect to target?
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param target Value. Which is your target positive value?
+#' @param splits Integer. Numer of quantiles to split the data
+#' @param highlight Character or Integer. Which split should be used
+#' for the automatic conclussion in the plot? Set to "auto" for
+#' best value, "none" to turn off or the number of split.
+#' @param caption Character. Caption to show in plot
+#' @param save Boolean. Save output plot into working directory
+#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param file_name Character. File name as you wish to save the plot
+#' @export
+mplot_gain <- function(tag, score, target = TRUE, splits = 10, highlight = "auto", 
+                       caption = NA, save = FALSE, subdir = NA, file_name = "viz_gain.png") {
+  
+  if (splits <= 1) {
+    stop("You must set more than 1 splits for this plot!")
+  }
+  if (target != TRUE) {
+    if (target %in% unique(tag)) {
+      tag <- ifelse(tag == target, TRUE, FALSE) 
+    } else {
+      stop(paste("Please select your 'target'. Possible values:", vector2text(unique(tag))))
+    }
+  }
+  
+  df <- data.frame(tag = tag, score = score)
+  
+  sc <- df %>% arrange(desc(score)) %>%
+    mutate(quantile = .bincode(
+      score, quantile(score, probs = seq(0, 1, length = splits + 1), include.lowest = TRUE), 
+      right = TRUE, include.lowest = TRUE)) %>%
+    mutate(quantile = rev(factor(quantile, 1:splits)))
+  
+  wizard <- data.frame(tag = !sort(sc$tag), quantile = sc$quantile) %>%
+    group_by(quantile, tag) %>% tally() %>% filter(tag == TRUE) %>%
+    ungroup() %>% mutate(p = 100*n/sum(n), pcum = cumsum(p)) %>% 
+    select(quantile, pcum) %>% rename(optimal = pcum)
+  
+  gains <- sc %>% group_by(quantile) %>% summarise(total = n(), pos = sum(tag)) %>%
+    left_join(wizard, "quantile") %>% replace(is.na(.), 100) %>% ungroup() %>%
+    mutate(gain = 100*cumsum(pos)/sum(pos),
+           random = cumsum(rep(100/splits, splits))) %>%
+    mutate(improved = 100 * (gain/random - 1))
+  
+  if (mean(gains$improved) < 0) {
+    stop(paste("Your target value", target, "is not valid. Possible other values:", 
+               vector2text(unique(tag))))
+  }
+  
+  p <- gains %>%
+    mutate(quantile = as.numeric(quantile)) %>%
+    ggplot(aes(x = quantile)) + theme_lares2(pal=2) +
+    geom_line(aes(y = optimal, linetype = "Optimal"), colour = "black", alpha = 0.6) +
+    geom_line(aes(y = random, linetype = "Random"), colour = "black", alpha = 0.6) +
+    geom_line(aes(y = gain, linetype = "Model"), size = 1.2) +
+    geom_label(aes(y = gain, label = ifelse(gain == 100, NA, round(gain))), alpha = 0.9) +
+    scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour=FALSE) +
+    scale_x_continuous(minor_breaks = NULL, 
+                       breaks = seq(0, splits, 1)) +
+    labs(title = "Cumulative Gains Plot", linetype = "",
+         y = "Cumulative gains [%]", 
+         x = paste0("Quantiles [",splits,"]")) +
+    theme(legend.position = c(0.88, 0.2))
+  
+  if (highlight == "auto") {
+    highlight <- as.integer(gains$quantile[gains$improved == max(gains$improved)])
+  }
+  if (highlight %in% gains$quantile & highlight != "none") {
+    highlight <- as.integer(highlight)
+    note <- paste0("If we select the observations with ", 
+                   round(highlight*100/splits),"% highest probability,\n",
+                   round(gains$gain[gains$quantile == highlight]),"% of all target class will be picked ",
+                   "(", round(gains$improved[gains$quantile == highlight]), "% better than random)")
+    p <- p + labs(subtitle = note)
+  } else {
+    message("That highlight value is not a quantile. Try any integer from 1 to ", splits)
+  }
+  
+  if (!is.na(caption)) {
+    p <- p + labs(caption = caption)
+  }
+  
+  if (!is.na(subdir)) {
+    dir.create(file.path(getwd(), subdir), recursive = T)
+    file_name <- paste(subdir, file_name, sep="/")
+  }
+  
+  if (save == TRUE) {
+    p <- p + ggsave(file_name, width = 6, height = 6)
+  }
+  
+  gains <- gains %>% select(quantile, gain, random, optimal, improved)
+  ret <- list(gains = gains, gains_plot = p)  
+  
+  return(ret)
+}
