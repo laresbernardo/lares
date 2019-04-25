@@ -15,11 +15,13 @@
 #' @param decimals Integer. How many decimals should be returned?
 #' @param keep_nas Boolean. Keep NAs and count them as well?
 #' @param total Boolean. Return total values column?
+#' @param order Boolean. Sort columns and rows by frequencies? Else, will
+#' be sorted alphabetically.
 #' @export
 crosstab <- function(df, ..., 
                      prow = FALSE, pcol = FALSE, pall = FALSE, 
-                     decimals = 2, keep_nas = TRUE,
-                     total = TRUE) {
+                     decimals = 2, keep_nas = TRUE, total = TRUE,
+                     order = TRUE) {
   
   options(warn=-1)
   
@@ -39,17 +41,16 @@ crosstab <- function(df, ...,
   }
   
   df <- df %>% select(!!!vars)
-  
-  if (keep_nas) {
-    df <- df %>% replaceall(NA, "N/A")
-  }
-  
   x <- df[,1]
   y <- df[,2]
   
+  if (keep_nas) {
+    df <- df %>% replace(is.na(.), "NA")
+  }
+  
   if (prow) {
     newx <- y; newy <- x; newxname <- yname; newyname <- xname;  
-    x <- newx; y <- newy; xname <- newxname; yname <- yewxname
+    x <- newx; y <- newy; xname <- newxname; yname <- newyname
   }
   
   cross_name <- paste(xname, "x", yname)
@@ -65,23 +66,29 @@ crosstab <- function(df, ...,
   dfn <- data.frame(x, y, weight)
   colnames(dfn) <- c("x","y","weight")
   
-  ret <- freqs(dfn, x, y, wt=weight) %>% select(-pcum, -p)
+  ret <- freqs(dfn, x, y, wt=weight) %>% select(-pcum, -p) %>%
+    mutate_all(funs(ifelse(as.character(.)!="", ., "NA")))
   levels <- factor(unique(ret$x), levels = unique(ret$x))
+  cols <- factor(unique(ret$y), levels = unique(ret$y))
   tab <- tidyr::spread(ret, y, n)
   ret <- tab[match(levels, tab$x),]
   colnames(ret)[1] <- cross_name
-  
-  order <- c(colnames(ret)[1], as.character(levels))
-  ret <- ret[,order]
+  ret <- ret %>% replace(is.na(.), 0)
   
   # Create totals
-  ret <- ret %>% mutate(total = rowSums(.[-1])) 
+  ret <- ret %>% mutate(total = rowSums(select_if(., is.numeric)))
   if (pcol | prow) {
     ret <- ret %>% mutate_if(is.numeric, funs(round(100*./sum(.), decimals)))
   }
   if (pall) {
     all <- sum(ret[,-1] %>% select(-total))
     ret <- ret %>% mutate_if(is.numeric, funs(round(100*./all, decimals)))
+  }
+  
+  if (order == TRUE) {
+    ret <- ret %>% arrange(desc(total)) # Rows
+    order <- c(colnames(ret)[1], as.character(cols), "total")
+    ret <- ret[,order] # Columns
   }
   
   if (!total) {
@@ -91,4 +98,3 @@ crosstab <- function(df, ...,
   return(ret)
   
 }
-

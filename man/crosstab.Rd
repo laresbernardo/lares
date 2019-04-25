@@ -5,7 +5,7 @@
 \title{Weighted Cross Tabulation}
 \usage{
 crosstab(df, ..., prow = FALSE, pcol = FALSE, pall = FALSE,
-  decimals = 2, keep_nas = TRUE, total = TRUE)
+  decimals = 2, keep_nas = TRUE, total = TRUE, order = TRUE)
 }
 \arguments{
 \item{df}{Data.frame.}
@@ -21,6 +21,9 @@ or the whole table, respectively.}
 \item{keep_nas}{Boolean. Keep NAs and count them as well?}
 
 \item{total}{Boolean. Return total values column?}
+
+\item{order}{Boolean. Sort columns and rows by frequencies? Else, will
+be sorted alphabetically.}
 }
 \description{
 A cross-tabulation function with output similar to STATA, tidy
