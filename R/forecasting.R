@@ -281,3 +281,57 @@ forecast_ml <- function(time, values,
   return(output)
   
 }  
+
+
+####################################################################
+#' Facebook's Prophet Forecast
+#' 
+#' Prophet is Facebook's procedure for forecasting time series data 
+#' based on an additive model where non-linear trends are fit with 
+#' yearly, weekly, and daily seasonality, plus holiday effects. It 
+#' works best with time series that have strong seasonal effects and 
+#' several seasons of historical data. Prophet is robust to missing 
+#' data and shifts in the trend, and typically handles outliers well.
+#' 
+#' Official documentation: \url{https://github.com/facebook/prophet}
+#' 
+#' @param df Data frame. Must contain date/time column and values column
+#' @param n_future Integer. How many steps do you wish to forecast?
+#' @param country Character. Country code for holidays
+#' @param pout Numeric. Get rid of pout \% of outliers
+#' @param project Character. Name of your forecast project for plot title
+#' @export
+prophesize <- function(df, n_future = 120, country = "AR", pout = 0.03, 
+                       project = "Prophet Forecast") {
+  
+  # require(prophet)
+  # require(ggplot2)
+  # require(scales)
+  
+  if (!"prophet" %in% (.packages())){
+    stop("The following library should be loaded. Please run: library(prophet)")
+  }
+  
+  df <- df[,c(1,2)]
+  metric <- colnames(df)[2]
+  colnames(df) <- c("ds","y")
+  df <- df[!rank(-df$y) %in% c(1:round(nrow(df)*pout)),] # Outliers
+  
+  m <- prophet(yearly.seasonality = TRUE, daily.seasonality = FALSE)
+  m <- add_country_holidays(m, country_name = country)
+  m <- fit.prophet(m, df)
+  future <- make_future_dataframe(m, periods = n_future)
+  
+  forecast <- predict(m, future)
+  forecast$y <- forecast$trend + forecast$additive_terms
+  
+  p <- plot(m, forecast) + theme_lares2() +
+    labs(y = metric, x="Dates", 
+         title = project,
+         subtitle = paste("Forecast results for the next", periods, "days")) +
+    scale_y_continuous(labels = comma)
+  
+  # plot2 = prophet_plot_components(m, forecast)
+  
+  return(list(result = forecast, model = m, plot = p))
+}

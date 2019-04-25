@@ -58,8 +58,8 @@ if(getRversion() >= "2.15.1")
       "InvPerc","Invested","Perc","Quant","RealPerc","RelChangePHist","RelChangeUSD",
       "RelPer","RelUSD","StartUSD","StockIniValue","StockValue","Stocks","Symbol","results",
       "TotalPer","TotalUSD","Type","Value","readOGR","read_exif","pcum","fpr","tpr",
-      "accuracy","add_headers","addedAt","amount","associatedCompanyIds","associatedVids","auc",
-      "canonical_vid","cats[, i]", "ceiling_date","color","contacts_canonical_vid",
+      "accuracy","add_headers","addedAt","amount","associatedCompanyIds","associatedVids",
+      "canonical_vid","cats[, i]", "ceiling_date","color","contacts_canonical_vid","auc",
       "contacts_form_submissions","contacts_identity_profiles", "google_analytics","perc",
       "contacts_is_contact","contacts_merge_audits","contacts_portal_id","model.matrix",
       "contacts_profile_token","contacts_profile_url","contacts_vid","content","size",
@@ -76,7 +76,7 @@ if(getRversion() >= "2.15.1")
       "tk_augment_timeseries_signature","tk_get_timeseries_signature","tk_index","dfl",
       "tk_make_future_timeseries","token","train_auc","train_ll","dft","Ticker",
       "trees","type","upload_file","value","values","variable_response","variables",
-      "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","x","y",
+      "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","x","y","periods",
       "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos",
       "name","where","deciles","gg_pos","colour","ptag","create_token","search_tweets",
       "..level..","cluster","drop_na","shapes","coords","long","lat","group","longitude",
@@ -84,5 +84,6 @@ if(getRversion() >= "2.15.1")
       "StocksValue","Dividend","Expense","Deposit","Invest","Deposited","Dividends",
       "Portfolio","start_clean","geo","hits","keyword","legend","subject","subject.x",
       "subject.y","type_label","facet","Total","pal","p_real","weight","ACC","AUC",
-      "Logloss","yewxname","gain","random","optimal","lift","pred")) 
+      "Logloss","yewxname","gain","random","optimal","lift","pred","prophet","fit.prophet",
+      "prophet_plot_components","add_country_holidays","make_future_dataframe")) 
 
