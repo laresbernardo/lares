@@ -913,3 +913,88 @@ mplot_gain <- function(tag, score, target = TRUE, splits = 10, highlight = "auto
 
   return(p)
 }
+
+
+####################################################################
+#' Confussion Matrix Plot
+#' 
+#' This function plots a confussion matrix.
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param thresh Numeric. Value which splits the results for the 
+#' confusion matrix.
+#' @param subtitle Character. Subtitle to show in plot
+#' @param save Boolean. Save output plot into working directory
+#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param file_name Character. File name as you wish to save the plot
+#' @export
+mplot_conf <- function (tag, score, thresh = 0.5,
+                        subtitle = NA, save = FALSE, subdir = NA, 
+                        file_name = "viz_conf_mat.png") {
+  
+  df <- data.frame(tag, score)
+  
+  # About tags
+  labels <- df %>% group_by(tag) %>% tally() %>% arrange(desc(n)) %>% .$tag
+  df <- df %>% mutate(tag = factor(tag, levels = unique(tag)))
+  
+  # About scores
+  if (is.numeric(df$score) & length(unique(tag)) == 2) {
+    means <- df %>% group_by(tag) %>% summarise(mean = mean(score))
+    target <- means$tag[means$mean == max(means$mean)]
+    other <- means$tag[means$mean == min(means$mean)]
+    df <- df %>% mutate(pred = ifelse(
+      score >= thresh, as.character(target), as.character(other)))
+  } else {
+    df <- df %>% mutate(pred = score)
+  }
+  
+  # Frequencies
+  plot_cf <- df %>% freqs(tag, pred) %>% 
+    mutate(label = paste0(formatNum(n, 0),"\n", p,"%"))
+  levels <- plot_cf %>% group_by(pred) %>% summarise(n = sum(n)) %>% 
+    arrange(desc(n)) %>% mutate(pred = factor(pred, levels = labels)) %>% .$pred
+  trues <- plot_cf %>% filter(tag == pred) %>% .$n %>% sum(.)
+  total <- sum(plot_cf$n)
+  metrics <- paste0("ACC ", round(100*(trues / total), 2), "%")
+  
+  p <- ggplot(plot_cf, aes(
+    y = factor(tag, levels = rev(labels)), 
+    x = factor(pred, levels = labels), 
+    fill= n, size=n, 
+    label = label)) +
+    geom_tile() + theme_lares2() +
+    geom_text(colour="white") + 
+    scale_size(range = c(3.1, 4.5)) + coord_equal() + 
+    guides(fill=FALSE, size=FALSE, colour=FALSE) +
+    labs(x="Predicted values", y="Real values",
+         title = ifelse(length(labels) == 2,
+                        paste("Confusion Matrix", 
+                              ifelse(thresh!=0.5, paste("with Threshold =", thresh), "")),
+                        paste0("Confusion Matrix (", length(labels), " categories)")),
+         subtitle = metrics) +
+    theme(axis.text.x = element_text(angle=30, hjust=0)) +
+    scale_x_discrete(position = "top") +
+    theme(axis.text.x.bottom = element_blank(), 
+          axis.ticks.x.bottom = element_blank(),
+          axis.text.y.right = element_blank(),
+          axis.ticks.y.right = element_blank()) +
+    theme_lares2()
+  
+  if (!is.na(subtitle)) {
+    p <- p + labs(subtitle = subtitle)
+  }
+  
+  if (!is.na(subdir)) {
+    dir.create(file.path(getwd(), subdir), recursive = T)
+    file_name <- paste(subdir, file_name, sep="/")
+  }
+  
+  if (save == TRUE) {
+    p <- p + ggsave(file_name, width = 6, height = 6)
+  }
+
+  return(p)
+  
+}

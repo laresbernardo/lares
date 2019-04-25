@@ -864,6 +864,43 @@ ROC <- function (tag, score, multis = NA) {
 
 
 ####################################################################
+#' Confussion Matrix
+#' 
+#' This function calculates a Confussion Matrix using crosstab for
+#' 2 or more categories. You can either set the score and threshold
+#' or the labels you wish to cross with.
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param thresh Numeric. Value which splits the results for the 
+#' confusion matrix when binary.
+#' @export
+conf_mat <- function (tag, score, thresh = 0.5) {
+  
+  df <- data.frame(tag, score)
+  
+  # About tags
+  labels <- df %>% group_by(tag) %>% tally() %>% arrange(desc(n)) %>% .$tag
+  df <- df %>% mutate(tag = factor(tag, levels = unique(tag)))
+  
+  # About scores
+  if (is.numeric(df$score) & length(unique(tag)) == 2) {
+    df <- df %>% mutate(pred = ifelse(
+      score >= thresh, as.character(labels[1]), as.character(labels[2])))
+  } else {
+    df <- df %>% mutate(pred = score)
+  }
+  
+  # Confussion Matrix
+  ret <- df %>% 
+    rename(Real = tag, Pred = pred) %>%
+    crosstab(Real, Pred, total = FALSE)
+  
+  return(ret)
+}
+
+
+####################################################################
 #' Classification Model Metrics
 #' 
 #' This function lets the user get a confusion matrix and accuracy, and 
@@ -886,6 +923,16 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
   
   if (type == "Classification") {
     
+    dic <- c("AUC: Area Under the Curve",
+             "ACC: Accuracy",
+             "PRC: Precision = Positive Predictive Value",
+             "TPR: Sensitivity = Recall = Hit rate = True Positive Rate",
+             "TNR: Specificity = Selectivity = True Negative Rate",
+             "Logloss (Error): Logarithmic loss [Neutral classification: 0.69315]",
+             "Gain: When best n deciles selected, what % of the real target observations are picked?",
+             "Lift: When best n deciles selected, how much better than random is?")
+    metrics[["dictionary"]] <- dic
+    
     labels <- sort(unique(as.character(tag)))
     tag <- as.character(tag)
     
@@ -895,15 +942,7 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
     } else {
       new <- score
     }
-    
-    dic <- c("AUC: Area Under the Curve",
-             "ACC: Accuracy",
-             "PRC: Precision = Positive Predictive Value",
-             "TPR: Sensitivity = Recall = Hit rate = True Positive Rate",
-             "TNR: Specificity = Selectivity = True Negative Rate",
-             "Logloss (Error): Logarithmic loss [Neutral classification: 0.69315]")
-    metrics[["dictionary"]] <- dic
-    
+  
     conf_mat <- table(Real = as.character(tag), 
                       Pred = as.character(new))
     total <- sum(conf_mat)
@@ -921,15 +960,13 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
         TPR = conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]),
         TNR = conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]),
         Logloss = loglossBinary(tag, as.numeric(score)))
-      metrics[["metrics"]] <- signif(nums, 5)
       metrics[["gain_lift"]] <- quiet(gain_lift(tag, score))
+      metrics[["metrics"]] <- signif(nums, 5)
     } else {
       
       # For Multi-Categories
       df <- data.frame(tag, score)
-      metrics[["confusion_matrix"]] <- df %>% 
-        rename(Real = tag, Pred = score) %>%
-        crosstab(Real, Pred, total = FALSE)
+      metrics[["confusion_matrix"]] <- conf_mat(tag, score)
       AUCs <- t(ROC(tag, score, multis)$ci)[,2]
       m <- data.frame(
         AUC = mean(AUCs[1:length(labels)]),
@@ -959,51 +996,16 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
       metrics[["metrics_tags"]] <- nums %>% mutate_if(is.numeric, funs(signif(., 5)))
     }
     
-    # ROC CURVE PLOT
     if (plots == TRUE) {
+      # ROC CURVE PLOT
       if (length(labels) == 2) {
-        plot_roc <- invisible(mplot_roc(tag, score)) 
+        plot_roc <- invisible(mplot_roc(tag, score, subtitle = subtitle)) 
       } else {
-        plot_roc <- invisible(mplot_roc(tag, score, multis)) 
-      }
-      if (!is.na(subtitle)) {
-        plot_roc <- plot_roc + labs(subtitle = subtitle)
+        plot_roc <- invisible(mplot_roc(tag, score, multis, subtitle = subtitle)) 
       }
       metrics[["plot_ROC"]] <- plot_roc
-      
       # CONFUSION MATRIX PLOT
-      plot_cf <- data.frame(conf_mat) %>%
-        mutate(perc = round(100 * Freq / sum(Freq), 2)) %>%
-        mutate(label = paste0(formatNum(Freq, 0),"\n", perc,"%"))
-      levels <- plot_cf %>% group_by(Real) %>% summarise(Freq = sum(Freq)) %>% 
-        arrange(desc(Freq)) %>% mutate(Real = factor(Real, levels = Real)) %>% .$Real
-      plot_cf <- ggplot(plot_cf, aes(
-        y = factor(Real, levels = rev(levels)), 
-        x = factor(Pred, levels = levels), 
-          fill= Freq, size=Freq, 
-          label = label)) +
-        geom_tile() + theme_lares2() +
-        geom_text(colour="white") + 
-        scale_size(range = c(3.1, 4.5)) + coord_equal() + 
-        guides(fill=FALSE, size=FALSE, colour=FALSE) +
-        labs(x="Predicted values", y="Real values",
-             title = ifelse(length(labels) == 2,
-                            paste("Confusion Matrix", 
-                                  ifelse(thresh!=0.5, paste("with Threshold =", thresh), "")),
-                            paste("Confusion Matrix for", length(labels), "Categories")),
-             subtitle = paste0("ACC: ", round(100*(trues / total), 2), "%")) +
-        theme(axis.text.x = element_text(angle=30, hjust=0)) +
-        scale_x_discrete(position = "top") +
-        theme(axis.text.x.bottom = element_blank(), 
-              axis.ticks.x.bottom = element_blank(),
-              axis.text.y.right = element_blank(),
-              axis.ticks.y.right = element_blank()) +
-        theme_lares2()
-      
-      if (!is.na(subtitle)) {
-        plot_cf <- plot_cf + labs(subtitle = subtitle)
-      }
-      metrics[["plot_ConfMat"]] <- plot_cf 
+      metrics[["plot_ConfMat"]] <- mplot_conf(tag, score, thresh, subtitle = subtitle) 
     }
   }
   
