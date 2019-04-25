@@ -301,7 +301,7 @@ forecast_ml <- function(time, values,
 #' @param pout Numeric. Get rid of pout \% of outliers
 #' @param project Character. Name of your forecast project for plot title
 #' @export
-prophesize <- function(df, n_future = 120, country = "AR", pout = 0.03, 
+prophesize <- function(df, n_future = 60, country = "AR", pout = 0.03, 
                        project = "Prophet Forecast") {
   
   # require(prophet)
@@ -328,7 +328,7 @@ prophesize <- function(df, n_future = 120, country = "AR", pout = 0.03,
   p <- plot(m, forecast) + theme_lares2() +
     labs(y = metric, x="Dates", 
          title = project,
-         subtitle = paste("Forecast results for the next", periods, "days")) +
+         subtitle = paste("Forecast results for the next", n_future, "days")) +
     scale_y_continuous(labels = comma)
   
   # plot2 = prophet_plot_components(m, forecast)
