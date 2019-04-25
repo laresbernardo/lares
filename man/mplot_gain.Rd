@@ -13,7 +13,9 @@ mplot_gain(tag, score, target = TRUE, splits = 10,
 
 \item{score}{Vector. Predicted value or model's result}
 
-\item{target}{Value. Which is your target positive value?}
+\item{target}{Value. Which is your target positive value? If 
+set to 'auto', the target with largest mean(score) will be 
+selected. Change the value to overwrite.}
 
 \item{splits}{Integer. Numer of quantiles to split the data}
 

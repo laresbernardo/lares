@@ -743,6 +743,69 @@ calibrate <- function(score, train, target, train_sample, target_sample) {
 
 
 ####################################################################
+#' Cumulative Gain and Lift
+#' 
+#' This function calculates cumulative gain and lift values for
+#' a predictive score of a specific target. You can use the 
+#' mplot_gain() function to custom plot results.
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param target Value. Which is your target positive value? If 
+#' set to 'auto', the target with largest mean(score) will be 
+#' selected. Change the value to overwrite.
+#' @param splits Integer. Numer of quantiles to split the data
+#' @param plot Boolean. Plot results?
+#' @export
+gain_lift <- function(tag, score, target = "auto", splits = 10, plot = FALSE) {
+  
+  if (splits <= 1) {
+    stop("You must set more than 1 split")
+  }
+  
+  df <- data.frame(tag = tag, score = score)
+  
+  if (target == "auto") {
+    means <- df %>% group_by(tag) %>% summarise(mean = mean(score))
+    target <- means$tag[means$mean == max(means$mean)]
+    message(paste("Target value:", target))
+  }
+  if (!target %in% unique(df$tag)) {
+    stop(paste("Your target value", target, "is not valid. Possible other values:", 
+               vector2text(unique(tag))))
+  }
+  
+  df <- df %>% mutate(tag = ifelse(tag == target, TRUE, FALSE))
+  
+  sc <- df %>% arrange(desc(score)) %>%
+    mutate(quantile = .bincode(
+      score, quantile(score, probs = seq(0, 1, length = splits + 1), include.lowest = TRUE), 
+      right = TRUE, include.lowest = TRUE)) %>%
+    mutate(quantile = rev(factor(quantile, 1:splits)))
+  
+  wizard <- data.frame(tag = !sort(sc$tag), quantile = sc$quantile) %>%
+    group_by(quantile, tag) %>% tally() %>% filter(tag == TRUE) %>%
+    ungroup() %>% mutate(p = 100*n/sum(n), pcum = cumsum(p)) %>% 
+    select(quantile, pcum) %>% rename(optimal = pcum)
+  
+  gains <- sc %>% group_by(quantile) %>% summarise(total = n(), pos = sum(tag)) %>%
+    left_join(wizard, "quantile") %>% replace(is.na(.), 100) %>% ungroup() %>%
+    mutate(gain = 100*cumsum(pos)/sum(pos),
+           random = cumsum(rep(100/splits, splits))) %>%
+    mutate(lift = 100 * (gain/random - 1))
+  
+  gains <- gains %>% select(quantile, gain, lift, random, optimal)
+  
+  if (plot == TRUE) {
+    mplot_gain(tag, score, target, splits = 10)
+  }
+  
+  return(gains)
+  
+}
+
+
+####################################################################
 #' ROC Curves
 #' 
 #' This function calculates ROC Curves and AUC values with 95\% confidence 
@@ -858,7 +921,10 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
         TPR = conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]),
         TNR = conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]),
         Logloss = loglossBinary(tag, as.numeric(score)))
+      metrics[["metrics"]] <- signif(nums, 5)
+      metrics[["gain_lift"]] <- quiet(gain_lift(tag, score))
     } else {
+      
       # For Multi-Categories
       df <- data.frame(tag, score)
       metrics[["confusion_matrix"]] <- df %>% 
@@ -890,8 +956,8 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
       nums$AUC <- AUCs[1:length(labels)]
       nums <- left_join(freqs(df %>% select(tag), tag), nums, "tag") %>% 
         select(tag, n, p, AUC, ACC:Logloss)
+      metrics[["metrics_tags"]] <- nums %>% mutate_if(is.numeric, funs(signif(., 5)))
     }
-    metrics[["metrics_tags"]] <- nums %>% mutate_if(is.numeric, funs(signif(., 5)))
     
     # ROC CURVE PLOT
     if (plots == TRUE) {

@@ -852,7 +852,9 @@ mplot_full <- function(tag,
 #' 
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
-#' @param target Value. Which is your target positive value?
+#' @param target Value. Which is your target positive value? If 
+#' set to 'auto', the target with largest mean(score) will be 
+#' selected. Change the value to overwrite.
 #' @param splits Integer. Numer of quantiles to split the data
 #' @param highlight Character or Integer. Which split should be used
 #' for the automatic conclussion in the plot? Set to "auto" for
@@ -865,40 +867,7 @@ mplot_full <- function(tag,
 mplot_gain <- function(tag, score, target = TRUE, splits = 10, highlight = "auto", 
                        caption = NA, save = FALSE, subdir = NA, file_name = "viz_gain.png") {
   
-  if (splits <= 1) {
-    stop("You must set more than 1 splits for this plot!")
-  }
-  if (target != TRUE) {
-    if (target %in% unique(tag)) {
-      tag <- ifelse(tag == target, TRUE, FALSE) 
-    } else {
-      stop(paste("Please select your 'target'. Possible values:", vector2text(unique(tag))))
-    }
-  }
-  
-  df <- data.frame(tag = tag, score = score)
-  
-  sc <- df %>% arrange(desc(score)) %>%
-    mutate(quantile = .bincode(
-      score, quantile(score, probs = seq(0, 1, length = splits + 1), include.lowest = TRUE), 
-      right = TRUE, include.lowest = TRUE)) %>%
-    mutate(quantile = rev(factor(quantile, 1:splits)))
-  
-  wizard <- data.frame(tag = !sort(sc$tag), quantile = sc$quantile) %>%
-    group_by(quantile, tag) %>% tally() %>% filter(tag == TRUE) %>%
-    ungroup() %>% mutate(p = 100*n/sum(n), pcum = cumsum(p)) %>% 
-    select(quantile, pcum) %>% rename(optimal = pcum)
-  
-  gains <- sc %>% group_by(quantile) %>% summarise(total = n(), pos = sum(tag)) %>%
-    left_join(wizard, "quantile") %>% replace(is.na(.), 100) %>% ungroup() %>%
-    mutate(gain = 100*cumsum(pos)/sum(pos),
-           random = cumsum(rep(100/splits, splits))) %>%
-    mutate(improved = 100 * (gain/random - 1))
-  
-  if (mean(gains$improved) < 0) {
-    stop(paste("Your target value", target, "is not valid. Possible other values:", 
-               vector2text(unique(tag))))
-  }
+  gains <- gain_lift(tag, score, target, splits)
   
   p <- gains %>%
     mutate(quantile = as.numeric(quantile)) %>%
@@ -916,14 +885,14 @@ mplot_gain <- function(tag, score, target = TRUE, splits = 10, highlight = "auto
     theme(legend.position = c(0.88, 0.2))
   
   if (highlight == "auto") {
-    highlight <- as.integer(gains$quantile[gains$improved == max(gains$improved)])
+    highlight <- as.integer(gains$quantile[gains$lift == max(gains$lift)])
   }
   if (highlight %in% gains$quantile & highlight != "none") {
     highlight <- as.integer(highlight)
     note <- paste0("If we select the observations with ", 
                    round(highlight*100/splits),"% highest probability,\n",
                    round(gains$gain[gains$quantile == highlight]),"% of all target class will be picked ",
-                   "(", round(gains$improved[gains$quantile == highlight]), "% better than random)")
+                   "(", round(gains$lift[gains$quantile == highlight]), "% better than random)")
     p <- p + labs(subtitle = note)
   } else {
     message("That highlight value is not a quantile. Try any integer from 1 to ", splits)
@@ -941,9 +910,6 @@ mplot_gain <- function(tag, score, target = TRUE, splits = 10, highlight = "auto
   if (save == TRUE) {
     p <- p + ggsave(file_name, width = 6, height = 6)
   }
-  
-  gains <- gains %>% select(quantile, gain, random, optimal, improved)
-  ret <- list(gains = gains, gains_plot = p)  
-  
-  return(ret)
+
+  return(p)
 }
