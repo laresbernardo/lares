@@ -88,20 +88,20 @@ theme_lares2 <- function(font = "Arial Narrow",
     size=base_size * 0.85, margin=margin(r=0),colour = soft_colour))
   # Axis titles
   ret <- ret + theme(axis.title=element_text(
-    size=base_size * 0.85, family=font,colour = soft_colour))
+    size=base_size * 1, family=font,colour = soft_colour))
   ret <- ret + theme(axis.title.x=element_text(
-    hjust=xj, size=base_size * 0.85, family=font, face="bold", colour = soft_colour))
+    hjust=xj, size=base_size * 1, family=font, face="bold", colour = soft_colour))
   ret <- ret + theme(axis.title.y=element_text(
-    hjust=yj, size=base_size * 0.85, colour = soft_colour,family=font, face="bold"))
+    hjust=yj, size=base_size * 1, colour = soft_colour,family=font, face="bold"))
   ret <- ret + theme(axis.title.y.right=element_text(
-    hjust=yj, size=base_size * 0.85, angle=-90,colour = soft_colour,family=font, face="bold"))
+    hjust=yj, size=base_size * 1, angle=-90,colour = soft_colour,family=font, face="bold"))
   # facet_grid
   ret <- ret + theme(strip.text=element_text(
     hjust=0, size=base_size * 1, colour = soft_colour, face="bold", family=font))
   ret <- ret + theme(panel.spacing=grid::unit(0.8, "lines"))
   # Plot title
   ret <- ret + theme(plot.title=element_text(
-    hjust=0, size=base_size * 1.2, margin=margin(b=base_size * 0.85), 
+    hjust=0, size=base_size * 1.3, margin=margin(b=base_size * 0.85), 
     family=font, face="bold", color = "black"))
   # Plot subtitle
   ret <- ret + theme(plot.subtitle=element_text(

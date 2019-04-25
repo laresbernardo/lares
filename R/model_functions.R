@@ -788,16 +788,17 @@ gain_lift <- function(tag, score, target = "auto", splits = 10, plot = FALSE, qu
   
   wizard <- data.frame(tag = !sort(sc$tag), quantile = sc$quantile) %>%
     group_by(quantile, tag) %>% tally() %>% filter(tag == TRUE) %>%
-    ungroup() %>% mutate(p = 100*n/sum(n), pcum = cumsum(p)) %>% 
+    ungroup() %>% mutate(p = 100 * n/sum(n), pcum = cumsum(p)) %>% 
     select(quantile, pcum) %>% rename(optimal = pcum)
   
-  gains <- sc %>% group_by(quantile) %>% summarise(total = n(), pos = sum(tag)) %>%
+  gains <- sc %>% group_by(quantile) %>% 
+    summarise(total = n(), pos = sum(tag), score = 100 * min(score)) %>%
     left_join(wizard, "quantile") %>% replace(is.na(.), 100) %>% ungroup() %>%
     mutate(gain = 100*cumsum(pos)/sum(pos),
-           random = cumsum(rep(100/splits, splits))) %>%
-    mutate(lift = 100 * (gain/random - 1))
+           random = cumsum(rep(100/splits, splits)),
+           lift = 100 * (gain/random - 1))
   
-  gains <- gains %>% select(quantile, gain, lift, random, optimal)
+  gains <- gains %>% select(quantile, random, gain, lift, optimal, score)
   
   if (plot == TRUE) {
     mplot_gain(tag, score, target, splits = 10)
