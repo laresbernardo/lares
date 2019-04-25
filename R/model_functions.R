@@ -756,8 +756,9 @@ calibrate <- function(score, train, target, train_sample, target_sample) {
 #' selected. Change the value to overwrite.
 #' @param splits Integer. Numer of quantiles to split the data
 #' @param plot Boolean. Plot results?
+#' @param quiet Boolean. Do not show message for auto target?
 #' @export
-gain_lift <- function(tag, score, target = "auto", splits = 10, plot = FALSE) {
+gain_lift <- function(tag, score, target = "auto", splits = 10, plot = FALSE, quiet = FALSE) {
   
   if (splits <= 1) {
     stop("You must set more than 1 split")
@@ -768,7 +769,9 @@ gain_lift <- function(tag, score, target = "auto", splits = 10, plot = FALSE) {
   if (target == "auto") {
     means <- df %>% group_by(tag) %>% summarise(mean = mean(score))
     target <- means$tag[means$mean == max(means$mean)]
-    message(paste("Target value:", target))
+    if (!quiet) {
+      message(paste("Target value:", target)) 
+    }
   }
   if (!target %in% unique(df$tag)) {
     stop(paste("Your target value", target, "is not valid. Possible other values:", 
@@ -958,9 +961,8 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
         ACC = trues / total,
         PRC = conf_mat[2,2] / (conf_mat[2,2] + conf_mat[1,2]),
         TPR = conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]),
-        TNR = conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]),
-        Logloss = loglossBinary(tag, as.numeric(score)))
-      metrics[["gain_lift"]] <- quiet(gain_lift(tag, score))
+        TNR = conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]))
+      metrics[["gain_lift"]] <- gain_lift(tag, score, "auto", quiet = TRUE)
       metrics[["metrics"]] <- signif(nums, 5)
     } else {
       
@@ -986,8 +988,7 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
           ACC = trues / total,
           PRC = conf_mati[2,2] / (conf_mati[2,2] + conf_mati[1,2]),
           TPR = conf_mati[2,2] / (conf_mati[2,2] + conf_mati[2,1]),
-          TNR = conf_mati[1,1] / (conf_mati[1,1] + conf_mati[1,2]),
-          Logloss = loglossBinary(tagi, as.numeric(predi)))
+          TNR = conf_mati[1,1] / (conf_mati[1,1] + conf_mati[1,2]))
         nums <- rbind(nums, numsi)
       }
       nums$AUC <- AUCs[1:length(labels)]
@@ -1006,6 +1007,11 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
       metrics[["plot_ROC"]] <- plot_roc
       # CONFUSION MATRIX PLOT
       metrics[["plot_ConfMat"]] <- mplot_conf(tag, score, thresh, subtitle = subtitle) 
+      # CUMULATIVE GAINS AND LIFT
+      if (length(labels) == 2) {
+        gains <- mplot_gain(tag, score, target = "auto", splits = 10, highlight = "auto")
+        metrics[["plot_Gains"]] <- gains
+      }
     }
   }
   

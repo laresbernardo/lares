@@ -4,7 +4,7 @@
 \alias{mplot_gain}
 \title{Cumulative Gain Plot}
 \usage{
-mplot_gain(tag, score, target = TRUE, splits = 10,
+mplot_gain(tag, score, target = "auto", splits = 10,
   highlight = "auto", caption = NA, save = FALSE, subdir = NA,
   file_name = "viz_gain.png")
 }

@@ -4,7 +4,8 @@
 \alias{gain_lift}
 \title{Cumulative Gain and Lift}
 \usage{
-gain_lift(tag, score, target = "auto", splits = 10, plot = FALSE)
+gain_lift(tag, score, target = "auto", splits = 10, plot = FALSE,
+  quiet = FALSE)
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -18,6 +19,8 @@ selected. Change the value to overwrite.}
 \item{splits}{Integer. Numer of quantiles to split the data}
 
 \item{plot}{Boolean. Plot results?}
+
+\item{quiet}{Boolean. Do not show message for auto target?}
 }
 \description{
 This function calculates cumulative gain and lift values for

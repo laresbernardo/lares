@@ -864,7 +864,7 @@ mplot_full <- function(tag,
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @export
-mplot_gain <- function(tag, score, target = TRUE, splits = 10, highlight = "auto", 
+mplot_gain <- function(tag, score, target = "auto", splits = 10, highlight = "auto", 
                        caption = NA, save = FALSE, subdir = NA, file_name = "viz_gain.png") {
   
   gains <- gain_lift(tag, score, target, splits)
