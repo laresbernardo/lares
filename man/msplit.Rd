@@ -4,12 +4,13 @@
 \alias{msplit}
 \title{Split a dataframe for training and testing sets}
 \usage{
-msplit(df, size = 0.7, seed = NA, print = T)
+msplit(df, size = 0.7, seed = 0, print = T)
 }
 \arguments{
 \item{df}{Dataframe to split}
 
-\item{size}{Split rate}
+\item{size}{Numeric. Split rate value, between 0 and 1. If set to
+1, the train and test set will be the same.}
 
 \item{seed}{Seed for random split}
 
@@ -19,7 +20,8 @@ msplit(df, size = 0.7, seed = NA, print = T)
 A list with both datasets, summary, and split rate
 }
 \description{
-This function splits automatically a dataframe into train and test datasets.
-You can define a seed to get the same results every time, but has a default value.
-You can prevent it from printing the split counter result.
+This function splits automatically a dataframe into train and 
+test datasets. You can define a seed to get the same results 
+every time, but has a default value. You can prevent it from 
+printing the split counter result.
 }

@@ -1,31 +1,41 @@
 ####################################################################
 #' Split a dataframe for training and testing sets
 #'
-#' This function splits automatically a dataframe into train and test datasets.
-#' You can define a seed to get the same results every time, but has a default value.
-#' You can prevent it from printing the split counter result.
+#' This function splits automatically a dataframe into train and 
+#' test datasets. You can define a seed to get the same results 
+#' every time, but has a default value. You can prevent it from 
+#' printing the split counter result.
 #'
 #' @param df Dataframe to split
-#' @param size Split rate
+#' @param size Numeric. Split rate value, between 0 and 1. If set to
+#' 1, the train and test set will be the same.
 #' @param seed Seed for random split
 #' @param print Print summary results
 #' @return A list with both datasets, summary, and split rate
 #' @export
-msplit <- function(df, size = 0.7, seed = NA, print=T) {
+msplit <- function(df, size = 0.7, seed = 0, print=T) {
   
-  if (!is.na(seed)) {
-    set.seed(seed)
+  if (size <= 0 | size > 1) {
+    stop("Set size parameter to a value >0 and <=1") 
   }
   
+  set.seed(seed)
   df <- data.frame(df)
   
-  ind <- sample(seq_len(nrow(df)), size = floor(size * nrow(df)))
-  train <- df[ind, ]
-  test <- df[-ind, ]
+  if (size == 1) {
+    train <- test <- df
+  }
+  
+  if (size < 1 & size > 0) {
+    ind <- sample(seq_len(nrow(df)), size = floor(size * nrow(df)))
+    train <- df[ind, ]
+    test <- df[-ind, ] 
+  }
   
   train_size <- dim(train)
   test_size <- dim(test)
   summary <- rbind(train_size, test_size)[,1]
+  
   if (print == TRUE) {
     print(summary) 
   }
