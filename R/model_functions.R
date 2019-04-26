@@ -996,20 +996,21 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
     }
     
     if (plots == TRUE) {
-      # ROC CURVE PLOT
+      plots <- list()
+      # CONFUSION MATRIX PLOT
+      plots[["conf_matrix"]] <- mplot_conf(tag, score, thresh, subtitle = subtitle) 
       if (length(labels) == 2) {
+        # ROC CURVE PLOT
         plot_roc <- invisible(mplot_roc(tag, score, subtitle = subtitle)) 
+        # CUMULATIVE GAINS AND LIFT
+        gains <- mplot_gain(tag, score, target = "auto", splits = 10, highlight = "auto")
+        plots[["gains"]] <- gains
       } else {
+        # ROC CURVES PLOT
         plot_roc <- invisible(mplot_roc(tag, score, multis, subtitle = subtitle)) 
       }
-      metrics[["plot_ROC"]] <- plot_roc
-      # CONFUSION MATRIX PLOT
-      metrics[["plot_ConfMat"]] <- mplot_conf(tag, score, thresh, subtitle = subtitle) 
-      # CUMULATIVE GAINS AND LIFT
-      if (length(labels) == 2) {
-        gains <- mplot_gain(tag, score, target = "auto", splits = 10, highlight = "auto")
-        metrics[["plot_Gains"]] <- gains
-      }
+      plots[["ROC"]] <- plot_roc
+      metrics[["plots"]] <- plots
     }
   }
   
