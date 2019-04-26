@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_functions.R
 \name{rsqa}
 \alias{rsqa}
-\title{Calculate Adjusted R Squared}
+\title{Adjusted R Squared}
 \usage{
 rsqa(tag, score)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_functions.R
 \name{rsq}
 \alias{rsq}
-\title{Calculate R Squared}
+\title{R Squared}
 \usage{
 rsq(tag, score)
 }

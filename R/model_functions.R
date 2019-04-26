@@ -220,11 +220,6 @@ h2o_automl <- function(df,
   
   # Calculations and variables
   scores <- quiet(h2o_predict_model(test, m))
-  if (length(unique(train$tag)) == 2) {
-    scores <- scores[,2]
-  } else {
-    colnames(scores)[1] <- "score"
-  }
   
   # Variables importances
   imp <- data.frame(h2o.varimp(m)) %>%
@@ -237,6 +232,11 @@ h2o_automl <- function(df,
   
   # CLASSIFICATION MODELS
   if (type == "Classifier") {
+    if (length(unique(train$tag)) == 2) {
+      scores <- scores[,2]
+    } else {
+      colnames(scores)[1] <- "score"
+    }
     results <- list(
       project = project,
       model = m,
@@ -284,21 +284,19 @@ h2o_automl <- function(df,
       project = project,
       model = m,
       scores_test = data.frame(
-        index = c(1:nrow(test)),
         tag = as.vector(test$tag),
-        score = as.vector(scores$predict)),
+        score = scores$predict),
       metrics = NULL,
       scoring_history = data.frame(m@model$scoring_history),
       datasets = list(test = test, train = train),
       parameters = m@parameters,
       importance = imp,
-      rmse = h2o::h2o.rmse(m),
       model_name = as.vector(m@model_id),
       algorithm = m@algorithm,
       leaderboard = aml@leaderboard
     )
     
-    results$metrics <- model_metrics(
+    results[["metrics"]] <- model_metrics(
       tag = results$scores_test$tag, 
       score = results$scores_test$score,
       plots = TRUE)
@@ -546,7 +544,7 @@ mape <- function(tag, score){
 
 
 ####################################################################
-#' Calculate R Squared
+#' R Squared
 #' 
 #' This function lets the user calculate r squared
 #' 
@@ -559,7 +557,7 @@ rsq <- function(tag, score){
 }
 
 ####################################################################
-#' Calculate Adjusted R Squared
+#' Adjusted R Squared
 #' 
 #' This function lets the user calculate adjusted r squared
 #' 
@@ -585,8 +583,8 @@ errors <- function(tag, score){
   data.frame(
     rmse = rmse(tag, score),
     mae = mae(tag, score),
-    mse = mse(tag, score),
     mape = mape(tag, score),
+    mse = mse(tag, score),
     rsq = rsq(tag, score),
     rsqa = rsqa(tag, score)
   )
@@ -1017,8 +1015,16 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
   }
   
   if (type == "Regression") {
-    # Needs further improvements
-    metrics[["errors"]] <- errors(tag, score)
+    
+    dic <- c("RMSE: Root Mean Squared Error",
+             "MAE: Mean Average Error",
+             "MAPE: Mean Absolute Percentage Error",
+             "MSE: Mean Squared Error",
+             "RSQ: R Squared",
+             "RSQA: Adjusted R Squared")
+    metrics[["dictionary"]] <- dic
+    
+    metrics[["metrics"]] <- errors(tag, score)
   }
   return(metrics)
 }
