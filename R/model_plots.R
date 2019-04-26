@@ -267,7 +267,7 @@ mplot_roc <- function(tag,
     coord_equal() +
     theme(axis.ticks = element_line(color = "grey80")) +
     labs(title = "ROC Curve: AUC", colour = "") +
-    guides(colour = guide_legend(ncol = 2)) +
+    guides(colour = guide_legend(ncol = 3)) +
     annotate("text", x = 0.25, y = 0.10, size = 4.2, 
              label = paste("AUC =", round(100*ci[c(2),],2))) +
     annotate("text", x = 0.25, y = 0.05, size = 2.8, 

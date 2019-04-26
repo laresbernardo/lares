@@ -234,8 +234,10 @@ h2o_automl <- function(df,
   if (type == "Classifier") {
     if (length(unique(train$tag)) == 2) {
       scores <- scores[,2]
+      multis <- NA
     } else {
       colnames(scores)[1] <- "score"
+      multis <- scores %>% select(-score)
     }
     results <- list(
       project = project,
@@ -247,35 +249,18 @@ h2o_automl <- function(df,
       datasets = list(test = test, train = train),
       parameters = m@parameters,
       importance = imp,
-      auc_test = NA, #h2o.auc(m, valid=TRUE)
-      errors_test = NA,
       model_name = as.vector(m@model_id),
       algorithm = m@algorithm,
       leaderboard = aml@leaderboard,
       scoring_history = data.frame(m@model$scoring_history),
       seed = seed)
     
-    if (length(unique(train$tag)) == 2) {
-      results$metrics <- model_metrics(
-        tag = results$scores_test$tag, 
-        score = results$scores_test$score,
-        plots = TRUE)
-      results$errors_test <- errors(
-        tag = results$scores_test$tag, 
-        score = results$scores_test$score) 
-      results$auc_test <- pROC::roc(
-        results$scores_test$tag, 
-        results$scores_test$score, ci=T)
-    } else {
-      results$metrics <- model_metrics(
-        tag = results$scores_test$tag, 
-        score = results$scores_test$score,
-        multis = results$scores_test %>% select(-tag, -score),
-        plots = TRUE)
-      results$logloss_test <- NULL
-      results$errors_test <- NULL
-      results$auc_test <- NULL
-    }
+    results$metrics <- model_metrics(
+      tag = results$scores_test$tag, 
+      score = results$scores_test$score,
+      multis = multis,
+      plots = TRUE)
+    
   } 
   
   # REGRESION MODELS
@@ -846,8 +831,12 @@ ROC <- function (tag, score, multis = NA) {
     coords <- c(); rocs <- list()
     for (i in 1:(length(cols)-2)) {
       which <- colnames(df)[2+i]
-      label <- ifelse(df[,1] == which,1,0)
-      roci <- pROC::roc(label, df[,c(which)], ci = TRUE)
+      res <- df[,c(which)]
+      if (grepl("p+[[:digit:]]", which)) {
+        which <- as.character(gsub("p","", which))
+      }
+      label <- ifelse(df[,1] == which, which, "other")
+      roci <- pROC::roc(label, res, ci = TRUE)
       rocs[[paste(cols[i+2])]] <- roci
       iter <- data.frame(fpr = rev(roci$specificities),
                          tpr = rev(roci$sensitivities),
@@ -992,7 +981,7 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
       }
       nums$AUC <- AUCs[1:length(labels)]
       nums <- left_join(freqs(df %>% select(tag), tag), nums, "tag") %>% 
-        select(tag, n, p, AUC, ACC:Logloss)
+        select(tag, n, p, AUC, everything(), -pcum)
       metrics[["metrics_tags"]] <- nums %>% mutate_if(is.numeric, funs(signif(., 5)))
     }
     
