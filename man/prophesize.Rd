@@ -4,7 +4,7 @@
 \alias{prophesize}
 \title{Facebook's Prophet Forecast}
 \usage{
-prophesize(df, n_future = 120, country = "AR", pout = 0.03,
+prophesize(df, n_future = 60, country = "AR", pout = 0.03,
   project = "Prophet Forecast")
 }
 \arguments{

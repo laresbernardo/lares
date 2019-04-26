@@ -870,8 +870,8 @@ mplot_gain <- function(tag, score, target = "auto", splits = 10, highlight = "au
   gains <- gain_lift(tag, score, target, splits)
   
   p <- gains %>%
-    mutate(quantile = as.numeric(quantile)) %>%
-    ggplot(aes(x = quantile)) + theme_lares2(pal=2) +
+    mutate(percentile = as.numeric(percentile)) %>%
+    ggplot(aes(x = percentile)) + theme_lares2(pal=2) +
     geom_line(aes(y = optimal, linetype = "Optimal"), colour = "black", alpha = 0.6) +
     geom_line(aes(y = random, linetype = "Random"), colour = "black", alpha = 0.6) +
     geom_line(aes(y = gain, linetype = "Model"), size = 1.2) +
@@ -881,21 +881,21 @@ mplot_gain <- function(tag, score, target = "auto", splits = 10, highlight = "au
                        breaks = seq(0, splits, 1)) +
     labs(title = "Cumulative Gains Plot", linetype = "",
          y = "Cumulative gains [%]", 
-         x = paste0("Quantiles [",splits,"]")) +
+         x = paste0("Percentiles [",splits,"]")) +
     theme(legend.position = c(0.88, 0.2))
   
   if (highlight == "auto") {
-    highlight <- as.integer(gains$quantile[gains$lift == max(gains$lift)])
+    highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
   }
-  if (highlight %in% gains$quantile & highlight != "none") {
+  if (highlight %in% gains$percentile & highlight != "none") {
     highlight <- as.integer(highlight)
     note <- paste0("If we select the observations with ", 
                    round(highlight*100/splits),"% highest probability,\n",
-                   round(gains$gain[gains$quantile == highlight]),"% of all target class will be picked ",
-                   "(", round(gains$lift[gains$quantile == highlight]), "% better than random)")
+                   round(gains$gain[gains$percentile == highlight]),"% of all target class will be picked ",
+                   "(", round(gains$lift[gains$percentile == highlight]), "% better than random)")
     p <- p + labs(subtitle = note)
   } else {
-    message("That highlight value is not a quantile. Try any integer from 1 to ", splits)
+    message("That highlight value is not a percentile Try any integer from 1 to ", splits)
   }
   
   if (!is.na(caption)) {

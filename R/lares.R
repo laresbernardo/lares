@@ -23,6 +23,7 @@
 #' @importFrom jsonlite fromJSON toJSON flatten
 #' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd 
 #' minute hour second %m+% floor_date 
+#' @importFrom magrittr "%>%"
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom pROC roc ci
@@ -85,5 +86,4 @@ if(getRversion() >= "2.15.1")
       "Portfolio","start_clean","geo","hits","keyword","legend","subject","subject.x",
       "subject.y","type_label","facet","Total","pal","p_real","weight","ACC","AUC",
       "Logloss","yewxname","gain","random","optimal","lift","pred","prophet","fit.prophet",
-      "prophet_plot_components","add_country_holidays","make_future_dataframe")) 
-
+      "prophet_plot_components","add_country_holidays","make_future_dataframe","percentile")) 

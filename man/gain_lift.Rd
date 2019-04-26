@@ -16,7 +16,7 @@ gain_lift(tag, score, target = "auto", splits = 10, plot = FALSE,
 set to 'auto', the target with largest mean(score) will be 
 selected. Change the value to overwrite.}
 
-\item{splits}{Integer. Numer of quantiles to split the data}
+\item{splits}{Integer. Numer of percentiles to split the data}
 
 \item{plot}{Boolean. Plot results?}
 

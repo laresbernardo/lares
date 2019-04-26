@@ -754,7 +754,7 @@ calibrate <- function(score, train, target, train_sample, target_sample) {
 #' @param target Value. Which is your target positive value? If 
 #' set to 'auto', the target with largest mean(score) will be 
 #' selected. Change the value to overwrite.
-#' @param splits Integer. Numer of quantiles to split the data
+#' @param splits Integer. Numer of percentiles to split the data
 #' @param plot Boolean. Plot results?
 #' @param quiet Boolean. Do not show message for auto target?
 #' @export
@@ -781,24 +781,24 @@ gain_lift <- function(tag, score, target = "auto", splits = 10, plot = FALSE, qu
   df <- df %>% mutate(tag = ifelse(tag == target, TRUE, FALSE))
   
   sc <- df %>% arrange(desc(score)) %>%
-    mutate(quantile = .bincode(
+    mutate(percentile = .bincode(
       score, quantile(score, probs = seq(0, 1, length = splits + 1), include.lowest = TRUE), 
       right = TRUE, include.lowest = TRUE)) %>%
-    mutate(quantile = rev(factor(quantile, 1:splits)))
+    mutate(percentile = rev(factor(percentile, 1:splits)))
   
-  wizard <- data.frame(tag = !sort(sc$tag), quantile = sc$quantile) %>%
-    group_by(quantile, tag) %>% tally() %>% filter(tag == TRUE) %>%
+  wizard <- data.frame(tag = !sort(sc$tag), percentile = sc$percentile) %>%
+    group_by(percentile, tag) %>% tally() %>% filter(tag == TRUE) %>%
     ungroup() %>% mutate(p = 100 * n/sum(n), pcum = cumsum(p)) %>% 
-    select(quantile, pcum) %>% rename(optimal = pcum)
+    select(percentile, pcum) %>% rename(optimal = pcum)
   
-  gains <- sc %>% group_by(quantile) %>% 
+  gains <- sc %>% group_by(percentile) %>% 
     summarise(total = n(), pos = sum(tag), score = 100 * min(score)) %>%
-    left_join(wizard, "quantile") %>% replace(is.na(.), 100) %>% ungroup() %>%
+    left_join(wizard, "percentile") %>% replace(is.na(.), 100) %>% ungroup() %>%
     mutate(gain = 100*cumsum(pos)/sum(pos),
            random = cumsum(rep(100/splits, splits)),
            lift = 100 * (gain/random - 1))
   
-  gains <- gains %>% select(quantile, random, gain, lift, optimal, score)
+  gains <- gains %>% select(percentile, random, gain, lift, optimal, score)
   
   if (plot == TRUE) {
     mplot_gain(tag, score, target, splits = 10)
