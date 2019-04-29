@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_functions.R
 \name{gain_lift}
 \alias{gain_lift}
-\title{Cumulative Gain and Lift}
+\title{Cumulative Gain, Lift and Response}
 \usage{
 gain_lift(tag, score, target = "auto", splits = 10, plot = FALSE,
   quiet = FALSE)
@@ -23,7 +23,7 @@ selected. Change the value to overwrite.}
 \item{quiet}{Boolean. Do not show message for auto target?}
 }
 \description{
-This function calculates cumulative gain and lift values for
-a predictive score of a specific target. You can use the 
+This function calculates cumulative gain, lift, and response 
+values for a predictive score of a specific target. You can use the 
 mplot_gain() function to custom plot results.
 }

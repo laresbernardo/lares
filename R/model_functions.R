@@ -249,16 +249,18 @@ h2o_automl <- function(df,
       colnames(scores)[1] <- "score"
       multis <- scores %>% select(-score)
     }
+    
+    #crossval <- m@model$cross_validation_metrics_summary[,c(1,2)]
+    #max_thresh <- m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores
+    
     results <- list(
-      project = project,
       model = m,
-      scores_test = data.frame(
-        tag = as.vector(test$tag),
-        scores),
+      scores_test = data.frame(tag = as.vector(test$tag), scores),
       metrics = NA,
       datasets = list(test = test, train = train),
       parameters = m@parameters,
       importance = imp,
+      project = project,
       model_name = as.vector(m@model_id),
       algorithm = m@algorithm,
       leaderboard = aml@leaderboard,
@@ -736,10 +738,10 @@ calibrate <- function(score, train, target, train_sample, target_sample) {
 
 
 ####################################################################
-#' Cumulative Gain and Lift
+#' Cumulative Gain, Lift and Response
 #' 
-#' This function calculates cumulative gain and lift values for
-#' a predictive score of a specific target. You can use the 
+#' This function calculates cumulative gain, lift, and response 
+#' values for a predictive score of a specific target. You can use the 
 #' mplot_gain() function to custom plot results.
 #' 
 #' @param tag Vector. Real known label
@@ -779,19 +781,20 @@ gain_lift <- function(tag, score, target = "auto", splits = 10, plot = FALSE, qu
       right = TRUE, include.lowest = TRUE)) %>%
     mutate(percentile = rev(factor(percentile, 1:splits)))
   
-  wizard <- data.frame(tag = !sort(sc$tag), percentile = sc$percentile) %>%
-    group_by(percentile, tag) %>% tally() %>% filter(tag == TRUE) %>%
+  wizard <- sc %>% filter(tag == TRUE) %>% 
+    mutate(percentile = sc$percentile[1:length(sc$percentile[sc$tag==TRUE])]) %>%
+    group_by(percentile) %>% tally() %>% 
     ungroup() %>% mutate(p = 100 * n/sum(n), pcum = cumsum(p)) %>% 
     select(percentile, pcum) %>% rename(optimal = pcum)
   
   gains <- sc %>% group_by(percentile) %>% 
-    summarise(total = n(), pos = sum(tag), score = 100 * min(score)) %>%
+    summarise(total = n(), target = sum(tag), score = 100 * min(score)) %>%
     left_join(wizard, "percentile") %>% replace(is.na(.), 100) %>% ungroup() %>%
-    mutate(gain = 100*cumsum(pos)/sum(pos),
+    mutate(gain = 100*cumsum(target)/sum(target),
            random = cumsum(rep(100/splits, splits)),
-           lift = 100 * (gain/random - 1))
-  
-  gains <- gains %>% select(percentile, random, gain, lift, optimal, score)
+           lift = 100 * (gain/random - 1),
+           response = 100 * target/sum(target)) %>%
+    select(percentile, random, target, total, gain, lift, optimal, response, score)
   
   if (plot == TRUE) {
     mplot_gain(tag, score, target, splits = 10)
@@ -1002,9 +1005,12 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
       if (length(labels) == 2) {
         # ROC CURVE PLOT
         plot_roc <- invisible(mplot_roc(tag, score, subtitle = subtitle)) 
-        # CUMULATIVE GAINS AND LIFT
-        gains <- mplot_gain(tag, score, target = "auto", splits = 10, highlight = "auto")
-        plots[["gains"]] <- gains
+        # CUMULATIVE GAINS PLOT
+        p <- mplot_gain(tag, score, target = "auto", splits = 10, highlight = "auto")
+        plots[["gains"]] <- p
+        # CUMULATIVE RESPONSE PLOT
+        p <- mplot_response(tag, score, target = "auto", splits = 10, highlight = "auto")
+        plots[["response"]] <- p
       } else {
         # ROC CURVES PLOT
         plot_roc <- invisible(mplot_roc(tag, score, multis, subtitle = subtitle)) 

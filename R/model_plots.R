@@ -843,79 +843,6 @@ mplot_full <- function(tag,
 
 
 ####################################################################
-#' Cumulative Gain Plot
-#' 
-#' The cumulative gains plot, often named ‘gains plot’, helps us 
-#' answer the question: When we apply the model and select the best 
-#' X deciles, what % of the actual target class observations can we 
-#' expect to target?
-#' 
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
-#' @param target Value. Which is your target positive value? If 
-#' set to 'auto', the target with largest mean(score) will be 
-#' selected. Change the value to overwrite.
-#' @param splits Integer. Numer of quantiles to split the data
-#' @param highlight Character or Integer. Which split should be used
-#' for the automatic conclussion in the plot? Set to "auto" for
-#' best value, "none" to turn off or the number of split.
-#' @param caption Character. Caption to show in plot
-#' @param save Boolean. Save output plot into working directory
-#' @param subdir Character. Sub directory on which you wish to save the plot
-#' @param file_name Character. File name as you wish to save the plot
-#' @export
-mplot_gain <- function(tag, score, target = "auto", splits = 10, highlight = "auto", 
-                       caption = NA, save = FALSE, subdir = NA, file_name = "viz_gain.png") {
-  
-  gains <- gain_lift(tag, score, target, splits)
-  
-  p <- gains %>%
-    mutate(percentile = as.numeric(percentile)) %>%
-    ggplot(aes(x = percentile)) + theme_lares2(pal=2) +
-    geom_line(aes(y = optimal, linetype = "Optimal"), colour = "black", alpha = 0.6) +
-    geom_line(aes(y = random, linetype = "Random"), colour = "black", alpha = 0.6) +
-    geom_line(aes(y = gain, linetype = "Model"), size = 1.2) +
-    geom_label(aes(y = gain, label = ifelse(gain == 100, NA, round(gain))), alpha = 0.9) +
-    scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour=FALSE) +
-    scale_x_continuous(minor_breaks = NULL, 
-                       breaks = seq(0, splits, 1)) +
-    labs(title = "Cumulative Gains Plot", linetype = "",
-         y = "Cumulative gains [%]", 
-         x = paste0("Percentiles [",splits,"]")) +
-    theme(legend.position = c(0.88, 0.2))
-  
-  if (highlight == "auto") {
-    highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
-  }
-  if (highlight %in% gains$percentile & highlight != "none") {
-    highlight <- as.integer(highlight)
-    note <- paste0("If we select the observations with ", 
-                   round(highlight*100/splits),"% highest probability,\n",
-                   round(gains$gain[gains$percentile == highlight]),"% of all target class will be picked ",
-                   "(", round(gains$lift[gains$percentile == highlight]), "% better than random)")
-    p <- p + labs(subtitle = note)
-  } else {
-    message("That highlight value is not a percentile Try any integer from 1 to ", splits)
-  }
-  
-  if (!is.na(caption)) {
-    p <- p + labs(caption = caption)
-  }
-  
-  if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = T)
-    file_name <- paste(subdir, file_name, sep="/")
-  }
-  
-  if (save == TRUE) {
-    p <- p + ggsave(file_name, width = 6, height = 6)
-  }
-
-  return(p)
-}
-
-
-####################################################################
 #' Confussion Matrix Plot
 #' 
 #' This function plots a confussion matrix.
@@ -994,7 +921,156 @@ mplot_conf <- function (tag, score, thresh = 0.5,
   if (save == TRUE) {
     p <- p + ggsave(file_name, width = 6, height = 6)
   }
-
+  
   return(p)
   
+}
+
+
+####################################################################
+#' Cumulative Gain Plot
+#' 
+#' The cumulative gains plot, often named ‘gains plot’, helps us 
+#' answer the question: When we apply the model and select the best 
+#' X deciles, what % of the actual target class observations can we 
+#' expect to target?
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param target Value. Which is your target positive value? If 
+#' set to 'auto', the target with largest mean(score) will be 
+#' selected. Change the value to overwrite.
+#' @param splits Integer. Numer of quantiles to split the data
+#' @param highlight Character or Integer. Which split should be used
+#' for the automatic conclussion in the plot? Set to "auto" for
+#' best value, "none" to turn off or the number of split.
+#' @param caption Character. Caption to show in plot
+#' @param save Boolean. Save output plot into working directory
+#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param file_name Character. File name as you wish to save the plot
+#' @export
+mplot_gain <- function(tag, score, target = "auto", splits = 10, highlight = "auto", 
+                       caption = NA, save = FALSE, subdir = NA, file_name = "viz_gain.png") {
+  
+  gains <- gain_lift(tag, score, target, splits)
+  
+  p <- gains %>%
+    mutate(percentile = as.numeric(percentile)) %>%
+    ggplot(aes(x = percentile)) + theme_lares2(pal=2) +
+    geom_line(aes(y = optimal, linetype = "Optimal"), colour = "black", alpha = 0.6) +
+    geom_line(aes(y = random, linetype = "Random"), colour = "black", alpha = 0.6) +
+    geom_line(aes(y = gain, linetype = "Model"), colour = "darkorange", size = 1.2) +
+    geom_label(aes(y = gain, label = ifelse(gain == 100, NA, round(gain))), alpha = 0.9) +
+    scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour=FALSE) +
+    scale_x_continuous(minor_breaks = NULL, 
+                       breaks = seq(0, splits, 1)) +
+    labs(title = "Cumulative Gains Plot", linetype = "",
+         y = "Cumulative gains [%]", 
+         x = paste0("Percentiles [",splits,"]")) +
+    theme(legend.position = c(0.88, 0.2))
+  
+  if (highlight == "auto") {
+    highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
+  }
+  if (highlight %in% gains$percentile & highlight != "none") {
+    highlight <- as.integer(highlight)
+    note <- paste0("If we select the top ", 
+                   round(highlight*100/splits),"% observations with highest scores,\n",
+                   round(gains$gain[gains$percentile == highlight]),"% of all target class will be picked ",
+                   "(", round(gains$lift[gains$percentile == highlight]), "% better than random)")
+    p <- p + labs(subtitle = note)
+  } else {
+    message("That highlight value is not a percentile. Try any integer from 1 to ", splits)
+  }
+  
+  if (!is.na(caption)) {
+    p <- p + labs(caption = caption)
+  }
+  
+  if (!is.na(subdir)) {
+    dir.create(file.path(getwd(), subdir), recursive = T)
+    file_name <- paste(subdir, file_name, sep="/")
+  }
+  
+  if (save == TRUE) {
+    p <- p + ggsave(file_name, width = 6, height = 6)
+  }
+
+  return(p)
+}
+
+
+####################################################################
+#' Cumulative Response Plot
+#' 
+#' The response gains plot helps us answer the question: When we 
+#' apply the model and select up until ntile X, what is the expected 
+#' % of target class observations in the selection?
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param target Value. Which is your target positive value? If 
+#' set to 'auto', the target with largest mean(score) will be 
+#' selected. Change the value to overwrite.
+#' @param splits Integer. Numer of quantiles to split the data
+#' @param highlight Character or Integer. Which split should be used
+#' for the automatic conclussion in the plot? Set to "auto" for
+#' best value, "none" to turn off or the number of split.
+#' @param caption Character. Caption to show in plot
+#' @param save Boolean. Save output plot into working directory
+#' @param subdir Character. Sub directory on which you wish to save the plot
+#' @param file_name Character. File name as you wish to save the plot
+#' @export
+mplot_response <- function(tag, score, target = "auto", splits = 10, highlight = "auto", 
+                           caption = NA, save = FALSE, subdir = NA, file_name = "viz_response.png") {
+  
+  gains <- gain_lift(tag, score, target, splits) %>% 
+    mutate(percentile = as.numeric(percentile),
+           cum_response = 100 * cumsum(target)/cumsum(total))
+  rand <- 100 * sum(gains$target)/sum(gains$total)
+  gains <- gains %>% mutate(cum_response_lift = 100 * cum_response/rand - 100)
+  
+  p <- gains %>%
+    ggplot(aes(x = percentile)) + theme_lares2(pal=2) +
+    geom_hline(yintercept = rand, colour = "black", linetype = "dashed") +
+    geom_line(aes(y = cum_response), size = 1.2) +
+    geom_label(aes(y = cum_response, label = round(cum_response)), alpha = 0.9) +
+    geom_text(label = paste0("Random: ", round(rand, 1), "%"), 
+              y = rand, x = 1, vjust = 1.2, hjust = 0, alpha = 0.2) +
+    scale_y_continuous(limits = c(0,100), breaks = seq(0, 100, 10)) + 
+    scale_x_continuous(minor_breaks = NULL, 
+                       breaks = seq(0, splits, 1)) +
+    labs(title = "Cumulative Response Plot", linetype = "",
+         y = "Cumulative response [%]", 
+         x = paste0("Percentiles [",splits,"]")) +
+    theme(legend.position = c(0.88, 0.2)) 
+  
+  if (highlight == "auto") {
+    highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
+  }
+  if (highlight %in% gains$percentile & highlight != "none") {
+    highlight <- as.integer(highlight)
+    note <- paste0("If we select the top ", 
+                   round(highlight*100/splits),"% observations with highest scores,\n",
+                   round(gains$cum_response[gains$percentile == highlight]),"% belong to the target class ",
+                   "(", round(gains$cum_response_lift[gains$percentile == highlight]), "% better than random)")
+    p <- p + labs(subtitle = note)
+  } else {
+    message("That highlight value is not a percentile. Try any integer from 1 to ", splits)
+  }
+  
+  if (!is.na(caption)) {
+    p <- p + labs(caption = caption)
+  }
+  
+  if (!is.na(subdir)) {
+    dir.create(file.path(getwd(), subdir), recursive = T)
+    file_name <- paste(subdir, file_name, sep="/")
+  }
+  
+  if (save == TRUE) {
+    p <- p + ggsave(file_name, width = 6, height = 6)
+  }
+  
+  return(p)
 }
