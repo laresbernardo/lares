@@ -56,8 +56,6 @@ Suggests:
     gtrendsR,
     highcharter,
     plotly,
-    plyr,
-    prophet,
     rtweet,
     shinydashboard,
     VIM 
