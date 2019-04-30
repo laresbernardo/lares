@@ -948,11 +948,13 @@ mplot_conf <- function (tag, score, thresh = 0.5,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @param quiet Boolean. Do not show message for auto target?
 #' @export
 mplot_gain <- function(tag, score, target = "auto", splits = 10, highlight = "auto", 
-                       caption = NA, save = FALSE, subdir = NA, file_name = "viz_gain.png") {
+                       caption = NA, save = FALSE, subdir = NA, 
+                       file_name = "viz_gain.png", quiet = FALSE) {
   
-  gains <- gain_lift(tag, score, target, splits)
+  gains <- gain_lift(tag, score, target, splits, quiet = quiet) 
   
   p <- gains %>%
     mutate(percentile = as.numeric(percentile)) %>%
@@ -1020,11 +1022,13 @@ mplot_gain <- function(tag, score, target = "auto", splits = 10, highlight = "au
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @param quiet Boolean. Do not show message for auto target?
 #' @export
 mplot_response <- function(tag, score, target = "auto", splits = 10, highlight = "auto", 
-                           caption = NA, save = FALSE, subdir = NA, file_name = "viz_response.png") {
+                           caption = NA, save = FALSE, subdir = NA, 
+                           file_name = "viz_response.png", quiet = FALSE) {
   
-  gains <- gain_lift(tag, score, target, splits) %>% 
+  gains <- gain_lift(tag, score, target, splits, quiet = quiet) %>% 
     mutate(percentile = as.numeric(percentile),
            cum_response = 100 * cumsum(target)/cumsum(total))
   rand <- 100 * sum(gains$target)/sum(gains$total)

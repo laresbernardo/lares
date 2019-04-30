@@ -753,7 +753,8 @@ calibrate <- function(score, train, target, train_sample, target_sample) {
 #' @param plot Boolean. Plot results?
 #' @param quiet Boolean. Do not show message for auto target?
 #' @export
-gain_lift <- function(tag, score, target = "auto", splits = 10, plot = FALSE, quiet = FALSE) {
+gain_lift <- function(tag, score, target = "auto", splits = 10, 
+                      plot = FALSE, quiet = FALSE) {
   
   if (splits <= 1) {
     stop("You must set more than 1 split")
@@ -963,7 +964,7 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
         PRC = conf_mat[2,2] / (conf_mat[2,2] + conf_mat[1,2]),
         TPR = conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]),
         TNR = conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]))
-      metrics[["gain_lift"]] <- gain_lift(tag, score, "auto", quiet = TRUE)
+      metrics[["gain_lift"]] <- gain_lift(tag, score, "auto", quiet = FALSE)
       metrics[["metrics"]] <- signif(nums, 5)
     } else {
       
@@ -1006,10 +1007,12 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
         # ROC CURVE PLOT
         plot_roc <- invisible(mplot_roc(tag, score, subtitle = subtitle)) 
         # CUMULATIVE GAINS PLOT
-        p <- mplot_gain(tag, score, target = "auto", splits = 10, highlight = "auto")
+        p <- mplot_gain(tag, score, target = "auto", splits = 10, 
+                        highlight = "auto", quiet = TRUE)
         plots[["gains"]] <- p
         # CUMULATIVE RESPONSE PLOT
-        p <- mplot_response(tag, score, target = "auto", splits = 10, highlight = "auto")
+        p <- mplot_response(tag, score, target = "auto", 
+                            splits = 10, highlight = "auto", quiet = TRUE)
         plots[["response"]] <- p
       } else {
         # ROC CURVES PLOT

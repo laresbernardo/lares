@@ -6,7 +6,7 @@
 \usage{
 mplot_response(tag, score, target = "auto", splits = 10,
   highlight = "auto", caption = NA, save = FALSE, subdir = NA,
-  file_name = "viz_response.png")
+  file_name = "viz_response.png", quiet = FALSE)
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -30,6 +30,8 @@ best value, "none" to turn off or the number of split.}
 \item{subdir}{Character. Sub directory on which you wish to save the plot}
 
 \item{file_name}{Character. File name as you wish to save the plot}
+
+\item{quiet}{Boolean. Do not show message for auto target?}
 }
 \description{
 The response gains plot helps us answer the question: When we 
