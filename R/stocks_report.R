@@ -809,7 +809,7 @@ etf_sector <- function (etf = "VTI") {
     url <- paste0("https://etfdb.com/etf/", toupper(etf[i]))
     if (RCurl::url.exists(url)) {
       sector <- read_html(url) %>% html_nodes(".col-md-6") %>% 
-        html_text() %>% .[grepl("Sector Breakdown",.)]
+        html_text() %>% .[grepl("Sector Breakdown",.)] %>% .[1]
       sector <- data.frame(matrix(unlist(strsplit(sector, split = "\n"))[-c(1:5)], ncol=2, byrow=TRUE))
       colnames(sector) <- c("Sector", "Percentage")
       sector$Percentage <- as.integer(cleanText(sector$Percentage))/100 
