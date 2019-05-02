@@ -15,8 +15,7 @@ Example: c('VTI','TSLA')}
 
 \item{today}{Boolean. Do you wish to additionaly download today's quote?}
 
-\item{tax}{Numeric. How much does of your dividends does the taxes take? 
-Range from 0 to 99}
+\item{tax}{Numeric. Percentage for dividends real return. Range from 0 to 99}
 
 \item{verbose}{Boolean. Print results and progress while downloading?}
 }

@@ -125,8 +125,7 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' working directory?
 #' @param subdir Character. In which directory do you wish to save 
 #' the results? Working directory as default.
-#' @param plot Boolean. Do you want to plot the results with 
-#' mplot_full function?
+#' @param plots Boolean. Do you want to plot the results metrics?
 #' @param project Character. Your project's name
 #' @export
 h2o_automl <- function(df, 
@@ -143,7 +142,6 @@ h2o_automl <- function(df,
                        alarm = TRUE,
                        save = FALSE,
                        subdir = NA,
-                       plot = FALSE,
                        project = "Machine Learning Model") {
   
   options(warn=-1)
@@ -243,7 +241,7 @@ h2o_automl <- function(df,
   # CLASSIFICATION MODELS
   if (type == "Classifier") {
     if (length(unique(train$tag)) == 2) {
-      scores <- scores$predict
+      scores <- select_if(scores, is.numeric) %>% .[,1]
       multis <- NA
     } else {
       colnames(scores)[1] <- "score"
@@ -266,13 +264,6 @@ h2o_automl <- function(df,
       leaderboard = aml@leaderboard,
       scoring_history = data.frame(m@model$scoring_history),
       seed = seed)
-    
-    results$metrics <- model_metrics(
-      tag = results$scores_test$tag, 
-      score = results$scores_test$score,
-      multis = multis,
-      plots = TRUE)
-    
   } 
   
   # REGRESION MODELS
@@ -280,10 +271,8 @@ h2o_automl <- function(df,
     results <- list(
       project = project,
       model = m,
-      scores_test = data.frame(
-        tag = as.vector(test$tag),
-        score = scores$predict),
-      metrics = NULL,
+      scores_test = data.frame(tag = as.vector(test$tag), score = scores$predict),
+      metrics = NA,
       scoring_history = data.frame(m@model$scoring_history),
       datasets = list(test = test, train = train),
       parameters = m@parameters,
@@ -292,12 +281,14 @@ h2o_automl <- function(df,
       algorithm = m@algorithm,
       leaderboard = aml@leaderboard
     )
-    
-    results[["metrics"]] <- model_metrics(
-      tag = results$scores_test$tag, 
-      score = results$scores_test$score,
-      plots = TRUE)
   }
+  
+  results[["metrics"]] <- model_metrics(
+    tag = results$scores_test$tag, 
+    score = results$scores_test$score,
+    multis = multis,
+    plots = TRUE)
+  print(results$metrics$metrics)
   
   message(paste0("Training duration: ", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
   
@@ -306,12 +297,12 @@ h2o_automl <- function(df,
     message("Results and model files exported succesfully!")
   }
   
-  if (plot) {
-    mplot_full(tag = results$scores_test$tag,
-               score = results$scores_test$score,
-               subtitle = results$project,
-               model_name = results$model_name)
-  }
+  # if (plots) {
+  #   mplot_full(tag = results$scores_test$tag,
+  #              score = results$scores_test$score,
+  #              subtitle = results$project,
+  #              model_name = results$model_name)
+  # }
   
   if (alarm) {
     beepr::beep()
@@ -795,7 +786,7 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
            random = 100*cumsum(total)/sum(total),
            lift = 100 * (gain/random - 1),
            response = 100 * target/sum(target)) %>%
-    select(percentile, random, target, total, gain, lift, optimal, response, score)
+    select(percentile, random, target, total, gain, optimal, lift, response, score)
   
   if (plot == TRUE) {
     mplot_gain(tag, score, target, splits = 10)

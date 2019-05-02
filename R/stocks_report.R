@@ -61,8 +61,7 @@ get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Document
 #' Example: c('VTI','TSLA')
 #' @param from Date. Since when do you wish to download historical data
 #' @param today Boolean. Do you wish to additionaly download today's quote?
-#' @param tax Numeric. How much does of your dividends does the taxes take? 
-#' Range from 0 to 99
+#' @param tax Numeric. Percentage for dividends real return. Range from 0 to 99
 #' @param verbose Boolean. Print results and progress while downloading?
 #' @export
 get_stocks_hist <- function(symbols = NA, 

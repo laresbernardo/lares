@@ -8,8 +8,7 @@ h2o_automl(df, train_test = NA, split = 0.7, weight = NULL,
   balance = TRUE, seed = 0, thresh = 5, max_time = 5 * 60,
   max_models = 25, start_clean = TRUE,
   exclude_algos = c("StackedEnsemble", "DeepLearning"), alarm = TRUE,
-  save = FALSE, subdir = NA, plot = FALSE,
-  project = "Machine Learning Model")
+  save = FALSE, subdir = NA, project = "Machine Learning Model")
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
@@ -54,10 +53,9 @@ working directory?}
 \item{subdir}{Character. In which directory do you wish to save 
 the results? Working directory as default.}
 
-\item{plot}{Boolean. Do you want to plot the results with 
-mplot_full function?}
-
 \item{project}{Character. Your project's name}
+
+\item{plots}{Boolean. Do you want to plot the results metrics?}
 }
 \description{
 This function lets the user create a robust and fast model, using 
