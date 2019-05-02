@@ -243,7 +243,7 @@ h2o_automl <- function(df,
   # CLASSIFICATION MODELS
   if (type == "Classifier") {
     if (length(unique(train$tag)) == 2) {
-      scores <- scores[,2]
+      scores <- scores$predict
       multis <- NA
     } else {
       colnames(scores)[1] <- "score"
