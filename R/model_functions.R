@@ -792,7 +792,7 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
     summarise(total = n(), target = sum(tag), score = 100 * min(score)) %>%
     left_join(wizard, "percentile") %>% replace(is.na(.), 100) %>% ungroup() %>%
     mutate(gain = 100*cumsum(target)/sum(target),
-           random = cumsum(rep(100/splits, splits)),
+           random = 100*cumsum(total)/sum(total),
            lift = 100 * (gain/random - 1),
            response = 100 * target/sum(target)) %>%
     select(percentile, random, target, total, gain, lift, optimal, response, score)
