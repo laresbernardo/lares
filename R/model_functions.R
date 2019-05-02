@@ -125,7 +125,6 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' working directory?
 #' @param subdir Character. In which directory do you wish to save 
 #' the results? Working directory as default.
-#' @param plots Boolean. Do you want to plot the results metrics?
 #' @param project Character. Your project's name
 #' @export
 h2o_automl <- function(df, 

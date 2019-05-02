@@ -33,6 +33,7 @@ Imports:
     pROC,
     quantmod,
     RColorBrewer,
+    RCurl,
     rdrop2,
     readstata13,
     reshape2,

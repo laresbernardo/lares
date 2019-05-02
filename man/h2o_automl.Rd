@@ -54,8 +54,6 @@ working directory?}
 the results? Working directory as default.}
 
 \item{project}{Character. Your project's name}
-
-\item{plots}{Boolean. Do you want to plot the results metrics?}
 }
 \description{
 This function lets the user create a robust and fast model, using 

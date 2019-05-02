@@ -796,6 +796,31 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
   rm(list = ls())
 }
 
+####################################################################
+#' ETF's Sectors Breakdown
+#' 
+#' This function scraps etf.com to get an ETF's sector breakdown.
+#' 
+#' @param etf Character Vector. Which ETF(s) you wish to scrap?
+#' @export
+etf_sector <- function (etf = "VTI") {
+  ret <- data.frame()
+  for (i in 1:length(etf)) {
+    url <- paste0("https://etfdb.com/etf/", toupper(etf[i]))
+    if (RCurl::url.exists(url)) {
+      sector <- read_html(url) %>% html_nodes(".col-md-6") %>% 
+        html_text() %>% .[grepl("Sector Breakdown",.)]
+      sector <- data.frame(matrix(unlist(strsplit(sector, split = "\n"))[-c(1:5)], ncol=2, byrow=TRUE))
+      colnames(sector) <- c("Sector", "Percentage")
+      sector$Percentage <- as.integer(cleanText(sector$Percentage))/100 
+      sector$ETF <- toupper(etf[i])
+      sector <- sector %>% select(ETF, Sector, Percentage)
+      ret <- rbind(ret, sector)
+    }
+  }
+  return(ret)
+}
+
 ######################### SHORT #####################################
 # df <- get_stocks() # Get data from my Dropbox
 # dfp <- stocks_objects(df) # Get historical data, make calculations and plots
@@ -806,3 +831,4 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
 # df <- get_stocks() # Get data from my Dropbox
 # hist <- get_stocks_hist(symbols = df$portfolio$Symbol, from = df$portfolio$StartDate)
 # daily <- stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = df$transactions)
+

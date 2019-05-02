@@ -39,7 +39,7 @@ plot_timeline <- function(event, start,
   cvlong <- data.frame(
     pos = rep(as.numeric(rownames(df)), 2),
     name = rep(as.character(df$Role), 2),
-    type = rep(factor(df$Type, order = TRUE), 2),
+    type = rep(factor(df$Type, ordered = TRUE), 2),
     where = rep(as.character(df$Place), 2),
     value = c(df$Start, df$End),
     label_pos = rep(df$Start + floor((df$End-df$Start)/2), 2))

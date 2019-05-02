@@ -86,4 +86,4 @@ if(getRversion() >= "2.15.1")
       "subject.y","type_label","facet","Total","pal","p_real","weight","ACC","AUC",
       "Logloss","yewxname","gain","random","optimal","lift","pred","prophet","fit.prophet",
       "prophet_plot_components","add_country_holidays","make_future_dataframe",
-      "percentile","cum_response","response","total")) 
+      "percentile","cum_response","response","total","ETF","Sector","Percentage")) 
