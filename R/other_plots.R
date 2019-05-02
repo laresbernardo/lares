@@ -37,12 +37,12 @@ plot_timeline <- function(event, start,
 
   # Duplicate data for ggplot's geom_lines
   cvlong <- data.frame(
-    pos = rep(as.numeric(rownames(df)),2),
-    name = rep(as.character(df$Role),2),
-    type = rep(as.character(df$Type),2),
-    where = rep(as.character(df$Place),2),
+    pos = rep(as.numeric(rownames(df)), 2),
+    name = rep(as.character(df$Role), 2),
+    type = rep(factor(df$Type, order = TRUE), 2),
+    where = rep(as.character(df$Place), 2),
     value = c(df$Start, df$End),
-    label_pos = rep(df$Start + floor((df$End-df$Start)/2) , 2))
+    label_pos = rep(df$Start + floor((df$End-df$Start)/2), 2))
 
   # Plot timeline
   maxdate <- max(df$End)
