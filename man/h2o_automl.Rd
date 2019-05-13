@@ -4,15 +4,18 @@
 \alias{h2o_automl}
 \title{Automated H2O's AutoML}
 \usage{
-h2o_automl(df, train_test = NA, split = 0.7, weight = NULL,
-  balance = TRUE, seed = 0, thresh = 5, max_time = 5 * 60,
-  max_models = 25, start_clean = TRUE,
+h2o_automl(df, y = "tag", train_test = NA, split = 0.7,
+  weight = NULL, balance = TRUE, seed = 0, thresh = 5,
+  max_time = 5 * 60, max_models = 25, start_clean = TRUE,
   exclude_algos = c("StackedEnsemble", "DeepLearning"), alarm = TRUE,
   save = FALSE, subdir = NA, project = "Machine Learning Model")
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
-the independent variable labeled as 'tag'}
+the independent variable labeled as 'tag'. If you want to define 
+which variable should be used instead, use the y parameter.}
+
+\item{y}{Character. Name of the independent variable}
 
 \item{train_test}{Character. If needed, df's column name with 'test' 
 and 'train' values to split}

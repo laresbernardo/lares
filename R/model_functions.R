@@ -98,7 +98,9 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' multi-layer artificial neural network) and "StackedEnsemble". 
 #'
 #' @param df Dataframe. Dataframe containing all your data, including 
-#' the independent variable labeled as 'tag'
+#' the independent variable labeled as 'tag'. If you want to define 
+#' which variable should be used instead, use the y parameter.
+#' @param y Character. Name of the independent variable
 #' @param train_test Character. If needed, df's column name with 'test' 
 #' and 'train' values to split
 #' @param split Numeric. Value between 0 and 1 to split as train/test 
@@ -127,7 +129,7 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' the results? Working directory as default.
 #' @param project Character. Your project's name
 #' @export
-h2o_automl <- function(df, 
+h2o_automl <- function(df, y = "tag",
                        train_test = NA,
                        split = 0.7,
                        weight = NULL,
@@ -144,13 +146,21 @@ h2o_automl <- function(df,
                        project = "Machine Learning Model") {
   
   options(warn=-1)
-  
+
   start <- Sys.time()
   message(paste(start,"| Started process..."))
   
-  df <- data.frame(df) %>% filter(!is.na(tag)) %>% mutate_if(is.character, as.factor)
-  type <- ifelse(length(unique(df$tag)) <= as.integer(thresh), "Classifier", "Regression")
+  # INDEPENDENT VARIABLE
+  if(!y %in% colnames(df)){
+    stop(paste("You should have a 'tag' column in your data.frame.",
+               "You can set the independent varialbe with the 'tag' parameter too!"))
+  }
+  colnames(df)[colnames(df) == y] <- "tag"
   
+  df <- data.frame(df) %>% filter(!is.na(tag)) %>% mutate_if(is.character, as.factor)
+  
+  # MODEL TYPE
+  type <- ifelse(length(unique(df$tag)) <= as.integer(thresh), "Classifier", "Regression")
   message("Model type: ", type)
   if (type == "Classifier") {
     print(data.frame(freqs(df, tag)))
@@ -159,12 +169,7 @@ h2o_automl <- function(df,
     print(summary(df$tag)) 
   }
   
-  ####### Validations to proceed #######
-  if(!"tag" %in% colnames(df)){
-    stop("You should have a 'tag' column in your data.frame!")
-  }
-  
-  ####### Split datasets for training and testing #######
+  # SPLIT TRAIN AND TEST DATASETS
   if (is.na(train_test)) {
     message("Splitting datasets...")
     splits <- msplit(df, size = split, seed = seed)
@@ -172,14 +177,16 @@ h2o_automl <- function(df,
     test <- splits$test
   } else {
     # If we already have a default split for train and test (train_test)
-    if ((!unique(train_test) %in% c('train', 'test')) & (length(unique(train_test)) != 2)) {
+    colnames(df)[colnames(df) == train_test] <- "train_test"
+    if ((!unique(as.character(df$train_test)) %in% c('train', 'test')) & 
+        (length(unique(df$train_test)) != 2)) {
       stop("Your train_test column should have 'train' and 'test' values only!")
     }
     train <- df %>% filter(train_test == "train")
     test <- df %>% filter(train_test == "test")
-    test$tag <- NULL
-    print(table(train_test))
+    print(table(df$train_test))
   }
+  
   # BALANCE TRAINING SET
   if (type == "Classifier" & balance == TRUE) {
     total <- nrow(train)
@@ -192,16 +199,13 @@ h2o_automl <- function(df,
                    rel, "% of training data..."))
   }
   
-  ####### Train model #######
-  
+  # TRAIN MODEL
   quiet(h2o.init(nthreads = -1, port=54321, min_mem_size="8g"))
   if (start_clean) {
     quiet(h2o.removeAll()) 
   } else {
     message("Previous trained models are not being erased. Use 'start_clean' parameter if needed.")
   }
-  #h2o.shutdown()
-  
   message(paste("Iterating until", max_models, "models or", max_time, "seconds..."))
   aml <- h2o::h2o.automl(x = setdiff(names(df), "tag"), 
                          y = "tag",
@@ -222,10 +226,8 @@ h2o_automl <- function(df,
   flow <- "http://localhost:54321/flow/index.html"
   message("Check results in H2O Flow's nice interface: ", flow)
   
-  # Select model (Best one by default)
-  m <- h2o.getModel(as.vector(aml@leaderboard$model_id[1]))  
-  
-  # Calculations and variables
+  # GET PERFORMANCE RESULTS
+  m <- h2o.getModel(as.vector(aml@leaderboard$model_id[1])) # Best model
   scores <- quiet(h2o_predict_model(test, m))
   
   # Variables importances
@@ -235,6 +237,11 @@ h2o_automl <- function(df,
   } %>%
   {if ("percentage" %in% colnames(.)) 
     dplyr::rename(., "importance" = "percentage") else .
+  }
+  noimp <- imp %>% filter(importance < 0.015)
+  if (nrow(noimp) > 0) {
+   which <- noimp %>% .$variable %>% vector2text(quotes = FALSE) 
+   message(paste("The following variables are NOT important:", which))
   }
   
   # CLASSIFICATION MODELS

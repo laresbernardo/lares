@@ -292,7 +292,7 @@ distr <- function(data, ...,
       prop <- freqs %>%
         group_by(value) %>%
         mutate(size = sum(n)/sum(freqs$n)) %>%
-        mutate(ptag = ifelse(p < 3, "", as.character(round(p,1)))) %>%
+        mutate(ptag = ifelse(p < 3, "", as.character(round(p, 1)))) %>%
         ggplot(aes(x = reorder(value, -order), y = p/100, label = ptag,
                    fill = tolower(as.character(targets)))) + 
         geom_col(position = "fill") +
@@ -306,7 +306,7 @@ distr <- function(data, ...,
         theme_lares2(pal = 1)
       # Show a reference line if levels = 2; quite useful when data is unbalanced (not 50/50)
       if (length(unique(targets)) == 2) {
-        distr <- df %>% freqs(targets) %>% arrange(targets)
+        distr <- df %>% freqs(targets) %>% arrange(as.character(targets))
         h <- signif(100 - distr$p[1], 3)
         prop <- prop +
           geom_hline(yintercept = h/100, colour = "purple", 
