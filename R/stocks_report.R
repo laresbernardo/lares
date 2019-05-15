@@ -802,8 +802,9 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
 #' This function scraps etf.com to get an ETF's sector breakdown.
 #' 
 #' @param etf Character Vector. Which ETF(s) you wish to scrap?
+#' @param verbose Boolean. Print results and progress while downloading?
 #' @export
-etf_sector <- function (etf = "VTI") {
+etf_sector <- function (etf = "VTI", verbose = TRUE) {
   ret <- data.frame()
   for (i in 1:length(etf)) {
     url <- paste0("https://etfdb.com/etf/", toupper(etf[i]))
@@ -816,6 +817,9 @@ etf_sector <- function (etf = "VTI") {
       sector$ETF <- toupper(etf[i])
       sector <- sector %>% select(ETF, Sector, Percentage)
       ret <- rbind(ret, sector)
+      if (verbose == TRUE) {
+        statusbar(i, length(etf), info = toupper(etf[i]))   
+      }
     }
   }
   return(ret)
