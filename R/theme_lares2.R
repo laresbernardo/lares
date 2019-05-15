@@ -47,17 +47,17 @@ theme_lares2 <- function(font = "Arial Narrow",
   update_geom_defaults("density", list(fill = main_colour, alpha = 0.95))
   
   # Edit some functions
-  scale_y_continuous <- function(...) ggplot2::scale_y_continuous(..., labels = scales::comma)
-  scale_x_continuous <- function(...) ggplot2::scale_x_continuous(..., labels = scales::comma)
+  # scale_y_continuous <- function(...) ggplot2::scale_y_continuous(..., labels = scales::comma)
+  # scale_x_continuous <- function(...) ggplot2::scale_x_continuous(..., labels = scales::comma)
   ## USING ASSIGN - IMPROVE:
-  envir <- as.environment(1)
-  assign("scale_x_continuous", function(..., labels = scales::comma) ggplot2::scale_x_continuous(..., labels = labels), envir=envir)
-  assign("scale_y_continuous", function(..., labels = scales::comma) ggplot2::scale_y_continuous(..., labels = labels), envir=envir)
+  # envir <- as.environment(1)
+  # assign("scale_x_continuous", function(..., labels = scales::comma) ggplot2::scale_x_continuous(..., labels = labels), envir=envir)
+  # assign("scale_y_continuous", function(..., labels = scales::comma) ggplot2::scale_y_continuous(..., labels = labels), envir=envir)
   # assign("scale_colour_discrete", function(..., values = as.vector(colours_pal)) ggplot2::scale_colour_manual(..., values = values), envir=envir)
   # assign("scale_fill_discrete", function(..., values = names(colours_pal)) ggplot2::scale_fill_manual(..., values = values), envir=envir)
   # assign("scale_colour_continuous", function(..., low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=envir)
   # assign("scale_fill_continuous", function(...,low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir=envir)
-  assign("ggsave", function(..., bg = bg_colour) ggplot2::ggsave(..., bg = bg), envir=envir)
+  # assign("ggsave", function(..., bg = bg_colour) ggplot2::ggsave(..., bg = bg), envir=envir)
   
   if (inherits(grid, "character")) {
     grid_col <- "#CCCCCC"
@@ -127,15 +127,18 @@ theme_lares2 <- function(font = "Arial Narrow",
   
   # Personal colours
   if (pal == 1) {
+    # Palette with fills and colour
     colours_pal <- lares_pal()$palette
     ret <- list(ret, scale_fill_manual(values = names(colours_pal))) 
     ret <- list(ret, scale_colour_manual(values = as.vector(colours_pal)))
   }
   if (pal == 2) {
+    # Palette without fills
     colours_pal <- lares_pal()$palette
     ret <- list(ret, scale_colour_manual(values = names(colours_pal)))
   }
   if (pal == 3) {
+    # Custom Palette Colours
     colours_pal <- lares_pal()$labels
     scale_fill_lares <- function(){
       values <- as.character(colours_pal$values)
