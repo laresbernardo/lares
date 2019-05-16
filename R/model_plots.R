@@ -776,7 +776,7 @@ mplot_lineal <- function(tag,
 mplot_full <- function(tag, 
                        score, 
                        splits = 8, 
-                       thresh = 5,
+                       thresh = 6,
                        subtitle = NA, 
                        model_name = NA, 
                        save = FALSE, 
@@ -790,32 +790,33 @@ mplot_full <- function(tag,
     stop(message(paste("Currently, tag has", length(tag), "rows and score has", length(score))))
   }
   
-  # Categorical Models
-  if (length(unique(tag)) <= thresh) {
-    if (!is.numeric(score)) {
-      metrics <- model_metrics(tag, score)
-      p1 <- metrics$plot_ConfMat
-      if (save == TRUE) {
-        p1 <- p1 + ggsave(file_name)
-      }
-      return(p1) 
-    } else {
-      p1 <- mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
-      p2 <- mplot_splits(tag = tag, score = score, splits = splits) +
-        theme(plot.margin = margin(10, 8, 5, 0))
-      p3 <- mplot_roc(tag = tag, score = score) +
-        theme(plot.margin = margin(0, 8, 5, 0))
-      p4 <- mplot_cuts(score = score) +
-        theme(plot.margin = margin(-3, 0, 5, 8))
-    }
+  # Multi-Categorical Models
+  if (length(unique(tag)) > 2 & length(unique(tag)) < thresh) {
+    message("Please try using the model_metrics() function instead...")
+    stop("Currently this function doesn't allow multi-categorical models!")
+  }  
+  
+  # Categorical Binomial Models
+  if (length(unique(tag)) == 2 & is.numeric(score)) {
+    
+    p1 <- mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
+    p2 <- mplot_splits(tag = tag, score = score, splits = splits) +
+      theme(plot.margin = margin(10, 8, 5, 0))
+    p3 <- mplot_roc(tag = tag, score = score) +
+      theme(plot.margin = margin(0, 8, 5, 0))
+    p4 <- mplot_cuts(score = score) +
+      theme(plot.margin = margin(-3, 0, 5, 8))
     
     p <- arrangeGrob(p1, p2, p3, p4,
                      widths = c(1.3,1),
-                     layout_matrix = rbind(c(1,2), c(1,2), c(1,3), c(4,3)))
+                     layout_matrix = rbind(c(1,2), c(1,2), 
+                                           c(1,3), c(4,3)))
     
-  } else {
+  }
+  
+  # Regression Continuous Models
+  if (is.numeric(tag) & is.numeric(score)) {
     
-    # Numerical models
     p1 <- mplot_lineal(tag = tag, score = score, subtitle = subtitle, model_name = model_name) +
       theme_lares2(bg_colour = "white")
     p2 <- mplot_density(tag = tag, score = score)

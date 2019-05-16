@@ -20,7 +20,7 @@ missingness <- function(df, plot = FALSE) {
   if (plot) {
     p <- gg_bars(m$variable, m$missing, p = m$missingness,
                  title = "Missing Values Frequencies",
-                 axis = "# Missings (%)")
+                 axis = "# Missings (%)", obs = FALSE)
     return(p)
   }
   return(m)

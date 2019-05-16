@@ -4,7 +4,7 @@
 \alias{mplot_full}
 \title{MPLOTS Score Full Report Plots}
 \usage{
-mplot_full(tag, score, splits = 8, thresh = 5, subtitle = NA,
+mplot_full(tag, score, splits = 8, thresh = 6, subtitle = NA,
   model_name = NA, save = FALSE, subdir = NA,
   file_name = "viz_full.png")
 }

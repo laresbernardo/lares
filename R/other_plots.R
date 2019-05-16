@@ -216,8 +216,6 @@ gg_bars <- function(names, n, p = NA,
                     obs = TRUE, 
                     limit = 15, na.rm = FALSE) {
   
-  lim <- 0.35
-  obs <- paste0("Obs.: ", formatNum(sum(n), 0))
   dfn <- data.frame(names, count = n) %>% arrange(desc(count), names)
   
   
@@ -235,12 +233,13 @@ gg_bars <- function(names, n, p = NA,
   
   if (nrow(dfn) >= limit) {
     dfn <- head(dfn, limit)
+    subtitle <- paste(limit, "most frequent results")
   }
   
   dfn <- dfn %>%
     mutate(label_colours = ifelse(p > mean(range(p)) * 0.9, "m", "f"),
-           label_hjust = ifelse(count < min(count) + diff(range(count)) * lim, -0.1, 1.05)) %>%
-    mutate(label_colours = ifelse(label_colours == "m" & label_hjust < lim, "f", label_colours))
+           label_hjust = ifelse(count < min(count) + diff(range(count)) * 0.35, -0.1, 1.05)) %>%
+    mutate(label_colours = ifelse(label_colours == "m" & label_hjust < 0.35, "f", label_colours))
   
   p <- ggplot(dfn, aes(x = reorder(names, count), y = count, label = labels, fill = p)) +
     geom_col(alpha = 0.9, width = 0.8) +
@@ -249,7 +248,7 @@ gg_bars <- function(names, n, p = NA,
     labs(x = "", y = axis, 
          title = if (!is.na(title)) title, 
          subtitle = if (!is.na(subtitle)) subtitle, 
-         caption = if (obs == TRUE) obs) +
+         caption = if (obs == TRUE) paste0("Obs.: ", formatNum(sum(n), 0))) +
     theme_lares2(legend="right") + gg_text_customs() +
     scale_fill_gradient(low = "lightskyblue2", high = "navy")
   return(p)
