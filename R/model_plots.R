@@ -762,7 +762,11 @@ mplot_lineal <- function(tag,
 #' unique values the independent variable (tag) has.
 #' 
 #' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
+#' @param score Vector. Predicted value or model's result. Must be numeric
+#' for categorical binomial models and continuous regression models; must
+#' be categorical for multi-categorical models (also need multis param).
+#' @param multis Data.frame. Containing columns with each category score 
+#' (only used when more than 2 categories coexist)
 #' @param splits Integer. Numer of separations to plot
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
@@ -775,6 +779,7 @@ mplot_lineal <- function(tag,
 #' @export
 mplot_full <- function(tag, 
                        score, 
+                       multis = NA,
                        splits = 8, 
                        thresh = 6,
                        subtitle = NA, 
@@ -790,11 +795,6 @@ mplot_full <- function(tag,
     stop(message(paste("Currently, tag has", length(tag), "rows and score has", length(score))))
   }
   
-  # Multi-Categorical Models
-  if (length(unique(tag)) > 2 & length(unique(tag)) < thresh) {
-    message("Please try using the model_metrics() function instead...")
-    stop("Currently this function doesn't allow multi-categorical models!")
-  }  
   
   # Categorical Binomial Models
   if (length(unique(tag)) == 2 & is.numeric(score)) {
@@ -807,12 +807,23 @@ mplot_full <- function(tag,
     p4 <- mplot_cuts(score = score) +
       theme(plot.margin = margin(-3, 0, 5, 8))
     
-    p <- arrangeGrob(p1, p2, p3, p4,
-                     widths = c(1.3,1),
-                     layout_matrix = rbind(c(1,2), c(1,2), 
-                                           c(1,3), c(4,3)))
-    
+    p <- arrangeGrob(
+      p1, p2, p3, p4,
+      widths = c(1.3,1),
+      layout_matrix = rbind(c(1,2), c(1,2), 
+                            c(1,3), c(4,3)))
   }
+  
+  # Multi-Categorical Models
+  if (length(unique(tag)) > 2 & length(unique(tag)) < thresh) {
+    m <- model_metrics(tag, score, multis)
+    p <- arrangeGrob(
+      m$plots$conf_matrix + 
+        labs(title = "Confusion Matrix", 
+             caption = if (!is.na(model_name)) model_name), 
+      m$plots$ROC, 
+      ncol = 2, nrow = 1)
+  }  
   
   # Regression Continuous Models
   if (is.numeric(tag) & is.numeric(score)) {
@@ -822,10 +833,11 @@ mplot_full <- function(tag,
     p2 <- mplot_density(tag = tag, score = score)
     p3 <- mplot_cuts_error(tag = tag, score = score, splits = splits)
     
-    p <- arrangeGrob(p1, p2, p3,
-                     heights = c(0.6, 0.4),
-                     widths = c(0.45, 0.55),
-                     layout_matrix = rbind(c(1,3), c(2,3)))
+    p <- arrangeGrob(
+      p1, p2, p3,
+      heights = c(0.6, 0.4),
+      widths = c(0.45, 0.55),
+      layout_matrix = rbind(c(1,3), c(2,3)))
   }
   
   if (save == TRUE) {

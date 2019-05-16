@@ -966,6 +966,12 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
     } else {
       
       # For Multi-Categories
+      if (is.na(multis)) {
+        stop("You have to input a data.frame with each tag's probability into the multis parameter.")
+      } 
+      if (sum(colnames(multis) %in% unique(tag)) != length(unique(tag))) {
+        stop(paste("Your multis data.frame colums should be:", vector2text(unique(tag))))
+      }
       df <- data.frame(tag, score)
       metrics[["confusion_matrix"]] <- conf_mat(tag, score)
       AUCs <- t(ROC(tag, score, multis)$ci)[,2]

@@ -4,14 +4,19 @@
 \alias{mplot_full}
 \title{MPLOTS Score Full Report Plots}
 \usage{
-mplot_full(tag, score, splits = 8, thresh = 6, subtitle = NA,
-  model_name = NA, save = FALSE, subdir = NA,
+mplot_full(tag, score, multis = NA, splits = 8, thresh = 6,
+  subtitle = NA, model_name = NA, save = FALSE, subdir = NA,
   file_name = "viz_full.png")
 }
 \arguments{
 \item{tag}{Vector. Real known label}
 
-\item{score}{Vector. Predicted value or model's result}
+\item{score}{Vector. Predicted value or model's result. Must be numeric
+for categorical binomial models and continuous regression models; must
+be categorical for multi-categorical models (also need multis param).}
+
+\item{multis}{Data.frame. Containing columns with each category score 
+(only used when more than 2 categories coexist)}
 
 \item{splits}{Integer. Numer of separations to plot}
 
