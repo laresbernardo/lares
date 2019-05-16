@@ -799,9 +799,9 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
 ####################################################################
 #' ETF's Sectors Breakdown
 #' 
-#' This function scraps etf.com to get an ETF's sector breakdown.
+#' This function scraps etf.com data for sector breakdown on ETFs.
 #' 
-#' @param etf Character Vector. Which ETF(s) you wish to scrap?
+#' @param etf Character Vector. Which ETFs you wish to scrap?
 #' @param verbose Boolean. Print results and progress while downloading?
 #' @export
 etf_sector <- function (etf = "VTI", verbose = TRUE) {
@@ -817,9 +817,13 @@ etf_sector <- function (etf = "VTI", verbose = TRUE) {
       sector$ETF <- toupper(etf[i])
       sector <- sector %>% select(ETF, Sector, Percentage)
       ret <- rbind(ret, sector)
-      if (verbose == TRUE) {
-        statusbar(i, length(etf), info = toupper(etf[i]))   
-      }
+      check <- TRUE
+    } else {
+      check <- FALSE
+    }
+    if (verbose == TRUE) {
+      info <- paste(toupper(etf[i]), ifelse(check, "", "X"))
+      statusbar(i, length(etf), info = info)   
     }
   }
   return(ret)

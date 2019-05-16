@@ -197,3 +197,60 @@ plot_chord <- function(origin, dest, weight = 1, mg = 3,
          bg = "transparent", box.lty = 0, cex = 0.8)
   
 }
+
+
+####################################################################
+#' Quick Nice Bar Plot
+#' 
+#' This function uses a nice template for barplots.
+#' 
+#' @param names Character Vector. Bar names
+#' @param n,p Numeric Vectors. n for counter, p to force percentage.
+#' @param title,subtitle,axis Character. Texts for plot
+#' @param obs Boolean. Show observations counter?
+#' @param limit Integer. Limit n most frequent values only
+#' @param na.rm Boolean. Remove empty and NAs?
+#' @export
+gg_bars <- function(names, n, p = NA, 
+                    title = NA, subtitle = NA, axis = "Counter", 
+                    obs = TRUE, 
+                    limit = 15, na.rm = FALSE) {
+  
+  lim <- 0.35
+  obs <- paste0("Obs.: ", formatNum(sum(n), 0))
+  dfn <- data.frame(names, count = n) %>% arrange(desc(count), names)
+  
+  
+  if (na.rm == TRUE) {
+    dfn <- dfn %>% filter(!is.na(names), names != "")
+  }
+  
+  if (class(n) == "integer") {
+    dfn <- dfn %>% 
+      mutate(p = ifelse(!is.na(p), p, 100*count/sum(count)),
+             labels = paste0(formatNum(count, 0)," (", signif(p, 3), "%)"))
+  } else {
+    dfn <- dfn %>% mutate(p = count, labels = signif(count, 3))
+  }
+  
+  if (nrow(dfn) >= limit) {
+    dfn <- head(dfn, limit)
+  }
+  
+  dfn <- dfn %>%
+    mutate(label_colours = ifelse(p > mean(range(p)) * 0.9, "m", "f"),
+           label_hjust = ifelse(count < min(count) + diff(range(count)) * lim, -0.1, 1.05)) %>%
+    mutate(label_colours = ifelse(label_colours == "m" & label_hjust < lim, "f", label_colours))
+  
+  p <- ggplot(dfn, aes(x = reorder(names, count), y = count, label = labels, fill = p)) +
+    geom_col(alpha = 0.9, width = 0.8) +
+    geom_text(aes(hjust = label_hjust, colour = label_colours), size = 3) + 
+    coord_flip() + guides(colour=FALSE, fill=FALSE) +
+    labs(x = "", y = axis, 
+         title = if (!is.na(title)) title, 
+         subtitle = if (!is.na(subtitle)) subtitle, 
+         caption = if (obs == TRUE) obs) +
+    theme_lares2(legend="right") + gg_text_customs() +
+    scale_fill_gradient(low = "lightskyblue2", high = "navy")
+  return(p)
+}
