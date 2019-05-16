@@ -815,7 +815,7 @@ mplot_full <- function(tag,
   }
   
   # Multi-Categorical Models
-  if (length(unique(tag)) > 2 & length(unique(tag)) < thresh) {
+  if (length(unique(tag)) > 2 & length(unique(tag)) <= thresh) {
     m <- model_metrics(tag, score, multis)
     p <- arrangeGrob(
       m$plots$conf_matrix + 
@@ -826,7 +826,7 @@ mplot_full <- function(tag,
   }  
   
   # Regression Continuous Models
-  if (is.numeric(tag) & is.numeric(score)) {
+  if (is.numeric(tag) & is.numeric(score) & length(unique(tag)) > thresh) {
     
     p1 <- mplot_lineal(tag = tag, score = score, subtitle = subtitle, model_name = model_name) +
       theme_lares2(bg_colour = "white")

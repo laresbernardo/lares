@@ -23,6 +23,7 @@ r$metrics
 
 # Full Results plots
 mplot_full(r$scores_test$tag, r$scores_test$score)
+mplot_full(r$scores_test$tag, r$scores_test$score, select(r$scores_test, -tag, -score))
 mplot_importance(r$importance$variable, r$importance$importance)
 
 # OTHER EXAMPLE
@@ -30,4 +31,3 @@ data(dfl)
 r <- dfl %>% ohse(dates = T) %>% 
   select(-opp_date, -opp_id) %>% 
   h2o_automl("issued", max_models = 3)
-r$metrics

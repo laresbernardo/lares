@@ -152,12 +152,14 @@ h2o_automl <- function(df, y = "tag",
   
   # INDEPENDENT VARIABLE
   if(!y %in% colnames(df)){
-    stop(paste("You should have a 'tag' column in your data.frame.",
-               "You can set the independent varialbe with the 'tag' parameter too!"))
+    stop(paste("You should have a 'tag' column in your data.frame or select",
+               "an independent varialbe using the 'y' parameter."))
   }
   colnames(df)[colnames(df) == y] <- "tag"
   
-  df <- data.frame(df) %>% filter(!is.na(tag)) %>% mutate_if(is.character, as.factor)
+  df <- data.frame(df) %>% 
+    filter(!is.na(tag)) %>% 
+    mutate_if(is.character, as.factor)
   
   # MODEL TYPE
   type <- ifelse(length(unique(df$tag)) <= as.integer(thresh), "Classifier", "Regression")
@@ -238,9 +240,9 @@ h2o_automl <- function(df, y = "tag",
   {if ("percentage" %in% colnames(.)) 
     dplyr::rename(., "importance" = "percentage") else .
   }
-  noimp <- imp %>% filter(importance < 0.015)
+  noimp <- imp %>% filter(importance < 0.015) %>% arrange(desc(importance))
   if (nrow(noimp) > 0) {
-   which <- noimp %>% .$variable %>% vector2text(quotes = FALSE) 
+   which <- noimp %>% .$variable %>% vector2text(.) 
    message(paste("The following variables are NOT important:", which))
   }
   
@@ -969,9 +971,15 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
       if (is.na(multis)) {
         stop("You have to input a data.frame with each tag's probability into the multis parameter.")
       } 
-      if (sum(colnames(multis) %in% unique(tag)) != length(unique(tag))) {
-        stop(paste("Your multis data.frame colums should be:", vector2text(unique(tag))))
+      tags <- sort(unique(tag))
+      if (any(1:1000 %in% tags)) {
+        which <- grepl("[[:digit:]]", tags)
+        tags[which] <- paste0("p", tags)
       }
+      if (sum(colnames(multis) %in% tags) != length(tags)) {
+        stop(paste("Your multis data.frame colums should be:", vector2text(tags)))
+      }
+      
       df <- data.frame(tag, score)
       metrics[["confusion_matrix"]] <- conf_mat(tag, score)
       AUCs <- t(ROC(tag, score, multis)$ci)[,2]
