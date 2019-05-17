@@ -4,16 +4,13 @@
 \alias{mplot_lineal}
 \title{Linear Regression Results Plot}
 \usage{
-mplot_lineal(tag, score, regression = FALSE, subtitle = NA,
-  model_name = NA, save = FALSE, subdir = NA,
-  file_name = "viz_lineal.png")
+mplot_lineal(tag, score, subtitle = NA, model_name = NA,
+  save = FALSE, subdir = NA, file_name = "viz_lineal.png")
 }
 \arguments{
 \item{tag}{Vector. Real known label}
 
 \item{score}{Vector. Predicted value or model's result}
-
-\item{regression}{Boolean. Plot with geom_smooth's lm regression?}
 
 \item{subtitle}{Character. Subitle to show in plot}
 

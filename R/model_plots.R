@@ -679,7 +679,6 @@ mplot_metrics <- function(results,
 #' 
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
-#' @param regression Boolean. Plot with geom_smooth's lm regression?
 #' @param subtitle Character. Subitle to show in plot
 #' @param model_name Character. Model's name
 #' @param save Boolean. Save output plot into working directory
@@ -688,7 +687,6 @@ mplot_metrics <- function(results,
 #' @export
 mplot_lineal <- function(tag, 
                          score, 
-                         regression = FALSE,
                          subtitle = NA, 
                          model_name = NA, 
                          save = FALSE, 
@@ -727,9 +725,9 @@ mplot_lineal <- function(tag,
     theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
     guides(colour = guide_colorbar(barwidth = 0.9, barheight = 4.5))
   
-  if (regression == TRUE) {
-    p <- p + geom_smooth("lm", alpha = 0.8) 
-  }
+  # if (regression == TRUE) {
+  #   p <- p + geom_smooth("lm", alpha = 0.8) 
+  # }
   
   # Draw reference line for correlation
   intercept <- summary(fit)$coefficients[1]
