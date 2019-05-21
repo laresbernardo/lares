@@ -36,7 +36,7 @@ freqs <- function(vector, ..., wt = NULL,
   output <-  if (quo_is_null(weight)) {
        group_by(vector, !!!vars) %>% tally() 
     } else { 
-       count(vector, !!!vars, wt = !!weight)} %>%
+       count(vector, !!!vars, wt = !!weight) %>%
        arrange(desc(n)) %>%
        mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
     }
@@ -120,7 +120,7 @@ freqs <- function(vector, ..., wt = NULL,
   if (ncol(output) - 3 == 2) { 
     type <- 1
     colnames(plot)[1] <- "names"
-    p <- ggplot(plot, aes(x = reorder(names, -order), y = n,label = labels, fill = p))
+    p <- ggplot(plot) + aes(x = reorder(names, -order), y = n, label = labels, fill = p)
   }
   # When two features
   else if (ncol(output) - 3 == 3) { 
