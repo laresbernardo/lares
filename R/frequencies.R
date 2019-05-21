@@ -32,164 +32,166 @@ freqs <- function(vector, ..., wt = NULL,
   
   vars <- quos(...)
   weight <- enquo(wt)
-  
-  output <- vector %>%
-  {if (as.character(weight)[2] == "NULL") group_by(., !!!vars) %>% tally() else 
-    count(., !!!vars, wt = !!weight)} %>%
-    arrange(desc(n)) %>%
-    mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
-  
-  if (plot == TRUE | save == TRUE) {
     
-    if (ncol(output) - 3 >= 4) {
-      # When more than two features
-      message(paste(
-        "Sorry, but trying to plot more than 3 features is as complex as it sounds.",
-        "You should try another method to understand your analysis!"))
-    } else {
-      obs_total <- sum(output$n)
-      obs <- paste("Total Obs.:", formatNum(obs_total, 0))
-      weight_text <- ifelse((as.character(weight)[2] != "NULL"), 
-                            paste0("(weighted by ", as.character(weight)[2], ")"), "")
-      
-      # Use only the most n frequent values/combinations only
-      values <- unique(output[,(ncol(output)-3)])
-      if(nrow(values) > top) {
-        if (!is.na(top)) {
-          output <- output %>% slice(1:top)
-          message(paste0("Slicing the top ", top, 
-                         " (out of ", nrow(values),
-                         ") frequencies; use 'top' parameter to overrule."))
-          note <- paste0("[", top, " most frequent]")
-          obs <- paste0("Obs.: ", formatNum(sum(output$n), 0), " (out of ", formatNum(obs_total, 0), ")")
-        }
-      } else { note <- "" }
-      
-      # Sort values alphabetically or ascending if numeric
-      if (abc == TRUE) {
-        message("Sorting variable(s) alphabetically")
-        output <- output %>% arrange(!!!vars, desc(n)) %>% 
-          mutate(order = row_number())
-        note <- gsub("most frequent", "first rows", note)
-      } else {
-        output <- output %>% arrange(desc(n)) %>%
-          mutate(order = row_number())
-      }
-      
-      if (ncol(output) - 3 <= 4) { 
-        
-        options(warn=-1)
-        
-        reorder_within <- function(x, by, within, fun = mean, sep = "___", ...) {
-          new_x <- paste(x, within, sep = sep)
-          stats::reorder(new_x, by, FUN = fun)
-        }
-        scale_x_reordered <- function(..., sep = "___") {
-          reg <- paste0(sep, ".+$")
-          ggplot2::scale_x_discrete(labels = function(x) gsub(reg, "", x), ...)
-        }
-        
-        plot <- ungroup(output)
-        
-        if (rm.na == TRUE) {
-          plot <- plot[complete.cases(plot), ]
-        }
-        
-        # Create some dynamic aesthetics
-        plot$labels <- paste0(lares::formatNum(plot$n, decimals = 0),
-                              " (", signif(plot$p, 4), "%)")
-        plot$label_colours <- ifelse(plot$p > mean(range(plot$p)) * 0.9, "m", "f")
-        lim <- 0.35
-        plot$label_hjust <- ifelse(
-          plot$n < min(plot$n) + diff(range(plot$n)) * lim, -0.1, 1.05)
-        plot$label_colours <- ifelse(
-          plot$label_colours == "m" & plot$label_hjust < lim, "f", plot$label_colours)
-        variable <- colnames(plot)[1]
-        
-        # When one feature
-        if (ncol(output) - 3 == 2) { 
-          type <- 1
-          colnames(plot)[1] <- "names"
-          p <- ggplot(plot, aes(x = reorder(names, -order), y = n,label = labels, fill = p))
-        }
-        # When two features
-        if (ncol(output) - 3 == 3) { 
-          type <- 2
-          facet_name <- colnames(plot)[2]
-          colnames(plot)[1] <- "facet"
-          colnames(plot)[2] <- "names"
-          plot$facet[is.na(plot$facet)] <- "NA"
-          p <- plot %>%
-            ggplot(aes(x = reorder_within(names, -order, facet), 
-                       y = n, label = labels, fill = p)) +
-            scale_x_reordered()
-        }
-        # When three features
-        if (ncol(output) - 3 == 4) { 
-          type <- 3
-          facet_name1 <- colnames(plot)[2]
-          facet_name2 <- colnames(plot)[3]
-          colnames(plot)[1] <- "facet2"
-          colnames(plot)[2] <- "facet1"
-          colnames(plot)[3] <- "names"
-          plot$facet2[is.na(plot$facet2)] <- "NA"
-          plot$facet1[is.na(plot$facet1)] <- "NA"
-          p <- plot %>%
-            ggplot(aes(x = reorder_within(names, n, facet2), 
-                       y = n, label = labels, fill = p)) +
-            scale_x_reordered()
-        }
-        
-        # Plot base
-        p <- p + geom_col(alpha=0.9, width = 0.8) +
-          geom_text(aes(hjust = label_hjust, colour = label_colours), size = 2.6) + 
-          coord_flip() + guides(colour = FALSE) +
-          labs(x = "", y = "Counter", fill = "[%]",
-               title = ifelse(is.na(title), paste("Frequencies and Percentages"), title),
-               subtitle = ifelse(is.na(subtitle), 
-                                 paste("Variable:", ifelse(!is.na(variable_name), variable_name, variable), note, weight_text), 
-                                 subtitle), caption = obs) +
-          scale_y_continuous(labels = comma) +
-          scale_fill_gradient(low = "lightskyblue2", high = "navy") +
-          gg_text_customs() + theme_lares2() +
-          theme(legend.position="none")
-        
-        # When two features
-        if (type == 2) { 
-          p <- p + 
-            facet_grid(as.character(facet) ~ ., scales = "free", space = "free") + 
-            labs(subtitle = ifelse(is.na(subtitle), 
-                                   paste("Variables:", facet_name, "grouped by", variable, "\n", note, weight_text), 
-                                   subtitle),
-                 caption = obs)
-        }
-        
-        # When three features
-        if (type == 3) { 
-          if (length(unique(facet_name2)) > 3) {
-            stop("Please, try with a (third) variable with 3 or less cateogries!")
-          }
-          p <- p + facet_grid(as.character(facet2) ~ as.character(facet1), scales = "free") + 
-            labs(title = ifelse(is.na(title), "Frequencies and Percentages:", title),
-                 subtitle = ifelse(is.na(subtitle), 
-                                   paste("Variables:", facet_name2, "grouped by", facet_name1, "[x] and", 
-                                         variable, "[y]", "\n", note, weight_text), 
-                                   subtitle),
-                 caption = obs)
-        }
-        return(p)
-      }
-      
-      # Export file name and folder for plot
-      if (save == TRUE) {
-        export_plot(p, "viz_freqs", vars, subdir = subdir)
-      }
-      output <- output %>% select(-order)
+  output <-  if (quo_is_null(weight)) {
+       group_by(vector, !!!vars) %>% tally() 
+    } else { 
+       count(vector, !!!vars, wt = !!weight) %>%
+       arrange(desc(n)) %>%
+       mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
     }
-    return(p)
+   
+  if (!plot && !save) {
+    if(results) {
+      return(output)
+    } else {
+      return(NULL)
+    }
   }
-  
-  if (results == TRUE) {
-    return(output)
+
+  if (ncol(output) - 3 >= 4) {
+    # When more than two features
+    # This should be a stop and not a message, because the user 
+    # requested a ggplot object back, and it cannot be constructed 
+    stop(
+      "Sorry, but trying to plot more than 3 features is as complex as it sounds.",
+      "You should try another method to understand your analysis!")
   }
+  obs_total <- sum(output$n)
+  obs <- paste("Total Obs.:", formatNum(obs_total, 0))
+  weight_text <- ifelse((as.character(weight)[2] != "NULL"), 
+                        paste0("(weighted by ", as.character(weight)[2], ")"), "")
+
+  # Use only the most n frequent values/combinations only
+  values <- unique(output[,(ncol(output)-3)])
+  if(nrow(values) > top) {
+    if (!is.na(top)) {
+      output <- output %>% slice(1:top)
+      message(paste0("Slicing the top ", top, 
+                     " (out of ", nrow(values),
+                     ") frequencies; use 'top' parameter to overrule."))
+      note <- paste0("[", top, " most frequent]")
+      obs <- paste0("Obs.: ", formatNum(sum(output$n), 0), " (out of ", formatNum(obs_total, 0), ")")
+    }
+  } else { note <- "" }
+
+  # Sort values alphabetically or ascending if numeric
+  if (abc) {
+    message("Sorting variable(s) alphabetically")
+    output <- output %>% arrange(!!!vars, desc(n)) %>% 
+      mutate(order = row_number())
+    note <- gsub("most frequent", "first rows", note)
+  } else {
+    output <- output %>% arrange(desc(n)) %>%
+      mutate(order = row_number())
+  }
+
+  # Disable warnings for rest of block, but turn them back on when done
+  w <- options(warn=-1)
+  on.exit(options(warn=w))
+
+  reorder_within <- function(x, by, within, fun = mean, sep = "___", ...) {
+    new_x <- paste(x, within, sep = sep)
+    stats::reorder(new_x, by, FUN = fun)
+  }
+  scale_x_reordered <- function(..., sep = "___") {
+    reg <- paste0(sep, ".+$")
+    ggplot2::scale_x_discrete(labels = function(x) gsub(reg, "", x), ...)
+  }
+
+  plot <- ungroup(output)
+
+  if (rm.na) {
+    plot <- plot[complete.cases(plot), ]
+  }
+
+  # Create some dynamic aesthetics
+  plot$labels <- paste0(lares::formatNum(plot$n, decimals = 0),
+                        " (", signif(plot$p, 4), "%)")
+  plot$label_colours <- ifelse(plot$p > mean(range(plot$p)) * 0.9, "m", "f")
+  lim <- 0.35
+  plot$label_hjust <- ifelse(
+    plot$n < min(plot$n) + diff(range(plot$n)) * lim, -0.1, 1.05)
+  plot$label_colours <- ifelse(
+    plot$label_colours == "m" & plot$label_hjust < lim, "f", plot$label_colours)
+  variable <- colnames(plot)[1]
+
+  # When one feature
+  if (ncol(output) - 3 == 2) { 
+    type <- 1
+    colnames(plot)[1] <- "names"
+    p <- ggplot(plot) + aes(x = reorder(names, -order), y = n, label = labels, fill = p)
+  }
+  # When two features
+  else if (ncol(output) - 3 == 3) { 
+    type <- 2
+    facet_name <- colnames(plot)[2]
+    colnames(plot)[1] <- "facet"
+    colnames(plot)[2] <- "names"
+    plot$facet[is.na(plot$facet)] <- "NA"
+    p <- plot %>%
+      ggplot(aes(x = reorder_within(names, -order, facet), 
+                 y = n, label = labels, fill = p)) +
+      scale_x_reordered()
+  }
+  # When three features
+  else if (ncol(output) - 3 == 4) { 
+    type <- 3
+    facet_name1 <- colnames(plot)[2]
+    facet_name2 <- colnames(plot)[3]
+    colnames(plot)[1] <- "facet2"
+    colnames(plot)[2] <- "facet1"
+    colnames(plot)[3] <- "names"
+    plot$facet2[is.na(plot$facet2)] <- "NA"
+    plot$facet1[is.na(plot$facet1)] <- "NA"
+    p <- plot %>%
+      ggplot(aes(x = reorder_within(names, n, facet2), 
+                 y = n, label = labels, fill = p)) +
+      scale_x_reordered()
+  }
+
+  # Plot base
+  p <- p + geom_col(alpha=0.9, width = 0.8) +
+    geom_text(aes(hjust = label_hjust, colour = label_colours), size = 2.6) + 
+    coord_flip() + guides(colour = FALSE) +
+    labs(x = "", y = "Counter", fill = "[%]",
+         title = ifelse(is.na(title), paste("Frequencies and Percentages"), title),
+         subtitle = ifelse(is.na(subtitle), 
+                           paste("Variable:", ifelse(!is.na(variable_name), variable_name, variable), note, weight_text), 
+                           subtitle), caption = obs) +
+    scale_y_continuous(labels = comma) +
+    scale_fill_gradient(low = "lightskyblue2", high = "navy") +
+    gg_text_customs() + theme_lares2() +
+    theme(legend.position="none")
+
+  # When two features
+  if (type == 2) { 
+    p <- p + 
+      facet_grid(as.character(facet) ~ ., scales = "free", space = "free") + 
+      labs(subtitle = ifelse(is.na(subtitle), 
+                             paste("Variables:", facet_name, "grouped by", variable, "\n", note, weight_text), 
+                             subtitle),
+           caption = obs)
+  }
+
+  # When three features
+  else if (type == 3) { 
+    if (length(unique(facet_name2)) > 3) {
+      stop("Please, try with a (third) variable with 3 or less cateogries!")
+    }
+    p <- p + facet_grid(as.character(facet2) ~ as.character(facet1), scales = "free") + 
+      labs(title = ifelse(is.na(title), "Frequencies and Percentages:", title),
+           subtitle = ifelse(is.na(subtitle), 
+                             paste("Variables:", facet_name2, "grouped by", facet_name1, "[x] and", 
+                                   variable, "[y]", "\n", note, weight_text), 
+                             subtitle),
+           caption = obs)
+  }
+
+  # Export file name and folder for plot
+  if (save) {
+    export_plot(p, "viz_freqs", vars, subdir = subdir)
+  }
+
+  return(p)  
 }

@@ -72,11 +72,7 @@ forecast_arima <- function(time, values, n_future = 30,
   # Which AR and MA values minimize our AIC
   if (is.na(AR) & is.na(MA)) {
     arma <- c(ARMA_min:ARMA)
-    combs <- expand.grid(arma, arma)
-    aic <- data.frame(
-      AR = combs[,1], 
-      MA = combs[,2], 
-      cals = rep(0, nrow(combs)))
+    aic <- expand.grid(AR=arma, MA=arma, cals=0)
     message("Iterating for best AR / MA combinations; there are ", nrow(aic), "!")
     # if (length(time) > 1000) { method <- "ML" } else { method <- "CSS" }
     for(i in 1:nrow(aic)){
@@ -85,7 +81,7 @@ forecast_arima <- function(time, values, n_future = 30,
     }
     AR <- aic$AR[which.min(aic$cals)]
     MA <- aic$MA[which.min(aic$cals)]
-    message(paste("Best combination:", AR, "and", MA))
+    message("Best combination:", AR, "and", MA)
     aic_ARIMA <- min(aic$cals)
   }
   
@@ -201,25 +197,25 @@ forecast_ml <- function(time, values,
   }
   
   # STEP 1: AUGMENT TIME SERIES SIGNATURE
-  augmented <- df %>% tk_augment_timeseries_signature()
+  augmented <- tk_augment_timeseries_signature(df)
   augmented <- mutate(augmented, 
                       month.lbl = as.character(month.lbl),
                       wday.lbl = as.character(wday.lbl))
   
   # STEP 2: BUILD FUTURE (NEW) DATA
-  idx <- augmented %>% tk_index()
-  future_idx <- idx %>% tk_make_future_timeseries(n_future = n_future)
-  new_data_tbl <- future_idx %>% tk_get_timeseries_signature() %>%
+  idx <- tk_index(augmented)
+  future_idx <- tk_make_future_timeseries(idx, n_future = n_future)
+  new_data_tbl <- tk_get_timeseries_signature(future_idx) %>%
     mutate(month.lbl = as.character(month.lbl),
            wday.lbl = as.character(wday.lbl))
   
   # STEP 3: MODEL
-  if (automl == FALSE) {
+  if (!automl) {
     fit_lm <- lm(amount ~ ., data = select(augmented, -c(time)))
     pred <- predict(fit_lm, newdata = select(new_data_tbl, -c(index)))
     predictions_tbl <- tibble(time = future_idx, amount = pred) 
   } else {
-    augmented_h2o <- augmented %>% dplyr::rename(tag = amount)
+    augmented_h2o <- dplyr::rename(augmented, tag = amount)
     fit_auto <- h2o_automl(df = augmented_h2o, alarm = FALSE, project = project)
     pred <- h2o.predict(fit_auto$model, as.h2o(new_data_tbl))
     predictions_tbl <- tibble(time = future_idx, amount = as.vector(pred))
@@ -228,8 +224,7 @@ forecast_ml <- function(time, values,
   # STEP 5: COMPARE ACTUAL VS PREDICTIONS
   rects <- data.frame(start = min(future_idx), end = max(future_idx))
   message("Predicted range: ", rects$start, " to ", rects$end)
-  forecast <- df %>%
-    ggplot(aes(x = time, y = amount)) + 
+  forecast <- ggplot(df, aes(x = time, y = amount)) + 
     labs(title = project, y = "Amount", x = "",
          subtitle = "Using simple multivariate regressions on time series with Machine Learning") +
     # Training data
@@ -251,11 +246,11 @@ forecast_ml <- function(time, values,
                 ymax = max(df$amount) * 1.02), 
               color = "transparent", fill = "orange", alpha = 0.3)
   
-  if (plot_forecast == TRUE) {
+  if (plot_forecast) {
     print(forecast)
   }
   
-  if (plot_model == TRUE) {
+  if (plot_model) {
     Sys.sleep(1)
     mplot_full(
       tag = df$amount, 
@@ -266,7 +261,7 @@ forecast_ml <- function(time, values,
   
   df_final <- rbind(df, predictions_tbl)
   
-  if (automl == TRUE) {
+  if (automl) {
     model <- fit_auto
     score <- fit_auto$scores$score
   } else {

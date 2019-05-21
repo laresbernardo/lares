@@ -8,12 +8,9 @@
 #' @export
 queryDummy = function(query, creds = NA) {
 
-  options(warn=-1)
-
-  # require(dplyr)
-  # require(RPostgreSQL)
-  # require(config)
-
+  w <- options(warn=-1)
+  on.exit(options(warn=w))
+  
   dw <- get_credentials(from="dummy", dir = creds)
 
   drv <- RPostgreSQL::PostgreSQL()
@@ -39,12 +36,9 @@ queryDummy = function(query, creds = NA) {
 #' @export
 queryDW = function(query, which = "soat", creds = NA) {
 
-  options(warn=-1)
-
-  # require(dplyr)
-  # require(RPostgreSQL)
-  # require(config)
-
+  w <- options(warn=-1)
+  on.exit(options(warn=w))
+  
   dw <- get_credentials(from = "warehouse", dir = creds)
 
   dbname <- ifelse(which == "soat", dw$database_soat,
@@ -72,11 +66,8 @@ queryDW = function(query, which = "soat", creds = NA) {
 #' @export
 queryProduc = function(query, creds = NA) {
 
-  options(warn=-1)
-
-  # require(dplyr)
-  # require(RPostgreSQL)
-  # require(config)
+  w <- options(warn=-1)
+  on.exit(options(warn=w))
 
   dw <- get_credentials(from = "production", dir = creds)
 
