@@ -35,12 +35,12 @@ freqs <- function(vector, ..., wt = NULL,
   weight <- enquo(wt)
     
   output <-  if (quo_is_null(weight)) {
-       group_by(vector, !!!vars) %>% tally() 
-    } else { 
-       count(vector, !!!vars, wt = !!weight) %>%
-       arrange(desc(n)) %>%
-       mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
-    }
+    group_by(vector, !!!vars) %>% tally()
+  } else { 
+    count(vector, !!!vars, wt = !!weight)
+  }
+  output <- arrange(output, desc(n)) %>%
+    mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
    
   if (!plot && !save) {
     if(results) {
