@@ -30,6 +30,7 @@ freqs <- function(vector, ..., wt = NULL,
                   top = 20, abc = FALSE,
                   save = FALSE, subdir = NA) {
   
+  options(warn=-1)
   vars <- quos(...)
   weight <- enquo(wt)
     
@@ -85,10 +86,6 @@ freqs <- function(vector, ..., wt = NULL,
     output <- output %>% arrange(desc(n)) %>%
       mutate(order = row_number())
   }
-
-  # Disable warnings for rest of block, but turn them back on when done
-  w <- options(warn=-1)
-  on.exit(options(warn=w))
 
   reorder_within <- function(x, by, within, fun = mean, sep = "___", ...) {
     new_x <- paste(x, within, sep = sep)
