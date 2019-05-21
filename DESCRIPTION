@@ -37,6 +37,7 @@ Imports:
     rdrop2,
     readstata13,
     reshape2,
+    rlang,
     rlist,
     rmarkdown,
     RPostgreSQL,
