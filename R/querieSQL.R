@@ -8,8 +8,7 @@
 #' @export
 queryDummy = function(query, creds = NA) {
 
-  w <- options(warn=-1)
-  on.exit(options(warn=w))
+  options(warn=-1)
   
   dw <- get_credentials(from="dummy", dir = creds)
 
@@ -36,8 +35,7 @@ queryDummy = function(query, creds = NA) {
 #' @export
 queryDW = function(query, which = "soat", creds = NA) {
 
-  w <- options(warn=-1)
-  on.exit(options(warn=w))
+  options(warn=-1)
   
   dw <- get_credentials(from = "warehouse", dir = creds)
 
@@ -66,8 +64,7 @@ queryDW = function(query, which = "soat", creds = NA) {
 #' @export
 queryProduc = function(query, creds = NA) {
 
-  w <- options(warn=-1)
-  on.exit(options(warn=w))
+  options(warn=-1)
 
   dw <- get_credentials(from = "production", dir = creds)
 
