@@ -41,7 +41,7 @@ freqs <- function(vector, ..., wt = NULL,
        mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
     }
    
-  if (!plot && !save)
+  if (!plot && !save) {
     if(results) {
       return(output)
     } else {
