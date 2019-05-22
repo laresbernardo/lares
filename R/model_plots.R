@@ -82,7 +82,7 @@ mplot_density <- function(tag,
       file_name <- paste(subdir, file_name, sep="/")
     }
     
-    png(bg = "white")
+    
     p <- arrangeGrob(p1, p2, p3, 
                      ncol = 2, nrow = 2, heights = 2:1,
                      layout_matrix = rbind(c(1,1), c(2,3)))
@@ -467,7 +467,7 @@ mplot_cuts_error <- function(tag,
     pd_error <- pd_error + labs(caption = model_name)
   }
   
-  png(bg = "white")
+  
   p <- arrangeGrob(
     p_abs, p_per, pd_error,
     heights = c(1.8,1.8,1),
@@ -655,7 +655,7 @@ mplot_metrics <- function(results,
     au <- au + labs(caption = model_name)
   }
   
-  png(bg = "white")
+  
   p <- arrangeGrob(ll, au, ncol = 1, nrow = 2)
   
   if (save == TRUE) {
@@ -808,7 +808,7 @@ mplot_full <- function(tag,
     p4 <- mplot_cuts(score = score) +
       theme(plot.margin = margin(-3, 0, 5, 8))
     
-    png(bg = "white")
+    
     p <- arrangeGrob(
       p1, p2, p3, p4,
       widths = c(1.3,1),
@@ -819,7 +819,7 @@ mplot_full <- function(tag,
   # Multi-Categorical Models
   if (length(unique(tag)) > 2 & length(unique(tag)) <= thresh) {
     m <- model_metrics(tag, score, multis)
-    png(bg = "white")
+    
     p <- arrangeGrob(
       m$plots$conf_matrix + 
         labs(title = "Confusion Matrix", 
@@ -836,7 +836,7 @@ mplot_full <- function(tag,
     p2 <- mplot_density(tag = tag, score = score)
     p3 <- mplot_cuts_error(tag = tag, score = score, splits = splits)
     
-    png(bg = "white")
+    
     p <- arrangeGrob(
       p1, p2, p3,
       heights = c(0.6, 0.4),
