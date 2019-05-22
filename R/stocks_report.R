@@ -544,6 +544,7 @@ portfolio_distr_plot <- function (portfolio_perf, daily, save = FALSE) {
     geom_bar(aes(x = "", y = DailyValue/sum(DailyValue), fill = Type), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels = scales::percent) +
     labs(x = '', y = "Portfolio's Stocks Type Distribution") + theme_lares2(pal = 1)
+  png(bg = "white")
   t1 <- tableGrob(
     portfolio_perf %>% 
       mutate(Perc = formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
@@ -563,6 +564,7 @@ portfolio_distr_plot <- function (portfolio_perf, daily, save = FALSE) {
     cols = c("Stock Type","Today's Value","% Portaf","Growth %"),
     theme = ttheme_minimal())
   
+  png(bg = "white")
   p <- arrangeGrob(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3))
   
   if (save) {
