@@ -63,7 +63,13 @@ lares_pal <- function() {
     c("meg1", "071D49", white),
     c("meg2", "EBB600", black),
     c("meg3", "F2F1F0", black),
-    c("meg4", "9A9A9A", white)
+    c("meg4", "9A9A9A", white),
+    c("r5", "#290452", white),
+    c("olx", green, black),
+    c("virtualllantas", red, black),
+    c("eltiempo", white, black),
+    c("otro", grey, black),
+    c("other", grey, black)
   ))
   colnames(colours_list) <- c("values","fill","colour")
   

@@ -51,12 +51,9 @@ freqs <- function(vector, ..., wt = NULL,
   }
 
   if (ncol(output) - 3 >= 4) {
-    # When more than two features
-    # This should be a stop and not a message, because the user 
-    # requested a ggplot object back, and it cannot be constructed 
     stop(
-      "Sorry, but trying to plot more than 3 features is as complex as it sounds.",
-      "You should try another method to understand your analysis!")
+      paste("Sorry, but trying to plot more than 3 features is as complex as it sounds.",
+            "You should try another method to understand your analysis!"))
   }
   obs_total <- sum(output$n)
   obs <- paste("Total Obs.:", formatNum(obs_total, 0))
