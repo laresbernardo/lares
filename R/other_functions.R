@@ -981,11 +981,12 @@ importxlsx <- function(file) {
 
 
 ####################################################################
-#' Import Excel File with All Its Tabs
+#' Quiet prints and verbose noice
 #' 
-#' This function silences (verbose) output prints. Thanks to Hadley Wickham!
+#' This function silences (verbose) output prints.
 #' 
-#' @param fx Function
+#' @author Hadley Wickham
+#' @param fx Function to quiet
 #' @export
 quiet <- function(fx) { 
   sink(tempfile()) 

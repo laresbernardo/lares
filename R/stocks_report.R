@@ -821,13 +821,18 @@ etf_sector <- function (etf = "VTI", verbose = TRUE) {
       check <- TRUE
     } else {
       check <- FALSE
+      Sys.sleep(1)
     }
     if (verbose == TRUE) {
       info <- paste(toupper(etf[i]), ifelse(check, "", "X"))
       statusbar(i, length(etf), info = info)   
     }
   }
-  return(ret)
+  if (nrow(ret) == 0) {
+    stop("No data found for given Tickers!")
+  } else {
+    return(ret) 
+  }
 }
 
 ######################### SHORT #####################################

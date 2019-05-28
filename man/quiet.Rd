@@ -2,13 +2,16 @@
 % Please edit documentation in R/other_functions.R
 \name{quiet}
 \alias{quiet}
-\title{Import Excel File with All Its Tabs}
+\title{Quiet prints and verbose noice}
 \usage{
 quiet(fx)
 }
 \arguments{
-\item{fx}{Function}
+\item{fx}{Function to quiet}
 }
 \description{
-This function silences (verbose) output prints. Thanks to Hadley Wickham!
+This function silences (verbose) output prints.
+}
+\author{
+Hadley Wickham
 }
