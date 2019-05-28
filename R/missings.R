@@ -29,20 +29,22 @@ missingness <- function(df, plot = FALSE) {
     #              title = "Missing Values Frequencies",
     #              axis = "# Missings (%)", obs = FALSE)
     
-    rows <- nrow(df)*ncol(df)
+    obs <- nrow(df)*ncol(df)
     miss <- sum(m$missing)
-    missp <- 100*miss/rows
-    note <- paste0("Total observations: ", formatNum(rows, 0),
+    missp <- 100*miss/obs
+    
+    note <- paste0("Total observations: ", formatNum(obs, 0),
                    " | Total missings: ", formatNum(miss, 0), 
                    " (",formatNum(missp, 1),"%)")
+    
     p <- is.na(df) %>% data.frame() %>% tidyr::gather() %>%
       mutate(type = ifelse(key %in% m$variable, "with", "without")) %>%
       group_by(key) %>%
-      mutate(label = ifelse(
-        type == "with", paste0(key, " | ", round(100*sum(value)/nrow(df),2),"%"), key)) %>%
-      arrange(value) %>% 
       mutate(row_num = row_number()) %>%
-      ggplot(aes(x = label, y = row_num, fill = value)) + 
+      mutate(perc = round(100*sum(value)/nrow(df),2)) %>%
+      mutate(label = ifelse(type == "with", paste0(key, " | ", perc,"%"), key)) %>%
+      arrange(value) %>% 
+      ggplot(aes(x = reorder(label, perc), y = row_num, fill = value)) + 
       geom_raster() + 
       coord_flip() +
       facet_grid(type~., space ="free", scales = "free") +
