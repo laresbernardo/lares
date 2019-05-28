@@ -35,14 +35,12 @@ missingness <- function(df, plot = FALSE) {
     note <- paste0("Total observations: ", formatNum(rows, 0),
                    " | Total missings: ", formatNum(miss, 0), 
                    " (",formatNum(missp, 1),"%)")
-    p <- dft %>%
-      is.na() %>% data.frame() %>%
-      tidyr::gather() %>%
+    p <- is.na(df) %>% data.frame() %>% tidyr::gather() %>%
       mutate(type = ifelse(key %in% m$variable, "with", "without")) %>%
       group_by(key) %>%
-      mutate(label = ifelse(type == "with", paste0(
-        key, " | ", round(100*sum(value)/nrow(.),2),"%"), key)) %>%
-      arrange(value) %>%
+      mutate(label = ifelse(
+        type == "with", paste0(key, " | ", round(100*sum(value)/nrow(.),2),"%"), key)) %>%
+      arrange(value) %>% 
       mutate(row_num = row_number()) %>%
       ggplot(aes(x = label, y = row_num, fill = value)) + 
       geom_raster() + 
