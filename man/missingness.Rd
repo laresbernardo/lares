@@ -13,5 +13,5 @@ missingness(df, plot = FALSE)
 }
 \description{
 This function lets the user calculate the percentage of NAs or
-missingness in a data.frame.
+missingness in a data.frame. It also plots the results if needed.
 }
