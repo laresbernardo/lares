@@ -29,3 +29,8 @@ forecast_ml(time, values, n_future = 15, use_last = TRUE,
 This function lets the user create a forecast setting a time series
 and a numerical value.
 }
+\seealso{
+Other Forecast: \code{\link{forecast_arima}},
+  \code{\link{prophesize}}
+}
+\concept{Forecast}

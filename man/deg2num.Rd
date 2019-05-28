@@ -15,3 +15,8 @@ deg2num(coord, sep = " ")
 This function converts degrees (DMS) coordinates into numerical. 
 Note that the sign (S or W) should be assigned manually if needed.
 }
+\seealso{
+Other Calculus: \code{\link{corr}}, \code{\link{dist2d}},
+  \code{\link{quants}}
+}
+\concept{Calculus}

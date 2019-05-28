@@ -14,3 +14,19 @@ etf_sector(etf = "VTI", verbose = TRUE)
 \description{
 This function scraps etf.com data for sector breakdown on ETFs.
 }
+\seealso{
+Other Investment: \code{\link{get_stocks_hist}},
+  \code{\link{get_stocks}},
+  \code{\link{portfolio_daily_plot}},
+  \code{\link{portfolio_daily}},
+  \code{\link{portfolio_distr_plot}},
+  \code{\link{portfolio_performance}},
+  \code{\link{portfolio_total_plot}},
+  \code{\link{stocks_daily_plot}},
+  \code{\link{stocks_hist_fix}}, \code{\link{stocks_html}},
+  \code{\link{stocks_objects}},
+  \code{\link{stocks_performance}},
+  \code{\link{stocks_report}},
+  \code{\link{stocks_total_plot}}
+}
+\concept{Investment}

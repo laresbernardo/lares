@@ -18,3 +18,8 @@ measure the distance}
 This function lets the user calculate the mathematical linear distance 
 Between a specific point and a line (given geometrical 3 points)
 }
+\seealso{
+Other Calculus: \code{\link{corr}}, \code{\link{deg2num}},
+  \code{\link{quants}}
+}
+\concept{Calculus}

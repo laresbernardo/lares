@@ -19,3 +19,8 @@ geoMap(map, fix_coords = FALSE, title = NA, subtitle = NA)
 This function returns a simple plot from a SpatialPolygonsDataFrame
 imported or a .shp file
 }
+\seealso{
+Other Geographical: \code{\link{geoAddress}},
+  \code{\link{geoGrid}}, \code{\link{geoStratum}}
+}
+\concept{Geographical}

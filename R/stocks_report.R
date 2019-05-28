@@ -3,6 +3,7 @@
 #' 
 #' This function lets me download my personal Excel with my Portfolio data
 #' 
+#' @family Investment
 #' @param filename Characeter. Import a local Excel file
 #' @param token_dir Character. Where is my personal token for Dropbox connection?
 #' @param auto Boolean. Automatically user my local personal file? 
@@ -57,6 +58,7 @@ get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Document
 #' 
 #' This function lets the user download stocks historical data
 #' 
+#' @family Investment
 #' @param symbols Character Vector. List of symbols to download historical data. 
 #' Example: c('VTI','TSLA')
 #' @param from Date. Since when do you wish to download historical data
@@ -147,6 +149,7 @@ get_stocks_hist <- function(symbols = NA,
 #' This function lets the user fix downloaded stock data into a usefull 
 #' format output
 #' 
+#' @family Investment
 #' @param dailys Dataframe. Daily values. Structure: "Date", "Symbol", 
 #' "Open", "High", "Low", "Close", "Volume", "Adjusted"
 #' @param dividends Dataframe. Dividends. Structure: "Symbol", "Date", 
@@ -227,6 +230,7 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
 #' 
 #' This function lets the user calculate stocks performance
 #' 
+#' @family Investment
 #' @param dailys Dataframe. Daily values. Structure: "Date", "Symbol", 
 #' "Open", "High", "Low", "Close", "Volume", "Adjusted", "Quant", 
 #' "Value", "Amount", "Expenses", "Stocks", "Div", "DivReal", "DailyDiv", 
@@ -286,6 +290,7 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
 #' 
 #' This function lets the user calculate portfolio performance
 #' 
+#' @family Investment
 #' @param portfolio Dataframe. Structure: "Symbol", "Stocks", "StockIniValue", "InvPerc", "Type", "Trans", "StartDate"
 #' @param daily Dataframe. Daily data
 #' @export
@@ -324,6 +329,7 @@ portfolio_performance <- function(portfolio, daily) {
 #' 
 #' This function lets the user calculate daily portfolio performance
 #' 
+#' @family Investment
 #' @param data Dataframe. Result from get_stocks()
 #' @param dailys Dataframe. Result from get_stocks_hist()
 #' @param cash_fix Numeric. If you wish to algebraically sum a value 
@@ -371,6 +377,7 @@ portfolio_daily <- function(data, dailys, cash_fix = 0) {
 #' 
 #' This function lets the user plot his portfolio daily change
 #' 
+#' @family Investment
 #' @param stocks_perf Dataframe. Output of the stocks_performance function
 #' @param save Boolean. Export plot as an image?
 #' @export
@@ -418,6 +425,7 @@ portfolio_daily_plot <- function(stocks_perf, save = FALSE) {
 #' 
 #' This function lets the user plot his stocks total performance
 #' 
+#' @family Investment
 #' @param stocks_perf Dataframe. Output of the stocks_performance function
 #' @param portfolio_perf Dataframe. Output of the portfolio_performance function
 #' @param daily Dataframe. Daily data
@@ -479,6 +487,7 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, s
 #' 
 #' This function lets the user plot stocks daily change
 #' 
+#' @family Investment
 #' @param portfolio Dataframe. Output of the portfolio_perf function
 #' @param daily Dataframe. Daily data
 #' @param weighted Boolean. Should variation values be weighted to the
@@ -530,6 +539,7 @@ stocks_daily_plot <- function (portfolio, daily, weighted = TRUE, group = TRUE, 
 #' 
 #' This function lets the user plot his portfolio's distribution
 #' 
+#' @family Investment
 #' @param portfolio_perf Dataframe. Output of the portfolio_performance function
 #' @param daily Dataframe. Daily data
 #' @param save Boolean. Export plot as an image?
@@ -581,6 +591,7 @@ portfolio_distr_plot <- function (portfolio_perf, daily, save = FALSE) {
 #' 
 #' This function lets the user plot his portfolio's daily cumulative
 #' 
+#' @family Investment
 #' @param portfolio Dataframe. Results from portfolio_daily()
 #' @param save Boolean. Export plot as an image?
 #' @export
@@ -625,6 +636,7 @@ portfolio_total_plot <- function(portfolio, save = FALSE) {
 #' This function lets the user create his portfolio's calculations and
 #' plots for further study.
 #' 
+#' @family Investment
 #' @param data List. Containing the following dataframes: portfolio,
 #' transactions, cash. They have to follow the original xlsx format
 #' @param cash_fix Numeric. If you wish to algebraically sum a value 
@@ -704,6 +716,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
 #' This function lets the user create his portfolio's full report in HTML using
 #' the library's results
 #' 
+#' @family Investment
 #' @param results List. Containing the following objects: portf_daily_change, 
 #' portf_stocks_change, portf_stocks_histchange, portf_distribution & portfolio_perf.
 #' You can use simply use the stocks_objects(data) if you didn't mess with the order!
@@ -747,6 +760,7 @@ stocks_html <- function(results) {
 #' 
 #' This function lets the user create his portfolio's full report with plots and email sent
 #' 
+#' @family Investment
 #' @param wd Character. Where do you wish to save the results (plots and report)?
 #' @param cash_fix Numeric. If you wish to algebraically sum a value to your cash balance
 #' @param mail Boolean. Do you wish to send the email? Set to NA to not send email
@@ -802,6 +816,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
 #' 
 #' This function scraps etf.com data for sector breakdown on ETFs.
 #' 
+#' @family Investment
 #' @param etf Character Vector. Which ETFs you wish to scrap?
 #' @param verbose Boolean. Print results and progress while downloading?
 #' @export

@@ -26,3 +26,8 @@ variables (not binaries) and plot them}
 \description{
 This function correlates a whole dataframe with a single feature.
 }
+\seealso{
+Other Visualization: \code{\link{noPlot}},
+  \code{\link{theme_lares}}
+}
+\concept{Visualization}

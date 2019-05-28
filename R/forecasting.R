@@ -19,6 +19,7 @@
 #' given by the great power to capture very complex patters of 
 #' temporal correlation (Cochrane, 1997: 25)
 #' 
+#' @family Forecast
 #' @param time POSIX. Vector with date values
 #' @param values Numeric. Vector with numerical values
 #' @param n_future Integer. How many steps do you wish to forecast?
@@ -166,6 +167,7 @@ forecast_arima <- function(time, values, n_future = 30,
 #' This function lets the user create a forecast setting a time series
 #' and a numerical value.
 #' 
+#' @family Forecast
 #' @param time POSIX. Vector with dates or time values
 #' @param values Numeric. Vector with numerical values
 #' @param n_future Integer. How many steps do you wish to forecast?
@@ -290,6 +292,7 @@ forecast_ml <- function(time, values,
 #' 
 #' Official documentation: \url{https://github.com/facebook/prophet}
 #' 
+#' @family Forecast
 #' @param df Data frame. Must contain date/time column and values column
 #' @param n_future Integer. How many steps do you wish to forecast?
 #' @param country Character. Country code for holidays

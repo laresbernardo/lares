@@ -7,6 +7,7 @@
 #' crossed; if three, both variables will be crossed with third as 
 #' weighted values.
 #' 
+#' @family Exploratory
 #' @param df Data.frame. 
 #' @param ... Variables. Dependent and independent variables. If needed,
 #' third value should be the weight variable.

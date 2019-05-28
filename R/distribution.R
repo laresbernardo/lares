@@ -5,6 +5,7 @@
 #' function automatically splits into quantiles for numerical variables.
 #' Custom and tidyverse friendly.
 #' 
+#' @family Exploratory
 #' @param data Dataframe
 #' @param ... Variables. Main (target variable) and secondary (values 
 #' variable) to group by

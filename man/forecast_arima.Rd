@@ -60,3 +60,8 @@ One thing to keep in mind when we think about ARIMA models is
 given by the great power to capture very complex patters of 
 temporal correlation (Cochrane, 1997: 25)
 }
+\seealso{
+Other Forecast: \code{\link{forecast_ml}},
+  \code{\link{prophesize}}
+}
+\concept{Forecast}

@@ -14,3 +14,8 @@ This function lets the user print a plot without plot, with a
 customizable message. It is quite useful for Shiny renderPlot when
 using filters and no data is returned.
 }
+\seealso{
+Other Visualization: \code{\link{corr_plot}},
+  \code{\link{theme_lares}}
+}
+\concept{Visualization}

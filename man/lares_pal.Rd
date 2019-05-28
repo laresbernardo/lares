@@ -9,3 +9,9 @@ lares_pal()
 \description{
 This function plots a list of colours on a specific palette
 }
+\seealso{
+Other Auxiliary: \code{\link{gg_colour_customs}},
+  \code{\link{gg_fill_customs}},
+  \code{\link{gg_text_customs}}, \code{\link{plot_palette}}
+}
+\concept{Auxiliary}

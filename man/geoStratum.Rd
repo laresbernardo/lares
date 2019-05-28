@@ -16,3 +16,8 @@ geoStratum(lon, lat, label = NA)
 \description{
 This function lets the user obtain Colombia's stratum given the coordinates of an address
 }
+\seealso{
+Other Geographical: \code{\link{geoAddress}},
+  \code{\link{geoGrid}}, \code{\link{geoMap}}
+}
+\concept{Geographical}

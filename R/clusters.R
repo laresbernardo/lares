@@ -9,6 +9,7 @@
 #' Also, kmeans assumes spherical shapes of clusters and doesn’t work well 
 #' when clusters are in different shapes such as elliptical clusters.
 #' 
+#' @family Machine Learning
 #' @param df Dataframe
 #' @param k Integer. Number of clusters
 #' @param limit Integer. How many clusters should be considered?

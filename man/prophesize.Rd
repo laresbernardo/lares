@@ -29,3 +29,8 @@ data and shifts in the trend, and typically handles outliers well.
 \details{
 Official documentation: \url{https://github.com/facebook/prophet}
 }
+\seealso{
+Other Forecast: \code{\link{forecast_arima}},
+  \code{\link{forecast_ml}}
+}
+\concept{Forecast}

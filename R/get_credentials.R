@@ -3,6 +3,7 @@
 #' 
 #' This function lets the user load parameters and credentials
 #' 
+#' @family Tools
 #' @param from Character. Which account do we need to import
 #' @param dir Character. Credentials directory for specific user
 #' @param filename Character. YML with credentials to read

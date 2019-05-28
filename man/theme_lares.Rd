@@ -23,3 +23,8 @@ This function sets some default values into ggplot2 outputs. This
 function is almost as using gg_colour_customs() + gg_fill_customs() 
 + gg_text_customs = but these won't be mantained any longer.
 }
+\seealso{
+Other Visualization: \code{\link{corr_plot}},
+  \code{\link{noPlot}}
+}
+\concept{Visualization}

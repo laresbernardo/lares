@@ -21,3 +21,11 @@ This function lets the user to check quickly the structure of a
 dataset (data.frame). It returns multiple counters for useful metrics,
 a plot, and a list of column names for each of the column metrics.
 }
+\seealso{
+Other Exploratory: \code{\link{corr_var}},
+  \code{\link{crosstab}}, \code{\link{dalex_explainer}},
+  \code{\link{dalex_local}}, \code{\link{dalex_residuals}},
+  \code{\link{dalex_variable}}, \code{\link{distr}},
+  \code{\link{freqs}}
+}
+\concept{Exploratory}

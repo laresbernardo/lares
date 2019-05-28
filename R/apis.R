@@ -4,6 +4,7 @@
 #' This function lets the user bring API data as JSON format and transform it 
 #' into data.frame. Designed initially for Hubspot but may work on other API
 #' 
+#' @family Tools
 #' @param url Character. API's URL
 #' @param status Boolean. Display status message?
 #' @export

@@ -33,3 +33,8 @@ and sorted by mean of each variable's correlations}
 This function correlates a whole dataframe, filtering automatically
 all numerical values.
 }
+\seealso{
+Other Calculus: \code{\link{deg2num}},
+  \code{\link{dist2d}}, \code{\link{quants}}
+}
+\concept{Calculus}

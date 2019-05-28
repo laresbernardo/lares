@@ -52,3 +52,11 @@ Compare the distribution of a target variable vs another variable. This
 function automatically splits into quantiles for numerical variables.
 Custom and tidyverse friendly.
 }
+\seealso{
+Other Exploratory: \code{\link{corr_var}},
+  \code{\link{crosstab}}, \code{\link{dalex_explainer}},
+  \code{\link{dalex_local}}, \code{\link{dalex_residuals}},
+  \code{\link{dalex_variable}}, \code{\link{df_str}},
+  \code{\link{freqs}}
+}
+\concept{Exploratory}

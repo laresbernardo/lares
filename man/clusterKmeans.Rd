@@ -35,3 +35,4 @@ For consideration: Scale/standardize the data when applying kmeans.
 Also, kmeans assumes spherical shapes of clusters and doesn’t work well 
 when clusters are in different shapes such as elliptical clusters.
 }
+\concept{Machine Learning}

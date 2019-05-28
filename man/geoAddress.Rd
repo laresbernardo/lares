@@ -21,3 +21,8 @@ geoAddress(address, country = "Argentina", index = NA, creds = NA,
 \description{
 This function lets the user obtain Google's Geodata on given addresses
 }
+\seealso{
+Other Geographical: \code{\link{geoGrid}},
+  \code{\link{geoMap}}, \code{\link{geoStratum}}
+}
+\concept{Geographical}

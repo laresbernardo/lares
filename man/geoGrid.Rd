@@ -28,3 +28,8 @@ with the information of each coordinate and its respective grid.
 Note that the coords and shapes coordinates MUST have the same 
 lon/lat reference system for it to work succesfully.
 }
+\seealso{
+Other Geographical: \code{\link{geoAddress}},
+  \code{\link{geoMap}}, \code{\link{geoStratum}}
+}
+\concept{Geographical}

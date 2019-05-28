@@ -4,6 +4,7 @@
 #' This function lets the user group, count, calculate percentages 
 #' and cumulatives. It also plots results if needed. Tidyverse friendly.
 #' 
+#' @family Exploratory
 #' @param vector Data.frame
 #' @param ... Variables. Variables you wish to process. Order matters.
 #' @param wt Variable, numeric. Weights.

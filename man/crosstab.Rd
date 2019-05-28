@@ -32,3 +32,11 @@ crossval() will be recommended; if two, then both variables will be
 crossed; if three, both variables will be crossed with third as 
 weighted values.
 }
+\seealso{
+Other Exploratory: \code{\link{corr_var}},
+  \code{\link{dalex_explainer}}, \code{\link{dalex_local}},
+  \code{\link{dalex_residuals}},
+  \code{\link{dalex_variable}}, \code{\link{df_str}},
+  \code{\link{distr}}, \code{\link{freqs}}
+}
+\concept{Exploratory}

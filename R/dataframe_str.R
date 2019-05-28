@@ -5,6 +5,7 @@
 #' dataset (data.frame). It returns multiple counters for useful metrics,
 #' a plot, and a list of column names for each of the column metrics.
 #' 
+#' @family Exploratory
 #' @param df Dataframe
 #' @param return Character. Return "skimr" for skim results, "numbers" for
 #' numbers, or "names" for column names of each of the cateogries

@@ -16,3 +16,8 @@ quants(values, splits = 10, return = "summary")
 \description{
 This function lets the user quickly calculate cuts for quantiles
 }
+\seealso{
+Other Calculus: \code{\link{corr}}, \code{\link{deg2num}},
+  \code{\link{dist2d}}
+}
+\concept{Calculus}

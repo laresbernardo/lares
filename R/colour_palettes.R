@@ -3,6 +3,7 @@
 #' 
 #' This function plots a list of colours on a specific palette
 #' 
+#' @family Auxiliary
 #' @export
 lares_pal <- function() {
   
@@ -113,6 +114,7 @@ lares_pal <- function() {
 #' 
 #' This function plots a list of colours
 #' 
+#' @family Auxiliary
 #' @param fill Vector. List of colours for fills
 #' @param colour Vector. List of colours for colours
 #' @param id Vector. ID for each color
@@ -149,6 +151,7 @@ plot_palette <- function(fill, colour = "black", id = NA) {
 #' function is almost as using gg_colour_customs() + gg_fill_customs() 
 #' + gg_text_customs = but these won't be mantained any longer.
 #' 
+#' @family Visualization
 #' @param labels Boolean. Add labels to plot?
 #' @param colours Boolean. Personalize colour palettes?
 #' @param cont Boolean. Is the value continuous? Discrete by default
@@ -206,6 +209,7 @@ theme_lares <- function(labels = FALSE, colours = TRUE, cont = FALSE,
 #' 
 #' This function lets the user use pre-defined default colours
 #' 
+#' @family Auxiliary
 #' @export
 gg_colour_customs <- function () {
   
@@ -222,6 +226,7 @@ gg_colour_customs <- function () {
 #' 
 #' This function lets the user use pre-defined default colours
 #' 
+#' @family Auxiliary
 #' @export
 gg_fill_customs <- function () {
   
@@ -238,6 +243,7 @@ gg_fill_customs <- function () {
 #' 
 #' This function lets the user use pre-defined default colours
 #' 
+#' @family Auxiliary
 #' @export
 gg_text_customs <- function() {
   

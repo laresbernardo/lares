@@ -2,16 +2,32 @@
 % Please edit documentation in R/missings.R
 \name{missingness}
 \alias{missingness}
-\title{Calculate missingness percentage on a data.frame}
+\title{Calculate and Visualize Missingness}
 \usage{
-missingness(df, plot = FALSE)
+missingness(df, plot = FALSE, subtitle = NA)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe to study}
 
 \item{plot}{Boolean. Do you wish to plot results?}
+
+\item{subtitle}{Character. Subtitle to show in plot}
 }
 \description{
 This function lets the user calculate the percentage of NAs or
 missingness in a data.frame. It also plots the results if needed.
 }
+\seealso{
+Other Data Wrangling: \code{\link{balance_data}},
+  \code{\link{categ_reducer}},
+  \code{\link{categoryCounter}}, \code{\link{cleanText}},
+  \code{\link{dateformat}}, \code{\link{formatNum}},
+  \code{\link{left}}, \code{\link{normalize}},
+  \code{\link{numericalonly}},
+  \code{\link{one_hot_encoding_commas}},
+  \code{\link{removenacols}}, \code{\link{removenarows}},
+  \code{\link{replaceall}}, \code{\link{right}},
+  \code{\link{vector2text}}, \code{\link{year_month}},
+  \code{\link{year_week}}
+}
+\concept{Data Wrangling}

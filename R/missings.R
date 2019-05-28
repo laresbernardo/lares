@@ -1,13 +1,15 @@
 ####################################################################
-#' Calculate missingness percentage on a data.frame
+#' Calculate and Visualize Missingness
 #' 
 #' This function lets the user calculate the percentage of NAs or
 #' missingness in a data.frame. It also plots the results if needed.
 #' 
+#' @family Data Wrangling
 #' @param df Dataframe. Dataframe to study
 #' @param plot Boolean. Do you wish to plot results?
+#' @param subtitle Character. Subtitle to show in plot
 #' @export
-missingness <- function(df, plot = FALSE) {
+missingness <- function(df, plot = FALSE, subtitle = NA) {
   
   if (sum(is.na(df)) == 0) {
     message("No missing values found!")
@@ -47,10 +49,10 @@ missingness <- function(df, plot = FALSE) {
       ggplot(aes(x = reorder(label, perc), y = row_num, fill = value)) + 
       geom_raster() + 
       coord_flip() +
-      facet_grid(type~., space ="free", scales = "free") +
+      facet_grid(type ~ ., space ="free", scales = "free") +
       scale_y_continuous(note, expand = c(0, 0)) +
       scale_fill_grey(name = "", labels = c("Present", "Missing")) +
-      labs(title = "Missing values", x="") +
+      labs(title = "Missing values", x="", subtitle = if(!is.na(subtitle)) subtitle) +
       theme_lares2(legend="top") +
       theme(axis.text.y  = element_text(size = 8))
     return(p)

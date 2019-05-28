@@ -3,6 +3,7 @@
 #' 
 #' This function lets the user obtain Google's Geodata on given addresses
 #' 
+#' @family Geographical
 #' @param address Character Vector. Addresses you wish to query
 #' @param country Character. Default Country if known
 #' @param index Character Vector. If you wish to keep an id on each address, set this values
@@ -96,6 +97,7 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
 #' 
 #' This function lets the user obtain Colombia's stratum given the coordinates of an address
 #' 
+#' @family Geographical
 #' @param lon Numeric Vector. Longitudes
 #' @param lat Numeric Vector. Latitudes
 #' @param label Character Vector. If you wish to keep an id on each address, set this values
@@ -132,6 +134,7 @@ geoStratum <- function(lon, lat, label = NA) {
 #' Note that the coords and shapes coordinates MUST have the same 
 #' lon/lat reference system for it to work succesfully.
 #' 
+#' @family Geographical
 #' @param coords Dataframe. Dataframe containing at least langitud 
 #' and latitud data
 #' @param map SpatialPolygonsDataFrame or .shp directory
@@ -212,6 +215,7 @@ geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE, 
 #' This function returns a simple plot from a SpatialPolygonsDataFrame
 #' imported or a .shp file
 #' 
+#' @family Geographical
 #' @param map SpatialPolygonsDataFrame or .shp directory
 #' @param fix_coords Boolean. Transform and fix coordinates system?
 #' @param title Character. Title for the plot
@@ -250,6 +254,7 @@ geoMap <- function(map, fix_coords = FALSE, title = NA, subtitle = NA) {
 #' This function converts degrees (DMS) coordinates into numerical. 
 #' Note that the sign (S or W) should be assigned manually if needed.
 #' 
+#' @family Calculus
 #' @param coord Character vector. Cooridnate in format c("DD MM SS")
 #' @param sep Character. Separator
 #' @export

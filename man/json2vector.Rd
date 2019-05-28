@@ -14,3 +14,16 @@ null, "feat2": "M"}'}
 This function lets the user transform a JSON string into vector 
 (data.frame with 1 row). You can also pass a Python's dictionary.
 }
+\seealso{
+Other Tools: \code{\link{bindfiles}},
+  \code{\link{bring_api}}, \code{\link{db_download}},
+  \code{\link{db_upload}}, \code{\link{export_plot}},
+  \code{\link{get_credentials}},
+  \code{\link{get_currency}}, \code{\link{h2o_update}},
+  \code{\link{haveInternet}}, \code{\link{importxlsx}},
+  \code{\link{ip_country}}, \code{\link{listfiles}},
+  \code{\link{myip}}, \code{\link{pass}},
+  \code{\link{quiet}}, \code{\link{read.file}},
+  \code{\link{statusbar}}, \code{\link{zerovar}}
+}
+\concept{Tools}

@@ -4,6 +4,7 @@
 #' This function correlates a whole dataframe, filtering automatically
 #' all numerical values.
 #'
+#' @family Calculus
 #' @param df Dataframe. It doesn't matter if it's got non-numerical
 #' columns: they will be filtered!
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
@@ -64,6 +65,7 @@ corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE,
 #'
 #' This function correlates a whole dataframe with a single feature.
 #'
+#' @family Exploratory
 #' @param df Dataframe.
 #' @param ... Object. Name of the variable to correlate
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
@@ -198,6 +200,7 @@ corr_var <- function(df, ...,
 #'
 #' This function correlates a whole dataframe with a single feature.
 #'
+#' @family Visualization
 #' @param df Dataframe.
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @param order Character. The ordering method of the correlation matrix.
