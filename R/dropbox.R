@@ -5,6 +5,7 @@
 #' its name and using a previously created token.
 #' 
 #' @family Tools
+#' @family Connections
 #' @param filename String. File's name
 #' @param xlsx Boolean. Is it an Excel file? Can be returned as a list
 #' for each tab and not as a file if needed
@@ -52,6 +53,7 @@ db_download <- function(filename, xlsx = TRUE, token_dir = NA,
 #' its name and using a previously created token. 
 #' 
 #' @family Tools
+#' @family Connections
 #' @param filename String. File's name
 #' @param dir String. Directory you wish to upload the file to
 #' @param delete_file Boolean. Delete local file after uploading?

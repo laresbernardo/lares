@@ -19,5 +19,9 @@ This function lets the user obtain Colombia's stratum given the coordinates of a
 \seealso{
 Other Geographical: \code{\link{geoAddress}},
   \code{\link{geoGrid}}, \code{\link{geoMap}}
+
+Other Scrapper: \code{\link{holidays}},
+  \code{\link{trendsRelated}}
 }
 \concept{Geographical}
+\concept{Scrapper}

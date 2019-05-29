@@ -34,7 +34,16 @@ This function correlates a whole dataframe, filtering automatically
 all numerical values.
 }
 \seealso{
-Other Calculus: \code{\link{deg2num}},
-  \code{\link{dist2d}}, \code{\link{quants}}
+Other Calculus: \code{\link{ROC}}, \code{\link{conf_mat}},
+  \code{\link{deg2num}}, \code{\link{dist2d}},
+  \code{\link{errors}}, \code{\link{loglossBinary}},
+  \code{\link{mae}}, \code{\link{mape}},
+  \code{\link{model_metrics}}, \code{\link{mse}},
+  \code{\link{quants}}, \code{\link{rmse}},
+  \code{\link{rsqa}}, \code{\link{rsq}}
+
+Other Correlations: \code{\link{corr_plot}},
+  \code{\link{corr_var}}
 }
 \concept{Calculus}
+\concept{Correlations}

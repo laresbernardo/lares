@@ -22,3 +22,15 @@ trendsRelated(gtrend, top = NA, title = NA, note = NA,
 This function creates a plot with google trend's related topics 
 and queries, and let the user compare different keywords.
 }
+\seealso{
+Other Exploratory: \code{\link{corr_var}},
+  \code{\link{crosstab}}, \code{\link{df_str}},
+  \code{\link{distr}}, \code{\link{freqs}},
+  \code{\link{gain_lift}}, \code{\link{get_tweets}},
+  \code{\link{missingness}}
+
+Other Scrapper: \code{\link{geoStratum}},
+  \code{\link{holidays}}
+}
+\concept{Exploratory}
+\concept{Scrapper}

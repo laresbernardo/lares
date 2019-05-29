@@ -3,6 +3,7 @@
 #' 
 #' This function lets the user query Google Analytics with its API
 #' 
+#' @family Connection
 #' @param account Character. Personal named accounts
 #' @param creds Character. Credential's user (see get_credentials)
 #' @param token_dir Character. Credential's user (see get_credentials)

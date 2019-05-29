@@ -4,6 +4,8 @@
 #' This function creates a plot with google trend's related topics 
 #' and queries, and let the user compare different keywords.
 #'
+#' @family Exploratory
+#' @family Scrapper
 #' @param gtrend List. Result from gtrends(keyword, geo, time)
 #' @param top Integer. Filter top n results only
 #' @param title Character. Custom title for the plot

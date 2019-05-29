@@ -4,6 +4,7 @@
 #' This function lets the user download surveys results from a
 #' Typeform account.
 #'
+#' @family Connections
 #' @param account Character. Which of the accounts in config.yml 
 #' do you wish to use?
 #' @param form Character. Define which form you wish to import. Should

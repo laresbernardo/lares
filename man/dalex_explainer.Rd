@@ -19,10 +19,8 @@ dalex_explainer(df, model, model_name = "lares::h2o_automl", pred = NA)
 DALEX library function to create an explainer object
 }
 \seealso{
-Other Exploratory: \code{\link{corr_var}},
-  \code{\link{crosstab}}, \code{\link{dalex_local}},
+Other Interpretability: \code{\link{dalex_local}},
   \code{\link{dalex_residuals}},
-  \code{\link{dalex_variable}}, \code{\link{df_str}},
-  \code{\link{distr}}, \code{\link{freqs}}
+  \code{\link{dalex_variable}}
 }
-\concept{Exploratory}
+\concept{Interpretability}

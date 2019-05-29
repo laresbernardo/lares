@@ -34,3 +34,18 @@ wish to get the history from? i.e, USD/COP, EUR/USD...}
 This function lets the user automatically create new columns out
 of a dataframe or vector with date/time variables.
 }
+\seealso{
+Other Data Wrangling: \code{\link{balance_data}},
+  \code{\link{calibrate}}, \code{\link{categ_reducer}},
+  \code{\link{categoryCounter}}, \code{\link{cleanText}},
+  \code{\link{dateformat}}, \code{\link{formatNum}},
+  \code{\link{holidays}}, \code{\link{left}},
+  \code{\link{normalize}}, \code{\link{numericalonly}},
+  \code{\link{ohse}},
+  \code{\link{one_hot_encoding_commas}},
+  \code{\link{rbind_full}}, \code{\link{removenacols}},
+  \code{\link{removenarows}}, \code{\link{replaceall}},
+  \code{\link{right}}, \code{\link{vector2text}},
+  \code{\link{year_month}}, \code{\link{year_week}}
+}
+\concept{Data Wrangling}

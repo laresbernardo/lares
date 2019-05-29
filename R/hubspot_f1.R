@@ -6,6 +6,8 @@
 #' or data.frame. Keep in mind that it will always bring the latest
 #' value for each parameter (column).
 #'
+#' @family Connections
+#' @family CRM
 #' @param limit Integer. Limit the amount of contacts to return. 
 #' Multiples of 100 or round up will occur.
 #' @param creds Character. Credential's user (see get_credentials)

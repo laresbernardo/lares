@@ -16,3 +16,8 @@ readGS(title, ws = "Hoja 1", first_time = FALSE)
 \description{
 This function lets the user read any Google Sheet's data
 }
+\seealso{
+Other Connection: \code{\link{get_tweets}},
+  \code{\link{queryGA}}, \code{\link{writeGS}}
+}
+\concept{Connection}

@@ -3,6 +3,7 @@
 #' 
 #' This function lets the user read any Google Sheet's data
 #' 
+#' @family Connection
 #' @param title Character. Textual title of Google Sheet
 #' @param ws Character. Working sheet to import
 #' @param first_time Boolean. Authenticate manualy
@@ -26,6 +27,7 @@ readGS <- function(title, ws = "Hoja 1", first_time = FALSE) {
 #' 
 #' This function lets the user write on any Google Sheet
 #' 
+#' @family Connection
 #' @param data Data Frame. Data to export to Google Sheet 
 #' @param title Character. Textual title of Google Sheet
 #' @param ws Character. Working sheet to export to

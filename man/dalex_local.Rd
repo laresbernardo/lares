@@ -19,10 +19,8 @@ dalex_local(explainer, row, plot = TRUE, print = TRUE)
 DALEX library function for local interpretations
 }
 \seealso{
-Other Exploratory: \code{\link{corr_var}},
-  \code{\link{crosstab}}, \code{\link{dalex_explainer}},
+Other Interpretability: \code{\link{dalex_explainer}},
   \code{\link{dalex_residuals}},
-  \code{\link{dalex_variable}}, \code{\link{df_str}},
-  \code{\link{distr}}, \code{\link{freqs}}
+  \code{\link{dalex_variable}}
 }
-\concept{Exploratory}
+\concept{Interpretability}

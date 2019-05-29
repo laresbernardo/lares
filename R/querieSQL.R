@@ -3,6 +3,7 @@
 #' 
 #' This function lets the user query our Dummy Database
 #' 
+#' @family Connections
 #' @param query Character. SQL Query
 #' @param creds Character. Credential's user (see get_credentials)
 #' @export
@@ -29,6 +30,7 @@ queryDummy = function(query, creds = NA) {
 #' 
 #' This function lets the user query our Data Warehouse Database
 #' 
+#' @family Connections
 #' @param query Character. SQL Query
 #' @param which Character. Which database do you wish to connect to: seguros, tabunga...
 #' @param creds Character. Credential's user (see get_credentials)
@@ -59,6 +61,7 @@ queryDW = function(query, which = "soat", creds = NA) {
 #' 
 #' This function lets the user query our Production Database
 #' 
+#' @family Connections
 #' @param query Character. SQL Query
 #' @param creds Character. Credential's user (see get_credentials)
 #' @export

@@ -13,10 +13,7 @@ dalex_residuals(explainer)
 DALEX library function for residuals
 }
 \seealso{
-Other Exploratory: \code{\link{corr_var}},
-  \code{\link{crosstab}}, \code{\link{dalex_explainer}},
-  \code{\link{dalex_local}}, \code{\link{dalex_variable}},
-  \code{\link{df_str}}, \code{\link{distr}},
-  \code{\link{freqs}}
+Other Interpretability: \code{\link{dalex_explainer}},
+  \code{\link{dalex_local}}, \code{\link{dalex_variable}}
 }
-\concept{Exploratory}
+\concept{Interpretability}

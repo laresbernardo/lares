@@ -3,6 +3,7 @@
 #' 
 #' This function lets the user send Emails with Attachments using MailGun
 #'
+#' @family Tools
 #' @param from,to,cc,bcc Character. Emails
 #' @param subject Character. Subject for the email
 #' @param text,html Character. Text or HTML to send in the body
@@ -87,6 +88,3 @@ mailSend <- function(from = "RMail <laresbernardo@gmail.com>",
   }
   
 }
-
-# l <- list(x = c(1,2), y=c(5,6,7,8), x=c(1,1))
-# l[["x"]]

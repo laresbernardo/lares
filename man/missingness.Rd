@@ -18,16 +18,10 @@ This function lets the user calculate the percentage of NAs or
 missingness in a data.frame. It also plots the results if needed.
 }
 \seealso{
-Other Data Wrangling: \code{\link{balance_data}},
-  \code{\link{categ_reducer}},
-  \code{\link{categoryCounter}}, \code{\link{cleanText}},
-  \code{\link{dateformat}}, \code{\link{formatNum}},
-  \code{\link{left}}, \code{\link{normalize}},
-  \code{\link{numericalonly}},
-  \code{\link{one_hot_encoding_commas}},
-  \code{\link{removenacols}}, \code{\link{removenarows}},
-  \code{\link{replaceall}}, \code{\link{right}},
-  \code{\link{vector2text}}, \code{\link{year_month}},
-  \code{\link{year_week}}
+Other Exploratory: \code{\link{corr_var}},
+  \code{\link{crosstab}}, \code{\link{df_str}},
+  \code{\link{distr}}, \code{\link{freqs}},
+  \code{\link{gain_lift}}, \code{\link{get_tweets}},
+  \code{\link{trendsRelated}}
 }
-\concept{Data Wrangling}
+\concept{Exploratory}

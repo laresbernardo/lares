@@ -17,3 +17,16 @@ li_auth(app_name = NA, client_id = NA, client_secret = NA)
 This function authenticates and creates a token for LinkedIn's 
 API REST
 }
+\seealso{
+Other Connections: \code{\link{bring_api}},
+  \code{\link{db_download}}, \code{\link{db_upload}},
+  \code{\link{f1_contacts}}, \code{\link{geoAddress}},
+  \code{\link{queryDW}}, \code{\link{queryDummy}},
+  \code{\link{queryProduc}},
+  \code{\link{typeform_download}}
+
+Other Social Networks: \code{\link{get_tweets}},
+  \code{\link{li_profile}}
+}
+\concept{Connections}
+\concept{Social Networks}

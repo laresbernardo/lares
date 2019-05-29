@@ -6,6 +6,8 @@
 #' every time, but has a default value. You can prevent it from 
 #' printing the split counter result.
 #'
+#' @family Machine Learning
+#' @family Tools
 #' @param df Dataframe to split
 #' @param size Numeric. Split rate value, between 0 and 1. If set to
 #' 1, the train and test set will be the same.
@@ -54,6 +56,7 @@ msplit <- function(df, size = 0.7, seed = 0, print=T) {
 #' models. NOTE: when result is 0.69315, the classification is neutral; 
 #' it assigns equal probability to both classes.
 #'
+#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param eps Numeric. Epsilon value
@@ -97,6 +100,7 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' "GBM" (Gradient Boosting Machine), "DeepLearning" (Fully-connected 
 #' multi-layer artificial neural network) and "StackedEnsemble". 
 #'
+#' @family Machine Learning
 #' @param df Dataframe. Dataframe containing all your data, including 
 #' the independent variable labeled as 'tag'. If you want to define 
 #' which variable should be used instead, use the y parameter.
@@ -326,6 +330,8 @@ h2o_automl <- function(df, y = "tag",
 #' 
 #' Select wich model from the h2o_automl function to use
 #' 
+#' @family Machine Learning
+#' @family Tools
 #' @param results Object. h2o_automl output
 #' @param which_model Integer. Which model from the leaderboard you wish to use?
 #' @export
@@ -365,6 +371,8 @@ h2o_selectmodel <- function(results, which_model = 1) {
 #' 
 #' Export RDS, TXT, POJO, MOJO and all results from h2o_automl
 #' 
+#' @family Machine Learning
+#' @family Tools
 #' @param results Object. h2o_automl output
 #' @param txt Boolean. Do you wish to export the txt results?
 #' @param rds Boolean. Do you wish to export the RDS results?
@@ -465,6 +473,8 @@ export_results <- function(results,
 #' This functions lets the user iterate and search for best seed. Note that if
 #' the results change a lot, you are having a high variance in your data.
 #' 
+#' @family Machine Learning
+#' @family Tools
 #' @param df Dataframe. Dataframe with all your data you wish to model (see h2o_automl's df)
 #' @param tries Integer. How many seed do you wish to try?
 #' @export
@@ -486,6 +496,7 @@ iter_seeds <- function(df, tries = 10) {
 #' 
 #' This function lets the user calculate Root Mean Squared Error
 #' 
+#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
@@ -500,6 +511,7 @@ rmse <- function(tag, score){
 #' 
 #' This function lets the user calculate Mean Absolute Error
 #' 
+#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
@@ -514,6 +526,7 @@ mae <- function(tag, score){
 #' 
 #' This function lets the user calculate Mean Squared Error
 #' 
+#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
@@ -528,6 +541,7 @@ mse <- function(tag, score){
 #' 
 #' This function lets the user calculate Mean Squared Error
 #' 
+#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
@@ -544,6 +558,7 @@ mape <- function(tag, score){
 #' 
 #' This function lets the user calculate r squared
 #' 
+#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
@@ -557,6 +572,7 @@ rsq <- function(tag, score){
 #' 
 #' This function lets the user calculate adjusted r squared
 #' 
+#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
@@ -572,6 +588,7 @@ rsqa <- function(tag, score){
 #' This function lets the user calculate all errors and R squared 
 #' simultaneously.
 #' 
+#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
@@ -594,6 +611,8 @@ errors <- function(tag, score){
 #' containing the MOJO files. Note that it works with the files 
 #' generated when using the function export_results()
 #' 
+#' @family Machine Learning
+#' @family Tools
 #' @param df Dataframe. Data to insert into the model
 #' @param model_path Character. Relative model_path directory
 #' @param sample Integer. How many rows should the function predict?
@@ -630,6 +649,8 @@ h2o_predict_MOJO <- function(df, model_path, sample = NA){
 #' h2o_predict_MOJO() function when possible - it let's you change
 #' h2o's version without problem.
 #' 
+#' @family Machine Learning
+#' @family Tools
 #' @param df Dataframe. Data to insert into the model
 #' @param model_path Character. Relative model_path directory or zip file
 #' @param sample Integer. How many rows should the function predict?
@@ -663,6 +684,8 @@ h2o_predict_binary <- function(df, model_path, sample = NA){
 #' 
 #' This function lets the user get the score from an API service
 #' 
+#' @family Machine Learning
+#' @family Tools
 #' @param df Dataframe/Vector. Data to insert into the model
 #' @param api Character. API's URL
 #' @export
@@ -698,6 +721,8 @@ h2o_predict_API <- function(df, api) {
 #' 
 #' This function lets the user get scores from a H2O Model Object
 #' 
+#' @family Machine Learning
+#' @family Tools
 #' @param df Dataframe/Vector. Data to insert into the model
 #' @param model H2o Object. Model
 #' @export
@@ -714,6 +739,7 @@ h2o_predict_model <- function(df, model){
 #' This function lets the user calibrate a model's predictions when 
 #' under or over sampling methods were applied when training it.
 #' 
+#' @family Data Wrangling
 #' @param score Vector. Probability predictions of the model output
 #' @param train Integer. Total row count in the training dataset
 #' @param target Integer. Total row count of the target class 
@@ -743,6 +769,8 @@ calibrate <- function(score, train, target, train_sample, target_sample) {
 #' values for a predictive score of a specific target. You can use the 
 #' mplot_gain() function to custom plot results.
 #' 
+#' @family Machine Learning
+#' @family Exploratory
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param target Value. Which is your target positive value? If 
@@ -811,6 +839,8 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
 #' This function calculates ROC Curves and AUC values with 95\% confidence 
 #' range. It also works for multi-categorical models.
 #' 
+#' @family Machine Learning
+#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param multis Data.frame. Containing columns with each category score 
@@ -874,6 +904,8 @@ ROC <- function (tag, score, multis = NA) {
 #' 2 or more categories. You can either set the score and threshold
 #' or the labels you wish to cross with.
 #' 
+#' @family Machine Learning
+#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param thresh Numeric. Value which splits the results for the 
@@ -905,12 +937,14 @@ conf_mat <- function (tag, score, thresh = 0.5) {
 
 
 ####################################################################
-#' Classification Model Metrics
+#' Model Metrics and Performance
 #' 
 #' This function lets the user get a confusion matrix and accuracy, and 
 #' for for binary classification models: AUC, Precision, Sensitivity, and
 #' Specificity.
 #' 
+#' @family Machine Learning
+#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param multis Data.frame. Containing columns with each category score 

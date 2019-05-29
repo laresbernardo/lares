@@ -5,6 +5,7 @@
 #' into data.frame. Designed initially for Hubspot but may work on other API
 #' 
 #' @family Tools
+#' @family Connections
 #' @param url Character. API's URL
 #' @param status Boolean. Display status message?
 #' @export

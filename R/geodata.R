@@ -4,6 +4,7 @@
 #' This function lets the user obtain Google's Geodata on given addresses
 #' 
 #' @family Geographical
+#' @family Connections
 #' @param address Character Vector. Addresses you wish to query
 #' @param country Character. Default Country if known
 #' @param index Character Vector. If you wish to keep an id on each address, set this values
@@ -98,6 +99,7 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
 #' This function lets the user obtain Colombia's stratum given the coordinates of an address
 #' 
 #' @family Geographical
+#' @family Scrapper
 #' @param lon Numeric Vector. Longitudes
 #' @param lat Numeric Vector. Latitudes
 #' @param label Character Vector. If you wish to keep an id on each address, set this values

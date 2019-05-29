@@ -1,8 +1,9 @@
 ####################################################################
-#' Send Emails with Attachments (Sendgrid)
+#' Visualize Survey Results
 #' 
-#' This function lets the user send Emails with Attachments using Sendgrid
+#' This function lets the user plot a survey's result.
 #' 
+#' @family Visualization
 #' @param answers Dataframe. Answers. Each row a different person. 
 #' Each column a different answer.
 #' @param ignore Numeric Vector. Which columns are NOT answers?
@@ -14,10 +15,6 @@ plot_survey <- function(answers, ignore = c(1), title = NA, subtitle = NA){
     answers <- answers[-ignore]
   }
   p <- answers %>%
-    # replaceall(1, "Most Important") %>% 
-    # replaceall(2, "Important") %>% 
-    # replaceall(3, "Less Important") %>%
-    # replaceall(4, "Not Important") %>%
     gather() %>% freqs(key, value) %>% 
     ggplot(aes(x = key, y = n, fill = value, group = key, label = p)) +
     geom_bar(stat = "identity") + theme_minimal() +

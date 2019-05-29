@@ -26,3 +26,8 @@ queryGA(account = "comparamejor", creds = NA, token_dir = NA,
 \description{
 This function lets the user query Google Analytics with its API
 }
+\seealso{
+Other Connection: \code{\link{get_tweets}},
+  \code{\link{readGS}}, \code{\link{writeGS}}
+}
+\concept{Connection}

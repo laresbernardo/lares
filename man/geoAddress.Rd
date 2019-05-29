@@ -24,5 +24,13 @@ This function lets the user obtain Google's Geodata on given addresses
 \seealso{
 Other Geographical: \code{\link{geoGrid}},
   \code{\link{geoMap}}, \code{\link{geoStratum}}
+
+Other Connections: \code{\link{bring_api}},
+  \code{\link{db_download}}, \code{\link{db_upload}},
+  \code{\link{f1_contacts}}, \code{\link{li_auth}},
+  \code{\link{queryDW}}, \code{\link{queryDummy}},
+  \code{\link{queryProduc}},
+  \code{\link{typeform_download}}
 }
+\concept{Connections}
 \concept{Geographical}

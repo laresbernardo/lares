@@ -4,7 +4,7 @@
 #' This function lets the user calculate the percentage of NAs or
 #' missingness in a data.frame. It also plots the results if needed.
 #' 
-#' @family Data Wrangling
+#' @family Exploratory
 #' @param df Dataframe. Dataframe to study
 #' @param plot Boolean. Do you wish to plot results?
 #' @param subtitle Character. Subtitle to show in plot

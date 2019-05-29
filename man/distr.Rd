@@ -54,9 +54,9 @@ Custom and tidyverse friendly.
 }
 \seealso{
 Other Exploratory: \code{\link{corr_var}},
-  \code{\link{crosstab}}, \code{\link{dalex_explainer}},
-  \code{\link{dalex_local}}, \code{\link{dalex_residuals}},
-  \code{\link{dalex_variable}}, \code{\link{df_str}},
-  \code{\link{freqs}}
+  \code{\link{crosstab}}, \code{\link{df_str}},
+  \code{\link{freqs}}, \code{\link{gain_lift}},
+  \code{\link{get_tweets}}, \code{\link{missingness}},
+  \code{\link{trendsRelated}}
 }
 \concept{Exploratory}

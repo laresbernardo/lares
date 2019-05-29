@@ -3,14 +3,12 @@
 #'
 #' This function lets the user update from repository or local source.
 #'
+#' @family Tools
 #' @param local Boolean. Install package with local files (TRUE) or Github repository
 #' @param force Boolean. Force install if needed
 #' @param restart Boolean. Restart session after re-installing the library
 #' @export
 updateLares <- function(local = FALSE, force = FALSE, restart = FALSE) {
-  
-  # require(devtools)
-  # require(config)
   
   start <- Sys.time()
   message(paste(start,"| Started installation..."))

@@ -12,3 +12,8 @@ li_profile(token = NA)
 \description{
 This function brings a list with your personal LinkedIn data
 }
+\seealso{
+Other Social Networks: \code{\link{get_tweets}},
+  \code{\link{li_auth}}
+}
+\concept{Social Networks}

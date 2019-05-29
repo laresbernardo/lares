@@ -14,3 +14,12 @@ queryDummy(query, creds = NA)
 \description{
 This function lets the user query our Dummy Database
 }
+\seealso{
+Other Connections: \code{\link{bring_api}},
+  \code{\link{db_download}}, \code{\link{db_upload}},
+  \code{\link{f1_contacts}}, \code{\link{geoAddress}},
+  \code{\link{li_auth}}, \code{\link{queryDW}},
+  \code{\link{queryProduc}},
+  \code{\link{typeform_download}}
+}
+\concept{Connections}

@@ -71,3 +71,21 @@ Random Forest (RF) and Extremely-Randomized Trees (XRT)), "GLM"
 "GBM" (Gradient Boosting Machine), "DeepLearning" (Fully-connected 
 multi-layer artificial neural network) and "StackedEnsemble".
 }
+\seealso{
+Other Machine Learning: \code{\link{ROC}},
+  \code{\link{clusterKmeans}}, \code{\link{conf_mat}},
+  \code{\link{export_results}}, \code{\link{gain_lift}},
+  \code{\link{h2o_predict_API}},
+  \code{\link{h2o_predict_MOJO}},
+  \code{\link{h2o_predict_binary}},
+  \code{\link{h2o_predict_model}},
+  \code{\link{h2o_selectmodel}}, \code{\link{iter_seeds}},
+  \code{\link{model_metrics}}, \code{\link{mplot_conf}},
+  \code{\link{mplot_cuts_error}}, \code{\link{mplot_cuts}},
+  \code{\link{mplot_density}}, \code{\link{mplot_full}},
+  \code{\link{mplot_gain}}, \code{\link{mplot_importance}},
+  \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
+  \code{\link{mplot_response}}, \code{\link{mplot_roc}},
+  \code{\link{mplot_splits}}, \code{\link{msplit}}
+}
+\concept{Machine Learning}

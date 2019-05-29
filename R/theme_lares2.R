@@ -11,6 +11,7 @@
 #' with solid default kerning pairs and geometric numbers.
 #'
 #' @md
+#' @family Visualization
 #' @param font,base_size Character and numeric. Base font family and size
 #' @param main_colour,second_colour,soft_colour,bg_colour Character. 
 #' Main colours for your theme

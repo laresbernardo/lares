@@ -2,7 +2,7 @@
 % Please edit documentation in R/colour_palettes.R
 \name{theme_lares}
 \alias{theme_lares}
-\title{lares Theme for ggplot2}
+\title{Theme for ggplot2}
 \usage{
 theme_lares(labels = FALSE, colours = TRUE, cont = FALSE,
   xcommas = FALSE, ycommas = FALSE)
@@ -23,8 +23,18 @@ This function sets some default values into ggplot2 outputs. This
 function is almost as using gg_colour_customs() + gg_fill_customs() 
 + gg_text_customs = but these won't be mantained any longer.
 }
+\details{
+This function is lo longer mantained: use theme_lares2() instead!
+}
 \seealso{
 Other Visualization: \code{\link{corr_plot}},
-  \code{\link{noPlot}}
+  \code{\link{mplot_conf}}, \code{\link{mplot_cuts_error}},
+  \code{\link{mplot_cuts}}, \code{\link{mplot_density}},
+  \code{\link{mplot_full}}, \code{\link{mplot_gain}},
+  \code{\link{mplot_importance}},
+  \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
+  \code{\link{mplot_response}}, \code{\link{mplot_roc}},
+  \code{\link{mplot_splits}}, \code{\link{noPlot}},
+  \code{\link{plot_survey}}, \code{\link{theme_lares2}}
 }
 \concept{Visualization}

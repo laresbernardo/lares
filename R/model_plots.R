@@ -3,6 +3,8 @@
 #' 
 #' This function plots discrete and continuous values results
 #' 
+#' @family Machine Learning
+#' @family Visualization
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param thresh Integer. Threshold for selecting binary or regression 
@@ -128,6 +130,8 @@ mplot_density <- function(tag,
 #' 
 #' This function plots Variable Importances
 #' 
+#' @family Machine Learning
+#' @family Visualization
 #' @param var Vector. Variable or column's names
 #' @param imp Vector. Importance of said variables. Must have same length as var
 #' @param colours If possitive and negative contribution is known
@@ -212,6 +216,8 @@ mplot_importance <- function(var,
 #' This function plots ROC Curves with AUC values with 95\% confidence 
 #' range. It also works for multi-categorical models.
 #' 
+#' @family Machine Learning
+#' @family Visualization
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param multis Data.frame. Containing columns with each category score 
@@ -311,6 +317,8 @@ mplot_roc <- function(tag,
 #' 
 #' This function cuts by quantiles any score or prediction
 #' 
+#' @family Machine Learning
+#' @family Visualization
 #' @param score Vector. Predicted value or model's result
 #' @param splits Integer. Numer of separations to plot
 #' @param model_name Character. Model's name
@@ -385,6 +393,8 @@ mplot_cuts <- function(score,
 #' 
 #' This function cuts by quantiles on absolut and percentual errors
 #' 
+#' @family Machine Learning
+#' @family Visualization
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param splits Integer. Numer of separations to plot
@@ -494,6 +504,8 @@ mplot_cuts_error <- function(tag,
 #' This function lets us split and compare quantiles on a given prediction to
 #' compare different categorical values vs scores grouped by equal sized buckets.
 #' 
+#' @family Machine Learning
+#' @family Visualization
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param splits Integer. Numer of separations to plot
@@ -595,6 +607,8 @@ mplot_splits <- function(tag,
 #' 
 #' This function can plot AUC and LogLoss Plots from a h2o_automl results object
 #' 
+#' @family Machine Learning
+#' @family Visualization
 #' @param results Object. Results object from h2o_automl function
 #' @param subtitle Character. Subitle to show in plot
 #' @param model_name Character. Model's name
@@ -680,6 +694,8 @@ mplot_metrics <- function(results,
 #' 
 #' This function plots a Linear Regression Result
 #' 
+#' @family Machine Learning
+#' @family Visualization
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param subtitle Character. Subitle to show in plot
@@ -762,6 +778,8 @@ mplot_lineal <- function(tag,
 #' detect if it's a categorical or regression's model by checking how many different
 #' unique values the independent variable (tag) has.
 #' 
+#' @family Machine Learning
+#' @family Visualization
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result. Must be numeric
 #' for categorical binomial models and continuous regression models; must
@@ -864,6 +882,8 @@ mplot_full <- function(tag,
 #' 
 #' This function plots a confussion matrix.
 #' 
+#' @family Machine Learning
+#' @family Visualization
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param thresh Numeric. Value which splits the results for the 
@@ -952,6 +972,8 @@ mplot_conf <- function (tag, score, thresh = 0.5,
 #' X deciles, what % of the actual target class observations can we 
 #' expect to target?
 #' 
+#' @family Machine Learning
+#' @family Visualization
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param target Value. Which is your target positive value? If 
@@ -1026,6 +1048,8 @@ mplot_gain <- function(tag, score, target = "auto", splits = 10, highlight = "au
 #' apply the model and select up until ntile X, what is the expected 
 #' % of target class observations in the selection?
 #' 
+#' @family Machine Learning
+#' @family Visualization
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param target Value. Which is your target positive value? If 

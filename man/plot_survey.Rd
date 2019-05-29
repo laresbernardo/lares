@@ -2,7 +2,7 @@
 % Please edit documentation in R/surveys.R
 \name{plot_survey}
 \alias{plot_survey}
-\title{Send Emails with Attachments (Sendgrid)}
+\title{Visualize Survey Results}
 \usage{
 plot_survey(answers, ignore = c(1), title = NA, subtitle = NA)
 }
@@ -17,5 +17,17 @@ Each column a different answer.}
 \item{subtitle}{Character. Subtitle for your plot}
 }
 \description{
-This function lets the user send Emails with Attachments using Sendgrid
+This function lets the user plot a survey's result.
 }
+\seealso{
+Other Visualization: \code{\link{corr_plot}},
+  \code{\link{mplot_conf}}, \code{\link{mplot_cuts_error}},
+  \code{\link{mplot_cuts}}, \code{\link{mplot_density}},
+  \code{\link{mplot_full}}, \code{\link{mplot_gain}},
+  \code{\link{mplot_importance}},
+  \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
+  \code{\link{mplot_response}}, \code{\link{mplot_roc}},
+  \code{\link{mplot_splits}}, \code{\link{noPlot}},
+  \code{\link{theme_lares2}}, \code{\link{theme_lares}}
+}
+\concept{Visualization}

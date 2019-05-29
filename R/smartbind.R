@@ -4,11 +4,13 @@
 #' Efficient rbind of data frames, even if the column names don't match.
 #' Code based on gtools::smartbind
 #'
+#' @family Data Wrangling
 #' @param ... Dataframes. Dataframes to combine
 #' @param list List. Containing dataframes to combine
 #' @param fill Value. To use when 'filling' missing columns
 #' @param sep Character. String used to separate column names when 
 #' pasting them together.
+#' @author Gregory R. Warnes
 #' @export
 rbind_full <- function(..., list, fill=NA, sep=':'){
   

@@ -24,3 +24,18 @@ class in the training dataset after sampling}
 This function lets the user calibrate a model's predictions when 
 under or over sampling methods were applied when training it.
 }
+\seealso{
+Other Data Wrangling: \code{\link{balance_data}},
+  \code{\link{categ_reducer}},
+  \code{\link{categoryCounter}}, \code{\link{cleanText}},
+  \code{\link{date_feats}}, \code{\link{dateformat}},
+  \code{\link{formatNum}}, \code{\link{holidays}},
+  \code{\link{left}}, \code{\link{normalize}},
+  \code{\link{numericalonly}}, \code{\link{ohse}},
+  \code{\link{one_hot_encoding_commas}},
+  \code{\link{rbind_full}}, \code{\link{removenacols}},
+  \code{\link{removenarows}}, \code{\link{replaceall}},
+  \code{\link{right}}, \code{\link{vector2text}},
+  \code{\link{year_month}}, \code{\link{year_week}}
+}
+\concept{Data Wrangling}

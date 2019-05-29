@@ -145,11 +145,13 @@ plot_palette <- function(fill, colour = "black", id = NA) {
 
 
 ####################################################################
-#' lares Theme for ggplot2
+#' Theme for ggplot2
 #' 
 #' This function sets some default values into ggplot2 outputs. This
 #' function is almost as using gg_colour_customs() + gg_fill_customs() 
-#' + gg_text_customs = but these won't be mantained any longer.
+#' + gg_text_customs = but these won't be mantained any longer. 
+#' 
+#' This function is lo longer mantained: use theme_lares2() instead!
 #' 
 #' @family Visualization
 #' @param labels Boolean. Add labels to plot?

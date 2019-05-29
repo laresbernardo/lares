@@ -28,3 +28,32 @@ mplot_splits(tag, score, splits = 5, subtitle = NA, model_name = NA,
 This function lets us split and compare quantiles on a given prediction to
 compare different categorical values vs scores grouped by equal sized buckets.
 }
+\seealso{
+Other Machine Learning: \code{\link{ROC}},
+  \code{\link{clusterKmeans}}, \code{\link{conf_mat}},
+  \code{\link{export_results}}, \code{\link{gain_lift}},
+  \code{\link{h2o_automl}}, \code{\link{h2o_predict_API}},
+  \code{\link{h2o_predict_MOJO}},
+  \code{\link{h2o_predict_binary}},
+  \code{\link{h2o_predict_model}},
+  \code{\link{h2o_selectmodel}}, \code{\link{iter_seeds}},
+  \code{\link{model_metrics}}, \code{\link{mplot_conf}},
+  \code{\link{mplot_cuts_error}}, \code{\link{mplot_cuts}},
+  \code{\link{mplot_density}}, \code{\link{mplot_full}},
+  \code{\link{mplot_gain}}, \code{\link{mplot_importance}},
+  \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
+  \code{\link{mplot_response}}, \code{\link{mplot_roc}},
+  \code{\link{msplit}}
+
+Other Visualization: \code{\link{corr_plot}},
+  \code{\link{mplot_conf}}, \code{\link{mplot_cuts_error}},
+  \code{\link{mplot_cuts}}, \code{\link{mplot_density}},
+  \code{\link{mplot_full}}, \code{\link{mplot_gain}},
+  \code{\link{mplot_importance}},
+  \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
+  \code{\link{mplot_response}}, \code{\link{mplot_roc}},
+  \code{\link{noPlot}}, \code{\link{plot_survey}},
+  \code{\link{theme_lares2}}, \code{\link{theme_lares}}
+}
+\concept{Machine Learning}
+\concept{Visualization}
