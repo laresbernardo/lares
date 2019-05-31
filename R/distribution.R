@@ -132,8 +132,8 @@ distr <- function(data, ...,
       p <- p + 
         geom_density(fill = "deepskyblue", alpha = 0.7, adjust = 1/3) +
         labs(y = "", x = "", fill = "Density",
-             title = ifelse(is.na(title), paste("Density Distribution"), title),
-             subtitle = ifelse(is.na(subtitle), paste("Variable:", variable_name), subtitle),
+             title = "Density Distribution",
+             subtitle = paste("Variable:", variable_name),
              caption = paste("Obs:", formatNum(nrow(df), 0))) +
         theme_lares2()
       if (top != 10) {
@@ -142,8 +142,7 @@ distr <- function(data, ...,
     } else {
       # Discrete values
       p <- df %>% 
-        freqs(value, plot = TRUE, variable_name = variable_name, 
-              abc = abc, top = top, title = title, subtitle = subtitle)
+        freqs(value, plot = TRUE, variable_name = variable_name, abc = abc, top = top)
     }
     # Return table with results?
     if (!plot) {
