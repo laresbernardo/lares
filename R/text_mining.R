@@ -1,27 +1,25 @@
 ####################################################################
-# Simple Wordcloud
+#' Tokenize Vectors into Words
 #' 
-#' Study the distribution of a target variable vs another variable. This
-#' function is quite similar to the funModeling's corrplot function.
+#' This function transforms texts into words, calculate frequencies,
+#' supress stop words in a given language.
 #' 
-#' @family Visualization
 #' @family Exploratory
+#' @family Data Wrangling
+#' @family Text Mining
 #' @param text Character vector
 #' @param lang Character. Language in text (used for stop words)
 #' @param exclude Character vector. Which word do you wish to exclude?
-#' @param seed Numeric. Seed for re-producible plots
-#' @param print Boolean. Plot results as textcloud?
 #' @param keep_spaces Boolean. If you wish to keep spaces in each line
 #' to keep unique compount words, separated with spaces, set to TRUE. 
 #' For example, 'LA ALAMEDA' will be set as 'LA_ALAMEDA' and treated as
 #' a single word.
+#' @param plot Boolean. Plot results as textcloud?
 #' @export
-textCloud <- function(text, lang = "english", exclude = c(), seed = 0, 
-                      print = TRUE, keep_spaces = FALSE) {
+textTokenizer <- function(text, lang = "english", exclude = c(), seed = 0, 
+                          print = TRUE, keep_spaces = FALSE) {
   
   # require("tm")
-  # require("wordcloud")
-
   set.seed(seed)
   options(warn=-1)
   
@@ -59,11 +57,38 @@ textCloud <- function(text, lang = "english", exclude = c(), seed = 0,
   m <- as.matrix(dtm)
   v <- sort(rowSums(m), decreasing=TRUE)
   d <- data.frame(word = names(v), freq=v)
+  return(d)
+}
+
+
+####################################################################
+#' Wordcloud Plot
+#' 
+#' Study the distribution of a target variable vs another variable. This
+#' function is quite similar to the funModeling's corrplot function.
+#' 
+#' @family Visualization
+#' @family Exploratory
+#' @family Text Mining
+#' @param text Character vector
+#' @param lang Character. Language in text (used for stop words)
+#' @param exclude Character vector. Which word do you wish to exclude?
+#' @param seed Numeric. Seed for re-producible plots
+#' @param keep_spaces Boolean. If you wish to keep spaces in each line
+#' to keep unique compount words, separated with spaces, set to TRUE. 
+#' For example, 'LA ALAMEDA' will be set as 'LA_ALAMEDA' and treated as
+#' a single word.
+#' @param print Boolean. Plot results as textcloud?
+#' @export
+textCloud <- function(text, lang = "english", exclude = c(), seed = 0, 
+                      keep_spaces = FALSE, print = TRUE) {
   
+  # require("wordcloud")
+  
+  d <- textTokenizer(text, lang, exclude, seed, keep_spaces)
+    
   if (print) {
     message(paste0(capture.output(head(d, 10)), collapse = "\n")) 
-  } else {
-    return(d)
   }
   
   wordcloud(words = d$word, freq = d$freq, 
@@ -73,5 +98,5 @@ textCloud <- function(text, lang = "english", exclude = c(), seed = 0,
             random.order = FALSE, 
             rot.per = 0.2, 
             colors = names(lares_pal()$palette)[1:8])
-
+  
 }

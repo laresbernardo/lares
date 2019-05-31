@@ -153,6 +153,7 @@ vector2text <- function(vector, sep=", ", quotes = TRUE) {
 #' characters and no accents/symbols on letters.
 #' 
 #' @family Data Wrangling
+#' @family Text Mining
 #' @param text Character Vector
 #' @param spaces Boolean. Keep spaces?
 #' @param lower Boolean. Transform all to lower case?
@@ -415,6 +416,7 @@ listfiles <- function(folder = getwd(), recursive = TRUE, regex = NA, images = F
 #' order that you pass them to the function.
 #' 
 #' @family Data Wrangling
+#' @family Text Mining
 #' @param df Data.frame or Vector
 #' @param original String or Vector. Original text you wish to replace
 #' @param change String or Vector. Values you wish to replace the originals with

@@ -28,7 +28,12 @@ Other Data Wrangling: \code{\link{balance_data}},
   \code{\link{one_hot_encoding_commas}},
   \code{\link{rbind_full}}, \code{\link{removenacols}},
   \code{\link{removenarows}}, \code{\link{replaceall}},
-  \code{\link{right}}, \code{\link{vector2text}},
-  \code{\link{year_month}}, \code{\link{year_week}}
+  \code{\link{right}}, \code{\link{textTokenizer}},
+  \code{\link{vector2text}}, \code{\link{year_month}},
+  \code{\link{year_week}}
+
+Other Text Mining: \code{\link{replaceall}},
+  \code{\link{textCloud}}, \code{\link{textTokenizer}}
 }
 \concept{Data Wrangling}
+\concept{Text Mining}

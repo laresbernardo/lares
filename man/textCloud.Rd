@@ -2,11 +2,10 @@
 % Please edit documentation in R/text_mining.R
 \name{textCloud}
 \alias{textCloud}
-\title{Study the distribution of a target variable vs another variable. This
-function is quite similar to the funModeling's corrplot function.}
+\title{Wordcloud Plot}
 \usage{
 textCloud(text, lang = "english", exclude = c(), seed = 0,
-  print = TRUE, keep_spaces = FALSE)
+  keep_spaces = FALSE, print = TRUE)
 }
 \arguments{
 \item{text}{Character vector}
@@ -17,12 +16,12 @@ textCloud(text, lang = "english", exclude = c(), seed = 0,
 
 \item{seed}{Numeric. Seed for re-producible plots}
 
-\item{print}{Boolean. Plot results as textcloud?}
-
 \item{keep_spaces}{Boolean. If you wish to keep spaces in each line
 to keep unique compount words, separated with spaces, set to TRUE. 
 For example, 'LA ALAMEDA' will be set as 'LA_ALAMEDA' and treated as
 a single word.}
+
+\item{print}{Boolean. Plot results as textcloud?}
 }
 \description{
 Study the distribution of a target variable vs another variable. This
@@ -44,7 +43,12 @@ Other Exploratory: \code{\link{corr_var}},
   \code{\link{crosstab}}, \code{\link{df_str}},
   \code{\link{distr}}, \code{\link{freqs}},
   \code{\link{gain_lift}}, \code{\link{get_tweets}},
-  \code{\link{missingness}}, \code{\link{trendsRelated}}
+  \code{\link{missingness}}, \code{\link{textTokenizer}},
+  \code{\link{trendsRelated}}
+
+Other Text Mining: \code{\link{cleanText}},
+  \code{\link{replaceall}}, \code{\link{textTokenizer}}
 }
 \concept{Exploratory}
+\concept{Text Mining}
 \concept{Visualization}

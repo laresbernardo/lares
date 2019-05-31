@@ -27,7 +27,8 @@ Other Exploratory: \code{\link{corr_var}},
   \code{\link{crosstab}}, \code{\link{df_str}},
   \code{\link{distr}}, \code{\link{freqs}},
   \code{\link{gain_lift}}, \code{\link{get_tweets}},
-  \code{\link{missingness}}, \code{\link{textCloud}}
+  \code{\link{missingness}}, \code{\link{textCloud}},
+  \code{\link{textTokenizer}}
 
 Other Scrapper: \code{\link{geoStratum}},
   \code{\link{holidays}}

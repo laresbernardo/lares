@@ -27,7 +27,7 @@ Other Data Wrangling: \code{\link{balance_data}},
   \code{\link{one_hot_encoding_commas}},
   \code{\link{rbind_full}}, \code{\link{removenacols}},
   \code{\link{replaceall}}, \code{\link{right}},
-  \code{\link{vector2text}}, \code{\link{year_month}},
-  \code{\link{year_week}}
+  \code{\link{textTokenizer}}, \code{\link{vector2text}},
+  \code{\link{year_month}}, \code{\link{year_week}}
 }
 \concept{Data Wrangling}
