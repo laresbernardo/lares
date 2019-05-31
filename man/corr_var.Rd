@@ -53,7 +53,7 @@ Other Exploratory: \code{\link{crosstab}},
   \code{\link{df_str}}, \code{\link{distr}},
   \code{\link{freqs}}, \code{\link{gain_lift}},
   \code{\link{get_tweets}}, \code{\link{missingness}},
-  \code{\link{trendsRelated}}
+  \code{\link{textCloud}}, \code{\link{trendsRelated}}
 
 Other Correlations: \code{\link{corr_plot}},
   \code{\link{corr}}

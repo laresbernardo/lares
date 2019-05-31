@@ -4,6 +4,8 @@
 #' Study the distribution of a target variable vs another variable. This
 #' function is quite similar to the funModeling's corrplot function.
 #' 
+#' @family Visualization
+#' @family Exploratory
 #' @param text Character vector
 #' @param lang Character. Language in text (used for stop words)
 #' @param exclude Character vector. Which word do you wish to exclude?
@@ -15,7 +17,7 @@
 #' a single word.
 #' @export
 textCloud <- function(text, lang = "english", exclude = c(), seed = 0, 
-                      print = T, keep_spaces = FALSE) {
+                      print = TRUE, keep_spaces = FALSE) {
   
   # require("tm")
   # require("wordcloud")
@@ -58,8 +60,10 @@ textCloud <- function(text, lang = "english", exclude = c(), seed = 0,
   v <- sort(rowSums(m), decreasing=TRUE)
   d <- data.frame(word = names(v), freq=v)
   
-  if (print == TRUE) {
+  if (print) {
     message(paste0(capture.output(head(d, 10)), collapse = "\n")) 
+  } else {
+    return(d)
   }
   
   wordcloud(words = d$word, freq = d$freq, 
@@ -68,5 +72,6 @@ textCloud <- function(text, lang = "english", exclude = c(), seed = 0,
             max.words = 200, 
             random.order = FALSE, 
             rot.per = 0.2, 
-            colors = names(lares::lares_pal()$palette)[1:8])
+            colors = names(lares_pal()$palette)[1:8])
+
 }

@@ -141,8 +141,7 @@ distr <- function(data, ...,
       }
     } else {
       # Discrete values
-      p <- df %>% 
-        freqs(value, plot = TRUE, variable_name = variable_name, abc = abc, top = top)
+      p <- freqs(df, value, plot = TRUE, variable_name = variable_name, abc = abc, top = top)
     }
     # Return table with results?
     if (!plot) {

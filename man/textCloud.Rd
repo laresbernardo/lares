@@ -6,7 +6,7 @@
 function is quite similar to the funModeling's corrplot function.}
 \usage{
 textCloud(text, lang = "english", exclude = c(), seed = 0,
-  print = T, keep_spaces = FALSE)
+  print = TRUE, keep_spaces = FALSE)
 }
 \arguments{
 \item{text}{Character vector}
@@ -28,3 +28,23 @@ a single word.}
 Study the distribution of a target variable vs another variable. This
 function is quite similar to the funModeling's corrplot function.
 }
+\seealso{
+Other Visualization: \code{\link{corr_plot}},
+  \code{\link{mplot_conf}}, \code{\link{mplot_cuts_error}},
+  \code{\link{mplot_cuts}}, \code{\link{mplot_density}},
+  \code{\link{mplot_full}}, \code{\link{mplot_gain}},
+  \code{\link{mplot_importance}},
+  \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
+  \code{\link{mplot_response}}, \code{\link{mplot_roc}},
+  \code{\link{mplot_splits}}, \code{\link{noPlot}},
+  \code{\link{plot_survey}}, \code{\link{theme_lares2}},
+  \code{\link{theme_lares}}
+
+Other Exploratory: \code{\link{corr_var}},
+  \code{\link{crosstab}}, \code{\link{df_str}},
+  \code{\link{distr}}, \code{\link{freqs}},
+  \code{\link{gain_lift}}, \code{\link{get_tweets}},
+  \code{\link{missingness}}, \code{\link{trendsRelated}}
+}
+\concept{Exploratory}
+\concept{Visualization}
