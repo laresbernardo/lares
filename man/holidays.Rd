@@ -31,8 +31,12 @@ Other Data Wrangling: \code{\link{balance_data}},
   \code{\link{right}}, \code{\link{vector2text}},
   \code{\link{year_month}}, \code{\link{year_week}}
 
+Other Feature Engineering: \code{\link{date_feats}},
+  \code{\link{ohse}}
+
 Other Scrapper: \code{\link{geoStratum}},
   \code{\link{trendsRelated}}
 }
 \concept{Data Wrangling}
+\concept{Feature Engineering}
 \concept{Scrapper}

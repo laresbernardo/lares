@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares) [![saythanks](https://img.shields.io/badge/say-thanks-1EAEDB.svg)](https://saythanks.io/to/laresbernardo)
 ----
 
-`lares` is a library used to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. It also simplifies the installation process of libraries, distribution, and reproducible research. You are most welcome to install, use, and comment on any of its code and functionalities. Feel free to contact me and/or add me on [Linkedin](https://www.linkedin.com/in/laresbernardo/)! Do let me know where did you got my contact from ;)
+`lares` is a library used to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. It also simplifies the installation process of libraries, distribution, and reproducible research. You are most welcome to install, use, and comment on any of its code and functionalities. Feel free to contact me and/or add me on [Linkedin](https://www.linkedin.com/in/laresbernardo)! Do let me know where did you got my contact from ;)
 
 ## Install the package
 
@@ -34,7 +34,7 @@ lares::updateLares(local=T) # Personal and local files, not necessarily deployed
 
 ## What else is there?
 
-You can type `lares::` in **RStudio** and you will see a pop-up with all the functions that are currently available within the package. If in doubt, you can use the `?` function (i.e. `?lares::function`) and the **Help** tab will display a short explanation on each function and its parameters. If you want to check all the documentation, simply run `help(package = lares)`.
+You can type `lares::` in **RStudio** and you will see a pop-up with all the functions that are currently available within the package. If in doubt, you can use the `?` function (i.e. `?lares::function`) and the **Help** tab will display a short explanation on each function and its parameters. If you want to check all the documentation, simply run `help(package = lares)`. You can find similar family functions in the **See Also** section of each documentation as well.
 
 ### Getting further help
 

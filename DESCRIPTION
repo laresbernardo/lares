@@ -1,7 +1,7 @@
 Package: lares
 Type: Package
 Title: Analytics, Data Mining & Machine Learning
-Version: 4.5
+Version: 4.6
 Author: Bernardo Lares
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
 Description: R library for better/faster analytics, visualization, data mining, and machine learning tasks.

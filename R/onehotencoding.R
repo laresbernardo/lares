@@ -5,6 +5,7 @@
 #' categorical columns into numerical by one hot encoding technic.
 #'
 #' @family Data Wrangling
+#' @family Feature Engineering
 #' @param df Dataframe
 #' @param redundant Boolean. Should we keep redundat columns? i.e. If the
 #' column only has two different values, should we keep both new columns?
@@ -163,6 +164,7 @@ ohse <- function(df,
 #' of a dataframe or vector with date/time variables.
 #'
 #' @family Data Wrangling
+#' @family Feature Engineering
 #' @param dates Vector or dataframe. Non-date/time columns will be 
 #' automatically ignored.
 #' @param keep_originals Boolean. Should the original date/time columns be
@@ -304,6 +306,7 @@ date_feats <- function(dates,
 #' any country and year within +- 5 years. Thanks to timeanddate.com!
 #'
 #' @family Data Wrangling
+#' @family Feature Engineering
 #' @family Scrapper
 #' @param years Character or vector. For which year(s) do you wish to import
 #' holiday dates?

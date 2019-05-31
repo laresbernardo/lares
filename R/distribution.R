@@ -86,19 +86,19 @@ distr <- function(data, ...,
   }
   
   fxclean <- function(value, clean = FALSE, targets = NA) {
-    if (clean == TRUE) {
+    if (clean) {
       if (!is.numeric(value)) {
-        value <- cleanText(value, spaces = F)
+        value <- cleanText(value, spaces = FALSE)
       }
       if (!is.numeric(targets) & !is.na(targets)) {
-        targets <- cleanText(targets, spaces = F)
+        targets <- cleanText(targets, spaces = FALSE)
       } 
     }
     return(value)
   }
   
   fxna_rm <- function(df, na.rm = FALSE){
-    if (na.rm == TRUE) {
+    if (na.rm) {
       df <- df[complete.cases(df), ]
     }
     return(df)
@@ -132,8 +132,8 @@ distr <- function(data, ...,
       p <- p + 
         geom_density(fill = "deepskyblue", alpha = 0.7, adjust = 1/3) +
         labs(y = "", x = "", fill = "Density",
-             title = paste("Density Distribution"),
-             subtitle = paste("Variable:", variable_name),
+             title = ifelse(is.na(title), paste("Density Distribution"), title),
+             subtitle = ifelse(is.na(subtitle), paste("Variable:", variable_name), subtitle),
              caption = paste("Obs:", formatNum(nrow(df), 0))) +
         theme_lares2()
       if (top != 10) {
@@ -142,10 +142,11 @@ distr <- function(data, ...,
     } else {
       # Discrete values
       p <- df %>% 
-        freqs(value, plot = T, variable_name = variable_name, abc = abc, top = top)
+        freqs(value, plot = TRUE, variable_name = variable_name, 
+              abc = abc, top = top, title = title, subtitle = subtitle)
     }
     # Return table with results?
-    if (plot == FALSE) {
+    if (!plot) {
       output <- df %>% freqs(value, top = top)
       return(output)
     }
@@ -195,15 +196,15 @@ distr <- function(data, ...,
     }
     
     # Chords plot
-    if (chords == TRUE) {
+    if (chords) {
       df <- data.frame(value = value, targets = targets)
       output <- freqs(df, targets, value)
-      if (na.rm == FALSE) {
+      if (!na.rm) {
         output <- output %>% replaceall(NA, "NA") 
       }
       title <- "Frequency Chords Diagram"
       subtitle <- paste("Variables:", targets_name, "to", variable_name)
-      if (plot == FALSE) {
+      if (!plot) {
         return(output)
       }
       return(plot_chord(
@@ -256,9 +257,7 @@ distr <- function(data, ...,
     }
     
     # Sort values alphabetically or ascending if numeric
-    if (abc == TRUE) {
-      freqs <- freqs %>% mutate(order = rank(value))
-    }
+    freqs <- if (abc) mutate(freqs, order = rank(value))
     
     # Counter plot
     if(type %in% c(1,2)) {
@@ -283,9 +282,7 @@ distr <- function(data, ...,
         count <- count + theme(axis.text.x = element_text(angle = 30, hjust=1))
       } 
       # Custom colours if wanted...
-      if (custom_colours == TRUE) {
-        count <- count + gg_fill_customs()
-      }
+      count <- if (custom_colours) count + gg_fill_customs()
     }
     
     # Proportions (%) plot
@@ -316,14 +313,14 @@ distr <- function(data, ...,
                      size = 2.5, fill="white", alpha = 0.8)
       }
       # Custom colours if wanted...
-      if (custom_colours == TRUE) {
+      if (custom_colours) {
         prop <- prop + gg_fill_customs()
       }
         
     }
     
     # Export file name and folder
-    if (save == TRUE) {
+    if (save) {
       file_name <- paste0(
         "viz_distr_", 
         cleanText(targets_name), ".vs.", 
@@ -331,7 +328,7 @@ distr <- function(data, ...,
         case_when(type == 2 ~ "_c", type == 3 ~ "_p", TRUE ~ ""),".png")
       if (!is.na(subdir)) {
         options(warn=-1)
-        dir.create(file.path(getwd(), subdir), recursive = T)
+        dir.create(file.path(getwd(), subdir), recursive = TRUE)
         file_name <- paste(subdir, file_name, sep="/")
       }
     }
@@ -343,7 +340,7 @@ distr <- function(data, ...,
         theme(plot.margin = margin(10, 15, -15, 15))
       prop <- prop + guides(fill=FALSE) + labs(caption = note) +
         theme(plot.margin = margin(-5, 15, -15, 15))
-      if (save == TRUE) {
+      if (save) {
         png(file_name, height = 1000, width = 1300, res = 200)
         gridExtra::arrangeGrob(count, prop, ncol = 1, nrow = 2)
         dev.off()
@@ -353,21 +350,21 @@ distr <- function(data, ...,
     if (type == 2) {
       count <- count + coord_flip() + 
         labs(title = "Distribution Plot", subtitle = subtitle, caption  = "")
-      if (save == TRUE) {
+      if (save) {
         count <- count + ggsave(file_name, width = 8, height = 6)
       }
       p <- count
     }
     if (type == 3) {
       prop <- prop + labs(title = "Proportions Plot", subtitle = subtitle, caption  = "")
-      if (save == TRUE) {
+      if (save) {
         prop <- prop + ggsave(file_name, width = 8, height = 6)
       }
       p <- prop
     }
     
     # Return table with results?
-    if (plot == FALSE) {
+    if (!plot) {
       table <- freqs %>% select(-order, -row)
       return(table)
     }

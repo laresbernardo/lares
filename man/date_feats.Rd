@@ -47,5 +47,9 @@ Other Data Wrangling: \code{\link{balance_data}},
   \code{\link{removenarows}}, \code{\link{replaceall}},
   \code{\link{right}}, \code{\link{vector2text}},
   \code{\link{year_month}}, \code{\link{year_week}}
+
+Other Feature Engineering: \code{\link{holidays}},
+  \code{\link{ohse}}
 }
 \concept{Data Wrangling}
+\concept{Feature Engineering}
