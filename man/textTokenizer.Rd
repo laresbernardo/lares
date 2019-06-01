@@ -4,8 +4,8 @@
 \alias{textTokenizer}
 \title{Tokenize Vectors into Words}
 \usage{
-textTokenizer(text, lang = "english", exclude = c(), seed = 0,
-  print = TRUE, keep_spaces = FALSE)
+textTokenizer(text, lang = "english", exclude = c(),
+  keep_spaces = FALSE)
 }
 \arguments{
 \item{text}{Character vector}
@@ -18,8 +18,6 @@ textTokenizer(text, lang = "english", exclude = c(), seed = 0,
 to keep unique compount words, separated with spaces, set to TRUE. 
 For example, 'LA ALAMEDA' will be set as 'LA_ALAMEDA' and treated as
 a single word.}
-
-\item{plot}{Boolean. Plot results as textcloud?}
 }
 \description{
 This function transforms texts into words, calculate frequencies,

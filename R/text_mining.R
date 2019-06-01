@@ -14,13 +14,12 @@
 #' to keep unique compount words, separated with spaces, set to TRUE. 
 #' For example, 'LA ALAMEDA' will be set as 'LA_ALAMEDA' and treated as
 #' a single word.
-#' @param plot Boolean. Plot results as textcloud?
 #' @export
-textTokenizer <- function(text, lang = "english", exclude = c(), seed = 0, 
-                          print = TRUE, keep_spaces = FALSE) {
+textTokenizer <- function(text, lang = "english", 
+                          exclude = c(),
+                          keep_spaces = FALSE) {
   
   # require("tm")
-  set.seed(seed)
   options(warn=-1)
   
   text <- as.character(text)
@@ -46,7 +45,7 @@ textTokenizer <- function(text, lang = "english", exclude = c(), seed = 0,
   # Remove english common stopwords
   docs <- tm_map(docs, removeWords, stopwords(lang))
   # Remove your own stop word (specify your stopwords as a character vector)
-  docs <- tm_map(docs, removeWords, rbind("https", exclude))
+  docs <- tm_map(docs, removeWords, c("https","http",exclude))
   # Remove punctuations
   docs <- tm_map(docs, removePunctuation)
   # Eliminate extra white spaces
@@ -86,15 +85,12 @@ textCloud <- function(text, lang = "english", exclude = c(), seed = 0,
                       keep_spaces = FALSE, min = 2, pal = NA, print = TRUE) {
   
   # require("wordcloud")
+  set.seed(seed)
   
-  d <- textTokenizer(text, lang, exclude, seed, keep_spaces)
-    
-  if (print) {
-    message(paste0(capture.output(head(d, 10)), collapse = "\n")) 
-  }
+  d <- textTokenizer(text, lang, exclude, keep_spaces)
+  if (print) message(paste0(capture.output(head(d, 10)), collapse = "\n")) 
   
-  pal <- if (is.na(pal)) names(lares_pal()$palette)[1:8]
-  
+  pal <- if (is.na(pal)) names(lares_pal()$palette)[1:6]
   wordcloud(words = d$word, freq = d$freq, 
             scale = c(3.5, .7),
             min.freq = min,
