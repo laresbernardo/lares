@@ -5,7 +5,7 @@
 \title{Wordcloud Plot}
 \usage{
 textCloud(text, lang = "english", exclude = c(), seed = 0,
-  keep_spaces = FALSE, print = TRUE)
+  keep_spaces = FALSE, min = 2, pal = NA, print = TRUE)
 }
 \arguments{
 \item{text}{Character vector}
@@ -20,6 +20,10 @@ textCloud(text, lang = "english", exclude = c(), seed = 0,
 to keep unique compount words, separated with spaces, set to TRUE. 
 For example, 'LA ALAMEDA' will be set as 'LA_ALAMEDA' and treated as
 a single word.}
+
+\item{min}{Integer. Words with less frequency will not be plotted}
+
+\item{pal}{Character vector. Which colours do you wish to use}
 
 \item{print}{Boolean. Plot results as textcloud?}
 }

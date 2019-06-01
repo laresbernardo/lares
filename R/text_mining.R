@@ -78,10 +78,12 @@ textTokenizer <- function(text, lang = "english", exclude = c(), seed = 0,
 #' to keep unique compount words, separated with spaces, set to TRUE. 
 #' For example, 'LA ALAMEDA' will be set as 'LA_ALAMEDA' and treated as
 #' a single word.
+#' @param min Integer. Words with less frequency will not be plotted
+#' @param pal Character vector. Which colours do you wish to use
 #' @param print Boolean. Plot results as textcloud?
 #' @export
 textCloud <- function(text, lang = "english", exclude = c(), seed = 0, 
-                      keep_spaces = FALSE, print = TRUE) {
+                      keep_spaces = FALSE, min = 2, pal = NA, print = TRUE) {
   
   # require("wordcloud")
   
@@ -91,12 +93,14 @@ textCloud <- function(text, lang = "english", exclude = c(), seed = 0,
     message(paste0(capture.output(head(d, 10)), collapse = "\n")) 
   }
   
+  pal <- if (is.na(pal)) names(lares_pal()$palette)[1:8]
+  
   wordcloud(words = d$word, freq = d$freq, 
             scale = c(3.5, .7),
-            min.freq = 1,
+            min.freq = min,
             max.words = 200, 
             random.order = FALSE, 
             rot.per = 0.2, 
-            colors = names(lares_pal()$palette)[1:8])
+            colors = rev(pal))
   
 }
