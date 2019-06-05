@@ -5,7 +5,7 @@
 \title{Tokenize Vectors into Words}
 \usage{
 textTokenizer(text, lang = "english", exclude = c(),
-  keep_spaces = FALSE, df = FALSE, feats = TRUE, min = 2)
+  keep_spaces = FALSE, feats = FALSE, df = FALSE, min = 2)
 }
 \arguments{
 \item{text}{Character vector}
@@ -21,8 +21,6 @@ a single word.}
 
 \item{df}{Boolean. Return a dataframe with a one-hot-encoding kind of
 results? Each word is a column and returns if word is contained.}
-
-\item{feats}{Boolean. Create automatic numarical features?}
 
 \item{min}{Integer. If df = TRUE, what is the minimum frequency for
 the word to be considered.}
