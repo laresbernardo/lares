@@ -16,6 +16,7 @@
 #' a single word.
 #' @param df Boolean. Return a dataframe with a one-hot-encoding kind of
 #' results? Each word is a column and returns if word is contained.
+#' @param feats Boolean. Create automatic numarical features?
 #' @param min Integer. If df = TRUE, what is the minimum frequency for
 #' the word to be considered.
 #' @export
@@ -23,6 +24,7 @@ textTokenizer <- function(text, lang = "english",
                           exclude = c(),
                           keep_spaces = FALSE,
                           df = FALSE,
+                          feats = TRUE,
                           min = 2) {
   
   # require("tm")
@@ -68,9 +70,23 @@ textTokenizer <- function(text, lang = "english",
     toksdf <- c()
     for (i in 1:nrow(d)) {
       word <- as.character(d$word[i])
-      vector <- grepl(word, df_clean$product)
+      vector <- grepl(word, text)
       toksdf <- cbind(toksdf, vector)
       colnames(toksdf)[colnames(toksdf)=="vector"] <- word
+    }
+    if (feats) {
+      nfeats <- d %>%
+        mutate(length = str_length(word),
+               ncap = str_count(word, "[A-Z]"),
+               ncap_len = ncap / length,
+               nexcl = str_count(word, fixed("!")),
+               nquest = str_count(word, fixed("?")),
+               nat = str_count(word, fixed("@")),
+               npunct = str_count(word, "[[:punct:]]"),
+               nword = 1+str_count(word, "\\ "),
+               nsymb = str_count(word, "&|@|#|\\$|%|\\*|\\^"),
+               nsmile = str_count(word, "((?::|;|=)(?:-)?(?:\\)|D|P))"))
+      toksdf <- cbind(nfeats, select(toksdf, -word))
     }
     return(toksdf)
   } else {
