@@ -43,7 +43,6 @@ cleanText <- function(text, spaces = TRUE, lower = TRUE) {
 textTokenizer <- function(text, lang = "english", 
                           exclude = c(),
                           keep_spaces = FALSE,
-                          feats = FALSE,
                           df = FALSE,
                           min = 2) {
   

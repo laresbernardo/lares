@@ -5,7 +5,7 @@
 \title{Tokenize Vectors into Words}
 \usage{
 textTokenizer(text, lang = "english", exclude = c(),
-  keep_spaces = FALSE, feats = FALSE, df = FALSE, min = 2)
+  keep_spaces = FALSE, df = FALSE, min = 2)
 }
 \arguments{
 \item{text}{Character vector}

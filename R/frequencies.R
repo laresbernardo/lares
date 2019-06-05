@@ -5,9 +5,10 @@
 #' and cumulatives. It also plots results if needed. Tidyverse friendly.
 #' 
 #' @family Exploratory
-#' @param vector Data.frame
+#' @param df Data.frame
 #' @param ... Variables. Variables you wish to process. Order matters.
 #' @param wt Variable, numeric. Weights.
+#' @param rel Boolean. Relative percentages (or absolute)?
 #' @param results Boolean. Return results in a dataframe?
 #' @param variable_name Character. Overwrite the main variable's name
 #' @param plot Boolean. Do you want to see a plot? Three variables tops.
@@ -23,7 +24,8 @@
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
 #' @export
-freqs <- function(vector, ..., wt = NULL,
+freqs <- function(df, ..., wt = NULL,
+                  rel = FALSE,
                   results = TRUE, 
                   variable_name = NA, 
                   plot = FALSE, rm.na = FALSE,
@@ -36,11 +38,13 @@ freqs <- function(vector, ..., wt = NULL,
   weight <- enquo(wt)
     
   output <-  if (quo_is_null(weight)) {
-    group_by(vector, !!!vars) %>% count()
+    group_by(df, !!!vars) %>% count()
   } else { 
-    count(vector, !!!vars, wt = !!weight)
+    count(df, !!!vars, wt = !!weight)
   }
-  output <- arrange(output, desc(n)) %>%
+  
+  output <- arrange(output, desc(n)) %>% 
+    {if (!rel) ungroup(.) else .} %>%
     mutate(p = round(100*n/sum(n),2), 
            pcum = cumsum(p))
    

@@ -88,4 +88,4 @@ if(getRversion() >= "2.15.1")
       "Logloss","yewxname","gain","random","optimal","lift","pred","prophet","fit.prophet",
       "prophet_plot_components","add_country_holidays","make_future_dataframe","importance",
       "percentile","cum_response","response","total","ETF","Sector","Percentage",
-      "row_num")) 
+      "row_num","ncap","freq")) 
