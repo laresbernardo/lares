@@ -87,6 +87,30 @@ textTokenizer <- function(text, lang = "english",
 
 
 ####################################################################
+#' Create features out of text
+#' 
+#' This function creates a data.frame with features based on a text vector
+#' 
+#' @family Data Wrangling
+#' @family Text Mining
+#' @param text Character vector
+#' @export
+textFeats <- function(text) {
+  data.frame(text = text) %>%
+    mutate(length = str_length(text),
+           ncap = str_count(text, "[A-Z]"),
+           ncap_len = ncap / length,
+           nexcl = str_count(text, fixed("!")),
+           nquest = str_count(text, fixed("?")),
+           nats = str_count(text, fixed("@")),
+           npunct = str_count(text, "[[:punct:]]"),
+           nword = 1+str_count(text, "\\ "),
+           nsymb = str_count(text, "&|@|#|\\$|%|\\*|\\^"),
+           nsmile = str_count(text, "((?::|;|=)(?:-)?(?:\\)|D|P))")) 
+}
+
+
+####################################################################
 #' Wordcloud Plot
 #' 
 #' Study the distribution of a target variable vs another variable. This

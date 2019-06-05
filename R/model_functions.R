@@ -105,6 +105,7 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' the independent variable labeled as 'tag'. If you want to define 
 #' which variable should be used instead, use the y parameter.
 #' @param y Character. Name of the independent variable
+#' @param ignore Character vector. Force columns for the model to ignore
 #' @param train_test Character. If needed, df's column name with 'test' 
 #' and 'train' values to split
 #' @param split Numeric. Value between 0 and 1 to split as train/test 
@@ -134,10 +135,11 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' @param project Character. Your project's name
 #' @export
 h2o_automl <- function(df, y = "tag",
+                       ignore = c(),
                        train_test = NA,
                        split = 0.7,
                        weight = NULL,
-                       balance = TRUE,
+                       balance = FALSE,
                        seed = 0,
                        thresh = 5,
                        max_time = 5*60,
@@ -161,17 +163,21 @@ h2o_automl <- function(df, y = "tag",
   }
   colnames(df)[colnames(df) == y] <- "tag"
   
+  # IGNORED VARIABLES
+  df <- df[ , -which(names(df) %in% ignore)]
+  
+  # FINAL DATAFRAME
   df <- data.frame(df) %>% 
-    filter(!is.na(tag)) %>% 
+    filter(!is.na(tag)) %>%
     mutate_if(is.character, as.factor)
   
   # MODEL TYPE
-  type <- ifelse(length(unique(df$tag)) <= as.integer(thresh), "Classifier", "Regression")
-  message("Model type: ", type)
-  if (type == "Classifier") {
+  model_type <- ifelse(length(unique(df$tag)) <= as.integer(thresh), "Classifier", "Regression")
+  message("Model type: ", model_type)
+  if (model_type == "Classifier") {
     print(data.frame(freqs(df, tag)))
   }
-  if (type == "Regression") {
+  if (model_type == "Regression") {
     print(summary(df$tag)) 
   }
   
@@ -194,7 +200,7 @@ h2o_automl <- function(df, y = "tag",
   }
   
   # BALANCE TRAINING SET
-  if (type == "Classifier" & balance == TRUE) {
+  if (model_type == "Classifier" & balance == TRUE) {
     total <- nrow(train)
     cats <- length(unique(train$tag))
     min <- train %>% freqs(tag) %>% .$n %>% min()
@@ -251,7 +257,7 @@ h2o_automl <- function(df, y = "tag",
   }
   
   # CLASSIFICATION MODELS
-  if (type == "Classifier") {
+  if (model_type == "Classifier") {
     if (length(unique(train$tag)) == 2) {
       scores <- select_if(scores, is.numeric) %>% .[,1]
       multis <- NA
@@ -279,7 +285,7 @@ h2o_automl <- function(df, y = "tag",
   } 
   
   # REGRESION MODELS
-  if (type == "Regression") {
+  if (model_type == "Regression") {
     results <- list(
       project = project,
       model = m,
@@ -1027,16 +1033,18 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
         predi <- as.numeric(ifelse(score == labels[i], 1, 0))
         conf_mati <- table(Real = as.character(tagi), 
                            Pred = as.character(predi))
-        total <- sum(conf_mati)
-        trues <- sum(diag(conf_mati))
-        falses <- total - trues
-        numsi <- data.frame(
-          tag = labels[i],
-          ACC = trues / total,
-          PRC = conf_mati[2,2] / (conf_mati[2,2] + conf_mati[1,2]),
-          TPR = conf_mati[2,2] / (conf_mati[2,2] + conf_mati[2,1]),
-          TNR = conf_mati[1,1] / (conf_mati[1,1] + conf_mati[1,2]))
-        nums <- rbind(nums, numsi)
+        if (nrow(conf_mati) == 2 & ncol(conf_mati == 2)) {
+          total <- sum(conf_mati)
+          trues <- sum(diag(conf_mati))
+          falses <- total - trues
+          numsi <- data.frame(
+            tag = labels[i],
+            ACC = trues / total,
+            PRC = conf_mati[2,2] / (conf_mati[2,2] + conf_mati[1,2]),
+            TPR = conf_mati[2,2] / (conf_mati[2,2] + conf_mati[2,1]),
+            TNR = conf_mati[1,1] / (conf_mati[1,1] + conf_mati[1,2]))
+          nums <- rbind(nums, numsi) 
+        }
       }
       nums$AUC <- AUCs[1:length(labels)]
       nums <- left_join(freqs(df %>% select(tag), tag), nums, "tag") %>% 
