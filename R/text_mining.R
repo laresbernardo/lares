@@ -13,8 +13,8 @@
 cleanText <- function(text, spaces = TRUE, lower = TRUE) {
   text <- as.character(text)
   output <- gsub("[^[:alnum:] ]", "", iconv(text, from = "UTF-8", to = "ASCII//TRANSLIT"))
-  if (!spaces) output <- gsub(" ", "", output)
   if (lower) output <- tolower(output)
+  if (!spaces) output <- gsub(" ", "", output)
   return(output)
 }
 
@@ -50,7 +50,7 @@ textTokenizer <- function(text, lang = "english",
   options(warn = -1)
   
   text <- as.character(text)
-  text <- if (keep_spaces) gsub(" ", "_", text) # '_' deleted later on
+  if (keep_spaces) text <- gsub(" ", "_", text) # '_' deleted later on
   
   ## Load the data as a corpus
   docs <- Corpus(VectorSource(text))
@@ -112,7 +112,7 @@ textTokenizer <- function(text, lang = "english",
 #' @param text Character vector
 #' @param auto Boolean. Auto create some useful parameters?
 #' @param contains Character vector. Which columns do you wish to add
-#' with a contains string validator?
+#' with a contains (counter) string validator?
 #' @export
 textFeats <- function(text, auto = TRUE, contains = NA) {
   
@@ -138,7 +138,7 @@ textFeats <- function(text, auto = TRUE, contains = NA) {
     df <- c()
     for (i in 1:length(contains)) {
       word <- as.character(contains[i])
-      vector <- as.integer(grepl(word, text))
+      vector <- str_count(text, fixed(word))
       df <- cbind(df, vector)
       colnames(df)[colnames(df) == "vector"] <- word
     }

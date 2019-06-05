@@ -12,7 +12,7 @@ textFeats(text, auto = TRUE, contains = NA)
 \item{auto}{Boolean. Auto create some useful parameters?}
 
 \item{contains}{Character vector. Which columns do you wish to add
-with a contains string validator?}
+with a contains (counter) string validator?}
 }
 \description{
 This function creates a data.frame with features based on a text vector
