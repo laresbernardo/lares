@@ -1,4 +1,29 @@
 ####################################################################
+#' Clean text
+#' 
+#' This function lets the user clean text into getting only alphanumeric 
+#' characters and no accents/symbols on letters.
+#' 
+#' @family Data Wrangling
+#' @family Text Mining
+#' @param text Character Vector
+#' @param spaces Boolean. Keep spaces?
+#' @param lower Boolean. Transform all to lower case?
+#' @export
+cleanText <- function(text, spaces = TRUE, lower = TRUE) {
+  text <- as.character(text)
+  output <- gsub("[^[:alnum:] ]", "", iconv(text, from="UTF-8", to="ASCII//TRANSLIT"))
+  if (spaces == FALSE) {
+    output <- gsub(" ", "", output)
+  }
+  if (lower == TRUE) {
+    output <- tolower(output)
+  }
+  return(output)
+}
+
+
+####################################################################
 #' Tokenize Vectors into Words
 #' 
 #' This function transforms texts into words, calculate frequencies,

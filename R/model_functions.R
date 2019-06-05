@@ -164,7 +164,7 @@ h2o_automl <- function(df, y = "tag",
   colnames(df)[colnames(df) == y] <- "tag"
   
   # IGNORED VARIABLES
-  df <- df[ , -which(names(df) %in% ignore)]
+  df <- df[ , which(!names(df) %in% ignore)]
   
   # FINAL DATAFRAME
   df <- data.frame(df) %>% 
