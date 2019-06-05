@@ -36,7 +36,7 @@ freqs <- function(df, ..., wt = NULL,
   options(warn = -1)
   vars <- quos(...)
   weight <- enquo(wt)
-    
+  
   output <-  if (quo_is_null(weight)) {
     group_by(df, !!!vars) %>% count()
   } else { 
@@ -47,7 +47,7 @@ freqs <- function(df, ..., wt = NULL,
     {if (!rel) ungroup(.) else .} %>%
     mutate(p = round(100*n/sum(n),2), 
            pcum = cumsum(p))
-   
+  
   if (!plot && !save) {
     if (results) {
       return(output)
@@ -55,7 +55,7 @@ freqs <- function(df, ..., wt = NULL,
       return(NULL)
     }
   }
-
+  
   if (ncol(output) - 3 >= 4) {
     stop(
       paste("Sorry, but trying to plot more than 3 features is as complex as it sounds.",
@@ -65,7 +65,7 @@ freqs <- function(df, ..., wt = NULL,
   obs <- paste("Total Obs.:", formatNum(obs_total, 0))
   weight_text <- ifelse((as.character(weight)[2] != "NULL"), 
                         paste0("(weighted by ", as.character(weight)[2], ")"), "")
-
+  
   # Use only the most n frequent values/combinations only
   values <- unique(output[,(ncol(output) - 3)])
   if (nrow(values) > top) {
@@ -78,7 +78,7 @@ freqs <- function(df, ..., wt = NULL,
       obs <- paste0("Obs.: ", formatNum(sum(output$n), 0), " (out of ", formatNum(obs_total, 0), ")")
     }
   } else {note <- ""}
-
+  
   # Sort values alphabetically or ascending if numeric
   if (abc) {
     message("Sorting variable(s) alphabetically")
@@ -89,7 +89,7 @@ freqs <- function(df, ..., wt = NULL,
     output <- output %>% arrange(desc(n)) %>%
       mutate(order = row_number())
   }
-
+  
   reorder_within <- function(x, by, within, fun = mean, sep = "___", ...) {
     new_x <- paste(x, within, sep = sep)
     stats::reorder(new_x, by, FUN = fun)
@@ -98,13 +98,11 @@ freqs <- function(df, ..., wt = NULL,
     reg <- paste0(sep, ".+$")
     ggplot2::scale_x_discrete(labels = function(x) gsub(reg, "", x), ...)
   }
-
+  
   plot <- ungroup(output)
-
-  if (rm.na) {
-    plot <- plot[complete.cases(plot), ]
-  }
-
+  
+  if (rm.na)  plot <- plot[complete.cases(plot), ]
+  
   # Create some dynamic aesthetics
   plot$labels <- paste0(lares::formatNum(plot$n, decimals = 0),
                         " (", signif(plot$p, 4), "%)")
@@ -115,7 +113,7 @@ freqs <- function(df, ..., wt = NULL,
   plot$label_colours <- ifelse(
     plot$label_colours == "m" & plot$label_hjust < lim, "f", plot$label_colours)
   variable <- colnames(plot)[1]
-
+  
   # When one feature
   if (ncol(output) - 3 == 2) { 
     type <- 1
@@ -149,7 +147,7 @@ freqs <- function(df, ..., wt = NULL,
                  y = n, label = labels, fill = p)) +
       scale_x_reordered()
   }
-
+  
   # Plot base
   p <- p + geom_col(alpha = 0.9, width = 0.8) +
     geom_text(aes(hjust = label_hjust, colour = label_colours), size = 2.6) + 
@@ -163,7 +161,7 @@ freqs <- function(df, ..., wt = NULL,
     scale_fill_gradient(low = "lightskyblue2", high = "navy") +
     gg_text_customs() + theme_lares2() +
     theme(legend.position = "none")
-
+  
   # When two features
   if (type == 2) { 
     p <- p + 
@@ -173,7 +171,7 @@ freqs <- function(df, ..., wt = NULL,
                              subtitle),
            caption = obs)
   }
-
+  
   # When three features
   else if (type == 3) { 
     if (length(unique(facet_name2)) > 3) {
@@ -187,11 +185,8 @@ freqs <- function(df, ..., wt = NULL,
                              subtitle),
            caption = obs)
   }
-
+  
   # Export file name and folder for plot
-  if (save) {
-    export_plot(p, "viz_freqs", vars, subdir = subdir)
-  }
-
+  if (save) export_plot(p, "viz_freqs", vars, subdir = subdir)
   return(p)  
 }

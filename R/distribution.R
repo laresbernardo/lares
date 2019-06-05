@@ -250,7 +250,7 @@ distr <- function(data, ...,
     }
     
     # Sort values alphabetically or ascending if numeric
-    freqs <- if (abc) mutate(freqs, order = rank(value))
+    if (abc) freqs <- mutate(freqs, order = rank(value))
     
     # Counter plot
     if (type %in% c(1,2)) {
@@ -275,7 +275,7 @@ distr <- function(data, ...,
         count <- count + theme(axis.text.x = element_text(angle = 30, hjust = 1))
       } 
       # Custom colours if wanted...
-      count <- if (custom_colours) count + gg_fill_customs()
+      if (custom_colours) count <- count + gg_fill_customs()
     }
     
     # Proportions (%) plot
@@ -306,10 +306,7 @@ distr <- function(data, ...,
                      size = 2.5, fill = "white", alpha = 0.8)
       }
       # Custom colours if wanted...
-      if (custom_colours) {
-        prop <- prop + gg_fill_customs()
-      }
-      
+      if (custom_colours) prop <- prop + gg_fill_customs()
     }
     
     # Export file name and folder
@@ -327,6 +324,7 @@ distr <- function(data, ...,
     
     # Plot the results and save if needed
     if (type == 1) {
+      print(count)
       count <- count + labs(title = "Distribution and Proportions", 
                             subtitle = subtitle, caption = "") +
         theme(plot.margin = margin(10, 15, -15, 15))
@@ -342,16 +340,12 @@ distr <- function(data, ...,
     if (type == 2) {
       count <- count + coord_flip() + 
         labs(title = "Distribution Plot", subtitle = subtitle, caption  = "")
-      if (save) {
-        count <- count + ggsave(file_name, width = 8, height = 6)
-      }
+      if (save) count <- count + ggsave(file_name, width = 8, height = 6)
       p <- count
     }
     if (type == 3) {
       prop <- prop + labs(title = "Proportions Plot", subtitle = subtitle, caption  = "")
-      if (save) {
-        prop <- prop + ggsave(file_name, width = 8, height = 6)
-      }
+      if (save) prop <- prop + ggsave(file_name, width = 8, height = 6)
       p <- prop
     }
     
