@@ -13,8 +13,8 @@
 cleanText <- function(text, spaces = TRUE, lower = TRUE) {
   text <- as.character(text)
   output <- gsub("[^[:alnum:] ]", "", iconv(text, from = "UTF-8", to = "ASCII//TRANSLIT"))
-  output <- if (!spaces) gsub(" ", "", output)
-  output <- if (lower) tolower(output)
+  if (!spaces) output <- gsub(" ", "", output)
+  if (lower) output <- tolower(output)
   return(output)
 }
 
