@@ -12,13 +12,9 @@
 #' @export
 cleanText <- function(text, spaces = TRUE, lower = TRUE) {
   text <- as.character(text)
-  output <- gsub("[^[:alnum:] ]", "", iconv(text, from="UTF-8", to="ASCII//TRANSLIT"))
-  if (spaces == FALSE) {
-    output <- gsub(" ", "", output)
-  }
-  if (lower == TRUE) {
-    output <- tolower(output)
-  }
+  output <- gsub("[^[:alnum:] ]", "", iconv(text, from = "UTF-8", to = "ASCII//TRANSLIT"))
+  output <- if (!spaces) gsub(" ", "", output)
+  output <- if (lower) tolower(output)
   return(output)
 }
 
@@ -52,19 +48,15 @@ textTokenizer <- function(text, lang = "english",
                           min = 2) {
   
   # require("tm")
-  options(warn=-1)
+  options(warn = -1)
   
   text <- as.character(text)
-  
-  if (keep_spaces == TRUE) {
-    text <- gsub(" ", "_", text) # '_' deleted later on
-  }
+  text <- if (keep_spaces) gsub(" ", "_", text) # '_' deleted later on
   
   ## Load the data as a corpus
   docs <- Corpus(VectorSource(text))
-  
   ## Text transformation
-  toSpace <- content_transformer(function (x , pattern) gsub(pattern, " ", x))
+  toSpace <- content_transformer(function(x , pattern) gsub(pattern, " ", x))
   docs <- tm_map(docs, toSpace, "/")
   docs <- tm_map(docs, toSpace, "@")
   docs <- tm_map(docs, toSpace, "\\|")
@@ -86,24 +78,24 @@ textTokenizer <- function(text, lang = "english",
   ## Build a term-document matrix
   dtm <- TermDocumentMatrix(docs)
   m <- as.matrix(dtm)
-  v <- sort(rowSums(m), decreasing=TRUE)
-  d <- data.frame(word = names(v), freq=v)
+  v <- sort(rowSums(m), decreasing = TRUE)
+  d <- data.frame(word = names(v), freq = v)
   
   if (df) {
     d <- filter(d, freq >= min)
     if (min <= 1) message(paste("Filtering frequencies with less than", min))
     texts <- cleanText(unique(text))
-    if (length(texts)!=length(text)) message("Returning unique texts results...")
+    if (length(texts) != length(text)) message("Returning unique texts results...")
     toksdf <- c()
     for (i in 1:nrow(d)) {
       word <- as.character(d$word[i])
       vector <- grepl(word, texts)
       toksdf <- cbind(toksdf, vector)
-      colnames(toksdf)[colnames(toksdf)=="vector"] <- word
+      colnames(toksdf)[colnames(toksdf) == "vector"] <- word
       statusbar(i, nrow(d), info = word)
     }
     message(paste(nrow(d), "columns created succesfully!"))
-    toksdf <- data.frame(texts=texts, toksdf)
+    toksdf <- data.frame(texts = texts, toksdf)
     return(toksdf)
   } else {
     return(d) 
@@ -119,19 +111,41 @@ textTokenizer <- function(text, lang = "english",
 #' @family Data Wrangling
 #' @family Text Mining
 #' @param text Character vector
+#' @param auto Boolean. Auto create some useful parameters?
+#' @param contains Character vector. Which columns do you wish to add
+#' with a contains string validator?
 #' @export
-textFeats <- function(text) {
-  data.frame(text = text) %>%
-    mutate(length = str_length(text),
-           ncap = str_count(text, "[A-Z]"),
-           ncap_len = ncap / length,
-           nexcl = str_count(text, fixed("!")),
-           nquest = str_count(text, fixed("?")),
-           nats = str_count(text, fixed("@")),
-           npunct = str_count(text, "[[:punct:]]"),
-           nword = 1+str_count(text, "\\ "),
-           nsymb = str_count(text, "&|@|#|\\$|%|\\*|\\^"),
-           nsmile = str_count(text, "((?::|;|=)(?:-)?(?:\\)|D|P))")) 
+textFeats <- function(text, auto = TRUE, contains = NA) {
+  
+  ret <- data.frame(text = text)
+  
+  if (auto) {
+    ret <- ret %>%
+      mutate(length = str_length(text),
+             ncap = str_count(text, "[A-Z]"),
+             ncap_len = ncap / length,
+             nexcl = str_count(text, fixed("!")),
+             nquest = str_count(text, fixed("?")),
+             nats = str_count(text, fixed("@")),
+             npunct = str_count(text, "[[:punct:]]"),
+             nword = 1 + str_count(text, "\\ "),
+             nsymb = str_count(text, "&|@|#|\\$|%|\\*|\\^"),
+             nsmile = str_count(text, "((?::|;|=)(?:-)?(?:\\)|D|P))")) 
+  }
+
+  
+  # Custom columns with contains argument
+  if (!is.na(contains)) {
+    df <- c()
+    for (i in 1:length(contains)) {
+      word <- as.character(contains[i])
+      vector <- as.integer(grepl(word, text))
+      df <- cbind(df, vector)
+      colnames(df)[colnames(df) == "vector"] <- word
+    }
+    ret <- data.frame(ret, df)
+  }
+  return(ret)
 }
 
 

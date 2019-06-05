@@ -4,10 +4,15 @@
 \alias{textFeats}
 \title{Create features out of text}
 \usage{
-textFeats(text)
+textFeats(text, auto = TRUE, contains = NA)
 }
 \arguments{
 \item{text}{Character vector}
+
+\item{auto}{Boolean. Auto create some useful parameters?}
+
+\item{contains}{Character vector. Which columns do you wish to add
+with a contains string validator?}
 }
 \description{
 This function creates a data.frame with features based on a text vector

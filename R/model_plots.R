@@ -901,7 +901,7 @@ mplot_conf <- function (tag, score, thresh = 0.5,
   
   # About tags
   labels <- df %>% group_by(tag) %>% tally() %>% arrange(desc(n)) %>% .$tag
-  df <- df %>% mutate(tag = factor(tag, levels = unique(tag)))
+  df <- df %>% mutate(tag = factor(tag, levels = labels))
   
   # About scores
   if (is.numeric(df$score) & length(unique(tag)) == 2) {
@@ -917,9 +917,7 @@ mplot_conf <- function (tag, score, thresh = 0.5,
   # Frequencies
   plot_cf <- df %>% freqs(tag, pred) %>% 
     mutate(label = paste0(formatNum(n, 0),"\n", p,"%"))
-  levels <- plot_cf %>% group_by(pred) %>% summarise(n = sum(n)) %>% 
-    arrange(desc(n)) %>% mutate(pred = factor(pred, levels = labels)) %>% .$pred
-  trues <- plot_cf %>% filter(tag == pred) %>% .$n %>% sum(.)
+  trues <- sum(plot_cf$n[as.character(plot_cf$tag) == as.character(plot_cf$pred)])
   total <- sum(plot_cf$n)
   metrics <- paste0("ACC ", round(100*(trues / total), 2), "%")
   

@@ -40,7 +40,7 @@
 #' @importFrom sp over coordinates proj4string proj4string<- coordinates<- spTransform
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
 #' reorder start kmeans var xtabs 
-#' @importFrom stringr str_locate_all 
+#' @import stringr 
 #' @importFrom tm content_transformer Corpus removeNumbers removePunctuation removeWords 
 #' stopwords stripWhitespace TermDocumentMatrix tm_map VectorSource
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 

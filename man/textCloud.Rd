@@ -51,7 +51,8 @@ Other Exploratory: \code{\link{corr_var}},
   \code{\link{trendsRelated}}
 
 Other Text Mining: \code{\link{cleanText}},
-  \code{\link{replaceall}}, \code{\link{textTokenizer}}
+  \code{\link{replaceall}}, \code{\link{textFeats}},
+  \code{\link{textTokenizer}}
 }
 \concept{Exploratory}
 \concept{Text Mining}

@@ -4,11 +4,12 @@
 \alias{h2o_automl}
 \title{Automated H2O's AutoML}
 \usage{
-h2o_automl(df, y = "tag", train_test = NA, split = 0.7,
-  weight = NULL, balance = TRUE, seed = 0, thresh = 5,
-  max_time = 5 * 60, max_models = 25, start_clean = TRUE,
-  exclude_algos = c("StackedEnsemble", "DeepLearning"), alarm = TRUE,
-  save = FALSE, subdir = NA, project = "Machine Learning Model")
+h2o_automl(df, y = "tag", ignore = c(), train_test = NA,
+  split = 0.7, weight = NULL, balance = FALSE, seed = 0,
+  thresh = 5, max_time = 5 * 60, max_models = 25,
+  start_clean = TRUE, exclude_algos = c("StackedEnsemble",
+  "DeepLearning"), alarm = TRUE, save = FALSE, subdir = NA,
+  project = "Machine Learning Model")
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
@@ -16,6 +17,8 @@ the independent variable labeled as 'tag'. If you want to define
 which variable should be used instead, use the y parameter.}
 
 \item{y}{Character. Name of the independent variable}
+
+\item{ignore}{Character vector. Force columns for the model to ignore}
 
 \item{train_test}{Character. If needed, df's column name with 'test' 
 and 'train' values to split}
@@ -30,7 +33,9 @@ row twice. Negative weights are not allowed.}
 
 \item{balance}{Boolean. Auto-balance train dataset with under-sampling?}
 
-\item{seed}{Numeric. Seed for random stuff and reproducibility}
+\item{seed}{Integer. Set a seed for reproducibility. AutoML can only 
+guarantee reproducibility if max_models is used because max_time is 
+resource limited.}
 
 \item{thresh}{Integer. Threshold for selecting binary or regression 
 models: this number is the threshold of unique values we should 

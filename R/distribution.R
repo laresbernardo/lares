@@ -44,8 +44,8 @@ distr <- function(data, ...,
                   save = FALSE, 
                   subdir = NA) {
   
-  options(scipen=999)
-  options(warn=-1)
+  options(scipen = 999)
+  options(warn = -1)
   
   data <- data.frame(data)
   vars <- quos(...)
@@ -103,9 +103,6 @@ distr <- function(data, ...,
     }
     return(df)
   }
-  
-  # lares' default palette colours
-  colours_pal <- lares_pal()$palette
   
   # When we only have one variable
   if (length(vars) == 1) {
@@ -231,19 +228,17 @@ distr <- function(data, ...,
     df <- fxna_rm(df, na.rm)
     
     # Captions for plots
-    subtitle <- paste0("Variables: ", targets_name, " vs. ", variable_name,". Obs: ", formatNum(nrow(df), 0))
-    caption <- ifelse(is.na(note), "", note)
+    subtitle <- paste0("Variables: ", targets_name, " vs. ", variable_name,
+                       ". Obs: ", formatNum(nrow(df), 0))
     
     freqs <- df %>% 
-      group_by(value, targets) %>% 
-      tally() %>% arrange(desc(n)) %>% 
-      mutate(p = round(100*n/sum(n),2)) %>% ungroup() %>%
+      freqs(value, targets) %>% ungroup() %>%
       mutate(row = row_number(),
              order = ifelse(grepl("\\(|\\)", value), 
                             as.numeric(as.character(substr(gsub(",.*", "", value), 2, 100))), row))
-    if(length(unique(value)) > top & !is.numeric(value)) {
+    if (length(unique(value)) > top & !is.numeric(value)) {
       message(paste("Filtering the", top, "most frequent values. Use `top` to overrule."))
-      which <- df %>% group_by(value) %>% tally() %>% arrange(desc(n)) %>% slice(1:top)
+      which <- freqs(df, value) %>% slice(1:top)
       freqs <- freqs %>%
         mutate(value = ifelse(value %in% which$value, as.character(value), "OTHERS")) %>%
         group_by(value, targets) %>% select(-row, -order) %>%
@@ -258,11 +253,11 @@ distr <- function(data, ...,
     freqs <- if (abc) mutate(freqs, order = rank(value))
     
     # Counter plot
-    if(type %in% c(1,2)) {
+    if (type %in% c(1,2)) {
       vadj <- ifelse(type == 1, -0.15, 0.5)
       hadj <- ifelse(type == 1, 0.5, -0.15)
       count <- ggplot(freqs, aes(
-        x = reorder(as.character(value), order), y=n, 
+        x = reorder(as.character(value), order), y = n, 
         fill = tolower(as.character(targets)), 
         label = formatNum(n, 0), ymax = max(n) * 1.1)) + 
         geom_col(position = "dodge") +
@@ -277,7 +272,7 @@ distr <- function(data, ...,
         theme_lares2(pal = 1)
       # Give an angle to labels when more than...
       if (length(unique(value)) >= 7) {
-        count <- count + theme(axis.text.x = element_text(angle = 30, hjust=1))
+        count <- count + theme(axis.text.x = element_text(angle = 30, hjust = 1))
       } 
       # Custom colours if wanted...
       count <- if (custom_colours) count + gg_fill_customs()
@@ -308,13 +303,13 @@ distr <- function(data, ...,
           geom_hline(yintercept = h/100, colour = "purple", 
                      linetype = "dotted", alpha = 0.8) +
           geom_label(aes(0, h/100, label = h, vjust = -0.05), 
-                     size = 2.5, fill="white", alpha = 0.8)
+                     size = 2.5, fill = "white", alpha = 0.8)
       }
       # Custom colours if wanted...
       if (custom_colours) {
         prop <- prop + gg_fill_customs()
       }
-        
+      
     }
     
     # Export file name and folder
@@ -325,9 +320,8 @@ distr <- function(data, ...,
         cleanText(variable_name), 
         case_when(type == 2 ~ "_c", type == 3 ~ "_p", TRUE ~ ""),".png")
       if (!is.na(subdir)) {
-        options(warn=-1)
         dir.create(file.path(getwd(), subdir), recursive = TRUE)
-        file_name <- paste(subdir, file_name, sep="/")
+        file_name <- paste(subdir, file_name, sep = "/")
       }
     }
     
@@ -336,7 +330,7 @@ distr <- function(data, ...,
       count <- count + labs(title = "Distribution and Proportions", 
                             subtitle = subtitle, caption = "") +
         theme(plot.margin = margin(10, 15, -15, 15))
-      prop <- prop + guides(fill=FALSE) + labs(caption = note) +
+      prop <- prop + guides(fill = FALSE) + labs(caption = note) +
         theme(plot.margin = margin(-5, 15, -15, 15))
       if (save) {
         png(file_name, height = 1000, width = 1300, res = 200)

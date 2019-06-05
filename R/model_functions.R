@@ -115,7 +115,9 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
 #' observation a relative weight of 2 is equivalent to repeating that 
 #' row twice. Negative weights are not allowed.
 #' @param balance Boolean. Auto-balance train dataset with under-sampling?
-#' @param seed Numeric. Seed for random stuff and reproducibility
+#' @param seed Integer. Set a seed for reproducibility. AutoML can only 
+#' guarantee reproducibility if max_models is used because max_time is 
+#' resource limited.
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
 #' have in 'tag' (more than: regression; less than: classification)
@@ -163,10 +165,6 @@ h2o_automl <- function(df, y = "tag",
   }
   colnames(df)[colnames(df) == y] <- "tag"
   
-  # IGNORED VARIABLES
-  df <- df[ , which(!names(df) %in% ignore)]
-  
-  # FINAL DATAFRAME
   df <- data.frame(df) %>% 
     filter(!is.na(tag)) %>%
     mutate_if(is.character, as.factor)
@@ -219,11 +217,12 @@ h2o_automl <- function(df, y = "tag",
     message("Previous trained models are not being erased. Use 'start_clean' parameter if needed.")
   }
   message(paste("Iterating until", max_models, "models or", max_time, "seconds..."))
-  aml <- h2o::h2o.automl(x = setdiff(names(df), "tag"), 
+  # IGNORED VARIABLES
+  aml <- h2o::h2o.automl(x = setdiff(names(df), c("tag", ignore)), 
                          y = "tag",
-                         weights_column = weight,
                          training_frame = as.h2o(train),
                          leaderboard_frame = as.h2o(test),
+                         weights_column = weight,
                          max_runtime_secs = max_time,
                          max_models = max_models,
                          exclude_algos = exclude_algos,
@@ -1033,7 +1032,7 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
         predi <- as.numeric(ifelse(score == labels[i], 1, 0))
         conf_mati <- table(Real = as.character(tagi), 
                            Pred = as.character(predi))
-        if (nrow(conf_mati) == 2 & ncol(conf_mati == 2)) {
+        if (nrow(data.frame(conf_mati)) == 4) {
           total <- sum(conf_mati)
           trues <- sum(diag(conf_mati))
           falses <- total - trues
@@ -1046,7 +1045,7 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
           nums <- rbind(nums, numsi) 
         }
       }
-      nums$AUC <- AUCs[1:length(labels)]
+      nums$AUC <- AUCs[1:nrow(nums)]
       nums <- left_join(freqs(df %>% select(tag), tag), nums, "tag") %>% 
         select(tag, n, p, AUC, everything(), -pcum)
       metrics[["metrics_tags"]] <- nums %>% mutate_if(is.numeric, funs(signif(., 5)))

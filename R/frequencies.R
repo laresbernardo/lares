@@ -31,20 +31,21 @@ freqs <- function(vector, ..., wt = NULL,
                   top = 20, abc = FALSE,
                   save = FALSE, subdir = NA) {
   
-  options(warn=-1)
+  options(warn = -1)
   vars <- quos(...)
   weight <- enquo(wt)
     
   output <-  if (quo_is_null(weight)) {
-    group_by(vector, !!!vars) %>% tally()
+    group_by(vector, !!!vars) %>% count()
   } else { 
     count(vector, !!!vars, wt = !!weight)
   }
   output <- arrange(output, desc(n)) %>%
-    mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
+    mutate(p = round(100*n/sum(n),2), 
+           pcum = cumsum(p))
    
   if (!plot && !save) {
-    if(results) {
+    if (results) {
       return(output)
     } else {
       return(NULL)
@@ -62,8 +63,8 @@ freqs <- function(vector, ..., wt = NULL,
                         paste0("(weighted by ", as.character(weight)[2], ")"), "")
 
   # Use only the most n frequent values/combinations only
-  values <- unique(output[,(ncol(output)-3)])
-  if(nrow(values) > top) {
+  values <- unique(output[,(ncol(output) - 3)])
+  if (nrow(values) > top) {
     if (!is.na(top)) {
       output <- output %>% slice(1:top)
       message(paste0("Slicing the top ", top, 
@@ -72,7 +73,7 @@ freqs <- function(vector, ..., wt = NULL,
       note <- paste0("[", top, " most frequent]")
       obs <- paste0("Obs.: ", formatNum(sum(output$n), 0), " (out of ", formatNum(obs_total, 0), ")")
     }
-  } else { note <- "" }
+  } else {note <- ""}
 
   # Sort values alphabetically or ascending if numeric
   if (abc) {
@@ -146,7 +147,7 @@ freqs <- function(vector, ..., wt = NULL,
   }
 
   # Plot base
-  p <- p + geom_col(alpha=0.9, width = 0.8) +
+  p <- p + geom_col(alpha = 0.9, width = 0.8) +
     geom_text(aes(hjust = label_hjust, colour = label_colours), size = 2.6) + 
     coord_flip() + guides(colour = FALSE) +
     labs(x = "", y = "Counter", fill = "[%]",
@@ -157,7 +158,7 @@ freqs <- function(vector, ..., wt = NULL,
     scale_y_continuous(labels = comma) +
     scale_fill_gradient(low = "lightskyblue2", high = "navy") +
     gg_text_customs() + theme_lares2() +
-    theme(legend.position="none")
+    theme(legend.position = "none")
 
   # When two features
   if (type == 2) { 
