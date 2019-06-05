@@ -14,10 +14,16 @@
 #' to keep unique compount words, separated with spaces, set to TRUE. 
 #' For example, 'LA ALAMEDA' will be set as 'LA_ALAMEDA' and treated as
 #' a single word.
+#' @param df Boolean. Return a dataframe with a one-hot-encoding kind of
+#' results? Each word is a column and returns if word is contained.
+#' @param min Integer. If df = TRUE, what is the minimum frequency for
+#' the word to be considered.
 #' @export
 textTokenizer <- function(text, lang = "english", 
                           exclude = c(),
-                          keep_spaces = FALSE) {
+                          keep_spaces = FALSE,
+                          df = FALSE,
+                          min = 2) {
   
   # require("tm")
   options(warn=-1)
@@ -56,7 +62,20 @@ textTokenizer <- function(text, lang = "english",
   m <- as.matrix(dtm)
   v <- sort(rowSums(m), decreasing=TRUE)
   d <- data.frame(word = names(v), freq=v)
-  return(d)
+  
+  if (df) {
+    d <- filter(d, freq >= min)
+    toksdf <- c()
+    for (i in 1:nrow(d)) {
+      word <- as.character(d$word[i])
+      vector <- grepl(word, df_clean$product)
+      toksdf <- cbind(toksdf, vector)
+      colnames(toksdf)[colnames(toksdf)=="vector"] <- word
+    }
+    return(toksdf)
+  } else {
+    return(d) 
+  }
 }
 
 
@@ -90,13 +109,12 @@ textCloud <- function(text, lang = "english", exclude = c(), seed = 0,
   d <- textTokenizer(text, lang, exclude, keep_spaces)
   if (print) message(paste0(capture.output(head(d, 10)), collapse = "\n")) 
   
-  pal <- if (is.na(pal)) names(lares_pal()$palette)[1:6]
+  pal <- if (is.na(pal)) rev(names(lares_pal()$palette)[1:6])
   wordcloud(words = d$word, freq = d$freq, 
             scale = c(3.5, .7),
             min.freq = min,
             max.words = 200, 
             random.order = FALSE, 
             rot.per = 0.2, 
-            colors = rev(pal))
-  
+            colors = pal)
 }

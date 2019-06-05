@@ -5,7 +5,7 @@
 \title{Tokenize Vectors into Words}
 \usage{
 textTokenizer(text, lang = "english", exclude = c(),
-  keep_spaces = FALSE)
+  keep_spaces = FALSE, df = FALSE, min = 2)
 }
 \arguments{
 \item{text}{Character vector}
@@ -18,6 +18,12 @@ textTokenizer(text, lang = "english", exclude = c(),
 to keep unique compount words, separated with spaces, set to TRUE. 
 For example, 'LA ALAMEDA' will be set as 'LA_ALAMEDA' and treated as
 a single word.}
+
+\item{df}{Boolean. Return a dataframe with a one-hot-encoding kind of
+results? Each word is a column and returns if word is contained.}
+
+\item{min}{Integer. If df = TRUE, what is the minimum frequency for
+the word to be considered.}
 }
 \description{
 This function transforms texts into words, calculate frequencies,
