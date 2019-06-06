@@ -36,14 +36,11 @@ freqs <- function(df, ..., wt = NULL,
   options(warn = -1)
   vars <- quos(...)
   weight <- enquo(wt)
-  
-  output <-  if (quo_is_null(weight)) {
-    group_by(df, !!!vars) %>% count()
-  } else { 
-    count(df, !!!vars, wt = !!weight)
-  }
-  
-  output <- arrange(output, desc(n)) %>% 
+
+  output <- df %>%
+    group_by(!!!vars) %>% 
+    tally(wt = !!weight) %>% 
+    arrange(desc(n)) %>%
     {if (!rel) ungroup(.) else .} %>%
     mutate(p = round(100*n/sum(n),2), 
            pcum = cumsum(p))

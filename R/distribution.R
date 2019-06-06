@@ -232,9 +232,9 @@ distr <- function(data, ...,
                        ". Obs: ", formatNum(nrow(df), 0))
     
     freqs <- df %>% 
-      group_by(value, targets) %>%
-      count() %>% ungroup() %>%
-      group_by(targets) %>%
+      group_by(targets, value) %>%
+      count() %>% ungroup() %>% arrange(desc(n)) %>%
+      group_by(value) %>%
       mutate(p = round(100*n/sum(n),2), 
              pcum = cumsum(p)) %>% ungroup() %>%
       mutate(row = row_number(),
