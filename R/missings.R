@@ -7,9 +7,10 @@
 #' @family Exploratory
 #' @param df Dataframe. Dataframe to study
 #' @param plot Boolean. Do you wish to plot results?
+#' @param full Boolean. Return all variables (or only with missings)?
 #' @param subtitle Character. Subtitle to show in plot
 #' @export
-missingness <- function(df, plot = FALSE, subtitle = NA) {
+missingness <- function(df, plot = FALSE, full = TRUE, subtitle = NA) {
   
   if (sum(is.na(df)) == 0) {
     message("No missing values found!")
@@ -45,15 +46,16 @@ missingness <- function(df, plot = FALSE, subtitle = NA) {
       mutate(row_num = row_number()) %>%
       mutate(perc = round(100*sum(value)/nrow(df),2)) %>%
       mutate(label = ifelse(type == "with", paste0(key, " | ", perc,"%"), key)) %>%
+      {if (!full) filter(., label == "with") else .} %>%
       arrange(value) %>% 
       ggplot(aes(x = reorder(label, perc), y = row_num, fill = value)) + 
       geom_raster() + 
       coord_flip() +
-      facet_grid(type ~ ., space ="free", scales = "free") +
+      facet_grid(type ~ ., space = "free", scales = "free") +
       scale_y_continuous(note, expand = c(0, 0)) +
       scale_fill_grey(name = "", labels = c("Present", "Missing")) +
-      labs(title = "Missing values", x="", subtitle = if(!is.na(subtitle)) subtitle) +
-      theme_lares2(legend="top") +
+      labs(title = "Missing values", x = "", subtitle = if (!is.na(subtitle)) subtitle) +
+      theme_lares2(legend = "top") +
       theme(axis.text.y  = element_text(size = 8))
     return(p)
   }

@@ -4,12 +4,14 @@
 \alias{missingness}
 \title{Calculate and Visualize Missingness}
 \usage{
-missingness(df, plot = FALSE, subtitle = NA)
+missingness(df, plot = FALSE, full = TRUE, subtitle = NA)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe to study}
 
 \item{plot}{Boolean. Do you wish to plot results?}
+
+\item{full}{Boolean. Return all variables (or only with missings)?}
 
 \item{subtitle}{Character. Subtitle to show in plot}
 }
