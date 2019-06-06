@@ -25,22 +25,22 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
                           ohse = TRUE, norm = TRUE, comb = c(1,2),
                           seed = 123){
   
-  options(warn=-1)
+  options(warn = -1)
   results <- list()
   
   # There should not be NAs
   if (sum(is.na(df)) > 0) {
     if (drop_na) { 
-      df <- df %>% removenarows(all=FALSE) 
+      df <- df %>% removenarows(all = FALSE) 
       message("Automatically removed rows with NA. To overtwrite: fix NAs and set drop_na = FALSE")
     } else {
       stop(paste("There should be no NAs in your dataframe!",
-                 "You can manually fix it or set drop_na to TRUE to remove these rows.", sep="\n")) 
+                 "You can manually fix it or set drop_na to TRUE to remove these rows.", sep = "\n")) 
     }
   }
   
   # Only numerical values
-  nums <- df_str(df, return = "names", plot = F)$nums
+  nums <- df_str(df, return = "names", plot = FALSE, quiet = TRUE)$nums
   if (ohse & length(nums) != ncol(df)) {
     df <- ohse(df, redundant = TRUE, dates = TRUE, limit = 6)
     message("One hot encoding applied...")
@@ -53,13 +53,11 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     df <- df %>% transmute_all(funs(normalize))
   }
   
-  results[["df"]] <- df
-  
   # Determine number of clusters (n)
-  wss <- sum(apply(df, 2, var))*(nrow(df)-1)
+  wss <- sum(apply(df, 2, var))*(nrow(df) - 1)
   for (i in 2:limit) wss[i] <- sum(kmeans(df, centers = i)$withinss)
   nclusters <- data.frame(n = c(1:limit), wss = wss)
-  nclusters_plot <- ggplot(nclusters, aes(x=n, y=wss)) + 
+  nclusters_plot <- ggplot(nclusters, aes(x = n, y = wss)) + 
     geom_line() + geom_point() +
     theme_minimal() +
     labs(title = "Total Number of Clusters",
@@ -71,8 +69,9 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   
   # If n is already selected
   if (!is.na(k)) {
+    results[["df"]] <- df
     nclusters_plot <- nclusters_plot + 
-      geom_hline(aes(yintercept = nclusters$wss[nclusters$n==k]), colour = "red") +
+      geom_hline(aes(yintercept = nclusters$wss[nclusters$n == k]), colour = "red") +
       labs(subtitle = paste("Number of clusters selected:", k))
     results[["clusters"]] <- k
     results[["nclusters_plot"]] <- nclusters_plot
@@ -96,7 +95,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       clusters[,-1][,comb],
       size = clusters$n)
     clusters_plot <- ggplot(df, aes(
-      x=df[,comb[1]], y=df[,comb[2]], colour = df$cluster)) + 
+      x = df[,comb[1]], y = df[,comb[2]], colour = df$cluster)) + 
       geom_point() + theme_minimal() + guides(size = FALSE) +
       geom_text(data = centers, 
                 aes_string(x = colnames(centers)[2], 
