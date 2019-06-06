@@ -232,7 +232,11 @@ distr <- function(data, ...,
                        ". Obs: ", formatNum(nrow(df), 0))
     
     freqs <- df %>% 
-      freqs(value, targets) %>% ungroup() %>%
+      group_by(value, target) %>%
+      count() %>% ungroup() %>%
+      group_by(target) %>%
+      mutate(p = round(100*n/sum(n),2), 
+             pcum = cumsum(p)) %>% ungroup() %>%
       mutate(row = row_number(),
              order = ifelse(grepl("\\(|\\)", value), 
                             as.numeric(as.character(substr(gsub(",.*", "", value), 2, 100))), row))
