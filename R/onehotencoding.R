@@ -46,7 +46,7 @@ ohse <- function(df,
   
   # Create features out of date/time variables
   if (dates == TRUE | holidays == TRUE | !is.na(currency_pair)) {
-    times <- df_str(df, return = "names", plot = F)$time
+    times <- df_str(df, return = "names", plot = FALSE, quiet = TRUE)$time
     if (length(times) <= 1) {
       df_dates <- date_feats(df, 
                              keep_originals = TRUE,
@@ -72,10 +72,9 @@ ohse <- function(df,
   }
   
   # Dummy variables that will be filled
-  no_need_to_convert <- converted <- converted_binary <- not_converted <- no_variance <- c()
+  no_need_to_convert <- converted <- converted_binary <- no_variance <- c()
   
   # Name and type of variables
-  cols <- df_str(df, "names", plot = F)
   types <- data.frame(name = colnames(df), 
                       type = unlist(lapply(lapply(df, class), `[[`, 1)))
   
@@ -102,7 +101,7 @@ ohse <- function(df,
       
       # Columns with 2 possible values
       if (vector_levels == 2) {
-        df[,c(vector_name)] <- as.integer(as.factor(df[,c(vector_name)]))-1
+        df[,c(vector_name)] <- as.integer(as.factor(df[,c(vector_name)])) - 1
         converted_binary <- rbind(converted_binary, vector_name)
       }
       # Columns with more than 2 possible values
@@ -113,7 +112,7 @@ ohse <- function(df,
                                          other_label = paste0(sep, other_label))
           dummy_matx <- data.frame(model.matrix( ~ . -1, data = vector_values))
           if (redundant == FALSE) {
-            dummy_matx <- dummy_matx[, 1:(ncol(dummy_matx)-1)]
+            dummy_matx <- dummy_matx[, 1:(ncol(dummy_matx) - 1)]
           }
           df <- cbind(df, dummy_matx)
           converted <- rbind(converted, vector_name)
@@ -185,9 +184,9 @@ date_feats <- function(dates,
                        holidays = FALSE, country = "Colombia",
                        currency_pair = NA,
                        summary = TRUE) {
-  options(warn=-1)
+  options(warn = -1)
   results <- c()
-  date_cols <- df_str(dates, return="names", plot=F)$time
+  date_cols <- df_str(dates, return = "names", plot = FALSE, quiet = TRUE)$time
   
   if (length(date_cols) == 0) {
     return(dates)
@@ -227,7 +226,7 @@ date_feats <- function(dates,
     cols <- paste0("values_date_holiday_",c("national","observance","season","other",tolower(country)))
     if (ncol(holidays_dates) == 6) {
       holidays_dates <- holidays_dates %>% 
-        mutate(dummy=TRUE) %>% 
+        mutate(dummy = TRUE) %>% 
         tidyr::spread(country, dummy)
     } else { 
       cols <- cols[1:4] 
@@ -254,14 +253,14 @@ date_feats <- function(dates,
         result$values_date_weekday <- weekdays(values, abbreviate = TRUE)
         result$values_date_weekend <-  grepl("S(at|un)", result$values_date_weekday)
         result$values_date_year_day <- as.integer(difftime(
-          values, floor_date(values, unit="year"), units="day"))
+          values, floor_date(values, unit = "year"), units = "day"))
         
         if (!is.na(ymd_hms(values[1]))) {
           values <- ymd_hms(values)
           result$values_date_hour <- hour(values)  
           result$values_date_minute <- minute(values)  
           result$values_date_minutes <- as.integer(difftime(
-            values, floor_date(values, unit="day"), units="mins"))
+            values, floor_date(values, unit = "day"), units = "mins"))
           result$values_date_second <- second(values)
           # result$values_date_seconds <- as.integer(difftime(
           #   values, floor_date(values, unit="day"), units="secs"))
@@ -270,7 +269,7 @@ date_feats <- function(dates,
       
       # Holidays data
       if (holidays == TRUE) {
-        result <- result %>% left_join(holidays_dates, by="values_date") %>% 
+        result <- result %>% left_join(holidays_dates, by = "values_date") %>% 
           mutate_at(vars(cols), funs(replace(., which(is.na(.)), FALSE)))
       }
       
@@ -290,9 +289,7 @@ date_feats <- function(dates,
     }
   }
   
-  if (keep_originals == FALSE) {
-    results <- results[, c(!colnames(results) %in% date_cols)]
-  }
+  if (!keep_originals) results <- results[, c(!colnames(results) %in% date_cols)]
   
   return(results)
   

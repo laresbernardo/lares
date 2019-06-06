@@ -84,9 +84,9 @@ theme_lares2 <- function(font = "Arial Narrow",
                      axis.ticks.y = element_blank())
   # Axis text
   ret <- ret + theme(axis.text.x = element_text(
-    size = base_size * 0.85, margin = margin(t = 0),colour = soft_colour))
+    size = base_size * 0.85, margin = margin(t = 0), colour = soft_colour))
   ret <- ret + theme(axis.text.y = element_text(
-    size = base_size * 0.85, margin = margin(r = 0),colour = soft_colour))
+    size = base_size * 0.85, margin = margin(r = 0), colour = soft_colour))
   # Axis titles
   ret <- ret + theme(axis.title = element_text(
     size = base_size * 1, family = font,colour = soft_colour))
