@@ -4,7 +4,7 @@
 \alias{missingness}
 \title{Calculate and Visualize Missingness}
 \usage{
-missingness(df, plot = FALSE, full = TRUE, subtitle = NA)
+missingness(df, plot = FALSE, full = FALSE, subtitle = NA)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe to study}

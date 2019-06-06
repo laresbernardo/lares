@@ -81,7 +81,7 @@ freqs <- function(df, ..., wt = NULL,
     message("Sorting variable(s) alphabetically")
     output <- output %>% arrange(!!!vars, desc(n)) %>% 
       mutate(order = row_number())
-    note <- gsub("most frequent", "first rows", note)
+    note <- gsub("most frequent", "A-Z sorted values", note)
   } else {
     output <- output %>% arrange(desc(n)) %>%
       mutate(order = row_number())

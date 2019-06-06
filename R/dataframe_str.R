@@ -11,13 +11,16 @@
 #' numbers, or "names" for column names of each of the cateogries
 #' @param plot Boolean. Do you wish to see a plot?
 #' @param subtitle Character. Add subtitle to plot
+#' @param quiet Boolean. Silence the messages?
 #' @export
-df_str <- function (df, 
-                    return = "skimr", 
-                    plot = TRUE, 
-                    subtitle = ""){
+df_str <- function(df, 
+                   return = "plot", 
+                   plot = FALSE, 
+                   subtitle = NA,
+                   quiet = FALSE){
   
-  options(warn=-1)
+  options(warn = -1)
+  ret <- c("skimr", "numbers", "names", "plot")
   df <- data.frame(df)
   
   names <- list(
@@ -29,9 +32,9 @@ df_str <- function (df,
   names[["time"]] <- names$cols[!colnames(df) %in% c(
     names$nums, names$char, names$factor, names$logic)]
   names[["allnas"]] <- names$cols[sapply(df, function(x) all(is.na(x)))]
-
+  
   numbers <- data.frame(
-    "Total Observations" = nrow(df) * ncol(df),
+    "Total Values" = nrow(df) * ncol(df),
     "Total Rows" = nrow(df),
     "Total Columns" = ncol(df),
     "Numeric Columns" = length(names$nums),
@@ -48,30 +51,38 @@ df_str <- function (df,
   intro2 <- data.frame(counter = t(numbers)) %>%
     mutate(metric = row.names(.),
            type = ifelse(grepl("Column", colnames(numbers)), "Columns",
-                         ifelse(grepl("Rows", colnames(numbers)), "Rows", "Observations")),
+                         ifelse(grepl("Rows", colnames(numbers)), "Rows", "Values")),
            p = ifelse(type == "Columns", 100*counter/numbers$Total.Columns,
                       ifelse(type == "Rows", 100*counter/numbers$Total.Rows, 
-                             100*counter/numbers$Total.Observations)),
+                             100*counter/numbers$Total.Values)),
            p = round(p,2),
-           type = factor(type, levels = c("Observations","Columns","Rows"))) %>%
+           type = factor(type, levels = c("Values","Columns","Rows"))) %>%
     select(metric, counter, type, p)
   
-  if (plot == TRUE) {
-    plot <- intro2 %>%
+  if (plot | return == "plot") {
+    p <- intro2 %>%
       filter(!metric %in% c("Memory.Usage")) %>%
-      ggplot(aes(x=reorder(metric, as.integer(counter)), 
-                 y=p, fill=type, 
-                 label=formatNum(counter, 0))) + 
-      geom_col() + coord_flip() + 
-      theme_minimal() + guides(fill=FALSE) +
-      labs(title = "Dataset columns and rows counter", 
-           subtitle = subtitle,
-           x = "", y = "% of total", fill="", 
+      mutate(x = ifelse(p < 75, -0.15, 1.15)) %>%
+      ggplot(aes(x = reorder(metric, as.integer(counter)), 
+                 y = p, fill = type,
+                 label = formatNum(counter, 0))) + 
+      geom_col() + coord_flip() + ylim(0, 100) +
+      theme_minimal() + guides(fill = FALSE) +
+      labs(title = "Dataset overall structure", 
+           x = "", y = "% of total", fill = "", 
            caption = paste("Memory Usage:", formatNum(numbers$Memory.Usage/(1024*1024)),"Mb")) +
-      facet_grid(type ~., scales = "free") + 
-      geom_text(size = 3, hjust = 1.1) +
-      theme_lares2()
-    print(plot)
+      facet_grid(type ~., scales = "free", space = "free") + 
+      geom_text(aes(hjust = x), size = 3) +
+      theme_lares2(pal = 1)
+    if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
+    if (return != "plot") plot(p)
+  }
+  
+  if (!quiet) message(paste("Other possible return values:", 
+                            vector2text(ret[ret != return])))
+  
+  if (return == "plot") {
+    return(p)
   }
   if (return == "skimr") {
     return(skimr::skim(df))

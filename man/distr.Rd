@@ -4,10 +4,10 @@
 \alias{distr}
 \title{Compare Variables with their Distributions}
 \usage{
-distr(data, ..., type = 1, note = NA, top = 10, breaks = 10,
-  na.rm = FALSE, force = "none", trim = 0, clean = FALSE,
-  abc = FALSE, custom_colours = FALSE, plot = TRUE, chords = FALSE,
-  save = FALSE, subdir = NA)
+distr(data, ..., type = 1, ref = TRUE, note = NA, top = 10,
+  breaks = 10, na.rm = FALSE, force = "none", trim = 0,
+  clean = FALSE, abc = FALSE, custom_colours = FALSE, plot = TRUE,
+  chords = FALSE, save = FALSE, subdir = NA)
 }
 \arguments{
 \item{data}{Dataframe}
@@ -17,6 +17,9 @@ variable) to group by}
 
 \item{type}{Integer. 1 for both plots, 2 for counter plot only, 3 por 
 percentages plot only.}
+
+\item{ref}{Boolean. Show a reference line if levels = 2? Quite useful 
+when data is unbalanced (not 50/50) because a reference line is drawn}
 
 \item{note}{Character. Caption for the plot}
 

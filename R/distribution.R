@@ -11,6 +11,8 @@
 #' variable) to group by
 #' @param type Integer. 1 for both plots, 2 for counter plot only, 3 por 
 #' percentages plot only.
+#' @param ref Boolean. Show a reference line if levels = 2? Quite useful 
+#' when data is unbalanced (not 50/50) because a reference line is drawn
 #' @param note Character. Caption for the plot
 #' @param top Integer. Filter and plot the most n frequent for categorical values
 #' @param breaks Integer. Number of splits for numerical values
@@ -30,6 +32,7 @@
 #' @export
 distr <- function(data, ...,
                   type = 1,
+                  ref = TRUE,
                   note = NA,
                   top = 10, 
                   breaks = 10, 
@@ -300,7 +303,7 @@ distr <- function(data, ...,
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
         theme_lares2(pal = 1)
       # Show a reference line if levels = 2; quite useful when data is unbalanced (not 50/50)
-      if (length(unique(targets)) == 2) {
+      if (length(unique(targets)) == 2 & ref) {
         distr <- df %>% freqs(targets) %>% arrange(as.character(targets))
         h <- signif(100 - distr$p[1], 3)
         prop <- prop +

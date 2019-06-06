@@ -4,7 +4,7 @@
 \alias{theme_lares2}
 \title{lares Theme for ggplot2}
 \usage{
-theme_lares2(font = "Arial Narrow", base_size = 12,
+theme_lares2(font = "Arial Narrow", base_size = 12.5,
   main_colour = "darkorange3", second_colour = "deepskyblue3",
   soft_colour = "grey30", bg_colour = "white", legend = "right",
   mg = 15, pal = 0)
