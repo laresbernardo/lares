@@ -37,8 +37,8 @@ Other Visualization: \code{\link{mplot_conf}},
   \code{\link{plot_survey}}, \code{\link{textCloud}},
   \code{\link{theme_lares2}}, \code{\link{theme_lares}}
 
-Other Correlations: \code{\link{corr_var}},
-  \code{\link{corr}}
+Other Correlations: \code{\link{corr_cross}},
+  \code{\link{corr_var}}, \code{\link{corr}}
 }
 \concept{Correlations}
 \concept{Visualization}

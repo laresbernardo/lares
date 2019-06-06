@@ -25,6 +25,7 @@
 #' minute hour second %m+% floor_date 
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
+#' @importFrom plotly plot_ly ggplotly
 #' @importFrom pROC roc ci
 #' @importFrom quantmod getDividends getSymbols getQuote 
 #' @importFrom RColorBrewer brewer.pal
@@ -88,4 +89,4 @@ if(getRversion() >= "2.15.1")
       "Logloss","yewxname","gain","random","optimal","lift","pred","prophet","fit.prophet",
       "prophet_plot_components","add_country_holidays","make_future_dataframe","importance",
       "percentile","cum_response","response","total","ETF","Sector","Percentage",
-      "row_num","ncap","freq")) 
+      "row_num","ncap","freq","mix")) 

@@ -22,7 +22,7 @@
 #' @param seed Numeric. Seed for reproducibility
 #' @export
 clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE, 
-                          ohse = TRUE, norm = TRUE, comb = c(1,2),
+                          ohse = TRUE, norm = TRUE, comb = c(1,2,3),
                           seed = 123){
   
   options(warn = -1)
@@ -49,9 +49,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   }
   
   # Data should be normalized for better results
-  if (norm) {
-    df <- df %>% transmute_all(funs(normalize))
-  }
+  if (norm) df <- df %>% transmute_all(funs(normalize))
   
   # Determine number of clusters (n)
   wss <- sum(apply(df, 2, var))*(nrow(df) - 1)
@@ -63,7 +61,9 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     labs(title = "Total Number of Clusters",
          subtitle = "Where does the curve level?",
          x = "Number of Clusters",
-         y = "Within Groups Sum of Squares")
+         y = "Within Groups Sum of Squares") +
+    scale_y_continuous(labels = scales::comma) +
+    theme_lares2()
   results[["nclusters"]] <- nclusters
   results[["nclusters_plot"]] <- nclusters_plot
   
@@ -88,26 +88,40 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       summarise_all(list(mean)) %>%
       mutate(n = as.integer(table(df$cluster)))
     results[["clusters"]] <- clusters
+    
     # Plot clusters
-    axisnames <- colnames(df[,comb])
-    centers <- data.frame(
-      cluster = clusters$cluster, 
-      clusters[,-1][,comb],
-      size = clusters$n)
-    clusters_plot <- ggplot(df, aes(
-      x = df[,comb[1]], y = df[,comb[2]], colour = df$cluster)) + 
-      geom_point() + theme_minimal() + guides(size = FALSE) +
-      geom_text(data = centers, 
-                aes_string(x = colnames(centers)[2], 
-                           y = colnames(centers)[3], 
-                           label = "cluster", 
-                           size = "size"), 
-                colour = "black", fontface = "bold") +
-      labs(title = "Clusters Plot",
-           subtitle = paste("Number of clusters selected:", k),
-           x = axisnames[1], y = axisnames[2],
-           colour = "Cluster") + coord_flip()
-    results[["clusters_plot"]] <- clusters_plot
+    if (length(comb) == 2) {
+      axisnames <- colnames(df[,comb])
+      centers <- data.frame(
+        cluster = clusters$cluster, 
+        clusters[,-1][,comb],
+        size = clusters$n)
+      clusters_plot <- ggplot(df, aes(
+        x = df[,comb[1]], y = df[,comb[2]], colour = df$cluster)) + 
+        geom_point() + theme_minimal() + guides(size = FALSE) +
+        geom_text(data = centers, 
+                  aes_string(x = colnames(centers)[2], 
+                             y = colnames(centers)[3], 
+                             label = "cluster", 
+                             size = "size"), 
+                  colour = "black", fontface = "bold") +
+        labs(title = "Clusters Plot",
+             subtitle = paste("Number of clusters selected:", k),
+             x = axisnames[1], y = axisnames[2],
+             colour = "Cluster") + coord_flip() +
+        theme_lares2(pal = 2)
+    }
+    
+    if (length(comb) == 3) {
+      clusters_plot <- plot_ly(x = df[,comb[1]], 
+                               y = df[,comb[2]], 
+                               z = df[,comb[3]],
+                               color = df$cluster,
+                               type = "scatter3d", mode = "markers")
+    }
+    
+    if (exists("clusters_plot")) results[["clusters_plot"]] <- clusters_plot
+    
   }
   return(results)
 }

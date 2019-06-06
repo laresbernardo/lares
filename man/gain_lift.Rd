@@ -44,12 +44,12 @@ Other Machine Learning: \code{\link{ROC}},
   \code{\link{mplot_response}}, \code{\link{mplot_roc}},
   \code{\link{mplot_splits}}, \code{\link{msplit}}
 
-Other Exploratory: \code{\link{corr_var}},
-  \code{\link{crosstab}}, \code{\link{df_str}},
-  \code{\link{distr}}, \code{\link{freqs}},
-  \code{\link{get_tweets}}, \code{\link{missingness}},
-  \code{\link{textCloud}}, \code{\link{textTokenizer}},
-  \code{\link{trendsRelated}}
+Other Exploratory: \code{\link{corr_cross}},
+  \code{\link{corr_var}}, \code{\link{crosstab}},
+  \code{\link{df_str}}, \code{\link{distr}},
+  \code{\link{freqs}}, \code{\link{get_tweets}},
+  \code{\link{missingness}}, \code{\link{textCloud}},
+  \code{\link{textTokenizer}}, \code{\link{trendsRelated}}
 }
 \concept{Exploratory}
 \concept{Machine Learning}

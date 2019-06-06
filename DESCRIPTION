@@ -30,6 +30,7 @@ Imports:
     jsonlite,
     lubridate,
     openxlsx,
+    plotly,
     pROC,
     quantmod,
     RColorBrewer,
@@ -57,7 +58,6 @@ Suggests:
     googleAnalyticsR,
     gtrendsR,
     highcharter,
-    plotly,
     rtweet,
     shinydashboard
 URL: https://github.com/laresbernardo/lares

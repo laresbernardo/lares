@@ -23,12 +23,12 @@ Other Connection: \code{\link{queryGA}},
 Other Social Networks: \code{\link{li_auth}},
   \code{\link{li_profile}}
 
-Other Exploratory: \code{\link{corr_var}},
-  \code{\link{crosstab}}, \code{\link{df_str}},
-  \code{\link{distr}}, \code{\link{freqs}},
-  \code{\link{gain_lift}}, \code{\link{missingness}},
-  \code{\link{textCloud}}, \code{\link{textTokenizer}},
-  \code{\link{trendsRelated}}
+Other Exploratory: \code{\link{corr_cross}},
+  \code{\link{corr_var}}, \code{\link{crosstab}},
+  \code{\link{df_str}}, \code{\link{distr}},
+  \code{\link{freqs}}, \code{\link{gain_lift}},
+  \code{\link{missingness}}, \code{\link{textCloud}},
+  \code{\link{textTokenizer}}, \code{\link{trendsRelated}}
 }
 \concept{Connection}
 \concept{Exploratory}

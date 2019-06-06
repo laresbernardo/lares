@@ -5,7 +5,7 @@
 \title{K-Means Clustering Automated}
 \usage{
 clusterKmeans(df, k = NA, limit = 20, drop_na = TRUE, ohse = TRUE,
-  norm = TRUE, comb = c(1, 2), seed = 123)
+  norm = TRUE, comb = c(1, 2, 3), seed = 123)
 }
 \arguments{
 \item{df}{Dataframe}

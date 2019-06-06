@@ -226,3 +226,46 @@ corr_plot <- function(df, method = "pearson", order = "FPC",
                    diag = FALSE)
   return(plot)
 }
+
+
+####################################################################
+#' Correlation Cross-Table
+#'
+#' This function creates a correlation full study and returns a rank
+#' of the highest correlation variables obtained in a cross-table.
+#'
+#' @family Correlations
+#' @family Exploratory
+#' @param df Dataframe.
+#' @param plot Boolean. Show and return a plot?
+#' @param max Numeric. Maximum correlation permited
+#' @param top Integer. Return top n results only
+#' @export
+corr_cross <- function(df, plot = TRUE, max = 1, top = 25) {
+  c <- corr(df, plot = FALSE)
+  ret <- data.frame(tidyr::gather(c)) %>% 
+    mutate(mix = rep(colnames(c), length(c))) %>%
+    mutate(rel = abs(value)) %>% filter(rel < max) %>% 
+    arrange(desc(rel)) %>%
+    mutate(rank = row_number()) %>%
+    filter(rank %in% seq(2,length(c)*length(c)*2,2)) %>%
+    select(key, mix, value) %>%
+    filter(!grepl("_OTHER", key)) %>%
+    rename(corr = value) %>%
+    head(top) 
+  if (plot) {
+    p <- ret %>% 
+      mutate(label = paste(key, "+", mix),
+             abs = abs(corr),
+             sign = ifelse(corr < 0, "n", "p"),
+             x = ifelse(corr < 0, -0.1, 1.1)) %>%
+      ggplot(aes(x = reorder(label,abs), y = 100*corr, fill = sign)) +
+      geom_col() + coord_flip() + guides(fill = FALSE) +
+      geom_text(aes(hjust = x, label = round(100*corr,2)), size = 3) +
+      labs(title = "Ranked Cross-Correlations", x = "", y = "",
+           subtitle = paste("Showing top", top, "correlations")) +
+      theme_lares2() 
+    return(p)
+  }
+  return(ret)
+}

@@ -42,8 +42,8 @@ Other Calculus: \code{\link{ROC}}, \code{\link{conf_mat}},
   \code{\link{quants}}, \code{\link{rmse}},
   \code{\link{rsqa}}, \code{\link{rsq}}
 
-Other Correlations: \code{\link{corr_plot}},
-  \code{\link{corr_var}}
+Other Correlations: \code{\link{corr_cross}},
+  \code{\link{corr_plot}}, \code{\link{corr_var}}
 }
 \concept{Calculus}
 \concept{Correlations}
