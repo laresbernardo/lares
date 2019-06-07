@@ -113,6 +113,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     }
     
     if (length(comb) == 3) {
+      try_require("plotly")
       clusters_plot <- plot_ly(x = df[,comb[1]], 
                                y = df[,comb[2]], 
                                z = df[,comb[3]],

@@ -4,17 +4,17 @@
 \alias{statusbar}
 \title{Progressbar for for loops}
 \usage{
-statusbar(run, max.run, percent.max = 40L, info = run)
+statusbar(run, max.run, info = run, percent.max = 40L)
 }
 \arguments{
 \item{run}{Iterator. for loop or an integer with the current loop number}
 
 \item{max.run}{Number. Maximum number of loops}
 
-\item{percent.max}{Integer. Indicates how wide the progress bar is printed}
-
 \item{info}{String. With additionaly information to be printed 
 at the end of the line. The default is \code{run}.}
+
+\item{percent.max}{Integer. Indicates how wide the progress bar is printed}
 }
 \description{
 This function lets the user view a progressbar for a 'for' loop. 

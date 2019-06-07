@@ -36,7 +36,7 @@ Other Feature Engineering: \code{\link{date_feats}},
   \code{\link{ohse}}
 
 Other Scrapper: \code{\link{geoStratum}},
-  \code{\link{trendsRelated}}
+  \code{\link{ip_country}}, \code{\link{trendsRelated}}
 }
 \concept{Data Wrangling}
 \concept{Feature Engineering}

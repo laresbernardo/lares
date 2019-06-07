@@ -28,7 +28,7 @@ queryGA <- function(account = "comparamejor",
   #         googleAuthR.client_secret = "XXX")
   # gar_auth()
   
-  account <- paste("google_analytics", account, sep="_")
+  account <- paste("google_analytics", account, sep = "_")
   vars <- lares::get_credentials(from = account, dir = creds)
   
   options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics"),
@@ -45,9 +45,7 @@ queryGA <- function(account = "comparamejor",
   googleAuthR::gar_auth(token)
   
   # Query on Google Analytics
-  if (!"googleAnalyticsR" %in% installed.packages()) {
-    install.packages('googleAnalyticsR')
-  }
+  try_require("googleAnalyticsR")
   google_analytics(
     vars$ga_id, 
     date_range = c(start, end),

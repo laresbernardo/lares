@@ -10,9 +10,7 @@ Encoding: UTF-8
 LazyData: true
 Imports: 
     beepr,
-    circlize,
     config,
-    corrplot,
     DBI,
     devtools,
     data.table,
@@ -29,8 +27,8 @@ Imports:
     httr,
     jsonlite,
     lubridate,
+    magrittr,
     openxlsx,
-    plotly,
     pROC,
     quantmod,
     RColorBrewer,
@@ -44,7 +42,6 @@ Imports:
     RPostgreSQL,
     rvest,
     scales,
-    skimr,
     sp,
     stringr,
     tidyr,
@@ -53,13 +50,17 @@ Imports:
     xml2
 Suggests:
     caret,
+    circlize,
+    corrplot,
     DALEX,
     exifr,
     googleAnalyticsR,
     gtrendsR,
     highcharter,
+    plotly,
     rtweet,
-    shinydashboard
+    shinydashboard,
+    skimr
 URL: https://github.com/laresbernardo/lares
 BugReports: https://github.com/laresbernardo/lares/issues
 RoxygenNote: 6.1.1

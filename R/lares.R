@@ -1,9 +1,13 @@
-#' lares: R library for Analytics, Visualization & Machine Learning Tasks
-
+#' Analytics, Visualization & Machine Learning Tasks Library
+#'
+#' R library for better/faster analytics, visualization, data mining, and machine learning tasks.
+#'
+#' @md
+#' @name lares
+#' @docType package
+#' @author Bernardo Lares (laresbernardo@@gmail.com)
 #' @importFrom beepr beep
-#' @importFrom circlize CELL_META chordDiagram circos.text circos.track uh
 #' @importFrom config get
-#' @importFrom corrplot corrplot
 #' @importFrom DBI dbDriver dbConnect dbSendQuery fetch dbDisconnect
 #' @importFrom devtools install install_github
 #' @import dplyr
@@ -23,9 +27,9 @@
 #' @importFrom jsonlite fromJSON toJSON flatten
 #' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd 
 #' minute hour second %m+% floor_date 
+#' @importFrom magrittr %>%
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
-#' @importFrom plotly plot_ly ggplotly
 #' @importFrom pROC roc ci
 #' @importFrom quantmod getDividends getSymbols getQuote 
 #' @importFrom RColorBrewer brewer.pal
@@ -51,7 +55,7 @@
 #' @importFrom xml2 read_html
 "_PACKAGE"
 
-if(getRversion() >= "2.15.1")
+if (getRversion() >= "2.15.1")
   globalVariables(
     c(".","..y..","!!!",".rs.restartR","Amount","Cash","Close","CreateDate","CumCash",
       "CumDiv","CumPortfolio","DailyCash","DailyDiv","DailyExpen","DailyStocks",
@@ -88,5 +92,14 @@ if(getRversion() >= "2.15.1")
       "subject.y","type_label","facet","Total","pal","p_real","weight","ACC","AUC",
       "Logloss","yewxname","gain","random","optimal","lift","pred","prophet","fit.prophet",
       "prophet_plot_components","add_country_holidays","make_future_dataframe","importance",
-      "percentile","cum_response","response","total","ETF","Sector","Percentage",
-      "row_num","ncap","freq","mix")) 
+      "percentile","cum_response","response","total","ETF","Sector","Percentage","corrplot",
+      "row_num","ncap","freq","mix","redundant","plot_ly","chordDiagram","skim","uh"))
+
+#' Pipe operator
+#' @name lares-exports
+NULL
+
+#' @name %>%
+#' @export
+#' @rdname lares-exports
+NULL

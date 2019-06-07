@@ -21,7 +21,7 @@ Other Geographical: \code{\link{geoAddress}},
   \code{\link{geoGrid}}, \code{\link{geoMap}}
 
 Other Scrapper: \code{\link{holidays}},
-  \code{\link{trendsRelated}}
+  \code{\link{ip_country}}, \code{\link{trendsRelated}}
 }
 \concept{Geographical}
 \concept{Scrapper}

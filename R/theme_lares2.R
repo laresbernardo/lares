@@ -1,8 +1,7 @@
 ####################################################################
 #' lares Theme for ggplot2
 #' 
-#' Based on hrbrthemes' theme_ipsum: A precise & pristine [ggplot2] theme 
-#' with opinionated defaults and an emphasis on typography.
+#' Based on hrbrthemes' theme_ipsum and customized for lares' use.
 #'
 #' @md
 #' @section Why Arial Narrow?:
@@ -13,8 +12,8 @@
 #' @md
 #' @family Visualization
 #' @param font,base_size Character and numeric. Base font family and size
-#' @param main_colour,second_colour,soft_colour,bg_colour Character. 
-#' Main colours for your theme
+#' @param main_colour,second_colour,soft_colour,hard_colour,bg_colour 
+#' Character. Main colours for your theme
 #' @param legend Character. Legend position: top, right, bottom, left
 #' @param mg Numeric. External margin
 #' @param pal Integer. 1 for fill and colour palette, 2 for only colour palette,
@@ -25,6 +24,7 @@ theme_lares2 <- function(font = "Arial Narrow",
                          main_colour = "darkorange3", 
                          second_colour = "deepskyblue3",
                          soft_colour = "grey30",
+                         hard_colour = "black",
                          bg_colour = "white",
                          legend = "right",
                          mg = 15,
@@ -37,28 +37,27 @@ theme_lares2 <- function(font = "Arial Narrow",
   ret <- ret + theme(text = element_text(family = font))
   
   # Set some defaults
-  update_geom_defaults("text", list(family = font))
-  update_geom_defaults("label", list(family = font))
-  #update_geom_defaults("text_repel", list(family = font))
   update_geom_defaults("point", list(colour = main_colour, alpha = 0.95))
   update_geom_defaults("line", list(colour = main_colour, alpha = 0.95))
-  update_geom_defaults("bar", list(fill = main_colour, alpha = 0.95))
-  update_geom_defaults("col", list(fill = main_colour, alpha = 0.95))
-  update_geom_defaults("boxplot", list(fill = main_colour, alpha = 0.95))
-  update_geom_defaults("density", list(fill = main_colour, alpha = 0.95))
+  update_geom_defaults("area", list(colour = main_colour, fill = main_colour, alpha = 0.95))
+  update_geom_defaults("rect", list(colour = main_colour, fill = main_colour, alpha = 0.95))
+  update_geom_defaults("density", list(colour = main_colour, fill = main_colour, alpha = 0.95))
+  update_geom_defaults("bar", list(colour = main_colour, fill = main_colour, alpha = 0.95))
+  update_geom_defaults("col", list(colour = main_colour, fill = main_colour, alpha = 0.95))
+  update_geom_defaults("boxplot", list(colour = main_colour, fill = main_colour, alpha = 0.95))
+  update_geom_defaults("text", list(colour = hard_colour, family = font))
+  update_geom_defaults("label", list(colour = hard_colour, family = font))
+  #update_geom_defaults("text_repel", list(family = font))
   
-  # Edit some functions
-  # scale_y_continuous <- function(...) ggplot2::scale_y_continuous(..., labels = scales::comma)
-  # scale_x_continuous <- function(...) ggplot2::scale_x_continuous(..., labels = scales::comma)
   ## USING ASSIGN - IMPROVE:
   # envir <- as.environment(1)
-  # assign("scale_x_continuous", function(..., labels = scales::comma) ggplot2::scale_x_continuous(..., labels = labels), envir = envir)
-  # assign("scale_y_continuous", function(..., labels = scales::comma) ggplot2::scale_y_continuous(..., labels = labels), envir = envir)
-  # assign("scale_colour_discrete", function(..., values = as.vector(colours_pal)) ggplot2::scale_colour_manual(..., values = values), envir = envir)
-  # assign("scale_fill_discrete", function(..., values = names(colours_pal)) ggplot2::scale_fill_manual(..., values = values), envir = envir)
-  # assign("scale_colour_continuous", function(..., low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir = envir)
-  # assign("scale_fill_continuous", function(...,low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) ggplot2::scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir = envir)
-  # assign("ggsave", function(..., bg = bg_colour) ggplot2::ggsave(..., bg = bg), envir = envir)
+  # assign("scale_x_continuous", function(..., labels = scales::comma) scale_x_continuous(..., labels = labels), envir = envir)
+  # assign("scale_y_continuous", function(..., labels = scales::comma) scale_y_continuous(..., labels = labels), envir = envir)
+  # assign("scale_colour_discrete", function(..., values = as.vector(colours_pal)) scale_colour_manual(..., values = values), envir = envir)
+  # assign("scale_fill_discrete", function(..., values = names(colours_pal)) scale_fill_manual(..., values = values), envir = envir)
+  # assign("scale_colour_continuous", function(..., low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir = envir)
+  # assign("scale_fill_continuous", function(...,low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir = envir)
+  # assign("ggsave", function(..., bg = bg_colour) ggsave(..., bg = bg), envir = envir)
   
   if (inherits(grid, "character")) {
     grid_col <- "#CCCCCC"

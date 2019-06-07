@@ -23,12 +23,10 @@
 corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE, 
                  redundant = TRUE, logs = FALSE, plot = FALSE, top = NA) {
   
-  options(warn=-1)
+  options(warn = -1)
   
   # One hot encoding for categorical features
-  if (dummy == TRUE) {
-    df <- ohse(df, summary = FALSE, redundant = redundant, dates = dates)
-  }
+  if (dummy) df <- ohse(df, summary = FALSE, redundant = redundant, dates = dates)
   
   # Select only numerical features and create log+1 for each one
   d <- numericalonly(df, logs = logs)
@@ -44,7 +42,7 @@ corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE,
     message(paste("Returning the top", top, "variables only..."))
     imp <- cor %>% 
       summarise_all(funs(mean(.))) %>% t() %>% 
-      data.frame(variable=row.names(.), mean=abs(.)) %>%
+      data.frame(variable = row.names(.), mean = abs(.)) %>%
       arrange(desc(abs(mean)))
     which <- as.vector(imp$variable[1:top])
     cor <- cor %>% select(one_of(which)) %>% 
@@ -52,9 +50,7 @@ corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE,
   }
   
   # Plot
-  if (plot == TRUE) {
-    corr_plot(cor, logs = FALSE)
-  }
+  if (plot) corr_plot(cor, logs = FALSE)
   
   return(cor)
   
@@ -130,9 +126,7 @@ corr_var <- function(df, ...,
   
   original_n <- nrow(d)
   
-  if (zeroes == FALSE) {
-    d <- d[d$corr != 0, ]
-  }
+  if (!zeroes) d <- d[d$corr != 0, ]
   
   # Limit automatically when more than 30 observations
   if (is.na(top) & nrow(d) > 30) {
@@ -146,9 +140,7 @@ corr_var <- function(df, ...,
     message(paste0("Removing all correlations greater than ", ceiling, "% (absolute)"))
   }
   
-  if (!is.na(top)) {
-    d <- d[1:as.integer(top), ]
-  }
+  if (!is.na(top)) d <- d[1:as.integer(top), ]
   
   d <- d[complete.cases(d), ]
   
@@ -158,38 +150,35 @@ corr_var <- function(df, ...,
     message(paste("Trimmed all name values into", trim, "characters"))
   }
   
-  if (plot == TRUE) {
+  if (plot) {
     p <- d %>% 
       mutate(pos = ifelse(corr > 0, TRUE, FALSE)) %>%
       ggplot(aes(x = reorder(variables, abs(corr)), 
                  y = abs(corr), fill = pos, label = 100 * corr)) +
-      geom_hline(aes(yintercept=0), alpha = 0.5) +
+      geom_hline(aes(yintercept = 0), alpha = 0.5) +
       geom_col(width = 0.1) + coord_flip() + theme_minimal() +
       geom_label(hjust = 0.5, size = 2.6, inherit.aes = TRUE, colour = "white") +
       scale_fill_discrete(name = "", breaks = c("TRUE","FALSE")) +
       guides(fill = FALSE) +
-      labs(title=paste("Correlation of", var, "vs other variables"), 
+      labs(title = paste("Correlation of", var, "vs other variables"), 
            x = "", y = "Correlation") +
       scale_y_continuous(labels = scales::percent) +
+      scale_fill_manual(values = c("#e5586e","#59b3d2")) +
       theme_lares2()
-    
-    if (!is.na(top) & top < original_n) { 
-      p <- p + 
+    if (!is.na(top) & top < original_n) p <- p + 
         labs(subtitle = paste("Plotting top", top, "out of", 
                               original_n, "variables (original + dummy)"))
-    }
   }
   
   if (!is.na(subdir)) {
-    options(warn=-1)
+    options(warn = -1)
     dir.create(file.path(getwd(), subdir), recursive = T)
-    file_name <- paste(subdir, file_name, sep="/")
-  }
-  if (save == TRUE) {
-    p <- p + ggsave(file_name, width = 6, height = 6)
+    file_name <- paste(subdir, file_name, sep = "/")
   }
   
-  if (plot == TRUE) {
+  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
+  
+  if (plot) {
     return(p)
   } else {
     return(d)  
@@ -218,6 +207,7 @@ corr_var <- function(df, ...,
 corr_plot <- function(df, method = "pearson", order = "FPC", 
                       type = "square", logs = FALSE) {
   
+  try_require("corrplot")
   c <- corr(df, method, logs = logs)
   plot <- corrplot(as.matrix(c),
                    order = order,

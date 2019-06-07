@@ -78,19 +78,13 @@ df_str <- function(df,
     if (return != "plot") plot(p)
   }
   
-  if (!quiet) message(paste("Other possible return values:", 
-                            vector2text(ret[ret != return])))
+  if (!quiet) message(paste("Other possible return values:", vector2text(ret[ret != return])))
   
-  if (return == "plot") {
-    return(p)
-  }
+  if (return == "plot") return(p)
+  if (return == "numbers") return(intro2 %>% select(-type))
+  if (return == "names") return(names) 
   if (return == "skimr") {
-    return(skimr::skim(df))
-  }
-  if (return == "numbers") {
-    return(intro2 %>% select(-type))
-  }
-  if (return == "names") {
-    return(names) 
+    try_require("skimr")
+    return(skim(df))
   }
 }

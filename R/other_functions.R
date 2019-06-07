@@ -1,3 +1,13 @@
+# Stolen from hrbrthemes' aaa.R
+try_require <- function(package) {
+  if (requireNamespace(package, quietly = TRUE)) {
+    library(package, character.only = TRUE)
+    return(invisible())
+  }
+  stop(paste0("Package `", package, "` required. Please install and try again."), call. = FALSE)
+}
+
+
 ####################################################################
 #' Convert year month format YYYY-MM
 #' 
@@ -7,11 +17,7 @@
 #' @param date Date. Date we wish to transform 
 #' @export
 year_month <- function(date) {
-  
-  return(paste(
-    lubridate::year(date),
-    stringr::str_pad(lubridate::month(date), 2, pad = "0"),
-    sep="-"))
+  paste(year(date),str_pad(lubridate::month(date), 2, pad = "0"), sep = "-")
 }
 
 
@@ -24,11 +30,7 @@ year_month <- function(date) {
 #' @param date Date. Date we wish to transform
 #' @export
 year_week <- function(date) {
-  
-  return(paste(
-    lubridate::year(date),
-    stringr::str_pad(lubridate::week(date), 2, pad = "0"),
-    sep="-"))
+  paste(year(date), str_pad(lubridate::week(date), 2, pad = "0"),sep = "-")
 }
 
 
@@ -41,7 +43,7 @@ year_week <- function(date) {
 #' @family Data Wrangling
 #' @param df Categorical Vector
 #' @export
-categoryCounter <- function (df) {
+categoryCounter <- function(df) {
   
   cats <- df %>% select_if(is.character)
   result <- c()
@@ -118,7 +120,7 @@ categ_reducer <- function(df, ...,
 #' @export
 normalize <- function(x) {
   if (is.numeric(x)) {
-    x <- (x-min(x)) / (max(x)-min(x))
+    x <- (x - min(x)) / (max(x) - min(x))
     return(x) 
   } else {
     stop("Try with a numerical vector!")
@@ -138,10 +140,8 @@ normalize <- function(x) {
 #' observation (useful for SQL)
 #' @export
 vector2text <- function(vector, sep=", ", quotes = TRUE) {
-  output <- paste(shQuote(vector), collapse=sep)
-  if (quotes == FALSE) {
-    output <- gsub("'", "", output)
-  }
+  output <- paste(shQuote(vector), collapse = sep)
+  if (quotes == FALSE) output <- gsub("'", "", output)
   return(output)
 }
 
@@ -152,15 +152,16 @@ vector2text <- function(vector, sep=", ", quotes = TRUE) {
 #' This function lets the user find a country from a given IP Address
 #' 
 #' @family Tools
+#' @family Scrapper
 #' @param ip Vector. Vector with all IP's we wish to search
 #' @export
 ip_country <- function(ip) {
-
+  
   ip <- ip[!is.na(ip)]
   ip <- ip[grep("^172\\.|^192\\.168\\.|^10\\.", ip, invert = T)]
   
   countries <- data.frame(ip = c(), country = c())
-  for(i in 1:length(ip)) {
+  for (i in 1:length(ip)) {
     message(paste("Searching for", ip[i]))
     url <- paste0("https://db-ip.com/", ip[i])
     scrap <- read_html(url) %>% html_nodes('.card-body tr') %>% html_text()
@@ -189,6 +190,7 @@ dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
   v2 <- a - b
   m <- cbind(v1, v2)
   d <- abs(det(m)) / sqrt(sum(v1 * v1))
+  return(d)
 }
 
 
@@ -205,17 +207,17 @@ dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
 #' @param scientific Boolean. Scientific notation
 #' @export
 formatNum <- function(x, decimals = 2, type = 1, scientific = FALSE) {
-  if (scientific == FALSE) {
-    options(scipen=999)
+  if (!scientific) {
+    options(scipen = 999)
   } else {
     x <- formatC(numb, format = "e", digits = 2)
   }
   if (type == 1) {
-    x <- format(round(as.numeric(x), decimals), nsmall=decimals, 
-                big.mark=".", decimal.mark = ",")
+    x <- format(round(as.numeric(x), decimals), nsmall = decimals, 
+                big.mark = ".", decimal.mark = ",")
   } else {
-    x <- format(round(as.numeric(x), decimals), nsmall=decimals, 
-                big.mark=",", decimal.mark = ".") 
+    x <- format(round(as.numeric(x), decimals), nsmall = decimals, 
+                big.mark = ",", decimal.mark = ".") 
   }
   return(trimws(x))
 }
@@ -241,12 +243,12 @@ one_hot_encoding_commas <- function(df, variables, sep=","){
     x <- as.character(df[[variable]])
     x <- gsub(", ", ",", toString(x)) # So it can split on strings like "A1,A2" and "A1, A2"
     vals <- unique(unlist(strsplit(x, sep)))
-    x <- paste(variable, vals, sep="_")
+    x <- paste(variable, vals, sep = "_")
     new_columns <- sort(as.character(x))
     if (length(new_columns) >= 15) {
       message(paste("You are using more than 15 unique values on this variable:", variable))
     }
-    for (i in seq_along(new_columns)){
+    for (i in seq_along(new_columns)) {
       df$temp <- NA
       df$temp <- ifelse(grepl(vals[i], df[[variable]]), TRUE, FALSE)
       colnames(df)[colnames(df) == "temp"] <- new_columns[i]
@@ -271,8 +273,6 @@ one_hot_encoding_commas <- function(df, variables, sep=","){
 #' @param seed Numeric. Seed to replicate and obtain same values
 #' @export
 balance_data <- function(df, variable, rate = 1, seed = 0) {
-  
-  # require(dplyr)
   
   set.seed(seed)
   
@@ -339,19 +339,13 @@ listfiles <- function(folder = getwd(), recursive = TRUE, regex = NA, images = F
   df$size <- as.integer(df$size/1024)
   imgs <- "jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF"
   
-  if (!is.na(regex)) {
-    df <- df[grep(regex, df$filename),] 
-  }
+  if (!is.na(regex)) df <- df[grep(regex, df$filename),] 
   
-  if (images == TRUE) {
-    
-    if (!"exifr" %in% (.packages())){
-      stop("The following library should be loaded. Please run: library(exifr)")
-    }
-    
+  if (images) {
+    try_require("exifr")
     if (nrow(df) > 250) {
       message(paste("This might take a while... Analizing around", 
-                    lares::formatNum(nrow(df), decimals = 0), "files!"))
+                    formatNum(nrow(df), decimals = 0), "files!"))
     }
     
     tags <- c("FileName", "SourceFile",
@@ -667,18 +661,18 @@ noPlot <- function(message = "Nothing to show here!") {
   
   p <- ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 
     geom_label() + theme_minimal() +
-    theme(axis.line=element_blank(),
-          axis.text.x=element_blank(),
-          axis.text.y=element_blank(),
-          axis.ticks=element_blank(),
-          axis.title.x=element_blank(),
-          axis.title.y=element_blank(),
+    theme(axis.line = element_blank(),
+          axis.text.x = element_blank(),
+          axis.text.y = element_blank(),
+          axis.ticks = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
           legend.position="none",
-          panel.background=element_blank(),
-          panel.border=element_blank(),
-          panel.grid.major=element_blank(),
-          panel.grid.minor=element_blank(),
-          plot.background=element_blank())
+          panel.background = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          plot.background = element_blank())
   return(p)
 }
 
@@ -705,11 +699,8 @@ h2o_update <- function(run = TRUE){
   if ("h2o" %in% rownames(installed.packages())) { remove.packages("h2o") }
   # Now we download, install and initialize the H2O package for R.
   message(paste("Installing h2o from", newurl))
-  install.packages("h2o", type="source", repos=newurl)
-  if(run == TRUE){
-    # require(h2o)
-    h2o.init()
-  }
+  install.packages("h2o", type = "source", repos = newurl)
+  if (run) h2o.init()
 }
 
 ####################################################################
@@ -740,7 +731,7 @@ export_plot <- function(p,
   # File name
   if (!is.na(vars)) {
     names <- vector2text(
-      cleanText(as.character(vars), spaces = FALSE), sep=sep, quotes = FALSE)
+      cleanText(as.character(vars), spaces = FALSE), sep = sep, quotes = FALSE)
     file_name <- paste0(name, "_", names, ".png")  
   } else {
     file_name <- paste0(name, ".png")  
@@ -748,9 +739,9 @@ export_plot <- function(p,
   
   # Create directory if needed
   if (!is.na(subdir)) {
-    options(warn=-1)
-    dir.create(file.path(getwd(), subdir), recursive = T)
-    file_name <- paste(subdir, file_name, sep="/")
+    options(warn = -1)
+    dir.create(file.path(getwd(), subdir), recursive = TRUE)
+    file_name <- paste(subdir, file_name, sep = "/")
   }
   
   # Export plot to file
@@ -774,21 +765,16 @@ export_plot <- function(p,
 #' @param return Character. Return "summary" or "labels"
 #' @export
 quants <- function(values, splits = 10, return = "summary") {
-  if (splits > length(unique(values[!is.na(values)]))-1) {
+  
+  if (splits > length(unique(values[!is.na(values)])) - 1) 
     stop("There are not enough observations to split the data in ", splits)
-  }
-  value <- as.numeric(as.character(values))
-  cuts <- quantile(values, 
-                   probs = seq(0, 1, length = splits+1), 
-                   na.rm = TRUE)
+  
+  cuts <- quantile(values, probs = seq(0, 1, length = splits + 1), na.rm = TRUE)
   decimals <- min(nchar(values), na.rm = TRUE) + 1
   decimals <- ifelse(decimals >= 4, 4, decimals)
-  labels <- cut(values, unique(cuts), 
-                dig.lab = decimals, 
-                include.lowest = TRUE)
-  if (return == "labels") {
-    return(labels) 
-  }
+  labels <- cut(values, unique(cuts), dig.lab = decimals, include.lowest = TRUE)
+  
+  if (return == "labels") return(labels)
   if (return == "summary") {
     output <- data.frame(percentile = names(cuts)[-1], cut = cuts[-1]) %>%
       mutate(label = paste0("(", signif(lag(cut),4), "-", signif(cut,4),"]"),
@@ -843,12 +829,12 @@ get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date(),
     }
   }
   
-  rate <- data.frame(date = as.Date(rownames(x)), rate=x[,1])
+  rate <- data.frame(date = as.Date(rownames(x)), rate = x[,1])
   
   if (fill) {
-    options(warn=-1)
+    options(warn = -1)
     rate <- data.frame(date = as.character(
-      as.Date(as.Date(from):Sys.Date(), origin="1970-01-01"))) %>%
+      as.Date(as.Date(from):Sys.Date(), origin = "1970-01-01"))) %>%
       left_join(rate %>% mutate(date = as.character(date)), "date") %>%
       tidyr::fill(rate, .direction = "down") %>%
       tidyr::fill(rate, .direction = "up") %>%
@@ -892,19 +878,14 @@ json2vector <- function(json) {
 #' @family Tools
 #' @param run Iterator. for loop or an integer with the current loop number
 #' @param max.run Number. Maximum number of loops
-#' @param percent.max Integer. Indicates how wide the progress bar is printed
 #' @param info String. With additionaly information to be printed 
 #' at the end of the line. The default is \code{run}.
+#' @param percent.max Integer. Indicates how wide the progress bar is printed
 #' @export
-statusbar <- function (run, max.run, percent.max = 40L, info = run){
+statusbar <- function(run, max.run, info = run, percent.max = 40L){
  
-  if (length(run) > 1) {
-    stop("run needs to be of length one!")
-  }
-  
-  if (length(max.run) == 0) {
-    stop("max.run has length 0")
-  }
+  if (length(run) > 1) stop("run needs to be of length one!")
+  if (length(max.run) == 0) stop("max.run has length 0")
   
   if (length(max.run) > 1) {
     percent <- which(run == max.run) / length(max.run)
@@ -918,11 +899,10 @@ statusbar <- function (run, max.run, percent.max = 40L, info = run){
                      paste0(rep(" ", percent.max - percent.step), collapse = ""),
                      "] ",
                      sprintf("%7.1f", percent * 100, 2),
-                     "% | ",
-                     paste(info, ("       "))) 
+                     "% | ", paste(info, ("         "))) 
   cat("\r", progress)
   flush.console()
-  if(run == max.run) cat("", sep="\n\n")
+  if (run == max.run) cat("", sep = "\n\n")
 }
 
 
@@ -973,11 +953,11 @@ importxlsx <- function(file) {
   if (length(sheets) > 1) {
     mylist <- list()
     for (i in 1:length(sheets)) {
-      sheet <- read.xlsx(file, sheet = i, skipEmptyRows=TRUE, detectDates=TRUE)  
+      sheet <- read.xlsx(file, sheet = i, skipEmptyRows = TRUE, detectDates = TRUE)  
       mylist[[i]] <- sheet
     } 
   } else {
-    mylist <- read.xlsx(file, sheet = sheets, skipEmptyRows=TRUE, detectDates=TRUE)  
+    mylist <- read.xlsx(file, sheet = sheets, skipEmptyRows = TRUE, detectDates = TRUE)  
   }
   return(mylist)
 }

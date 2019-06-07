@@ -301,14 +301,8 @@ forecast_ml <- function(time, values,
 #' @export
 prophesize <- function(df, n_future = 60, country = "AR", pout = 0.03, 
                        project = "Prophet Forecast") {
-  
-  # require(prophet)
-  # require(ggplot2)
-  # require(scales)
-  
-  if (!"prophet" %in% (.packages())){
-    stop("The following library should be loaded. Please run: library(prophet)")
-  }
+
+  try_require("prophet")
   
   df <- df[,c(1,2)]
   metric <- colnames(df)[2]
@@ -324,7 +318,7 @@ prophesize <- function(df, n_future = 60, country = "AR", pout = 0.03,
   forecast$y <- forecast$trend + forecast$additive_terms
   
   p <- plot(m, forecast) + theme_lares2() +
-    labs(y = metric, x="Dates", 
+    labs(y = metric, x = "Dates", 
          title = project,
          subtitle = paste("Forecast results for the next", n_future, "days")) +
     scale_y_continuous(labels = comma)

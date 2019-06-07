@@ -159,7 +159,7 @@ plot_chord <- function(origin, dest, weight = 1, mg = 3,
                        title = "Chord Diagram",
                        subtitle = "", pal = NA) {
   
-  # require(circlize)
+  try_require("circlize")
   
   if (length(origin) != length(dest)) {
     stop("The origin and dest vectors should have the same length!")
@@ -172,16 +172,14 @@ plot_chord <- function(origin, dest, weight = 1, mg = 3,
   colnames(df) <- c("orig_reg", "dest_reg", "flow")
   uniq <- unique(c(as.character(df$orig_reg), as.character(df$dest_reg)))
   
-  if (is.na(pal)) {
-    pal <- names(lares::lares_pal()$palette)
-  }
+  if (is.na(pal)) pal <- names(lares_pal()$palette)
   
   if (length(unique(origin)) > length(pal)) {
     stop("Too many chords to plot and not enough colours :(")
   }
   
   col <- c(pal[1:length(unique(origin))], 
-           rep("darkgrey", length(unique(uniq))-length(unique(origin))))
+           rep("darkgrey", length(unique(uniq)) - length(unique(origin))))
   
   chordDiagram(x = df, 
                grid.col = col,
@@ -244,12 +242,35 @@ gg_bars <- function(names, n, p = NA,
   p <- ggplot(dfn, aes(x = reorder(names, count), y = count, label = labels, fill = p)) +
     geom_col(alpha = 0.9, width = 0.8) +
     geom_text(aes(hjust = label_hjust, colour = label_colours), size = 3) + 
-    coord_flip() + guides(colour=FALSE, fill=FALSE) +
+    coord_flip() + guides(colour = FALSE, fill = FALSE) +
     labs(x = "", y = axis, 
          title = if (!is.na(title)) title, 
          subtitle = if (!is.na(subtitle)) subtitle, 
          caption = if (obs == TRUE) paste0("Obs.: ", formatNum(sum(n), 0))) +
-    theme_lares2(legend="right") + gg_text_customs() +
+    theme_lares2(legend = "right") + gg_text_customs() +
     scale_fill_gradient(low = "lightskyblue2", high = "navy")
   return(p)
 }
+
+
+####################################################################
+#' Axis scales format
+#'
+#' The `_comma` ones set comma format for axis text and the `_percent` 
+#' ones set percent format for axis text.
+#'
+#' @inheritDotParams ggplot2::continuous_scale -expand -position
+#' @export
+scale_x_comma <- function(...) scale_x_continuous(..., labels = scales::comma)
+
+#' @rdname scale_x_comma
+#' @export
+scale_y_comma <- function(...) scale_y_continuous(..., labels = scales::comma)
+
+#' @rdname scale_x_comma
+#' @export
+scale_x_percent <- function(...) scale_x_continuous(..., labels = scales::percent)
+
+#' @rdname scale_x_comma
+#' @export
+scale_y_percent <- function(...) scale_y_continuous(..., labels = scales::percent)
