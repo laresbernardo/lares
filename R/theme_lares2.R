@@ -12,7 +12,7 @@
 #' @md
 #' @family Visualization
 #' @param font,base_size Character and numeric. Base font family and size
-#' @param main_colour,second_colour,soft_colour,hard_colour,bg_colour 
+#' @param main_colour,hard_colour,soft_colour,bg_colour 
 #' Character. Main colours for your theme
 #' @param legend Character. Legend position: top, right, bottom, left
 #' @param mg Numeric. External margin
@@ -22,9 +22,8 @@
 theme_lares2 <- function(font = "Arial Narrow", 
                          base_size = 12.5, 
                          main_colour = "darkorange3", 
-                         second_colour = "deepskyblue3",
-                         soft_colour = "grey30",
                          hard_colour = "black",
+                         soft_colour = "grey30",
                          bg_colour = "white",
                          legend = "right",
                          mg = 15,
@@ -37,14 +36,14 @@ theme_lares2 <- function(font = "Arial Narrow",
   ret <- ret + theme(text = element_text(family = font))
   
   # Set some defaults
-  update_geom_defaults("point", list(colour = main_colour, alpha = 0.95))
-  update_geom_defaults("line", list(colour = main_colour, alpha = 0.95))
-  update_geom_defaults("area", list(colour = main_colour, fill = main_colour, alpha = 0.95))
-  update_geom_defaults("rect", list(colour = main_colour, fill = main_colour, alpha = 0.95))
-  update_geom_defaults("density", list(colour = main_colour, fill = main_colour, alpha = 0.95))
-  update_geom_defaults("bar", list(colour = main_colour, fill = main_colour, alpha = 0.95))
-  update_geom_defaults("col", list(colour = main_colour, fill = main_colour, alpha = 0.95))
-  update_geom_defaults("boxplot", list(colour = main_colour, fill = main_colour, alpha = 0.95))
+  update_geom_defaults("point", list(colour = hard_colour, alpha = 0.95))
+  update_geom_defaults("line", list(colour = hard_colour, alpha = 0.95))
+  update_geom_defaults("area", list(colour = hard_colour, fill = main_colour, alpha = 0.95))
+  update_geom_defaults("rect", list(colour = hard_colour, fill = main_colour, alpha = 0.95))
+  update_geom_defaults("density", list(colour = hard_colour, fill = main_colour, alpha = 0.95))
+  update_geom_defaults("bar", list(colour = hard_colour, fill = main_colour, alpha = 0.95))
+  update_geom_defaults("col", list(colour = hard_colour, fill = main_colour, alpha = 0.95))
+  update_geom_defaults("boxplot", list(colour = hard_colour, fill = main_colour, alpha = 0.95))
   update_geom_defaults("text", list(colour = hard_colour, family = font))
   update_geom_defaults("label", list(colour = hard_colour, family = font))
   #update_geom_defaults("text_repel", list(family = font))

@@ -5,14 +5,14 @@
 \title{lares Theme for ggplot2}
 \usage{
 theme_lares2(font = "Arial Narrow", base_size = 12.5,
-  main_colour = "darkorange3", second_colour = "deepskyblue3",
-  soft_colour = "grey30", hard_colour = "black", bg_colour = "white",
-  legend = "right", mg = 15, pal = 0)
+  main_colour = "darkorange3", hard_colour = "black",
+  soft_colour = "grey30", bg_colour = "white", legend = "right",
+  mg = 15, pal = 0)
 }
 \arguments{
 \item{font, base_size}{Character and numeric. Base font family and size}
 
-\item{main_colour, second_colour, soft_colour, hard_colour, bg_colour}{Character. Main colours for your theme}
+\item{main_colour, hard_colour, soft_colour, bg_colour}{Character. Main colours for your theme}
 
 \item{legend}{Character. Legend position: top, right, bottom, left}
 
