@@ -252,23 +252,27 @@ corr_cross <- function(df, plot = TRUE, max = 100, top = 25, rm.na = FALSE) {
     filter(rank %in% seq(2,length(c)*length(c)*2,2)) %>%
     mutate(redundant = ifelse(gsub("_.*","", key) == gsub("_.*","", mix), TRUE, FALSE)) %>%
     filter(redundant == FALSE) %>%
-    select(key, mix, value) %>%
-    {if (rm.na) filter(., !grepl("_NAs", key)) else .} %>%
+    filter(!grepl("_NAs", key)) %>%
+    {if (rm.na) filter(., !grepl("_NAs", mix)) else .} %>%
     filter(!grepl("_OTHER", key)) %>%
+    select(key, mix, value) %>%
     rename(corr = value) %>%
     head(top) 
   if (plot) {
+    subtitle <- paste(top, "most relevant")
+    if (max < 100) subtitle <- paste0(subtitle," (excluding +", max, "%)")
+    if (rm.na) subtitle <- paste(subtitle, paste("[NAs removed]"))
     p <- ret %>% 
-      mutate(label = paste(key, "+", mix),
-             abs = abs(corr),
+      mutate(label = paste(key, "+", mix), abs = abs(corr),
              sign = ifelse(corr < 0, "n", "p"),
              x = ifelse(corr < 0, -0.1, 1.1)) %>%
       ggplot(aes(x = reorder(label,abs), y = 100*corr, fill = sign)) +
       geom_col() + coord_flip() + guides(fill = FALSE) +
-      geom_text(aes(hjust = x, label = round(100*corr,2)), size = 3) +
-      labs(title = "Ranked Cross-Correlations", x = "", y = "Correlation [%]",
-           subtitle = paste("Showing top", top, "correlations")) +
-      theme_lares2() 
+      geom_text(aes(hjust = x, label = round(100*corr, 1)), size = 3) +
+      labs(title = "Ranked Cross-Correlations", subtitle = subtitle,
+           x = "", y = "Correlation [%]") +
+      scale_fill_manual(values = c("#e5586e","#59b3d2")) +
+      theme_lares2()
     return(p)
   }
   return(ret)
