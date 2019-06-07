@@ -238,18 +238,20 @@ corr_plot <- function(df, method = "pearson", order = "FPC",
 #' @family Exploratory
 #' @param df Dataframe.
 #' @param plot Boolean. Show and return a plot?
-#' @param max Numeric. Maximum correlation permited
+#' @param max Numeric. Maximum correlation permited (from 0 to 100)
 #' @param top Integer. Return top n results only
+#' @param rm.na Boolean. Remove NAs?
 #' @export
-corr_cross <- function(df, plot = TRUE, max = 1, top = 25) {
+corr_cross <- function(df, plot = TRUE, max = 100, top = 25, rm.na = FALSE) {
   c <- corr(df, plot = FALSE)
   ret <- data.frame(tidyr::gather(c)) %>% 
     mutate(mix = rep(colnames(c), length(c))) %>%
-    mutate(rel = abs(value)) %>% filter(rel < max) %>% 
+    mutate(rel = abs(value)) %>% filter(100*rel < max) %>% 
     arrange(desc(rel)) %>%
     mutate(rank = row_number()) %>%
     filter(rank %in% seq(2,length(c)*length(c)*2,2)) %>%
     select(key, mix, value) %>%
+    {if (rm.na) filter(., !grepl("_NAs", key)) else .} %>%
     filter(!grepl("_OTHER", key)) %>%
     rename(corr = value) %>%
     head(top) 
@@ -262,7 +264,7 @@ corr_cross <- function(df, plot = TRUE, max = 1, top = 25) {
       ggplot(aes(x = reorder(label,abs), y = 100*corr, fill = sign)) +
       geom_col() + coord_flip() + guides(fill = FALSE) +
       geom_text(aes(hjust = x, label = round(100*corr,2)), size = 3) +
-      labs(title = "Ranked Cross-Correlations", x = "", y = "",
+      labs(title = "Ranked Cross-Correlations", x = "", y = "Correlation [%]",
            subtitle = paste("Showing top", top, "correlations")) +
       theme_lares2() 
     return(p)

@@ -4,16 +4,18 @@
 \alias{corr_cross}
 \title{Correlation Cross-Table}
 \usage{
-corr_cross(df, plot = TRUE, max = 1, top = 25)
+corr_cross(df, plot = TRUE, max = 100, top = 25, rm.na = FALSE)
 }
 \arguments{
 \item{df}{Dataframe.}
 
 \item{plot}{Boolean. Show and return a plot?}
 
-\item{max}{Numeric. Maximum correlation permited}
+\item{max}{Numeric. Maximum correlation permited (from 0 to 100)}
 
 \item{top}{Integer. Return top n results only}
+
+\item{rm.na}{Boolean. Remove NAs?}
 }
 \description{
 This function creates a correlation full study and returns a rank
