@@ -250,6 +250,8 @@ corr_cross <- function(df, plot = TRUE, max = 100, top = 25, rm.na = FALSE) {
     arrange(desc(rel)) %>%
     mutate(rank = row_number()) %>%
     filter(rank %in% seq(2,length(c)*length(c)*2,2)) %>%
+    mutate(redundant = ifelse(gsub("_.*","", key) == gsub("_.*","", mix), TRUE, FALSE)) %>%
+    filter(redundant == FALSE) %>%
     select(key, mix, value) %>%
     {if (rm.na) filter(., !grepl("_NAs", key)) else .} %>%
     filter(!grepl("_OTHER", key)) %>%
