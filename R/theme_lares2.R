@@ -36,6 +36,8 @@ theme_lares2 <- function(font = "Arial Narrow",
   ret <- ret + theme(text = element_text(family = font))
   
   # Set some defaults
+  update_geom_defaults("text", list(colour = hard_colour, family = font))
+  update_geom_defaults("label", list(colour = hard_colour, family = font))
   update_geom_defaults("point", list(colour = hard_colour, alpha = 0.95))
   update_geom_defaults("line", list(colour = hard_colour, alpha = 0.95))
   update_geom_defaults("area", list(fill = main_colour, alpha = 0.95))
@@ -44,8 +46,6 @@ theme_lares2 <- function(font = "Arial Narrow",
   update_geom_defaults("bar", list(fill = main_colour, alpha = 0.95))
   update_geom_defaults("col", list(fill = main_colour, alpha = 0.95))
   update_geom_defaults("boxplot", list(fill = main_colour, alpha = 0.9))
-  update_geom_defaults("text", list(colour = hard_colour, family = font))
-  update_geom_defaults("label", list(colour = hard_colour, family = font))
   #update_geom_defaults("text_repel", list(family = font))
   
   ## USING ASSIGN - IMPROVE:

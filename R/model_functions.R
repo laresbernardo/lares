@@ -17,16 +17,11 @@
 #' @export
 msplit <- function(df, size = 0.7, seed = 0, print=T) {
   
-  if (size <= 0 | size > 1) {
-    stop("Set size parameter to a value >0 and <=1") 
-  }
+  if (size <= 0 | size > 1) stop("Set size parameter to a value >0 and <=1") 
   
   set.seed(seed)
   df <- data.frame(df)
-  
-  if (size == 1) {
-    train <- test <- df
-  }
+  if (size == 1) train <- test <- df
   
   if (size < 1 & size > 0) {
     ind <- sample(seq_len(nrow(df)), size = floor(size * nrow(df)))
@@ -38,11 +33,9 @@ msplit <- function(df, size = 0.7, seed = 0, print=T) {
   test_size <- dim(test)
   summary <- rbind(train_size, test_size)[,1]
   
-  if (print == TRUE) {
-    print(summary) 
-  }
+  if (print == TRUE) print(summary) 
   
-  sets <- list(train=train, test=test, summary=summary, split_size=size)
+  sets <- list(train = train, test = test, summary = summary, split_size = size)
   
   return(sets)
   
@@ -153,13 +146,13 @@ h2o_automl <- function(df, y = "tag",
                        subdir = NA,
                        project = "Machine Learning Model") {
   
-  options(warn=-1)
-
+  options(warn = -1)
+  
   start <- Sys.time()
   message(paste(start,"| Started process..."))
   
   # INDEPENDENT VARIABLE
-  if(!y %in% colnames(df)){
+  if (!y %in% colnames(df)) {
     stop(paste("You should have a 'tag' column in your data.frame or select",
                "an independent varialbe using the 'y' parameter."))
   }
@@ -172,12 +165,8 @@ h2o_automl <- function(df, y = "tag",
   # MODEL TYPE
   model_type <- ifelse(length(unique(df$tag)) <= as.integer(thresh), "Classifier", "Regression")
   message("Model type: ", model_type)
-  if (model_type == "Classifier") {
-    print(data.frame(freqs(df, tag)))
-  }
-  if (model_type == "Regression") {
-    print(summary(df$tag)) 
-  }
+  if (model_type == "Classifier") print(data.frame(freqs(df, tag)))
+  if (model_type == "Regression") print(summary(df$tag)) 
   
   # SPLIT TRAIN AND TEST DATASETS
   if (is.na(train_test)) {
@@ -210,7 +199,7 @@ h2o_automl <- function(df, y = "tag",
   }
   
   # TRAIN MODEL
-  quiet(h2o.init(nthreads = -1, port=54321, min_mem_size="8g"))
+  quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
   if (start_clean) {
     quiet(h2o.removeAll()) 
   } else {
@@ -243,16 +232,16 @@ h2o_automl <- function(df, y = "tag",
   
   # Variables importances
   imp <- data.frame(h2o.varimp(m)) %>%
-  {if ("names" %in% colnames(.)) 
-    dplyr::rename(., "variable" = "names", "importance" = "coefficients") else .
-  } %>%
-  {if ("percentage" %in% colnames(.)) 
-    dplyr::rename(., "importance" = "percentage") else .
-  }
+    {if ("names" %in% colnames(.)) 
+      dplyr::rename(., "variable" = "names", "importance" = "coefficients") else .
+    } %>%
+    {if ("percentage" %in% colnames(.)) 
+      dplyr::rename(., "importance" = "percentage") else .
+    }
   noimp <- imp %>% filter(importance < 0.015) %>% arrange(desc(importance))
   if (nrow(noimp) > 0) {
-   which <- noimp %>% .$variable %>% vector2text(.) 
-   message(paste("The following variables are NOT important:", which))
+    which <- noimp %>% .$variable %>% vector2text(.) 
+    message(paste("The following variables are NOT important:", which))
   }
   
   # CLASSIFICATION MODELS
@@ -307,23 +296,14 @@ h2o_automl <- function(df, y = "tag",
     plots = TRUE)
   print(results$metrics$metrics)
   
-  message(paste0("Training duration: ", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
+  message(paste0("Training duration: ", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
   
   if (save) {
     export_results(results, subdir = subdir)
     message("Results and model files exported succesfully!")
   }
   
-  # if (plots) {
-  #   mplot_full(tag = results$scores_test$tag,
-  #              score = results$scores_test$score,
-  #              subtitle = results$project,
-  #              model_name = results$model_name)
-  # }
-  
-  if (alarm) {
-    beepr::beep()
-  }
+  if (alarm) beepr::beep()
   
   return(results)
   
@@ -361,7 +341,7 @@ h2o_selectmodel <- function(results, which_model = 1) {
     logloss_test = NA,
     model_name = as.vector(m@model_id),
     algorithm = m@algorithm)
-  roc <- pROC::roc(output$scores$tag, output$scores$score, ci=T)
+  roc <- pROC::roc(output$scores$tag, output$scores$score, ci = TRUE, quiet = TRUE)
   output$auc_test <- roc$auc
   output$errors_test <- errors(tag = results$scores_test$tag, 
                                score = results$scores_test$score)
@@ -400,7 +380,7 @@ export_results <- function(results,
   
   if (save) {
     
-    options(warn=-1)
+    options(warn = -1)
     quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
     
     # We create a directory to save all our results
@@ -422,25 +402,16 @@ export_results <- function(results,
     dir.create(file.path(getwd(), subdir), recursive = T)
     
     # Export Results List
-    if (rds == TRUE) {
-      saveRDS(results, file=paste0(subdir, "/results.rds")) 
-    }
+    if (rds) saveRDS(results, file = paste0(subdir, "/results.rds")) 
     
     # Export Model as POJO & MOJO for Production
-    if (pojo == TRUE) {
-      h2o.download_pojo(results$model, path=subdir)  
-    }
-    if (mojo == TRUE) {
-      h2o.download_mojo(results$model, path=subdir)  
-    }
+    if (pojo) h2o.download_pojo(results$model, path = subdir)  
+    if (mojo) h2o.download_mojo(results$model, path = subdir)  
     
     # Export Binary
-    if (mojo == TRUE) {
-      h2o.saveModel(results$model, path=subdir, force=TRUE)
-    }
+    if (mojo) h2o.saveModel(results$model, path = subdir, force = TRUE)
     
-    if (txt == TRUE) {
-      
+    if (txt) {
       tags <- c(as.character(results$datasets$test$tag), 
                 as.character(results$datasets$train$tag))
       tags_test <- results$datasets$test
@@ -453,8 +424,8 @@ export_results <- function(results,
         "Dimensions" = 
           list("Distribution" = table(tags),
                "Test vs Train" = c(paste(round(100*nrow(tags_test)/length(tags)),
-                                         round(100*nrow(tags_train)/length(tags)), sep=" / "),
-                                   paste(nrow(tags_test), nrow(tags_train), sep=" vs. ")),
+                                         round(100*nrow(tags_train)/length(tags)), sep = " / "),
+                                   paste(nrow(tags_test), nrow(tags_train), sep = " vs. ")),
                "Total" = length(tags)),
         "Metrics" = model_metrics(results$scores_test$tag, 
                                   results$scores_test$score, plots = FALSE),
@@ -627,13 +598,13 @@ h2o_predict_MOJO <- function(df, model_path, sample = NA){
   df <- as.data.frame(df)
   zip <- paste0(model_path, "/", gsub(".*-","",model_path), ".zip")
   
-  if(!is.na(sample)) {
+  if (!is.na(sample)) {
     json <- toJSON(df[1:sample, ])
   } else {
     json <- toJSON(df)
   }
   
-  quiet(h2o.init(nthreads = -1, port=54321, min_mem_size="8g"))
+  quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
   x <- h2o.predict_json(zip, json)
   
   if (length(x$error) >= 1) {
@@ -662,20 +633,18 @@ h2o_predict_MOJO <- function(df, model_path, sample = NA){
 #' @export
 h2o_predict_binary <- function(df, model_path, sample = NA){
   
-  options(warn=-1)
-  quiet(h2o.init(nthreads = -1, port=54321, min_mem_size="8g"))
+  options(warn = -1)
+  quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
   
   if (!right(model_path, 4) == ".zip") {
-    binary <- paste(model_path, gsub(".*-", "", model_path), sep="/")  
+    binary <- paste(model_path, gsub(".*-", "", model_path), sep = "/")  
   } else {
     binary <- model_path
   }
   
   model <- h2o.loadModel(binary)
   
-  if(!is.na(sample)) {
-    df <- df[1:sample, ]
-  }
+  if (!is.na(sample)) df <- df[1:sample, ]
   
   score_binary <- as.vector(predict(model, as.h2o(df))[,3])
   
@@ -702,7 +671,7 @@ h2o_predict_API <- function(df, api) {
       select(-contains("tag"))
     x <- POST(
       api, 
-      add_headers('Content-Type'='application/json'), 
+      add_headers('Content-Type' = 'application/json'), 
       body = as.list(df), 
       encode = "json", 
       verbose())
@@ -815,7 +784,7 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
     mutate(percentile = rev(factor(percentile, 1:splits)))
   
   wizard <- sc %>% filter(tag == TRUE) %>% 
-    mutate(percentile = sc$percentile[1:length(sc$percentile[sc$tag==TRUE])]) %>%
+    mutate(percentile = sc$percentile[1:length(sc$percentile[sc$tag == TRUE])]) %>%
     group_by(percentile) %>% tally() %>% 
     ungroup() %>% mutate(p = 100 * n/sum(n), pcum = cumsum(p)) %>% 
     select(percentile, pcum) %>% rename(optimal = pcum)
@@ -851,10 +820,9 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
 #' @param multis Data.frame. Containing columns with each category score 
 #' (only used when more than 2 categories coexist)
 #' @export
-ROC <- function (tag, score, multis = NA) {
+ROC <- function(tag, score, multis = NA) {
   
   # require(pROC)
-  # require(dplyr)
   
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
@@ -863,11 +831,11 @@ ROC <- function (tag, score, multis = NA) {
   
   if (!is.numeric(score) & is.na(multis)) {
     score <- as.numeric(score) 
-    #stop("You should use the multis parameter to add each category's score")
+    warning("You should use the multis parameter to add each category's score")
   }
   
   if (is.na(multis)) {
-    roc <- pROC::roc(tag, score, ci=T)
+    roc <- pROC::roc(tag, score, ci = TRUE, quiet = TRUE)
     coords <- data.frame(
       fpr = rev(roc$specificities),
       tpr = rev(roc$sensitivities)) %>%
@@ -877,18 +845,18 @@ ROC <- function (tag, score, multis = NA) {
     df <- data.frame(tag = tag, score = score, multis)
     cols <- colnames(df)
     coords <- c(); rocs <- list()
-    for (i in 1:(length(cols)-2)) {
-      which <- colnames(df)[2+i]
+    for (i in 1:(length(cols) - 2)) {
+      which <- colnames(df)[2 + i]
       res <- df[,c(which)]
       if (grepl("p+[[:digit:]]", which)) {
         which <- as.character(gsub("p","", which))
       }
       label <- ifelse(df[,1] == which, which, "other")
-      roci <- pROC::roc(label, res, ci = TRUE)
-      rocs[[paste(cols[i+2])]] <- roci
+      roci <- pROC::roc(label, res, ci = TRUE, quiet = TRUE)
+      rocs[[paste(cols[i + 2])]] <- roci
       iter <- data.frame(fpr = rev(roci$specificities),
                          tpr = rev(roci$sensitivities),
-                         label = paste(round(100*roci$auc,2), which, sep="% | "))
+                         label = paste(round(100*roci$auc,2), which, sep = "% | "))
       coords <- rbind(coords, iter)
     }
     ci <- data.frame(lapply(rocs, "[[", "ci")) %>% mutate(mean = rowMeans(.))
@@ -916,7 +884,7 @@ ROC <- function (tag, score, multis = NA) {
 #' @param thresh Numeric. Value which splits the results for the 
 #' confusion matrix when binary.
 #' @export
-conf_mat <- function (tag, score, thresh = 0.5) {
+conf_mat <- function(tag, score, thresh = 0.5) {
   
   df <- data.frame(tag, score)
   
@@ -985,7 +953,7 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
     } else {
       new <- score
     }
-  
+    
     conf_mat <- table(Real = as.character(tag), 
                       Pred = as.character(new))
     total <- sum(conf_mat)
@@ -995,7 +963,7 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
     # For Binaries
     if (length(labels) == 2) {
       metrics[["confusion_matrix"]] <- conf_mat
-      ROC <- pROC::roc(tag, as.numeric(score), ci=T)
+      ROC <- pROC::roc(tag, as.numeric(score), ci = TRUE, quiet = TRUE)
       nums <- data.frame(
         AUC = ROC$auc,
         ACC = trues / total,

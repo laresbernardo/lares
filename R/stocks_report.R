@@ -495,7 +495,9 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, s
 #' @param group Boolean. Group stocks by stocks type?
 #' @param save Boolean. Export plot as an image?
 #' @export
-stocks_daily_plot <- function (portfolio, daily, weighted = TRUE, group = TRUE, save = FALSE) {
+stocks_daily_plot <- function(portfolio, daily, weighted = TRUE, group = TRUE, save = FALSE) {
+  
+  try_require("ggrepel")
   
   d <- daily %>%
     left_join(portfolio %>% select(Symbol,Type), by='Symbol') %>%
@@ -597,6 +599,8 @@ portfolio_distr_plot <- function (portfolio_perf, daily, save = FALSE) {
 #' @export
 portfolio_total_plot <- function(portfolio, save = FALSE) {
   
+  try_require("ggrepel")
+  
   labels <- portfolio %>% filter(Deposit != 0)
   caption <- paste0("Portfolio: $", formatNum(portfolio$Portfolio[nrow(portfolio)]),
                     "\nInvested: $", formatNum(portfolio$StocksValue[nrow(portfolio)]))
@@ -608,8 +612,8 @@ portfolio_total_plot <- function(portfolio, save = FALSE) {
     ggplot() + 
     geom_area(aes(x = Date, y = values, fill = type), 
               colour = "black", size = 0.2, alpha = 0.95) + 
-    labs(title = "   Daily Total Portfolio Value", y = "", x = "", fill ="") +
-    geom_label_repel(data=labels, 
+    labs(title = "   Daily Total Portfolio Value", y = "", x = "", fill = "") +
+    geom_label_repel(data = labels, 
                      aes(x = Date, y = Portfolio, label = formatNum(Deposit, 0)), 
                      vjust = -1.3, size = 2.5) +
     scale_y_continuous(position = "right", labels = comma) +
@@ -617,11 +621,10 @@ portfolio_total_plot <- function(portfolio, save = FALSE) {
              y = 0.09*max(portfolio$Portfolio), 
              size = 3.3, colour = "white", hjust = 1.1) +
     theme_lares2(pal = 1) +
-    theme(legend.position = "top", legend.justification=c(0, 1))
+    theme(legend.position = "top", legend.justification = c(0, 1))
   
-  if (save) {
-    plot <- plot + ggsave("portf_total_hist.png", width = 8, height = 5, dpi = 300)
-  }
+  if (save) plot <- plot + 
+    ggsave("portf_total_hist.png", width = 8, height = 5, dpi = 300)
   
   return(plot)
   
@@ -648,7 +651,7 @@ portfolio_total_plot <- function(portfolio, save = FALSE) {
 #' @export
 stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   
-  options(warn=-1)
+  options(warn = -1)
   
   tabs <- c('portfolio','transactions','cash')
   if (sum(names(data) %in% tabs) != 3) {
@@ -705,9 +708,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   unlink(tempdir, recursive = FALSE)
   setwd(current_wd)
   message("All results are ready to export")
-  
   return(results)
-  
 }
 
 ####################################################################

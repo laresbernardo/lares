@@ -44,17 +44,13 @@ mplot_density <- function(tag,
       geom_density(aes(x = as.numeric(score), 
                        group = tag, fill = as.character(tag)), 
                    alpha = 0.6, adjust = 0.25) + 
-      guides(fill = guide_legend(title="Tag")) + 
+      guides(fill = guide_legend(title = "Tag")) + 
       labs(title = "Classification Model Results",
            y = "Density by tag", x = "Score", fill = "") + 
       theme_lares2(pal = 1) +
       theme(legend.position = "top",
             legend.justification = c(0, 0),
             legend.title = element_blank())
-    
-    # if (is.numeric(score)) {
-    #   p1 <- p1 + xlim(0, 100) 
-    # }
     
     p2 <- ggplot(out) + 
       geom_density(aes(x = score), alpha = 0.9, adjust = 0.25, fill = "deepskyblue") + 
@@ -64,26 +60,21 @@ mplot_density <- function(tag,
       geom_line(aes(x = as.numeric(score), y = (1 - ..y..), color = as.character(tag)), 
                 stat = 'ecdf', size = 1) +
       geom_line(aes(x = as.numeric(score), y = (1 - ..y..)), 
-                stat = 'ecdf', size = 0.5, colour = "black", linetype="dotted") +
-      ylab('Cumulative') + xlab('') + guides(color=FALSE) + theme_lares2(pal = 2)
+                stat = 'ecdf', size = 0.5, colour = "black", linetype = "dotted") +
+      ylab('Cumulative') + xlab('') + guides(color = FALSE) + theme_lares2(pal = 2)
     
     p1 <- p1 + theme(plot.margin = margin(10, 5, 0, 5))
     p2 <- p2 + theme(plot.margin = margin(0, 0, 5, 5))
     p3 <- p3 + theme(plot.margin = margin(0, 5, 5, 0))
     
-    if(!is.na(subtitle)) {
-      p1 <- p1 + labs(subtitle = subtitle)
-    }
+    if (!is.na(subtitle)) p1 <- p1 + labs(subtitle = subtitle)
     
-    if(!is.na(model_name)) {
-      p1 <- p1 + labs(caption = model_name)
-    }
+    if (!is.na(model_name)) p1 <- p1 + labs(caption = model_name)
     
     if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = T)
-      file_name <- paste(subdir, file_name, sep="/")
+      dir.create(file.path(getwd(), subdir), recursive = TRUE)
+      file_name <- paste(subdir, file_name, sep = "/")
     }
-    
     
     p <- arrangeGrob(p1, p2, p3, 
                      ncol = 2, nrow = 2, heights = 2:1,
@@ -99,24 +90,20 @@ mplot_density <- function(tag,
     p <- ggplot(df) + 
       geom_density(aes(x = values, fill = as.character(type)), 
                    alpha = 0.6, adjust = 0.25) + 
-      labs(y = "Density", x = "Continuous values", fill="") +
+      labs(y = "Density", x = "Continuous values", fill = "") +
       guides(colour = FALSE) +
       theme_lares2(pal = 1, legend = "top")
     
-    if(!is.na(model_name)) {
-      p <- p + labs(caption = model_name)
-    }
+    if (!is.na(model_name)) p <- p + labs(caption = model_name)
     
-    if(!is.na(subtitle)) {
-      p <- p + labs(subtitle = subtitle)
-    }  
+    if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
     
   }
   
-  if (save == TRUE) {
+  if (save) {
     if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = T)
-      file_name <- paste(subdir, file_name, sep="/")
+      dir.create(file.path(getwd(), subdir), recursive = TRUE)
+      file_name <- paste(subdir, file_name, sep = "/")
     }
     p <- p + ggsave(file_name, width = 6, height = 6)
   }
@@ -152,22 +139,18 @@ mplot_importance <- function(var,
                              subdir = NA, 
                              file_name = "viz_importance.png") {
   
-  options(warn=-1)
+  options(warn = -1)
   
   if (length(var) != length(imp)) {
     message("The variables and importance values vectors should be the same length.")
     stop(message(paste("Currently, there are",length(var),"variables and",length(imp),"importance values!")))
   }
   
-  if (is.na(colours)) {
-    colours <- "deepskyblue" 
-  }
+  if (is.na(colours)) colours <- "deepskyblue" 
   
   out <- data.frame(var = var, imp = imp, Type = colours)
   
-  if (length(var) < limit) {
-    limit <- length(var)
-  }
+  if (length(var) < limit) limit <- length(var)
   
   output <- out[1:limit,]
   
@@ -189,18 +172,14 @@ mplot_importance <- function(var,
       geom_text(hjust = 0.5, size = 2, inherit.aes = TRUE, colour = "white")
   }
   
-  if(!is.na(model_name)) {
-    p <- p + labs(caption = model_name)
-  }
+  if (!is.na(model_name)) p <- p + labs(caption = model_name)
   
-  if(!is.na(subtitle)) {
-    p <- p + labs(subtitle = subtitle)
-  }  
+  if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   
-  if (save == TRUE) {
+  if (save) {
     if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = T)
-      file_name <- paste(subdir, file_name, sep="/")
+      dir.create(file.path(getwd(), subdir), recursive = TRUE)
+      file_name <- paste(subdir, file_name, sep = "/")
     }
     p <- p + ggsave(file_name, width = 6, height = 6)
   }
@@ -242,10 +221,7 @@ mplot_roc <- function(tag,
                       save = FALSE, 
                       subdir = NA, 
                       file_name = "viz_roc.png") {
-  
-  # require(ggplot2)
-  # require(plotly)
-  
+
   if (is.na(multis)) {
     rocs <- ROC(tag, score)
     ci <- rocs$ci
@@ -261,16 +237,16 @@ mplot_roc <- function(tag,
   }
   
   scale <- function(x) sprintf("%.1f", x)
-  p <- ggplot(coords, aes(x = fpr, y = tpr, group=label)) +
+  p <- ggplot(coords, aes(x = fpr, y = tpr, group = label)) +
     geom_line(colour = "deepskyblue", size = 0.8) +
-    geom_point(aes(colour=label), size = 0.7, alpha = 0.8) +
+    geom_point(aes(colour = label), size = 0.7, alpha = 0.8) +
     geom_segment(aes(x = 0, y = 1, xend = 1, yend = 0), alpha = 0.2, linetype = "dotted") + 
     scale_x_reverse(name = "1 - Specificity [False Positive Rate]", limits = c(1,0), 
                     breaks = seq(0, 1, interval), expand = c(0.001,0.001),
-                    labels=scale) + 
+                    labels = scale) + 
     scale_y_continuous(name = "Sensitivity [True Positive Rate]", limits = c(0,1), 
                        breaks = seq(0, 1, interval), expand = c(0.001, 0.001),
-                       labels=scale) +
+                       labels = scale) +
     coord_equal() +
     theme(axis.ticks = element_line(color = "grey80")) +
     labs(title = "ROC Curve: AUC", colour = "") +
@@ -282,30 +258,21 @@ mplot_roc <- function(tag,
                             round(100*ci[c(3),],2))) +
     theme_lares2(bg_colour = "white", pal = 2, legend = "bottom")
   
-  if (is.na(multis)) {
-    p <- p + guides(colour = FALSE)
-  }
+  if (is.na(multis)) p <- p + guides(colour = FALSE)
+  if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
+  if (!is.na(model_name)) p <- p + labs(caption = model_name)
   
-  if(!is.na(subtitle)) {
-    p <- p + labs(subtitle = subtitle)
-  }  
-  
-  if(!is.na(model_name)) {
-    p <- p + labs(caption = model_name)
-  }
-  
-  if (plotly == TRUE) {
+  if (plotly) {
+    try_require("plotly")
     p <- ggplotly(p)
   }
   
   if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = T)
-    file_name <- paste(subdir, file_name, sep="/")
+    dir.create(file.path(getwd(), subdir), recursive = TRUE)
+    file_name <- paste(subdir, file_name, sep = "/")
   }
   
-  if (save == TRUE) {
-    p <- p + ggsave(file_name, width = 6, height = 6)
-  }
+  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
   
   return(p)
   
@@ -337,12 +304,9 @@ mplot_cuts <- function(score,
                        subdir = NA, 
                        file_name = "viz_ncuts.png") {
   
-  # require(ggplot2)
-  options(warn=-1)
+  options(warn = -1)
   
-  if (splits > 25) {
-    stop("You should try with less splits!")
-  }
+  if (splits > 25) stop("You should try with less splits!")
   
   deciles <- quantile(score, 
                       probs = seq((1/splits), 1, length = splits), 
@@ -354,7 +318,7 @@ mplot_cuts <- function(score,
   p <- deciles %>%
     #mutate(label_colours = ifelse(cuts*100 < 50, "1", "m")) %>%
     ggplot(aes(x = reorder(range, cuts), y = cuts * 100)) + 
-    geom_col(fill="deepskyblue") + 
+    geom_col(fill = "deepskyblue") + 
     xlab('Cumulative volume') + ylab('Score') + 
     geom_text(aes(label = round(100 * cuts, 1),
                   vjust = ifelse(cuts*100 < 50, -0.3, 1.3)), 
@@ -363,24 +327,18 @@ mplot_cuts <- function(score,
     labs(title = paste0("Score cuts (", splits, " equal-sized buckets)")) +
     theme_lares2()
   
-  if(!is.na(subtitle)) {
-    p <- p + labs(subtitle = subtitle)
-  } 
+  if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   
-  if(!is.na(model_name)) {
-    p <- p + labs(caption = model_name)
-  }
+  if (!is.na(model_name)) p <- p + labs(caption = model_name)
   
   if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = T)
-    file_name <- paste(subdir, file_name, sep="/")
+    dir.create(file.path(getwd(), subdir), recursive = TRUE)
+    file_name <- paste(subdir, file_name, sep = "/")
   }
   
-  if (save == TRUE) {
-    p <- p + ggsave(file_name, width = 6, height = 6)
-  }
+  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
   
-  if(table == TRUE){
+  if(table) {
     return(deciles)
   } else {
     return(p) 
@@ -413,9 +371,7 @@ mplot_cuts_error <- function(tag,
                              subdir = NA, 
                              file_name = "viz_ncuts_error.png") {
   
-  if (splits > 25) {
-    stop("You should try with less splits!")
-  }
+  if (splits > 25) stop("You should try with less splits!")
   
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
@@ -444,49 +400,44 @@ mplot_cuts_error <- function(tag,
   # First: absolute errors
   deciles_abs <- quants(df$abs_error, splits = splits, just = 0.3)
   p_abs <- ggplot(deciles_abs, aes(x = reorder(deciles, cut), y = cut, label = signif(cut, 3))) +
-    geom_col(fill="deepskyblue") + 
+    geom_col(fill = "deepskyblue") + 
     xlab('') + ylab('Absolute Error') + 
     geom_text(aes(vjust = gg_pos, colour = colour), size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute error")) +
-    scale_y_continuous(labels = comma) + guides(colour=F) +
+    scale_y_continuous(labels = comma) + guides(colour = FALSE) +
     gg_text_customs() + theme_lares2(bg_colour = "white")
   
   # Second: percentual errors
   deciles_perabs <- quants(abs(df$p_error), splits = splits, just = 0.3)
   p_per <- ggplot(deciles_perabs, aes(x = reorder(deciles, cut), y = cut, label = signif(cut, 3))) +
-    geom_col(fill="deepskyblue") + 
+    geom_col(fill = "deepskyblue") + 
     xlab('') + ylab('Percetage Error') + 
     geom_text(aes(vjust = gg_pos, colour = colour), size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute percentage error")) +
-    scale_y_continuous(labels = comma) + guides(colour=F) +
+    scale_y_continuous(labels = comma) + guides(colour = FALSE) +
     gg_text_customs() + theme_lares2(bg_colour = "white")
   
   # Third: errors distribution
   pd_error <- ggplot(df) + 
-    geom_density(aes(x=p_error), fill="deepskyblue", alpha = 0.7) +
+    geom_density(aes(x = p_error), fill = "deepskyblue", alpha = 0.7) +
     xlab('') + ylab('Error Density') + 
-    scale_x_continuous(labels=function(x) paste0(x,"%")) +
+    scale_x_percent() +
     geom_vline(xintercept = 0, alpha = 0.5, colour = "navy", linetype = "dotted") + 
     theme_lares2(bg_colour = "white")
   
-  if(!is.na(title)) {
-    p_abs <- p_abs + labs(title = title)
-  } 
+  if (!is.na(title)) p_abs <- p_abs + labs(title = title)
   
-  if(!is.na(model_name)) {
-    pd_error <- pd_error + labs(caption = model_name)
-  }
-  
+  if (!is.na(model_name)) pd_error <- pd_error + labs(caption = model_name)
   
   p <- arrangeGrob(
     p_abs, p_per, pd_error,
     heights = c(1.8,1.8,1),
     ncol = 1, nrow = 3)
   
-  if(save == TRUE) {
+  if (save) {
     if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = T)
-      file_name <- paste(subdir, file_name, sep="/")
+      dir.create(file.path(getwd(), subdir), recursive = TRUE)
+      file_name <- paste(subdir, file_name, sep = "/")
     }
     png(file_name, height = 1800, width = 1800, res = 300)
     plot(p)
@@ -529,9 +480,7 @@ mplot_splits <- function(tag,
     stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
   }
   
-  if (splits > 10) {
-    stop("You should try with less splits!")
-  }
+  if (splits > 10) stop("You should try with less splits!")
   
   df <- data.frame(tag, score)
   npersplit <- round(nrow(df)/splits)
@@ -575,27 +524,20 @@ mplot_splits <- function(tag,
     geom_col(position = "stack") + 
     geom_text(size = 3, position = position_stack(vjust = 0.5), check_overlap = TRUE) +
     xlab("Tag") + ylab("Total Percentage by Tag") +
-    guides(fill = guide_legend(title=paste0("~",npersplit," p/split"))) +
+    guides(fill = guide_legend(title = paste0("~",npersplit," p/split"))) +
     labs(title = "Tag vs Score Splits Comparison") +
     scale_fill_brewer(palette = "Spectral") +
     theme_lares2()
   
-  if(!is.na(subtitle)) {
-    p <- p + labs(subtitle = subtitle)
-  }  
-  
-  if(!is.na(model_name)) {
-    p <- p + labs(caption = model_name)
-  }
+  if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
+  if (!is.na(model_name)) p <- p + labs(caption = model_name)
   
   if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = T)
-    file_name <- paste(subdir, file_name, sep="/")
+    dir.create(file.path(getwd(), subdir), recursive = TRUE)
+    file_name <- paste(subdir, file_name, sep = "/")
   }
   
-  if (save == TRUE) {
-    p <- p + ggsave(file_name, width = 6, height = 6)
-  }
+  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
   
   return(p)
   
@@ -631,52 +573,46 @@ mplot_metrics <- function(results,
     test_auc = results$model@model$scoring_history$validation_auc)
   ll <- ggplot(plots_data) + 
     geom_hline(yintercept = 0.69315, alpha = 0.5, linetype = 'dotted') + 
-    geom_line(aes(x=trees, y=train_ll, colour="Train"), size=0.5) +
-    geom_line(aes(x=trees, y=test_ll, colour="Test"), size=1) +
+    geom_line(aes(x = trees, y = train_ll, colour = "Train"), size = 0.5) +
+    geom_line(aes(x = trees, y = test_ll, colour = "Test"), size = 1) +
     labs(title = "Logarithmic Loss vs Number of Trees",
          colour = "Dataset", x = "# of trees", y = "LogLoss") +
     scale_colour_brewer(palette = "Set1") + 
-    geom_text(aes(x=trees, y=train_ll, colour="Train", 
-                  label=round(train_ll,2)),
-              check_overlap = TRUE, nudge_y=0.03, size=3) +
-    geom_text(aes(x=trees, y=test_ll, colour="Test", 
-                  label=round(test_ll,2)),
-              check_overlap = TRUE, nudge_y=0.03, size=3) + 
+    geom_text(aes(x = trees, y = train_ll, colour = "Train", 
+                  label = round(train_ll,2)),
+              check_overlap = TRUE, nudge_y = 0.03, size = 3) +
+    geom_text(aes(x = trees, y = test_ll, colour = "Test", 
+                  label = round(test_ll, 2)),
+              check_overlap = TRUE, nudge_y = 0.03, size = 3) + 
     theme_lares2(pal = 1) +
     theme(strip.text.x = element_blank(),
-          strip.background = element_rect(colour="white", fill="white"),
-          legend.position=c(0.1, 0.05))
+          strip.background = element_rect(colour = "white", fill = "white"),
+          legend.position = c(0.1, 0.05))
   au <- ggplot(plots_data) + 
-    geom_line(aes(x=trees, y=train_auc*100, colour="Train"), size=0.5) +
-    geom_line(aes(x=trees, y=test_auc*100, colour="Test"), size=1) +
-    geom_hline(yintercept = 50, alpha = 0.5, linetype = 'dotted', colour="black") + 
+    geom_line(aes(x = trees, y = train_auc*100, colour = "Train"), size = 0.5) +
+    geom_line(aes(x = trees, y = test_auc*100, colour = "Test"), size = 1) +
+    geom_hline(yintercept = 50, alpha = 0.5, linetype = 'dotted', colour = "black") + 
     labs(title = "Area Under the Curve vs Number of Trees",
          colour = "Dataset", x = "# of trees", y = "AUC") +
-    scale_colour_brewer(palette = "Set1") + guides(colour=FALSE) +
-    geom_text(aes(x=trees, y=train_auc*100, colour="Train", 
-                  label=round(train_auc*100,2)),
-              check_overlap = TRUE, nudge_y=3, size=3) +
-    geom_text(aes(x=trees, y=test_auc*100, colour="Test", 
-                  label=round(test_auc*100,2)),
-              check_overlap = TRUE, nudge_y=3, size=3) +
+    scale_colour_brewer(palette = "Set1") + guides(colour = FALSE) +
+    geom_text(aes(x = trees, y = train_auc*100, colour = "Train", 
+                  label = round(train_auc*100, 2)),
+              check_overlap = TRUE, nudge_y = 3, size = 3) +
+    geom_text(aes(x = trees, y = test_auc*100, colour = "Test", 
+                  label = round(test_auc*100,2)),
+              check_overlap = TRUE, nudge_y = 3, size = 3) +
     theme_lares2(pal = 1)
   
-  if(!is.na(subtitle)) {
-    ll <- ll + labs(subtitle = subtitle)
-  }  
-  
-  if(!is.na(model_name)) {
-    au <- au + labs(caption = model_name)
-  }
-  
+  if (!is.na(subtitle)) ll <- ll + labs(subtitle = subtitle)
+  if (!is.na(model_name)) au <- au + labs(caption = model_name)
   
   p <- arrangeGrob(ll, au, ncol = 1, nrow = 2)
   
-  if (save == TRUE) {
+  if (save) {
     
     if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = T)
-      file_name <- paste(subdir, file_name, sep="/")
+      dir.create(file.path(getwd(), subdir), recursive = TRUE)
+      file_name <- paste(subdir, file_name, sep = "/")
     }
     
     png(file_name, height = 1800, width = 2100, res = 300)
@@ -730,7 +666,7 @@ mplot_lineal <- function(tag,
     #paste("Pval =", signif(summary(fit)$coef[2,4], 3)), 
     paste("RMSE =", signif(rmse(results$tag, results$score), 4)), 
     paste("MAE =", signif(mae(results$tag, results$score), 4)), 
-    sep="\n")
+    sep = "\n")
   
   p <- ggplot(results, aes(x = tag, y = score, colour = dist)) +
     geom_point() + theme_lares2() +
@@ -744,27 +680,15 @@ mplot_lineal <- function(tag,
     theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
     guides(colour = guide_colorbar(barwidth = 0.9, barheight = 4.5))
   
-  # if (regression == TRUE) {
-  #   p <- p + geom_smooth("lm", alpha = 0.8) 
-  # }
-  
   # Draw reference line for correlation
   intercept <- summary(fit)$coefficients[1]
   slope <- summary(fit)$coefficients[2]
   p <- p + geom_abline(slope = slope, intercept = intercept, 
-                       alpha = 0.5, colour = "orange", size=0.6)
+                       alpha = 0.5, colour = "orange", size = 0.6)
   
-  if(!is.na(subtitle)) {
-    p <- p + labs(subtitle = subtitle)
-  }  
-  
-  if(!is.na(model_name)) {
-    p <- p + labs(caption = model_name)
-  }
-  
-  if (save == TRUE) {
-    p <- p + ggsave(file_name, width = 6, height = 6)
-  }
+  if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
+  if (!is.na(model_name)) p <- p + labs(caption = model_name)
+  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
   
   return(p)
   
@@ -807,7 +731,7 @@ mplot_full <- function(tag,
                        subdir = NA,
                        file_name = "viz_full.png") {
   
-  options(warn=-1)
+  options(warn = -1)
   
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
@@ -837,7 +761,6 @@ mplot_full <- function(tag,
   # Multi-Categorical Models
   if (length(unique(tag)) > 2 & length(unique(tag)) <= thresh) {
     m <- model_metrics(tag, score, multis)
-    
     p <- arrangeGrob(
       m$plots$conf_matrix + 
         labs(title = "Confusion Matrix", 
@@ -854,7 +777,6 @@ mplot_full <- function(tag,
     p2 <- mplot_density(tag = tag, score = score)
     p3 <- mplot_cuts_error(tag = tag, score = score, splits = splits)
     
-    
     p <- arrangeGrob(
       p1, p2, p3,
       heights = c(0.6, 0.4),
@@ -862,10 +784,10 @@ mplot_full <- function(tag,
       layout_matrix = rbind(c(1,3), c(2,3)))
   }
   
-  if (save == TRUE) {
+  if (save) {
     if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = T)
-      file_name <- paste(subdir, file_name, sep="/")
+      dir.create(file.path(getwd(), subdir), recursive = TRUE)
+      file_name <- paste(subdir, file_name, sep = "/")
     }
     png(file_name, height = 2000, width = 3200, res = 300)
     plot(p)
@@ -893,9 +815,9 @@ mplot_full <- function(tag,
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @export
-mplot_conf <- function (tag, score, thresh = 0.5,
-                        subtitle = NA, save = FALSE, subdir = NA, 
-                        file_name = "viz_conf_mat.png") {
+mplot_conf <- function(tag, score, thresh = 0.5,
+                       subtitle = NA, save = FALSE, subdir = NA, 
+                       file_name = "viz_conf_mat.png") {
   
   df <- data.frame(tag, score)
   
@@ -924,19 +846,18 @@ mplot_conf <- function (tag, score, thresh = 0.5,
   p <- ggplot(plot_cf, aes(
     y = factor(tag, levels = rev(labels)), 
     x = factor(pred, levels = labels), 
-    fill= n, size=n, 
-    label = label)) +
+    fill = n, size = n, label = label)) +
     geom_tile() + theme_lares2() +
-    geom_text(colour="white") + 
+    geom_text(colour = "white") + 
     scale_size(range = c(3.1, 4.5)) + coord_equal() + 
-    guides(fill=FALSE, size=FALSE, colour=FALSE) +
-    labs(x="Predicted values", y="Real values",
+    guides(fill = FALSE, size = FALSE, colour = FALSE) +
+    labs(x = "Predicted values", y = "Real values",
          title = ifelse(length(labels) == 2,
                         paste("Confusion Matrix", 
-                              ifelse(thresh!=0.5, paste("with Threshold =", thresh), "")),
+                              ifelse(thresh != 0.5, paste("with Threshold =", thresh), "")),
                         paste0("Confusion Matrix (", length(labels), " categories)")),
          subtitle = metrics) +
-    theme(axis.text.x = element_text(angle=30, hjust=0)) +
+    theme(axis.text.x = element_text(angle = 30, hjust = 0)) +
     scale_x_discrete(position = "top") +
     theme(axis.text.x.bottom = element_blank(), 
           axis.ticks.x.bottom = element_blank(),
@@ -944,18 +865,14 @@ mplot_conf <- function (tag, score, thresh = 0.5,
           axis.ticks.y.right = element_blank()) +
     theme_lares2()
   
-  if (!is.na(subtitle)) {
-    p <- p + labs(subtitle = subtitle)
-  }
+  if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   
   if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = T)
-    file_name <- paste(subdir, file_name, sep="/")
+    dir.create(file.path(getwd(), subdir), recursive = TRUE)
+    file_name <- paste(subdir, file_name, sep = "/")
   }
   
-  if (save == TRUE) {
-    p <- p + ggsave(file_name, width = 6, height = 6)
-  }
+  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
   
   return(p)
   
@@ -995,12 +912,12 @@ mplot_gain <- function(tag, score, target = "auto", splits = 10, highlight = "au
   
   p <- gains %>%
     mutate(percentile = as.numeric(percentile)) %>%
-    ggplot(aes(x = percentile)) + theme_lares2(pal=2) +
+    ggplot(aes(x = percentile)) + theme_lares2(pal = 2) +
     geom_line(aes(y = optimal, linetype = "Optimal"), colour = "black", alpha = 0.6) +
     geom_line(aes(y = random, linetype = "Random"), colour = "black", alpha = 0.6) +
     geom_line(aes(y = gain, linetype = "Model"), colour = "darkorange", size = 1.2) +
     geom_label(aes(y = gain, label = ifelse(gain == 100, NA, round(gain))), alpha = 0.9) +
-    scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour=FALSE) +
+    scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour = FALSE) +
     scale_x_continuous(minor_breaks = NULL, 
                        breaks = seq(0, splits, 1)) +
     labs(title = "Cumulative Gains Plot", linetype = "",
@@ -1008,9 +925,7 @@ mplot_gain <- function(tag, score, target = "auto", splits = 10, highlight = "au
          x = paste0("Percentiles [",splits,"]")) +
     theme(legend.position = c(0.88, 0.2))
   
-  if (highlight == "auto") {
-    highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
-  }
+  if (highlight == "auto") highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
   if (highlight %in% gains$percentile & highlight != "none") {
     highlight <- as.integer(highlight)
     note <- paste0("If we select the top ", 
@@ -1022,19 +937,15 @@ mplot_gain <- function(tag, score, target = "auto", splits = 10, highlight = "au
     message("That highlight value is not a percentile. Try any integer from 1 to ", splits)
   }
   
-  if (!is.na(caption)) {
-    p <- p + labs(caption = caption)
-  }
+  if (!is.na(caption)) p <- p + labs(caption = caption)
   
   if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = T)
-    file_name <- paste(subdir, file_name, sep="/")
+    dir.create(file.path(getwd(), subdir), recursive = TRUE)
+    file_name <- paste(subdir, file_name, sep = "/")
   }
   
-  if (save == TRUE) {
-    p <- p + ggsave(file_name, width = 6, height = 6)
-  }
-
+  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
+  
   return(p)
 }
 
@@ -1074,7 +985,7 @@ mplot_response <- function(tag, score, target = "auto", splits = 10, highlight =
   gains <- gains %>% mutate(cum_response_lift = 100 * cum_response/rand - 100)
   
   p <- gains %>%
-    ggplot(aes(x = percentile)) + theme_lares2(pal=2) +
+    ggplot(aes(x = percentile)) + theme_lares2(pal = 2) +
     geom_hline(yintercept = rand, colour = "black", linetype = "dashed") +
     geom_line(aes(y = cum_response), size = 1.2) +
     geom_label(aes(y = cum_response, label = round(cum_response)), alpha = 0.9) +
@@ -1088,9 +999,7 @@ mplot_response <- function(tag, score, target = "auto", splits = 10, highlight =
          x = paste0("Percentiles [",splits,"]")) +
     theme(legend.position = c(0.88, 0.2)) 
   
-  if (highlight == "auto") {
-    highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
-  }
+  if (highlight == "auto") highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
   if (highlight %in% gains$percentile & highlight != "none") {
     highlight <- as.integer(highlight)
     note <- paste0("If we select the top ", 
@@ -1102,18 +1011,14 @@ mplot_response <- function(tag, score, target = "auto", splits = 10, highlight =
     message("That highlight value is not a percentile. Try any integer from 1 to ", splits)
   }
   
-  if (!is.na(caption)) {
-    p <- p + labs(caption = caption)
-  }
+  if (!is.na(caption)) p <- p + labs(caption = caption)
   
   if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = T)
-    file_name <- paste(subdir, file_name, sep="/")
+    dir.create(file.path(getwd(), subdir), recursive = TRUE)
+    file_name <- paste(subdir, file_name, sep = "/")
   }
   
-  if (save == TRUE) {
-    p <- p + ggsave(file_name, width = 6, height = 6)
-  }
+  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
   
   return(p)
 }

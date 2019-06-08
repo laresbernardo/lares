@@ -582,7 +582,7 @@ dateformat <- function(dates, metric = TRUE, origin = '1900-01-01') {
   
   # When date is an integer:
   if (int %in% 30000:60000) {
-    dates <- as.Date(as.integer(as.character(dates)), origin=origin)
+    dates <- as.Date(as.integer(as.character(dates)), origin = origin)
   } else {
     comps <- unlist(strsplit(x, "/|-|\\."))
     lasts <- as.integer(comps[3])
@@ -667,7 +667,7 @@ noPlot <- function(message = "Nothing to show here!") {
           axis.ticks = element_blank(),
           axis.title.x = element_blank(),
           axis.title.y = element_blank(),
-          legend.position="none",
+          legend.position = "none",
           panel.background = element_blank(),
           panel.border = element_blank(),
           panel.grid.major = element_blank(),
@@ -1027,43 +1027,48 @@ zerovar <- function(df) {
 #' the file's name? Use this param to NOT get absolute root directory.
 #' @export
 read.file <- function(filename, current_wd = TRUE) {
-  if (current_wd) {
-    filename <- paste0(getwd(), "/", filename) 
-  }
+  
+  if (current_wd) filename <- paste0(getwd(), "/", filename) 
+  
   if (!file.exists(filename)) {
     stop("That file doesn't exist.. try with another!")
   } else {
+    
     filetype <- gsub("\\.","", right(filename, 4))
+    
     if (filetype == "csv") {
-      results <- data.frame(data.table::fread(filename))
+      try_require("data.table")
+      results <- data.frame(fread(filename))
     }
     if (filetype == "xlsx") {
-      results <- openxlsx::read.xlsx(filename)
+      try_require("openxlsx")
+      results <- read.xlsx(filename)
     }
     if (filetype == "xls") {
-      results <- gdata::read.xls(filename)
-    }
-    if (filetype == "dat") {
-      results <- read.table(filename, header = TRUE)
+      try_require("gdata")
+      results <- read.xls(filename)
     }
     if (filetype == "sav") {
-      results <- quiet(foreign::read.spss(filename, to.data.frame = T))
+      try_require("foreign")
+      results <- quiet(read.spss(filename, to.data.frame = T))
     }
     if (filetype == "dta") {
       # Stata version 5-12 .dta file
       #results <- foreign::read.dta(filename)
       # Stata version 13 .dta file
-      results <- readstata13::read.dta13(filename)
+      try_require("readstata13")
+      results <- read.dta13(filename)
     }
+    if (filetype == "dat") {
+      results <- read.table(filename, header = TRUE)
+    } 
     
     message(paste("Imported", filetype, "file with", 
                   formatNum(nrow(results),0), "rows x", 
                   formatNum(ncol(results),0), "columns, succesfully!"))
     
   }
-  if (nrow(results) == 0) {
-    warning("There is no data in that file...")
-  }
+  if (nrow(results) == 0) warning("There is no data in that file...")
   return(results)
 }
 

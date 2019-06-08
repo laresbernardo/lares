@@ -13,7 +13,6 @@
 #' @import dplyr
 #' @importFrom forecast Arima auto.arima forecast
 #' @import ggplot2
-#' @importFrom ggrepel geom_label_repel geom_text_repel
 #' @importFrom googleAuthR gar_auth
 #' @importFrom googlesheets gs_auth gs_read gs_edit_cells gs_title
 #' @importFrom graphics box hist plot points rasterImage rect grid 
@@ -32,9 +31,7 @@
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom pROC roc ci
 #' @importFrom quantmod getDividends getSymbols getQuote 
-#' @importFrom RColorBrewer brewer.pal
 #' @importFrom rdrop2 drop_auth drop_dir drop_download drop_search drop_upload
-#' @importFrom rlang quo_is_null
 #' @import rlist
 #' @importFrom rmarkdown render
 # @importFrom recipes recipe step_num2factor step_meanimpute all_numeric step_modeimpute
@@ -93,7 +90,8 @@ if (getRversion() >= "2.15.1")
       "Logloss","yewxname","gain","random","optimal","lift","pred","prophet","fit.prophet",
       "prophet_plot_components","add_country_holidays","make_future_dataframe","importance",
       "percentile","cum_response","response","total","ETF","Sector","Percentage","corrplot",
-      "row_num","ncap","freq","mix","redundant","plot_ly","chordDiagram","skim","uh"))
+      "row_num","ncap","freq","mix","redundant","plot_ly","chordDiagram","skim","uh",
+      "fread","read.dta13","read.spss","read.xls","geom_label_repel"))
 
 #' Pipe operator
 #' @name lares-exports

@@ -19,7 +19,7 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
 
   getGeoDetails <- function(address){   
     
-    options(warn=-1)
+    options(warn = -1)
     
     c <- get_credentials(from = "google_api", dir = creds)
     url <- "https://maps.google.com/maps/api/geocode/json?address="
@@ -29,9 +29,8 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
     x <- fromJSON(url, simplifyVector = FALSE)
     
     # Return Na's if we didn't get a match:
-    if (x$status != "OK"){
-      return(message(paste(x$status, x$error_message)))
-    }   
+    if (x$status != "OK") return(message(paste(x$status, x$error_message)))
+    
     # Else, extract what we need from the Google server reply into a dataframe:
     
     # Note: We bring the first and most probable result or prefered country only
@@ -41,9 +40,7 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
       country_pref$row <- 1:nrow(country_pref)
       country_pref <- country_pref[!is.na(country_pref$is_country),]
       which_list <- min(country_pref$row)
-      if (nrow(country_pref) == 0) {
-        which_list <- 1
-      }
+      if (nrow(country_pref) == 0) which_list <- 1
     } else {
       which_list <- 1
     }
@@ -51,9 +48,7 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
     # Address_components (varies a lot depending on results)
     values <- data.frame(rlist::list.cbind(x$results[[which_list]]$address_components))[1,]
     names <- unlist(do.call(rbind, rlist::list.cbind(x$results[[which_list]]$address_components)[3,])[,1])
-    if (length(colnames(values)) > 1) {
-      colnames(values) <- names
-    }
+    if (length(colnames(values)) > 1) colnames(values) <- names
     
     out <- data.frame(
       status = x$status,
@@ -81,9 +76,7 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
     if (length(result) > 1) {
       result$index <- i
       result$search <- address[i]
-      if (!is.na(index)) {
-        result$id <- index[i]
-      }
+      if (!is.na(index)) result$id <- index[i]
       output <- rbind(output, result)
       message(paste("Found:", result$address_formatted))
     }
@@ -117,10 +110,8 @@ geoStratum <- function(lon, lat, label = NA) {
     "returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=pjson"))
   x <- fromJSON(url, simplifyVector = FALSE)
   if (length(x$features) > 0) {
-    out <- data.frame(lon = lon, lat=lat, stratum = x$features[[1]]$attributes$ESTRATO)
-    if (!is.na(label)) {
-      out$label <- label
-    }
+    out <- data.frame(lon = lon, lat = lat, stratum = x$features[[1]]$attributes$ESTRATO)
+    if (!is.na(label)) out$label <- label
     return(out)
   } else {
     message("Stratum not found for those coordinates!")
@@ -148,9 +139,7 @@ geoStratum <- function(lon, lat, label = NA) {
 #' @export
 geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE, alpha = 0.3) {
   
-  if (!"rgdal" %in% (.packages())){
-    stop("The following library should be loaded. Please run: library(rgdal)")
-  }
+  try_require("rgdal")
   
   if (!class(map)[1] == "SpatialPolygonsDataFrame") {
     message("Importing shapefile...")
@@ -166,11 +155,8 @@ geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE, 
   colnames(coords) <- cols
   coordinates(coords) <- c("longitude", "latitude")  
   
-  if (fix_coords) {
-    map <- spTransform(map, CRS("+proj=longlat +datum=WGS84"))
-  }
+  if (fix_coords) map <- spTransform(map, CRS("+proj=longlat +datum=WGS84"))
 
-  coords_sample <- head(coordinates(coords))
   shapes_sample <- head(map@polygons[[2]]@Polygons[[1]]@coords)
   proj4string <- "+proj=utm +units=mm"
   project(shapes_sample, proj4string)
@@ -224,9 +210,9 @@ geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE, 
 #' @param subtitle Character. Subtitle for the plot
 #' @export
 geoMap <- function(map, fix_coords = FALSE, title = NA, subtitle = NA) {
-  if (!"rgdal" %in% (.packages())){
-    stop("The following library should be loaded. Please run: library(rgdal)")
-  }
+  
+  try_require("rgdal")
+  
   if (!class(map)[1] == "SpatialPolygonsDataFrame") {
     message("Importing shapefile...")
     map <- readOGR(dsn = file.path(map))
@@ -240,12 +226,10 @@ geoMap <- function(map, fix_coords = FALSE, title = NA, subtitle = NA) {
     colour = "black", fill = "white", alpha = 0.1) +
     labs(x = "Latitude", y = "Longitude") +
     theme_bw()
-  if (!is.na(title)) {
-    plot <- plot + labs(title = title)
-  }
-  if (!is.na(subtitle)) {
-    plot <- plot + labs(subtitle = subtitle)
-  }
+  
+  if (!is.na(title)) plot <- plot + labs(title = title)
+  if (!is.na(subtitle)) plot <- plot + labs(subtitle = subtitle)
+  
   return(plot)
 }
 
@@ -261,7 +245,7 @@ geoMap <- function(map, fix_coords = FALSE, title = NA, subtitle = NA) {
 #' @param sep Character. Separator
 #' @export
 deg2num <- function(coord, sep=" ") {
-  z <- data.frame(stringr::str_split_fixed(as.character(coord), sep, 3)) %>% 
+  z <- data.frame(str_split_fixed(as.character(coord), sep, 3)) %>% 
     mutate_all(as.numeric)
   colnames(z) <- c("days","minutes","seconds")
     mutate(num = days + minutes/60 + seconds/3600)
