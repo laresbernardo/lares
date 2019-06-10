@@ -151,20 +151,21 @@ corr_var <- function(df, ...,
   }
   
   if (plot) {
-    p <- d %>% 
-      mutate(pos = ifelse(corr > 0, TRUE, FALSE)) %>%
+    p <- ungroup(d) %>%
+      mutate(pos = ifelse(corr > 0, TRUE, FALSE),
+             hjust = ifelse(abs(corr) < max(abs(corr))/1.5, -0.1, 1.1)) %>%
       ggplot(aes(x = reorder(variables, abs(corr)), 
-                 y = abs(corr), fill = pos, label = 100 * corr)) +
+                 y = abs(corr), fill = pos, label = signif(100*corr, 3))) +
       geom_hline(aes(yintercept = 0), alpha = 0.5) +
-      geom_col(width = 0.1) + coord_flip() + theme_minimal() +
-      geom_label(hjust = 0.5, size = 2.6, inherit.aes = TRUE, colour = "white") +
-      scale_fill_discrete(name = "", breaks = c("TRUE","FALSE")) +
+      geom_col() + 
+      coord_flip() + theme_minimal() +
+      geom_text(aes(hjust = hjust), size = 3, colour = "black") +
+      scale_fill_manual(values = c("FALSE" = "#E5586E", "TRUE" = "#59B3D2")) +
       guides(fill = FALSE) +
       labs(title = paste("Correlation of", var, "vs other variables"), 
            x = "", y = "Correlation") +
-      scale_y_continuous(labels = scales::percent) +
-      scale_fill_manual(values = c("#e5586e","#59b3d2")) +
-      theme_lares2()
+      scale_y_percent(expand = c(0, 0)) + theme_lares2()
+    
     if (!is.na(top) & top < original_n) p <- p + 
         labs(subtitle = paste("Plotting top", top, "out of", 
                               original_n, "variables (original + dummy)"))
@@ -228,15 +229,15 @@ corr_plot <- function(df, method = "pearson", order = "FPC",
 #' @family Exploratory
 #' @param df Dataframe.
 #' @param plot Boolean. Show and return a plot?
-#' @param max Numeric. Maximum correlation permited (from 0 to 100)
+#' @param max Numeric. Maximum correlation permited (from 0 to 1)
 #' @param top Integer. Return top n results only
 #' @param rm.na Boolean. Remove NAs?
 #' @export
-corr_cross <- function(df, plot = TRUE, max = 100, top = 25, rm.na = FALSE) {
+corr_cross <- function(df, plot = TRUE, max = 1, top = 25, rm.na = FALSE) {
   c <- corr(df, plot = FALSE)
   ret <- data.frame(tidyr::gather(c)) %>% 
     mutate(mix = rep(colnames(c), length(c))) %>%
-    mutate(rel = abs(value)) %>% filter(100*rel < max) %>% 
+    mutate(rel = abs(value)) %>% filter(1*rel < max) %>% 
     arrange(desc(rel)) %>%
     mutate(rank = row_number()) %>%
     filter(rank %in% seq(2,length(c)*length(c)*2,2)) %>%
@@ -250,19 +251,20 @@ corr_cross <- function(df, plot = TRUE, max = 100, top = 25, rm.na = FALSE) {
     head(top) 
   if (plot) {
     subtitle <- paste(top, "most relevant")
-    if (max < 100) subtitle <- paste0(subtitle," (excluding +", max, "%)")
+    if (max < 1) subtitle <- paste0(subtitle," (excluding +", 100*max, "%)")
     if (rm.na) subtitle <- paste(subtitle, paste("[NAs removed]"))
     p <- ret %>% 
       mutate(label = paste(key, "+", mix), abs = abs(corr),
-             sign = ifelse(corr < 0, "n", "p"),
+             sign = ifelse(corr < 0, "bad", "good"),
              x = ifelse(corr < 0, -0.1, 1.1)) %>%
-      ggplot(aes(x = reorder(label,abs), y = 100*corr, fill = sign)) +
+      ggplot(aes(x = reorder(label,abs), y = corr, fill = sign)) +
       geom_col() + coord_flip() + guides(fill = FALSE) +
-      geom_text(aes(hjust = x, label = round(100*corr, 1)), size = 3) +
+      geom_hline(aes(yintercept = 0), alpha = 0.5) + 
+      geom_text(aes(hjust = x, label = signif(100*corr, 3)), size = 3, colour = "white") +
       labs(title = "Ranked Cross-Correlations", subtitle = subtitle,
            x = "", y = "Correlation [%]") +
-      scale_fill_manual(values = c("#e5586e","#59b3d2")) +
-      theme_lares2()
+      scale_fill_manual(values = c("bad" = "#E5586E", "good" = "#59B3D2")) +
+      scale_y_percent() + theme_lares2()
     return(p)
   }
   return(ret)
