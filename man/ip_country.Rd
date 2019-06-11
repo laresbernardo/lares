@@ -32,8 +32,9 @@ Other Tools: \code{\link{bindfiles}},
   \code{\link{read.file}}, \code{\link{statusbar}},
   \code{\link{updateLares}}, \code{\link{zerovar}}
 
-Other Scrapper: \code{\link{geoStratum}},
-  \code{\link{holidays}}, \code{\link{trendsRelated}}
+Other Scrapper: \code{\link{fb_posts}},
+  \code{\link{geoStratum}}, \code{\link{holidays}},
+  \code{\link{trendsRelated}}
 }
 \concept{Scrapper}
 \concept{Tools}

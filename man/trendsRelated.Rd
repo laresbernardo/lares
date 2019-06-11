@@ -30,8 +30,9 @@ Other Exploratory: \code{\link{corr_cross}},
   \code{\link{get_tweets}}, \code{\link{missingness}},
   \code{\link{textCloud}}, \code{\link{textTokenizer}}
 
-Other Scrapper: \code{\link{geoStratum}},
-  \code{\link{holidays}}, \code{\link{ip_country}}
+Other Scrapper: \code{\link{fb_posts}},
+  \code{\link{geoStratum}}, \code{\link{holidays}},
+  \code{\link{ip_country}}
 }
 \concept{Exploratory}
 \concept{Scrapper}

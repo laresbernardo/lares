@@ -100,6 +100,7 @@ ohse <- function(df,
       vector_values[,1] <- paste0(sep, vector_values[,1])
       
       # Columns with 2 possible values
+      # It would be cool to have these as colnames_value instead of colnames only
       if (vector_levels == 2) {
         df[,c(vector_name)] <- as.integer(as.factor(df[,c(vector_name)])) - 1
         converted_binary <- rbind(converted_binary, vector_name)

@@ -47,7 +47,7 @@
 #' stopwords stripWhitespace TermDocumentMatrix tm_map VectorSource
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
 #' globalVariables installed.packages write.table install.packages remove.packages object.size 
-#' type.convert flush.console read.table modifyList write.csv combn
+#' type.convert flush.console read.table modifyList write.csv combn browseURL
 #' @importFrom wordcloud wordcloud textplot
 #' @importFrom xml2 read_html
 "_PACKAGE"
@@ -77,7 +77,7 @@ if (getRversion() >= "2.15.1")
       "prediction_breakdown","q_na","quantile_tag","question","real_error","dummy","sale",
       "stateChanges","step_done","str_pad","tag","test_auc","test_ll","theme_tq",
       "tk_augment_timeseries_signature","tk_get_timeseries_signature","tk_index","dfl",
-      "tk_make_future_timeseries","token","train_auc","train_ll","dft","Ticker",
+      "tk_make_future_timeseries","token","train_auc","train_ll","dft","Ticker","hjust",
       "trees","type","upload_file","value","values","variable_response","variables",
       "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","x","y","periods",
       "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos",
