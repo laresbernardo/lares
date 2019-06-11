@@ -26,9 +26,7 @@ fb_posts <- function(token,
   
   fb_comments <- function(posts) {
     comments <- c()
-    if ("data" %in% names(posts)) {
-      posts$posts$data <- posts$data
-    } 
+    if ("data" %in% names(posts)) posts$posts$data <- posts$data
     iters <- ifelse("comments" %in% names(posts$posts$data),
                     length(posts$posts$data$comments$data),
                     length(posts$posts$data))
@@ -40,9 +38,7 @@ fb_posts <- function(token,
         all <- data.frame(lapply(posts$posts$data, `[`, c('comments'))[[i]]) 
         id <- posts$posts$data[[i]]$id  
       }
-      if ("data" %in% names(posts)) {
-        posts$posts$data <- posts$data
-      } 
+      if ("data" %in% names(posts)) posts$posts$data <- posts$data
       if (length(all) > 0) {
         ids <- c(t(select(all, starts_with("id")))) 
         times <- c(t(select(all, starts_with("created_time"))))
@@ -63,9 +59,7 @@ fb_posts <- function(token,
   
   fb_reactions <- function(posts) {
     reactions <- c()
-    if ("data" %in% names(posts)) {
-      posts$posts$data <- posts$data
-    } 
+    if ("data" %in% names(posts)) posts$posts$data <- posts$data
     iters <- ifelse("reactions" %in% names(posts$posts$data),
                     length(posts$posts$data$reactions$data),
                     length(posts$posts$data))
@@ -90,9 +84,7 @@ fb_posts <- function(token,
   
   fb_shares <- function(posts) {
     shares <- c()
-    if ("data" %in% names(posts)) {
-      posts$posts$data <- posts$data
-    } 
+    if ("data" %in% names(posts)) posts$posts$data <- posts$data
     if (length(posts$posts$data$shares) > 0) {
       all <- posts$posts$data$shares$count
       id <- posts$posts$data$id
@@ -107,9 +99,7 @@ fb_posts <- function(token,
   }
   
   fb_pposts <- function(posts) {
-    if ("data" %in% names(posts)) {
-      posts$posts$data <- posts$data
-    } 
+    if ("data" %in% names(posts)) posts$posts$data <- posts$data
     plinks <- data.frame(
       id = posts$posts$data$id,
       created_time = as.POSIXct(posts$posts$data$created_time, 
@@ -160,17 +150,15 @@ fb_posts <- function(token,
     all_comments <- if (comments) rbind(all_comments, fb_comments(json))
     all_reactions <- if (reactions) rbind(all_reactions, fb_reactions(json))
     all_shares <- if (shares) rbind(all_shares, fb_shares(json))
-    
     new_url <- ifelse(length(json$paging) > 0, json$paging$`next`, json$posts$paging$`next`) 
-    if (total_iters > 1) {
-      statusbar(iter, total_iters)
-    }
+    if (total_iters > 1) statusbar(iter, total_iters)
+    
   }
   ret[["posts"]] <- all_posts
   ret[["comments"]] <- all_comments
   ret[["reactions"]] <- all_reactions
   ret[["shares"]] <- all_shares
-  ret[["json"]] <- json
+  #ret[["json"]] <- json
   
   msg <- paste("Succesfully exported", total, "posts from", ret$account$name, "with")
   msg <- ifelse(!is.null(ret$comments),paste(msg, nrow(ret$comments),"comments,"),msg)
