@@ -15,8 +15,6 @@
 #' @param main_colour,hard_colour,soft_colour,bg_colour 
 #' Character. Main colours for your theme
 #' @param legend Character. Legend position: top, right, bottom, left
-#' @param comma,percent Character. Scale format for x and/or y axis.
-#' Possible values are "x", "y", "xy" for both.
 #' @param mg Numeric. External margin
 #' @param pal Integer. 1 for fill and colour palette, 2 for only colour palette,
 #' 3 for personal labels-colour palette. 0 or else for nothing.
@@ -28,8 +26,6 @@ theme_lares2 <- function(font = "Arial Narrow",
                          soft_colour = "grey30",
                          bg_colour = "white",
                          legend = "right",
-                         comma = NA,
-                         percent = NA,
                          mg = 15,
                          pal = 0) {
   
@@ -135,10 +131,10 @@ theme_lares2 <- function(font = "Arial Narrow",
   # df <- p$data %>% select(matches(list))
   # classes <- data.frame(lapply(df, class))
 
-  if (grepl("x",tolower(comma))) ret <- ret + scale_x_comma()
-  if (grepl("y",tolower(comma))) ret <- ret + scale_y_comma()
-  if (grepl("x",tolower(percent))) ret <- ret + scale_x_percent()
-  if (grepl("y",tolower(percent))) ret <- ret + scale_y_percent()
+  # if (grepl("x",tolower(comma))) ret <- ret + scale_x_comma()
+  # if (grepl("y",tolower(comma))) ret <- ret + scale_y_comma()
+  # if (grepl("x",tolower(percent))) ret <- ret + scale_x_percent()
+  # if (grepl("y",tolower(percent))) ret <- ret + scale_y_percent()
   
   # Personal colours
   if (pal == 1) {
