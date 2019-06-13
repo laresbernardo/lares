@@ -337,7 +337,7 @@ listfiles <- function(folder = getwd(), recursive = TRUE, regex = NA, images = F
   
   df <- data.frame(filename = files, address, info)
   df$size <- as.integer(df$size/1024)
-  imgs <- "jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF"
+  #imgs <- "jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF"
   
   if (!is.na(regex)) df <- df[grep(regex, df$filename),] 
   
@@ -365,9 +365,8 @@ listfiles <- function(folder = getwd(), recursive = TRUE, regex = NA, images = F
     
   }
   
-  if (export == TRUE) {
-    write.table(df$filename, file = "files.txt", quote = FALSE, row.names = FALSE) 
-  }
+  if (export) write.table(df$filename, file = "files.txt", 
+                          quote = FALSE, row.names = FALSE) 
   
   row.names(df) <- NULL
   df$address <- NULL
@@ -426,9 +425,7 @@ replaceall <- function(df, original, change, quiet = TRUE) {
       df[] <- lapply(df, function(x) gsub(original[i], change[i], x))
     } 
   }
-  if (vector) {
-    df <- df[,1]
-  }
+  if (vector) df <- df[,1]
   return(df)
 }
 
@@ -487,21 +484,19 @@ removenarows <- function(df, all = TRUE) {
 numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA) {
   
   # Drop ALL NAs columns
-  if (dropnacols == TRUE) {
-    df <- removenacols(df, all = TRUE) 
-  }
+  if (dropnacols) df <- removenacols(df, all = TRUE) 
   
   # Which character columns may be used as numeric?
   transformable <- apply(df, 2, function(x) length(unique(x)))
-  which <- names(transformable[transformable==2])
+  which <- names(transformable[transformable == 2])
   dfn <- data.frame(df[,colnames(df) %in% which])
   colnames(dfn) <- which
-  non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x))-1)
+  non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x)) - 1)
   # Which are already numeric?
   numeric <- select_if(df, is.numeric)
   
   # Calculate logs
-  if (logs == TRUE) {
+  if (logs) {
     # Non binary numeric features
     whichlog <- colnames(numeric)[!colnames(numeric) %in% which]
     numeric <- numeric %>% mutate_at(vars(whichlog), funs(log = log(. + 1)))
@@ -516,7 +511,7 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
       d[is.na(d)] <- 0 
     }
     if (natransform == "mean") {
-      for(i in 1:ncol(d)){
+      for (i in 1:ncol(d)) {
         if (median(d[,i], na.rm = TRUE) != 0) {
           d[is.na(d[,i]), i] <- mean(d[,i], na.rm = TRUE) 
         } else {
@@ -550,10 +545,10 @@ dateformat <- function(dates, metric = TRUE, origin = '1900-01-01') {
   #require(dplyr)
   #require(stringr)
   #require(lubridate)
-  options(warn=-1)
+  options(warn = -1)
   
   # Check if all values are NA
-  if(length(dates) == sum(is.na(dates))){
+  if (length(dates) == sum(is.na(dates))) {
     message("No dates where transformed becase all values are NA")
     return(dates)
   }
@@ -573,7 +568,7 @@ dateformat <- function(dates, metric = TRUE, origin = '1900-01-01') {
     sym <- ifelse(grepl("/", x),"/","-")
     pattern <- str_locate_all(x, "/")[[1]][,1]
     
-    if(sum(pattern == c(3,6)) == 2) {
+    if (sum(pattern == c(3,6)) == 2) {
       return(as.Date(dates, format = paste0("%m",sym,"%d",sym,"%",year)))
     } else {
       return(as.Date(dates, format = paste0("%",year,sym,"%m",sym,"%d")))
@@ -640,7 +635,7 @@ myip <- function(){
   # require(rvest)
   # require(xml2)
   ipify <- "https://api.ipify.org/"
-  ip <- xml2::read_html(ipify) %>% rvest::html_text()
+  ip <- xml2::read_html(ipify) %>% rvest::html_text(.)
   return(ip)
 }
 
@@ -656,10 +651,7 @@ myip <- function(){
 #' @param message Character. What message do you wish to show?
 #' @export
 noPlot <- function(message = "Nothing to show here!") {
-  
-  # require(ggplot2)
-  
-  p <- ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 
+  ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 
     geom_label() + theme_minimal() +
     theme(axis.line = element_blank(),
           axis.text.x = element_blank(),
@@ -673,7 +665,6 @@ noPlot <- function(message = "Nothing to show here!") {
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           plot.background = element_blank())
-  return(p)
 }
 
 
@@ -747,9 +738,7 @@ export_plot <- function(p,
   # Export plot to file
   p <- p + ggsave(file_name, width = width, height = height)
   
-  if (quiet == FALSE) {
-    message(paste("Plot saved as", file_name)) 
-  }
+  if (!quiet) message(paste("Plot saved as", file_name)) 
   
 }
 
@@ -805,13 +794,8 @@ get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date(),
   options("getSymbols.yahoo.warning" = FALSE)
   string <- paste0(toupper(cleanText(currency_pair)), "=X")
   
-  if (from == to) {
-    to <- from + 1
-  }
-  
-  if (to > Sys.Date()) {
-    to <- Sys.Date()
-  }
+  if (from == to) to <- from + 1
+  if (to > Sys.Date()) to <- Sys.Date()
   
   if (Sys.Date() == from) {
     x <- getQuote(string, auto.assign = FALSE)
@@ -883,9 +867,11 @@ json2vector <- function(json) {
 #' @param percent.max Integer. Indicates how wide the progress bar is printed
 #' @export
 statusbar <- function(run, max.run, info = run, percent.max = 40L){
- 
-  if (length(run) > 1) stop("run needs to be of length one!")
-  if (length(max.run) == 0) stop("max.run has length 0")
+  
+  if (length(run) > 1 & !is.numeric(run)) 
+    stop("run must be a numerical value!")
+  if (length(max.run) == 0 & !is.numeric(run)) 
+    stop("max.run needs to be greater than 0!")
   
   if (length(max.run) > 1) {
     percent <- which(run == max.run) / length(max.run)
@@ -899,7 +885,7 @@ statusbar <- function(run, max.run, info = run, percent.max = 40L){
                      paste0(rep(" ", percent.max - percent.step), collapse = ""),
                      "] ",
                      sprintf("%7.1f", percent * 100, 2),
-                     "% | ", paste(info, ("         "))) 
+                     "% | ", paste(info, ("           "))) 
   cat("\r", progress)
   flush.console()
   if (run == max.run) cat("", sep = "\n\n")

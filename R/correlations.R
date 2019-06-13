@@ -9,6 +9,7 @@
 #' @param df Dataframe. It doesn't matter if it's got non-numerical
 #' columns: they will be filtered!
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
+#' @param ignore Character vector. Which columns do you wish to exlude?
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
 #' @param dates Boolean. Do you want the function to create more features
 #' out of the date/time columns?
@@ -20,10 +21,15 @@
 #' @param top Integer. Select top N most relevant variables? Filtered 
 #' and sorted by mean of each variable's correlations
 #' @export
-corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE, 
-                 redundant = TRUE, logs = FALSE, plot = FALSE, top = NA) {
+corr <- function(df, method = "pearson", ignore = NA, 
+                 dummy = TRUE, dates = FALSE, 
+                 redundant = TRUE, logs = FALSE, 
+                 plot = FALSE, top = NA) {
   
   options(warn = -1)
+  
+  # Ignored columns
+  if (!is.na(ignore)) df <- select(df, -one_of(ignore))
   
   # One hot encoding for categorical features
   if (dummy) df <- ohse(df, summary = FALSE, redundant = redundant, dates = dates)
@@ -66,6 +72,7 @@ corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE,
 #' @family Correlations
 #' @param df Dataframe.
 #' @param ... Object. Name of the variable to correlate
+#' @param ignore Character vector. Which columns do you wish to exlude?
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @param trim Integer. Trim words until the nth character for 
 #' categorical values (applies for both, target and values)
@@ -87,6 +94,7 @@ corr <- function(df, method = "pearson", dummy = TRUE, dates = FALSE,
 #' @param file_name Character. File name as you wish to save the plot
 #' @export
 corr_var <- function(df, ..., 
+                     ignore = NA,
                      method = "pearson", 
                      trim = 0,
                      clean = FALSE,
@@ -103,7 +111,7 @@ corr_var <- function(df, ...,
   vars <- quos(...)
   
   # Calculate correlations
-  rs <- corr(df, method = method, logs = logs, dates = dates)
+  rs <- corr(df, method = method, ignore = ignore, logs = logs, dates = dates)
   var <- as.character(vars[[1]])[2]
   rs <- rs %>% 
     select(-contains(paste0(var,"_log"))) %>%
@@ -195,6 +203,7 @@ corr_var <- function(df, ...,
 #' @family Visualization
 #' @family Correlations
 #' @param df Dataframe.
+#' @param ignore Character vector. Which columns do you wish to exlude?
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @param order Character. The ordering method of the correlation matrix.
 #' Any of: c("original", "AOE", "FPC", "hclust", "alphabet")
@@ -205,11 +214,11 @@ corr_var <- function(df, ...,
 #' @param logs Boolean. Automatically calculate log(values) for numerical
 #' variables (not binaries) and plot them
 #' @export
-corr_plot <- function(df, method = "pearson", order = "FPC", 
+corr_plot <- function(df, ignore = NA, method = "pearson", order = "FPC", 
                       type = "square", logs = FALSE) {
   
   try_require("corrplot")
-  c <- corr(df, method, logs = logs)
+  c <- corr(df, method, ignore, logs = logs)
   plot <- corrplot(as.matrix(c),
                    order = order,
                    method = type, 
@@ -231,10 +240,11 @@ corr_plot <- function(df, method = "pearson", order = "FPC",
 #' @param plot Boolean. Show and return a plot?
 #' @param max Numeric. Maximum correlation permited (from 0 to 1)
 #' @param top Integer. Return top n results only
+#' @param ignore Character vector. Which columns do you wish to exlude?
 #' @param rm.na Boolean. Remove NAs?
 #' @export
-corr_cross <- function(df, plot = TRUE, max = 1, top = 25, rm.na = FALSE) {
-  c <- corr(df, plot = FALSE)
+corr_cross <- function(df, plot = TRUE, max = 1, top = 25, ignore = NA, rm.na = FALSE) {
+  c <- corr(df, ignore = ignore, plot = FALSE)
   ret <- data.frame(tidyr::gather(c)) %>% 
     mutate(mix = rep(colnames(c), length(c))) %>%
     mutate(rel = abs(value)) %>% filter(1*rel < max) %>% 

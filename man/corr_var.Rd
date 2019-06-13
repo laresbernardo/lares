@@ -4,15 +4,17 @@
 \alias{corr_var}
 \title{Correlation between variable and dataframe}
 \usage{
-corr_var(df, ..., method = "pearson", trim = 0, clean = FALSE,
-  plot = TRUE, logs = FALSE, dates = TRUE, top = NA,
-  ceiling = 100, zeroes = FALSE, save = FALSE, subdir = NA,
-  file_name = "viz_corrvar.png")
+corr_var(df, ..., ignore = NA, method = "pearson", trim = 0,
+  clean = FALSE, plot = TRUE, logs = FALSE, dates = TRUE,
+  top = NA, ceiling = 100, zeroes = FALSE, save = FALSE,
+  subdir = NA, file_name = "viz_corrvar.png")
 }
 \arguments{
 \item{df}{Dataframe.}
 
 \item{...}{Object. Name of the variable to correlate}
+
+\item{ignore}{Character vector. Which columns do you wish to exlude?}
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
 

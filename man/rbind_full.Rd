@@ -7,7 +7,7 @@
 rbind_full(..., list, fill = NA, sep = ":")
 }
 \arguments{
-\item{...}{Dataframes. Dataframes to combine}
+\item{...}{Dataframes. Dataframes to start combining}
 
 \item{list}{List. Containing dataframes to combine}
 

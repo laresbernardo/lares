@@ -4,14 +4,17 @@
 \alias{corr}
 \title{Correlation table}
 \usage{
-corr(df, method = "pearson", dummy = TRUE, dates = FALSE,
-  redundant = TRUE, logs = FALSE, plot = FALSE, top = NA)
+corr(df, method = "pearson", ignore = NA, dummy = TRUE,
+  dates = FALSE, redundant = TRUE, logs = FALSE, plot = FALSE,
+  top = NA)
 }
 \arguments{
 \item{df}{Dataframe. It doesn't matter if it's got non-numerical
 columns: they will be filtered!}
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
+
+\item{ignore}{Character vector. Which columns do you wish to exlude?}
 
 \item{dummy}{Boolean. Should One Hot Encoding be applied to categorical columns?}
 

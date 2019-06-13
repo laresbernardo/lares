@@ -4,11 +4,13 @@
 \alias{corr_plot}
 \title{Correlation plot}
 \usage{
-corr_plot(df, method = "pearson", order = "FPC", type = "square",
-  logs = FALSE)
+corr_plot(df, ignore = NA, method = "pearson", order = "FPC",
+  type = "square", logs = FALSE)
 }
 \arguments{
 \item{df}{Dataframe.}
+
+\item{ignore}{Character vector. Which columns do you wish to exlude?}
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
 

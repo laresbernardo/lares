@@ -1,85 +1,4 @@
 ####################################################################
-#' Split a dataframe for training and testing sets
-#'
-#' This function splits automatically a dataframe into train and 
-#' test datasets. You can define a seed to get the same results 
-#' every time, but has a default value. You can prevent it from 
-#' printing the split counter result.
-#'
-#' @family Machine Learning
-#' @family Tools
-#' @param df Dataframe to split
-#' @param size Numeric. Split rate value, between 0 and 1. If set to
-#' 1, the train and test set will be the same.
-#' @param seed Seed for random split
-#' @param print Print summary results
-#' @return A list with both datasets, summary, and split rate
-#' @export
-msplit <- function(df, size = 0.7, seed = 0, print=T) {
-  
-  if (size <= 0 | size > 1) stop("Set size parameter to a value >0 and <=1") 
-  
-  set.seed(seed)
-  df <- data.frame(df)
-  if (size == 1) train <- test <- df
-  
-  if (size < 1 & size > 0) {
-    ind <- sample(seq_len(nrow(df)), size = floor(size * nrow(df)))
-    train <- df[ind, ]
-    test <- df[-ind, ] 
-  }
-  
-  train_size <- dim(train)
-  test_size <- dim(test)
-  summary <- rbind(train_size, test_size)[,1]
-  
-  if (print == TRUE) print(summary) 
-  
-  sets <- list(train = train, test = test, summary = summary, split_size = size)
-  
-  return(sets)
-  
-}
-
-
-####################################################################
-#' Loggarithmic Loss Function for Binary Models
-#'
-#' This function calculates log loss/cross-entropy loss for binary 
-#' models. NOTE: when result is 0.69315, the classification is neutral; 
-#' it assigns equal probability to both classes.
-#'
-#' @family Calculus
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
-#' @param eps Numeric. Epsilon value
-#' @export
-loglossBinary <- function(tag, score, eps = 1e-15) {
-  
-  if (length(unique(tag)) != 2) {
-    stop("Your 'tag' vector is not binary!")
-  }
-  
-  if (length(tag) != length(score)) {
-    message("The tag and score vectors should be the same length.")
-    stop(message(paste("Currently, tag has", length(tag),
-                       "rows and score has", length(score)))
-    )
-  }
-  
-  if (!is.numeric(tag)) {
-    tag <- as.integer(tag) - 1
-  }
-  
-  score <- pmax(pmin(score, 1 - eps), eps)
-  LogLoss <- -mean(tag * log(score) + (1 - tag) * log(1 - score))
-  
-  return(LogLoss)
-  
-}
-
-
-####################################################################
 #' Automated H2O's AutoML
 #'
 #' This function lets the user create a robust and fast model, using 
@@ -306,6 +225,87 @@ h2o_automl <- function(df, y = "tag",
   if (alarm) beepr::beep()
   
   return(results)
+  
+}
+
+
+####################################################################
+#' Split a dataframe for training and testing sets
+#'
+#' This function splits automatically a dataframe into train and 
+#' test datasets. You can define a seed to get the same results 
+#' every time, but has a default value. You can prevent it from 
+#' printing the split counter result.
+#'
+#' @family Machine Learning
+#' @family Tools
+#' @param df Dataframe to split
+#' @param size Numeric. Split rate value, between 0 and 1. If set to
+#' 1, the train and test set will be the same.
+#' @param seed Seed for random split
+#' @param print Print summary results
+#' @return A list with both datasets, summary, and split rate
+#' @export
+msplit <- function(df, size = 0.7, seed = 0, print=T) {
+  
+  if (size <= 0 | size > 1) stop("Set size parameter to a value >0 and <=1") 
+  
+  set.seed(seed)
+  df <- data.frame(df)
+  if (size == 1) train <- test <- df
+  
+  if (size < 1 & size > 0) {
+    ind <- sample(seq_len(nrow(df)), size = floor(size * nrow(df)))
+    train <- df[ind, ]
+    test <- df[-ind, ] 
+  }
+  
+  train_size <- dim(train)
+  test_size <- dim(test)
+  summary <- rbind(train_size, test_size)[,1]
+  
+  if (print == TRUE) print(summary) 
+  
+  sets <- list(train = train, test = test, summary = summary, split_size = size)
+  
+  return(sets)
+  
+}
+
+
+####################################################################
+#' Loggarithmic Loss Function for Binary Models
+#'
+#' This function calculates log loss/cross-entropy loss for binary 
+#' models. NOTE: when result is 0.69315, the classification is neutral; 
+#' it assigns equal probability to both classes.
+#'
+#' @family Calculus
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param eps Numeric. Epsilon value
+#' @export
+loglossBinary <- function(tag, score, eps = 1e-15) {
+  
+  if (length(unique(tag)) != 2) {
+    stop("Your 'tag' vector is not binary!")
+  }
+  
+  if (length(tag) != length(score)) {
+    message("The tag and score vectors should be the same length.")
+    stop(message(paste("Currently, tag has", length(tag),
+                       "rows and score has", length(score)))
+    )
+  }
+  
+  if (!is.numeric(tag)) {
+    tag <- as.integer(tag) - 1
+  }
+  
+  score <- pmax(pmin(score, 1 - eps), eps)
+  LogLoss <- -mean(tag * log(score) + (1 - tag) * log(1 - score))
+  
+  return(LogLoss)
   
 }
 
