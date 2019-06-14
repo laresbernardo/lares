@@ -1,5 +1,5 @@
 ####################################################################
-#' Facebook API Graph's Posts
+#' Get Facebook's Page Posts (API Graph)
 #' 
 #' Connect to an API Graph's token of a given page and get posts, 
 #' comments, shares, and reactions of n posts (with no limits).
@@ -167,5 +167,33 @@ fb_posts <- function(token,
   msg <- paste(msg, "and one happy client! :)")
   ret[["msg"]] <- msg
   message(msg)
+  return(ret)
+}
+
+
+####################################################################
+#' Get Facebook's Post Comments (API Graph)
+#' 
+#' Connect to an API Graph's token and get posts comments given the
+#' post(s) id.
+#' 
+#' @family Scrapper
+#' @param token Character. Access token. Generate it for any of your
+#' users or apps in \url{https://developers.facebook.com/tools/explorer}
+#' @param post_id Character vector. Post id(s)
+#' @export
+fb_post <- function(token, post_id) {
+  iters <- length(post_id)
+  for (i in 1:iters) {
+    if (i == 1) ret <- c()
+    url <- paste0("https://graph.facebook.com/v3.0/", post_id[i],
+                  "/comments?limit=50000","&access_token=", token)
+    get <- GET(url = url)
+    char <- rawToChar(get$content)
+    json <- fromJSON(char)
+    json$data$post <- post_id[i]
+    ret <- rbind(ret, json$data)
+    if (iters > 1) statusbar(i, iters, time = FALSE)
+  }  
   return(ret)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/facebook.R
 \name{fb_posts}
 \alias{fb_posts}
-\title{Facebook API Graph's Posts}
+\title{Get Facebook's Page Posts (API Graph)}
 \usage{
 fb_posts(token, total = 150, limit = 100, comments = FALSE,
   shares = FALSE, reactions = FALSE)
@@ -22,8 +22,8 @@ Connect to an API Graph's token of a given page and get posts,
 comments, shares, and reactions of n posts (with no limits).
 }
 \seealso{
-Other Scrapper: \code{\link{geoStratum}},
-  \code{\link{holidays}}, \code{\link{ip_country}},
-  \code{\link{trendsRelated}}
+Other Scrapper: \code{\link{fb_post}},
+  \code{\link{geoStratum}}, \code{\link{holidays}},
+  \code{\link{ip_country}}, \code{\link{trendsRelated}}
 }
 \concept{Scrapper}

@@ -4,7 +4,7 @@
 \alias{statusbar}
 \title{Progressbar for for loops}
 \usage{
-statusbar(run, max.run, info = run, percent.max = 40L, time = TRUE)
+statusbar(run, max.run, info = run, percent.max = 40L, time = FALSE)
 }
 \arguments{
 \item{run}{Iterator. for loop or an integer with the current loop number}
@@ -20,7 +20,7 @@ at the end of the line. The default is \code{run}.}
 }
 \description{
 This function lets the user view a progressbar for a 'for' loop. 
-Taken from https://github.com/STATWORX/helfRlein/blob/master/R/statusbar.R
+Idea from https://github.com/STATWORX/helfRlein/blob/master/R/statusbar.R
 }
 \seealso{
 Other Tools: \code{\link{bindfiles}},

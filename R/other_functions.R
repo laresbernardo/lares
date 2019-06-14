@@ -857,7 +857,7 @@ json2vector <- function(json) {
 #' Progressbar for for loops
 #' 
 #' This function lets the user view a progressbar for a 'for' loop. 
-#' Taken from https://github.com/STATWORX/helfRlein/blob/master/R/statusbar.R
+#' Idea from https://github.com/STATWORX/helfRlein/blob/master/R/statusbar.R
 #' 
 #' @family Tools
 #' @param run Iterator. for loop or an integer with the current loop number
@@ -867,7 +867,7 @@ json2vector <- function(json) {
 #' @param percent.max Integer. Indicates how wide the progress bar is printed
 #' @param time Boolean. Show time?
 #' @export
-statusbar <- function(run, max.run, info = run, percent.max = 40L, time = TRUE){
+statusbar <- function(run, max.run, info = run, percent.max = 40L, time = FALSE){
   
   if (run == 1) start <- Sys.time()
   
