@@ -865,8 +865,11 @@ json2vector <- function(json) {
 #' @param info String. With additionaly information to be printed 
 #' at the end of the line. The default is \code{run}.
 #' @param percent.max Integer. Indicates how wide the progress bar is printed
+#' @param time Boolean. Show time?
 #' @export
-statusbar <- function(run, max.run, info = run, percent.max = 40L){
+statusbar <- function(run, max.run, info = run, percent.max = 40L, time = TRUE){
+  
+  if (run == 1) start <- Sys.time()
   
   if (length(run) > 1 & !is.numeric(run)) 
     stop("run must be a numerical value!")
@@ -888,7 +891,12 @@ statusbar <- function(run, max.run, info = run, percent.max = 40L){
                      "% | ", paste(info, ("           "))) 
   cat("\r", progress)
   flush.console()
-  if (run == max.run) cat("", sep = "\n\n")
+  
+  if (run == max.run) {
+    cat("", sep = "\n\n") 
+    if (time) message(paste0("Total time: ", round(Sys.time() - start, 2), "s"))
+  }
+  
 }
 
 
