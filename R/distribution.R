@@ -331,7 +331,6 @@ distr <- function(data, ...,
     
     # Plot the results and save if needed
     if (type == 1) {
-      print(count)
       count <- count + labs(title = "Distribution and Proportions", 
                             subtitle = subtitle, caption = "") +
         theme(plot.margin = margin(10, 15, -15, 15))

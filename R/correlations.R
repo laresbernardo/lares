@@ -165,8 +165,7 @@ corr_var <- function(df, ...,
       ggplot(aes(x = reorder(variables, abs(corr)), 
                  y = abs(corr), fill = pos, label = signif(100*corr, 3))) +
       geom_hline(aes(yintercept = 0), alpha = 0.5) +
-      geom_col() + 
-      coord_flip() + theme_minimal() +
+      geom_col() + coord_flip() + 
       geom_text(aes(hjust = hjust), size = 3, colour = "black") +
       scale_fill_manual(values = c("FALSE" = "#E5586E", "TRUE" = "#59B3D2")) +
       guides(fill = FALSE) +
