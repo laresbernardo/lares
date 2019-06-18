@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares) [![saythanks](https://img.shields.io/badge/say-thanks-1EAEDB.svg)](https://saythanks.io/to/laresbernardo)
 ----
 
-`lares` is a library used to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. It also simplifies the installation process of libraries, distribution, and reproducible research. You are most welcome to install, use, and comment on any of its code and functionalities. Feel free to contact me and/or add me on [Linkedin](https://www.linkedin.com/in/laresbernardo)! Do let me know where did you got my contact from ;)
+`lares` is a library used to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. It also simplifies the installation process of libraries, distribution, and reproducible research. You are most welcome to install, use, and comment on any of its code and functionalities. Feel free to contact me and/or add me on Linkedin, and please, do let me know where did you got my contact from!
 
 ## Install the package
 
@@ -32,7 +32,7 @@ updateLares(local = TRUE) # Personal and local files, not necessarily deployed
 
 - DataScience+: [Plot timelines with Gantt charts](https://datascienceplus.com/visualize-your-cvs-timeline-with-r-gantt-style/)
 
-### AutoML (`h2o_automl()`) Simplified Map
+### AutoML Simplified Map from `h2o_automl()`
 ![AutoML Map (lares)](inst/docs/automl_map.png?raw=true)
 
 ## What else is there?
