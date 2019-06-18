@@ -20,6 +20,8 @@ updateLares(local = TRUE) # Personal and local files, not necessarily deployed
 ```
 
 ## See the library in action!
+- RMarkdown: [Frequencies, Distributions, and Correlations](http://rpubs.com/laresbernardo/freqs-distr-corr)
+
 - DataScience+: [Visualizations for Classification Models Results](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all)
 
 - DataScience+: [Visualizations for Regression Models Results](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models)
@@ -29,8 +31,6 @@ updateLares(local = TRUE) # Personal and local files, not necessarily deployed
 - DataScience+: [Portfolio's Performance and Report](https://datascienceplus.com/visualize-your-portfolios-performance-and-generate-a-nice-report-with-r)
 
 - DataScience+: [Plot timelines with Gantt charts](https://datascienceplus.com/visualize-your-cvs-timeline-with-r-gantt-style/)
-
-- RMarkdown: [Frequencies, Distributions, and Variable Correlation](http://rpubs.com/laresbernardo/freqs-distr-corr_var)
 
 ### AutoML (`h2o_automl()`) Simplified Map
 ![AutoML Map (lares)](inst/docs/automl_map.png?raw=true)
