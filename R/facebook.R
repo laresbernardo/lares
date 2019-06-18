@@ -191,9 +191,24 @@ fb_post <- function(token, post_id) {
     get <- GET(url = url)
     char <- rawToChar(get$content)
     json <- fromJSON(char)
-    json$data$post <- post_id[i]
-    ret <- rbind(ret, json$data)
-    if (iters > 1) statusbar(i, iters, time = FALSE)
+    if ("error" %in% names(json)) {
+      if (grepl("expired", json$error$message)) {
+        message("You must be logged in to your Facebook account and refresh/get the token!")
+        message("1. Within the Graph API Explorer, select an Application.")
+        message("2. Go to Get Token and select the Page Acces Token needed. ",
+                "Note that there are navigation arrows if lots of accounts axists.")
+        message("3. Copy and use the Acces Token created.")
+        url <- paste0("https://developers.facebook.com/tools/explorer/1866795993626030/",
+                      "?version=v3.3&classic=1")
+        browseURL(url)
+      }
+      error <- paste("API ERROR:", json$error$message)
+      return(error)
+    } else {
+      json$data$post <- post_id[i]
+      ret <- rbind(ret, json$data)
+    }
+    if (iters > 1) statusbar(i, iters, time = FALSE) 
   }  
   return(ret)
 }
