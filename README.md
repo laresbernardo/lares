@@ -15,8 +15,8 @@ I currently don't have planned to post `lares` library to CRAN yet, but who know
 
 ### Update the package
 ```{r}
-lares::updateLares() # From Github repository (Bitbucket discontinued)
-lares::updateLares(local=T) # Personal and local files, not necessarily deployed
+updateLares() # From Github repository (Bitbucket discontinued)
+updateLares(local = TRUE) # Personal and local files, not necessarily deployed
 ```
 
 ## See the library in action!
@@ -31,6 +31,9 @@ lares::updateLares(local=T) # Personal and local files, not necessarily deployed
 - DataScience+: [Plot timelines with Gantt charts](https://datascienceplus.com/visualize-your-cvs-timeline-with-r-gantt-style/)
 
 - RMarkdown: [Frequencies, Distributions, and Variable Correlation](http://rpubs.com/laresbernardo/freqs-distr-corr_var)
+
+### AutoML (`h2o_automl()`) Simplified Map
+![AutoML Map (lares)](inst/docs/automl_map.png?raw=true)
 
 ## What else is there?
 
