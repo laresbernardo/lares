@@ -320,8 +320,12 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
 #' @param regex Character. String to use for filtering files
 #' @param images Boolean. Bring only image files?
 #' @param export Boolean. Do you wish to export list as txt file?
+#' @param dir Character. In which directory do you wish to save 
+#' the results? Working directory as default.
 #' @export
-listfiles <- function(folder = getwd(), recursive = TRUE, regex = NA, images = FALSE, export = FALSE) {
+listfiles <- function(folder = getwd(), 
+                      recursive = TRUE, regex = NA, images = FALSE, 
+                      export = FALSE, dir = getwd()) {
   
   # require(dplyr)
   # require(lubridate)
@@ -365,8 +369,9 @@ listfiles <- function(folder = getwd(), recursive = TRUE, regex = NA, images = F
     
   }
   
-  if (export) write.table(df$filename, file = "files.txt", 
-                          quote = FALSE, row.names = FALSE) 
+  if (export) 
+    write.table(df$filename, file = file.path(dir, "files.txt"), 
+                quote = FALSE, row.names = FALSE)
   
   row.names(df) <- NULL
   df$address <- NULL
@@ -707,6 +712,8 @@ h2o_update <- function(run = TRUE){
 #' @param sep Character. Separator for variables
 #' @param width Numeric. Plot's width on file
 #' @param height Numeric. Plot's height on file
+#' @param dir Character. In which directory do you wish to save 
+#' the results? Working directory as default.
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @param quiet Boolean. Display succesful message with filename when saved?
 #' @export
@@ -716,6 +723,7 @@ export_plot <- function(p,
                         sep = ".vs.", 
                         width = 8, 
                         height = 6, 
+                        dir = getwd(),
                         subdir = NA,
                         quiet = FALSE) {
   
@@ -731,7 +739,7 @@ export_plot <- function(p,
   # Create directory if needed
   if (!is.na(subdir)) {
     options(warn = -1)
-    dir.create(file.path(getwd(), subdir), recursive = TRUE)
+    dir.create(file.path(dir, subdir), recursive = TRUE)
     file_name <- paste(subdir, file_name, sep = "/")
   }
   

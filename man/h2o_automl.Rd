@@ -5,8 +5,8 @@
 \title{Automated H2O's AutoML}
 \usage{
 h2o_automl(df, y = "tag", ignore = c(), train_test = NA,
-  split = 0.7, weight = NULL, balance = FALSE, seed = 0,
-  thresh = 5, max_time = 5 * 60, max_models = 25,
+  split = 0.7, weight = NULL, balance = FALSE, impute = FALSE,
+  seed = 0, thresh = 5, max_time = 5 * 60, max_models = 25,
   start_clean = TRUE, exclude_algos = c("StackedEnsemble",
   "DeepLearning"), alarm = TRUE, save = FALSE, subdir = NA,
   project = "Machine Learning Model")
@@ -32,6 +32,8 @@ observation a relative weight of 2 is equivalent to repeating that
 row twice. Negative weights are not allowed.}
 
 \item{balance}{Boolean. Auto-balance train dataset with under-sampling?}
+
+\item{impute}{Boolean. Fill NA values with MICE?}
 
 \item{seed}{Integer. Set a seed for reproducibility. AutoML can only 
 guarantee reproducibility if max_models is used because max_time is 
@@ -84,11 +86,12 @@ Other Machine Learning: \code{\link{ROC}},
   \code{\link{h2o_predict_MOJO}},
   \code{\link{h2o_predict_binary}},
   \code{\link{h2o_predict_model}},
-  \code{\link{h2o_selectmodel}}, \code{\link{iter_seeds}},
-  \code{\link{model_metrics}}, \code{\link{mplot_conf}},
-  \code{\link{mplot_cuts_error}}, \code{\link{mplot_cuts}},
-  \code{\link{mplot_density}}, \code{\link{mplot_full}},
-  \code{\link{mplot_gain}}, \code{\link{mplot_importance}},
+  \code{\link{h2o_selectmodel}}, \code{\link{impute}},
+  \code{\link{iter_seeds}}, \code{\link{model_metrics}},
+  \code{\link{mplot_conf}}, \code{\link{mplot_cuts_error}},
+  \code{\link{mplot_cuts}}, \code{\link{mplot_density}},
+  \code{\link{mplot_full}}, \code{\link{mplot_gain}},
+  \code{\link{mplot_importance}},
   \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
   \code{\link{mplot_response}}, \code{\link{mplot_roc}},
   \code{\link{mplot_splits}}, \code{\link{msplit}}

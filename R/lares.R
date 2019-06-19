@@ -27,6 +27,7 @@
 #' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd 
 #' minute hour second %m+% floor_date 
 #' @importFrom magrittr %>%
+#' @importFrom mice mice complete
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom pROC roc ci
@@ -45,6 +46,7 @@
 #' @import stringr 
 #' @importFrom tm content_transformer Corpus removeNumbers removePunctuation removeWords 
 #' stopwords stripWhitespace TermDocumentMatrix tm_map VectorSource
+#' @importFrom tidyr gather spread
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
 #' globalVariables installed.packages write.table install.packages remove.packages object.size 
 #' type.convert flush.console read.table modifyList write.csv combn browseURL
@@ -91,7 +93,7 @@ if (getRversion() >= "2.15.1")
       "prophet_plot_components","add_country_holidays","make_future_dataframe","importance",
       "percentile","cum_response","response","total","ETF","Sector","Percentage","corrplot",
       "row_num","ncap","freq","mix","redundant","plot_ly","chordDiagram","skim","uh",
-      "fread","read.dta13","read.spss","read.xls","geom_label_repel"))
+      "fread","read.dta13","read.spss","read.xls","geom_label_repel","variable"))
 
 #' Pipe operator
 #' @name lares-exports

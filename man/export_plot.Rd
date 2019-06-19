@@ -5,7 +5,7 @@
 \title{Install latest version of H2O}
 \usage{
 export_plot(p, name = "plot", vars = NA, sep = ".vs.", width = 8,
-  height = 6, subdir = NA, quiet = FALSE)
+  height = 6, dir = getwd(), subdir = NA, quiet = FALSE)
 }
 \arguments{
 \item{p}{ggplot2 object. Plot to export}
@@ -19,6 +19,9 @@ export_plot(p, name = "plot", vars = NA, sep = ".vs.", width = 8,
 \item{width}{Numeric. Plot's width on file}
 
 \item{height}{Numeric. Plot's height on file}
+
+\item{dir}{Character. In which directory do you wish to save 
+the results? Working directory as default.}
 
 \item{subdir}{Character. Into which subdirectory do you wish to save the plot to?}
 

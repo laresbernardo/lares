@@ -27,6 +27,7 @@
 #' observation a relative weight of 2 is equivalent to repeating that 
 #' row twice. Negative weights are not allowed.
 #' @param balance Boolean. Auto-balance train dataset with under-sampling?
+#' @param impute Boolean. Fill NA values with MICE?
 #' @param seed Integer. Set a seed for reproducibility. AutoML can only 
 #' guarantee reproducibility if max_models is used because max_time is 
 #' resource limited.
@@ -54,6 +55,7 @@ h2o_automl <- function(df, y = "tag",
                        split = 0.7,
                        weight = NULL,
                        balance = FALSE,
+                       impute = FALSE,
                        seed = 0,
                        thresh = 5,
                        max_time = 5*60,
@@ -81,6 +83,23 @@ h2o_automl <- function(df, y = "tag",
     filter(!is.na(tag)) %>%
     mutate_if(is.character, as.factor)
   
+  # MISSING VALUES
+  m <- missingness(df) %>% mutate(label = paste0(variable, " (", missingness, "%)"))
+  if (sum(m$missing) > 0) {
+    message(paste("- The following variables contain missing observations:", vector2text(m$label),
+                  if (!impute) "(You can auto-fix these by setting impute = TRUE)"))
+    if (impute) {
+      message(">>> Imputing missing values")
+      df <- impute(df, seed = seed, quiet = TRUE)
+    }
+  }
+  
+  # ONE HOT SMART ENCODING
+  nums <- length(df_str(df, "names", quiet = TRUE)$nums)
+  if (nums != ncol(df)) 
+    message(paste("- There are", ncol(df) - nums,
+                  "non-numerical columns. Consider using ohse() for One Hot Smart Encoding before automl"))
+  
   # MODEL TYPE
   model_type <- ifelse(length(unique(df$tag)) <= as.integer(thresh), "Classifier", "Regression")
   message("Model type: ", model_type)
@@ -89,7 +108,7 @@ h2o_automl <- function(df, y = "tag",
   
   # SPLIT TRAIN AND TEST DATASETS
   if (is.na(train_test)) {
-    message("Splitting datasets...")
+    message(">>> Splitting datasets")
     splits <- msplit(df, size = split, seed = seed)
     train <- splits$train
     test <- splits$test
@@ -124,7 +143,7 @@ h2o_automl <- function(df, y = "tag",
   } else {
     message("Previous trained models are not being erased. Use 'start_clean' parameter if needed.")
   }
-  message(paste("Iterating until", max_models, "models or", max_time, "seconds..."))
+  message(paste(">>> Iterating until", max_models, "models or", max_time, "seconds..."))
   # IGNORED VARIABLES
   aml <- h2o::h2o.automl(x = setdiff(names(df), c("tag", ignore)), 
                          y = "tag",
@@ -954,8 +973,8 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
       new <- score
     }
     
-    conf_mat <- table(Real = as.character(tag), 
-                      Pred = as.character(new))
+    conf_mat <- table(Real = factor(tag, levels = unique(tag)), 
+                      Pred = factor(new, levels = unique(tag)))
     total <- sum(conf_mat)
     trues <- sum(diag(conf_mat))
     falses <- total - trues
@@ -998,8 +1017,8 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
       for (i in 1:length(labels)) {
         tagi <- ifelse(tag == labels[i], 1, 0)
         predi <- as.numeric(ifelse(score == labels[i], 1, 0))
-        conf_mati <- table(Real = as.character(tagi), 
-                           Pred = as.character(predi))
+        conf_mati <- table(Real = factor(tagi, levels = unique(tagi)), 
+                          Pred = factor(predi, levels = unique(tagi)))
         if (nrow(data.frame(conf_mati)) == 4) {
           total <- sum(conf_mati)
           trues <- sum(diag(conf_mati))
@@ -1019,7 +1038,7 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
       metrics[["metrics_tags"]] <- nums %>% mutate_if(is.numeric, funs(signif(., 5)))
     }
     
-    if (plots == TRUE) {
+    if (plots) {
       plots <- list()
       # CONFUSION MATRIX PLOT
       plots[["conf_matrix"]] <- mplot_conf(tag, score, thresh, subtitle = subtitle) 

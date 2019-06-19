@@ -5,7 +5,7 @@
 \title{List files in a directory}
 \usage{
 listfiles(folder = getwd(), recursive = TRUE, regex = NA,
-  images = FALSE, export = FALSE)
+  images = FALSE, export = FALSE, dir = getwd())
 }
 \arguments{
 \item{folder}{Character. Directory which contains files}
@@ -17,6 +17,9 @@ listfiles(folder = getwd(), recursive = TRUE, regex = NA,
 \item{images}{Boolean. Bring only image files?}
 
 \item{export}{Boolean. Do you wish to export list as txt file?}
+
+\item{dir}{Character. In which directory do you wish to save 
+the results? Working directory as default.}
 }
 \description{
 This function lets the user list all files on a given directory.

@@ -11,7 +11,7 @@
 devtools::install_github("laresbernardo/lares")
 ```
   
-I currently don't have planned to post `lares` library to CRAN yet, but who knows what might happen!
+I currently don't have planned to post `lares` library to CRAN yet, but who knows what the future brings!
 
 ### Update the package
 ```{r}

@@ -19,7 +19,7 @@ missingness <- function(df, plot = FALSE, full = FALSE, subtitle = NA) {
   
   m <- df %>%
     summarize_all(.funs = ~ sum(is.na(.))) %>%
-    tidyr::gather() %>%
+    gather() %>%
     arrange(desc(value)) %>%
     filter(value > 0) %>%
     mutate(missing = round(100*value/nrow(df),2))
@@ -60,4 +60,25 @@ missingness <- function(df, plot = FALSE, full = FALSE, subtitle = NA) {
     return(p)
   }
   return(m)
+}
+
+
+####################################################################
+#' Impute Missing Values (using MICE)
+#' 
+#' This function uses the MICE methodology to impute missing values.
+#' 
+#' @family Data Wrangling
+#' @family Machine Learning
+#' @param df Dataframe. Dataframe to transform
+#' @param m Integer. Number of multiple imputations
+#' @param iters Integer. Number of iterations
+#' @param seed Integer. Set a seed for reproducibility
+#' @param quiet Boolean. Keep quiet? (or print replacements)
+#' @export
+impute <- function(df, m = 5, iters = 5, seed = 0, quiet = FALSE){
+  set.seed(seed)
+  mids <- mice(df, seed = seed, m = m, maxit = iters, printFlag = !quiet)
+  full <- complete(mids)
+  return(full)
 }
