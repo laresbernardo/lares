@@ -84,8 +84,9 @@ h2o_automl <- function(df, y = "tag",
     mutate_if(is.character, as.factor)
   
   # MISSING VALUES
-  m <- missingness(df) %>% mutate(label = paste0(variable, " (", missingness, "%)"))
-  if (sum(m$missing) > 0) {
+  m <- missingness(df)
+  if (!is.null(m)) {
+    m <- mutate(m, label = paste0(variable, " (", missingness, "%)"))
     message(paste("- The following variables contain missing observations:", vector2text(m$label),
                   if (!impute) "(You can auto-fix these by setting impute = TRUE)"))
     if (impute) {
