@@ -11,9 +11,9 @@
 get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Documentos/Docs/Data", auto = TRUE) {
   
   processFile <- function(file) {
-    cash <- read.xlsx(file, sheet = 'Fondos', skipEmptyRows=TRUE, detectDates=TRUE)
-    trans <- read.xlsx(file, sheet = 'Transacciones', skipEmptyRows=TRUE, detectDates=TRUE)
-    port <- read.xlsx(file, sheet = 'Portafolio', skipEmptyRows=TRUE, detectDates=TRUE)
+    cash <- read.xlsx(file, sheet = 'Fondos', skipEmptyRows = TRUE, detectDates = TRUE)
+    trans <- read.xlsx(file, sheet = 'Transacciones', skipEmptyRows = TRUE, detectDates = TRUE)
+    port <- read.xlsx(file, sheet = 'Portafolio', skipEmptyRows = TRUE, detectDates = TRUE)
     port <- port[port$Stocks != 0,]
     mylist <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
     return(mylist)
@@ -72,14 +72,12 @@ get_stocks_hist <- function(symbols = NA,
                             tax = 30, 
                             verbose = TRUE) {
   
-  options(warn=-1)
-  
   if (!haveInternet()) {
     stop("You currently have NO internet connection!")
   }
   
-  options("getSymbols.warning4.0"=FALSE)
-  options("getSymbols.yahoo.warning"=FALSE)
+  options("getSymbols.warning4.0" = FALSE)
+  options("getSymbols.yahoo.warning" = FALSE)
   data <- divs <- c()
   
   if (!is.na(symbols)) {
@@ -90,12 +88,12 @@ get_stocks_hist <- function(symbols = NA,
     
     if (length(from) == length(symbols)) {
       
-      for(i in 1:length(symbols)) {
+      for (i in 1:length(symbols)) {
         
         symbol <- as.character(symbols[i])
         start_date <- as.character(from[i])
 
-        values <- quantmod::getSymbols(symbol, env=NULL, from=start_date, src="yahoo") %>% data.frame()
+        values <- getSymbols(symbol, env = NULL, from = start_date, src = "yahoo") %>% data.frame()
         values <- cbind(row.names(values), as.character(symbol), values)
         colnames(values) <- c("Date","Symbol","Open","High","Low","Close","Volume","Adjusted")
         values <- mutate(values, Adjusted = rowMeans(dplyr::select(values, High, Close), na.rm = TRUE))
@@ -105,7 +103,7 @@ get_stocks_hist <- function(symbols = NA,
         if (today == TRUE) {
           quote <- function(ticks) {
             qRoot <- "https://query1.finance.yahoo.com/v7/finance/quote?fields=symbol,longName,regularMarketPrice,regularMarketChange,regularMarketTime&formatted=false&symbols="
-            z <- fromJSON(paste(qRoot, paste(ticks, collapse=","), sep=""))
+            z <- fromJSON(paste(qRoot, paste(ticks, collapse = ","), sep = ""))
             z <- z$quoteResponse$result[,c("symbol", "regularMarketTime", "regularMarketPrice", "regularMarketChange", "longName")]
             row.names(z) <- z$symbol
             z$symbol <- NULL
@@ -128,7 +126,7 @@ get_stocks_hist <- function(symbols = NA,
           div <-  data.frame(Symbol = rep(symbol, nrow(d)),
                              Date = ymd(row.names(data.frame(d))),
                              Div = as.vector(d),
-                             DivReal = as.vector(d)*(100-tax)/100)
+                             DivReal = as.vector(d)*(100 - tax)/100)
           divs <- rbind(divs, div)
         }
         if (verbose == TRUE) {
@@ -136,8 +134,8 @@ get_stocks_hist <- function(symbols = NA,
           statusbar(i, length(symbols), info = info)  
         }
       }
-    } else { message("The parameters 'symbols' and 'from' should be the same length.") }
-  } else { message("You need to define which stocks to bring. Use the 'symbols=' parameter.") }
+    } else {message("The parameters 'symbols' and 'from' should be the same length.") }
+  } else {message("You need to define which stocks to bring. Use the 'symbols=' parameter.") }
   results <- list("values" = data, "dividends" = divs)
   return(results)
 }
@@ -159,7 +157,7 @@ get_stocks_hist <- function(symbols = NA,
 #' @param expenses Numeric. How much does that bank or broker charges per
 #' transaction? Absolute value.
 #' @export
-stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
+stocks_hist_fix <- function(dailys, dividends, transactions, expenses = 7) {
   
   dailys_structure <- c("Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted")
   dividends_structure <- c("Symbol", "Date", "Div", "DivReal")
@@ -167,17 +165,17 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
   
   if (colnames(dailys) != dailys_structure) {
     stop(paste("The structure of the 'dailys' table should be:",
-               paste(shQuote(dailys_structure), collapse=", ")))
+               paste(shQuote(dailys_structure), collapse = ", ")))
   }
   
   if (colnames(dividends) != dividends_structure) {
     stop(paste("The structure of the 'dividends' table should be:",
-               paste(shQuote(dividends_structure), collapse=", ")))
+               paste(shQuote(dividends_structure), collapse = ", ")))
   }
   
   if (colnames(transactions) != trans_structure) {
     stop(paste("The structure of the 'transactions' table should be:",
-               paste(shQuote(trans_structure), collapse=", ")))
+               paste(shQuote(trans_structure), collapse = ", ")))
   }
   
   df <- dailys %>%
@@ -201,7 +199,7 @@ stocks_hist_fix <- function (dailys, dividends, transactions, expenses = 7) {
     group_by(Symbol) %>% 
     mutate(group = ifelse(lead(Stocks) > 0 & Stocks == 0, 1, 0)) %>%
     mutate(groupi = cumsum(group)) %>% ungroup() %>% 
-    mutate(Ticker = ifelse(groupi > 0, paste0(Symbol, groupi+1), Symbol)) %>% 
+    mutate(Ticker = ifelse(groupi > 0, paste0(Symbol, groupi + 1), Symbol)) %>% 
     select(-group, -groupi) %>% 
     # Some other cumulative calculations
     arrange(Date) %>% group_by(Stocks) %>%
@@ -251,16 +249,16 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
   
   if (colnames(dailys) != dailys_structure) {
     stop(paste("The structure of the 'dailys' table should be:",
-               paste(shQuote(dailys_structure), collapse=", ")))
+               paste(shQuote(dailys_structure), collapse = ", ")))
   }
   
   if (colnames(cash_in) != cash_structure) {
     stop(paste("The structure of the 'cash_in' table should be:",
-               paste(shQuote(cash_structure), collapse=", ")))
+               paste(shQuote(cash_structure), collapse = ", ")))
   }
   
   result <- dailys %>% group_by(Date) %>%
-    dplyr::summarise(Stocks = n(),
+    summarise(Stocks = n(),
                      DailyStocks = sum(DailyValue),
                      DailyTrans = sum(Amount),
                      DailyExpen = sum(Expenses),
@@ -275,7 +273,7 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
            CumPortfolio = CumCash + DailyStocks,
            TotalUSD = DailyStocks - cumsum(DailyTrans),
            TotalPer = round(100 * DailyStocks / (cumsum(DailyTrans)), 2) - 100) %>%
-    dplyr::select(Date,CumPortfolio,TotalUSD,TotalPer,RelUSD,RelPer,DailyStocks,
+    select(Date,CumPortfolio,TotalUSD,TotalPer,RelUSD,RelPer,DailyStocks,
                   DailyTrans,DailyDiv,CumDiv,DailyCash,CumCash) %>% arrange(desc(Date)) %>%
     mutate_if(is.numeric, funs(round(., 2))) %>%
     distinct()
@@ -298,14 +296,12 @@ portfolio_performance <- function(portfolio, daily) {
   
   portf_structure <- c("Symbol", "Stocks", "StockIniValue", "InvPerc", "Type", "Trans", "StartDate")
   
-  if (colnames(portfolio) != portf_structure) {
-    stop(paste("The structure of the 'portfolio' table should be:",
-               paste(shQuote(portf_structure), collapse=", ")))
-  }
+  if (colnames(portfolio) != portf_structure)
+    stop(paste("The structure of the 'portfolio' table should be:", vector2text(portf_structure)))
   
   divIn <- daily %>% group_by(Symbol) %>%
-    dplyr::summarise(DivIncome = sum(DailyDiv),
-                     DivPerc = round(100 * DivIncome / sum(Amount), 2)) %>%
+    summarise(DivIncome = sum(DailyDiv),
+              DivPerc = round(100 * DivIncome / sum(Amount), 2)) %>%
     arrange(desc(DivPerc))
   
   result <- left_join(portfolio %>% mutate(Symbol = as.character(Symbol)), 
@@ -341,9 +337,9 @@ portfolio_daily <- function(data, dailys, cash_fix = 0) {
                                  dividends = dailys$dividends, 
                                  transactions = data$transactions)
   
-  mindate <- as.Date(min(as.Date(daily_fixed$Date), origin="1970-01-01"), na.rm = TRUE)
+  mindate <- as.Date(min(as.Date(daily_fixed$Date), origin = "1970-01-01"), na.rm = TRUE)
 
-  result <- data.frame(Date = as.Date(mindate:Sys.Date(), origin="1970-01-01")) %>%
+  result <- data.frame(Date = as.Date(mindate:Sys.Date(), origin = "1970-01-01")) %>%
     left_join(data$cash %>% select(Date, Cash) %>% rename(Deposit = Cash), "Date") %>%
     left_join(data$transactions %>% group_by(Date) %>% summarise(Amount = sum(Amount)) %>%
                 select(Date, Amount) %>% rename(Invest = Amount), "Date") %>%
@@ -393,11 +389,11 @@ portfolio_daily_plot <- function(stocks_perf, save = FALSE) {
     filter(abs(RelPer) < 70) %>%
     mutate(color = ifelse(RelPer > 0, "Pos", "Neg")) %>%
     ggplot() +
-    geom_area(aes(x=Date, y=TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.15) +
-    geom_bar(aes(x=Date, y=RelPer, fill=color), stat='identity', width = 1) +
-    geom_line(aes(x=Date, y=TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.9, colour="black") +
-    geom_hline(yintercept = 0, alpha = 0.5, color="black") +
-    guides(fill=FALSE) + 
+    geom_area(aes(x = Date, y = TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.15) +
+    geom_bar(aes(x = Date, y = RelPer, fill = color), stat = 'identity', width = 1) +
+    geom_line(aes(x = Date, y = TotalPer/(0.5*max(stocks_perf$TotalPer))), alpha = 0.9, colour = "black") +
+    geom_hline(yintercept = 0, alpha = 0.5, color = "black") +
+    guides(fill = FALSE) + 
     scale_x_date(date_labels = "%b%y") +
     scale_y_continuous(
       labels = comma,
@@ -408,12 +404,10 @@ portfolio_daily_plot <- function(stocks_perf, save = FALSE) {
          subtitle = paste(stocks_perf$Date[1]," (Includes Expenses): ",
                           formatNum(stocks_perf$TotalPer[1],2),"% ($",
                           formatNum(stocks_perf$TotalUSD[1], 0),") | $",
-                          formatNum(stocks_perf$CumPortfolio[1]), sep="")) +
+                          formatNum(stocks_perf$CumPortfolio[1]), sep = "")) +
     theme_lares2()
   
-  if (save) {
-    plot <- plot + ggsave("portf_daily_change.png", width = 8, height = 5, dpi = 300)
-  }
+  if (save) plot <- plot + ggsave("portf_daily_change.png", width = 8, height = 5, dpi = 300)
 
   return(plot)
   
@@ -450,8 +444,8 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, s
     ggplot() + 
     geom_hline(yintercept = 0, colour = "black") +
     geom_col(aes(x = reorder(Symbol, Invested), y = Invested, fill = Symbol, group = 1)) +
-    geom_col(aes(x = Symbol, y = Invested + DifUSD, fill=Symbol), alpha=0.5) +
-    geom_col(aes(x = Symbol, y = box), fill="grey", alpha=0.5) +
+    geom_col(aes(x = Symbol, y = Invested + DifUSD, fill = Symbol), alpha = 0.5) +
+    geom_col(aes(x = Symbol, y = box), fill = "grey", alpha = 0.5) +
     geom_point(aes(x = Symbol, y = Invested + DifUSD, shape = shapeflag), colour = "black") +
     scale_shape_identity() +
     geom_text(aes(label = paste0("$",formatNum(DifUSD,1)), y = Invested + DifUSD, x = Symbol), 
@@ -469,13 +463,11 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, s
     annotate("label", x = length(unique(portfolio_perf$Stocks)) * 0.25, y = tops * 0.6, 
              label = vector2text(summary,"\n",quotes = F), size = 3.5, hjust = 0, alpha = 0.55) +
     scale_y_continuous(limits = c(NA, tops*1.1), labels = comma) + 
-    labs(y='', x='', title="Stocks Distribution and Growth") +
-    guides(fill=FALSE, colour=FALSE) + coord_flip() +
+    labs(y = '', x = '', title = "Stocks Distribution and Growth") +
+    guides(fill = FALSE, colour = FALSE) + coord_flip() +
     theme_lares2(pal = 1)
   
-  if (save) {
-    plot <- plot + ggsave("portf_stocks_change.png", width = 8, height = 8, dpi = 300)
-  }
+  if (save) plot <- plot + ggsave("portf_stocks_change.png", width = 8, height = 8, dpi = 300)
   
   return(plot)
   
@@ -500,36 +492,30 @@ stocks_daily_plot <- function(portfolio, daily, weighted = TRUE, group = TRUE, s
   try_require("ggrepel")
   
   d <- daily %>%
-    left_join(portfolio %>% select(Symbol,Type), by='Symbol') %>%
+    left_join(portfolio %>% select(Symbol,Type), by = 'Symbol') %>%
     arrange(Date) %>% group_by(Symbol) %>%
-    mutate(Hist = if (weighted) {100*(1-cumsum(Amount)/(Stocks*Adjusted))} else {RelChangePHist},
+    mutate(Hist = if (weighted) {100*(1 - cumsum(Amount)/(Stocks*Adjusted))} else {RelChangePHist},
            BuySell = ifelse(Amount > 0, "Bought", ifelse(Amount < 0, "Sold", NA)))
   labels <- d %>% filter(Date == max(Date))
   amounts <- d %>% filter(Amount != 0) %>%
     mutate(label = paste0(round(Amount/1000,1),"K"))
   days <- as.integer(difftime(range(d$Date)[2], range(d$Date)[1], units = "days"))
   plot <- ggplot(d) + ylab('% Change since Start') +
-    geom_hline(yintercept = 0, alpha=0.8, color="black") +
-    geom_line(aes(x=Date, y=Hist, color=Symbol), alpha=0.9, size=0.5) +
-    geom_point(aes(x=Date, y=Hist, size=abs(Amount), colour=BuySell), alpha=0.6) +
+    geom_hline(yintercept = 0, alpha = 0.8, color = "black") +
+    geom_line(aes(x = Date, y = Hist, color = Symbol), alpha = 0.9, size = 0.5) +
+    geom_point(aes(x = Date, y = Hist, size = abs(Amount), colour = BuySell), alpha = 0.6) +
     scale_y_continuous(position = "right") +
-    scale_size(range = c(0, 3.2)) + guides(size=F, colour=F) + 
+    scale_size(range = c(0, 3.2)) + guides(size = FALSE, colour = FALSE) + 
     xlim(min(d$Date), max(d$Date) + round(days*0.08)) +
     labs(title = 'Daily Portfolio\'s Stocks Change (%) since Start', x = '',
          subtitle = 'Showing absolute delta values since first purchase', colour = '') +
-    geom_label_repel(data=amounts, aes(x=Date, y=Hist, label=label), size=2) +
-    geom_label(data=labels, aes(x=Date, y=Hist, label=Symbol), size=2.5, hjust=-0.2, alpha=0.6) +
+    geom_label_repel(data = amounts, aes(x = Date, y = Hist, label = label), size = 2) +
+    geom_label(data = labels, aes(x = Date, y = Hist, label = Symbol), size = 2.5, hjust = -0.2, alpha = 0.6) +
     theme_lares2(pal = 2)
   
-  if (group) {
-    plot <- plot + facet_grid(Type ~ ., scales = "free", switch = "both") 
-  }
-  if (weighted) {
-    plot <- plot + labs(subtitle = "Showing real weighted portfolio delta values") 
-  }
-  if (save) {
-    ploty <- plot + ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300) 
-  }
+  if (group) plot <- plot + facet_grid(Type ~ ., scales = "free", switch = "both")
+  if (weighted) plot <- plot + labs(subtitle = "Showing real weighted portfolio delta values")
+  if (save) plot <- plot + ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300) 
   
   return(plot)
   
@@ -546,40 +532,40 @@ stocks_daily_plot <- function(portfolio, daily, weighted = TRUE, group = TRUE, s
 #' @param daily Dataframe. Daily data
 #' @param save Boolean. Export plot as an image?
 #' @export
-portfolio_distr_plot <- function (portfolio_perf, daily, save = FALSE) {
+portfolio_distr_plot <- function(portfolio_perf, daily, save = FALSE) {
   
   plot_stocks <- ggplot(portfolio_perf) +
     geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
-    coord_polar("y", start = 0) + scale_y_continuous(labels=scales::comma) +
+    coord_polar("y", start = 0) + scale_y_continuous(labels = comma) +
     labs(x = '', y = "Portfolio's Stocks Dimentions") + theme_lares2(pal = 1)
   plot_areas <- ggplot(portfolio_perf) +
     geom_bar(aes(x = "", y = DailyValue/sum(DailyValue), fill = Type), width = 1, stat = "identity") +
-    coord_polar("y", start = 0) + scale_y_continuous(labels = scales::percent) +
+    coord_polar("y", start = 0) + scale_y_continuous(labels = percent) +
     labs(x = '', y = "Portfolio's Stocks Type Distribution") + theme_lares2(pal = 1)
   t1 <- tableGrob(
     portfolio_perf %>% 
       mutate(Perc = formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
              DailyValue = formatNum(DailyValue, 2),
              DifPer = paste0(formatNum(DifPer, 2))) %>%
-      select(Symbol, Type, DailyValue, Perc, DifPer), rows=NULL,
+      select(Symbol, Type, DailyValue, Perc, DifPer), rows = NULL,
     cols = c("Stock","Stock Type","Today's Value","% Portaf","Growth %"),
     theme = ttheme_minimal())
   t2 <- tableGrob(
     portfolio_perf %>% 
       group_by(Type) %>%
       summarise(Perc = formatNum(100*sum(DailyValue)/sum(portfolio_perf$DailyValue),2),
-                DifPer = formatNum(100*sum(DailyValue)/sum(Invested)-100,2),
+                DifPer = formatNum(100*sum(DailyValue)/sum(Invested) - 100,2),
                 DailyValue = formatNum(sum(DailyValue))) %>%
       select(Type, DailyValue, Perc, DifPer) %>% 
-      arrange(desc(Perc)), rows=NULL,
+      arrange(desc(Perc)), rows = NULL,
     cols = c("Stock Type","Today's Value","% Portaf","Growth %"),
     theme = ttheme_minimal())
   
   
-  p <- arrangeGrob(plot_stocks, plot_areas, t1, t2, nrow=2, heights=c(3,3))
+  p <- arrangeGrob(plot_stocks, plot_areas, t1, t2, nrow = 2, heights = c(3,3))
   
   if (save) {
-    png("portf_distribution.png", width=700, height=500)
+    png("portf_distribution.png", width = 700, height = 500)
     plot(p)
     dev.off() 
   } else {
@@ -651,17 +637,14 @@ portfolio_total_plot <- function(portfolio, save = FALSE) {
 #' @export
 stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   
-  options(warn = -1)
-  
   tabs <- c('portfolio','transactions','cash')
   if (sum(names(data) %in% tabs) != 3) {
     not <- names(data)[!names(data) %in% tabs]
     stop(paste("The following objects are obligatory too:", vector2text(not)))
   }
   
-  current_wd <- getwd()
   tempdir <- tempdir()
-  setwd(tempdir)
+  on.exit(setwd(tempdir))
   
   # Data wrangling and calculations
   message("Downloading historical and live data for each Stock...")
@@ -724,10 +707,9 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
 #' @export
 stocks_html <- function(results) {
   
-  options(warn=-1)
   dir <- getwd()
   pandoc <- Sys.getenv("RSTUDIO_PANDOC")
-  Sys.setenv(RSTUDIO_PANDOC=pandoc)
+  Sys.setenv(RSTUDIO_PANDOC = pandoc)
   
   # Can be more accurate with names but works for me!
   params <- list(portf_daily_change = results[[1]],
@@ -771,8 +753,6 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
                           mail = "laresbernardo@gmail.com", 
                           creds = NA) {
   
-  options(warn=-1)
-
   # Setting up working directory
   current_wd <- getwd()
   if (dir.exists(wd)) {
@@ -780,7 +760,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
   } else {
     temp <- tempdir() 
   }
-  setwd(temp)
+  on.exit(setwd(temp))
   
   # Set token for Sendgrid credentials:
   token_dir <- case_when(
@@ -821,14 +801,14 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
 #' @param etf Character Vector. Which ETFs you wish to scrap?
 #' @param verbose Boolean. Print results and progress while downloading?
 #' @export
-etf_sector <- function (etf = "VTI", verbose = TRUE) {
+etf_sector <- function(etf = "VTI", verbose = TRUE) {
   ret <- data.frame()
   for (i in 1:length(etf)) {
     url <- paste0("https://etfdb.com/etf/", toupper(etf[i]))
     if (RCurl::url.exists(url)) {
       sector <- read_html(url) %>% html_nodes(".col-md-6") %>% 
         html_text() %>% .[grepl("Sector Breakdown",.)] %>% .[1]
-      sector <- data.frame(matrix(unlist(strsplit(sector, split = "\n"))[-c(1:5)], ncol=2, byrow=TRUE))
+      sector <- data.frame(matrix(unlist(strsplit(sector, split = "\n"))[-c(1:5)], ncol = 2, byrow = TRUE))
       colnames(sector) <- c("Sector", "Percentage")
       sector$Percentage <- as.integer(cleanText(sector$Percentage))/100 
       sector$ETF <- toupper(etf[i])

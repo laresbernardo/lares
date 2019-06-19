@@ -968,10 +968,10 @@ importxlsx <- function(file) {
 ####################################################################
 #' Quiet prints and verbose noice
 #' 
-#' This function silences (verbose) output prints.
+#' This function silences (verbose) output prints. Thanks to Hadley Wickham
+#' for bringing the idea.
 #' 
 #' @family Tools
-#' @author Hadley Wickham
 #' @param fx Function to quiet
 #' @export
 quiet <- function(fx) { 

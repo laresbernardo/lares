@@ -24,16 +24,12 @@ crosstab <- function(df, ...,
                      decimals = 2, keep_nas = TRUE, total = TRUE,
                      order = TRUE) {
   
-  options(warn=-1)
-  
   vars <- quos(...)
   
-  names <- gsub("~","",as.character(vars))
+  names <- gsub("~", "", as.character(vars))
   xname <- names[1]
   yname <- names[2]
-  if (length(vars) == 3) {
-    wname <- names[3] 
-  }
+  if (length(vars) == 3) wname <- names[3] 
   
   if (length(vars) == 1) {
     message("For one variable with/out weights, use freqs(var, wt=weight) instead!")
@@ -41,13 +37,11 @@ crosstab <- function(df, ...,
     return(ret)
   }
   
-  df <- df %>% select(!!!vars)
+  df <- select(df, !!!vars) %>% mutate_each(funs(as.character))
   x <- df[,1]
   y <- df[,2]
   
-  if (keep_nas) {
-    df <- df %>% replace(is.na(.), "NA")
-  }
+  if (keep_nas) df <- df %>% replace(is.na(.), "NA")
   
   if (prow) {
     newx <- y; newy <- x; newxname <- yname; newyname <- xname;  
@@ -67,34 +61,33 @@ crosstab <- function(df, ...,
   dfn <- data.frame(x, y, weight)
   colnames(dfn) <- c("x","y","weight")
   
-  ret <- freqs(dfn, x, y, wt=weight) %>% select(-pcum, -p) %>%
-    mutate_all(funs(ifelse(as.character(.)!="", ., "NA")))
+  ret <- freqs(dfn, x, y, wt = weight) %>% select(-pcum, -p) %>%
+    mutate(x = ifelse(x == "" | is.na(x), "NA", as.character(x)),
+           y = ifelse(x == "" | is.na(y), "NA", as.character(y)))
+
   levels <- factor(unique(ret$x), levels = unique(ret$x))
   cols <- factor(unique(ret$y), levels = unique(ret$y))
-  tab <- tidyr::spread(ret, y, n)
+  tab <- spread(ret, y, n)
   ret <- tab[match(levels, tab$x),]
   colnames(ret)[1] <- cross_name
   ret <- ret %>% replace(is.na(.), 0)
   
   # Create totals
   ret <- ret %>% mutate(total = rowSums(select_if(., is.numeric)))
-  if (pcol | prow) {
+  if (pcol | prow) 
     ret <- ret %>% mutate_if(is.numeric, funs(round(100*./sum(.), decimals)))
-  }
   if (pall) {
     all <- sum(ret[,-1] %>% select(-total))
     ret <- ret %>% mutate_if(is.numeric, funs(round(100*./all, decimals)))
   }
   
-  if (order == TRUE) {
+  if (order) {
     ret <- ret %>% arrange(desc(total)) # Rows
     order <- c(colnames(ret)[1], as.character(cols), "total")
     ret <- ret[,order] # Columns
   }
   
-  if (!total) {
-    ret <- ret %>% select(-total)
-  }
+  if (!total) ret <- ret %>% select(-total)
   
   return(ret)
   

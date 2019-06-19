@@ -69,7 +69,7 @@ if (getRversion() >= "2.15.1")
       "contacts_is_contact","contacts_merge_audits","contacts_portal_id","model.matrix",
       "contacts_profile_token","contacts_profile_url","contacts_vid","content","size",
       "createdate","credit","cuts","date_of_birth","days","dealId","send.mail","shapeflag",
-      "dealstage","df_status","form_submissions","gather","ceiling_date","trim",
+      "dealstage","df_status","form_submissions","gather","ceiling_date","trim","current_wd",
       "get_questionnaire","get_typeforms","endfx","to","Real","Pred","Freq","force_n",
       "hasMore","has_more","identification_date","identity_profiles","ggplotly","facet2",
       "image_darknet_detect","image_darknet_model","image_info","image_read","index",

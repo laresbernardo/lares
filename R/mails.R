@@ -20,38 +20,21 @@ mailSend <- function(from = "RMail <laresbernardo@gmail.com>",
                      attachment = NA,
                      quiet = FALSE,
                      creds = NA){
-  
-  options(warn = -1)
-  #require(httr)
-  
+
   # MailGun documentation:
   # https://documentation.mailgun.com/en/latest/api-sending.html#sending
   
-  credentials <- get_credentials(from="mailgun", dir = creds)
+  credentials <- get_credentials(from = "mailgun", dir = creds)
   url <- credentials$url
   api_key <- credentials$api
   
   the_body <- list(from = from, to = to, subject = subject)
   
-  if (grepl("mailgun", url)) {
-    the_body[["o:tag"]] <- "R-email"
-  }
-  
-  if (!is.na(cc)) {
-    the_body[["cc"]] <- cc
-  }
-  
-  if (!is.na(bcc)) {
-    the_body[["bcc"]] <- bcc
-  }
-  
-  if (!is.na(text)) {
-    the_body[["text"]] <- text
-  }
-  
-  if (!is.na(html)) {
-    the_body[["html"]] <- html
-  }
+  if (grepl("mailgun", url)) the_body[["o:tag"]] <- "R-email"
+  if (!is.na(cc)) the_body[["cc"]] <- cc
+  if (!is.na(bcc)) the_body[["bcc"]] <- bcc
+  if (!is.na(text)) the_body[["text"]] <- text
+  if (!is.na(html)) the_body[["html"]] <- html
   
   if (sum(!is.na(attachment)) > 0) {
     if ("ggplot" %in% class(attachment)) {

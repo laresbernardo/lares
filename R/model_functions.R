@@ -101,8 +101,13 @@ h2o_automl <- function(df, y = "tag",
                   "non-numerical columns. Consider using ohse() for One Hot Smart Encoding before automl"))
   
   # MODEL TYPE
-  model_type <- ifelse(length(unique(df$tag)) <= as.integer(thresh), "Classifier", "Regression")
+  cats <- unique(df$tag)
+  model_type <- ifelse(length(cats) <= as.integer(thresh), "Classifier", "Regression")
   message("Model type: ", model_type)
+  # When seems numeric but is categorical
+  if (model_type == "Classifier" & sum(grepl('^[0-9]+$', cleanText(cats))) == length(cats))
+    df$tag <- as.factor(paste0("p", df$tag))
+  # Show a summary
   if (model_type == "Classifier") print(data.frame(freqs(df, tag)))
   if (model_type == "Regression") print(summary(df$tag)) 
   
@@ -115,19 +120,17 @@ h2o_automl <- function(df, y = "tag",
   } else {
     # If we already have a default split for train and test (train_test)
     colnames(df)[colnames(df) == train_test] <- "train_test"
-    if ((!unique(as.character(df$train_test)) %in% c('train', 'test')) & 
-        (length(unique(df$train_test)) != 2)) {
+    if ((!unique(as.character(df$train_test)) %in% c('train', 'test')) & (length(cats) != 2)) {
       stop("Your train_test column should have 'train' and 'test' values only!")
     }
-    train <- df %>% filter(train_test == "train")
-    test <- df %>% filter(train_test == "test")
+    train <- filter(df, train_test == "train")
+    test <- filter(df, train_test == "test")
     print(table(df$train_test))
   }
   
   # BALANCE TRAINING SET
   if (model_type == "Classifier" & balance == TRUE) {
     total <- nrow(train)
-    cats <- length(unique(train$tag))
     min <- train %>% freqs(tag) %>% .$n %>% min()
     rel <- round(100*min*cats/total, 1)
     train <- train %>% group_by(tag) %>% sample_n(min)
@@ -145,20 +148,21 @@ h2o_automl <- function(df, y = "tag",
   }
   message(paste(">>> Iterating until", max_models, "models or", max_time, "seconds..."))
   # IGNORED VARIABLES
-  aml <- h2o::h2o.automl(x = setdiff(names(df), c("tag", ignore)), 
-                         y = "tag",
-                         training_frame = as.h2o(train),
-                         leaderboard_frame = as.h2o(test),
-                         weights_column = weight,
-                         max_runtime_secs = max_time,
-                         max_models = max_models,
-                         exclude_algos = exclude_algos,
-                         nfolds = 5, 
-                         seed = seed)
+  aml <- h2o.automl(x = setdiff(names(df), c("tag", ignore)), 
+                    y = "tag",
+                    training_frame = as.h2o(train),
+                    leaderboard_frame = as.h2o(test),
+                    weights_column = weight,
+                    max_runtime_secs = max_time,
+                    max_models = max_models,
+                    exclude_algos = exclude_algos,
+                    nfolds = 5, 
+                    seed = seed)
   if (nrow(aml@leaderboard) == 0) {
-    stop("No models were trained! Please set max_models to at least 1.")
+    stop("Error: no models trained! Please set max_models to at least 1.")
   } else {
-    message(paste("Succesfully trained", nrow(aml@leaderboard), "models:")) 
+    if (!is.nan(aml@leaderboard[1,2]))
+      message(paste("Succesfully trained", nrow(aml@leaderboard), "models:")) 
   }
   print(aml@leaderboard[,1:3])
   flow <- "http://localhost:54321/flow/index.html"
@@ -171,11 +175,9 @@ h2o_automl <- function(df, y = "tag",
   # Variables importances
   imp <- data.frame(h2o.varimp(m)) %>%
     {if ("names" %in% colnames(.)) 
-      dplyr::rename(., "variable" = "names", "importance" = "coefficients") else .
-    } %>%
+      rename(., "variable" = "names", "importance" = "coefficients") else .} %>%
     {if ("percentage" %in% colnames(.)) 
-      dplyr::rename(., "importance" = "percentage") else .
-    }
+      rename(., "importance" = "percentage") else .}
   noimp <- imp %>% filter(importance < 0.015) %>% arrange(desc(importance))
   if (nrow(noimp) > 0) {
     which <- noimp %>% .$variable %>% vector2text(.) 
@@ -184,7 +186,7 @@ h2o_automl <- function(df, y = "tag",
   
   # CLASSIFICATION MODELS
   if (model_type == "Classifier") {
-    if (length(unique(train$tag)) == 2) {
+    if (length(cats) == 2) {
       scores <- select_if(scores, is.numeric) %>% .[,1]
       multis <- NA
     } else {
@@ -867,9 +869,6 @@ ROC <- function(tag, score, multis = NA) {
     for (i in 1:(length(cols) - 2)) {
       which <- colnames(df)[2 + i]
       res <- df[,c(which)]
-      if (grepl("p+[[:digit:]]", which)) {
-        which <- as.character(gsub("p","", which))
-      }
       label <- ifelse(df[,1] == which, which, "other")
       roci <- pROC::roc(label, res, ci = TRUE, quiet = TRUE)
       rocs[[paste(cols[i + 2])]] <- roci
@@ -908,15 +907,14 @@ conf_mat <- function(tag, score, thresh = 0.5) {
   df <- data.frame(tag, score)
   
   # About tags
-  labels <- df %>% group_by(tag) %>% tally() %>% arrange(desc(n)) %>% .$tag
+  labels <- df %>% group_by(tag, .drop = FALSE) %>% tally(wt = NULL) %>% arrange(desc(n)) %>% .$tag
   df <- df %>% mutate(tag = factor(tag, levels = unique(tag)))
   
   # About scores
   if (is.numeric(df$score) & length(unique(tag)) == 2) {
-    df <- df %>% mutate(pred = ifelse(
-      score >= thresh, as.character(labels[1]), as.character(labels[2])))
+    df <- mutate(df, pred = ifelse(score >= thresh, as.character(labels[1]), as.character(labels[2])))
   } else {
-    df <- df %>% mutate(pred = score)
+    df <- mutate(df, pred = score)
   }
   
   # Confussion Matrix
@@ -994,14 +992,9 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
     } else {
       
       # For Multi-Categories
-      if (is.na(multis)) {
+      if (is.na(multis)) 
         stop("You have to input a data.frame with each tag's probability into the multis parameter.")
-      } 
       tags <- sort(unique(tag))
-      if (any(1:1000 %in% tags)) {
-        which <- grepl("[[:digit:]]", tags)
-        tags[which] <- paste0("p", tags)
-      }
       if (sum(colnames(multis) %in% tags) != length(tags)) {
         stop(paste("Your multis data.frame colums should be:", vector2text(tags)))
       }
@@ -1017,8 +1010,8 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
       for (i in 1:length(labels)) {
         tagi <- ifelse(tag == labels[i], 1, 0)
         predi <- as.numeric(ifelse(score == labels[i], 1, 0))
-        conf_mati <- table(Real = factor(tagi, levels = unique(tagi)), 
-                          Pred = factor(predi, levels = unique(tagi)))
+        conf_mati <- table(Real = factor(tagi, levels = c(1, 0)), 
+                           Pred = factor(predi, levels = c(1, 0)))
         if (nrow(data.frame(conf_mati)) == 4) {
           total <- sum(conf_mati)
           trues <- sum(diag(conf_mati))

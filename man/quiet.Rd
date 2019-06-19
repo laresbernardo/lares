@@ -10,7 +10,8 @@ quiet(fx)
 \item{fx}{Function to quiet}
 }
 \description{
-This function silences (verbose) output prints.
+This function silences (verbose) output prints. Thanks to Hadley Wickham
+for bringing the idea.
 }
 \seealso{
 Other Tools: \code{\link{bindfiles}},
@@ -31,8 +32,5 @@ Other Tools: \code{\link{bindfiles}},
   \code{\link{myip}}, \code{\link{pass}},
   \code{\link{read.file}}, \code{\link{statusbar}},
   \code{\link{updateLares}}, \code{\link{zerovar}}
-}
-\author{
-Hadley Wickham
 }
 \concept{Tools}
