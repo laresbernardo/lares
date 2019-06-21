@@ -28,6 +28,8 @@
 #' row twice. Negative weights are not allowed.
 #' @param balance Boolean. Auto-balance train dataset with under-sampling?
 #' @param impute Boolean. Fill NA values with MICE?
+#' @param center,scale Boolean. Using the base function scale, do you wish
+#' to center and/or scale all numerical values? 
 #' @param seed Integer. Set a seed for reproducibility. AutoML can only 
 #' guarantee reproducibility if max_models is used because max_time is 
 #' resource limited.
@@ -56,6 +58,8 @@ h2o_automl <- function(df, y = "tag",
                        weight = NULL,
                        balance = FALSE,
                        impute = FALSE,
+                       center = FALSE,
+                       scale = FALSE,
                        seed = 0,
                        thresh = 5,
                        max_time = 5*60,
@@ -87,19 +91,26 @@ h2o_automl <- function(df, y = "tag",
   m <- missingness(df)
   if (!is.null(m)) {
     m <- mutate(m, label = paste0(variable, " (", missingness, "%)"))
-    message(paste("- The following variables contain missing observations:", vector2text(m$label),
-                  if (!impute) "(You can auto-fix these by setting impute = TRUE)"))
+    message(paste0("NOTE: The following variables contain missing observations: ", vector2text(m$label),
+                   if (!impute) ". Consider setting the impute parameter."))
     if (impute) {
-      message(">>> Imputing missing values")
+      message(paste(">>> Imputing", sum(m$missing), "missing values..."))
       df <- impute(df, seed = seed, quiet = TRUE)
     }
   }
   
   # ONE HOT SMART ENCODING
-  nums <- length(df_str(df, "names", quiet = TRUE)$nums)
-  if (nums != ncol(df)) 
-    message(paste("- There are", ncol(df) - nums,
-                  "non-numerical columns. Consider using ohse() for One Hot Smart Encoding before automl"))
+  nums <- df_str(df, "names", quiet = TRUE)$nums
+  if (length(nums) != ncol(df)) 
+    message(paste(
+      "NOTE: There are", ncol(df) - length(nums), "non-numerical features.",
+      "Consider using ohse() for One Hot Smart Encoding before automl if you want to custom your inputs."))
+  if (scale | center & length(nums) > 0) {
+    new <- data.frame(lapply(df[nums], function(x) scale(x, center = center, scale = scale)))
+    colnames(new) <- nums; df[nums] <- new
+    msg <- ifelse(scale & center, "scaled and centered", ifelse(scale, "scaled", "centered"))
+    message(paste0("All numerical features (", length(nums), ") were ", msg))
+  }
   
   # MODEL TYPE
   cats <- unique(df$tag)
@@ -182,7 +193,7 @@ h2o_automl <- function(df, y = "tag",
   noimp <- imp %>% filter(importance < 0.015) %>% arrange(desc(importance))
   if (nrow(noimp) > 0) {
     which <- noimp %>% .$variable %>% vector2text(.) 
-    message(paste("The following variables are NOT important:", which))
+    message(paste("The following variables were NOT important:", which))
   }
   
   # CLASSIFICATION MODELS

@@ -6,10 +6,10 @@
 \usage{
 h2o_automl(df, y = "tag", ignore = c(), train_test = NA,
   split = 0.7, weight = NULL, balance = FALSE, impute = FALSE,
-  seed = 0, thresh = 5, max_time = 5 * 60, max_models = 25,
-  start_clean = TRUE, exclude_algos = c("StackedEnsemble",
-  "DeepLearning"), alarm = TRUE, save = FALSE, subdir = NA,
-  project = "Machine Learning Model")
+  center = FALSE, scale = FALSE, seed = 0, thresh = 5,
+  max_time = 5 * 60, max_models = 25, start_clean = TRUE,
+  exclude_algos = c("StackedEnsemble", "DeepLearning"), alarm = TRUE,
+  save = FALSE, subdir = NA, project = "Machine Learning Model")
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
@@ -34,6 +34,9 @@ row twice. Negative weights are not allowed.}
 \item{balance}{Boolean. Auto-balance train dataset with under-sampling?}
 
 \item{impute}{Boolean. Fill NA values with MICE?}
+
+\item{center, scale}{Boolean. Using the base function scale, do you wish
+to center and/or scale all numerical values?}
 
 \item{seed}{Integer. Set a seed for reproducibility. AutoML can only 
 guarantee reproducibility if max_models is used because max_time is 

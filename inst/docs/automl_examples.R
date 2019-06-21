@@ -28,9 +28,11 @@ r$metrics
 # Variables importances for any model
 mplot_importance(r$importance$variable, r$importance$importance)
 
+
 # OTHER EXAMPLE
 data(dfl)
 r <- dfl %>% ohse(dates = T) %>% 
   select(-opp_date, -opp_id) %>% 
   h2o_automl("issued", max_models = 5, balance = TRUE)
 r$metrics
+
