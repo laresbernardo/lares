@@ -80,19 +80,12 @@ get_stocks_hist <- function(symbols = NA,
   options("getSymbols.yahoo.warning" = FALSE)
   data <- divs <- c()
   
-  if (!is.na(symbols)) {
-    
-    if (is.na(from)) {
-      from <- rep(Sys.Date() - 365, each = length(symbols))
-    }
-    
+  if (!any(is.na(symbols))) {
+    from[is.na(from)] <- Sys.Date() - 365
     if (length(from) == length(symbols)) {
-      
       for (i in 1:length(symbols)) {
-        
         symbol <- as.character(symbols[i])
         start_date <- as.character(from[i])
-
         values <- getSymbols(symbol, env = NULL, from = start_date, src = "yahoo") %>% data.frame()
         values <- cbind(row.names(values), as.character(symbol), values)
         colnames(values) <- c("Date","Symbol","Open","High","Low","Close","Volume","Adjusted")
@@ -163,17 +156,17 @@ stocks_hist_fix <- function(dailys, dividends, transactions, expenses = 7) {
   dividends_structure <- c("Symbol", "Date", "Div", "DivReal")
   trans_structure <- c("ID", "Inv", "CODE", "Symbol", "Date", "Quant", "Value", "Amount", "Description")
   
-  if (colnames(dailys) != dailys_structure) {
+  if (!all(colnames(dailys) %in% dailys_structure)) {
     stop(paste("The structure of the 'dailys' table should be:",
                paste(shQuote(dailys_structure), collapse = ", ")))
   }
   
-  if (colnames(dividends) != dividends_structure) {
+  if (!all(colnames(dividends) %in% dividends_structure)) {
     stop(paste("The structure of the 'dividends' table should be:",
                paste(shQuote(dividends_structure), collapse = ", ")))
   }
   
-  if (colnames(transactions) != trans_structure) {
+  if (!all(colnames(transactions) %in% trans_structure)) {
     stop(paste("The structure of the 'transactions' table should be:",
                paste(shQuote(trans_structure), collapse = ", ")))
   }
@@ -247,12 +240,12 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
   
   cash_structure <- c("ID", "Date", "Cash")
   
-  if (colnames(dailys) != dailys_structure) {
+  if (!all(colnames(dailys) %in% dailys_structure)) {
     stop(paste("The structure of the 'dailys' table should be:",
                paste(shQuote(dailys_structure), collapse = ", ")))
   }
   
-  if (colnames(cash_in) != cash_structure) {
+  if (!all(colnames(cash_in) %in% cash_structure)) {
     stop(paste("The structure of the 'cash_in' table should be:",
                paste(shQuote(cash_structure), collapse = ", ")))
   }
@@ -296,7 +289,7 @@ portfolio_performance <- function(portfolio, daily) {
   
   portf_structure <- c("Symbol", "Stocks", "StockIniValue", "InvPerc", "Type", "Trans", "StartDate")
   
-  if (colnames(portfolio) != portf_structure)
+  if (!all(colnames(portfolio) %in% portf_structure))
     stop(paste("The structure of the 'portfolio' table should be:", vector2text(portf_structure)))
   
   divIn <- daily %>% group_by(Symbol) %>%
@@ -782,11 +775,6 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
              creds = token_dir,
              quiet = FALSE)
   }
-  
-  # Clean everything up and delete files created
-  unlink(temp, recursive = FALSE)
-  graphics.off()
-  rm(list = ls())
 }
 
 ####################################################################
