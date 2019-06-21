@@ -689,7 +689,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
                   df_daily = daily,
                   df_hist = hist)
   unlink(tempdir, recursive = FALSE)
-  setwd(current_wd)
+  
   message("All results are ready to export")
   return(results)
 }
@@ -754,7 +754,6 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
                           creds = NA) {
   
   # Setting up working directory
-  current_wd <- getwd()
   if (dir.exists(wd)) {
     temp <- wd
   } else {
@@ -783,8 +782,6 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
              creds = token_dir,
              quiet = FALSE)
   }
-  
-  setwd(current_wd)
   
   # Clean everything up and delete files created
   unlink(temp, recursive = FALSE)
