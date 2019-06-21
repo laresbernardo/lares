@@ -156,17 +156,17 @@ stocks_hist_fix <- function(dailys, dividends, transactions, expenses = 7) {
   dividends_structure <- c("Symbol", "Date", "Div", "DivReal")
   trans_structure <- c("ID", "Inv", "CODE", "Symbol", "Date", "Quant", "Value", "Amount", "Description")
   
-  if (!all(colnames(dailys) %in% dailys_structure)) {
+  if (!all(dailys_structure %in% colnames(dailys))) {
     stop(paste("The structure of the 'dailys' table should be:",
                paste(shQuote(dailys_structure), collapse = ", ")))
   }
   
-  if (!all(colnames(dividends) %in% dividends_structure)) {
+  if (!all(dividends_structure %in% colnames(dividends))) {
     stop(paste("The structure of the 'dividends' table should be:",
                paste(shQuote(dividends_structure), collapse = ", ")))
   }
   
-  if (!all(colnames(transactions) %in% trans_structure)) {
+  if (!all(trans_structure %in% colnames(transactions))) {
     stop(paste("The structure of the 'transactions' table should be:",
                paste(shQuote(trans_structure), collapse = ", ")))
   }
@@ -240,12 +240,12 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
   
   cash_structure <- c("ID", "Date", "Cash")
   
-  if (!all(colnames(dailys) %in% dailys_structure)) {
+  if (!all(dailys_structure %in% colnames(dailys))) {
     stop(paste("The structure of the 'dailys' table should be:",
                paste(shQuote(dailys_structure), collapse = ", ")))
   }
   
-  if (!all(colnames(cash_in) %in% cash_structure)) {
+  if (!all(cash_structure %in% colnames(cash_in))) {
     stop(paste("The structure of the 'cash_in' table should be:",
                paste(shQuote(cash_structure), collapse = ", ")))
   }
@@ -289,7 +289,7 @@ portfolio_performance <- function(portfolio, daily) {
   
   portf_structure <- c("Symbol", "Stocks", "StockIniValue", "InvPerc", "Type", "Trans", "StartDate")
   
-  if (!all(colnames(portfolio) %in% portf_structure))
+  if (!all(portf_structure %in% colnames(portfolio)))
     stop(paste("The structure of the 'portfolio' table should be:", vector2text(portf_structure)))
   
   divIn <- daily %>% group_by(Symbol) %>%
