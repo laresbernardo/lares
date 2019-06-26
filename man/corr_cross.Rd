@@ -30,10 +30,11 @@ Other Correlations: \code{\link{corr_plot}},
 
 Other Exploratory: \code{\link{corr_var}},
   \code{\link{crosstab}}, \code{\link{df_str}},
-  \code{\link{distr}}, \code{\link{freqs}},
-  \code{\link{gain_lift}}, \code{\link{get_tweets}},
-  \code{\link{missingness}}, \code{\link{textCloud}},
-  \code{\link{textTokenizer}}, \code{\link{trendsRelated}}
+  \code{\link{df_tree}}, \code{\link{distr}},
+  \code{\link{freqs}}, \code{\link{gain_lift}},
+  \code{\link{get_tweets}}, \code{\link{missingness}},
+  \code{\link{textCloud}}, \code{\link{textTokenizer}},
+  \code{\link{trendsRelated}}
 }
 \concept{Correlations}
 \concept{Exploratory}

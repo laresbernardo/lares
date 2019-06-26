@@ -58,9 +58,10 @@ Custom and tidyverse friendly.
 \seealso{
 Other Exploratory: \code{\link{corr_cross}},
   \code{\link{corr_var}}, \code{\link{crosstab}},
-  \code{\link{df_str}}, \code{\link{freqs}},
-  \code{\link{gain_lift}}, \code{\link{get_tweets}},
-  \code{\link{missingness}}, \code{\link{textCloud}},
-  \code{\link{textTokenizer}}, \code{\link{trendsRelated}}
+  \code{\link{df_str}}, \code{\link{df_tree}},
+  \code{\link{freqs}}, \code{\link{gain_lift}},
+  \code{\link{get_tweets}}, \code{\link{missingness}},
+  \code{\link{textCloud}}, \code{\link{textTokenizer}},
+  \code{\link{trendsRelated}}
 }
 \concept{Exploratory}

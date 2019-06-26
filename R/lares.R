@@ -42,7 +42,7 @@
 #' @importFrom scales percent comma
 #' @importFrom sp over coordinates proj4string proj4string<- coordinates<- spTransform
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
-#' reorder start kmeans var xtabs 
+#' reorder start kmeans var xtabs as.formula
 #' @import stringr 
 #' @importFrom tm content_transformer Corpus removeNumbers removePunctuation removeWords 
 #' stopwords stripWhitespace TermDocumentMatrix tm_map VectorSource
@@ -93,7 +93,8 @@ if (getRversion() >= "2.15.1")
       "prophet_plot_components","add_country_holidays","make_future_dataframe","importance",
       "percentile","cum_response","response","total","ETF","Sector","Percentage","corrplot",
       "row_num","ncap","freq","mix","redundant","plot_ly","chordDiagram","skim","uh",
-      "fread","read.dta13","read.spss","read.xls","geom_label_repel","variable"))
+      "fread","read.dta13","read.spss","read.xls","geom_label_repel","variable",
+      "rpart","rpart.control","rpart.plot"))
 
 #' Pipe operator
 #' @name lares-exports
