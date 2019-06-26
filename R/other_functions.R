@@ -206,7 +206,7 @@ dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
 #' American Standards.  
 #' @param scientific Boolean. Scientific notation
 #' @export
-formatNum <- function(x, decimals = 2, type = 1, scientific = FALSE) {
+formatNum <- function(x, decimals = 2, type = 2, scientific = FALSE) {
   if (!scientific) {
     options(scipen = 999)
   } else {
