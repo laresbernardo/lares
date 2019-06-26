@@ -5,50 +5,46 @@
 #' Code based on gtools::smartbind
 #'
 #' @family Data Wrangling
-#' @param ... Dataframes. Dataframes to start combining
+#' @param ... Dataframes. Dataframes to bind
 #' @param list List. Containing dataframes to combine
 #' @param fill Value. To use when 'filling' missing columns
 #' @param sep Character. String used to separate column names when 
 #' pasting them together.
-#' @author Gregory R. Warnes
 #' @export
-rbind_full <- function(..., list, fill = NA, sep = ':'){
+rbind_full <- function(..., list, fill = NA, sep = ':') {
   
   # https://github.com/cran/gtools/blob/master/R/smartbind.R
   
-  options(warn = -1)
-  data <- list(...)
-  verbose <- FALSE
-  
+  data <- base::list(...)
   if (!missing(list)) data <- modifyList(list, data)
-
-  data <- data[!sapply(data, function(l) is.null(l) | (ncol(l) == 0) | (nrow(l) == 0) )]
+  data <- data[!sapply(data, function(l) is.null(l) | (ncol(l) == 0) | (nrow(l) == 0))]
+  
   
   defaultNames <- seq.int(length(data))
   
-  if (is.null(names(data))) names(data) <- defaultNames
+  if (is.null(names(data)))
+    names(data) <- defaultNames
   
   emptyNames <- names(data) == ""
-  if (any(emptyNames)) names(data)[emptyNames] <- defaultNames[emptyNames]
+  if (any(emptyNames) )
+    names(data)[emptyNames] <- defaultNames[emptyNames]
   
   data <- lapply(data,
                  function(x)
                    if (is.matrix(x) || is.data.frame(x))
                      x
                  else
-                   data.frame(as.list(x), check.names = FALSE)
-  )
+                   data.frame(as.list(x), check.names = FALSE))
   
   #retval <- new.env()
-  retval <- list()
+  retval <- base::list()
   rowLens <- unlist(lapply(data, nrow))
   nrows <- sum(rowLens)
   
-  rowNameList <- unlist(lapply( names(data),
+  rowNameList <- unlist(lapply(names(data),
                                 function(x)
                                   if (rowLens[x] <= 1) x
-                                else paste(x, seq(1,rowLens[x]),sep = sep))
-  )
+                                else paste(x, seq(1,rowLens[x]),sep = sep)))
   
   colClassList <- vector(mode = "list", length = length(data))
   factorColumnList <- vector(mode = "list", length = length(data))
@@ -58,11 +54,10 @@ rbind_full <- function(..., list, fill = NA, sep = ':'){
   start <- 1
   blockIndex <- 1
   for (block in data) {
-    colClassList[[blockIndex]] <- list()
+    colClassList[[blockIndex]] <- base::list()
     factorColumnList[[blockIndex]] <- character(length = 0)
-    factorLevelList[[blockIndex]] <- list()
+    factorLevelList[[blockIndex]] <- base::list()
     
-    if (verbose) print(head(block))
     end <- start + nrow(block) - 1
     for (col in colnames(block)) {
       classVec <- class(block[,col])
@@ -78,21 +73,16 @@ rbind_full <- function(..., list, fill = NA, sep = ':'){
           levels(block[,col])
       }
       
-      if (verbose) cat("Start:", start,
-                      "  End:", end,
-                      "  Column:", col,
-                      "\n", sep = "")
-      
       if ("factor" %in% classVec) {
         newclass <- "character"
-      }
-      else
-        newclass <- classVec[1]
+      } else newclass <- classVec[1]
       
       ## Coerce everything that isn't a native type to character
-      if (!(newclass %in% c("logical", "integer", "numeric", "complex", "character", "raw") )) {
+      if (!(newclass %in% c("logical", "integer", "numeric",
+                            "complex", "character", "raw"))) {
         newclass <- "character"
-        warning("Converting non-atomic type column '", col, "' to type character.")
+        warning("Converting non-atomic type column '", col,
+                "' to type character.")
       }
       
       if (!(col %in% names(retval)))
@@ -112,7 +102,8 @@ rbind_full <- function(..., list, fill = NA, sep = ':'){
           class(retval[[col]]) <- mode <- "complex"
         else if (oldclass %in% c("integer", "numeric") && newclass == "complex")
           class(retval[[col]]) <- mode <- "complex"
-        else {
+        else
+        {
           class(retval[[col]]) <- mode <- "character"
           warning("Column class mismatch for '", col, "'. ",
                   "Converting column to class 'character'.")
@@ -120,6 +111,7 @@ rbind_full <- function(..., list, fill = NA, sep = ':'){
       }
       else
         mode <- oldclass
+      
       if (mode == "character")
         vals <- as.character(block[,col])
       else
@@ -130,8 +122,8 @@ rbind_full <- function(..., list, fill = NA, sep = ':'){
     blockIndex <- blockIndex + 1
   }
   
-  all.equal.or.null <- function(x,y) {
-    if (is.null(x) || is.null(y) )
+  all.equal.or.null <- function(x,y){
+    if (is.null(x) || is.null(y))
       return(TRUE)
     else
       return(all.equal(x,y))
@@ -175,16 +167,13 @@ rbind_full <- function(..., list, fill = NA, sep = ':'){
       longestIndex  <- which.max( sapply(colLevels, length) )
       longestLevels <- colLevels[[longestIndex]]
       allSubset <- all(sapply(colLevels[-longestIndex],
-                              function(l) all(l %in% longestLevels)
-      ))
+                              function(l) all(l %in% longestLevels)))
       if (allSubset) {
         if ("ordered" %in% colClass)
           retval[[col]] <- ordered(retval[[col]], levels = longestLevels )
         else
           retval[[col]] <- factor(retval[[col]], levels = longestLevels )
-      }
-      else
-      {
+      } else {
         # form superset by appending to longest level set
         levelSuperSet <- unique(c(longestLevels, unlist(colLevels)))
         retval[[col]] <- factor(retval[[col]], levels = levelSuperSet )
@@ -194,6 +183,7 @@ rbind_full <- function(..., list, fill = NA, sep = ':'){
                    paste("'", colClass, "'", collapse = ":", sep = "'"),
                    " converted to class 'factor'. Check level ordering." )
         }
+        
       }
     }
   }
@@ -201,3 +191,7 @@ rbind_full <- function(..., list, fill = NA, sep = ':'){
   class(retval) <- "data.frame"
   return(retval)
 }
+
+# df1 <- data.frame(A = 1:10, B = LETTERS[1:10], C = rnorm(10) )
+# df2 <- data.frame(A = 11:20, D = rnorm(10), E = letters[1:10] )
+# rbind_full(df1, df2)

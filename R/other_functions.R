@@ -1,12 +1,11 @@
-# Stolen from hrbrthemes' aaa.R
+# Check if specific package is installed
 try_require <- function(package) {
-  if (requireNamespace(package, quietly = TRUE)) {
+  if (length(find.package(package, quiet = TRUE)) > 0) {
     library(package, character.only = TRUE)
     return(invisible())
   }
-  stop(paste0("Package `", package, "` required. Please install and try again."), call. = FALSE)
+  stop(paste0("Package `", package, "` required. Install and try again."), call. = FALSE)
 }
-
 
 ####################################################################
 #' Convert year month format YYYY-MM
@@ -547,11 +546,6 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
 #' @export
 dateformat <- function(dates, metric = TRUE, origin = '1900-01-01') {
   
-  #require(dplyr)
-  #require(stringr)
-  #require(lubridate)
-  options(warn = -1)
-  
   # Check if all values are NA
   if (length(dates) == sum(is.na(dates))) {
     message("No dates where transformed becase all values are NA")
@@ -681,11 +675,9 @@ noPlot <- function(message = "Nothing to show here!") {
 #' 
 #' @family Tools
 #' @param run Boolean. Do you want to run and start an H2O cluster?
+#' @param lib Character. Library directories where to install h2o
 #' @export
-h2o_update <- function(run = TRUE){
-  
-  # require(rvest)
-  
+h2o_update <- function(run = TRUE, lib = .libPaths()){
   url <- "http://h2o-release.s3.amazonaws.com/h2o/latest_stable.html"
   end <- xml2::read_html(url) %>% rvest::html_node("head") %>% 
     as.character() %>% gsub(".*url=","",.) %>% gsub("/index.html.*","",.)
@@ -695,7 +687,7 @@ h2o_update <- function(run = TRUE){
   if ("h2o" %in% rownames(installed.packages())) { remove.packages("h2o") }
   # Now we download, install and initialize the H2O package for R.
   message(paste("Installing h2o from", newurl))
-  install.packages("h2o", type = "source", repos = newurl)
+  install.packages("h2o", type = "source", repos = newurl, lib = lib)
   if (run) h2o.init()
 }
 
@@ -738,7 +730,6 @@ export_plot <- function(p,
   
   # Create directory if needed
   if (!is.na(subdir)) {
-    options(warn = -1)
     dir.create(file.path(dir, subdir), recursive = TRUE)
     file_name <- paste(subdir, file_name, sep = "/")
   }
@@ -824,7 +815,6 @@ get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date(),
   rate <- data.frame(date = as.Date(rownames(x)), rate = x[,1])
   
   if (fill) {
-    options(warn = -1)
     rate <- data.frame(date = as.character(
       as.Date(as.Date(from):Sys.Date(), origin = "1970-01-01"))) %>%
       left_join(rate %>% mutate(date = as.character(date)), "date") %>%

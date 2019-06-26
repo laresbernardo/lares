@@ -4,10 +4,12 @@
 \alias{h2o_update}
 \title{Install latest version of H2O}
 \usage{
-h2o_update(run = TRUE)
+h2o_update(run = TRUE, lib = .libPaths())
 }
 \arguments{
 \item{run}{Boolean. Do you want to run and start an H2O cluster?}
+
+\item{lib}{Character. Library directories where to install h2o}
 }
 \description{
 This function lets the user un-install the current version of

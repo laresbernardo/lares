@@ -7,7 +7,7 @@
 rbind_full(..., list, fill = NA, sep = ":")
 }
 \arguments{
-\item{...}{Dataframes. Dataframes to start combining}
+\item{...}{Dataframes. Dataframes to bind}
 
 \item{list}{List. Containing dataframes to combine}
 
@@ -35,8 +35,5 @@ Other Data Wrangling: \code{\link{balance_data}},
   \code{\link{textFeats}}, \code{\link{textTokenizer}},
   \code{\link{vector2text}}, \code{\link{year_month}},
   \code{\link{year_week}}
-}
-\author{
-Gregory R. Warnes
 }
 \concept{Data Wrangling}
