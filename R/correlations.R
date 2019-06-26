@@ -113,18 +113,14 @@ corr_var <- function(df, ...,
   # Calculate correlations
   rs <- corr(df, method = method, ignore = ignore, logs = logs, dates = dates)
   var <- as.character(vars[[1]])[2]
-  rs <- rs %>% 
-    select(-contains(paste0(var,"_log"))) %>%
+  rs <- select(rs, -contains(paste0(var,"_log"))) %>%
     filter(!grepl(paste0(var,"_log"), row.names(.)))
   
   # Check if main variable exists
   if (!var %in% colnames(rs)) {
-    message(paste("The variable", var, "is not a valid input because that column",
-                  "doesn't exist or probably was transformed!"))
+    message(paste("Not a valid input:", var, "was transformed or does not exist."))
     maybes <- colnames(rs)[grepl(var, colnames(rs))]
-    if (length(maybes) > 0) {
-      message(paste("Maybe you meant one of these:", vector2text(maybes)))
-    }
+    if (length(maybes) > 0) message(paste("Maybe you meant one of:", vector2text(maybes)))
     stop()
   }
   

@@ -4,7 +4,7 @@
 \alias{formatNum}
 \title{Nicely Format Numerical Values}
 \usage{
-formatNum(x, decimals = 2, type = 1, scientific = FALSE)
+formatNum(x, decimals = 2, type = 2, scientific = FALSE)
 }
 \arguments{
 \item{x}{Numerical Vector}

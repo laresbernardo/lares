@@ -100,10 +100,11 @@ ohse <- function(df,
       vector_values[,1] <- paste0(sep, vector_values[,1])
       
       # Columns with 2 possible values
-      # It would be cool to have these as colnames_value instead of colnames only
       if (vector_levels == 2) {
+        which <- as.character(levels(as.factor(df[,c(vector_name)]))[2])
         df[,c(vector_name)] <- as.integer(as.factor(df[,c(vector_name)])) - 1
         converted_binary <- rbind(converted_binary, vector_name)
+        df <- rename_at(df, vars(vector_name), funs(paste0(vector_name, "_", which)))
       }
       # Columns with more than 2 possible values
       if (!colnames(vector_values) %in% c(converted_binary, no_variance)) {
@@ -112,9 +113,7 @@ ohse <- function(df,
           vector_values <- categ_reducer(vector_values, !!as.name(vector_name), top = limit,
                                          other_label = paste0(sep, other_label))
           dummy_matx <- data.frame(model.matrix( ~ . -1, data = vector_values))
-          if (redundant == FALSE) {
-            dummy_matx <- dummy_matx[, 1:(ncol(dummy_matx) - 1)]
-          }
+          if (!redundant) dummy_matx <- dummy_matx[, 1:(ncol(dummy_matx) - 1)]
           df <- cbind(df, dummy_matx)
           converted <- rbind(converted, vector_name)
         }
@@ -124,12 +123,10 @@ ohse <- function(df,
   }
   
   # Shorten up the long names of some variables
-  if (trim > 0) {
-    colnames(df) <- substr(colnames(df), 1, trim)
-  }
+  if (trim > 0) colnames(df) <- substr(colnames(df), 1, trim)
   
   # Summary
-  if (summary == TRUE) {
+  if (summary) {
     total_converted <- rbind(converted, converted_binary)
     if (length(total_converted) > 1) {
       message(paste("One Hot Encoding applied to", length(total_converted), 
@@ -143,14 +140,10 @@ ohse <- function(df,
   }
   
   # Return only useful columns
-  if (drops) {
-    df <- df[, c(!colnames(df) %in% c(no_variance, converted))] 
-  }
+  if (drops) df <- df[, c(!colnames(df) %in% c(no_variance, converted))] 
   
   # Bind ignored untouched columns
-  if (!is.na(ignore)) {
-    df <- data.frame(ignored, df)
-  }
+  if (!is.na(ignore)) df <- data.frame(ignored, df)
   
   return(df)
   
