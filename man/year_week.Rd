@@ -2,7 +2,7 @@
 % Please edit documentation in R/other_functions.R
 \name{year_week}
 \alias{year_week}
-\title{Convert year week format YYYY-WW}
+\title{Convert Date into Year-Week (YYYY-WW)}
 \usage{
 year_week(date)
 }
@@ -15,12 +15,11 @@ This function lets the user convert a date into YYYY-WW format
 \seealso{
 Other Data Wrangling: \code{\link{balance_data}},
   \code{\link{calibrate}}, \code{\link{categ_reducer}},
-  \code{\link{categoryCounter}}, \code{\link{cleanText}},
-  \code{\link{date_feats}}, \code{\link{dateformat}},
-  \code{\link{formatNum}}, \code{\link{holidays}},
-  \code{\link{impute}}, \code{\link{left}},
-  \code{\link{normalize}}, \code{\link{numericalonly}},
-  \code{\link{ohse}},
+  \code{\link{cleanText}}, \code{\link{date_feats}},
+  \code{\link{dateformat}}, \code{\link{formatNum}},
+  \code{\link{holidays}}, \code{\link{impute}},
+  \code{\link{left}}, \code{\link{normalize}},
+  \code{\link{numericalonly}}, \code{\link{ohse}},
   \code{\link{one_hot_encoding_commas}},
   \code{\link{rbind_full}}, \code{\link{removenacols}},
   \code{\link{removenarows}}, \code{\link{replaceall}},

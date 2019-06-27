@@ -2,7 +2,7 @@
 % Please edit documentation in R/other_functions.R
 \name{normalize}
 \alias{normalize}
-\title{Normalize values}
+\title{Normalize Vector}
 \usage{
 normalize(x)
 }
@@ -17,11 +17,11 @@ the 0 to 1 range
 \seealso{
 Other Data Wrangling: \code{\link{balance_data}},
   \code{\link{calibrate}}, \code{\link{categ_reducer}},
-  \code{\link{categoryCounter}}, \code{\link{cleanText}},
-  \code{\link{date_feats}}, \code{\link{dateformat}},
-  \code{\link{formatNum}}, \code{\link{holidays}},
-  \code{\link{impute}}, \code{\link{left}},
-  \code{\link{numericalonly}}, \code{\link{ohse}},
+  \code{\link{cleanText}}, \code{\link{date_feats}},
+  \code{\link{dateformat}}, \code{\link{formatNum}},
+  \code{\link{holidays}}, \code{\link{impute}},
+  \code{\link{left}}, \code{\link{numericalonly}},
+  \code{\link{ohse}},
   \code{\link{one_hot_encoding_commas}},
   \code{\link{rbind_full}}, \code{\link{removenacols}},
   \code{\link{removenarows}}, \code{\link{replaceall}},

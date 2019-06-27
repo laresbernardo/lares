@@ -2,7 +2,7 @@
 % Please edit documentation in R/other_functions.R
 \name{year_month}
 \alias{year_month}
-\title{Convert year month format YYYY-MM}
+\title{Convert Date into Year-Month (YYYY-MM)}
 \usage{
 year_month(date)
 }
@@ -15,12 +15,11 @@ This function lets the user convert a date into YYYY-MM format
 \seealso{
 Other Data Wrangling: \code{\link{balance_data}},
   \code{\link{calibrate}}, \code{\link{categ_reducer}},
-  \code{\link{categoryCounter}}, \code{\link{cleanText}},
-  \code{\link{date_feats}}, \code{\link{dateformat}},
-  \code{\link{formatNum}}, \code{\link{holidays}},
-  \code{\link{impute}}, \code{\link{left}},
-  \code{\link{normalize}}, \code{\link{numericalonly}},
-  \code{\link{ohse}},
+  \code{\link{cleanText}}, \code{\link{date_feats}},
+  \code{\link{dateformat}}, \code{\link{formatNum}},
+  \code{\link{holidays}}, \code{\link{impute}},
+  \code{\link{left}}, \code{\link{normalize}},
+  \code{\link{numericalonly}}, \code{\link{ohse}},
   \code{\link{one_hot_encoding_commas}},
   \code{\link{rbind_full}}, \code{\link{removenacols}},
   \code{\link{removenarows}}, \code{\link{replaceall}},

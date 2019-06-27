@@ -11,17 +11,19 @@
 #' numbers, or "names" for column names of each of the cateogries
 #' @param plot Boolean. Do you wish to see a plot?
 #' @param subtitle Character. Add subtitle to plot
-#' @param quiet Boolean. Silence the messages?
 #' @export
 df_str <- function(df, 
                    return = "plot", 
                    plot = FALSE, 
-                   subtitle = NA,
-                   quiet = FALSE){
+                   subtitle = NA){
   
-  options(warn = -1)
-  ret <- c("skimr", "numbers", "names", "plot")
   df <- data.frame(df)
+  
+  if (return == "skimr") {
+    try_require("skimr")
+    return(skim(df))
+  }
+  
   
   names <- list(
     cols = colnames(df),
@@ -31,7 +33,9 @@ df_str <- function(df,
     logic = colnames(df)[unlist(lapply(df, is.logical))])
   names[["time"]] <- names$cols[!colnames(df) %in% c(
     names$nums, names$char, names$factor, names$logic)]
-  names[["allnas"]] <- names$cols[sapply(df, function(x) all(is.na(x)))]
+  names[["allnas"]] <- names$cols[sapply(df, function(x) all(is.na(x)))] 
+  
+  if (return == "names") return(names)
   
   numbers <- data.frame(
     "Total Values" = nrow(df) * ncol(df),
@@ -45,8 +49,7 @@ df_str <- function(df,
     "All Missing Columns" = length(names$allnas),
     "Missing Values" = sum(is.na(df)),
     "Complete Rows" = sum(complete.cases(df)),
-    "Memory Usage" = as.numeric(object.size(df))
-  )
+    "Memory Usage" = as.numeric(object.size(df)))
   
   intro2 <- data.frame(counter = t(numbers)) %>%
     mutate(metric = row.names(.),
@@ -58,6 +61,8 @@ df_str <- function(df,
            p = round(p,2),
            type = factor(type, levels = c("Values","Columns","Rows"))) %>%
     select(metric, counter, type, p)
+  
+  if (return == "numbers") return(select(intro2, -type))
   
   if (plot | return == "plot") {
     p <- intro2 %>%
@@ -75,16 +80,6 @@ df_str <- function(df,
       geom_text(aes(hjust = x), size = 3) +
       theme_lares2(pal = 1)
     if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
-    if (return != "plot") plot(p)
-  }
-  
-  if (!quiet) message(paste("Other possible return values:", vector2text(ret[ret != return])))
-  
-  if (return == "plot") return(p)
-  if (return == "numbers") return(intro2 %>% select(-type))
-  if (return == "names") return(names) 
-  if (return == "skimr") {
-    try_require("skimr")
-    return(skim(df))
+    if (return != "plot") plot(p) else return(p)
   }
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny.R
 \name{matrixwd}
 \alias{matrixwd}
-\title{MatrixDS Auto-Working Directory for Shiny}
+\title{MatrixDS Auto Working Directory for Shiny}
 \usage{
 matrixwd(dir)
 }

@@ -8,7 +8,7 @@ try_require <- function(package) {
 }
 
 ####################################################################
-#' Convert year month format YYYY-MM
+#' Convert Date into Year-Month (YYYY-MM)
 #' 
 #' This function lets the user convert a date into YYYY-MM format
 #' 
@@ -21,7 +21,7 @@ year_month <- function(date) {
 
 
 ####################################################################
-#' Convert year week format YYYY-WW
+#' Convert Date into Year-Week (YYYY-WW)
 #' 
 #' This function lets the user convert a date into YYYY-WW format
 #' 
@@ -30,31 +30,6 @@ year_month <- function(date) {
 #' @export
 year_week <- function(date) {
   paste(year(date), str_pad(lubridate::week(date), 2, pad = "0"),sep = "-")
-}
-
-
-####################################################################
-#' Count Categories on a Dataframe
-#' 
-#' This function lets the user count unique values in a categorical 
-#' dataframe
-#'
-#' @family Data Wrangling
-#' @param df Categorical Vector
-#' @export
-categoryCounter <- function(df) {
-  
-  cats <- df %>% select_if(is.character)
-  result <- c()
-  
-  for (i in 1:ncol(cats)) {
-    x <- freqs(cats, cats[,i])
-    y <- colnames(cats)[i]
-    x <- cbind(variable = y, x)
-    result <- rbind(result, x)
-  }
-  result <- rename(result, category = `cats[, i]`)
-  return(result)
 }
 
 
@@ -84,10 +59,7 @@ categ_reducer <- function(df, ...,
   
   vars <- quos(...)
   
-  dff <- df %>%
-    group_by(!!!vars) %>%
-    tally() %>% arrange(desc(n)) %>%
-    mutate(p = round(100*n/sum(n),2), pcum = cumsum(p))
+  dff <- freqs(df, !!!vars)
   
   if (!is.na(top)) {
     tops <- dff %>% slice(1:top)
@@ -108,7 +80,7 @@ categ_reducer <- function(df, ...,
 
 
 ####################################################################
-#' Normalize values
+#' Normalize Vector
 #' 
 #' This function lets the user normalize numerical values into 
 #' the 0 to 1 range
@@ -138,9 +110,9 @@ normalize <- function(x) {
 #' @param quotes Boolean. Bring simple quotes for each 
 #' observation (useful for SQL)
 #' @export
-vector2text <- function(vector, sep=", ", quotes = TRUE) {
+vector2text <- function(vector, sep = ", ", quotes = TRUE) {
   output <- paste(shQuote(vector), collapse = sep)
-  if (quotes == FALSE) output <- gsub("'", "", output)
+  if (!quotes) output <- gsub("'", "", output)
   return(output)
 }
 

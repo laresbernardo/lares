@@ -4,8 +4,7 @@
 \alias{df_str}
 \title{Dataset columns and rows structure}
 \usage{
-df_str(df, return = "plot", plot = FALSE, subtitle = NA,
-  quiet = FALSE)
+df_str(df, return = "plot", plot = FALSE, subtitle = NA)
 }
 \arguments{
 \item{df}{Dataframe}
@@ -16,8 +15,6 @@ numbers, or "names" for column names of each of the cateogries}
 \item{plot}{Boolean. Do you wish to see a plot?}
 
 \item{subtitle}{Character. Add subtitle to plot}
-
-\item{quiet}{Boolean. Silence the messages?}
 }
 \description{
 This function lets the user to check quickly the structure of a

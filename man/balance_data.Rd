@@ -23,8 +23,7 @@ with a given relation rate and a binary feature.
 }
 \seealso{
 Other Data Wrangling: \code{\link{calibrate}},
-  \code{\link{categ_reducer}},
-  \code{\link{categoryCounter}}, \code{\link{cleanText}},
+  \code{\link{categ_reducer}}, \code{\link{cleanText}},
   \code{\link{date_feats}}, \code{\link{dateformat}},
   \code{\link{formatNum}}, \code{\link{holidays}},
   \code{\link{impute}}, \code{\link{left}},

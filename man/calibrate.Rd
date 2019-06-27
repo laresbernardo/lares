@@ -26,8 +26,7 @@ under or over sampling methods were applied when training it.
 }
 \seealso{
 Other Data Wrangling: \code{\link{balance_data}},
-  \code{\link{categ_reducer}},
-  \code{\link{categoryCounter}}, \code{\link{cleanText}},
+  \code{\link{categ_reducer}}, \code{\link{cleanText}},
   \code{\link{date_feats}}, \code{\link{dateformat}},
   \code{\link{formatNum}}, \code{\link{holidays}},
   \code{\link{impute}}, \code{\link{left}},

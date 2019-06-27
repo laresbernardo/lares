@@ -30,12 +30,12 @@ It is tidyverse friendly for use on pipelines
 }
 \seealso{
 Other Data Wrangling: \code{\link{balance_data}},
-  \code{\link{calibrate}}, \code{\link{categoryCounter}},
-  \code{\link{cleanText}}, \code{\link{date_feats}},
-  \code{\link{dateformat}}, \code{\link{formatNum}},
-  \code{\link{holidays}}, \code{\link{impute}},
-  \code{\link{left}}, \code{\link{normalize}},
-  \code{\link{numericalonly}}, \code{\link{ohse}},
+  \code{\link{calibrate}}, \code{\link{cleanText}},
+  \code{\link{date_feats}}, \code{\link{dateformat}},
+  \code{\link{formatNum}}, \code{\link{holidays}},
+  \code{\link{impute}}, \code{\link{left}},
+  \code{\link{normalize}}, \code{\link{numericalonly}},
+  \code{\link{ohse}},
   \code{\link{one_hot_encoding_commas}},
   \code{\link{rbind_full}}, \code{\link{removenacols}},
   \code{\link{removenarows}}, \code{\link{replaceall}},

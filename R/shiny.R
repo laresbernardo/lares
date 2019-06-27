@@ -1,5 +1,5 @@
 ####################################################################
-#' MatrixDS Auto-Working Directory for Shiny
+#' MatrixDS Auto Working Directory for Shiny
 #' 
 #' This function automatically detects which of the Shiny paths 
 #' should be used when running a Shiny App on MatrixDS (internal
