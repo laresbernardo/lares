@@ -46,7 +46,7 @@ ohse <- function(df,
   
   # Create features out of date/time variables
   if (dates == TRUE | holidays == TRUE | !is.na(currency_pair)) {
-    times <- df_str(df, return = "names", plot = FALSE, quiet = TRUE)$time
+    times <- df_str(df, return = "names", quiet = TRUE)$time
     if (length(times) <= 1) {
       df_dates <- date_feats(df, 
                              keep_originals = TRUE,
@@ -178,9 +178,8 @@ date_feats <- function(dates,
                        holidays = FALSE, country = "Colombia",
                        currency_pair = NA,
                        summary = TRUE) {
-  options(warn = -1)
   results <- c()
-  date_cols <- df_str(dates, return = "names", plot = FALSE, quiet = TRUE)$time
+  date_cols <- df_str(dates, return = "names", quiet = TRUE)$time
   
   if (length(date_cols) == 0) {
     return(dates)

@@ -25,7 +25,6 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
                           ohse = TRUE, norm = TRUE, comb = c(1,2,3),
                           seed = 123){
   
-  options(warn = -1)
   results <- list()
   
   # There should not be NAs
@@ -40,7 +39,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   }
   
   # Only numerical values
-  nums <- df_str(df, return = "names", plot = FALSE, quiet = TRUE)$nums
+  nums <- df_str(df, return = "names", quiet = TRUE)$nums
   if (ohse & length(nums) != ncol(df)) {
     df <- ohse(df, redundant = TRUE, dates = TRUE, limit = 6)
     message("One hot encoding applied...")

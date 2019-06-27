@@ -4,17 +4,18 @@
 \alias{df_str}
 \title{Dataset columns and rows structure}
 \usage{
-df_str(df, return = "plot", plot = FALSE, subtitle = NA)
+df_str(df, return = "plot", subtitle = NA, quiet = FALSE)
 }
 \arguments{
 \item{df}{Dataframe}
 
-\item{return}{Character. Return "skimr" for skim results, "numbers" for
-numbers, or "names" for column names of each of the cateogries}
-
-\item{plot}{Boolean. Do you wish to see a plot?}
+\item{return}{Character. Return "skimr" for skim report, "numbers" for
+stats and numbers, "names" for a list with the column names of each of 
+the class types, "plot" for a nice plot with "numbers" output}
 
 \item{subtitle}{Character. Add subtitle to plot}
+
+\item{quiet}{Boolean. Keep quiet or show other options available?}
 }
 \description{
 This function lets the user to check quickly the structure of a
@@ -24,10 +25,10 @@ a plot, and a list of column names for each of the column metrics.
 \seealso{
 Other Exploratory: \code{\link{corr_cross}},
   \code{\link{corr_var}}, \code{\link{crosstab}},
-  \code{\link{df_tree}}, \code{\link{distr}},
-  \code{\link{freqs}}, \code{\link{gain_lift}},
-  \code{\link{get_tweets}}, \code{\link{missingness}},
-  \code{\link{textCloud}}, \code{\link{textTokenizer}},
+  \code{\link{distr}}, \code{\link{freqs}},
+  \code{\link{gain_lift}}, \code{\link{get_tweets}},
+  \code{\link{missingness}}, \code{\link{textCloud}},
+  \code{\link{textTokenizer}}, \code{\link{tree_var}},
   \code{\link{trendsRelated}}
 }
 \concept{Exploratory}

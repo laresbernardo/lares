@@ -25,11 +25,11 @@ and queries, and let the user compare different keywords.
 \seealso{
 Other Exploratory: \code{\link{corr_cross}},
   \code{\link{corr_var}}, \code{\link{crosstab}},
-  \code{\link{df_str}}, \code{\link{df_tree}},
-  \code{\link{distr}}, \code{\link{freqs}},
-  \code{\link{gain_lift}}, \code{\link{get_tweets}},
-  \code{\link{missingness}}, \code{\link{textCloud}},
-  \code{\link{textTokenizer}}
+  \code{\link{df_str}}, \code{\link{distr}},
+  \code{\link{freqs}}, \code{\link{gain_lift}},
+  \code{\link{get_tweets}}, \code{\link{missingness}},
+  \code{\link{textCloud}}, \code{\link{textTokenizer}},
+  \code{\link{tree_var}}
 
 Other Scrapper: \code{\link{fb_posts}},
   \code{\link{fb_post}}, \code{\link{geoStratum}},

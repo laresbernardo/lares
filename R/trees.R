@@ -16,8 +16,8 @@
 #' @param plot Boolean. Return a plot? If not, rpart object
 #' @param ... rpart.plot custom parameters
 #' @export
-df_tree <- function(df, target, max = 3, min = 20, cp = 0, 
-                    size = 0.7, ohse = TRUE, plot = TRUE, ...) {
+tree_var <- function(df, target, max = 3, min = 20, cp = 0, 
+                     size = 0.7, ohse = TRUE, plot = TRUE, ...) {
   
   try_require("rpart")
   try_require("rpart.plot")

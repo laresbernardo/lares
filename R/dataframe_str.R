@@ -7,15 +7,21 @@
 #' 
 #' @family Exploratory
 #' @param df Dataframe
-#' @param return Character. Return "skimr" for skim results, "numbers" for
-#' numbers, or "names" for column names of each of the cateogries
-#' @param plot Boolean. Do you wish to see a plot?
+#' @param return Character. Return "skimr" for skim report, "numbers" for
+#' stats and numbers, "names" for a list with the column names of each of 
+#' the class types, "plot" for a nice plot with "numbers" output
 #' @param subtitle Character. Add subtitle to plot
+#' @param quiet Boolean. Keep quiet or show other options available?
 #' @export
 df_str <- function(df, 
                    return = "plot", 
-                   plot = FALSE, 
-                   subtitle = NA){
+                   subtitle = NA, 
+                   quiet = FALSE){
+  
+  if (!quiet) {
+    rets <- c("plot","skimr","numbers","names")
+    message(paste("Other available 'return' options:", vector2text(rets[rets != return]))) 
+  }
   
   df <- data.frame(df)
   
@@ -23,7 +29,6 @@ df_str <- function(df,
     try_require("skimr")
     return(skim(df))
   }
-  
   
   names <- list(
     cols = colnames(df),
@@ -64,7 +69,7 @@ df_str <- function(df,
   
   if (return == "numbers") return(select(intro2, -type))
   
-  if (plot | return == "plot") {
+  if (return == "plot") {
     p <- intro2 %>%
       filter(!metric %in% c("Memory.Usage")) %>%
       mutate(x = ifelse(p < 75, -0.15, 1.15)) %>%
@@ -80,6 +85,6 @@ df_str <- function(df,
       geom_text(aes(hjust = x), size = 3) +
       theme_lares2(pal = 1)
     if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
-    if (return != "plot") plot(p) else return(p)
+    return(p)
   }
 }
