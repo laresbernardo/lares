@@ -5,6 +5,8 @@
 #' comments, shares, and reactions of n posts (with no limits).
 #' 
 #' @family Scrapper
+#' @family API
+#' @family Facebook
 #' @param token Character. Access token. Generate it for any of your
 #' users or apps in \url{https://developers.facebook.com/tools/explorer}
 #' @param total Integer. How many most recent posts do you need?
@@ -178,6 +180,8 @@ fb_posts <- function(token,
 #' post(s) id.
 #' 
 #' @family Scrapper
+#' @family API
+#' @family Facebook
 #' @param token Character. Access token. Generate it for any of your
 #' users or apps in \url{https://developers.facebook.com/tools/explorer}
 #' @param post_id Character vector. Post id(s)

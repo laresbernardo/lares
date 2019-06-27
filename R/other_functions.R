@@ -1,4 +1,11 @@
-# Check if specific package is installed
+####################################################################
+#' Check if specific package is installed
+#' 
+#' This function checks library dependencies
+#' 
+#' @family Tools
+#' @param package Character. Name of the library
+#' @export
 try_require <- function(package) {
   if (length(find.package(package, quiet = TRUE)) > 0) {
     library(package, character.only = TRUE)

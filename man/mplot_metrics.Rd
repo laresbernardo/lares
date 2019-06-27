@@ -50,7 +50,7 @@ Other Visualization: \code{\link{corr_plot}},
   \code{\link{mplot_roc}}, \code{\link{mplot_splits}},
   \code{\link{noPlot}}, \code{\link{plot_survey}},
   \code{\link{textCloud}}, \code{\link{theme_lares2}},
-  \code{\link{theme_lares}}
+  \code{\link{theme_lares}}, \code{\link{tree_var}}
 }
 \concept{Machine Learning}
 \concept{Visualization}

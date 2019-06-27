@@ -41,7 +41,7 @@ Other Visualization: \code{\link{corr_plot}},
   \code{\link{mplot_response}}, \code{\link{mplot_roc}},
   \code{\link{mplot_splits}}, \code{\link{noPlot}},
   \code{\link{plot_survey}}, \code{\link{theme_lares2}},
-  \code{\link{theme_lares}}
+  \code{\link{theme_lares}}, \code{\link{tree_var}}
 
 Other Exploratory: \code{\link{corr_cross}},
   \code{\link{corr_var}}, \code{\link{crosstab}},

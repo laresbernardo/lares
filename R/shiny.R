@@ -6,6 +6,7 @@
 #' RStudio session or external production version). It also
 #' works for a local file so the script is the same.
 #' 
+#' @family Tools
 #' @param dir Character. Project's folder
 #' @export
 matrixwd <- function(dir) {

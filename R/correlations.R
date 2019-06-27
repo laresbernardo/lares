@@ -26,8 +26,6 @@ corr <- function(df, method = "pearson", ignore = NA,
                  redundant = TRUE, logs = FALSE, 
                  plot = FALSE, top = NA) {
   
-  options(warn = -1)
-  
   # Ignored columns
   if (!is.na(ignore)) df <- select(df, -one_of(ignore))
   
@@ -237,10 +235,11 @@ corr_plot <- function(df, ignore = NA, method = "pearson", order = "FPC",
 #' @param top Integer. Return top n results only
 #' @param ignore Character vector. Which columns do you wish to exlude?
 #' @param rm.na Boolean. Remove NAs?
+#' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
 #' @export
-corr_cross <- function(df, plot = TRUE, max = 1, top = 25, ignore = NA, rm.na = FALSE) {
-  c <- corr(df, ignore = ignore, plot = FALSE)
-  ret <- data.frame(tidyr::gather(c)) %>% 
+corr_cross <- function(df, plot = TRUE, max = 1, top = 25, ignore = NA, rm.na = FALSE, dummy = TRUE) {
+  c <- corr(df, ignore = ignore, plot = FALSE, dummy = dummy)
+  ret <- data.frame(gather(c)) %>% 
     mutate(mix = rep(colnames(c), length(c))) %>%
     mutate(rel = abs(value)) %>% filter(1*rel < max) %>% 
     arrange(desc(rel)) %>%

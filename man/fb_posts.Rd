@@ -25,5 +25,11 @@ comments, shares, and reactions of n posts (with no limits).
 Other Scrapper: \code{\link{fb_post}},
   \code{\link{geoStratum}}, \code{\link{holidays}},
   \code{\link{ip_country}}, \code{\link{trendsRelated}}
+
+Other API: \code{\link{bring_api}}, \code{\link{fb_post}}
+
+Other Facebook: \code{\link{fb_post}}
 }
+\concept{API}
+\concept{Facebook}
 \concept{Scrapper}

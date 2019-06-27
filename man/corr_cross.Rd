@@ -5,7 +5,7 @@
 \title{Correlation Cross-Table}
 \usage{
 corr_cross(df, plot = TRUE, max = 1, top = 25, ignore = NA,
-  rm.na = FALSE)
+  rm.na = FALSE, dummy = TRUE)
 }
 \arguments{
 \item{df}{Dataframe.}
@@ -19,6 +19,8 @@ corr_cross(df, plot = TRUE, max = 1, top = 25, ignore = NA,
 \item{ignore}{Character vector. Which columns do you wish to exlude?}
 
 \item{rm.na}{Boolean. Remove NAs?}
+
+\item{dummy}{Boolean. Should One Hot Encoding be applied to categorical columns?}
 }
 \description{
 This function creates a correlation full study and returns a rank

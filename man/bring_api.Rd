@@ -29,10 +29,11 @@ Other Tools: \code{\link{bindfiles}},
   \code{\link{haveInternet}}, \code{\link{importxlsx}},
   \code{\link{ip_country}}, \code{\link{iter_seeds}},
   \code{\link{json2vector}}, \code{\link{listfiles}},
-  \code{\link{mailSend}}, \code{\link{msplit}},
-  \code{\link{myip}}, \code{\link{pass}},
-  \code{\link{quiet}}, \code{\link{read.file}},
-  \code{\link{statusbar}}, \code{\link{updateLares}},
+  \code{\link{mailSend}}, \code{\link{matrixwd}},
+  \code{\link{msplit}}, \code{\link{myip}},
+  \code{\link{pass}}, \code{\link{quiet}},
+  \code{\link{read.file}}, \code{\link{statusbar}},
+  \code{\link{try_require}}, \code{\link{updateLares}},
   \code{\link{zerovar}}
 
 Other Connections: \code{\link{db_download}},
@@ -41,6 +42,9 @@ Other Connections: \code{\link{db_download}},
   \code{\link{queryDW}}, \code{\link{queryDummy}},
   \code{\link{queryProduc}},
   \code{\link{typeform_download}}
+
+Other API: \code{\link{fb_posts}}, \code{\link{fb_post}}
 }
+\concept{API}
 \concept{Connections}
 \concept{Tools}

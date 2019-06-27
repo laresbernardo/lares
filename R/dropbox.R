@@ -6,6 +6,7 @@
 #' 
 #' @family Tools
 #' @family Connections
+#' @family Dropbox
 #' @param filename String. File's name
 #' @param xlsx Boolean. Is it an Excel file? Can be returned as a list
 #' for each tab and not as a file if needed
@@ -54,14 +55,15 @@ db_download <- function(filename, xlsx = TRUE, token_dir = NA,
 #' 
 #' @family Tools
 #' @family Connections
+#' @family Dropbox
 #' @param filename String. File's name
 #' @param dir String. Directory you wish to upload the file to
 #' @param delete_file Boolean. Delete local file after uploading?
 #' @param token_dir Character. Credential's local directory
 #' @param token_name Character. RDS file name with your token's data
 #' @export
-db_upload <- function (filename, dir, delete_file = FALSE, token_dir = NA,
-                       token_name = "token_pers.rds") {
+db_upload <- function(filename, dir, delete_file = FALSE, token_dir = NA,
+                      token_name = "token_pers.rds") {
   
   if (is.na(token_dir)) {
     load(paste0("~/Dropbox (Personal)/Documentos/Docs/Data/", token_name))

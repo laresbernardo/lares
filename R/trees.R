@@ -5,6 +5,7 @@
 #' and rpart.plot libraries. Idea from explore library.
 #'
 #' @family Exploratory
+#' @family Visualization
 #' @param df Data frame
 #' @param target Variable
 #' @param max Integer. Maximal depth of the tree
@@ -23,8 +24,17 @@ tree_var <- function(df, target, max = 3, min = 20, cp = 0,
   try_require("rpart.plot")
   
   if (ohse) df <- ohse(df, limit = min)
+  
+  # Check if main variable exists
   target_quo <- enquo(target)
   target_txt <- quo_name(target_quo)[[1]]
+  if (!target_txt %in% colnames(df)) {
+    message(paste("Not a valid input:", target_txt, "was transformed or does not exist."))
+    maybes <- colnames(df)[grepl(target_txt, colnames(df))]
+    if (length(maybes) > 0) message(paste("Maybe you meant one of:", vector2text(maybes)))
+    stop()
+  }
+  
   formula_txt <- as.formula(paste(target_txt, "~ ."))
   
   mod <- rpart(formula_txt, data = df, 

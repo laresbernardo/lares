@@ -27,9 +27,10 @@ Other Tools: \code{\link{bindfiles}},
   \code{\link{haveInternet}}, \code{\link{importxlsx}},
   \code{\link{iter_seeds}}, \code{\link{json2vector}},
   \code{\link{listfiles}}, \code{\link{mailSend}},
-  \code{\link{msplit}}, \code{\link{myip}},
-  \code{\link{pass}}, \code{\link{quiet}},
-  \code{\link{read.file}}, \code{\link{statusbar}},
+  \code{\link{matrixwd}}, \code{\link{msplit}},
+  \code{\link{myip}}, \code{\link{pass}},
+  \code{\link{quiet}}, \code{\link{read.file}},
+  \code{\link{statusbar}}, \code{\link{try_require}},
   \code{\link{updateLares}}, \code{\link{zerovar}}
 
 Other Scrapper: \code{\link{fb_posts}},

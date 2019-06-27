@@ -6,6 +6,7 @@
 #' 
 #' @family Tools
 #' @family Connections
+#' @family API
 #' @param url Character. API's URL
 #' @param status Boolean. Display status message?
 #' @export
@@ -27,5 +28,5 @@ bring_api <- function(url, status = TRUE) {
     import[import == "integer(0)"] <- 0
     colnames(import) <- gsub("\\.", "_", colnames(import))  
     return(import)
-  } else { return(NA) }
+  } else {invisible(return())}
 }
