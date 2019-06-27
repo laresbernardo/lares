@@ -16,8 +16,8 @@ matrixwd <- function(dir) {
   } else {
     .libPaths(c(.libPaths(), "/srv/.R/library"))
     options(java.parameters = "-Xmx8048m")
+    if (dir.exists(prod)) shiny_path <- prod 
+    if (dir.exists(dev)) shiny_path <- dev 
   } 
-  if (dir.exists(prod)) shiny_path <- prod 
-  if (dir.exists(dev)) shiny_path <- dev 
   return(shiny_path)
 }

@@ -81,8 +81,6 @@ rbind_full <- function(..., list, fill = NA, sep = ':') {
       if (!(newclass %in% c("logical", "integer", "numeric",
                             "complex", "character", "raw"))) {
         newclass <- "character"
-        warning("Converting non-atomic type column '", col,
-                "' to type character.")
       }
       
       if (!(col %in% names(retval)))
@@ -105,8 +103,6 @@ rbind_full <- function(..., list, fill = NA, sep = ':') {
         else
         {
           class(retval[[col]]) <- mode <- "character"
-          warning("Column class mismatch for '", col, "'. ",
-                  "Converting column to class 'character'.")
         }
       }
       else
@@ -142,8 +138,6 @@ rbind_full <- function(..., list, fill = NA, sep = ':') {
       # grab the first *non-NULL* class information
       colClass <- colClasses[[firstNotNull]]
     } else {
-      warning("Column class mismatch for '", col, "'. ",
-              "Converting column to class 'character'.")
       next()
     }
     
@@ -177,13 +171,6 @@ rbind_full <- function(..., list, fill = NA, sep = ':') {
         # form superset by appending to longest level set
         levelSuperSet <- unique(c(longestLevels, unlist(colLevels)))
         retval[[col]] <- factor(retval[[col]], levels = levelSuperSet )
-        
-        if (length(colClass) > 1) {
-          warning( "column '", col, "' of class ",
-                   paste("'", colClass, "'", collapse = ":", sep = "'"),
-                   " converted to class 'factor'. Check level ordering." )
-        }
-        
       }
     }
   }
