@@ -14,20 +14,20 @@ params:
 
 <style type="text/css">
 h1.title {
-  font-size: 20px;
+  font-size: 22px;
   color: DarkOrange;
 }
 h1 { /* Header 1 */
-  font-size: 18px;
+  font-size: 20px;
 }
 h2 { /* Header 2 */
-  font-size: 16px;
+  font-size: 18px;
 }
 h3 { /* Header 3 */
-  font-size: 15px;
+  font-size: 16px;
 }
 body{ /* Normal  */
-  font-size: 13px;
+  font-size: 15px;
 }
 </style>
 
@@ -52,7 +52,7 @@ print(params$portf_daily_change)
 print(params$portf_stocks_change)
 ```
 
-```{r fig.width = 10, fig.height = 8, echo = FALSE}
+```{r fig.width = 10, fig.height = 8, echo = FALSE, warning = FALSE}
 # Stocks Daily Change (Weighted and absolute)
 print(params$portf_stocks_histchange_weighted)
 print(params$portf_stocks_histchange_absolute)

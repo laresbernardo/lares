@@ -433,7 +433,8 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, s
            formatNum(sum(daily$Expenses),0)))
   
   plot <- portfolio_perf %>%
-    mutate(shapeflag = ifelse(DifUSD < 0, 25, 24), box = -tops/5.5) %>%
+    mutate(shapeflag = ifelse(DifUSD < 0, 25, 24), box = -tops/5.5) %>% ungroup() %>%
+    mutate(Symbol = paste0(Symbol, " (", formatNum(100*DailyValue/sum(DailyValue)), "%)")) %>%
     ggplot() + 
     geom_hline(yintercept = 0, colour = "black") +
     geom_col(aes(x = reorder(Symbol, Invested), y = Invested, fill = Symbol, group = 1)) +
@@ -455,7 +456,7 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, s
               size = 2, hjust = 0, vjust = 1.5) +
     annotate("label", x = length(unique(portfolio_perf$Stocks)) * 0.25, y = tops * 0.6, 
              label = vector2text(summary,"\n",quotes = F), size = 3.5, hjust = 0, alpha = 0.55) +
-    scale_y_continuous(limits = c(NA, tops*1.1), labels = comma) + 
+    scale_y_continuous(limits = c(NA, tops*1.1), labels = comma, expand = c(0, 0)) + 
     labs(y = '', x = '', title = "Stocks Distribution and Growth") +
     guides(fill = FALSE, colour = FALSE) + coord_flip() +
     theme_lares2(pal = 1)
@@ -531,34 +532,38 @@ portfolio_distr_plot <- function(portfolio_perf, daily, save = FALSE) {
     geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels = comma) +
     labs(x = '', y = "Portfolio's Stocks Dimentions") + theme_lares2(pal = 1)
+  
   plot_areas <- ggplot(portfolio_perf) +
     geom_bar(aes(x = "", y = DailyValue/sum(DailyValue), fill = Type), width = 1, stat = "identity") +
     coord_polar("y", start = 0) + scale_y_continuous(labels = percent) +
     labs(x = '', y = "Portfolio's Stocks Type Distribution") + theme_lares2(pal = 1)
-  t1 <- tableGrob(
-    portfolio_perf %>% 
-      mutate(Perc = formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
-             DailyValue = formatNum(DailyValue, 2),
-             DifPer = paste0(formatNum(DifPer, 2))) %>%
-      select(Symbol, Type, DailyValue, Perc, DifPer), rows = NULL,
-    cols = c("Stock","Stock Type","Today's Value","% Portaf","Growth %"),
-    theme = ttheme_minimal())
-  t2 <- tableGrob(
-    portfolio_perf %>% 
-      group_by(Type) %>%
-      summarise(Perc = formatNum(100*sum(DailyValue)/sum(portfolio_perf$DailyValue),2),
-                DifPer = formatNum(100*sum(DailyValue)/sum(Invested) - 100,2),
-                DailyValue = formatNum(sum(DailyValue))) %>%
-      select(Type, DailyValue, Perc, DifPer) %>% 
-      arrange(desc(Perc)), rows = NULL,
-    cols = c("Stock Type","Today's Value","% Portaf","Growth %"),
-    theme = ttheme_minimal())
   
+  # t1 <- tableGrob(
+  #   portfolio_perf %>% 
+  #     mutate(Perc = formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
+  #            DailyValue = formatNum(DailyValue, 2),
+  #            DifPer = paste0(formatNum(DifPer, 2))) %>%
+  #     select(Symbol, Type, DailyValue, Perc, DifPer), rows = NULL,
+  #   cols = c("Stock","Stock Type","Today's Value","% Portaf","Growth %"),
+  #   theme = ttheme_minimal())
+  # 
+  # t2 <- tableGrob(
+  #   portfolio_perf %>% 
+  #     group_by(Type) %>%
+  #     summarise(Perc = formatNum(100*sum(DailyValue)/sum(portfolio_perf$DailyValue),2),
+  #               DifPer = formatNum(100*sum(DailyValue)/sum(Invested) - 100,2),
+  #               DailyValue = formatNum(sum(DailyValue))) %>%
+  #     select(Type, DailyValue, Perc, DifPer) %>% 
+  #     arrange(desc(Perc)), rows = NULL,
+  #   cols = c("Stock Type","Today's Value","% Portaf","Growth %"),
+  #   theme = ttheme_minimal())
+  # 
+  # p <- arrangeGrob(plot_stocks, plot_areas, t1, t2, nrow = 2, heights = c(3,3))
   
-  p <- arrangeGrob(plot_stocks, plot_areas, t1, t2, nrow = 2, heights = c(3,3))
+  p <- arrangeGrob(plot_stocks, plot_areas, nrow = 1, ncol = 2)
   
   if (save) {
-    png("portf_distribution.png", width = 700, height = 500)
+    png("portf_distribution.png", width = 700, height = 300)
     plot(p)
     dev.off() 
   } else {
@@ -589,9 +594,9 @@ portfolio_total_plot <- function(portfolio, save = FALSE) {
                            rep("Cash", nrow(portfolio))),
                   values = c(portfolio$StocksValue, portfolio$Cash)) %>%
     ggplot() + 
-    geom_area(aes(x = Date, y = values, fill = type), 
-              colour = "black", size = 0.2, alpha = 0.95) + 
-    labs(title = "   Daily Total Portfolio Value", y = "", x = "", fill = "") +
+    geom_area(aes(x = Date, y = values, fill = type, group = type), 
+              colour = "black", size = 0.2, alpha = 0.95, position = 'stack') + 
+    labs(title = "  Daily Total Portfolio Value", y = "", x = "", fill = "") +
     geom_label_repel(data = labels, 
                      aes(x = Date, y = Portfolio, label = formatNum(Deposit, 0)), 
                      vjust = -1.3, size = 2.5) +
@@ -640,7 +645,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   on.exit(setwd(tempdir))
   
   # Data wrangling and calculations
-  message("Downloading historical and live data for each Stock...")
+  message(">>> Downloading historical data for each stock...")
   hist <- get_stocks_hist(symbols = data$portfolio$Symbol, 
                           from = data$portfolio$StartDate, 
                           tax = tax)
@@ -683,7 +688,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
                   df_hist = hist)
   unlink(tempdir, recursive = FALSE)
   
-  message("All results are ready to export")
+  message("All results ready to export!")
   return(results)
 }
 
@@ -726,8 +731,7 @@ stocks_html <- function(results) {
                     quiet = TRUE)  
   
   invisible(file.remove(paste0(dir, "/stocksReport.Rmd")))
-  message("HTML report created successfully")
-  
+  message("HTML report created succesfully!")
 }
 
 
@@ -765,6 +769,7 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
   results <- stocks_objects(data)
   
   # HTML report
+  message(">>> Creating HTML report...")
   stocks_html(results)
   
   if (!is.na(mail)) {
