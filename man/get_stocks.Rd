@@ -18,8 +18,8 @@ get_stocks(filename = NA,
 This function lets me download my personal Excel with my Portfolio data
 }
 \seealso{
-Other Investment: \code{\link{etf_sector}},
-  \code{\link{get_stocks_hist}},
+Other Investment: \code{\link{etf_sector_plot}},
+  \code{\link{etf_sector}}, \code{\link{get_stocks_hist}},
   \code{\link{portfolio_daily_plot}},
   \code{\link{portfolio_daily}},
   \code{\link{portfolio_distr_plot}},

@@ -15,9 +15,9 @@ portfolio_daily_plot(stocks_perf, save = FALSE)
 This function lets the user plot his portfolio daily change
 }
 \seealso{
-Other Investment: \code{\link{etf_sector}},
-  \code{\link{get_stocks_hist}}, \code{\link{get_stocks}},
-  \code{\link{portfolio_daily}},
+Other Investment: \code{\link{etf_sector_plot}},
+  \code{\link{etf_sector}}, \code{\link{get_stocks_hist}},
+  \code{\link{get_stocks}}, \code{\link{portfolio_daily}},
   \code{\link{portfolio_distr_plot}},
   \code{\link{portfolio_performance}},
   \code{\link{portfolio_total_plot}},

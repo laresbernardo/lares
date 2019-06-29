@@ -4,7 +4,8 @@
 \alias{stocks_objects}
 \title{Portfolio's Calculations and Plots}
 \usage{
-stocks_objects(data, cash_fix = 0, tax = 30, expenses = 7)
+stocks_objects(data, cash_fix = 0, tax = 30, expenses = 7,
+  sectors = TRUE)
 }
 \arguments{
 \item{data}{List. Containing the following dataframes: portfolio,
@@ -18,14 +19,17 @@ Range from 0 to 99}
 
 \item{expenses}{Numeric. How much does that bank or broker charges per
 transaction? Absolute value.}
+
+\item{sectors}{Boolean. Return sectors segmentation for ETFs?}
 }
 \description{
 This function lets the user create his portfolio's calculations and
 plots for further study.
 }
 \seealso{
-Other Investment: \code{\link{etf_sector}},
-  \code{\link{get_stocks_hist}}, \code{\link{get_stocks}},
+Other Investment: \code{\link{etf_sector_plot}},
+  \code{\link{etf_sector}}, \code{\link{get_stocks_hist}},
+  \code{\link{get_stocks}},
   \code{\link{portfolio_daily_plot}},
   \code{\link{portfolio_daily}},
   \code{\link{portfolio_distr_plot}},

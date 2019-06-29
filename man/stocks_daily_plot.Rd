@@ -23,8 +23,9 @@ portfolio (or simply compared with initial value)?}
 This function lets the user plot stocks daily change
 }
 \seealso{
-Other Investment: \code{\link{etf_sector}},
-  \code{\link{get_stocks_hist}}, \code{\link{get_stocks}},
+Other Investment: \code{\link{etf_sector_plot}},
+  \code{\link{etf_sector}}, \code{\link{get_stocks_hist}},
+  \code{\link{get_stocks}},
   \code{\link{portfolio_daily_plot}},
   \code{\link{portfolio_daily}},
   \code{\link{portfolio_distr_plot}},

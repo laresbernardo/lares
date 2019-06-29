@@ -22,8 +22,9 @@ to your cash balance}
 This function lets the user calculate stocks performance
 }
 \seealso{
-Other Investment: \code{\link{etf_sector}},
-  \code{\link{get_stocks_hist}}, \code{\link{get_stocks}},
+Other Investment: \code{\link{etf_sector_plot}},
+  \code{\link{etf_sector}}, \code{\link{get_stocks_hist}},
+  \code{\link{get_stocks}},
   \code{\link{portfolio_daily_plot}},
   \code{\link{portfolio_daily}},
   \code{\link{portfolio_distr_plot}},

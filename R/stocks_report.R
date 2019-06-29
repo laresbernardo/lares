@@ -517,57 +517,109 @@ stocks_daily_plot <- function(portfolio, daily, weighted = TRUE, group = TRUE, s
 
 
 ####################################################################
-#' Portfolio's Distribution
+#' Portfolio's Category Distribution
 #' 
 #' This function lets the user plot his portfolio's distribution
 #' 
 #' @family Investment
 #' @param portfolio_perf Dataframe. Output of the portfolio_performance function
-#' @param daily Dataframe. Daily data
 #' @param save Boolean. Export plot as an image?
 #' @export
-portfolio_distr_plot <- function(portfolio_perf, daily, save = FALSE) {
+portfolio_distr_plot <- function(portfolio_perf, save = FALSE) {
   
-  plot_stocks <- ggplot(portfolio_perf) +
+  p <- portfolio_perf %>%
+    group_by(Type) %>% 
+    mutate(label = paste0(Type, "\n", formatNum(
+      100*sum(DailyValue)/sum(portfolio_perf$DailyValue)),"%")) %>%
+    ggplot() +
     geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
-    coord_polar("y", start = 0) + scale_y_continuous(labels = comma) +
-    labs(x = '', y = "Portfolio's Stocks Dimentions") + theme_lares2(pal = 1)
-  
-  plot_areas <- ggplot(portfolio_perf) +
-    geom_bar(aes(x = "", y = DailyValue/sum(DailyValue), fill = Type), width = 1, stat = "identity") +
-    coord_polar("y", start = 0) + scale_y_continuous(labels = percent) +
-    labs(x = '', y = "Portfolio's Stocks Type Distribution") + theme_lares2(pal = 1)
-  
-  # t1 <- tableGrob(
-  #   portfolio_perf %>% 
-  #     mutate(Perc = formatNum(100*DailyValue/sum(portfolio_perf$DailyValue),2),
-  #            DailyValue = formatNum(DailyValue, 2),
-  #            DifPer = paste0(formatNum(DifPer, 2))) %>%
-  #     select(Symbol, Type, DailyValue, Perc, DifPer), rows = NULL,
-  #   cols = c("Stock","Stock Type","Today's Value","% Portaf","Growth %"),
-  #   theme = ttheme_minimal())
-  # 
-  # t2 <- tableGrob(
-  #   portfolio_perf %>% 
-  #     group_by(Type) %>%
-  #     summarise(Perc = formatNum(100*sum(DailyValue)/sum(portfolio_perf$DailyValue),2),
-  #               DifPer = formatNum(100*sum(DailyValue)/sum(Invested) - 100,2),
-  #               DailyValue = formatNum(sum(DailyValue))) %>%
-  #     select(Type, DailyValue, Perc, DifPer) %>% 
-  #     arrange(desc(Perc)), rows = NULL,
-  #   cols = c("Stock Type","Today's Value","% Portaf","Growth %"),
-  #   theme = ttheme_minimal())
-  # 
-  # p <- arrangeGrob(plot_stocks, plot_areas, t1, t2, nrow = 2, heights = c(3,3))
-  
-  p <- arrangeGrob(plot_stocks, plot_areas, nrow = 1, ncol = 2)
-  
-  if (save) {
-    png("portf_distribution.png", width = 700, height = 300)
-    plot(p)
-    dev.off() 
+    facet_grid(. ~ label, scales = "free") +
+    scale_y_continuous(labels = scales::comma, expand = c(0, 0)) + 
+    theme_lares2(pal = 1) +
+    labs(x = "", y = "Total value", title = "Portfolio's Category Distribution")
+  if (save) p <- p + ggsave("portf_distribution.png", width = 8, height = 5, dpi = 300) 
+  return(p)
+}
+
+
+####################################################################
+#' ETF's Sectors Breakdown
+#' 
+#' This function scraps etf.com data for sector breakdown on ETFs.
+#' 
+#' @family Investment
+#' @param etf Character Vector. Which ETFs you wish to scrap?
+#' @param verbose Boolean. Print results and progress while downloading?
+#' @export
+etf_sector <- function(etf = "VTI", verbose = TRUE) {
+  ret <- data.frame()
+  for (i in 1:length(etf)) {
+    url <- paste0("https://etfdb.com/etf/", toupper(etf[i]))
+    if (RCurl::url.exists(url)) {
+      sector <- read_html(url) %>% html_nodes(".col-md-6") %>% 
+        html_text() %>% .[grepl("Sector Breakdown",.)] %>% .[1]
+      sector <- data.frame(matrix(unlist(strsplit(sector, split = "\n"))[-c(1:5)], ncol = 2, byrow = TRUE))
+      colnames(sector) <- c("Sector", "Percentage")
+      sector$Percentage <- as.integer(cleanText(sector$Percentage))/100 
+      sector$ETF <- toupper(etf[i])
+      sector <- sector %>% select(ETF, Sector, Percentage)
+      ret <- rbind(ret, sector)
+      check <- TRUE
+    } else {
+      check <- FALSE
+      Sys.sleep(1)
+    }
+    if (verbose == TRUE & length(etf) > 1) {
+      info <- paste(toupper(etf[i]), ifelse(check, "", "X"))
+      statusbar(i, length(etf), info = info)   
+    }
+  }
+  if (nrow(ret) == 0) {
+    stop("No data found for given Tickers!")
   } else {
-    return(p)
+    return(ret) 
+  }
+}
+
+
+####################################################################
+#' Portfolio's Sector Distribution (ETFs)
+#' 
+#' This function lets the user plot his portfolio's distribution, 
+#' specifically ETF's sectors
+#' 
+#' @family Investment
+#' @param portfolio_perf Dataframe. Output of the portfolio_performance function
+#' @param save Boolean. Export plot as an image?
+#' @export
+etf_sector_plot <- function(portfolio_perf, save = FALSE) {
+  
+  structure <- c("Symbol", "DailyValue")
+  
+  if (!all(structure %in% colnames(portfolio_perf))) {
+    stop(paste("portfolio_perf should contain all of the following:",
+               paste(shQuote(structure), collapse = ", ")))
+  }
+  
+  message(">>> Downloading ETF's sectors...")
+  etfs <- etf_sector(portfolio_perf$Symbol)
+  
+  if (nrow(etfs) > 0) {
+    p <- etfs %>% 
+      left_join(select(portfolio_perf, Symbol, DailyValue), 
+                by = c("ETF" = "Symbol")) %>%
+      mutate(Value = DailyValue * Percentage / 100) %>%
+      group_by(Sector) %>% mutate(total = sum(Value)) %>%
+      ggplot(aes(x = reorder(Sector,total), y = Value, fill = ETF)) +
+      geom_bar(width = 1, stat = "identity") +
+      coord_flip() +
+      scale_y_continuous(labels = comma, expand = c(0, 0)) + 
+      theme_lares2(pal = 1) +
+      labs(x = "", y = "Total value", title = "Portfolio's Sector Distribution (ETFs)")
+    if (save) p <- p + ggsave("portf_distribution_etfs.png", width = 8, height = 5, dpi = 300) 
+    return(p) 
+  } else {
+    return(noPlot("No data here!"))
   }
 }
 
@@ -595,7 +647,7 @@ portfolio_total_plot <- function(portfolio, save = FALSE) {
                   values = c(portfolio$StocksValue, portfolio$Cash)) %>%
     ggplot() + 
     geom_area(aes(x = Date, y = values, fill = type, group = type), 
-              colour = "black", size = 0.2, alpha = 0.95, position = 'stack') + 
+              colour = "black", size = 0.2, alpha = 0.95) + 
     labs(title = "  Daily Total Portfolio Value", y = "", x = "", fill = "") +
     geom_label_repel(data = labels, 
                      aes(x = Date, y = Portfolio, label = formatNum(Deposit, 0)), 
@@ -632,8 +684,9 @@ portfolio_total_plot <- function(portfolio, save = FALSE) {
 #' Range from 0 to 99
 #' @param expenses Numeric. How much does that bank or broker charges per
 #' transaction? Absolute value.
+#' @param sectors Boolean. Return sectors segmentation for ETFs?
 #' @export
-stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
+stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7, sectors = TRUE) {
   
   tabs <- c('portfolio','transactions','cash')
   if (sum(names(data) %in% tabs) != 3) {
@@ -670,8 +723,9 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
   p3 <- stocks_daily_plot(portfolio = data$portfolio, daily, weighted = FALSE)
   p5 <- stocks_daily_plot(portfolio = data$portfolio, daily, weighted = TRUE)
   p6 <- portfolio_total_plot(pf_daily)
-  p4 <- portfolio_distr_plot(portfolio_perf, daily)
-
+  p4 <- portfolio_distr_plot(portfolio_perf)
+  if (sectors) p7 <- etf_sector_plot(portfolio_perf)
+  
   message("Graphics ready...")
   
   # Consolidation
@@ -686,6 +740,8 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7) {
                   df_stocks_perf = stocks_perf,
                   df_daily = daily,
                   df_hist = hist)
+  if (sectors) results[["p_sectors"]] <- p7
+  
   unlink(tempdir, recursive = FALSE)
   
   message("All results ready to export!")
@@ -710,13 +766,16 @@ stocks_html <- function(results) {
   Sys.setenv(RSTUDIO_PANDOC = pandoc)
   
   # Can be more accurate with names but works for me!
-  params <- list(portf_daily_change = results[[1]],
-                 portf_stocks_change = results[[2]],
-                 portf_stocks_histchange_weighted = results[[3]],
-                 portf_stocks_histchange_absolute = results[[4]],
-                 portf_distribution = results[[5]],
-                 portf_daily = results[[6]],
-                 portfolio_perf = results[[7]])
+  params <- list(portf_daily_change = results[["p_portf_daily_change"]],
+                 portf_stocks_change = results[["p_portf_stocks_change"]],
+                 portf_stocks_histchange_weighted = results[["p_portf_stocks_histchange_weighted"]],
+                 portf_stocks_histchange_absolute = results[["p_portf_stocks_histchange_absolute"]],
+                 portf_distribution = results[["p_portf_distribution"]],
+                 portf_daily = results[["p_portfolio_daily"]],
+                 portfolio_perf = results[["df_portfolio_perf"]])
+  if ("p_sectors" %in% names(results)) 
+    params[["portf_distribution_sectors"]] <- results[["p_sectors"]]
+  
   invisible(file.copy(
     from = system.file("docs", "stocksReport.Rmd", package = "lares"),
     to = dir, 
@@ -743,10 +802,12 @@ stocks_html <- function(results) {
 #' @family Investment
 #' @param wd Character. Where do you wish to save the results (plots and report)?
 #' @param cash_fix Numeric. If you wish to algebraically sum a value to your cash balance
+#' @param sectors Boolean. Return sectors segmentation for ETFs?
 #' @param mail Boolean. Do you wish to send the email? Set to NA to not send email
 #' @param creds Character. Credential's user (see get_credentials) for sending mail
 #' @export
 stocks_report <- function(wd = "personal", cash_fix = 0, 
+                          sectors = TRUE,
                           mail = "laresbernardo@gmail.com", 
                           creds = NA) {
   
@@ -766,58 +827,20 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
   
   # Data extraction and processing
   data <- get_stocks(token_dir = token_dir)
-  results <- stocks_objects(data)
+  results <- stocks_objects(data, sectors = sectors)
   
   # HTML report
   message(">>> Creating HTML report...")
   stocks_html(results)
   
   if (!is.na(mail)) {
+    message(">>> Sending email...")
     mailSend(to = mail, 
              subject = paste("Portfolio:", max(results$df_daily$Date)),
              text = " \n", 
              attachment = paste0(getwd(), "/stocksReport.html"),
              creds = token_dir,
              quiet = FALSE)
-  }
-}
-
-####################################################################
-#' ETF's Sectors Breakdown
-#' 
-#' This function scraps etf.com data for sector breakdown on ETFs.
-#' 
-#' @family Investment
-#' @param etf Character Vector. Which ETFs you wish to scrap?
-#' @param verbose Boolean. Print results and progress while downloading?
-#' @export
-etf_sector <- function(etf = "VTI", verbose = TRUE) {
-  ret <- data.frame()
-  for (i in 1:length(etf)) {
-    url <- paste0("https://etfdb.com/etf/", toupper(etf[i]))
-    if (RCurl::url.exists(url)) {
-      sector <- read_html(url) %>% html_nodes(".col-md-6") %>% 
-        html_text() %>% .[grepl("Sector Breakdown",.)] %>% .[1]
-      sector <- data.frame(matrix(unlist(strsplit(sector, split = "\n"))[-c(1:5)], ncol = 2, byrow = TRUE))
-      colnames(sector) <- c("Sector", "Percentage")
-      sector$Percentage <- as.integer(cleanText(sector$Percentage))/100 
-      sector$ETF <- toupper(etf[i])
-      sector <- sector %>% select(ETF, Sector, Percentage)
-      ret <- rbind(ret, sector)
-      check <- TRUE
-    } else {
-      check <- FALSE
-      Sys.sleep(1)
-    }
-    if (verbose == TRUE) {
-      info <- paste(toupper(etf[i]), ifelse(check, "", "X"))
-      statusbar(i, length(etf), info = info)   
-    }
-  }
-  if (nrow(ret) == 0) {
-    stop("No data found for given Tickers!")
-  } else {
-    return(ret) 
   }
 }
 

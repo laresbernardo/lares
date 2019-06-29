@@ -23,8 +23,8 @@ Example: c('VTI','TSLA')}
 This function lets the user download stocks historical data
 }
 \seealso{
-Other Investment: \code{\link{etf_sector}},
-  \code{\link{get_stocks}},
+Other Investment: \code{\link{etf_sector_plot}},
+  \code{\link{etf_sector}}, \code{\link{get_stocks}},
   \code{\link{portfolio_daily_plot}},
   \code{\link{portfolio_daily}},
   \code{\link{portfolio_distr_plot}},

@@ -24,8 +24,9 @@ stocks_total_plot(stocks_perf, portfolio_perf, daily, trans, cash,
 This function lets the user plot his stocks total performance
 }
 \seealso{
-Other Investment: \code{\link{etf_sector}},
-  \code{\link{get_stocks_hist}}, \code{\link{get_stocks}},
+Other Investment: \code{\link{etf_sector_plot}},
+  \code{\link{etf_sector}}, \code{\link{get_stocks_hist}},
+  \code{\link{get_stocks}},
   \code{\link{portfolio_daily_plot}},
   \code{\link{portfolio_daily}},
   \code{\link{portfolio_distr_plot}},

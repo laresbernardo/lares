@@ -2,14 +2,12 @@
 % Please edit documentation in R/stocks_report.R
 \name{portfolio_distr_plot}
 \alias{portfolio_distr_plot}
-\title{Portfolio's Distribution}
+\title{Portfolio's Category Distribution}
 \usage{
-portfolio_distr_plot(portfolio_perf, daily, save = FALSE)
+portfolio_distr_plot(portfolio_perf, save = FALSE)
 }
 \arguments{
 \item{portfolio_perf}{Dataframe. Output of the portfolio_performance function}
-
-\item{daily}{Dataframe. Daily data}
 
 \item{save}{Boolean. Export plot as an image?}
 }
@@ -17,8 +15,9 @@ portfolio_distr_plot(portfolio_perf, daily, save = FALSE)
 This function lets the user plot his portfolio's distribution
 }
 \seealso{
-Other Investment: \code{\link{etf_sector}},
-  \code{\link{get_stocks_hist}}, \code{\link{get_stocks}},
+Other Investment: \code{\link{etf_sector_plot}},
+  \code{\link{etf_sector}}, \code{\link{get_stocks_hist}},
+  \code{\link{get_stocks}},
   \code{\link{portfolio_daily_plot}},
   \code{\link{portfolio_daily}},
   \code{\link{portfolio_performance}},

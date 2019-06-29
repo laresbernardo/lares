@@ -4,13 +4,15 @@
 \alias{stocks_report}
 \title{Portfolio's Full Report and Email}
 \usage{
-stocks_report(wd = "personal", cash_fix = 0,
+stocks_report(wd = "personal", cash_fix = 0, sectors = TRUE,
   mail = "laresbernardo@gmail.com", creds = NA)
 }
 \arguments{
 \item{wd}{Character. Where do you wish to save the results (plots and report)?}
 
 \item{cash_fix}{Numeric. If you wish to algebraically sum a value to your cash balance}
+
+\item{sectors}{Boolean. Return sectors segmentation for ETFs?}
 
 \item{mail}{Boolean. Do you wish to send the email? Set to NA to not send email}
 
@@ -20,8 +22,9 @@ stocks_report(wd = "personal", cash_fix = 0,
 This function lets the user create his portfolio's full report with plots and email sent
 }
 \seealso{
-Other Investment: \code{\link{etf_sector}},
-  \code{\link{get_stocks_hist}}, \code{\link{get_stocks}},
+Other Investment: \code{\link{etf_sector_plot}},
+  \code{\link{etf_sector}}, \code{\link{get_stocks_hist}},
+  \code{\link{get_stocks}},
   \code{\link{portfolio_daily_plot}},
   \code{\link{portfolio_daily}},
   \code{\link{portfolio_distr_plot}},

@@ -8,6 +8,7 @@ params:
   portf_stocks_histchange_weighted: NA
   portf_stocks_histchange_absolute: NA
   portf_distribution: NA
+  portf_distribution_sectors: NA
   portf_daily: NA
   portfolio_perf: NA
 ---
@@ -24,10 +25,10 @@ h2 { /* Header 2 */
   font-size: 18px;
 }
 h3 { /* Header 3 */
-  font-size: 16px;
+  font-size: 17px;
 }
 body{ /* Normal  */
-  font-size: 15px;
+  font-size: 16px;
 }
 </style>
 
@@ -63,9 +64,14 @@ print(params$portf_stocks_histchange_absolute)
 print(params$portf_daily)
 ```
 
-```{r fig.width = 10, fig.height = 8, echo = FALSE}
+```{r fig.width = 10, fig.height = 4, echo = FALSE}
 # Portfolio Distribution
-plot(params$portf_distribution)
+print(params$portf_distribution)
+```
+
+```{r fig.width = 10, fig.height = 4, echo = FALSE}
+if ("portf_distribution_sectors" %in% names(params)) 
+  print(params$portf_distribution_sectors) 
 ```
 
 > Report generated timestamp: `r Sys.time()`
