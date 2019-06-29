@@ -605,17 +605,22 @@ etf_sector_plot <- function(portfolio_perf, save = FALSE) {
   etfs <- etf_sector(portfolio_perf$Symbol)
   
   if (nrow(etfs) > 0) {
-    p <- etfs %>% 
-      left_join(select(portfolio_perf, Symbol, DailyValue), 
+    df <- etfs %>% 
+      right_join(select(portfolio_perf, Symbol, DailyValue), 
                 by = c("ETF" = "Symbol")) %>%
+      mutate(Sector = ifelse(is.na(Sector), "Not Known", as.character(Sector))) %>%
+      replace(., is.na(.), 100) %>%
       mutate(Value = DailyValue * Percentage / 100) %>%
-      group_by(Sector) %>% mutate(total = sum(Value)) %>%
-      ggplot(aes(x = reorder(Sector,total), y = Value, fill = ETF)) +
+      group_by(Sector) %>% mutate(total = sum(Value)) %>% ungroup() %>% 
+      group_by(Sector) %>% mutate(label = paste0(
+        Sector, " (", formatNum(100*total/sum(portfolio_perf$DailyValue), 1), "%)"))
+    
+    p <- ggplot(df, aes(x = reorder(label,total), y = Value, fill = ETF)) +
       geom_bar(width = 1, stat = "identity") +
       coord_flip() +
       scale_y_continuous(labels = comma, expand = c(0, 0)) + 
       theme_lares2(pal = 1) +
-      labs(x = "", y = "Total value", title = "Portfolio's Sector Distribution (ETFs)")
+      labs(x = "", y = "Total value", title = "Portfolio's Sector Distribution (ETFs)", fill = NULL)
     if (save) p <- p + ggsave("portf_distribution_etfs.png", width = 8, height = 5, dpi = 300) 
     return(p) 
   } else {
