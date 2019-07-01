@@ -100,7 +100,11 @@ lares_pal <- function() {
     "#FE8A71" = black,
     "#8600A1" = white,
     "#A52A2A" = white,
-    "#000000" = white)
+    "#000000" = white,
+    "#E69F00" = black,
+    "#009E73" = black,
+    "#0072B2" = white,
+    "#D55E00" = black)
   
   pal <- list(labels = colours_list, palette = colours_names)
   return(pal)

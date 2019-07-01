@@ -4,14 +4,23 @@
 \alias{freqs_df}
 \title{All Frequencies on Data Frame}
 \usage{
-freqs_df(df, var = 0.9, plot = TRUE, save = FALSE, subdir = NA)
+freqs_df(df, max = 0.9, min = 0, novar = TRUE, plot = TRUE,
+  top = 30, save = FALSE, subdir = NA)
 }
 \arguments{
 \item{df}{Data.frame}
 
-\item{var}{Numeric. Top variance accepted. Range: (0-1]}
+\item{max}{Numeric. Top variance threshold. Range: (0-1].
+These variables will be excluded}
 
-\item{plot}{Boolean. Do you want to see a plot? Three variables tops.}
+\item{min}{Numeric. Minimum variance threshold. Range: [0-1). 
+These values will be grouped into a high frequency (HF) value}
+
+\item{novar}{Boolean. Remove no variance columns?}
+
+\item{plot}{Boolean. Do you want to see a plot? Three variables tops}
+
+\item{top}{Integer. Plot most relevant (less categories) variables}
 
 \item{save}{Boolean. Save the output plot in our working directory}
 

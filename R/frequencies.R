@@ -200,23 +200,59 @@ freqs <- function(df, ..., wt = NULL,
 #' @family Exploratory
 #' @family Visualization
 #' @param df Data.frame
-#' @param var Numeric. Top variance accepted. Range: (0-1]
-#' @param plot Boolean. Do you want to see a plot? Three variables tops.
+#' @param max Numeric. Top variance threshold. Range: (0-1].
+#' These variables will be excluded
+#' @param min Numeric. Minimum variance threshold. Range: [0-1). 
+#' These values will be grouped into a high frequency (HF) value
+#' @param novar Boolean. Remove no variance columns?
+#' @param plot Boolean. Do you want to see a plot? Three variables tops
+#' @param top Integer. Plot most relevant (less categories) variables
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
 #' @export
-freqs_df <- function(df, var = 0.9,
-                     plot = TRUE, save = FALSE, subdir = NA) {
+freqs_df <- function(df, 
+                     max = 0.9, min = 0.0, novar = TRUE,
+                     plot = TRUE, top = 30,
+                     save = FALSE, subdir = NA) {
+  
+  # if (!is.null(df2)) {
+  #   colnames(df2) <- paste0(colnames(df2), "_df2")
+  #   colnames(df) <- paste0(colnames(df), "_df1")
+  #   if (nrow(df) < nrow(df2)) {x <- df; df <- df2; df2 <- x}
+  #   aux <- df2[nrow(df2) + 1,]
+  #   aux <- aux[rep(seq_len(nrow(df) - nrow(df2))),]
+  #   df2 <- rbind(df2, aux)
+  #   df <- cbind(df, df2)
+  # }
   
   df <- df[!unlist(lapply(df, is.list))]
   unique <- data.frame(lapply(df, function(x) length(unique(x))))
-  order <- rownames(t(-sort(unique)))
-  novar <- names(unique)[unique > nrow(df) * var]
-  if (length(novar) > 0) {
-    message(paste("Variables with more than", var, "variance exluded:", vector2text(novar)))
-    which <- order[!order %in% novar] 
-  } else which <- order
+  which <- rownames(t(-sort(unique)))
+  
+  # Too much variance
+  no <- names(unique)[unique > nrow(df) * max]
+  if (length(no) > 0) {
+    message(paste("Variables with more than", max, "variance exluded:", vector2text(no)))
+    which <- which[!which %in% no] 
+  }
+  
+  # No variance at all
+  if (novar) {
+    no <- zerovar(df)
+    if (length(no) > 0) {
+      message(paste("Variables with no variance exluded:", vector2text(no)))
+      which <- which[!which %in% no] 
+    } 
+  }
+  
+  # Too many columns
+  if (length(which) > top) {
+    no <- which[(top + 1):length(which)]
+    message(paste("Using the", top, "variables with less distinct categories.",
+                  "Excluded:", vector2text(no)))
+    which <- which[1:top]
+  }
   
   for (i in 1:length(which)) {
     if (i == 1) out <- c()
@@ -226,7 +262,11 @@ freqs_df <- function(df, var = 0.9,
       arrange(desc(count))
     out <- rbind(out, res)
   }
-  out <- mutate(out, p = round(100*count/nrow(df),2))
+  out <- out %>% 
+    mutate(p = round(100*count/nrow(df),2)) %>%
+    mutate(value = ifelse(p > min*100, as.character(value), "(HF)")) %>%
+    group_by(col, value) %>% summarise(p = sum(p), count = sum(count)) %>% 
+    arrange(desc(count)) %>% ungroup()
   
   if (plot) {
     out <-  out %>%
@@ -237,7 +277,7 @@ freqs_df <- function(df, var = 0.9,
     p <- ggplot(out, aes(x = col, y = count, fill = col, label = label, colour = col)) + 
       geom_col(aes(alpha = alpha), position = "fill", colour = "black", width = 0.95, size = 0.1) + 
       geom_text(position = position_fill(vjust = .5), size = 3) +
-      coord_flip() + labs(x = "", y = "", title = "Unique Values Frequencies") +
+      coord_flip() + labs(x = "", y = "", title = "Global Values Frequencies") +
       scale_y_percent(expand = c(0, 0)) +
       guides(fill = FALSE, colour = FALSE, alpha = FALSE) +
       theme_lares2(pal = 1) + 
@@ -256,3 +296,10 @@ freqs_df <- function(df, var = 0.9,
     return(out)
   }
 }
+
+# freqs_dfs <- function(df1, df2) {
+#  p1 <- freqs_df(df1) + labs(subtitle = "df1")
+#  p2 <- freqs_df(df2) + labs(subtitle = "df2")
+#  p <- gridExtra::arrangeGrob(p1, p2, ncol = 2, nrow = 1)
+#  plot(p)
+# }
