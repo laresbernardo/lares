@@ -33,10 +33,10 @@ supress stop words in a given language.
 Other Exploratory: \code{\link{corr_cross}},
   \code{\link{corr_var}}, \code{\link{crosstab}},
   \code{\link{df_str}}, \code{\link{distr}},
-  \code{\link{freqs}}, \code{\link{gain_lift}},
-  \code{\link{get_tweets}}, \code{\link{missingness}},
-  \code{\link{textCloud}}, \code{\link{tree_var}},
-  \code{\link{trendsRelated}}
+  \code{\link{freqs_df}}, \code{\link{freqs}},
+  \code{\link{gain_lift}}, \code{\link{get_tweets}},
+  \code{\link{missingness}}, \code{\link{textCloud}},
+  \code{\link{tree_var}}, \code{\link{trendsRelated}}
 
 Other Data Wrangling: \code{\link{balance_data}},
   \code{\link{calibrate}}, \code{\link{categ_reducer}},

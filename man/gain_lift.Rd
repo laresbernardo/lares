@@ -48,10 +48,10 @@ Other Machine Learning: \code{\link{ROC}},
 Other Exploratory: \code{\link{corr_cross}},
   \code{\link{corr_var}}, \code{\link{crosstab}},
   \code{\link{df_str}}, \code{\link{distr}},
-  \code{\link{freqs}}, \code{\link{get_tweets}},
-  \code{\link{missingness}}, \code{\link{textCloud}},
-  \code{\link{textTokenizer}}, \code{\link{tree_var}},
-  \code{\link{trendsRelated}}
+  \code{\link{freqs_df}}, \code{\link{freqs}},
+  \code{\link{get_tweets}}, \code{\link{missingness}},
+  \code{\link{textCloud}}, \code{\link{textTokenizer}},
+  \code{\link{tree_var}}, \code{\link{trendsRelated}}
 }
 \concept{Exploratory}
 \concept{Machine Learning}

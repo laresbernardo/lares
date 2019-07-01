@@ -6,6 +6,7 @@
 #' Custom and tidyverse friendly.
 #' 
 #' @family Exploratory
+#' @family Visualization
 #' @param data Dataframe
 #' @param ... Variables. Main (target variable) and secondary (values 
 #' variable) to group by

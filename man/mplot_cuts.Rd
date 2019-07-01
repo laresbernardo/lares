@@ -46,7 +46,9 @@ Other Machine Learning: \code{\link{ROC}},
   \code{\link{mplot_splits}}, \code{\link{msplit}}
 
 Other Visualization: \code{\link{corr_plot}},
-  \code{\link{mplot_conf}}, \code{\link{mplot_cuts_error}},
+  \code{\link{distr}}, \code{\link{freqs_df}},
+  \code{\link{freqs}}, \code{\link{mplot_conf}},
+  \code{\link{mplot_cuts_error}},
   \code{\link{mplot_density}}, \code{\link{mplot_full}},
   \code{\link{mplot_gain}}, \code{\link{mplot_importance}},
   \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},

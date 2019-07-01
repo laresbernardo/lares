@@ -5,8 +5,10 @@
 #' and cumulatives. It also plots results if needed. Tidyverse friendly.
 #' 
 #' @family Exploratory
+#' @family Visualization
 #' @param df Data.frame
 #' @param ... Variables. Variables you wish to process. Order matters.
+#' If no variables are passed, the whole data.frame will be considered
 #' @param wt Variable, numeric. Weights.
 #' @param rel Boolean. Relative percentages (or absolute)?
 #' @param results Boolean. Return results in a dataframe?
@@ -36,21 +38,21 @@ freqs <- function(df, ..., wt = NULL,
   options(warn = -1)
   vars <- quos(...)
   weight <- enquo(wt)
-
-  output <- df %>%
-    group_by(!!!vars) %>% 
-    tally(wt = !!weight) %>% 
+  
+  # Probably an error but might be usefull for the user instead
+  if (length(vars) == 0) {
+    output <- freqs_df(df, plot = TRUE, save = save, subdir = subdir)
+    return(output)
+  }
+  
+  output <- df %>% group_by(!!!vars) %>% tally(wt = !!weight) %>% 
     arrange(desc(n)) %>%
     {if (!rel) ungroup(.) else .} %>%
-    mutate(p = round(100*n/sum(n),2), 
-           pcum = cumsum(p))
+    mutate(p = round(100*n/sum(n), 2), pcum = cumsum(p))    
+  
   
   if (!plot && !save) {
-    if (results) {
-      return(output)
-    } else {
-      return(NULL)
-    }
+    if (results) return(output) else invisible(return())
   }
   
   if (ncol(output) - 3 >= 4) {
@@ -186,4 +188,71 @@ freqs <- function(df, ..., wt = NULL,
   # Export file name and folder for plot
   if (save) export_plot(p, "viz_freqs", vars, subdir = subdir)
   return(p)  
+}
+
+
+####################################################################
+#' All Frequencies on Data Frame
+#' 
+#' This function lets the user analize data by visualizing the
+#' frequency of each value of each column from a whole data frame.
+#' 
+#' @family Exploratory
+#' @family Visualization
+#' @param df Data.frame
+#' @param var Numeric. Top variance accepted. Range: (0-1]
+#' @param plot Boolean. Do you want to see a plot? Three variables tops.
+#' @param save Boolean. Save the output plot in our working directory
+#' @param subdir Character. Into which subdirectory do you wish to 
+#' save the plot to?
+#' @export
+freqs_df <- function(df, var = 0.9,
+                     plot = TRUE, save = FALSE, subdir = NA) {
+  
+  df <- df[!unlist(lapply(df, is.list))]
+  unique <- data.frame(lapply(df, function(x) length(unique(x))))
+  order <- rownames(t(-sort(unique)))
+  novar <- names(unique)[unique > nrow(df) * var]
+  if (length(novar) > 0) {
+    message(paste("Variables with more than", var, "variance exluded:", vector2text(novar)))
+    which <- order[!order %in% novar] 
+  } else which <- order
+  
+  for (i in 1:length(which)) {
+    if (i == 1) out <- c()
+    iter <- which[i]
+    counter <- table(df[iter], useNA = "ifany")
+    res <- data.frame(value = names(counter), count = as.vector(counter), col = iter) %>%
+      arrange(desc(count))
+    out <- rbind(out, res)
+  }
+  out <- mutate(out, p = round(100*count/nrow(df),2))
+  
+  if (plot) {
+    out <-  out %>%
+      mutate(value = ifelse(is.na(value), "NA", as.character(value))) %>%
+      mutate(col = factor(col, levels = which)) %>%
+      mutate(label = ifelse(p > 8, as.character(value), "")) %>%
+      group_by(col) %>% mutate(alpha = normalize(p))
+    p <- ggplot(out, aes(x = col, y = count, fill = col, label = label, colour = col)) + 
+      geom_col(aes(alpha = alpha), position = "fill", colour = "black", width = 0.95, size = 0.1) + 
+      geom_text(position = position_fill(vjust = .5), size = 3) +
+      coord_flip() + labs(x = "", y = "", title = "Unique Values Frequencies") +
+      scale_y_percent(expand = c(0, 0)) +
+      guides(fill = FALSE, colour = FALSE, alpha = FALSE) +
+      theme_lares2(pal = 1) + 
+      theme(panel.background = element_blank(),
+            panel.grid.major = element_blank(), 
+            panel.grid.minor = element_blank()) +
+      geom_hline(yintercept = c(0.25, 0.5, 0.75), linetype = "dashed",
+                 color = "black", size = 0.5, alpha = 0.3)
+    if (save) export_plot(p, "viz_freqs_df", subdir = subdir)
+    return(p)
+  } else {
+    out <- select(out, col, value, count, p) %>%
+      rename(n = count, variable = col) %>%
+      group_by(variable) %>%
+      mutate(pcum = round(cumsum(p), 2))
+    return(out)
+  }
 }

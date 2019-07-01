@@ -982,10 +982,9 @@ haveInternet <- function(thresh = 3, url = "http://www.google.com") {
 #' @export
 zerovar <- function(df) {
   out <- lapply(df, function(x) length(unique(x)))
-  want <- which(!out > 1)
-  unlist(want)
+  which <- which(out <= 1)
+  names(unlist(which))
 }
-
 
 ####################################################################
 #' Read Files (Auto-detected)

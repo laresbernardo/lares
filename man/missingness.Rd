@@ -23,9 +23,9 @@ missingness in a data.frame. It also plots the results if needed.
 Other Exploratory: \code{\link{corr_cross}},
   \code{\link{corr_var}}, \code{\link{crosstab}},
   \code{\link{df_str}}, \code{\link{distr}},
-  \code{\link{freqs}}, \code{\link{gain_lift}},
-  \code{\link{get_tweets}}, \code{\link{textCloud}},
-  \code{\link{textTokenizer}}, \code{\link{tree_var}},
-  \code{\link{trendsRelated}}
+  \code{\link{freqs_df}}, \code{\link{freqs}},
+  \code{\link{gain_lift}}, \code{\link{get_tweets}},
+  \code{\link{textCloud}}, \code{\link{textTokenizer}},
+  \code{\link{tree_var}}, \code{\link{trendsRelated}}
 }
 \concept{Exploratory}

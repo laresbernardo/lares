@@ -16,10 +16,11 @@ using filters and no data is returned.
 }
 \seealso{
 Other Visualization: \code{\link{corr_plot}},
-  \code{\link{mplot_conf}}, \code{\link{mplot_cuts_error}},
-  \code{\link{mplot_cuts}}, \code{\link{mplot_density}},
-  \code{\link{mplot_full}}, \code{\link{mplot_gain}},
-  \code{\link{mplot_importance}},
+  \code{\link{distr}}, \code{\link{freqs_df}},
+  \code{\link{freqs}}, \code{\link{mplot_conf}},
+  \code{\link{mplot_cuts_error}}, \code{\link{mplot_cuts}},
+  \code{\link{mplot_density}}, \code{\link{mplot_full}},
+  \code{\link{mplot_gain}}, \code{\link{mplot_importance}},
   \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
   \code{\link{mplot_response}}, \code{\link{mplot_roc}},
   \code{\link{mplot_splits}}, \code{\link{plot_survey}},

@@ -12,7 +12,8 @@ freqs(df, ..., wt = NULL, rel = FALSE, results = TRUE,
 \arguments{
 \item{df}{Data.frame}
 
-\item{...}{Variables. Variables you wish to process. Order matters.}
+\item{...}{Variables. Variables you wish to process. Order matters.
+If no variables are passed, the whole data.frame will be considered}
 
 \item{wt}{Variable, numeric. Weights.}
 
@@ -50,9 +51,23 @@ and cumulatives. It also plots results if needed. Tidyverse friendly.
 Other Exploratory: \code{\link{corr_cross}},
   \code{\link{corr_var}}, \code{\link{crosstab}},
   \code{\link{df_str}}, \code{\link{distr}},
-  \code{\link{gain_lift}}, \code{\link{get_tweets}},
-  \code{\link{missingness}}, \code{\link{textCloud}},
-  \code{\link{textTokenizer}}, \code{\link{tree_var}},
-  \code{\link{trendsRelated}}
+  \code{\link{freqs_df}}, \code{\link{gain_lift}},
+  \code{\link{get_tweets}}, \code{\link{missingness}},
+  \code{\link{textCloud}}, \code{\link{textTokenizer}},
+  \code{\link{tree_var}}, \code{\link{trendsRelated}}
+
+Other Visualization: \code{\link{corr_plot}},
+  \code{\link{distr}}, \code{\link{freqs_df}},
+  \code{\link{mplot_conf}}, \code{\link{mplot_cuts_error}},
+  \code{\link{mplot_cuts}}, \code{\link{mplot_density}},
+  \code{\link{mplot_full}}, \code{\link{mplot_gain}},
+  \code{\link{mplot_importance}},
+  \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
+  \code{\link{mplot_response}}, \code{\link{mplot_roc}},
+  \code{\link{mplot_splits}}, \code{\link{noPlot}},
+  \code{\link{plot_survey}}, \code{\link{textCloud}},
+  \code{\link{theme_lares2}}, \code{\link{theme_lares}},
+  \code{\link{tree_var}}
 }
 \concept{Exploratory}
+\concept{Visualization}

@@ -12,12 +12,12 @@
 "dft"
 
 # dft <- read.csv("~/Dropbox (Personal)/Documentos/R/R Titanic/train.csv") %>%
-#   mutate(Pclass = factor(Pclass), 
-#          Sex = factor(Sex), 
+#   mutate(Pclass = factor(Pclass),
+#          Sex = factor(Sex),
 #          Survived = as.logical(Survived),
 #          Ticket = as.character(Ticket)) %>%
 #   select(-Name)
-# save(dft, file="data/dft.RData")
+# save(dft, file = "data/dft.RData")
 
 
 
