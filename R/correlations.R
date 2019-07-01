@@ -49,8 +49,7 @@ corr <- function(df, method = "pearson", ignore = NA,
       data.frame(variable = row.names(.), mean = abs(.)) %>%
       arrange(desc(abs(mean)))
     which <- as.vector(imp$variable[1:top])
-    cor <- cor %>% select(one_of(which)) %>% 
-      filter(row.names(.) %in% which) 
+    cor <- cor[which,which]
   }
   
   # Plot
@@ -118,8 +117,13 @@ corr_var <- function(df, ...,
   if (!var %in% colnames(rs)) {
     message(paste("Not a valid input:", var, "was transformed or does not exist."))
     maybes <- colnames(rs)[grepl(var, colnames(rs))]
-    if (length(maybes) > 0) message(paste("Maybe you meant one of:", vector2text(maybes)))
-    stop()
+    if (length(maybes) > 0) {
+      if (maybes[1] %in% colnames(rs)) {
+        message(paste0("Maybe you meant one of: ", vector2text(maybes), ". ",
+                       "Automatically using '", maybes[1], "'"))
+        var <- maybes[1]
+      } 
+    } else stop()
   }
   
   d <- data.frame(variables = colnames(rs), corr = rs[, c(var)])
