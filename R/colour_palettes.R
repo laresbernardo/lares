@@ -89,7 +89,7 @@ lares_pal <- function() {
     "#0C7BDC" = black,
     "#817B7B" = black,
     "#F66320" = black,
-    "#FEFE62" = black,
+    "#FEFE95" = black,
     "#005AB5" = white,
     "#9A9A9A" = black,
     "#00008B" = white,
@@ -106,7 +106,7 @@ lares_pal <- function() {
     "#0072B2" = white,
     "#D55E00" = black)
   
-  pal <- list(labels = colours_list, palette = colours_names)
+  pal <- list(labels = colours_list, palette = rep(colours_names, 4))
   return(pal)
 }
 
@@ -125,26 +125,22 @@ lares_pal <- function() {
 #' @export
 plot_palette <- function(fill, colour = "black", id = NA) {
   
-  options(warn=-1)
-  
-  if (is.na(id)) {
-    id <- 1:length(fill)
-  }
+  if (is.na(id)) id <- 1:length(fill)
   
   data.frame(fill = fill, 
              colour = colour,
              id = id) %>%
-    ggplot(aes(x=reorder(fill, -id), y=1)) + 
-    geom_bar(aes(fill = fill), stat="identity", position="dodge") +
-    geom_text(aes(colour = colour, label=id), hjust = 1.5) +
+    ggplot(aes(x = reorder(fill, -id), y = 1)) + 
+    geom_bar(aes(fill = fill), stat = "identity", position = "dodge") +
+    geom_text(aes(colour = colour, label = id), hjust = 1.5) +
     scale_fill_identity() +
     scale_colour_identity() +
     coord_flip() + labs(x = "Colours", y = "") +
-    guides(fill=FALSE, colour=FALSE) +
+    guides(fill = FALSE, colour = FALSE) +
     theme_lares2() + 
-    theme(axis.title.x=element_blank(),
-          axis.text.x=element_blank(),
-          axis.ticks.x=element_blank())
+    theme(axis.title.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks.x = element_blank())
 }
 
 

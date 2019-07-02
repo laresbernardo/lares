@@ -216,16 +216,6 @@ freqs_df <- function(df,
                      plot = TRUE, top = 30,
                      save = FALSE, subdir = NA) {
   
-  # if (!is.null(df2)) {
-  #   colnames(df2) <- paste0(colnames(df2), "_df2")
-  #   colnames(df) <- paste0(colnames(df), "_df1")
-  #   if (nrow(df) < nrow(df2)) {x <- df; df <- df2; df2 <- x}
-  #   aux <- df2[nrow(df2) + 1,]
-  #   aux <- aux[rep(seq_len(nrow(df) - nrow(df2))),]
-  #   df2 <- rbind(df2, aux)
-  #   df <- cbind(df, df2)
-  # }
-  
   df <- df[!unlist(lapply(df, is.list))]
   unique <- data.frame(lapply(df, function(x) length(unique(x))))
   which <- rownames(t(-sort(unique)))
@@ -233,7 +223,8 @@ freqs_df <- function(df,
   # Too much variance
   no <- names(unique)[unique > nrow(df) * max]
   if (length(no) > 0) {
-    message(paste("Variables with more than", max, "variance exluded:", vector2text(no)))
+    message(paste(length(no), "variables with more than", max, 
+                  "variance exluded:", vector2text(no)))
     which <- which[!which %in% no] 
   }
   
@@ -241,7 +232,7 @@ freqs_df <- function(df,
   if (novar) {
     no <- zerovar(df)
     if (length(no) > 0) {
-      message(paste("Variables with no variance exluded:", vector2text(no)))
+      message(paste(length(no), "variables with no variance exluded:", vector2text(no)))
       which <- which[!which %in% no] 
     } 
   }
@@ -250,7 +241,7 @@ freqs_df <- function(df,
   if (length(which) > top) {
     no <- which[(top + 1):length(which)]
     message(paste("Using the", top, "variables with less distinct categories.",
-                  "Excluded:", vector2text(no)))
+                  length(no), "variables excluded:", vector2text(no)))
     which <- which[1:top]
   }
   
@@ -262,9 +253,10 @@ freqs_df <- function(df,
       arrange(desc(count))
     out <- rbind(out, res)
   }
+  
   out <- out %>% 
-    mutate(p = round(100*count/nrow(df),2)) %>%
-    mutate(value = ifelse(p > min*100, as.character(value), "(HF)")) %>%
+    mutate(p = round(100 * count / nrow(df), 2)) %>%
+    mutate(value = ifelse(p > min * 100, as.character(value), "(HF)")) %>%
     group_by(col, value) %>% summarise(p = sum(p), count = sum(count)) %>% 
     arrange(desc(count)) %>% ungroup()
   
@@ -273,7 +265,8 @@ freqs_df <- function(df,
       mutate(value = ifelse(is.na(value), "NA", as.character(value))) %>%
       mutate(col = factor(col, levels = which)) %>%
       mutate(label = ifelse(p > 8, as.character(value), "")) %>%
-      group_by(col) %>% mutate(alpha = normalize(p))
+      group_by(col) %>% mutate(alpha = log(count))
+    
     p <- ggplot(out, aes(x = col, y = count, fill = col, label = label, colour = col)) + 
       geom_col(aes(alpha = alpha), position = "fill", colour = "black", width = 0.95, size = 0.1) + 
       geom_text(position = position_fill(vjust = .5), size = 3) +
@@ -296,10 +289,3 @@ freqs_df <- function(df,
     return(out)
   }
 }
-
-# freqs_dfs <- function(df1, df2) {
-#  p1 <- freqs_df(df1) + labs(subtitle = "df1")
-#  p2 <- freqs_df(df2) + labs(subtitle = "df2")
-#  p <- gridExtra::arrangeGrob(p1, p2, ncol = 2, nrow = 1)
-#  plot(p)
-# }
