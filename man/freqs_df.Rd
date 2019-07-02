@@ -5,7 +5,7 @@
 \title{All Frequencies on Data Frame}
 \usage{
 freqs_df(df, max = 0.9, min = 0, novar = TRUE, plot = TRUE,
-  top = 30, save = FALSE, subdir = NA)
+  top = 30, quiet = FALSE, save = FALSE, subdir = NA)
 }
 \arguments{
 \item{df}{Data.frame}
@@ -21,6 +21,8 @@ These values will be grouped into a high frequency (HF) value}
 \item{plot}{Boolean. Do you want to see a plot? Three variables tops}
 
 \item{top}{Integer. Plot most relevant (less categories) variables}
+
+\item{quiet}{Boolean. Keep quiet? (or show variables exclusions)}
 
 \item{save}{Boolean. Save the output plot in our working directory}
 

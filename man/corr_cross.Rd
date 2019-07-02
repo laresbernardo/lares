@@ -5,7 +5,7 @@
 \title{Correlation Cross-Table}
 \usage{
 corr_cross(df, plot = TRUE, max = 1, top = 25, ignore = NA,
-  rm.na = FALSE, dummy = TRUE)
+  contains = NA, rm.na = FALSE, dummy = TRUE)
 }
 \arguments{
 \item{df}{Dataframe.}
@@ -17,6 +17,9 @@ corr_cross(df, plot = TRUE, max = 1, top = 25, ignore = NA,
 \item{top}{Integer. Return top n results only}
 
 \item{ignore}{Character vector. Which columns do you wish to exlude?}
+
+\item{contains}{Character vector. Filter cross-correlations with variables
+that contains certain strings (using any value if vector used)}
 
 \item{rm.na}{Boolean. Remove NAs?}
 

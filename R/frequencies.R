@@ -207,6 +207,7 @@ freqs <- function(df, ..., wt = NULL,
 #' @param novar Boolean. Remove no variance columns?
 #' @param plot Boolean. Do you want to see a plot? Three variables tops
 #' @param top Integer. Plot most relevant (less categories) variables
+#' @param quiet Boolean. Keep quiet? (or show variables exclusions)
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
@@ -214,6 +215,7 @@ freqs <- function(df, ..., wt = NULL,
 freqs_df <- function(df, 
                      max = 0.9, min = 0.0, novar = TRUE,
                      plot = TRUE, top = 30,
+                     quiet = FALSE,
                      save = FALSE, subdir = NA) {
   
   df <- df[!unlist(lapply(df, is.list))]
@@ -223,8 +225,8 @@ freqs_df <- function(df,
   # Too much variance
   no <- names(unique)[unique > nrow(df) * max]
   if (length(no) > 0) {
-    message(paste(length(no), "variables with more than", max, 
-                  "variance exluded:", vector2text(no)))
+    if (!quiet) message(paste(length(no), "variables with more than", max, 
+                              "variance exluded:", vector2text(no)))
     which <- which[!which %in% no] 
   }
   
@@ -232,7 +234,8 @@ freqs_df <- function(df,
   if (novar) {
     no <- zerovar(df)
     if (length(no) > 0) {
-      message(paste(length(no), "variables with no variance exluded:", vector2text(no)))
+      if (!quiet) message(paste(length(no), "variables with no variance exluded:", 
+                                vector2text(no)))
       which <- which[!which %in% no] 
     } 
   }
@@ -240,7 +243,7 @@ freqs_df <- function(df,
   # Too many columns
   if (length(which) > top) {
     no <- which[(top + 1):length(which)]
-    message(paste("Using the", top, "variables with less distinct categories.",
+    if (!quiet) message(paste("Using the", top, "variables with less distinct categories.",
                   length(no), "variables excluded:", vector2text(no)))
     which <- which[1:top]
   }
@@ -265,7 +268,8 @@ freqs_df <- function(df,
       mutate(value = ifelse(is.na(value), "NA", as.character(value))) %>%
       mutate(col = factor(col, levels = which)) %>%
       mutate(label = ifelse(p > 8, as.character(value), "")) %>%
-      group_by(col) %>% mutate(alpha = log(count))
+      group_by(col) %>% mutate(alpha = log(count)) %>%
+      mutate(alpha = as.numeric(ifelse(value == "NA", 0, alpha)))
     
     p <- ggplot(out, aes(x = col, y = count, fill = col, label = label, colour = col)) + 
       geom_col(aes(alpha = alpha), position = "fill", colour = "black", width = 0.95, size = 0.1) + 

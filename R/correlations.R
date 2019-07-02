@@ -238,10 +238,14 @@ corr_plot <- function(df, ignore = NA, method = "pearson", order = "FPC",
 #' @param max Numeric. Maximum correlation permited (from 0 to 1)
 #' @param top Integer. Return top n results only
 #' @param ignore Character vector. Which columns do you wish to exlude?
+#' @param contains Character vector. Filter cross-correlations with variables
+#' that contains certain strings (using any value if vector used)
 #' @param rm.na Boolean. Remove NAs?
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
 #' @export
-corr_cross <- function(df, plot = TRUE, max = 1, top = 25, ignore = NA, rm.na = FALSE, dummy = TRUE) {
+corr_cross <- function(df, plot = TRUE, max = 1, top = 25, 
+                       ignore = NA, contains = NA,
+                       rm.na = FALSE, dummy = TRUE) {
   c <- corr(df, ignore = ignore, plot = FALSE, dummy = dummy)
   ret <- data.frame(gather(c)) %>% 
     mutate(mix = rep(colnames(c), length(c))) %>%
@@ -256,6 +260,7 @@ corr_cross <- function(df, plot = TRUE, max = 1, top = 25, ignore = NA, rm.na = 
     filter(!grepl("_OTHER", key)) %>%
     select(key, mix, value) %>%
     rename(corr = value) %>%
+    filter(grepl(vector2text(contains, sep = "|", quotes = FALSE), paste(key, mix))) %>%
     head(top) 
   if (plot) {
     subtitle <- paste(top, "most relevant")
