@@ -46,9 +46,8 @@ textTokenizer <- function(text, lang = "english",
                           df = FALSE,
                           min = 2) {
   
-  # require("tm")
-  options(warn = -1)
-  
+  try_require("tm")
+
   text <- as.character(text)
   if (keep_spaces) text <- gsub(" ", "_", text) # '_' deleted later on
   
@@ -91,7 +90,7 @@ textTokenizer <- function(text, lang = "english",
       vector <- grepl(word, texts)
       toksdf <- cbind(toksdf, vector)
       colnames(toksdf)[colnames(toksdf) == "vector"] <- word
-      statusbar(i, nrow(d), info = word)
+      statusbar(i, nrow(d), word)
     }
     message(paste(nrow(d), "columns created succesfully!"))
     toksdf <- data.frame(texts = texts, toksdf)

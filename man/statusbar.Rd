@@ -4,21 +4,20 @@
 \alias{statusbar}
 \title{Progressbar for for loops}
 \usage{
-statusbar(run = 1, max.run = 100, info = run, msg = "DONE!")
+statusbar(run = 1, max.run = 100, label = run, msg = "DONE!")
 }
 \arguments{
 \item{run}{Iterator. for loop or an integer with the current loop number}
 
 \item{max.run}{Number. Maximum number of loops}
 
-\item{info}{String. With additionaly information to be printed 
+\item{label}{String. With additionaly information to be printed 
 at the end of the line. The default is \code{run}.}
 
 \item{msg}{Character. Finish message}
 }
 \description{
-This function lets the user view a progressbar for a 'for' loop. 
-Idea from https://github.com/STATWORX/helfRlein/blob/master/R/statusbar.R
+This function lets the user view a progressbar for a 'for' loop.
 }
 \seealso{
 Other Tools: \code{\link{bindfiles}},

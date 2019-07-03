@@ -834,16 +834,15 @@ json2vector <- function(json) {
 #' Progressbar for for loops
 #' 
 #' This function lets the user view a progressbar for a 'for' loop. 
-#' Idea from https://github.com/STATWORX/helfRlein/blob/master/R/statusbar.R
 #' 
 #' @family Tools
 #' @param run Iterator. for loop or an integer with the current loop number
 #' @param max.run Number. Maximum number of loops
-#' @param info String. With additionaly information to be printed 
+#' @param label String. With additionaly information to be printed 
 #' at the end of the line. The default is \code{run}.
 #' @param msg Character. Finish message
 #' @export
-statusbar <- function(run = 1, max.run = 100, info = run, msg = "DONE!"){
+statusbar <- function(run = 1, max.run = 100, label = run, msg = "DONE!"){
   
   if (length(run) > 1 & !is.numeric(run)) 
     stop("run must be a numerical value!")
@@ -862,9 +861,10 @@ statusbar <- function(run = 1, max.run = 100, info = run, msg = "DONE!"){
                      ifelse(percent.step != percent.max, "\\", "|"),
                      paste0(rep("_", percent.max - percent.step), collapse = ""),"] ", 
                      round(percent * 100, 2), "% | ", 
-                     paste(ifelse(run != max.run, info, msg), ("           ")))
+                     paste(ifelse(run != max.run, label, msg), ("           ")))
   cat("\r", progress) # Replace
   flush.console()
+  if (run == max.run) cat(" ", sep = "\n\n")
 }
 
 

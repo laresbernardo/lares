@@ -124,7 +124,7 @@ get_stocks_hist <- function(symbols = NA,
         }
         if (verbose == TRUE) {
           info <- paste(symbol, "since", start_date, "   ")
-          statusbar(i, length(symbols), info = info)  
+          statusbar(i, length(symbols), info)  
         }
       }
     } else {message("The parameters 'symbols' and 'from' should be the same length.") }
@@ -571,7 +571,7 @@ etf_sector <- function(etf = "VTI", verbose = TRUE) {
     }
     if (verbose == TRUE & length(etf) > 1) {
       info <- paste(toupper(etf[i]), ifelse(check, "", "X"))
-      statusbar(i, length(etf), info = info)   
+      statusbar(i, length(etf), info)   
     }
   }
   if (nrow(ret) == 0) {
