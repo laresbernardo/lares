@@ -210,11 +210,11 @@ fb_post <- function(token, post_id) {
       return(error)
     } else {
       json$data$post_id <- post_id[i]
-      json$data$created_time <- as.POSIXct(json$data$created_time, 
-                                           format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+      json$data$created_time <- as.POSIXct(
+        json$data$created_time, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
       ret <- rbind(ret, json$data)
     }
-    if (iters > 1) statusbar(i, iters, time = FALSE) 
+    if (iters > 1) statusbar(i, iters) 
   }  
   return(ret)
 }
