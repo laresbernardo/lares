@@ -4,7 +4,7 @@
 \alias{statusbar}
 \title{Progressbar for for loops}
 \usage{
-statusbar(run, max.run, info = run, percent.max = 40L, time = FALSE)
+statusbar(run = 1, max.run = 100, info = run, msg = "DONE!")
 }
 \arguments{
 \item{run}{Iterator. for loop or an integer with the current loop number}
@@ -14,9 +14,7 @@ statusbar(run, max.run, info = run, percent.max = 40L, time = FALSE)
 \item{info}{String. With additionaly information to be printed 
 at the end of the line. The default is \code{run}.}
 
-\item{percent.max}{Integer. Indicates how wide the progress bar is printed}
-
-\item{time}{Boolean. Show time?}
+\item{msg}{Character. Finish message}
 }
 \description{
 This function lets the user view a progressbar for a 'for' loop. 

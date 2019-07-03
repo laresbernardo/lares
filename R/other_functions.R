@@ -841,39 +841,30 @@ json2vector <- function(json) {
 #' @param max.run Number. Maximum number of loops
 #' @param info String. With additionaly information to be printed 
 #' at the end of the line. The default is \code{run}.
-#' @param percent.max Integer. Indicates how wide the progress bar is printed
-#' @param time Boolean. Show time?
+#' @param msg Character. Finish message
 #' @export
-statusbar <- function(run, max.run, info = run, percent.max = 40L, time = FALSE){
-  
-  if (run == 1) start <- Sys.time()
+statusbar <- function(run = 1, max.run = 100, info = run, msg = "DONE!"){
   
   if (length(run) > 1 & !is.numeric(run)) 
     stop("run must be a numerical value!")
   if (length(max.run) == 0 & !is.numeric(run)) 
     stop("max.run needs to be greater than 0!")
   
+  percent.max <- getOption("width") * 0.7
+  
   if (length(max.run) > 1) {
     percent <- which(run == max.run) / length(max.run)
-  } else {
-    percent <- run / max.run
-  }
+  } else percent <- run / max.run
   
-  percent.step <- round(percent * percent.max, 0)
+  percent.step <- percent * percent.max
   progress <- paste0("[",
-                     paste0(rep("=", percent.step), collapse = ""),
-                     paste0(rep(" ", percent.max - percent.step), collapse = ""),
-                     "] ",
-                     sprintf("%7.1f", percent * 100, 2),
-                     "% | ", paste(info, ("           "))) 
-  cat("\r", progress)
+                     paste0(rep("|", percent.step), collapse = ""), 
+                     ifelse(percent.step != percent.max, "\\", "|"),
+                     paste0(rep("_", percent.max - percent.step), collapse = ""),"] ", 
+                     round(percent * 100, 2), "% | ", 
+                     paste(ifelse(run != max.run, info, msg), ("           ")))
+  cat("\r", progress) # Replace
   flush.console()
-  
-  if (run == max.run) {
-    cat("", sep = "\n\n") 
-    if (time) message(paste0("Total time: ", round(Sys.time() - start, 2), "s"))
-  }
-  
 }
 
 
