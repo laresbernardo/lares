@@ -33,6 +33,7 @@ Other Data Wrangling: \code{\link{balance_data}},
   \code{\link{year_month}}, \code{\link{year_week}}
 
 Other Text Mining: \code{\link{replaceall}},
+  \code{\link{sentimentBreakdown}},
   \code{\link{textCloud}}, \code{\link{textFeats}},
   \code{\link{textTokenizer}}
 }

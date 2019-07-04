@@ -103,7 +103,7 @@ freqs <- function(df, ..., wt = NULL,
   if (rm.na)  plot <- plot[complete.cases(plot), ]
   
   # Create some dynamic aesthetics
-  plot$labels <- paste0(lares::formatNum(plot$n, decimals = 0),
+  plot$labels <- paste0(formatNum(plot$n, decimals = 0),
                         " (", signif(plot$p, 4), "%)")
   plot$label_colours <- ifelse(plot$p > mean(range(plot$p)) * 0.9, "m", "f")
   lim <- 0.35

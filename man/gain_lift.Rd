@@ -50,7 +50,6 @@ Other Exploratory: \code{\link{corr_cross}},
   \code{\link{df_str}}, \code{\link{distr}},
   \code{\link{freqs_df}}, \code{\link{freqs}},
   \code{\link{get_tweets}}, \code{\link{missingness}},
-  \code{\link{textCloud}}, \code{\link{textTokenizer}},
   \code{\link{tree_var}}, \code{\link{trendsRelated}}
 }
 \concept{Exploratory}

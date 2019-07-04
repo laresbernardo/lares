@@ -16,7 +16,7 @@
 #' @importFrom googleAuthR gar_auth
 #' @importFrom googlesheets gs_auth gs_read gs_edit_cells gs_title
 #' @importFrom graphics box hist plot points rasterImage rect grid 
-#' @importFrom grDevices graphics.off dev.off png
+#' @importFrom grDevices graphics.off dev.off png dev.size
 #' @importFrom gridExtra grid.arrange tableGrob arrangeGrob ttheme_minimal 
 #' @importFrom h2o as.h2o h2o.automl h2o.accuracy h2o.getModel h2o.performance h2o.init 
 #' h2o.removeAll h2o.download_mojo h2o.download_pojo h2o.loadModel h2o.no_progress h2o.predict 
@@ -94,7 +94,7 @@ if (getRversion() >= "2.15.1")
       "percentile","cum_response","response","total","ETF","Sector","Percentage","corrplot",
       "row_num","ncap","freq","mix","redundant","plot_ly","chordDiagram","skim","uh",
       "fread","read.dta13","read.spss","read.xls","geom_label_repel","variable",
-      "rpart","rpart.control","rpart.plot"))
+      "rpart","rpart.control","rpart.plot","get_sentiment_dictionary","sentiment"))
 
 #' Pipe operator
 #' @name lares-exports

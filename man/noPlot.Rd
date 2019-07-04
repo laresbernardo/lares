@@ -24,7 +24,7 @@ Other Visualization: \code{\link{corr_plot}},
   \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
   \code{\link{mplot_response}}, \code{\link{mplot_roc}},
   \code{\link{mplot_splits}}, \code{\link{plot_survey}},
-  \code{\link{textCloud}}, \code{\link{theme_lares2}},
-  \code{\link{theme_lares}}, \code{\link{tree_var}}
+  \code{\link{theme_lares2}}, \code{\link{theme_lares}},
+  \code{\link{tree_var}}
 }
 \concept{Visualization}

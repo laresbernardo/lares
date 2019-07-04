@@ -575,7 +575,8 @@ etf_sector <- function(etf = "VTI", verbose = TRUE) {
     }
   }
   if (nrow(ret) == 0) {
-    stop("No data found for given Tickers!")
+    message("No data found for given Tickers!")
+    invisible(return())
   } else {
     return(ret) 
   }

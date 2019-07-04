@@ -2,7 +2,7 @@
 % Please edit documentation in R/other_functions.R
 \name{try_require}
 \alias{try_require}
-\title{Check if specific package is installed}
+\title{Check if Specific Package is Installed}
 \usage{
 try_require(package)
 }
@@ -13,10 +13,10 @@ try_require(package)
 This function checks library dependencies
 }
 \seealso{
-Other Tools: \code{\link{bindfiles}},
-  \code{\link{bring_api}}, \code{\link{db_download}},
-  \code{\link{db_upload}}, \code{\link{export_plot}},
-  \code{\link{export_results}},
+Other Tools: \code{\link{autoline}},
+  \code{\link{bindfiles}}, \code{\link{bring_api}},
+  \code{\link{db_download}}, \code{\link{db_upload}},
+  \code{\link{export_plot}}, \code{\link{export_results}},
   \code{\link{get_credentials}},
   \code{\link{get_currency}},
   \code{\link{h2o_predict_API}},

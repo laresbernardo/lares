@@ -25,7 +25,6 @@ cleanText <- function(text, spaces = TRUE, lower = TRUE) {
 #' This function transforms texts into words, calculate frequencies,
 #' supress stop words in a given language.
 #' 
-#' @family Exploratory
 #' @family Data Wrangling
 #' @family Text Mining
 #' @param text Character vector
@@ -46,38 +45,59 @@ textTokenizer <- function(text, lang = "english",
                           df = FALSE,
                           min = 2) {
   
+  options(warn = -1)
   try_require("tm")
 
   text <- as.character(text)
   if (keep_spaces) text <- gsub(" ", "_", text) # '_' deleted later on
   
+  # text <- as.character(c("Hooooolaa 123 4 jaja ALLÁ que bueeeno toOdO!...","seguuuimos","jajaja?"))
+  
   ## Load the data as a corpus
   docs <- Corpus(VectorSource(text))
-  ## Text transformation
-  toSpace <- content_transformer(function(x , pattern) gsub(pattern, " ", x))
-  docs <- tm_map(docs, toSpace, "/")
-  docs <- tm_map(docs, toSpace, "@")
-  docs <- tm_map(docs, toSpace, "\\|")
   
-  ## Cleaning the text
   # Convert the text to lower case
-  docs <- tm_map(docs, content_transformer(tolower))
+  aux <- function(x) tolower(x)
+  docs <- tm_map(docs, content_transformer(aux))
+  
   # Remove numbers
-  docs <- tm_map(docs, removeNumbers)
-  # Remove english common stopwords
-  docs <- tm_map(docs, removeWords, stopwords(lang))
-  # Remove your own stop word (specify your stopwords as a character vector)
-  docs <- tm_map(docs, removeWords, c("https","http",exclude))
+  aux <- function(x) gsub("[0-9]", " ", x)
+  docs <- tm_map(docs, content_transformer(aux))
+
   # Remove punctuations
-  docs <- tm_map(docs, removePunctuation)
+  aux <- function(x) gsub("[[:punct:] ]+", " ", x)
+  docs <- tm_map(docs, content_transformer(aux))
+  
+  # Repeated letters (more than 3 times)
+  aux <- function(x) gsub("([[:alpha:]])\\1{2,}", "\\1", x)
+  docs <- tm_map(docs, content_transformer(aux))
+  
+  # Double vowels as well
+  if (lang %in% c("spanish", "english")) {
+    aux <- function(x) gsub("[aeiou]*([aeiou])\\1+", "\\1", x)
+    docs <- tm_map(docs, content_transformer(aux))
+  } 
+  
+  # Laughs replacements
+  aux <- function(x) gsub("a*ja+j[ja]*|a*ha+h[ha]*|o?l+o+l+[ol]*", "(laugh)", x)
+  docs <- tm_map(docs, content_transformer(aux))
+  
+  # Remove stopwords (common stopwords)
+  docs <- tm_map(docs, removeWords, stopwords(lang))
+  
+  # Remove your own stop words
+  docs <- tm_map(docs, removeWords, c("https","http","que", as.character(exclude)))
+  
   # Eliminate extra white spaces
-  docs <- tm_map(docs, stripWhitespace)
+  aux <- function(x) gsub("\\s+"," ",x)
+  docs <- tm_map(docs, content_transformer(aux))
   
   ## Build a term-document matrix
   dtm <- TermDocumentMatrix(docs)
   m <- as.matrix(dtm)
   v <- sort(rowSums(m), decreasing = TRUE)
   d <- data.frame(word = names(v), freq = v)
+  rownames(d) <- NULL
   
   if (df) {
     d <- filter(d, freq >= min)
@@ -153,8 +173,6 @@ textFeats <- function(text, auto = TRUE, contains = NA) {
 #' Study the distribution of a target variable vs another variable. This
 #' function is quite similar to the funModeling's corrplot function.
 #' 
-#' @family Visualization
-#' @family Exploratory
 #' @family Text Mining
 #' @param text Character vector
 #' @param lang Character. Language in text (used for stop words)
@@ -185,4 +203,69 @@ textCloud <- function(text, lang = "english", exclude = c(), seed = 0,
             random.order = FALSE, 
             rot.per = 0.2, 
             colors = pal)
+}
+
+
+####################################################################
+#' Sentiment Breakdown on Text
+#' 
+#' This function searches for relevant words in a given text and adds 
+#' sentiments labels (joy, anticipation, surprise, positive, trust, 
+#' anger, sadness, fear, negative, disgust) for each of them, using NRC. 
+#' Then, makes a summary for all words and plot results.
+#' 
+#' @family Text Mining
+#' @param text Character vector
+#' @param lang Character. Language in text (used for stop words)
+#' @param exclude Character vector. Which word do you wish to exclude?
+#' @param append_file Character. Add a dictionary to append. This file 
+#' must contain at least two columns, first with words and second with
+#' the sentiment (consider sentiments on description).
+#' @param plot Boolean. Plot results summary?
+#' @param subtitle Character. Add subtitle to the plot
+#' @export
+sentimentBreakdown <- function(text, lang = "spanish", 
+                               exclude = c("maduro","que"),
+                               append_file = NA, 
+                               plot = TRUE, subtitle = NA) {
+  
+  try_require("syuzhet")
+  ret <- list()
+  
+  dictionary <- get_sentiment_dictionary('nrc', language = lang) %>%
+    select(-lang, -value) %>%
+    filter(!word %in% exclude) %>%
+    rbind(data.frame(word = c("(laugh)","(laugh)"), 
+                     sentiment = c("positive","joy")))
+  if (!is.na(append_file)) {
+    new_words <- read.file(normalizePath(append_file), current_wd = FALSE)[,1:2]
+    colnames(new_words) <- c("word","sentiment")
+    new_words$word <- cleanText(new_words$word)
+    dictionary <- rbind(dictionary, new_words)
+  }
+  
+  ret[["words"]] <- textTokenizer(text, lang = lang, exclude = exclude)
+  
+  ret[["result"]] <- ret$words %>% 
+    inner_join(dictionary, "word") %>% 
+    distinct(word, sentiment, .keep_all = TRUE)
+  
+  ret[["summary"]] <- ret$result %>% 
+    group_by(sentiment) %>% 
+    summarise(freq = sum(freq)) %>% 
+    mutate(freq = 100 * freq/sum(freq)) %>%
+    arrange(desc(freq))
+  
+  print(ret$summary)
+  
+  if (plot) {
+    p <- ggplot(ret$summary, 
+                aes(x = reorder(sentiment, freq), 
+                    y = freq)) +
+      geom_col() + theme_lares2(pal = 1) + coord_flip() + 
+      labs(x = "", y = "Intensity", title = "Sentiment Breakdown")
+    if (!is.na(subtitle)) p <- p + labs(subtitle = autoline(subtitle))
+    ret[["plot"]] <- p
+  }
+  return(ret)
 }

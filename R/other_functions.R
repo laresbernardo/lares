@@ -1,5 +1,5 @@
 ####################################################################
-#' Check if specific package is installed
+#' Check if Specific Package is Installed
 #' 
 #' This function checks library dependencies
 #' 
@@ -1052,4 +1052,34 @@ bindfiles <- function(files) {
     statusbar(i, length(files))
   }
   return(data.frame(alldat))
+}
+
+
+####################################################################
+#' New Line Feed for Long Character Strings
+#' 
+#' Add a break or new line without breaking words. Automatically,
+#' the function can detect your plot's width and will dynamically
+#' set an auto width. You can adjust the relation (rel) parameter
+#' for different fonts and sizes until perfect harmony found.
+#' 
+#' @family Tools
+#' @param text Character.
+#' @param top Integer. How many characters aprox should be on each line
+#' @param rel Numeric. Relation of pixels and characters per line
+#' @export
+autoline <- function(text, top = "auto", rel = 9.5) {
+  if (top == "auto") top <- round(dev.size("px")[1]/rel)
+  if (top < 20) top <- 20
+  for (i in 1:ceiling(nchar(text)/top)) {
+    if (i == 1) texti <- text
+    if (i == 1) n <- 0
+    texti <- gsub(".*\\n", "", text)
+    pos <- as.vector(gregexpr(' ', texti)[[1]])
+    sp <- pos[pos > top][1]
+    if (is.na(sp) & i > 1) break
+    n <- n + sp + ifelse(i > 1, 1, 0)
+    text <- gsub(paste0('^(.{', n, '})(.*)$'), '\\1\n\\2', text)
+  }
+  return(text)
 }

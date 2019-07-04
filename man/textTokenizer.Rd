@@ -30,14 +30,6 @@ This function transforms texts into words, calculate frequencies,
 supress stop words in a given language.
 }
 \seealso{
-Other Exploratory: \code{\link{corr_cross}},
-  \code{\link{corr_var}}, \code{\link{crosstab}},
-  \code{\link{df_str}}, \code{\link{distr}},
-  \code{\link{freqs_df}}, \code{\link{freqs}},
-  \code{\link{gain_lift}}, \code{\link{get_tweets}},
-  \code{\link{missingness}}, \code{\link{textCloud}},
-  \code{\link{tree_var}}, \code{\link{trendsRelated}}
-
 Other Data Wrangling: \code{\link{balance_data}},
   \code{\link{calibrate}}, \code{\link{categ_reducer}},
   \code{\link{cleanText}}, \code{\link{date_feats}},
@@ -53,9 +45,9 @@ Other Data Wrangling: \code{\link{balance_data}},
   \code{\link{year_week}}
 
 Other Text Mining: \code{\link{cleanText}},
-  \code{\link{replaceall}}, \code{\link{textCloud}},
-  \code{\link{textFeats}}
+  \code{\link{replaceall}},
+  \code{\link{sentimentBreakdown}},
+  \code{\link{textCloud}}, \code{\link{textFeats}}
 }
 \concept{Data Wrangling}
-\concept{Exploratory}
 \concept{Text Mining}

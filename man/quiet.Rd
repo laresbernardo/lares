@@ -14,10 +14,10 @@ This function silences (verbose) output prints. Thanks to Hadley Wickham
 for bringing the idea.
 }
 \seealso{
-Other Tools: \code{\link{bindfiles}},
-  \code{\link{bring_api}}, \code{\link{db_download}},
-  \code{\link{db_upload}}, \code{\link{export_plot}},
-  \code{\link{export_results}},
+Other Tools: \code{\link{autoline}},
+  \code{\link{bindfiles}}, \code{\link{bring_api}},
+  \code{\link{db_download}}, \code{\link{db_upload}},
+  \code{\link{export_plot}}, \code{\link{export_results}},
   \code{\link{get_credentials}},
   \code{\link{get_currency}},
   \code{\link{h2o_predict_API}},

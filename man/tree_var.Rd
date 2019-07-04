@@ -37,8 +37,7 @@ Other Exploratory: \code{\link{corr_cross}},
   \code{\link{df_str}}, \code{\link{distr}},
   \code{\link{freqs_df}}, \code{\link{freqs}},
   \code{\link{gain_lift}}, \code{\link{get_tweets}},
-  \code{\link{missingness}}, \code{\link{textCloud}},
-  \code{\link{textTokenizer}}, \code{\link{trendsRelated}}
+  \code{\link{missingness}}, \code{\link{trendsRelated}}
 
 Other Visualization: \code{\link{corr_plot}},
   \code{\link{distr}}, \code{\link{freqs_df}},
@@ -49,8 +48,8 @@ Other Visualization: \code{\link{corr_plot}},
   \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
   \code{\link{mplot_response}}, \code{\link{mplot_roc}},
   \code{\link{mplot_splits}}, \code{\link{noPlot}},
-  \code{\link{plot_survey}}, \code{\link{textCloud}},
-  \code{\link{theme_lares2}}, \code{\link{theme_lares}}
+  \code{\link{plot_survey}}, \code{\link{theme_lares2}},
+  \code{\link{theme_lares}}
 }
 \concept{Exploratory}
 \concept{Visualization}
