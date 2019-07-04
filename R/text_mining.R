@@ -269,8 +269,7 @@ sentimentBreakdown <- function(text, lang = "spanish",
   
   if (plot) {
     p <- ggplot(ret$summary, 
-                aes(x = reorder(sentiment, freq), 
-                    y = freq)) +
+                aes(x = reorder(sentiment, freq), y = freq)) +
       geom_col() + theme_lares2(pal = 1) + coord_flip() + 
       labs(x = "", y = "Intensity", title = "Sentiment Breakdown")
     if (!is.na(subtitle)) p <- p + labs(subtitle = autoline(subtitle))

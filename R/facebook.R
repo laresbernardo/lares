@@ -189,7 +189,8 @@ fb_posts <- function(token,
 fb_post <- function(token, post_id) {
   iters <- length(post_id)
   for (i in 1:iters) {
-    if (i == 1) ret <- data.frame()
+    if (i == 1) ret <- c()
+    if (i == 1) nodata <- c()
     url <- paste0("https://graph.facebook.com/v3.0/", post_id[i],
                   "/comments?limit=50000","&access_token=", token)
     get <- GET(url = url)
@@ -210,15 +211,20 @@ fb_post <- function(token, post_id) {
       error <- paste("API ERROR:", json$error$message)
       return(error)
     } else {
-      if (length(json$data) == 0) return("NO DATA: there is no data here!")
-      json$data$post_id <- post_id[i]
-      json$data$created_time <- as.POSIXct(
-        json$data$created_time, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
-      json$data$from <- json$data$from$name
-      json$data <- as.data.frame(json$data, row.names = paste0(i,":",rownames(json$data)))
-      ret <- rbind(ret, json$data)
+      if (length(json$data) != 0) {
+        json$data$post_id <- post_id[i]
+        json$data$created_time <- as.POSIXct(
+          json$data$created_time, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+        json$data$from <- json$data$from$name
+        json$data <- as.data.frame(json$data, row.names = paste0(i,":",rownames(json$data)))
+        ret <- rbind(ret, json$data) 
+      } else {
+        nodata <- c(nodata, post_id[i])
+      }
     }
     if (iters > 1) statusbar(i, iters) 
   }  
+  if (i == iters & length(nodata) > 0) 
+    message(paste("NO DATA: no comments on", vector2text(nodata)))
   return(ret)
 }
