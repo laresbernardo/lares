@@ -221,12 +221,14 @@ textCloud <- function(text, lang = "english", exclude = c(), seed = 0,
 #' @param append_file Character. Add a dictionary to append. This file 
 #' must contain at least two columns, first with words and second with
 #' the sentiment (consider sentiments on description).
+#' @param append_words Dataframe. Same as append_file but appending
+#' data frame with word and sentiment directly
 #' @param plot Boolean. Plot results summary?
 #' @param subtitle Character. Add subtitle to the plot
 #' @export
 sentimentBreakdown <- function(text, lang = "spanish", 
                                exclude = c("maduro","que"),
-                               append_file = NA, 
+                               append_file = NA, append_words = NA,
                                plot = TRUE, subtitle = NA) {
   
   try_require("syuzhet")
@@ -237,11 +239,20 @@ sentimentBreakdown <- function(text, lang = "spanish",
     filter(!word %in% exclude) %>%
     rbind(data.frame(word = c("(laugh)","(laugh)"), 
                      sentiment = c("positive","joy")))
+  
   if (!is.na(append_file)) {
     new_words <- read.file(normalizePath(append_file), current_wd = FALSE)[,1:2]
     colnames(new_words) <- c("word","sentiment")
     new_words$word <- cleanText(new_words$word)
+    new_words$sentiment <- cleanText(new_words$sentiment)
     dictionary <- rbind(dictionary, new_words)
+  }
+  
+  if (!is.na(append_words)) {
+    colnames(append_words) <- c("word","sentiment")
+    append_words$word <- cleanText(append_words$word)
+    append_words$sentiment <- cleanText(append_words$sentiment)
+    dictionary <- rbind(dictionary, append_words)
   }
   
   ret[["words"]] <- textTokenizer(text, lang = lang, exclude = exclude)

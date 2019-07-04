@@ -5,7 +5,8 @@
 \title{Sentiment Breakdown on Text}
 \usage{
 sentimentBreakdown(text, lang = "spanish", exclude = c("maduro",
-  "que"), append_file = NA, plot = TRUE, subtitle = NA)
+  "que"), append_file = NA, append_words = NA, plot = TRUE,
+  subtitle = NA)
 }
 \arguments{
 \item{text}{Character vector}
@@ -17,6 +18,9 @@ sentimentBreakdown(text, lang = "spanish", exclude = c("maduro",
 \item{append_file}{Character. Add a dictionary to append. This file 
 must contain at least two columns, first with words and second with
 the sentiment (consider sentiments on description).}
+
+\item{append_words}{Dataframe. Same as append_file but appending
+data frame with word and sentiment directly}
 
 \item{plot}{Boolean. Plot results summary?}
 
