@@ -267,8 +267,6 @@ sentimentBreakdown <- function(text, lang = "spanish",
     mutate(freq = 100 * freq/sum(freq)) %>%
     arrange(desc(freq))
   
-  print(ret$summary)
-  
   if (plot) {
     p <- ggplot(ret$summary, 
                 aes(x = reorder(sentiment, freq), 
