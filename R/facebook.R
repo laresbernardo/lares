@@ -189,12 +189,13 @@ fb_posts <- function(token,
 fb_post <- function(token, post_id) {
   iters <- length(post_id)
   for (i in 1:iters) {
-    if (i == 1) ret <- c()
+    if (i == 1) ret <- data.frame()
     url <- paste0("https://graph.facebook.com/v3.0/", post_id[i],
                   "/comments?limit=50000","&access_token=", token)
     get <- GET(url = url)
     char <- rawToChar(get$content)
     json <- fromJSON(char)
+    
     if ("error" %in% names(json)) {
       if (grepl("expired", json$error$message)) {
         message("You must be logged in to your Facebook account and refresh/get the token!")
@@ -209,9 +210,12 @@ fb_post <- function(token, post_id) {
       error <- paste("API ERROR:", json$error$message)
       return(error)
     } else {
+      if (length(json$data) == 0) return("NO DATA: there is no data here!")
       json$data$post_id <- post_id[i]
       json$data$created_time <- as.POSIXct(
         json$data$created_time, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+      json$data$from <- json$data$from$name
+      json$data <- as.data.frame(json$data, row.names = paste0(i,":",rownames(json$data)))
       ret <- rbind(ret, json$data)
     }
     if (iters > 1) statusbar(i, iters) 
