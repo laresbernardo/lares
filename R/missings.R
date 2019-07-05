@@ -27,11 +27,6 @@ missingness <- function(df, plot = FALSE, full = FALSE, subtitle = NA) {
   
   if (plot) {
     
-    # # Old Plot
-    # p <- gg_bars(m$variable, m$missing, p = m$missingness,
-    #              title = "Missing Values Frequencies",
-    #              axis = "# Missings (%)", obs = FALSE)
-    
     obs <- nrow(df)*ncol(df)
     miss <- sum(m$missing)
     missp <- 100*miss/obs
