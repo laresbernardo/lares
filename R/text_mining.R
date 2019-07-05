@@ -68,6 +68,10 @@ textTokenizer <- function(text, lang = "english",
   aux <- function(x) gsub("[[:punct:] ]+", " ", x)
   docs <- tm_map(docs, content_transformer(aux))
   
+  # Remove crazy UTF-8 symbols over letters
+  aux <- function(x) gsub("[^[:alnum:] ]", "", iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT"))
+  docs <- tm_map(docs, content_transformer(aux))
+  
   # Repeated letters (more than 3 times)
   aux <- function(x) gsub("([[:alpha:]])\\1{2,}", "\\1", x)
   docs <- tm_map(docs, content_transformer(aux))
