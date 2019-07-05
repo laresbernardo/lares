@@ -132,7 +132,7 @@ distr <- function(data, ...,
       }
       p <- p + 
         geom_density(fill = "deepskyblue", alpha = 0.7, adjust = 1/3) +
-        labs(y = "", x = "", fill = "Density",
+        labs(y = NULL, x = NULL, fill = "Density",
              title = "Density Distribution",
              subtitle = paste("Variable:", variable_name),
              caption = paste("Obs:", formatNum(nrow(df), 0))) +
@@ -273,7 +273,7 @@ distr <- function(data, ...,
                   check_overlap = TRUE, 
                   position = position_dodge(0.9), 
                   size = 3, vjust = vadj, hjust = hadj) +
-        labs(x = "", y = "Counter [#]", fill = targets_name, caption = note) + 
+        labs(x = NULL, y = "Counter [#]", fill = targets_name, caption = note) + 
         theme(legend.position = "top") + guides(colour = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
         scale_y_continuous(labels = comma) +
@@ -299,7 +299,7 @@ distr <- function(data, ...,
                   position = position_stack(vjust = 0.5)) +
         scale_size(range = c(2.2, 3)) +
         coord_flip() +
-        labs(x = "Proportions [%]", y = "", fill = targets_name, caption = note) +
+        labs(x = "Proportions [%]", y = NULL, fill = targets_name, caption = note) +
         theme(legend.position = "top") + ylim(0, 1) + guides(colour = FALSE, size = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
         theme_lares2(pal = 1)

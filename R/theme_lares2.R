@@ -136,20 +136,19 @@ theme_lares2 <- function(font = "Arial Narrow",
   # if (grepl("x",tolower(percent))) ret <- ret + scale_x_percent()
   # if (grepl("y",tolower(percent))) ret <- ret + scale_y_percent()
   
-  # Personal colours
+  # Palette with fills and colour
   if (pal == 1) {
-    # Palette with fills and colour
     colours_pal <- lares_pal()$palette
     ret <- list(ret, scale_fill_manual(values = names(colours_pal))) 
     ret <- list(ret, scale_colour_manual(values = as.vector(colours_pal)))
   }
+  # Palette without fills
   if (pal == 2) {
-    # Palette without fills
     colours_pal <- lares_pal()$palette
     ret <- list(ret, scale_colour_manual(values = names(colours_pal)))
   }
+  # Custom Palette Colours
   if (pal == 3) {
-    # Custom Palette Colours
     colours_pal <- lares_pal()$labels
     scale_fill_lares <- function(){
       values <- as.character(colours_pal$values)

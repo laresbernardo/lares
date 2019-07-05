@@ -49,7 +49,7 @@ plot_timeline <- function(event, start,
   p <- ggplot(cvlong, aes(x=value, y=reorder(name, -pos), label=where, group=pos)) + 
     geom_vline(xintercept = maxdate, alpha = 0.8, linetype="dotted") +
     labs(title = title, subtitle = subtitle, 
-         x = "", y = "", colour = "") +
+         x = NULL, y = NULL, colour = "") +
     theme(panel.background = element_rect(fill="white", colour=NA),
           axis.ticks = element_blank(),
           panel.grid.major.x = element_line(size=0.25, colour="grey80"))
@@ -113,7 +113,7 @@ gg_pie <- function(df, var, table = FALSE, save = FALSE, subdir = NA){
   
   if (table) { print(n) }
   
-  p <- ggplot(n, aes(x = "", y = reorder(p, n), 
+  p <- ggplot(n, aes(x = NULL, y = reorder(p, n), 
                      fill = as.character(!!!variable), label = p)) + 
     geom_col() + 
     geom_label(position = position_stack(vjust = 0.4), 
@@ -243,7 +243,7 @@ gg_bars <- function(names, n, p = NA,
     geom_col(alpha = 0.9, width = 0.8) +
     geom_text(aes(hjust = label_hjust, colour = label_colours), size = 3) + 
     coord_flip() + guides(colour = FALSE, fill = FALSE) +
-    labs(x = "", y = axis, 
+    labs(x = NULL, y = axis, 
          title = if (!is.na(title)) title, 
          subtitle = if (!is.na(subtitle)) subtitle, 
          caption = if (obs == TRUE) paste0("Obs.: ", formatNum(sum(n), 0))) +

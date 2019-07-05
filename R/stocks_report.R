@@ -532,11 +532,11 @@ portfolio_distr_plot <- function(portfolio_perf, save = FALSE) {
     mutate(label = paste0(Type, "\n", formatNum(
       100*sum(DailyValue)/sum(portfolio_perf$DailyValue)),"%")) %>%
     ggplot() +
-    geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
+    geom_bar(aes(x = NULL, y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
     facet_grid(. ~ label, scales = "free") +
     scale_y_continuous(labels = scales::comma, expand = c(0, 0)) + 
     theme_lares2(pal = 1) +
-    labs(x = "", y = "Total value", title = "Portfolio's Category Distribution")
+    labs(x = NULL, y = "Total value", title = "Portfolio's Category Distribution")
   if (save) p <- p + ggsave("portf_distribution.png", width = 8, height = 5, dpi = 300) 
   return(p)
 }
@@ -621,7 +621,7 @@ etf_sector_plot <- function(portfolio_perf, save = FALSE) {
       coord_flip() +
       scale_y_continuous(labels = comma, expand = c(0, 0)) + 
       theme_lares2(pal = 1) +
-      labs(x = "", y = "Total value", title = "Portfolio's Sector Distribution (ETFs)", fill = NULL)
+      labs(x = NULL, y = "Total value", title = "Portfolio's Sector Distribution (ETFs)", fill = NULL)
     if (save) p <- p + ggsave("portf_distribution_etfs.png", width = 8, height = 5, dpi = 300) 
     return(p) 
   } else {
@@ -654,7 +654,7 @@ portfolio_total_plot <- function(portfolio, save = FALSE) {
     ggplot() + 
     geom_area(aes(x = Date, y = values, fill = type, group = type), 
               colour = "black", size = 0.2, alpha = 0.95) + 
-    labs(title = "  Daily Total Portfolio Value", y = "", x = "", fill = "") +
+    labs(title = "  Daily Total Portfolio Value", y = NULL, x = NULL, fill = "") +
     geom_label_repel(data = labels, 
                      aes(x = Date, y = Portfolio, label = formatNum(Deposit, 0)), 
                      vjust = -1.3, size = 2.5) +

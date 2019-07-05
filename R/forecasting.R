@@ -227,7 +227,7 @@ forecast_ml <- function(time, values,
   rects <- data.frame(start = min(future_idx), end = max(future_idx))
   message("Predicted range: ", rects$start, " to ", rects$end)
   forecast <- ggplot(df, aes(x = time, y = amount)) + 
-    labs(title = project, y = "Amount", x = "",
+    labs(title = project, y = "Amount", x = NULL,
          subtitle = "Using simple multivariate regressions on time series with Machine Learning") +
     # Training data
     geom_line(color = palette_light()[[1]]) +

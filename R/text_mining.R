@@ -253,10 +253,13 @@ sentimentBreakdown <- function(text, lang = "spanish",
   }
   
   if (!is.na(append_words)) {
-    colnames(append_words) <- c("word","sentiment")
-    append_words$word <- cleanText(append_words$word)
-    append_words$sentiment <- cleanText(append_words$sentiment)
-    dictionary <- rbind(dictionary, append_words)
+    if (ncol(append_words) >= 2) {
+      new_words <- append_words[,1:2]
+      colnames(new_words) <- c("word","sentiment")
+      new_words$word <- cleanText(new_words$word)
+      new_words$sentiment <- cleanText(new_words$sentiment)
+      dictionary <- rbind(dictionary, new_words) 
+    } else message("Be sure to have 'word' and 'sentiment' columns in append_words!")
   }
   
   ret[["words"]] <- textTokenizer(text, lang = lang, exclude = exclude)
@@ -272,10 +275,12 @@ sentimentBreakdown <- function(text, lang = "spanish",
     arrange(desc(freq))
   
   if (plot) {
-    p <- ggplot(ret$summary, 
-                aes(x = reorder(sentiment, freq), y = freq)) +
-      geom_col() + theme_lares2(pal = 1) + coord_flip() + 
-      labs(x = "", y = "Intensity", title = "Sentiment Breakdown")
+    p <- ggplot(
+      ret$summary, aes(x = reorder(sentiment, freq), y = freq, fill = sentiment)) +
+      geom_col() + 
+      theme_lares2(pal = 0) + gg_fill_customs() + 
+      coord_flip() + guides(fill = FALSE) +
+      labs(x = NULL, y = "Intensity", title = "Sentiment Breakdown")
     if (!is.na(subtitle)) p <- p + labs(subtitle = autoline(subtitle))
     ret[["plot"]] <- p
   }

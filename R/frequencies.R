@@ -151,7 +151,7 @@ freqs <- function(df, ..., wt = NULL,
   p <- p + geom_col(alpha = 0.9, width = 0.8) +
     geom_text(aes(hjust = label_hjust, colour = label_colours), size = 2.6) + 
     coord_flip() + guides(colour = FALSE) +
-    labs(x = "", y = "Counter", fill = "[%]",
+    labs(x = NULL, y = "Counter", fill = "[%]",
          title = ifelse(is.na(title), paste("Frequencies and Percentages"), title),
          subtitle = ifelse(is.na(subtitle), 
                            paste("Variable:", ifelse(!is.na(variable_name), variable_name, variable), note, weight_text), 
@@ -274,7 +274,7 @@ freqs_df <- function(df,
     p <- ggplot(out, aes(x = col, y = count, fill = col, label = label, colour = col)) + 
       geom_col(aes(alpha = alpha), position = "fill", colour = "black", width = 0.95, size = 0.1) + 
       geom_text(position = position_fill(vjust = .5), size = 3) +
-      coord_flip() + labs(x = "", y = "", title = "Global Values Frequencies") +
+      coord_flip() + labs(x = NULL, y = NULL, title = "Global Values Frequencies") +
       scale_y_percent(expand = c(0, 0)) +
       guides(fill = FALSE, colour = FALSE, alpha = FALSE) +
       theme_lares2(pal = 1) + 

@@ -54,7 +54,7 @@ mplot_density <- function(tag,
     
     p2 <- ggplot(out) + 
       geom_density(aes(x = score), alpha = 0.9, adjust = 0.25, fill = "deepskyblue") + 
-      labs(x = "", y = "Density") + theme_lares2()
+      labs(x = NULL, y = "Density") + theme_lares2()
     
     p3 <- ggplot(out) + 
       geom_line(aes(x = as.numeric(score), y = (1 - ..y..), color = as.character(tag)), 

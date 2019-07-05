@@ -70,7 +70,16 @@ lares_pal <- function() {
     c("virtualllantas", red, black),
     c("eltiempo", white, black),
     c("otro", grey, black),
-    c("other", grey, black)
+    c("negative", "#FA4113", black),
+    c("fear", "#810806", white),
+    c("disgust", "#BF200E", black),
+    c("anger", "#FE9B13", black),
+    c("sadness", "#838B8B", black),
+    c("anticipation", "#FE8A71", black),
+    c("surprise", "#F7E565", black),
+    c("trust", "#40A4D8", black),
+    c("joy", "#BD116F", black),
+    c("positive", "#3DA4AB", black)
   ))
   colnames(colours_list) <- c("values","fill","colour")
   
@@ -135,7 +144,7 @@ plot_palette <- function(fill, colour = "black", id = NA) {
     geom_text(aes(colour = colour, label = id), hjust = 1.5) +
     scale_fill_identity() +
     scale_colour_identity() +
-    coord_flip() + labs(x = "Colours", y = "") +
+    coord_flip() + labs(x = "Colours", y = NULL) +
     guides(fill = FALSE, colour = FALSE) +
     theme_lares2() + 
     theme(axis.title.x = element_blank(),
