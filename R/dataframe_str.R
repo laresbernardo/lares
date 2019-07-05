@@ -53,7 +53,7 @@ df_str <- function(df,
     "Time/Date Columns" = length(names$time),
     "All Missing Columns" = length(names$allnas),
     "Missing Values" = sum(is.na(df)),
-    "Complete Rows" = sum(complete.cases(df[, sapply(x, !is.list)])),
+    "Complete Rows" = sum(complete.cases(df)),
     "Memory Usage" = as.numeric(object.size(df)))
   
   intro2 <- data.frame(counter = t(numbers)) %>%
