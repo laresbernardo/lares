@@ -864,7 +864,7 @@ statusbar <- function(run = 1, max.run = 100, label = run, msg = "DONE!"){
                      paste(ifelse(run != max.run, label, msg), ("           ")))
   cat("\r", progress) # Replace
   flush.console()
-  if (run == max.run) cat(" ", sep = "\n\n")
+  if (run == max.run) cat(rep(" ", 2), sep = "\n")
 }
 
 
@@ -1069,17 +1069,25 @@ bindfiles <- function(files) {
 #' @param rel Numeric. Relation of pixels and characters per line
 #' @export
 autoline <- function(text, top = "auto", rel = 9.5) {
+  
+  # Auto-maximum
   if (top == "auto") top <- round(dev.size("px")[1]/rel)
-  if (top < 20) top <- 20
-  for (i in 1:ceiling(nchar(text)/top)) {
-    if (i == 1) texti <- text
-    if (i == 1) n <- 0
-    texti <- gsub(".*\\n", "", text)
-    pos <- as.vector(gregexpr(' ', texti)[[1]])
-    sp <- pos[pos > top][1]
-    if (is.na(sp) & i > 1) break
-    n <- n + sp + ifelse(i > 1, 1, 0)
-    text <- gsub(paste0('^(.{', n, '})(.*)$'), '\\1\n\\2', text)
+  # Auto-minimum
+  if (top < 15) top <- 15 
+  
+  # Add new lines for long texts
+  iters <- ceiling(nchar(text)/top)
+  if (iters > 1) {
+    for (i in 1:iters) {
+      if (i == 1) texti <- text
+      if (i == 1) n <- 0
+      texti <- gsub(".*\\n", "", text)
+      pos <- as.vector(gregexpr(' ', texti)[[1]])
+      sp <- pos[pos > top][1]
+      if (is.na(sp) & i > 1) break
+      n <- n + sp + ifelse(i > 1, 1, 0)
+      text <- gsub(paste0('^(.{', n, '})(.*)$'), '\\1\n\\2', text)
+    } 
   }
   return(text)
 }
