@@ -256,14 +256,15 @@ corr_cross <- function(df, plot = TRUE, max = 1, top = 25,
     mutate(redundant = ifelse(gsub("_.*","", key) == gsub("_.*","", mix), TRUE, FALSE)) %>%
     filter(redundant == FALSE) %>%
     filter(!grepl("_NAs", key)) %>%
-    {if (rm.na) filter(., !grepl("_NAs", mix)) else .} %>%
+    {if (rm.na) 
+      filter(., !grepl("_NAs", mix)) else .} %>%
     filter(!grepl("_OTHER", key)) %>%
-    select(key, mix, value) %>%
     rename(corr = value) %>%
+    mutate(value = paste(key, mix)) %>%
     {if (!is.na(contains)) 
-      filter(., grepl(vector2text(contains, sep = "|", quotes = FALSE), 
-                      paste(.$key, .$mix))) else .} %>%
-    head(top) 
+      filter(., grepl(vector2text(contains, sep = "|", quotes = FALSE), value)) else .} %>%
+    select(key, mix, corr) %>%
+    head(top)
   if (plot) {
     subtitle <- paste(top, "most relevant")
     if (max < 1) subtitle <- paste0(subtitle," (excluding +", 100*max, "%)")
