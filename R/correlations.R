@@ -260,7 +260,9 @@ corr_cross <- function(df, plot = TRUE, max = 1, top = 25,
     filter(!grepl("_OTHER", key)) %>%
     select(key, mix, value) %>%
     rename(corr = value) %>%
-    filter(grepl(vector2text(contains, sep = "|", quotes = FALSE), paste(key, mix))) %>%
+    {if (!is.na(contains)) 
+      filter(grepl(vector2text(contains, sep = "|", quotes = FALSE), 
+                   paste(.$key, .$mix))) else .} %>%
     head(top) 
   if (plot) {
     subtitle <- paste(top, "most relevant")

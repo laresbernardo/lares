@@ -283,6 +283,20 @@ sentimentBreakdown <- function(text, lang = "spanish",
       labs(x = NULL, y = "Intensity", title = "Sentiment Breakdown")
     if (!is.na(subtitle)) p <- p + labs(subtitle = autoline(subtitle))
     ret[["plot"]] <- p
+    
+    # wrd <- spread(ret$result, sentiment, freq, fill = 0)
+    # rownames(wrd) <- wrd$word
+    # wrd$word <- NULL
+    # pal <- lares_pal()$labels %>% 
+    #   filter(values %in% ret$result$sentiment) %>% arrange(values)
+    # comparison.cloud(wrd, max.words = 100, 
+    #                  scale = c(3.5,.5), 
+    #                  title.size = NULL,
+    #                  random.order = FALSE,
+    #                  colors = as.character(pal$fill), 
+    #                  match.colors = TRUE,
+    #                  title.bg.colors = "transparent")
+    
   }
   return(ret)
 }
