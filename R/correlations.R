@@ -27,7 +27,7 @@ corr <- function(df, method = "pearson", ignore = NA,
                  plot = FALSE, top = NA) {
   
   # Ignored columns
-  if (!is.na(ignore)) df <- select(df, -one_of(ignore))
+  if (!is.na(ignore[1])) df <- select(df, -one_of(ignore))
   
   # One hot encoding for categorical features
   if (dummy) df <- ohse(df, summary = FALSE, redundant = redundant, dates = dates)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/other_functions.R
 \name{statusbar}
 \alias{statusbar}
-\title{Progressbar for for loops}
+\title{Progressive Status Bar (Domino)}
 \usage{
 statusbar(run = 1, max.run = 100, label = run, msg = "DONE!")
 }

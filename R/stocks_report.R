@@ -532,7 +532,7 @@ portfolio_distr_plot <- function(portfolio_perf, save = FALSE) {
     mutate(label = paste0(Type, "\n", formatNum(
       100*sum(DailyValue)/sum(portfolio_perf$DailyValue)),"%")) %>%
     ggplot() +
-    geom_bar(aes(x = NULL, y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
+    geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
     facet_grid(. ~ label, scales = "free") +
     scale_y_continuous(labels = scales::comma, expand = c(0, 0)) + 
     theme_lares2(pal = 1) +
