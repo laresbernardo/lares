@@ -4,8 +4,8 @@
 \alias{model_metrics}
 \title{Model Metrics and Performance}
 \usage{
-model_metrics(tag, score, multis = NA, thresh = 0.5, plots = TRUE,
-  subtitle = NA)
+model_metrics(tag, score, multis = NA, thresh = 10, thresh_cm = 0.5,
+  plots = TRUE, subtitle = NA)
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -15,8 +15,12 @@ model_metrics(tag, score, multis = NA, thresh = 0.5, plots = TRUE,
 \item{multis}{Data.frame. Containing columns with each category score 
 (only used when more than 2 categories coexist)}
 
-\item{thresh}{Numeric. Value which splits the results for the 
-confusion matrix.}
+\item{thresh}{Integer. Threshold for selecting binary or regression 
+models: this number is the threshold of unique values we should 
+have in 'tag' (more than: regression; less than: classification)}
+
+\item{thresh_cm}{Numeric. Value to splits the results for the 
+confusion matrix. Range of values: (0-1)}
 
 \item{plots}{Boolean. Include plots?}
 

@@ -4,12 +4,16 @@
 \alias{export_results}
 \title{Export h2o_automl's Results}
 \usage{
-export_results(results, txt = TRUE, rds = TRUE, binary = TRUE,
-  pojo = TRUE, mojo = TRUE, sample_size = 10, subdir = NA,
-  save = TRUE)
+export_results(results, thresh = 10, txt = TRUE, rds = TRUE,
+  binary = TRUE, pojo = TRUE, mojo = TRUE, sample_size = 10,
+  subdir = NA, save = TRUE)
 }
 \arguments{
 \item{results}{Object. h2o_automl output}
+
+\item{thresh}{Integer. Threshold for selecting binary or regression 
+models: this number is the threshold of unique values we should 
+have in 'tag' (more than: regression; less than: classification)}
 
 \item{txt}{Boolean. Do you wish to export the txt results?}
 

@@ -77,8 +77,6 @@ h2o_automl <- function(df, y = "tag",
                        subdir = NA,
                        project = "Machine Learning Model") {
   
-  options(warn = -1)
-  
   start <- Sys.time()
   message(paste(start,"| Started process..."))
   
@@ -253,13 +251,14 @@ h2o_automl <- function(df, y = "tag",
     tag = results$scores_test$tag, 
     score = results$scores_test$score,
     multis = multis,
+    thresh = thresh,
     plots = TRUE)
   print(results$metrics$metrics)
   
   message(paste0("Training duration: ", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
   
   if (save) {
-    export_results(results, subdir = subdir)
+    export_results(results, subdir = subdir, thresh = thresh)
     message("Results and model files exported succesfully!")
   }
   
@@ -400,6 +399,9 @@ h2o_selectmodel <- function(results, which_model = 1) {
 #' @family Machine Learning
 #' @family Tools
 #' @param results Object. h2o_automl output
+#' @param thresh Integer. Threshold for selecting binary or regression 
+#' models: this number is the threshold of unique values we should 
+#' have in 'tag' (more than: regression; less than: classification)
 #' @param txt Boolean. Do you wish to export the txt results?
 #' @param rds Boolean. Do you wish to export the RDS results?
 #' @param binary Boolean. Do you wish to export the Binary model?
@@ -410,6 +412,7 @@ h2o_selectmodel <- function(results, which_model = 1) {
 #' @param save Boolean. Do you wish to save/export results?
 #' @export
 export_results <- function(results, 
+                           thresh = 10,
                            txt = TRUE, 
                            rds = TRUE, 
                            binary = TRUE,
@@ -421,7 +424,6 @@ export_results <- function(results,
   
   if (save) {
     
-    options(warn = -1)
     quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
     
     # We create a directory to save all our results
@@ -469,7 +471,9 @@ export_results <- function(results,
                                    paste(nrow(tags_test), nrow(tags_train), sep = " vs. ")),
                "Total" = length(tags)),
         "Metrics" = model_metrics(results$scores_test$tag, 
-                                  results$scores_test$score, plots = FALSE),
+                                  results$scores_test$score, 
+                                  thresh = thresh,
+                                  plots = FALSE),
         "Variable Importance" = results$importance,
         "Model Results" = results$model,
         "Models Leaderboard" = results$leaderboard,
@@ -674,7 +678,6 @@ h2o_predict_MOJO <- function(df, model_path, sample = NA){
 #' @export
 h2o_predict_binary <- function(df, model_path, sample = NA){
   
-  options(warn = -1)
   quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
   
   if (!right(model_path, 4) == ".zip") {
@@ -959,15 +962,22 @@ conf_mat <- function(tag, score, thresh = 0.5) {
 #' @param score Vector. Predicted value or model's result
 #' @param multis Data.frame. Containing columns with each category score 
 #' (only used when more than 2 categories coexist)
-#' @param thresh Numeric. Value which splits the results for the 
-#' confusion matrix.
+#' @param thresh Integer. Threshold for selecting binary or regression 
+#' models: this number is the threshold of unique values we should 
+#' have in 'tag' (more than: regression; less than: classification)
+#' @param thresh_cm Numeric. Value to splits the results for the 
+#' confusion matrix. Range of values: (0-1)
 #' @param plots Boolean. Include plots?
 #' @param subtitle Character. Subtitle for plots
 #' @export
-model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, subtitle = NA){
+model_metrics <- function(tag, score, multis = NA, 
+                          thresh = 10, 
+                          thresh_cm = 0.5, 
+                          plots = TRUE, subtitle = NA){
   
   metrics <- list()
-  type <- ifelse(length(unique(tag)) <= 10, "Classification", "Regression")
+  type <- ifelse(length(unique(tag)) <= thresh, "Classification", "Regression")    
+  
   
   if (type == "Classification") {
     
@@ -986,7 +996,7 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
     
     if (is.numeric(score)) {
       new <- data.frame(score = score) %>%
-        mutate(new = ifelse(score >= thresh, labels[1], labels[2])) %>% .$new
+        mutate(new = ifelse(score >= thresh_cm, labels[1], labels[2])) %>% .$new
     } else {
       new <- score
     }
@@ -1054,7 +1064,7 @@ model_metrics <- function(tag, score, multis = NA, thresh = 0.5, plots = TRUE, s
     if (plots) {
       plots <- list()
       # CONFUSION MATRIX PLOT
-      plots[["conf_matrix"]] <- mplot_conf(tag, score, thresh, subtitle = subtitle) 
+      plots[["conf_matrix"]] <- mplot_conf(tag, score, thresh_cm, subtitle = subtitle) 
       if (length(labels) == 2) {
         # ROC CURVE PLOT
         plot_roc <- invisible(mplot_roc(tag, score, subtitle = subtitle)) 
