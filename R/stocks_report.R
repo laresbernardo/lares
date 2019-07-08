@@ -252,11 +252,11 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
   
   result <- dailys %>% group_by(Date) %>%
     summarise(Stocks = n(),
-                     DailyStocks = sum(DailyValue),
-                     DailyTrans = sum(Amount),
-                     DailyExpen = sum(Expenses),
-                     DailyDiv = sum(DailyDiv),
-                     RelUSD = sum(RelChangeUSD)) %>%
+              DailyStocks = sum(DailyValue),
+              DailyTrans = sum(Amount),
+              DailyExpen = sum(Expenses),
+              DailyDiv = sum(DailyDiv),
+              RelUSD = sum(RelChangeUSD)) %>%
     mutate(RelPer = round(100 * RelUSD / DailyStocks, 2),
            CumDiv = cumsum(DailyDiv),
            CumExpen = cumsum(DailyExpen)) %>%
@@ -267,7 +267,7 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
            TotalUSD = DailyStocks - cumsum(DailyTrans),
            TotalPer = round(100 * DailyStocks / (cumsum(DailyTrans)), 2) - 100) %>%
     select(Date,CumPortfolio,TotalUSD,TotalPer,RelUSD,RelPer,DailyStocks,
-                  DailyTrans,DailyDiv,CumDiv,DailyCash,CumCash) %>% arrange(desc(Date)) %>%
+           DailyTrans,DailyDiv,CumDiv,DailyCash,CumCash) %>% arrange(desc(Date)) %>%
     mutate_if(is.numeric, funs(round(., 2))) %>%
     distinct()
   
@@ -331,7 +331,7 @@ portfolio_daily <- function(data, dailys, cash_fix = 0) {
                                  transactions = data$transactions)
   
   mindate <- as.Date(min(as.Date(daily_fixed$Date), origin = "1970-01-01"), na.rm = TRUE)
-
+  
   result <- data.frame(Date = as.Date(mindate:Sys.Date(), origin = "1970-01-01")) %>%
     left_join(data$cash %>% select(Date, Cash) %>% rename(Deposit = Cash), "Date") %>%
     left_join(data$transactions %>% group_by(Date) %>% summarise(Amount = sum(Amount)) %>%
@@ -401,7 +401,7 @@ portfolio_daily_plot <- function(stocks_perf, save = FALSE) {
     theme_lares2()
   
   if (save) plot <- plot + ggsave("portf_daily_change.png", width = 8, height = 5, dpi = 300)
-
+  
   return(plot)
   
 }
@@ -608,7 +608,7 @@ etf_sector_plot <- function(portfolio_perf, save = FALSE) {
   if (nrow(etfs) > 0) {
     df <- etfs %>% 
       right_join(select(portfolio_perf, Symbol, DailyValue), 
-                by = c("ETF" = "Symbol")) %>%
+                 by = c("ETF" = "Symbol")) %>%
       mutate(Sector = ifelse(is.na(Sector), "Not Known", as.character(Sector))) %>%
       replace(., is.na(.), 100) %>%
       mutate(Value = DailyValue * Percentage / 100) %>%
@@ -648,9 +648,9 @@ portfolio_total_plot <- function(portfolio, save = FALSE) {
                     "\nInvested: $", formatNum(portfolio$StocksValue[nrow(portfolio)]))
   
   plot <- data.frame(Date = rep(portfolio$Date, 2),
-                  type = c(rep("Invested", nrow(portfolio)), 
-                           rep("Cash", nrow(portfolio))),
-                  values = c(portfolio$StocksValue, portfolio$Cash)) %>%
+                     type = c(rep("Invested", nrow(portfolio)), 
+                              rep("Cash", nrow(portfolio))),
+                     values = c(portfolio$StocksValue, portfolio$Cash)) %>%
     ggplot() + 
     geom_area(aes(x = Date, y = values, fill = type, group = type), 
               colour = "black", size = 0.2, alpha = 0.95) + 
@@ -772,13 +772,14 @@ stocks_html <- function(results) {
   Sys.setenv(RSTUDIO_PANDOC = pandoc)
   
   # Can be more accurate with names but works for me!
-  params <- list(portf_daily_change = results[["p_portf_daily_change"]],
-                 portf_stocks_change = results[["p_portf_stocks_change"]],
-                 portf_stocks_histchange_weighted = results[["p_portf_stocks_histchange_weighted"]],
-                 portf_stocks_histchange_absolute = results[["p_portf_stocks_histchange_absolute"]],
-                 portf_distribution = results[["p_portf_distribution"]],
-                 portf_daily = results[["p_portfolio_daily"]],
-                 portfolio_perf = results[["df_portfolio_perf"]])
+  params <- list(
+    portf_daily_change = results[["p_portf_daily_change"]],
+    portf_stocks_change = results[["p_portf_stocks_change"]],
+    portf_stocks_histchange_weighted = results[["p_portf_stocks_histchange_weighted"]],
+    portf_stocks_histchange_absolute = results[["p_portf_stocks_histchange_absolute"]],
+    portf_distribution = results[["p_portf_distribution"]],
+    portf_daily = results[["p_portfolio_daily"]],
+    portfolio_perf = results[["df_portfolio_perf"]])
   if ("p_sectors" %in% names(results)) 
     params[["portf_distribution_sectors"]] <- results[["p_sectors"]]
   
@@ -860,4 +861,3 @@ stocks_report <- function(wd = "personal", cash_fix = 0,
 # df <- get_stocks() # Get data from my Dropbox
 # hist <- get_stocks_hist(symbols = df$portfolio$Symbol, from = df$portfolio$StartDate)
 # daily <- stocks_hist_fix(dailys = hist$values, dividends = hist$dividends, transactions = df$transactions)
-

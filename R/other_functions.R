@@ -861,8 +861,8 @@ statusbar <- function(run = 1, max.run = 100, label = run, msg = "DONE!"){
                      ifelse(percent.step != percent.max, "/", "_"),
                      paste0(rep("|", percent.max - percent.step), collapse = ""),"] ", 
                      round(percent * 100, 2), "% | ", 
-                     paste(ifelse(run != max.run, label, paste(msg,"\n")), 
-                           paste(rep(" ", 20), collapse = "")))
+                     paste(ifelse(run != max.run, label, 
+                                  paste(msg,paste(rep(" ", 18), collapse = ""),"\n"))))
   cat("\r", progress) # Replace
   flush.console()
 }
