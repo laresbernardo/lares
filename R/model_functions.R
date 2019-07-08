@@ -123,7 +123,10 @@ h2o_automl <- function(df, y = "tag",
   # When seems numeric but is categorical
   if (model_type == "Classifier" & sum(grepl('^[0-9]+$', cleanText(cats))) == length(cats))
     df$tag <- as.factor(paste0("p", df$tag))
-  # Show a summary
+  # When is regression should always be numerical
+  if (model_type == "Regression")
+    df$tag <- as.numeric(df$tag)
+  # Show a summary of our tags
   if (model_type == "Classifier") print(data.frame(freqs(df, tag)))
   if (model_type == "Regression") print(summary(df$tag)) 
   
@@ -145,14 +148,13 @@ h2o_automl <- function(df, y = "tag",
   }
   
   # BALANCE TRAINING SET
-  if (model_type == "Classifier" & balance == TRUE) {
+  if (model_type == "Classifier" & balance) {
     total <- nrow(train)
-    min <- freqs(train, tag) %>% min(.$n, na.rm = TRUE)
-    rel <- round(100*min*cats/total, 1)
+    min <- freqs(train, tag) %>% .$n %>% min(., na.rm = TRUE)
     train <- train %>% group_by(tag) %>% sample_n(min)
     message(paste0("Training set balanced: ", min, 
-                   " observations for each (",cats,") category; using ",
-                   rel, "% of training data..."))
+                   " observations for each (",length(cats),") category; using ",
+                   round(100*nrow(train)/total, 2), "% of training data..."))
   }
   
   # TRAIN MODEL
@@ -976,10 +978,17 @@ model_metrics <- function(tag, score, multis = NA,
                           plots = TRUE, subtitle = NA){
   
   metrics <- list()
-  type <- ifelse(length(unique(tag)) <= thresh, "Classification", "Regression")    
+  cats <- sort(unique(as.character(tag)))
+  model_type <- ifelse(length(cats) <= thresh, "Classification", "Regression")    
   
+  # When seems numeric but is categorical
+  if (model_type == "Classifier" & sum(grepl('^[0-9]+$', cleanText(cats))) == length(cats))
+    tag <- as.factor(paste0("p", tag))
+  # When is regression should always be numerical
+  if (model_type == "Classifier")
+    tag <- as.numeric(tag)
   
-  if (type == "Classification") {
+  if (model_type == "Classification") {
     
     dic <- c("AUC: Area Under the Curve",
              "ACC: Accuracy",
@@ -991,12 +1000,11 @@ model_metrics <- function(tag, score, multis = NA,
              "Lift: When best n deciles selected, how much better than random is?")
     metrics[["dictionary"]] <- dic
     
-    labels <- sort(unique(as.character(tag)))
     tag <- as.character(tag)
     
     if (is.numeric(score)) {
       new <- data.frame(score = score) %>%
-        mutate(new = ifelse(score >= thresh_cm, labels[1], labels[2])) %>% .$new
+        mutate(new = ifelse(score >= thresh_cm, cats[1], cats[2])) %>% .$new
     } else {
       new <- score
     }
@@ -1008,7 +1016,7 @@ model_metrics <- function(tag, score, multis = NA,
     falses <- total - trues
     
     # For Binaries
-    if (length(labels) == 2) {
+    if (length(cats) == 2) {
       metrics[["confusion_matrix"]] <- conf_mat
       ROC <- pROC::roc(tag, as.numeric(score), ci = TRUE, quiet = TRUE)
       nums <- data.frame(
@@ -1033,13 +1041,13 @@ model_metrics <- function(tag, score, multis = NA,
       metrics[["confusion_matrix"]] <- conf_mat(tag, score)
       AUCs <- t(ROC(tag, score, multis)$ci)[,2]
       m <- data.frame(
-        AUC = mean(AUCs[1:length(labels)]),
+        AUC = mean(AUCs[1:length(cats)]),
         ACC = trues / total)
       metrics[["metrics"]] <- signif(m, 5)
       nums <- c()
-      for (i in 1:length(labels)) {
-        tagi <- ifelse(tag == labels[i], 1, 0)
-        predi <- as.numeric(ifelse(score == labels[i], 1, 0))
+      for (i in 1:length(cats)) {
+        tagi <- ifelse(tag == cats[i], 1, 0)
+        predi <- as.numeric(ifelse(score == cats[i], 1, 0))
         conf_mati <- table(Real = factor(tagi, levels = c(1, 0)), 
                            Pred = factor(predi, levels = c(1, 0)))
         if (nrow(data.frame(conf_mati)) == 4) {
@@ -1047,7 +1055,7 @@ model_metrics <- function(tag, score, multis = NA,
           trues <- sum(diag(conf_mati))
           falses <- total - trues
           numsi <- data.frame(
-            tag = labels[i],
+            tag = cats[i],
             ACC = trues / total,
             PRC = conf_mati[2,2] / (conf_mati[2,2] + conf_mati[1,2]),
             TPR = conf_mati[2,2] / (conf_mati[2,2] + conf_mati[2,1]),
@@ -1056,16 +1064,16 @@ model_metrics <- function(tag, score, multis = NA,
         }
       }
       nums$AUC <- AUCs[1:nrow(nums)]
-      nums <- left_join(freqs(df %>% select(tag), tag), nums, "tag") %>% 
+      nums <- left_join(freqs(select(df, tag), tag), nums, "tag") %>% 
         select(tag, n, p, AUC, everything(), -pcum)
-      metrics[["metrics_tags"]] <- nums %>% mutate_if(is.numeric, funs(signif(., 5)))
+      metrics[["metrics_tags"]] <- mutate_if(nums, is.numeric, funs(signif(., 5)))
     }
     
     if (plots) {
       plots <- list()
       # CONFUSION MATRIX PLOT
       plots[["conf_matrix"]] <- mplot_conf(tag, score, thresh_cm, subtitle = subtitle) 
-      if (length(labels) == 2) {
+      if (length(cats) == 2) {
         # ROC CURVE PLOT
         plot_roc <- invisible(mplot_roc(tag, score, subtitle = subtitle)) 
         # CUMULATIVE GAINS PLOT
@@ -1085,7 +1093,7 @@ model_metrics <- function(tag, score, multis = NA,
     }
   }
   
-  if (type == "Regression") {
+  if (model_type == "Regression") {
     
     dic <- c("RMSE: Root Mean Squared Error",
              "MAE: Mean Average Error",
