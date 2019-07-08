@@ -6,10 +6,11 @@
 \usage{
 h2o_automl(df, y = "tag", ignore = c(), train_test = NA,
   split = 0.7, weight = NULL, balance = FALSE, impute = FALSE,
-  center = FALSE, scale = FALSE, seed = 0, thresh = 5,
-  max_time = 5 * 60, max_models = 25, start_clean = TRUE,
-  exclude_algos = c("StackedEnsemble", "DeepLearning"), alarm = TRUE,
-  save = FALSE, subdir = NA, project = "Machine Learning Model")
+  center = FALSE, scale = FALSE, seed = 0, nfolds = 5,
+  thresh = 5, max_time = 5 * 60, max_models = 10,
+  start_clean = TRUE, exclude_algos = c("StackedEnsemble",
+  "DeepLearning"), alarm = TRUE, save = FALSE, subdir = NA,
+  project = "Machine Learning Model")
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
@@ -41,6 +42,10 @@ to center and/or scale all numerical values?}
 \item{seed}{Integer. Set a seed for reproducibility. AutoML can only 
 guarantee reproducibility if max_models is used because max_time is 
 resource limited.}
+
+\item{nfolds}{Integer. Number of folds for k-fold cross-validation of 
+the models. If set to 0, the test data will be used as validation, and
+cross-validation amd Stacked Ensembles disableded}
 
 \item{thresh}{Integer. Threshold for selecting binary or regression 
 models: this number is the threshold of unique values we should 
@@ -79,7 +84,9 @@ Full list of algorithms: "DRF" (Distributed Random Forest, including
 Random Forest (RF) and Extremely-Randomized Trees (XRT)), "GLM" 
 (Generalized Linear Model), "XGBoost" (eXtreme Grading Boosting), 
 "GBM" (Gradient Boosting Machine), "DeepLearning" (Fully-connected 
-multi-layer artificial neural network) and "StackedEnsemble".
+multi-layer artificial neural network) and "StackedEnsemble". Read more 
+\url{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}{in 
+here}
 }
 \seealso{
 Other Machine Learning: \code{\link{ROC}},

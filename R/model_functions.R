@@ -10,7 +10,9 @@
 #' Random Forest (RF) and Extremely-Randomized Trees (XRT)), "GLM" 
 #' (Generalized Linear Model), "XGBoost" (eXtreme Grading Boosting), 
 #' "GBM" (Gradient Boosting Machine), "DeepLearning" (Fully-connected 
-#' multi-layer artificial neural network) and "StackedEnsemble". 
+#' multi-layer artificial neural network) and "StackedEnsemble". Read more 
+#' \url{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}{in 
+#' here}
 #'
 #' @family Machine Learning
 #' @param df Dataframe. Dataframe containing all your data, including 
@@ -33,6 +35,9 @@
 #' @param seed Integer. Set a seed for reproducibility. AutoML can only 
 #' guarantee reproducibility if max_models is used because max_time is 
 #' resource limited.
+#' @param nfolds Integer. Number of folds for k-fold cross-validation of 
+#' the models. If set to 0, the test data will be used as validation, and
+#' cross-validation amd Stacked Ensembles disableded
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
 #' have in 'tag' (more than: regression; less than: classification)
@@ -61,9 +66,10 @@ h2o_automl <- function(df, y = "tag",
                        center = FALSE,
                        scale = FALSE,
                        seed = 0,
+                       nfolds = 5,
                        thresh = 5,
                        max_time = 5*60,
-                       max_models = 25,
+                       max_models = 10,
                        start_clean = TRUE,
                        exclude_algos = c("StackedEnsemble","DeepLearning"),
                        alarm = TRUE,
@@ -143,7 +149,7 @@ h2o_automl <- function(df, y = "tag",
   # BALANCE TRAINING SET
   if (model_type == "Classifier" & balance == TRUE) {
     total <- nrow(train)
-    min <- train %>% freqs(tag) %>% .$n %>% min()
+    min <- freqs(train, tag) %>% min(.$n, na.rm = TRUE)
     rel <- round(100*min*cats/total, 1)
     train <- train %>% group_by(tag) %>% sample_n(min)
     message(paste0("Training set balanced: ", min, 
@@ -168,7 +174,8 @@ h2o_automl <- function(df, y = "tag",
                     max_runtime_secs = max_time,
                     max_models = max_models,
                     exclude_algos = exclude_algos,
-                    nfolds = 5, 
+                    nfolds = nfolds, 
+                    project_name = project,
                     seed = seed)
   if (nrow(aml@leaderboard) == 0) {
     stop("Error: no models trained! Please set max_models to at least 1.")
@@ -226,6 +233,7 @@ h2o_automl <- function(df, y = "tag",
   
   # REGRESION MODELS
   if (model_type == "Regression") {
+    multis <- NA
     results <- list(
       project = project,
       model = m,
