@@ -16,21 +16,22 @@ queryGA(account = "comparamejor", creds = NA, token_dir = NA,
 
 \item{token_dir}{Character. Credential's user (see get_credentials)}
 
-\item{metrics, }{Character. Which metrics we wish to bring. 
-More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets}
+\item{metrics}{Character. Which metrics we wish to bring}
 
-\item{dimensions}{Character. Which dimensions we wish to bring 
-More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets}
+\item{dimensions}{Character. Which dimensions we wish to bring}
 
-\item{met_filters, dim_filters}{A filter_clause_ga4 for filtering metrics/dimensions.
-More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets}
+\item{met_filters, dim_filters}{A filter_clause_ga4 for filtering 
+metrics/dimensions. Check googleAnalyticsR::google_analytics()}
 
 \item{start}{Date. Start date for the report}
 
 \item{end}{Date. End date for the report}
 }
 \description{
-This function lets the user query Google Analytics with its API
+This function lets the user query Google Analytics with its API.
+More about the documentation and parameters in googleAnalyticsR's
+google_analytics or Google Analytics'
+\url{https://developers.google.com/analytics/devguides/reporting/core/dimsmets}{API}
 }
 \seealso{
 Other Connection: \code{\link{get_tweets}},

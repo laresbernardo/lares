@@ -1,18 +1,19 @@
 ####################################################################
 #' Queries on Google Analytics
 #' 
-#' This function lets the user query Google Analytics with its API
+#' This function lets the user query Google Analytics with its API.
+#' More about the documentation and parameters in googleAnalyticsR's
+#' google_analytics or Google Analytics'
+#' \url{https://developers.google.com/analytics/devguides/reporting/core/dimsmets}{API}
 #' 
 #' @family Connection
 #' @param account Character. Personal named accounts
 #' @param creds Character. Credential's user (see get_credentials)
 #' @param token_dir Character. Credential's user (see get_credentials)
-#' @param metrics, Character. Which metrics we wish to bring. 
-#' More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets
-#' @param dimensions Character. Which dimensions we wish to bring 
-#' More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets
-#' @param met_filters,dim_filters A filter_clause_ga4 for filtering metrics/dimensions.
-#' More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets
+#' @param metrics Character. Which metrics we wish to bring
+#' @param dimensions Character. Which dimensions we wish to bring
+#' @param met_filters,dim_filters A filter_clause_ga4 for filtering 
+#' metrics/dimensions. Check googleAnalyticsR::google_analytics()
 #' @param start Date. Start date for the report
 #' @param end Date. End date for the report
 #' @export
