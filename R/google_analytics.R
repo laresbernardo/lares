@@ -7,8 +7,12 @@
 #' @param account Character. Personal named accounts
 #' @param creds Character. Credential's user (see get_credentials)
 #' @param token_dir Character. Credential's user (see get_credentials)
-#' @param metrics Character. Which metrics we wish to bring. More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets
-#' @param dimensions Character. Which dimensions we wish to bring More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets
+#' @param metrics, Character. Which metrics we wish to bring. 
+#' More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets
+#' @param dimensions Character. Which dimensions we wish to bring 
+#' More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets
+#' @param met_filters,dim_filters A filter_clause_ga4 for filtering metrics/dimensions.
+#' More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets
 #' @param start Date. Start date for the report
 #' @param end Date. End date for the report
 #' @export
@@ -16,6 +20,8 @@ queryGA <- function(account = "comparamejor",
                     creds = NA, token_dir = NA,
                     metrics = "sessions",
                     dimensions = "date",
+                    met_filters = NULL,
+                    dim_filters = NULL,
                     start = lubridate::floor_date(Sys.Date(), "month"),
                     end = Sys.Date()){
   
@@ -50,5 +56,7 @@ queryGA <- function(account = "comparamejor",
     vars$ga_id, 
     date_range = c(start, end),
     metrics = metrics,
-    dimensions = dimensions)
+    dimensions = dimensions,
+    met_filters = met_filters,
+    dim_filters = dim_filters)
 }

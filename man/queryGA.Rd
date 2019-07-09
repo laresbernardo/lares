@@ -5,8 +5,9 @@
 \title{Queries on Google Analytics}
 \usage{
 queryGA(account = "comparamejor", creds = NA, token_dir = NA,
-  metrics = "sessions", dimensions = "date",
-  start = lubridate::floor_date(Sys.Date(), "month"), end = Sys.Date())
+  metrics = "sessions", dimensions = "date", met_filters = NULL,
+  dim_filters = NULL, start = lubridate::floor_date(Sys.Date(),
+  "month"), end = Sys.Date())
 }
 \arguments{
 \item{account}{Character. Personal named accounts}
@@ -15,9 +16,14 @@ queryGA(account = "comparamejor", creds = NA, token_dir = NA,
 
 \item{token_dir}{Character. Credential's user (see get_credentials)}
 
-\item{metrics}{Character. Which metrics we wish to bring. More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets}
+\item{metrics, }{Character. Which metrics we wish to bring. 
+More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets}
 
-\item{dimensions}{Character. Which dimensions we wish to bring More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets}
+\item{dimensions}{Character. Which dimensions we wish to bring 
+More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets}
+
+\item{met_filters, dim_filters}{A filter_clause_ga4 for filtering metrics/dimensions.
+More info: https://developers.google.com/analytics/devguides/reporting/core/dimsmets}
 
 \item{start}{Date. Start date for the report}
 
