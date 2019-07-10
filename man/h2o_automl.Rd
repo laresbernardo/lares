@@ -9,8 +9,8 @@ h2o_automl(df, y = "tag", ignore = c(), train_test = NA,
   center = FALSE, scale = FALSE, seed = 0, nfolds = 5,
   thresh = 5, max_time = 5 * 60, max_models = 10,
   start_clean = TRUE, exclude_algos = c("StackedEnsemble",
-  "DeepLearning"), alarm = TRUE, save = FALSE, subdir = NA,
-  project = "Machine Learning Model")
+  "DeepLearning"), alarm = TRUE, quiet = FALSE, save = FALSE,
+  subdir = NA, project = "Machine Learning Model")
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
@@ -64,6 +64,8 @@ instance before we start to train models?}
 skip during the model-building phase.}
 
 \item{alarm}{Boolean. Ping an alarm when ready!}
+
+\item{quiet}{Boolean. Quiet messages, warnings, recommendations?}
 
 \item{save}{Boolean. Do you wish to save/export results into your 
 working directory?}

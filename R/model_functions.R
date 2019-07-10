@@ -50,6 +50,7 @@
 #' @param exclude_algos Vector of character strings. Algorithms to 
 #' skip during the model-building phase.
 #' @param alarm Boolean. Ping an alarm when ready!
+#' @param quiet Boolean. Quiet messages, warnings, recommendations?
 #' @param save Boolean. Do you wish to save/export results into your 
 #' working directory?
 #' @param subdir Character. In which directory do you wish to save 
@@ -73,12 +74,13 @@ h2o_automl <- function(df, y = "tag",
                        start_clean = TRUE,
                        exclude_algos = c("StackedEnsemble","DeepLearning"),
                        alarm = TRUE,
+                       quiet = FALSE,
                        save = FALSE,
                        subdir = NA,
                        project = "Machine Learning Model") {
   
   start <- Sys.time()
-  message(paste(start,"| Started process..."))
+  if (!quiet) message(paste(start,"| Started process..."))
   
   # INDEPENDENT VARIABLE
   if (!y %in% colnames(df)) {
@@ -95,17 +97,17 @@ h2o_automl <- function(df, y = "tag",
   m <- missingness(df)
   if (!is.null(m)) {
     m <- mutate(m, label = paste0(variable, " (", missingness, "%)"))
-    message(paste0("NOTE: The following variables contain missing observations: ", vector2text(m$label),
-                   if (!impute) ". Consider setting the impute parameter."))
+    if (!quiet) message(paste0("NOTE: The following variables contain missing observations: ", vector2text(m$label),
+                               if (!impute & !quiet) ". Consider setting the impute parameter."))
     if (impute) {
-      message(paste(">>> Imputing", sum(m$missing), "missing values..."))
+      if (!quiet) message(paste(">>> Imputing", sum(m$missing), "missing values..."))
       df <- impute(df, seed = seed, quiet = TRUE)
     }
   }
   
   # ONE HOT SMART ENCODING
   nums <- df_str(df, "names", quiet = TRUE)$nums
-  if (length(nums) != ncol(df)) 
+  if (length(nums) != ncol(df) & !quiet) 
     message(paste(
       "NOTE: There are", ncol(df) - length(nums), "non-numerical features.",
       "Consider using ohse() for One Hot Smart Encoding before automl if you want to custom your inputs."))
@@ -113,7 +115,7 @@ h2o_automl <- function(df, y = "tag",
     new <- data.frame(lapply(df[nums], function(x) scale(x, center = center, scale = scale)))
     colnames(new) <- nums; df[nums] <- new
     msg <- ifelse(scale & center, "scaled and centered", ifelse(scale, "scaled", "centered"))
-    message(paste0("All numerical features (", length(nums), ") were ", msg))
+    if (!quiet) message(paste0("All numerical features (", length(nums), ") were ", msg))
   }
   
   # MODEL TYPE
@@ -127,13 +129,13 @@ h2o_automl <- function(df, y = "tag",
   if (model_type == "Regression")
     df$tag <- as.numeric(df$tag)
   # Show a summary of our tags
-  if (model_type == "Classifier") print(data.frame(freqs(df, tag)))
-  if (model_type == "Regression") print(summary(df$tag)) 
+  if (model_type == "Classifier" & !quiet) print(data.frame(freqs(df, tag)))
+  if (model_type == "Regression" & !quiet) print(summary(df$tag)) 
   
   # SPLIT TRAIN AND TEST DATASETS
   if (is.na(train_test)) {
-    message(">>> Splitting datasets")
-    splits <- msplit(df, size = split, seed = seed)
+    if (!quiet) message(">>> Splitting datasets")
+    splits <- msplit(df, size = split, seed = seed, print = quiet)
     train <- splits$train
     test <- splits$test
   } else {
@@ -144,7 +146,7 @@ h2o_automl <- function(df, y = "tag",
     }
     train <- filter(df, train_test == "train")
     test <- filter(df, train_test == "test")
-    print(table(df$train_test))
+    if (!quiet) print(table(df$train_test))
   }
   
   # BALANCE TRAINING SET
@@ -152,9 +154,9 @@ h2o_automl <- function(df, y = "tag",
     total <- nrow(train)
     min <- freqs(train, tag) %>% .$n %>% min(., na.rm = TRUE)
     train <- train %>% group_by(tag) %>% sample_n(min)
-    message(paste0("Training set balanced: ", min, 
-                   " observations for each (",length(cats),") category; using ",
-                   round(100*nrow(train)/total, 2), "% of training data..."))
+    if (!quiet) message(paste0("Training set balanced: ", min, 
+                               " observations for each (",length(cats),") category; using ",
+                               round(100*nrow(train)/total, 2), "% of training data..."))
   }
   
   # TRAIN MODEL
@@ -162,9 +164,11 @@ h2o_automl <- function(df, y = "tag",
   if (start_clean) {
     quiet(h2o.removeAll()) 
   } else {
-    message("Previous trained models are not being erased. Use 'start_clean' parameter if needed.")
+    if (!quiet) 
+      message(paste("Previous trained models are not being erased.",
+                    "Use 'start_clean' parameter if needed."))
   }
-  message(paste(">>> Iterating until", max_models, "models or", max_time, "seconds..."))
+  if (!quiet) message(paste(">>> Iterating until", max_models, "models or", max_time, "seconds..."))
   # IGNORED VARIABLES
   aml <- h2o.automl(x = setdiff(names(df), c("tag", ignore)), 
                     y = "tag",
@@ -181,11 +185,11 @@ h2o_automl <- function(df, y = "tag",
     stop("Error: no models trained! Please set max_models to at least 1.")
   } else {
     if (!is.nan(aml@leaderboard[1,2]))
-      message(paste("Succesfully trained", nrow(aml@leaderboard), "models:")) 
+      if (!quiet) message(paste("Succesfully trained", nrow(aml@leaderboard), "models:")) 
   }
-  print(aml@leaderboard[,1:3])
+  if (!quiet) print(aml@leaderboard[,1:3])
   flow <- "http://localhost:54321/flow/index.html"
-  message("Check results in H2O Flow's nice interface: ", flow)
+  if (!quiet) message("Check results in H2O Flow's nice interface: ", flow)
   
   # GET PERFORMANCE RESULTS
   m <- h2o.getModel(as.vector(aml@leaderboard$model_id[1])) # Best model
@@ -200,7 +204,7 @@ h2o_automl <- function(df, y = "tag",
   noimp <- imp %>% filter(importance < 0.015) %>% arrange(desc(importance))
   if (nrow(noimp) > 0) {
     which <- noimp %>% .$variable %>% vector2text(.) 
-    message(paste("The following variables were NOT important:", which))
+    if (!quiet) message(paste("The following variables were NOT important:", which))
   }
   
   # CLASSIFICATION MODELS
@@ -257,14 +261,15 @@ h2o_automl <- function(df, y = "tag",
     plots = TRUE)
   print(results$metrics$metrics)
   
-  message(paste0("Training duration: ", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
+  if (!quiet) message(paste0(
+    "Training duration: ", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
   
   if (save) {
     export_results(results, subdir = subdir, thresh = thresh)
-    message("Results and model files exported succesfully!")
+    if (!quiet) message("Results and model files exported succesfully!")
   }
   
-  if (alarm) beepr::beep()
+  if (alarm & !quiet) beepr::beep()
   
   return(results)
   
