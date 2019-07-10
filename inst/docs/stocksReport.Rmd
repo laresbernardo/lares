@@ -14,22 +14,11 @@ params:
 ---
 
 <style type="text/css">
-h1.title {
-  font-size: 22px;
-  color: DarkOrange;
-}
-h1 { /* Header 1 */
-  font-size: 20px;
-}
-h2 { /* Header 2 */
-  font-size: 18px;
-}
-h3 { /* Header 3 */
-  font-size: 17px;
-}
-body{ /* Normal  */
-  font-size: 16px;
-}
+h1.title { font-size: 28px; color: DarkOrange;}
+h1 { font-size: 24px;}
+h2 { font-size: 20px;}
+h3 { font-size: 18px;}
+body { font-size: 16px;}
 </style>
 
 ```{r echo = FALSE, message = FALSE}

@@ -167,19 +167,22 @@ h2o_automl <- function(df, y = "tag",
       message(paste("Previous trained models are not being erased.",
                     "Use 'start_clean' parameter if needed."))
   }
-  if (!quiet) message(paste(">>> Iterating until", max_models, "models or", max_time, "seconds..."))
-  # IGNORED VARIABLES
-  aml <- h2o.automl(x = setdiff(names(df), c("tag", ignore)), 
-                    y = "tag",
-                    training_frame = as.h2o(train),
-                    leaderboard_frame = as.h2o(test),
-                    weights_column = weight,
-                    max_runtime_secs = max_time,
-                    max_models = max_models,
-                    exclude_algos = exclude_algos,
-                    nfolds = nfolds, 
-                    project_name = project,
-                    seed = seed)
+  
+  # RUN AUTOML
+  if (!quiet) message(paste(">>> Iterating until", max_models, 
+                            "models or", max_time, "seconds..."))
+  aml <- quiet(h2o.automl(
+    x = setdiff(names(df), c("tag", ignore)), 
+    y = "tag",
+    training_frame = as.h2o(train),
+    leaderboard_frame = as.h2o(test),
+    weights_column = weight,
+    max_runtime_secs = max_time,
+    max_models = max_models,
+    exclude_algos = exclude_algos,
+    nfolds = nfolds, 
+    project_name = project,
+    seed = seed))
   if (nrow(aml@leaderboard) == 0) {
     stop("Error: no models trained! Please set max_models to at least 1.")
   } else {

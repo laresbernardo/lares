@@ -46,7 +46,7 @@ mplot_density <- function(tag,
                    alpha = 0.6, adjust = 0.25) + 
       guides(fill = guide_legend(title = "Tag")) + 
       labs(title = "Classification Model Results",
-           y = "Density by tag", x = "Score", fill = "") + 
+           y = "Density by tag", x = "Score", fill = NULL) + 
       theme_lares2(pal = 1) +
       theme(legend.position = "top",
             legend.justification = c(0, 0),
@@ -61,7 +61,7 @@ mplot_density <- function(tag,
                 stat = 'ecdf', size = 1) +
       geom_line(aes(x = as.numeric(score), y = (1 - ..y..)), 
                 stat = 'ecdf', size = 0.5, colour = "black", linetype = "dotted") +
-      ylab('Cumulative') + xlab('') + guides(color = FALSE) + theme_lares2(pal = 2)
+      ylab('Cumulative') + labs(x = NULL) + guides(color = FALSE) + theme_lares2(pal = 2)
     
     p1 <- p1 + theme(plot.margin = margin(10, 5, 0, 5))
     p2 <- p2 + theme(plot.margin = margin(0, 0, 5, 5))
@@ -90,7 +90,7 @@ mplot_density <- function(tag,
     p <- ggplot(df) + 
       geom_density(aes(x = values, fill = as.character(type)), 
                    alpha = 0.6, adjust = 0.25) + 
-      labs(y = "Density", x = "Continuous values", fill = "") +
+      labs(y = "Density", x = "Continuous values", fill = NULL) +
       guides(colour = FALSE) +
       theme_lares2(pal = 1, legend = "top")
     
@@ -249,7 +249,7 @@ mplot_roc <- function(tag,
                        labels = scale) +
     coord_equal() +
     theme(axis.ticks = element_line(color = "grey80")) +
-    labs(title = "ROC Curve: AUC", colour = "") +
+    labs(title = "ROC Curve: AUC", colour = NULL) +
     guides(colour = guide_legend(ncol = 3)) +
     annotate("text", x = 0.25, y = 0.10, size = 4.2, 
              label = paste("AUC =", round(100*ci[c(2),],2))) +
@@ -920,7 +920,7 @@ mplot_gain <- function(tag, score, target = "auto", splits = 10, highlight = "au
     scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour = FALSE) +
     scale_x_continuous(minor_breaks = NULL, 
                        breaks = seq(0, splits, 1)) +
-    labs(title = "Cumulative Gains Plot", linetype = "",
+    labs(title = "Cumulative Gains Plot", linetype = NULL,
          y = "Cumulative gains [%]", 
          x = paste0("Percentiles [",splits,"]")) +
     theme(legend.position = c(0.88, 0.2))
@@ -994,7 +994,7 @@ mplot_response <- function(tag, score, target = "auto", splits = 10, highlight =
     scale_y_continuous(limits = c(0,100), breaks = seq(0, 100, 10)) + 
     scale_x_continuous(minor_breaks = NULL, 
                        breaks = seq(0, splits, 1)) +
-    labs(title = "Cumulative Response Plot", linetype = "",
+    labs(title = "Cumulative Response Plot", linetype = NULL,
          y = "Cumulative response [%]", 
          x = paste0("Percentiles [",splits,"]")) +
     theme(legend.position = c(0.88, 0.2)) 
