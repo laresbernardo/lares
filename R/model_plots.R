@@ -221,7 +221,7 @@ mplot_roc <- function(tag,
                       save = FALSE, 
                       subdir = NA, 
                       file_name = "viz_roc.png") {
-
+  
   if (is.na(multis)) {
     rocs <- ROC(tag, score)
     ci <- rocs$ci
@@ -922,8 +922,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
       geom_line(aes(y = gain, linetype = "Model"), colour = "darkorange", size = 1.2) +
       geom_label(aes(y = gain, label = ifelse(gain == 100, NA, round(gain))), alpha = 0.9) +
       scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour = FALSE) +
-      scale_x_continuous(minor_breaks = NULL, 
-                         breaks = seq(0, splits, 1)) +
+      scale_x_continuous(minor_breaks = NULL, breaks = seq(0, splits, 1)) +
       labs(title = "Cumulative Gains Plot", linetype = NULL,
            y = "Cumulative gains [%]", 
            x = paste0("Percentiles [",splits,"]")) +
@@ -960,7 +959,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
       labs(title = "Cumulative Gains for Multiple Labels",
            subtitle = paste("If we select the top nth percentile with highest scores,",
                             "\nhow much of your target class will be picked?"),
-           x = paste0("Percentiles [", max(as.numeric(out$percentile)), "]"), 
+           x = paste0("Percentiles [", splits, "]"), 
            y = "Cumulative Gains [%]",
            linetype = "Reference", colour = "Label") +
       scale_y_continuous(minor_breaks = seq(0, 100, 10), breaks = seq(0, 100, 20)) +
@@ -991,6 +990,8 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
 #' @family Visualization
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
+#' @param multis Data.frame. Containing columns with each category score 
+#' (only used when more than 2 categories coexist)
 #' @param target Value. Which is your target positive value? If 
 #' set to 'auto', the target with largest mean(score) will be 
 #' selected. Change the value to overwrite.
@@ -1004,41 +1005,74 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
 #' @param file_name Character. File name as you wish to save the plot
 #' @param quiet Boolean. Do not show message for auto target?
 #' @export
-mplot_response <- function(tag, score, target = "auto", splits = 10, highlight = "auto", 
+mplot_response <- function(tag, score, multis = NA, target = "auto", 
+                           splits = 10, highlight = "auto", 
                            caption = NA, save = FALSE, subdir = NA, 
                            file_name = "viz_response.png", quiet = FALSE) {
   
-  gains <- gain_lift(tag, score, target, splits, quiet = quiet) %>% 
-    mutate(percentile = as.numeric(percentile),
-           cum_response = 100 * cumsum(target)/cumsum(total))
-  rand <- 100 * sum(gains$target)/sum(gains$total)
-  gains <- gains %>% mutate(cum_response_lift = 100 * cum_response/rand - 100)
-  
-  p <- gains %>%
-    ggplot(aes(x = percentile)) + theme_lares2(pal = 2) +
-    geom_hline(yintercept = rand, colour = "black", linetype = "dashed") +
-    geom_line(aes(y = cum_response), size = 1.2) +
-    geom_label(aes(y = cum_response, label = round(cum_response)), alpha = 0.9) +
-    geom_text(label = paste0("Random: ", round(rand, 1), "%"), 
-              y = rand, x = 1, vjust = 1.2, hjust = 0, alpha = 0.2) +
-    scale_y_continuous(limits = c(0,100), breaks = seq(0, 100, 10)) + 
-    scale_x_continuous(minor_breaks = NULL, 
-                       breaks = seq(0, splits, 1)) +
-    labs(title = "Cumulative Response Plot", linetype = NULL,
-         y = "Cumulative response [%]", 
-         x = paste0("Percentiles [",splits,"]")) +
-    theme(legend.position = c(0.88, 0.2)) 
-  
-  if (highlight == "auto") highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
-  if (highlight %in% gains$percentile & highlight != "none") {
-    highlight <- as.integer(highlight)
-    note <- paste0("If we select the top ", 
-                   round(highlight*100/splits),"% observations with highest scores,\n",
-                   round(gains$cum_response[gains$percentile == highlight]),"% belong to the target class ",
-                   "(", round(gains$cum_response_lift[gains$percentile == highlight]), "% better than random)")
-    p <- p + labs(subtitle = note)
+  if (is.na(multis)[1]) {
+    gains <- gain_lift(tag, score, target, splits, quiet = quiet) %>% 
+      mutate(percentile = as.numeric(percentile),
+             cum_response = 100 * cumsum(target)/cumsum(total))
+    rand <- 100 * sum(gains$target)/sum(gains$total)
+    gains <- gains %>% mutate(cum_response_lift = 100 * cum_response/rand - 100)
+    
+    p <- gains %>%
+      ggplot(aes(x = percentile)) + theme_lares2(pal = 2) +
+      geom_hline(yintercept = rand, colour = "black", linetype = "dashed") +
+      geom_line(aes(y = cum_response, colour = "x"), size = 1.2) +
+      geom_label(aes(y = cum_response, label = round(cum_response)), alpha = 0.9) +
+      geom_text(label = paste0("Random: ", round(rand, 1), "%"), 
+                y = rand, x = 1, vjust = 1.2, hjust = 0, alpha = 0.2) +
+      scale_y_continuous(limits = c(0,100), breaks = seq(0, 100, 10)) + 
+      scale_x_continuous(minor_breaks = NULL, 
+                         breaks = seq(0, splits, 1)) +
+      labs(title = "Cumulative Response Plot", linetype = NULL,
+           y = "Cumulative response [%]", 
+           x = paste0("Percentiles [",splits,"]")) +
+      theme(legend.position = c(0.88, 0.2)) +
+      guides(colour = FALSE)
+    
+    if (highlight == "auto") highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
+    if (highlight %in% gains$percentile & highlight != "none") {
+      highlight <- as.integer(highlight)
+      note <- paste0("If we select the top ", 
+                     round(highlight*100/splits),"% observations with highest scores,\n",
+                     round(gains$cum_response[gains$percentile == highlight]),"% belong to the target class ",
+                     "(", round(gains$cum_response_lift[gains$percentile == highlight]), "% better than random)")
+      p <- p + labs(subtitle = note)
+    } else message("That highlight value is not a percentile. Try any integer from 1 to ", splits)
   } else {
-    message("That highlight value is not a percentile. Try any integer from 1 to ", splits)
+    df <- data.frame(tag = tag, score = score, multis)
+    for (i in 1:(ncol(df) - 2)) {
+      if (i == 1) out <- c()
+      g <- gain_lift(df$tag, df[,2 + i], target, splits, quiet = quiet) %>% 
+        mutate(label = colnames(df)[2 + i])  
+      out <- rbind(out, g)
+    }
+    p <- out %>% 
+      mutate(factor(percentile, levels = unique(out$percentile))) %>%
+      group_by(label) %>%
+      mutate(rand = 100 * sum(target)/sum(total),
+             cum_response = 100 * cumsum(target)/cumsum(total)) %>%
+      ggplot(aes(group = label, x = percentile)) +
+      geom_hline(aes(yintercept = rand), colour = "black", linetype = "dashed") + 
+      geom_line(aes(y = cum_response, colour = label), size = 1.2) + 
+      geom_label(aes(y = cum_response, label = round(cum_response)), alpha = 0.9) + 
+      geom_text(aes(label = paste0("Random: ", round(rand, 1), "%"), y = rand), 
+                x = 1, vjust = 1.2, hjust = 0, alpha = 0.2) + 
+      labs(title = "Cumulative Response Plot", linetype = NULL, 
+           y = "Cumulative response [%]", 
+           x = paste0("Percentiles [", splits, "]")) + theme(legend.position = c(0.88, 0.2)) +
+      theme_lares2(pal = 2) + 
+      labs(title = "Cumulative Response for Multiple Labels",
+           subtitle = paste("If we select the top nth percentile with highest scores,",
+                            "\nhow many observations belong to the target class?"),
+           x = paste0("Percentiles [", max(as.numeric(out$percentile)), "]"), 
+           y = "Cumulative Response [%]",
+           linetype = "Reference", colour = "Label") +
+      facet_grid(label~.) + guides(colour = FALSE) +
+      scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 20))
   }
   
   if (!is.na(caption)) p <- p + labs(caption = caption)

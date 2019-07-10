@@ -1072,26 +1072,17 @@ model_metrics <- function(tag, score, multis = NA,
     
     if (plots) {
       plots <- list()
+      # CUMULATIVE GAINS PLOT
+      plots[["gains"]] <- mplot_gain(
+        tag, score, multis, target = "auto", splits = 10, quiet = TRUE)
+      # CUMULATIVE RESPONSE PLOT
+      plots[["response"]] <- mplot_response(
+        tag, score, multis, target = "auto", splits = 10, highlight = "auto", quiet = TRUE)
       # CONFUSION MATRIX PLOT
       plots[["conf_matrix"]] <- mplot_conf(tag, score, thresh_cm, subtitle = subtitle) 
-      if (length(cats) == 2) {
-        # ROC CURVE PLOT
-        plot_roc <- invisible(mplot_roc(tag, score, subtitle = subtitle)) 
-        # CUMULATIVE GAINS PLOT
-        p <- mplot_gain(tag, score, target = "auto", splits = 10, 
-                        highlight = "auto", quiet = TRUE)
-        # CUMULATIVE RESPONSE PLOT
-        p <- mplot_response(tag, score, target = "auto", 
-                            splits = 10, highlight = "auto", quiet = TRUE)
-        plots[["response"]] <- p
-      } else {
-        # ROC CURVES PLOT
-        plot_roc <- invisible(mplot_roc(tag, score, multis, subtitle = subtitle)) 
-        # CUMULATIVE GAINS PLOT
-        p <- mplot_gain(tag, score, multis, target = "auto", splits = 10, quiet = TRUE)
-      }
-      plots[["gains"]] <- p
-      plots[["ROC"]] <- plot_roc
+      # ROC CURVES PLOT
+      plots[["ROC"]] <- invisible(mplot_roc(tag, score, multis, subtitle = subtitle)) 
+      # Bring them all!
       metrics[["plots"]] <- plots
     }
   }

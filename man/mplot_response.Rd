@@ -4,7 +4,7 @@
 \alias{mplot_response}
 \title{Cumulative Response Plot}
 \usage{
-mplot_response(tag, score, target = "auto", splits = 10,
+mplot_response(tag, score, multis = NA, target = "auto", splits = 10,
   highlight = "auto", caption = NA, save = FALSE, subdir = NA,
   file_name = "viz_response.png", quiet = FALSE)
 }
@@ -12,6 +12,9 @@ mplot_response(tag, score, target = "auto", splits = 10,
 \item{tag}{Vector. Real known label}
 
 \item{score}{Vector. Predicted value or model's result}
+
+\item{multis}{Data.frame. Containing columns with each category score 
+(only used when more than 2 categories coexist)}
 
 \item{target}{Value. Which is your target positive value? If 
 set to 'auto', the target with largest mean(score) will be 
