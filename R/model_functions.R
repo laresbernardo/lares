@@ -810,18 +810,14 @@ calibrate <- function(score, train, target, train_sample, target_sample) {
 gain_lift <- function(tag, score, target = "auto", splits = 10, 
                       plot = FALSE, quiet = FALSE) {
   
-  if (splits <= 1) {
-    stop("You must set more than 1 split")
-  }
+  if (splits <= 1) stop("You must set more than 1 split")
   
   df <- data.frame(tag = tag, score = score)
   
   if (target == "auto") {
     means <- df %>% group_by(tag) %>% summarise(mean = mean(score))
     target <- means$tag[means$mean == max(means$mean)]
-    if (!quiet) {
-      message(paste("Target value:", target)) 
-    }
+    if (!quiet) message(paste("Target value:", target)) 
   }
   if (!target %in% unique(df$tag)) {
     stop(paste("Your target value", target, "is not valid. Possible other values:", 
@@ -851,9 +847,7 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
            response = 100 * target/sum(target)) %>%
     select(percentile, random, target, total, gain, optimal, lift, response, score)
   
-  if (plot == TRUE) {
-    mplot_gain(tag, score, target, splits = 10)
-  }
+  if (plot) mplot_gain(tag, score, target, splits = splits)
   
   return(gains)
   
@@ -1032,7 +1026,7 @@ model_metrics <- function(tag, score, multis = NA,
         PRC = conf_mat[2,2] / (conf_mat[2,2] + conf_mat[1,2]),
         TPR = conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]),
         TNR = conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]))
-      metrics[["gain_lift"]] <- gain_lift(tag, score, "auto", quiet = FALSE)
+      metrics[["gain_lift"]] <- gain_lift(tag, score, target = "auto", quiet = FALSE)
       metrics[["metrics"]] <- signif(nums, 5)
     } else {
       
@@ -1086,7 +1080,6 @@ model_metrics <- function(tag, score, multis = NA,
         # CUMULATIVE GAINS PLOT
         p <- mplot_gain(tag, score, target = "auto", splits = 10, 
                         highlight = "auto", quiet = TRUE)
-        plots[["gains"]] <- p
         # CUMULATIVE RESPONSE PLOT
         p <- mplot_response(tag, score, target = "auto", 
                             splits = 10, highlight = "auto", quiet = TRUE)
@@ -1094,7 +1087,10 @@ model_metrics <- function(tag, score, multis = NA,
       } else {
         # ROC CURVES PLOT
         plot_roc <- invisible(mplot_roc(tag, score, multis, subtitle = subtitle)) 
+        # CUMULATIVE GAINS PLOT
+        p <- mplot_gain(tag, score, multis, target = "auto", splits = 10, quiet = TRUE)
       }
+      plots[["gains"]] <- p
       plots[["ROC"]] <- plot_roc
       metrics[["plots"]] <- plots
     }

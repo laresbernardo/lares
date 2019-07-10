@@ -891,6 +891,8 @@ mplot_conf <- function(tag, score, thresh = 0.5,
 #' @family Visualization
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
+#' @param multis Data.frame. Containing columns with each category score 
+#' (only used when more than 2 categories coexist)
 #' @param target Value. Which is your target positive value? If 
 #' set to 'auto', the target with largest mean(score) will be 
 #' selected. Change the value to overwrite.
@@ -904,37 +906,65 @@ mplot_conf <- function(tag, score, thresh = 0.5,
 #' @param file_name Character. File name as you wish to save the plot
 #' @param quiet Boolean. Do not show message for auto target?
 #' @export
-mplot_gain <- function(tag, score, target = "auto", splits = 10, highlight = "auto", 
+mplot_gain <- function(tag, score, multis = NA, target = "auto", 
+                       splits = 10, highlight = "auto", 
                        caption = NA, save = FALSE, subdir = NA, 
                        file_name = "viz_gain.png", quiet = FALSE) {
   
-  gains <- gain_lift(tag, score, target, splits, quiet = quiet) 
-  
-  p <- gains %>%
-    mutate(percentile = as.numeric(percentile)) %>%
-    ggplot(aes(x = percentile)) + theme_lares2(pal = 2) +
-    geom_line(aes(y = optimal, linetype = "Optimal"), colour = "black", alpha = 0.6) +
-    geom_line(aes(y = random, linetype = "Random"), colour = "black", alpha = 0.6) +
-    geom_line(aes(y = gain, linetype = "Model"), colour = "darkorange", size = 1.2) +
-    geom_label(aes(y = gain, label = ifelse(gain == 100, NA, round(gain))), alpha = 0.9) +
-    scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour = FALSE) +
-    scale_x_continuous(minor_breaks = NULL, 
-                       breaks = seq(0, splits, 1)) +
-    labs(title = "Cumulative Gains Plot", linetype = NULL,
-         y = "Cumulative gains [%]", 
-         x = paste0("Percentiles [",splits,"]")) +
-    theme(legend.position = c(0.88, 0.2))
-  
-  if (highlight == "auto") highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
-  if (highlight %in% gains$percentile & highlight != "none") {
-    highlight <- as.integer(highlight)
-    note <- paste0("If we select the top ", 
-                   round(highlight*100/splits),"% observations with highest scores,\n",
-                   round(gains$gain[gains$percentile == highlight]),"% of all target class will be picked ",
-                   "(", round(gains$lift[gains$percentile == highlight]), "% better than random)")
-    p <- p + labs(subtitle = note)
+  if (is.na(multis)[1]) {
+    gains <- gain_lift(tag, score, target, splits, quiet = quiet) 
+    
+    p <- gains %>%
+      mutate(percentile = as.numeric(percentile)) %>%
+      ggplot(aes(x = percentile)) + theme_lares2(pal = 2) +
+      geom_line(aes(y = optimal, linetype = "Optimal"), colour = "black", alpha = 0.6) +
+      geom_line(aes(y = random, linetype = "Random"), colour = "black", alpha = 0.6) +
+      geom_line(aes(y = gain, linetype = "Model"), colour = "darkorange", size = 1.2) +
+      geom_label(aes(y = gain, label = ifelse(gain == 100, NA, round(gain))), alpha = 0.9) +
+      scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour = FALSE) +
+      scale_x_continuous(minor_breaks = NULL, 
+                         breaks = seq(0, splits, 1)) +
+      labs(title = "Cumulative Gains Plot", linetype = NULL,
+           y = "Cumulative gains [%]", 
+           x = paste0("Percentiles [",splits,"]")) +
+      theme(legend.position = c(0.88, 0.2))
+    
+    if (highlight == "auto") highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
+    if (highlight %in% gains$percentile & highlight != "none") {
+      highlight <- as.integer(highlight)
+      note <- paste0("If we select the top ", 
+                     round(highlight*100/splits),"% observations with highest scores,\n",
+                     round(gains$gain[gains$percentile == highlight]),"% of all target class will be picked ",
+                     "(", round(gains$lift[gains$percentile == highlight]), "% better than random)")
+      p <- p + labs(subtitle = note)
+    } else {
+      message("That highlight value is not a percentile. Try any integer from 1 to ", splits)
+    } 
   } else {
-    message("That highlight value is not a percentile. Try any integer from 1 to ", splits)
+    df <- data.frame(tag = tag, score = score, multis)
+    for (i in 1:(ncol(df) - 2)) {
+      if (i == 1) out <- c()
+      g <- gain_lift(df$tag, df[,2 + i], target, splits, quiet = quiet) %>% 
+        mutate(label = colnames(df)[2 + i])  
+      out <- rbind(out, g)
+    }
+    p <- out %>% 
+      mutate(factor(percentile, levels = unique(out$percentile))) %>%
+      ggplot(aes(group = label)) +
+      geom_line(aes(x = percentile, y = random, linetype = "Perfect model"), colour = "black") +
+      geom_line(aes(x = percentile, y = random, linetype = "No model"), colour = "black") +
+      geom_line(aes(x = percentile, y = optimal, colour = label, linetype = "Optimal"), 
+                size = 0.4, linetype = "dashed") +
+      geom_line(aes(x = percentile, y = gain, colour = label), size = 1.1) +
+      theme_lares2(pal = 2) + 
+      labs(title = "Cumulative Gains for Multiple Labels",
+           subtitle = paste("If we select the top nth percentile with highest scores,",
+                            "\nhow much of your target class will be picked?"),
+           x = paste0("Percentiles [", max(as.numeric(out$percentile)), "]"), 
+           y = "Cumulative Gains [%]",
+           linetype = "Reference", colour = "Label") +
+      scale_y_continuous(minor_breaks = seq(0, 100, 10), breaks = seq(0, 100, 20)) +
+      facet_grid(label~.)
   }
   
   if (!is.na(caption)) p <- p + labs(caption = caption)
