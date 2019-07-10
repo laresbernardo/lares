@@ -10,9 +10,8 @@
 #' Random Forest (RF) and Extremely-Randomized Trees (XRT)), "GLM" 
 #' (Generalized Linear Model), "XGBoost" (eXtreme Grading Boosting), 
 #' "GBM" (Gradient Boosting Machine), "DeepLearning" (Fully-connected 
-#' multi-layer artificial neural network) and "StackedEnsemble". Read more 
-#' \url{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}{in 
-#' here}
+#' multi-layer artificial neural network) and "StackedEnsemble". Read more: 
+#' \url{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}
 #'
 #' @family Machine Learning
 #' @param df Dataframe. Dataframe containing all your data, including 
@@ -135,7 +134,7 @@ h2o_automl <- function(df, y = "tag",
   # SPLIT TRAIN AND TEST DATASETS
   if (is.na(train_test)) {
     if (!quiet) message(">>> Splitting datasets")
-    splits <- msplit(df, size = split, seed = seed, print = quiet)
+    splits <- msplit(df, size = split, seed = seed, print = !quiet)
     train <- splits$train
     test <- splits$test
   } else {

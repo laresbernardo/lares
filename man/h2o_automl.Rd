@@ -86,9 +86,8 @@ Full list of algorithms: "DRF" (Distributed Random Forest, including
 Random Forest (RF) and Extremely-Randomized Trees (XRT)), "GLM" 
 (Generalized Linear Model), "XGBoost" (eXtreme Grading Boosting), 
 "GBM" (Gradient Boosting Machine), "DeepLearning" (Fully-connected 
-multi-layer artificial neural network) and "StackedEnsemble". Read more 
-\url{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}{in 
-here}
+multi-layer artificial neural network) and "StackedEnsemble". Read more: 
+\url{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}
 }
 \seealso{
 Other Machine Learning: \code{\link{ROC}},
