@@ -822,7 +822,9 @@ mplot_conf <- function(tag, score, thresh = 0.5,
   df <- data.frame(tag, score)
   
   # About tags
-  labels <- df %>% group_by(tag) %>% tally() %>% arrange(desc(n)) %>% .$tag
+  values <- df %>% group_by(tag) %>% tally() %>% arrange(desc(n)) %>%
+    mutate(label = paste0(tag, " (", formatNum(n, 0), ")"))
+  labels <- values$tag
   df <- df %>% mutate(tag = factor(tag, levels = labels))
   
   # About scores
@@ -837,19 +839,24 @@ mplot_conf <- function(tag, score, thresh = 0.5,
   }
   
   # Frequencies
-  plot_cf <- df %>% freqs(tag, pred) %>% 
-    mutate(label = paste0(formatNum(n, 0),"\n", p,"%"))
+  plot_cf <- df %>% freqs(tag, pred) %>% ungroup() %>%
+    group_by(tag) %>%
+    mutate(label = paste0(formatNum(n, 0),"\n", formatNum(p,1), "%T\n(", 
+                          formatNum(100*n/sum(n),1),"%)"))
   trues <- sum(plot_cf$n[as.character(plot_cf$tag) == as.character(plot_cf$pred)])
   total <- sum(plot_cf$n)
-  metrics <- paste0("ACC ", round(100*(trues / total), 2), "%")
+  acc <- round(100 * (trues / total), 2)
+  #auc <- round(100 * ROC(tag, score)$ci[2,1], 2)
+  obs <- formatNum(nrow(df), 0)
+  metrics <- paste0(obs, " observations | ACC ", acc, "%")
   
   p <- ggplot(plot_cf, aes(
-    y = factor(tag, levels = rev(labels)), 
-    x = factor(pred, levels = labels), 
+    y = as.numeric(factor(tag, levels = rev(labels))), 
+    x = as.numeric(factor(pred, levels = labels)), 
     fill = n, size = n, label = label)) +
     geom_tile() + theme_lares2() +
     geom_text(colour = "white") + 
-    scale_size(range = c(3.1, 4.5)) + coord_equal() + 
+    scale_size(range = c(2.6, 3.8)) + coord_equal() + 
     guides(fill = FALSE, size = FALSE, colour = FALSE) +
     labs(x = "Predicted values", y = "Real values",
          title = ifelse(length(labels) == 2,
@@ -857,13 +864,29 @@ mplot_conf <- function(tag, score, thresh = 0.5,
                               ifelse(thresh != 0.5, paste("with Threshold =", thresh), "")),
                         paste0("Confusion Matrix (", length(labels), " categories)")),
          subtitle = metrics) +
-    theme(axis.text.x = element_text(angle = 30, hjust = 0)) +
-    scale_x_discrete(position = "top") +
-    theme(axis.text.x.bottom = element_blank(), 
+    theme_lares2() +
+    theme(axis.text.x = element_text(angle = 30, hjust = 0),
+          axis.title.x = element_text(hjust = 0.5),
+          axis.text.x.bottom = element_blank(), 
           axis.ticks.x.bottom = element_blank(),
           axis.text.y.right = element_blank(),
-          axis.ticks.y.right = element_blank()) +
-    theme_lares2()
+          axis.ticks.y.right = element_blank(),
+          panel.background = element_blank(), 
+          panel.border = element_blank(), 
+          strip.background = element_blank(), 
+          plot.background = element_blank()) +
+    scale_x_continuous(breaks = 1:length(labels),
+                       labels = labels,
+                       position = 'right',
+                       sec.axis = sec_axis(~.,
+                                           breaks = 1:length(labels),
+                                           labels = labels)) +
+    scale_y_continuous(breaks = 1:length(labels),
+                       labels = labels,
+                       position = 'bottom',
+                       sec.axis = sec_axis(~.,
+                                           breaks = 1:length(labels),
+                                           labels = rev(values$label)))
   
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   
