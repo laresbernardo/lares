@@ -300,7 +300,7 @@ distr <- function(data, ...,
         scale_size(range = c(2.2, 3)) +
         coord_flip() +
         labs(x = "Proportions [%]", y = NULL, fill = targets_name, caption = note) +
-        theme(legend.position = "top") + ylim(0, 1) + 
+        theme(legend.position = "top") + 
         guides(colour = FALSE, size = FALSE) +
         scale_y_percent(expand = c(0, 0)) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
