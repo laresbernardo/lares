@@ -825,7 +825,7 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
   }
   
   df <- df %>% mutate(tag = ifelse(tag == target, TRUE, FALSE))
-  
+
   sc <- df %>% arrange(desc(score)) %>%
     mutate(percentile = .bincode(
       score, quantile(score, probs = seq(0, 1, length = splits + 1), include.lowest = TRUE), 
@@ -841,8 +841,8 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
   gains <- sc %>% group_by(percentile) %>% 
     summarise(total = n(), target = sum(tag), score = 100 * min(score)) %>%
     left_join(wizard, "percentile") %>% replace(is.na(.), 100) %>% ungroup() %>%
-    mutate(gain = 100*cumsum(target)/sum(target),
-           random = 100*cumsum(total)/sum(total),
+    mutate(gain = 100 * cumsum(target)/sum(target),
+           random = 100 * cumsum(total)/sum(total),
            lift = 100 * (gain/random - 1),
            response = 100 * target/sum(target)) %>%
     select(percentile, random, target, total, gain, optimal, lift, response, score)

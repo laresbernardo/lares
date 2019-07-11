@@ -916,17 +916,20 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
     
     p <- gains %>%
       mutate(percentile = as.numeric(percentile)) %>%
-      ggplot(aes(x = percentile)) + theme_lares2(pal = 2) +
-      geom_line(aes(y = optimal, linetype = "Optimal"), colour = "black", alpha = 0.6) +
+      ggplot(aes(x = percentile)) + 
+      # Random line
       geom_line(aes(y = random, linetype = "Random"), colour = "black", alpha = 0.6) +
-      geom_line(aes(y = gain, linetype = "Model"), colour = "darkorange", size = 1.2) +
+      # Optimal line
+      geom_line(aes(y = optimal, linetype = "Optimal"), colour = "black", alpha = 0.6) +
+      # Model line
+      geom_line(aes(y = gain), colour = "darkorange", size = 1.2) +
       geom_label(aes(y = gain, label = ifelse(gain == 100, NA, round(gain))), alpha = 0.9) +
       scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour = FALSE) +
       scale_x_continuous(minor_breaks = NULL, breaks = seq(0, splits, 1)) +
       labs(title = "Cumulative Gains Plot", linetype = NULL,
            y = "Cumulative gains [%]", 
            x = paste0("Percentiles [",splits,"]")) +
-      theme(legend.position = c(0.88, 0.2))
+      theme_lares2(pal = 2) + theme(legend.position = c(0.88, 0.2))
     
     if (highlight == "auto") highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
     if (highlight %in% gains$percentile & highlight != "none") {
@@ -949,16 +952,18 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
     }
     p <- out %>% 
       mutate(factor(percentile, levels = unique(out$percentile))) %>%
-      ggplot(aes(group = label)) +
-      geom_line(aes(x = percentile, y = random, linetype = "Perfect model"), colour = "black") +
-      geom_line(aes(x = percentile, y = random, linetype = "No model"), colour = "black") +
-      geom_line(aes(x = percentile, y = optimal, colour = label, linetype = "Optimal"), 
-                size = 0.4, linetype = "dashed") +
-      geom_line(aes(x = percentile, y = gain, colour = label), size = 1.1) +
+      ggplot(aes(x = percentile, group = label)) +
+      # Random line
+      geom_line(aes(y = random, linetype = "Random"), colour = "black") +
+      # Optimal line
+      geom_line(aes(y = optimal, colour = label, linetype = "Optimal"), size = 0.4) +
+      # Model line
+      geom_line(aes(y = gain, colour = label), size = 1.1) +
+      geom_label(aes(y = gain, label = round(gain)), alpha = 0.9) +
       theme_lares2(pal = 2) + 
       labs(title = "Cumulative Gains for Multiple Labels",
-           subtitle = paste("If we select the top nth percentile with highest scores,",
-                            "\nhow much of your target class will be picked?"),
+           subtitle = paste("If we select the top nth percentile with highest scores",
+                            "\nhow much of that specific target class (vs any other) will be picked?"),
            x = paste0("Percentiles [", splits, "]"), 
            y = "Cumulative Gains [%]",
            linetype = "Reference", colour = "Label") +

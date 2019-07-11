@@ -36,3 +36,24 @@ r <- dfl %>% ohse(dates = T) %>%
   h2o_automl("issued", max_models = 5, balance = TRUE)
 r$metrics
 
+library(ggplot2)
+splits <- 10
+quiet = FALSE
+gains <- gain_lift(r$scores_test$tag, r$scores_test$scores, "auto", splits, quiet = quiet) 
+
+gains %>%
+  mutate(percentile = as.numeric(percentile)) %>%
+  ggplot(aes(x = percentile)) + 
+  # Random line
+  geom_line(aes(y = random, linetype = "Random"), colour = "black", alpha = 0.6) +
+  # Optimal line
+  geom_line(aes(y = optimal, linetype = "Optimal"), colour = "black", alpha = 0.6) +
+  # Model line
+  geom_line(aes(y = gain), colour = "darkorange", size = 1.2) +
+  geom_label(aes(y = gain, label = ifelse(gain == 100, NA, round(gain))), alpha = 0.9) +
+  scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour = FALSE) +
+  scale_x_continuous(minor_breaks = NULL, breaks = seq(0, splits, 1)) +
+  labs(title = "Cumulative Gains Plot", linetype = NULL,
+       y = "Cumulative gains [%]", 
+       x = paste0("Percentiles [",splits,"]")) +
+  theme_lares2(pal = 2) + theme(legend.position = c(0.88, 0.2))
