@@ -15,6 +15,7 @@ quants(values, splits = 10, return = "summary")
 }
 \description{
 This function lets the user quickly calculate cuts for quantiles
+and discretize numerical values into cateogorical values.
 }
 \seealso{
 Other Calculus: \code{\link{ROC}}, \code{\link{conf_mat}},

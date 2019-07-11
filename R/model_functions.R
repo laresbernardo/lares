@@ -814,19 +814,24 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
   
   df <- data.frame(tag = tag, score = score)
   
+  means <- df %>% group_by(tag) %>% summarise(mean = mean(score))
+  auto <- means$tag[means$mean == max(means$mean)]
   if (target == "auto") {
-    means <- df %>% group_by(tag) %>% summarise(mean = mean(score))
-    target <- means$tag[means$mean == max(means$mean)]
+    target <- auto
     if (!quiet) message(paste("Target value:", target)) 
   }
   if (!target %in% unique(df$tag)) {
     stop(paste("Your target value", target, "is not valid. Possible other values:", 
                vector2text(unique(tag))))
   }
+  which <- target
   
-  df <- df %>% mutate(tag = ifelse(tag == target, TRUE, FALSE))
-
-  sc <- df %>% arrange(desc(score)) %>%
+  # If the forced target value is the "lower scores" value, invert scores
+  if (auto != which) df$score <- df$score * (-1) + 100
+  
+  sc <- df %>% 
+    mutate(tag = ifelse(tag == which, TRUE, FALSE)) %>%
+    arrange(desc(score)) %>%
     mutate(percentile = .bincode(
       score, quantile(score, probs = seq(0, 1, length = splits + 1), include.lowest = TRUE), 
       right = TRUE, include.lowest = TRUE)) %>%
@@ -844,11 +849,19 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
     mutate(gain = 100 * cumsum(target)/sum(target),
            random = 100 * cumsum(total)/sum(total),
            lift = 100 * (gain/random - 1),
-           response = 100 * target/sum(target)) %>%
-    select(percentile, random, target, total, gain, optimal, lift, response, score)
+           response = 100 * target/sum(target),
+           value = which) %>%
+    select(percentile, value, random, target, total, 
+           gain, optimal, lift, response, score)
   
-  if (plot) mplot_gain(tag, score, target, splits = splits)
-  
+  if (plot) {
+    plots <- list()
+    plots[["gain"]] <- mplot_gain(
+      tag, score, target = which, splits = splits)
+    plots[["response"]] <- mplot_response(
+      tag, score, target = which, splits = splits)
+    return(plots) 
+  }
   return(gains)
   
 }

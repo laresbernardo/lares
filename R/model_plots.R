@@ -897,7 +897,7 @@ mplot_conf <- function(tag, score, thresh = 0.5,
 #' (only used when more than 2 categories coexist)
 #' @param target Value. Which is your target positive value? If 
 #' set to 'auto', the target with largest mean(score) will be 
-#' selected. Change the value to overwrite.
+#' selected. Change the value to overwrite. Only works for binary classes
 #' @param splits Integer. Numer of quantiles to split the data
 #' @param highlight Character or Integer. Which split should be used
 #' for the automatic conclussion in the plot? Set to "auto" for
@@ -915,7 +915,6 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
   
   if (is.na(multis)[1]) {
     gains <- gain_lift(tag, score, target, splits, quiet = quiet) 
-    
     p <- gains %>%
       mutate(percentile = as.numeric(percentile)) %>%
       ggplot(aes(x = percentile)) + 
@@ -928,7 +927,8 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
       geom_label(aes(y = gain, label = ifelse(gain == 100, NA, round(gain))), alpha = 0.9) +
       scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour = FALSE) +
       scale_x_continuous(minor_breaks = NULL, breaks = seq(0, splits, 1)) +
-      labs(title = "Cumulative Gains Plot", linetype = NULL,
+      labs(title = paste("Cumulative Gains for", gains$value[1]), 
+           linetype = NULL,
            y = "Cumulative gains [%]", 
            x = paste0("Percentiles [",splits,"]")) +
       theme_lares2(pal = 2) + theme(legend.position = c(0.88, 0.2))
@@ -937,8 +937,8 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
     if (highlight %in% gains$percentile & highlight != "none") {
       highlight <- as.integer(highlight)
       note <- paste0("If we select the top ", 
-                     round(highlight*100/splits),"% observations with highest scores,\n",
-                     round(gains$gain[gains$percentile == highlight]),"% of all target class will be picked ",
+                     round(highlight*100/splits),"% cases with highest probabilities,\n",
+                     round(gains$gain[gains$percentile == highlight]),"% of all target class will be picked",
                      "(", round(gains$lift[gains$percentile == highlight]), "% better than random)")
       p <- p + labs(subtitle = note)
     } else {
@@ -964,7 +964,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
       geom_label(aes(y = gain, label = round(gain)), alpha = 0.9) +
       theme_lares2(pal = 2) + 
       labs(title = "Cumulative Gains for Multiple Labels",
-           subtitle = paste("If we select the top nth percentile with highest scores",
+           subtitle = paste("If we select the top nth percentile with highest probabilities,",
                             "\nhow much of that specific target class will be picked?"),
            x = paste0("Percentiles [", splits, "]"), 
            y = "Cumulative Gains [%]",
@@ -1001,7 +1001,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
 #' (only used when more than 2 categories coexist)
 #' @param target Value. Which is your target positive value? If 
 #' set to 'auto', the target with largest mean(score) will be 
-#' selected. Change the value to overwrite.
+#' selected. Change the value to overwrite. Only works for binary classes
 #' @param splits Integer. Numer of quantiles to split the data
 #' @param highlight Character or Integer. Which split should be used
 #' for the automatic conclussion in the plot? Set to "auto" for
@@ -1021,6 +1021,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
     gains <- gain_lift(tag, score, target, splits, quiet = quiet) %>% 
       mutate(percentile = as.numeric(percentile),
              cum_response = 100 * cumsum(target)/cumsum(total))
+    target <- gains$target[1]
     rand <- 100 * sum(gains$target)/sum(gains$total)
     gains <- gains %>% mutate(cum_response_lift = 100 * cum_response/rand - 100)
     
@@ -1034,7 +1035,8 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
       scale_y_continuous(limits = c(0,100), breaks = seq(0, 100, 10)) + 
       scale_x_continuous(minor_breaks = NULL, 
                          breaks = seq(0, splits, 1)) +
-      labs(title = "Cumulative Response Plot", linetype = NULL,
+      labs(title = paste("Cumulative Response for", gains$value[1]), 
+           linetype = NULL,
            y = "Cumulative response [%]", 
            x = paste0("Percentiles [",splits,"]")) +
       theme(legend.position = c(0.88, 0.2)) +
@@ -1044,7 +1046,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
     if (highlight %in% gains$percentile & highlight != "none") {
       highlight <- as.integer(highlight)
       note <- paste0("If we select the top ", 
-                     round(highlight*100/splits),"% observations with highest scores,\n",
+                     round(highlight*100/splits),"% cases with highest probabilities,\n",
                      round(gains$cum_response[gains$percentile == highlight]),"% belong to the target class ",
                      "(", round(gains$cum_response_lift[gains$percentile == highlight]), "% better than random)")
       p <- p + labs(subtitle = note)
@@ -1073,7 +1075,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
            x = paste0("Percentiles [", splits, "]")) + theme(legend.position = c(0.88, 0.2)) +
       theme_lares2(pal = 2) + 
       labs(title = "Cumulative Response for Multiple Labels",
-           subtitle = paste("If we select the top nth percentile with highest scores,",
+           subtitle = paste("If we select the top nth percentile with highest probabilities,",
                             "\nhow many observations belong to that specific target class?"),
            x = paste0("Percentiles [", max(as.numeric(out$percentile)), "]"), 
            y = "Cumulative Response [%]",

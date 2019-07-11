@@ -18,7 +18,7 @@ mplot_response(tag, score, multis = NA, target = "auto", splits = 10,
 
 \item{target}{Value. Which is your target positive value? If 
 set to 'auto', the target with largest mean(score) will be 
-selected. Change the value to overwrite.}
+selected. Change the value to overwrite. Only works for binary classes}
 
 \item{splits}{Integer. Numer of quantiles to split the data}
 

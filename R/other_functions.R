@@ -725,6 +725,7 @@ export_plot <- function(p,
 #' Calculate cuts by quantiles
 #' 
 #' This function lets the user quickly calculate cuts for quantiles
+#' and discretize numerical values into cateogorical values.
 #' 
 #' @family Calculus
 #' @param values Vector. Values to calculate quantile cuts

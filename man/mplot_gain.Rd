@@ -18,7 +18,7 @@ mplot_gain(tag, score, multis = NA, target = "auto", splits = 10,
 
 \item{target}{Value. Which is your target positive value? If 
 set to 'auto', the target with largest mean(score) will be 
-selected. Change the value to overwrite.}
+selected. Change the value to overwrite. Only works for binary classes}
 
 \item{splits}{Integer. Numer of quantiles to split the data}
 
@@ -40,7 +40,9 @@ best value, "none" to turn off or the number of split.}
 The cumulative gains plot, often named ‘gains plot’, helps us 
 answer the question: When we apply the model and select the best 
 X deciles, what % of the actual target class observations can we 
-expect to target?
+expect to target? The cumulative gains chart shows the percentage 
+of the overall number of cases in a given category "gained" by 
+targeting a percentage of the total number of cases.
 }
 \seealso{
 Other Machine Learning: \code{\link{ROC}},
