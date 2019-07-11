@@ -244,7 +244,9 @@ corr_plot <- function(df, ignore = NA, method = "pearson", order = "FPC",
 corr_cross <- function(df, plot = TRUE, max = 1, top = 25, 
                        ignore = NA, contains = NA,
                        rm.na = FALSE, dummy = TRUE) {
+  
   c <- corr(df, ignore = ignore, plot = FALSE, dummy = dummy)
+  
   ret <- data.frame(gather(c)) %>% 
     mutate(mix = rep(colnames(c), length(c))) %>%
     mutate(rel = abs(value)) %>% filter(1*rel < max) %>% 
@@ -261,13 +263,13 @@ corr_cross <- function(df, plot = TRUE, max = 1, top = 25,
     mutate(value = paste(key, mix)) %>%
     {if (!is.na(contains)) 
       filter(., grepl(vector2text(contains, sep = "|", quotes = FALSE), value)) else .} %>%
-    select(key, mix, corr) %>%
-    head(top)
+    select(key, mix, corr)
+  
   if (plot) {
-    subtitle <- paste(top, "most relevant")
+    subtitle <- paste0(top, "most relevant (out of ", nrow(ret), ")")
     if (max < 1) subtitle <- paste0(subtitle," (excluding +", 100*max, "%)")
     if (rm.na) subtitle <- paste(subtitle, paste("[NAs removed]"))
-    p <- ret %>% 
+    p <- ret %>% head(top) %>%
       mutate(label = paste(key, "+", mix), abs = abs(corr),
              sign = ifelse(corr < 0, "bad", "good"),
              x = ifelse(corr < 0, -0.1, 1.1)) %>%

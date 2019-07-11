@@ -276,7 +276,7 @@ distr <- function(data, ...,
         labs(x = NULL, y = "Counter [#]", fill = targets_name, caption = note) + 
         theme(legend.position = "top") + guides(colour = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
-        scale_y_continuous(labels = comma) +
+        scale_y_comma(expand = c(0, 0)) +
         theme_lares2(pal = 1)
       # Give an angle to labels when more than...
       if (length(unique(value)) >= 7) {
@@ -300,9 +300,12 @@ distr <- function(data, ...,
         scale_size(range = c(2.2, 3)) +
         coord_flip() +
         labs(x = "Proportions [%]", y = NULL, fill = targets_name, caption = note) +
-        theme(legend.position = "top") + ylim(0, 1) + guides(colour = FALSE, size = FALSE) +
+        theme(legend.position = "top") + ylim(0, 1) + 
+        guides(colour = FALSE, size = FALSE) +
+        scale_y_percent(expand = c(0, 0)) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
         theme_lares2(pal = 1)
+      
       # Show a reference line if levels = 2; quite useful when data is unbalanced (not 50/50)
       if (length(unique(targets)) == 2 & ref) {
         distr <- df %>% freqs(targets) %>% arrange(as.character(targets))
