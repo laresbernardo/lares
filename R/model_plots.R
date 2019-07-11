@@ -885,7 +885,9 @@ mplot_conf <- function(tag, score, thresh = 0.5,
 #' The cumulative gains plot, often named ‘gains plot’, helps us 
 #' answer the question: When we apply the model and select the best 
 #' X deciles, what % of the actual target class observations can we 
-#' expect to target?
+#' expect to target? The cumulative gains chart shows the percentage 
+#' of the overall number of cases in a given category "gained" by 
+#' targeting a percentage of the total number of cases.
 #' 
 #' @family Machine Learning
 #' @family Visualization
@@ -963,7 +965,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
       theme_lares2(pal = 2) + 
       labs(title = "Cumulative Gains for Multiple Labels",
            subtitle = paste("If we select the top nth percentile with highest scores",
-                            "\nhow much of that specific target class (vs any other) will be picked?"),
+                            "\nhow much of that specific target class will be picked?"),
            x = paste0("Percentiles [", splits, "]"), 
            y = "Cumulative Gains [%]",
            linetype = "Reference", colour = "Label") +
@@ -1072,7 +1074,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
       theme_lares2(pal = 2) + 
       labs(title = "Cumulative Response for Multiple Labels",
            subtitle = paste("If we select the top nth percentile with highest scores,",
-                            "\nhow many observations belong to the target class?"),
+                            "\nhow many observations belong to that specific target class?"),
            x = paste0("Percentiles [", max(as.numeric(out$percentile)), "]"), 
            y = "Cumulative Response [%]",
            linetype = "Reference", colour = "Label") +

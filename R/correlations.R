@@ -167,17 +167,15 @@ corr_var <- function(df, ...,
       geom_text(aes(hjust = hjust), size = 3, colour = "black") +
       scale_fill_manual(values = c("FALSE" = "#E5586E", "TRUE" = "#59B3D2")) +
       guides(fill = FALSE) +
-      labs(title = paste("Correlation of", var, "vs other variables"), 
-           x = "", y = "Correlation") +
+      labs(title = paste("Correlations of", var), x = NULL, y = "Correlation [%]") +
       scale_y_percent(expand = c(0, 0)) + theme_lares2()
     
     if (!is.na(top) & top < original_n) p <- p + 
         labs(subtitle = paste("Plotting top", top, "out of", 
-                              original_n, "variables (original + dummy)"))
+                              original_n, "variables (original & dummy)"))
   }
   
   if (!is.na(subdir)) {
-    options(warn = -1)
     dir.create(file.path(getwd(), subdir), recursive = T)
     file_name <- paste(subdir, file_name, sep = "/")
   }
@@ -278,7 +276,7 @@ corr_cross <- function(df, plot = TRUE, max = 1, top = 25,
       geom_hline(aes(yintercept = 0), alpha = 0.5) + 
       geom_text(aes(hjust = x, label = signif(100*corr, 3)), size = 3, colour = "white") +
       labs(title = "Ranked Cross-Correlations", subtitle = subtitle,
-           x = "", y = "Correlation [%]") +
+           x = NULL, y = "Correlation [%]") +
       scale_fill_manual(values = c("bad" = "#E5586E", "good" = "#59B3D2")) +
       scale_y_percent() + theme_lares2()
     return(p)
