@@ -4,7 +4,8 @@
 \alias{missingness}
 \title{Calculate and Visualize Missingness}
 \usage{
-missingness(df, plot = FALSE, full = FALSE, subtitle = NA)
+missingness(df, plot = FALSE, full = FALSE, subtitle = NA,
+  summary = TRUE)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe to study}
@@ -14,6 +15,8 @@ missingness(df, plot = FALSE, full = FALSE, subtitle = NA)
 \item{full}{Boolean. Return all variables (or only with missings)?}
 
 \item{subtitle}{Character. Subtitle to show in plot}
+
+\item{summary}{Boolean. Show numerical summary text?}
 }
 \description{
 This function lets the user calculate the percentage of NAs or

@@ -142,7 +142,7 @@ plot_cats <- function(df) {
 plot_df <- function(df, plot = TRUE) {
   cats <- plot_cats(df) + theme(plot.title = element_text(size = 12))
   nums <- plot_nums(df, 15) + theme(plot.title = element_text(size = 12))
-  mis <- missingness(df, plot = TRUE) + 
+  mis <- missingness(df, plot = TRUE, summary = FALSE) + 
     theme(plot.title = element_text(size = 12)) + guides(fill = FALSE)
   p <- invisible(gridExtra::grid.arrange(cats, nums, mis, ncol = 1, nrow = 3))
   if (plot) plot(p) else return(p)

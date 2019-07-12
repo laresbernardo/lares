@@ -9,12 +9,14 @@
 #' @param plot Boolean. Do you wish to plot results?
 #' @param full Boolean. Return all variables (or only with missings)?
 #' @param subtitle Character. Subtitle to show in plot
+#' @param summary Boolean. Show numerical summary text?
 #' @export
-missingness <- function(df, plot = FALSE, full = FALSE, subtitle = NA) {
+missingness <- function(df, plot = FALSE, full = FALSE, 
+                        subtitle = NA, summary = TRUE) {
   
   if (sum(is.na(df)) == 0) {
     message("No missing values found!")
-    return()
+    invisible(return())
   }
   
   m <- df %>%
@@ -36,7 +38,8 @@ missingness <- function(df, plot = FALSE, full = FALSE, subtitle = NA) {
                    " (",formatNum(missp, 1),"%)")
     
     p <- is.na(df) %>% data.frame() %>% tidyr::gather() %>%
-      {if (!full) filter(., key %in% m$variable) else .} %>%
+      {if (!full) 
+        filter(., key %in% m$variable) else .} %>%
       mutate(type = ifelse(key %in% m$variable, "with", "without")) %>%
       group_by(key) %>%
       mutate(row_num = row_number()) %>%
@@ -46,9 +49,12 @@ missingness <- function(df, plot = FALSE, full = FALSE, subtitle = NA) {
       ggplot(aes(x = reorder(label, perc), y = row_num, fill = value)) + 
       geom_raster() + 
       coord_flip() +
-      {if (full) facet_grid(type ~ ., space = "free", scales = "free")} +
-      {if (full) scale_y_comma(note, expand = c(0, 0))} +
-      scale_fill_grey(name = "", labels = c("Present", "Missing")) +
+      {if (full) 
+        facet_grid(type ~ ., space = "free", scales = "free")} +
+      {if (summary) 
+        scale_y_comma(note, expand = c(0, 0)) else 
+        scale_y_comma(NULL, expand = c(0, 0))} +
+      scale_fill_grey(name = NULL, labels = c("Present", "Missing"), expand = c(0, 0)) +
       labs(title = "Missing values", x = "", subtitle = if (!is.na(subtitle)) subtitle) +
       theme_lares2(legend = "top") +
       theme(axis.text.y  = element_text(size = 8))
