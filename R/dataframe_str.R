@@ -97,19 +97,23 @@ df_str <- function(df,
 #' 
 #' @family Exploratory
 #' @param df Dataframe
-#' @param cols How many columns per row to plot?
-#' @param seed Numeric. Seed for reproducibility on geom_jitter
 #' @export
-plot_nums <- function(df, cols = 12, seed = 0) {
-  set.seed(seed)
-  p <- df %>% select_if(is.numeric) %>% gather() %>%
+plot_nums <- function(df) {
+  set.seed(0)
+  which <- df %>% select_if(is.numeric)
+  p <- gather(which) %>%
+    filter(!is.na(value)) %>%
     ggplot(aes(x = key, y = value)) +
     geom_jitter(alpha = 0.2, size = 0.8) +
-    geom_boxplot(alpha = 0.8) +
-    facet_wrap(.~key, scales = "free", ncol = cols) + 
+    geom_boxplot(alpha = 0.8, outlier.shape = NA, width = 1) +
+    facet_wrap(key~., scales = "free", nrow = 5) + 
     labs(title = "Numerical Features Boxplots", x = NULL, y = NULL) +
     theme_lares2() +
-    theme(axis.text.x = element_blank())
+    theme(axis.text.y = element_blank(), 
+          axis.text.x = element_text(vjust = 2, size = 8),
+          panel.spacing.y = unit(-.5, "lines"),
+          strip.text = element_text(size = 10, vjust = -1.3)) +
+    coord_flip()
   return(p)
 }
 
@@ -141,9 +145,11 @@ plot_cats <- function(df) {
 #' @export
 plot_df <- function(df, plot = TRUE) {
   cats <- plot_cats(df) + theme(plot.title = element_text(size = 12))
-  nums <- plot_nums(df, 15) + theme(plot.title = element_text(size = 12))
+  nums <- plot_nums(df) + theme(plot.title = element_text(size = 12))
   mis <- missingness(df, plot = TRUE, summary = FALSE) + 
     theme(plot.title = element_text(size = 12)) + guides(fill = FALSE)
-  p <- invisible(gridExtra::grid.arrange(cats, nums, mis, ncol = 1, nrow = 3))
+  margin <- theme(plot.margin = unit(c(0.1,0.5,0.1,0.5), "cm"))
+  plots <- list(cats, nums, mis)
+  p <- grid.arrange(grobs = lapply(plots, "+", margin), heights = c(4/12, 1/2, 3/12))
   if (plot) plot(p) else return(p)
 }

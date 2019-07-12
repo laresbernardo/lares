@@ -4,14 +4,10 @@
 \alias{plot_nums}
 \title{Plot All Numerical Features (Boxplots)}
 \usage{
-plot_nums(df, cols = 12, seed = 0)
+plot_nums(df)
 }
 \arguments{
 \item{df}{Dataframe}
-
-\item{cols}{How many columns per row to plot?}
-
-\item{seed}{Numeric. Seed for reproducibility on geom_jitter}
 }
 \description{
 This function filters numerical columns and plots boxplots.
