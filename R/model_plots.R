@@ -841,7 +841,8 @@ mplot_conf <- function(tag, score, thresh = 0.5,
   # Frequencies
   plot_cf <- df %>% freqs(tag, pred) %>% ungroup() %>%
     group_by(tag) %>%
-    mutate(label = paste0(formatNum(n, 0),"\n", formatNum(p,1), "%T\n(", 
+    mutate(label = paste0(formatNum(n, 0),"\n", 
+                          formatNum(p,1), "%T\n(", 
                           formatNum(100*n/sum(n),1),"%)"))
   trues <- sum(plot_cf$n[as.character(plot_cf$tag) == as.character(plot_cf$pred)])
   total <- sum(plot_cf$n)

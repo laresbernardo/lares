@@ -38,7 +38,9 @@ Other Exploratory: \code{\link{corr_var}},
   \code{\link{distr}}, \code{\link{freqs_df}},
   \code{\link{freqs}}, \code{\link{gain_lift}},
   \code{\link{get_tweets}}, \code{\link{missingness}},
-  \code{\link{tree_var}}, \code{\link{trendsRelated}}
+  \code{\link{plot_cats}}, \code{\link{plot_df}},
+  \code{\link{plot_nums}}, \code{\link{tree_var}},
+  \code{\link{trendsRelated}}
 }
 \concept{Correlations}
 \concept{Exploratory}

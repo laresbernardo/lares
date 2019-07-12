@@ -116,7 +116,8 @@ theme_lares2 <- function(font = "Arial Narrow",
     legend.position = legend,
     legend.justification = c(ifelse(legend %in% c("top","bottom"),0,.5),
                              ifelse(legend == "top",0,.5)),
-    legend.margin = margin(-3,0,-5,0))
+    legend.margin = margin(-3,0,-5,0),
+    legend.key.size = unit(0.4, "cm"))
   # Background
   ret <- ret + theme(
     panel.background = element_rect(fill = "#F1F1F1", colour = NA),
@@ -130,7 +131,7 @@ theme_lares2 <- function(font = "Arial Narrow",
   # list <- vector2text(unlist(which), sep = "|", quotes = FALSE)
   # df <- p$data %>% select(matches(list))
   # classes <- data.frame(lapply(df, class))
-
+  
   # if (grepl("x",tolower(comma))) ret <- ret + scale_x_comma()
   # if (grepl("y",tolower(comma))) ret <- ret + scale_y_comma()
   # if (grepl("x",tolower(percent))) ret <- ret + scale_x_percent()

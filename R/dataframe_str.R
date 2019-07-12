@@ -88,3 +88,62 @@ df_str <- function(df,
     return(p)
   }
 }
+
+
+####################################################################
+#' Plot All Numerical Features (Boxplots)
+#' 
+#' This function filters numerical columns and plots boxplots.
+#' 
+#' @family Exploratory
+#' @param df Dataframe
+#' @param cols How many columns per row to plot?
+#' @param seed Numeric. Seed for reproducibility on geom_jitter
+#' @export
+plot_nums <- function(df, cols = 12, seed = 0) {
+  set.seed(seed)
+  p <- df %>% select_if(is.numeric) %>% gather() %>%
+    ggplot(aes(x = key, y = value)) +
+    geom_jitter(alpha = 0.2, size = 0.8) +
+    geom_boxplot(alpha = 0.8) +
+    facet_wrap(.~key, scales = "free", ncol = cols) + 
+    labs(title = "Numerical Features Boxplots", x = NULL, y = NULL) +
+    theme_lares2() +
+    theme(axis.text.x = element_blank())
+  return(p)
+}
+
+
+####################################################################
+#' Plot All Categorical Features (Frequencies)
+#' 
+#' This function filters categorical columns and plots the frequency
+#' for each value on every feature.
+#' 
+#' @family Exploratory
+#' @param df Dataframe
+#' @export
+plot_cats <- function(df) {
+  df %>% select_if(Negate(is.numeric)) %>% freqs() +
+    labs(title = "Categorical Features Frequencies")
+}
+
+
+####################################################################
+#' Plot Summary of Numerical and Categorical Features
+#' 
+#' This function plots all columns frequencies and boxplots, for 
+#' categorical and numerical respectively.
+#' 
+#' @family Exploratory
+#' @param df Dataframe
+#' @param plot Boolean. Plot or return object?
+#' @export
+plot_df <- function(df, plot = TRUE) {
+  cats <- plot_cats(df) + theme(plot.title = element_text(size = 12))
+  nums <- plot_nums(df, 15) + theme(plot.title = element_text(size = 12))
+  mis <- missingness(df, plot = TRUE) + 
+    theme(plot.title = element_text(size = 12)) + guides(fill = FALSE)
+  p <- invisible(gridExtra::grid.arrange(cats, nums, mis, ncol = 1, nrow = 3))
+  if (plot) plot(p) else return(p)
+}

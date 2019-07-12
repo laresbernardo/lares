@@ -47,7 +47,7 @@ missingness <- function(df, plot = FALSE, full = FALSE, subtitle = NA) {
       geom_raster() + 
       coord_flip() +
       {if (full) facet_grid(type ~ ., space = "free", scales = "free")} +
-      scale_y_continuous(note, expand = c(0, 0), labels = scales::comma) +
+      {if (full) scale_y_comma(note, expand = c(0, 0))} +
       scale_fill_grey(name = "", labels = c("Present", "Missing")) +
       labs(title = "Missing values", x = "", subtitle = if (!is.na(subtitle)) subtitle) +
       theme_lares2(legend = "top") +
