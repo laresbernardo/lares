@@ -269,7 +269,8 @@ freqs_df <- function(df,
       mutate(col = factor(col, levels = which)) %>%
       mutate(label = ifelse(p > 8, as.character(value), "")) %>%
       group_by(col) %>% mutate(alpha = log(count)) %>%
-      mutate(alpha = as.numeric(ifelse(value == "NA", 0, alpha)))
+      mutate(alpha = as.numeric(ifelse(value == "NA", 0, alpha))) %>%
+      mutate(alpha = as.numeric(ifelse(is.infinite(alpha), 0, alpha)))
     
     p <- ggplot(out, aes(x = col, y = count, fill = col, label = label, colour = col)) + 
       geom_col(aes(alpha = alpha), position = "fill", colour = "black", width = 0.95, size = 0.1) + 
