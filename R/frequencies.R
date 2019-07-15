@@ -35,13 +35,12 @@ freqs <- function(df, ..., wt = NULL,
                   top = 20, abc = FALSE,
                   save = FALSE, subdir = NA) {
   
-  options(warn = -1)
   vars <- quos(...)
   weight <- enquo(wt)
   
   # Probably an error but might be usefull for the user instead
   if (length(vars) == 0) {
-    output <- freqs_df(df, plot = TRUE, save = save, subdir = subdir)
+    output <- freqs_df(df, plot = !plot, save = save, subdir = subdir)
     return(output)
   }
   
@@ -219,7 +218,10 @@ freqs_df <- function(df,
                      save = FALSE, subdir = NA) {
   
   df <- df[!unlist(lapply(df, is.list))]
-  which <- names(lapply(df, function(x) length(unique(x))))
+  names <- lapply(df, function(x) length(unique(x)))
+  unique <- as.data.frame(names)
+  colnames(unique) <- names(names)
+  which <- rownames(t(-sort(unique)))
   
   # Too much variance
   no <- names(unique)[unique > nrow(df) * max]
