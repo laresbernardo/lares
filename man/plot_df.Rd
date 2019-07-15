@@ -9,7 +9,7 @@ plot_df(df, plot = TRUE)
 \arguments{
 \item{df}{Dataframe}
 
-\item{plot}{Boolean. Plot or return object?}
+\item{plot}{Boolean. Plot the object? Otherwise, return grid}
 }
 \description{
 This function plots all columns frequencies and boxplots, for 

@@ -101,20 +101,24 @@ df_str <- function(df,
 plot_nums <- function(df) {
   set.seed(0)
   which <- df %>% select_if(is.numeric)
-  p <- gather(which) %>%
-    filter(!is.na(value)) %>%
-    ggplot(aes(x = key, y = value)) +
-    geom_jitter(alpha = 0.2, size = 0.8) +
-    geom_boxplot(alpha = 0.8, outlier.shape = NA, width = 1) +
-    facet_wrap(key~., scales = "free", nrow = 5) + 
-    labs(title = "Numerical Features Boxplots", x = NULL, y = NULL) +
-    theme_lares2() +
-    theme(axis.text.y = element_blank(), 
-          axis.text.x = element_text(vjust = 2, size = 8),
-          panel.spacing.y = unit(-.5, "lines"),
-          strip.text = element_text(size = 10, vjust = -1.3)) +
-    coord_flip()
-  return(p)
+  if (length(which) > 0) {
+    p <- gather(which) %>%
+      filter(!is.na(value)) %>%
+      ggplot(aes(x = key, y = value)) +
+      geom_jitter(alpha = 0.2, size = 0.8) +
+      geom_boxplot(alpha = 0.8, outlier.shape = NA, width = 1) +
+      facet_wrap(key~., scales = "free") + 
+      labs(title = "Numerical Features Boxplots", x = NULL, y = NULL) +
+      theme_lares2() +
+      theme(axis.text.y = element_blank(), 
+            axis.text.x = element_text(vjust = 2, size = 8),
+            panel.spacing.y = unit(-.5, "lines"),
+            strip.text = element_text(size = 10, vjust = -1.3)) +
+      coord_flip()
+    return(p)
+  } else {
+    message("No numerical variables found!")
+  }
 }
 
 
@@ -128,8 +132,13 @@ plot_nums <- function(df) {
 #' @param df Dataframe
 #' @export
 plot_cats <- function(df) {
-  df %>% select_if(Negate(is.numeric)) %>% freqs() +
-    labs(title = "Categorical Features Frequencies")
+  plot <- df %>% select_if(Negate(is.numeric)) 
+  if (length(plot) > 0) {
+    p <- plot %>% freqs() + labs(title = "Categorical Features Frequencies") 
+    return(p)
+  } else {
+    message("No categorical variables found!")
+  }
 }
 
 
@@ -141,15 +150,29 @@ plot_cats <- function(df) {
 #' 
 #' @family Exploratory
 #' @param df Dataframe
-#' @param plot Boolean. Plot or return object?
+#' @param plot Boolean. Plot the object? Otherwise, return grid
 #' @export
 plot_df <- function(df, plot = TRUE) {
-  cats <- plot_cats(df) + theme(plot.title = element_text(size = 12))
-  nums <- plot_nums(df) + theme(plot.title = element_text(size = 12))
-  mis <- missingness(df, plot = TRUE, summary = FALSE) + 
+  
+  plots <- list()
+  
+  cats <- plot_cats(df)
+  if (length(cats) != 0) plots[["cats"]] <- cats +
+    theme(plot.title = element_text(size = 12))
+  
+  nums <- plot_nums(df)
+  if (length(nums) != 0) plots[["nums"]] <- nums  + 
+    theme(plot.title = element_text(size = 12))
+  
+  mis <- missingness(df, plot = TRUE, summary = FALSE) 
+  if (length(mis) != 0) plots[["miss"]] <- mis + 
     theme(plot.title = element_text(size = 12)) + guides(fill = FALSE)
+  
+  if (length(plots) == 3) heights <- c(4/12, 1/2, 3/12) 
+  if (length(plots) == 2) heights <- c(0.5, 0.5) 
+  if (length(plots) == 1) heights <- NULL 
+  
   margin <- theme(plot.margin = unit(c(0.1,0.5,0.1,0.5), "cm"))
-  plots <- list(cats, nums, mis)
-  p <- grid.arrange(grobs = lapply(plots, "+", margin), heights = c(4/12, 1/2, 3/12))
+  p <- grid.arrange(grobs = lapply(plots, "+", margin), heights = heights)
   if (plot) plot(p) else return(p)
 }

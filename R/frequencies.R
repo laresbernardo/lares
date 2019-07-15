@@ -219,8 +219,7 @@ freqs_df <- function(df,
                      save = FALSE, subdir = NA) {
   
   df <- df[!unlist(lapply(df, is.list))]
-  unique <- data.frame(lapply(df, function(x) length(unique(x))))
-  which <- rownames(t(-sort(unique)))
+  which <- names(lapply(df, function(x) length(unique(x))))
   
   # Too much variance
   no <- names(unique)[unique > nrow(df) * max]
