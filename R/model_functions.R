@@ -889,12 +889,12 @@ ROC <- function(tag, score, multis = NA) {
     stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
   }
   
-  if (!is.numeric(score) & is.na(multis[1])) {
+  if (!is.numeric(score) & is.na(multis)[1]) {
     score <- as.numeric(score) 
     warning("You should use the multis parameter to add each category's score")
   }
   
-  if (is.na(multis[1])) {
+  if (is.na(multis)[1]) {
     roc <- pROC::roc(tag, score, ci = TRUE, quiet = TRUE)
     coords <- data.frame(
       fpr = rev(roc$specificities),
@@ -920,7 +920,7 @@ ROC <- function(tag, score, multis = NA) {
     row.names(ci) <- c("min","AUC","max")
   }
   ret <- list(ci = ci, roc = coords)
-  if (!is.na(multis[1])) {
+  if (!is.na(multis)[1]) {
     ret[["rocs"]] <- rocs  
   }
   return(ret)
@@ -1047,7 +1047,7 @@ model_metrics <- function(tag, score, multis = NA,
     } else {
       
       # For Multi-Categories
-      if (is.na(multis[1])) 
+      if (is.na(multis)[1]) 
         stop("You have to input a data.frame with each tag's probability into the multis parameter.")
       tags <- sort(unique(tag))
       if (sum(colnames(multis) %in% tags) != length(tags)) {

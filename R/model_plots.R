@@ -220,7 +220,7 @@ mplot_roc <- function(tag,
                       subdir = NA, 
                       file_name = "viz_roc.png") {
   
-  if (is.na(multis[1])) {
+  if (is.na(multis)[1]) {
     rocs <- ROC(tag, score)
     ci <- rocs$ci
   } else {
@@ -256,7 +256,7 @@ mplot_roc <- function(tag,
                             round(100*ci[c(3),],2))) +
     theme_lares2(bg_colour = "white", pal = 2, legend = "bottom")
   
-  if (is.na(multis[1])) p <- p + guides(colour = FALSE)
+  if (is.na(multis)[1]) p <- p + guides(colour = FALSE)
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
   
@@ -870,8 +870,8 @@ mplot_conf <- function(tag, score, thresh = 0.5,
           axis.ticks.y.right = element_blank(),
           panel.background = element_blank(), 
           panel.border = element_blank(), 
-          strip.background = element_blank(), 
-          plot.background = element_blank()) +
+          panel.grid.minor = element_blank(),
+          strip.background = element_blank()) +
     scale_x_continuous(breaks = 1:length(labels),
                        labels = labels,
                        position = 'right',
@@ -933,7 +933,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
                        caption = NA, save = FALSE, subdir = NA, 
                        file_name = "viz_gain.png", quiet = FALSE) {
   
-  if (is.na(multis[1])) {
+  if (is.na(multis)[1]) {
     gains <- gain_lift(tag, score, target, splits, quiet = quiet) 
     p <- gains %>%
       mutate(percentile = as.numeric(percentile)) %>%
@@ -1037,7 +1037,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
                            caption = NA, save = FALSE, subdir = NA, 
                            file_name = "viz_response.png", quiet = FALSE) {
   
-  if (is.na(multis[1])) {
+  if (is.na(multis)[1]) {
     gains <- gain_lift(tag, score, target, splits, quiet = quiet) %>% 
       mutate(percentile = as.numeric(percentile),
              cum_response = 100 * cumsum(target)/cumsum(total))
