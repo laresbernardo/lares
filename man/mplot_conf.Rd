@@ -4,8 +4,8 @@
 \alias{mplot_conf}
 \title{Confussion Matrix Plot}
 \usage{
-mplot_conf(tag, score, thresh = 0.5, subtitle = NA, save = FALSE,
-  subdir = NA, file_name = "viz_conf_mat.png")
+mplot_conf(tag, score, thresh = 0.5, abc = FALSE, subtitle = NA,
+  save = FALSE, subdir = NA, file_name = "viz_conf_mat.png")
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -14,6 +14,8 @@ mplot_conf(tag, score, thresh = 0.5, subtitle = NA, save = FALSE,
 
 \item{thresh}{Numeric. Value which splits the results for the 
 confusion matrix.}
+
+\item{abc}{Boolean. Arrange columns and rows alphabetically?}
 
 \item{subtitle}{Character. Subtitle to show in plot}
 

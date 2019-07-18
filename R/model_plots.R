@@ -139,8 +139,6 @@ mplot_importance <- function(var,
                              subdir = NA, 
                              file_name = "viz_importance.png") {
   
-  options(warn = -1)
-  
   if (length(var) != length(imp)) {
     message("The variables and importance values vectors should be the same length.")
     stop(message(paste("Currently, there are",length(var),"variables and",length(imp),"importance values!")))
@@ -222,7 +220,7 @@ mplot_roc <- function(tag,
                       subdir = NA, 
                       file_name = "viz_roc.png") {
   
-  if (is.na(multis)) {
+  if (is.na(multis[1])) {
     rocs <- ROC(tag, score)
     ci <- rocs$ci
   } else {
@@ -258,7 +256,7 @@ mplot_roc <- function(tag,
                             round(100*ci[c(3),],2))) +
     theme_lares2(bg_colour = "white", pal = 2, legend = "bottom")
   
-  if (is.na(multis)) p <- p + guides(colour = FALSE)
+  if (is.na(multis[1])) p <- p + guides(colour = FALSE)
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
   
@@ -303,8 +301,6 @@ mplot_cuts <- function(score,
                        save = FALSE, 
                        subdir = NA, 
                        file_name = "viz_ncuts.png") {
-  
-  options(warn = -1)
   
   if (splits > 25) stop("You should try with less splits!")
   
@@ -731,8 +727,6 @@ mplot_full <- function(tag,
                        subdir = NA,
                        file_name = "viz_full.png") {
   
-  options(warn = -1)
-  
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
     stop(message(paste("Currently, tag has", length(tag), "rows and score has", length(score))))
@@ -810,19 +804,21 @@ mplot_full <- function(tag,
 #' @param score Vector. Predicted value or model's result
 #' @param thresh Numeric. Value which splits the results for the 
 #' confusion matrix.
+#' @param abc Boolean. Arrange columns and rows alphabetically?
 #' @param subtitle Character. Subtitle to show in plot
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @export
 mplot_conf <- function(tag, score, thresh = 0.5,
-                       subtitle = NA, save = FALSE, subdir = NA, 
+                       abc = FALSE, subtitle = NA, save = FALSE, subdir = NA, 
                        file_name = "viz_conf_mat.png") {
   
   df <- data.frame(tag, score)
   
   # About tags
-  values <- df %>% group_by(tag) %>% tally() %>% arrange(desc(n)) %>%
+  values <- df %>% group_by(tag) %>% tally() %>% 
+    {if (abc) arrange(., tag) else arrange(., desc(n))} %>%
     mutate(label = paste0(tag, " (", formatNum(n, 0), ")"))
   labels <- values$tag
   df <- df %>% mutate(tag = factor(tag, levels = labels))
@@ -937,7 +933,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
                        caption = NA, save = FALSE, subdir = NA, 
                        file_name = "viz_gain.png", quiet = FALSE) {
   
-  if (is.na(multis)[1]) {
+  if (is.na(multis[1])) {
     gains <- gain_lift(tag, score, target, splits, quiet = quiet) 
     p <- gains %>%
       mutate(percentile = as.numeric(percentile)) %>%
@@ -1041,7 +1037,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
                            caption = NA, save = FALSE, subdir = NA, 
                            file_name = "viz_response.png", quiet = FALSE) {
   
-  if (is.na(multis)[1]) {
+  if (is.na(multis[1])) {
     gains <- gain_lift(tag, score, target, splits, quiet = quiet) %>% 
       mutate(percentile = as.numeric(percentile),
              cum_response = 100 * cumsum(target)/cumsum(total))

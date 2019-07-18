@@ -4,7 +4,7 @@
 \alias{conf_mat}
 \title{Confussion Matrix}
 \usage{
-conf_mat(tag, score, thresh = 0.5)
+conf_mat(tag, score, thresh = 0.5, plot = FALSE)
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -13,6 +13,8 @@ conf_mat(tag, score, thresh = 0.5)
 
 \item{thresh}{Numeric. Value which splits the results for the 
 confusion matrix when binary.}
+
+\item{plot}{Boolean. Plot result?}
 }
 \description{
 This function calculates a Confussion Matrix using crosstab for
