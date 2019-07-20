@@ -94,7 +94,9 @@ if (getRversion() >= "2.15.1")
       "percentile","cum_response","response","total","ETF","Sector","Percentage","corrplot",
       "row_num","ncap","freq","mix","redundant","plot_ly","chordDiagram","skim","uh",
       "fread","read.dta13","read.spss","read.xls","geom_label_repel","variable",
-      "rpart","rpart.control","rpart.plot","get_sentiment_dictionary","sentiment"))
+      "rpart","rpart.control","rpart.plot","get_sentiment_dictionary","sentiment",
+      "Cost","CumCost","CumDividend","CumInvested","CumQuant","CumROI","CumValue",
+      "Each","ROI","ValueSector","etf_sector_plot","ma1","ma2"))
 
 #' Pipe operator
 #' @name lares-exports

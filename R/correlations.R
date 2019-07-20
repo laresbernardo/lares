@@ -266,7 +266,7 @@ corr_cross <- function(df, plot = TRUE, max = 1, top = 25,
     select(key, mix, corr)
   
   if (plot) {
-    subtitle <- paste0(top, "most relevant (out of ", nrow(ret), ")")
+    subtitle <- paste0(top, " most relevant (out of ", nrow(ret), ")")
     if (max < 1) subtitle <- paste0(subtitle," (excluding +", 100*max, "%)")
     if (rm.na) subtitle <- paste(subtitle, paste("[NAs removed]"))
     p <- ret %>% head(top) %>%

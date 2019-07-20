@@ -1,20 +1,28 @@
+###################### OLD FUNCTIONS ###############################
+
 ####################################################################
-#' Get Personal Portfolio's Data
-#' 
-#' This function lets me download my personal Excel with my Portfolio data
-#' 
-#' @family Investment
-#' @param filename Characeter. Import a local Excel file
-#' @param token_dir Character. Where is my personal token for Dropbox connection?
-#' @param auto Boolean. Automatically user my local personal file? 
-#' @export
-get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Documentos/Docs/Data", auto = TRUE) {
+# Get Personal Portfolio's Data
+# 
+# This function downloads my personal Excel with my Portfolio data
+# 
+# @family Investment
+# @param filename Characeter. Import a local Excel file
+# @param token_dir Character. Where is my personal token for Dropbox connection?
+# @param auto Boolean. Automatically user my local personal file? 
+# @param sheets Character Vector. Names of each sheet containing Portfolio summary,
+# Cash, and Transactions information
+# @param keep_old Boolean. Keep 100% sold tickers?
+get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Documentos/Docs/Data", 
+                       auto = TRUE, sheets = c("Portafolio","Fondos","Transacciones"),
+                       keep_old = TRUE) {
   
-  processFile <- function(file) {
-    cash <- read.xlsx(file, sheet = 'Fondos', skipEmptyRows = TRUE, detectDates = TRUE)
-    trans <- read.xlsx(file, sheet = 'Transacciones', skipEmptyRows = TRUE, detectDates = TRUE)
-    port <- read.xlsx(file, sheet = 'Portafolio', skipEmptyRows = TRUE, detectDates = TRUE)
-    port <- port[port$Stocks != 0,]
+  warning("New portfolio/stocks functions created. Use stocks_file() instead")
+  
+  processFile <- function(file, keep_old = TRUE) {
+    port <- read.xlsx(file, sheet = sheets[1], skipEmptyRows = TRUE, detectDates = TRUE)
+    cash <- read.xlsx(file, sheet = sheets[2], skipEmptyRows = TRUE, detectDates = TRUE)
+    trans <- read.xlsx(file, sheet = sheets[3], skipEmptyRows = TRUE, detectDates = TRUE)
+    if (keep_old == FALSE) port <- port[port$Stocks != 0,]
     mylist <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
     return(mylist)
   }
@@ -24,15 +32,12 @@ get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Document
   if (local[["nodename"]] == "MacBook-Pro-de-Bernardo.local" & auto == TRUE) {
     message("Using BL's local file...")
     local <- "~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio/Portfolio LC.xlsx"
-    results <- processFile(local) 
+    results <- processFile(local, keep_old) 
   } else {
     # FOR EVERYONE'S USE
     if (!is.na(filename)) {
-      if (file.exists(filename)) {
-        results <- processFile(filename)
-      } else {
+      if (file.exists(filename)) results <- processFile(filename, keep_old) else
         stop("Error: that file doesn't exist or it's not in your working directory!")
-      }
     } else {
       # FOR DROPBOX'S USE
       token_dir <- token_dir
@@ -44,7 +49,7 @@ get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Document
                       local_path = file,
                       overwrite = TRUE,
                       dtoken = token))
-      results <- processFile(file)
+      results <- processFile(file, keep_old)
       file.remove(file)
     } 
   }
@@ -54,27 +59,26 @@ get_stocks <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Document
 
 
 ####################################################################
-#' Download Stocks Historical Data
-#' 
-#' This function lets the user download stocks historical data
-#' 
-#' @family Investment
-#' @param symbols Character Vector. List of symbols to download historical data. 
-#' Example: c('VTI','TSLA')
-#' @param from Date. Since when do you wish to download historical data
-#' @param today Boolean. Do you wish to additionaly download today's quote?
-#' @param tax Numeric. Percentage for dividends real return. Range from 0 to 99
-#' @param verbose Boolean. Print results and progress while downloading?
-#' @export
+# Download Stocks Historical Data
+# 
+# This function lets the user download stocks historical data
+# 
+# @family Investment
+# @param symbols Character Vector. List of symbols to download historical data. 
+# Example: c('VTI','TSLA')
+# @param from Date. Since when do you wish to download historical data
+# @param today Boolean. Do you wish to additionaly download today's quote?
+# @param tax Numeric. Percentage for dividends real return. Range from 0 to 99
+# @param verbose Boolean. Print results and progress while downloading?
 get_stocks_hist <- function(symbols = NA, 
                             from = NA, 
                             today = TRUE, 
                             tax = 30, 
                             verbose = TRUE) {
   
-  if (!haveInternet()) {
-    stop("You currently have NO internet connection!")
-  }
+  warning("New portfolio/stocks functions created. Use stocks_hist() instead")
+  
+  if (!haveInternet()) stop("You currently have NO internet connection!")
   
   options("getSymbols.warning4.0" = FALSE)
   options("getSymbols.yahoo.warning" = FALSE)
@@ -89,11 +93,11 @@ get_stocks_hist <- function(symbols = NA,
         values <- getSymbols(symbol, env = NULL, from = start_date, src = "yahoo") %>% data.frame()
         values <- cbind(row.names(values), as.character(symbol), values)
         colnames(values) <- c("Date","Symbol","Open","High","Low","Close","Volume","Adjusted")
-        values <- mutate(values, Adjusted = rowMeans(dplyr::select(values, High, Close), na.rm = TRUE))
+        values <- mutate(values, Adjusted = rowMeans(select(values, High, Close), na.rm = TRUE))
         row.names(values) <- NULL
         
         # Add right now's data
-        if (today == TRUE) {
+        if (today) {
           quote <- function(ticks) {
             qRoot <- "https://query1.finance.yahoo.com/v7/finance/quote?fields=symbol,longName,regularMarketPrice,regularMarketChange,regularMarketTime&formatted=false&symbols="
             z <- fromJSON(paste(qRoot, paste(ticks, collapse = ","), sep = ""))
@@ -129,28 +133,38 @@ get_stocks_hist <- function(symbols = NA,
       }
     } else {message("The parameters 'symbols' and 'from' should be the same length.") }
   } else {message("You need to define which stocks to bring. Use the 'symbols=' parameter.") }
-  results <- list("values" = data, "dividends" = divs)
+  
+  joined <- data %>% 
+    select(Date, Symbol, Adjusted) %>% rename(Value = Adjusted) %>%
+    mutate(Date = as.Date(Date), Symbol = as.character(Symbol)) %>%
+    left_join(mutate(divs, Symbol = as.character(Symbol)), 
+              by = c("Date", "Symbol")) %>% 
+    replace(is.na(.), 0) %>%
+    arrange(desc(Date))
+  
+  results <- list("values" = data, "dividends" = divs, "joined" = joined)
   return(results)
 }
 
 
 ####################################################################
-#' Fix Historical Data on Stocks
-#' 
-#' This function lets the user fix downloaded stock data into a usefull 
-#' format output
-#' 
-#' @family Investment
-#' @param dailys Dataframe. Daily values. Structure: "Date", "Symbol", 
-#' "Open", "High", "Low", "Close", "Volume", "Adjusted"
-#' @param dividends Dataframe. Dividends. Structure: "Symbol", "Date", 
-#' "Div", "DivReal"
-#' @param transactions Dataframe. Transactions. Structure: "ID", "Inv", 
-#' "CODE", "Symbol", "Date", "Quant", "Value", "Amount", "Description"
-#' @param expenses Numeric. How much does that bank or broker charges per
-#' transaction? Absolute value.
-#' @export
+# Fix Historical Data on Stocks
+# 
+# This function lets the user fix downloaded stock data into a usefull 
+# format output
+# 
+# @family Investment
+# @param dailys Dataframe. Daily values. Structure: "Date", "Symbol", 
+# "Open", "High", "Low", "Close", "Volume", "Adjusted"
+# @param dividends Dataframe. Dividends. Structure: "Symbol", "Date", 
+# "Div", "DivReal"
+# @param transactions Dataframe. Transactions. Structure: "ID", "Inv", 
+# "CODE", "Symbol", "Date", "Quant", "Value", "Amount", "Description"
+# @param expenses Numeric. How much does that bank or broker charges per
+# transaction? Absolute value.
 stocks_hist_fix <- function(dailys, dividends, transactions, expenses = 7) {
+  
+  warning("New portfolio/stocks functions created. Use daily_stocks() and daily_portfolio() instead")
   
   dailys_structure <- c("Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted")
   dividends_structure <- c("Symbol", "Date", "Div", "DivReal")
@@ -177,7 +191,7 @@ stocks_hist_fix <- function(dailys, dividends, transactions, expenses = 7) {
     # Add transactions daily data
     left_join(transactions %>%
                 mutate(Date = as.Date(as.character(Date)), Symbol = as.character(Symbol)) %>%
-                dplyr::select(Symbol, Date, Quant, Value, Amount),
+                select(Symbol, Date, Quant, Value, Amount),
               by = c('Symbol','Date')) %>%
     mutate(Expenses = ifelse(is.na(Quant), 0, expenses)) %>%
     group_by(Symbol) %>%
@@ -217,21 +231,22 @@ stocks_hist_fix <- function(dailys, dividends, transactions, expenses = 7) {
 
 
 ####################################################################
-#' Stocks Overall Performance
-#' 
-#' This function lets the user calculate stocks performance
-#' 
-#' @family Investment
-#' @param dailys Dataframe. Daily values. Structure: "Date", "Symbol", 
-#' "Open", "High", "Low", "Close", "Volume", "Adjusted", "Quant", 
-#' "Value", "Amount", "Expenses", "Stocks", "Div", "DivReal", "DailyDiv", 
-#' "DailyValue", "RelChangeP", 
-#' "RelChangeUSD"
-#' @param cash_in Dataframe. Deposits and withdrawals. Structure: "ID", "Date", "Cash"
-#' @param cash_fix Numeric. If you wish to algebraically sum a value 
-#' to your cash balance
-#' @export
+# Stocks Overall Performance
+# 
+# This function lets the user calculate stocks performance
+# 
+# @family Investment
+# @param dailys Dataframe. Daily values. Structure: "Date", "Symbol", 
+# "Open", "High", "Low", "Close", "Volume", "Adjusted", "Quant", 
+# "Value", "Amount", "Expenses", "Stocks", "Div", "DivReal", "DailyDiv", 
+# "DailyValue", "RelChangeP", 
+# "RelChangeUSD"
+# @param cash_in Dataframe. Deposits and withdrawals. Structure: "ID", "Date", "Cash"
+# @param cash_fix Numeric. If you wish to algebraically sum a value 
+# to your cash balance
 stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
+  
+  warning("New portfolio/stocks functions created. Use daily_stocks() and daily_portfolio() instead")
   
   dailys_structure <- c("Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted",
                         "Quant", "Value", "Amount", "Expenses", "Stocks", "Div", "DivReal",
@@ -260,7 +275,7 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
     mutate(RelPer = round(100 * RelUSD / DailyStocks, 2),
            CumDiv = cumsum(DailyDiv),
            CumExpen = cumsum(DailyExpen)) %>%
-    left_join(cash_in %>% dplyr::select(Date, Cash), by = c('Date')) %>%
+    left_join(cash_in %>% select(Date, Cash), by = c('Date')) %>%
     mutate(DailyCash = ifelse(is.na(Cash), 0, Cash),
            CumCash = cumsum(DailyCash) - cumsum(DailyTrans) + cumsum(DailyDiv) + cash_fix,
            CumPortfolio = CumCash + DailyStocks,
@@ -277,15 +292,16 @@ stocks_performance <- function(dailys, cash_in, cash_fix = 0)  {
 
 
 ####################################################################
-#' Portfolio Overall Performance
-#' 
-#' This function lets the user calculate portfolio performance
-#' 
-#' @family Investment
-#' @param portfolio Dataframe. Structure: "Symbol", "Stocks", "StockIniValue", "InvPerc", "Type", "Trans", "StartDate"
-#' @param daily Dataframe. Daily data
-#' @export
+# Portfolio Overall Performance
+# 
+# This function lets the user calculate portfolio performance
+# 
+# @family Investment
+# @param portfolio Dataframe. Structure: "Symbol", "Stocks", "StockIniValue", "InvPerc", "Type", "Trans", "StartDate"
+# @param daily Dataframe. Daily data
 portfolio_performance <- function(portfolio, daily) {
+  
+  warning("New portfolio/stocks functions created. Use daily_stocks() and daily_portfolio() instead")
   
   portf_structure <- c("Symbol", "Stocks", "StockIniValue", "InvPerc", "Type", "Trans", "StartDate")
   
@@ -314,17 +330,18 @@ portfolio_performance <- function(portfolio, daily) {
 
 
 ####################################################################
-#' Portfolio Daily Performance
-#' 
-#' This function lets the user calculate daily portfolio performance
-#' 
-#' @family Investment
-#' @param data Dataframe. Result from get_stocks()
-#' @param dailys Dataframe. Result from get_stocks_hist()
-#' @param cash_fix Numeric. If you wish to algebraically sum a value 
-#' to your cash balance
-#' @export
+# Portfolio Daily Performance
+# 
+# This function lets the user calculate daily portfolio performance
+# 
+# @family Investment
+# @param data Dataframe. Result from get_stocks()
+# @param dailys Dataframe. Result from get_stocks_hist()
+# @param cash_fix Numeric. If you wish to algebraically sum a value 
+# to your cash balance
 portfolio_daily <- function(data, dailys, cash_fix = 0) {
+  
+  warning("New portfolio/stocks functions created. Use daily_stocks() and daily_portfolio() instead")
   
   daily_fixed <- stocks_hist_fix(dailys = dailys$values, 
                                  dividends = dailys$dividends, 
@@ -362,15 +379,16 @@ portfolio_daily <- function(data, dailys, cash_fix = 0) {
 ################# PLOTTING FUNCTIONS #################
 
 ####################################################################
-#' Portfolio Daily Plot
-#' 
-#' This function lets the user plot his portfolio daily change
-#' 
-#' @family Investment
-#' @param stocks_perf Dataframe. Output of the stocks_performance function
-#' @param save Boolean. Export plot as an image?
-#' @export
+# Portfolio Daily Plot
+# 
+# This function lets the user plot his portfolio daily change
+# 
+# @family Investment
+# @param stocks_perf Dataframe. Output of the stocks_performance function
+# @param save Boolean. Export plot as an image?
 portfolio_daily_plot <- function(stocks_perf, save = FALSE) {
+  
+  warning("New portfolio/stocks functions created. Use splot_roi() instead")
   
   stocks_perf <- stocks_perf %>% 
     # Get rid of super picks
@@ -408,19 +426,20 @@ portfolio_daily_plot <- function(stocks_perf, save = FALSE) {
 
 
 ####################################################################
-#' Stocks Total Performance Plot
-#' 
-#' This function lets the user plot his stocks total performance
-#' 
-#' @family Investment
-#' @param stocks_perf Dataframe. Output of the stocks_performance function
-#' @param portfolio_perf Dataframe. Output of the portfolio_performance function
-#' @param daily Dataframe. Daily data
-#' @param trans Dataframe. Transactions data
-#' @param cash Dataframe. Cash data
-#' @param save Boolean. Export plot as an image?
-#' @export
+# Stocks Total Performance Plot
+# 
+# This function lets the user plot his stocks total performance
+# 
+# @family Investment
+# @param stocks_perf Dataframe. Output of the stocks_performance function
+# @param portfolio_perf Dataframe. Output of the portfolio_performance function
+# @param daily Dataframe. Daily data
+# @param trans Dataframe. Transactions data
+# @param cash Dataframe. Cash data
+# @param save Boolean. Export plot as an image?
 stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, save = FALSE) {
+  
+  warning("New portfolio/stocks functions created. Use splot_summary() instead")
   
   tops <- max(rbind(portfolio_perf$Invested, portfolio_perf$DailyValue))
   summary <- rbind(
@@ -469,19 +488,20 @@ stocks_total_plot <- function(stocks_perf, portfolio_perf, daily, trans, cash, s
 
 
 ####################################################################
-#' Stocks Daily Plot
-#' 
-#' This function lets the user plot stocks daily change
-#' 
-#' @family Investment
-#' @param portfolio Dataframe. Output of the portfolio_perf function
-#' @param daily Dataframe. Daily data
-#' @param weighted Boolean. Should variation values be weighted to the
-#' portfolio (or simply compared with initial value)?
-#' @param group Boolean. Group stocks by stocks type?
-#' @param save Boolean. Export plot as an image?
-#' @export
+# Stocks Daily Plot
+# 
+# This function lets the user plot stocks daily change
+# 
+# @family Investment
+# @param portfolio Dataframe. Output of the portfolio_perf function
+# @param daily Dataframe. Daily data
+# @param weighted Boolean. Should variation values be weighted to the
+# portfolio (or simply compared with initial value)?
+# @param group Boolean. Group stocks by stocks type?
+# @param save Boolean. Export plot as an image?
 stocks_daily_plot <- function(portfolio, daily, weighted = TRUE, group = TRUE, save = FALSE) {
+  
+  warning("New portfolio/stocks functions created. Use splot_change() instead")
   
   try_require("ggrepel")
   
@@ -517,15 +537,16 @@ stocks_daily_plot <- function(portfolio, daily, weighted = TRUE, group = TRUE, s
 
 
 ####################################################################
-#' Portfolio's Category Distribution
-#' 
-#' This function lets the user plot his portfolio's distribution
-#' 
-#' @family Investment
-#' @param portfolio_perf Dataframe. Output of the portfolio_performance function
-#' @param save Boolean. Export plot as an image?
-#' @export
+# Portfolio's Category Distribution
+# 
+# This function lets the user plot his portfolio's distribution
+# 
+# @family Investment
+# @param portfolio_perf Dataframe. Output of the portfolio_performance function
+# @param save Boolean. Export plot as an image?
 portfolio_distr_plot <- function(portfolio_perf, save = FALSE) {
+  
+  warning("New portfolio/stocks functions created. Use splot_types() instead")
   
   p <- portfolio_perf %>%
     group_by(Type) %>% 
@@ -543,103 +564,16 @@ portfolio_distr_plot <- function(portfolio_perf, save = FALSE) {
 
 
 ####################################################################
-#' ETF's Sectors Breakdown
-#' 
-#' This function scraps etf.com data for sector breakdown on ETFs.
-#' 
-#' @family Investment
-#' @param etf Character Vector. Which ETFs you wish to scrap?
-#' @param verbose Boolean. Print results and progress while downloading?
-#' @export
-etf_sector <- function(etf = "VTI", verbose = TRUE) {
-  ret <- data.frame()
-  for (i in 1:length(etf)) {
-    url <- paste0("https://etfdb.com/etf/", toupper(etf[i]))
-    if (RCurl::url.exists(url)) {
-      sector <- read_html(url) %>% html_nodes(".col-md-6") %>% 
-        html_text() %>% .[grepl("Sector Breakdown",.)] %>% .[1]
-      sector <- data.frame(matrix(unlist(strsplit(sector, split = "\n"))[-c(1:5)], ncol = 2, byrow = TRUE))
-      colnames(sector) <- c("Sector", "Percentage")
-      sector$Percentage <- as.integer(cleanText(sector$Percentage))/100 
-      sector$ETF <- toupper(etf[i])
-      sector <- sector %>% select(ETF, Sector, Percentage)
-      ret <- rbind(ret, sector)
-      check <- TRUE
-    } else {
-      check <- FALSE
-      Sys.sleep(1)
-    }
-    if (verbose == TRUE & length(etf) > 1) {
-      info <- paste(toupper(etf[i]), ifelse(check, "", "X"))
-      statusbar(i, length(etf), info)   
-    }
-  }
-  if (nrow(ret) == 0) {
-    message("No data found for given Tickers!")
-    invisible(return())
-  } else {
-    return(ret) 
-  }
-}
-
-
-####################################################################
-#' Portfolio's Sector Distribution (ETFs)
-#' 
-#' This function lets the user plot his portfolio's distribution, 
-#' specifically ETF's sectors
-#' 
-#' @family Investment
-#' @param portfolio_perf Dataframe. Output of the portfolio_performance function
-#' @param save Boolean. Export plot as an image?
-#' @export
-etf_sector_plot <- function(portfolio_perf, save = FALSE) {
-  
-  structure <- c("Symbol", "DailyValue")
-  
-  if (!all(structure %in% colnames(portfolio_perf))) {
-    stop(paste("portfolio_perf should contain all of the following:",
-               paste(shQuote(structure), collapse = ", ")))
-  }
-  
-  message(">>> Downloading ETF's sectors...")
-  etfs <- etf_sector(portfolio_perf$Symbol)
-  
-  if (nrow(etfs) > 0) {
-    df <- etfs %>% 
-      right_join(select(portfolio_perf, Symbol, DailyValue), 
-                 by = c("ETF" = "Symbol")) %>%
-      mutate(Sector = ifelse(is.na(Sector), "Not Known", as.character(Sector))) %>%
-      replace(., is.na(.), 100) %>%
-      mutate(Value = DailyValue * Percentage / 100) %>%
-      group_by(Sector) %>% mutate(total = sum(Value)) %>% ungroup() %>% 
-      group_by(Sector) %>% mutate(label = paste0(
-        Sector, " (", formatNum(100*total/sum(portfolio_perf$DailyValue), 1), "%)"))
-    
-    p <- ggplot(df, aes(x = reorder(label,total), y = Value, fill = ETF)) +
-      geom_bar(width = 1, stat = "identity") +
-      coord_flip() +
-      scale_y_continuous(labels = comma, expand = c(0, 0)) + 
-      theme_lares2(pal = 1) +
-      labs(x = NULL, y = "Total value", title = "Portfolio's Sector Distribution (ETFs)", fill = NULL)
-    if (save) p <- p + ggsave("portf_distribution_etfs.png", width = 8, height = 5, dpi = 300) 
-    return(p) 
-  } else {
-    return(noPlot("No data here!"))
-  }
-}
-
-
-####################################################################
-#' Portfolio's Daily Cumulative
-#' 
-#' This function lets the user plot his portfolio's daily cumulative
-#' 
-#' @family Investment
-#' @param portfolio Dataframe. Results from portfolio_daily()
-#' @param save Boolean. Export plot as an image?
-#' @export
+# Portfolio's Daily Cumulative
+# 
+# This function lets the user plot his portfolio's daily cumulative
+# 
+# @family Investment
+# @param portfolio Dataframe. Results from portfolio_daily()
+# @param save Boolean. Export plot as an image?
 portfolio_total_plot <- function(portfolio, save = FALSE) {
+  
+  warning("New portfolio/stocks functions created. Use splot_growth() instead")
   
   try_require("ggrepel")
   
@@ -659,6 +593,7 @@ portfolio_total_plot <- function(portfolio, save = FALSE) {
                      aes(x = Date, y = Portfolio, label = formatNum(Deposit, 0)), 
                      vjust = -1.3, size = 2.5) +
     scale_y_continuous(position = "right", labels = comma) +
+    scale_x_date(date_labels = "%b%y", expand = c(0, 0)) +
     annotate("text", label = caption, x = max(portfolio$Date), 
              y = 0.09*max(portfolio$Portfolio), 
              size = 3.3, colour = "white", hjust = 1.1) +
@@ -676,23 +611,24 @@ portfolio_total_plot <- function(portfolio, save = FALSE) {
 ################# REPORTING FUNCTIONS #################
 
 ####################################################################
-#' Portfolio's Calculations and Plots
-#' 
-#' This function lets the user create his portfolio's calculations and
-#' plots for further study.
-#' 
-#' @family Investment
-#' @param data List. Containing the following dataframes: portfolio,
-#' transactions, cash. They have to follow the original xlsx format
-#' @param cash_fix Numeric. If you wish to algebraically sum a value 
-#' to your cash balance
-#' @param tax Numeric. How much does of your dividends does the taxes take? 
-#' Range from 0 to 99
-#' @param expenses Numeric. How much does that bank or broker charges per
-#' transaction? Absolute value.
-#' @param sectors Boolean. Return sectors segmentation for ETFs?
-#' @export
+# Portfolio's Calculations and Plots
+# 
+# This function lets the user create his portfolio's calculations and
+# plots for further study.
+# 
+# @family Investment
+# @param data List. Containing the following dataframes: portfolio,
+# transactions, cash. They have to follow the original xlsx format
+# @param cash_fix Numeric. If you wish to algebraically sum a value 
+# to your cash balance
+# @param tax Numeric. How much does of your dividends does the taxes take? 
+# Range from 0 to 99
+# @param expenses Numeric. How much does that bank or broker charges per
+# transaction? Absolute value.
+# @param sectors Boolean. Return sectors segmentation for ETFs?
 stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7, sectors = TRUE) {
+  
+  warning("New portfolio/stocks functions created. Use stocks_obj() instead")
   
   tabs <- c('portfolio','transactions','cash')
   if (sum(names(data) %in% tabs) != 3) {
@@ -755,16 +691,15 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7, sectors =
 }
 
 ####################################################################
-#' Portfolio's Full Report in HTML
-#' 
-#' This function lets the user create his portfolio's full report in HTML using
-#' the library's results
-#' 
-#' @family Investment
-#' @param results List. Containing the following objects: portf_daily_change, 
-#' portf_stocks_change, portf_stocks_histchange, portf_distribution & portfolio_perf.
-#' You can use simply use the stocks_objects(data) if you didn't mess with the order!
-#' @export
+# Portfolio's Full Report in HTML
+# 
+# This function lets the user create his portfolio's full report in HTML using
+# the library's results
+# 
+# @family Investment
+# @param results List. Containing the following objects: portf_daily_change, 
+# portf_stocks_change, portf_stocks_histchange, portf_distribution & portfolio_perf.
+# You can use simply use the stocks_objects(data) if you didn't mess with the order!
 stocks_html <- function(results) {
   
   dir <- getwd()
@@ -798,57 +733,6 @@ stocks_html <- function(results) {
   
   invisible(file.remove(paste0(dir, "/stocksReport.Rmd")))
   message("HTML report created succesfully!")
-}
-
-
-####################################################################
-#' Portfolio's Full Report and Email
-#' 
-#' This function lets the user create his portfolio's full report with plots and email sent
-#' 
-#' @family Investment
-#' @param wd Character. Where do you wish to save the results (plots and report)?
-#' @param cash_fix Numeric. If you wish to algebraically sum a value to your cash balance
-#' @param sectors Boolean. Return sectors segmentation for ETFs?
-#' @param mail Boolean. Do you wish to send the email? Set to NA to not send email
-#' @param creds Character. Credential's user (see get_credentials) for sending mail
-#' @export
-stocks_report <- function(wd = "personal", cash_fix = 0, 
-                          sectors = TRUE,
-                          mail = "laresbernardo@gmail.com", 
-                          creds = NA) {
-  
-  # Setting up working directory
-  if (dir.exists(wd)) {
-    temp <- wd
-  } else {
-    temp <- tempdir() 
-  }
-  on.exit(setwd(temp))
-  
-  # Set token for Sendgrid credentials:
-  token_dir <- case_when(
-    wd == "personal" ~ "~/Dropbox (Personal)/Documentos/Docs/Data",
-    wd %in% c("matrix","server") ~ "~/creds",
-    TRUE ~ as.character(creds))
-  
-  # Data extraction and processing
-  data <- get_stocks(token_dir = token_dir)
-  results <- stocks_objects(data, sectors = sectors)
-  
-  # HTML report
-  message(">>> Creating HTML report...")
-  stocks_html(results)
-  
-  if (!is.na(mail)) {
-    message(">>> Sending email...")
-    mailSend(to = mail, 
-             subject = paste("Portfolio:", max(results$df_daily$Date)),
-             text = " \n", 
-             attachment = paste0(getwd(), "/stocksReport.html"),
-             creds = token_dir,
-             quiet = FALSE)
-  }
 }
 
 ######################### SHORT #####################################

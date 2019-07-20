@@ -65,7 +65,7 @@ ohse <- function(df,
   }
   
   # Leave some columns out of the logic
-  if (!is.na(ignore)) {
+  if (!is.na(ignore)[1]) {
     message("Omitting transformations for ", vector2text(ignore))
     ignored <- df %>% select(one_of(ignore))
     df <- df %>% select(-one_of(ignore))
@@ -143,7 +143,7 @@ ohse <- function(df,
   if (drops) df <- df[, c(!colnames(df) %in% c(no_variance, converted))] 
   
   # Bind ignored untouched columns
-  if (!is.na(ignore)) df <- data.frame(ignored, df)
+  if (!is.na(ignore)[1]) df <- data.frame(ignored, df)
   
   return(df)
   
