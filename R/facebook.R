@@ -228,3 +228,96 @@ fb_post <- function(token, post_id) {
     message(paste("NO DATA: no comments on", vector2text(nodata)))
   return(ret)
 }
+
+
+####################################################################
+#' Facebook Insights API
+#' 
+#' This returns all available FB insights per day including any given
+#' breakdown to the specified report level, and place into a data frame.
+#' For more information on Ad Insights' API, go to the 
+#' \href{https://developers.facebook.com/docs/marketing-api/reference/adgroup/insights/}{original documentaion}
+#' 
+#' This function was based on FBinsightsR.
+#' 
+#' @family Scrapper
+#' @family API
+#' @family Facebook
+#' @param token Character. This must be a valid access token with sufficient 
+#' privileges. Visit the Facebook API Graph Explorer to acquire one
+#' @param account Character. This is the ad account, campaign, adset, 
+#' or ad ID to be queried
+#' @param start Character. The first full day to report, in the 
+#' format "YYYY-MM-DD"
+#' @param end Character. The last full day to report, in the 
+#' format "YYYY-MM-DD"
+#' @param report_level Character. One of ad, adset, campaign, or account
+#' @param breakdowns Character Vector. One or more of breakdowns for 
+#' segmentation results
+#' @param api_version Character. Facebook API version
+#' @export
+fb_insights <- function(token,
+                        account,
+                        start = Sys.Date() - 30, 
+                        end = Sys.Date(), 
+                        report_level = "ad",
+                        breakdowns = "dma",
+                        api_version = "v3.3"){
+  
+  # Starting URL
+  url <- "https://graph.facebook.com/"
+  URL <- paste0(url, api_version, "/", account, "/insights")
+  
+  which <- c("ad","adset","campaign","account")
+  if (!report_level %in% which) 
+    stop(paste("Your report_level must be one of:", vector2text(which)))
+  
+  # Call insights
+  import <- content(GET(
+    URL,
+    query = list(
+      access_token = token,
+      time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
+      level = report_level,
+      fields = paste(
+        "campaign_name, campaign_id, objective, adset_id, adset_name, ad_id, ad_name,",
+        "impressions, cpm, reach, clicks, unique_clicks, ctr, cpc, unique_ctr,",
+        "cost_per_unique_click, estimated_ad_recall_rate, cost_per_estimated_ad_recallers,",
+        "spend, canvas_avg_view_time, canvas_avg_view_percent"),
+      breakdowns = vector2text(breakdowns, sep = ", ", quotes = FALSE),
+      time_increment = "1",
+      limit = "1000"
+    ),
+    encode = "json"))
+  
+  # Show and return error
+  if ("error" %in% names(import)) {
+    message(paste("API ERROR:", import$error$message))
+    # Very useful for Shiny apps
+    invisible(return(import$error))
+  }
+  
+  # Check for no-data (user might think there was an error on GET request - warn him!)
+  if (length(import$data) == 0) {
+    message("There is no data for this query!")
+    invisible(return(NULL))
+  } 
+  
+  ret <- data.frame(bind_rows(import$data))
+  
+  # Condition to detect the next page
+  if (exists("next", import$paging)) {
+    # Checking from the originally returned list
+    out <- fromJSON(import$paging$`next`)
+    ret <- bind_rows(ret, data.frame(out$data))
+    # Looping through subsequent returned pages
+    while (exists("next", out$paging)) {
+      out <- fromJSON(out$paging$`next`)
+      ret <- bind_rows(ret, data.frame(out$data))
+    }
+  }
+  ret <- suppressMessages(type.convert(ret)) %>%
+    mutate_at(vars(contains("date")), funs(as.Date)) %>%
+    arrange(desc(date_start), desc(spend))
+  return(ret)
+}

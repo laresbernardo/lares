@@ -22,7 +22,7 @@
 #' h2o.removeAll h2o.download_mojo h2o.download_pojo h2o.loadModel h2o.no_progress h2o.predict 
 #' h2o.predict_json h2o.saveModel h2o.varimp
 #' @importFrom httr GET POST oauth_endpoint oauth_app oauth1.0_token authenticate 
-#' stop_for_status upload_file add_headers
+#' stop_for_status upload_file add_headers content
 #' @importFrom jsonlite fromJSON toJSON flatten
 #' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd 
 #' minute hour second %m+% floor_date 
@@ -49,7 +49,7 @@
 #' @importFrom tidyr gather spread
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
 #' globalVariables installed.packages write.table install.packages remove.packages object.size 
-#' type.convert flush.console read.table modifyList write.csv combn browseURL
+#' type.convert flush.console read.table modifyList write.csv combn browseURL type.convert
 #' @importFrom wordcloud wordcloud textplot
 #' @importFrom xml2 read_html
 "_PACKAGE"

@@ -648,6 +648,7 @@ stocks_obj <- function(data = stocks_file(), cash_fix = 0, tax = 30, sectors = T
 #' @param mail Boolean. Do you want to send an email with the report attached?
 #' @param to Character. Email to send the report to
 #' @param creds Character. Credential's user (see get_credentials) for sending mail
+#' @export
 stocks_report <- function(data = stocks_obj(), dir = NA,
                           mail = FALSE, 
                           to = "laresbernardo@gmail.com",
