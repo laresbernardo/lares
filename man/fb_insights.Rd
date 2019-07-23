@@ -5,7 +5,7 @@
 \title{Facebook Insights API}
 \usage{
 fb_insights(token, account, start = Sys.Date() - 7, end = Sys.Date(),
-  time_increment = "1", report_level = "ad", breakdowns = "dma",
+  time_increment = "1", report_level = "ad", breakdowns = NA,
   api_version = "v3.3")
 }
 \arguments{
@@ -28,7 +28,7 @@ Por defecto, traerá cada día por separado (i.e.=1)}
 \item{report_level}{Character. One of ad, adset, campaign, or account}
 
 \item{breakdowns}{Character Vector. One or more of breakdowns for 
-segmentation results}
+segmentation results. Set to NA for no breakdowns}
 
 \item{api_version}{Character. Facebook API version}
 }
