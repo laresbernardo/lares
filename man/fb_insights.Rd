@@ -4,8 +4,9 @@
 \alias{fb_insights}
 \title{Facebook Insights API}
 \usage{
-fb_insights(token, account, start = Sys.Date() - 30, end = Sys.Date(),
-  report_level = "ad", breakdowns = "dma", api_version = "v3.3")
+fb_insights(token, account, start = Sys.Date() - 7, end = Sys.Date(),
+  time_increment = "1", report_level = "ad", breakdowns = "dma",
+  api_version = "v3.3")
 }
 \arguments{
 \item{token}{Character. This must be a valid access token with sufficient 
@@ -20,6 +21,10 @@ format "YYYY-MM-DD"}
 \item{end}{Character. The last full day to report, in the 
 format "YYYY-MM-DD"}
 
+\item{time_increment}{Character. Agrupación por meses (monthly), 
+para todo junto (all_days) o un entero para cantidad de días [1-90].
+Por defecto, traerá cada día por separado (i.e.=1)}
+
 \item{report_level}{Character. One of ad, adset, campaign, or account}
 
 \item{breakdowns}{Character Vector. One or more of breakdowns for 
@@ -31,22 +36,23 @@ segmentation results}
 This returns all available FB insights per day including any given
 breakdown to the specified report level, and place into a data frame.
 For more information on Ad Insights' API, go to the 
-\href{https://developers.facebook.com/docs/marketing-api/reference/adgroup/insights/}{original documentaion}
+\href{https://developers.facebook.com/docs/marketing-api/reference/ad-account/insights/}{original documentaion}
 }
 \details{
 This function was based on FBinsightsR.
 }
 \seealso{
-Other Scrapper: \code{\link{fb_posts}},
-  \code{\link{fb_post}}, \code{\link{geoStratum}},
-  \code{\link{holidays}}, \code{\link{ip_country}},
-  \code{\link{trendsRelated}}
+Other Scrapper: \code{\link{fb_accounts}},
+  \code{\link{fb_posts}}, \code{\link{fb_post}},
+  \code{\link{geoStratum}}, \code{\link{holidays}},
+  \code{\link{ip_country}}, \code{\link{trendsRelated}}
 
-Other API: \code{\link{bring_api}}, \code{\link{fb_posts}},
+Other API: \code{\link{bring_api}},
+  \code{\link{fb_accounts}}, \code{\link{fb_posts}},
   \code{\link{fb_post}}
 
-Other Facebook: \code{\link{fb_posts}},
-  \code{\link{fb_post}}
+Other Facebook: \code{\link{fb_accounts}},
+  \code{\link{fb_posts}}, \code{\link{fb_post}}
 }
 \concept{API}
 \concept{Facebook}

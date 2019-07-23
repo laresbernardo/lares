@@ -20,10 +20,10 @@ This function lets the user obtain Colombia's stratum given the coordinates of a
 Other Geographical: \code{\link{geoAddress}},
   \code{\link{geoGrid}}, \code{\link{geoMap}}
 
-Other Scrapper: \code{\link{fb_insights}},
-  \code{\link{fb_posts}}, \code{\link{fb_post}},
-  \code{\link{holidays}}, \code{\link{ip_country}},
-  \code{\link{trendsRelated}}
+Other Scrapper: \code{\link{fb_accounts}},
+  \code{\link{fb_insights}}, \code{\link{fb_posts}},
+  \code{\link{fb_post}}, \code{\link{holidays}},
+  \code{\link{ip_country}}, \code{\link{trendsRelated}}
 }
 \concept{Geographical}
 \concept{Scrapper}

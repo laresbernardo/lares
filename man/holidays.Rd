@@ -35,10 +35,10 @@ Other Data Wrangling: \code{\link{balance_data}},
 Other Feature Engineering: \code{\link{date_feats}},
   \code{\link{ohse}}
 
-Other Scrapper: \code{\link{fb_insights}},
-  \code{\link{fb_posts}}, \code{\link{fb_post}},
-  \code{\link{geoStratum}}, \code{\link{ip_country}},
-  \code{\link{trendsRelated}}
+Other Scrapper: \code{\link{fb_accounts}},
+  \code{\link{fb_insights}}, \code{\link{fb_posts}},
+  \code{\link{fb_post}}, \code{\link{geoStratum}},
+  \code{\link{ip_country}}, \code{\link{trendsRelated}}
 }
 \concept{Data Wrangling}
 \concept{Feature Engineering}
