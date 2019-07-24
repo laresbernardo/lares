@@ -11,7 +11,8 @@ df_str(df, return = "plot", subtitle = NA, quiet = FALSE)
 
 \item{return}{Character. Return "skimr" for skim report, "numbers" for
 stats and numbers, "names" for a list with the column names of each of 
-the class types, "plot" for a nice plot with "numbers" output}
+the class types, "plot" for a nice plot with "numbers" output, "summary"
+for an overall summary plot showing categorical, numeric, and missing values}
 
 \item{subtitle}{Character. Add subtitle to plot}
 

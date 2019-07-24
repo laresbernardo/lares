@@ -9,7 +9,8 @@
 #' @param df Dataframe
 #' @param return Character. Return "skimr" for skim report, "numbers" for
 #' stats and numbers, "names" for a list with the column names of each of 
-#' the class types, "plot" for a nice plot with "numbers" output
+#' the class types, "plot" for a nice plot with "numbers" output, "summary"
+#' for an overall summary plot showing categorical, numeric, and missing values
 #' @param subtitle Character. Add subtitle to plot
 #' @param quiet Boolean. Keep quiet or show other options available?
 #' @export
@@ -19,7 +20,7 @@ df_str <- function(df,
                    quiet = FALSE){
   
   if (!quiet) {
-    rets <- c("plot","skimr","numbers","names")
+    rets <- c("plot","summary","skimr","numbers","names")
     message(paste("Other available 'return' options:", vector2text(rets[rets != return]))) 
   }
   
@@ -28,6 +29,11 @@ df_str <- function(df,
   if (return == "skimr") {
     try_require("skimr")
     return(skim(df))
+  }
+  
+  if (return == "summary") {
+    plot_df(df)
+    invisible(return(NULL))
   }
   
   names <- list(
