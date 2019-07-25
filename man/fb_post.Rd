@@ -18,16 +18,18 @@ post(s) id.
 }
 \seealso{
 Other Scrapper: \code{\link{fb_accounts}},
-  \code{\link{fb_insights}}, \code{\link{fb_posts}},
-  \code{\link{geoStratum}}, \code{\link{holidays}},
-  \code{\link{ip_country}}, \code{\link{trendsRelated}}
+  \code{\link{fb_ads}}, \code{\link{fb_insights}},
+  \code{\link{fb_posts}}, \code{\link{geoStratum}},
+  \code{\link{holidays}}, \code{\link{ip_country}},
+  \code{\link{trendsRelated}}
 
 Other API: \code{\link{bring_api}},
-  \code{\link{fb_accounts}}, \code{\link{fb_insights}},
-  \code{\link{fb_posts}}
+  \code{\link{fb_accounts}}, \code{\link{fb_ads}},
+  \code{\link{fb_insights}}, \code{\link{fb_posts}}
 
 Other Facebook: \code{\link{fb_accounts}},
-  \code{\link{fb_insights}}, \code{\link{fb_posts}}
+  \code{\link{fb_ads}}, \code{\link{fb_insights}},
+  \code{\link{fb_posts}}
 }
 \concept{API}
 \concept{Facebook}

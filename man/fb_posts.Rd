@@ -23,16 +23,18 @@ comments, shares, and reactions of n posts (with no limits).
 }
 \seealso{
 Other Scrapper: \code{\link{fb_accounts}},
-  \code{\link{fb_insights}}, \code{\link{fb_post}},
-  \code{\link{geoStratum}}, \code{\link{holidays}},
-  \code{\link{ip_country}}, \code{\link{trendsRelated}}
+  \code{\link{fb_ads}}, \code{\link{fb_insights}},
+  \code{\link{fb_post}}, \code{\link{geoStratum}},
+  \code{\link{holidays}}, \code{\link{ip_country}},
+  \code{\link{trendsRelated}}
 
 Other API: \code{\link{bring_api}},
-  \code{\link{fb_accounts}}, \code{\link{fb_insights}},
-  \code{\link{fb_post}}
+  \code{\link{fb_accounts}}, \code{\link{fb_ads}},
+  \code{\link{fb_insights}}, \code{\link{fb_post}}
 
 Other Facebook: \code{\link{fb_accounts}},
-  \code{\link{fb_insights}}, \code{\link{fb_post}}
+  \code{\link{fb_ads}}, \code{\link{fb_insights}},
+  \code{\link{fb_post}}
 }
 \concept{API}
 \concept{Facebook}

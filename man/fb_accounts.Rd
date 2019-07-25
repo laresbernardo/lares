@@ -21,17 +21,19 @@ For more information on Ad Insights' API, go to the
 \href{https://developers.facebook.com/docs/marketing-api/reference/ad-account/insights/}{original documentaion}
 }
 \seealso{
-Other Scrapper: \code{\link{fb_insights}},
-  \code{\link{fb_posts}}, \code{\link{fb_post}},
-  \code{\link{geoStratum}}, \code{\link{holidays}},
-  \code{\link{ip_country}}, \code{\link{trendsRelated}}
+Other Scrapper: \code{\link{fb_ads}},
+  \code{\link{fb_insights}}, \code{\link{fb_posts}},
+  \code{\link{fb_post}}, \code{\link{geoStratum}},
+  \code{\link{holidays}}, \code{\link{ip_country}},
+  \code{\link{trendsRelated}}
 
-Other API: \code{\link{bring_api}},
+Other API: \code{\link{bring_api}}, \code{\link{fb_ads}},
   \code{\link{fb_insights}}, \code{\link{fb_posts}},
   \code{\link{fb_post}}
 
-Other Facebook: \code{\link{fb_insights}},
-  \code{\link{fb_posts}}, \code{\link{fb_post}}
+Other Facebook: \code{\link{fb_ads}},
+  \code{\link{fb_insights}}, \code{\link{fb_posts}},
+  \code{\link{fb_post}}
 }
 \concept{API}
 \concept{Facebook}

@@ -249,10 +249,6 @@ fb_accounts <- function(token,
                         business_id = "904189322962915",
                         api_version = "v3.3"){
   
-  # library(jsonlite)
-  # library(httr)
-  # library(dplyr)
-  
   # Starting URL
   url <- "https://graph.facebook.com/"
   URL <- paste0(url, api_version, "/", business_id, "/owned_ad_accounts")
@@ -315,6 +311,101 @@ fb_accounts <- function(token,
 
 
 ####################################################################
+#' Facebook Ads API
+#' 
+#' This returns all available FB ads for any account, campaign, or ad set id.
+#' For more information on Ad' API, go to the 
+#' \href{https://developers.facebook.com/docs/marketing-api/reference/adgroup}{original documentaion}
+#' 
+#' This function was based on FBinsightsR.
+#' 
+#' @family Scrapper
+#' @family API
+#' @family Facebook
+#' @param token Character. This must be a valid access token with sufficient 
+#' privileges. Visit the Facebook API Graph Explorer to acquire one
+#' @param which Character. This is the ad account, campaign, adset, 
+#' or ad ID to be queried
+#' @param start Character. The first full day to report, in the 
+#' format "YYYY-MM-DD"
+#' @param end Character. The last full day to report, in the 
+#' format "YYYY-MM-DD"
+#' @param api_version Character. Facebook API version
+#' @export
+fb_ads <- function(token,
+                   which,
+                   start = Sys.Date() - 31, 
+                   end = Sys.Date(), 
+                   api_version = "v3.3"){
+  
+  # Auxiliary process sub-lists function
+  process_list <- function(l) {
+    l <- as.list(l)
+    if ("data" %in% names(l)) l <- l$data
+    aux <- data.frame(l[[1]])
+    for (i in 2:length(l)) {
+      lx <- data.frame(l[[i]])
+      aux <- rbind_full(aux, lx)
+    }
+    if ("id" %in% colnames(aux))
+      aux <- rename(aux, list_id = id)
+    return(aux)
+  }
+  
+  # Starting URL
+  url <- "https://graph.facebook.com/"
+  URL <- paste0(url, api_version, "/", which, "/ads")
+  
+  # Call insights
+  import <- content(GET(
+    URL,
+    query = list(
+      access_token = token,
+      time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
+      fields = paste("id,name,created_time,status,adset_id,campaign_id,",
+                     "adcreatives{id,body,image_url,thumbnail_url,object_type}")
+    ),
+    encode = "json"))
+  
+  # Show and return error
+  if ("error" %in% names(import)) {
+    message(paste("API ERROR:", import$error$message))
+    # Very useful for Shiny apps
+    invisible(return(import$error))
+  }
+  
+  # Check for no-data (user might think there was an error on GET request - warn him!)
+  if (length(import$data) == 0) {
+    message("There is no data for this query!")
+    invisible(return(NULL))
+  } 
+  
+  ret <- data.frame(bind_rows(import$data))
+  ret <- cbind(select(ret, -adcreatives), process_list(ret$adcreatives))
+  
+  # Condition to detect the next page
+  if (exists("next", import$paging)) {
+    # Checking from the originally returned list
+    out <- fromJSON(import$paging$`next`)
+    newout <- cbind(select(out$data, -adcreatives), process_list(out$data$adcreatives))
+    ret <- rbind_full(ret, data.frame(newout$data))
+    # Looping through subsequent returned pages
+    while (exists("next", out$paging)) {
+      out <- fromJSON(out$paging$`next`)
+      newout <- cbind(select(out$data, -adcreatives), process_list(out$data$adcreatives))
+      ret <- rbind_full(ret, data.frame(newout))
+    }
+  }
+  ret <- suppressMessages(type.convert(ret)) %>%
+    mutate_at(vars(contains("date")), list(as.Date)) %>%
+    mutate_at(vars(contains("id")), list(as.character)) %>%
+    rename(adcreatives_id = list_id) %>%
+    arrange(desc(created_time))
+  return(ret)
+}
+
+
+####################################################################
 #' Facebook Insights API
 #' 
 #' This returns all available FB insights per day including any given
@@ -329,7 +420,7 @@ fb_accounts <- function(token,
 #' @family Facebook
 #' @param token Character. This must be a valid access token with sufficient 
 #' privileges. Visit the Facebook API Graph Explorer to acquire one
-#' @param account Character. This is the ad account, campaign, adset, 
+#' @param which Character. This is the ad account, campaign, adset, 
 #' or ad ID to be queried
 #' @param start Character. The first full day to report, in the 
 #' format "YYYY-MM-DD"
@@ -344,7 +435,7 @@ fb_accounts <- function(token,
 #' @param api_version Character. Facebook API version
 #' @export
 fb_insights <- function(token,
-                        account,
+                        which,
                         start = Sys.Date() - 7, 
                         end = Sys.Date(), 
                         time_increment = "1",
@@ -352,9 +443,13 @@ fb_insights <- function(token,
                         breakdowns = NA,
                         api_version = "v3.3"){
   
+  # library(jsonlite)
+  # library(httr)
+  # library(dplyr)
+  
   # Starting URL
   url <- "https://graph.facebook.com/"
-  URL <- paste0(url, api_version, "/", account, "/insights")
+  URL <- paste0(url, api_version, "/", which, "/insights")
   
   which <- c("ad","adset","campaign","account")
   if (!report_level %in% which) 
@@ -406,6 +501,7 @@ fb_insights <- function(token,
   }
   ret <- suppressMessages(type.convert(ret)) %>%
     mutate_at(vars(contains("date")), list(as.Date)) %>%
+    mutate_at(vars(contains("id")), list(as.character)) %>%
     arrange(desc(date_start), desc(spend))
   return(ret)
 }

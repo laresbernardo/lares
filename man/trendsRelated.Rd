@@ -33,9 +33,10 @@ Other Exploratory: \code{\link{corr_cross}},
   \code{\link{tree_var}}
 
 Other Scrapper: \code{\link{fb_accounts}},
-  \code{\link{fb_insights}}, \code{\link{fb_posts}},
-  \code{\link{fb_post}}, \code{\link{geoStratum}},
-  \code{\link{holidays}}, \code{\link{ip_country}}
+  \code{\link{fb_ads}}, \code{\link{fb_insights}},
+  \code{\link{fb_posts}}, \code{\link{fb_post}},
+  \code{\link{geoStratum}}, \code{\link{holidays}},
+  \code{\link{ip_country}}
 }
 \concept{Exploratory}
 \concept{Scrapper}
