@@ -4,7 +4,7 @@
 \alias{mplot_conf}
 \title{Confussion Matrix Plot}
 \usage{
-mplot_conf(tag, score, thresh = 0.5, abc = FALSE, subtitle = NA,
+mplot_conf(tag, score, thresh = 0.5, abc = TRUE, subtitle = NA,
   save = FALSE, subdir = NA, file_name = "viz_conf_mat.png")
 }
 \arguments{

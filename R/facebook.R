@@ -309,7 +309,6 @@ fb_accounts <- function(token,
   return(ret)
 }
 
-
 ####################################################################
 #' Facebook Ads API
 #' 
@@ -340,6 +339,8 @@ fb_ads <- function(token,
   
   # Auxiliary process sub-lists function
   process_list <- function(l) {
+    # islist <- lapply(l[[1]][[1]], is.list)
+    # names(islist)[unlist(islist)]
     l <- as.list(l)
     if ("data" %in% names(l)) l <- l$data
     aux <- data.frame(l[[1]])

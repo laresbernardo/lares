@@ -981,6 +981,8 @@ conf_mat <- function(tag, score, thresh = 0.5, plot = FALSE) {
 #' @param score Vector. Predicted value or model's result
 #' @param multis Data.frame. Containing columns with each category score 
 #' (only used when more than 2 categories coexist)
+#' @param abc Boolean. Arrange columns and rows alphabetically 
+#' when categorical values?
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
 #' have in 'tag' (more than: regression; less than: classification)
@@ -990,6 +992,7 @@ conf_mat <- function(tag, score, thresh = 0.5, plot = FALSE) {
 #' @param subtitle Character. Subtitle for plots
 #' @export
 model_metrics <- function(tag, score, multis = NA, 
+                          abc = TRUE,
                           thresh = 10, 
                           thresh_cm = 0.5, 
                           plots = TRUE, subtitle = NA){
@@ -1095,7 +1098,7 @@ model_metrics <- function(tag, score, multis = NA,
       plots[["response"]] <- mplot_response(
         tag, score, multis, target = "auto", splits = 10, highlight = "auto", quiet = TRUE)
       # CONFUSION MATRIX PLOT
-      plots[["conf_matrix"]] <- mplot_conf(tag, score, thresh_cm, subtitle = subtitle) 
+      plots[["conf_matrix"]] <- mplot_conf(tag, score, thresh_cm, abc = abc, subtitle = subtitle) 
       # ROC CURVES PLOT
       plots[["ROC"]] <- invisible(mplot_roc(tag, score, multis, subtitle = subtitle)) 
       # Bring them all!

@@ -810,8 +810,8 @@ mplot_full <- function(tag,
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @export
-mplot_conf <- function(tag, score, thresh = 0.5,
-                       abc = FALSE, subtitle = NA, save = FALSE, subdir = NA, 
+mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE, 
+                       subtitle = NA, save = FALSE, subdir = NA, 
                        file_name = "viz_conf_mat.png") {
   
   df <- data.frame(tag, score)

@@ -13,20 +13,18 @@
 bring_api <- function(url, status = TRUE) {
   
   get <- GET(url = url)
-  if (status == TRUE) {
-    message(paste0("Status: ", ifelse(get$status_code == 200, "OK", "ERROR"))) 
-  }
+  if (status) message(paste0("Status: ", ifelse(get$status_code == 200, "OK", "ERROR"))) 
   char <- rawToChar(get$content)
   json <- fromJSON(char)
   
-  if (length(json$contacts) > 0) {
+  if (length(json[[1]]) > 0) {
     import <- data.frame(json)
     import <- flatten(import)
     import <- data.frame(list.cbind(lapply(import, unlist(as.character))))
-    # Further transformations
     import[import == "list()"] <- NA
     import[import == "integer(0)"] <- 0
-    colnames(import) <- gsub("\\.", "_", colnames(import))  
+    colnames(import) <- gsub("\\.", "_", colnames(import))
+    import <- suppressMessages(type.convert(import))
     return(import)
-  } else {invisible(return())}
+  } else invisible(return())
 }
