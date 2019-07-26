@@ -12,17 +12,19 @@ dft %>% distr(Survived, Pclass, abc = TRUE)
 
 # Classification: 2 class
 r <- dft %>% h2o_automl(y = "Survived", max_models = 4, impute = TRUE)
-mplot_full(r$scores_test$tag, r$scores_test$score)
+plot(r$plots$dashboard)
+r$plots$importance
 r$metrics
 
 # Classification: 3 classes
 r <- dft %>% select(-Fare) %>% h2o_automl(y = "Pclass", max_models = 3)
-mplot_full(r$scores_test$tag, r$scores_test$score, select(r$scores_test, -tag, -score))
+plot(r$plot$dashboard)
 r$metrics
 
 # Regression
 r <- dft %>% h2o_automl(y = "Fare", max_models = 3)
-mplot_full(r$scores_test$tag, r$scores_test$score)
+plot(r$plot$dashboard)
+r$metrics
 
 # Variables importances for any model
 mplot_importance(r$importance$variable, r$importance$importance)

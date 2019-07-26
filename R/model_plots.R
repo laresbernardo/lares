@@ -161,8 +161,7 @@ mplot_importance <- function(var,
     geom_text(hjust = 0.5, size = 2.1, inherit.aes = TRUE, colour = "white") +
     labs(title = paste0("Most Relevant Variables (top ", limit, " of ", length(var), ")"),
          x = NULL, y = "Importance") +
-    theme_lares2() +
-    scale_y_continuous(expand = c(0, 0))
+    theme_lares2()
   
   if (length(unique(output$Type)) == 1) {
     p <- p + geom_col(fill = colours, width = 0.2) +
