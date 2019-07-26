@@ -9,8 +9,8 @@ h2o_automl(df, y = "tag", ignore = c(), train_test = NA,
   center = FALSE, scale = FALSE, seed = 0, nfolds = 5,
   thresh = 5, max_time = 5 * 60, max_models = 10,
   start_clean = TRUE, exclude_algos = c("StackedEnsemble",
-  "DeepLearning"), alarm = TRUE, quiet = FALSE, save = FALSE,
-  subdir = NA, project = "Machine Learning Model")
+  "DeepLearning"), plots = TRUE, alarm = TRUE, quiet = FALSE,
+  save = FALSE, subdir = NA, project = "Machine Learning Model")
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
@@ -62,6 +62,8 @@ instance before we start to train models?}
 
 \item{exclude_algos}{Vector of character strings. Algorithms to 
 skip during the model-building phase.}
+
+\item{plots}{Boolean. Create plots objects?}
 
 \item{alarm}{Boolean. Ping an alarm when ready!}
 

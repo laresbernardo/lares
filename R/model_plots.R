@@ -157,11 +157,12 @@ mplot_importance <- function(var,
                   label = round(100 * imp, 1))) + 
     geom_col(aes(fill = Type), width = 0.08) +
     geom_point(aes(colour = Type), size = 6.2) + 
-    coord_flip() + xlab('') + 
-    ylab('Importance') + 
+    coord_flip() +
     geom_text(hjust = 0.5, size = 2.1, inherit.aes = TRUE, colour = "white") +
-    labs(title = paste0("Most Relevant Variables (top ", limit, " of ", length(var), ")")) +
-    theme_lares2()
+    labs(title = paste0("Most Relevant Variables (top ", limit, " of ", length(var), ")"),
+         x = NULL, y = "Importance") +
+    theme_lares2() +
+    scale_y_continuous(expand = c(0, 0))
   
   if (length(unique(output$Type)) == 1) {
     p <- p + geom_col(fill = colours, width = 0.2) +
@@ -712,6 +713,7 @@ mplot_lineal <- function(tag,
 #' have in 'tag' (more than: regression; less than: classification)
 #' @param subtitle Character. Subitle to show in plot
 #' @param model_name Character. Model's name
+#' @param plot Boolean. Plot results? If not, plot grid object returned
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
@@ -723,6 +725,7 @@ mplot_full <- function(tag,
                        thresh = 6,
                        subtitle = NA, 
                        model_name = NA, 
+                       plot = TRUE,
                        save = FALSE, 
                        subdir = NA,
                        file_name = "viz_full.png") {
@@ -788,7 +791,7 @@ mplot_full <- function(tag,
     dev.off()
   }
   
-  plot(p)
+  if (plot) plot(p) else return(p)
   
 }
 
@@ -958,7 +961,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
       highlight <- as.integer(highlight)
       note <- paste0("If we select the top ", 
                      round(highlight*100/splits),"% cases with highest probabilities,\n",
-                     round(gains$gain[gains$percentile == highlight]),"% of all target class will be picked",
+                     round(gains$gain[gains$percentile == highlight]),"% of all target class will be picked ",
                      "(", round(gains$lift[gains$percentile == highlight]), "% better than random)")
       p <- p + labs(subtitle = note)
     } else {

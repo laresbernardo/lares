@@ -48,6 +48,7 @@
 #' instance before we start to train models?
 #' @param exclude_algos Vector of character strings. Algorithms to 
 #' skip during the model-building phase.
+#' @param plots Boolean. Create plots objects?
 #' @param alarm Boolean. Ping an alarm when ready!
 #' @param quiet Boolean. Quiet messages, warnings, recommendations?
 #' @param save Boolean. Do you wish to save/export results into your 
@@ -72,6 +73,7 @@ h2o_automl <- function(df, y = "tag",
                        max_models = 10,
                        start_clean = TRUE,
                        exclude_algos = c("StackedEnsemble","DeepLearning"),
+                       plots = TRUE,
                        alarm = TRUE,
                        quiet = FALSE,
                        save = FALSE,
@@ -262,18 +264,39 @@ h2o_automl <- function(df, y = "tag",
     score = results$scores_test$score,
     multis = multis,
     thresh = thresh,
-    plots = TRUE)
-  print(results$metrics$metrics)
+    plots = plots)
   
-  if (!quiet) message(paste0(
-    "Training duration: ", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
+  if (plots) {
+    if (!quiet) message(">>> Generating plots...")
+    plots <- list()
+    plots[["dashboard"]] <- mplot_full(
+      tag = results$scores_test$tag,
+      score = results$scores_test$score,
+      multis = multis,
+      thresh = thresh,
+      subtitle = results$project,
+      model_name = results$model_name,
+      plot = FALSE)
+    plots[["importance"]] <- mplot_importance(
+      var = results$importance$variable,
+      imp = results$importance$importance,
+      model_name = results$model_name,
+      subtitle = results$project)
+    plots <- append(plots, rev(results$metrics$plots))
+    results$plots <- plots
+  } 
   
   if (save) {
     export_results(results, subdir = subdir, thresh = thresh)
     if (!quiet) message("Results and model files exported succesfully!")
   }
   
-  if (alarm & !quiet) beepr::beep()
+  if (!quiet) message(paste0(
+    "Process duration: ", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
+  
+  print(results$metrics$metrics)
+  
+  if (alarm & !quiet) beep()
   
   return(results)
   

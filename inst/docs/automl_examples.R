@@ -23,7 +23,6 @@ r$metrics
 # Regression
 r <- dft %>% h2o_automl(y = "Fare", max_models = 3)
 mplot_full(r$scores_test$tag, r$scores_test$score)
-r$metrics
 
 # Variables importances for any model
 mplot_importance(r$importance$variable, r$importance$importance)

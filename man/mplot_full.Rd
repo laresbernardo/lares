@@ -5,8 +5,8 @@
 \title{MPLOTS Score Full Report Plots}
 \usage{
 mplot_full(tag, score, multis = NA, splits = 8, thresh = 6,
-  subtitle = NA, model_name = NA, save = FALSE, subdir = NA,
-  file_name = "viz_full.png")
+  subtitle = NA, model_name = NA, plot = TRUE, save = FALSE,
+  subdir = NA, file_name = "viz_full.png")
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -27,6 +27,8 @@ have in 'tag' (more than: regression; less than: classification)}
 \item{subtitle}{Character. Subitle to show in plot}
 
 \item{model_name}{Character. Model's name}
+
+\item{plot}{Boolean. Plot results? If not, plot grid object returned}
 
 \item{save}{Boolean. Save output plot into working directory}
 
