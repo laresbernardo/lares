@@ -196,6 +196,8 @@ h2o_automl <- function(df, y = "tag",
   # GET PERFORMANCE RESULTS
   m <- h2o.getModel(as.vector(aml@leaderboard$model_id[1])) # Best model
   scores <- quiet(h2o_predict_model(test, m))
+  if (sum(grepl(" ", cats)) > 0)
+    colnames(scores) <- str_replace_all(colnames(scores), "\\.", " ")
   
   # Variables importances
   imp <- data.frame(h2o.varimp(m)) %>%

@@ -97,7 +97,7 @@ if (getRversion() >= "2.15.1")
       "rpart","rpart.control","rpart.plot","get_sentiment_dictionary","sentiment",
       "Cost","CumCost","CumDividend","CumInvested","CumQuant","CumROI","CumValue",
       "Each","ROI","ValueSector","etf_sector_plot","ma1","ma2","amount_spent",
-      "date_start","spend"))
+      "date_start","spend","adcreatives","created_time","list_id"))
 
 #' Pipe operator
 #' @name lares-exports
