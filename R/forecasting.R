@@ -90,7 +90,7 @@ forecast_arima <- function(time, values, n_future = 30,
   train <- data.frame(time, values, 
                       pred = model$fitted, 
                       resid = model$residuals)
-    
+  
   # Forecast
   future_dates <- seq.Date(max(time) + 1, max(time) %m+% days(n_future), by = 1)
   if (!is.na(wd_excluded)) {
@@ -184,7 +184,7 @@ forecast_ml <- function(time, values,
                         plot_forecast = TRUE, 
                         plot_model = FALSE,
                         project = "Simple Forecast using Machine Learning") {
-
+  
   # require(timetk)
   # require(tidyquant)
   
@@ -306,6 +306,14 @@ prophesize <- function(df, n_future = 60, country = "AR",
                        trend.param = 0.05, logged = FALSE, pout = 0.03, 
                        project = "Prophet Forecast") {
   
+  # @importFrom prophet prophet fit.prophet prophet_plot_components
+  # add_country_holidays make_future_dataframe 
+  # Currently prophet doesn't pass Travis CI 
+  if (length(find.package("prophet", quiet = TRUE)) > 0) {
+    if (!"prophet" %in% loadedNamespaces())
+      stop("Load library(prophet) before using prophesize()")
+  } else stop("Run install.packages('prophet') to use prophesize()")
+  
   df <- data.frame(df[,c(1,2)])
   metric <- colnames(df)[2]
   colnames(df) <- c("ds","y")
@@ -318,15 +326,15 @@ prophesize <- function(df, n_future = 60, country = "AR",
   
   # Run prophet functions
   m <- prophet(yearly.seasonality = TRUE, daily.seasonality = FALSE, 
-                        changepoint.prior.scale = trend.param)
-  m <- add_country_holidays(m, country_name = country)
+               changepoint.prior.scale = trend.param)
+  if (!is.null(country))
+    m <- add_country_holidays(m, country_name = country)
   m <- fit.prophet(m, df)
   future <- make_future_dataframe(m, periods = n_future)
   
   forecast <- predict(m, future)
   forecast$y <- forecast$trend + forecast$additive_terms
-  if (logged) forecast$y <- exp(forecast$y)
-  
+
   p <- plot(m, forecast) + theme_lares2() +
     labs(y = metric, x = "Dates", 
          title = project,

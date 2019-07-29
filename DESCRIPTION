@@ -27,7 +27,6 @@ Imports:
     mice,
     openxlsx,
     pROC,
-    prophet,
     quantmod,
     RCurl,
     rdrop2,
