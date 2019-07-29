@@ -301,8 +301,6 @@ forecast_ml <- function(time, values,
 #' @param logged Boolean. Convert values into logs?
 #' @param pout Numeric. Get rid of pout \% of outliers
 #' @param project Character. Name of your forecast project for plot title
-#' @importFrom prophet prophet fit.prophet prophet_plot_components
-#' add_country_holidays make_future_dataframe 
 #' @export
 prophesize <- function(df, n_future = 60, country = "AR", 
                        trend.param = 0.05, logged = FALSE, pout = 0.03, 
@@ -312,7 +310,7 @@ prophesize <- function(df, n_future = 60, country = "AR",
   metric <- colnames(df)[2]
   colnames(df) <- c("ds","y")
   df$ds <- formatTime(df$ds)
-  df <- df[order(df[ds]),] 
+  df <- arrange(df, ds)
   if (logged) df$y <- log(df$y)
   
   # Outliers

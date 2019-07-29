@@ -31,6 +31,8 @@
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom pROC roc ci
+#' @importFrom prophet prophet fit.prophet prophet_plot_components
+#' add_country_holidays make_future_dataframe 
 #' @importFrom quantmod getDividends getSymbols getQuote 
 #' @importFrom rdrop2 drop_auth drop_dir drop_download drop_search drop_upload
 #' @import rlist
