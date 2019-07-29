@@ -4,8 +4,8 @@
 \alias{prophesize}
 \title{Facebook's Prophet Forecast}
 \usage{
-prophesize(df, n_future = 60, country = "AR", pout = 0.03,
-  project = "Prophet Forecast")
+prophesize(df, n_future = 60, country = "AR", trend.param = 0.05,
+  logged = FALSE, pout = 0.03, project = "Prophet Forecast")
 }
 \arguments{
 \item{df}{Data frame. Must contain date/time column and values column}
@@ -13,6 +13,11 @@ prophesize(df, n_future = 60, country = "AR", pout = 0.03,
 \item{n_future}{Integer. How many steps do you wish to forecast?}
 
 \item{country}{Character. Country code for holidays}
+
+\item{trend.param}{Numeric. Flexibility of trend component. Default is 0.05, 
+and as this value becomes larger, the trend component will be more flexible.}
+
+\item{logged}{Boolean. Convert values into logs?}
 
 \item{pout}{Numeric. Get rid of pout \% of outliers}
 

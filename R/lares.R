@@ -89,15 +89,14 @@ if (getRversion() >= "2.15.1")
       "StocksValue","Dividend","Expense","Deposit","Invest","Deposited","Dividends",
       "Portfolio","start_clean","geo","hits","keyword","legend","subject","subject.x",
       "subject.y","type_label","facet","Total","pal","p_real","weight","ACC","AUC",
-      "Logloss","yewxname","gain","random","optimal","lift","pred","prophet","fit.prophet",
-      "prophet_plot_components","add_country_holidays","make_future_dataframe","importance",
+      "Logloss","yewxname","gain","random","optimal","lift","pred","importance",
       "percentile","cum_response","response","total","ETF","Sector","Percentage","corrplot",
       "row_num","ncap","freq","mix","redundant","plot_ly","chordDiagram","skim","uh",
       "fread","read.dta13","read.spss","read.xls","geom_label_repel","variable",
       "rpart","rpart.control","rpart.plot","get_sentiment_dictionary","sentiment",
       "Cost","CumCost","CumDividend","CumInvested","CumQuant","CumROI","CumValue",
       "Each","ROI","ValueSector","etf_sector_plot","ma1","ma2","amount_spent",
-      "date_start","spend","adcreatives","created_time","list_id"))
+      "date_start","spend","adcreatives","created_time","list_id","aux","ds"))
 
 #' Pipe operator
 #' @name lares-exports

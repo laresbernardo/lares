@@ -10,7 +10,7 @@ h2o_automl(df, y = "tag", ignore = c(), train_test = NA,
   thresh = 5, max_time = 5 * 60, max_models = 10,
   start_clean = TRUE, exclude_algos = c("StackedEnsemble",
   "DeepLearning"), plots = TRUE, alarm = TRUE, quiet = FALSE,
-  save = FALSE, subdir = NA, project = "Machine Learning Model")
+  save = FALSE, subdir = NA, project = "ML Project")
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 

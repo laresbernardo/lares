@@ -296,26 +296,38 @@ forecast_ml <- function(time, values,
 #' @param df Data frame. Must contain date/time column and values column
 #' @param n_future Integer. How many steps do you wish to forecast?
 #' @param country Character. Country code for holidays
+#' @param trend.param Numeric. Flexibility of trend component. Default is 0.05, 
+#' and as this value becomes larger, the trend component will be more flexible.
+#' @param logged Boolean. Convert values into logs?
 #' @param pout Numeric. Get rid of pout \% of outliers
 #' @param project Character. Name of your forecast project for plot title
+#' @importFrom prophet prophet fit.prophet prophet_plot_components
+#' add_country_holidays make_future_dataframe 
 #' @export
-prophesize <- function(df, n_future = 60, country = "AR", pout = 0.03, 
+prophesize <- function(df, n_future = 60, country = "AR", 
+                       trend.param = 0.05, logged = FALSE, pout = 0.03, 
                        project = "Prophet Forecast") {
-
-  try_require("prophet")
   
-  df <- df[,c(1,2)]
+  df <- data.frame(df[,c(1,2)])
   metric <- colnames(df)[2]
   colnames(df) <- c("ds","y")
-  df <- df[!rank(-df$y) %in% c(1:round(nrow(df)*pout)),] # Outliers
+  df$ds <- formatTime(df$ds)
+  df <- df[order(df[ds]),] 
+  if (logged) df$y <- log(df$y)
   
-  m <- prophet(yearly.seasonality = TRUE, daily.seasonality = FALSE)
+  # Outliers
+  df <- df[!rank(-df$y) %in% c(1:round(nrow(df)*pout)),]
+  
+  # Run prophet functions
+  m <- prophet(yearly.seasonality = TRUE, daily.seasonality = FALSE, 
+                        changepoint.prior.scale = trend.param)
   m <- add_country_holidays(m, country_name = country)
   m <- fit.prophet(m, df)
   future <- make_future_dataframe(m, periods = n_future)
   
   forecast <- predict(m, future)
   forecast$y <- forecast$trend + forecast$additive_terms
+  if (logged) forecast$y <- exp(forecast$y)
   
   p <- plot(m, forecast) + theme_lares2() +
     labs(y = metric, x = "Dates", 

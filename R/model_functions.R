@@ -78,7 +78,7 @@ h2o_automl <- function(df, y = "tag",
                        quiet = FALSE,
                        save = FALSE,
                        subdir = NA,
-                       project = "Machine Learning Model") {
+                       project = "ML Project") {
   
   start <- Sys.time()
   if (!quiet) message(paste(start,"| Started process..."))
@@ -282,7 +282,7 @@ h2o_automl <- function(df, y = "tag",
       imp = results$importance$importance,
       model_name = results$model_name,
       subtitle = results$project)
-    plots <- append(plots, rev(results$metrics$plots))
+    plots <- append(plots, rev(as.list(results$metrics$plots)))
     results$plots <- plots
   } 
   

@@ -1092,3 +1092,59 @@ autoline <- function(text, top = "auto", rel = 9.5) {
   }
   return(text)
 }
+
+
+####################################################################
+#' Auto Detect Time-Date Format
+#' 
+#' This function tries to detect which format is your date value and returns
+#' a valid time class or same values if non-found.
+#' 
+#' @family Data Wrangling
+#' @param vector Vector containing dates or timestamps
+#' @export
+formatTime <- function(vector) {
+  if (class(vector)[1] == "POSIXlt" | class(vector)[1] == "POSIXct" ) {
+    return(vector)
+  }
+  if (str_detect(vector[1], "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} \\+\\d{4}$")) {
+    vector <- as.POSIXct(strptime(vector, format = "%Y-%m-%d %H:%M:%S", tz = "UTC"))
+  }
+  else if (str_detect(vector[1], "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$")) {
+    vector <- as.POSIXct(strptime(vector, format = "%Y-%m-%d %H:%M:%S", tz = "UTC"))
+  }
+  else if (str_detect(vector[1], "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}$")) {
+    vector <- as.POSIXct(strptime(vector, format = "%Y-%m-%d %H:%M", tz = "UTC"))
+  }
+  else if (str_detect(vector[1], "^\\d{4}-\\d{2}-\\d{2} \\d{1}$")) {
+    vector <- as.POSIXct(strptime(vector, format = "%Y-%m-%d %H", tz = "UTC"))
+  }
+  else if (str_detect(vector[1], "^\\d{4}-\\d{2}-\\d{2} \\d{2}$")) {
+    vector <- as.POSIXct(strptime(vector, format = "%Y-%m-%d %H", tz = "UTC"))
+  }
+  else if (str_detect(vector[1], "^\\d{4}\\d{2}\\d{2} \\d{2}$")) {
+    vector <- as.POSIXct(strptime(vector, format = "%Y%m%d %H", tz = "UTC"))
+  }
+  else if (str_detect(vector[1], "^\\d{4}-\\d{2}-\\d{2}$")) {
+    vector <- as.POSIXct(strptime(vector, format = "%Y-%m-%d", tz = "UTC"))
+  }
+  else if (str_detect(vector[1], "^\\d{2}/\\d{2}/\\d{2}$")) {
+    vector <- as.POSIXct(strptime(vector, format = "%m/%d/%y", tz = "UTC"))
+  }
+  else if (str_detect(vector[1], "^\\d{2}/\\d{2}/\\d{4}$")) {
+    vector <- as.POSIXct(strptime(vector, format = "%m/%d/%Y", tz = "UTC"))
+  }
+  else if (str_detect(vector[1], "^\\d{4}\\d{2}\\d{2}$")) {
+    vector <- as.POSIXct(strptime(vector, format = "%Y%m%d", tz = "UTC"))
+  }
+  else if (str_detect(vector[1], "^\\d{4}/\\d{2}/\\d{2}/\\d{2}$")) {
+    vector <- as.POSIXct(strptime(vector, format = "%Y/%m/%d/%H", tz = "UTC"))
+  }
+  else if (str_detect(vector[1],"^\\d{4}-\\d{2}$")) {
+    vector <- as.POSIXct(strptime(paste0(vector, "-01"), format = "%Y-%m-%d", tz = "UTC"))
+  }
+  else if (str_detect(vector[1],"^\\d{4}/\\d{2}$")) {
+    vector <- as.POSIXct(strptime(paste0(vector, "/01"), format = "%Y/%m/%d", tz = "UTC"))
+  }
+  return(vector)
+}

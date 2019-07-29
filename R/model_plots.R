@@ -839,29 +839,27 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
   # Frequencies
   plot_cf <- df %>% freqs(tag, pred) %>% ungroup() %>%
     group_by(tag) %>%
+    mutate(aux = 100*n/sum(n)) %>%
     mutate(label = paste0(formatNum(n, 0),"\n", 
-                          formatNum(p,1), "%T\n(", 
-                          formatNum(100*n/sum(n),1),"%)"))
+                          formatNum(p, 1), "%T\n(", 
+                          formatNum(aux, 1),"%)"))
   trues <- sum(plot_cf$n[as.character(plot_cf$tag) == as.character(plot_cf$pred)])
   total <- sum(plot_cf$n)
   acc <- round(100 * (trues / total), 2)
-  #auc <- round(100 * ROC(tag, score)$ci[2,1], 2)
   obs <- formatNum(nrow(df), 0)
   metrics <- paste0(obs, " observations | ACC ", acc, "%")
   
   p <- ggplot(plot_cf, aes(
     y = as.numeric(factor(tag, levels = rev(labels))), 
     x = as.numeric(factor(pred, levels = labels)), 
-    fill = n, size = n, label = label)) +
+    fill = aux, size = n, label = label)) +
     geom_tile() + theme_lares2() +
     geom_text(colour = "white") + 
     scale_size(range = c(2.6, 3.8)) + coord_equal() + 
     guides(fill = FALSE, size = FALSE, colour = FALSE) +
     labs(x = "Predicted values", y = "Real values",
-         title = ifelse(length(labels) == 2,
-                        paste("Confusion Matrix", 
-                              ifelse(thresh != 0.5, paste("with Threshold =", thresh), "")),
-                        paste0("Confusion Matrix (", length(labels), " categories)")),
+         title = paste("Confusion Matrix", ifelse(
+           thresh != 0.5, paste("with Threshold =", thresh), "")),
          subtitle = metrics) +
     theme_lares2() +
     theme(axis.text.x = element_text(angle = 30, hjust = 0),

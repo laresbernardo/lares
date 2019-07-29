@@ -13,7 +13,6 @@ dft %>% distr(Survived, Pclass, abc = TRUE)
 # Classification: 2 class
 r <- dft %>% h2o_automl(y = "Survived", max_models = 4, impute = TRUE)
 plot(r$plots$dashboard)
-r$plots$importance
 r$metrics
 
 # Classification: 3 classes
@@ -27,8 +26,7 @@ plot(r$plot$dashboard)
 r$metrics
 
 # Variables importances for any model
-mplot_importance(r$importance$variable, r$importance$importance)
-
+r$plots$importance
 
 ####### OTHER EXAMPLE
 data(dfl)
