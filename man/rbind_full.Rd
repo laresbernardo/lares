@@ -4,7 +4,7 @@
 \alias{rbind_full}
 \title{Smart rbind}
 \usage{
-rbind_full(..., list, fill = NA, sep = ":")
+rbind_full(..., list = NA, fill = NA, sep = ":")
 }
 \arguments{
 \item{...}{Dataframes. Dataframes to bind}

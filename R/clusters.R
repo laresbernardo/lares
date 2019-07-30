@@ -78,6 +78,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     # K-Means Cluster Analysis
     set.seed(seed)
     fit <- kmeans(df, k)
+    results[["fit"]] <- fit
     # Append cluster assignment
     df <- data.frame(df, cluster = as.factor(fit$cluster))
     results[["df"]] <- df
@@ -123,5 +124,8 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     if (exists("clusters_plot")) results[["clusters_plot"]] <- clusters_plot
     
   }
+  
+  results[["correlations"]] <- corr_cross(df, contains = "cluster")
+  
   return(results)
 }

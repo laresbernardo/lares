@@ -152,6 +152,18 @@ distr <- function(data, ...,
     return(p)
   }
   
+  # Check if secondary variable exists and fix if possible
+  var <- as.character(vars[[2]])[2]
+  if (!var %in% colnames(data)) {
+    warning(paste("Not a valid input:", var, "was transformed or does not exist."))
+    maybes <- colnames(data)[grepl(var, colnames(data))]
+    if (length(maybes) > 0 & maybes[1] %in% colnames(data)) {
+      message(paste0("Maybe you meant one of: ", vector2text(maybes), ". ",
+                     "Automatically using '", maybes[1], "'"))
+      vars[[2]] <- quos(maybes[1])
+    } else stop()
+  }
+  
   # When we only have 2 variables
   if (length(vars) == 2) {
     
