@@ -11,9 +11,11 @@
 #' @param sep Character. String used to separate column names when 
 #' pasting them together.
 #' @export
-rbind_full <- function(..., list, fill = NA, sep = ':') {
+rbind_full <- function(..., list = NA, fill = NA, sep = ':') {
   
   # https://github.com/cran/gtools/blob/master/R/smartbind.R
+  
+  if (is.na(list)[1]) return(bind_rows(...))
   
   data <- base::list(...)
   if (!missing(list)) data <- modifyList(list, data)

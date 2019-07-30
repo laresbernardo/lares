@@ -48,7 +48,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   }
   
   # Data should be normalized for better results
-  if (norm) df <- df %>% transmute_all(funs(normalize))
+  if (norm) df <- df %>% transmute_all(funs(normalize)) %>% replace(., is.na(.), 0)
   
   # Determine number of clusters (n)
   wss <- sum(apply(df, 2, var))*(nrow(df) - 1)
