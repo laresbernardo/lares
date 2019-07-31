@@ -3,21 +3,18 @@
 [![Build Status](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares) [![saythanks](https://img.shields.io/badge/say-thanks-1EAEDB.svg)](https://saythanks.io/to/laresbernardo)
 ----
 
-`lares` is a library used to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. It also simplifies the installation process of libraries, distribution, and reproducible research. You are most welcome to install, use, and comment on any of its code and functionalities. If you are colour blind as well, glad to share my colour palettes! Feel free to contact me and/or add me on Linkedin, and please, do let me know where did you got my contact from!
+`lares` is a library designed to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. With a wide variety of family functions within Machine Learning, Data Wrangling, EDA, and Scrappers, `lares` helps the analyst or data scientist to get quick, reproducible, and robust results, without the need of repetitive coding or extensive programming skills.
 
-## Install the package
+You are most welcome to install, use, and/or comment on any of the code and functionalities. If you are colour blind as well, glad to share my colour palettes! Feel free to contact me via [Linkedin](https://www.linkedin.com/in/laresbernardo/), and please, do let me know where did you got my contact from.
+
+## Installation
 
 ```{r}
+# install.packages('devtools')
 devtools::install_github("laresbernardo/lares")
 ```
-  
-I currently don't have planned to post `lares` library to CRAN yet, but who knows what the future brings!
 
-### Update the package
-```{r}
-updateLares() # From Github repository (Bitbucket discontinued)
-updateLares(local = TRUE) # Personal and local files, not necessarily deployed
-```
+**CRAN NOTE**: I currently don't have planned to submit the library into CRAN, eventhough it passes all its quality tests (and I'm a huge fan). I think `lares` is more of an everyday useful *package* rather than a "specialized for a specific task" *library*. It has too many useful and various kinds of functions, from NLP to querying APIs to plotting Machine Learning results to market stocks and portfolio reports. I gladly share my code with the community and encourage you to use/comment/share it, but I strongly think that CRAN is not aiming for this kind of libraries in their repertoire.
 
 ## See the library in action!
 
