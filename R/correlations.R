@@ -109,7 +109,7 @@ corr_var <- function(df, ...,
   
   # Calculate correlations
   rs <- corr(df, method = method, ignore = ignore, logs = logs, dates = dates)
-  var <- as.character(vars[[1]])[2]
+  var <- as_label(vars[[1]])
   rs <- select(rs, -contains(paste0(var,"_log"))) %>%
     filter(!grepl(paste0(var,"_log"), row.names(.)))
   

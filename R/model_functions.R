@@ -461,22 +461,11 @@ export_results <- function(results,
     quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
     
     # We create a directory to save all our results
-    if ("plot_ROC" %in% names(results$metrics)) {
-      first <- round(100*results$metrics$metrics$AUC, 2)
-    } else {
-      first <- round(100*results$metrics$metrics$ACC, 2)
-    }
-    if (length(unique(results$scores_test$tag)) > 6) {
-      first <- signif(results$errors_test$rmse, 4)
-    }
-    
-    subdirname <- paste0(first, "-", results$model_name)  
-    if (!is.na(subdir)) {
-      subdir <- paste0(subdir, "/", subdirname)
-    } else {
-      subdir <- subdirname
-    }
-    dir.create(file.path(getwd(), subdir), recursive = T)
+    first <- signif(100*model$metrics$metrics[1,1], 4)
+    subdirname <- paste0(results$model_name, "_(", first, ")")  
+    if (!is.na(subdir)) 
+      subdir <- paste0(subdir, "/", subdirname) else subdir <- subdirnamxe
+    dir.create(file.path(getwd(), subdir), recursive = TRUE)
     
     # Export Results List
     if (rds) saveRDS(results, file = paste0(subdir, "/results.rds")) 

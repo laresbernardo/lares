@@ -34,6 +34,7 @@
 #' @importFrom quantmod getDividends getSymbols getQuote 
 #' @importFrom rdrop2 drop_auth drop_dir drop_download drop_search drop_upload
 #' @import rlist
+#' @importFrom rlang as_label
 #' @importFrom rmarkdown render
 # @importFrom recipes recipe step_num2factor step_meanimpute all_numeric step_modeimpute
 # all_nominal step_scale all_outcomes step_dummy prep

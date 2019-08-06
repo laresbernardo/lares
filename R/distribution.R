@@ -112,7 +112,7 @@ distr <- function(data, ...,
   if (length(vars) == 1) {
     value <- data %>% select(!!!vars[[1]])
     variable_name <- colnames(value)
-    value <- value[,1] # do.call("c", value)
+    value <- value[,1]
     value <- force_class(value, force)
     value <- fxtrim(value, trim)
     value <- fxclean(value, clean)
@@ -153,7 +153,7 @@ distr <- function(data, ...,
   }
   
   # Check if secondary variable exists and fix if possible
-  var <- as.character(vars[[2]])[2]
+  var <- as_label(vars[[2]])
   if (!var %in% colnames(data)) {
     warning(paste("Not a valid input:", var, "was transformed or does not exist."))
     maybes <- colnames(data)[grepl(var, colnames(data))]
@@ -278,7 +278,7 @@ distr <- function(data, ...,
       hadj <- ifelse(type == 1, 0.5, -0.15)
       count <- ggplot(freqs, aes(
         x = reorder(as.character(value), order), y = n, 
-        fill = tolower(as.character(targets)), 
+        fill = as.character(targets), 
         label = formatNum(n, 0), ymax = max(n) * 1.1)) + 
         geom_col(position = "dodge") +
         geom_text(colour = "black",
@@ -305,9 +305,9 @@ distr <- function(data, ...,
         mutate(size = sum(n)/sum(freqs$n)) %>%
         mutate(ptag = ifelse(p < 3, "", as.character(round(p, 1)))) %>%
         ggplot(aes(x = reorder(value, -order), y = p/100, label = ptag,
-                   fill = tolower(as.character(targets)))) + 
+                   fill = as.character(targets))) + 
         geom_col(position = "fill") +
-        geom_text(aes(size = size, colour = tolower(as.character(targets))), 
+        geom_text(aes(size = size, colour = as.character(targets)), 
                   position = position_stack(vjust = 0.5)) +
         scale_size(range = c(2.2, 3)) +
         coord_flip() +

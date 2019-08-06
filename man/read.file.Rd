@@ -2,15 +2,18 @@
 % Please edit documentation in R/other_functions.R
 \name{read.file}
 \alias{read.file}
-\title{Read Files (Auto-detected)}
+\title{Read Files Quickly (Auto-detected)}
 \usage{
-read.file(filename, current_wd = TRUE)
+read.file(filename, current_wd = TRUE, sheet = 1, quiet = FALSE)
 }
 \arguments{
 \item{filename}{Character}
 
 \item{current_wd}{Boolean. Use current working directory before
 the file's name? Use this param to NOT get absolute root directory.}
+
+\item{sheet}{Character. Name or index of the sheet to read data 
+from if file is xlsx or xls}
 }
 \description{
 This function lets the user import csv, xlsx, xls, sav files.

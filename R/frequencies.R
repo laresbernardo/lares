@@ -61,8 +61,8 @@ freqs <- function(df, ..., wt = NULL,
   }
   obs_total <- sum(output$n)
   obs <- paste("Total Obs.:", formatNum(obs_total, 0))
-  weight_text <- ifelse((as.character(weight)[2] != "NULL"), 
-                        paste0("(weighted by ", as.character(weight)[2], ")"), "")
+  weight_text <- ifelse((as_label(weight) != "NULL"), 
+                        paste0("(weighted by ", as_label(weight), ")"), "")
   
   # Use only the most n frequent values/combinations only
   values <- unique(output[,(ncol(output) - 3)])

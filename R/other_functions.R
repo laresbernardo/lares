@@ -861,7 +861,7 @@ statusbar <- function(run = 1, max.run = 100, label = run, msg = "DONE!"){
                      paste0(rep("_", percent.step), collapse = ""), 
                      ifelse(percent.step != percent.max, "/", "_"),
                      paste0(rep("|", percent.max - percent.step), collapse = ""),"] ", 
-                     round(percent * 100, 2), "% | ", 
+                     round(percent * 100, 0), "% | ", 
                      paste(ifelse(run != max.run, label, 
                                   paste(msg,paste(rep(" ", 18), collapse = ""),"\n"))))
   cat("\r", progress) # Replace
@@ -979,7 +979,7 @@ zerovar <- function(df) {
 }
 
 ####################################################################
-#' Read Files (Auto-detected)
+#' Read Files Quickly (Auto-detected)
 #' 
 #' This function lets the user import csv, xlsx, xls, sav files.
 #' 
@@ -987,8 +987,10 @@ zerovar <- function(df) {
 #' @param filename Character
 #' @param current_wd Boolean. Use current working directory before
 #' the file's name? Use this param to NOT get absolute root directory.
+#' @param sheet Character. Name or index of the sheet to read data 
+#' from if file is xlsx or xls
 #' @export
-read.file <- function(filename, current_wd = TRUE) {
+read.file <- function(filename, current_wd = TRUE, sheet = 1, quiet = FALSE) {
   
   if (current_wd) filename <- paste0(getwd(), "/", filename) 
   
@@ -1004,11 +1006,11 @@ read.file <- function(filename, current_wd = TRUE) {
     }
     if (filetype == "xlsx") {
       try_require("openxlsx")
-      results <- read.xlsx(filename)
+      results <- read.xlsx(filename, sheet)
     }
     if (filetype == "xls") {
       try_require("gdata")
-      results <- read.xls(filename)
+      results <- read.xls(filename, read.xls)
     }
     if (filetype == "sav") {
       try_require("foreign")
@@ -1025,9 +1027,11 @@ read.file <- function(filename, current_wd = TRUE) {
       results <- read.table(filename, header = TRUE)
     } 
     
-    message(paste("Imported", filetype, "file with", 
-                  formatNum(nrow(results),0), "rows x", 
-                  formatNum(ncol(results),0), "columns, succesfully!"))
+    if (!quiet)
+      message(paste(
+        "Imported", filetype, "file with", 
+        formatNum(nrow(results), 0), "rows x", 
+        formatNum(ncol(results), 0), "columns, succesfully!"))
     
   }
   if (nrow(results) == 0) warning("There is no data in that file...")
