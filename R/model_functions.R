@@ -202,7 +202,8 @@ h2o_automl <- function(df, y = "tag",
   scores <- quiet(h2o_predict_model(test, m))
   if (sum(grepl(" ", cats)) > 0)
     colnames(scores) <- str_replace_all(colnames(scores), "\\.", " ")
-  if (grep("Stacked", as.vector(m@model_id))) stacked <- TRUE else stacked <- FALSE
+  if (sum(grepl("Stacked", as.vector(m@model_id))) > 0) 
+    stacked <- TRUE else stacked <- FALSE
   
   # Variables importances
   if (!stacked) {
