@@ -11,7 +11,7 @@ dft %>% distr(Survived, Age, na.rm = TRUE)
 dft %>% distr(Survived, Pclass, abc = TRUE)
 
 # Classification: 2 class
-r <- dft %>% h2o_automl(y = "Survived", max_models = 4, impute = TRUE)
+r <- dft %>% h2o_automl(y = "Survived", max_models = 4, impute = TRUE, exclude_algos = NULL)
 plot(r$plots$dashboard)
 r$metrics
 

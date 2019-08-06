@@ -47,7 +47,7 @@
 #' @param start_clean Boolean. Erase everything in the current h2o 
 #' instance before we start to train models?
 #' @param exclude_algos Vector of character strings. Algorithms to 
-#' skip during the model-building phase.
+#' skip during the model-building phase. Set NULL to use all
 #' @param plots Boolean. Create plots objects?
 #' @param alarm Boolean. Ping an alarm when ready!
 #' @param quiet Boolean. Quiet messages, warnings, recommendations?
@@ -171,6 +171,8 @@ h2o_automl <- function(df, y = "tag",
   }
   
   # RUN AUTOML
+  if (length(exclude_algos) > 0) 
+    message(paste("Algorithms excluded:", vector2text(exclude_algos)))
   if (!quiet) message(paste(">>> Iterating until", max_models, 
                             "models or", max_time, "seconds..."))
   aml <- quiet(h2o.automl(
@@ -183,7 +185,7 @@ h2o_automl <- function(df, y = "tag",
     max_models = max_models,
     exclude_algos = exclude_algos,
     nfolds = nfolds, 
-    project_name = project,
+    #project_name = project,
     seed = seed))
   if (nrow(aml@leaderboard) == 0) {
     stop("Error: no models trained! Please set max_models to at least 1.")
@@ -200,17 +202,20 @@ h2o_automl <- function(df, y = "tag",
   scores <- quiet(h2o_predict_model(test, m))
   if (sum(grepl(" ", cats)) > 0)
     colnames(scores) <- str_replace_all(colnames(scores), "\\.", " ")
+  if (grep("Stacked", as.vector(m@model_id))) stacked <- TRUE else stacked <- FALSE
   
   # Variables importances
-  imp <- data.frame(h2o.varimp(m)) %>%
-    {if ("names" %in% colnames(.)) 
-      rename(., "variable" = "names", "importance" = "coefficients") else .} %>%
-    {if ("percentage" %in% colnames(.)) 
-      rename(., "importance" = "percentage") else .}
-  noimp <- imp %>% filter(importance < 0.015) %>% arrange(desc(importance))
-  if (nrow(noimp) > 0) {
-    which <- noimp %>% .$variable %>% vector2text(.) 
-    if (!quiet) message(paste("The following variables were NOT important:", which))
+  if (!stacked) {
+    imp <- data.frame(h2o.varimp(m)) %>%
+      {if ("names" %in% colnames(.)) 
+        rename(., "variable" = "names", "importance" = "coefficients") else .} %>%
+      {if ("percentage" %in% colnames(.)) 
+        rename(., "importance" = "percentage") else .}
+    noimp <- imp %>% filter(importance < 0.015) %>% arrange(desc(importance))
+    if (nrow(noimp) > 0) {
+      which <- noimp %>% .$variable %>% vector2text(.) 
+      if (!quiet) message(paste("The following variables were NOT important:", which))
+    } 
   }
   
   # CLASSIFICATION MODELS
@@ -232,7 +237,7 @@ h2o_automl <- function(df, y = "tag",
       metrics = NA,
       datasets = list(test = test, train = train),
       parameters = m@parameters,
-      importance = imp,
+      importance = if (!stacked) imp else NULL,
       project = project,
       model_name = as.vector(m@model_id),
       algorithm = m@algorithm,
@@ -252,7 +257,7 @@ h2o_automl <- function(df, y = "tag",
       scoring_history = data.frame(m@model$scoring_history),
       datasets = list(test = test, train = train),
       parameters = m@parameters,
-      importance = imp,
+      importance = if (!stacked) imp else NULL,
       model_name = as.vector(m@model_id),
       algorithm = m@algorithm,
       leaderboard = aml@leaderboard
@@ -277,11 +282,12 @@ h2o_automl <- function(df, y = "tag",
       subtitle = results$project,
       model_name = results$model_name,
       plot = FALSE)
-    plots[["importance"]] <- mplot_importance(
-      var = results$importance$variable,
-      imp = results$importance$importance,
-      model_name = results$model_name,
-      subtitle = results$project)
+    if (!stacked) 
+      plots[["importance"]] <- mplot_importance(
+        var = results$importance$variable,
+        imp = results$importance$importance,
+        model_name = results$model_name,
+        subtitle = results$project)
     plots <- append(plots, rev(as.list(results$metrics$plots)))
     results$plots <- plots
   } 
@@ -464,7 +470,7 @@ export_results <- function(results,
     first <- signif(100*model$metrics$metrics[1,1], 4)
     subdirname <- paste0(results$model_name, "_(", first, ")")  
     if (!is.na(subdir)) 
-      subdir <- paste0(subdir, "/", subdirname) else subdir <- subdirnamxe
+      subdir <- paste0(subdir, "/", subdirname) else subdir <- subdirname
     dir.create(file.path(getwd(), subdir), recursive = TRUE)
     
     # Export Results List

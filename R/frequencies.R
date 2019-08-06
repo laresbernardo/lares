@@ -217,6 +217,7 @@ freqs_df <- function(df,
                      quiet = FALSE,
                      save = FALSE, subdir = NA) {
   
+  if (is.vector(df)) stop("df should be a data frame, not a vector")
   df <- df[!unlist(lapply(df, is.list))]
   names <- lapply(df, function(x) length(unique(x)))
   unique <- as.data.frame(names)

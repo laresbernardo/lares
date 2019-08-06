@@ -989,6 +989,7 @@ zerovar <- function(df) {
 #' the file's name? Use this param to NOT get absolute root directory.
 #' @param sheet Character. Name or index of the sheet to read data 
 #' from if file is xlsx or xls
+#' @param quiet Boolean. Quiet summary message?
 #' @export
 read.file <- function(filename, current_wd = TRUE, sheet = 1, quiet = FALSE) {
   

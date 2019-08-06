@@ -61,7 +61,7 @@ to create}
 instance before we start to train models?}
 
 \item{exclude_algos}{Vector of character strings. Algorithms to 
-skip during the model-building phase.}
+skip during the model-building phase. Set NULL to use all}
 
 \item{plots}{Boolean. Create plots objects?}
 

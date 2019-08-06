@@ -14,6 +14,8 @@ the file's name? Use this param to NOT get absolute root directory.}
 
 \item{sheet}{Character. Name or index of the sheet to read data 
 from if file is xlsx or xls}
+
+\item{quiet}{Boolean. Quiet summary message?}
 }
 \description{
 This function lets the user import csv, xlsx, xls, sav files.
