@@ -1,6 +1,6 @@
 # lares <img src='man/figures/lares_logo.png' align="right" height="140px" />
 ### R Package for Analytics and Machine Learning
-[![Build Status](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares) [![saythanks](https://img.shields.io/badge/say-thanks-1EAEDB.svg)](https://saythanks.io/to/laresbernardo)
+[![Build Status](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares) [![Rdoc](http://www.rdocumentation.org/badges/version/lares)](http://www.rdocumentation.org/packages/lares) [![saythanks](https://img.shields.io/badge/say-thanks-1EAEDB.svg)](https://saythanks.io/to/laresbernardo)
 ----
 
 `lares` is a library designed to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. With a wide variety of family functions within Machine Learning, Data Wrangling, EDA, and Scrappers, `lares` helps the analyst or data scientist to get quick, reproducible, and robust results, without the need of repetitive coding or extensive programming skills.

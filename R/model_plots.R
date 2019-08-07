@@ -397,7 +397,7 @@ mplot_cuts_error <- function(tag,
   deciles_abs <- quants(df$abs_error, splits = splits, just = 0.3)
   p_abs <- ggplot(deciles_abs, aes(x = reorder(deciles, cut), y = cut, label = signif(cut, 3))) +
     geom_col(fill = "deepskyblue") + 
-    xlab('') + ylab('Absolute Error [#]') + 
+    labs(x = NULL, y = 'Absolute [#]') +
     geom_text(aes(vjust = gg_pos, colour = colour), size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute error")) +
     scale_y_continuous(labels = comma) + guides(colour = FALSE) +
@@ -407,7 +407,7 @@ mplot_cuts_error <- function(tag,
   deciles_perabs <- quants(abs(df$p_error), splits = splits, just = 0.3)
   p_per <- ggplot(deciles_perabs, aes(x = reorder(deciles, cut), y = cut, label = signif(cut, 3))) +
     geom_col(fill = "deepskyblue") + 
-    xlab('') + ylab('Percetage Error [%]') + 
+    labs(x = NULL, y = 'Absolute [%]') +
     geom_text(aes(vjust = gg_pos, colour = colour), size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute percentage error")) +
     scale_y_continuous(labels = comma) + guides(colour = FALSE) +
@@ -416,7 +416,7 @@ mplot_cuts_error <- function(tag,
   # Third: errors distribution
   pd_error <- ggplot(df) + 
     geom_density(aes(x = p_error), fill = "deepskyblue", alpha = 0.7) +
-    xlab('') + ylab('Error Density [%]') + 
+    labs(x = NULL, y = 'Density [%]') +
     geom_vline(xintercept = 0, alpha = 0.5, colour = "navy", linetype = "dotted") + 
     theme_lares2(bg_colour = "white")
   
@@ -426,7 +426,7 @@ mplot_cuts_error <- function(tag,
   
   p <- arrangeGrob(
     p_abs, p_per, pd_error,
-    heights = c(1.8,1.8,1),
+    heights = c(1.8, 1.8, 1),
     ncol = 1, nrow = 3)
   
   if (save) {
