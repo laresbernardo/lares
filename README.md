@@ -42,8 +42,10 @@ If there is space for one more, I would add `ohse()` (One Hot Smart Encoding), w
 
 ## What else is there?
 
-You can type `lares::` in **RStudio** and you will see a pop-up with all the functions that are currently available within the package. If in doubt, you can use the `?` function (i.e. `?lares::function`) and the **Help** tab will display a short explanation on each function and its parameters. If you want to check all the documentation, simply run `help(package = lares)`. You can find similar family functions in the **See Also** section of each documentation as well.
+You can type `lares::` in **RStudio** and you will get a pop-up with all the functions that are currently available within the package. You can also check the whole documentation by running `help(package = lares)` or going to the [rdrr.io](https://rdrr.io/github/laresbernardo/lares/man/) friendly online index. Also check the families and similar functions on the **See Also** sections.
 
 ### Getting further help
 
-If you encounter a clear bug, please share with us a reproducible example on [Github](https://github.com/laresbernardo/lares/issues) and I'll take care of it. For inquiries, and other matters, you can [email me](mailto:laresbernardo@gmail.com "email me") directly.
+If you need help with any of the functions, use the `?` function (i.e. `?lares::function`) and the **Help** tab will display a short explanation on each function and its parameters. 
+
+If you encounter a bug, please share with me a reproducible example on [Github issues](https://github.com/laresbernardo/lares/issues) and I'll take care of it. For inquiries, and other matters, you can [email me](mailto:laresbernardo@gmail.com "email me") directly or open a new ticket [here](https://github.com/laresbernardo/lares/issues).

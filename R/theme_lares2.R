@@ -11,29 +11,37 @@
 #'
 #' @md
 #' @family Visualization
-#' @param font,base_size Character and numeric. Base font family and size
+#' @param font,size Character and numeric. Base font family and base size for texts
 #' @param main_colour,hard_colour,soft_colour,bg_colour 
 #' Character. Main colours for your theme
 #' @param legend Character. Legend position: top, right, bottom, left
 #' @param mg Numeric. External margin
 #' @param pal Integer. 1 for fill and colour palette, 2 for only colour palette,
-#' 3 for personal labels-colour palette. 0 or else for nothing.
+#' 3 for only fill palette, 4 for personal labels-colour palette. 0 or else for nothing.
+#' @param which Character. When pal = 3, select which colours should be
+#' added with the custom colours pelette: fill, colour, text (fct) - first letters
 #' @export
 theme_lares2 <- function(font = "Arial Narrow", 
-                         base_size = 12.5, 
+                         size = 12.5, 
                          main_colour = "darkorange3", 
                          hard_colour = "black",
                          soft_colour = "grey30",
                          bg_colour = "white",
                          legend = "right",
                          mg = 15,
-                         pal = 0) {
+                         pal = 0,
+                         which = "fct") {
   
   # Start from theme_minimal()
-  ret <- theme_minimal(base_family = font, base_size = base_size)
+  ret <- theme_minimal(base_size = size)
   
-  # Set default font
-  ret <- ret + theme(text = element_text(family = font))
+  # Check font
+  if (!font_exists(font)) {
+    warning(paste(font, "font is not installed, has other name, or can't be found..."))  
+    font <- NA
+  } else {
+    ret <- ret + theme(text = element_text(family = font))  
+  }
   
   # Set some defaults
   update_geom_defaults("text", list(colour = hard_colour, family = font))
@@ -82,40 +90,40 @@ theme_lares2 <- function(font = "Arial Narrow",
                      axis.ticks.y = element_blank())
   # Axis text
   ret <- ret + theme(axis.text.x = element_text(
-    size = base_size * 0.85, margin = margin(t = 0), colour = soft_colour))
+    size = size * 0.85, margin = margin(t = 0), colour = soft_colour))
   ret <- ret + theme(axis.text.y = element_text(
-    size = base_size * 0.85, margin = margin(r = 0), colour = soft_colour))
+    size = size * 0.85, margin = margin(r = 0), colour = soft_colour))
   # Axis titles
   ret <- ret + theme(axis.title = element_text(
-    size = base_size * 1, family = font,colour = soft_colour))
+    size = size * 1, family = font, colour = soft_colour))
   ret <- ret + theme(axis.title.x = element_text(
-    hjust = xj, size = base_size * 1, family = font, face = "bold", colour = soft_colour))
+    hjust = xj, size = size * 1, family = font, face = "bold", colour = soft_colour))
   ret <- ret + theme(axis.title.y = element_text(
-    hjust = yj, size = base_size * 1, colour = soft_colour,family = font, face = "bold"))
+    hjust = yj, size = size * 1, colour = soft_colour,family = font, face = "bold"))
   ret <- ret + theme(axis.title.y.right = element_text(
-    hjust = yj, size = base_size * 1, angle = -90, colour = soft_colour, family = font, face = "bold"))
+    hjust = yj, size = size * 1, angle = -90, colour = soft_colour, family = font, face = "bold"))
   # facet_grid
   ret <- ret + theme(strip.text = element_text(
-    hjust = 0, size = base_size * 1, colour = soft_colour, face = "bold", family = font))
+    hjust = 0, size = size * 1, colour = soft_colour, face = "bold", family = font))
   ret <- ret + theme(panel.spacing = grid::unit(0.8, "lines"))
   # Plot title
   ret <- ret + theme(plot.title = element_text(
-    hjust = 0, size = base_size * 1.3, margin = margin(b = base_size * 0.85), 
+    hjust = 0, size = size * 1.3, margin = margin(b = size * 0.85), 
     family = font, face = "bold", color = "black"))
   # Plot subtitle
   ret <- ret + theme(plot.subtitle = element_text(
-    hjust = 0, size = base_size * 1, colour = soft_colour, 
-    margin = margin(b = base_size * 0.7),family = font, face = "italic"))
+    hjust = 0, size = size * 1, colour = soft_colour, 
+    margin = margin(b = size * 0.7),family = font, face = "italic"))
   # Caption
   ret <- ret + theme(plot.caption = element_text(
-    hjust = 1, size = base_size * 0.85, margin = margin(t = base_size * 0.9), 
+    hjust = 1, size = size * 0.85, margin = margin(t = size * 0.9), 
     family = font, face = "bold", color = soft_colour))
   # Legend 
   ret <- ret + theme(legend.title = element_text(
-    color = soft_colour, size = base_size * 0.9, face = "bold"),
+    color = soft_colour, size = size * 0.9, face = "bold"),
     legend.position = legend,
-    legend.justification = c(ifelse(legend %in% c("top","bottom"),0,.5),
-                             ifelse(legend == "top",0,.5)),
+    legend.justification = c(ifelse(legend %in% c("top","bottom"), 0, .5),
+                             ifelse(legend == "top", 0, .5)),
     legend.margin = margin(-3,0,-5,0),
     legend.key.size = unit(0.4, "cm"))
   # Background
@@ -138,30 +146,23 @@ theme_lares2 <- function(font = "Arial Narrow",
   # if (grepl("y",tolower(percent))) ret <- ret + scale_y_percent()
   
   # Palette with fills and colour
+  colours_pal <- lares_pal()$palette
   if (pal == 1) {
-    colours_pal <- lares_pal()$palette
     ret <- list(ret, scale_fill_manual(values = names(colours_pal))) 
     ret <- list(ret, scale_colour_manual(values = as.vector(colours_pal)))
   }
   # Palette without fills
-  if (pal == 2) {
-    colours_pal <- lares_pal()$palette
+  if (pal == 2)
     ret <- list(ret, scale_colour_manual(values = names(colours_pal)))
-  }
-  # Custom Palette Colours
-  if (pal == 3) {
-    colours_pal <- lares_pal()$labels
-    scale_fill_lares <- function(){
-      values <- as.character(colours_pal$values)
-      names(values) <- colours_pal$fill
-      structure(list(scale_fill_manual(values = values)))
-    }
-    scale_colour_lares <- function(){
-      values <- as.character(colours_pal$values)
-      names(values) <- colours_pal$colour
-      structure(list(scale_color_manual(values = values)))
-    }
-    ret <- c(ret, scale_fill_lares(), scale_colour_lares())
+  # Palette without fills
+  if (pal == 3)
+    ret <- list(ret, scale_fill_manual(values = names(colours_pal))) 
+  # Custom Palette Colours defined in colour_palettes.R (personal use)
+  if (pal == 4) {
+    ret <- list(ret) 
+    if (grepl("f", which)) ret <- append(ret, gg_fill_customs())
+    if (grepl("c", which)) ret <- append(ret, gg_colour_customs())
+    if (grepl("t", which)) ret <- append(ret, gg_text_customs())
   }
   
   return(ret)

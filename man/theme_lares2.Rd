@@ -4,13 +4,13 @@
 \alias{theme_lares2}
 \title{lares Theme for ggplot2}
 \usage{
-theme_lares2(font = "Arial Narrow", base_size = 12.5,
+theme_lares2(font = "Arial Narrow", size = 12.5,
   main_colour = "darkorange3", hard_colour = "black",
   soft_colour = "grey30", bg_colour = "white", legend = "right",
-  mg = 15, pal = 0)
+  mg = 15, pal = 0, which = "fct")
 }
 \arguments{
-\item{font, base_size}{Character and numeric. Base font family and size}
+\item{font, size}{Character and numeric. Base font family and base size for texts}
 
 \item{main_colour, hard_colour, soft_colour, bg_colour}{Character. Main colours for your theme}
 
@@ -19,7 +19,10 @@ theme_lares2(font = "Arial Narrow", base_size = 12.5,
 \item{mg}{Numeric. External margin}
 
 \item{pal}{Integer. 1 for fill and colour palette, 2 for only colour palette,
-3 for personal labels-colour palette. 0 or else for nothing.}
+3 for only fill palette, 4 for personal labels-colour palette. 0 or else for nothing.}
+
+\item{which}{Character. When pal = 3, select which colours should be
+added with the custom colours pelette: fill, colour, text (fct) - first letters}
 }
 \description{
 Based on hrbrthemes' theme_ipsum and customized for lares' use.

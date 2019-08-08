@@ -19,7 +19,7 @@ corr_cross(df, plot = TRUE, type = 1, max = 1, top = 25,
 
 \item{top}{Integer. Return top n results only. Only valid when type = 1}
 
-\item{local}{Integer. Show top n local correlations. Only valid when type = 2}
+\item{local}{Integer. Label top n local correlations. Only valid when type = 2}
 
 \item{ignore}{Character vector. Which columns do you wish to exlude?}
 

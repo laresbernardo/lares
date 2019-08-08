@@ -1153,3 +1153,54 @@ formatTime <- function(vector) {
   }
   return(vector)
 }
+
+
+####################################################################
+#' Check if Font is Installed
+#' 
+#' This function check if specific font is installed
+#' 
+#' @param font Character. Which font to check
+#' @export
+font_exists <- function(font = "Arial Narrow") {
+  # Thanks to extrafont for this code
+  ttf_find_default_path <- function() {
+    if (grepl("^darwin", R.version$os)) {
+      paths <-
+        c("/Library/Fonts/",                      # System fonts
+          "/System/Library/Fonts",                # More system fonts
+          "~/Library/Fonts/")                     # User fonts
+      return(paths[file.exists(paths)])
+      
+    } else if (grepl("^linux-gnu", R.version$os)) {
+      # Possible font paths, depending on the system
+      paths <-
+        c("/usr/share/fonts/",                    # Ubuntu/Debian/Arch/Gentoo
+          "/usr/X11R6/lib/X11/fonts/TrueType/",   # RH 6
+          "~/.fonts/")                            # User fonts
+      return(paths[file.exists(paths)])
+      
+    } else if (grepl("^freebsd", R.version$os)) {
+      # Possible font paths, depending on installed ports
+      paths <-
+        c("/usr/local/share/fonts/truetype/",
+          "/usr/local/lib/X11/fonts/",
+          "~/.fonts/")                            # User fonts
+      return(paths[file.exists(paths)])
+      
+    } else if (grepl("^mingw", R.version$os)) {
+      return(paste(Sys.getenv("SystemRoot"), "\\Fonts", sep = ""))
+    } else {
+      stop("Unknown platform. Don't know where to look for truetype fonts. Sorry!")
+    }
+  }
+  check <- function(font) {
+    pattern <- "\\.ttf$"
+    fonts_path <- ttf_find_default_path()
+    ttfiles <- list.files(fonts_path, pattern = pattern,
+                          full.names = TRUE, ignore.case = TRUE)
+    ret <- font %in% gsub(pattern, "", basename(ttfiles))
+    return(ret)
+  }
+  check(font)
+}

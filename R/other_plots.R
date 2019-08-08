@@ -256,8 +256,8 @@ gg_bars <- function(names, n, p = NA,
 ####################################################################
 #' Axis scales format
 #'
-#' The `_comma` ones set comma format for axis text and the `_percent` 
-#' ones set percent format for axis text.
+#' The `_comma` ones set comma format for axis text, the `_percent` 
+#' ones set percent format for axis text, and `_dollar` for collar currency 
 #'
 #' @inheritDotParams ggplot2::continuous_scale -expand -position
 #' @export
@@ -274,3 +274,11 @@ scale_x_percent <- function(...) scale_x_continuous(..., labels = scales::percen
 #' @rdname scale_x_comma
 #' @export
 scale_y_percent <- function(...) scale_y_continuous(..., labels = scales::percent)
+
+#' @rdname scale_x_comma
+#' @export
+scale_x_dollar <- function(...) scale_y_continuous(..., labels = scales::dollar)
+
+#' @rdname scale_x_comma
+#' @export
+scale_y_dollar <- function(...) scale_y_continuous(..., labels = scales::dollar)

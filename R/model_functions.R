@@ -366,11 +366,10 @@ msplit <- function(df, size = 0.7, seed = 0, print=T) {
 #' @param score Vector. Predicted value or model's result
 #' @param eps Numeric. Epsilon value
 #' @export
-loglossBinary <- function(tag, score, eps = 1e-15) {
+loglossBinary <- function(tag, score, eps = 0.0000001) {
   
-  if (length(unique(tag)) != 2) {
+  if (length(unique(tag)) != 2)
     stop("Your 'tag' vector is not binary!")
-  }
   
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
@@ -379,9 +378,7 @@ loglossBinary <- function(tag, score, eps = 1e-15) {
     )
   }
   
-  if (!is.numeric(tag)) {
-    tag <- as.integer(tag) - 1
-  }
+  if (!is.numeric(tag)) tag <- as.integer(tag) - 1
   
   score <- pmax(pmin(score, 1 - eps), eps)
   LogLoss <- -mean(tag * log(score) + (1 - tag) * log(1 - score))
