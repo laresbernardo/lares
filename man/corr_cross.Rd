@@ -4,17 +4,22 @@
 \alias{corr_cross}
 \title{Correlation Cross-Table}
 \usage{
-corr_cross(df, plot = TRUE, max = 1, top = 25, ignore = NA,
-  contains = NA, rm.na = FALSE, dummy = TRUE)
+corr_cross(df, plot = TRUE, type = 1, max = 1, top = 25,
+  local = 1, ignore = NA, contains = NA, rm.na = FALSE,
+  dummy = TRUE)
 }
 \arguments{
 \item{df}{Dataframe.}
 
 \item{plot}{Boolean. Show and return a plot?}
 
+\item{type}{Integer. Plot type. 1 is for overall rank. 2 is for local rank.}
+
 \item{max}{Numeric. Maximum correlation permited (from 0 to 1)}
 
-\item{top}{Integer. Return top n results only}
+\item{top}{Integer. Return top n results only. Only valid when type = 1}
+
+\item{local}{Integer. Show top n local correlations. Only valid when type = 2}
 
 \item{ignore}{Character vector. Which columns do you wish to exlude?}
 

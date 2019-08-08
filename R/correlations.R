@@ -27,7 +27,7 @@ corr <- function(df, method = "pearson", ignore = NA,
                  plot = FALSE, top = NA) {
   
   # Ignored columns
-  if (!is.na(ignore[1])) df <- select(df, -one_of(ignore))
+  if (!is.na(ignore)[1]) df <- select(df, -one_of(ignore))
   
   # One hot encoding for categorical features
   if (dummy) df <- ohse(df, summary = FALSE, redundant = redundant, dates = dates)
@@ -231,18 +231,22 @@ corr_plot <- function(df, ignore = NA, method = "pearson", order = "FPC",
 #' @family Exploratory
 #' @param df Dataframe.
 #' @param plot Boolean. Show and return a plot?
+#' @param type Integer. Plot type. 1 is for overall rank. 2 is for local rank.
 #' @param max Numeric. Maximum correlation permited (from 0 to 1)
-#' @param top Integer. Return top n results only
+#' @param top Integer. Return top n results only. Only valid when type = 1
+#' @param local Integer. Label top n local correlations. Only valid when type = 2
 #' @param ignore Character vector. Which columns do you wish to exlude?
 #' @param contains Character vector. Filter cross-correlations with variables
 #' that contains certain strings (using any value if vector used)
 #' @param rm.na Boolean. Remove NAs?
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
 #' @export
-corr_cross <- function(df, plot = TRUE, max = 1, top = 25, 
+corr_cross <- function(df, plot = TRUE, type = 1, 
+                       max = 1, top = 25, local = 1,
                        ignore = NA, contains = NA,
                        rm.na = FALSE, dummy = TRUE) {
   
+  if (sum(is.na(df))) warning("There are NA values in your dataframe!")
   c <- corr(df, ignore = ignore, plot = FALSE, dummy = dummy)
   
   ret <- data.frame(gather(c)) %>% 
@@ -257,27 +261,62 @@ corr_cross <- function(df, plot = TRUE, max = 1, top = 25,
     rename(corr = value) %>%
     mutate(value = paste(key, mix)) %>%
     {if (!is.na(contains)) 
-      filter(., grepl(vector2text(contains, sep = "|", quotes = FALSE), key)) else .} %>%
+      filter(., grepl(vector2text(contains, sep = "|", quotes = FALSE), paste(key, mix))) else .} %>%
     mutate(redundant = ifelse(gsub("_.*","", key) == gsub("_.*","", mix), TRUE, FALSE)) %>%
     filter(redundant == FALSE) %>%
     select(key, mix, corr)
   
+  for (i in 1:ncol(df)) {
+    if (i == 1) ret <- mutate(ret, group1 = "fill", group2 = "fill")
+    group <- colnames(df)[i]
+    aux <- ifelse(grepl(group, ret$key), group, "fill")
+    ret$group1 <- ifelse(ret$group1 == "fill", aux, ret$group1)
+    aux <- ifelse(grepl(group, ret$mix), group, "fill")
+    ret$group2 <- ifelse(ret$group2 == "fill", aux, ret$group2)
+  }
+  
   if (plot) {
-    subtitle <- paste0(top, " most relevant (out of ", nrow(ret), ")")
+    n <- ifelse(type == 1, top, local)
+    subtitle <- paste(n, "most relevant")
+    if (!is.na(contains)[1]) subtitle <- paste(subtitle, "containing", vector2text(contains))
     if (max < 1) subtitle <- paste0(subtitle," (excluding +", 100*max, "%)")
     if (rm.na) subtitle <- paste(subtitle, paste("[NAs removed]"))
-    p <- ret %>% head(top) %>%
-      mutate(label = paste(key, "+", mix), abs = abs(corr),
-             sign = ifelse(corr < 0, "bad", "good"),
-             x = ifelse(corr < 0, -0.1, 1.1)) %>%
-      ggplot(aes(x = reorder(label,abs), y = corr, fill = sign)) +
-      geom_col() + coord_flip() + guides(fill = FALSE) +
-      geom_hline(aes(yintercept = 0), alpha = 0.5) + 
-      geom_text(aes(hjust = x, label = signif(100*corr, 3)), size = 3, colour = "white") +
-      labs(title = "Ranked Cross-Correlations", subtitle = subtitle,
-           x = NULL, y = "Correlation [%]") +
-      scale_fill_manual(values = c("bad" = "#E5586E", "good" = "#59B3D2")) +
-      scale_y_percent() + theme_lares2()
+    if (type == 1) {
+      p <- ret %>% head(top) %>%
+        mutate(label = paste(key, "+", mix), abs = abs(corr),
+               sign = ifelse(corr < 0, "bad", "good"),
+               x = ifelse(corr < 0, -0.1, 1.1)) %>%
+        ggplot(aes(x = reorder(label,abs), y = corr, fill = sign)) +
+        geom_col() + coord_flip() + guides(fill = FALSE) +
+        geom_hline(aes(yintercept = 0), alpha = 0.5) + 
+        geom_text(aes(hjust = x, label = signif(100*corr, 3)), size = 3, colour = "white") +
+        labs(title = "Ranked Cross-Correlations", subtitle = subtitle,
+             x = NULL, y = "Correlation [%]") +
+        scale_fill_manual(values = c("bad" = "#E5586E", "good" = "#59B3D2")) +
+        scale_y_percent() + theme_lares2()
+    }
+    if (type == 2) {
+      ret <- rbind(data.frame(ret, group = ret$group1), 
+                   data.frame(ret, group = ret$group2)) %>%
+        arrange(desc(abs(corr)))
+      aux <- position_jitter(width = 0.4, seed = 123)
+      p <- ret %>% 
+        group_by(group) %>%
+        mutate(hjust = ifelse(corr > 0, 1, 0),
+               size = abs(corr),
+               alpha = ifelse(row_number() <= local, 2, size),
+               label = ifelse(row_number() <= local, paste(key, "+", mix), "")) %>%
+        ggplot(aes(x = group, y = corr, label = label, colour = group)) + 
+        geom_jitter(aes(alpha = alpha, size = size), position = aux) + 
+        geom_hline(yintercept = 0, alpha = 0.3) +
+        geom_text(aes(hjust = hjust), size = 2.7, position = aux, colour = "black") +
+        guides(colour = FALSE, alpha = FALSE, size = FALSE) +
+        scale_size(range = c(0.4, 2)) +
+        labs(x = NULL, y = "Correlation [%]", subtitle = subtitle,
+             title = "Local Cross-Correlations") +
+        scale_y_percent() + coord_flip() +
+        theme_lares2(pal = 2) 
+    }
     return(p)
   }
   return(ret)
