@@ -60,7 +60,7 @@ if (getRversion() >= "2.15.1")
     c(".","..y..","!!!",".rs.restartR","Amount","Cash","Close","CreateDate","CumCash",
       "CumDiv","CumPortfolio","DailyCash","DailyDiv","DailyExpen","DailyStocks",
       "DailyTrans","DailyValue","Date","DateTimeOriginal","Deciles","DifPer","DifUSD",
-      "DivIncome","DivPerc","DivReal","Expenses","FileModifyDate","High","Hist",
+      "DivIncome","DivPerc","DivReal","Expenses","FileModifyDate","High","Hist","creds",
       "InvPerc","Invested","Perc","Quant","RealPerc","RelChangePHist","RelChangeUSD",
       "RelPer","RelUSD","StartUSD","StockIniValue","StockValue","Stocks","Symbol","results",
       "TotalPer","TotalUSD","Type","Value","readOGR","read_exif","pcum","fpr","tpr",

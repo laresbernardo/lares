@@ -4,7 +4,7 @@
 \alias{stocks_obj}
 \title{Portfolio's Calculations and Plots}
 \usage{
-stocks_obj(data = stocks_file(), cash_fix = 0, tax = 30,
+stocks_obj(data = stocks_file(creds = creds), cash_fix = 0, tax = 30,
   sectors = TRUE)
 }
 \arguments{
@@ -17,6 +17,8 @@ to your cash balance}
 \item{tax}{Numeric. How much [0-99] of your dividends are gone with taxes?}
 
 \item{sectors}{Boolean. Return sectors segmentation for ETFs?}
+
+\item{creds}{Character. Where is my personal token for Dropbox connection?}
 }
 \description{
 This function lets the user create his portfolio's calculations and

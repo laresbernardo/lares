@@ -5,13 +5,13 @@
 \title{Get Personal Portfolio's Data}
 \usage{
 stocks_file(filename = NA,
-  token_dir = "~/Dropbox (Personal)/Documentos/Docs/Data", auto = TRUE,
+  creds = "~/Dropbox (Personal)/Documentos/Docs/Data", auto = TRUE,
   sheets = c("Portafolio", "Fondos", "Transacciones"), keep_old = TRUE)
 }
 \arguments{
 \item{filename}{Characeter. Import a local Excel file}
 
-\item{token_dir}{Character. Where is my personal token for Dropbox connection?}
+\item{creds}{Character. Where is my personal token for Dropbox connection?}
 
 \item{auto}{Boolean. Automatically user my local personal file?}
 

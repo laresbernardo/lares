@@ -6,13 +6,13 @@
 #' 
 #' @family Investment
 #' @param filename Characeter. Import a local Excel file
-#' @param token_dir Character. Where is my personal token for Dropbox connection?
+#' @param creds Character. Where is my personal token for Dropbox connection?
 #' @param auto Boolean. Automatically user my local personal file? 
 #' @param sheets Character Vector. Names of each sheet containing Portfolio summary,
 #' Cash, and Transactions information
 #' @param keep_old Boolean. Include sold tickers eventhough not currently in portfolio?
 #' @export
-stocks_file <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Documentos/Docs/Data", 
+stocks_file <- function(filename = NA, creds = "~/Dropbox (Personal)/Documentos/Docs/Data", 
                         auto = TRUE, sheets = c("Portafolio","Fondos","Transacciones"),
                         keep_old = TRUE) {
   
@@ -39,8 +39,8 @@ stocks_file <- function(filename = NA, token_dir = "~/Dropbox (Personal)/Documen
         stop("Error: that file doesn't exist or it's not in your working directory!")
     } else {
       # FOR DROPBOX'S USE
-      token_dir <- token_dir
-      load(paste0(token_dir, "/token_pers.rds"))
+      creds <- creds
+      load(paste0(creds, "/token_pers.rds"))
       x <- drop_search("Portfolio LC.xlsx", dtoken = token)
       file <- "temp.xlsx"
       invisible(
@@ -600,8 +600,10 @@ splot_etf <- function(s, save = FALSE) {
 #' to your cash balance
 #' @param tax Numeric. How much [0-99] of your dividends are gone with taxes? 
 #' @param sectors Boolean. Return sectors segmentation for ETFs?
+#' @param creds Character. Where is my personal token for Dropbox connection?
 #' @export
-stocks_obj <- function(data = stocks_file(), cash_fix = 0, tax = 30, sectors = TRUE) {
+stocks_obj <- function(data = stocks_file(creds = creds), 
+                       cash_fix = 0, tax = 30, sectors = TRUE) {
 
   ret <- list()
   trans <- data$transactions
@@ -642,17 +644,25 @@ stocks_obj <- function(data = stocks_file(), cash_fix = 0, tax = 30, sectors = T
 #' plots and send it to an email with the HTML report attached
 #' 
 #' @family Investment
-#' @param data List. Results from stocks_obj()
+#' @param file Character. stocks_file() output. If NA, automatic report
+#' parameters will be used
 #' @param dir Character. Directory for HTML report output. If set to NA, 
-#' current working directory will be used
-#' @param mail Boolean. Do you want to send an email with the report attached?
+#' current working directory will be used. If mail sent, file will be erased
+#' @param mail Boolean. Do you want to send an email with the report attached? 
+#' If not, an HTML file will be created in dir
 #' @param to Character. Email to send the report to
-#' @param creds Character. Credential's user (see get_credentials) for sending mail
+#' @param creds Character. Credential's user (see get_credentials) for 
+#' sending mail and Dropbox interaction
 #' @export
-stocks_report <- function(data = stocks_obj(), dir = NA,
+stocks_report <- function(file = NA,
+                          dir = NA,
                           mail = FALSE, 
                           to = "laresbernardo@gmail.com",
                           creds = NA) {
+  if (!is.na(file))
+    file <- stocks_file(creds = creds)
+  
+  data <- stocks_obj(file)
   
   pandoc <- Sys.getenv("RSTUDIO_PANDOC")
   Sys.setenv(RSTUDIO_PANDOC = pandoc)
@@ -687,7 +697,7 @@ stocks_report <- function(data = stocks_obj(), dir = NA,
   
   if (mail) {
     # Set token for mail and dropbox credentials
-    token_dir <- case_when(
+    creds <- case_when(
       is.na(creds) ~ "~/Dropbox (Personal)/Documentos/Docs/Data",
       creds %in% c("matrix","server") ~ "~/creds",
       TRUE ~ as.character(creds))
@@ -696,7 +706,7 @@ stocks_report <- function(data = stocks_obj(), dir = NA,
     mailSend(to = to, text = " \n", 
              subject = paste("Portfolio:", max(data$portfolio$Date)),
              attachment = paste0(getwd(), "/stocksReport.html"),
-             creds = token_dir,
+             creds = creds,
              quiet = FALSE) 
     invisible(file.remove(paste0(getwd(), "/stocksReport.html")))
   }

@@ -4,20 +4,23 @@
 \alias{stocks_report}
 \title{Portfolio's Full Report and Email}
 \usage{
-stocks_report(data = stocks_obj(), dir = NA, mail = FALSE,
+stocks_report(file = NA, dir = NA, mail = FALSE,
   to = "laresbernardo@gmail.com", creds = NA)
 }
 \arguments{
-\item{data}{List. Results from stocks_obj()}
+\item{file}{Character. stocks_file() output. If NA, automatic report
+parameters will be used}
 
 \item{dir}{Character. Directory for HTML report output. If set to NA, 
-current working directory will be used}
+current working directory will be used. If mail sent, file will be erased}
 
-\item{mail}{Boolean. Do you want to send an email with the report attached?}
+\item{mail}{Boolean. Do you want to send an email with the report attached? 
+If not, an HTML file will be created in dir}
 
 \item{to}{Character. Email to send the report to}
 
-\item{creds}{Character. Credential's user (see get_credentials) for sending mail}
+\item{creds}{Character. Credential's user (see get_credentials) for 
+sending mail and Dropbox interaction}
 }
 \description{
 This function lets the user create his portfolio's full report with 
