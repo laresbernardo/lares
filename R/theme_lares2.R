@@ -12,7 +12,7 @@
 #' @md
 #' @family Visualization
 #' @param font,size Character and numeric. Base font family and base size for texts
-#' @param main_colour,hard_colour,soft_colour,bg_colour 
+#' @param main_colour,hard_colour,soft_colour,bg_colour,panel_colour
 #' Character. Main colours for your theme
 #' @param legend Character. Legend position: top, right, bottom, left
 #' @param mg Numeric. External margin
@@ -27,17 +27,19 @@ theme_lares2 <- function(font = "Arial Narrow",
                          hard_colour = "black",
                          soft_colour = "grey30",
                          bg_colour = "white",
+                         panel_colour = "#F1F1F1",
                          legend = "right",
-                         mg = 15,
+                         mg = 14,
                          pal = 0,
                          which = "fct") {
   
   # Start from theme_minimal()
   ret <- theme_minimal(base_size = size)
   
-  # Check font
+  # Check and set font
   if (!font_exists(font)) {
-    warning(paste(font, "font is not installed, has other name, or can't be found..."))  
+    if (font != "Arial Narrow")
+      warning(paste(font, "font is not installed, has other name, or can't be found..."))  
     font <- NA
   } else {
     ret <- ret + theme(text = element_text(family = font))  
@@ -128,7 +130,7 @@ theme_lares2 <- function(font = "Arial Narrow",
     legend.key.size = unit(0.4, "cm"))
   # Background
   ret <- ret + theme(
-    panel.background = element_rect(fill = "#F1F1F1", colour = NA),
+    panel.background = element_rect(fill = panel_colour, colour = NA),
     plot.background = element_rect(fill = bg_colour, colour = NA))
   # External margins
   ret <- ret + theme(plot.margin = margin(mg, mg, mg, mg))

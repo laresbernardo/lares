@@ -6,13 +6,14 @@
 \usage{
 theme_lares2(font = "Arial Narrow", size = 12.5,
   main_colour = "darkorange3", hard_colour = "black",
-  soft_colour = "grey30", bg_colour = "white", legend = "right",
-  mg = 15, pal = 0, which = "fct")
+  soft_colour = "grey30", bg_colour = "white",
+  panel_colour = "#F1F1F1", legend = "right", mg = 14, pal = 0,
+  which = "fct")
 }
 \arguments{
 \item{font, size}{Character and numeric. Base font family and base size for texts}
 
-\item{main_colour, hard_colour, soft_colour, bg_colour}{Character. Main colours for your theme}
+\item{main_colour, hard_colour, soft_colour, bg_colour, panel_colour}{Character. Main colours for your theme}
 
 \item{legend}{Character. Legend position: top, right, bottom, left}
 
