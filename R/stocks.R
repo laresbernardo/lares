@@ -600,10 +600,10 @@ splot_etf <- function(s, save = FALSE) {
 #' to your cash balance
 #' @param tax Numeric. How much [0-99] of your dividends are gone with taxes? 
 #' @param sectors Boolean. Return sectors segmentation for ETFs?
-#' @param creds Character. Where is my personal token for Dropbox connection?
 #' @export
-stocks_obj <- function(data = stocks_file(creds = creds), 
-                       cash_fix = 0, tax = 30, sectors = TRUE) {
+stocks_obj <- function(data = stocks_file(), 
+                       cash_fix = 0, tax = 30, 
+                       sectors = TRUE) {
 
   ret <- list()
   trans <- data$transactions
@@ -644,7 +644,7 @@ stocks_obj <- function(data = stocks_file(creds = creds),
 #' plots and send it to an email with the HTML report attached
 #' 
 #' @family Investment
-#' @param file Character. stocks_file() output. If NA, automatic report
+#' @param data Character. stocks_file() output. If NA, automatic report
 #' parameters will be used
 #' @param dir Character. Directory for HTML report output. If set to NA, 
 #' current working directory will be used. If mail sent, file will be erased
@@ -654,15 +654,15 @@ stocks_obj <- function(data = stocks_file(creds = creds),
 #' @param creds Character. Credential's user (see get_credentials) for 
 #' sending mail and Dropbox interaction
 #' @export
-stocks_report <- function(file = NA,
+stocks_report <- function(data = NA,
                           dir = NA,
                           mail = FALSE, 
                           to = "laresbernardo@gmail.com",
                           creds = NA) {
-  if (!is.na(file))
-    file <- stocks_file(creds = creds)
+  if (is.na(data))
+    data <- stocks_file(creds = creds)
   
-  data <- stocks_obj(file)
+  data <- stocks_obj(data)
   
   pandoc <- Sys.getenv("RSTUDIO_PANDOC")
   Sys.setenv(RSTUDIO_PANDOC = pandoc)

@@ -4,11 +4,11 @@
 \alias{stocks_report}
 \title{Portfolio's Full Report and Email}
 \usage{
-stocks_report(file = NA, dir = NA, mail = FALSE,
+stocks_report(data = NA, dir = NA, mail = FALSE,
   to = "laresbernardo@gmail.com", creds = NA)
 }
 \arguments{
-\item{file}{Character. stocks_file() output. If NA, automatic report
+\item{data}{Character. stocks_file() output. If NA, automatic report
 parameters will be used}
 
 \item{dir}{Character. Directory for HTML report output. If set to NA, 
