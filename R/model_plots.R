@@ -969,22 +969,29 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
     } 
   } else {
     df <- data.frame(tag = tag, score = score, multis)
+    out <- aux <- c()
     for (i in 1:(ncol(df) - 2)) {
-      if (i == 1) out <- c()
-      g <- gain_lift(df$tag, df[,2 + i], target, splits, quiet = quiet) %>% 
+      g <- gain_lift(df$tag, df[,2 + i], splits = splits, quiet = FALSE) %>% 
         mutate(label = colnames(df)[2 + i])  
+      x <- data.frame(x = as.factor(c(0, g$percentile)),
+                      y = c(0, g$optimal), 
+                      label = as.character(g$label[1]))
       out <- rbind(out, g)
+      aux <- rbind(aux, x)
     }
     p <- out %>% 
       mutate(factor(percentile, levels = unique(out$percentile))) %>%
       ggplot(aes(x = percentile, group = label)) +
-      # Random line
-      geom_line(aes(y = random, linetype = "Random"), colour = "black") +
-      # Optimal line
-      geom_line(aes(y = optimal, colour = label, linetype = "Optimal"), size = 0.4) +
+      # # Random line
+      # geom_line(aes(y = random, linetype = "Random"), colour = "black") +
+      # # Optimal line
+      # geom_line(aes(y = optimal, colour = label, linetype = "Optimal"), size = 0.4) +
+      # Possible area
+      geom_polygon(data = aux, aes(x = x, y = y, group = label), alpha = 0.1) +
       # Model line
-      geom_line(aes(y = gain, colour = label), size = 1.1) +
-      geom_label(aes(y = gain, label = round(gain)), alpha = 0.9) +
+      geom_line(aes(y = gain, colour = label), size = 1) +
+      geom_label(aes(y = gain, label = round(gain)), alpha = 0.8) +
+      guides(colour = FALSE) +
       theme_lares2(pal = 2) + 
       labs(title = "Cumulative Gains for Multiple Labels",
            subtitle = paste("If we select the top nth percentile with highest probabilities,",
