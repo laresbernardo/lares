@@ -309,7 +309,7 @@ corr_cross <- function(df, plot = TRUE, type = 1,
         ggplot(aes(x = group, y = corr, label = label, colour = group)) + 
         geom_jitter(aes(alpha = alpha, size = size), position = aux) + 
         geom_hline(yintercept = 0, alpha = 0.3) +
-        geom_text(aes(hjust = hjust), size = 2.7, position = aux, colour = "black") +
+        geom_text(aes(hjust = hjust), size = 2.9, position = aux, colour = "black") +
         guides(colour = FALSE, alpha = FALSE, size = FALSE) +
         scale_size(range = c(0.4, 2)) +
         labs(x = NULL, y = "Correlation [%]", subtitle = subtitle,

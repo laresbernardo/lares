@@ -664,7 +664,7 @@ mplot_lineal <- function(tag,
     sep = "\n")
   
   p <- ggplot(results, aes(x = tag, y = score, colour = dist)) +
-    geom_point() + theme_lares2() +
+    geom_point() +
     labs(title = "Regression Model Results",
          x = "Real value", y = "Predicted value",
          colour = "Deviation") +
@@ -673,7 +673,8 @@ mplot_lineal <- function(tag,
     scale_y_continuous(labels = comma) +
     scale_colour_continuous(labels = comma) +
     theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
-    guides(colour = guide_colorbar(barwidth = 0.9, barheight = 4.5))
+    guides(colour = guide_colorbar(barwidth = 0.9, barheight = 4.5)) +
+    theme_lares2()
   
   # Draw reference line for correlation
   intercept <- summary(fit)$coefficients[1]
@@ -934,13 +935,16 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
   
   if (is.na(multis)[1]) {
     gains <- gain_lift(tag, score, target, splits, quiet = quiet) 
+    aux <- data.frame(x = c(0, gains$percentile), y = c(0, gains$optimal))
     p <- gains %>%
       mutate(percentile = as.numeric(percentile)) %>%
       ggplot(aes(x = percentile)) + 
       # Random line
-      geom_line(aes(y = random, linetype = "Random"), colour = "black", alpha = 0.6) +
+      #geom_line(aes(y = random, linetype = "Random"), colour = "black", alpha = 0.6) +
       # Optimal line
-      geom_line(aes(y = optimal, linetype = "Optimal"), colour = "black", alpha = 0.6) +
+      #geom_line(aes(y = optimal, linetype = "Optimal"), colour = "black", alpha = 0.6) +
+      # Range area
+      geom_polygon(data = aux, aes(x, y), alpha = 0.1) +
       # Model line
       geom_line(aes(y = gain), colour = "darkorange", size = 1.2) +
       geom_label(aes(y = gain, label = ifelse(gain == 100, NA, round(gain))), alpha = 0.9) +
