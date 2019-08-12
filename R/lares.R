@@ -6,7 +6,6 @@
 #' @name lares
 #' @docType package
 #' @author Bernardo Lares (laresbernardo@@gmail.com)
-#' @importFrom beepr beep
 #' @importFrom config get
 #' @importFrom DBI dbDriver dbConnect dbSendQuery fetch dbDisconnect
 #' @importFrom devtools install install_github
@@ -22,7 +21,7 @@
 #' h2o.removeAll h2o.download_mojo h2o.download_pojo h2o.loadModel h2o.no_progress h2o.predict 
 #' h2o.predict_json h2o.saveModel h2o.varimp
 #' @importFrom httr GET POST oauth_endpoint oauth_app oauth1.0_token authenticate 
-#' stop_for_status upload_file add_headers content
+#' stop_for_status upload_file add_headers content http_error
 #' @importFrom jsonlite fromJSON toJSON flatten
 #' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd 
 #' minute hour second %m+% floor_date 
@@ -38,7 +37,6 @@
 #' @importFrom rmarkdown render
 # @importFrom recipes recipe step_num2factor step_meanimpute all_numeric step_modeimpute
 # all_nominal step_scale all_outcomes step_dummy prep
-#' @import reshape2
 #' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text 
 #' @importFrom scales percent comma
 #' @importFrom sp over coordinates proj4string proj4string<- coordinates<- spTransform
@@ -93,7 +91,7 @@ if (getRversion() >= "2.15.1")
       "Logloss","yewxname","gain","random","optimal","lift","pred","importance","stacked",
       "percentile","cum_response","response","total","ETF","Sector","Percentage","corrplot",
       "row_num","ncap","freq","mix","redundant","plot_ly","chordDiagram","skim","uh",
-      "fread","read.dta13","read.spss","read.xls","geom_label_repel","variable",
+      "fread","read.dta13","read.spss","read.xls","geom_label_repel","variable","beep",
       "rpart","rpart.control","rpart.plot","get_sentiment_dictionary","sentiment",
       "Cost","CumCost","CumDividend","CumInvested","CumQuant","CumROI","CumValue",
       "Each","ROI","ValueSector","etf_sector_plot","ma1","ma2","amount_spent","model",

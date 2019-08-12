@@ -303,7 +303,10 @@ h2o_automl <- function(df, y = "tag",
   
   print(results$metrics$metrics)
   
-  if (alarm & !quiet) beep()
+  if (alarm & !quiet) {
+    try_require("beepr", stop = FALSE)
+    beep() 
+  }
   
   return(results)
   

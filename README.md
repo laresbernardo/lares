@@ -42,7 +42,7 @@ If there is space for one more, I would add `ohse()` (One Hot Smart Encoding), w
 
 ## What else is there?
 
-You can type `lares::` in **RStudio** and you will get a pop-up with all the functions that are currently available within the package. You might also want to check the whole documentation by running `help(package = lares)` locally or in the [rdrr.io](https://rdrr.io/github/laresbernardo/lares/man/) or [rdocumentation.org](https://www.rdocumentation.org/packages/lares/versions/4.7) online websites. Remember to check the families and similar functions on the **See Also** sections.
+You can type `lares::` in **RStudio** and you will get a pop-up with all the functions that are currently available within the package. You might also want to check the whole documentation by running `help(package = "lares")` locally or in the [rdrr.io](https://rdrr.io/github/laresbernardo/lares/man/) or [rdocumentation.org](https://www.rdocumentation.org/packages/lares/versions/4.7) online websites. Remember to check the families and similar functions on the **See Also** sections.
 
 ### Getting further help
 

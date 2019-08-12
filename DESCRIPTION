@@ -9,7 +9,6 @@ License: AGPL-3
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    beepr,
     config,
     DBI,
     devtools,
@@ -28,9 +27,7 @@ Imports:
     openxlsx,
     pROC,
     quantmod,
-    RCurl,
     rdrop2,
-    reshape2,
     rlang,
     rlist,
     rmarkdown,
@@ -44,6 +41,7 @@ Imports:
     wordcloud,
     xml2
 Suggests:
+    beepr,
     caret,
     circlize,
     corrplot,

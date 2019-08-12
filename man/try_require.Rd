@@ -4,10 +4,12 @@
 \alias{try_require}
 \title{Check if Specific Package is Installed}
 \usage{
-try_require(package)
+try_require(package, stop = TRUE)
 }
 \arguments{
 \item{package}{Character. Name of the library}
+
+\item{stop}{Boolean. Stop if not installed}
 }
 \description{
 This function checks library dependencies
