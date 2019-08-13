@@ -22,7 +22,9 @@
 #' @param train_test Character. If needed, df's column name with 'test' 
 #' and 'train' values to split
 #' @param split Numeric. Value between 0 and 1 to split as train/test 
-#' datasets. Value is for training set.
+#' datasets. Value is for training set. Set value to 1 to train will all 
+#' available data and test with same data (cross-validation will still be 
+#' used when training)
 #' @param weight Column with observation weights. Giving some observation a
 #' weight of zero is equivalent to excluding it from the dataset; giving an 
 #' observation a relative weight of 2 is equivalent to repeating that 
@@ -40,16 +42,16 @@
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
 #' have in 'tag' (more than: regression; less than: classification)
-#' @param max_time Numeric. Max seconds you wish for the function 
-#' to iterate
-#' @param max_models Numeric. Max models you wish for the function 
-#' to create
+#' @param max_models,max_time Numeric. Max number of models and seconds 
+#' you wish for the function to iterate. Note that max_models guarantees
+#' reproducibility and max_time not (because it depends entirely on your
+#' machine's computational characteristics)
 #' @param start_clean Boolean. Erase everything in the current h2o 
 #' instance before we start to train models?
 #' @param exclude_algos Vector of character strings. Algorithms to 
 #' skip during the model-building phase. Set NULL to use all
 #' @param plots Boolean. Create plots objects?
-#' @param alarm Boolean. Ping an alarm when ready!
+#' @param alarm Boolean. Ping an alarm when ready! Needs beepr installed
 #' @param quiet Boolean. Quiet messages, warnings, recommendations?
 #' @param save Boolean. Do you wish to save/export results into your 
 #' working directory?
@@ -69,8 +71,8 @@ h2o_automl <- function(df, y = "tag",
                        seed = 0,
                        nfolds = 5,
                        thresh = 5,
-                       max_time = 5*60,
-                       max_models = 10,
+                       max_models = 3,
+                       max_time = 10*60,
                        start_clean = TRUE,
                        exclude_algos = c("StackedEnsemble","DeepLearning"),
                        plots = TRUE,
@@ -123,9 +125,10 @@ h2o_automl <- function(df, y = "tag",
   cats <- unique(df$tag)
   model_type <- ifelse(length(cats) <= as.integer(thresh), "Classifier", "Regression")
   message("Model type: ", model_type)
-  # When seems numeric but is categorical
-  if (model_type == "Classifier" & sum(grepl('^[0-9]+$', cleanText(cats))) == length(cats))
-    df$tag <- as.factor(paste0("p", df$tag))
+  # When might seem numeric but is categorical
+  if (model_type == "Classifier" & sum(grepl('^[0-9]', cats)) > 0)
+    df <- mutate(df, tag = as.factor(as.character(
+      ifelse(grepl('^[0-9]', tag), paste0("n_", tag), as.character(tag)))))
   # When is regression should always be numerical
   if (model_type == "Regression")
     df$tag <- as.numeric(df$tag)
@@ -188,7 +191,7 @@ h2o_automl <- function(df, y = "tag",
     #project_name = project,
     seed = seed))
   if (nrow(aml@leaderboard) == 0) {
-    stop("Error: no models trained! Please set max_models to at least 1.")
+    stop("NO MODELS TRAINED. Please set max_models to at least 1 and increase max_time")
   } else {
     if (!is.nan(aml@leaderboard[1,2]))
       if (!quiet) message(paste("Succesfully trained", nrow(aml@leaderboard), "models:")) 
@@ -1020,16 +1023,17 @@ model_metrics <- function(tag, score, multis = NA,
   
   metrics <- list()
   cats <- sort(unique(as.character(tag)))
-  model_type <- ifelse(length(cats) <= thresh, "Classification", "Regression")    
+  model_type <- ifelse(length(cats) <= thresh, "Classifier", "Regression")    
   
   # When seems numeric but is categorical
-  if (model_type == "Classifier" & sum(grepl('^[0-9]+$', cleanText(cats))) == length(cats))
-    tag <- as.factor(paste0("p", tag))
+  if (model_type == "Classifier" & sum(grepl('^[0-9]', cats)) > 0)
+    tag <- as.factor(as.character(ifelse(
+      grepl('^[0-9]', tag), paste0("n_", tag), as.character(tag))))
   # When is regression should always be numerical
-  if (model_type == "Classifier")
+  if (model_type == "Regression")
     tag <- as.numeric(tag)
   
-  if (model_type == "Classification") {
+  if (model_type == "Classifier") {
     
     dic <- c("AUC: Area Under the Curve",
              "ACC: Accuracy",
@@ -1071,12 +1075,14 @@ model_metrics <- function(tag, score, multis = NA,
     } else {
       
       # For Multi-Categories
+      tags <- sort(unique(tag))
       if (is.na(multis)[1]) 
         stop("You have to input a data.frame with each tag's probability into the multis parameter.")
-      tags <- sort(unique(tag))
-      if (sum(colnames(multis) %in% tags) != length(tags)) {
-        stop(paste("Your multis data.frame colums should be:", vector2text(tags)))
-      }
+      if (!all(colnames(multis) %in% as.character(tags)))
+        stop(paste0("Your multis data.frame colums should be ", vector2text(tags),
+                    " (not ", vector2text(colnames(multis)), ")"))
+      if (ncol(multis) != length(tags))
+        stop("You have more columns than needed!")
       
       df <- data.frame(tag, score)
       metrics[["confusion_matrix"]] <- conf_mat(tag, score)

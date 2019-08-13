@@ -7,7 +7,7 @@
 h2o_automl(df, y = "tag", ignore = c(), train_test = NA,
   split = 0.7, weight = NULL, balance = FALSE, impute = FALSE,
   center = FALSE, scale = FALSE, seed = 0, nfolds = 5,
-  thresh = 5, max_time = 5 * 60, max_models = 10,
+  thresh = 5, max_models = 3, max_time = 10 * 60,
   start_clean = TRUE, exclude_algos = c("StackedEnsemble",
   "DeepLearning"), plots = TRUE, alarm = TRUE, quiet = FALSE,
   save = FALSE, subdir = NA, project = "ML Project")
@@ -25,7 +25,9 @@ which variable should be used instead, use the y parameter.}
 and 'train' values to split}
 
 \item{split}{Numeric. Value between 0 and 1 to split as train/test 
-datasets. Value is for training set.}
+datasets. Value is for training set. Set value to 1 to train will all 
+available data and test with same data (cross-validation will still be 
+used when training)}
 
 \item{weight}{Column with observation weights. Giving some observation a
 weight of zero is equivalent to excluding it from the dataset; giving an 
@@ -51,11 +53,10 @@ cross-validation amd Stacked Ensembles disableded}
 models: this number is the threshold of unique values we should 
 have in 'tag' (more than: regression; less than: classification)}
 
-\item{max_time}{Numeric. Max seconds you wish for the function 
-to iterate}
-
-\item{max_models}{Numeric. Max models you wish for the function 
-to create}
+\item{max_models, max_time}{Numeric. Max number of models and seconds 
+you wish for the function to iterate. Note that max_models guarantees
+reproducibility and max_time not (because it depends entirely on your
+machine's computational characteristics)}
 
 \item{start_clean}{Boolean. Erase everything in the current h2o 
 instance before we start to train models?}
@@ -65,7 +66,7 @@ skip during the model-building phase. Set NULL to use all}
 
 \item{plots}{Boolean. Create plots objects?}
 
-\item{alarm}{Boolean. Ping an alarm when ready!}
+\item{alarm}{Boolean. Ping an alarm when ready! Needs beepr installed}
 
 \item{quiet}{Boolean. Quiet messages, warnings, recommendations?}
 
