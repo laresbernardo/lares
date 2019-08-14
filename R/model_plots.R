@@ -855,7 +855,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
     fill = aux, size = n, label = label)) +
     geom_tile() + theme_lares2() +
     geom_text(colour = "white") + 
-    scale_size(range = c(2.6, 3.8)) + coord_equal() + 
+    scale_size(range = c(2.6, 3.6)) + coord_equal() + 
     guides(fill = FALSE, size = FALSE, colour = FALSE) +
     labs(x = "Predicted values", y = "Real values",
          title = paste("Confusion Matrix", ifelse(

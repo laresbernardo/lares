@@ -275,6 +275,8 @@ h2o_automl <- function(df, y = "tag",
     thresh = thresh,
     plots = plots)
   
+  results[["type"]] <- model_type
+  
   if (plots) {
     if (!quiet) message(">>> Generating plots...")
     plots <- list()
