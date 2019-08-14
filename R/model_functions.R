@@ -244,7 +244,7 @@ h2o_automl <- function(df, y = "tag",
       model = m,
       scores_test = data.frame(tag = as.vector(test$tag), scores),
       metrics = NA,
-      datasets = list(global = global, test = test, train = train),
+      datasets = list(global = global, test = test),
       parameters = m@parameters,
       importance = if (!stacked) imp else NULL,
       project = project,
@@ -264,7 +264,7 @@ h2o_automl <- function(df, y = "tag",
       scores_test = data.frame(tag = as.vector(test$tag), score = scores$predict),
       metrics = NA,
       scoring_history = data.frame(m@model$scoring_history),
-      datasets = list(global = global, test = test, train = train),
+      datasets = list(global = global, test = test),
       parameters = m@parameters,
       importance = if (!stacked) imp else NULL,
       model_name = as.vector(m@model_id),
@@ -495,20 +495,19 @@ export_results <- function(results,
     if (mojo) h2o.saveModel(results$model, path = subdir, force = TRUE)
     
     if (txt) {
-      tags <- c(as.character(results$datasets$test$tag), 
-                as.character(results$datasets$train$tag))
-      tags_test <- results$datasets$test
-      tags_train <- results$datasets$train
-      random_sample <- sample(1:nrow(results$scores_test), sample_size)
+      tags <- results$datasets$global$tag
+      train <- tags[results$datasets$global$train_test == "train"]
+      test <- tags[results$datasets$global$train_test == "test"]
+      random_sample <- sample(1:length(test), sample_size)
       
       results_txt <- list(
         "Project" = results$project,
         "Model" = results$model_name,
         "Dimensions" = 
           list("Distribution" = table(tags),
-               "Test vs Train" = c(paste(round(100*nrow(tags_test)/length(tags)),
-                                         round(100*nrow(tags_train)/length(tags)), sep = " / "),
-                                   paste(nrow(tags_test), nrow(tags_train), sep = " vs. ")),
+               "Test vs Train" = c(paste(round(100*length(test)/length(tags)),
+                                         round(100*length(train)/length(tags)), sep = " / "),
+                                   paste(length(test), length(train), sep = " vs. ")),
                "Total" = length(tags)),
         "Metrics" = model_metrics(results$scores_test$tag, 
                                   results$scores_test$score, 
