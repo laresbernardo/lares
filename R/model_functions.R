@@ -201,14 +201,19 @@ h2o_automl <- function(df, y = "tag",
   if (!quiet) message("Check results in H2O Flow's nice interface: ", flow)
   
   # GET PERFORMANCE RESULTS
+  if (!quiet) message(">>> Running predictions...")
   m <- h2o.getModel(as.vector(aml@leaderboard$model_id[1])) # Best model
-  scores <- quiet(h2o_predict_model(test, m))
+  global <- rbind(test, train) %>%
+    mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
+  predictions <- quiet(h2o_predict_model(global, m))
+  global <- cbind(global, predictions)
   if (sum(grepl(" ", cats)) > 0)
-    colnames(scores) <- str_replace_all(colnames(scores), "\\.", " ")
+    colnames(global) <- str_replace_all(colnames(global), "\\.", " ")
+  scores <- predictions[1:nrow(test),]
+  
+  # VARIABLES IMPORTANCES
   if (sum(grepl("Stacked", as.vector(m@model_id))) > 0) 
     stacked <- TRUE else stacked <- FALSE
-  
-  # Variables importances
   if (!stacked) {
     imp <- data.frame(h2o.varimp(m)) %>%
       {if ("names" %in% colnames(.)) 
@@ -239,7 +244,7 @@ h2o_automl <- function(df, y = "tag",
       model = m,
       scores_test = data.frame(tag = as.vector(test$tag), scores),
       metrics = NA,
-      datasets = list(test = test, train = train),
+      datasets = list(global = global, test = test, train = train),
       parameters = m@parameters,
       importance = if (!stacked) imp else NULL,
       project = project,
@@ -259,7 +264,7 @@ h2o_automl <- function(df, y = "tag",
       scores_test = data.frame(tag = as.vector(test$tag), score = scores$predict),
       metrics = NA,
       scoring_history = data.frame(m@model$scoring_history),
-      datasets = list(test = test, train = train),
+      datasets = list(global = global, test = test, train = train),
       parameters = m@parameters,
       importance = if (!stacked) imp else NULL,
       model_name = as.vector(m@model_id),
