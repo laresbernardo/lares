@@ -12,6 +12,8 @@ dalex_explainer(df, model, variable = "tag", model_name = NULL,
 
 \item{model}{Model object}
 
+\item{variable}{Character. Variable's column name}
+
 \item{model_name}{Character. Name of your model for plots}
 
 \item{pred}{Function. Custom function for calculating predictions.

@@ -200,7 +200,7 @@ h2o_automl <- function(df, y = "tag",
   flow <- "http://localhost:54321/flow/index.html"
   if (!quiet) message("Check results in H2O Flow's nice interface: ", flow)
   
-  # GET PERFORMANCE RESULTS
+  # GET PREDICTIONS
   if (!quiet) message(">>> Running predictions...")
   m <- h2o.getModel(as.vector(aml@leaderboard$model_id[1])) # Best model
   global <- rbind(test, train) %>%
@@ -209,7 +209,18 @@ h2o_automl <- function(df, y = "tag",
   global <- cbind(global, predictions)
   if (sum(grepl(" ", cats)) > 0)
     colnames(global) <- str_replace_all(colnames(global), "\\.", " ")
+  # For test performance metrics
   scores <- predictions[1:nrow(test),]
+  # Multis object and standard predictions output
+  multis <- NA
+  if (model_type == "Classifier") {
+    if (length(cats) == 2) {
+      scores <- select_if(scores, is.numeric) %>% .[,1]
+    } else {
+      colnames(scores)[1] <- "score"
+      multis <- select(scores, -score)
+    }
+  }
   
   # VARIABLES IMPORTANCES
   if (sum(grepl("Stacked", as.vector(m@model_id))) > 0) 
@@ -220,67 +231,38 @@ h2o_automl <- function(df, y = "tag",
         rename(., "variable" = "names", "importance" = "coefficients") else .} %>%
       {if ("percentage" %in% colnames(.)) 
         rename(., "importance" = "percentage") else .}
-    noimp <- imp %>% filter(importance < 0.015) %>% arrange(desc(importance))
+    noimp <- filter(imp, importance < 0.015) %>% arrange(desc(importance))
     if (nrow(noimp) > 0) {
-      which <- noimp %>% .$variable %>% vector2text(.) 
+      which <- vector2text(noimp$variable)
       if (!quiet) message(paste("The following variables were NOT important:", which))
     } 
   }
   
-  # CLASSIFICATION MODELS
-  if (model_type == "Classifier") {
-    if (length(cats) == 2) {
-      scores <- select_if(scores, is.numeric) %>% .[,1]
-      multis <- NA
-    } else {
-      colnames(scores)[1] <- "score"
-      multis <- scores %>% select(-score)
-    }
-    
-    #crossval <- m@model$cross_validation_metrics_summary[,c(1,2)]
-    #max_thresh <- m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores
-    
-    results <- list(
-      model = m,
-      scores_test = data.frame(tag = as.vector(test$tag), scores),
-      metrics = NA,
-      datasets = list(global = global, test = test),
-      parameters = m@parameters,
-      importance = if (!stacked) imp else NULL,
-      project = project,
-      model_name = as.vector(m@model_id),
-      algorithm = m@algorithm,
-      leaderboard = aml@leaderboard,
-      scoring_history = data.frame(m@model$scoring_history),
-      seed = seed)
-  } 
+  # GET ALL RESULTS INTO A LIST
+  results <- list()
   
-  # REGRESION MODELS
-  if (model_type == "Regression") {
-    multis <- NA
-    results <- list(
-      project = project,
-      model = m,
-      scores_test = data.frame(tag = as.vector(test$tag), score = scores$predict),
-      metrics = NA,
-      scoring_history = data.frame(m@model$scoring_history),
-      datasets = list(global = global, test = test),
-      parameters = m@parameters,
-      importance = if (!stacked) imp else NULL,
-      model_name = as.vector(m@model_id),
-      algorithm = m@algorithm,
-      leaderboard = aml@leaderboard
-    )
-  }
-  
+  results["model"] <- m
+  results["scores_test"] <- data.frame(tag = as.vector(test$tag), scores)
   results[["metrics"]] <- model_metrics(
     tag = results$scores_test$tag, 
     score = results$scores_test$score,
     multis = multis,
     thresh = thresh,
+    model_name = results$model_name,
     plots = plots)
+  if (model_type == "Classifier" & length(cats) == 2) 
+    results["max_metrics"] <- m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores
+  if (!stacked) results["importance"] <- imp
   
-  results[["type"]] <- model_type
+  results["datasets"] <- list(global = global, test = test)
+  results["scoring_history"] <- data.frame(m@model$scoring_history)
+  results["parameters"] <- m@parameters
+  results["type"] <- model_type
+  results["model_name"] <- as.vector(m@model_id)
+  results["algorithm"] <- m@algorithm
+  results["leaderboard"] <- aml@leaderboard
+  results["project"] <- project
+  results["seed"] <- seed
   
   if (plots) {
     if (!quiet) message(">>> Generating plots...")
@@ -288,8 +270,7 @@ h2o_automl <- function(df, y = "tag",
     plots[["dashboard"]] <- mplot_full(
       tag = results$scores_test$tag,
       score = results$scores_test$score,
-      multis = multis,
-      thresh = thresh,
+      multis = multis, thresh = thresh,
       subtitle = results$project,
       model_name = results$model_name,
       plot = FALSE)
@@ -1018,6 +999,7 @@ conf_mat <- function(tag, score, thresh = 0.5, plot = FALSE) {
 #' have in 'tag' (more than: regression; less than: classification)
 #' @param thresh_cm Numeric. Value to splits the results for the 
 #' confusion matrix. Range of values: (0-1)
+#' @param model_name Character. Model's name
 #' @param plots Boolean. Include plots?
 #' @param subtitle Character. Subtitle for plots
 #' @export
@@ -1025,6 +1007,7 @@ model_metrics <- function(tag, score, multis = NA,
                           abc = TRUE,
                           thresh = 10, 
                           thresh_cm = 0.5, 
+                          model_name = NA,
                           plots = TRUE, subtitle = NA){
   
   metrics <- list()
@@ -1131,7 +1114,8 @@ model_metrics <- function(tag, score, multis = NA,
       plots[["response"]] <- mplot_response(
         tag, score, multis, target = "auto", splits = 10, highlight = "auto", quiet = TRUE)
       # CONFUSION MATRIX PLOT
-      plots[["conf_matrix"]] <- mplot_conf(tag, score, thresh_cm, abc = abc, subtitle = subtitle) 
+      plots[["conf_matrix"]] <- mplot_conf(
+        tag, score, thresh_cm, abc = abc, subtitle = subtitle, model_name = model_name) 
       # ROC CURVES PLOT
       plots[["ROC"]] <- invisible(mplot_roc(tag, score, multis, subtitle = subtitle)) 
       # Bring them all!

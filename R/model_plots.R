@@ -808,12 +808,14 @@ mplot_full <- function(tag,
 #' confusion matrix.
 #' @param abc Boolean. Arrange columns and rows alphabetically?
 #' @param subtitle Character. Subtitle to show in plot
+#' @param model_name Character. Model's name
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @export
 mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE, 
-                       subtitle = NA, save = FALSE, subdir = NA, 
+                       subtitle = NA, model_name = NA,
+                       save = FALSE, subdir = NA, 
                        file_name = "viz_conf_mat.png") {
   
   df <- data.frame(tag, score)
@@ -855,7 +857,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
     fill = aux, size = n, label = label)) +
     geom_tile() + theme_lares2() +
     geom_text(colour = "white") + 
-    scale_size(range = c(2.6, 3.6)) + coord_equal() + 
+    scale_size(range = c(2.8, 3.5)) + coord_equal() + 
     guides(fill = FALSE, size = FALSE, colour = FALSE) +
     labs(x = "Predicted values", y = "Real values",
          title = paste("Confusion Matrix", ifelse(
@@ -886,6 +888,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
                                            labels = rev(values$label)))
   
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
+  if (!is.na(model_name)) p <- p + labs(caption = model_name)
   
   if (!is.na(subdir)) {
     dir.create(file.path(getwd(), subdir), recursive = TRUE)

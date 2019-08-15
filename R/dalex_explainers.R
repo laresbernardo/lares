@@ -6,6 +6,7 @@
 #' @family Interpretability
 #' @param df Dataframe. Must contain all columns and predictions
 #' @param model Model object
+#' @param variable Character. Variable's column name
 #' @param model_name Character. Name of your model for plots
 #' @param pred Function. Custom function for calculating predictions.
 #' Default function will be H2O's function to predict

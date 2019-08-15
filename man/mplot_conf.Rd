@@ -5,7 +5,8 @@
 \title{Confussion Matrix Plot}
 \usage{
 mplot_conf(tag, score, thresh = 0.5, abc = TRUE, subtitle = NA,
-  save = FALSE, subdir = NA, file_name = "viz_conf_mat.png")
+  model_name = NA, save = FALSE, subdir = NA,
+  file_name = "viz_conf_mat.png")
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -18,6 +19,8 @@ confusion matrix.}
 \item{abc}{Boolean. Arrange columns and rows alphabetically?}
 
 \item{subtitle}{Character. Subtitle to show in plot}
+
+\item{model_name}{Character. Model's name}
 
 \item{save}{Boolean. Save output plot into working directory}
 

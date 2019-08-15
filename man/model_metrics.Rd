@@ -5,7 +5,7 @@
 \title{Model Metrics and Performance}
 \usage{
 model_metrics(tag, score, multis = NA, abc = TRUE, thresh = 10,
-  thresh_cm = 0.5, plots = TRUE, subtitle = NA)
+  thresh_cm = 0.5, model_name = NA, plots = TRUE, subtitle = NA)
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -24,6 +24,8 @@ have in 'tag' (more than: regression; less than: classification)}
 
 \item{thresh_cm}{Numeric. Value to splits the results for the 
 confusion matrix. Range of values: (0-1)}
+
+\item{model_name}{Character. Model's name}
 
 \item{plots}{Boolean. Include plots?}
 
