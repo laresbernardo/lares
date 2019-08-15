@@ -95,7 +95,6 @@ mplot_density <- function(tag,
       theme_lares2(pal = 1, legend = "top")
     
     if (!is.na(model_name)) p <- p + labs(caption = model_name)
-    
     if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
     
   }
@@ -171,7 +170,6 @@ mplot_importance <- function(var,
   }
   
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
-  
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   
   if (save) {
@@ -324,7 +322,6 @@ mplot_cuts <- function(score,
     theme_lares2()
   
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
-  
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
   
   if (!is.na(subdir)) {
@@ -334,7 +331,7 @@ mplot_cuts <- function(score,
   
   if (save) p <- p + ggsave(file_name, width = 6, height = 6)
   
-  if(table) {
+  if (table) {
     return(deciles)
   } else {
     return(p) 
@@ -421,7 +418,6 @@ mplot_cuts_error <- function(tag,
     theme_lares2(bg_colour = "white")
   
   if (!is.na(title)) p_abs <- p_abs + labs(title = title)
-  
   if (!is.na(model_name)) pd_error <- pd_error + labs(caption = model_name)
   
   p <- arrangeGrob(

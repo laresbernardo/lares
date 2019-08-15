@@ -250,7 +250,7 @@ h2o_automl <- function(df, y = "tag",
     score = results$scores_test$score,
     multis = multis,
     thresh = thresh,
-    model_name = results$model_name,
+    model_name = as.vector(m@model_id),
     plots = plots)
   if (model_type == "Classifier" & length(cats) == 2) 
     results[["max_metrics"]] <- m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores
