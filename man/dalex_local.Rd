@@ -4,12 +4,16 @@
 \alias{dalex_local}
 \title{DALEX Local}
 \usage{
-dalex_local(explainer, row, plot = TRUE, print = TRUE)
+dalex_local(explainer, observation = NA, row = 1, plot = TRUE,
+  print = TRUE)
 }
 \arguments{
 \item{explainer}{Object. Result from dalex_explainer function}
 
-\item{row}{Dataframe. An observation which you want to study}
+\item{observation}{Data.frame. If you want to use an observation
+that was not in the original explainer function, add here. Else, use row}
+
+\item{row}{Dataframe. Row number from the data.frame used in explainer}
 
 \item{plot}{Boolean. Do you wish to see the results plot?}
 

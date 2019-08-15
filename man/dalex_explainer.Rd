@@ -5,7 +5,7 @@
 \title{DALEX Explainer}
 \usage{
 dalex_explainer(df, model, variable = "tag", model_name = NULL,
-  pred = NA)
+  pred = NA, ignore = NA)
 }
 \arguments{
 \item{df}{Dataframe. Must contain all columns and predictions}
@@ -18,6 +18,8 @@ dalex_explainer(df, model, variable = "tag", model_name = NULL,
 
 \item{pred}{Function. Custom function for calculating predictions.
 Default function will be H2O's function to predict}
+
+\item{ignore}{Character vector. Which columns should be ignored?}
 }
 \description{
 DALEX library function to create an explainer object

@@ -219,8 +219,8 @@ h2o_automl <- function(df, y = "tag",
   }
   
   # GET PREDICTIONS
-  if (!quiet) message(">>> Running predictions...")
-  global <- rbind(test, train) %>%
+  if (!quiet) message(paste0(">>> Running predictions for ", y, "..."))
+  global <- rbind(test, train) %>% rename(y = tag) %>%
     mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
   predictions <- quiet(h2o_predict_model(global, m))
   global <- cbind(global, predictions)

@@ -4,7 +4,7 @@
 \alias{loglossBinary}
 \title{Loggarithmic Loss Function for Binary Models}
 \usage{
-loglossBinary(tag, score, eps = 1e-07)
+loglossBinary(tag, score, eps = 0.0000001)
 }
 \arguments{
 \item{tag}{Vector. Real known label}

@@ -10,16 +10,23 @@
 #' @param model_name Character. Name of your model for plots
 #' @param pred Function. Custom function for calculating predictions.
 #' Default function will be H2O's function to predict
+#' @param ignore Character vector. Which columns should be ignored?
 #' @export
-dalex_explainer <- function(df, model, variable = "tag", model_name = NULL, pred = NA) {
+dalex_explainer <- function(df, model, variable = "tag", model_name = NULL, 
+                            pred = NA, ignore = NA) {
   
   try_require("DALEX")
+  
+  df <- data.frame(df)
   
   if (!variable %in% colnames(df))
     stop(paste("The variable", variable, "is not in your data.frame"))
   
-  x_valid <- df[-c(variable)]
-  y_valid <- as.numeric(df[c(variable)])
+  if (!is.na(ignore)[1])
+    df <- df[,!(colnames(df) %in% ignore)]
+  
+  x_valid <- select(df, -var)
+  y_valid <- as.vector(df[variable])
   
   if (is.na(pred)) {
     pred <- function(model, newdata) {
@@ -35,8 +42,7 @@ dalex_explainer <- function(df, model, variable = "tag", model_name = NULL, pred
     data = x_valid,
     y = y_valid,
     predict_function = pred,
-    label = model_name
-  )
+    label = model_name)
   
   return(explainer)
   
@@ -50,16 +56,23 @@ dalex_explainer <- function(df, model, variable = "tag", model_name = NULL, pred
 #' 
 #' @family Interpretability
 #' @param explainer Object. Result from dalex_explainer function
-#' @param row Dataframe. An observation which you want to study
+#' @param observation Data.frame. If you want to use an observation
+#' that was not in the original explainer function, add here. Else, use row
+#' @param row Dataframe. Row number from the data.frame used in explainer
 #' @param plot Boolean. Do you wish to see the results plot?
 #' @param print Boolean. Do you wish to see the results table?
 #' @export
-dalex_local <- function(explainer, row, plot = TRUE, print = TRUE) {
+dalex_local <- function(explainer, observation = NA, row = 1, plot = TRUE, print = TRUE) {
 
   try_require("DALEX")
   
-  individual <- data.frame(row)
-  breakdown <- prediction_breakdown(explainer, observation = individual)
+  if (is.na(observation)) {
+    observation <- explainer$data[row,] 
+  } else {
+    observation <- select(observation, colnames(explainer$data))
+  }
+  
+  breakdown <- prediction_breakdown(explainer, observation = observation)
   
   if (plot)
     print(plot(breakdown))
