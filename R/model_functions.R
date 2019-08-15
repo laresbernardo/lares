@@ -199,10 +199,27 @@ h2o_automl <- function(df, y = "tag",
   if (!quiet) print(aml@leaderboard[,1:3])
   flow <- "http://localhost:54321/flow/index.html"
   if (!quiet) message("Check results in H2O Flow's nice interface: ", flow)
+  # Best model from leaderboard
+  m <- h2o.getModel(as.vector(aml@leaderboard$model_id[1]))
+  
+  # VARIABLES IMPORTANCES
+  if (sum(grepl("Stacked", as.vector(m@model_id))) > 0) 
+    stacked <- TRUE else stacked <- FALSE
+  if (!stacked) {
+    imp <- data.frame(h2o.varimp(m)) %>%
+      {if ("names" %in% colnames(.)) 
+        rename(., "variable" = "names", "importance" = "coefficients") else .} %>%
+      {if ("percentage" %in% colnames(.)) 
+        rename(., "importance" = "percentage") else .}
+    noimp <- filter(imp, importance < 0.015) %>% arrange(desc(importance))
+    if (nrow(noimp) > 0) {
+      which <- vector2text(noimp$variable)
+      if (!quiet) message(paste("The following variables were NOT important:", which))
+    } 
+  }
   
   # GET PREDICTIONS
   if (!quiet) message(">>> Running predictions...")
-  m <- h2o.getModel(as.vector(aml@leaderboard$model_id[1])) # Best model
   global <- rbind(test, train) %>%
     mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
   predictions <- quiet(h2o_predict_model(global, m))
@@ -222,25 +239,8 @@ h2o_automl <- function(df, y = "tag",
     }
   }
   
-  # VARIABLES IMPORTANCES
-  if (sum(grepl("Stacked", as.vector(m@model_id))) > 0) 
-    stacked <- TRUE else stacked <- FALSE
-  if (!stacked) {
-    imp <- data.frame(h2o.varimp(m)) %>%
-      {if ("names" %in% colnames(.)) 
-        rename(., "variable" = "names", "importance" = "coefficients") else .} %>%
-      {if ("percentage" %in% colnames(.)) 
-        rename(., "importance" = "percentage") else .}
-    noimp <- filter(imp, importance < 0.015) %>% arrange(desc(importance))
-    if (nrow(noimp) > 0) {
-      which <- vector2text(noimp$variable)
-      if (!quiet) message(paste("The following variables were NOT important:", which))
-    } 
-  }
-  
   # GET ALL RESULTS INTO A LIST
   results <- list()
-  
   results["model"] <- m
   results["scores_test"] <- data.frame(tag = as.vector(test$tag), scores)
   results[["metrics"]] <- model_metrics(
