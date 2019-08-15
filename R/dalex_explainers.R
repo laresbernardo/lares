@@ -25,7 +25,7 @@ dalex_explainer <- function(df, model, variable = "tag", model_name = NULL,
   if (!is.na(ignore)[1])
     df <- df[,!(colnames(df) %in% ignore)]
   
-  x_valid <- select(df, -var)
+  x_valid <- select(df, -variable)
   y_valid <- as.vector(df[variable])
   
   if (is.na(pred)) {

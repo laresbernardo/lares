@@ -222,7 +222,7 @@ h2o_automl <- function(df, y = "tag",
   if (!quiet) message(paste0(">>> Running predictions for ", y, "..."))
   global <- rbind(test, train) %>% 
     mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
-  names(global)[names(global) == "tag"] <- y
+  colnames(global)[colnames(global) == "tag"] <- y
   predictions <- quiet(h2o_predict_model(global, m))
   global <- cbind(global, predictions)
   if (sum(grepl(" ", cats)) > 0)
