@@ -220,8 +220,9 @@ h2o_automl <- function(df, y = "tag",
   
   # GET PREDICTIONS
   if (!quiet) message(paste0(">>> Running predictions for ", y, "..."))
-  global <- rbind(test, train) %>% rename(y = tag) %>%
+  global <- rbind(test, train) %>% 
     mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
+  names(global)[names(global) == "tag"] <- y
   predictions <- quiet(h2o_predict_model(global, m))
   global <- cbind(global, predictions)
   if (sum(grepl(" ", cats)) > 0)
@@ -256,7 +257,8 @@ h2o_automl <- function(df, y = "tag",
     results[["max_metrics"]] <- m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores
   if (!stacked) results[["importance"]] <- imp
   
-  results[["datasets"]] <- list(global = global, test = test)
+  results[["datasets"]] <- list(
+    global = global, test = filter(global, train_test == "test"))
   results[["scoring_history"]] <- data.frame(m@model$scoring_history)
   results[["parameters"]] <- m@parameters
   results[["type"]] <- model_type
