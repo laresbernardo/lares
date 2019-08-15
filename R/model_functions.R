@@ -237,12 +237,14 @@ h2o_automl <- function(df, y = "tag",
       colnames(scores)[1] <- "score"
       multis <- select(scores, -score)
     }
+  } else {
+    scores <- data.frame(score = as.vector(scores))
   }
   
   # GET ALL RESULTS INTO A LIST
   results <- list()
-  results["model"] <- m
-  results["scores_test"] <- data.frame(tag = as.vector(test$tag), scores)
+  results[["model"]] <- m
+  results[["scores_test"]] <- cbind(tag = as.vector(test$tag), scores)
   results[["metrics"]] <- model_metrics(
     tag = results$scores_test$tag, 
     score = results$scores_test$score,
@@ -251,18 +253,18 @@ h2o_automl <- function(df, y = "tag",
     model_name = results$model_name,
     plots = plots)
   if (model_type == "Classifier" & length(cats) == 2) 
-    results["max_metrics"] <- m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores
-  if (!stacked) results["importance"] <- imp
+    results[["max_metrics"]] <- m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores
+  if (!stacked) results[["importance"]] <- imp
   
-  results["datasets"] <- list(global = global, test = test)
-  results["scoring_history"] <- data.frame(m@model$scoring_history)
-  results["parameters"] <- m@parameters
-  results["type"] <- model_type
-  results["model_name"] <- as.vector(m@model_id)
-  results["algorithm"] <- m@algorithm
-  results["leaderboard"] <- aml@leaderboard
-  results["project"] <- project
-  results["seed"] <- seed
+  results[["datasets"]] <- list(global = global, test = test)
+  results[["scoring_history"]] <- data.frame(m@model$scoring_history)
+  results[["parameters"]] <- m@parameters
+  results[["type"]] <- model_type
+  results[["model_name"]] <- as.vector(m@model_id)
+  results[["algorithm"]] <- m@algorithm
+  results[["leaderboard"]] <- aml@leaderboard
+  results[["project"]] <- project
+  results[["seed"]] <- seed
   
   if (plots) {
     if (!quiet) message(">>> Generating plots...")

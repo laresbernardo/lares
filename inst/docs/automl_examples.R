@@ -21,7 +21,7 @@ plot(r$plot$dashboard)
 r$metrics
 
 # Regression
-r <- dft %>% h2o_automl(y = "Fare", max_models = 3)
+r <- dft %>% h2o_automl(y = "Fare", ignore = c("Pclass","Cabin"), max_models = 3)
 plot(r$plot$dashboard)
 r$metrics
 
