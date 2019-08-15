@@ -68,7 +68,6 @@ mplot_density <- function(tag,
     p3 <- p3 + theme(plot.margin = margin(0, 5, 5, 0))
     
     if (!is.na(subtitle)) p1 <- p1 + labs(subtitle = subtitle)
-    
     if (!is.na(model_name)) p1 <- p1 + labs(caption = model_name)
     
     if (!is.na(subdir)) {

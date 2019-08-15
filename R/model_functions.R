@@ -244,7 +244,7 @@ h2o_automl <- function(df, y = "tag",
   # GET ALL RESULTS INTO A LIST
   results <- list()
   results[["model"]] <- m
-  results[["scores_test"]] <- cbind(tag = as.vector(test$tag), scores)
+  results[["scores_test"]] <- data.frame(tag = as.vector(test$tag), scores)
   results[["metrics"]] <- model_metrics(
     tag = results$scores_test$tag, 
     score = results$scores_test$score,
