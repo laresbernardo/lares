@@ -199,12 +199,75 @@ h2o_automl <- function(df, y = "tag",
   if (!quiet) print(aml@leaderboard[,1:3])
   flow <- "http://localhost:54321/flow/index.html"
   if (!quiet) message("Check results in H2O Flow's nice interface: ", flow)
-  # Best model from leaderboard
-  m <- h2o.getModel(as.vector(aml@leaderboard$model_id[1]))
+  
+  # GET RESULTS AND PERFORMANCE
+  results <- h2o_results(
+    aml, test, train, y, which = 1, model_type, plots, project, seed, quiet)
+  
+  if (save) {
+    export_results(results, subdir = subdir, thresh = thresh)
+    if (!quiet) message("Results and model files exported succesfully!")
+  }
+  
+  if (!quiet) message(paste0(
+    "Process duration: ", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
+  
+  print(results$metrics$metrics)
+  
+  if (alarm & !quiet) {
+    try_require("beepr", stop = FALSE)
+    beep() 
+  }
+  
+  return(results)
+  
+}
+
+
+####################################################################
+#' Automated H2O's AutoML Results
+#'
+#' @family Machine Learning
+#' @param aml H2O Leaderboard
+#' @param test,train Dataframe. Must have the same columns
+#' @param y Character. Name of the independent variable
+#' @param which Integer. Which model to select from aml
+#' @param model_type Character. Select "Classifier" or "Regression"
+#' @param plots Boolean. Create plots objects?
+#' @param project Character. Your project's name
+#' @param seed Integer. Set a seed for reproducibility. AutoML can only 
+#' guarantee reproducibility if max_models is used because max_time is 
+#' resource limited.
+#' @param quiet Boolean. Quiet messages, warnings, recommendations?
+#' @export
+h2o_results <- function(aml, test, train, y = "tag", which = 1,
+                        model_type, plots = TRUE, project = NULL, 
+                        seed = 0, quiet = FALSE) {
+  
+  # MODEL TYPE
+  types <- c("Classifier", "Regression")
+  if (!model_type %in% types) 
+    stop(paste("model_type must be any of:", vector2text(types)))
+  if (model_type == types[1]) thresh <- 100 else thresh <- 0
+  
+  # GLOBAL DATAFRAME FROM TEST AND TRAIN
+  if (!all(colnames(test) == colnames(train)))
+      stop("All columns from test and train datasets must be exactly the same")
+  global <- rbind(test, train) %>% 
+    mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
+  colnames(global)[colnames(global) == "tag"] <- y
+  cats <- unique(global[,colnames(global) == y])
+  
+  # SELECT MODEL FROM h2o_automl()
+  # Note: Best model from leaderboard is which = 1
+  m <- h2o.getModel(as.vector(aml@leaderboard$model_id[which]))    
+  if (!quiet) message(paste("Model selected:", as.vector(m@model_id)))
   
   # VARIABLES IMPORTANCES
-  if (sum(grepl("Stacked", as.vector(m@model_id))) > 0) 
-    stacked <- TRUE else stacked <- FALSE
+  if (sum(grepl("Stacked", as.vector(m@model_id))) > 0) {
+    stacked <- TRUE
+    if (!quiet) message("NOTE: No importance features for Stacked Ensemble Models")
+  } else stacked <- FALSE
   if (!stacked) {
     imp <- data.frame(h2o.varimp(m)) %>%
       {if ("names" %in% colnames(.)) 
@@ -214,15 +277,12 @@ h2o_automl <- function(df, y = "tag",
     noimp <- filter(imp, importance < 0.015) %>% arrange(desc(importance))
     if (nrow(noimp) > 0) {
       which <- vector2text(noimp$variable)
-      if (!quiet) message(paste("The following variables were NOT important:", which))
+      if (!quiet) message(paste("NOTE: The following variables were NOT important:", which))
     } 
   }
   
   # GET PREDICTIONS
   if (!quiet) message(paste0(">>> Running predictions for ", y, "..."))
-  global <- rbind(test, train) %>% 
-    mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
-  colnames(global)[colnames(global) == "tag"] <- y
   predictions <- quiet(h2o_predict_model(global, m))
   global <- cbind(global, predictions)
   if (sum(grepl(" ", cats)) > 0)
@@ -274,7 +334,8 @@ h2o_automl <- function(df, y = "tag",
     plots[["dashboard"]] <- mplot_full(
       tag = results$scores_test$tag,
       score = results$scores_test$score,
-      multis = multis, thresh = thresh,
+      multis = multis, 
+      thresh = thresh,
       subtitle = results$project,
       model_name = results$model_name,
       plot = FALSE)
@@ -287,21 +348,6 @@ h2o_automl <- function(df, y = "tag",
     plots <- append(plots, rev(as.list(results$metrics$plots)))
     results$plots <- plots
   } 
-  
-  if (save) {
-    export_results(results, subdir = subdir, thresh = thresh)
-    if (!quiet) message("Results and model files exported succesfully!")
-  }
-  
-  if (!quiet) message(paste0(
-    "Process duration: ", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
-  
-  print(results$metrics$metrics)
-  
-  if (alarm & !quiet) {
-    try_require("beepr", stop = FALSE)
-    beep() 
-  }
   
   return(results)
   
@@ -441,7 +487,6 @@ h2o_selectmodel <- function(results, which_model = 1) {
 #' @param txt Boolean. Do you wish to export the txt results?
 #' @param rds Boolean. Do you wish to export the RDS results?
 #' @param binary Boolean. Do you wish to export the Binary model?
-#' @param pojo Boolean. Do you wish to export the POJO model?
 #' @param mojo Boolean. Do you wish to export the MOJO model?
 #' @param sample_size Integer. How many example rows do you want to show?
 #' @param subdir Character. In which directory do you wish to save the results?
@@ -452,7 +497,6 @@ export_results <- function(results,
                            txt = TRUE, 
                            rds = TRUE, 
                            binary = TRUE,
-                           pojo = TRUE, 
                            mojo = TRUE, 
                            sample_size = 10,
                            subdir = NA,
@@ -473,8 +517,8 @@ export_results <- function(results,
     if (rds) saveRDS(results, file = paste0(subdir, "/results.rds")) 
     
     # Export Model as POJO & MOJO for Production
-    if (pojo) h2o.download_pojo(results$model, path = subdir)  
     if (mojo) h2o.download_mojo(results$model, path = subdir)  
+    #if (pojo) h2o.download_pojo(results$model, path = subdir)  
     
     # Export Binary
     if (mojo) h2o.saveModel(results$model, path = subdir, force = TRUE)

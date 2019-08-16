@@ -96,7 +96,8 @@ if (getRversion() >= "2.15.1")
       "Cost","CumCost","CumDividend","CumInvested","CumQuant","CumROI","CumValue",
       "Each","ROI","ValueSector","etf_sector_plot","ma1","ma2","amount_spent","model",
       "date_start","spend","adcreatives","created_time","list_id","aux","ds","prophet",
-      "fit.prophet","prophet_plot_components","add_country_holidays","make_future_dataframe"))
+      "fit.prophet","prophet_plot_components","add_country_holidays",
+      "make_future_dataframe","train_test"))
 
 #' Pipe operator
 #' @name lares-exports

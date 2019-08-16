@@ -5,8 +5,8 @@
 \title{Export h2o_automl's Results}
 \usage{
 export_results(results, thresh = 10, txt = TRUE, rds = TRUE,
-  binary = TRUE, pojo = TRUE, mojo = TRUE, sample_size = 10,
-  subdir = NA, save = TRUE)
+  binary = TRUE, mojo = TRUE, sample_size = 10, subdir = NA,
+  save = TRUE)
 }
 \arguments{
 \item{results}{Object. h2o_automl output}
@@ -20,8 +20,6 @@ have in 'tag' (more than: regression; less than: classification)}
 \item{rds}{Boolean. Do you wish to export the RDS results?}
 
 \item{binary}{Boolean. Do you wish to export the Binary model?}
-
-\item{pojo}{Boolean. Do you wish to export the POJO model?}
 
 \item{mojo}{Boolean. Do you wish to export the MOJO model?}
 
@@ -42,12 +40,12 @@ Other Machine Learning: \code{\link{ROC}},
   \code{\link{h2o_predict_MOJO}},
   \code{\link{h2o_predict_binary}},
   \code{\link{h2o_predict_model}},
-  \code{\link{h2o_selectmodel}}, \code{\link{impute}},
-  \code{\link{iter_seeds}}, \code{\link{model_metrics}},
-  \code{\link{mplot_conf}}, \code{\link{mplot_cuts_error}},
-  \code{\link{mplot_cuts}}, \code{\link{mplot_density}},
-  \code{\link{mplot_full}}, \code{\link{mplot_gain}},
-  \code{\link{mplot_importance}},
+  \code{\link{h2o_results}}, \code{\link{h2o_selectmodel}},
+  \code{\link{impute}}, \code{\link{iter_seeds}},
+  \code{\link{model_metrics}}, \code{\link{mplot_conf}},
+  \code{\link{mplot_cuts_error}}, \code{\link{mplot_cuts}},
+  \code{\link{mplot_density}}, \code{\link{mplot_full}},
+  \code{\link{mplot_gain}}, \code{\link{mplot_importance}},
   \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
   \code{\link{mplot_response}}, \code{\link{mplot_roc}},
   \code{\link{mplot_splits}}, \code{\link{msplit}}

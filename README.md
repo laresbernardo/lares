@@ -12,6 +12,8 @@ You are most welcome to install, use, and/or comment on any of the code and func
 ```{r}
 # install.packages('devtools')
 devtools::install_github("laresbernardo/lares")
+# User friendly update
+lares::updateLares()
 ```
 
 **CRAN NOTE**: I currently don't have planned to submit the library into CRAN, eventhough it passes all its quality tests (and I'm a huge fan). I think `lares` is more of an everyday useful *package* rather than a "specialized for a specific task" *library*. It has too many useful and various kinds of functions, from NLP to querying APIs to plotting Machine Learning results to market stocks and portfolio reports. I gladly share my code with the community and encourage you to use/comment/share it, but I strongly think that CRAN is not aiming for this kind of libraries in their repertoire.

@@ -4,11 +4,12 @@ library(dplyr)
 data(dft)
 dft <- dft %>% select(-Ticket, -PassengerId)
 
-# Correlations
-dft %>% corr_cross()
-dft %>% corr_var(Survived)
-dft %>% distr(Survived, Age, na.rm = TRUE)
-dft %>% distr(Survived, Pclass, abc = TRUE)
+# # Correlations
+# dft %>% corr_cross()
+# dft %>% corr_cross(type = 2)
+# dft %>% corr_var(Survived)
+# dft %>% distr(Survived, Age, na.rm = TRUE)
+# dft %>% distr(Survived, Pclass, abc = TRUE)
 
 # Classification: 2 class
 r <- dft %>% h2o_automl(y = "Survived", max_models = 2, exclude_algos = NULL)

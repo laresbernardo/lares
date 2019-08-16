@@ -18,7 +18,7 @@
 #' @export
 mplot_density <- function(tag, 
                           score, 
-                          thresh = 5,
+                          thresh = 100,
                           model_name = NA, 
                           subtitle = NA, 
                           save = FALSE, 
@@ -75,9 +75,10 @@ mplot_density <- function(tag,
       file_name <- paste(subdir, file_name, sep = "/")
     }
     
-    p <- arrangeGrob(p1, p2, p3, 
-                     ncol = 2, nrow = 2, heights = 2:1,
-                     layout_matrix = rbind(c(1,1), c(2,3)))
+    p <- gridExtra::arrangeGrob(
+      p1, p2, p3, 
+      ncol = 2, nrow = 2, heights = 2:1,
+      layout_matrix = rbind(c(1,1), c(2,3)))
     
   } else {
     
@@ -741,12 +742,10 @@ mplot_full <- function(tag,
     p4 <- mplot_cuts(score = score) +
       theme(plot.margin = margin(-3, 0, 5, 8))
     
-    
     p <- arrangeGrob(
       p1, p2, p3, p4,
       widths = c(1.3,1),
-      layout_matrix = rbind(c(1,2), c(1,2), 
-                            c(1,3), c(4,3)))
+      layout_matrix = rbind(c(1,2), c(1,2), c(1,3), c(4,3)))
   }
   
   # Multi-Categorical Models
@@ -851,7 +850,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
     x = as.numeric(factor(pred, levels = labels)), 
     fill = aux, size = n, label = label)) +
     geom_tile() + theme_lares2() +
-    geom_text(colour = "white") + 
+    geom_text(colour = "white", lineheight = .8) + 
     scale_size(range = c(2.8, 3.5)) + coord_equal() + 
     guides(fill = FALSE, size = FALSE, colour = FALSE) +
     labs(x = "Predicted values", y = "Real values",

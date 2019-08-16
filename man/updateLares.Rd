@@ -4,14 +4,12 @@
 \alias{updateLares}
 \title{Update the library}
 \usage{
-updateLares(local = FALSE, force = FALSE, restart = FALSE)
+updateLares(local = FALSE, force = FALSE)
 }
 \arguments{
 \item{local}{Boolean. Install package with local files (TRUE) or Github repository}
 
 \item{force}{Boolean. Force install if needed}
-
-\item{restart}{Boolean. Restart session after re-installing the library}
 }
 \description{
 This function lets the user update from repository or local source.

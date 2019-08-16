@@ -4,8 +4,9 @@
 \alias{mplot_density}
 \title{Density plot for discrete and continuous values}
 \usage{
-mplot_density(tag, score, thresh = 5, model_name = NA, subtitle = NA,
-  save = FALSE, subdir = NA, file_name = "viz_distribution.png")
+mplot_density(tag, score, thresh = 100, model_name = NA,
+  subtitle = NA, save = FALSE, subdir = NA,
+  file_name = "viz_distribution.png")
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -37,11 +38,12 @@ Other Machine Learning: \code{\link{ROC}},
   \code{\link{h2o_predict_MOJO}},
   \code{\link{h2o_predict_binary}},
   \code{\link{h2o_predict_model}},
-  \code{\link{h2o_selectmodel}}, \code{\link{impute}},
-  \code{\link{iter_seeds}}, \code{\link{model_metrics}},
-  \code{\link{mplot_conf}}, \code{\link{mplot_cuts_error}},
-  \code{\link{mplot_cuts}}, \code{\link{mplot_full}},
-  \code{\link{mplot_gain}}, \code{\link{mplot_importance}},
+  \code{\link{h2o_results}}, \code{\link{h2o_selectmodel}},
+  \code{\link{impute}}, \code{\link{iter_seeds}},
+  \code{\link{model_metrics}}, \code{\link{mplot_conf}},
+  \code{\link{mplot_cuts_error}}, \code{\link{mplot_cuts}},
+  \code{\link{mplot_full}}, \code{\link{mplot_gain}},
+  \code{\link{mplot_importance}},
   \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
   \code{\link{mplot_response}}, \code{\link{mplot_roc}},
   \code{\link{mplot_splits}}, \code{\link{msplit}}
