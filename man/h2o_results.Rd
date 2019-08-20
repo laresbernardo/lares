@@ -4,17 +4,17 @@
 \alias{h2o_results}
 \title{Automated H2O's AutoML Results}
 \usage{
-h2o_results(aml, test, train, y = "tag", which = 1, model_type,
+h2o_results(h2o_object, test, train, y = "tag", which = 1, model_type,
   plots = TRUE, project = NULL, seed = 0, quiet = FALSE)
 }
 \arguments{
-\item{aml}{H2O Leaderboard}
+\item{h2o_object}{H2O Leaderboard (H2OFrame) or Model (h2o)}
 
 \item{test, train}{Dataframe. Must have the same columns}
 
 \item{y}{Character. Name of the independent variable}
 
-\item{which}{Integer. Which model to select from aml}
+\item{which}{Integer. Which model to select from leaderboard}
 
 \item{model_type}{Character. Select "Classifier" or "Regression"}
 

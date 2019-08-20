@@ -1,40 +1,37 @@
 ####################################################################
-#' DALEX Explainer
+#' DALEX Explainer for H2O
 #' 
 #' DALEX library function to create an explainer object
 #' 
 #' @family Interpretability
 #' @param df Dataframe. Must contain all columns and predictions
 #' @param model Model object
-#' @param variable Character. Variable's column name
-#' @param model_name Character. Name of your model for plots
-#' @param pred Function. Custom function for calculating predictions.
-#' Default function will be H2O's function to predict
+#' @param y Character. Variable's column name
 #' @param ignore Character vector. Which columns should be ignored?
 #' @export
-dalex_explainer <- function(df, model, variable = "tag", model_name = NULL, 
-                            pred = NA, ignore = NA) {
+dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
   
   try_require("DALEX")
   
+  if (!any(grepl("H2O", class(m))))
+    stop("This function currently works with h2o models only!")
+  
   df <- data.frame(df)
   
-  if (!variable %in% colnames(df))
-    stop(paste("The variable", variable, "is not in your data.frame"))
+  if (!y %in% colnames(df))
+    stop(paste("The y value", y, "is not in your data.frame"))
   
   if (!is.na(ignore)[1])
     df <- df[,!(colnames(df) %in% ignore)]
   
-  x_valid <- select(df, -variable)
-  y_valid <- as.vector(df[variable])
+  x_valid <- select(df, -y)
+  y_valid <- df[y][,1]
   
-  if (is.na(pred)) {
-    pred <- function(model, newdata) {
-      try_require("h2o")
-      h2o.no_progress()
-      results <- data.frame(h2o.predict(model, as.h2o(newdata)))
-      return(results[[3L]])
-    }
+  pred <- function(model, newdata) {
+    try_require("h2o")
+    h2o.no_progress()
+    results <- as.data.frame(h2o.predict(model, as.h2o(newdata)))
+    return(results[[3L]])
   }
   
   explainer <- explain(
@@ -42,7 +39,7 @@ dalex_explainer <- function(df, model, variable = "tag", model_name = NULL,
     data = x_valid,
     y = y_valid,
     predict_function = pred,
-    label = model_name)
+    label = model@model_id)
   
   return(explainer)
   
@@ -121,6 +118,7 @@ dalex_residuals <- function(explainer) {
 dalex_variable <- function(explainer, variable, force_class = NA) {
   
   try_require("DALEX")
+  try_require("pdp")
   
   classes <- c('factor','numeric')
   if (force_class %in% classes) {

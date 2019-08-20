@@ -10,9 +10,6 @@
 updateLares <- function(local = FALSE, force = FALSE) {
   
   start <- Sys.time()
-  message(paste(start,"| Started installation..."))
-  
-  if (length(find.package("lares", quiet = TRUE)) > 0) aux <- TRUE
   
   if (local) {
     devtools::install("~/Dropbox (Personal)/Documentos/R/Github/lares")
@@ -21,8 +18,7 @@ updateLares <- function(local = FALSE, force = FALSE) {
   }
   #if (restart) .rs.restartR()
   
-  if (aux) message("Restart your current session for update to work properly")
-  
+  message("Restart your current session for update to work properly")
   aux <- round(difftime(Sys.time(), start, units = "secs"), 2)
   message(paste(Sys.time(), "| Duration:", aux, "s"))
 }

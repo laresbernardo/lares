@@ -228,10 +228,10 @@ h2o_automl <- function(df, y = "tag",
 #' Automated H2O's AutoML Results
 #'
 #' @family Machine Learning
-#' @param aml H2O Leaderboard
+#' @param h2o_object H2O Leaderboard (H2OFrame) or Model (h2o)
 #' @param test,train Dataframe. Must have the same columns
 #' @param y Character. Name of the independent variable
-#' @param which Integer. Which model to select from aml
+#' @param which Integer. Which model to select from leaderboard
 #' @param model_type Character. Select "Classifier" or "Regression"
 #' @param plots Boolean. Create plots objects?
 #' @param project Character. Your project's name
@@ -240,7 +240,7 @@ h2o_automl <- function(df, y = "tag",
 #' resource limited.
 #' @param quiet Boolean. Quiet messages, warnings, recommendations?
 #' @export
-h2o_results <- function(aml, test, train, y = "tag", which = 1,
+h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
                         model_type, plots = TRUE, project = NULL, 
                         seed = 0, quiet = FALSE) {
   
@@ -259,9 +259,13 @@ h2o_results <- function(aml, test, train, y = "tag", which = 1,
   cats <- unique(global[,colnames(global) == y])
   
   # SELECT MODEL FROM h2o_automl()
-  # Note: Best model from leaderboard is which = 1
-  m <- h2o.getModel(as.vector(aml@leaderboard$model_id[which]))    
-  if (!quiet) message(paste("Model selected:", as.vector(m@model_id)))
+  if ("H2OFrame" %in% class(h2o_object)) {
+    # Note: Best model from leaderboard is which = 1
+    m <- h2o.getModel(as.vector(h2o_object@leaderboard$model_id[which]))     
+    if (!quiet) message(paste("Model selected:", as.vector(m@model_id)))
+  } else {
+    m <- h2o_object
+  }
   
   # VARIABLES IMPORTANCES
   if (sum(grepl("Stacked", as.vector(m@model_id))) > 0) {
@@ -324,7 +328,8 @@ h2o_results <- function(aml, test, train, y = "tag", which = 1,
   results[["type"]] <- model_type
   results[["model_name"]] <- as.vector(m@model_id)
   results[["algorithm"]] <- m@algorithm
-  results[["leaderboard"]] <- aml@leaderboard
+  if ("H2OFrame" %in% class(h2o_object))
+    results[["leaderboard"]] <- aml@leaderboard
   results[["project"]] <- project
   results[["seed"]] <- seed
   
