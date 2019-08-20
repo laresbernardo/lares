@@ -5,7 +5,7 @@
 \title{DALEX Local}
 \usage{
 dalex_local(explainer, observation = NA, row = 1, plot = TRUE,
-  print = TRUE)
+  print = TRUE, alarm = TRUE)
 }
 \arguments{
 \item{explainer}{Object. Result from dalex_explainer function}
@@ -18,9 +18,11 @@ that was not in the original explainer function, add here. Else, use row}
 \item{plot}{Boolean. Do you wish to see the results plot?}
 
 \item{print}{Boolean. Do you wish to see the results table?}
+
+\item{alarm}{Boolean. Ping an alarm when ready! Needs beepr installed}
 }
 \description{
-DALEX library function for local interpretations
+DALEX function for local interpretations
 }
 \seealso{
 Other Interpretability: \code{\link{dalex_explainer}},

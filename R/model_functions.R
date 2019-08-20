@@ -259,7 +259,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   cats <- unique(global[,colnames(global) == y])
   
   # SELECT MODEL FROM h2o_automl()
-  if ("H2OFrame" %in% class(h2o_object)) {
+  if (any(c("H2OFrame","H2OAutoML") %in% class(h2o_object))) {
     # Note: Best model from leaderboard is which = 1
     m <- h2o.getModel(as.vector(h2o_object@leaderboard$model_id[which]))     
     if (!quiet) message(paste("Model selected:", as.vector(m@model_id)))

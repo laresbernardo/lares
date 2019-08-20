@@ -10,7 +10,7 @@ dalex_residuals(explainer)
 \item{explainer}{Object. Result from dalex_explainer function}
 }
 \description{
-DALEX library function for residuals
+DALEX function for residuals
 }
 \seealso{
 Other Interpretability: \code{\link{dalex_explainer}},

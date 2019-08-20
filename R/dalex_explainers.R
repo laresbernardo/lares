@@ -1,7 +1,7 @@
 ####################################################################
 #' DALEX Explainer for H2O
 #' 
-#' DALEX library function to create an explainer object
+#' DALEX function to create an explainer object
 #' 
 #' @family Interpretability
 #' @param df Dataframe. Must contain all columns and predictions
@@ -27,7 +27,7 @@ dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
   x_valid <- select(df, -y)
   y_valid <- df[y][,1]
   
-  pred <- function(model, newdata) {
+  h2o <- function(model, newdata) {
     try_require("h2o")
     h2o.no_progress()
     results <- as.data.frame(h2o.predict(model, as.h2o(newdata)))
@@ -38,7 +38,7 @@ dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
     model = model,
     data = x_valid,
     y = y_valid,
-    predict_function = pred,
+    predict_function = h2o,
     label = model@model_id)
   
   return(explainer)
@@ -49,7 +49,7 @@ dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
 ####################################################################
 #' DALEX Local
 #' 
-#' DALEX library function for local interpretations
+#' DALEX function for local interpretations
 #' 
 #' @family Interpretability
 #' @param explainer Object. Result from dalex_explainer function
@@ -58,10 +58,13 @@ dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
 #' @param row Dataframe. Row number from the data.frame used in explainer
 #' @param plot Boolean. Do you wish to see the results plot?
 #' @param print Boolean. Do you wish to see the results table?
+#' @param alarm Boolean. Ping an alarm when ready! Needs beepr installed
 #' @export
-dalex_local <- function(explainer, observation = NA, row = 1, plot = TRUE, print = TRUE) {
+dalex_local <- function(explainer, observation = NA, row = 1, 
+                        plot = TRUE, print = TRUE, alarm = TRUE) {
 
   try_require("DALEX")
+  start <- Sys.time()
   
   if (is.na(observation)) {
     observation <- explainer$data[row,] 
@@ -77,6 +80,14 @@ dalex_local <- function(explainer, observation = NA, row = 1, plot = TRUE, print
   if (print)
     print(breakdown[1:10, 1:5])
   
+  if (alarm) {
+    try_require("beepr", stop = FALSE)
+    beep() 
+  }
+  
+  aux <- round(difftime(Sys.time(), start, units = "secs"), 2)
+  message(paste(Sys.time(), "| Duration:", aux, "s"))
+  
   return(breakdown)
   
 }
@@ -85,7 +96,7 @@ dalex_local <- function(explainer, observation = NA, row = 1, plot = TRUE, print
 ####################################################################
 #' DALEX Residuals
 #' 
-#' DALEX library function for residuals
+#' DALEX function for residuals
 #' 
 #' @family Interpretability
 #' @param explainer Object. Result from dalex_explainer function
@@ -107,18 +118,21 @@ dalex_residuals <- function(explainer) {
 ####################################################################
 #' DALEX Partial Dependency Plots (PDP)
 #' 
-#' DALEX library function for creating Partial Dependency Plots and study
+#' DALEX function for creating Partial Dependency Plots and study
 #' variable's responses vs independent vector.
 #' 
 #' @family Interpretability
 #' @param explainer Object. Result from dalex_explainer function
 #' @param variable Character. Which character do you wish to study?
-#' @param force_class Character. If you wish to force a class on your variable, which one do you need?
+#' @param force_class Character. If you wish to force a class on your 
+#' variable, which one do you need?
+#' @param alarm Boolean. Ping an alarm when ready! Needs beepr installed
 #' @export
-dalex_variable <- function(explainer, variable, force_class = NA) {
+dalex_variable <- function(explainer, variable, force_class = NA, alarm = TRUE) {
   
   try_require("DALEX")
   try_require("pdp")
+  start <- Sys.time()
   
   classes <- c('factor','numeric')
   if (force_class %in% classes) {
@@ -136,7 +150,16 @@ dalex_variable <- function(explainer, variable, force_class = NA) {
   }
   
   pdp <- variable_response(explainer, variable = variable, type = "pdp")
+  pdp <- pdp + theme_lares2(legend = "top")
   
-  return(plot(pdp))
+  if (alarm) {
+    try_require("beepr", stop = FALSE)
+    beep() 
+  }
+  
+  aux <- round(difftime(Sys.time(), start, units = "secs"), 2)
+  message(paste(Sys.time(), "| Duration:", aux, "s"))
+  
+  return(pdp)
   
 }

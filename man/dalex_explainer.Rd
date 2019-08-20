@@ -2,27 +2,21 @@
 % Please edit documentation in R/dalex_explainers.R
 \name{dalex_explainer}
 \alias{dalex_explainer}
-\title{DALEX Explainer}
+\title{DALEX Explainer for H2O}
 \usage{
-dalex_explainer(df, model, variable = "tag", model_name = NULL,
-  pred = NA, ignore = NA)
+dalex_explainer(df, model, y = "tag", ignore = NA)
 }
 \arguments{
 \item{df}{Dataframe. Must contain all columns and predictions}
 
 \item{model}{Model object}
 
-\item{variable}{Character. Variable's column name}
-
-\item{model_name}{Character. Name of your model for plots}
-
-\item{pred}{Function. Custom function for calculating predictions.
-Default function will be H2O's function to predict}
+\item{y}{Character. Variable's column name}
 
 \item{ignore}{Character vector. Which columns should be ignored?}
 }
 \description{
-DALEX library function to create an explainer object
+DALEX function to create an explainer object
 }
 \seealso{
 Other Interpretability: \code{\link{dalex_local}},

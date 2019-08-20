@@ -37,7 +37,7 @@ theme_lares2 <- function(font = "Arial Narrow",
   ret <- theme_minimal(base_size = size)
   
   # Check and set font
-  if (!font_exists(font)) {
+  if (!font_exists(font)[1]) {
     if (font != "Arial Narrow")
       warning(paste(font, "font is not installed, has other name, or can't be found..."))  
     font <- NA
