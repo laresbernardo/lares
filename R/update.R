@@ -10,7 +10,7 @@
 updateLares <- function(local = FALSE, force = FALSE) {
   
   start <- Sys.time()
-  message(paste(start, "| Started installation..."))
+  message(paste(start, "| Started update..."))
   
   if (local) {
     devtools::install("~/Dropbox (Personal)/Documentos/R/Github/lares")

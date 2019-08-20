@@ -8,7 +8,7 @@ h2o_results(h2o_object, test, train, y = "tag", which = 1, model_type,
   plots = TRUE, project = NULL, seed = 0, quiet = FALSE)
 }
 \arguments{
-\item{h2o_object}{H2O Leaderboard (H2OFrame) or Model (h2o)}
+\item{h2o_object}{H2O Leaderboard (H2OFrame/H2OAutoML) or Model (h2o)}
 
 \item{test, train}{Dataframe. Must have the same columns}
 

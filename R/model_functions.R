@@ -228,7 +228,7 @@ h2o_automl <- function(df, y = "tag",
 #' Automated H2O's AutoML Results
 #'
 #' @family Machine Learning
-#' @param h2o_object H2O Leaderboard (H2OFrame) or Model (h2o)
+#' @param h2o_object H2O Leaderboard (H2OFrame/H2OAutoML) or Model (h2o)
 #' @param test,train Dataframe. Must have the same columns
 #' @param y Character. Name of the independent variable
 #' @param which Integer. Which model to select from leaderboard
@@ -332,6 +332,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     results[["leaderboard"]] <- aml@leaderboard
   results[["project"]] <- project
   results[["seed"]] <- seed
+  results[["h2o"]] <- h2o.getVersion()
   
   if (plots) {
     if (!quiet) message(">>> Generating plots...")
