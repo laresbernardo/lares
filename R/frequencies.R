@@ -246,24 +246,28 @@ freqs_df <- function(df,
   if (length(which) > top) {
     no <- which[(top + 1):length(which)]
     if (!quiet) message(paste("Using the", top, "variables with less distinct categories.",
-                  length(no), "variables excluded:", vector2text(no)))
+                              length(no), "variables excluded:", vector2text(no)))
     which <- which[1:top]
   }
   
-  for (i in 1:length(which)) {
-    if (i == 1) out <- c()
-    iter <- which[i]
-    counter <- table(df[iter], useNA = "ifany")
-    res <- data.frame(value = names(counter), count = as.vector(counter), col = iter) %>%
-      arrange(desc(count))
-    out <- rbind(out, res)
+  if (length(which) > 0) {
+    for (i in 1:length(which)) {
+      if (i == 1) out <- c()
+      iter <- which[i]
+      counter <- table(df[iter], useNA = "ifany")
+      res <- data.frame(value = names(counter), count = as.vector(counter), col = iter) %>%
+        arrange(desc(count))
+      out <- rbind(out, res)
+    } 
+    out <- out %>% 
+      mutate(p = round(100 * count / nrow(df), 2)) %>%
+      mutate(value = ifelse(p > min * 100, as.character(value), "(HF)")) %>%
+      group_by(col, value) %>% summarise(p = sum(p), count = sum(count)) %>% 
+      arrange(desc(count)) %>% ungroup()
+  } else { 
+    warning("No relevant information to display regarding your data.frame!") 
+    return(invisible(NULL))
   }
-  
-  out <- out %>% 
-    mutate(p = round(100 * count / nrow(df), 2)) %>%
-    mutate(value = ifelse(p > min * 100, as.character(value), "(HF)")) %>%
-    group_by(col, value) %>% summarise(p = sum(p), count = sum(count)) %>% 
-    arrange(desc(count)) %>% ungroup()
   
   if (plot) {
     out <-  out %>%

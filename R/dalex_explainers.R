@@ -13,7 +13,7 @@ dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
   
   try_require("DALEX")
   
-  if (!any(grepl("H2O", class(m))))
+  if (!any(grepl("H2O", class(model))))
     stop("This function currently works with h2o models only!")
   
   df <- data.frame(df)
@@ -131,6 +131,7 @@ dalex_residuals <- function(explainer) {
 dalex_variable <- function(explainer, variable, force_class = NA, alarm = TRUE) {
   
   try_require("DALEX")
+  try_require("factorMerger")
   try_require("pdp")
   start <- Sys.time()
   
@@ -150,7 +151,6 @@ dalex_variable <- function(explainer, variable, force_class = NA, alarm = TRUE) 
   }
   
   pdp <- variable_response(explainer, variable = variable, type = "pdp")
-  pdp <- pdp + theme_lares2(legend = "top")
   
   if (alarm) {
     try_require("beepr", stop = FALSE)

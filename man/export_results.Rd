@@ -5,7 +5,7 @@
 \title{Export h2o_automl's Results}
 \usage{
 export_results(results, thresh = 10, txt = TRUE, rds = TRUE,
-  binary = TRUE, mojo = TRUE, sample_size = 10, subdir = NA,
+  binary = TRUE, mojo = TRUE, plots = TRUE, subdir = NA,
   save = TRUE)
 }
 \arguments{
@@ -23,7 +23,7 @@ have in 'tag' (more than: regression; less than: classification)}
 
 \item{mojo}{Boolean. Do you wish to export the MOJO model?}
 
-\item{sample_size}{Integer. How many example rows do you want to show?}
+\item{plots}{Boolean. Do you wish to export all plots into a Plots directory?}
 
 \item{subdir}{Character. In which directory do you wish to save the results?}
 

@@ -658,21 +658,16 @@ noPlot <- function(message = "Nothing to show here!") {
 #' @param name Character. File's name or sufix if vars is not null
 #' @param vars Vector. Variables in plot
 #' @param sep Character. Separator for variables
-#' @param width Numeric. Plot's width on file
-#' @param height Numeric. Plot's height on file
+#' @param width,height,res Numeric. Plot's width, height, and res (for grids)
 #' @param dir Character. In which directory do you wish to save 
 #' the results? Working directory as default.
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @param quiet Boolean. Display succesful message with filename when saved?
 #' @export
 export_plot <- function(p, 
-                        name = "plot", 
-                        vars = NA, 
-                        sep = ".vs.", 
-                        width = 8, 
-                        height = 6, 
-                        dir = getwd(),
-                        subdir = NA,
+                        name = "plot", vars = NA, sep = ".vs.", 
+                        width = 8, height = 6, res = 300,
+                        dir = getwd(), subdir = NA,
                         quiet = FALSE) {
   
   # File name
@@ -686,13 +681,21 @@ export_plot <- function(p,
   
   # Create directory if needed
   if (!is.na(subdir)) {
-    dir.create(file.path(dir, subdir), recursive = TRUE)
+    dir <- file.path(dir, subdir)
+    if (!dir.exists(dir))
+      dir.create(dir, recursive = TRUE)
     file_name <- paste(subdir, file_name, sep = "/")
   }
   
   # Export plot to file
-  p <- p + ggsave(file_name, width = width, height = height)
-  
+  if ("gg" %in% class(p))
+    p <- p + ggsave(file_name, width = width, height = height)
+  if ("grob" %in% class(p)) {
+    png(file_name, height = height * res, width = width * res, res = res)
+    plot(p)
+    dev.off() 
+  }
+    
   if (!quiet) message(paste("Plot saved as", file_name)) 
   
 }

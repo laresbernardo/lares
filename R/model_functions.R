@@ -328,7 +328,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   results[["type"]] <- model_type
   results[["model_name"]] <- as.vector(m@model_id)
   results[["algorithm"]] <- m@algorithm
-  if ("H2OFrame" %in% class(h2o_object))
+  if (any(c("H2OFrame","H2OAutoML") %in% class(h2o_object)))
     results[["leaderboard"]] <- aml@leaderboard
   results[["project"]] <- project
   results[["seed"]] <- seed
@@ -494,7 +494,7 @@ h2o_selectmodel <- function(results, which_model = 1) {
 #' @param rds Boolean. Do you wish to export the RDS results?
 #' @param binary Boolean. Do you wish to export the Binary model?
 #' @param mojo Boolean. Do you wish to export the MOJO model?
-#' @param sample_size Integer. How many example rows do you want to show?
+#' @param plots Boolean. Do you wish to export all plots into a Plots directory?
 #' @param subdir Character. In which directory do you wish to save the results?
 #' @param save Boolean. Do you wish to save/export results?
 #' @export
@@ -504,7 +504,7 @@ export_results <- function(results,
                            rds = TRUE, 
                            binary = TRUE,
                            mojo = TRUE, 
-                           sample_size = 10,
+                           plots = TRUE,
                            subdir = NA,
                            save = TRUE) {
   
@@ -513,53 +513,124 @@ export_results <- function(results,
     quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
     
     # We create a directory to save all our results
-    first <- signif(100*model$metrics$metrics[1,1], 4)
-    subdirname <- paste0(results$model_name, "_(", first, ")")  
-    if (!is.na(subdir)) 
-      subdir <- paste0(subdir, "/", subdirname) else subdir <- subdirname
-    dir.create(file.path(getwd(), subdir), recursive = TRUE)
-    
-    # Export Results List
-    if (rds) saveRDS(results, file = paste0(subdir, "/results.rds")) 
-    
-    # Export Model as POJO & MOJO for Production
-    if (mojo) h2o.download_mojo(results$model, path = subdir)  
-    #if (pojo) h2o.download_pojo(results$model, path = subdir)  
-    
-    # Export Binary
-    if (mojo) h2o.saveModel(results$model, path = subdir, force = TRUE)
+    dir <- file.path(paste0(getwd(), ifelse(is.na(subdir), "", subdir), "/", results$model_name))
+    if (!dir.exists(dir)) {
+      dir.create(dir) 
+      message(paste("Subdir", subdir, "created..."))
+    } else message("Directory already exists...")
     
     if (txt) {
-      tags <- results$datasets$global$tag
-      train <- tags[results$datasets$global$train_test == "train"]
-      test <- tags[results$datasets$global$train_test == "test"]
-      random_sample <- sample(1:length(test), sample_size)
-      
       results_txt <- list(
         "Project" = results$project,
-        "Model" = results$model_name,
-        "Dimensions" = 
-          list("Distribution" = table(tags),
-               "Test vs Train" = c(paste(round(100*length(test)/length(tags)),
-                                         round(100*length(train)/length(tags)), sep = " / "),
-                                   paste(length(test), length(train), sep = " vs. ")),
-               "Total" = length(tags)),
-        "Metrics" = model_metrics(results$scores_test$tag, 
-                                  results$scores_test$score, 
-                                  thresh = thresh,
-                                  plots = FALSE),
+        "Model Type" = results$type,
+        "Algorithm" = results$algorithm,
+        "Model name" = results$model_name,
+        "Train/Test" = table(results$datasets$global$train_test),
+        "Metrics" = model_metrics(results$scores_test$tag, results$scores_test$scores,
+                                  select(results$scores_test, -tag, -scores), 
+                                  thresh = thresh, plots = FALSE),
         "Variable Importance" = results$importance,
         "Model Results" = results$model,
-        "Models Leaderboard" = results$leaderboard,
-        "10 Scoring examples" = cbind(
-          real = results$scores_test$tag[random_sample],
-          score = results$scores_test$score[random_sample], 
-          results$datasets$test[random_sample, names(results$datasets$test) != "tag"])
+        "Leaderboard" = results$leaderboard,
+        "10 Scoring examples" = sample_n(results$datasets$global, 10)
       )
-      capture.output(results_txt, file = paste0(subdir, "/results.txt"))
+      capture.output(results_txt, file = paste0(dir, "/results.txt"))
+      message(">>> Summary test file saved...")
+    }
+    
+    # Export Results List
+    if (rds) {
+      saveRDS(results, file = paste0(dir, "/results.rds")) 
+      message(">>> RDS file exported...")
+    }
+    
+    
+    # Export Model as POJO & MOJO for Production
+    if (mojo) {
+      h2o.download_mojo(results$model, path = dir, get_genmodel_jar = TRUE)  
+      message(">>> MOJO (zip + jar files) exported...")
     } 
+    
+    #if (pojo) h2o.download_pojo(results$model, path = dir)  
+    
+    # Export Binary
+    if (binary) {
+      h2o.saveModel(results$model, path = dir, force = TRUE)
+      message(">>> Binary file saved...")
+    }
+    
+    if (plots) {
+      message(">>> Saving plots...")
+      aux <- names(results$plots)
+      for (i in 1:length(results$plots)) {
+        export_plot(results$plots[[i]], 
+                    name = aux[i],
+                    width = 8, height = 6, res = 300,
+                    dir = getwd(),
+                    subdir = paste0(results$model_name, "/Plots"),
+                    quiet = TRUE)
+      }
+      message(">>> Plots saved...")
+    }
+    message("Succesfully exported/saved all files!")
   }
 }
+
+# model_exporter <- function(model) {
+#   try_require("shiny")
+#   try_require("miniUI")
+#   try_require("shinyWidgets")
+#   try_require("shinyFiles")
+#   ui <- miniPage(
+#     gadgetTitleBar(model$model_name, left = NULL),
+#     miniContentPanel(
+#       strong(p("Performance summary:")),
+#       tableOutput("metrics"),
+#       tableOutput("metrics_other"),
+#       hr(),
+#       checkboxGroupInput("checkGroup",
+#                          label = strong("Select files to export:"),
+#                          choices = list("Summary in txt file" = 1L,
+#                                         "RDS object" = 2L,
+#                                         "Binary model file" = 3L,
+#                                         "MOJO files (cross-platform friendly)" = 4L,
+#                                         "Plots as PNG" = 5L),
+#                          selected = c(1:5)),
+#       hr(),
+#       strong(p("Save files into current directory:")),
+#       p(textOutput("directory")),
+#       actionButton("run", icon = icon("save"), label = "Generate files"),
+#       hr()
+#     )
+#   )
+#   
+#   server <- function(input, output, session) {
+#     
+#     output$metrics <- renderTable(model$metrics$metrics)
+#     
+#     output$directory <- renderPrint(getwd())
+#     
+#     observeEvent(input$run, {
+#       withProgress(value = 1, message = "Exporting files",{
+#         export_results(model,
+#                        txt = 1L %in% input$checkGroup,
+#                        rds = 2L %in% input$checkGroup,
+#                        binary = 3L %in% input$checkGroup,
+#                        mojo = 4L %in% input$checkGroup,
+#                        plots = 5L %in% input$checkGroup,
+#                        subdir = subdir)
+#         sendSweetAlert(session, title = "Done!", type = "success",
+#                        text = paste("Succesfully exported results for", model$model_name,
+#                                     "into", dir))
+#       })
+#     })
+#     
+#     observeEvent(input$done, {
+#       stopApp(message("Bye bye!"))
+#     })
+#   }
+#   runGadget(ui, server)
+# }
 
 
 ####################################################################
