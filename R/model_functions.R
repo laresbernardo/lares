@@ -179,7 +179,7 @@ h2o_automl <- function(df, y = "tag",
   if (!quiet) message(paste(">>> Iterating until", max_models, 
                             "models or", max_time, "seconds..."))
   aml <- quiet(h2o.automl(
-    x = setdiff(names(df), c("tag", ignore)), 
+    x = colnames(df)[!colnames(df) %in% c("tag", ignore)],
     y = "tag",
     training_frame = as.h2o(train),
     leaderboard_frame = as.h2o(test),
@@ -329,7 +329,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   results[["model_name"]] <- as.vector(m@model_id)
   results[["algorithm"]] <- m@algorithm
   if (any(c("H2OFrame","H2OAutoML") %in% class(h2o_object)))
-    results[["leaderboard"]] <- aml@leaderboard
+    results[["leaderboard"]] <- h2o_object@leaderboard
   results[["project"]] <- project
   results[["seed"]] <- seed
   results[["h2o"]] <- h2o.getVersion()

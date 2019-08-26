@@ -75,7 +75,7 @@ dalex_local <- function(explainer, observation = NA, row = 1,
   breakdown <- prediction_breakdown(explainer, observation = observation)
   
   if (plot)
-    print(plot(breakdown))
+    plot(breakdown) + theme_lares2(legend = "none")
   
   if (print)
     print(breakdown[1:10, 1:5])
