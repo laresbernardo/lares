@@ -34,6 +34,7 @@ lares_pal <- function() {
     c("puntored", "#FFFF00", grey),
     c("movilred", "#FF1493", black),
     c("moviired", "#FF1493", black),
+    c("moviaval", "#00A69C", black),
     c("web", "#290452", white),
     c("somosf1", "#290452", white),
     c("f1", "#290452", white),
