@@ -252,7 +252,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   
   # GLOBAL DATAFRAME FROM TEST AND TRAIN
   if (!all(colnames(test) == colnames(train)))
-      stop("All columns from test and train datasets must be exactly the same")
+    stop("All columns from test and train datasets must be exactly the same")
   global <- rbind(test, train) %>% 
     mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
   colnames(global)[colnames(global) == "tag"] <- y
@@ -331,6 +331,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   if (any(c("H2OFrame","H2OAutoML") %in% class(h2o_object)))
     results[["leaderboard"]] <- h2o_object@leaderboard
   results[["project"]] <- project
+  results[["y"]] <- y
   results[["seed"]] <- seed
   results[["h2o"]] <- h2o.getVersion()
   
@@ -357,6 +358,39 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   
   return(results)
   
+}
+
+
+####################################################################
+#' Select Model from h2o_automl's Leaderboard
+#' 
+#' Select wich model from the h2o_automl function to use
+#' 
+#' @family Machine Learning
+#' @family Tools
+#' @param results Object. h2o_automl output
+#' @param which_model Integer. Which model from the leaderboard you wish to use?
+#' @param plots Boolean. Create plots too?
+#' @param quiet Boolean. Quiet messages, warnings, recommendations?
+#' @export
+h2o_selectmodel <- function(results, which_model = 1, plots = TRUE, quiet = FALSE) {
+  
+  # Select model (Best one by default)
+  m <- h2o.getModel(as.vector(results$leaderboard$model_id[which_model]))  
+  
+  # Calculate everything
+  output <- h2o_results(m, 
+                        test = results$datasets$test, 
+                        # NOT filter(results$datasets$global, train_test == "train"),
+                        train = results$datasets$test, 
+                        y = results$y, 
+                        which = which_model, 
+                        model_type = results$model_type, 
+                        plots = plots, 
+                        project = results$project, 
+                        seed = results$seed, 
+                        quiet = quiet)
+  return(output)
 }
 
 
@@ -405,81 +439,6 @@ msplit <- function(df, size = 0.7, seed = 0, print=T) {
 
 
 ####################################################################
-#' Loggarithmic Loss Function for Binary Models
-#'
-#' This function calculates log loss/cross-entropy loss for binary 
-#' models. NOTE: when result is 0.69315, the classification is neutral; 
-#' it assigns equal probability to both classes.
-#'
-#' @family Calculus
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
-#' @param eps Numeric. Epsilon value
-#' @export
-loglossBinary <- function(tag, score, eps = 0.0000001) {
-  
-  if (length(unique(tag)) != 2)
-    stop("Your 'tag' vector is not binary!")
-  
-  if (length(tag) != length(score)) {
-    message("The tag and score vectors should be the same length.")
-    stop(message(paste("Currently, tag has", length(tag),
-                       "rows and score has", length(score)))
-    )
-  }
-  
-  if (!is.numeric(tag)) tag <- as.integer(tag) - 1
-  
-  score <- pmax(pmin(score, 1 - eps), eps)
-  LogLoss <- -mean(tag * log(score) + (1 - tag) * log(1 - score))
-  
-  return(LogLoss)
-  
-}
-
-
-####################################################################
-#' Select Model from h2o_automl's Leaderboard
-#' 
-#' Select wich model from the h2o_automl function to use
-#' 
-#' @family Machine Learning
-#' @family Tools
-#' @param results Object. h2o_automl output
-#' @param which_model Integer. Which model from the leaderboard you wish to use?
-#' @export
-h2o_selectmodel <- function(results, which_model = 1) {
-  
-  # Select model (Best one by default)
-  m <- h2o.getModel(as.vector(results$leaderboard$model_id[which_model]))  
-  
-  # Calculations and variables
-  scores <- predict(m, as.h2o(results$datasets$test))
-  output <- list(
-    project = results$project,
-    model = m,
-    scores = data.frame(
-      index = c(1:nrow(results$datasets$test)),
-      tag = as.vector(results$datasets$test$tag),
-      score = as.vector(scores[,3]),
-      norm_score = normalize(as.vector(scores[,3]))),
-    importance = data.frame(h2o.varimp(m)),
-    auc_test = NA,
-    errors_test = NA,
-    logloss_test = NA,
-    model_name = as.vector(m@model_id),
-    algorithm = m@algorithm)
-  roc <- pROC::roc(output$scores$tag, output$scores$score, ci = TRUE, quiet = TRUE)
-  output$auc_test <- roc$auc
-  output$errors_test <- errors(tag = results$scores_test$tag, 
-                               score = results$scores_test$score)
-  output$logloss_test <- loglossBinary(tag = results$scores_test$tag, 
-                                       score = results$scores_test$score)
-  return(output)
-}
-
-
-####################################################################
 #' Export h2o_automl's Results
 #' 
 #' Export RDS, TXT, POJO, MOJO and all results from h2o_automl
@@ -490,17 +449,14 @@ h2o_selectmodel <- function(results, which_model = 1) {
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
 #' have in 'tag' (more than: regression; less than: classification)
-#' @param txt Boolean. Do you wish to export the txt results?
-#' @param rds Boolean. Do you wish to export the RDS results?
-#' @param binary Boolean. Do you wish to export the Binary model?
-#' @param mojo Boolean. Do you wish to export the MOJO model?
-#' @param plots Boolean. Do you wish to export all plots into a Plots directory?
+#' @param txt,csv,rds,binary,mojo,plots Booleans. Export results as...
 #' @param subdir Character. In which directory do you wish to save the results?
 #' @param save Boolean. Do you wish to save/export results?
 #' @export
 export_results <- function(results, 
                            thresh = 10,
                            txt = TRUE, 
+                           csv = TRUE,
                            rds = TRUE, 
                            binary = TRUE,
                            mojo = TRUE, 
@@ -510,40 +466,52 @@ export_results <- function(results,
   
   if (save) {
     
-    quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
+    #quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
     
-    # We create a directory to save all our results
-    dir <- file.path(paste0(getwd(), ifelse(is.na(subdir), "", subdir), "/", results$model_name))
-    if (!dir.exists(dir)) {
-      dir.create(dir) 
-      message(paste("Subdir", subdir, "created..."))
-    } else message("Directory already exists...")
+    name <- results$model_name
+    subdir <- paste0(ifelse(is.na(subdir), "", subdir), "/", name)
+    
+    # Directory to save all our results
+    dir <- file.path(paste0(getwd(), "/", subdir))
+    message(paste("Export directory:", dir))
+    if (!dir.exists(dir)) dir.create(dir) 
     
     if (txt) {
+      set.seed(123)
       results_txt <- list(
         "Project" = results$project,
         "Model Type" = results$type,
         "Algorithm" = results$algorithm,
-        "Model name" = results$model_name,
+        "Model name" = name,
         "Train/Test" = table(results$datasets$global$train_test),
-        "Metrics" = model_metrics(results$scores_test$tag, results$scores_test$scores,
-                                  select(results$scores_test, -tag, -scores), 
-                                  thresh = thresh, plots = FALSE),
-        "Variable Importance" = results$importance,
-        "Model Results" = results$model,
+        "Metrics Glossary" = results$metrics$dictionary,
+        "Train Metrics" = results$metrics$metrics,
+        "Train Metrics by labels" = if (length(results$metrics$metrics_tags) > 1)
+          results$metrics$metrics_tags else NULL,
+        "Train's Confusion Matrix" = if (length(results$metrics$confusion_matrix) > 1)
+          results$metrics$confusion_matrix else NULL,
+        "Variables Importance" = results$importance,
+        "H2O Global Results" = results$model,
         "Leaderboard" = results$leaderboard,
-        "10 Scoring examples" = sample_n(results$datasets$global, 10)
-      )
-      capture.output(results_txt, file = paste0(dir, "/results.txt"))
+        "10 Scoring examples" = sample_n(results$datasets$global, 10),
+        "H20 Version" = results$h2o)
+      capture.output(results_txt, file = paste0(dir, "/", name, ".txt"))
       message(">>> Summary test file saved...")
+    }
+    
+    # Export CSV with predictions and datasets
+    if (csv) {
+      write.csv(results$datasets$global, 
+                paste0(dir, "/", name, ".csv"), 
+                row.names = FALSE)
+      message(">>> CSV file exported...")
     }
     
     # Export Results List
     if (rds) {
-      saveRDS(results, file = paste0(dir, "/results.rds")) 
+      saveRDS(results, file = paste0(dir, "/", name, ".rds")) 
       message(">>> RDS file exported...")
     }
-    
     
     # Export Model as POJO & MOJO for Production
     if (mojo) {
@@ -567,7 +535,7 @@ export_results <- function(results,
                     name = aux[i],
                     width = 8, height = 6, res = 300,
                     dir = getwd(),
-                    subdir = paste0(results$model_name, "/Plots"),
+                    subdir = paste0(subdir, "/Plots"),
                     quiet = TRUE)
       }
       message(">>> Plots saved...")
@@ -576,61 +544,73 @@ export_results <- function(results,
   }
 }
 
-# model_exporter <- function(model) {
-#   try_require("shiny")
-#   try_require("miniUI")
-#   try_require("shinyWidgets")
-#   try_require("shinyFiles")
-#   ui <- miniPage(
-#     gadgetTitleBar(model$model_name, left = NULL),
-#     miniContentPanel(
-#       strong(p("Performance summary:")),
-#       tableOutput("metrics"),
-#       tableOutput("metrics_other"),
-#       hr(),
-#       checkboxGroupInput("checkGroup",
-#                          label = strong("Select files to export:"),
-#                          choices = list("Summary in txt file" = 1L,
-#                                         "RDS object" = 2L,
-#                                         "Binary model file" = 3L,
-#                                         "MOJO files (cross-platform friendly)" = 4L,
-#                                         "Plots as PNG" = 5L),
-#                          selected = c(1:5)),
-#       hr(),
-#       strong(p("Save files into current directory:")),
-#       p(textOutput("directory")),
-#       actionButton("run", icon = icon("save"), label = "Generate files"),
-#       hr()
-#     )
-#   )
-#   
-#   server <- function(input, output, session) {
-#     
-#     output$metrics <- renderTable(model$metrics$metrics)
-#     
-#     output$directory <- renderPrint(getwd())
-#     
-#     observeEvent(input$run, {
-#       withProgress(value = 1, message = "Exporting files",{
-#         export_results(model,
-#                        txt = 1L %in% input$checkGroup,
-#                        rds = 2L %in% input$checkGroup,
-#                        binary = 3L %in% input$checkGroup,
-#                        mojo = 4L %in% input$checkGroup,
-#                        plots = 5L %in% input$checkGroup,
-#                        subdir = subdir)
-#         sendSweetAlert(session, title = "Done!", type = "success",
-#                        text = paste("Succesfully exported results for", model$model_name,
-#                                     "into", dir))
-#       })
-#     })
-#     
-#     observeEvent(input$done, {
-#       stopApp(message("Bye bye!"))
-#     })
-#   }
-#   runGadget(ui, server)
-# }
+#' #' Example source: https://github.com/alan-y/objectremover/blob/master/R/object_remove.R
+#' #' model_exporter
+#' #' @description Friendly h2o_automl() results export tool
+#' #'
+#' #' @param model List. Result from h2o_automl()
+#' #' @export
+#' #' @examples
+#' #' if (interactive()) {
+#' #'   model_exporter()
+#' #' }
+#' model_exporter <- function(model) {
+#'   
+#'   try_require("shiny")
+#'   try_require("miniUI")
+#'   try_require("shinyWidgets")
+#'   try_require("h2o")
+#'   
+#'   ui <- miniPage(
+#'     gadgetTitleBar(model$model_name, left = NULL),
+#'     miniContentPanel(
+#'       strong(p("Performance summary:")),
+#'       tableOutput("metrics"),
+#'       tableOutput("metrics_other"),
+#'       checkboxGroupInput("checkGroup",
+#'                          label = strong("Select files to export:"),
+#'                          choices = list("Summary in txt file" = 1L,
+#'                                         "CSV file with datasets and scores" = 5L,
+#'                                         "RDS object" = 2L,
+#'                                         "MOJO files (cross-platform friendly)" = 4L,
+#'                                         "Binary model file" = 3L,
+#'                                         "Plots as PNG" = 6L),
+#'                          selected = c(1, 2, 3, 4, 5)),
+#'       hr(),
+#'       strong(p("Current directory:")),
+#'       p(textOutput("directory")), 
+#'       hr(),
+#'       actionButton("run", icon = icon("save"), label = "Generate files")
+#'     )
+#'   )
+#'   
+#'   server <- function(input, output, session) {
+#'     
+#'     output$metrics <- renderTable(model$metrics$metrics) 
+#'     
+#'     output$directory <- renderPrint(getwd())
+#'     
+#'     observeEvent(input$run, {
+#'       withProgress(message = "Generating files...", value = 1, {
+#'         export_results(model, 
+#'                        txt = 1L %in% input$checkGroup,
+#'                        rds = 2L %in% input$checkGroup,
+#'                        binary = 3L %in% input$checkGroup,
+#'                        mojo = 4L %in% input$checkGroup,
+#'                        csv = 5L %in% input$checkGroup,
+#'                        plots = 6L %in% input$checkGroup)  
+#'       })
+#'       sendSweetAlert(session, title = "Done!", type = "success",
+#'                      text = paste("Succesfully exported results for", 
+#'                                   model$model_name, "into", getwd()))
+#'     })
+#'     
+#'     observeEvent(input$done, {
+#'       stopApp(message("Done exporting. Bye!"))
+#'     })
+#'   }
+#'   runGadget(ui, server)
+#' }
 
 
 ####################################################################
@@ -771,6 +751,40 @@ errors <- function(tag, score){
 
 
 ####################################################################
+#' Loggarithmic Loss Function for Binary Models
+#'
+#' This function calculates log loss/cross-entropy loss for binary 
+#' models. NOTE: when result is 0.69315, the classification is neutral; 
+#' it assigns equal probability to both classes.
+#'
+#' @family Calculus
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param eps Numeric. Epsilon value
+#' @export
+loglossBinary <- function(tag, score, eps = 0.0001) {
+  
+  if (length(unique(tag)) != 2)
+    stop("Your 'tag' vector is not binary!")
+  
+  if (length(tag) != length(score)) {
+    message("The tag and score vectors should be the same length.")
+    stop(message(paste("Currently, tag has", length(tag),
+                       "rows and score has", length(score)))
+    )
+  }
+  
+  if (!is.numeric(tag)) tag <- as.integer(tag) - 1
+  
+  score <- pmax(pmin(score, 1 - eps), eps)
+  LogLoss <- -mean(tag * log(score) + (1 - tag) * log(1 - score))
+  
+  return(LogLoss)
+  
+}
+
+
+####################################################################
 #' H2O Predict using MOJO file
 #' 
 #' This function lets the user predict using the h2o .zip file 
@@ -780,28 +794,26 @@ errors <- function(tag, score){
 #' @family Machine Learning
 #' @family Tools
 #' @param df Dataframe. Data to insert into the model
-#' @param model_path Character. Relative model_path directory
-#' @param sample Integer. How many rows should the function predict?
+#' @param model_path Character. Relative path of directory
+#' where your zip model file is
 #' @export
-h2o_predict_MOJO <- function(df, model_path, sample = NA){
-  
-  df <- as.data.frame(df)
-  zip <- paste0(model_path, "/", gsub(".*-","",model_path), ".zip")
-  
-  if (!is.na(sample)) {
-    json <- toJSON(df[1:sample, ])
-  } else {
-    json <- toJSON(df)
-  }
+h2o_predict_MOJO <- function(df, model_path){
   
   quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
-  x <- h2o.predict_json(zip, json)
   
-  if (length(x$error) >= 1) {
-    stop("Error:", x$error)
+  df <- as.data.frame(df)
+  file <- listfiles(model_path, regex = ".zip")$filename
+  zip <- paste0(model_path,"/",as.character(file))
+  json <- toJSON(df)
+  
+  quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
+  output <- h2o.predict_json(zip, json)
+  
+  if (length(output$error) >= 1) {
+    stop("Error:", output$error)
   } else {
-    score_MOJO <- as.vector(unlist(data.frame(x[,3])[2,])) 
-    return(score_MOJO)
+    #score_MOJO <- as.vector(unlist(data.frame(x[,3])[2,])) 
+    return(output)
   }
 }
 
@@ -823,6 +835,7 @@ h2o_predict_MOJO <- function(df, model_path, sample = NA){
 #' @export
 h2o_predict_binary <- function(df, model_path, sample = NA){
   
+  message("Use of h2o_predict_MOJO instead highly recommended!")
   quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
   
   if (!right(model_path, 4) == ".zip") {
@@ -890,9 +903,7 @@ h2o_predict_API <- function(df, api) {
 #' @param model H2o Object. Model
 #' @export
 h2o_predict_model <- function(df, model){
-  #model <- h2o.getModel(as.vector(aml@leaderboard$model_id[1]))
-  scores <- as.data.frame(predict(model, as.h2o(df)))
-  return(scores)
+  as.data.frame(predict(model, as.h2o(df)))
 }
 
 
@@ -915,12 +926,8 @@ h2o_predict_model <- function(df, model){
 calibrate <- function(score, train, target, train_sample, target_sample) {
   score <-
     (score * (target / train) / (target_sample / train_sample)) /
-    ((
-      (1 - score) * (1 - target / train) / (1 - target_sample / train_sample)
-    ) +
-      (
-        score * (target / train) / (target_sample / train_sample)
-      ))
+    (((1 - score) * (1 - target / train) / (1 - target_sample / train_sample)) +
+       (score * (target / train) / (target_sample / train_sample)))
   return(score)
 }
 

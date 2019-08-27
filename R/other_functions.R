@@ -654,7 +654,7 @@ noPlot <- function(message = "Nothing to show here!") {
 #' H2O installed and update to latest stable version.
 #' 
 #' @family Tools
-#' @param p ggplot2 object. Plot to export
+#' @param p ggplot2 or gridExtra object. Plot to export
 #' @param name Character. File's name or sufix if vars is not null
 #' @param vars Vector. Variables in plot
 #' @param sep Character. Separator for variables
@@ -683,18 +683,14 @@ export_plot <- function(p,
   if (!is.na(subdir)) {
     dir <- file.path(dir, subdir)
     if (!dir.exists(dir))
-      dir.create(dir, recursive = TRUE)
+      dir.create(dir)
     file_name <- paste(subdir, file_name, sep = "/")
   }
   
   # Export plot to file
-  if ("gg" %in% class(p))
-    p <- p + ggsave(file_name, width = width, height = height)
-  if ("grob" %in% class(p)) {
-    png(file_name, height = height * res, width = width * res, res = res)
-    plot(p)
-    dev.off() 
-  }
+  png(file_name, height = height * res, width = width * res, res = res)
+  plot(p)
+  dev.off() 
     
   if (!quiet) message(paste("Plot saved as", file_name)) 
   

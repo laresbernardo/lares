@@ -96,7 +96,7 @@ if (getRversion() >= "2.15.1")
       "Cost","CumCost","CumDividend","CumInvested","CumQuant","CumROI","CumValue",
       "Each","ROI","ValueSector","etf_sector_plot","ma1","ma2","amount_spent","model",
       "date_start","spend","adcreatives","created_time","list_id","aux","ds","prophet",
-      "fit.prophet","prophet_plot_components","add_country_holidays",
+      "fit.prophet","prophet_plot_components","add_country_holidays","group1","group2",
       "make_future_dataframe","train_test","aml","m","scores","partial_dependency"))
 
 #' Pipe operator

@@ -6,7 +6,7 @@
 \usage{
 corr_cross(df, plot = TRUE, type = 1, max = 1, top = 25,
   local = 1, ignore = NA, contains = NA, rm.na = FALSE,
-  dummy = TRUE)
+  dummy = TRUE, method = "pearson")
 }
 \arguments{
 \item{df}{Dataframe.}
@@ -29,6 +29,8 @@ that contains certain strings (using any value if vector used)}
 \item{rm.na}{Boolean. Remove NAs?}
 
 \item{dummy}{Boolean. Should One Hot Encoding be applied to categorical columns?}
+
+\item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
 }
 \description{
 This function creates a correlation full study and returns a rank

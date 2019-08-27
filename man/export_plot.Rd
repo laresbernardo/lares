@@ -9,7 +9,7 @@ export_plot(p, name = "plot", vars = NA, sep = ".vs.", width = 8,
   quiet = FALSE)
 }
 \arguments{
-\item{p}{ggplot2 object. Plot to export}
+\item{p}{ggplot2 or gridExtra object. Plot to export}
 
 \item{name}{Character. File's name or sufix if vars is not null}
 

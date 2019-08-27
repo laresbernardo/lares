@@ -4,9 +4,9 @@
 \alias{export_results}
 \title{Export h2o_automl's Results}
 \usage{
-export_results(results, thresh = 10, txt = TRUE, rds = TRUE,
-  binary = TRUE, mojo = TRUE, plots = TRUE, subdir = NA,
-  save = TRUE)
+export_results(results, thresh = 10, txt = TRUE, csv = TRUE,
+  rds = TRUE, binary = TRUE, mojo = TRUE, plots = TRUE,
+  subdir = NA, save = TRUE)
 }
 \arguments{
 \item{results}{Object. h2o_automl output}
@@ -15,15 +15,7 @@ export_results(results, thresh = 10, txt = TRUE, rds = TRUE,
 models: this number is the threshold of unique values we should 
 have in 'tag' (more than: regression; less than: classification)}
 
-\item{txt}{Boolean. Do you wish to export the txt results?}
-
-\item{rds}{Boolean. Do you wish to export the RDS results?}
-
-\item{binary}{Boolean. Do you wish to export the Binary model?}
-
-\item{mojo}{Boolean. Do you wish to export the MOJO model?}
-
-\item{plots}{Boolean. Do you wish to export all plots into a Plots directory?}
+\item{txt, csv, rds, binary, mojo, plots}{Booleans. Export results as...}
 
 \item{subdir}{Character. In which directory do you wish to save the results?}
 

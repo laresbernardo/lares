@@ -240,30 +240,30 @@ corr_plot <- function(df, ignore = NA, method = "pearson", order = "FPC",
 #' that contains certain strings (using any value if vector used)
 #' @param rm.na Boolean. Remove NAs?
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
+#' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @export
 corr_cross <- function(df, plot = TRUE, type = 1, 
                        max = 1, top = 25, local = 1,
                        ignore = NA, contains = NA,
-                       rm.na = FALSE, dummy = TRUE) {
+                       rm.na = FALSE, dummy = TRUE,
+                       method = "pearson") {
   
   if (sum(is.na(df))) warning("There are NA values in your dataframe!")
-  c <- corr(df, ignore = ignore, plot = FALSE, dummy = dummy)
+  c <- corr(df, ignore = ignore, plot = FALSE, dummy = dummy, method = method)
   
   ret <- data.frame(gather(c)) %>% 
     mutate(mix = rep(colnames(c), length(c))) %>%
-    mutate(rel = abs(value)) %>% filter(1*rel < max) %>% 
-    arrange(desc(rel)) %>%
-    mutate(rank = row_number()) %>%
-    filter(rank %in% seq(2,length(c)*length(c)*2,2)) %>%
-    filter(!grepl("_NAs", key)) %>%
+    mutate(p1 = rep(1:length(c), each = length(c)),
+           p2 = rep(1:length(c), length(c)),
+           aux = p2 - p1) %>% filter(aux > 0) %>%
+    mutate(rel = abs(value)) %>% filter(rel < max) %>% arrange(desc(rel)) %>%
     {if (rm.na) filter(., !grepl("_NAs", mix)) else .} %>%
     filter(!grepl("_OTHER", key)) %>%
     rename(corr = value) %>%
     mutate(value = paste(key, mix)) %>%
     {if (!is.na(contains)) 
-      filter(., grepl(vector2text(contains, sep = "|", quotes = FALSE), paste(key, mix))) else .} %>%
-    mutate(redundant = ifelse(gsub("_.*","", key) == gsub("_.*","", mix), TRUE, FALSE)) %>%
-    filter(redundant == FALSE) %>%
+      filter(., grepl(vector2text(
+        contains, sep = "|", quotes = FALSE), paste(key, mix))) else .} %>%
     select(key, mix, corr)
   
   for (i in 1:ncol(df)) {
@@ -274,6 +274,7 @@ corr_cross <- function(df, plot = TRUE, type = 1,
     aux <- ifelse(grepl(group, ret$mix), group, "fill")
     ret$group2 <- ifelse(ret$group2 == "fill", aux, ret$group2)
   }
+  ret <- filter(ret, group1 != group2)
   
   if (plot) {
     n <- ifelse(type == 1, top, local)
