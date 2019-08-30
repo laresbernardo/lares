@@ -144,7 +144,6 @@ daily_stocks <- function(hist, trans, tickers = NA) {
   
   check_attr(hist, check = "stocks_hist")
   check_attr(trans, check = "stocks_file_transactions")
-  check_attr(tickers, check = "stocks_file_portfolio")
 
   # hist_structure <- c("Date", "Symbol", "Value", "Div", "DivReal")
   # trans_structure <- c("Symbol", "Date", "Quant", "Each", "Invested", "Cost")
