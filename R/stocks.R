@@ -55,7 +55,7 @@ stocks_file <- function(filename = NA, creds = "~/Dropbox (Personal)/Documentos/
   
   attr(results$portfolio, "type") <- "stocks_file_portfolio"
   attr(results$transactions, "type") <- "stocks_file_transactions"
-  attr(results$portfolio, "type") <- "stocks_file_cash"
+  attr(results$cash, "type") <- "stocks_file_cash"
   attr(results, "type") <- "stocks_file"
   
   message("File imported succesfully!")
@@ -144,6 +144,8 @@ daily_stocks <- function(hist, trans, tickers = NA) {
   
   check_attr(hist, check = "stocks_hist")
   check_attr(trans, check = "stocks_file_transactions")
+  if (!is.na(tickers)[1])
+    check_attr(tickers, check = "stocks_file_portfolio")
 
   # hist_structure <- c("Date", "Symbol", "Value", "Div", "DivReal")
   # trans_structure <- c("Symbol", "Date", "Quant", "Each", "Invested", "Cost")
@@ -175,13 +177,13 @@ daily_stocks <- function(hist, trans, tickers = NA) {
     group_by(Date, Symbol) %>% slice(1) %>%
     arrange(desc(Date), desc(CumValue)) %>% ungroup()
   
-  # if ("Type" %in% colnames(tickers)) {
-  #   tickers_structure <- c("Symbol", "Type")
-  #   if (!all(tickers_structure %in% colnames(tickers))) {
-  #     stop(paste("The structure of the 'tickers' table should be:",
-  #                paste(shQuote(tickers_structure), collapse = ", ")))}
-  #   daily <- left_join(daily, select(tickers, Symbol, Type), "Symbol")
-  # } else daily$Type <- "No type"
+  if ("Type" %in% colnames(tickers)) {
+    tickers_structure <- c("Symbol", "Type")
+    if (!all(tickers_structure %in% colnames(tickers))) {
+      stop(paste("The structure of the 'tickers' table should be:",
+                 paste(shQuote(tickers_structure), collapse = ", ")))}
+    daily <- left_join(daily, select(tickers, Symbol, Type), "Symbol")
+  } else daily$Type <- "No type"
   
   daily$Symbol <- factor(daily$Symbol, levels = unique(daily$Symbol[daily$Date == max(daily$Date)]))
   
@@ -578,11 +580,7 @@ splot_etf <- function(s, save = FALSE) {
   
   check_attr(s, check = "daily_stocks")
   
-  # structure <- c("Symbol", "CumValue")
-  # if (!all(structure %in% colnames(s))) {
-  #   stop(paste("s should contain all of the following:",
-  #              paste(shQuote(s), collapse = ", ")))}
-  # if (!"Date" %in% colnames(s)) s$Date <- Sys.Date()
+  if (!"Date" %in% colnames(s)) s$Date <- Sys.Date()
   
   message(">>> Downloading ETF's sectors...")
   etfs <- etf_sector(unique(s$Symbol[s$Date == max(s$Date)]))
@@ -663,6 +661,7 @@ stocks_obj <- function(data = stocks_file(),
   ret[["plots"]] <- plots
   message("Visualizations ready...")
   
+  attr(ret, "type") <- "stocks_obj"
   return(ret)
 }
 #x <- stocks_obj()
@@ -690,9 +689,12 @@ stocks_report <- function(data = NA,
                           mail = FALSE, 
                           to = "laresbernardo@gmail.com",
                           creds = NA) {
-  if (is.na(data))
-    data <- stocks_file(creds = creds)
-  data <- stocks_obj(data)
+  if (is.na(data)[1]) {
+    df <- stocks_file(creds = creds) 
+    data <- stocks_obj(df)
+  }
+  
+  check_attr(data, check = c("stocks_obj"))
   
   pandoc <- Sys.getenv("RSTUDIO_PANDOC")
   Sys.setenv(RSTUDIO_PANDOC = pandoc)
@@ -751,7 +753,6 @@ stocks_report <- function(data = NA,
 # library(lubridate)
 # library(rvest)
 # library(scales)
+# library(httr)
 # x <- stocks_obj(sectors = FALSE)
-# s <- x$stocks
-# p <- x$portfolio
 # stocks_report(x, dir = "~/Desktop")
