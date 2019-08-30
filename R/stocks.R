@@ -175,17 +175,17 @@ daily_stocks <- function(hist, trans, tickers = NA) {
     group_by(Date, Symbol) %>% slice(1) %>%
     arrange(desc(Date), desc(CumValue)) %>% ungroup()
   
-  if ("Type" %in% colnames(tickers)) {
-    tickers_structure <- c("Symbol", "Type")
-    if (!all(tickers_structure %in% colnames(tickers))) {
-      stop(paste("The structure of the 'tickers' table should be:",
-                 paste(shQuote(tickers_structure), collapse = ", ")))}
-    daily <- left_join(daily, select(tickers, Symbol, Type), "Symbol")
-  } else daily$Type <- "No type"
+  # if ("Type" %in% colnames(tickers)) {
+  #   tickers_structure <- c("Symbol", "Type")
+  #   if (!all(tickers_structure %in% colnames(tickers))) {
+  #     stop(paste("The structure of the 'tickers' table should be:",
+  #                paste(shQuote(tickers_structure), collapse = ", ")))}
+  #   daily <- left_join(daily, select(tickers, Symbol, Type), "Symbol")
+  # } else daily$Type <- "No type"
   
   daily$Symbol <- factor(daily$Symbol, levels = unique(daily$Symbol[daily$Date == max(daily$Date)]))
   
-  attr(results, "type") <- "daily_stocks"
+  attr(daily, "type") <- "daily_stocks"
   return(daily)
   
 }
@@ -209,12 +209,7 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0) {
   check_attr(hist, check = "stocks_hist")
   check_attr(trans, check = "stocks_file_transactions")
   check_attr(cash, check = "stocks_file_cash")
-  
-  # cash_structure <- c("Date", "Cash")
-  # if (!all(cash_structure %in% colnames(cash))) {
-  #   stop(paste("The structure of the 'cash' table should be:",
-  #              paste(shQuote(cash_structure), collapse = ", ")))}
-  
+
   daily <- daily_stocks(hist, trans) %>%
     arrange(Date) %>% group_by(Date) %>% 
     summarise_if(is.numeric, sum) %>%
@@ -233,7 +228,7 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0) {
     filter(CumInvested != 0) %>%
     arrange(desc(Date)) %>% ungroup()
   
-  attr(results, "type") <- "daily_portfolio"
+  attr(days, "type") <- "daily_portfolio"
   return(days)
   
 }
