@@ -52,6 +52,12 @@ stocks_file <- function(filename = NA, creds = "~/Dropbox (Personal)/Documentos/
       file.remove(file)
     } 
   }
+  
+  attr(results$portfolio, "type") <- "stocks_file_portfolio"
+  attr(results$transactions, "type") <- "stocks_file_transactions"
+  attr(results$portfolio, "type") <- "stocks_file_cash"
+  attr(results, "type") <- "stocks_file"
+  
   message("File imported succesfully!")
   return(results)   
 }
@@ -116,6 +122,9 @@ stocks_hist <- function(symbols = c("VTI","IEMG"),
     left_join(mutate(divs, Symbol = as.character(Symbol)), by = c("Date", "Symbol")) %>% 
     replace(is.na(.), 0) %>%
     arrange(desc(Date))
+  
+  attr(results, "type") <- "stocks_hist"
+  
   return(results)
 }
 
@@ -133,14 +142,18 @@ stocks_hist <- function(symbols = c("VTI","IEMG"),
 #' @export
 daily_stocks <- function(hist, trans, tickers = NA) {
   
-  hist_structure <- c("Date", "Symbol", "Value", "Div", "DivReal")
-  trans_structure <- c("Symbol", "Date", "Quant", "Each", "Invested", "Cost")
-  if (!all(hist_structure %in% colnames(hist))) {
-    stop(paste("The structure of the 'hist' table should be:",
-               paste(shQuote(hist_structure), collapse = ", ")))}
-  if (!all(trans_structure %in% colnames(trans))) {
-    stop(paste("The structure of the 'trans' table should be:",
-               paste(shQuote(trans_structure), collapse = ", ")))}
+  check_attr(hist, check = "stocks_hist")
+  check_attr(trans, check = "stocks_file_transactions")
+  check_attr(tickers, check = "stocks_file_portfolio")
+
+  # hist_structure <- c("Date", "Symbol", "Value", "Div", "DivReal")
+  # trans_structure <- c("Symbol", "Date", "Quant", "Each", "Invested", "Cost")
+  # if (!all(hist_structure %in% colnames(hist))) {
+  #   stop(paste("The structure of the 'hist' table should be:",
+  #              paste(shQuote(hist_structure), collapse = ", ")))}
+  # if (!all(trans_structure %in% colnames(trans))) {
+  #   stop(paste("The structure of the 'trans' table should be:",
+  #              paste(shQuote(trans_structure), collapse = ", ")))}
   
   daily <- hist %>%
     left_join(trans, by = c("Date", "Symbol")) %>%
@@ -173,6 +186,7 @@ daily_stocks <- function(hist, trans, tickers = NA) {
   
   daily$Symbol <- factor(daily$Symbol, levels = unique(daily$Symbol[daily$Date == max(daily$Date)]))
   
+  attr(results, "type") <- "daily_stocks"
   return(daily)
   
 }
@@ -193,10 +207,14 @@ daily_stocks <- function(hist, trans, tickers = NA) {
 #' @export
 daily_portfolio <- function(hist, trans, cash, cash_fix = 0) {
   
-  cash_structure <- c("Date", "Cash")
-  if (!all(cash_structure %in% colnames(cash))) {
-    stop(paste("The structure of the 'cash' table should be:",
-               paste(shQuote(cash_structure), collapse = ", ")))}
+  check_attr(hist, check = "stocks_hist")
+  check_attr(trans, check = "stocks_file_transactions")
+  check_attr(cash, check = "stocks_file_cash")
+  
+  # cash_structure <- c("Date", "Cash")
+  # if (!all(cash_structure %in% colnames(cash))) {
+  #   stop(paste("The structure of the 'cash' table should be:",
+  #              paste(shQuote(cash_structure), collapse = ", ")))}
   
   daily <- daily_stocks(hist, trans) %>%
     arrange(Date) %>% group_by(Date) %>% 
@@ -216,6 +234,7 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0) {
     filter(CumInvested != 0) %>%
     arrange(desc(Date)) %>% ungroup()
   
+  attr(results, "type") <- "daily_portfolio"
   return(days)
   
 }
@@ -234,6 +253,9 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0) {
 #' @param save Boolean. Save plot into a local file?
 #' @export
 splot_summary <- function(p, s, save = FALSE) {
+  
+  check_attr(p, check = "daily_portfolio")
+  check_attr(s, check = "daily_stocks")
   
   today <- filter(p, Date == max(Date))
   summary <- rbind(
@@ -304,6 +326,8 @@ splot_summary <- function(p, s, save = FALSE) {
 #' @export
 splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save = FALSE) {
   
+  check_attr(p, check = "daily_portfolio")
+
   n_days <- ifelse(n_days < max(ma), max(ma) + 2, n_days)
   newp <- rbind(p, mutate(tail(p, 1), Date = Date - 1, ROI = 0, CumValue = 0))
   
@@ -382,6 +406,9 @@ splot_change <- function(p, s, weighted = TRUE, group = TRUE, save = FALSE) {
   
   try_require("ggrepel")
   
+  check_attr(p, check = "daily_portfolio")
+  check_attr(s, check = "daily_stocks")
+  
   d <- s %>% 
     arrange(Date) %>% group_by(Symbol) %>%
     mutate(Hist = if (weighted) {100*(1 - cumsum(Invested)/(CumValue))} 
@@ -435,6 +462,8 @@ splot_growth <- function(p, save = FALSE) {
   
   try_require("ggrepel")
   
+  check_attr(p, check = "daily_portfolio")
+  
   labels <- filter(p, Cash != 0)
   caption <- paste0("Total Portfolio: $", formatNum(p$Portfolio[1], 0),
                     "\nInvested: $", formatNum(p$CumValue[1], 0), " (",
@@ -475,6 +504,8 @@ splot_growth <- function(p, save = FALSE) {
 #' @param save Boolean. Save plot into a local file?
 #' @export
 splot_types <- function(s, save = FALSE) {
+  
+  check_attr(s, check = "daily_stocks")
   
   plot <- s %>%
     filter(Date == max(Date), CumQuant > 0) %>%
@@ -551,11 +582,13 @@ etf_sector <- function(etf = "VTI", verbose = TRUE) {
 #' @export
 splot_etf <- function(s, save = FALSE) {
   
-  structure <- c("Symbol", "CumValue")
-  if (!all(structure %in% colnames(s))) {
-    stop(paste("s should contain all of the following:",
-               paste(shQuote(s), collapse = ", ")))}
-  if (!"Date" %in% colnames(s)) s$Date <- Sys.Date()
+  check_attr(s, check = "daily_stocks")
+  
+  # structure <- c("Symbol", "CumValue")
+  # if (!all(structure %in% colnames(s))) {
+  #   stop(paste("s should contain all of the following:",
+  #              paste(shQuote(s), collapse = ", ")))}
+  # if (!"Date" %in% colnames(s)) s$Date <- Sys.Date()
   
   message(">>> Downloading ETF's sectors...")
   etfs <- etf_sector(unique(s$Symbol[s$Date == max(s$Date)]))
@@ -607,6 +640,8 @@ stocks_obj <- function(data = stocks_file(),
                        cash_fix = 0, tax = 30, 
                        sectors = TRUE) {
 
+  check_attr(data, check = "stocks_file")
+  
   ret <- list()
   trans <- data$transactions
   cash <- data$cash
@@ -663,7 +698,6 @@ stocks_report <- function(data = NA,
                           creds = NA) {
   if (is.na(data))
     data <- stocks_file(creds = creds)
-  
   data <- stocks_obj(data)
   
   pandoc <- Sys.getenv("RSTUDIO_PANDOC")

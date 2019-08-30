@@ -219,6 +219,7 @@ h2o_automl <- function(df, y = "tag",
     beep() 
   }
   
+  attr(results, "type") <- "h2o_automl"
   return(results)
   
 }
@@ -356,6 +357,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     results$plots <- plots
   } 
   
+  attr(results, "type") <- "h2o_automl"
   return(results)
   
 }
@@ -374,6 +376,8 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
 #' @param quiet Boolean. Quiet messages, warnings, recommendations?
 #' @export
 h2o_selectmodel <- function(results, which_model = 1, plots = TRUE, quiet = FALSE) {
+  
+  check_attr(results, attr = "type", check = "h2o_automl")
   
   # Select model (Best one by default)
   m <- h2o.getModel(as.vector(results$leaderboard$model_id[which_model]))  
@@ -465,6 +469,8 @@ export_results <- function(results,
                            save = TRUE) {
   
   if (save) {
+    
+    check_attr(results, attr = "type", check = "h2o_automl")
     
     #quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
     
@@ -924,11 +930,9 @@ h2o_predict_model <- function(df, model){
 #' class in the training dataset after sampling
 #' @export
 calibrate <- function(score, train, target, train_sample, target_sample) {
-  score <-
     (score * (target / train) / (target_sample / train_sample)) /
     (((1 - score) * (1 - target / train) / (1 - target_sample / train_sample)) +
        (score * (target / train) / (target_sample / train_sample)))
-  return(score)
 }
 
 

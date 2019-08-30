@@ -1180,3 +1180,24 @@ font_exists <- function(font = "Arial Narrow") {
   }
   check(font)
 }
+
+
+####################################################################
+#' Attribute checker
+#' 
+#' This function checks if an object has a specific attribute and
+#' stops if not
+#' 
+#' @param object Object of any kind
+#' @param attr Character. Attribute to check
+#' @param check Character. Attribute value
+#' @param stop Boolean. Stop if doesn't check?
+#' @export
+check_attr <- function(object, attr = "type", check = "h2o_automl", stop = TRUE) {
+  aux <- attr(object, attr)
+  if (is.null(aux)) aux <- "Noclass"
+  if (aux != check) {
+    msg <- paste("Your object must be", attr, check)
+    if (stop) stop(msg) else message(msg)
+  }
+}

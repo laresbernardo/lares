@@ -2,7 +2,7 @@ library(lares)
 library(dplyr)
 
 data(dft)
-dft <- dft %>% select(-Ticket, -PassengerId)
+dft <- dft %>% select(-Ticket, -PassengerId, -Cabin)
 
 # # Correlations
 # dft %>% corr_cross()
