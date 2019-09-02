@@ -172,6 +172,9 @@ h2o_automl <- function(df, y = "tag",
       message(paste("Previous trained models are not being erased.",
                     "Use 'start_clean' parameter if needed."))
   }
+  if (length(ignore) > 0)
+    if (!quiet)
+      message(paste("Ignored variables for training models:", vector2text(ignore)))
   
   # RUN AUTOML
   if (length(exclude_algos) > 0) 

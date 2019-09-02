@@ -35,10 +35,10 @@ Other Tools: \code{\link{autoline}},
   \code{\link{haveInternet}}, \code{\link{importxlsx}},
   \code{\link{ip_country}}, \code{\link{iter_seeds}},
   \code{\link{json2vector}}, \code{\link{listfiles}},
-  \code{\link{mailSend}}, \code{\link{matrixwd}},
-  \code{\link{msplit}}, \code{\link{myip}},
-  \code{\link{pass}}, \code{\link{quiet}},
-  \code{\link{statusbar}}, \code{\link{try_require}},
-  \code{\link{updateLares}}, \code{\link{zerovar}}
+  \code{\link{mailSend}}, \code{\link{msplit}},
+  \code{\link{myip}}, \code{\link{pass}},
+  \code{\link{quiet}}, \code{\link{statusbar}},
+  \code{\link{try_require}}, \code{\link{updateLares}},
+  \code{\link{zerovar}}
 }
 \concept{Tools}
