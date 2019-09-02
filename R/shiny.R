@@ -1,1 +1,1 @@
-try_require("lareshiny")
+# devtools::install_github("laresbernardo/lareshiny")
