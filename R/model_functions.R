@@ -145,7 +145,7 @@ h2o_automl <- function(df, y = "tag",
   } else {
     # If we already have a default split for train and test (train_test)
     colnames(df)[colnames(df) == train_test] <- "train_test"
-    if ((!unique(as.character(df$train_test)) %in% c('train', 'test')) & (length(cats) != 2)) {
+    if (!unique(as.character(df$train_test)) %in% c('train', 'test')) {
       stop("Your train_test column should have 'train' and 'test' values only!")
     }
     train <- filter(df, train_test == "train")

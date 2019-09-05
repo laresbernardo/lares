@@ -818,8 +818,10 @@ json2vector <- function(json) {
 #' @param label String. With additionaly information to be printed 
 #' at the end of the line. The default is \code{run}.
 #' @param msg Character. Finish message
+#' @param type Character. Loading type style
 #' @export
-statusbar <- function(run = 1, max.run = 100, label = run, msg = "DONE!"){
+statusbar <- function(run = 1, max.run = 100, label = run, 
+                      msg = "DONE!", type = "domino"){
   
   if (length(run) > 1 & !is.numeric(run)) 
     stop("run must be a numerical value!")
@@ -833,13 +835,14 @@ statusbar <- function(run = 1, max.run = 100, label = run, msg = "DONE!"){
   } else percent <- run / max.run
   
   percent.step <- percent * percent.max
-  progress <- paste0("[",
-                     paste0(rep("_", percent.step), collapse = ""), 
-                     ifelse(percent.step != percent.max, "/", "_"),
-                     paste0(rep("|", percent.max - percent.step), collapse = ""),"] ", 
-                     round(percent * 100, 0), "% | ", 
-                     paste(ifelse(run != max.run, label, 
-                                  paste(msg,paste(rep(" ", 18), collapse = ""),"\n"))))
+  if (type == "domino")
+    progress <- paste0("[",
+                       paste0(rep("_", percent.step), collapse = ""), 
+                       ifelse(percent.step != percent.max, "/", "_"),
+                       paste0(rep("|", percent.max - percent.step), collapse = ""),"] ", 
+                       round(percent * 100, 0), "% | ", 
+                       paste(ifelse(run != max.run, label, paste(
+                         msg,paste(rep(" ", 18), collapse = ""),"\n"))))
   cat("\r", progress) # Replace
   flush.console()
 }

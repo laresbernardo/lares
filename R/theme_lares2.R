@@ -153,12 +153,15 @@ theme_lares2 <- function(font = "Arial Narrow",
     ret <- list(ret, scale_fill_manual(values = names(colours_pal))) 
     ret <- list(ret, scale_colour_manual(values = as.vector(colours_pal)))
   }
+  
   # Palette without fills
   if (pal == 2)
     ret <- list(ret, scale_colour_manual(values = names(colours_pal)))
+  
   # Palette without fills
   if (pal == 3)
     ret <- list(ret, scale_fill_manual(values = names(colours_pal))) 
+  
   # Custom Palette Colours defined in colour_palettes.R (personal use)
   if (pal == 4) {
     ret <- list(ret) 

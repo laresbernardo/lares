@@ -4,7 +4,8 @@
 \alias{statusbar}
 \title{Progressive Status Bar (Domino)}
 \usage{
-statusbar(run = 1, max.run = 100, label = run, msg = "DONE!")
+statusbar(run = 1, max.run = 100, label = run, msg = "DONE!",
+  type = "domino")
 }
 \arguments{
 \item{run}{Iterator. for loop or an integer with the current loop number}
@@ -15,6 +16,8 @@ statusbar(run = 1, max.run = 100, label = run, msg = "DONE!")
 at the end of the line. The default is \code{run}.}
 
 \item{msg}{Character. Finish message}
+
+\item{type}{Character. Loading type style}
 }
 \description{
 This function lets the user view a progressbar for a 'for' loop.
