@@ -6,7 +6,7 @@
 \usage{
 export_results(results, thresh = 10, txt = TRUE, csv = TRUE,
   rds = TRUE, binary = TRUE, mojo = TRUE, plots = TRUE,
-  subdir = NA, save = TRUE)
+  note = NA, subdir = NA, save = TRUE)
 }
 \arguments{
 \item{results}{Object. h2o_automl output}
@@ -16,6 +16,9 @@ models: this number is the threshold of unique values we should
 have in 'tag' (more than: regression; less than: classification)}
 
 \item{txt, csv, rds, binary, mojo, plots}{Booleans. Export results as...}
+
+\item{note}{Character. Add a note to the txt file. Useful when lots of models
+are trained and saved to remember which one is which one}
 
 \item{subdir}{Character. In which directory do you wish to save the results?}
 

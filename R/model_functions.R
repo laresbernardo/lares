@@ -145,7 +145,7 @@ h2o_automl <- function(df, y = "tag",
   } else {
     # If we already have a default split for train and test (train_test)
     colnames(df)[colnames(df) == train_test] <- "train_test"
-    if (!unique(as.character(df$train_test)) %in% c('train', 'test')) {
+    if (all(unique(as.character(df$train_test)) %in% c('train', 'test'))) {
       stop("Your train_test column should have 'train' and 'test' values only!")
     }
     train <- filter(df, train_test == "train")
@@ -457,6 +457,8 @@ msplit <- function(df, size = 0.7, seed = 0, print=T) {
 #' models: this number is the threshold of unique values we should 
 #' have in 'tag' (more than: regression; less than: classification)
 #' @param txt,csv,rds,binary,mojo,plots Booleans. Export results as...
+#' @param note Character. Add a note to the txt file. Useful when lots of models
+#' are trained and saved to remember which one is which one
 #' @param subdir Character. In which directory do you wish to save the results?
 #' @param save Boolean. Do you wish to save/export results?
 #' @export
@@ -468,6 +470,7 @@ export_results <- function(results,
                            binary = TRUE,
                            mojo = TRUE, 
                            plots = TRUE,
+                           note = NA,
                            subdir = NA,
                            save = TRUE) {
   
@@ -485,10 +488,11 @@ export_results <- function(results,
     message(paste("Export directory:", dir))
     if (!dir.exists(dir)) dir.create(dir) 
     
-    if (txt) {
+    if (txt | !is.na(note)[1]) {
       set.seed(123)
       results_txt <- list(
         "Project" = results$project,
+        "Note" = ifelse(!is.na(note)[1], note, NULL),
         "Model Type" = results$type,
         "Algorithm" = results$algorithm,
         "Model name" = name,
