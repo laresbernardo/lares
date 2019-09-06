@@ -492,7 +492,7 @@ export_results <- function(results,
       set.seed(123)
       results_txt <- list(
         "Project" = results$project,
-        "Note" = ifelse(!is.na(note)[1], note, NULL),
+        "Note" = if (!is.na(note)[1]) note else NULL,
         "Model Type" = results$type,
         "Algorithm" = results$algorithm,
         "Model name" = name,
