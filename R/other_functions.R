@@ -813,37 +813,61 @@ json2vector <- function(json) {
 #' This function lets the user view a progressbar for a 'for' loop. 
 #' 
 #' @family Tools
-#' @param run Iterator. for loop or an integer with the current loop number
+#' @param run Iterator. for loop or an integer with the current loop number.
+#' Start with 1 preferibly
 #' @param max.run Number. Maximum number of loops
 #' @param label String. With additionaly information to be printed 
 #' at the end of the line. The default is \code{run}.
 #' @param msg Character. Finish message
-#' @param type Character. Loading type style
+#' @param type Character. Loading type style: equal, domino
+#' @examples
+#' for (i in 1:15) {
+#'   statusbar(i, 15) 
+#'   Sys.sleep(0.25)
+#' }
 #' @export
 statusbar <- function(run = 1, max.run = 100, label = run, 
-                      msg = "DONE!", type = "domino"){
+                      msg = "DONE", type = "equal"){
   
   if (length(run) > 1 & !is.numeric(run)) 
     stop("run must be a numerical value!")
   if (length(max.run) == 0 & !is.numeric(run)) 
     stop("max.run needs to be greater than 0!")
   
-  percent.max <- getOption("width") * 0.7
+  percent.max <- getOption("width") * 0.6
+  
+  if (run == 1) options("startclock" = Sys.time())
   
   if (length(max.run) > 1) {
     percent <- which(run == max.run) / length(max.run)
   } else percent <- run / max.run
   
+  if (type == "domino") {
+    first <- "|"
+    middle <- "/"
+    last <- "_"
+  }
+  if (type == "equal") {
+    first <- " "
+    middle <- "="
+    last <- "="
+  }
+  
   percent.step <- percent * percent.max
-  if (type == "domino")
-    progress <- paste0("[",
-                       paste0(rep("_", percent.step), collapse = ""), 
-                       ifelse(percent.step != percent.max, "/", "_"),
-                       paste0(rep("|", percent.max - percent.step), collapse = ""),"] ", 
-                       round(percent * 100, 0), "% | ", 
-                       paste(ifelse(run != max.run, label, paste(
-                         msg,paste(rep(" ", 18), collapse = ""),"\n"))))
-  cat("\r", progress) # Replace
+  progress <- paste0(
+    "[", paste0(rep(last, percent.step), collapse = ""), 
+    ifelse(percent.step != percent.max, middle, last),
+    paste0(rep(first, percent.max - percent.step), collapse = ""),"] ", 
+    round(percent * 100, 0), "% | ", 
+    paste(ifelse(run != max.run, label, paste(
+      msg,paste(rep(" ", 18), collapse = ""),"\n"))))
+  
+  now <- format(.POSIXct(difftime(
+    Sys.time(), getOption("startclock"), units = "secs"), tz = "GMT"), "%H:%M:%S")
+  cat("\r", paste(now, progress))
+  
+  if (run == max.run) options("startclock" = NULL)
+  
   flush.console()
 }
 
