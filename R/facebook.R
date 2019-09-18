@@ -344,12 +344,14 @@ fb_ads <- function(token,
     l <- as.list(l)
     if ("data" %in% names(l)) l <- l$data
     aux <- data.frame(l[[1]])
-    for (i in 2:length(l)) {
-      lx <- data.frame(l[[i]])
-      aux <- rbind_full(aux, lx)
+    if (length(l) > 1) {
+      for (i in 2:length(l)) {
+        lx <- data.frame(l[[i]])
+        aux <- rbind_full(aux, lx)
+      }
+      if ("id" %in% colnames(aux))
+        aux <- rename(aux, list_id = id)
     }
-    if ("id" %in% colnames(aux))
-      aux <- rename(aux, list_id = id)
     return(aux)
   }
   

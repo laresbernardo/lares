@@ -8,7 +8,8 @@ statusbar(run = 1, max.run = 100, label = run, msg = "DONE",
   type = "equal")
 }
 \arguments{
-\item{run}{Iterator. for loop or an integer with the current loop number}
+\item{run}{Iterator. for loop or an integer with the current loop number.
+Start with 1 preferibly}
 
 \item{max.run}{Number. Maximum number of loops}
 
@@ -24,8 +25,8 @@ This function lets the user view a progressbar for a 'for' loop.
 }
 \examples{
 for (i in 1:15) {
- statusbar(i, 15) 
- Sys.sleep(0.25)
+  statusbar(i, 15) 
+  Sys.sleep(0.25)
 }
 }
 \seealso{
