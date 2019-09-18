@@ -304,7 +304,8 @@ fb_accounts <- function(token,
     account_status == "202" ~ "ANY_CLOSED"
   ))
   
-  ret <- suppressMessages(type.convert(ret)) %>% arrange(desc(amount_spent))
+  ret <- suppressMessages(type.convert(ret, numerals = "no.loss")) %>% 
+    arrange(desc(amount_spent))
     
   return(ret)
 }
@@ -504,7 +505,7 @@ fb_insights <- function(token,
       ret <- bind_rows(ret, data.frame(out$data))
     }
   }
-  ret <- suppressMessages(type.convert(ret)) %>%
+  ret <- suppressMessages(type.convert(ret, numerals = "no.loss")) %>%
     mutate_at(vars(contains("date")), list(as.Date)) %>%
     mutate_at(vars(contains("id")), list(as.character)) %>%
     arrange(desc(date_start), desc(spend))
