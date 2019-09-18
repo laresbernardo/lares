@@ -401,7 +401,7 @@ fb_ads <- function(token,
       ret <- rbind_full(ret, data.frame(newout))
     }
   }
-  ret <- suppressMessages(type.convert(ret)) %>%
+  ret <- suppressMessages(type.convert(ret, numerals = "no.loss")) %>%
     mutate_at(vars(contains("date")), list(as.Date)) %>%
     mutate_at(vars(contains("id")), list(as.character)) %>%
     rename(adcreatives_id = list_id) %>%
