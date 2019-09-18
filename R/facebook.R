@@ -384,7 +384,9 @@ fb_ads <- function(token,
   } 
   
   ret <- data.frame(bind_rows(import$data))
-  ret <- cbind(select(ret, -adcreatives), process_list(ret$adcreatives))
+  aux <- process_list(ret$adcreatives)
+  if ("id" %in% colnames(aux)) aux <- rename(aux, list_id = id)
+  ret <- cbind(select(ret, -adcreatives), aux)
   
   # Condition to detect the next page
   if (exists("next", import$paging)) {
