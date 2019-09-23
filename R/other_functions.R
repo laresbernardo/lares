@@ -853,13 +853,14 @@ statusbar <- function(run = 1, max.run = 100, label = run,
     last <- "="
   }
   
-  percent.step <- percent * percent.max
+  percent.step <- trunc(percent * percent.max, 5)
+  space <- paste(rep(" ", 10), collapse = " ")
   progress <- paste0(
     "[", paste0(rep(last, percent.step), collapse = ""), 
     ifelse(percent.step != percent.max, middle, last),
     paste0(rep(first, percent.max - percent.step), collapse = ""),"] ", 
     round(percent * 100, 0), "% | ", 
-    paste(ifelse(run != max.run, label, paste(
+    paste(ifelse(run != max.run, paste(label, space), paste(
       msg,paste(rep(" ", 18), collapse = ""),"\n"))))
   
   now <- format(.POSIXct(difftime(
