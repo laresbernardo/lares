@@ -146,11 +146,10 @@ h2o_automl <- function(df, y = "tag",
     # If we already have a default split for train and test (train_test)
     colnames(df)[colnames(df) == train_test] <- "train_test"
     if (all(unique(as.character(df$train_test)) %in% c('train', 'test'))) {
-      stop("Your train_test column should have 'train' and 'test' values only!")
-    }
-    train <- filter(df, train_test == "train")
-    test <- filter(df, train_test == "test")
-    if (!quiet) print(table(df$train_test))
+      train <- filter(df, train_test == "train")
+      test <- filter(df, train_test == "test")
+      if (!quiet) print(table(df$train_test))
+    } else stop("Your train_test column should have 'train' and 'test' values only!")
   }
   
   # BALANCE TRAINING SET
