@@ -455,7 +455,8 @@ msplit <- function(df, size = 0.7, seed = 0, print=T) {
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
 #' have in 'tag' (more than: regression; less than: classification)
-#' @param txt,csv,rds,binary,mojo,plots Booleans. Export results as...
+#' @param which Character vector. Select which file format to export:
+#' Possible values: txt, csv, rds, binary, mojo, plots
 #' @param note Character. Add a note to the txt file. Useful when lots of models
 #' are trained and saved to remember which one is which one
 #' @param subdir Character. In which directory do you wish to save the results?
@@ -463,12 +464,7 @@ msplit <- function(df, size = 0.7, seed = 0, print=T) {
 #' @export
 export_results <- function(results, 
                            thresh = 10,
-                           txt = TRUE, 
-                           csv = TRUE,
-                           rds = TRUE, 
-                           binary = TRUE,
-                           mojo = TRUE, 
-                           plots = TRUE,
+                           which = c("txt","csv","rds","binary","mojo","plots"),
                            note = NA,
                            subdir = NA,
                            save = TRUE) {
@@ -476,9 +472,7 @@ export_results <- function(results,
   if (save) {
     
     check_attr(results, attr = "type", check = "h2o_automl")
-    
-    #quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
-    
+    quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
     name <- results$model_name
     subdir <- paste0(ifelse(is.na(subdir), "", subdir), "/", name)
     
@@ -487,11 +481,11 @@ export_results <- function(results,
     message(paste("Export directory:", dir))
     if (!dir.exists(dir)) dir.create(dir) 
     
-    if (txt | !is.na(note)[1]) {
+    if ("txt" %in% which | !is.na(note)[1]) {
       set.seed(123)
       results_txt <- list(
         "Project" = results$project,
-        "Note" = if (!is.na(note)[1]) note else NULL,
+        "Note" = note,
         "Model Type" = results$type,
         "Algorithm" = results$algorithm,
         "Model name" = name,
@@ -507,12 +501,13 @@ export_results <- function(results,
         "Leaderboard" = results$leaderboard,
         "10 Scoring examples" = sample_n(results$datasets$global, 10),
         "H20 Version" = results$h2o)
+      if (is.na(note)[1]) results_txt$note <- NULL
       capture.output(results_txt, file = paste0(dir, "/", name, ".txt"))
       message(">>> Summary test file saved...")
     }
     
     # Export CSV with predictions and datasets
-    if (csv) {
+    if ("csv" %in% which) {
       write.csv(results$datasets$global, 
                 paste0(dir, "/", name, ".csv"), 
                 row.names = FALSE)
@@ -520,13 +515,13 @@ export_results <- function(results,
     }
     
     # Export Results List
-    if (rds) {
+    if ("rds" %in% which) {
       saveRDS(results, file = paste0(dir, "/", name, ".rds")) 
       message(">>> RDS file exported...")
     }
     
     # Export Model as POJO & MOJO for Production
-    if (mojo) {
+    if ("mojo" %in% which) {
       h2o.download_mojo(results$model, path = dir, get_genmodel_jar = TRUE)  
       message(">>> MOJO (zip + jar files) exported...")
     } 
@@ -534,12 +529,12 @@ export_results <- function(results,
     #if (pojo) h2o.download_pojo(results$model, path = dir)  
     
     # Export Binary
-    if (binary) {
+    if ("binary" %in% which) {
       h2o.saveModel(results$model, path = dir, force = TRUE)
       message(">>> Binary file saved...")
     }
     
-    if (plots) {
+    if ("plots" %in% which) {
       message(">>> Saving plots...")
       aux <- names(results$plots)
       for (i in 1:length(results$plots)) {
@@ -552,77 +547,9 @@ export_results <- function(results,
       }
       message(">>> Plots saved...")
     }
-    message("Succesfully exported/saved all files!")
+    message(paste("Succesfully exported files:", vector2text(which)))
   }
 }
-
-#' #' Example source: https://github.com/alan-y/objectremover/blob/master/R/object_remove.R
-#' #' model_exporter
-#' #' @description Friendly h2o_automl() results export tool
-#' #'
-#' #' @param model List. Result from h2o_automl()
-#' #' @export
-#' #' @examples
-#' #' if (interactive()) {
-#' #'   model_exporter()
-#' #' }
-#' model_exporter <- function(model) {
-#'   
-#'   try_require("shiny")
-#'   try_require("miniUI")
-#'   try_require("shinyWidgets")
-#'   try_require("h2o")
-#'   
-#'   ui <- miniPage(
-#'     gadgetTitleBar(model$model_name, left = NULL),
-#'     miniContentPanel(
-#'       strong(p("Performance summary:")),
-#'       tableOutput("metrics"),
-#'       tableOutput("metrics_other"),
-#'       checkboxGroupInput("checkGroup",
-#'                          label = strong("Select files to export:"),
-#'                          choices = list("Summary in txt file" = 1L,
-#'                                         "CSV file with datasets and scores" = 5L,
-#'                                         "RDS object" = 2L,
-#'                                         "MOJO files (cross-platform friendly)" = 4L,
-#'                                         "Binary model file" = 3L,
-#'                                         "Plots as PNG" = 6L),
-#'                          selected = c(1, 2, 3, 4, 5)),
-#'       hr(),
-#'       strong(p("Current directory:")),
-#'       p(textOutput("directory")), 
-#'       hr(),
-#'       actionButton("run", icon = icon("save"), label = "Generate files")
-#'     )
-#'   )
-#'   
-#'   server <- function(input, output, session) {
-#'     
-#'     output$metrics <- renderTable(model$metrics$metrics) 
-#'     
-#'     output$directory <- renderPrint(getwd())
-#'     
-#'     observeEvent(input$run, {
-#'       withProgress(message = "Generating files...", value = 1, {
-#'         export_results(model, 
-#'                        txt = 1L %in% input$checkGroup,
-#'                        rds = 2L %in% input$checkGroup,
-#'                        binary = 3L %in% input$checkGroup,
-#'                        mojo = 4L %in% input$checkGroup,
-#'                        csv = 5L %in% input$checkGroup,
-#'                        plots = 6L %in% input$checkGroup)  
-#'       })
-#'       sendSweetAlert(session, title = "Done!", type = "success",
-#'                      text = paste("Succesfully exported results for", 
-#'                                   model$model_name, "into", getwd()))
-#'     })
-#'     
-#'     observeEvent(input$done, {
-#'       stopApp(message("Done exporting. Bye!"))
-#'     })
-#'   }
-#'   runGadget(ui, server)
-#' }
 
 
 ####################################################################
