@@ -1139,6 +1139,8 @@ model_metrics <- function(tag, score, multis = NA,
       if (!all(as.character(tags) %in% colnames(multis)))
         stop(paste0("Your multis data.frame colums should be ", vector2text(tags),
                     " (not ", vector2text(colnames(multis)), ")"))
+      if (!all(colnames(multis) %in% as.character(tags)))
+        warning("Your multis data.frame has more predictors than actual possible values")
       if (ncol(multis) != length(tags))
         stop("You have more columns than needed!")
       
