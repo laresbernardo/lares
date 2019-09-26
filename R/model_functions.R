@@ -1140,9 +1140,7 @@ model_metrics <- function(tag, score, multis = NA,
         stop(paste0("Your multis data.frame colums should be ", vector2text(tags),
                     " (not ", vector2text(colnames(multis)), ")"))
       if (!all(colnames(multis) %in% as.character(tags)))
-        warning("Your multis data.frame has more predictors than actual possible values")
-      if (ncol(multis) != length(tags))
-        stop("You have more columns than needed!")
+        warning("Your multis data.frame has more predictors (columns) than actual possible values")
       
       df <- data.frame(tag, score)
       metrics[["confusion_matrix"]] <- conf_mat(tag, score)
