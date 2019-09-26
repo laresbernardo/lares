@@ -91,7 +91,6 @@ h2o_automl <- function(df, y = "tag",
                "an independent varialbe using the 'y' parameter."))
   }
   colnames(df)[colnames(df) == y] <- "tag"
-  
   df <- data.frame(df) %>% 
     filter(!is.na(tag)) %>%
     mutate_if(is.character, as.factor)
@@ -160,6 +159,14 @@ h2o_automl <- function(df, y = "tag",
     if (!quiet) message(paste0("Training set balanced: ", min, 
                                " observations for each (",length(cats),") category; using ",
                                round(100*nrow(train)/total, 2), "% of training data..."))
+  }
+  
+  # LAST CHECK ON TRAIN/TEST VALUES
+  if (model_type == "Classifier") {
+    if (!all(cats %in% unique(train$tag)))
+      stop(paste("You must train with all available tags:", vector2text(cats)))
+    if (!all(cats %in% unique(test$tag)))
+      warning("You are training with tags that are not in your test set.")  
   }
   
   # TRAIN MODEL
@@ -894,9 +901,9 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
   
   df <- data.frame(tag = tag, score = score)
   
-  means <- df %>% group_by(tag) %>% summarise(mean = mean(score))
-  auto <- means$tag[means$mean == max(means$mean)]
   if (target == "auto") {
+    means <- df %>% group_by(tag) %>% summarise(mean = mean(score))
+    auto <- means$tag[means$mean == max(means$mean)]
     target <- auto
     if (!quiet) message(paste("Target value:", target)) 
   }
@@ -1140,12 +1147,8 @@ model_metrics <- function(tag, score, multis = NA,
         stop(paste0("Your multis data.frame colums should be ", vector2text(tags),
                     " (not ", vector2text(colnames(multis)), ")"))
       if (!all(colnames(multis) %in% as.character(tags))) {
-        warning(paste(
-          "Your multis data.frame has more predictors (columns) than actual possible values.",
-          "Automatically selecting relevant columns..."))
         multis <- multis[,colnames(multis) %in% as.character(tags)]
       }
-        
       
       df <- data.frame(tag, score)
       metrics[["confusion_matrix"]] <- conf_mat(tag, score)
