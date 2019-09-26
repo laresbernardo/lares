@@ -863,7 +863,7 @@ h2o_predict_model <- function(df, model){
 #' class in the training dataset after sampling
 #' @export
 calibrate <- function(score, train, target, train_sample, target_sample) {
-    (score * (target / train) / (target_sample / train_sample)) /
+  (score * (target / train) / (target_sample / train_sample)) /
     (((1 - score) * (1 - target / train) / (1 - target_sample / train_sample)) +
        (score * (target / train) / (target_sample / train_sample)))
 }
@@ -1136,7 +1136,7 @@ model_metrics <- function(tag, score, multis = NA,
       tags <- sort(unique(tag))
       if (is.na(multis)[1]) 
         stop("You have to input a data.frame with each tag's probability into the multis parameter.")
-      if (!all(colnames(multis) %in% as.character(tags)))
+      if (!all(as.character(tags) %in% colnames(multis)))
         stop(paste0("Your multis data.frame colums should be ", vector2text(tags),
                     " (not ", vector2text(colnames(multis)), ")"))
       if (ncol(multis) != length(tags))
