@@ -14,6 +14,8 @@
 #' @param k Integer. Number of clusters
 #' @param limit Integer. How many clusters should be considered?
 #' @param drop_na Boolean. Should NA rows be removed?
+#' @param ignore Character vector. Which columns should be excluded
+#' when calculating kmeans?
 #' @param ohse Boolean. Do you wish to automatically run one hot
 #' encoding to non-numerical columns?
 #' @param norm Boolean. Should the data be normalized?
@@ -22,7 +24,8 @@
 #' @param seed Numeric. Seed for reproducibility
 #' @export
 clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE, 
-                          ohse = TRUE, norm = TRUE, comb = c(1,2,3),
+                          ignore = NA, ohse = TRUE, norm = TRUE, 
+                          comb = c(1, 2, 3),
                           seed = 123){
   
   results <- list()
@@ -50,6 +53,14 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   # Data should be normalized for better results
   if (norm) df <- df %>% transmute_all(funs(normalize)) %>% replace(., is.na(.), 0)
   
+  # Ignore some columns
+  if (!is.na(ignore)[1]) {
+    order <- colnames(df)
+    aux <- df[,colnames(df) %in% ignore]
+    df <- df[,!colnames(df) %in% ignore]
+    message(paste("Ignored only for kmeans:", vector2text(ignore)))
+  }
+  
   # Determine number of clusters (n)
   wss <- sum(apply(df, 2, var))*(nrow(df) - 1)
   for (i in 2:limit) wss[i] <- sum(kmeans(df, centers = i)$withinss)
@@ -68,6 +79,9 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   
   # If n is already selected
   if (!is.na(k)) {
+    if (!is.na(ignore)[1])
+      df <- cbind(df, aux) %>% 
+        select(one_of(order), everything())
     results[["df"]] <- df
     nclusters_plot <- nclusters_plot + 
       geom_hline(aes(yintercept = nclusters$wss[nclusters$n == k]), colour = "red") +
@@ -121,7 +135,8 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
                                type = "scatter3d", mode = "markers")
     }
     
-    if (exists("clusters_plot")) results[["clusters_plot"]] <- clusters_plot
+    if (exists("clusters_plot")) 
+      results[["clusters_plot"]] <- clusters_plot
     results[["correlations"]] <- corr_cross(df, contains = "cluster")  + 
       facet_grid(mix ~ ., scales = "free")
   }

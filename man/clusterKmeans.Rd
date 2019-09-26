@@ -4,8 +4,8 @@
 \alias{clusterKmeans}
 \title{K-Means Clustering Automated}
 \usage{
-clusterKmeans(df, k = NA, limit = 20, drop_na = TRUE, ohse = TRUE,
-  norm = TRUE, comb = c(1, 2, 3), seed = 123)
+clusterKmeans(df, k = NA, limit = 20, drop_na = TRUE, ignore = NA,
+  ohse = TRUE, norm = TRUE, comb = c(1, 2, 3), seed = 123)
 }
 \arguments{
 \item{df}{Dataframe}
@@ -15,6 +15,9 @@ clusterKmeans(df, k = NA, limit = 20, drop_na = TRUE, ohse = TRUE,
 \item{limit}{Integer. How many clusters should be considered?}
 
 \item{drop_na}{Boolean. Should NA rows be removed?}
+
+\item{ignore}{Character vector. Which columns should be excluded
+when calculating kmeans?}
 
 \item{ohse}{Boolean. Do you wish to automatically run one hot
 encoding to non-numerical columns?}
