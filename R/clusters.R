@@ -122,7 +122,8 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     }
     
     if (exists("clusters_plot")) results[["clusters_plot"]] <- clusters_plot
-    results[["correlations"]] <- corr_cross(df, contains = "cluster")  
+    results[["correlations"]] <- corr_cross(df, contains = "cluster")  + 
+      facet_grid(mix ~ ., scales = "free")
   }
   
   return(results)
