@@ -408,50 +408,6 @@ h2o_selectmodel <- function(results, which_model = 1, plots = TRUE, quiet = FALS
 
 
 ####################################################################
-#' Split a dataframe for training and testing sets
-#'
-#' This function splits automatically a dataframe into train and 
-#' test datasets. You can define a seed to get the same results 
-#' every time, but has a default value. You can prevent it from 
-#' printing the split counter result.
-#'
-#' @family Machine Learning
-#' @family Tools
-#' @param df Dataframe to split
-#' @param size Numeric. Split rate value, between 0 and 1. If set to
-#' 1, the train and test set will be the same.
-#' @param seed Seed for random split
-#' @param print Print summary results
-#' @return A list with both datasets, summary, and split rate
-#' @export
-msplit <- function(df, size = 0.7, seed = 0, print=T) {
-  
-  if (size <= 0 | size > 1) stop("Set size parameter to a value >0 and <=1") 
-  
-  set.seed(seed)
-  df <- data.frame(df)
-  if (size == 1) train <- test <- df
-  
-  if (size < 1 & size > 0) {
-    ind <- sample(seq_len(nrow(df)), size = floor(size * nrow(df)))
-    train <- df[ind, ]
-    test <- df[-ind, ] 
-  }
-  
-  train_size <- dim(train)
-  test_size <- dim(test)
-  summary <- rbind(train_size, test_size)[,1]
-  
-  if (print == TRUE) print(summary) 
-  
-  sets <- list(train = train, test = test, summary = summary, split_size = size)
-  
-  return(sets)
-  
-}
-
-
-####################################################################
 #' Export h2o_automl's Results
 #' 
 #' Export RDS, TXT, POJO, MOJO and all results from h2o_automl
@@ -463,15 +419,20 @@ msplit <- function(df, size = 0.7, seed = 0, print=T) {
 #' models: this number is the threshold of unique values we should 
 #' have in 'tag' (more than: regression; less than: classification)
 #' @param which Character vector. Select which file format to export:
-#' Possible values: txt, csv, rds, binary, mojo, plots
-#' @param note Character. Add a note to the txt file. Useful when lots of models
-#' are trained and saved to remember which one is which one
-#' @param subdir Character. In which directory do you wish to save the results?
+#' Possible values: txt, csv, rds, binary, mojo, plots. You might also
+#' use dev (txt, csv, rds) or production (binary, mojo) or simply don't use
+#' parameter to export everything
+#' @param note Character. Add a note to the txt file. Useful when lots of 
+#' models are trained and saved to remember which one is which one
+#' @param subdir Character. In which directory do you wish to save 
+#' the results?
 #' @param save Boolean. Do you wish to save/export results?
 #' @export
 export_results <- function(results, 
                            thresh = 10,
-                           which = c("txt","csv","rds","binary","mojo","plots"),
+                           which = c("txt","csv","rds",
+                                     "binary","mojo","plots",
+                                     "dev","production"),
                            note = NA,
                            subdir = NA,
                            save = TRUE) {
@@ -487,6 +448,9 @@ export_results <- function(results,
     dir <- file.path(paste0(getwd(), "/", subdir))
     message(paste("Export directory:", dir))
     if (!dir.exists(dir)) dir.create(dir) 
+    
+    if ("dev" %in% which) which <- unique(c(which, "txt", "csv", "rds"))
+    if ("production" %in% which) which <- unique(c(which, "binary", "mojo"))
     
     if ("txt" %in% which | !is.na(note)[1]) {
       set.seed(123)
@@ -556,6 +520,50 @@ export_results <- function(results,
     }
     message(paste("Succesfully exported files:", vector2text(which)))
   }
+}
+
+
+####################################################################
+#' Split a dataframe for training and testing sets
+#'
+#' This function splits automatically a dataframe into train and 
+#' test datasets. You can define a seed to get the same results 
+#' every time, but has a default value. You can prevent it from 
+#' printing the split counter result.
+#'
+#' @family Machine Learning
+#' @family Tools
+#' @param df Dataframe to split
+#' @param size Numeric. Split rate value, between 0 and 1. If set to
+#' 1, the train and test set will be the same.
+#' @param seed Seed for random split
+#' @param print Print summary results
+#' @return A list with both datasets, summary, and split rate
+#' @export
+msplit <- function(df, size = 0.7, seed = 0, print=T) {
+  
+  if (size <= 0 | size > 1) stop("Set size parameter to a value >0 and <=1") 
+  
+  set.seed(seed)
+  df <- data.frame(df)
+  if (size == 1) train <- test <- df
+  
+  if (size < 1 & size > 0) {
+    ind <- sample(seq_len(nrow(df)), size = floor(size * nrow(df)))
+    train <- df[ind, ]
+    test <- df[-ind, ] 
+  }
+  
+  train_size <- dim(train)
+  test_size <- dim(test)
+  summary <- rbind(train_size, test_size)[,1]
+  
+  if (print == TRUE) print(summary) 
+  
+  sets <- list(train = train, test = test, summary = summary, split_size = size)
+  
+  return(sets)
+  
 }
 
 
