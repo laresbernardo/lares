@@ -161,11 +161,11 @@ h2o_automl <- function(df, y = "tag",
                                round(100*nrow(train)/total, 2), "% of training data..."))
   }
   
-  # LAST CHECK ON TRAIN/TEST VALUES
+  # CHECK TRAIN/TEST VALUES
   if (model_type == "Classifier") {
-    if (!all(cats %in% unique(train$tag)))
-      stop(paste("You must train with all available tags:", vector2text(cats)))
-    if (!all(cats %in% unique(test$tag)))
+    if (!all(unique(df$tag) %in% unique(train$tag)))
+      stop(paste("You must train with all available tags:", vector2text(unique(df$tag))))
+    if (!all(unique(df$tag) %in% unique(test$tag)))
       warning("You are training with tags that are not in your test set.")  
   }
   
