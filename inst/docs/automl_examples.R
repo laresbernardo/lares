@@ -29,3 +29,9 @@ r <- dfl %>% ohse(dates = T) %>%
   select(-opp_date, -opp_id) %>% 
   h2o_automl("issued", max_models = 5, balance = TRUE)
 r$metrics
+
+####### WITH PRE-DEFINED TRAIN/TEST
+splits <- msplit(dft)
+df <- rbind(mutate(splits$train, train_test = "train"),
+            mutate(splits$test, train_test = "test"))
+r <- h2o_automl(df, "Survived", max_models = 3, train_test = "train_test")

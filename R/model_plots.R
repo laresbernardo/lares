@@ -954,7 +954,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
       theme_lares2(pal = 2) + theme(legend.position = c(0.88, 0.2))
     
     if (highlight == "auto") highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
-    if (highlight %in% gains$percentile & highlight != "none") {
+    if (highlight[1] %in% gains$percentile & highlight != "none") {
       highlight <- as.integer(highlight)
       note <- paste0("If we select the top ", 
                      round(highlight*100/splits),"% cases with highest probabilities,\n",
