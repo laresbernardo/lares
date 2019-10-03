@@ -236,15 +236,16 @@ corr_plot <- function(df, ignore = NA, method = "pearson", order = "FPC",
 #' @param top Integer. Return top n results only. Only valid when type = 1
 #' @param local Integer. Label top n local correlations. Only valid when type = 2
 #' @param ignore Character vector. Which columns do you wish to exlude?
-#' @param contains Character vector. Filter cross-correlations with variables
-#' that contains certain strings (using any value if vector used)
+#' @param contains Character vector and Boolean. Filter cross-correlations 
+#' with variables that contains certain strings (using any value if vector used).
+#' @param grid Boolean. Separate into grids?
 #' @param rm.na Boolean. Remove NAs?
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @export
 corr_cross <- function(df, plot = TRUE, type = 1, 
                        max = 1, top = 25, local = 1,
-                       ignore = NA, contains = NA,
+                       ignore = NA, contains = NA, grid = FALSE,
                        rm.na = FALSE, dummy = TRUE,
                        method = "pearson") {
   
@@ -295,6 +296,8 @@ corr_cross <- function(df, plot = TRUE, type = 1,
              x = NULL, y = "Correlation [%]") +
         scale_fill_manual(values = c("bad" = "#E5586E", "good" = "#59B3D2")) +
         scale_y_percent() + theme_lares2()
+      if ((!is.na(contains)[1] & length(contains) == 1) | grid)
+        p <- p + facet_grid(mix ~ ., scales = "free", space = "free")
     }
     if (type == 2) {
       ret <- rbind(data.frame(ret, group = ret$group1), 

@@ -5,8 +5,8 @@
 \title{Correlation Cross-Table}
 \usage{
 corr_cross(df, plot = TRUE, type = 1, max = 1, top = 25,
-  local = 1, ignore = NA, contains = NA, rm.na = FALSE,
-  dummy = TRUE, method = "pearson")
+  local = 1, ignore = NA, contains = NA, grid = FALSE,
+  rm.na = FALSE, dummy = TRUE, method = "pearson")
 }
 \arguments{
 \item{df}{Dataframe.}
@@ -23,8 +23,10 @@ corr_cross(df, plot = TRUE, type = 1, max = 1, top = 25,
 
 \item{ignore}{Character vector. Which columns do you wish to exlude?}
 
-\item{contains}{Character vector. Filter cross-correlations with variables
-that contains certain strings (using any value if vector used)}
+\item{contains}{Character vector and Boolean. Filter cross-correlations 
+with variables that contains certain strings (using any value if vector used).}
+
+\item{grid}{Boolean. Separate into grids?}
 
 \item{rm.na}{Boolean. Remove NAs?}
 
