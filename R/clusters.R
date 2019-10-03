@@ -1,5 +1,5 @@
 ####################################################################
-#' K-Means Clustering Automated
+#' K-Means Clustering + PCA Automated
 #' 
 #' This function lets the user cluster a whole data.frame automatically.
 #' As you might know, the goal of kmeans is to group data points into 
@@ -25,7 +25,7 @@
 #' @export
 clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE, 
                           ignore = NA, ohse = TRUE, norm = TRUE, 
-                          comb = c(1, 2, 3),
+                          comb = c(1, 2),
                           seed = 123){
   
   results <- list()
@@ -101,43 +101,51 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       group_by(cluster) %>% 
       summarise_all(list(mean)) %>%
       mutate(n = as.integer(table(df$cluster)))
-    results[["clusters"]] <- clusters
+    results[["means"]] <- clusters
     
-    # Plot clusters
-    if (length(comb) == 2) {
-      axisnames <- colnames(df[,comb])
-      centers <- data.frame(
-        cluster = clusters$cluster, 
-        clusters[,-1][,comb],
-        size = clusters$n)
-      clusters_plot <- ggplot(df, aes(
-        x = df[,comb[1]], y = df[,comb[2]], colour = df$cluster)) + 
-        geom_point() + theme_minimal() + guides(size = FALSE) +
-        geom_text(data = centers, 
-                  aes_string(x = colnames(centers)[2], 
-                             y = colnames(centers)[3], 
-                             label = "cluster", 
-                             size = "size"), 
-                  colour = "black", fontface = "bold") +
-        labs(title = "Clusters Plot",
-             subtitle = paste("Number of clusters selected:", k),
-             x = axisnames[1], y = axisnames[2],
-             colour = "Cluster") + coord_flip() +
-        theme_lares2(pal = 2)
-    }
+    # # Plot clusters
+    # if (length(comb) == 2) {
+    #   axisnames <- colnames(df[,comb])
+    #   centers <- data.frame(
+    #     cluster = clusters$cluster, 
+    #     clusters[,-1][,comb],
+    #     size = clusters$n)
+    #   clusters_plot <- ggplot(df, aes(
+    #     x = df[,comb[1]], y = df[,comb[2]], colour = df$cluster)) + 
+    #     geom_point() + theme_minimal() + guides(size = FALSE) +
+    #     geom_text(data = centers, 
+    #               aes_string(x = colnames(centers)[2], 
+    #                          y = colnames(centers)[3], 
+    #                          label = "cluster", 
+    #                          size = "size"), 
+    #               colour = "black", fontface = "bold") +
+    #     labs(title = "Clusters Plot",
+    #          subtitle = paste("Number of clusters selected:", k),
+    #          x = axisnames[1], y = axisnames[2],
+    #          colour = "Cluster") + coord_flip() +
+    #     theme_lares2(pal = 2)
+    # }
+    # 
+    # if (length(comb) == 3) {
+    #   try_require("plotly")
+    #   clusters_plot <- plot_ly(x = df[,comb[1]], 
+    #                            y = df[,comb[2]], 
+    #                            z = df[,comb[3]],
+    #                            color = df$cluster,
+    #                            type = "scatter3d", mode = "markers")
+    # }
+    # if (exists("clusters_plot")) results[["clusters_plot"]] <- clusters_plot
     
-    if (length(comb) == 3) {
-      try_require("plotly")
-      clusters_plot <- plot_ly(x = df[,comb[1]], 
-                               y = df[,comb[2]], 
-                               z = df[,comb[3]],
-                               color = df$cluster,
-                               type = "scatter3d", mode = "markers")
-    }
+    # Correlations
+    results[["correlations"]] <- corr_cross(df, contains = "cluster")
     
-    if (exists("clusters_plot")) 
-      results[["clusters_plot"]] <- clusters_plot
-    results[["correlations"]] <- corr_cross(df, contains = "cluster", grid = TRUE)
+    # PCA
+    PCA <- list()
+    pca <- prcomp(select(df, -cluster), center = TRUE, scale. = TRUE)
+    PCA$pcadf <- data.frame(pca$x, cluster = results$df$cluster)
+    PCA$pca_explained <- round(100 * pca$sdev^2/sum(pca$sdev^2), 4)
+    PCA$pca <- pca
+    results[["PCA"]] <- PCA
   }
   
   return(results)

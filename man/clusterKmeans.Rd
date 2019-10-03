@@ -2,10 +2,10 @@
 % Please edit documentation in R/clusters.R
 \name{clusterKmeans}
 \alias{clusterKmeans}
-\title{K-Means Clustering Automated}
+\title{K-Means Clustering + PCA Automated}
 \usage{
 clusterKmeans(df, k = NA, limit = 20, drop_na = TRUE, ignore = NA,
-  ohse = TRUE, norm = TRUE, comb = c(1, 2, 3), seed = 123)
+  ohse = TRUE, norm = TRUE, comb = c(1, 2), seed = 123)
 }
 \arguments{
 \item{df}{Dataframe}
