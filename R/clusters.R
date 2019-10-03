@@ -143,7 +143,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     pca <- prcomp(df, center = TRUE, scale. = TRUE)
     PCA$pcadf <- data.frame(pca$x, cluster = results$df$cluster)
     PCA$pca_explained <- round(100 * pca$sdev^2/sum(pca$sdev^2), 4)
-    PCA$pcadf <- PCA$pcadf[,c(c$PCA$pca_explained > 0.1, TRUE)]
+    PCA$pcadf <- PCA$pcadf[,c(PCA$pca_explained > 0.1, TRUE)]
     PCA$plotPC <- data.frame(id = 1:length(PCA$pca_explained)) %>%
       mutate(PC = factor(paste0("PC", id), 
                          levels = paste0("PC", 1:length(PCA$pca_explained))),
