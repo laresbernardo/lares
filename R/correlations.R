@@ -23,7 +23,7 @@
 #' @export
 corr <- function(df, method = "pearson", ignore = NA, 
                  dummy = TRUE, dates = FALSE, 
-                 redundant = TRUE, logs = FALSE, 
+                 redundant = FALSE, logs = FALSE, 
                  plot = FALSE, top = NA) {
   
   # Ignored columns
@@ -296,8 +296,10 @@ corr_cross <- function(df, plot = TRUE, type = 1,
              x = NULL, y = "Correlation [%]") +
         scale_fill_manual(values = c("bad" = "#E5586E", "good" = "#59B3D2")) +
         scale_y_percent() + theme_lares2()
-      if ((!is.na(contains)[1] & length(contains) == 1) | grid)
+      if ((!is.na(contains)[1] & length(contains) == 1) | grid) {
         p <- p + facet_grid(mix ~ ., scales = "free", space = "free")
+      }
+        
     }
     if (type == 2) {
       ret <- rbind(data.frame(ret, group = ret$group1), 

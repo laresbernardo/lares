@@ -100,15 +100,16 @@ ohse <- function(df,
       vector_values[,1] <- paste0(sep, vector_values[,1])
       
       # Columns with 2 possible values
-      if (vector_levels == 2) {
+      if (vector_levels == 2 & redundant == FALSE) {
         which <- as.character(levels(as.factor(df[,c(vector_name)]))[2])
         df[,c(vector_name)] <- as.integer(as.factor(df[,c(vector_name)])) - 1
         converted_binary <- rbind(converted_binary, vector_name)
         df <- rename_at(df, vars(vector_name), funs(paste0(vector_name, "_", which)))
       }
-      # Columns with more than 2 possible values
+      
+      # ONE HOT ENCODING
       if (!colnames(vector_values) %in% c(converted_binary, no_variance)) {
-        if (vector_levels >= 3) {
+        if (vector_levels >= 2 & !vector_name %in% converted_binary) {
           options(na.action = 'na.pass')
           vector_values <- categ_reducer(vector_values, !!as.name(vector_name), top = limit,
                                          other_label = paste0(sep, other_label))

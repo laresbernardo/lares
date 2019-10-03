@@ -11,6 +11,7 @@
 #' @importFrom devtools install install_github
 #' @import dplyr
 #' @importFrom forecast Arima auto.arima forecast
+#' @importFrom ggforce geom_mark_ellipse
 #' @import ggplot2
 #' @importFrom googleAuthR gar_auth
 #' @importFrom googlesheets gs_auth gs_read gs_edit_cells gs_title
@@ -97,7 +98,8 @@ if (getRversion() >= "2.15.1")
       "Each","ROI","ValueSector","etf_sector_plot","ma1","ma2","amount_spent","model",
       "date_start","spend","adcreatives","created_time","list_id","aux","ds","prophet",
       "fit.prophet","prophet_plot_components","add_country_holidays","group1","group2",
-      "make_future_dataframe","train_test","aml","m","scores","partial_dependency"))
+      "make_future_dataframe","train_test","aml","m","scores","partial_dependency",
+      "PC1","PC2"))
 
 #' Pipe operator
 #' @name lares-exports

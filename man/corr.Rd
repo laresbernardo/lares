@@ -5,7 +5,7 @@
 \title{Correlation table}
 \usage{
 corr(df, method = "pearson", ignore = NA, dummy = TRUE,
-  dates = FALSE, redundant = TRUE, logs = FALSE, plot = FALSE,
+  dates = FALSE, redundant = FALSE, logs = FALSE, plot = FALSE,
   top = NA)
 }
 \arguments{
