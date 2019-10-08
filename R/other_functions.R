@@ -1173,6 +1173,7 @@ font_exists <- function(font = "Arial Narrow") {
       paths <-
         c("/Library/Fonts/",                      # System fonts
           "/System/Library/Fonts",                # More system fonts
+          "/System/Library/Fonts/Supplemental",   # More system fonts
           "~/Library/Fonts/")                     # User fonts
       return(paths[file.exists(paths)])
       
