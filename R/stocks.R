@@ -70,13 +70,15 @@ stocks_file <- function(filename = NA, creds = "~/Dropbox (Personal)/Documentos/
 #' 
 #' @family Investment
 #' @param symbols Character Vector. List of symbols to download historical data
-#' @param from Date. Since when do you wish to download historical data? 
-#' If not set, will return since 365 days ago
+#' @param from,to Date. Dates for range. If not set, 1 year will be downloaded
+#' @param today Boolean. Do you wish to add today's live quote? This will happen
+#' only if to value is the same as today's date
 #' @param tax Numeric. How much [0-99] of your dividends are gone with taxes? 
 #' @param verbose Boolean. Print results and progress while downloading?
 #' @export
-stocks_hist <- function(symbols = c("VTI","IEMG"), 
-                        from = Sys.Date() - 365, 
+stocks_hist <- function(symbols = c("VTI", "TSLA"), 
+                        from = Sys.Date() - 365, to = Sys.Date(),
+                        today = TRUE,
                         tax = 30, 
                         verbose = TRUE) {
   
@@ -90,14 +92,38 @@ stocks_hist <- function(symbols = c("VTI","IEMG"),
     if (length(from) != length(symbols)) from <- rep(from[1], length(symbols))
     
     for (i in 1:length(symbols)) {
-      # Daily quotes
+      # Daily quotes (except today)
       symbol <- as.character(symbols[i])
       start_date <- as.character(from[i])
-      values <- getSymbols(symbol, env = NULL, from = start_date, src = "yahoo") %>% data.frame()
+      values <- data.frame(getSymbols(
+        symbol, env = NULL, from = start_date, to = to, src = "yahoo"))
       values <- cbind(row.names(values), as.character(symbol), values)
       colnames(values) <- c("Date","Symbol","Open","High","Low","Close","Volume","Adjusted")
       values <- mutate(values, Adjusted = rowMeans(select(values, High, Close), na.rm = TRUE))
       row.names(values) <- NULL
+      
+      # Add right now's data
+      if (today & to == Sys.Date()) {
+        quote <- function(ticks) {
+          qRoot <- "https://query1.finance.yahoo.com/v7/finance/quote?fields=symbol,longName,regularMarketPrice,regularMarketChange,regularMarketTime&formatted=false&symbols="
+          z <- fromJSON(paste(qRoot, paste(ticks, collapse = ","), sep = ""))
+          z <- z$quoteResponse$result[,c("symbol", "regularMarketTime", "regularMarketPrice", "regularMarketChange", "longName")]
+          row.names(z) <- z$symbol
+          z$symbol <- NULL
+          names(z) <- c("Time", "Price", "Change", "Name")
+          z$Time <- as.POSIXct(z$Time, origin = '1970-01-01 00:00:00')
+          return(z)
+        }
+        now <- quote(symbol)
+        now <- data.frame(Date = as.character(as.Date(now$Time)), 
+                          Symbol = symbol,
+                          Open = now$Price, High = now$Price, 
+                          Low = now$Price, Close = now$Price,
+                          Volume = NA, Adjusted = now$Price)
+        # Append to historical data
+        values <- rbind(values, now)
+      }
+      # Append to other symbols' data
       data <- rbind(data, values)
       
       # Dividends

@@ -4,12 +4,14 @@
 \alias{updateLares}
 \title{Update the library}
 \usage{
-updateLares(local = FALSE, force = FALSE)
+updateLares(local = FALSE, force = FALSE, notification = TRUE)
 }
 \arguments{
 \item{local}{Boolean. Install package with local files (TRUE) or Github repository}
 
 \item{force}{Boolean. Force install if needed}
+
+\item{notification}{Boolean. Notify update for lares' stats}
 }
 \description{
 This function lets the user update from repository or local source.
@@ -32,7 +34,7 @@ Other Tools: \code{\link{autoline}},
   \code{\link{mailSend}}, \code{\link{msplit}},
   \code{\link{myip}}, \code{\link{pass}},
   \code{\link{quiet}}, \code{\link{read.file}},
-  \code{\link{statusbar}}, \code{\link{try_require}},
-  \code{\link{zerovar}}
+  \code{\link{slackSend}}, \code{\link{statusbar}},
+  \code{\link{try_require}}, \code{\link{zerovar}}
 }
 \concept{Tools}

@@ -4,14 +4,16 @@
 \alias{stocks_hist}
 \title{Download Stocks Historical Data}
 \usage{
-stocks_hist(symbols = c("VTI", "IEMG"), from = Sys.Date() - 365,
-  tax = 30, verbose = TRUE)
+stocks_hist(symbols = c("VTI", "TSLA"), from = Sys.Date() - 365,
+  to = Sys.Date(), today = TRUE, tax = 30, verbose = TRUE)
 }
 \arguments{
 \item{symbols}{Character Vector. List of symbols to download historical data}
 
-\item{from}{Date. Since when do you wish to download historical data? 
-If not set, will return since 365 days ago}
+\item{from, to}{Date. Dates for range. If not set, 1 year will be downloaded}
+
+\item{today}{Boolean. Do you wish to add today's live quote? This will happen
+only if to value is the same as today's date}
 
 \item{tax}{Numeric. How much [0-99] of your dividends are gone with taxes?}
 

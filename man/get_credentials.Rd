@@ -33,7 +33,8 @@ Other Tools: \code{\link{autoline}},
   \code{\link{mailSend}}, \code{\link{msplit}},
   \code{\link{myip}}, \code{\link{pass}},
   \code{\link{quiet}}, \code{\link{read.file}},
-  \code{\link{statusbar}}, \code{\link{try_require}},
-  \code{\link{updateLares}}, \code{\link{zerovar}}
+  \code{\link{slackSend}}, \code{\link{statusbar}},
+  \code{\link{try_require}}, \code{\link{updateLares}},
+  \code{\link{zerovar}}
 }
 \concept{Tools}

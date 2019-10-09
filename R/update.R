@@ -6,8 +6,9 @@
 #' @family Tools
 #' @param local Boolean. Install package with local files (TRUE) or Github repository
 #' @param force Boolean. Force install if needed
+#' @param notification Boolean. Notify update for lares' stats
 #' @export
-updateLares <- function(local = FALSE, force = FALSE) {
+updateLares <- function(local = FALSE, force = FALSE, notification = TRUE) {
   
   start <- Sys.time()
   message(paste(start, "| Started update..."))
@@ -18,6 +19,11 @@ updateLares <- function(local = FALSE, force = FALSE) {
     devtools::install_github("laresbernardo/lares", force = force) 
   }
   #if (restart) .rs.restartR()
+  
+  if (notification) {
+    aux <- paste("User:", Sys.info()[["user"]])
+    slackSend(aux, title = "New lares update", quiet = TRUE)
+  }
   
   message("Restart your current session for update to work properly")
   aux <- round(difftime(Sys.time(), start, units = "secs"), 2)
