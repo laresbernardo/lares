@@ -143,12 +143,15 @@ h2o_automl <- function(df, y = "tag",
     test <- splits$test
   } else {
     # If we already have a default split for train and test (train_test)
-    colnames(df)[colnames(df) == train_test] <- "train_test"
-    if (all(unique(as.character(df$train_test)) %in% c('train', 'test'))) {
-      train <- filter(df, train_test == "train")
-      test <- filter(df, train_test == "test")
-      if (!quiet) print(table(df$train_test))
-    } else stop("Your train_test column should have 'train' and 'test' values only!")
+    if (train_test %in% colnames(df)) {
+      colnames(df)[colnames(df) == train_test] <- "train_test"
+      if (all(unique(as.character(df$train_test)) %in% c('train', 'test'))) {
+        train <- filter(df, train_test == "train")
+        test <- filter(df, train_test == "test")
+        ignore <- c(ignore, train_test)
+        if (!quiet) print(table(df$train_test))
+      } else stop("Your train_test column should have 'train' and 'test' values only!") 
+    } else stop(paste("There is no column named", train_test))
   }
   
   # BALANCE TRAINING SET
@@ -328,7 +331,8 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     model_name = as.vector(m@model_id),
     plots = plots)
   if (model_type == "Classifier" & length(cats) == 2) 
-    results$metrics[["max_metrics"]] <- m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores
+    results$metrics[["max_metrics"]] <- data.frame(
+      m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores)
   if (!stacked) results[["importance"]] <- imp
   
   results[["datasets"]] <- list(

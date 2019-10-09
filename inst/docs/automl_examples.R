@@ -8,7 +8,6 @@ dft <- dft %>% select(-Ticket, -PassengerId, -Cabin)
 r <- dft %>% h2o_automl(y = "Survived", max_models = 2, exclude_algos = NULL)
 plot(r$plots$dashboard)
 r$metrics
-r$max_metrics
 
 # Classification: 3 classes
 r <- dft %>% select(-Fare) %>% h2o_automl(y = "Pclass", impute = TRUE)
