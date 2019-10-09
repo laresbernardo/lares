@@ -18,8 +18,7 @@ updateLares <- function(local = FALSE, force = FALSE, notification = TRUE) {
   } else {
     devtools::install_github("laresbernardo/lares", force = force) 
   }
-  #if (restart) .rs.restartR()
-  
+
   if (notification) {
     aux <- paste("User:", Sys.info()[["user"]])
     slackSend(aux, title = "New lares update", quiet = TRUE)

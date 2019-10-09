@@ -328,7 +328,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     model_name = as.vector(m@model_id),
     plots = plots)
   if (model_type == "Classifier" & length(cats) == 2) 
-    results[["max_metrics"]] <- m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores
+    results$metrics[["max_metrics"]] <- m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores
   if (!stacked) results[["importance"]] <- imp
   
   results[["datasets"]] <- list(
