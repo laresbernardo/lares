@@ -4,15 +4,15 @@
 \alias{dalex_variable}
 \title{DALEX Partial Dependency Plots (PDP)}
 \usage{
-dalex_variable(explainer, variable, force_class = NA, alarm = TRUE)
+dalex_variable(explainer, y, force_class = NA, alarm = TRUE)
 }
 \arguments{
 \item{explainer}{Object. Result from dalex_explainer function}
 
-\item{variable}{Character. Which character do you wish to study?}
+\item{y}{Character. Which character do you wish to study?}
 
 \item{force_class}{Character. If you wish to force a class on your 
-variable, which one do you need?}
+y, which one do you need?}
 
 \item{alarm}{Boolean. Ping an alarm when ready! Needs beepr installed}
 }

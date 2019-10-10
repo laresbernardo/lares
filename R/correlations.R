@@ -125,25 +125,27 @@ corr_var <- function(df, ...,
                      file_name = "viz_corrvar.png") {
   
   vars <- quos(...)
+  var <- as_label(vars[[1]])
+  df <- select(df, -contains(paste0(var,"_log")))
   
   # Calculate correlations
-  rs <- corr(df, method = method, ignore = ignore, logs = logs, dates = dates)
-  var <- as_label(vars[[1]])
-  rs <- select(rs, -contains(paste0(var,"_log"))) %>%
-    filter(!grepl(paste0(var,"_log"), row.names(.)))
+  rs <- corr(df, method = method, ignore = ignore, 
+             logs = logs, dates = dates, pvalue = TRUE)
   
   # Check if main variable exists
-  if (!var %in% colnames(rs)) {
+  if (!var %in% colnames(rs$cor)) {
     warning(paste("Not a valid input:", var, "was transformed or does not exist."))
-    maybes <- colnames(rs)[grepl(var, colnames(rs))]
-    if (length(maybes) > 0 & maybes[1] %in% colnames(rs)) {
+    maybes <- colnames(rs$cor)[grepl(var, colnames(rs$cor))]
+    if (length(maybes) > 0 & maybes[1] %in% colnames(rs$cor)) {
       message(paste0("Maybe you meant one of: ", vector2text(maybes), ". ",
                      "Automatically using '", maybes[1], "'"))
       var <- maybes[1]
     } else stop()
   }
   
-  d <- data.frame(variables = colnames(rs), corr = rs[, c(var)])
+  d <- data.frame(variables = colnames(rs$cor), 
+                  corr = rs$cor[, c(var)],
+                  pvalue = rs$pvalue[, c(var)])
   d <- d[(d$corr < 1 & !is.na(d$corr)),]
   d <- d[order(-abs(d$corr)), ]
   
@@ -198,12 +200,7 @@ corr_var <- function(df, ...,
   }
   
   if (save) p <- p + ggsave(file_name, width = 6, height = 6)
-  
-  if (plot) {
-    return(p)
-  } else {
-    return(d)  
-  }
+  if (plot) return(p) else return(d)
 }
 
 

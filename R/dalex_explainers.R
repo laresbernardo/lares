@@ -62,7 +62,7 @@ dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
 #' @export
 dalex_local <- function(explainer, observation = NA, row = 1, 
                         plot = TRUE, print = TRUE, alarm = TRUE) {
-
+  
   try_require("DALEX")
   start <- Sys.time()
   
@@ -102,7 +102,7 @@ dalex_local <- function(explainer, observation = NA, row = 1,
 #' @param explainer Object. Result from dalex_explainer function
 #' @export
 dalex_residuals <- function(explainer) {
-
+  
   try_require("DALEX")
   
   resids <- model_performance(explainer)
@@ -123,42 +123,62 @@ dalex_residuals <- function(explainer) {
 #' 
 #' @family Interpretability
 #' @param explainer Object. Result from dalex_explainer function
-#' @param variable Character. Which character do you wish to study?
+#' @param y Character. Which character do you wish to study?
 #' @param force_class Character. If you wish to force a class on your 
-#' variable, which one do you need?
+#' y, which one do you need?
 #' @param alarm Boolean. Ping an alarm when ready! Needs beepr installed
 #' @export
-dalex_variable <- function(explainer, variable, force_class = NA, alarm = TRUE) {
+dalex_variable <- function(explainer, y, force_class = NA, alarm = TRUE) {
   
   try_require("DALEX")
   try_require("factorMerger")
-  try_require("pdp")
   start <- Sys.time()
   
+  label <- explainer$label
+  explainer$label <- NULL
   classes <- c('factor','numeric')
   if (force_class %in% classes) {
-    class(explainer$data[[variable]]) <- force_class
+    class(explainer$data[[y]]) <- force_class
     message("Change class to ", force_class)
   } else {
     if (!is.na(force_class))
       stop("Try using force_class: ", vector2text(classes))
   }
   
-  if (is.numeric(explainer$data[[variable]]) & 
-      length(unique(explainer$data[[variable]])) > 6) {
-    message(paste0("Calculating and plotting ", variable, 
-                   "'s response... this might take some time!"))
+  
+  # Plot
+  if (is.numeric(explainer$data[[y]])) {
+    try_require("ingredients")
+    message(paste0(
+      ">>> Calculating and plotting ", y, "'s response... this might take some time!"))
+    aux <- partial_dependency(explainer, variables = y)
+    message("Done")
+    p <- plot(aux) + 
+      labs(title = paste("Partial Dependency Plot (PDP):", y), 
+           subtitle = "model", x = NULL, y = "Average Prediction") +
+      theme_lares2(pal = 2, legend = "none")
+  } else {
+    try_require("pdp")
+    aux <- variable_response(explainer, y, type = "pdp")
+    p <- plot(aux) + 
+      labs(title = paste("Partial Dependency Plot (PDP):", y), subtitle = label) +
+      theme_lares2(pal = 2, bg_colour = "white", legend = "none") +
+      theme(panel.grid = element_blank(),
+            axis.title = element_blank(),
+            axis.text = element_blank(),
+            axis.ticks = element_blank(),
+            panel.background = element_blank())
   }
   
-  pdp <- variable_response(explainer, variable = variable, type = "pdp")
+  pdp <- list(pdp = aux, plot = p, y = y)
+
+  aux <- round(difftime(Sys.time(), start, units = "secs"), 2)
+  message(paste(Sys.time(), "| Duration:", aux, "s"))
   
   if (alarm) {
     try_require("beepr", stop = FALSE)
     beep() 
   }
-  
-  aux <- round(difftime(Sys.time(), start, units = "secs"), 2)
-  message(paste(Sys.time(), "| Duration:", aux, "s"))
   
   return(pdp)
   
