@@ -4,14 +4,16 @@
 \alias{corr_cross}
 \title{Correlation Cross-Table}
 \usage{
-corr_cross(df, plot = TRUE, type = 1, max = 1, top = 25,
-  local = 1, ignore = NA, contains = NA, grid = FALSE,
+corr_cross(df, plot = TRUE, pvalue = TRUE, type = 1, max = 1,
+  top = 25, local = 1, ignore = NA, contains = NA, grid = FALSE,
   rm.na = FALSE, dummy = TRUE, method = "pearson")
 }
 \arguments{
 \item{df}{Dataframe.}
 
 \item{plot}{Boolean. Show and return a plot?}
+
+\item{pvalue}{Boolean. Statistical significance (p-value) information}
 
 \item{type}{Integer. Plot type. 1 is for overall rank. 2 is for local rank.}
 

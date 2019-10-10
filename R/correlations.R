@@ -9,6 +9,8 @@
 #' @param df Dataframe. It doesn't matter if it's got non-numerical
 #' columns: they will be filtered!
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
+#' @param pvalue Boolean. Returns a list, with correlations and statistical 
+#' significance (p-value) for each value
 #' @param ignore Character vector. Which columns do you wish to exlude?
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
 #' @param dates Boolean. Do you want the function to create more features
@@ -21,7 +23,9 @@
 #' @param top Integer. Select top N most relevant variables? Filtered 
 #' and sorted by mean of each variable's correlations
 #' @export
-corr <- function(df, method = "pearson", ignore = NA, 
+corr <- function(df, method = "pearson", 
+                 pvalue = FALSE,
+                 ignore = NA, 
                  dummy = TRUE, dates = FALSE, 
                  redundant = FALSE, logs = FALSE, 
                  plot = FALSE, top = NA) {
@@ -54,6 +58,21 @@ corr <- function(df, method = "pearson", ignore = NA,
   
   # Plot
   if (plot) corr_plot(cor, logs = FALSE)
+  
+  # Statistical significance (p-value)
+  if (pvalue) {
+    n <- t(!is.na(d)) %*% (!is.na(d))
+    t <- (rs*sqrt(n - 2))/sqrt(1 - rs^2)
+    p <- -2 * expm1(pt(abs(t), (n - 2), log.p = TRUE))
+    p[p > 1] <- 1
+    lp <- upper.tri(p)
+    pa <- p[lp]
+    pa <- p.adjust(pa, "holm")
+    p[upper.tri(p, diag = FALSE)] <- pa
+    p <- round(data.frame(p), 8)
+    row.names(p) <- colnames(rs)
+    return(list(cor = cor, pvalue = p))
+  }
   
   return(cor)
   
@@ -231,6 +250,7 @@ corr_plot <- function(df, ignore = NA, method = "pearson", order = "FPC",
 #' @family Exploratory
 #' @param df Dataframe.
 #' @param plot Boolean. Show and return a plot?
+#' @param pvalue Boolean. Statistical significance (p-value) information
 #' @param type Integer. Plot type. 1 is for overall rank. 2 is for local rank.
 #' @param max Numeric. Maximum correlation permited (from 0 to 1)
 #' @param top Integer. Return top n results only. Only valid when type = 1
@@ -243,29 +263,41 @@ corr_plot <- function(df, ignore = NA, method = "pearson", order = "FPC",
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @export
-corr_cross <- function(df, plot = TRUE, type = 1, 
-                       max = 1, top = 25, local = 1,
+corr_cross <- function(df, plot = TRUE, pvalue = TRUE,
+                       type = 1, max = 1, top = 25, local = 1,
                        ignore = NA, contains = NA, grid = FALSE,
                        rm.na = FALSE, dummy = TRUE,
                        method = "pearson") {
   
   if (sum(is.na(df))) warning("There are NA values in your dataframe!")
-  c <- corr(df, ignore = ignore, plot = FALSE, dummy = dummy, method = method)
   
-  ret <- data.frame(gather(c)) %>% 
-    mutate(mix = rep(colnames(c), length(c))) %>%
-    mutate(p1 = rep(1:length(c), each = length(c)),
-           p2 = rep(1:length(c), length(c)),
-           aux = p2 - p1) %>% filter(aux > 0) %>%
-    mutate(rel = abs(value)) %>% filter(rel < max) %>% arrange(desc(rel)) %>%
-    {if (rm.na) filter(., !grepl("_NAs", mix)) else .} %>%
-    filter(!grepl("_OTHER", key)) %>%
-    rename(corr = value) %>%
-    mutate(value = paste(key, mix)) %>%
-    {if (!is.na(contains)) 
-      filter(., grepl(vector2text(
-        contains, sep = "|", quotes = FALSE), paste(key, mix))) else .} %>%
-    select(key, mix, corr)
+  cor <- corr(df, ignore = ignore, plot = FALSE, dummy = dummy, 
+              method = method, pvalue = pvalue)
+  
+  aux <- function(c) {
+    data.frame(gather(c)) %>% 
+      mutate(mix = rep(colnames(c), length(c))) %>%
+      mutate(p1 = rep(1:length(c), each = length(c)),
+             p2 = rep(1:length(c), length(c)),
+             aux = p2 - p1) %>% filter(aux > 0) %>%
+      mutate(rel = abs(value)) %>% filter(rel < max) %>% arrange(desc(rel)) %>%
+      {if (rm.na) filter(., !grepl("_NAs", mix)) else .} %>%
+      filter(!grepl("_OTHER", key)) %>%
+      rename(corr = value) %>%
+      mutate(value = paste(key, mix)) %>%
+      {if (!is.na(contains)) 
+        filter(., grepl(vector2text(
+          contains, sep = "|", quotes = FALSE), paste(key, mix))) else .} %>%
+      select(key, mix, corr)
+  }
+  
+  if (pvalue == FALSE) {
+    ret <- aux(c)
+  } else {
+    ret <- aux(cor$cor)
+    aux <- aux(cor$pvalue)
+    ret <- left_join(ret, rename(aux, pvalue = corr), c("key", "mix"))
+  }
   
   for (i in 1:ncol(df)) {
     if (i == 1) ret <- mutate(ret, group1 = "fill", group2 = "fill")
@@ -299,7 +331,7 @@ corr_cross <- function(df, plot = TRUE, type = 1,
       if ((!is.na(contains)[1] & length(contains) == 1) | grid) {
         p <- p + facet_grid(mix ~ ., scales = "free", space = "free")
       }
-        
+      
     }
     if (type == 2) {
       ret <- rbind(data.frame(ret, group = ret$group1), 

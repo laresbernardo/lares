@@ -4,15 +4,18 @@
 \alias{corr}
 \title{Correlation table}
 \usage{
-corr(df, method = "pearson", ignore = NA, dummy = TRUE,
-  dates = FALSE, redundant = FALSE, logs = FALSE, plot = FALSE,
-  top = NA)
+corr(df, method = "pearson", pvalue = FALSE, ignore = NA,
+  dummy = TRUE, dates = FALSE, redundant = FALSE, logs = FALSE,
+  plot = FALSE, top = NA)
 }
 \arguments{
 \item{df}{Dataframe. It doesn't matter if it's got non-numerical
 columns: they will be filtered!}
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
+
+\item{pvalue}{Boolean. Returns a list, with correlations and statistical 
+significance (p-value) for each value}
 
 \item{ignore}{Character vector. Which columns do you wish to exlude?}
 
