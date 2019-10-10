@@ -206,7 +206,7 @@ h2o_automl <- function(df, y = "tag",
     stop("NO MODELS TRAINED. Please set max_models to at least 1 and increase max_time")
   } else {
     if (!is.nan(aml@leaderboard[1,2]))
-      if (!quiet) message(paste("Succesfully trained", nrow(aml@leaderboard), "models:")) 
+      if (!quiet) message(paste("Succesfully generated", nrow(aml@leaderboard), "models:")) 
   }
   if (!quiet) print(aml@leaderboard[,1:3])
   flow <- "http://localhost:54321/flow/index.html"

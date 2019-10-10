@@ -291,12 +291,13 @@ corr_cross <- function(df, plot = TRUE, pvalue = TRUE,
       select(key, mix, corr)
   }
   
-  if (pvalue == FALSE) {
-    ret <- aux(c)
-  } else {
+  if (pvalue == TRUE & plot == FALSE) {
     ret <- aux(cor$cor)
     aux <- aux(cor$pvalue)
     ret <- left_join(ret, rename(aux, pvalue = corr), c("key", "mix"))
+  } else {
+    if (is.list(cor)) cor <- cor$cor
+    ret <- aux(cor)
   }
   
   for (i in 1:ncol(df)) {
