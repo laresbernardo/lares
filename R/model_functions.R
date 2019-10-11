@@ -754,25 +754,29 @@ loglossBinary <- function(tag, score, eps = 0.0001) {
 #' @param df Dataframe. Data to insert into the model
 #' @param model_path Character. Relative path of directory
 #' where your zip model file is
+#' @param batch Integer. Run n batches at a time
 #' @export
-h2o_predict_MOJO <- function(df, model_path){
+h2o_predict_MOJO <- function(df, model_path, batch = 300){
   
   quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
   
   df <- as.data.frame(df)
   file <- listfiles(model_path, regex = ".zip")$filename
   zip <- paste0(model_path,"/",as.character(file))
-  json <- toJSON(df)
   
-  quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
-  output <- h2o.predict_json(zip, json)
-  
-  if (length(output$error) >= 1) {
-    stop("Error:", output$error)
-  } else {
-    #score_MOJO <- as.vector(unlist(data.frame(x[,3])[2,])) 
-    return(output)
+  aux <- ceiling(nrow(df)/batch)
+  df$iter <- rep(1:aux, each = batch)[1:nrow(df)]
+  output <- c()
+  for (i in 1:aux) {
+    dfi <- select(df[df$iter == i,], -iter)
+    json <- toJSON(dfi)
+    res <- h2o.predict_json(zip, json)  
+    if (length(res$error) >= 1)
+      break("Error:", res$error)
+    output <- rbind(output, res)
+    if (aux > 1) statusbar(i, aux)
   }
+  return(output)
 }
 
 
