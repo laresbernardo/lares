@@ -4,7 +4,7 @@
 \alias{corr_cross}
 \title{Correlation Cross-Table}
 \usage{
-corr_cross(df, plot = TRUE, pvalue = TRUE, type = 1, max = 1,
+corr_cross(df, plot = TRUE, max_pvalue = 1, type = 1, max = 1,
   top = 25, local = 1, ignore = NA, contains = NA, grid = FALSE,
   rm.na = FALSE, dummy = TRUE, method = "pearson")
 }
@@ -13,7 +13,7 @@ corr_cross(df, plot = TRUE, pvalue = TRUE, type = 1, max = 1,
 
 \item{plot}{Boolean. Show and return a plot?}
 
-\item{pvalue}{Boolean. Statistical significance (p-value) information}
+\item{max_pvalue}{Numeric. Filter non-significant variables. Range (0, 1]}
 
 \item{type}{Integer. Plot type. 1 is for overall rank. 2 is for local rank.}
 

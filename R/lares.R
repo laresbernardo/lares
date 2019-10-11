@@ -99,7 +99,7 @@ if (getRversion() >= "2.15.1")
       "date_start","spend","adcreatives","created_time","list_id","aux","ds","prophet",
       "fit.prophet","prophet_plot_components","add_country_holidays","group1","group2",
       "make_future_dataframe","train_test","aml","m","scores","partial_dependency",
-      "PC1","PC2"))
+      "PC1","PC2","pvalue"))
 
 #' Pipe operator
 #' @name lares-exports
