@@ -765,10 +765,10 @@ h2o_predict_MOJO <- function(df, model_path, batch = 300){
   zip <- paste0(model_path,"/",as.character(file))
   
   aux <- ceiling(nrow(df)/batch)
-  df$iter <- rep(1:aux, each = batch)[1:nrow(df)]
+  df$aux <- rep(1:aux, each = batch)[1:nrow(df)]
   output <- c()
   for (i in 1:aux) {
-    dfi <- select(df[df$iter == i,], -iter)
+    dfi <- select(df[df$aux == i,], -aux)
     json <- toJSON(dfi)
     res <- h2o.predict_json(zip, json)  
     if (length(res$error) >= 1)

@@ -258,19 +258,21 @@ corr_plot <- function(df, ignore = NA, method = "pearson", order = "FPC",
 #' @param grid Boolean. Separate into grids?
 #' @param rm.na Boolean. Remove NAs?
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
+#' @param redundant Boolean. Should we keep redundat columns? i.e. It the
+#' column only has two different values, should we keep both new columns?
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @export
 corr_cross <- function(df, plot = TRUE, 
                        max_pvalue = 1,
                        type = 1, max = 1, top = 25, local = 1,
                        ignore = NA, contains = NA, grid = FALSE,
-                       rm.na = FALSE, dummy = TRUE,
+                       rm.na = FALSE, dummy = TRUE, redundant = FALSE,
                        method = "pearson") {
   
   if (sum(is.na(df))) warning("There are NA values in your dataframe!")
   
   cor <- corr(df, ignore = ignore, plot = FALSE, dummy = dummy, 
-              method = method, pvalue = TRUE)
+              redundant = redundant, method = method, pvalue = TRUE)
   
   aux <- function(c) {
     data.frame(gather(c)) %>% 

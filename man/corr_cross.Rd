@@ -6,7 +6,8 @@
 \usage{
 corr_cross(df, plot = TRUE, max_pvalue = 1, type = 1, max = 1,
   top = 25, local = 1, ignore = NA, contains = NA, grid = FALSE,
-  rm.na = FALSE, dummy = TRUE, method = "pearson")
+  rm.na = FALSE, dummy = TRUE, redundant = FALSE,
+  method = "pearson")
 }
 \arguments{
 \item{df}{Dataframe.}
@@ -33,6 +34,9 @@ with variables that contains certain strings (using any value if vector used).}
 \item{rm.na}{Boolean. Remove NAs?}
 
 \item{dummy}{Boolean. Should One Hot Encoding be applied to categorical columns?}
+
+\item{redundant}{Boolean. Should we keep redundat columns? i.e. It the
+column only has two different values, should we keep both new columns?}
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
 }
