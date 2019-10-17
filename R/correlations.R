@@ -255,6 +255,7 @@ corr_plot <- function(df, ignore = NA, method = "pearson", order = "FPC",
 #' @param ignore Character vector. Which columns do you wish to exlude?
 #' @param contains Character vector and Boolean. Filter cross-correlations 
 #' with variables that contains certain strings (using any value if vector used).
+#' This will automatically invert redundant default value.
 #' @param grid Boolean. Separate into grids?
 #' @param rm.na Boolean. Remove NAs?
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
@@ -270,7 +271,7 @@ corr_cross <- function(df, plot = TRUE,
                        method = "pearson") {
   
   if (sum(is.na(df))) warning("There are NA values in your dataframe!")
-  
+  if (!is.na(contains)) redundant <- !redundant
   cor <- corr(df, ignore = ignore, plot = FALSE, dummy = dummy, 
               redundant = redundant, method = method, pvalue = TRUE)
   

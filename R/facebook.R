@@ -259,7 +259,7 @@ fb_accounts <- function(token,
     query = list(
       access_token = token,
       fields = "name,account_status,amount_spent,business_country_code",
-      limit = "1000"
+      limit = "1000000"
     ),
     encode = "json"))
   
@@ -475,7 +475,7 @@ fb_insights <- function(token,
       breakdowns = if (!is.na(breakdowns)) 
         vector2text(breakdowns, sep = ", ", quotes = FALSE) else NULL,
       time_increment = time_increment,
-      limit = "1000"
+      limit = "1000000"
     ),
     encode = "json"))
   

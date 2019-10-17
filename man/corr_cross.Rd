@@ -27,7 +27,8 @@ corr_cross(df, plot = TRUE, max_pvalue = 1, type = 1, max = 1,
 \item{ignore}{Character vector. Which columns do you wish to exlude?}
 
 \item{contains}{Character vector and Boolean. Filter cross-correlations 
-with variables that contains certain strings (using any value if vector used).}
+with variables that contains certain strings (using any value if vector used).
+This will automatically invert redundant default value.}
 
 \item{grid}{Boolean. Separate into grids?}
 
