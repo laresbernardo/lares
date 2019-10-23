@@ -417,7 +417,7 @@ fb_ads <- function(token,
 #' This returns all available FB insights per day including any given
 #' breakdown to the specified report level, and place into a data frame.
 #' For more information on Ad Insights' API, go to the 
-#' \href{https://developers.facebook.com/docs/marketing-api/reference/ad-account/insights/}{original documentaion}
+#' \href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}
 #' 
 #' This function was based on FBinsightsR.
 #' 

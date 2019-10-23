@@ -153,6 +153,8 @@ h2o_automl <- function(df, y = "tag",
       } else stop("Your train_test column should have 'train' and 'test' values only!") 
     } else stop(paste("There is no column named", train_test))
   }
+  if (nrow(train) > 10000)
+    message("NOTE: Consider sampling your dataset for faster results")
   
   # BALANCE TRAINING SET
   if (model_type == "Classifier" & balance) {
