@@ -124,6 +124,12 @@ h2o_automl <- function(df, y = "tag",
   cats <- unique(df$tag)
   model_type <- ifelse(length(cats) <= as.integer(thresh), "Classifier", "Regression")
   message("Model type: ", model_type)
+  # If y variables is named as one of the categories, prediction values will be a problem
+  if (model_type == "Classifier" & y %in% cats) {
+    stop(paste("Your y parameter can't be named as any of the labels used.",
+               "Please, rename", y, "ìnto a valid column name next such as",
+               paste0(y, "_labels for example.")))
+  }
   # When might seem numeric but is categorical
   if (model_type == "Classifier" & sum(grepl('^[0-9]', cats)) > 0)
     df <- mutate(df, tag = as.factor(as.character(
@@ -271,7 +277,8 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   global <- rbind(test, train) %>% 
     mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
   colnames(global)[colnames(global) == "tag"] <- y
-  cats <- unique(global[,colnames(global) == y])
+  if (model_type == "Classifier")
+    cats <- unique(global[,colnames(global) == y])
   
   # SELECT MODEL FROM h2o_automl()
   if (any(c("H2OFrame","H2OAutoML") %in% class(h2o_object))) {
@@ -304,6 +311,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   if (!quiet) message(paste0(">>> Running predictions for ", y, "..."))
   predictions <- quiet(h2o_predict_model(global, m))
   global <- cbind(global, predictions)
+  # Change dots for space
   if (sum(grepl(" ", cats)) > 0)
     colnames(global) <- str_replace_all(colnames(global), "\\.", " ")
   # For test performance metrics
