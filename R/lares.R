@@ -98,8 +98,8 @@ if (getRversion() >= "2.15.1")
       "Each","ROI","ValueSector","etf_sector_plot","ma1","ma2","amount_spent","model",
       "date_start","spend","adcreatives","created_time","list_id","aux","ds","prophet",
       "fit.prophet","prophet_plot_components","add_country_holidays","group1","group2",
-      "make_future_dataframe","train_test","aml","m","scores","partial_dependency",
-      "PC1","PC2","pvalue"))
+      "make_future_dataframe","train_test","aml","m","scores","aggregate_profiles",
+      "PC1","PC2","pvalue","ceteris_paribus","contribution"))
 
 #' Pipe operator
 #' @name lares-exports

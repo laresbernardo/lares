@@ -4,9 +4,8 @@
 \alias{mplot_density}
 \title{Density plot for discrete and continuous values}
 \usage{
-mplot_density(tag, score, thresh = 100, model_name = NA,
-  subtitle = NA, save = FALSE, subdir = NA,
-  file_name = "viz_distribution.png")
+mplot_density(tag, score, thresh = 6, model_name = NA, subtitle = NA,
+  save = FALSE, subdir = NA, file_name = "viz_distribution.png")
 }
 \arguments{
 \item{tag}{Vector. Real known label}

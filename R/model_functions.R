@@ -127,7 +127,7 @@ h2o_automl <- function(df, y = "tag",
   # If y variables is named as one of the categories, prediction values will be a problem
   if (model_type == "Classifier" & y %in% cats) {
     stop(paste("Your y parameter can't be named as any of the labels used.",
-               "Please, rename", y, "ìnto a valid column name next such as",
+               "Please, rename", y, "into a valid column name next such as",
                paste0(y, "_labels for example.")))
   }
   # When might seem numeric but is categorical

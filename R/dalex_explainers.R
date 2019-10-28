@@ -66,29 +66,50 @@ dalex_local <- function(explainer, observation = NA, row = 1,
   try_require("DALEX")
   start <- Sys.time()
   
-  if (is.na(observation)) {
+  if (length(observation) == 1) {
     observation <- explainer$data[row,] 
   } else {
-    observation <- select(observation, colnames(explainer$data))
+    if (!all(colnames(observation) %in% colnames(explainer$data)))
+      stop(paste("All columns must be present in your observation:",
+                 vector2text(colnames(explainer$data))))
   }
   
+  # BREAKDOWN
   breakdown <- prediction_breakdown(explainer, observation = observation)
+  if (print) print(breakdown)
   
-  if (plot)
-    plot(breakdown) + theme_lares2(legend = "none")
+  # PLOT
+  aux <- range(breakdown$contribution)
+  aux2 <- max(abs(aux)) * 0.12
+  p <- breakdown  %>%
+    mutate(rank = rank(-abs(contribution)) + 1,
+           rank = ifelse(sign == "X", 1, rank),
+           pos = ifelse(sign == "1", -0.1, 1.1)) %>%
+    ggplot(aes(x = reorder(variable, abs(contribution)),
+               y = contribution,
+               fill = sign,
+               label = signif(contribution, 2))) +
+    geom_hline(yintercept = 0, alpha = 0.5) +
+    geom_col() +
+    facet_wrap(~label, scales = "free_y", ncol = 1) +
+    geom_text(aes(hjust = pos)) + coord_flip() +
+    ylim(aux[1] - aux2, aux[2] + aux2) +
+    labs(x = NULL, y = NULL) +
+    theme_lares2(legend = "none", pal = 4, which = "f")
   
-  if (print)
-    print(breakdown[1:10, 1:5])
   
+  if (plot) plot(p)
+  
+  # GATHER RESULTS
+  return <- list(breakdown = breakdown, plot = p)
+  aux <- round(difftime(Sys.time(), start, units = "secs"), 2)
+  message(paste(Sys.time(), "| Duration:", aux, "s"))
   if (alarm) {
     try_require("beepr", stop = FALSE)
     beep() 
   }
   
-  aux <- round(difftime(Sys.time(), start, units = "secs"), 2)
-  message(paste(Sys.time(), "| Duration:", aux, "s"))
-  
-  return(breakdown)
+  return(return)
   
 }
 
@@ -139,23 +160,24 @@ dalex_variable <- function(explainer, y, force_class = NA, alarm = TRUE) {
   classes <- c('factor','numeric')
   if (force_class %in% classes) {
     class(explainer$data[[y]]) <- force_class
-    message("Change class to ", force_class)
+    message(paste("Changeed class to", force_class))
   } else {
     if (!is.na(force_class))
-      stop("Try using force_class: ", vector2text(classes))
+      stop(paste("Try using force_class:", vector2text(classes)))
   }
-  
   
   # Plot
   if (is.numeric(explainer$data[[y]])) {
     try_require("ingredients")
-    message(paste0(
-      ">>> Calculating and plotting ", y, "'s response... this might take some time!"))
-    aux <- partial_dependency(explainer, variables = y)
-    message("Done")
+    if (nrow(explainer$data) > 2000)
+      message(paste0(
+        ">>> Calculating and plotting ", y, "'s response... this might take some time!"))
+    # aux <- partial_dependency(explainer, variables = y)
+    x <- ceteris_paribus(explainer, explainer$data, variables = y)
+    aux <- aggregate_profiles(x)
     p <- plot(aux) + 
       labs(title = paste("Partial Dependency Plot (PDP):", y), 
-           subtitle = "model", x = NULL, y = "Average Prediction") +
+           subtitle = label, x = NULL, y = "Average Prediction") +
       theme_lares2(pal = 2, legend = "none")
   } else {
     try_require("pdp")

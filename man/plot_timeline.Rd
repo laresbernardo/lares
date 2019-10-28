@@ -2,7 +2,7 @@
 % Please edit documentation in R/other_plots.R
 \name{plot_timeline}
 \alias{plot_timeline}
-\title{Density plot for discrete and continuous values}
+\title{Plot timeline as Gantt Plot}
 \usage{
 plot_timeline(event, start, end = start + 1, label = NA, group = NA,
   title = "Curriculum Vitae Timeline", subtitle = "Bernardo Lares",
@@ -32,5 +32,6 @@ plot_timeline(event, start, end = start + 1, label = NA, group = NA,
 \item{subdir}{Character. Into which subdirectory do you wish to save the plot to?}
 }
 \description{
-This function plots discrete and continuous values results
+This function plots groups of observartions with timelines in a 
+Gantt Plot way. Only works if start and end are date format values.
 }

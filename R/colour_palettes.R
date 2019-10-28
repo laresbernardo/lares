@@ -54,6 +54,8 @@ lares_pal <- function() {
     c("FALSE", red, black),
     c("1", green, white),
     c("0", red, black),
+    c("-1", red, black),
+    c("X", grey, black),
     c("good", green, white),
     c("bad", red, black),
     c("bueno", green, white),

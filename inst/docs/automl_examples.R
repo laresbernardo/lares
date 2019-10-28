@@ -34,3 +34,13 @@ splits <- msplit(dft)
 df <- rbind(mutate(splits$train, train_test = "train"),
             mutate(splits$test, train_test = "test"))
 r <- h2o_automl(df, "Survived", max_models = 3, train_test = "train_test")
+
+# Error in colname check
+r <- dft %>% 
+  mutate(Survived = ifelse(Survived, "Survived", "Did Not")) %>%
+  h2o_automl(y = "Survived", max_models = 2)
+r <- dft %>% 
+  mutate(Survived = ifelse(Survived, "Survived", "Did Not")) %>%
+  rename(Alive = Survived) %>%
+  h2o_automl(y = "Alive", max_models = 2)
+

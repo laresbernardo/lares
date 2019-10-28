@@ -18,7 +18,7 @@
 #' @export
 mplot_density <- function(tag, 
                           score, 
-                          thresh = 100,
+                          thresh = 6,
                           model_name = NA, 
                           subtitle = NA, 
                           save = FALSE, 

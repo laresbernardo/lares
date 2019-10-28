@@ -1,7 +1,8 @@
 ####################################################################
-#' Density plot for discrete and continuous values
+#' Plot timeline as Gantt Plot
 #' 
-#' This function plots discrete and continuous values results
+#' This function plots groups of observartions with timelines in a 
+#' Gantt Plot way. Only works if start and end are date format values.
 #' 
 #' @param event Vector. Event, role, label, or row.
 #' @param start Vector. Start date.
@@ -25,7 +26,6 @@ plot_timeline <- function(event, start,
                           colour = "orange",
                           save = FALSE,
                           subdir = NA) {
-  options(warn=-1)
   
   # Let's gather all the data
   df <- data.frame(
@@ -42,25 +42,25 @@ plot_timeline <- function(event, start,
     type = rep(factor(df$Type, ordered = TRUE), 2),
     where = rep(as.character(df$Place), 2),
     value = c(df$Start, df$End),
-    label_pos = rep(df$Start + floor((df$End-df$Start)/2), 2))
+    label_pos = rep(df$Start + floor((df$End - df$Start)/2), 2))
 
   # Plot timeline
   maxdate <- max(df$End)
-  p <- ggplot(cvlong, aes(x=value, y=reorder(name, -pos), label=where, group=pos)) + 
-    geom_vline(xintercept = maxdate, alpha = 0.8, linetype="dotted") +
+  p <- ggplot(cvlong, aes(x = value, y = reorder(name, -pos), label = where, group = pos)) + 
+    geom_vline(xintercept = maxdate, alpha = 0.8, linetype = "dotted") +
     labs(title = title, subtitle = subtitle, 
          x = NULL, y = NULL, colour = "") +
-    theme(panel.background = element_rect(fill="white", colour=NA),
+    theme(panel.background = element_rect(fill = "white", colour = NA),
           axis.ticks = element_blank(),
-          panel.grid.major.x = element_line(size=0.25, colour="grey80"))
+          panel.grid.major.x = element_line(size = 0.25, colour = "grey80"))
   
   if (!is.na(cvlong$type) | length(unique(cvlong$type)) > 1) {
-    p <- p + geom_line(aes(colour=type), size = size) +
-      facet_grid(type ~ ., scales = "free", space= "free") +
+    p <- p + geom_line(aes(colour = type), size = size) +
+      facet_grid(type ~ ., scales = "free", space = "free") +
       guides(colour = FALSE) +
-      scale_colour_brewer(palette="Set1")
+      scale_colour_brewer(palette = "Set1")
   } else {
-    p <- p + geom_line(size = size, colour=colour)
+    p <- p + geom_line(size = size, colour = colour)
   }
   
   p <- p + geom_label(aes(x = label_pos), colour = "black", size = 2, alpha = 0.7)
@@ -69,9 +69,8 @@ plot_timeline <- function(event, start,
   if (save == TRUE) {
     file_name <- "cv_timeline.png"
     if (!is.na(subdir)) {
-      options(warn=-1)
       dir.create(file.path(getwd(), subdir), recursive = T)
-      file_name <- paste(subdir, file_name, sep="/")
+      file_name <- paste(subdir, file_name, sep = "/")
     }
     p <- p + ggsave(file_name, width = 8, height = 6)
     message(paste("Saved plot as", file_name))
