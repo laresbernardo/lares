@@ -6,8 +6,8 @@
 \usage{
 theme_lares2(font = "Arial Narrow", size = 12.5,
   main_colour = "darkorange3", hard_colour = "black",
-  soft_colour = "grey30", bg_colour = "white",
-  panel_colour = "#F1F1F1", legend = "right", mg = 14, pal = 0,
+  soft_colour = "grey25", bg_colour = "white",
+  panel_colour = "grey97", legend = "right", mg = 14, pal = 0,
   which = "fct")
 }
 \arguments{

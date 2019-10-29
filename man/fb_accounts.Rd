@@ -4,14 +4,16 @@
 \alias{fb_accounts}
 \title{Facebook Ad Accounts}
 \usage{
-fb_accounts(token, business_id = "904189322962915",
-  api_version = "v3.3")
+fb_accounts(token, business_id = "904189322962915", type = c("owned",
+  "client"), api_version = "v3.3")
 }
 \arguments{
 \item{token}{Character. This must be a valid access token with sufficient 
 privileges. Visit the Facebook API Graph Explorer to acquire one}
 
 \item{business_id}{Character. Business ID}
+
+\item{type}{Character vector. Values: owned, client}
 
 \item{api_version}{Character. Facebook API version}
 }

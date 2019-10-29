@@ -243,55 +243,68 @@ fb_post <- function(token, post_id) {
 #' @param token Character. This must be a valid access token with sufficient 
 #' privileges. Visit the Facebook API Graph Explorer to acquire one
 #' @param business_id Character. Business ID
+#' @param type Character vector. Values: owned, client
 #' @param api_version Character. Facebook API version
 #' @export
 fb_accounts <- function(token,
                         business_id = "904189322962915",
+                        type = c("owned", "client"),
                         api_version = "v3.3"){
   
   # Starting URL
   url <- "https://graph.facebook.com/"
-  URL <- paste0(url, api_version, "/", business_id, "/owned_ad_accounts")
+  output <- c()
   
-  # Call insights
-  import <- content(GET(
-    URL,
-    query = list(
-      access_token = token,
-      fields = "name,account_status,amount_spent,business_country_code",
-      limit = "1000000"
-    ),
-    encode = "json"))
+  # Select which type of ad accounts
+  type <- paste0(type, "_ad_accounts")
   
-  # Show and return error
-  if ("error" %in% names(import)) {
-    message(paste("API ERROR:", import$error$message))
-    # Very useful for Shiny apps
-    invisible(return(import$error))
-  }
-  
-  # Check for no-data (user might think there was an error on GET request - warn him!)
-  if (length(import$data) == 0) {
-    message("There is no data for this query!")
-    invisible(return(NULL))
-  } 
-  
-  ret <- data.frame(bind_rows(import$data))
-  
-  # Condition to detect the next page
-  if (exists("next", import$paging)) {
-    # Checking from the originally returned list
-    out <- fromJSON(import$paging$`next`)
-    ret <- bind_rows(ret, data.frame(out$data))
-    # Looping through subsequent returned pages
-    while (exists("next", out$paging)) {
-      out <- fromJSON(out$paging$`next`)
-      ret <- bind_rows(ret, data.frame(out$data))
+  for (i in 1:length(type)) {
+    
+    message(paste("Getting", type[i]))
+    URL <- paste0(url, api_version, "/", business_id, "/", type[i])
+    
+    # Call insights
+    import <- content(GET(
+      URL,
+      query = list(
+        access_token = token,
+        fields = "name,account_status,amount_spent,business_country_code",
+        limit = "1000000"
+      ),
+      encode = "json"))
+    
+    # Show and return error
+    if ("error" %in% names(import)) {
+      message(paste("API ERROR:", import$error$message))
+      # Very useful for Shiny apps
+      invisible(return(import$error))
     }
+    
+    ret <- data.frame(bind_rows(import$data))
+    
+    # Check for no-data (user might think there was an error on GET request - warn him!)
+    if (length(import$data) == 0) {
+      message("There is no data for this query!")
+      invisible(return(NULL))
+    } 
+    
+    # Condition to detect the next page
+    if (exists("next", import$paging)) {
+      # Checking from the originally returned list
+      out <- fromJSON(import$paging$`next`)
+      ret <- bind_rows(ret, data.frame(out$data))
+      # Looping through subsequent returned pages
+      while (exists("next", out$paging)) {
+        out <- fromJSON(out$paging$`next`)
+        ret <- bind_rows(ret, data.frame(out$data))
+      }
+    }
+    ret$type <- type[i]
+    output <- bind_rows(output, ret)
   }
   
   # Account status dictionary
-  ret <- mutate(ret, account_status = case_when(
+  output <- mutate(output, account_status = case_when(
     account_status == "1" ~ "ACTIVE",
     account_status == "2" ~ "DISABLED",
     account_status == "3" ~ "UNSETTLED",
@@ -304,10 +317,10 @@ fb_accounts <- function(token,
     account_status == "202" ~ "ANY_CLOSED"
   ))
   
-  ret <- suppressMessages(type.convert(ret, numerals = "no.loss")) %>% 
+  output <- suppressMessages(type.convert(output, numerals = "no.loss")) %>% 
     arrange(desc(amount_spent))
     
-  return(ret)
+  return(output)
 }
 
 ####################################################################
