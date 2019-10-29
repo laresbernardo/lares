@@ -262,6 +262,7 @@ fb_accounts <- function(token,
     
     message(paste("Getting", type[i]))
     URL <- paste0(url, api_version, "/", business_id, "/", type[i])
+    continue <- TRUE
     
     # Call insights
     import <- content(GET(
@@ -285,11 +286,11 @@ fb_accounts <- function(token,
     # Check for no-data (user might think there was an error on GET request - warn him!)
     if (length(import$data) == 0) {
       message("There is no data for this query!")
-      invisible(return(NULL))
+      continue <- FALSE
     } 
     
     # Condition to detect the next page
-    if (exists("next", import$paging)) {
+    if (exists("next", import$paging) & continue) {
       # Checking from the originally returned list
       out <- fromJSON(import$paging$`next`)
       ret <- bind_rows(ret, data.frame(out$data))
