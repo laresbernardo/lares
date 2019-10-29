@@ -25,9 +25,9 @@ theme_lares2 <- function(font = "Arial Narrow",
                          size = 12.5, 
                          main_colour = "darkorange3", 
                          hard_colour = "black",
-                         soft_colour = "grey30",
+                         soft_colour = "grey25",
                          bg_colour = "white",
-                         panel_colour = "#F1F1F1",
+                         panel_colour = "grey97",
                          legend = "right",
                          mg = 14,
                          pal = 0,
@@ -70,9 +70,9 @@ theme_lares2 <- function(font = "Arial Narrow",
   
   if (inherits(grid, "character")) {
     grid_col <- "#CCCCCC"
-    ret <- ret + theme(panel.grid = element_line(color = grid_col, size = 0.2))
+    ret <- ret + theme(panel.grid = element_line(color = grid_col, size = 0.1))
     ret <- ret + theme(panel.grid.major = element_line(color = grid_col, size = 0.2))
-    ret <- ret + theme(panel.grid.minor = element_line(color = grid_col, size = 0.15))
+    ret <- ret + theme(panel.grid.minor = element_line(color = grid_col, size = 0.1))
     if (inherits(grid, "character")) {
       if (regexpr("X", grid)[1] < 0) ret <- ret + theme(panel.grid.major.x = element_blank())
       if (regexpr("Y", grid)[1] < 0) ret <- ret + theme(panel.grid.major.y = element_blank())

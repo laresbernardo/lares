@@ -148,17 +148,18 @@ freqs <- function(df, ..., wt = NULL,
   
   # Plot base
   p <- p + geom_col(alpha = 0.9, width = 0.8) +
-    geom_text(aes(hjust = label_hjust, colour = label_colours), size = 2.6) + 
+    geom_text(aes(hjust = label_hjust, colour = label_colours), size = 2.8) + 
     coord_flip() + guides(colour = FALSE) +
     labs(x = NULL, y = "Counter", fill = "[%]",
          title = ifelse(is.na(title), paste("Frequencies and Percentages"), title),
          subtitle = ifelse(is.na(subtitle), 
                            paste("Variable:", ifelse(!is.na(variable_name), variable_name, variable), note, weight_text), 
                            subtitle), caption = obs) +
-    scale_y_continuous(labels = comma) +
     scale_fill_gradient(low = "lightskyblue2", high = "navy") +
-    gg_text_customs() + theme_lares2() +
-    theme(legend.position = "none")
+    gg_text_customs() + theme_lares2(legend = "none") +
+    scale_y_continuous(expand = c(0, 0), limits = c(0, 1.03 * max(output$n))) +
+    theme(panel.grid.major.y = element_blank(),
+          panel.grid.minor.y = element_blank())
   
   # When two features
   if (type == 2) { 
