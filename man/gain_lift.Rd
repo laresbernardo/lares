@@ -14,7 +14,8 @@ gain_lift(tag, score, target = "auto", splits = 10, plot = FALSE,
 
 \item{target}{Value. Which is your target positive value? If 
 set to 'auto', the target with largest mean(score) will be 
-selected. Change the value to overwrite.}
+selected. Change the value to overwrite. Only used when binary
+categorical model.}
 
 \item{splits}{Integer. Numer of percentiles to split the data}
 

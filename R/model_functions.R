@@ -29,6 +29,10 @@
 #' weight of zero is equivalent to excluding it from the dataset; giving an 
 #' observation a relative weight of 2 is equivalent to repeating that 
 #' row twice. Negative weights are not allowed.
+#' @param target Value. Which is your target positive value? If 
+#' set to 'auto', the target with largest mean(score) will be 
+#' selected. Change the value to overwrite. Only used when binary
+#' categorical model.
 #' @param balance Boolean. Auto-balance train dataset with under-sampling?
 #' @param impute Boolean. Fill NA values with MICE?
 #' @param center,scale Boolean. Using the base function scale, do you wish
@@ -64,6 +68,7 @@ h2o_automl <- function(df, y = "tag",
                        train_test = NA,
                        split = 0.7,
                        weight = NULL,
+                       target = "auto",
                        balance = FALSE,
                        impute = FALSE,
                        center = FALSE,
@@ -130,6 +135,9 @@ h2o_automl <- function(df, y = "tag",
                "Please, rename", y, "into a valid column name next such as",
                paste0(y, "_labels for example.")))
   }
+  # If target value is not an existing target value
+  if (!target %in% cats & length(cats) == 2)
+    stop(paste("Define a correct target. Choose between:", vector2text(cats)))
   # When might seem numeric but is categorical
   if (model_type == "Classifier" & sum(grepl('^[0-9]', cats)) > 0)
     df <- mutate(df, tag = as.factor(as.character(
@@ -222,7 +230,9 @@ h2o_automl <- function(df, y = "tag",
   
   # GET RESULTS AND PERFORMANCE
   results <- h2o_results(
-    aml, test, train, y, which = 1, model_type, plots, project, seed, quiet)
+    aml, test, train, y, which = 1, 
+    model_type = model_type, target = target, 
+    plots = plots, project = project, seed = seed, quiet = quiet)
   
   if (save) {
     export_results(results, subdir = subdir, thresh = thresh)
@@ -254,6 +264,10 @@ h2o_automl <- function(df, y = "tag",
 #' @param y Character. Name of the independent variable
 #' @param which Integer. Which model to select from leaderboard
 #' @param model_type Character. Select "Classifier" or "Regression"
+#' @param target Value. Which is your target positive value? If 
+#' set to 'auto', the target with largest mean(score) will be 
+#' selected. Change the value to overwrite. Only used when binary
+#' categorical model.
 #' @param plots Boolean. Create plots objects?
 #' @param project Character. Your project's name
 #' @param seed Integer. Set a seed for reproducibility. AutoML can only 
@@ -262,8 +276,8 @@ h2o_automl <- function(df, y = "tag",
 #' @param quiet Boolean. Quiet messages, warnings, recommendations?
 #' @export
 h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
-                        model_type, plots = TRUE, project = NULL, 
-                        seed = 0, quiet = FALSE) {
+                        model_type, target = "auto", plots = TRUE, 
+                        project = NULL, seed = 0, quiet = FALSE) {
   
   # MODEL TYPE
   types <- c("Classifier", "Regression")
@@ -316,6 +330,12 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     colnames(global) <- str_replace_all(colnames(global), "\\.", " ")
   # For test performance metrics
   scores <- predictions[1:nrow(test),]
+  # Selected target value
+  if (target != "auto" & length(cats) == 2)
+    scores <- target_set(tag = as.vector(test$tag), 
+                         score = scores[,2], 
+                         target = target, 
+                         quiet = TRUE)$df
   # Multis object and standard predictions output
   multis <- NA
   if (model_type == "Classifier") {
@@ -338,6 +358,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     score = results$scores_test$score,
     multis = multis,
     thresh = thresh,
+    target = target,
     model_name = as.vector(m@model_id),
     plots = plots)
   if (model_type == "Classifier" & length(cats) == 2) 
@@ -903,6 +924,43 @@ calibrate <- function(score, train, target, train_sample, target_sample) {
 
 
 ####################################################################
+#' Set Target Value in Target Variable
+#' 
+#' This function detects or forces the target value when predicting
+#' a categorical binary model.
+#' 
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @param target Value. Which is your target positive value? If 
+#' set to 'auto', the target with largest mean(score) will be 
+#' selected. Change the value to overwrite. Only used when binary
+#' categorical model.
+#' @param quiet Boolean. Do not show message for auto target?
+#' @export
+target_set <- function(tag, score, target = "auto", quiet = FALSE) {
+  
+  df <- data.frame(tag = tag, score = score)
+  
+  # Validate inputs
+  if (!is.numeric(score) | is.numeric(tag))
+    stop("Your tag must be categorical. Your score must be numerical.") 
+  
+  # Get mean scores for each tag
+  means <- df %>% group_by(tag) %>% summarise(mean = mean(score))
+  auto <- means$tag[means$mean == max(means$mean)]
+  if (target == "auto")
+    target <- auto
+  if (!target %in% unique(df$tag))
+    stop(paste("Your target value", target, "is not valid.",
+               "Possible other values:", vector2text(unique(df$tag))))
+  if (!quiet) message(paste("Target value:", target)) 
+  # If the forced target value is the "lower scores" value, invert scores
+  if (auto != target) df$score <- df$score * (-1) + 1
+  return(list(df = df, which = target))
+}
+
+
+####################################################################
 #' Cumulative Gain, Lift and Response
 #' 
 #' This function calculates cumulative gain, lift, and response 
@@ -915,7 +973,8 @@ calibrate <- function(score, train, target, train_sample, target_sample) {
 #' @param score Vector. Predicted value or model's result
 #' @param target Value. Which is your target positive value? If 
 #' set to 'auto', the target with largest mean(score) will be 
-#' selected. Change the value to overwrite.
+#' selected. Change the value to overwrite. Only used when binary
+#' categorical model.
 #' @param splits Integer. Numer of percentiles to split the data
 #' @param plot Boolean. Plot results?
 #' @param quiet Boolean. Do not show message for auto target?
@@ -924,23 +983,9 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
                       plot = FALSE, quiet = FALSE) {
   
   if (splits <= 1) stop("You must set more than 1 split")
-  
-  df <- data.frame(tag = tag, score = score)
-  
-  if (target == "auto") {
-    means <- df %>% group_by(tag) %>% summarise(mean = mean(score))
-    auto <- means$tag[means$mean == max(means$mean)]
-    target <- auto
-    if (!quiet) message(paste("Target value:", target)) 
-  }
-  if (!target %in% unique(df$tag)) {
-    stop(paste("Your target value", target, "is not valid. Possible other values:", 
-               vector2text(unique(tag))))
-  }
-  which <- target
-  
-  # If the forced target value is the "lower scores" value, invert scores
-  if (auto != which) df$score <- df$score * (-1) + 100
+  aux <- target_set(tag, score, target, quiet)
+  df <- aux$df
+  which <- aux$which
   
   sc <- df %>% 
     mutate(tag = ifelse(tag == which, TRUE, FALSE)) %>%
@@ -1101,6 +1146,10 @@ conf_mat <- function(tag, score, thresh = 0.5, plot = FALSE) {
 #' have in 'tag' (more than: regression; less than: classification)
 #' @param thresh_cm Numeric. Value to splits the results for the 
 #' confusion matrix. Range of values: (0-1)
+#' @param target Value. Which is your target positive value? If 
+#' set to 'auto', the target with largest mean(score) will be 
+#' selected. Change the value to overwrite. Only used when binary
+#' categorical model.
 #' @param model_name Character. Model's name
 #' @param plots Boolean. Include plots?
 #' @param subtitle Character. Subtitle for plots
@@ -1109,6 +1158,7 @@ model_metrics <- function(tag, score, multis = NA,
                           abc = TRUE,
                           thresh = 10, 
                           thresh_cm = 0.5, 
+                          target = "auto",
                           model_name = NA,
                           plots = TRUE, subtitle = NA){
   
@@ -1161,7 +1211,7 @@ model_metrics <- function(tag, score, multis = NA,
         PRC = conf_mat[2,2] / (conf_mat[2,2] + conf_mat[1,2]),
         TPR = conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]),
         TNR = conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]))
-      metrics[["gain_lift"]] <- gain_lift(tag, score, target = "auto", quiet = FALSE)
+      metrics[["gain_lift"]] <- gain_lift(tag, score, target = target, quiet = FALSE)
       metrics[["metrics"]] <- signif(nums, 5)
     } else {
       

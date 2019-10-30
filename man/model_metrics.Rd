@@ -5,7 +5,8 @@
 \title{Model Metrics and Performance}
 \usage{
 model_metrics(tag, score, multis = NA, abc = TRUE, thresh = 10,
-  thresh_cm = 0.5, model_name = NA, plots = TRUE, subtitle = NA)
+  thresh_cm = 0.5, target = "auto", model_name = NA, plots = TRUE,
+  subtitle = NA)
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -24,6 +25,11 @@ have in 'tag' (more than: regression; less than: classification)}
 
 \item{thresh_cm}{Numeric. Value to splits the results for the 
 confusion matrix. Range of values: (0-1)}
+
+\item{target}{Value. Which is your target positive value? If 
+set to 'auto', the target with largest mean(score) will be 
+selected. Change the value to overwrite. Only used when binary
+categorical model.}
 
 \item{model_name}{Character. Model's name}
 

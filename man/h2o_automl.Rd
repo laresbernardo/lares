@@ -5,9 +5,9 @@
 \title{Automated H2O's AutoML}
 \usage{
 h2o_automl(df, y = "tag", ignore = c(), train_test = NA,
-  split = 0.7, weight = NULL, balance = FALSE, impute = FALSE,
-  center = FALSE, scale = FALSE, seed = 0, nfolds = 5,
-  thresh = 5, max_models = 3, max_time = 10 * 60,
+  split = 0.7, weight = NULL, target = "auto", balance = FALSE,
+  impute = FALSE, center = FALSE, scale = FALSE, seed = 0,
+  nfolds = 5, thresh = 5, max_models = 3, max_time = 10 * 60,
   start_clean = TRUE, exclude_algos = c("StackedEnsemble",
   "DeepLearning"), plots = TRUE, alarm = TRUE, quiet = FALSE,
   save = FALSE, subdir = NA, project = "ML Project")
@@ -33,6 +33,11 @@ used when training)}
 weight of zero is equivalent to excluding it from the dataset; giving an 
 observation a relative weight of 2 is equivalent to repeating that 
 row twice. Negative weights are not allowed.}
+
+\item{target}{Value. Which is your target positive value? If 
+set to 'auto', the target with largest mean(score) will be 
+selected. Change the value to overwrite. Only used when binary
+categorical model.}
 
 \item{balance}{Boolean. Auto-balance train dataset with under-sampling?}
 

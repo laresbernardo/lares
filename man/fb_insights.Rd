@@ -5,7 +5,7 @@
 \title{Facebook Insights API}
 \usage{
 fb_insights(token, which, start = Sys.Date() - 7, end = Sys.Date(),
-  time_increment = "1", report_level = "ad", breakdowns = NA,
+  time_increment = "1", report_level = "campaign", breakdowns = NA,
   api_version = "v3.3")
 }
 \arguments{

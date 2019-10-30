@@ -459,7 +459,7 @@ fb_insights <- function(token,
                         start = Sys.Date() - 7, 
                         end = Sys.Date(), 
                         time_increment = "1",
-                        report_level = "ad",
+                        report_level = "campaign",
                         breakdowns = NA,
                         api_version = "v3.3"){
   

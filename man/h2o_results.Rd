@@ -5,7 +5,8 @@
 \title{Automated H2O's AutoML Results}
 \usage{
 h2o_results(h2o_object, test, train, y = "tag", which = 1, model_type,
-  plots = TRUE, project = NULL, seed = 0, quiet = FALSE)
+  target = "auto", plots = TRUE, project = NULL, seed = 0,
+  quiet = FALSE)
 }
 \arguments{
 \item{h2o_object}{H2O Leaderboard (H2OFrame/H2OAutoML) or Model (h2o)}
@@ -17,6 +18,11 @@ h2o_results(h2o_object, test, train, y = "tag", which = 1, model_type,
 \item{which}{Integer. Which model to select from leaderboard}
 
 \item{model_type}{Character. Select "Classifier" or "Regression"}
+
+\item{target}{Value. Which is your target positive value? If 
+set to 'auto', the target with largest mean(score) will be 
+selected. Change the value to overwrite. Only used when binary
+categorical model.}
 
 \item{plots}{Boolean. Create plots objects?}
 
