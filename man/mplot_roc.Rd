@@ -5,8 +5,8 @@
 \title{ROC Curve Plot}
 \usage{
 mplot_roc(tag, score, multis = NA, sample = 1000, model_name = NA,
-  subtitle = NA, interval = 0.2, plotly = FALSE, save = FALSE,
-  subdir = NA, file_name = "viz_roc.png")
+  subtitle = NA, interval = 0.2, squared = TRUE, plotly = FALSE,
+  save = FALSE, subdir = NA, file_name = "viz_roc.png")
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -23,6 +23,8 @@ mplot_roc(tag, score, multis = NA, sample = 1000, model_name = NA,
 \item{subtitle}{Character. Subtitle to show in plot}
 
 \item{interval}{Numeric. Interval for breaks in plot}
+
+\item{squared}{Boolean. Keep proportions?}
 
 \item{plotly}{Boolean. Use plotly for plot's output for an interactive plot}
 

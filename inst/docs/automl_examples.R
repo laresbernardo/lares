@@ -26,7 +26,7 @@ r$plots$importance
 data(dfl)
 r <- dfl %>% ohse(dates = T) %>% 
   select(-opp_date, -opp_id) %>% 
-  h2o_automl("issued", max_models = 5, balance = TRUE)
+  h2o_automl("type_TRUE", max_models = 1, balance = TRUE)
 r$metrics
 
 ####### WITH PRE-DEFINED TRAIN/TEST

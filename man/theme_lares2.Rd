@@ -7,8 +7,8 @@
 theme_lares2(font = "Arial Narrow", size = 12.5,
   main_colour = "darkorange3", hard_colour = "black",
   soft_colour = "grey30", bg_colour = "white",
-  panel_colour = "grey97", legend = "right", grid = TRUE, mg = 14,
-  pal = 0, which = "fct")
+  panel_colour = "transparent", legend = "right", grid = TRUE,
+  mg = 14, pal = 0, which = "fct")
 }
 \arguments{
 \item{font, size}{Character and numeric. Base font family and base size for texts}

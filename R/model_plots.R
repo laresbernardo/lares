@@ -203,6 +203,7 @@ mplot_importance <- function(var,
 #' @param model_name Character. Model's name
 #' @param subtitle Character. Subtitle to show in plot
 #' @param interval Numeric. Interval for breaks in plot
+#' @param squared Boolean. Keep proportions?
 #' @param plotly Boolean. Use plotly for plot's output for an interactive plot
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
@@ -215,6 +216,7 @@ mplot_roc <- function(tag,
                       model_name = NA, 
                       subtitle = NA, 
                       interval = 0.2, 
+                      squared = TRUE,
                       plotly = FALSE,
                       save = FALSE, 
                       subdir = NA, 
@@ -245,7 +247,6 @@ mplot_roc <- function(tag,
     scale_y_continuous(name = "Sensitivity [True Positive Rate]", limits = c(0,1), 
                        breaks = seq(0, 1, interval), expand = c(0.001, 0.001),
                        labels = scale) +
-    coord_equal() +
     theme(axis.ticks = element_line(color = "grey80")) +
     labs(title = "ROC Curve: AUC", colour = NULL) +
     guides(colour = guide_legend(ncol = 3)) +
@@ -256,6 +257,7 @@ mplot_roc <- function(tag,
                             round(100*ci[c(3),],2))) +
     theme_lares2(bg_colour = "white", pal = 2, legend = "bottom")
   
+  if (squared) p <- p + coord_equal()
   if (is.na(multis)[1]) p <- p + guides(colour = FALSE)
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
@@ -739,7 +741,7 @@ mplot_full <- function(tag,
     p1 <- mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
     p2 <- mplot_splits(tag = tag, score = score, splits = splits) +
       theme(plot.margin = margin(10, 8, 5, 0))
-    p3 <- mplot_roc(tag = tag, score = score) +
+    p3 <- mplot_roc(tag = tag, score = score, squared = FALSE) +
       theme(plot.margin = margin(0, 8, 5, 0))
     p4 <- mplot_cuts(score = score) +
       theme(plot.margin = margin(-3, 0, 5, 8))
@@ -955,8 +957,9 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
            x = paste0("Percentiles [",splits,"]")) +
       theme_lares2(pal = 2) + theme(legend.position = c(0.88, 0.2))
     
-    if (highlight == "auto") highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
-    if (highlight[1] %in% gains$percentile & highlight != "none") {
+    if (highlight == "auto") 
+      highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])[1]
+    if (highlight %in% gains$percentile & highlight != "none") {
       highlight <- as.integer(highlight)
       note <- paste0("If we select the top ", 
                      round(highlight*100/splits),"% cases with highest probabilities,\n",

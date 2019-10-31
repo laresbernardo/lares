@@ -50,6 +50,7 @@ plot_timeline <- function(event, start,
     geom_vline(xintercept = maxdate, alpha = 0.8, linetype = "dotted") +
     labs(title = title, subtitle = subtitle, 
          x = NULL, y = NULL, colour = "") +
+    scale_x_datetime(position = "top") +
     theme(panel.background = element_rect(fill = "white", colour = NA),
           axis.ticks = element_blank(),
           panel.grid.major.x = element_line(size = 0.25, colour = "grey80"))
@@ -104,7 +105,7 @@ gg_pie <- function(df, var, table = FALSE, save = FALSE, subdir = NA){
   
   n <- df %>% freqs(!!!variable)
   
-  if(nrow(n) > 6){
+  if (nrow(n) > 6) {
     geom_label <- function(...){
       ggrepel::geom_label_repel(...)
     }

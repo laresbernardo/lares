@@ -118,7 +118,7 @@ theme_lares2 <- function(font = "Arial Narrow",
   
   # Plot title
   ret <- ret + theme(plot.title = element_text(
-    hjust = 0, size = size * 1.3, margin = margin(b = size * 0.3), 
+    hjust = 0, size = size * 1.25, margin = margin(b = size * 0.3), 
     family = font, face = "bold", color = "black"))
   
   # Plot subtitle
@@ -137,8 +137,9 @@ theme_lares2 <- function(font = "Arial Narrow",
     legend.position = legend,
     legend.justification = c(ifelse(legend %in% c("top","bottom"), 0, .5),
                              ifelse(legend == "top", 0, .5)),
-    legend.margin = margin(-3,0,-5,0),
-    legend.key.size = unit(0.4, "cm"))
+    legend.margin = margin(-3,0,-5,0))
+    # guides(colour = guide_legend(override.aes = list(size = 4)),
+    #        fill = guide_legend(override.aes = list(size = 4)))
   
   # Background
   ret <- ret + theme(

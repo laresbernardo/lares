@@ -290,7 +290,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   # GLOBAL DATAFRAME FROM TEST AND TRAIN
   if (!all(colnames(test) == colnames(train)))
     stop("All columns from test and train datasets must be exactly the same")
-  global <- rbind(test, train) %>% 
+  global <- data.frame(test) %>%  bind_rows(train) %>%
     mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
   colnames(global)[colnames(global) == "tag"] <- y
   if (model_type == "Classifier")
