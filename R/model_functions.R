@@ -137,7 +137,7 @@ h2o_automl <- function(df, y = "tag",
   }
   # If target value is not an existing target value
   if (!target %in% cats & length(cats) == 2)
-    if (!target %in% unique(df$tag))
+    if (!target %in% c(cats, "auto"))
       stop(paste("Your target value", target, "is not valid.",
                  "Possible other values:", vector2text(cats)))
   # When might seem numeric but is categorical
