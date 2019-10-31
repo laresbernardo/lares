@@ -5,7 +5,7 @@ data(dft)
 dft <- dft %>% select(-Ticket, -PassengerId, -Cabin)
 
 # Classification: 2 class
-r <- dft %>% h2o_automl(y = "Survived", max_models = 1, target = "TRUE")
+r <- h2o_automl(dft, y = "Survived", max_models = 1, target = "TRUE")
 plot(r$plots$dashboard)
 r$metrics
 

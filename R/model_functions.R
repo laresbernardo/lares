@@ -137,7 +137,9 @@ h2o_automl <- function(df, y = "tag",
   }
   # If target value is not an existing target value
   if (!target %in% cats & length(cats) == 2)
-    stop(paste("Define a correct target. Choose between:", vector2text(cats)))
+    if (!target %in% unique(df$tag))
+      stop(paste("Your target value", target, "is not valid.",
+                 "Possible other values:", vector2text(cats)))
   # When might seem numeric but is categorical
   if (model_type == "Classifier" & sum(grepl('^[0-9]', cats)) > 0)
     df <- mutate(df, tag = as.factor(as.character(
@@ -292,7 +294,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
   colnames(global)[colnames(global) == "tag"] <- y
   if (model_type == "Classifier")
-    cats <- unique(global[,colnames(global) == y])
+    cats <- unique(global[,colnames(global) == y]) else cats <- "None"
   
   # SELECT MODEL FROM h2o_automl()
   if (any(c("H2OFrame","H2OAutoML") %in% class(h2o_object))) {
