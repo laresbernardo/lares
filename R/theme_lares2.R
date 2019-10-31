@@ -28,7 +28,7 @@ theme_lares2 <- function(font = "Arial Narrow",
                          hard_colour = "black",
                          soft_colour = "grey30",
                          bg_colour = "white",
-                         panel_colour = "grey97",
+                         panel_colour = "transparent",
                          legend = "right",
                          grid = TRUE,
                          mg = 14,
@@ -124,7 +124,7 @@ theme_lares2 <- function(font = "Arial Narrow",
   # Plot subtitle
   ret <- ret + theme(plot.subtitle = element_text(
     hjust = 0, size = size * 1.1, colour = soft_colour, 
-    margin = margin(b = size * 0.5),family = font, face = "italic"))
+    margin = margin(b = size * 0.5), family = font, face = "italic"))
   
   # Caption
   ret <- ret + theme(plot.caption = element_text(
