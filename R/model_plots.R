@@ -154,16 +154,18 @@ mplot_importance <- function(var,
   p <- ggplot(output, 
               aes(x = reorder(var, imp), y = imp * 100, 
                   label = round(100 * imp, 1))) + 
-    geom_col(aes(fill = Type), width = 0.08) +
+    geom_col(aes(fill = Type), width = 0.08, colour = "transparent") +
     geom_point(aes(colour = Type), size = 6.2) + 
     coord_flip() +
     geom_text(hjust = 0.5, size = 2.1, inherit.aes = TRUE, colour = "white") +
     labs(title = paste0("Most Relevant Variables (top ", limit, " of ", length(var), ")"),
-         x = NULL, y = "Importance") +
+         x = NULL, y = NULL) +
+    scale_y_continuous(position = "right", expand = c(0, 0), 
+                       limits = c(0, 1.03 * max(output$imp))) +
     theme_lares2()
   
   if (length(unique(output$Type)) == 1) {
-    p <- p + geom_col(fill = colours, width = 0.2) +
+    p <- p + geom_col(fill = colours, width = 0.2, colour = "transparent") +
       geom_point(colour = colours, size = 6) + 
       guides(fill = FALSE, colour = FALSE) + 
       geom_text(hjust = 0.5, size = 2, inherit.aes = TRUE, colour = "white")
@@ -312,7 +314,7 @@ mplot_cuts <- function(score,
   p <- deciles %>%
     #mutate(label_colours = ifelse(cuts*100 < 50, "1", "m")) %>%
     ggplot(aes(x = reorder(range, cuts), y = cuts * 100)) + 
-    geom_col(fill = "deepskyblue") + 
+    geom_col(fill = "deepskyblue", colour = "transparent") + 
     xlab('Cumulative volume') + ylab('Score') + 
     geom_text(aes(label = round(100 * cuts, 1),
                   vjust = ifelse(cuts*100 < 50, -0.3, 1.3)), 
@@ -393,7 +395,7 @@ mplot_cuts_error <- function(tag,
   # First: absolute errors
   deciles_abs <- quants(df$abs_error, splits = splits, just = 0.3)
   p_abs <- ggplot(deciles_abs, aes(x = reorder(deciles, cut), y = cut, label = signif(cut, 3))) +
-    geom_col(fill = "deepskyblue") + 
+    geom_col(fill = "deepskyblue", colour = "transparent") + 
     labs(x = NULL, y = 'Absolute [#]') +
     geom_text(aes(vjust = gg_pos, colour = colour), size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute error")) +
@@ -403,7 +405,7 @@ mplot_cuts_error <- function(tag,
   # Second: percentual errors
   deciles_perabs <- quants(abs(df$p_error), splits = splits, just = 0.3)
   p_per <- ggplot(deciles_perabs, aes(x = reorder(deciles, cut), y = cut, label = signif(cut, 3))) +
-    geom_col(fill = "deepskyblue") + 
+    geom_col(fill = "deepskyblue", colour = "transparent") + 
     labs(x = NULL, y = 'Absolute [%]') +
     geom_text(aes(vjust = gg_pos, colour = colour), size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute percentage error")) +
@@ -512,7 +514,7 @@ mplot_splits <- function(tag,
     left_join(names, by = c("quantile")) %>%
     ggplot(aes(x = as.character(tag), y = p, label = as.character(p),
                fill = reorder(as.character(quantile_tag),quantile))) +
-    geom_col(position = "stack") + 
+    geom_col(position = "stack", colour = "transparent") + 
     geom_text(size = 3, position = position_stack(vjust = 0.5), check_overlap = TRUE) +
     xlab("Tag") + ylab("Total Percentage by Tag") +
     guides(fill = guide_legend(title = paste0("~",npersplit," p/split"))) +

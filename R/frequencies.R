@@ -147,19 +147,18 @@ freqs <- function(df, ..., wt = NULL,
   }
   
   # Plot base
-  p <- p + geom_col(alpha = 0.9, width = 0.8) +
+  p <- p + geom_col(alpha = 0.95, width = 0.8, colour = "transparent") +
     geom_text(aes(hjust = label_hjust, colour = label_colours), size = 2.8) + 
     coord_flip() + guides(colour = FALSE) +
-    labs(x = NULL, y = "Counter", fill = "[%]",
+    labs(x = NULL, y = NULL, fill = NULL,
          title = ifelse(is.na(title), paste("Frequencies and Percentages"), title),
          subtitle = ifelse(is.na(subtitle), 
                            paste("Variable:", ifelse(!is.na(variable_name), variable_name, variable), note, weight_text), 
                            subtitle), caption = obs) +
     scale_fill_gradient(low = "lightskyblue2", high = "navy") +
-    gg_text_customs() + theme_lares2(legend = "none") +
-    scale_y_continuous(expand = c(0, 0), limits = c(0, 1.03 * max(output$n))) +
-    theme(panel.grid.major.y = element_blank(),
-          panel.grid.minor.y = element_blank())
+    theme_lares2(legend = "none", grid = "Xx") + gg_text_customs() + 
+    scale_y_continuous(position = "right", expand = c(0, 0), 
+                       limits = c(0, 1.03 * max(output$n)))
   
   # When two features
   if (type == 2) { 
@@ -280,7 +279,8 @@ freqs_df <- function(df,
       mutate(alpha = as.numeric(ifelse(is.infinite(alpha), 0, alpha)))
     
     p <- ggplot(out, aes(x = col, y = count, fill = col, label = label, colour = col)) + 
-      geom_col(aes(alpha = alpha), position = "fill", colour = "black", width = 0.95, size = 0.1) + 
+      geom_col(aes(alpha = alpha), position = "fill", 
+               colour = "transparent", width = 0.95, size = 0.1) + 
       geom_text(position = position_fill(vjust = .5), size = 3) +
       coord_flip() + labs(x = NULL, y = NULL, title = "Global Values Frequencies") +
       scale_y_percent(expand = c(0, 0)) +

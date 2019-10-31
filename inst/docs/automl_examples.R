@@ -30,7 +30,7 @@ r <- dfl %>% ohse(dates = T) %>%
 r$metrics
 
 ####### WITH PRE-DEFINED TRAIN/TEST
-splits <- msplit(dft)
+splits <- msplit(dft, size = 0.8)
 df <- rbind(mutate(splits$train, split = "train"),
             mutate(splits$test, split = "test"))
 r <- h2o_automl(df, "Survived", max_models = 3, train_test = "split")

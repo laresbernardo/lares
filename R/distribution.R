@@ -280,7 +280,7 @@ distr <- function(data, ...,
         x = reorder(as.character(value), order), y = n, 
         fill = as.character(targets), 
         label = formatNum(n, 0), ymax = max(n) * 1.1)) + 
-        geom_col(position = "dodge") +
+        geom_col(position = "dodge", colour = "transparent") +
         geom_text(colour = "black",
                   check_overlap = TRUE, 
                   position = position_dodge(0.9), 
@@ -306,7 +306,7 @@ distr <- function(data, ...,
         mutate(ptag = ifelse(p < 3, "", as.character(round(p, 1)))) %>%
         ggplot(aes(x = reorder(value, -order), y = p/100, label = ptag,
                    fill = as.character(targets))) + 
-        geom_col(position = "fill") +
+        geom_col(position = "fill", colour = "transparent") +
         geom_text(aes(size = size, colour = as.character(targets)), 
                   position = position_stack(vjust = 0.5)) +
         scale_size(range = c(2.2, 3)) +

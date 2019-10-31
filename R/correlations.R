@@ -182,12 +182,13 @@ corr_var <- function(df, ...,
       ggplot(aes(x = reorder(variables, abs(corr)), 
                  y = abs(corr), fill = pos, label = signif(100*corr, 3))) +
       geom_hline(aes(yintercept = 0), alpha = 0.5) +
-      geom_col() + coord_flip() + 
+      geom_col(colour = "transparent") + coord_flip() + 
       geom_text(aes(hjust = hjust), size = 3, colour = "black") +
       scale_fill_manual(values = c("FALSE" = "#E5586E", "TRUE" = "#59B3D2")) +
       guides(fill = FALSE) +
-      labs(title = paste("Correlations of", var), x = NULL, y = "Correlation [%]") +
-      scale_y_percent(expand = c(0, 0)) + theme_lares2()
+      labs(title = paste("Correlations of", var, "[%]"), x = NULL, y = NULL) +
+      scale_y_percent(expand = c(0, 0), position = "right") + 
+      theme_lares2(pal = 2)
     
     if (!is.na(top) & top < original_n) p <- p + 
         labs(subtitle = paste(
@@ -324,7 +325,7 @@ corr_cross <- function(df, plot = TRUE,
         mutate(label = paste(key, "+", mix), abs = abs(corr),
                sign = ifelse(corr < 0, "bad", "good")) %>%
         ggplot(aes(x = reorder(label, abs), y = abs, fill = sign)) +
-        geom_col() +
+        geom_col(colour = "transparent") +
         # geom_hline(aes(yintercept = 0), alpha = 0.5) + 
         geom_text(aes(label = signif(100*corr, 3)), 
                   size = 3, colour = "white", hjust = 1.1) +

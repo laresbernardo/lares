@@ -15,6 +15,7 @@
 #' @param main_colour,hard_colour,soft_colour,bg_colour,panel_colour
 #' Character. Main colours for your theme
 #' @param legend Character. Legend position: top, right, bottom, left
+#' @param grid Character (`TRUE`, `FALSE`, or a combination of `X`, `x`, `Y`, `y`)
 #' @param mg Numeric. External margin
 #' @param pal Integer. 1 for fill and colour palette, 2 for only colour palette,
 #' 3 for only fill palette, 4 for personal labels-colour palette. 0 or else for nothing.
@@ -25,10 +26,11 @@ theme_lares2 <- function(font = "Arial Narrow",
                          size = 12.5, 
                          main_colour = "darkorange3", 
                          hard_colour = "black",
-                         soft_colour = "grey25",
+                         soft_colour = "grey30",
                          bg_colour = "white",
                          panel_colour = "grey97",
                          legend = "right",
+                         grid = TRUE,
                          mg = 14,
                          pal = 0,
                          which = "fct") {
@@ -41,9 +43,7 @@ theme_lares2 <- function(font = "Arial Narrow",
     if (font != "Arial Narrow")
       warning(paste(font, "font is not installed, has other name, or can't be found..."))  
     font <- NA
-  } else {
-    ret <- ret + theme(text = element_text(family = font))  
-  }
+  } else ret <- ret + theme(text = element_text(family = font))  
   
   # Set some defaults
   update_geom_defaults("text", list(colour = hard_colour, family = font))
@@ -68,58 +68,69 @@ theme_lares2 <- function(font = "Arial Narrow",
   # assign("scale_fill_continuous", function(...,low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir = envir)
   # assign("ggsave", function(..., bg = bg_colour) ggsave(..., bg = bg), envir = envir)
   
-  if (inherits(grid, "character")) {
+  if (inherits(grid, "character") | grid == TRUE) {
     grid_col <- "#CCCCCC"
-    ret <- ret + theme(panel.grid = element_line(color = grid_col, size = 0.1))
-    ret <- ret + theme(panel.grid.major = element_line(color = grid_col, size = 0.2))
-    ret <- ret + theme(panel.grid.minor = element_line(color = grid_col, size = 0.1))
+    ret <- ret + theme(panel.grid = element_line(color = grid_col, size = 0.2))
+    ret <- ret + theme(panel.grid.major = element_line(color = grid_col, size = 0.1))
+    ret <- ret + theme(panel.grid.minor = element_line(color = grid_col, size = 0.05))
     if (inherits(grid, "character")) {
       if (regexpr("X", grid)[1] < 0) ret <- ret + theme(panel.grid.major.x = element_blank())
       if (regexpr("Y", grid)[1] < 0) ret <- ret + theme(panel.grid.major.y = element_blank())
       if (regexpr("x", grid)[1] < 0) ret <- ret + theme(panel.grid.minor.x = element_blank())
       if (regexpr("y", grid)[1] < 0) ret <- ret + theme(panel.grid.minor.y = element_blank())
     }
+  } else {
+    ret <- ret + theme(panel.grid = element_blank())
   }
   
-  xj <- switch(tolower(substr("left", 1, 1)), b = 0, l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
-  yj <- switch(tolower(substr("left", 2, 2)), b = 0, l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
+  aux <- ifelse(legend == "top", "right", "left")
+  xj <- switch(tolower(substr(aux, 1, 1)), b = 0, l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
+  yj <- switch(tolower(substr(aux, 2, 2)), b = 0, l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
   
   # Axis lines
   ret <- ret + theme(axis.line = element_blank())
+  
   # Axis ticks
   ret <- ret + theme(axis.ticks = element_blank(), 
                      axis.ticks.x = element_blank(), 
                      axis.ticks.y = element_blank())
+  
   # Axis text
   ret <- ret + theme(axis.text.x = element_text(
-    size = size * 0.85, margin = margin(t = 0), colour = soft_colour))
+    size = size * 0.8, margin = margin(t = 0), colour = soft_colour))
   ret <- ret + theme(axis.text.y = element_text(
-    size = size * 0.85, margin = margin(r = 0), colour = soft_colour))
+    size = size * 0.8, margin = margin(r = 0), colour = soft_colour))
+  
   # Axis titles
   ret <- ret + theme(axis.title = element_text(
-    size = size * 1, family = font, colour = soft_colour))
+    size = size * 0.85, family = font, colour = soft_colour))
   ret <- ret + theme(axis.title.x = element_text(
-    hjust = xj, size = size * 1, family = font, face = "bold", colour = soft_colour))
+    hjust = xj, size = size * 0.85, family = font, face = "bold", colour = soft_colour))
   ret <- ret + theme(axis.title.y = element_text(
-    hjust = yj, size = size * 1, colour = soft_colour,family = font, face = "bold"))
+    hjust = yj, size = size * 0.85, colour = soft_colour,family = font, face = "bold"))
   ret <- ret + theme(axis.title.y.right = element_text(
-    hjust = yj, size = size * 1, angle = -90, colour = soft_colour, family = font, face = "bold"))
+    hjust = yj, size = size * 0.85, angle = -90, colour = soft_colour, family = font, face = "bold"))
+  
   # facet_grid
   ret <- ret + theme(strip.text = element_text(
     hjust = 0, size = size * 1, colour = soft_colour, face = "bold", family = font))
   ret <- ret + theme(panel.spacing = grid::unit(0.8, "lines"))
+  
   # Plot title
   ret <- ret + theme(plot.title = element_text(
-    hjust = 0, size = size * 1.3, margin = margin(b = size * 0.85), 
+    hjust = 0, size = size * 1.3, margin = margin(b = size * 0.3), 
     family = font, face = "bold", color = "black"))
+  
   # Plot subtitle
   ret <- ret + theme(plot.subtitle = element_text(
-    hjust = 0, size = size * 1, colour = soft_colour, 
-    margin = margin(b = size * 0.7),family = font, face = "italic"))
+    hjust = 0, size = size * 1.1, colour = soft_colour, 
+    margin = margin(b = size * 0.5),family = font, face = "italic"))
+  
   # Caption
   ret <- ret + theme(plot.caption = element_text(
     hjust = 1, size = size * 0.85, margin = margin(t = size * 0.9), 
     family = font, face = "bold", color = soft_colour))
+  
   # Legend 
   ret <- ret + theme(legend.title = element_text(
     color = soft_colour, size = size * 0.9, face = "bold"),
@@ -128,10 +139,12 @@ theme_lares2 <- function(font = "Arial Narrow",
                              ifelse(legend == "top", 0, .5)),
     legend.margin = margin(-3,0,-5,0),
     legend.key.size = unit(0.4, "cm"))
+  
   # Background
   ret <- ret + theme(
     panel.background = element_rect(fill = panel_colour, colour = NA),
     plot.background = element_rect(fill = bg_colour, colour = NA))
+  
   # External margins
   ret <- ret + theme(plot.margin = margin(mg, mg, mg, mg))
   
