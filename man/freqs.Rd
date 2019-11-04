@@ -35,8 +35,7 @@ numerical output; use na.omit() or filter() if needed)}
 \item{top}{Integer. Filter and plot the most n frequent for 
 categorical values. Set to NA to return all values}
 
-\item{abc}{Boolean. Do you wish to sort by alphabetical order? If set
-to FALSE then frequency will sort the values}
+\item{abc}{Boolean. Do you wish to sort by alphabetical order?}
 
 \item{save}{Boolean. Save the output plot in our working directory}
 

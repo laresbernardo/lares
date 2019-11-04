@@ -99,7 +99,8 @@ if (getRversion() >= "2.15.1")
       "date_start","spend","adcreatives","created_time","list_id","aux","ds","prophet",
       "fit.prophet","prophet_plot_components","add_country_holidays","group1","group2",
       "make_future_dataframe","train_test","aml","m","scores","aggregate_profiles",
-      "PC1","PC2","pvalue","ceteris_paribus","contribution"))
+      "PC1","PC2","pvalue","ceteris_paribus","contribution",
+      "udpipe_download_model","udpipe_load_model","udpipe_annotate","keywords_rake"))
 
 #' Pipe operator
 #' @name lares-exports

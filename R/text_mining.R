@@ -300,3 +300,38 @@ sentimentBreakdown <- function(text, lang = "spanish",
   }
   return(ret)
 }
+
+
+####################################################################
+#' Keyword/Topic identification using RAKE
+#' 
+#' RAKE is a basic algorithm which tries to identify keywords in text. 
+#' Based on udpipe library, model models, and keywords_rake function.
+#' 
+#' @family Text Mining
+#' @param text Character vector
+#' @param file Character. Name of udpipe model previously downloaded
+#' for a specific language
+#' @param lang Character. If file does not exist, this language will be
+#' downloaded from udpipe's models
+#' @export
+topics_rake <- function(text, file = "english-ewt-ud-2.4-190531.udpipe", lang = "english") {
+  try_require("udpipe") 
+  if (file.exists(file)) {
+    message(">>> Loading previously downloaded model...")
+    model <- udpipe_load_model(file) 
+  } else {
+    message(">>> Downloading new language model...")
+    model <- udpipe_download_model(tolower(lang))
+    if (model$download_failed)
+      stop(model$download_message)
+  }
+  message(">>> Annotating text...")
+  doc <- udpipe_annotate(model, cleanText(text))
+  aux <- as.data.frame(doc)
+  message(">>> Calculating RAKE values...")
+  topics <- keywords_rake(
+    x = aux, term = "lemma", group = "doc_id", 
+    relevant = aux$upos %in% c("NOUN", "ADJ"))
+  return(topics)
+}

@@ -35,7 +35,7 @@ Other Data Wrangling: \code{\link{balance_data}},
 Other Text Mining: \code{\link{replaceall}},
   \code{\link{sentimentBreakdown}},
   \code{\link{textCloud}}, \code{\link{textFeats}},
-  \code{\link{textTokenizer}}
+  \code{\link{textTokenizer}}, \code{\link{topics_rake}}
 }
 \concept{Data Wrangling}
 \concept{Text Mining}

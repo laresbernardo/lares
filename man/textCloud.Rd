@@ -35,6 +35,7 @@ function is quite similar to the funModeling's corrplot function.
 Other Text Mining: \code{\link{cleanText}},
   \code{\link{replaceall}},
   \code{\link{sentimentBreakdown}},
-  \code{\link{textFeats}}, \code{\link{textTokenizer}}
+  \code{\link{textFeats}}, \code{\link{textTokenizer}},
+  \code{\link{topics_rake}}
 }
 \concept{Text Mining}

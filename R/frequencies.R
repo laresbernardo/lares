@@ -20,8 +20,7 @@
 #' @param subtitle Character. Overwrite plot's subtitle with.
 #' @param top Integer. Filter and plot the most n frequent for 
 #' categorical values. Set to NA to return all values
-#' @param abc Boolean. Do you wish to sort by alphabetical order? If set
-#' to FALSE then frequency will sort the values
+#' @param abc Boolean. Do you wish to sort by alphabetical order?
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
@@ -49,10 +48,19 @@ freqs <- function(df, ..., wt = NULL,
     {if (!rel) ungroup(.) else .} %>%
     mutate(p = round(100*n/sum(n), 2), pcum = cumsum(p))    
   
-  
-  if (!plot && !save) {
-    if (results) return(output) else invisible(return())
+  # Sort values alphabetically or ascending if numeric
+  if (abc) {
+    message("Sorting variable(s) alphabetically")
+    output <- output %>% arrange(!!!vars, desc(n)) %>% 
+      mutate(order = row_number())
+  } else {
+    output <- output %>% arrange(desc(n)) %>%
+      mutate(order = row_number())
   }
+  
+  # No plot
+  if (!plot && !save)
+    if (results) return(output) else invisible(return())
   
   if (ncol(output) - 3 >= 4) {
     stop(
@@ -77,16 +85,7 @@ freqs <- function(df, ..., wt = NULL,
     }
   } else {note <- ""}
   
-  # Sort values alphabetically or ascending if numeric
-  if (abc) {
-    message("Sorting variable(s) alphabetically")
-    output <- output %>% arrange(!!!vars, desc(n)) %>% 
-      mutate(order = row_number())
-    note <- gsub("most frequent", "A-Z sorted values", note)
-  } else {
-    output <- output %>% arrange(desc(n)) %>%
-      mutate(order = row_number())
-  }
+  if (abc) note <- gsub("most frequent", "A-Z sorted values", note)
   
   reorder_within <- function(x, by, within, fun = mean, sep = "___", ...) {
     new_x <- paste(x, within, sep = sep)
