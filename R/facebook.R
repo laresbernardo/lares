@@ -440,8 +440,8 @@ fb_ads <- function(token,
 #' @family Facebook
 #' @param token Character. This must be a valid access token with sufficient 
 #' privileges. Visit the Facebook API Graph Explorer to acquire one
-#' @param which Character. This is the ad account, campaign, adset, 
-#' or ad ID to be queried
+#' @param which Character vector. This is the accounts, campaigns, adsets, 
+#' or ads IDs to be queried
 #' @param start Character. The first full day to report, in the 
 #' format "YYYY-MM-DD"
 #' @param end Character. The last full day to report, in the 
@@ -469,59 +469,67 @@ fb_insights <- function(token,
   
   # Starting URL
   url <- "https://graph.facebook.com/"
-  URL <- paste0(url, api_version, "/", which, "/insights")
+  output <- c()
   
-  which <- c("ad","adset","campaign","account")
-  if (!report_level %in% which) 
-    stop(paste("Your report_level must be one of:", vector2text(which)))
-  
-  # Call insights
-  import <- content(GET(
-    URL,
-    query = list(
-      access_token = token,
-      time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
-      level = report_level,
-      fields = paste(
-        "campaign_name, campaign_id, objective, adset_id, adset_name, ad_id, ad_name,",
-        "impressions, cpm, spend, reach, clicks, unique_clicks, ctr, cpc, unique_ctr,",
-        "cost_per_unique_click"), 
-      breakdowns = if (!is.na(breakdowns)) 
-        vector2text(breakdowns, sep = ", ", quotes = FALSE) else NULL,
-      time_increment = time_increment,
-      limit = "1000000"
-    ),
-    encode = "json"))
-  
-  # Show and return error
-  if ("error" %in% names(import)) {
-    message(paste("API ERROR:", import$error$message))
-    # Very useful for Shiny apps
-    invisible(return(import$error))
-  }
-  
-  # Check for no-data (user might think there was an error on GET request - warn him!)
-  if (length(import$data) == 0) {
-    message("There is no data for this query!")
-    invisible(return(NULL))
-  } 
-  
-  ret <- data.frame(bind_rows(import$data))
-  
-  # Condition to detect the next page
-  if (exists("next", import$paging)) {
-    # Checking from the originally returned list
-    out <- fromJSON(import$paging$`next`)
-    ret <- bind_rows(ret, data.frame(out$data))
-    # Looping through subsequent returned pages
-    while (exists("next", out$paging)) {
-      out <- fromJSON(out$paging$`next`)
-      ret <- bind_rows(ret, data.frame(out$data))
+  for (i in 1:length(which)) {
+    aux <- which[i]
+    URL <- paste0(url, api_version, "/", aux, "/insights")
+    
+    type <- c("ad","adset","campaign","account")
+    if (!report_level %in% type) 
+      stop(paste("Your report_level must be one of:", vector2text(type)))
+    
+    # Call insights
+    import <- content(GET(
+      URL,
+      query = list(
+        access_token = token,
+        time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
+        level = report_level,
+        fields = paste(
+          "campaign_name, campaign_id, objective, adset_id, adset_name, ad_id, ad_name,",
+          "impressions, cpm, spend, reach, clicks, unique_clicks, ctr, cpc, unique_ctr,",
+          "cost_per_unique_click"), 
+        breakdowns = if (!is.na(breakdowns)) 
+          vector2text(breakdowns, sep = ", ", quotes = FALSE) else NULL,
+        time_increment = time_increment,
+        limit = "1000000"
+      ),
+      encode = "json"))
+    
+    # Show and return error
+    if ("error" %in% names(import)) {
+      message(paste("API ERROR:", import$error$message))
+      # Very useful for Shiny apps
+      if (length(which) == 1) invisible(return(import$error))
+      next
     }
+    
+    # Check for no-data (user might think there was an error on GET request - warn him!)
+    if (length(import$data) == 0) {
+      message(paste("There is no data for", aux))
+      next
+    } else if (length(which) > 1) message(paste("Data for", aux, "imported..."))
+    
+    ret <- data.frame(bind_rows(import$data))
+    
+    # Condition to detect the next page
+    if (exists("next", import$paging)) {
+      # Checking from the originally returned list
+      out <- fromJSON(import$paging$`next`)
+      ret <- bind_rows(ret, data.frame(out$data))
+      # Looping through subsequent returned pages
+      while (exists("next", out$paging)) {
+        out <- fromJSON(out$paging$`next`)
+        ret <- bind_rows(ret, data.frame(out$data))
+      }
+    }
+    ret <- suppressMessages(type.convert(ret, numerals = "no.loss")) %>%
+      mutate_at(vars(contains("date")), list(as.Date)) %>%
+      mutate_at(vars(contains("id")), list(as.character)) %>%
+      arrange(desc(date_start), desc(spend)) %>%
+      mutate(id = aux)
+    output <- rbind(output, ret)
   }
-  ret <- suppressMessages(type.convert(ret, numerals = "no.loss")) %>%
-    mutate_at(vars(contains("date")), list(as.Date)) %>%
-    mutate_at(vars(contains("id")), list(as.character)) %>%
-    arrange(desc(date_start), desc(spend))
   return(ret)
 }
