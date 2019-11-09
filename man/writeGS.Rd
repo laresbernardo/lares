@@ -22,6 +22,7 @@ This function lets the user write on any Google Sheet
 }
 \seealso{
 Other Connection: \code{\link{get_tweets}},
-  \code{\link{queryGA}}, \code{\link{readGS}}
+  \code{\link{queryGA}}, \code{\link{readGS4}},
+  \code{\link{readGS}}
 }
 \concept{Connection}

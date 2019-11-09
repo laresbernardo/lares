@@ -9,17 +9,14 @@
 #' @param first_time Boolean. Authenticate manualy
 #' @export
 readGS <- function(title, ws = "Hoja 1", first_time = FALSE) {
-  
-  if (first_time == TRUE) {
+  try_require("googlesheets")
+  if (first_time) {
     options(httr_oob_default = TRUE)
     gs_auth(new_user = TRUE)
   }
-  
   gs <- gs_title(title)
-  gs <- invisible(gs_read(gs, ws = ws, verbose=F) %>% data.frame())
-
+  gs <- invisible(gs_read(gs, ws = ws, verbose = FALSE) %>% data.frame())
   return(gs)
-  
 }
 
 ####################################################################
@@ -35,14 +32,40 @@ readGS <- function(title, ws = "Hoja 1", first_time = FALSE) {
 #' @param first_time Boolean. Authenticate manualy
 #' @export
 writeGS <- function(data, title, ws = "Hoja 1", cell = 'A1', first_time = FALSE) {
-
-  if (first_time == TRUE) {
+  try_require("googlesheets")
+  if (first_time) {
     options(httr_oob_default = TRUE)
     gs_auth(new_user = TRUE)
   }
-
   gs <- gs_title(title)
   invisible(gs_edit_cells(
-    gs, ws = ws, input = data, anchor = cell, verbose=F) %>% data.frame())
+    gs, ws = ws, input = data, anchor = cell, verbose = FALSE) %>% 
+      data.frame())
+}
 
+
+####################################################################
+#' Google Sheets Reading (API v4)
+#' 
+#' This function lets the user read any Google Sheet's data
+#' 
+#' @family Connection
+#' @param title Character. Textual title of Google Sheet
+#' @param sheet Character. Working sheet to import
+#' @param range Character. A cell range to read from
+#' @param creds Character. JSON filename with service auth
+#' @export
+readGS4 <- function(title, sheet = "Hoja 1", range = NULL, creds = NA) {
+  try_require("googledrive")
+  if (!is.na(creds)) {
+    if (file.exists(creds)) {
+      sheets_auth(path = creds)
+      drive_auth(path = creds)  
+    } else stop("No credentials found on ", creds)
+  }
+  aux <- drive_find(pattern = title, n_max = 100)
+  if (nrow(aux) > 1)
+    message(paste(nrow(aux), "files found with pattern:", title))
+  df <- read_sheet(aux$id[1], sheet = sheet, range = range)  
+  return(df)
 }

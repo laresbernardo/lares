@@ -17,7 +17,7 @@ Imports:
     ggforce,
     ggplot2,
     googleAuthR,
-    googlesheets,
+    googlesheets4,
     gridExtra,
     h2o,
     httr,

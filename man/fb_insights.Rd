@@ -12,8 +12,8 @@ fb_insights(token, which, start = Sys.Date() - 7, end = Sys.Date(),
 \item{token}{Character. This must be a valid access token with sufficient 
 privileges. Visit the Facebook API Graph Explorer to acquire one}
 
-\item{which}{Character. This is the ad account, campaign, adset, 
-or ad ID to be queried}
+\item{which}{Character vector. This is the accounts, campaigns, adsets, 
+or ads IDs to be queried}
 
 \item{start}{Character. The first full day to report, in the 
 format "YYYY-MM-DD"}

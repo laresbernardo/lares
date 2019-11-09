@@ -18,7 +18,8 @@ This function downloads tweets with personal credentials
 }
 \seealso{
 Other Connection: \code{\link{queryGA}},
-  \code{\link{readGS}}, \code{\link{writeGS}}
+  \code{\link{readGS4}}, \code{\link{readGS}},
+  \code{\link{writeGS}}
 
 Other Social Networks: \code{\link{li_auth}},
   \code{\link{li_profile}}

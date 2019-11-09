@@ -35,6 +35,7 @@ google_analytics or Google Analytics'
 }
 \seealso{
 Other Connection: \code{\link{get_tweets}},
-  \code{\link{readGS}}, \code{\link{writeGS}}
+  \code{\link{readGS4}}, \code{\link{readGS}},
+  \code{\link{writeGS}}
 }
 \concept{Connection}

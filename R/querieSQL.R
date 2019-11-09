@@ -9,18 +9,16 @@
 #' @export
 queryDummy = function(query, creds = NA) {
 
-  options(warn=-1)
-  
-  dw <- get_credentials(from="dummy", dir = creds)
+  dw <- get_credentials(from = "dummy", dir = creds)
 
   drv <- RPostgreSQL::PostgreSQL()
-  con <- dbConnect(drv, host=dw$server, dbname=dw$database,
-                   port=dw$port, user=dw$uid, password=dw$pwd)
+  con <- dbConnect(drv, host = dw$server, dbname = dw$database,
+                   port = dw$port, user = dw$uid, password = dw$pwd)
   start <- Sys.time()
   q <- dbSendQuery(con, query)
   q <- fetch(q, n = -1)
   dbDisconnect(con)
-  message(paste("Query duration:", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
+  message(paste("Query duration:", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
   return(q)
 }
 
@@ -37,21 +35,19 @@ queryDummy = function(query, creds = NA) {
 #' @export
 queryDW = function(query, which = "soat", creds = NA) {
 
-  options(warn=-1)
-  
   dw <- get_credentials(from = "warehouse", dir = creds)
 
   dbname <- ifelse(which == "soat", dw$database_soat,
                    ifelse(which == "creditos", dw$database_creditos, NA))
 
   drv <- RPostgreSQL::PostgreSQL()
-  con <- dbConnect(drv, host=dw$server, dbname=dbname,
-                   port=dw$port, user=dw$uid, password=dw$pwd)
+  con <- dbConnect(drv, host = dw$server, dbname = dw$database,
+                   port = dw$port, user = dw$uid, password = dw$pwd)
   start <- Sys.time()
   q <- dbSendQuery(con, query)
   q <- fetch(q, n = -1)
   dbDisconnect(con)
-  message(paste("Query duration:", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
+  message(paste("Query duration:", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
   return(q)
 }
 
@@ -67,17 +63,15 @@ queryDW = function(query, which = "soat", creds = NA) {
 #' @export
 queryProduc = function(query, creds = NA) {
 
-  options(warn=-1)
-
   dw <- get_credentials(from = "production", dir = creds)
 
   drv <- RPostgreSQL::PostgreSQL()
-  con <- dbConnect(drv, host=dw$server, dbname=dw$database,
-                   port=dw$port, user=dw$uid, password=dw$pwd)
+  con <- dbConnect(drv, host = dw$server, dbname = dw$database,
+                   port = dw$port, user = dw$uid, password = dw$pwd)
   start <- Sys.time()
   q <- dbSendQuery(con, query)
   q <- fetch(q, n = -1)
   dbDisconnect(con)
-  message(paste("Query duration:", round(difftime(Sys.time(), start, units="secs"), 2), "s"))
+  message(paste("Query duration:", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
   return(q)
 }
