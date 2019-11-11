@@ -53,8 +53,8 @@ Other Exploratory: \code{\link{corr_cross}},
   \code{\link{freqs_df}}, \code{\link{gain_lift}},
   \code{\link{get_tweets}}, \code{\link{missingness}},
   \code{\link{plot_cats}}, \code{\link{plot_df}},
-  \code{\link{plot_nums}}, \code{\link{tree_var}},
-  \code{\link{trendsRelated}}
+  \code{\link{plot_nums}}, \code{\link{summer}},
+  \code{\link{tree_var}}, \code{\link{trendsRelated}}
 
 Other Visualization: \code{\link{corr_plot}},
   \code{\link{distr}}, \code{\link{freqs_df}},
@@ -65,8 +65,9 @@ Other Visualization: \code{\link{corr_plot}},
   \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
   \code{\link{mplot_response}}, \code{\link{mplot_roc}},
   \code{\link{mplot_splits}}, \code{\link{noPlot}},
-  \code{\link{plot_survey}}, \code{\link{theme_lares2}},
-  \code{\link{theme_lares}}, \code{\link{tree_var}}
+  \code{\link{plot_survey}}, \code{\link{summer}},
+  \code{\link{theme_lares2}}, \code{\link{theme_lares}},
+  \code{\link{tree_var}}
 }
 \concept{Exploratory}
 \concept{Visualization}

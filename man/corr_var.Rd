@@ -57,8 +57,8 @@ Other Exploratory: \code{\link{corr_cross}},
   \code{\link{freqs}}, \code{\link{gain_lift}},
   \code{\link{get_tweets}}, \code{\link{missingness}},
   \code{\link{plot_cats}}, \code{\link{plot_df}},
-  \code{\link{plot_nums}}, \code{\link{tree_var}},
-  \code{\link{trendsRelated}}
+  \code{\link{plot_nums}}, \code{\link{summer}},
+  \code{\link{tree_var}}, \code{\link{trendsRelated}}
 
 Other Correlations: \code{\link{corr_cross}},
   \code{\link{corr_plot}}, \code{\link{corr}}

@@ -43,10 +43,11 @@ freqs <- function(df, ..., wt = NULL,
     return(output)
   }
   
-  output <- df %>% group_by(!!!vars) %>% tally(wt = !!weight) %>% 
+  output <- df %>% 
+    group_by(!!!vars) %>% tally(wt = !!weight) %>% 
     arrange(desc(n)) %>%
     {if (!rel) ungroup(.) else .} %>%
-    mutate(p = round(100*n/sum(n), 2), pcum = cumsum(p))    
+    mutate(p = round(100*n/sum(n), 2), pcum = cumsum(p))  
   
   # Sort values alphabetically or ascending if numeric
   if (abc) {

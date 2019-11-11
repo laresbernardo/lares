@@ -469,7 +469,7 @@ fb_insights <- function(token,
   
   # Starting URL
   url <- "https://graph.facebook.com/"
-  output <- c()
+  output <- ret <- c()
   
   for (i in 1:length(which)) {
     aux <- which[i]
@@ -510,6 +510,11 @@ fb_insights <- function(token,
       message(paste("There is no data for", aux))
       next
     } else if (length(which) > 1) message(paste("Data for", aux, "imported..."))
+    
+    if (length(which) == i & length(ret) == 0) {
+      message("No data found!")
+      return(invisible(NULL))
+    }
     
     ret <- data.frame(bind_rows(import$data))
     
