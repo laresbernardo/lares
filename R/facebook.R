@@ -469,12 +469,12 @@ fb_insights <- function(token,
   
   # Starting URL
   url <- "https://graph.facebook.com/"
-  output <- ret <- c()
+  output <- c()
   
   for (i in 1:length(which)) {
     aux <- which[i]
     URL <- paste0(url, api_version, "/", aux, "/insights")
-    
+    ret <- c()
     type <- c("ad","adset","campaign","account")
     if (!report_level %in% type) 
       stop(paste("Your report_level must be one of:", vector2text(type)))
@@ -511,7 +511,7 @@ fb_insights <- function(token,
       next
     } else if (length(which) > 1) message(paste("Data for", aux, "imported..."))
     
-    if (length(which) == i & length(ret) == 0) {
+    if (length(which) == i & length(output) == 0) {
       message("No data found!")
       return(invisible(NULL))
     }
@@ -536,5 +536,5 @@ fb_insights <- function(token,
       mutate(id = aux)
     output <- rbind(output, ret)
   }
-  return(ret)
+  return(output)
 }
