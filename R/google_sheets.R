@@ -64,8 +64,9 @@ readGS4 <- function(title, sheet = "Hoja 1", range = NULL, creds = NA) {
     } else stop("No credentials found on ", creds)
   }
   aux <- drive_find(pattern = title, n_max = 100)
-  if (nrow(aux) > 1)
-    message(paste(nrow(aux), "files found with pattern:", title))
-  df <- read_sheet(aux$id[1], sheet = sheet, range = range)  
-  return(df)
+  message(paste(nrow(aux), "files found with pattern:", title))
+  if (nrow(aux) > 1) {
+    df <- read_sheet(aux$id[1], sheet = sheet, range = range)   
+    return(df)
+  } else return(invisible(NULL))
 }
