@@ -4,10 +4,22 @@
 \alias{ohse}
 \title{One Hot Smart Encoding (Dummy Variables)}
 \usage{
-ohse(df, redundant = FALSE, drops = TRUE, ignore = NA,
-  dates = FALSE, holidays = FALSE, country = "Colombia",
-  currency_pair = NA, trim = 0, limit = 10, variance = 0.9,
-  other_label = "OTHER", sep = "_", summary = TRUE)
+ohse(
+  df,
+  redundant = FALSE,
+  drops = TRUE,
+  ignore = NA,
+  dates = FALSE,
+  holidays = FALSE,
+  country = "Colombia",
+  currency_pair = NA,
+  trim = 0,
+  limit = 10,
+  variance = 0.9,
+  other_label = "OTHER",
+  sep = "_",
+  summary = TRUE
+)
 }
 \arguments{
 \item{df}{Dataframe}
@@ -52,22 +64,35 @@ This function lets the user automatically transform a dataframe with
 categorical columns into numerical by one hot encoding technic.
 }
 \seealso{
-Other Data Wrangling: \code{\link{balance_data}},
-  \code{\link{calibrate}}, \code{\link{categ_reducer}},
-  \code{\link{cleanText}}, \code{\link{date_feats}},
-  \code{\link{dateformat}}, \code{\link{formatNum}},
-  \code{\link{formatTime}}, \code{\link{holidays}},
-  \code{\link{impute}}, \code{\link{left}},
-  \code{\link{normalize}}, \code{\link{numericalonly}},
-  \code{\link{one_hot_encoding_commas}},
-  \code{\link{rbind_full}}, \code{\link{removenacols}},
-  \code{\link{removenarows}}, \code{\link{replaceall}},
-  \code{\link{right}}, \code{\link{textFeats}},
-  \code{\link{textTokenizer}}, \code{\link{vector2text}},
-  \code{\link{year_month}}, \code{\link{year_week}}
+Other Data Wrangling: 
+\code{\link{balance_data}()},
+\code{\link{calibrate}()},
+\code{\link{categ_reducer}()},
+\code{\link{cleanText}()},
+\code{\link{date_feats}()},
+\code{\link{dateformat}()},
+\code{\link{formatNum}()},
+\code{\link{formatTime}()},
+\code{\link{holidays}()},
+\code{\link{impute}()},
+\code{\link{left}()},
+\code{\link{normalize}()},
+\code{\link{numericalonly}()},
+\code{\link{one_hot_encoding_commas}()},
+\code{\link{rbind_full}()},
+\code{\link{removenacols}()},
+\code{\link{removenarows}()},
+\code{\link{replaceall}()},
+\code{\link{right}()},
+\code{\link{textFeats}()},
+\code{\link{textTokenizer}()},
+\code{\link{vector2text}()},
+\code{\link{year_month}()},
+\code{\link{year_week}()}
 
-Other Feature Engineering: \code{\link{date_feats}},
-  \code{\link{holidays}}
+Other Feature Engineering: 
+\code{\link{date_feats}()},
+\code{\link{holidays}()}
 }
 \concept{Data Wrangling}
 \concept{Feature Engineering}

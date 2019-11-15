@@ -4,8 +4,12 @@
 \alias{get_currency}
 \title{Download Historical Currency Exchange Rate}
 \usage{
-get_currency(currency_pair, from = Sys.Date() - 99, to = Sys.Date(),
-  fill = FALSE)
+get_currency(
+  currency_pair,
+  from = Sys.Date() - 99,
+  to = Sys.Date(),
+  fill = FALSE
+)
 }
 \arguments{
 \item{currency_pair}{Character. Which currency exchange do you
@@ -23,24 +27,37 @@ This function lets the user download historical currency exchange
 rate between two currencies
 }
 \seealso{
-Other Tools: \code{\link{autoline}},
-  \code{\link{bindfiles}}, \code{\link{bring_api}},
-  \code{\link{db_download}}, \code{\link{db_upload}},
-  \code{\link{export_plot}}, \code{\link{export_results}},
-  \code{\link{get_credentials}},
-  \code{\link{h2o_predict_API}},
-  \code{\link{h2o_predict_MOJO}},
-  \code{\link{h2o_predict_binary}},
-  \code{\link{h2o_predict_model}},
-  \code{\link{h2o_selectmodel}}, \code{\link{h2o_update}},
-  \code{\link{haveInternet}}, \code{\link{importxlsx}},
-  \code{\link{ip_country}}, \code{\link{iter_seeds}},
-  \code{\link{json2vector}}, \code{\link{listfiles}},
-  \code{\link{mailSend}}, \code{\link{msplit}},
-  \code{\link{myip}}, \code{\link{pass}},
-  \code{\link{quiet}}, \code{\link{read.file}},
-  \code{\link{slackSend}}, \code{\link{statusbar}},
-  \code{\link{try_require}}, \code{\link{updateLares}},
-  \code{\link{zerovar}}
+Other Tools: 
+\code{\link{autoline}()},
+\code{\link{bindfiles}()},
+\code{\link{bring_api}()},
+\code{\link{db_download}()},
+\code{\link{db_upload}()},
+\code{\link{export_plot}()},
+\code{\link{export_results}()},
+\code{\link{get_credentials}()},
+\code{\link{h2o_predict_API}()},
+\code{\link{h2o_predict_MOJO}()},
+\code{\link{h2o_predict_binary}()},
+\code{\link{h2o_predict_model}()},
+\code{\link{h2o_selectmodel}()},
+\code{\link{h2o_update}()},
+\code{\link{haveInternet}()},
+\code{\link{importxlsx}()},
+\code{\link{ip_country}()},
+\code{\link{iter_seeds}()},
+\code{\link{json2vector}()},
+\code{\link{listfiles}()},
+\code{\link{mailSend}()},
+\code{\link{msplit}()},
+\code{\link{myip}()},
+\code{\link{pass}()},
+\code{\link{quiet}()},
+\code{\link{read.file}()},
+\code{\link{slackSend}()},
+\code{\link{statusbar}()},
+\code{\link{try_require}()},
+\code{\link{updateLares}()},
+\code{\link{zerovar}()}
 }
 \concept{Tools}

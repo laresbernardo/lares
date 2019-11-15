@@ -4,8 +4,13 @@
 \alias{theme_lares}
 \title{Theme for ggplot2}
 \usage{
-theme_lares(labels = FALSE, colours = TRUE, cont = FALSE,
-  xcommas = FALSE, ycommas = FALSE)
+theme_lares(
+  labels = FALSE,
+  colours = TRUE,
+  cont = FALSE,
+  xcommas = FALSE,
+  ycommas = FALSE
+)
 }
 \arguments{
 \item{labels}{Boolean. Add labels to plot?}
@@ -27,16 +32,27 @@ function is almost as using gg_colour_customs() + gg_fill_customs()
 This function is lo longer mantained: use theme_lares2() instead!
 }
 \seealso{
-Other Visualization: \code{\link{corr_plot}},
-  \code{\link{distr}}, \code{\link{freqs_df}},
-  \code{\link{freqs}}, \code{\link{mplot_conf}},
-  \code{\link{mplot_cuts_error}}, \code{\link{mplot_cuts}},
-  \code{\link{mplot_density}}, \code{\link{mplot_full}},
-  \code{\link{mplot_gain}}, \code{\link{mplot_importance}},
-  \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
-  \code{\link{mplot_response}}, \code{\link{mplot_roc}},
-  \code{\link{mplot_splits}}, \code{\link{noPlot}},
-  \code{\link{plot_survey}}, \code{\link{summer}},
-  \code{\link{theme_lares2}}, \code{\link{tree_var}}
+Other Visualization: 
+\code{\link{corr_plot}()},
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs}()},
+\code{\link{mplot_conf}()},
+\code{\link{mplot_cuts_error}()},
+\code{\link{mplot_cuts}()},
+\code{\link{mplot_density}()},
+\code{\link{mplot_full}()},
+\code{\link{mplot_gain}()},
+\code{\link{mplot_importance}()},
+\code{\link{mplot_lineal}()},
+\code{\link{mplot_metrics}()},
+\code{\link{mplot_response}()},
+\code{\link{mplot_roc}()},
+\code{\link{mplot_splits}()},
+\code{\link{noPlot}()},
+\code{\link{plot_survey}()},
+\code{\link{summer}()},
+\code{\link{theme_lares2}()},
+\code{\link{tree_var}()}
 }
 \concept{Visualization}

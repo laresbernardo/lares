@@ -19,8 +19,9 @@ dalex_explainer(df, model, y = "tag", ignore = NA)
 DALEX function to create an explainer object
 }
 \seealso{
-Other Interpretability: \code{\link{dalex_local}},
-  \code{\link{dalex_residuals}},
-  \code{\link{dalex_variable}}
+Other Interpretability: 
+\code{\link{dalex_local}()},
+\code{\link{dalex_residuals}()},
+\code{\link{dalex_variable}()}
 }
 \concept{Interpretability}

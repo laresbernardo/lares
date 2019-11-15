@@ -4,9 +4,15 @@
 \alias{sentimentBreakdown}
 \title{Sentiment Breakdown on Text}
 \usage{
-sentimentBreakdown(text, lang = "spanish", exclude = c("maduro",
-  "que"), append_file = NA, append_words = NA, plot = TRUE,
-  subtitle = NA)
+sentimentBreakdown(
+  text,
+  lang = "spanish",
+  exclude = c("maduro", "que"),
+  append_file = NA,
+  append_words = NA,
+  plot = TRUE,
+  subtitle = NA
+)
 }
 \arguments{
 \item{text}{Character vector}
@@ -33,9 +39,12 @@ anger, sadness, fear, negative, disgust) for each of them, using NRC.
 Then, makes a summary for all words and plot results.
 }
 \seealso{
-Other Text Mining: \code{\link{cleanText}},
-  \code{\link{replaceall}}, \code{\link{textCloud}},
-  \code{\link{textFeats}}, \code{\link{textTokenizer}},
-  \code{\link{topics_rake}}
+Other Text Mining: 
+\code{\link{cleanText}()},
+\code{\link{replaceall}()},
+\code{\link{textCloud}()},
+\code{\link{textFeats}()},
+\code{\link{textTokenizer}()},
+\code{\link{topics_rake}()}
 }
 \concept{Text Mining}

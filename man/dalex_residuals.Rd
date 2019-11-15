@@ -13,7 +13,9 @@ dalex_residuals(explainer)
 DALEX function for residuals
 }
 \seealso{
-Other Interpretability: \code{\link{dalex_explainer}},
-  \code{\link{dalex_local}}, \code{\link{dalex_variable}}
+Other Interpretability: 
+\code{\link{dalex_explainer}()},
+\code{\link{dalex_local}()},
+\code{\link{dalex_variable}()}
 }
 \concept{Interpretability}

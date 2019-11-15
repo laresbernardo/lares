@@ -4,8 +4,7 @@
 \alias{splot_roi}
 \title{Portfolio Plots: Daily ROI}
 \usage{
-splot_roi(p, n_days = 365, historical = TRUE, ma = c(12, 50),
-  save = FALSE)
+splot_roi(p, n_days = 365, historical = TRUE, ma = c(12, 50), save = FALSE)
 }
 \arguments{
 \item{p}{Dataframe. Result from daily_portfolio()}
@@ -25,12 +24,18 @@ This function plots a portfolio's historical ROI since inception
 or since last n days, with 2 moving average lines.
 }
 \seealso{
-Other Investment: \code{\link{daily_portfolio}},
-  \code{\link{daily_stocks}}, \code{\link{etf_sector}},
-  \code{\link{splot_change}}, \code{\link{splot_etf}},
-  \code{\link{splot_growth}}, \code{\link{splot_summary}},
-  \code{\link{splot_types}}, \code{\link{stocks_file}},
-  \code{\link{stocks_hist}}, \code{\link{stocks_obj}},
-  \code{\link{stocks_report}}
+Other Investment: 
+\code{\link{daily_portfolio}()},
+\code{\link{daily_stocks}()},
+\code{\link{etf_sector}()},
+\code{\link{splot_change}()},
+\code{\link{splot_etf}()},
+\code{\link{splot_growth}()},
+\code{\link{splot_summary}()},
+\code{\link{splot_types}()},
+\code{\link{stocks_file}()},
+\code{\link{stocks_hist}()},
+\code{\link{stocks_obj}()},
+\code{\link{stocks_report}()}
 }
 \concept{Investment}

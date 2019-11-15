@@ -4,8 +4,14 @@
 \alias{dalex_local}
 \title{DALEX Local}
 \usage{
-dalex_local(explainer, observation = NA, row = 1, plot = TRUE,
-  print = TRUE, alarm = TRUE)
+dalex_local(
+  explainer,
+  observation = NA,
+  row = 1,
+  plot = TRUE,
+  print = TRUE,
+  alarm = TRUE
+)
 }
 \arguments{
 \item{explainer}{Object. Result from dalex_explainer function}
@@ -25,8 +31,9 @@ that was not in the original explainer function, add here. Else, use row}
 DALEX function for local interpretations
 }
 \seealso{
-Other Interpretability: \code{\link{dalex_explainer}},
-  \code{\link{dalex_residuals}},
-  \code{\link{dalex_variable}}
+Other Interpretability: 
+\code{\link{dalex_explainer}()},
+\code{\link{dalex_residuals}()},
+\code{\link{dalex_variable}()}
 }
 \concept{Interpretability}

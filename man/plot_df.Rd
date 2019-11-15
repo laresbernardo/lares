@@ -16,13 +16,21 @@ This function plots all columns frequencies and boxplots, for
 categorical and numerical respectively.
 }
 \seealso{
-Other Exploratory: \code{\link{corr_cross}},
-  \code{\link{corr_var}}, \code{\link{crosstab}},
-  \code{\link{df_str}}, \code{\link{distr}},
-  \code{\link{freqs_df}}, \code{\link{freqs}},
-  \code{\link{gain_lift}}, \code{\link{get_tweets}},
-  \code{\link{missingness}}, \code{\link{plot_cats}},
-  \code{\link{plot_nums}}, \code{\link{summer}},
-  \code{\link{tree_var}}, \code{\link{trendsRelated}}
+Other Exploratory: 
+\code{\link{corr_cross}()},
+\code{\link{corr_var}()},
+\code{\link{crosstab}()},
+\code{\link{df_str}()},
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs}()},
+\code{\link{gain_lift}()},
+\code{\link{get_tweets}()},
+\code{\link{missingness}()},
+\code{\link{plot_cats}()},
+\code{\link{plot_nums}()},
+\code{\link{summer}()},
+\code{\link{tree_var}()},
+\code{\link{trendsRelated}()}
 }
 \concept{Exploratory}

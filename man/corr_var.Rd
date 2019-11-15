@@ -4,10 +4,23 @@
 \alias{corr_var}
 \title{Correlation between variable and dataframe}
 \usage{
-corr_var(df, ..., ignore = NA, method = "pearson", trim = 0,
-  clean = FALSE, plot = TRUE, logs = FALSE, dates = TRUE,
-  top = NA, ceiling = 100, zeroes = FALSE, save = FALSE,
-  subdir = NA, file_name = "viz_corrvar.png")
+corr_var(
+  df,
+  ...,
+  ignore = NA,
+  method = "pearson",
+  trim = 0,
+  clean = FALSE,
+  plot = TRUE,
+  logs = FALSE,
+  dates = TRUE,
+  top = NA,
+  ceiling = 100,
+  zeroes = FALSE,
+  save = FALSE,
+  subdir = NA,
+  file_name = "viz_corrvar.png"
+)
 }
 \arguments{
 \item{df}{Dataframe.}
@@ -51,17 +64,27 @@ save the plot}
 This function correlates a whole dataframe with a single feature.
 }
 \seealso{
-Other Exploratory: \code{\link{corr_cross}},
-  \code{\link{crosstab}}, \code{\link{df_str}},
-  \code{\link{distr}}, \code{\link{freqs_df}},
-  \code{\link{freqs}}, \code{\link{gain_lift}},
-  \code{\link{get_tweets}}, \code{\link{missingness}},
-  \code{\link{plot_cats}}, \code{\link{plot_df}},
-  \code{\link{plot_nums}}, \code{\link{summer}},
-  \code{\link{tree_var}}, \code{\link{trendsRelated}}
+Other Exploratory: 
+\code{\link{corr_cross}()},
+\code{\link{crosstab}()},
+\code{\link{df_str}()},
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs}()},
+\code{\link{gain_lift}()},
+\code{\link{get_tweets}()},
+\code{\link{missingness}()},
+\code{\link{plot_cats}()},
+\code{\link{plot_df}()},
+\code{\link{plot_nums}()},
+\code{\link{summer}()},
+\code{\link{tree_var}()},
+\code{\link{trendsRelated}()}
 
-Other Correlations: \code{\link{corr_cross}},
-  \code{\link{corr_plot}}, \code{\link{corr}}
+Other Correlations: 
+\code{\link{corr_cross}()},
+\code{\link{corr_plot}()},
+\code{\link{corr}()}
 }
 \concept{Correlations}
 \concept{Exploratory}

@@ -4,8 +4,7 @@
 \alias{topics_rake}
 \title{Keyword/Topic identification using RAKE}
 \usage{
-topics_rake(text, file = "english-ewt-ud-2.4-190531.udpipe",
-  lang = "english")
+topics_rake(text, file = "english-ewt-ud-2.4-190531.udpipe", lang = "english")
 }
 \arguments{
 \item{text}{Character vector}
@@ -21,10 +20,12 @@ RAKE is a basic algorithm which tries to identify keywords in text.
 Based on udpipe library, model models, and keywords_rake function.
 }
 \seealso{
-Other Text Mining: \code{\link{cleanText}},
-  \code{\link{replaceall}},
-  \code{\link{sentimentBreakdown}},
-  \code{\link{textCloud}}, \code{\link{textFeats}},
-  \code{\link{textTokenizer}}
+Other Text Mining: 
+\code{\link{cleanText}()},
+\code{\link{replaceall}()},
+\code{\link{sentimentBreakdown}()},
+\code{\link{textCloud}()},
+\code{\link{textFeats}()},
+\code{\link{textTokenizer}()}
 }
 \concept{Text Mining}

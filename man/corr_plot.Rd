@@ -4,8 +4,14 @@
 \alias{corr_plot}
 \title{Correlation plot}
 \usage{
-corr_plot(df, ignore = NA, method = "pearson", order = "FPC",
-  type = "square", logs = FALSE)
+corr_plot(
+  df,
+  ignore = NA,
+  method = "pearson",
+  order = "FPC",
+  type = "square",
+  logs = FALSE
+)
 }
 \arguments{
 \item{df}{Dataframe.}
@@ -29,21 +35,33 @@ variables (not binaries) and plot them}
 This function correlates a whole dataframe with a single feature.
 }
 \seealso{
-Other Visualization: \code{\link{distr}},
-  \code{\link{freqs_df}}, \code{\link{freqs}},
-  \code{\link{mplot_conf}}, \code{\link{mplot_cuts_error}},
-  \code{\link{mplot_cuts}}, \code{\link{mplot_density}},
-  \code{\link{mplot_full}}, \code{\link{mplot_gain}},
-  \code{\link{mplot_importance}},
-  \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
-  \code{\link{mplot_response}}, \code{\link{mplot_roc}},
-  \code{\link{mplot_splits}}, \code{\link{noPlot}},
-  \code{\link{plot_survey}}, \code{\link{summer}},
-  \code{\link{theme_lares2}}, \code{\link{theme_lares}},
-  \code{\link{tree_var}}
+Other Visualization: 
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs}()},
+\code{\link{mplot_conf}()},
+\code{\link{mplot_cuts_error}()},
+\code{\link{mplot_cuts}()},
+\code{\link{mplot_density}()},
+\code{\link{mplot_full}()},
+\code{\link{mplot_gain}()},
+\code{\link{mplot_importance}()},
+\code{\link{mplot_lineal}()},
+\code{\link{mplot_metrics}()},
+\code{\link{mplot_response}()},
+\code{\link{mplot_roc}()},
+\code{\link{mplot_splits}()},
+\code{\link{noPlot}()},
+\code{\link{plot_survey}()},
+\code{\link{summer}()},
+\code{\link{theme_lares2}()},
+\code{\link{theme_lares}()},
+\code{\link{tree_var}()}
 
-Other Correlations: \code{\link{corr_cross}},
-  \code{\link{corr_var}}, \code{\link{corr}}
+Other Correlations: 
+\code{\link{corr_cross}()},
+\code{\link{corr_var}()},
+\code{\link{corr}()}
 }
 \concept{Correlations}
 \concept{Visualization}

@@ -4,9 +4,19 @@
 \alias{plot_timeline}
 \title{Plot timeline as Gantt Plot}
 \usage{
-plot_timeline(event, start, end = start + 1, label = NA, group = NA,
-  title = "Curriculum Vitae Timeline", subtitle = "Bernardo Lares",
-  size = 7, colour = "orange", save = FALSE, subdir = NA)
+plot_timeline(
+  event,
+  start,
+  end = start + 1,
+  label = NA,
+  group = NA,
+  title = "Curriculum Vitae Timeline",
+  subtitle = "Bernardo Lares",
+  size = 7,
+  colour = "orange",
+  save = FALSE,
+  subdir = NA
+)
 }
 \arguments{
 \item{event}{Vector. Event, role, label, or row.}

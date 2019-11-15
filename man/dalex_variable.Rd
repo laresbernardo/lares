@@ -21,7 +21,9 @@ DALEX function for creating Partial Dependency Plots and study
 variable's responses vs independent vector.
 }
 \seealso{
-Other Interpretability: \code{\link{dalex_explainer}},
-  \code{\link{dalex_local}}, \code{\link{dalex_residuals}}
+Other Interpretability: 
+\code{\link{dalex_explainer}()},
+\code{\link{dalex_local}()},
+\code{\link{dalex_residuals}()}
 }
 \concept{Interpretability}

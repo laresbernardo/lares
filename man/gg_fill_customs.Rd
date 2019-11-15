@@ -10,8 +10,10 @@ gg_fill_customs()
 This function lets the user use pre-defined default colours
 }
 \seealso{
-Other Auxiliary: \code{\link{gg_colour_customs}},
-  \code{\link{gg_text_customs}}, \code{\link{lares_pal}},
-  \code{\link{plot_palette}}
+Other Auxiliary: 
+\code{\link{gg_colour_customs}()},
+\code{\link{gg_text_customs}()},
+\code{\link{lares_pal}()},
+\code{\link{plot_palette}()}
 }
 \concept{Auxiliary}

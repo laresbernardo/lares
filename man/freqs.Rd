@@ -4,10 +4,22 @@
 \alias{freqs}
 \title{Frequencies Calculations and Plot}
 \usage{
-freqs(df, ..., wt = NULL, rel = FALSE, results = TRUE,
-  variable_name = NA, plot = FALSE, rm.na = FALSE, title = NA,
-  subtitle = NA, top = 20, abc = FALSE, save = FALSE,
-  subdir = NA)
+freqs(
+  df,
+  ...,
+  wt = NULL,
+  rel = FALSE,
+  results = TRUE,
+  variable_name = NA,
+  plot = FALSE,
+  rm.na = FALSE,
+  title = NA,
+  subtitle = NA,
+  top = 20,
+  abc = FALSE,
+  save = FALSE,
+  subdir = NA
+)
 }
 \arguments{
 \item{df}{Data.frame}
@@ -47,27 +59,45 @@ This function lets the user group, count, calculate percentages
 and cumulatives. It also plots results if needed. Tidyverse friendly.
 }
 \seealso{
-Other Exploratory: \code{\link{corr_cross}},
-  \code{\link{corr_var}}, \code{\link{crosstab}},
-  \code{\link{df_str}}, \code{\link{distr}},
-  \code{\link{freqs_df}}, \code{\link{gain_lift}},
-  \code{\link{get_tweets}}, \code{\link{missingness}},
-  \code{\link{plot_cats}}, \code{\link{plot_df}},
-  \code{\link{plot_nums}}, \code{\link{summer}},
-  \code{\link{tree_var}}, \code{\link{trendsRelated}}
+Other Exploratory: 
+\code{\link{corr_cross}()},
+\code{\link{corr_var}()},
+\code{\link{crosstab}()},
+\code{\link{df_str}()},
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{gain_lift}()},
+\code{\link{get_tweets}()},
+\code{\link{missingness}()},
+\code{\link{plot_cats}()},
+\code{\link{plot_df}()},
+\code{\link{plot_nums}()},
+\code{\link{summer}()},
+\code{\link{tree_var}()},
+\code{\link{trendsRelated}()}
 
-Other Visualization: \code{\link{corr_plot}},
-  \code{\link{distr}}, \code{\link{freqs_df}},
-  \code{\link{mplot_conf}}, \code{\link{mplot_cuts_error}},
-  \code{\link{mplot_cuts}}, \code{\link{mplot_density}},
-  \code{\link{mplot_full}}, \code{\link{mplot_gain}},
-  \code{\link{mplot_importance}},
-  \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
-  \code{\link{mplot_response}}, \code{\link{mplot_roc}},
-  \code{\link{mplot_splits}}, \code{\link{noPlot}},
-  \code{\link{plot_survey}}, \code{\link{summer}},
-  \code{\link{theme_lares2}}, \code{\link{theme_lares}},
-  \code{\link{tree_var}}
+Other Visualization: 
+\code{\link{corr_plot}()},
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{mplot_conf}()},
+\code{\link{mplot_cuts_error}()},
+\code{\link{mplot_cuts}()},
+\code{\link{mplot_density}()},
+\code{\link{mplot_full}()},
+\code{\link{mplot_gain}()},
+\code{\link{mplot_importance}()},
+\code{\link{mplot_lineal}()},
+\code{\link{mplot_metrics}()},
+\code{\link{mplot_response}()},
+\code{\link{mplot_roc}()},
+\code{\link{mplot_splits}()},
+\code{\link{noPlot}()},
+\code{\link{plot_survey}()},
+\code{\link{summer}()},
+\code{\link{theme_lares2}()},
+\code{\link{theme_lares}()},
+\code{\link{tree_var}()}
 }
 \concept{Exploratory}
 \concept{Visualization}

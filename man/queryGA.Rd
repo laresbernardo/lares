@@ -4,10 +4,17 @@
 \alias{queryGA}
 \title{Queries on Google Analytics}
 \usage{
-queryGA(account = "comparamejor", creds = NA, token_dir = NA,
-  metrics = "sessions", dimensions = "date", met_filters = NULL,
-  dim_filters = NULL, start = lubridate::floor_date(Sys.Date(),
-  "month"), end = Sys.Date())
+queryGA(
+  account = "comparamejor",
+  creds = NA,
+  token_dir = NA,
+  metrics = "sessions",
+  dimensions = "date",
+  met_filters = NULL,
+  dim_filters = NULL,
+  start = lubridate::floor_date(Sys.Date(), "month"),
+  end = Sys.Date()
+)
 }
 \arguments{
 \item{account}{Character. Personal named accounts}
@@ -34,8 +41,10 @@ google_analytics or Google Analytics'
 \url{https://developers.google.com/analytics/devguides/reporting/core/dimsmets}{API}
 }
 \seealso{
-Other Connection: \code{\link{get_tweets}},
-  \code{\link{readGS4}}, \code{\link{readGS}},
-  \code{\link{writeGS}}
+Other Connection: 
+\code{\link{get_tweets}()},
+\code{\link{readGS4}()},
+\code{\link{readGS}()},
+\code{\link{writeGS}()}
 }
 \concept{Connection}

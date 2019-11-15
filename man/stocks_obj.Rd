@@ -4,8 +4,7 @@
 \alias{stocks_obj}
 \title{Portfolio's Calculations and Plots}
 \usage{
-stocks_obj(data = stocks_file(), cash_fix = 0, tax = 30,
-  sectors = TRUE)
+stocks_obj(data = stocks_file(), cash_fix = 0, tax = 30, sectors = TRUE)
 }
 \arguments{
 \item{data}{List. Containing the following dataframes: portfolio,
@@ -23,12 +22,18 @@ This function lets the user create his portfolio's calculations and
 plots for further study.
 }
 \seealso{
-Other Investment: \code{\link{daily_portfolio}},
-  \code{\link{daily_stocks}}, \code{\link{etf_sector}},
-  \code{\link{splot_change}}, \code{\link{splot_etf}},
-  \code{\link{splot_growth}}, \code{\link{splot_roi}},
-  \code{\link{splot_summary}}, \code{\link{splot_types}},
-  \code{\link{stocks_file}}, \code{\link{stocks_hist}},
-  \code{\link{stocks_report}}
+Other Investment: 
+\code{\link{daily_portfolio}()},
+\code{\link{daily_stocks}()},
+\code{\link{etf_sector}()},
+\code{\link{splot_change}()},
+\code{\link{splot_etf}()},
+\code{\link{splot_growth}()},
+\code{\link{splot_roi}()},
+\code{\link{splot_summary}()},
+\code{\link{splot_types}()},
+\code{\link{stocks_file}()},
+\code{\link{stocks_hist}()},
+\code{\link{stocks_report}()}
 }
 \concept{Investment}

@@ -4,9 +4,13 @@
 \alias{stocks_file}
 \title{Get Personal Portfolio's Data}
 \usage{
-stocks_file(filename = NA,
-  creds = "~/Dropbox (Personal)/Documentos/Docs/Data", auto = TRUE,
-  sheets = c("Portafolio", "Fondos", "Transacciones"), keep_old = TRUE)
+stocks_file(
+  filename = NA,
+  creds = "~/Dropbox (Personal)/Documentos/Docs/Data",
+  auto = TRUE,
+  sheets = c("Portafolio", "Fondos", "Transacciones"),
+  keep_old = TRUE
+)
 }
 \arguments{
 \item{filename}{Characeter. Import a local Excel file}
@@ -25,12 +29,18 @@ This function lets me download my personal Excel with my Portfolio
 data, locally or from Dropbox. You can also use it for local files
 }
 \seealso{
-Other Investment: \code{\link{daily_portfolio}},
-  \code{\link{daily_stocks}}, \code{\link{etf_sector}},
-  \code{\link{splot_change}}, \code{\link{splot_etf}},
-  \code{\link{splot_growth}}, \code{\link{splot_roi}},
-  \code{\link{splot_summary}}, \code{\link{splot_types}},
-  \code{\link{stocks_hist}}, \code{\link{stocks_obj}},
-  \code{\link{stocks_report}}
+Other Investment: 
+\code{\link{daily_portfolio}()},
+\code{\link{daily_stocks}()},
+\code{\link{etf_sector}()},
+\code{\link{splot_change}()},
+\code{\link{splot_etf}()},
+\code{\link{splot_growth}()},
+\code{\link{splot_roi}()},
+\code{\link{splot_summary}()},
+\code{\link{splot_types}()},
+\code{\link{stocks_hist}()},
+\code{\link{stocks_obj}()},
+\code{\link{stocks_report}()}
 }
 \concept{Investment}

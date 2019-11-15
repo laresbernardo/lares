@@ -4,8 +4,15 @@
 \alias{plot_chord}
 \title{Chords Plot}
 \usage{
-plot_chord(origin, dest, weight = 1, mg = 3, title = "Chord Diagram",
-  subtitle = "", pal = NA)
+plot_chord(
+  origin,
+  dest,
+  weight = 1,
+  mg = 3,
+  title = "Chord Diagram",
+  subtitle = "",
+  pal = NA
+)
 }
 \arguments{
 \item{origin, dest}{Vectors. Origin and destination vectors}

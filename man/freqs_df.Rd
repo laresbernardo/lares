@@ -4,8 +4,17 @@
 \alias{freqs_df}
 \title{All Frequencies on Data Frame}
 \usage{
-freqs_df(df, max = 0.9, min = 0, novar = TRUE, plot = TRUE,
-  top = 30, quiet = FALSE, save = FALSE, subdir = NA)
+freqs_df(
+  df,
+  max = 0.9,
+  min = 0,
+  novar = TRUE,
+  plot = TRUE,
+  top = 30,
+  quiet = FALSE,
+  save = FALSE,
+  subdir = NA
+)
 }
 \arguments{
 \item{df}{Data.frame}
@@ -34,27 +43,45 @@ This function lets the user analize data by visualizing the
 frequency of each value of each column from a whole data frame.
 }
 \seealso{
-Other Exploratory: \code{\link{corr_cross}},
-  \code{\link{corr_var}}, \code{\link{crosstab}},
-  \code{\link{df_str}}, \code{\link{distr}},
-  \code{\link{freqs}}, \code{\link{gain_lift}},
-  \code{\link{get_tweets}}, \code{\link{missingness}},
-  \code{\link{plot_cats}}, \code{\link{plot_df}},
-  \code{\link{plot_nums}}, \code{\link{summer}},
-  \code{\link{tree_var}}, \code{\link{trendsRelated}}
+Other Exploratory: 
+\code{\link{corr_cross}()},
+\code{\link{corr_var}()},
+\code{\link{crosstab}()},
+\code{\link{df_str}()},
+\code{\link{distr}()},
+\code{\link{freqs}()},
+\code{\link{gain_lift}()},
+\code{\link{get_tweets}()},
+\code{\link{missingness}()},
+\code{\link{plot_cats}()},
+\code{\link{plot_df}()},
+\code{\link{plot_nums}()},
+\code{\link{summer}()},
+\code{\link{tree_var}()},
+\code{\link{trendsRelated}()}
 
-Other Visualization: \code{\link{corr_plot}},
-  \code{\link{distr}}, \code{\link{freqs}},
-  \code{\link{mplot_conf}}, \code{\link{mplot_cuts_error}},
-  \code{\link{mplot_cuts}}, \code{\link{mplot_density}},
-  \code{\link{mplot_full}}, \code{\link{mplot_gain}},
-  \code{\link{mplot_importance}},
-  \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
-  \code{\link{mplot_response}}, \code{\link{mplot_roc}},
-  \code{\link{mplot_splits}}, \code{\link{noPlot}},
-  \code{\link{plot_survey}}, \code{\link{summer}},
-  \code{\link{theme_lares2}}, \code{\link{theme_lares}},
-  \code{\link{tree_var}}
+Other Visualization: 
+\code{\link{corr_plot}()},
+\code{\link{distr}()},
+\code{\link{freqs}()},
+\code{\link{mplot_conf}()},
+\code{\link{mplot_cuts_error}()},
+\code{\link{mplot_cuts}()},
+\code{\link{mplot_density}()},
+\code{\link{mplot_full}()},
+\code{\link{mplot_gain}()},
+\code{\link{mplot_importance}()},
+\code{\link{mplot_lineal}()},
+\code{\link{mplot_metrics}()},
+\code{\link{mplot_response}()},
+\code{\link{mplot_roc}()},
+\code{\link{mplot_splits}()},
+\code{\link{noPlot}()},
+\code{\link{plot_survey}()},
+\code{\link{summer}()},
+\code{\link{theme_lares2}()},
+\code{\link{theme_lares}()},
+\code{\link{tree_var}()}
 }
 \concept{Exploratory}
 \concept{Visualization}

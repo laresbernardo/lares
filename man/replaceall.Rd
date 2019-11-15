@@ -22,25 +22,39 @@ one value, order matters so they will be replaced in the same
 order that you pass them to the function.
 }
 \seealso{
-Other Data Wrangling: \code{\link{balance_data}},
-  \code{\link{calibrate}}, \code{\link{categ_reducer}},
-  \code{\link{cleanText}}, \code{\link{date_feats}},
-  \code{\link{dateformat}}, \code{\link{formatNum}},
-  \code{\link{formatTime}}, \code{\link{holidays}},
-  \code{\link{impute}}, \code{\link{left}},
-  \code{\link{normalize}}, \code{\link{numericalonly}},
-  \code{\link{ohse}},
-  \code{\link{one_hot_encoding_commas}},
-  \code{\link{rbind_full}}, \code{\link{removenacols}},
-  \code{\link{removenarows}}, \code{\link{right}},
-  \code{\link{textFeats}}, \code{\link{textTokenizer}},
-  \code{\link{vector2text}}, \code{\link{year_month}},
-  \code{\link{year_week}}
+Other Data Wrangling: 
+\code{\link{balance_data}()},
+\code{\link{calibrate}()},
+\code{\link{categ_reducer}()},
+\code{\link{cleanText}()},
+\code{\link{date_feats}()},
+\code{\link{dateformat}()},
+\code{\link{formatNum}()},
+\code{\link{formatTime}()},
+\code{\link{holidays}()},
+\code{\link{impute}()},
+\code{\link{left}()},
+\code{\link{normalize}()},
+\code{\link{numericalonly}()},
+\code{\link{ohse}()},
+\code{\link{one_hot_encoding_commas}()},
+\code{\link{rbind_full}()},
+\code{\link{removenacols}()},
+\code{\link{removenarows}()},
+\code{\link{right}()},
+\code{\link{textFeats}()},
+\code{\link{textTokenizer}()},
+\code{\link{vector2text}()},
+\code{\link{year_month}()},
+\code{\link{year_week}()}
 
-Other Text Mining: \code{\link{cleanText}},
-  \code{\link{sentimentBreakdown}},
-  \code{\link{textCloud}}, \code{\link{textFeats}},
-  \code{\link{textTokenizer}}, \code{\link{topics_rake}}
+Other Text Mining: 
+\code{\link{cleanText}()},
+\code{\link{sentimentBreakdown}()},
+\code{\link{textCloud}()},
+\code{\link{textFeats}()},
+\code{\link{textTokenizer}()},
+\code{\link{topics_rake}()}
 }
 \concept{Data Wrangling}
 \concept{Text Mining}

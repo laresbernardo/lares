@@ -4,9 +4,16 @@
 \alias{forecast_ml}
 \title{Machine Learning Forecast}
 \usage{
-forecast_ml(time, values, n_future = 15, use_last = TRUE,
-  automl = FALSE, plot_forecast = TRUE, plot_model = FALSE,
-  project = "Simple Forecast using Machine Learning")
+forecast_ml(
+  time,
+  values,
+  n_future = 15,
+  use_last = TRUE,
+  automl = FALSE,
+  plot_forecast = TRUE,
+  plot_model = FALSE,
+  project = "Simple Forecast using Machine Learning"
+)
 }
 \arguments{
 \item{time}{POSIX. Vector with dates or time values}
@@ -30,7 +37,8 @@ This function lets the user create a forecast setting a time series
 and a numerical value.
 }
 \seealso{
-Other Forecast: \code{\link{forecast_arima}},
-  \code{\link{prophesize}}
+Other Forecast: 
+\code{\link{forecast_arima}()},
+\code{\link{prophesize}()}
 }
 \concept{Forecast}

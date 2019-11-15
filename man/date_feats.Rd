@@ -4,9 +4,16 @@
 \alias{date_feats}
 \title{One Hot Encoding for Date/Time Variables (Dummy Variables)}
 \usage{
-date_feats(dates, keep_originals = FALSE, only = NA, features = TRUE,
-  holidays = FALSE, country = "Colombia", currency_pair = NA,
-  summary = TRUE)
+date_feats(
+  dates,
+  keep_originals = FALSE,
+  only = NA,
+  features = TRUE,
+  holidays = FALSE,
+  country = "Colombia",
+  currency_pair = NA,
+  summary = TRUE
+)
 }
 \arguments{
 \item{dates}{Vector or dataframe. Non-date/time columns will be 
@@ -35,22 +42,35 @@ This function lets the user automatically create new columns out
 of a dataframe or vector with date/time variables.
 }
 \seealso{
-Other Data Wrangling: \code{\link{balance_data}},
-  \code{\link{calibrate}}, \code{\link{categ_reducer}},
-  \code{\link{cleanText}}, \code{\link{dateformat}},
-  \code{\link{formatNum}}, \code{\link{formatTime}},
-  \code{\link{holidays}}, \code{\link{impute}},
-  \code{\link{left}}, \code{\link{normalize}},
-  \code{\link{numericalonly}}, \code{\link{ohse}},
-  \code{\link{one_hot_encoding_commas}},
-  \code{\link{rbind_full}}, \code{\link{removenacols}},
-  \code{\link{removenarows}}, \code{\link{replaceall}},
-  \code{\link{right}}, \code{\link{textFeats}},
-  \code{\link{textTokenizer}}, \code{\link{vector2text}},
-  \code{\link{year_month}}, \code{\link{year_week}}
+Other Data Wrangling: 
+\code{\link{balance_data}()},
+\code{\link{calibrate}()},
+\code{\link{categ_reducer}()},
+\code{\link{cleanText}()},
+\code{\link{dateformat}()},
+\code{\link{formatNum}()},
+\code{\link{formatTime}()},
+\code{\link{holidays}()},
+\code{\link{impute}()},
+\code{\link{left}()},
+\code{\link{normalize}()},
+\code{\link{numericalonly}()},
+\code{\link{ohse}()},
+\code{\link{one_hot_encoding_commas}()},
+\code{\link{rbind_full}()},
+\code{\link{removenacols}()},
+\code{\link{removenarows}()},
+\code{\link{replaceall}()},
+\code{\link{right}()},
+\code{\link{textFeats}()},
+\code{\link{textTokenizer}()},
+\code{\link{vector2text}()},
+\code{\link{year_month}()},
+\code{\link{year_week}()}
 
-Other Feature Engineering: \code{\link{holidays}},
-  \code{\link{ohse}}
+Other Feature Engineering: 
+\code{\link{holidays}()},
+\code{\link{ohse}()}
 }
 \concept{Data Wrangling}
 \concept{Feature Engineering}

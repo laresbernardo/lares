@@ -4,8 +4,14 @@
 \alias{geoGrid}
 \title{Check, Cross, and Plot Coordinates with Polygons}
 \usage{
-geoGrid(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE,
-  alpha = 0.3)
+geoGrid(
+  coords,
+  map,
+  fix_coords = FALSE,
+  plot = FALSE,
+  all = FALSE,
+  alpha = 0.3
+)
 }
 \arguments{
 \item{coords}{Dataframe. Dataframe containing at least langitud 
@@ -29,7 +35,9 @@ Note that the coords and shapes coordinates MUST have the same
 lon/lat reference system for it to work succesfully.
 }
 \seealso{
-Other Geographical: \code{\link{geoAddress}},
-  \code{\link{geoMap}}, \code{\link{geoStratum}}
+Other Geographical: 
+\code{\link{geoAddress}()},
+\code{\link{geoMap}()},
+\code{\link{geoStratum}()}
 }
 \concept{Geographical}

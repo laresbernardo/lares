@@ -18,12 +18,18 @@ This function plots a summary for the whole portfolio, showing
 how much have you invested, how much has each ticker changed, etc.
 }
 \seealso{
-Other Investment: \code{\link{daily_portfolio}},
-  \code{\link{daily_stocks}}, \code{\link{etf_sector}},
-  \code{\link{splot_change}}, \code{\link{splot_etf}},
-  \code{\link{splot_growth}}, \code{\link{splot_roi}},
-  \code{\link{splot_types}}, \code{\link{stocks_file}},
-  \code{\link{stocks_hist}}, \code{\link{stocks_obj}},
-  \code{\link{stocks_report}}
+Other Investment: 
+\code{\link{daily_portfolio}()},
+\code{\link{daily_stocks}()},
+\code{\link{etf_sector}()},
+\code{\link{splot_change}()},
+\code{\link{splot_etf}()},
+\code{\link{splot_growth}()},
+\code{\link{splot_roi}()},
+\code{\link{splot_types}()},
+\code{\link{stocks_file}()},
+\code{\link{stocks_hist}()},
+\code{\link{stocks_obj}()},
+\code{\link{stocks_report}()}
 }
 \concept{Investment}

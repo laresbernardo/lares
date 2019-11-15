@@ -15,12 +15,20 @@ rsqa(tag, score)
 This function lets the user calculate adjusted r squared
 }
 \seealso{
-Other Calculus: \code{\link{ROC}}, \code{\link{conf_mat}},
-  \code{\link{corr}}, \code{\link{deg2num}},
-  \code{\link{dist2d}}, \code{\link{errors}},
-  \code{\link{loglossBinary}}, \code{\link{mae}},
-  \code{\link{mape}}, \code{\link{model_metrics}},
-  \code{\link{mse}}, \code{\link{quants}},
-  \code{\link{rmse}}, \code{\link{rsq}}
+Other Calculus: 
+\code{\link{ROC}()},
+\code{\link{conf_mat}()},
+\code{\link{corr}()},
+\code{\link{deg2num}()},
+\code{\link{dist2d}()},
+\code{\link{errors}()},
+\code{\link{loglossBinary}()},
+\code{\link{mae}()},
+\code{\link{mape}()},
+\code{\link{model_metrics}()},
+\code{\link{mse}()},
+\code{\link{quants}()},
+\code{\link{rmse}()},
+\code{\link{rsq}()}
 }
 \concept{Calculus}

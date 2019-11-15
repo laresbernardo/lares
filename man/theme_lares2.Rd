@@ -4,11 +4,20 @@
 \alias{theme_lares2}
 \title{lares Theme for ggplot2}
 \usage{
-theme_lares2(font = "Arial Narrow", size = 12.5,
-  main_colour = "darkorange3", hard_colour = "black",
-  soft_colour = "grey30", bg_colour = "white",
-  panel_colour = "transparent", legend = "right", grid = TRUE,
-  mg = 14, pal = 0, which = "fct")
+theme_lares2(
+  font = "Arial Narrow",
+  size = 12.5,
+  main_colour = "darkorange3",
+  hard_colour = "black",
+  soft_colour = "grey30",
+  bg_colour = "white",
+  panel_colour = "transparent",
+  legend = "right",
+  grid = TRUE,
+  mg = 14,
+  pal = 0,
+  which = "fct"
+)
 }
 \arguments{
 \item{font, size}{Character and numeric. Base font family and base size for texts}
@@ -38,16 +47,27 @@ with solid default kerning pairs and geometric numbers.
 }
 
 \seealso{
-Other Visualization: \code{\link{corr_plot}},
-  \code{\link{distr}}, \code{\link{freqs_df}},
-  \code{\link{freqs}}, \code{\link{mplot_conf}},
-  \code{\link{mplot_cuts_error}}, \code{\link{mplot_cuts}},
-  \code{\link{mplot_density}}, \code{\link{mplot_full}},
-  \code{\link{mplot_gain}}, \code{\link{mplot_importance}},
-  \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
-  \code{\link{mplot_response}}, \code{\link{mplot_roc}},
-  \code{\link{mplot_splits}}, \code{\link{noPlot}},
-  \code{\link{plot_survey}}, \code{\link{summer}},
-  \code{\link{theme_lares}}, \code{\link{tree_var}}
+Other Visualization: 
+\code{\link{corr_plot}()},
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs}()},
+\code{\link{mplot_conf}()},
+\code{\link{mplot_cuts_error}()},
+\code{\link{mplot_cuts}()},
+\code{\link{mplot_density}()},
+\code{\link{mplot_full}()},
+\code{\link{mplot_gain}()},
+\code{\link{mplot_importance}()},
+\code{\link{mplot_lineal}()},
+\code{\link{mplot_metrics}()},
+\code{\link{mplot_response}()},
+\code{\link{mplot_roc}()},
+\code{\link{mplot_splits}()},
+\code{\link{noPlot}()},
+\code{\link{plot_survey}()},
+\code{\link{summer}()},
+\code{\link{theme_lares}()},
+\code{\link{tree_var}()}
 }
 \concept{Visualization}

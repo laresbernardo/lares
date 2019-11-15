@@ -4,8 +4,17 @@
 \alias{gg_bars}
 \title{Quick Nice Bar Plot}
 \usage{
-gg_bars(names, n, p = NA, title = NA, subtitle = NA,
-  axis = "Counter", obs = TRUE, limit = 15, na.rm = FALSE)
+gg_bars(
+  names,
+  n,
+  p = NA,
+  title = NA,
+  subtitle = NA,
+  axis = "Counter",
+  obs = TRUE,
+  limit = 15,
+  na.rm = FALSE
+)
 }
 \arguments{
 \item{names}{Character Vector. Bar names}

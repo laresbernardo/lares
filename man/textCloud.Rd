@@ -4,8 +4,16 @@
 \alias{textCloud}
 \title{Wordcloud Plot}
 \usage{
-textCloud(text, lang = "english", exclude = c(), seed = 0,
-  keep_spaces = FALSE, min = 2, pal = NA, print = TRUE)
+textCloud(
+  text,
+  lang = "english",
+  exclude = c(),
+  seed = 0,
+  keep_spaces = FALSE,
+  min = 2,
+  pal = NA,
+  print = TRUE
+)
 }
 \arguments{
 \item{text}{Character vector}
@@ -32,10 +40,12 @@ Study the distribution of a target variable vs another variable. This
 function is quite similar to the funModeling's corrplot function.
 }
 \seealso{
-Other Text Mining: \code{\link{cleanText}},
-  \code{\link{replaceall}},
-  \code{\link{sentimentBreakdown}},
-  \code{\link{textFeats}}, \code{\link{textTokenizer}},
-  \code{\link{topics_rake}}
+Other Text Mining: 
+\code{\link{cleanText}()},
+\code{\link{replaceall}()},
+\code{\link{sentimentBreakdown}()},
+\code{\link{textFeats}()},
+\code{\link{textTokenizer}()},
+\code{\link{topics_rake}()}
 }
 \concept{Text Mining}

@@ -4,13 +4,32 @@
 \alias{h2o_automl}
 \title{Automated H2O's AutoML}
 \usage{
-h2o_automl(df, y = "tag", ignore = c(), train_test = NA,
-  split = 0.7, weight = NULL, target = "auto", balance = FALSE,
-  impute = FALSE, center = FALSE, scale = FALSE, seed = 0,
-  nfolds = 5, thresh = 5, max_models = 3, max_time = 10 * 60,
-  start_clean = TRUE, exclude_algos = c("StackedEnsemble",
-  "DeepLearning"), plots = TRUE, alarm = TRUE, quiet = FALSE,
-  save = FALSE, subdir = NA, project = "ML Project")
+h2o_automl(
+  df,
+  y = "tag",
+  ignore = c(),
+  train_test = NA,
+  split = 0.7,
+  weight = NULL,
+  target = "auto",
+  balance = FALSE,
+  impute = FALSE,
+  center = FALSE,
+  scale = FALSE,
+  seed = 0,
+  nfolds = 5,
+  thresh = 5,
+  max_models = 3,
+  max_time = 10 * 60,
+  start_clean = TRUE,
+  exclude_algos = c("StackedEnsemble", "DeepLearning"),
+  plots = TRUE,
+  alarm = TRUE,
+  quiet = FALSE,
+  save = FALSE,
+  subdir = NA,
+  project = "ML Project"
+)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
@@ -98,21 +117,33 @@ multi-layer artificial neural network) and "StackedEnsemble". Read more:
 \url{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}
 }
 \seealso{
-Other Machine Learning: \code{\link{ROC}},
-  \code{\link{clusterKmeans}}, \code{\link{conf_mat}},
-  \code{\link{export_results}}, \code{\link{gain_lift}},
-  \code{\link{h2o_predict_API}},
-  \code{\link{h2o_predict_MOJO}},
-  \code{\link{h2o_predict_binary}},
-  \code{\link{h2o_predict_model}},
-  \code{\link{h2o_results}}, \code{\link{h2o_selectmodel}},
-  \code{\link{impute}}, \code{\link{iter_seeds}},
-  \code{\link{model_metrics}}, \code{\link{mplot_conf}},
-  \code{\link{mplot_cuts_error}}, \code{\link{mplot_cuts}},
-  \code{\link{mplot_density}}, \code{\link{mplot_full}},
-  \code{\link{mplot_gain}}, \code{\link{mplot_importance}},
-  \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
-  \code{\link{mplot_response}}, \code{\link{mplot_roc}},
-  \code{\link{mplot_splits}}, \code{\link{msplit}}
+Other Machine Learning: 
+\code{\link{ROC}()},
+\code{\link{clusterKmeans}()},
+\code{\link{conf_mat}()},
+\code{\link{export_results}()},
+\code{\link{gain_lift}()},
+\code{\link{h2o_predict_API}()},
+\code{\link{h2o_predict_MOJO}()},
+\code{\link{h2o_predict_binary}()},
+\code{\link{h2o_predict_model}()},
+\code{\link{h2o_results}()},
+\code{\link{h2o_selectmodel}()},
+\code{\link{impute}()},
+\code{\link{iter_seeds}()},
+\code{\link{model_metrics}()},
+\code{\link{mplot_conf}()},
+\code{\link{mplot_cuts_error}()},
+\code{\link{mplot_cuts}()},
+\code{\link{mplot_density}()},
+\code{\link{mplot_full}()},
+\code{\link{mplot_gain}()},
+\code{\link{mplot_importance}()},
+\code{\link{mplot_lineal}()},
+\code{\link{mplot_metrics}()},
+\code{\link{mplot_response}()},
+\code{\link{mplot_roc}()},
+\code{\link{mplot_splits}()},
+\code{\link{msplit}()}
 }
 \concept{Machine Learning}

@@ -4,8 +4,14 @@
 \alias{mplot_metrics}
 \title{AUC and LogLoss Plots}
 \usage{
-mplot_metrics(results, subtitle = NA, model_name = NA, save = FALSE,
-  subdir = NA, file_name = "viz_metrics.png")
+mplot_metrics(
+  results,
+  subtitle = NA,
+  model_name = NA,
+  save = FALSE,
+  subdir = NA,
+  file_name = "viz_metrics.png"
+)
 }
 \arguments{
 \item{results}{Object. Results object from h2o_automl function}
@@ -24,34 +30,57 @@ mplot_metrics(results, subtitle = NA, model_name = NA, save = FALSE,
 This function can plot AUC and LogLoss Plots from a h2o_automl results object
 }
 \seealso{
-Other Machine Learning: \code{\link{ROC}},
-  \code{\link{clusterKmeans}}, \code{\link{conf_mat}},
-  \code{\link{export_results}}, \code{\link{gain_lift}},
-  \code{\link{h2o_automl}}, \code{\link{h2o_predict_API}},
-  \code{\link{h2o_predict_MOJO}},
-  \code{\link{h2o_predict_binary}},
-  \code{\link{h2o_predict_model}},
-  \code{\link{h2o_results}}, \code{\link{h2o_selectmodel}},
-  \code{\link{impute}}, \code{\link{iter_seeds}},
-  \code{\link{model_metrics}}, \code{\link{mplot_conf}},
-  \code{\link{mplot_cuts_error}}, \code{\link{mplot_cuts}},
-  \code{\link{mplot_density}}, \code{\link{mplot_full}},
-  \code{\link{mplot_gain}}, \code{\link{mplot_importance}},
-  \code{\link{mplot_lineal}}, \code{\link{mplot_response}},
-  \code{\link{mplot_roc}}, \code{\link{mplot_splits}},
-  \code{\link{msplit}}
+Other Machine Learning: 
+\code{\link{ROC}()},
+\code{\link{clusterKmeans}()},
+\code{\link{conf_mat}()},
+\code{\link{export_results}()},
+\code{\link{gain_lift}()},
+\code{\link{h2o_automl}()},
+\code{\link{h2o_predict_API}()},
+\code{\link{h2o_predict_MOJO}()},
+\code{\link{h2o_predict_binary}()},
+\code{\link{h2o_predict_model}()},
+\code{\link{h2o_results}()},
+\code{\link{h2o_selectmodel}()},
+\code{\link{impute}()},
+\code{\link{iter_seeds}()},
+\code{\link{model_metrics}()},
+\code{\link{mplot_conf}()},
+\code{\link{mplot_cuts_error}()},
+\code{\link{mplot_cuts}()},
+\code{\link{mplot_density}()},
+\code{\link{mplot_full}()},
+\code{\link{mplot_gain}()},
+\code{\link{mplot_importance}()},
+\code{\link{mplot_lineal}()},
+\code{\link{mplot_response}()},
+\code{\link{mplot_roc}()},
+\code{\link{mplot_splits}()},
+\code{\link{msplit}()}
 
-Other Visualization: \code{\link{corr_plot}},
-  \code{\link{distr}}, \code{\link{freqs_df}},
-  \code{\link{freqs}}, \code{\link{mplot_conf}},
-  \code{\link{mplot_cuts_error}}, \code{\link{mplot_cuts}},
-  \code{\link{mplot_density}}, \code{\link{mplot_full}},
-  \code{\link{mplot_gain}}, \code{\link{mplot_importance}},
-  \code{\link{mplot_lineal}}, \code{\link{mplot_response}},
-  \code{\link{mplot_roc}}, \code{\link{mplot_splits}},
-  \code{\link{noPlot}}, \code{\link{plot_survey}},
-  \code{\link{summer}}, \code{\link{theme_lares2}},
-  \code{\link{theme_lares}}, \code{\link{tree_var}}
+Other Visualization: 
+\code{\link{corr_plot}()},
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs}()},
+\code{\link{mplot_conf}()},
+\code{\link{mplot_cuts_error}()},
+\code{\link{mplot_cuts}()},
+\code{\link{mplot_density}()},
+\code{\link{mplot_full}()},
+\code{\link{mplot_gain}()},
+\code{\link{mplot_importance}()},
+\code{\link{mplot_lineal}()},
+\code{\link{mplot_response}()},
+\code{\link{mplot_roc}()},
+\code{\link{mplot_splits}()},
+\code{\link{noPlot}()},
+\code{\link{plot_survey}()},
+\code{\link{summer}()},
+\code{\link{theme_lares2}()},
+\code{\link{theme_lares}()},
+\code{\link{tree_var}()}
 }
 \concept{Machine Learning}
 \concept{Visualization}

@@ -17,8 +17,10 @@ plot_palette(fill, colour = "black", id = NA)
 This function plots a list of colours
 }
 \seealso{
-Other Auxiliary: \code{\link{gg_colour_customs}},
-  \code{\link{gg_fill_customs}},
-  \code{\link{gg_text_customs}}, \code{\link{lares_pal}}
+Other Auxiliary: 
+\code{\link{gg_colour_customs}()},
+\code{\link{gg_fill_customs}()},
+\code{\link{gg_text_customs}()},
+\code{\link{lares_pal}()}
 }
 \concept{Auxiliary}

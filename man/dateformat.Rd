@@ -23,18 +23,30 @@ the permitted: 10-05-2019, 2019-10-05 5/22/2015, 9:45:03 AM,
 42348.44, 9/2/18 23:16, 10-05-19
 }
 \seealso{
-Other Data Wrangling: \code{\link{balance_data}},
-  \code{\link{calibrate}}, \code{\link{categ_reducer}},
-  \code{\link{cleanText}}, \code{\link{date_feats}},
-  \code{\link{formatNum}}, \code{\link{formatTime}},
-  \code{\link{holidays}}, \code{\link{impute}},
-  \code{\link{left}}, \code{\link{normalize}},
-  \code{\link{numericalonly}}, \code{\link{ohse}},
-  \code{\link{one_hot_encoding_commas}},
-  \code{\link{rbind_full}}, \code{\link{removenacols}},
-  \code{\link{removenarows}}, \code{\link{replaceall}},
-  \code{\link{right}}, \code{\link{textFeats}},
-  \code{\link{textTokenizer}}, \code{\link{vector2text}},
-  \code{\link{year_month}}, \code{\link{year_week}}
+Other Data Wrangling: 
+\code{\link{balance_data}()},
+\code{\link{calibrate}()},
+\code{\link{categ_reducer}()},
+\code{\link{cleanText}()},
+\code{\link{date_feats}()},
+\code{\link{formatNum}()},
+\code{\link{formatTime}()},
+\code{\link{holidays}()},
+\code{\link{impute}()},
+\code{\link{left}()},
+\code{\link{normalize}()},
+\code{\link{numericalonly}()},
+\code{\link{ohse}()},
+\code{\link{one_hot_encoding_commas}()},
+\code{\link{rbind_full}()},
+\code{\link{removenacols}()},
+\code{\link{removenarows}()},
+\code{\link{replaceall}()},
+\code{\link{right}()},
+\code{\link{textFeats}()},
+\code{\link{textTokenizer}()},
+\code{\link{vector2text}()},
+\code{\link{year_month}()},
+\code{\link{year_week}()}
 }
 \concept{Data Wrangling}

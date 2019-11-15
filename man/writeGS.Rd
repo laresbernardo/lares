@@ -21,8 +21,24 @@ writeGS(data, title, ws = "Hoja 1", cell = "A1", first_time = FALSE)
 This function lets the user write on any Google Sheet
 }
 \seealso{
-Other Connection: \code{\link{get_tweets}},
-  \code{\link{queryGA}}, \code{\link{readGS4}},
-  \code{\link{readGS}}
+Other Connection: 
+\code{\link{get_tweets}()},
+\code{\link{queryGA}()},
+\code{\link{readGS4}()},
+\code{\link{readGS}()}
+
+Other Scrapper: 
+\code{\link{fb_accounts}()},
+\code{\link{fb_ads}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()},
+\code{\link{geoStratum}()},
+\code{\link{holidays}()},
+\code{\link{ip_country}()},
+\code{\link{readGS4}()},
+\code{\link{readGS}()},
+\code{\link{trendsRelated}()}
 }
 \concept{Connection}
+\concept{Scrapper}

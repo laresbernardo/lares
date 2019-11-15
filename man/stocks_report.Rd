@@ -4,8 +4,13 @@
 \alias{stocks_report}
 \title{Portfolio's Full Report and Email}
 \usage{
-stocks_report(data = NA, dir = NA, mail = FALSE,
-  to = "laresbernardo@gmail.com", creds = NA)
+stocks_report(
+  data = NA,
+  dir = NA,
+  mail = FALSE,
+  to = "laresbernardo@gmail.com",
+  creds = NA
+)
 }
 \arguments{
 \item{data}{Character. stocks_file() output. If NA, automatic report
@@ -27,12 +32,18 @@ This function lets the user create his portfolio's full report with
 plots and send it to an email with the HTML report attached
 }
 \seealso{
-Other Investment: \code{\link{daily_portfolio}},
-  \code{\link{daily_stocks}}, \code{\link{etf_sector}},
-  \code{\link{splot_change}}, \code{\link{splot_etf}},
-  \code{\link{splot_growth}}, \code{\link{splot_roi}},
-  \code{\link{splot_summary}}, \code{\link{splot_types}},
-  \code{\link{stocks_file}}, \code{\link{stocks_hist}},
-  \code{\link{stocks_obj}}
+Other Investment: 
+\code{\link{daily_portfolio}()},
+\code{\link{daily_stocks}()},
+\code{\link{etf_sector}()},
+\code{\link{splot_change}()},
+\code{\link{splot_etf}()},
+\code{\link{splot_growth}()},
+\code{\link{splot_roi}()},
+\code{\link{splot_summary}()},
+\code{\link{splot_types}()},
+\code{\link{stocks_file}()},
+\code{\link{stocks_hist}()},
+\code{\link{stocks_obj}()}
 }
 \concept{Investment}

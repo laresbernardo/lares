@@ -17,14 +17,23 @@ geoStratum(lon, lat, label = NA)
 This function lets the user obtain Colombia's stratum given the coordinates of an address
 }
 \seealso{
-Other Geographical: \code{\link{geoAddress}},
-  \code{\link{geoGrid}}, \code{\link{geoMap}}
+Other Geographical: 
+\code{\link{geoAddress}()},
+\code{\link{geoGrid}()},
+\code{\link{geoMap}()}
 
-Other Scrapper: \code{\link{fb_accounts}},
-  \code{\link{fb_ads}}, \code{\link{fb_insights}},
-  \code{\link{fb_posts}}, \code{\link{fb_post}},
-  \code{\link{holidays}}, \code{\link{ip_country}},
-  \code{\link{trendsRelated}}
+Other Scrapper: 
+\code{\link{fb_accounts}()},
+\code{\link{fb_ads}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()},
+\code{\link{holidays}()},
+\code{\link{ip_country}()},
+\code{\link{readGS4}()},
+\code{\link{readGS}()},
+\code{\link{trendsRelated}()},
+\code{\link{writeGS}()}
 }
 \concept{Geographical}
 \concept{Scrapper}

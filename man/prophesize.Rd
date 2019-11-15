@@ -4,8 +4,15 @@
 \alias{prophesize}
 \title{Facebook's Prophet Forecast}
 \usage{
-prophesize(df, n_future = 60, country = "AR", trend.param = 0.05,
-  logged = FALSE, pout = 0.03, project = "Prophet Forecast")
+prophesize(
+  df,
+  n_future = 60,
+  country = "AR",
+  trend.param = 0.05,
+  logged = FALSE,
+  pout = 0.03,
+  project = "Prophet Forecast"
+)
 }
 \arguments{
 \item{df}{Data frame. Must contain date/time column and values column}
@@ -35,7 +42,8 @@ data and shifts in the trend, and typically handles outliers well.
 Official documentation: \url{https://github.com/facebook/prophet}
 }
 \seealso{
-Other Forecast: \code{\link{forecast_arima}},
-  \code{\link{forecast_ml}}
+Other Forecast: 
+\code{\link{forecast_arima}()},
+\code{\link{forecast_ml}()}
 }
 \concept{Forecast}

@@ -22,18 +22,19 @@ scale_x_dollar(...)
 scale_y_dollar(...)
 }
 \arguments{
-\item{...}{Arguments passed on to \code{ggplot2::continuous_scale}
-\describe{
-  \item{aesthetics}{The names of the aesthetics that this scale works with}
-  \item{scale_name}{The name of the scale}
-  \item{palette}{A palette function that when called with a numeric vector with
+\item{...}{
+  Arguments passed on to \code{\link[ggplot2:continuous_scale]{ggplot2::continuous_scale}}
+  \describe{
+    \item{\code{aesthetics}}{The names of the aesthetics that this scale works with}
+    \item{\code{scale_name}}{The name of the scale}
+    \item{\code{palette}}{A palette function that when called with a numeric vector with
 values between 0 and 1 returns the corresponding values in the range the
 scale maps to.}
-  \item{name}{The name of the scale. Used as the axis or legend title. If
+    \item{\code{name}}{The name of the scale. Used as the axis or legend title. If
 \code{waiver()}, the default, the name of the scale is taken from the first
 mapping used for that aesthetic. If \code{NULL}, the legend title will be
 omitted.}
-  \item{breaks}{One of:
+    \item{\code{breaks}}{One of:
 \itemize{
 \item \code{NULL} for no breaks
 \item \code{waiver()} for the default breaks computed by the
@@ -42,7 +43,7 @@ transformation object
 \item A function that takes the limits as input and returns breaks
 as output
 }}
-  \item{minor_breaks}{One of:
+    \item{\code{minor_breaks}}{One of:
 \itemize{
 \item \code{NULL} for no minor breaks
 \item \code{waiver()} for the default breaks (one minor break between
@@ -50,7 +51,7 @@ each major break)
 \item A numeric vector of positions
 \item A function that given the limits returns a vector of minor breaks.
 }}
-  \item{labels}{One of:
+    \item{\code{labels}}{One of:
 \itemize{
 \item \code{NULL} for no labels
 \item \code{waiver()} for the default labels computed by the
@@ -59,7 +60,7 @@ transformation object
 \item A function that takes the breaks as input and returns labels
 as output
 }}
-  \item{limits}{One of:
+    \item{\code{limits}}{One of:
 \itemize{
 \item \code{NULL} to use the default scale range
 \item A numeric vector of length two providing limits of the scale.
@@ -67,13 +68,13 @@ Use \code{NA} to refer to the existing minimum or maximum
 \item A function that accepts the existing (automatic) limits and returns
 new limits
 }}
-  \item{rescaler}{Used by diverging and n colour gradients
+    \item{\code{rescaler}}{Used by diverging and n colour gradients
 (i.e. \code{\link[=scale_colour_gradient2]{scale_colour_gradient2()}}, \code{\link[=scale_colour_gradientn]{scale_colour_gradientn()}}).
 A function used to scale the input values to the range [0, 1].}
-  \item{oob}{Function that handles limits outside of the scale limits
+    \item{\code{oob}}{Function that handles limits outside of the scale limits
 (out of bounds). The default replaces out of bounds values with \code{NA}.}
-  \item{na.value}{Missing values will be replaced with this value.}
-  \item{trans}{Either the name of a transformation object, or the
+    \item{\code{na.value}}{Missing values will be replaced with this value.}
+    \item{\code{trans}}{Either the name of a transformation object, or the
 object itself. Built-in transformations include "asn", "atanh",
 "boxcox", "date", "exp", "hms", "identity", "log", "log10", "log1p", "log2",
 "logit", "modulus", "probability", "probit", "pseudo_log", "reciprocal",
@@ -84,10 +85,10 @@ and methods for generating breaks and labels. Transformation objects
 are defined in the scales package, and are called \code{name_trans}, e.g.
 \code{\link[scales:boxcox_trans]{scales::boxcox_trans()}}. You can create your own
 transformation with \code{\link[scales:trans_new]{scales::trans_new()}}.}
-  \item{guide}{A function used to create a guide or its name. See
+    \item{\code{guide}}{A function used to create a guide or its name. See
 \code{\link[=guides]{guides()}} for more info.}
-  \item{super}{The super class to use for the constructed scale}
-}}
+    \item{\code{super}}{The super class to use for the constructed scale}
+  }}
 }
 \description{
 The `_comma` ones set comma format for axis text, the `_percent` 

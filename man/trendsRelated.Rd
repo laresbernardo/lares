@@ -4,8 +4,7 @@
 \alias{trendsRelated}
 \title{Google Trends: Related Plot}
 \usage{
-trendsRelated(gtrend, top = NA, title = NA, note = NA,
-  exclude = c())
+trendsRelated(gtrend, top = NA, title = NA, note = NA, exclude = c())
 }
 \arguments{
 \item{gtrend}{List. Result from gtrends(keyword, geo, time)}
@@ -23,20 +22,35 @@ This function creates a plot with google trend's related topics
 and queries, and let the user compare different keywords.
 }
 \seealso{
-Other Exploratory: \code{\link{corr_cross}},
-  \code{\link{corr_var}}, \code{\link{crosstab}},
-  \code{\link{df_str}}, \code{\link{distr}},
-  \code{\link{freqs_df}}, \code{\link{freqs}},
-  \code{\link{gain_lift}}, \code{\link{get_tweets}},
-  \code{\link{missingness}}, \code{\link{plot_cats}},
-  \code{\link{plot_df}}, \code{\link{plot_nums}},
-  \code{\link{summer}}, \code{\link{tree_var}}
+Other Exploratory: 
+\code{\link{corr_cross}()},
+\code{\link{corr_var}()},
+\code{\link{crosstab}()},
+\code{\link{df_str}()},
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs}()},
+\code{\link{gain_lift}()},
+\code{\link{get_tweets}()},
+\code{\link{missingness}()},
+\code{\link{plot_cats}()},
+\code{\link{plot_df}()},
+\code{\link{plot_nums}()},
+\code{\link{summer}()},
+\code{\link{tree_var}()}
 
-Other Scrapper: \code{\link{fb_accounts}},
-  \code{\link{fb_ads}}, \code{\link{fb_insights}},
-  \code{\link{fb_posts}}, \code{\link{fb_post}},
-  \code{\link{geoStratum}}, \code{\link{holidays}},
-  \code{\link{ip_country}}
+Other Scrapper: 
+\code{\link{fb_accounts}()},
+\code{\link{fb_ads}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()},
+\code{\link{geoStratum}()},
+\code{\link{holidays}()},
+\code{\link{ip_country}()},
+\code{\link{readGS4}()},
+\code{\link{readGS}()},
+\code{\link{writeGS}()}
 }
 \concept{Exploratory}
 \concept{Scrapper}

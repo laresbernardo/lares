@@ -4,8 +4,17 @@
 \alias{crosstab}
 \title{Weighted Cross Tabulation}
 \usage{
-crosstab(df, ..., prow = FALSE, pcol = FALSE, pall = FALSE,
-  decimals = 2, keep_nas = TRUE, total = TRUE, order = TRUE)
+crosstab(
+  df,
+  ...,
+  prow = FALSE,
+  pcol = FALSE,
+  pall = FALSE,
+  decimals = 2,
+  keep_nas = TRUE,
+  total = TRUE,
+  order = TRUE
+)
 }
 \arguments{
 \item{df}{Data.frame.}
@@ -33,13 +42,21 @@ crossed; if three, both variables will be crossed with third as
 weighted values.
 }
 \seealso{
-Other Exploratory: \code{\link{corr_cross}},
-  \code{\link{corr_var}}, \code{\link{df_str}},
-  \code{\link{distr}}, \code{\link{freqs_df}},
-  \code{\link{freqs}}, \code{\link{gain_lift}},
-  \code{\link{get_tweets}}, \code{\link{missingness}},
-  \code{\link{plot_cats}}, \code{\link{plot_df}},
-  \code{\link{plot_nums}}, \code{\link{summer}},
-  \code{\link{tree_var}}, \code{\link{trendsRelated}}
+Other Exploratory: 
+\code{\link{corr_cross}()},
+\code{\link{corr_var}()},
+\code{\link{df_str}()},
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs}()},
+\code{\link{gain_lift}()},
+\code{\link{get_tweets}()},
+\code{\link{missingness}()},
+\code{\link{plot_cats}()},
+\code{\link{plot_df}()},
+\code{\link{plot_nums}()},
+\code{\link{summer}()},
+\code{\link{tree_var}()},
+\code{\link{trendsRelated}()}
 }
 \concept{Exploratory}

@@ -17,8 +17,24 @@ readGS(title, ws = "Hoja 1", first_time = FALSE)
 This function lets the user read any Google Sheet's data
 }
 \seealso{
-Other Connection: \code{\link{get_tweets}},
-  \code{\link{queryGA}}, \code{\link{readGS4}},
-  \code{\link{writeGS}}
+Other Connection: 
+\code{\link{get_tweets}()},
+\code{\link{queryGA}()},
+\code{\link{readGS4}()},
+\code{\link{writeGS}()}
+
+Other Scrapper: 
+\code{\link{fb_accounts}()},
+\code{\link{fb_ads}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()},
+\code{\link{geoStratum}()},
+\code{\link{holidays}()},
+\code{\link{ip_country}()},
+\code{\link{readGS4}()},
+\code{\link{trendsRelated}()},
+\code{\link{writeGS}()}
 }
 \concept{Connection}
+\concept{Scrapper}

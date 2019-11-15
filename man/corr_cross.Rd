@@ -4,10 +4,22 @@
 \alias{corr_cross}
 \title{Correlation Cross-Table}
 \usage{
-corr_cross(df, plot = TRUE, max_pvalue = 1, type = 1, max = 1,
-  top = 25, local = 1, ignore = NA, contains = NA, grid = FALSE,
-  rm.na = FALSE, dummy = TRUE, redundant = FALSE,
-  method = "pearson")
+corr_cross(
+  df,
+  plot = TRUE,
+  max_pvalue = 1,
+  type = 1,
+  max = 1,
+  top = 25,
+  local = 1,
+  ignore = NA,
+  contains = NA,
+  grid = FALSE,
+  rm.na = FALSE,
+  dummy = TRUE,
+  redundant = FALSE,
+  method = "pearson"
+)
 }
 \arguments{
 \item{df}{Dataframe.}
@@ -46,17 +58,27 @@ This function creates a correlation full study and returns a rank
 of the highest correlation variables obtained in a cross-table.
 }
 \seealso{
-Other Correlations: \code{\link{corr_plot}},
-  \code{\link{corr_var}}, \code{\link{corr}}
+Other Correlations: 
+\code{\link{corr_plot}()},
+\code{\link{corr_var}()},
+\code{\link{corr}()}
 
-Other Exploratory: \code{\link{corr_var}},
-  \code{\link{crosstab}}, \code{\link{df_str}},
-  \code{\link{distr}}, \code{\link{freqs_df}},
-  \code{\link{freqs}}, \code{\link{gain_lift}},
-  \code{\link{get_tweets}}, \code{\link{missingness}},
-  \code{\link{plot_cats}}, \code{\link{plot_df}},
-  \code{\link{plot_nums}}, \code{\link{summer}},
-  \code{\link{tree_var}}, \code{\link{trendsRelated}}
+Other Exploratory: 
+\code{\link{corr_var}()},
+\code{\link{crosstab}()},
+\code{\link{df_str}()},
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs}()},
+\code{\link{gain_lift}()},
+\code{\link{get_tweets}()},
+\code{\link{missingness}()},
+\code{\link{plot_cats}()},
+\code{\link{plot_df}()},
+\code{\link{plot_nums}()},
+\code{\link{summer}()},
+\code{\link{tree_var}()},
+\code{\link{trendsRelated}()}
 }
 \concept{Correlations}
 \concept{Exploratory}

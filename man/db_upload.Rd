@@ -4,8 +4,13 @@
 \alias{db_upload}
 \title{Upload Dropbox File}
 \usage{
-db_upload(filename, dir, delete_file = FALSE, token_dir = NA,
-  token_name = "token_pers.rds")
+db_upload(
+  filename,
+  dir,
+  delete_file = FALSE,
+  token_dir = NA,
+  token_name = "token_pers.rds"
+)
 }
 \arguments{
 \item{filename}{String. File's name}
@@ -23,35 +28,52 @@ This function lets the user download a file from Dropbox, specifying
 its name and using a previously created token.
 }
 \seealso{
-Other Tools: \code{\link{autoline}},
-  \code{\link{bindfiles}}, \code{\link{bring_api}},
-  \code{\link{db_download}}, \code{\link{export_plot}},
-  \code{\link{export_results}},
-  \code{\link{get_credentials}},
-  \code{\link{get_currency}},
-  \code{\link{h2o_predict_API}},
-  \code{\link{h2o_predict_MOJO}},
-  \code{\link{h2o_predict_binary}},
-  \code{\link{h2o_predict_model}},
-  \code{\link{h2o_selectmodel}}, \code{\link{h2o_update}},
-  \code{\link{haveInternet}}, \code{\link{importxlsx}},
-  \code{\link{ip_country}}, \code{\link{iter_seeds}},
-  \code{\link{json2vector}}, \code{\link{listfiles}},
-  \code{\link{mailSend}}, \code{\link{msplit}},
-  \code{\link{myip}}, \code{\link{pass}},
-  \code{\link{quiet}}, \code{\link{read.file}},
-  \code{\link{slackSend}}, \code{\link{statusbar}},
-  \code{\link{try_require}}, \code{\link{updateLares}},
-  \code{\link{zerovar}}
+Other Tools: 
+\code{\link{autoline}()},
+\code{\link{bindfiles}()},
+\code{\link{bring_api}()},
+\code{\link{db_download}()},
+\code{\link{export_plot}()},
+\code{\link{export_results}()},
+\code{\link{get_credentials}()},
+\code{\link{get_currency}()},
+\code{\link{h2o_predict_API}()},
+\code{\link{h2o_predict_MOJO}()},
+\code{\link{h2o_predict_binary}()},
+\code{\link{h2o_predict_model}()},
+\code{\link{h2o_selectmodel}()},
+\code{\link{h2o_update}()},
+\code{\link{haveInternet}()},
+\code{\link{importxlsx}()},
+\code{\link{ip_country}()},
+\code{\link{iter_seeds}()},
+\code{\link{json2vector}()},
+\code{\link{listfiles}()},
+\code{\link{mailSend}()},
+\code{\link{msplit}()},
+\code{\link{myip}()},
+\code{\link{pass}()},
+\code{\link{quiet}()},
+\code{\link{read.file}()},
+\code{\link{slackSend}()},
+\code{\link{statusbar}()},
+\code{\link{try_require}()},
+\code{\link{updateLares}()},
+\code{\link{zerovar}()}
 
-Other Connections: \code{\link{bring_api}},
-  \code{\link{db_download}}, \code{\link{f1_contacts}},
-  \code{\link{geoAddress}}, \code{\link{li_auth}},
-  \code{\link{queryDW}}, \code{\link{queryDummy}},
-  \code{\link{queryProduc}},
-  \code{\link{typeform_download}}
+Other Connections: 
+\code{\link{bring_api}()},
+\code{\link{db_download}()},
+\code{\link{f1_contacts}()},
+\code{\link{geoAddress}()},
+\code{\link{li_auth}()},
+\code{\link{queryDW}()},
+\code{\link{queryDummy}()},
+\code{\link{queryProduc}()},
+\code{\link{typeform_download}()}
 
-Other Dropbox: \code{\link{db_download}}
+Other Dropbox: 
+\code{\link{db_download}()}
 }
 \concept{Connections}
 \concept{Dropbox}

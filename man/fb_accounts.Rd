@@ -4,8 +4,12 @@
 \alias{fb_accounts}
 \title{Facebook Ad Accounts}
 \usage{
-fb_accounts(token, business_id = "904189322962915", type = c("owned",
-  "client"), api_version = "v3.3")
+fb_accounts(
+  token,
+  business_id = "904189322962915",
+  type = c("owned", "client"),
+  api_version = "v3.3"
+)
 }
 \arguments{
 \item{token}{Character. This must be a valid access token with sufficient 
@@ -23,19 +27,31 @@ For more information on Ad Insights' API, go to the
 \href{https://developers.facebook.com/docs/marketing-api/reference/ad-account/insights/}{original documentaion}
 }
 \seealso{
-Other Scrapper: \code{\link{fb_ads}},
-  \code{\link{fb_insights}}, \code{\link{fb_posts}},
-  \code{\link{fb_post}}, \code{\link{geoStratum}},
-  \code{\link{holidays}}, \code{\link{ip_country}},
-  \code{\link{trendsRelated}}
+Other Scrapper: 
+\code{\link{fb_ads}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()},
+\code{\link{geoStratum}()},
+\code{\link{holidays}()},
+\code{\link{ip_country}()},
+\code{\link{readGS4}()},
+\code{\link{readGS}()},
+\code{\link{trendsRelated}()},
+\code{\link{writeGS}()}
 
-Other API: \code{\link{bring_api}}, \code{\link{fb_ads}},
-  \code{\link{fb_insights}}, \code{\link{fb_posts}},
-  \code{\link{fb_post}}
+Other API: 
+\code{\link{bring_api}()},
+\code{\link{fb_ads}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()}
 
-Other Facebook: \code{\link{fb_ads}},
-  \code{\link{fb_insights}}, \code{\link{fb_posts}},
-  \code{\link{fb_post}}
+Other Facebook: 
+\code{\link{fb_ads}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()}
 }
 \concept{API}
 \concept{Facebook}

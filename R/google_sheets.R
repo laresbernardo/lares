@@ -4,6 +4,7 @@
 #' This function lets the user read any Google Sheet's data
 #' 
 #' @family Connection
+#' @family Scrapper
 #' @param title Character. Textual title of Google Sheet
 #' @param ws Character. Working sheet to import
 #' @param first_time Boolean. Authenticate manualy
@@ -25,6 +26,7 @@ readGS <- function(title, ws = "Hoja 1", first_time = FALSE) {
 #' This function lets the user write on any Google Sheet
 #' 
 #' @family Connection
+#' @family Scrapper
 #' @param data Data Frame. Data to export to Google Sheet 
 #' @param title Character. Textual title of Google Sheet
 #' @param ws Character. Working sheet to export to
@@ -50,6 +52,7 @@ writeGS <- function(data, title, ws = "Hoja 1", cell = 'A1', first_time = FALSE)
 #' This function lets the user read any Google Sheet's data
 #' 
 #' @family Connection
+#' @family Scrapper
 #' @param title Character. Textual title of Google Sheet
 #' @param sheet Character. Working sheet to import
 #' @param range Character. A cell range to read from
@@ -63,9 +66,10 @@ readGS4 <- function(title, sheet = "Hoja 1", range = NULL, creds = NA) {
       drive_auth(path = creds)  
     } else stop("No credentials found on ", creds)
   }
-  aux <- drive_find(pattern = title, n_max = 100)
+  aux <- drive_find(pattern = title, n_max = 199, 
+                    type = "spreadsheet", verbose = FALSE)
   message(paste(nrow(aux), "files found with pattern:", title))
-  if (nrow(aux) > 1) {
+  if (nrow(aux) > 0) {
     df <- read_sheet(aux$id[1], sheet = sheet, range = range)   
     return(df)
   } else return(invisible(NULL))

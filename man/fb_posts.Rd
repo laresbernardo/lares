@@ -4,8 +4,14 @@
 \alias{fb_posts}
 \title{Get Facebook's Page Posts (API Graph)}
 \usage{
-fb_posts(token, total = 150, limit = 100, comments = FALSE,
-  shares = FALSE, reactions = FALSE)
+fb_posts(
+  token,
+  total = 150,
+  limit = 100,
+  comments = FALSE,
+  shares = FALSE,
+  reactions = FALSE
+)
 }
 \arguments{
 \item{token}{Character. Access token. Generate it for any of your
@@ -22,19 +28,31 @@ Connect to an API Graph's token of a given page and get posts,
 comments, shares, and reactions of n posts (with no limits).
 }
 \seealso{
-Other Scrapper: \code{\link{fb_accounts}},
-  \code{\link{fb_ads}}, \code{\link{fb_insights}},
-  \code{\link{fb_post}}, \code{\link{geoStratum}},
-  \code{\link{holidays}}, \code{\link{ip_country}},
-  \code{\link{trendsRelated}}
+Other Scrapper: 
+\code{\link{fb_accounts}()},
+\code{\link{fb_ads}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_post}()},
+\code{\link{geoStratum}()},
+\code{\link{holidays}()},
+\code{\link{ip_country}()},
+\code{\link{readGS4}()},
+\code{\link{readGS}()},
+\code{\link{trendsRelated}()},
+\code{\link{writeGS}()}
 
-Other API: \code{\link{bring_api}},
-  \code{\link{fb_accounts}}, \code{\link{fb_ads}},
-  \code{\link{fb_insights}}, \code{\link{fb_post}}
+Other API: 
+\code{\link{bring_api}()},
+\code{\link{fb_accounts}()},
+\code{\link{fb_ads}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_post}()}
 
-Other Facebook: \code{\link{fb_accounts}},
-  \code{\link{fb_ads}}, \code{\link{fb_insights}},
-  \code{\link{fb_post}}
+Other Facebook: 
+\code{\link{fb_accounts}()},
+\code{\link{fb_ads}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_post}()}
 }
 \concept{API}
 \concept{Facebook}

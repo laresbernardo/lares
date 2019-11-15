@@ -4,9 +4,19 @@
 \alias{forecast_arima}
 \title{ARIMA Forecast}
 \usage{
-forecast_arima(time, values, n_future = 30, ARMA = 8, ARMA_min = 5,
-  AR = NA, MA = NA, wd_excluded = NA, plot = TRUE,
-  plot_days = 90, project = NA)
+forecast_arima(
+  time,
+  values,
+  n_future = 30,
+  ARMA = 8,
+  ARMA_min = 5,
+  AR = NA,
+  MA = NA,
+  wd_excluded = NA,
+  plot = TRUE,
+  plot_days = 90,
+  project = NA
+)
 }
 \arguments{
 \item{time}{POSIX. Vector with date values}
@@ -50,7 +60,7 @@ stationary (i.e., its mean, variance, and autocorrelation should
 be approximately constant through time) and it is recommended 
 that there are at least 50 observations in the input data.
 
-The model consists of two parts, an autoregressive (AR) part 
+ The model consists of two parts, an autoregressive (AR) part 
  and a moving average (MA) part. The AR part involves regressing 
  the variable on its own lagged (i.e., past) values. The MA part 
  involves modeling the error term as a linear combination of error 
@@ -61,7 +71,8 @@ given by the great power to capture very complex patters of
 temporal correlation (Cochrane, 1997: 25)
 }
 \seealso{
-Other Forecast: \code{\link{forecast_ml}},
-  \code{\link{prophesize}}
+Other Forecast: 
+\code{\link{forecast_ml}()},
+\code{\link{prophesize}()}
 }
 \concept{Forecast}

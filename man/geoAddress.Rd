@@ -4,8 +4,13 @@
 \alias{geoAddress}
 \title{Get Google's Geodata given the Addresses}
 \usage{
-geoAddress(address, country = "Argentina", index = NA, creds = NA,
-  which = "api_01")
+geoAddress(
+  address,
+  country = "Argentina",
+  index = NA,
+  creds = NA,
+  which = "api_01"
+)
 }
 \arguments{
 \item{address}{Character Vector. Addresses you wish to query}
@@ -22,15 +27,21 @@ geoAddress(address, country = "Argentina", index = NA, creds = NA,
 This function lets the user obtain Google's Geodata on given addresses
 }
 \seealso{
-Other Geographical: \code{\link{geoGrid}},
-  \code{\link{geoMap}}, \code{\link{geoStratum}}
+Other Geographical: 
+\code{\link{geoGrid}()},
+\code{\link{geoMap}()},
+\code{\link{geoStratum}()}
 
-Other Connections: \code{\link{bring_api}},
-  \code{\link{db_download}}, \code{\link{db_upload}},
-  \code{\link{f1_contacts}}, \code{\link{li_auth}},
-  \code{\link{queryDW}}, \code{\link{queryDummy}},
-  \code{\link{queryProduc}},
-  \code{\link{typeform_download}}
+Other Connections: 
+\code{\link{bring_api}()},
+\code{\link{db_download}()},
+\code{\link{db_upload}()},
+\code{\link{f1_contacts}()},
+\code{\link{li_auth}()},
+\code{\link{queryDW}()},
+\code{\link{queryDummy}()},
+\code{\link{queryProduc}()},
+\code{\link{typeform_download}()}
 }
 \concept{Connections}
 \concept{Geographical}

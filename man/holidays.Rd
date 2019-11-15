@@ -18,28 +18,48 @@ This function lets the user automatically scrap holiday dates from
 any country and year within +- 5 years. Thanks to timeanddate.com!
 }
 \seealso{
-Other Data Wrangling: \code{\link{balance_data}},
-  \code{\link{calibrate}}, \code{\link{categ_reducer}},
-  \code{\link{cleanText}}, \code{\link{date_feats}},
-  \code{\link{dateformat}}, \code{\link{formatNum}},
-  \code{\link{formatTime}}, \code{\link{impute}},
-  \code{\link{left}}, \code{\link{normalize}},
-  \code{\link{numericalonly}}, \code{\link{ohse}},
-  \code{\link{one_hot_encoding_commas}},
-  \code{\link{rbind_full}}, \code{\link{removenacols}},
-  \code{\link{removenarows}}, \code{\link{replaceall}},
-  \code{\link{right}}, \code{\link{textFeats}},
-  \code{\link{textTokenizer}}, \code{\link{vector2text}},
-  \code{\link{year_month}}, \code{\link{year_week}}
+Other Data Wrangling: 
+\code{\link{balance_data}()},
+\code{\link{calibrate}()},
+\code{\link{categ_reducer}()},
+\code{\link{cleanText}()},
+\code{\link{date_feats}()},
+\code{\link{dateformat}()},
+\code{\link{formatNum}()},
+\code{\link{formatTime}()},
+\code{\link{impute}()},
+\code{\link{left}()},
+\code{\link{normalize}()},
+\code{\link{numericalonly}()},
+\code{\link{ohse}()},
+\code{\link{one_hot_encoding_commas}()},
+\code{\link{rbind_full}()},
+\code{\link{removenacols}()},
+\code{\link{removenarows}()},
+\code{\link{replaceall}()},
+\code{\link{right}()},
+\code{\link{textFeats}()},
+\code{\link{textTokenizer}()},
+\code{\link{vector2text}()},
+\code{\link{year_month}()},
+\code{\link{year_week}()}
 
-Other Feature Engineering: \code{\link{date_feats}},
-  \code{\link{ohse}}
+Other Feature Engineering: 
+\code{\link{date_feats}()},
+\code{\link{ohse}()}
 
-Other Scrapper: \code{\link{fb_accounts}},
-  \code{\link{fb_ads}}, \code{\link{fb_insights}},
-  \code{\link{fb_posts}}, \code{\link{fb_post}},
-  \code{\link{geoStratum}}, \code{\link{ip_country}},
-  \code{\link{trendsRelated}}
+Other Scrapper: 
+\code{\link{fb_accounts}()},
+\code{\link{fb_ads}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()},
+\code{\link{geoStratum}()},
+\code{\link{ip_country}()},
+\code{\link{readGS4}()},
+\code{\link{readGS}()},
+\code{\link{trendsRelated}()},
+\code{\link{writeGS}()}
 }
 \concept{Data Wrangling}
 \concept{Feature Engineering}

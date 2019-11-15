@@ -4,8 +4,13 @@
 \alias{fb_ads}
 \title{Facebook Ads API}
 \usage{
-fb_ads(token, which, start = Sys.Date() - 31, end = Sys.Date(),
-  api_version = "v3.3")
+fb_ads(
+  token,
+  which,
+  start = Sys.Date() - 31,
+  end = Sys.Date(),
+  api_version = "v3.3"
+)
 }
 \arguments{
 \item{token}{Character. This must be a valid access token with sufficient 
@@ -31,19 +36,31 @@ For more information on Ad' API, go to the
 This function was based on FBinsightsR.
 }
 \seealso{
-Other Scrapper: \code{\link{fb_accounts}},
-  \code{\link{fb_insights}}, \code{\link{fb_posts}},
-  \code{\link{fb_post}}, \code{\link{geoStratum}},
-  \code{\link{holidays}}, \code{\link{ip_country}},
-  \code{\link{trendsRelated}}
+Other Scrapper: 
+\code{\link{fb_accounts}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()},
+\code{\link{geoStratum}()},
+\code{\link{holidays}()},
+\code{\link{ip_country}()},
+\code{\link{readGS4}()},
+\code{\link{readGS}()},
+\code{\link{trendsRelated}()},
+\code{\link{writeGS}()}
 
-Other API: \code{\link{bring_api}},
-  \code{\link{fb_accounts}}, \code{\link{fb_insights}},
-  \code{\link{fb_posts}}, \code{\link{fb_post}}
+Other API: 
+\code{\link{bring_api}()},
+\code{\link{fb_accounts}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()}
 
-Other Facebook: \code{\link{fb_accounts}},
-  \code{\link{fb_insights}}, \code{\link{fb_posts}},
-  \code{\link{fb_post}}
+Other Facebook: 
+\code{\link{fb_accounts}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()}
 }
 \concept{API}
 \concept{Facebook}

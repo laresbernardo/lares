@@ -4,8 +4,15 @@
 \alias{categ_reducer}
 \title{Reduce categorical values}
 \usage{
-categ_reducer(df, ..., nmin = 0, pmin = 0, pcummax = 100, top = NA,
-  other_label = "other")
+categ_reducer(
+  df,
+  ...,
+  nmin = 0,
+  pmin = 0,
+  pcummax = 100,
+  top = NA,
+  other_label = "other"
+)
 }
 \arguments{
 \item{df}{Categorical Vector}
@@ -29,18 +36,30 @@ This function lets the user reduce categorical values in a vector.
 It is tidyverse friendly for use on pipelines
 }
 \seealso{
-Other Data Wrangling: \code{\link{balance_data}},
-  \code{\link{calibrate}}, \code{\link{cleanText}},
-  \code{\link{date_feats}}, \code{\link{dateformat}},
-  \code{\link{formatNum}}, \code{\link{formatTime}},
-  \code{\link{holidays}}, \code{\link{impute}},
-  \code{\link{left}}, \code{\link{normalize}},
-  \code{\link{numericalonly}}, \code{\link{ohse}},
-  \code{\link{one_hot_encoding_commas}},
-  \code{\link{rbind_full}}, \code{\link{removenacols}},
-  \code{\link{removenarows}}, \code{\link{replaceall}},
-  \code{\link{right}}, \code{\link{textFeats}},
-  \code{\link{textTokenizer}}, \code{\link{vector2text}},
-  \code{\link{year_month}}, \code{\link{year_week}}
+Other Data Wrangling: 
+\code{\link{balance_data}()},
+\code{\link{calibrate}()},
+\code{\link{cleanText}()},
+\code{\link{date_feats}()},
+\code{\link{dateformat}()},
+\code{\link{formatNum}()},
+\code{\link{formatTime}()},
+\code{\link{holidays}()},
+\code{\link{impute}()},
+\code{\link{left}()},
+\code{\link{normalize}()},
+\code{\link{numericalonly}()},
+\code{\link{ohse}()},
+\code{\link{one_hot_encoding_commas}()},
+\code{\link{rbind_full}()},
+\code{\link{removenacols}()},
+\code{\link{removenarows}()},
+\code{\link{replaceall}()},
+\code{\link{right}()},
+\code{\link{textFeats}()},
+\code{\link{textTokenizer}()},
+\code{\link{vector2text}()},
+\code{\link{year_month}()},
+\code{\link{year_week}()}
 }
 \concept{Data Wrangling}

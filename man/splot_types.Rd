@@ -15,12 +15,18 @@ splot_types(s, save = FALSE)
 This function lets the user plot types or categories of tickers.
 }
 \seealso{
-Other Investment: \code{\link{daily_portfolio}},
-  \code{\link{daily_stocks}}, \code{\link{etf_sector}},
-  \code{\link{splot_change}}, \code{\link{splot_etf}},
-  \code{\link{splot_growth}}, \code{\link{splot_roi}},
-  \code{\link{splot_summary}}, \code{\link{stocks_file}},
-  \code{\link{stocks_hist}}, \code{\link{stocks_obj}},
-  \code{\link{stocks_report}}
+Other Investment: 
+\code{\link{daily_portfolio}()},
+\code{\link{daily_stocks}()},
+\code{\link{etf_sector}()},
+\code{\link{splot_change}()},
+\code{\link{splot_etf}()},
+\code{\link{splot_growth}()},
+\code{\link{splot_roi}()},
+\code{\link{splot_summary}()},
+\code{\link{stocks_file}()},
+\code{\link{stocks_hist}()},
+\code{\link{stocks_obj}()},
+\code{\link{stocks_report}()}
 }
 \concept{Investment}

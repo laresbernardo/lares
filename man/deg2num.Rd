@@ -16,12 +16,20 @@ This function converts degrees (DMS) coordinates into numerical.
 Note that the sign (S or W) should be assigned manually if needed.
 }
 \seealso{
-Other Calculus: \code{\link{ROC}}, \code{\link{conf_mat}},
-  \code{\link{corr}}, \code{\link{dist2d}},
-  \code{\link{errors}}, \code{\link{loglossBinary}},
-  \code{\link{mae}}, \code{\link{mape}},
-  \code{\link{model_metrics}}, \code{\link{mse}},
-  \code{\link{quants}}, \code{\link{rmse}},
-  \code{\link{rsqa}}, \code{\link{rsq}}
+Other Calculus: 
+\code{\link{ROC}()},
+\code{\link{conf_mat}()},
+\code{\link{corr}()},
+\code{\link{dist2d}()},
+\code{\link{errors}()},
+\code{\link{loglossBinary}()},
+\code{\link{mae}()},
+\code{\link{mape}()},
+\code{\link{model_metrics}()},
+\code{\link{mse}()},
+\code{\link{quants}()},
+\code{\link{rmse}()},
+\code{\link{rsqa}()},
+\code{\link{rsq}()}
 }
 \concept{Calculus}

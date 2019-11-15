@@ -4,8 +4,14 @@
 \alias{stocks_hist}
 \title{Download Stocks Historical Data}
 \usage{
-stocks_hist(symbols = c("VTI", "TSLA"), from = Sys.Date() - 365,
-  to = Sys.Date(), today = TRUE, tax = 30, verbose = TRUE)
+stocks_hist(
+  symbols = c("VTI", "TSLA"),
+  from = Sys.Date() - 365,
+  to = Sys.Date(),
+  today = TRUE,
+  tax = 30,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{symbols}{Character Vector. List of symbols to download historical data}
@@ -23,12 +29,18 @@ only if to value is the same as today's date}
 This function lets the user download stocks historical data
 }
 \seealso{
-Other Investment: \code{\link{daily_portfolio}},
-  \code{\link{daily_stocks}}, \code{\link{etf_sector}},
-  \code{\link{splot_change}}, \code{\link{splot_etf}},
-  \code{\link{splot_growth}}, \code{\link{splot_roi}},
-  \code{\link{splot_summary}}, \code{\link{splot_types}},
-  \code{\link{stocks_file}}, \code{\link{stocks_obj}},
-  \code{\link{stocks_report}}
+Other Investment: 
+\code{\link{daily_portfolio}()},
+\code{\link{daily_stocks}()},
+\code{\link{etf_sector}()},
+\code{\link{splot_change}()},
+\code{\link{splot_etf}()},
+\code{\link{splot_growth}()},
+\code{\link{splot_roi}()},
+\code{\link{splot_summary}()},
+\code{\link{splot_types}()},
+\code{\link{stocks_file}()},
+\code{\link{stocks_obj}()},
+\code{\link{stocks_report}()}
 }
 \concept{Investment}

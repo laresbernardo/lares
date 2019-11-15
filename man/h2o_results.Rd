@@ -4,9 +4,19 @@
 \alias{h2o_results}
 \title{Automated H2O's AutoML Results}
 \usage{
-h2o_results(h2o_object, test, train, y = "tag", which = 1, model_type,
-  target = "auto", plots = TRUE, project = NULL, seed = 0,
-  quiet = FALSE)
+h2o_results(
+  h2o_object,
+  test,
+  train,
+  y = "tag",
+  which = 1,
+  model_type,
+  target = "auto",
+  plots = TRUE,
+  project = NULL,
+  seed = 0,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{h2o_object}{H2O Leaderboard (H2OFrame/H2OAutoML) or Model (h2o)}
@@ -38,21 +48,33 @@ resource limited.}
 Automated H2O's AutoML Results
 }
 \seealso{
-Other Machine Learning: \code{\link{ROC}},
-  \code{\link{clusterKmeans}}, \code{\link{conf_mat}},
-  \code{\link{export_results}}, \code{\link{gain_lift}},
-  \code{\link{h2o_automl}}, \code{\link{h2o_predict_API}},
-  \code{\link{h2o_predict_MOJO}},
-  \code{\link{h2o_predict_binary}},
-  \code{\link{h2o_predict_model}},
-  \code{\link{h2o_selectmodel}}, \code{\link{impute}},
-  \code{\link{iter_seeds}}, \code{\link{model_metrics}},
-  \code{\link{mplot_conf}}, \code{\link{mplot_cuts_error}},
-  \code{\link{mplot_cuts}}, \code{\link{mplot_density}},
-  \code{\link{mplot_full}}, \code{\link{mplot_gain}},
-  \code{\link{mplot_importance}},
-  \code{\link{mplot_lineal}}, \code{\link{mplot_metrics}},
-  \code{\link{mplot_response}}, \code{\link{mplot_roc}},
-  \code{\link{mplot_splits}}, \code{\link{msplit}}
+Other Machine Learning: 
+\code{\link{ROC}()},
+\code{\link{clusterKmeans}()},
+\code{\link{conf_mat}()},
+\code{\link{export_results}()},
+\code{\link{gain_lift}()},
+\code{\link{h2o_automl}()},
+\code{\link{h2o_predict_API}()},
+\code{\link{h2o_predict_MOJO}()},
+\code{\link{h2o_predict_binary}()},
+\code{\link{h2o_predict_model}()},
+\code{\link{h2o_selectmodel}()},
+\code{\link{impute}()},
+\code{\link{iter_seeds}()},
+\code{\link{model_metrics}()},
+\code{\link{mplot_conf}()},
+\code{\link{mplot_cuts_error}()},
+\code{\link{mplot_cuts}()},
+\code{\link{mplot_density}()},
+\code{\link{mplot_full}()},
+\code{\link{mplot_gain}()},
+\code{\link{mplot_importance}()},
+\code{\link{mplot_lineal}()},
+\code{\link{mplot_metrics}()},
+\code{\link{mplot_response}()},
+\code{\link{mplot_roc}()},
+\code{\link{mplot_splits}()},
+\code{\link{msplit}()}
 }
 \concept{Machine Learning}
