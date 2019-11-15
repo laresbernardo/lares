@@ -26,6 +26,8 @@ fb_posts <- function(token,
   # require(rlist)
   # require(dplyr)
   
+  set_config(config(http_version = 0))
+  
   fb_comments <- function(posts) {
     comments <- c()
     if ("data" %in% names(posts)) posts$posts$data <- posts$data
@@ -187,6 +189,9 @@ fb_posts <- function(token,
 #' @param post_id Character vector. Post id(s)
 #' @export
 fb_post <- function(token, post_id) {
+  
+  set_config(config(http_version = 0))
+  
   iters <- length(post_id)
   for (i in 1:iters) {
     if (i == 1) ret <- c()
@@ -250,6 +255,8 @@ fb_accounts <- function(token,
                         business_id = "904189322962915",
                         type = c("owned", "client"),
                         api_version = "v3.3"){
+  
+  set_config(config(http_version = 0))
   
   # Starting URL
   url <- "https://graph.facebook.com/"
@@ -351,6 +358,8 @@ fb_ads <- function(token,
                    start = Sys.Date() - 31, 
                    end = Sys.Date(), 
                    api_version = "v3.3"){
+  
+  set_config(config(http_version = 0))
   
   # Auxiliary process sub-lists function
   process_list <- function(l) {
@@ -466,6 +475,7 @@ fb_insights <- function(token,
   # library(jsonlite)
   # library(httr)
   # library(dplyr)
+  set_config(config(http_version = 0))
   
   # Starting URL
   url <- "https://graph.facebook.com/"
