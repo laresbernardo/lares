@@ -4,7 +4,7 @@
 \alias{readGS4}
 \title{Google Sheets Reading (API v4)}
 \usage{
-readGS4(title, sheet = "Hoja 1", range = NULL, creds = NA)
+readGS4(title, sheet = "Hoja 1", range = NULL, creds = NA, ...)
 }
 \arguments{
 \item{title}{Character. Textual title of Google Sheet}
@@ -14,6 +14,8 @@ readGS4(title, sheet = "Hoja 1", range = NULL, creds = NA)
 \item{range}{Character. A cell range to read from}
 
 \item{creds}{Character. JSON filename with service auth}
+
+\item{...}{Further read_sheet parameters}
 }
 \description{
 This function lets the user read any Google Sheet's data
