@@ -4,7 +4,7 @@
 \alias{readGS4}
 \title{Google Sheets Reading (API v4)}
 \usage{
-readGS4(title, sheet = "Hoja 1", range = NULL, creds = NA, ...)
+readGS4(title, sheet = "Hoja 1", range = NULL, creds = NULL, ...)
 }
 \arguments{
 \item{title}{Character. Textual title of Google Sheet}

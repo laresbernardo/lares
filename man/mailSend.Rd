@@ -29,7 +29,8 @@ plot as PNG or data.frame as CSV, respectively.}
 
 \item{quiet}{Boolean. Keep quite or display messages?}
 
-\item{creds}{Character. Credential's user (see get_credentials)}
+\item{creds}{Character. Credential's user (see get_credentials).
+Must contain: url (POST address), api (api key)}
 }
 \description{
 This function lets the user send Emails with Attachments using MailGun

@@ -1,14 +1,15 @@
 ####################################################################
-#' Load personal parameters and credentials
+#' Load parameters and credentials from YML file
 #' 
 #' This function lets the user load parameters and credentials
 #' 
 #' @family Tools
-#' @param from Character. Which account do we need to import
-#' @param dir Character. Credentials directory for specific user
-#' @param filename Character. YML with credentials to read
+#' @param from Character. Which account do we need to import? If
+#' used for personal use, you might use any of aux1:aux10 slacks
+#' @param dir Character. Credentials directory where your YML file is
+#' @param filename Character. YML with credentials
 #' @export
-get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
+get_credentials <- function(from = NA, dir = NA, filename = "config.yml") {
   
   # require(config)
   
@@ -28,7 +29,9 @@ get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
              "google_api",
              "google_analytics_somosf1",
              "google_analytics_comparamejor",
-             "twitter")
+             "twitter",
+             "other",
+             paste0("aux", 1:10))
 
   if (is.na(dir)) { dir <- "~/Dropbox (Personal)/Documentos/Docs/Data" }
   if (dir == "personal") { dir <- "~/Dropbox (Personal)/Documentos/Docs/Data" }
@@ -52,7 +55,6 @@ get_credentials <- function(from=NA, dir=NA, filename="config.yml") {
       return(credentials)
     }
   } else {
-    message(paste("Not a valid 'from' value. Try any of the following:\n", 
-                  paste(shQuote(froms), collapse="\n ")))
+    message(paste("Not a valid 'from' value. Try any of the following:\n", vector2text(froms)))
   }
 }

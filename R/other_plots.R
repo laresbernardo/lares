@@ -49,17 +49,17 @@ plot_timeline <- function(event, start,
   p <- ggplot(cvlong, aes(x = value, y = reorder(name, -pos), label = where, group = pos)) + 
     geom_vline(xintercept = maxdate, alpha = 0.8, linetype = "dotted") +
     labs(title = title, subtitle = subtitle, 
-         x = NULL, y = NULL, colour = "") +
-    scale_x_datetime(position = "top") +
+         x = NULL, y = NULL, colour = NULL) +
+    #scale_x_datetime(position = "top") +
+    theme_lares2() +
     theme(panel.background = element_rect(fill = "white", colour = NA),
           axis.ticks = element_blank(),
           panel.grid.major.x = element_line(size = 0.25, colour = "grey80"))
   
-  if (!is.na(cvlong$type) | length(unique(cvlong$type)) > 1) {
+  if (!is.na(cvlong$type)[1] | length(unique(cvlong$type)) > 1) {
     p <- p + geom_line(aes(colour = type), size = size) +
       facet_grid(type ~ ., scales = "free", space = "free") +
-      guides(colour = FALSE) +
-      scale_colour_brewer(palette = "Set1")
+      guides(colour = FALSE)
   } else {
     p <- p + geom_line(size = size, colour = colour)
   }
@@ -67,7 +67,7 @@ plot_timeline <- function(event, start,
   p <- p + geom_label(aes(x = label_pos), colour = "black", size = 2, alpha = 0.7)
   
   # Export file name and folder for plot
-  if (save == TRUE) {
+  if (save) {
     file_name <- "cv_timeline.png"
     if (!is.na(subdir)) {
       dir.create(file.path(getwd(), subdir), recursive = T)

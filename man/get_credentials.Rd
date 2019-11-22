@@ -2,16 +2,17 @@
 % Please edit documentation in R/get_credentials.R
 \name{get_credentials}
 \alias{get_credentials}
-\title{Load personal parameters and credentials}
+\title{Load parameters and credentials from YML file}
 \usage{
 get_credentials(from = NA, dir = NA, filename = "config.yml")
 }
 \arguments{
-\item{from}{Character. Which account do we need to import}
+\item{from}{Character. Which account do we need to import? If
+used for personal use, you might use any of aux1:aux10 slacks}
 
-\item{dir}{Character. Credentials directory for specific user}
+\item{dir}{Character. Credentials directory where your YML file is}
 
-\item{filename}{Character. YML with credentials to read}
+\item{filename}{Character. YML with credentials}
 }
 \description{
 This function lets the user load parameters and credentials
