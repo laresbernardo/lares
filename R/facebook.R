@@ -541,11 +541,10 @@ fb_insights <- function(token,
       arrange(desc(date_start), desc(spend)) %>%
       mutate(id = aux)
     output <- rbind(output, ret)
+    if (length(which) == i & length(output) == 0) {
+      message("No data found!")
+      return(invisible(NULL))
+    }
   }
-  
-  if (length(which) == i & length(output) == 0) {
-    message("No data found!")
-    return(invisible(NULL))
-  } else return(output)
-  
+  return(output)
 }
