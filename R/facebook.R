@@ -533,7 +533,7 @@ fb_insights <- function(token,
         out <- fromJSON(out$paging$`next`)
         ret <- bind_rows(ret, data.frame(out$data))
       }
-    } else ret <- data.frame(import$data)
+    }
     
     ret <- suppressMessages(type.convert(ret, numerals = "no.loss")) %>%
       mutate_at(vars(contains("date")), list(as.Date)) %>%
