@@ -521,11 +521,6 @@ fb_insights <- function(token,
       next
     } else if (length(which) > 1) message(paste("Data for", aux, "imported..."))
     
-    if (length(which) == i & length(output) == 0) {
-      message("No data found!")
-      return(invisible(NULL))
-    }
-    
     ret <- data.frame(bind_rows(import$data))
     
     # Condition to detect the next page
@@ -538,7 +533,8 @@ fb_insights <- function(token,
         out <- fromJSON(out$paging$`next`)
         ret <- bind_rows(ret, data.frame(out$data))
       }
-    }
+    } else ret <- data.frame(import$data)
+    
     ret <- suppressMessages(type.convert(ret, numerals = "no.loss")) %>%
       mutate_at(vars(contains("date")), list(as.Date)) %>%
       mutate_at(vars(contains("id")), list(as.character)) %>%
@@ -546,5 +542,10 @@ fb_insights <- function(token,
       mutate(id = aux)
     output <- rbind(output, ret)
   }
-  return(output)
+  
+  if (length(which) == i & length(output) == 0) {
+    message("No data found!")
+    return(invisible(NULL))
+  } else return(output)
+  
 }
