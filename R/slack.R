@@ -3,6 +3,10 @@
 #' 
 #' This function send a Slack message using its Webhooks.
 #' 
+#' For more help, you can follow the 
+#' \href{https://api.slack.com/messaging/webhooks#posting_with_webhooks}{Sending messages using Incoming Webhooks}
+#' original documentarion.
+#' 
 #' @family Tools
 #' @param text,title,pretext Character
 #' @param hook Character. Web hook URL
@@ -15,7 +19,7 @@ slackSend <- function(text, title = "", pretext = "", hook = NA, quiet = FALSE) 
   
   if (is.na(hook)) {
     hook <- paste0("https://hooks.slack.com/services/",
-                   "T2H307N9E/BP5GM8VEG/","1UDv2cpseBPC3wFB4p8DV0qw")
+                   "T5TUJPK1D/BRDPQ34DD/FAvAG6l1tFJP4SiBtyxsp1Va")
     if (!quiet)
       warning("Using lares' default hook. Please, use yours for it to work as it should.")
   } 

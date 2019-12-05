@@ -16,6 +16,11 @@ slackSend(text, title = "", pretext = "", hook = NA, quiet = FALSE)
 \description{
 This function send a Slack message using its Webhooks.
 }
+\details{
+For more help, you can follow the 
+\href{https://api.slack.com/messaging/webhooks#posting_with_webhooks}{Sending messages using Incoming Webhooks}
+original documentarion.
+}
 \seealso{
 Other Tools: 
 \code{\link{autoline}()},
