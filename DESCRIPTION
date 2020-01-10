@@ -61,4 +61,4 @@ Suggests:
     skimr
 URL: https://github.com/laresbernardo/lares
 BugReports: https://github.com/laresbernardo/lares/issues
-RoxygenNote: 7.0.0
+RoxygenNote: 7.0.2

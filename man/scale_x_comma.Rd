@@ -69,7 +69,7 @@ Use \code{NA} to refer to the existing minimum or maximum
 new limits
 }}
     \item{\code{rescaler}}{Used by diverging and n colour gradients
-(i.e. \code{\link[=scale_colour_gradient2]{scale_colour_gradient2()}}, \code{\link[=scale_colour_gradientn]{scale_colour_gradientn()}}).
+(i.e. \code{\link[ggplot2:scale_colour_gradient2]{scale_colour_gradient2()}}, \code{\link[ggplot2:scale_colour_gradientn]{scale_colour_gradientn()}}).
 A function used to scale the input values to the range [0, 1].}
     \item{\code{oob}}{Function that handles limits outside of the scale limits
 (out of bounds). The default replaces out of bounds values with \code{NA}.}
@@ -86,7 +86,7 @@ are defined in the scales package, and are called \code{name_trans}, e.g.
 \code{\link[scales:boxcox_trans]{scales::boxcox_trans()}}. You can create your own
 transformation with \code{\link[scales:trans_new]{scales::trans_new()}}.}
     \item{\code{guide}}{A function used to create a guide or its name. See
-\code{\link[=guides]{guides()}} for more info.}
+\code{\link[ggplot2:guides]{guides()}} for more info.}
     \item{\code{super}}{The super class to use for the constructed scale}
   }}
 }

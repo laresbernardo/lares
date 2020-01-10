@@ -1230,3 +1230,59 @@ check_attr <- function(object, attr = "type", check = "h2o_automl", stop = TRUE)
     if (stop) stop(msg) else message(msg)
   }
 }
+
+
+####################################################################
+#' Abbreviate numbers
+#' 
+#' This function converts a numeric vector's values into their
+#' abbreviated character equivalent, i.e. 100,000,000 into 100M.
+#'
+#' @param x Numeric vector
+#' @param n Integer. Single numeric value, specifying number of 
+#' significant figures to show. Range 1 to 6.
+#' @return A vector of character values that contain converted values
+#' @author William Chon, \email{wchon@fb.com}
+#' @examples
+#' abbreviate_number(rnorm(100) * 1e6)
+#' abbreviate_number(rnorm(100) * 1e6, n = 1)
+#' @export
+num_abbr <- function(x, n = 3) {
+  
+  if (!is.numeric(x)) stop('Input vector x needs to be numeric.')
+  if (!is.numeric(n)) stop('n needs to be numeric.')
+  if (length(n) > 1) stop('Please make sure that n takes on a single value.')
+  if (!n %in% 1:6) stop('Please make sure that n takes on an interger value between 1 to 6.')
+  if (any(x > 1e15))
+    message('Note: You have some really large numbers, note that Qa = Quadrillion; Qi = Quintillion')
+  if (any(x >= 1e21))
+    stop('You have some really large numbers, output for numbers greater 
+          than 1e21 are not supported by this function')
+  
+  # To handle scientific notation inputs correctly
+  original_scipen <- getOption('scipen')
+  on.exit(options(scipen = original_scipen), add = TRUE)
+  options(scipen = 999)
+  
+  # Clean up x
+  negative_positions <- ifelse(x < 0, '-', '')
+  x <- abs(x)
+  
+  div <- findInterval(x, c(0, 1e3, 1e6, 1e9, 1e12, 1e15, 1e18))
+  
+  # Round x with some cleaning
+  x <- round(x, -nchar(round(x, 0)) + n) / 10 ^ (3 * (div -  1))
+  
+  # Fix numbers rounded up to another digit 
+  # i.e. 999k -> 1000k should actually be 1M
+  div <- ifelse(nchar(as.integer(x)) > 3, div + 1, div)
+  x <- ifelse(nchar(as.integer(x)) > 3, x / 1e3, x)
+  
+  # Cap decimal places to 3
+  x <- round(x, 3)
+  
+  # Qa = Quadrillion; Qi = Quintillion
+  x <- paste0(x, c('', 'K', 'M', 'B', 'T', 'Qa', 'Qi')[div])
+  return(paste0(negative_positions, x))
+  
+}
