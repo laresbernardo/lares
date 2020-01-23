@@ -36,7 +36,7 @@ queryGA <- function(account = "comparamejor",
   # gar_auth()
   
   account <- paste("google_analytics", account, sep = "_")
-  vars <- lares::get_credentials(from = account, dir = creds)
+  vars <- get_credentials(from = account, dir = creds)
   
   options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics"),
           googleAuthR.client_id = vars$client_id,

@@ -105,7 +105,7 @@
 #'   
 #'   options(warn=-1)
 #'   
-#'   credentials <- lares::get_credentials("hubspot", dir = creds)
+#'   credentials <- get_credentials("hubspot", dir = creds)
 #'   token <- credentials$token
 #'   
 #'   API <- "https://api.hubapi.com/deals/v1/deal/paged?"

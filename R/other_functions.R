@@ -185,10 +185,13 @@ dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
 #' @param type Integer. 1 for International standards. 2 for 
 #' American Standards.  
 #' @param scientific Boolean. Scientific notation
+#' @param pre,pos Character. Add string before or after number
 #' @export
-formatNum <- function(x, decimals = 2, type = 2, scientific = FALSE) {
+formatNum <- function(x, decimals = 2, type = 2, 
+                      scientific = FALSE,
+                      pre = "", pos = "") {
   if (!scientific) {
-    options(scipen = 999)
+    on.exit(options(scipen = 999))
   } else {
     x <- formatC(numb, format = "e", digits = 2)
   }
@@ -199,7 +202,8 @@ formatNum <- function(x, decimals = 2, type = 2, scientific = FALSE) {
     x <- format(round(as.numeric(x), decimals), nsmall = decimals, 
                 big.mark = ",", decimal.mark = ".") 
   }
-  return(trimws(x))
+  ret <- paste0(pre, trimws(x), pos)
+  return(ret)
 }
 
 
@@ -1244,8 +1248,8 @@ check_attr <- function(object, attr = "type", check = "h2o_automl", stop = TRUE)
 #' @return A vector of character values that contain converted values
 #' @author William Chon, \email{wchon@fb.com}
 #' @examples
-#' abbreviate_number(rnorm(100) * 1e6)
-#' abbreviate_number(rnorm(100) * 1e6, n = 1)
+#' num_abbr(rnorm(100) * 1e6)
+#' num_abbr(rnorm(100) * 1e6, n = 1)
 #' @export
 num_abbr <- function(x, n = 3) {
   

@@ -4,7 +4,7 @@
 \alias{formatNum}
 \title{Nicely Format Numerical Values}
 \usage{
-formatNum(x, decimals = 2, type = 2, scientific = FALSE)
+formatNum(x, decimals = 2, type = 2, scientific = FALSE, pre = "", pos = "")
 }
 \arguments{
 \item{x}{Numerical Vector}
@@ -15,6 +15,8 @@ formatNum(x, decimals = 2, type = 2, scientific = FALSE)
 American Standards.}
 
 \item{scientific}{Boolean. Scientific notation}
+
+\item{pre, pos}{Character. Add string before or after number}
 }
 \description{
 This function lets the user format numerical values nicely

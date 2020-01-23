@@ -20,8 +20,8 @@ This function converts a numeric vector's values into their
 abbreviated character equivalent, i.e. 100,000,000 into 100M.
 }
 \examples{
-abbreviate_number(rnorm(100) * 1e6)
-abbreviate_number(rnorm(100) * 1e6, n = 1)
+num_abbr(rnorm(100) * 1e6)
+num_abbr(rnorm(100) * 1e6, n = 1)
 }
 \author{
 William Chon, \email{wchon@fb.com}

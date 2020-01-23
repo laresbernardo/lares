@@ -158,7 +158,7 @@ f1_contacts <- function(limit = 1000, creds = NA) {
     "hs_email_optout",
     "form_submissions")
   
-  credentials <- lares::get_credentials("hubspot", dir = creds)
+  credentials <- get_credentials("hubspot", dir = creds)
   
   # ALL Contacts with properties
   properties_string <- paste(rbind("property=", properties, "&"), collapse="")
