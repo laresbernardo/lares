@@ -38,7 +38,8 @@ Other Scrapper:
 \code{\link{ip_country}()},
 \code{\link{readGS4}()},
 \code{\link{readGS}()},
-\code{\link{trendsRelated}()}
+\code{\link{trendsRelated}()},
+\code{\link{yt2mp3}()}
 }
 \concept{Connection}
 \concept{Scrapper}

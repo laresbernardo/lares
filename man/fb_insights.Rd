@@ -60,7 +60,8 @@ Other Scrapper:
 \code{\link{readGS4}()},
 \code{\link{readGS}()},
 \code{\link{trendsRelated}()},
-\code{\link{writeGS}()}
+\code{\link{writeGS}()},
+\code{\link{yt2mp3}()}
 
 Other API: 
 \code{\link{bring_api}()},
