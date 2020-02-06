@@ -14,7 +14,7 @@ formatNum(x, decimals = 2, type = 2, scientific = FALSE, pre = "", pos = "")
 \item{type}{Integer. 1 for International standards. 2 for 
 American Standards.}
 
-\item{scientific}{Boolean. Scientific notation}
+\item{scientific}{Boolean. Scientific notation?}
 
 \item{pre, pos}{Character. Add string before or after number}
 }

@@ -7,13 +7,15 @@
 #' @family Investment
 #' @param filename Characeter. Import a local Excel file
 #' @param creds Character. Where is my personal token for Dropbox connection?
-#' @param auto Boolean. Automatically user my local personal file? 
+#' @param auto Boolean. Automatically use my local personal file? 
 #' @param sheets Character Vector. Names of each sheet containing Portfolio summary,
 #' Cash, and Transactions information
 #' @param keep_old Boolean. Include sold tickers eventhough not currently in portfolio?
 #' @export
-stocks_file <- function(filename = NA, creds = "~/Dropbox (Personal)/Documentos/Docs/Data", 
-                        auto = TRUE, sheets = c("Portafolio","Fondos","Transacciones"),
+stocks_file <- function(filename = NA, 
+                        creds = NA, 
+                        auto = TRUE, 
+                        sheets = c("Portafolio","Fondos","Transacciones"),
                         keep_old = TRUE) {
   
   processFile <- function(file, keep_old = TRUE) {
@@ -28,7 +30,7 @@ stocks_file <- function(filename = NA, creds = "~/Dropbox (Personal)/Documentos/
   
   # FOR PERSONAL USE
   local <- Sys.info()
-  if (local[["nodename"]] == "MacBook-Pro-de-Bernardo.local" & auto == TRUE) {
+  if (local[["nodename"]] == "MacBook-Pro-de-Bernardo.local" & auto) {
     message("Using BL's local file...")
     local <- "~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio/Portfolio LC.xlsx"
     results <- processFile(local, keep_old) 
@@ -39,7 +41,7 @@ stocks_file <- function(filename = NA, creds = "~/Dropbox (Personal)/Documentos/
         stop("Error: that file doesn't exist or it's not in your working directory!")
     } else {
       # FOR DROPBOX'S USE
-      creds <- creds
+      if (is.na(creds) & auto) creds <- "~/Dropbox (Personal)/Documentos/Docs/Data"
       load(paste0(creds, "/token_pers.rds"))
       x <- drop_search("Portfolio LC.xlsx", dtoken = token)
       file <- "temp.xlsx"

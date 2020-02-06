@@ -184,7 +184,7 @@ dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
 #' @param decimals Integer. Amount of decimals to display
 #' @param type Integer. 1 for International standards. 2 for 
 #' American Standards.  
-#' @param scientific Boolean. Scientific notation
+#' @param scientific Boolean. Scientific notation?
 #' @param pre,pos Character. Add string before or after number
 #' @export
 formatNum <- function(x, decimals = 2, type = 2, 

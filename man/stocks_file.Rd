@@ -6,7 +6,7 @@
 \usage{
 stocks_file(
   filename = NA,
-  creds = "~/Dropbox (Personal)/Documentos/Docs/Data",
+  creds = NA,
   auto = TRUE,
   sheets = c("Portafolio", "Fondos", "Transacciones"),
   keep_old = TRUE
@@ -17,7 +17,7 @@ stocks_file(
 
 \item{creds}{Character. Where is my personal token for Dropbox connection?}
 
-\item{auto}{Boolean. Automatically user my local personal file?}
+\item{auto}{Boolean. Automatically use my local personal file?}
 
 \item{sheets}{Character Vector. Names of each sheet containing Portfolio summary,
 Cash, and Transactions information}
