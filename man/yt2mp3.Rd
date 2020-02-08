@@ -4,20 +4,10 @@
 \alias{yt2mp3}
 \title{Get Personal Portfolio's Data}
 \usage{
-yt2mp3(
-  url = "https://www.youtube.com/watch?v=lrlKcCdVw9Q",
-  filename = NA,
-  start = 0
-)
+yt2mp3(url = "https://www.youtube.com/watch?v=lrlKcCdVw9Q")
 }
 \arguments{
 \item{url}{Characeter. YouTube URL}
-
-\item{filename}{Character. Specify output filename. If NA, video's name 
-will be automatically used}
-
-\item{start}{Numeric. Seeks in the input file to position (Must be 
-greater than 0) and crops output}
 }
 \description{
 This function lets me download my personal Excel with my Portfolio 
