@@ -79,7 +79,8 @@ stocks_file <- function(filename = NA,
 #' @param verbose Boolean. Print results and progress while downloading?
 #' @export
 stocks_hist <- function(symbols = c("VTI", "TSLA"), 
-                        from = Sys.Date() - 365, to = Sys.Date(),
+                        from = Sys.Date() - 365, 
+                        to = Sys.Date(),
                         today = TRUE,
                         tax = 30, 
                         verbose = TRUE) {
@@ -127,8 +128,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
       }
       # Append to other symbols' data
       data <- rbind(data, values)
-      
-      # Dividends
+      # Dividends (ISSUE HERE NOW)
       d <- getDividends(as.character(symbol), from = start_date)
       if (nrow(d) > 0) {
         div <-  data.frame(Symbol = rep(symbol, nrow(d)),
@@ -658,7 +658,7 @@ splot_etf <- function(s, save = FALSE) {
 #' @export
 stocks_obj <- function(data = stocks_file(), 
                        cash_fix = 0, tax = 30, 
-                       sectors = TRUE) {
+                       sectors = FALSE) {
 
   check_attr(data, check = "stocks_file")
   
@@ -709,6 +709,7 @@ stocks_obj <- function(data = stocks_file(),
 #' @param mail Boolean. Do you want to send an email with the report attached? 
 #' If not, an HTML file will be created in dir
 #' @param to Character. Email to send the report to
+#' @param sectors Boolean. Return sectors segmentation for ETFs?
 #' @param creds Character. Credential's user (see get_credentials) for 
 #' sending mail and Dropbox interaction
 #' @export
@@ -716,10 +717,11 @@ stocks_report <- function(data = NA,
                           dir = NA,
                           mail = FALSE, 
                           to = "laresbernardo@gmail.com",
+                          sectors = FALSE,
                           creds = NA) {
   if (is.na(data)[1]) {
     df <- stocks_file(creds = creds) 
-    data <- stocks_obj(df)
+    data <- stocks_obj(df, sectors = sectors)
   }
   
   check_attr(data, check = c("stocks_obj"))

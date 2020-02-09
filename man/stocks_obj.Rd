@@ -4,7 +4,7 @@
 \alias{stocks_obj}
 \title{Portfolio's Calculations and Plots}
 \usage{
-stocks_obj(data = stocks_file(), cash_fix = 0, tax = 30, sectors = TRUE)
+stocks_obj(data = stocks_file(), cash_fix = 0, tax = 30, sectors = FALSE)
 }
 \arguments{
 \item{data}{List. Containing the following dataframes: portfolio,

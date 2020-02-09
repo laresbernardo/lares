@@ -9,6 +9,7 @@ stocks_report(
   dir = NA,
   mail = FALSE,
   to = "laresbernardo@gmail.com",
+  sectors = FALSE,
   creds = NA
 )
 }
@@ -23,6 +24,8 @@ current working directory will be used. If mail sent, file will be erased}
 If not, an HTML file will be created in dir}
 
 \item{to}{Character. Email to send the report to}
+
+\item{sectors}{Boolean. Return sectors segmentation for ETFs?}
 
 \item{creds}{Character. Credential's user (see get_credentials) for 
 sending mail and Dropbox interaction}
