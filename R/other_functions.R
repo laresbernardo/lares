@@ -377,24 +377,26 @@ listfiles <- function(folder = getwd(),
 #' @param df Data.frame or Vector
 #' @param original String or Vector. Original text you wish to replace
 #' @param change String or Vector. Values you wish to replace the originals with
+#' @param which Character vector. Name of columns to use. Leave "all" for everything
 #' @param quiet Boolean. Keep quiet? (or print replacements)
 #' @export
-replaceall <- function(df, original, change, quiet = TRUE) {
+replaceall <- function(df, original, change, which = "all", quiet = TRUE) {
   if (is.vector(df)) {
     vector <- TRUE
     df <- data.frame(x = df)
     dic <- data.frame(original, change)
     original <- dic[,1]
     change <- dic[,2]
-  } else { 
-    vector <- FALSE 
-  }
-  if (length(original) != length(change)) {
+  } else vector <- FALSE 
+  if (length(original) != length(change))
     stop("Vectors original and change should have the same length!")
-  }
   if (length(unique(original)) != length(original)) {
-    which <- freqs(dic, original) %>% filter(n > 1) %>% .$original
-    stop("You have repeated original values to replace: ", vector2text(which))
+    aux <- freqs(dic, original) %>% filter(n > 1) %>% .$original
+    stop("You have repeated original values to replace: ", vector2text(aux))
+  }
+  if (which[1] != "all") {
+    aux <- df
+    df <- select(df, one_of(which))
   }
   if (sum(is.na(original)) > 0) {
     df <- df %>% replace(is.na(.), change[is.na(original)])
@@ -408,15 +410,18 @@ replaceall <- function(df, original, change, quiet = TRUE) {
   }
   if (length(original) > 0) {
     for (i in 1:length(original)) {
-      if (!quiet) {
+      if (!quiet)
         message(paste("Transforming all", original[i], "into", change[i])) 
-      }
       df[] <- lapply(df, function(x) gsub(original[i], change[i], x))
     } 
   }
+  if (which[1] != "all")
+    df <- select(aux, -one_of(which)) %>% cbind(df) %>% 
+      select(one_of(colnames(aux)))
   if (vector) df <- df[,1]
   return(df)
 }
+
 
 ####################################################################
 #' Remove/Drop Columns in which ALL or SOME values are NAs
@@ -858,7 +863,7 @@ statusbar <- function(run = 1, max.run = 100, label = run,
   }
   
   percent.step <- trunc(percent * percent.max, 5)
-  space <- paste(rep(" ", 10), collapse = " ")
+  space <- paste(rep(" ", 20), collapse = " ")
   progress <- paste0(
     "[", paste0(rep(last, percent.step), collapse = ""), 
     ifelse(percent.step != percent.max, middle, last),
@@ -869,11 +874,9 @@ statusbar <- function(run = 1, max.run = 100, label = run,
   
   now <- format(.POSIXct(difftime(
     Sys.time(), getOption("startclock"), units = "secs"), tz = "GMT"), "%H:%M:%S")
-  cat("\r", paste(now, progress))
-  
-  if (run == max.run) options("startclock" = NULL)
-  
   flush.console()
+  cat("\r", paste(now, progress))
+  if (run == max.run) options("startclock" = NULL)
 }
 
 

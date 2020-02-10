@@ -2,7 +2,7 @@
 % Please edit documentation in R/audio.R
 \name{yt2mp3}
 \alias{yt2mp3}
-\title{Get Personal Portfolio's Data}
+\title{YouTube to MP3}
 \usage{
 yt2mp3(url = "https://www.youtube.com/watch?v=lrlKcCdVw9Q")
 }
@@ -10,8 +10,8 @@ yt2mp3(url = "https://www.youtube.com/watch?v=lrlKcCdVw9Q")
 \item{url}{Characeter. YouTube URL}
 }
 \description{
-This function lets me download my personal Excel with my Portfolio 
-data, locally or from Dropbox. You can also use it for local files
+This function downloads a YouTube video and converts it into a 
+high quality MP3 file.
 }
 \seealso{
 Other Scrapper: 

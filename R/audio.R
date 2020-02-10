@@ -1,8 +1,8 @@
 ####################################################################
-#' Get Personal Portfolio's Data
+#' YouTube to MP3
 #' 
-#' This function lets me download my personal Excel with my Portfolio 
-#' data, locally or from Dropbox. You can also use it for local files
+#' This function downloads a YouTube video and converts it into a 
+#' high quality MP3 file.
 #' 
 #' @family Scrapper
 #' @family Audio
@@ -10,7 +10,7 @@
 #' @export
 yt2mp3 <- function(url = "https://www.youtube.com/watch?v=lrlKcCdVw9Q") {
   
-  try_require("av")
+  #try_require("av")
   
   # txt <- read_html(url) %>%
   #   html_nodes("head title") %>% 
