@@ -145,15 +145,15 @@ mplot_importance <- function(var,
   
   if (is.na(colours)) colours <- "deepskyblue" 
   
-  out <- data.frame(var = var, imp = imp, Type = colours)
+  out <- data.frame(var = var, imp = 100 * imp, Type = colours)
   
   if (length(var) < limit) limit <- length(var)
   
   output <- out[1:limit,]
   
   p <- ggplot(output, 
-              aes(x = reorder(var, imp), y = imp * 100, 
-                  label = round(100 * imp, 1))) + 
+              aes(x = reorder(var, imp), y = imp, 
+                  label = round(imp, 1))) + 
     geom_col(aes(fill = Type), width = 0.08, colour = "transparent") +
     geom_point(aes(colour = Type), size = 6.2) + 
     coord_flip() +
