@@ -204,10 +204,11 @@ h2o_automl <- function(df, y = "tag",
       message(paste("Ignored variables for training models:", vector2text(ignore)))
   
   # RUN AUTOML
-  if (length(exclude_algos) > 0) 
+  if (length(exclude_algos) > 0 & !quiet) 
     message(paste("Algorithms excluded:", vector2text(exclude_algos)))
-  if (!quiet) message(paste(">>> Iterating until", max_models, 
-                            "models or", max_time, "seconds..."))
+  if (!quiet) 
+    message(paste(">>> Iterating until", max_models, 
+                  "models or", max_time, "seconds..."))
   aml <- quiet(h2o.automl(
     x = colnames(df)[!colnames(df) %in% c("tag", ignore)],
     y = "tag",
@@ -247,8 +248,12 @@ h2o_automl <- function(df, y = "tag",
   print(results$metrics$metrics)
   
   if (alarm & !quiet) {
-    try_require("beepr", stop = FALSE)
-    beep() 
+    tryCatch({
+      try_require("beepr", stop = FALSE)
+      beep() 
+    }, error = function(err) {
+      message(err)
+    })
   }
   
   attr(results, "type") <- "h2o_automl"
