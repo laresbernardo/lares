@@ -700,7 +700,7 @@ export_plot <- function(p,
   png(file_name, height = height * res, width = width * res, res = res)
   plot(p)
   dev.off() 
-    
+  
   if (!quiet) message(paste("Plot saved as", file_name)) 
   
 }
@@ -1292,4 +1292,29 @@ num_abbr <- function(x, n = 3) {
   x <- paste0(x, c('', 'K', 'M', 'B', 'T', 'Qa', 'Qi')[div])
   return(paste0(negative_positions, x))
   
+}
+
+
+####################################################################
+#' Validate options within vector
+#' 
+#' This function validates if inputs match all/any of your options
+#' and return error/message with possible options to use.
+#'
+#' @param inputs Vector character
+#' @param options Vector character
+#' @param type Character. Options: all, any
+#' @param not Character. Options: stop, message, print, return
+#' @param quiet Boolean. Keep quiet? If not, returns TRUE when checked
+#' @export
+check_opts <- function(inputs, options, 
+                       type = "all", not = "stop", 
+                       quiet = TRUE) {
+  aux <- get(type)
+  not <- get(not)
+  if (!aux(inputs %in% options))
+    not(paste("Input(s) not valid.", toupper(type), 
+              "input(s) should match your options:", 
+              vector2text(options)))
+  if (!quiet) return(TRUE)
 }
