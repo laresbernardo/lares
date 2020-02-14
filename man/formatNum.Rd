@@ -4,7 +4,15 @@
 \alias{formatNum}
 \title{Nicely Format Numerical Values}
 \usage{
-formatNum(x, decimals = 2, type = 2, scientific = FALSE, pre = "", pos = "")
+formatNum(
+  x,
+  decimals = 2,
+  type = 2,
+  scientific = FALSE,
+  pre = "",
+  pos = "",
+  abbr = FALSE
+)
 }
 \arguments{
 \item{x}{Numerical Vector}
@@ -17,6 +25,8 @@ American Standards.}
 \item{scientific}{Boolean. Scientific notation?}
 
 \item{pre, pos}{Character. Add string before or after number}
+
+\item{num_abbr}{Boolean. Use num_abbr()?}
 }
 \description{
 This function lets the user format numerical values nicely

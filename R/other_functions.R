@@ -186,23 +186,28 @@ dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
 #' American Standards.  
 #' @param scientific Boolean. Scientific notation?
 #' @param pre,pos Character. Add string before or after number
+#' @param num_abbr Boolean. Use num_abbr()?
 #' @export
 formatNum <- function(x, decimals = 2, type = 2, 
                       scientific = FALSE,
-                      pre = "", pos = "") {
+                      pre = "", pos = "",
+                      abbr = FALSE) {
   if (!scientific) {
     on.exit(options(scipen = 999))
+  } else x <- formatC(numb, format = "e", digits = 2)
+  if (abbr) {
+    x <- num_abbr(x) 
   } else {
-    x <- formatC(numb, format = "e", digits = 2)
+    if (type == 1) {
+      x <- format(round(as.numeric(x), decimals), nsmall = decimals, 
+                  big.mark = ".", decimal.mark = ",")
+    } else {
+      x <- format(round(as.numeric(x), decimals), nsmall = decimals, 
+                  big.mark = ",", decimal.mark = ".") 
+    }
+    x <- trimws(x)
   }
-  if (type == 1) {
-    x <- format(round(as.numeric(x), decimals), nsmall = decimals, 
-                big.mark = ".", decimal.mark = ",")
-  } else {
-    x <- format(round(as.numeric(x), decimals), nsmall = decimals, 
-                big.mark = ",", decimal.mark = ".") 
-  }
-  ret <- paste0(pre, trimws(x), pos)
+  ret <- paste0(pre, x, pos)
   return(ret)
 }
 
@@ -1310,8 +1315,8 @@ num_abbr <- function(x, n = 3) {
 check_opts <- function(inputs, options, 
                        type = "all", not = "stop", 
                        quiet = TRUE) {
-  aux <- get(type)
-  not <- get(not)
+  aux <- base::get(type)
+  not <- base::get(not)
   if (!aux(inputs %in% options))
     not(paste("Input(s) not valid.", toupper(type), 
               "input(s) should match your options:", 
