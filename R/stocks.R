@@ -128,8 +128,10 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
       }
       # Append to other symbols' data
       data <- rbind(data, values)
-      # Dividends (ISSUE HERE NOW)
-      d <- getDividends(as.character(symbol), from = start_date)
+      
+      # Dividends 
+      d <- getDividends(as.character(symbol), from = start_date, 
+                        split.adjust = FALSE)
       if (nrow(d) > 0) {
         div <-  data.frame(Symbol = rep(symbol, nrow(d)),
                            Date = ymd(row.names(data.frame(d))),
@@ -137,6 +139,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
                            DivReal = as.vector(d)*(100 - tax)/100)
         divs <- rbind(divs, div)
       }
+      
       if (verbose) {
         info <- paste(symbol, "since", start_date, "   ")
         statusbar(i, length(symbols), info)  
