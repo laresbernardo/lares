@@ -40,6 +40,7 @@ Other Data Wrangling:
 \code{\link{balance_data}()},
 \code{\link{calibrate}()},
 \code{\link{cleanText}()},
+\code{\link{date_cuts}()},
 \code{\link{date_feats}()},
 \code{\link{dateformat}()},
 \code{\link{formatNum}()},

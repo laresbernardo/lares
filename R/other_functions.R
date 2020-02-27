@@ -30,6 +30,34 @@ year_month <- function(date) {
 
 
 ####################################################################
+#' Convert Date into Year-Month (YYYY-MM)
+#' 
+#' This function returns categorical values for any date(s) using year
+#' cuts such as bimonths, quarters, terms, and halves.
+#' 
+#' @family Data Wrangling
+#' @param date Date. Date we wish to transform 
+#' @param type. Character. Any of the following: B (2 months),
+#' Q (3 months), T (4 months), H (6 months)
+#' @export
+date_cuts <- function(date, type = "Q") {
+  df <- data.frame(date = as.Date(as.character(date))) %>%
+    mutate(month = month(date), cut = NA)
+  if (tolower(type) == "b") aux <- 2
+  if (tolower(type) == "q") aux <- 3
+  if (tolower(type) == "t") aux <- 4
+  if (tolower(type) == "h") aux <- 6
+  cuts <- c(seq(1, 12, aux), 12)
+  for (i in 1:(12/aux)) {
+    df <- df %>% mutate(cut = ifelse(
+      month >= cuts[i] & month <= cuts[i+1], 
+      paste0(toupper(type), i), cut))
+  }
+  return(df$cut)
+}
+
+
+####################################################################
 #' Convert Date into Year-Week (YYYY-WW)
 #' 
 #' This function lets the user convert a date into YYYY-WW format

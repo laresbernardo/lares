@@ -29,6 +29,7 @@ Other Data Wrangling:
 \code{\link{balance_data}()},
 \code{\link{categ_reducer}()},
 \code{\link{cleanText}()},
+\code{\link{date_cuts}()},
 \code{\link{date_feats}()},
 \code{\link{dateformat}()},
 \code{\link{formatNum}()},
