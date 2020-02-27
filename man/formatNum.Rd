@@ -26,7 +26,7 @@ American Standards.}
 
 \item{pre, pos}{Character. Add string before or after number}
 
-\item{num_abbr}{Boolean. Use num_abbr()?}
+\item{abbr}{Boolean. Abbreviate using num_abbr()?}
 }
 \description{
 This function lets the user format numerical values nicely

@@ -9,7 +9,7 @@ date_cuts(date, type = "Q")
 \arguments{
 \item{date}{Date. Date we wish to transform}
 
-\item{type.}{Character. Any of the following: B (2 months),
+\item{type}{Character. Any of the following: B (2 months),
 Q (3 months), T (4 months), H (6 months)}
 }
 \description{

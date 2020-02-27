@@ -37,7 +37,7 @@ year_month <- function(date) {
 #' 
 #' @family Data Wrangling
 #' @param date Date. Date we wish to transform 
-#' @param type. Character. Any of the following: B (2 months),
+#' @param type Character. Any of the following: B (2 months),
 #' Q (3 months), T (4 months), H (6 months)
 #' @export
 date_cuts <- function(date, type = "Q") {
@@ -214,7 +214,7 @@ dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
 #' American Standards.  
 #' @param scientific Boolean. Scientific notation?
 #' @param pre,pos Character. Add string before or after number
-#' @param num_abbr Boolean. Use num_abbr()?
+#' @param abbr Boolean. Abbreviate using num_abbr()?
 #' @export
 formatNum <- function(x, decimals = 2, type = 2, 
                       scientific = FALSE,
