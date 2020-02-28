@@ -129,7 +129,7 @@ theme_lares2 <- function(font = "Arial Narrow",
   # Caption
   ret <- ret + theme(plot.caption = element_text(
     hjust = 1, size = size * 0.85, margin = margin(t = size * 0.9), 
-    family = font, face = "bold", color = soft_colour))
+    family = font, color = soft_colour))
   
   # Legend 
   ret <- ret + theme(legend.title = element_text(
