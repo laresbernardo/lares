@@ -17,12 +17,11 @@ updateLares <- function(local = FALSE, force = FALSE, notification = TRUE, fb = 
   if (local) {
     devtools::install("~/Dropbox (Personal)/Documentos/R/Github/lares")
   } else {
-    devtools::install_github("laresbernardo/lares", force = force) 
     if (fb) {
       try_require("fbr")
       with_proxy(devtools::install_github("laresbernardo/laresfb", force = force))
       with_proxy(devtools::install_github("laresbernardo/lares", force = force))
-    }
+    } else devtools::install_github("laresbernardo/lares", force = force) 
   }
 
   if (notification) {
