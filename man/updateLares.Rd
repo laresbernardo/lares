@@ -4,7 +4,7 @@
 \alias{updateLares}
 \title{Update the library}
 \usage{
-updateLares(local = FALSE, force = FALSE, notification = TRUE)
+updateLares(local = FALSE, force = FALSE, notification = TRUE, fb = FALSE)
 }
 \arguments{
 \item{local}{Boolean. Install package with local files (TRUE) or Github repository}
@@ -12,6 +12,8 @@ updateLares(local = FALSE, force = FALSE, notification = TRUE)
 \item{force}{Boolean. Force install if needed}
 
 \item{notification}{Boolean. Notify update for lares' stats}
+
+\item{fb}{Boolean. From FB instance?}
 }
 \description{
 This function lets the user update from repository or local source.
