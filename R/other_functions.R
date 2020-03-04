@@ -850,7 +850,7 @@ json2vector <- function(json) {
 
 
 ####################################################################
-#' Progressive Status Bar (Domino)
+#' Progressive Status Bar (Loading)
 #' 
 #' This function lets the user view a progressbar for a 'for' loop. 
 #' 
@@ -863,9 +863,9 @@ json2vector <- function(json) {
 #' @param msg Character. Finish message
 #' @param type Character. Loading type style: equal, domino
 #' @examples
-#' for (i in 1:15) {
-#'   statusbar(i, 15) 
-#'   Sys.sleep(0.25)
+#' for (i in 1:100) {
+#'   statusbar(i, 100)
+#'   Sys.sleep(0.05)
 #' }
 #' @export
 statusbar <- function(run = 1, max.run = 100, label = run, 
@@ -876,7 +876,21 @@ statusbar <- function(run = 1, max.run = 100, label = run,
   if (length(max.run) == 0 & !is.numeric(run)) 
     stop("max.run needs to be greater than 0!")
   
-  percent.max <- getOption("width") * 0.6
+  percent.max <- getOption("width") * 0.5
+  
+  smart.time.format <- function(x) {
+    if (x < 60) {
+      suffix <- "s"
+      value <- x
+    } else if (x < 60 * 60) {
+      suffix <- "m"
+      value <- x / 60
+    } else {
+      suffix <- "h"
+      value <- x / (60 * 60)
+    }
+    return(paste0(sprintf('%.1f', value), suffix))
+  }
   
   if (run == 1) options("startclock" = Sys.time())
   
@@ -905,8 +919,8 @@ statusbar <- function(run = 1, max.run = 100, label = run,
     paste(ifelse(run != max.run, paste(label, space), paste(
       msg,paste(rep(" ", 18), collapse = ""),"\n"))))
   
-  now <- format(.POSIXct(difftime(
-    Sys.time(), getOption("startclock"), units = "secs"), tz = "GMT"), "%H:%M:%S")
+  now <- difftime(Sys.time(), getOption("startclock"), units = "secs")
+  now <- smart.time.format(now)
   flush.console()
   cat("\r", paste(now, progress))
   if (run == max.run) options("startclock" = NULL)

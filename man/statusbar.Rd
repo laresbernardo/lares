@@ -2,7 +2,7 @@
 % Please edit documentation in R/other_functions.R
 \name{statusbar}
 \alias{statusbar}
-\title{Progressive Status Bar (Domino)}
+\title{Progressive Status Bar (Loading)}
 \usage{
 statusbar(run = 1, max.run = 100, label = run, msg = "DONE", type = "equal")
 }
@@ -23,9 +23,9 @@ at the end of the line. The default is \code{run}.}
 This function lets the user view a progressbar for a 'for' loop.
 }
 \examples{
-for (i in 1:15) {
-  statusbar(i, 15) 
-  Sys.sleep(0.25)
+for (i in 1:100) {
+  statusbar(i, 100)
+  Sys.sleep(0.05)
 }
 }
 \seealso{

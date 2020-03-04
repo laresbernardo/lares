@@ -19,6 +19,7 @@ updateLares <- function(local = FALSE, force = FALSE, notification = TRUE, fb = 
   } else {
     if (fb) {
       try_require("fbr")
+      notification <- FALSE
       with_proxy(devtools::install_github("laresbernardo/laresfb", force = force))
       with_proxy(devtools::install_github("laresbernardo/lares", force = force))
     } else devtools::install_github("laresbernardo/lares", force = force) 
