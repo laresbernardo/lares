@@ -108,7 +108,9 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
       # Add right now's data
       if (today & to == Sys.Date()) {
         quote <- function(ticks) {
-          qRoot <- "https://query1.finance.yahoo.com/v7/finance/quote?fields=symbol,longName,regularMarketPrice,regularMarketChange,regularMarketTime&formatted=false&symbols="
+          qRoot <- paste0(
+            "https://query1.finance.yahoo.com/v7/finance/quote?fields=symbol,",
+            "longName,regularMarketPrice,regularMarketChange,regularMarketTime&formatted=false&symbols=")
           z <- fromJSON(paste(qRoot, paste(ticks, collapse = ","), sep = ""))
           z <- z$quoteResponse$result[,c("symbol", "regularMarketTime", "regularMarketPrice", "regularMarketChange", "longName")]
           row.names(z) <- z$symbol
@@ -124,7 +126,11 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
                           Low = now$Price, Close = now$Price,
                           Volume = NA, Adjusted = now$Price)
         # Append to historical data
-        values <- rbind(values, now)
+        if (max(as.Date(values$Date)) == max(as.Date(now$Date))) {
+          values <- values %>%
+            filter(as.Date(Date) != max(as.Date(Date))) %>%
+            bind_rows(now)
+        }
       }
       # Append to other symbols' data
       data <- rbind(data, values)
