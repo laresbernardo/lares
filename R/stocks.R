@@ -258,13 +258,19 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0) {
     replace(is.na(.), 0) %>%    
     mutate(DifUSD = CumValue - Invested - lag(CumValue),
            Cash = as.numeric(ifelse(is.na(Cash), 0, Cash)),
-           CumCash = round(cumsum(Cash) + cumsum(Dividend) - CumInvested - CumCost + cash_fix),
-           Portfolio = CumCash + CumValue) %>% 
+           CumCash = round(cumsum(Cash) + cumsum(Dividend) - CumInvested - CumCost + cash_fix)) %>% 
     filter(CumInvested != 0) %>%
     arrange(desc(Date)) %>% ungroup()
   
-  attr(days, "type") <- "daily_portfolio"
-  return(days)
+  # One row per day only
+  ret <- days %>% 
+    group_by(Date, CumInvested, CumValue, CumCost, CumDividend, ROI) %>%  
+    summarise_if(is.numeric, sum) %>%
+    arrange(desc(Date)) %>% ungroup() %>%
+    mutate(Portfolio = CumCash + CumValue)
+  
+  attr(ret, "type") <- "daily_portfolio"
+  return(ret)
   
 }
 
@@ -502,7 +508,7 @@ splot_growth <- function(p, save = FALSE) {
                data.frame(Date = p$Date, Amount = p$CumValue, Type = "Stocks"))
   
   plot <- ggplot(aux, aes(x = Date, y = Amount)) + 
-    geom_col(aes(y = Amount, fill = Type), position = "stack", width = 1) +
+    geom_area(aes(y = Amount, fill = Type), position = "stack") +
     labs(title = "  Daily Total Portfolio Value", y = NULL, x = NULL, fill = "") +
     geom_label_repel(data = labels, 
                      aes(x = Date, y = Portfolio, label = formatNum(Cash, 0)), 
@@ -674,7 +680,8 @@ stocks_obj <- function(data = stocks_file(),
   
   message(">>> Downloading historical data for each stock...")
   ret[["quotes"]] <- hist <- stocks_hist(
-    symbols = tickers$Symbol, from = tickers$StartDate, tax = tax)
+    symbols = tickers$Symbol, 
+    from = tickers$StartDate, tax = tax)
   
   # Objects needed for plots
   ret[["stocks"]] <- s <- daily_stocks(hist, trans, tickers)
