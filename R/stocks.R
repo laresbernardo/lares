@@ -98,8 +98,8 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
       # Daily quotes (except today)
       symbol <- as.character(symbols[i])
       start_date <- as.character(from[i])
-      values <- data.frame(getSymbols(
-        symbol, env = NULL, from = start_date, to = to, src = "yahoo"))
+      values <- suppressWarnings(data.frame(getSymbols(
+        symbol, env = NULL, from = start_date, to = to, src = "yahoo")))
       values <- cbind(row.names(values), as.character(symbol), values)
       colnames(values) <- c("Date","Symbol","Open","High","Low","Close","Volume","Adjusted")
       values <- mutate(values, Adjusted = rowMeans(select(values, High, Close), na.rm = TRUE))
@@ -130,8 +130,8 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
       data <- rbind(data, values)
       
       # Dividends 
-      d <- getDividends(as.character(symbol), from = start_date, 
-                        split.adjust = FALSE)
+      d <- suppressWarnings(getDividends(
+        as.character(symbol), from = start_date, split.adjust = FALSE))
       if (nrow(d) > 0) {
         div <-  data.frame(Symbol = rep(symbol, nrow(d)),
                            Date = ymd(row.names(data.frame(d))),
@@ -148,7 +148,9 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
   } else {message("You need to define which stocks to bring. Use the 'symbols=' parameter.") }
   
   results <- data %>% 
-    select(Date, Symbol, Adjusted) %>% rename(Value = Adjusted) %>%
+    select(Date, Symbol, Adjusted) %>% 
+    rename(Value = Adjusted) %>%
+    filter(Value > 0) %>%
     mutate(Date = as.Date(Date), Symbol = as.character(Symbol)) %>%
     left_join(mutate(divs, Symbol = as.character(Symbol)), by = c("Date", "Symbol")) %>% 
     replace(is.na(.), 0) %>%
