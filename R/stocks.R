@@ -72,7 +72,8 @@ stocks_file <- function(filename = NA,
 #' 
 #' @family Investment
 #' @param symbols Character Vector. List of symbols to download historical data
-#' @param from,to Date. Dates for range. If not set, 1 year will be downloaded
+#' @param from,to Date. Dates for range. If not set, 1 year will be downloaded.
+#' Do use more than 4 days or will be over-written.
 #' @param today Boolean. Do you wish to add today's live quote? This will happen
 #' only if to value is the same as today's date
 #' @param tax Numeric. How much [0-99] of your dividends are gone with taxes? 
@@ -97,6 +98,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
     for (i in 1:length(symbols)) {
       # Daily quotes (except today)
       symbol <- as.character(symbols[i])
+      if (as.Date(from[i]) > (Sys.Date() - 4)) from[i] <- Sys.Date() - 4
       start_date <- as.character(from[i])
       values <- suppressWarnings(data.frame(getSymbols(
         symbol, env = NULL, from = start_date, to = to, src = "yahoo")))
@@ -104,6 +106,8 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
       colnames(values) <- c("Date","Symbol","Open","High","Low","Close","Volume","Adjusted")
       values <- mutate(values, Adjusted = rowMeans(select(values, High, Close), na.rm = TRUE))
       row.names(values) <- NULL
+      if (as.Date(from[i]) > (Sys.Date() - 4))
+        values <- head(values, 1)
       
       # Add right now's data
       if (today & to == Sys.Date()) {
@@ -127,9 +131,9 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
                           Volume = NA, Adjusted = now$Price)
         # Append to historical data
         if (max(as.Date(values$Date)) == max(as.Date(now$Date))) {
-          values <- values %>%
-            filter(as.Date(Date) != max(as.Date(Date))) %>%
-            bind_rows(now)
+          values <- values %>% 
+            filter(as.Date(Date) != max(as.Date(Date)))
+          values <- rbind(values, now)
         }
       }
       # Append to other symbols' data
@@ -146,21 +150,24 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
         divs <- rbind(divs, div)
       }
       
-      if (verbose) {
+      if (verbose & length(symbols) > 1) {
         info <- paste(symbol, "since", start_date, "   ")
         statusbar(i, length(symbols), info)  
       }
     }
-  } else {message("You need to define which stocks to bring. Use the 'symbols=' parameter.") }
+  } else {
+    message("You need to define which stocks to bring. Use the 'symbols=' parameter.") 
+  }
   
   results <- data %>% 
     select(Date, Symbol, Adjusted) %>% 
     rename(Value = Adjusted) %>%
     filter(Value > 0) %>%
-    mutate(Date = as.Date(Date), Symbol = as.character(Symbol)) %>%
-    left_join(mutate(divs, Symbol = as.character(Symbol)), by = c("Date", "Symbol")) %>% 
-    replace(is.na(.), 0) %>%
-    arrange(desc(Date))
+    mutate(Date = as.Date(Date), Symbol = as.character(Symbol))
+  if (length(divs) > 0)
+    results <- results %>% 
+    left_join(mutate(divs, Symbol = as.character(Symbol)), by = c("Date", "Symbol"))
+  results <- results %>% replace(is.na(.), 0) %>% arrange(desc(Date))
   
   attr(results, "type") <- "stocks_hist"
   
@@ -802,5 +809,7 @@ stocks_report <- function(data = NA,
 # library(rvest)
 # library(scales)
 # library(httr)
+# library(rdrop2)
 # x <- stocks_obj(sectors = FALSE)
 # stocks_report(x, dir = "~/Desktop")
+

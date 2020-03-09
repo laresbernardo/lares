@@ -16,7 +16,8 @@ stocks_hist(
 \arguments{
 \item{symbols}{Character Vector. List of symbols to download historical data}
 
-\item{from, to}{Date. Dates for range. If not set, 1 year will be downloaded}
+\item{from, to}{Date. Dates for range. If not set, 1 year will be downloaded.
+Do use more than 4 days or will be over-written.}
 
 \item{today}{Boolean. Do you wish to add today's live quote? This will happen
 only if to value is the same as today's date}
