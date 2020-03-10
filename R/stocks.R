@@ -93,7 +93,8 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
   data <- divs <- c()
   
   if (!any(is.na(symbols))) {
-    if (length(from) != length(symbols)) from <- rep(from[1], length(symbols))
+    if (length(from) != length(symbols)) 
+      from <- rep(from[1], length(symbols))
     
     for (i in 1:length(symbols)) {
       # Daily quotes (except today)
@@ -106,8 +107,8 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
       colnames(values) <- c("Date","Symbol","Open","High","Low","Close","Volume","Adjusted")
       values <- mutate(values, Adjusted = rowMeans(select(values, High, Close), na.rm = TRUE))
       row.names(values) <- NULL
-      if (as.Date(from[i]) > (Sys.Date() - 4))
-        values <- head(values, 1)
+      # if (as.Date(from[i]) > (Sys.Date() - 4))
+      #   values <- head(values, 1)
       
       # Add right now's data
       if (today & to == Sys.Date()) {
@@ -130,11 +131,8 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
                           Low = now$Price, Close = now$Price,
                           Volume = NA, Adjusted = now$Price)
         # Append to historical data
-        if (max(as.Date(values$Date)) == max(as.Date(now$Date))) {
-          values <- values %>% 
-            filter(as.Date(Date) != max(as.Date(Date)))
+          values <- values %>% filter(as.Date(Date) != as.Date(now$Date))
           values <- rbind(values, now)
-        }
       }
       # Append to other symbols' data
       data <- rbind(data, values)
@@ -813,3 +811,4 @@ stocks_report <- function(data = NA,
 # x <- stocks_obj(sectors = FALSE)
 # stocks_report(x, dir = "~/Desktop")
 
+x$stocks %>% dplyr::filter(Date == max(Date))
