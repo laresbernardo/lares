@@ -64,6 +64,36 @@ stocks_file <- function(filename = NA,
   return(results)   
 }
 
+####################################################################
+#' Download Stocks Historical Data
+#' 
+#' This function lets the user download stocks historical data
+#' 
+#' @family Investment
+#' @param ticks Character Vector. Symbols/Tickers to quote in real time
+#' @export
+stocks_quote <- function(ticks) {
+  ret <- noret <- c()
+  qRoot <- paste0(
+    "https://query1.finance.yahoo.com/v7/finance/quote?fields=symbol,",
+    "longName,regularMarketPrice,regularMarketChange,regularMarketTime&formatted=false&symbols=")
+  for (i in 1:length(ticks)) {
+    z <- fromJSON(paste(qRoot, paste(ticks[i], collapse = ","), sep = ""))
+    if (length(z$quoteResponse$result) > 0) {
+      z <- z$quoteResponse$result[,c(
+        "symbol", "quoteType", "regularMarketTime", "regularMarketPrice", 
+        "regularMarketChange", "market", "longName")]
+      ret <- rbind(ret, z) 
+    } else noret <- rbind(noret, ticks[i])
+  }
+  colnames(ret) <- c("Symbol","Type","QuoteTime", "Value", "DailyChange", "Market", "SymbolName")
+  ret <- data.frame(ret) %>%
+    mutate(QuoteTime = as.POSIXct(QuoteTime, origin = '1970-01-01 00:00:00'))
+  row.names(ret) <- NULL
+  if (length(noret) > 0) message(paste("No results for", vector2text(noret)))
+  return(ret)
+}
+
 
 ####################################################################
 #' Download Stocks Historical Data
@@ -112,24 +142,12 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
       
       # Add right now's data
       if (today & to == Sys.Date()) {
-        quote <- function(ticks) {
-          qRoot <- paste0(
-            "https://query1.finance.yahoo.com/v7/finance/quote?fields=symbol,",
-            "longName,regularMarketPrice,regularMarketChange,regularMarketTime&formatted=false&symbols=")
-          z <- fromJSON(paste(qRoot, paste(ticks, collapse = ","), sep = ""))
-          z <- z$quoteResponse$result[,c("symbol", "regularMarketTime", "regularMarketPrice", "regularMarketChange", "longName")]
-          row.names(z) <- z$symbol
-          z$symbol <- NULL
-          names(z) <- c("Time", "Price", "Change", "Name")
-          z$Time <- as.POSIXct(z$Time, origin = '1970-01-01 00:00:00')
-          return(z)
-        }
-        now <- quote(symbol)
-        now <- data.frame(Date = as.character(as.Date(now$Time)), 
+        now <- stocks_quote(symbol)
+        now <- data.frame(Date = as.character(as.Date(now$QuoteTime)), 
                           Symbol = symbol,
-                          Open = now$Price, High = now$Price, 
-                          Low = now$Price, Close = now$Price,
-                          Volume = NA, Adjusted = now$Price)
+                          Open = now$v, High = now$Value, 
+                          Low = now$Value, Close = now$Value,
+                          Volume = NA, Adjusted = now$Value)
         # Append to historical data
           values <- values %>% filter(as.Date(Date) != as.Date(now$Date))
           values <- rbind(values, now)

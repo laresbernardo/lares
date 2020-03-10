@@ -6,10 +6,10 @@
 #' @family Tools
 #' @param local Boolean. Install package with local files (TRUE) or Github repository
 #' @param force Boolean. Force install if needed
-#' @param notification Boolean. Notify update for lares' stats
+#' @param n Boolean. Notify update for lares' stats
 #' @param fb Boolean. From FB instance?
 #' @export
-updateLares <- function(local = FALSE, force = FALSE, notification = TRUE, fb = FALSE) {
+updateLares <- function(local = FALSE, force = FALSE, n = TRUE, fb = FALSE) {
   
   start <- Sys.time()
   message(paste(start, "| Started update..."))
@@ -19,13 +19,12 @@ updateLares <- function(local = FALSE, force = FALSE, notification = TRUE, fb = 
   } else {
     if (fb) {
       try_require("fbr")
-      notification <- FALSE
+      n <- FALSE
       with_proxy(devtools::install_github("laresbernardo/laresfb", force = force))
-      with_proxy(devtools::install_github("laresbernardo/lares", force = force))
     } else devtools::install_github("laresbernardo/lares", force = force) 
   }
 
-  if (notification) {
+  if (n) {
     aux <- paste("User:", Sys.info()[["user"]])
     slackSend(aux, title = "New lares update", quiet = TRUE)
   }

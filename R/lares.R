@@ -101,7 +101,8 @@ if (getRversion() >= "2.15.1")
       "make_future_dataframe","train_test","aml","m","scores","aggregate_profiles",
       "PC1","PC2","pvalue","ceteris_paribus","contribution","drive_auth","drive_find",
       "udpipe_download_model","udpipe_load_model","udpipe_annotate","keywords_rake",
-      "gs_auth","gs_read","gs_edit_cells","gs_title","av_audio_convert","with_proxy"))
+      "gs_auth","gs_read","gs_edit_cells","gs_title","av_audio_convert","with_proxy",
+      "QuoteTime"))
 
 #' Pipe operator
 #' @name lares-exports

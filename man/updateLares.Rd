@@ -4,14 +4,14 @@
 \alias{updateLares}
 \title{Update the library}
 \usage{
-updateLares(local = FALSE, force = FALSE, notification = TRUE, fb = FALSE)
+updateLares(local = FALSE, force = FALSE, n = TRUE, fb = FALSE)
 }
 \arguments{
 \item{local}{Boolean. Install package with local files (TRUE) or Github repository}
 
 \item{force}{Boolean. Force install if needed}
 
-\item{notification}{Boolean. Notify update for lares' stats}
+\item{n}{Boolean. Notify update for lares' stats}
 
 \item{fb}{Boolean. From FB instance?}
 }

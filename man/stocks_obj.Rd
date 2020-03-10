@@ -34,6 +34,7 @@ Other Investment:
 \code{\link{splot_types}()},
 \code{\link{stocks_file}()},
 \code{\link{stocks_hist}()},
+\code{\link{stocks_quote}()},
 \code{\link{stocks_report}()}
 }
 \concept{Investment}
