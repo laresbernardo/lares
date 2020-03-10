@@ -810,5 +810,3 @@ stocks_report <- function(data = NA,
 # library(rdrop2)
 # x <- stocks_obj(sectors = FALSE)
 # stocks_report(x, dir = "~/Desktop")
-
-x$stocks %>% dplyr::filter(Date == max(Date))
