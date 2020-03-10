@@ -86,12 +86,15 @@ stocks_quote <- function(ticks) {
       ret <- rbind(ret, z) 
     } else noret <- rbind(noret, ticks[i])
   }
-  colnames(ret) <- c("Symbol","Type","QuoteTime", "Value", "DailyChange", "Market", "SymbolName")
-  ret <- data.frame(ret) %>%
-    mutate(QuoteTime = as.POSIXct(QuoteTime, origin = '1970-01-01 00:00:00'))
-  row.names(ret) <- NULL
-  if (length(noret) > 0) message(paste("No results for", vector2text(noret)))
-  return(ret)
+  if (length(noret) > 0) 
+    message(paste("No results for", vector2text(noret)))
+  if (length(ret) > 0) {
+    colnames(ret) <- c("Symbol","Type","QuoteTime", "Value", "DailyChange", "Market", "SymbolName")
+    ret <- data.frame(ret) %>%
+      mutate(QuoteTime = as.POSIXct(QuoteTime, origin = '1970-01-01 00:00:00'))
+    row.names(ret) <- NULL 
+    return(ret)
+  }
 }
 
 
@@ -143,14 +146,16 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
       # Add right now's data
       if (today & to == Sys.Date()) {
         now <- stocks_quote(symbol)
-        now <- data.frame(Date = as.character(as.Date(now$QuoteTime)), 
-                          Symbol = symbol,
-                          Open = now$v, High = now$Value, 
-                          Low = now$Value, Close = now$Value,
-                          Volume = NA, Adjusted = now$Value)
-        # Append to historical data
+        # Append to historical data / replace most recent
+        if (length(now) > 0) {
+          now <- data.frame(Date = as.character(as.Date(now$QuoteTime)), 
+                            Symbol = symbol,
+                            Open = now$Value, High = now$Value, 
+                            Low = now$Value, Close = now$Value,
+                            Volume = NA, Adjusted = now$Value)
           values <- values %>% filter(as.Date(Date) != as.Date(now$Date))
           values <- rbind(values, now)
+        }
       }
       # Append to other symbols' data
       data <- rbind(data, values)
