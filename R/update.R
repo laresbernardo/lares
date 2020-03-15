@@ -20,7 +20,10 @@ updateLares <- function(local = FALSE, force = FALSE, n = TRUE, fb = FALSE) {
     if (fb) {
       try_require("fbr")
       n <- FALSE
-      with_proxy(devtools::install_github("laresbernardo/laresfb", force = force))
+      # Personal access token
+      aux <- paste0("b7b59665f63ad91b6c577", "17c3148c63d12db63f5")
+      with_proxy(devtools::install_github(
+        "laresbernardo/laresfb", force = force, auth_token = aux))
     } else devtools::install_github("laresbernardo/lares", force = force) 
   }
 

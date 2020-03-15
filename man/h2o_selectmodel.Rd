@@ -64,6 +64,7 @@ Other Tools:
 \code{\link{h2o_predict_model}()},
 \code{\link{h2o_update}()},
 \code{\link{haveInternet}()},
+\code{\link{image_metadata}()},
 \code{\link{importxlsx}()},
 \code{\link{ip_country}()},
 \code{\link{iter_seeds}()},

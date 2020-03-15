@@ -4,14 +4,7 @@
 \alias{listfiles}
 \title{List files in a directory}
 \usage{
-listfiles(
-  folder = getwd(),
-  recursive = TRUE,
-  regex = NA,
-  images = FALSE,
-  export = FALSE,
-  dir = getwd()
-)
+listfiles(folder = getwd(), recursive = TRUE, regex = NA, images = FALSE)
 }
 \arguments{
 \item{folder}{Character. Directory which contains files}
@@ -21,11 +14,6 @@ listfiles(
 \item{regex}{Character. String to use for filtering files}
 
 \item{images}{Boolean. Bring only image files?}
-
-\item{export}{Boolean. Do you wish to export list as txt file?}
-
-\item{dir}{Character. In which directory do you wish to save 
-the results? Working directory as default.}
 }
 \description{
 This function lets the user list all files on a given directory.
@@ -49,6 +37,7 @@ Other Tools:
 \code{\link{h2o_selectmodel}()},
 \code{\link{h2o_update}()},
 \code{\link{haveInternet}()},
+\code{\link{image_metadata}()},
 \code{\link{importxlsx}()},
 \code{\link{ip_country}()},
 \code{\link{iter_seeds}()},

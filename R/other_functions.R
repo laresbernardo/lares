@@ -326,6 +326,67 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
 
 
 ####################################################################
+#' Get Meta Data from Image Files
+#' 
+#' This function lets the user get meta data from image files or directory.
+#' 
+#' @family Tools
+#' @param files Character vector. Files or directory which contains files.
+#' @export
+image_metadata <- function(files) {
+  
+  try_require("exifr")
+  
+  files <- as.character(files)
+  if (length(files) == 1)
+    if (dir.exists(files))
+      files <- listfiles(files, recursive = TRUE)
+  
+  df <- data.frame(file = files)
+  tags <- c("FileName", "SourceFile",
+            "CreateDate", "DateTimeOriginal", "FileModifyDate",
+            "FileTypeExtension", "Megapixels",
+            "ImageSize", "ImageWidth", "ImageHeight", 
+            "GPSLongitude", "GPSLatitude", 
+            "GPSLatitudeRef", "GPSLongitudeRef",
+            "Rotation", "Flash", "Duration", 
+            "Make", "Model")
+  
+  aux <- ceiling(nrow(df)/500)
+  for (i in 1:aux) {
+    if (i == 1) {
+      ret <- c()
+      if (aux > 2)
+        message(paste("This might take a while... Analizing", 
+                      formatNum(nrow(df), decimals = 0), "files!"))
+    }
+    from <- (i - 1) * 500 + 1
+    to <- i*500
+    x <- slice(df, from:to)
+    temp <- read_exif(as.character(x$file)) %>% select(one_of(tags))
+    if (nrow(temp) > 0)
+      ret <- rbind(ret, temp)
+    statusbar(i, aux, label = paste(formatNum(from, 0), "-", formatNum(to, 0)))
+  }
+  
+  df <- ret %>% 
+    mutate(DateTimeOriginal = ymd_hms(DateTimeOriginal),
+           CreateDate = ymd_hms(CreateDate),
+           FileModifyDate = ymd_hms(FileModifyDate))
+  df <- df[,colSums(is.na(df)) < nrow(df)]
+  
+  if (aux > 10)
+    tryCatch({
+      try_require("beepr", stop = FALSE)
+      beep() 
+    })
+  
+  return(df)
+  
+}
+
+
+####################################################################
 #' List files in a directory
 #' 
 #' This function lets the user list all files on a given directory.
@@ -336,21 +397,14 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
 #' @param recursive Boolean. Should the listing recurse into directories?
 #' @param regex Character. String to use for filtering files
 #' @param images Boolean. Bring only image files?
-#' @param export Boolean. Do you wish to export list as txt file?
-#' @param dir Character. In which directory do you wish to save 
-#' the results? Working directory as default.
 #' @export
 listfiles <- function(folder = getwd(), 
-                      recursive = TRUE, regex = NA, images = FALSE, 
-                      export = FALSE, dir = getwd()) {
-  
-  # require(dplyr)
-  # require(lubridate)
-  # require(exifr)
-  
-  if (!file.exists(folder)) {
+                      recursive = TRUE, 
+                      regex = NA, 
+                      images = FALSE) {
+
+  if (!file.exists(folder))
     stop("That directory doesn't exist; please try again!")
-  }
   
   files <- list.files(folder, recursive = recursive)
   address <- paste0(folder, "/", files)
@@ -362,33 +416,8 @@ listfiles <- function(folder = getwd(),
   
   if (!is.na(regex)) df <- df[grep(regex, df$filename),] 
   
-  if (images) {
-    try_require("exifr")
-    if (nrow(df) > 250) {
-      message(paste("This might take a while... Analizing around", 
-                    formatNum(nrow(df), decimals = 0), "files!"))
-    }
-    
-    tags <- c("FileName", "SourceFile",
-              "CreateDate", "DateTimeOriginal", "FileModifyDate",
-              "FileTypeExtension", "Megapixels",
-              "ImageSize", "ImageWidth", "ImageHeight", 
-              "GPSLongitude", "GPSLatitude",
-              "Rotation", "Flash", "Duration")
-    
-    df <- read_exif(folder, recursive = TRUE) %>% 
-      select(one_of(tags)) %>%
-      mutate(DateTimeOriginal = ymd_hms(DateTimeOriginal),
-             CreateDate = ymd_hms(CreateDate),
-             FileModifyDate = ymd_hms(FileModifyDate))
-    
-    df <- df[,colSums(is.na(df)) < nrow(df)]
-    
-  }
-  
-  if (export) 
-    write.table(df$filename, file = file.path(dir, "files.txt"), 
-                quote = FALSE, row.names = FALSE)
+  if (images)
+    df <- image_metadata(df$address)
   
   row.names(df) <- NULL
   df$address <- NULL
@@ -863,9 +892,9 @@ json2vector <- function(json) {
 #' @param msg Character. Finish message
 #' @param type Character. Loading type style: equal, domino
 #' @examples
-#' for (i in 1:100) {
-#'   statusbar(i, 100)
-#'   Sys.sleep(0.05)
+#' for (i in 1:15) {
+#'   statusbar(i, 15) 
+#'   Sys.sleep(0.25)
 #' }
 #' @export
 statusbar <- function(run = 1, max.run = 100, label = run, 
@@ -878,19 +907,19 @@ statusbar <- function(run = 1, max.run = 100, label = run,
   
   percent.max <- getOption("width") * 0.5
   
-  smart.time.format <- function(x) {
-    if (x < 60) {
-      suffix <- "s"
-      value <- x
-    } else if (x < 60 * 60) {
-      suffix <- "m"
-      value <- x / 60
-    } else {
-      suffix <- "h"
-      value <- x / (60 * 60)
-    }
-    return(paste0(sprintf('%.1f', value), suffix))
-  }
+  # formatTimeSmart <- function(x) {
+  #   if (x < 60) {
+  #     suffix <- "s"
+  #     value <- x
+  #   } else if (x < 60 * 60) {
+  #     suffix <- "m"
+  #     value <- x / 60
+  #   } else {
+  #     suffix <- "h"
+  #     value <- x / (60 * 60)
+  #   }
+  #   return(paste0(sprintf('%.1f', value), suffix))
+  # }
   
   if (run == 1) options("startclock" = Sys.time())
   
@@ -915,12 +944,12 @@ statusbar <- function(run = 1, max.run = 100, label = run,
     "[", paste0(rep(last, percent.step), collapse = ""), 
     ifelse(percent.step != percent.max, middle, last),
     paste0(rep(first, percent.max - percent.step), collapse = ""),"] ", 
-    round(percent * 100, 0), "% | ", 
+    round(percent * 100, 0), "% | ",
     paste(ifelse(run != max.run, paste(label, space), paste(
       msg,paste(rep(" ", 18), collapse = ""),"\n"))))
   
-  now <- difftime(Sys.time(), getOption("startclock"), units = "secs")
-  now <- smart.time.format(now)
+  now <- format(.POSIXct(difftime(
+    Sys.time(), getOption("startclock"), units = "secs"), tz = "GMT"), "%H:%M:%S")
   flush.console()
   cat("\r", paste(now, progress))
   if (run == max.run) options("startclock" = NULL)

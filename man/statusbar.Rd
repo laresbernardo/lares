@@ -23,9 +23,9 @@ at the end of the line. The default is \code{run}.}
 This function lets the user view a progressbar for a 'for' loop.
 }
 \examples{
-for (i in 1:100) {
-  statusbar(i, 100)
-  Sys.sleep(0.05)
+for (i in 1:15) {
+  statusbar(i, 15) 
+  Sys.sleep(0.25)
 }
 }
 \seealso{
@@ -46,6 +46,7 @@ Other Tools:
 \code{\link{h2o_selectmodel}()},
 \code{\link{h2o_update}()},
 \code{\link{haveInternet}()},
+\code{\link{image_metadata}()},
 \code{\link{importxlsx}()},
 \code{\link{ip_country}()},
 \code{\link{iter_seeds}()},

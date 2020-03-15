@@ -62,6 +62,7 @@ Other Tools:
 \code{\link{h2o_selectmodel}()},
 \code{\link{h2o_update}()},
 \code{\link{haveInternet}()},
+\code{\link{image_metadata}()},
 \code{\link{importxlsx}()},
 \code{\link{ip_country}()},
 \code{\link{json2vector}()},
