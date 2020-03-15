@@ -363,25 +363,28 @@ image_metadata <- function(files) {
     from <- (i - 1) * 500 + 1
     to <- i*500
     x <- slice(df, from:to)
-    temp <- read_exif(as.character(x$file)) %>% select(one_of(tags))
+    temp <- read_exif(as.character(x$file), tags = tags)
     if (nrow(temp) > 0)
-      ret <- rbind(ret, temp)
+      if ("DateTimeOriginal" %in% colnames(temp))
+        ret <- rbind(ret, select(temp, one_of(tags)))
     statusbar(i, aux, label = paste(formatNum(from, 0), "-", formatNum(to, 0)))
   }
   
-  df <- ret %>% 
-    mutate(DateTimeOriginal = ymd_hms(DateTimeOriginal),
-           CreateDate = ymd_hms(CreateDate),
-           FileModifyDate = ymd_hms(FileModifyDate))
-  df <- df[,colSums(is.na(df)) < nrow(df)]
-  
-  if (aux > 10)
-    tryCatch({
-      try_require("beepr", stop = FALSE)
-      beep() 
-    })
-  
-  return(df)
+  if (length(ret) > 0) {
+    if ("DateTimeOriginal" %in% colnames(ret)) {
+      df <- ret %>% 
+        mutate(DateTimeOriginal = ymd_hms(DateTimeOriginal),
+               CreateDate = ymd_hms(CreateDate),
+               FileModifyDate = ymd_hms(FileModifyDate))
+      df <- df[,colSums(is.na(df)) < nrow(df)] 
+      if (aux > 10)
+        tryCatch({
+          try_require("beepr", stop = FALSE)
+          beep() 
+        }) 
+      return(df)
+    }
+  } else message("No images found to process...")
   
 }
 
