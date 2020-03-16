@@ -4,15 +4,17 @@
 \alias{vector2text}
 \title{Convert a vector into a comma separated text}
 \usage{
-vector2text(vector, sep = ", ", quotes = TRUE)
+vector2text(vector, sep = ", ", quotes = TRUE, and = "")
 }
 \arguments{
 \item{vector}{Vector. Vector with more than 1 observation}
 
 \item{sep}{Character. String text wished to insert between values}
 
-\item{quotes}{Boolean. Bring simple quotes for each 
-observation (useful for SQL)}
+\item{quotes}{Boolean. Bring simple quotes for each observation}
+
+\item{and}{Character. Add 'and' or something before last observation. 
+Not boolean variable so it can be used on other languages}
 }
 \description{
 Convert a vector into a comma separated text

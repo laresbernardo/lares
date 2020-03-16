@@ -144,10 +144,16 @@ normalize <- function(x) {
 #' @family Data Wrangling
 #' @param vector Vector. Vector with more than 1 observation
 #' @param sep Character. String text wished to insert between values
-#' @param quotes Boolean. Bring simple quotes for each 
-#' observation (useful for SQL)
+#' @param quotes Boolean. Bring simple quotes for each observation
+#' @param and Character. Add 'and' or something before last observation. 
+#' Not boolean variable so it can be used on other languages
 #' @export
-vector2text <- function(vector, sep = ", ", quotes = TRUE) {
+vector2text <- function(vector, sep = ", ", quotes = TRUE, and = "") {
+  n <- length(vector)
+  if (and != "" & n > 1) {
+    vector <- c(x[1:(n - 1)], paste("and", vector[n]))
+    quotes <- !quotes # Makes no sense to keep quotes but keep the option
+  } 
   output <- paste(shQuote(vector), collapse = sep)
   if (!quotes) output <- gsub("'", "", output)
   return(output)
@@ -366,7 +372,7 @@ image_metadata <- function(files) {
     temp <- read_exif(as.character(x$file), tags = tags)
     if (nrow(temp) > 0)
       if ("DateTimeOriginal" %in% colnames(temp))
-        ret <- rbind(ret, select(temp, one_of(tags)))
+        ret <- bind_rows(ret, select(temp, one_of(tags)))
     statusbar(i, aux, label = paste(formatNum(from, 0), "-", formatNum(to, 0)))
   }
   
