@@ -46,12 +46,14 @@ Other API:
 \code{\link{bring_api}()},
 \code{\link{fb_accounts}()},
 \code{\link{fb_ads}()},
+\code{\link{fb_creatives}()},
 \code{\link{fb_insights}()},
 \code{\link{fb_post}()}
 
 Other Facebook: 
 \code{\link{fb_accounts}()},
 \code{\link{fb_ads}()},
+\code{\link{fb_creatives}()},
 \code{\link{fb_insights}()},
 \code{\link{fb_post}()}
 }

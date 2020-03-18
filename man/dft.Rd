@@ -4,7 +4,9 @@
 \name{dft}
 \alias{dft}
 \title{Dataset: Titanic Sub-dataset por Examples}
-\format{An object of class \code{"data.frame"}}
+\format{
+An object of class \code{"data.frame"}
+}
 \usage{
 data(dft)
 }

@@ -4,7 +4,9 @@
 \name{dfl}
 \alias{dfl}
 \title{Dataset: Random Data for Examples}
-\format{An object of class \code{"data.frame"}}
+\format{
+An object of class \code{"data.frame"}
+}
 \usage{
 data(dfl)
 }
