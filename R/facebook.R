@@ -262,7 +262,7 @@ fb_post <- function(token, post_id) {
   }  
   if (i == iters & length(nodata) > 0) 
     message(paste("NO DATA: no comments on", vector2text(nodata)))
-  return(ret)
+  return(as_tibble(ret))
 }
 
 
@@ -319,6 +319,9 @@ fb_accounts <- function(token,
     }
   }
   
+  if (class(output) != "data.frame")
+    invisible(return(NULL))
+  
   # Account status dictionary
   output <- mutate(output, account_status = case_when(
     account_status == "1" ~ "ACTIVE",
@@ -334,7 +337,8 @@ fb_accounts <- function(token,
   ))
   
   output <- suppressMessages(type.convert(output, numerals = "no.loss")) %>% 
-    arrange(desc(amount_spent))
+    arrange(desc(amount_spent)) %>%
+    as_tibble()
   
   return(output)
 }
@@ -406,7 +410,8 @@ fb_ads <- function(token,
   if (class(ret) == "data.frame") {
     ret <- ret %>%
       rename(adcreatives_id = list_id) %>%
-      arrange(desc(created_time))
+      arrange(desc(created_time)) %>%
+      as_tibble()
     return(ret) 
   }
 }
@@ -491,7 +496,7 @@ fb_insights <- function(token,
       message("No data found!")
       return(invisible(NULL))
     }
-    return(output)
+    return(as_tibble(output))
   }
 }
 
@@ -523,6 +528,6 @@ fb_creatives <- function(token, which, api_version = "v6.0") {
   import <- GET(linkurl)
   ret <- cleanImport(import)
   if (class(ret) == "data.frame")
-    ret <- select(ret, one_of("id", fields))
+    ret <- as_tibble(select(ret, one_of("id", fields)))
   return(ret) 
 }

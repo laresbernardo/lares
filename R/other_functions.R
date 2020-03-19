@@ -411,7 +411,7 @@ listfiles <- function(folder = getwd(),
                       recursive = TRUE, 
                       regex = NA, 
                       images = FALSE) {
-
+  
   if (!file.exists(folder))
     stop("That directory doesn't exist; please try again!")
   
@@ -1262,27 +1262,24 @@ font_exists <- function(font = "Arial Narrow") {
   # Thanks to extrafont for this code
   ttf_find_default_path <- function() {
     if (grepl("^darwin", R.version$os)) {
-      paths <-
-        c("/Library/Fonts/",                      # System fonts
-          "/System/Library/Fonts",                # More system fonts
-          "/System/Library/Fonts/Supplemental",   # More system fonts
-          "~/Library/Fonts/")                     # User fonts
+      paths <- c("/Library/Fonts/",
+                 "/System/Library/Fonts",
+                 "/System/Library/Fonts/Supplemental",
+                 "~/Library/Fonts/")
       return(paths[file.exists(paths)])
       
     } else if (grepl("^linux-gnu", R.version$os)) {
       # Possible font paths, depending on the system
-      paths <-
-        c("/usr/share/fonts/",                    # Ubuntu/Debian/Arch/Gentoo
-          "/usr/X11R6/lib/X11/fonts/TrueType/",   # RH 6
-          "~/.fonts/")                            # User fonts
+      paths <- c("/usr/share/fonts/",
+                 "/usr/X11R6/lib/X11/fonts/TrueType/",
+                 "~/.fonts/")
       return(paths[file.exists(paths)])
       
     } else if (grepl("^freebsd", R.version$os)) {
       # Possible font paths, depending on installed ports
-      paths <-
-        c("/usr/local/share/fonts/truetype/",
-          "/usr/local/lib/X11/fonts/",
-          "~/.fonts/")                            # User fonts
+      paths <- c("/usr/local/share/fonts/truetype/",
+                 "/usr/local/lib/X11/fonts/",
+                 "~/.fonts/")
       return(paths[file.exists(paths)])
       
     } else if (grepl("^mingw", R.version$os)) {
@@ -1292,7 +1289,7 @@ font_exists <- function(font = "Arial Narrow") {
     }
   }
   check <- function(font) {
-    pattern <- "\\.ttf$"
+    pattern <- "\\.ttf$|\\.otf"
     fonts_path <- ttf_find_default_path()
     ttfiles <- list.files(fonts_path, pattern = pattern,
                           full.names = TRUE, ignore.case = TRUE)
