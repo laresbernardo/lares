@@ -13,18 +13,19 @@ updateLares <- function(local = FALSE, force = FALSE, n = TRUE, fb = FALSE) {
   
   start <- Sys.time()
   message(paste(start, "| Started update..."))
+  try_require("devtools")
   
   if (local) {
-    devtools::install("~/Dropbox (Personal)/Documentos/R/Github/lares")
+    install("~/Dropbox (Personal)/Documentos/R/Github/lares")
   } else {
     if (fb) {
-      try_require("fbr")
+      try_require("fbr", stop = TRUE)
       n <- FALSE
       # Personal access token
       aux <- paste0("b7b59665f63ad91b6c577", "17c3148c63d12db63f5")
-      with_proxy(devtools::install_github(
+      with_proxy(install_github(
         "laresbernardo/laresfb", force = force, auth_token = aux))
-    } else devtools::install_github("laresbernardo/lares", force = force) 
+    } else install_github("laresbernardo/lares", force = force) 
   }
 
   if (n) {

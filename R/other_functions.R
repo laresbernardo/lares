@@ -823,11 +823,20 @@ quants <- function(values, splits = 10, return = "summary") {
 #' @param fill Boolean. Fill weekends and non-quoted dates with 
 #' previous values?
 #' @export
-get_currency <- function(currency_pair, from = Sys.Date() - 99, to = Sys.Date(), fill = FALSE) {
+get_currency <- function(currency_pair, 
+                         from = Sys.Date() - 99, 
+                         to = Sys.Date(), 
+                         fill = FALSE) {
   
   options("getSymbols.warning4.0" = FALSE)
   options("getSymbols.yahoo.warning" = FALSE)
   string <- paste0(toupper(cleanText(currency_pair)), "=X")
+  
+  if (is.na(from) | is.na(to))
+    stop("You must insert a valid date")
+  
+  from <- as.Date(from)
+  to <- as.Date(to)
   
   if (from == to) to <- from + 1
   if (to > Sys.Date()) to <- Sys.Date()

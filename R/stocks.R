@@ -41,15 +41,8 @@ stocks_file <- function(filename = NA,
         stop("Error: that file doesn't exist or it's not in your working directory!")
     } else {
       # FOR DROPBOX'S USE
-      if (is.na(creds) & auto) creds <- "~/Dropbox (Personal)/Documentos/Docs/Data"
-      load(paste0(creds, "/token_pers.rds"))
-      x <- drop_search("Portfolio LC.xlsx", dtoken = token)
-      file <- "temp.xlsx"
-      invisible(
-        drop_download(x$matches[[1]]$metadata$path_lower,
-                      local_path = file,
-                      overwrite = TRUE,
-                      dtoken = token))
+      file <- "Portfolio LC.xlsx"
+      db_download(file, token_dir = creds, token_name = "token_pers.rds")
       results <- processFile(file, keep_old)
       file.remove(file)
     } 

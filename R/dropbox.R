@@ -16,6 +16,7 @@
 db_download <- function(filename, xlsx = TRUE, token_dir = NA, 
                         token_name = "token_pers.rds"){
   
+  try_require("rdrop2")
   if (is.na(token_dir)) {
     load(paste0("~/Dropbox (Personal)/Documentos/Docs/Data/", token_name))
   } else {
@@ -65,6 +66,7 @@ db_download <- function(filename, xlsx = TRUE, token_dir = NA,
 db_upload <- function(filename, dir, delete_file = FALSE, token_dir = NA,
                       token_name = "token_pers.rds") {
   
+  try_require("rdrop2")
   if (is.na(token_dir)) {
     load(paste0("~/Dropbox (Personal)/Documentos/Docs/Data/", token_name))
   } else {

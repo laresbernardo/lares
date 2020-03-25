@@ -8,7 +8,6 @@
 #' @author Bernardo Lares (laresbernardo@@gmail.com)
 #' @importFrom config get
 #' @importFrom DBI dbDriver dbConnect dbSendQuery fetch dbDisconnect
-#' @importFrom devtools install install_github
 #' @import dplyr
 #' @importFrom forecast Arima auto.arima forecast
 #' @importFrom ggforce geom_mark_ellipse
@@ -32,7 +31,7 @@
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom pROC roc ci
 #' @importFrom quantmod getDividends getSymbols getQuote 
-#' @importFrom rdrop2 drop_auth drop_dir drop_download drop_search drop_upload
+# @importFrom rdrop2 drop_auth drop_dir drop_download drop_search drop_upload
 #' @import rlist
 #' @importFrom rlang as_label
 #' @importFrom rmarkdown render
@@ -102,7 +101,8 @@ if (getRversion() >= "2.15.1")
       "PC1","PC2","pvalue","ceteris_paribus","contribution","drive_auth","drive_find",
       "udpipe_download_model","udpipe_load_model","udpipe_annotate","keywords_rake",
       "gs_auth","gs_read","gs_edit_cells","gs_title","av_audio_convert","with_proxy",
-      "QuoteTime"))
+      "QuoteTime","install_github","install","drop_search","drop_download","drop_auth",
+      "drop_upload"))
 
 #' Pipe operator
 #' @name lares-exports
