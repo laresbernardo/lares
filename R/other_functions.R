@@ -909,6 +909,10 @@ json2vector <- function(json) {
 #' at the end of the line. The default is \code{run}.
 #' @param msg Character. Finish message
 #' @param type Character. Loading type style: equal, domino
+#' @param start_time POSIXct. Start time to consider. If NA, then
+#' when first iteration starts will be set as start time. Useful
+#' for when first iteration is showed as done but started a few 
+#' seconds/minutes ago.
 #' @examples
 #' for (i in 1:15) {
 #'   statusbar(i, 15) 
@@ -916,7 +920,8 @@ json2vector <- function(json) {
 #' }
 #' @export
 statusbar <- function(run = 1, max.run = 100, label = run, 
-                      msg = "DONE", type = "equal"){
+                      msg = "DONE", type = "equal",
+                      start_time = NA){
   
   if (length(run) > 1 & !is.numeric(run)) 
     stop("run must be a numerical value!")
@@ -939,7 +944,10 @@ statusbar <- function(run = 1, max.run = 100, label = run,
   #   return(paste0(sprintf('%.1f', value), suffix))
   # }
   
-  if (run == 1) options("startclock" = Sys.time())
+  if (run == 1 & is.na(start_time))
+    options("startclock" = Sys.time())
+  if (!is.na(start_time))
+    options("startclock" = start_time)
   
   if (length(max.run) > 1) {
     percent <- which(run == max.run) / length(max.run)

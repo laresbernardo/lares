@@ -12,8 +12,8 @@
 #' @importFrom forecast Arima auto.arima forecast
 #' @importFrom ggforce geom_mark_ellipse
 #' @import ggplot2
-#' @importFrom googleAuthR gar_auth
-#' @importFrom googlesheets4 sheets_auth read_sheet
+# @importFrom googleAuthR gar_auth
+# @importFrom googlesheets4 sheets_auth read_sheet
 #' @importFrom graphics box hist plot points rasterImage rect grid 
 #' @importFrom grDevices graphics.off dev.off png dev.size
 #' @importFrom gridExtra grid.arrange tableGrob arrangeGrob ttheme_minimal 
@@ -102,7 +102,7 @@ if (getRversion() >= "2.15.1")
       "udpipe_download_model","udpipe_load_model","udpipe_annotate","keywords_rake",
       "gs_auth","gs_read","gs_edit_cells","gs_title","av_audio_convert","with_proxy",
       "QuoteTime","install_github","install","drop_search","drop_download","drop_auth",
-      "drop_upload"))
+      "drop_upload","sheets_auth","read_sheet","gar_auth"))
 
 #' Pipe operator
 #' @name lares-exports

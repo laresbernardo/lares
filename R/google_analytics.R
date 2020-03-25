@@ -26,8 +26,8 @@ queryGA <- function(account = "comparamejor",
                     start = lubridate::floor_date(Sys.Date(), "month"),
                     end = Sys.Date()){
   
-  # require(googleAuthR)
-  # require(googleAnalyticsR)
+  try_require("googleAnalyticsR")
+  try_require("googleAuthR")
   
   #FIRST TIME
   # options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics"),
@@ -49,10 +49,9 @@ queryGA <- function(account = "comparamejor",
     token <- vars$token_name 
   }
   message(paste("Token:", token))
-  googleAuthR::gar_auth(token)
+  gar_auth(token) # From googleAuthR
   
   # Query on Google Analytics
-  try_require("googleAnalyticsR")
   google_analytics(
     vars$ga_id, 
     date_range = c(start, end),

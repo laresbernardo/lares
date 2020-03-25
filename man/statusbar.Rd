@@ -4,7 +4,14 @@
 \alias{statusbar}
 \title{Progressive Status Bar (Loading)}
 \usage{
-statusbar(run = 1, max.run = 100, label = run, msg = "DONE", type = "equal")
+statusbar(
+  run = 1,
+  max.run = 100,
+  label = run,
+  msg = "DONE",
+  type = "equal",
+  start_time = NA
+)
 }
 \arguments{
 \item{run}{Iterator. for loop or an integer with the current loop number.
@@ -18,6 +25,11 @@ at the end of the line. The default is \code{run}.}
 \item{msg}{Character. Finish message}
 
 \item{type}{Character. Loading type style: equal, domino}
+
+\item{start_time}{POSIXct. Start time to consider. If NA, then
+when first iteration starts will be set as start time. Useful
+for when first iteration is showed as done but started a few 
+seconds/minutes ago.}
 }
 \description{
 This function lets the user view a progressbar for a 'for' loop.

@@ -60,7 +60,10 @@ writeGS <- function(data, title, ws = "Hoja 1", cell = 'A1', first_time = FALSE)
 #' @param ... Further read_sheet parameters
 #' @export
 readGS4 <- function(title, sheet = "Hoja 1", range = NULL, creds = NULL, ...) {
+  
   try_require("googledrive")
+  try_require("googlesheets4")
+  
   if (!is.null(creds)) {
     if (file.exists(creds)) {
       sheets_auth(path = creds)
