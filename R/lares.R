@@ -10,7 +10,7 @@
 #' @importFrom DBI dbDriver dbConnect dbSendQuery fetch dbDisconnect
 #' @import dplyr
 #' @importFrom forecast Arima auto.arima forecast
-#' @importFrom ggforce geom_mark_ellipse
+# @importFrom ggforce geom_mark_ellipse
 #' @import ggplot2
 # @importFrom googleAuthR gar_auth
 # @importFrom googlesheets4 sheets_auth read_sheet
@@ -26,7 +26,7 @@
 #' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd 
 #' minute hour second %m+% floor_date 
 #' @importFrom magrittr %>% set_colnames
-#' @importFrom mice mice complete
+# @importFrom mice mice complete
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom pROC roc ci
@@ -102,7 +102,7 @@ if (getRversion() >= "2.15.1")
       "udpipe_download_model","udpipe_load_model","udpipe_annotate","keywords_rake",
       "gs_auth","gs_read","gs_edit_cells","gs_title","av_audio_convert","with_proxy",
       "QuoteTime","install_github","install","drop_search","drop_download","drop_auth",
-      "drop_upload","sheets_auth","read_sheet","gar_auth"))
+      "drop_upload","sheets_auth","read_sheet","gar_auth","geom_mark_ellipse","mice","complete"))
 
 #' Pipe operator
 #' @name lares-exports

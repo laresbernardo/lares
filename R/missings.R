@@ -78,8 +78,9 @@ missingness <- function(df, plot = FALSE, full = FALSE,
 #' @param quiet Boolean. Keep quiet? (or print replacements)
 #' @export
 impute <- function(df, m = 5, iters = 5, seed = 0, quiet = FALSE){
+  try_require("mice")
   set.seed(seed)
-  mids <- mice(df, seed = seed, m = m, maxit = iters, printFlag = !quiet)
-  full <- complete(mids)
-  return(full)
+  aux <- mice(df, seed = seed, m = m, maxit = iters, printFlag = !quiet)
+  ret <- complete(aux)
+  return(ret)
 }

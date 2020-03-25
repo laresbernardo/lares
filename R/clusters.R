@@ -28,6 +28,8 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
                           comb = c(1, 2),
                           seed = 123){
   
+  try_require("ggforce")
+  
   results <- list()
   
   # There should not be NAs
