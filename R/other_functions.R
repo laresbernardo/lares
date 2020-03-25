@@ -9,7 +9,7 @@
 #' @export
 try_require <- function(package, stop = TRUE) {
   if (length(find.package(package, quiet = TRUE)) > 0) {
-    library(package, character.only = TRUE)
+    suppressMessages(library(package, character.only = TRUE))
     return(invisible())
   }
   if (stop)
@@ -827,6 +827,8 @@ get_currency <- function(currency_pair,
                          from = Sys.Date() - 99, 
                          to = Sys.Date(), 
                          fill = FALSE) {
+  
+  try_require("quantmod")
   
   options("getSymbols.warning4.0" = FALSE)
   options("getSymbols.yahoo.warning" = FALSE)

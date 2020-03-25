@@ -47,9 +47,9 @@ forecast_arima <- function(time, values, n_future = 30,
                            wd_excluded = NA,
                            plot = TRUE, plot_days = 90, project = NA){
   
-  # require(forecast)
   # require(lubridate)
   # require(ggplot2)
+  try_require("forecast")
   
   # ARIMA doesn't use zeroes!
   time <- time[!values == 0]

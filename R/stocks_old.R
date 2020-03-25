@@ -78,6 +78,8 @@ get_stocks_hist <- function(symbols = NA,
   
   warning("New portfolio/stocks functions created. Use stocks_hist() instead")
   
+  try_require("quantmod")
+  
   if (!haveInternet()) stop("You currently have NO internet connection!")
   
   options("getSymbols.warning4.0" = FALSE)
@@ -118,7 +120,7 @@ get_stocks_hist <- function(symbols = NA,
         data <- rbind(data, values)
         
         # Dividends if case
-        d <- quantmod::getDividends(as.character(symbol), from = start_date)
+        d <- getDividends(as.character(symbol), from = start_date)
         if (nrow(d) > 0) {
           div <-  data.frame(Symbol = rep(symbol, nrow(d)),
                              Date = ymd(row.names(data.frame(d))),

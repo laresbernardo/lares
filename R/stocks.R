@@ -112,7 +112,9 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
                         tax = 30, 
                         verbose = TRUE) {
   
-  if (!haveInternet()) stop("You currently have NO internet connection!")
+  try_require("quantmod")
+  
+  # if (!haveInternet()) stop("You currently have NO internet connection!")
   
   options("getSymbols.warning4.0" = FALSE)
   options("getSymbols.yahoo.warning" = FALSE)
