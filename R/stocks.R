@@ -103,6 +103,8 @@ stocks_quote <- function(ticks) {
 #' @param today Boolean. Do you wish to add today's live quote? This will happen
 #' only if to value is the same as today's date
 #' @param tax Numeric. How much [0-99] of your dividends are gone with taxes? 
+#' @param parg Boolean. Personal argument. Used to personalize stuff, in this
+#' case, taxes changed from A to B in given date (hardcoded)
 #' @param verbose Boolean. Print results and progress while downloading?
 #' @export
 stocks_hist <- function(symbols = c("VTI", "TSLA"), 
@@ -110,6 +112,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
                         to = Sys.Date(),
                         today = TRUE,
                         tax = 30, 
+                        parg = FALSE,
                         verbose = TRUE) {
   
   try_require("quantmod")
@@ -164,6 +167,11 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
                            Div = as.vector(d),
                            DivReal = as.vector(d)*(100 - tax)/100)
         divs <- rbind(divs, div)
+        if (parg == TRUE)
+          divs <- mutate(divs, DivReal = ifelse(
+            Date < as.Date('2020-03-03'), 
+            as.vector(d) * 0.30, 
+            as.vector(d) * 0.15))
       }
       
       if (verbose & length(symbols) > 1) {
@@ -694,10 +702,14 @@ splot_etf <- function(s, save = FALSE) {
 #' @param cash_fix Numeric. If you wish to algebraically sum a value 
 #' to your cash balance
 #' @param tax Numeric. How much [0-99] of your dividends are gone with taxes? 
+#' @param parg Boolean. Personal argument. Used to personalize stuff, in this
+#' case, taxes changed from A to B in given date (hardcoded)
 #' @param sectors Boolean. Return sectors segmentation for ETFs?
 #' @export
 stocks_obj <- function(data = stocks_file(), 
-                       cash_fix = 0, tax = 30, 
+                       cash_fix = 0, 
+                       tax = 30, 
+                       parg = FALSE,
                        sectors = FALSE) {
 
   check_attr(data, check = "stocks_file")
@@ -710,7 +722,9 @@ stocks_obj <- function(data = stocks_file(),
   message(">>> Downloading historical data for each stock...")
   ret[["quotes"]] <- hist <- stocks_hist(
     symbols = tickers$Symbol, 
-    from = tickers$StartDate, tax = tax)
+    from = tickers$StartDate, 
+    tax = tax,
+    parg = parg)
   
   # Objects needed for plots
   ret[["stocks"]] <- s <- daily_stocks(hist, trans, tickers)
@@ -762,7 +776,7 @@ stocks_report <- function(data = NA,
                           creds = NA) {
   if (is.na(data)[1]) {
     df <- stocks_file(creds = creds) 
-    data <- stocks_obj(df, sectors = sectors)
+    data <- stocks_obj(df, sectors = sectors, parg = is.na(creds))
   }
   
   check_attr(data, check = c("stocks_obj"))

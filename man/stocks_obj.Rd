@@ -4,7 +4,13 @@
 \alias{stocks_obj}
 \title{Portfolio's Calculations and Plots}
 \usage{
-stocks_obj(data = stocks_file(), cash_fix = 0, tax = 30, sectors = FALSE)
+stocks_obj(
+  data = stocks_file(),
+  cash_fix = 0,
+  tax = 30,
+  parg = FALSE,
+  sectors = FALSE
+)
 }
 \arguments{
 \item{data}{List. Containing the following dataframes: portfolio,
@@ -14,6 +20,9 @@ transactions, cash. They have to follow the original xlsx format}
 to your cash balance}
 
 \item{tax}{Numeric. How much [0-99] of your dividends are gone with taxes?}
+
+\item{parg}{Boolean. Personal argument. Used to personalize stuff, in this
+case, taxes changed from A to B in given date (hardcoded)}
 
 \item{sectors}{Boolean. Return sectors segmentation for ETFs?}
 }
