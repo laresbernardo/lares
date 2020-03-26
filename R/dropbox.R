@@ -10,10 +10,14 @@
 #' @param filename String. File's name
 #' @param xlsx Boolean. Is it an Excel file? Can be returned as a list
 #' for each tab and not as a file if needed
+#' @param newname Character. Name for new file
 #' @param token_dir Character. RDS with token local directory
 #' @param token_name Character. RDS file name with your token's data
 #' @export
-db_download <- function(filename, xlsx = TRUE, token_dir = NA, 
+db_download <- function(filename, 
+                        xlsx = TRUE, 
+                        newname = "temp.xlsx",
+                        token_dir = NA, 
                         token_name = "token_pers.rds"){
   
   try_require("rdrop2")
@@ -32,16 +36,16 @@ db_download <- function(filename, xlsx = TRUE, token_dir = NA,
   }
   
   x <- drop_search(filename, dtoken = token)
-  file <- "temp.xlsx"
+  
   invisible(
     drop_download(x$matches[[1]]$metadata$path_lower, 
-                  local_path = file, 
+                  local_path = newname, 
                   overwrite = TRUE, 
                   dtoken = token))
   
   if (xlsx) {
-    results <- importxlsx(file) 
-    invisible(file.remove(file))
+    results <- importxlsx(newname) 
+    invisible(file.remove(newname))
     return(results)
   } else {
     return(message("File downloaded succesfully"))

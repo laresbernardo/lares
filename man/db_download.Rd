@@ -7,6 +7,7 @@
 db_download(
   filename,
   xlsx = TRUE,
+  newname = "temp.xlsx",
   token_dir = NA,
   token_name = "token_pers.rds"
 )
@@ -16,6 +17,8 @@ db_download(
 
 \item{xlsx}{Boolean. Is it an Excel file? Can be returned as a list
 for each tab and not as a file if needed}
+
+\item{newname}{Character. Name for new file}
 
 \item{token_dir}{Character. RDS with token local directory}
 
