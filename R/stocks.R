@@ -43,10 +43,10 @@ stocks_file <- function(filename = NA,
       # FOR DROPBOX'S USE
       file <- "Portfolio LC.xlsx"
       db_download(file, 
-                  xlsx = FALSE, # Do not delete file yet!
-                  newname = "temp.xlsx",
+                  xlsx = FALSE, # Do not import as Excel, just download
+                  newname = file,
                   token_dir = creds)
-      results <- processFile("temp.xlsx", keep_old)
+      results <- processFile(file, keep_old)
       file.remove(file)
     } 
   }
