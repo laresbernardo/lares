@@ -12,7 +12,7 @@
 updateLares <- function(local = FALSE, force = FALSE, n = TRUE, fb = FALSE) {
   
   tic(id = "updateLares")
-  message(paste(start, "| Started update..."))
+  message(paste(Sys.time(), "| Started update..."))
   try_require("devtools")
   
   if (local) {
