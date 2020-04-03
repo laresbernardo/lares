@@ -4,8 +4,6 @@
 set.tictoc <- function(which, id) {
   now <- proc.time()["elapsed"]
   aux <- getOption(which)
-  if (!sprintf("tic_%s", id) %in% names(getOption("tic")))
-    stop(sprintf("You need to tic(id = '%s') before you toc(id = '%s')", id, id))
   name <- sprintf("%s_%s", which, id)
   if (is.null(aux)) aux <- list()
   aux[[name]] <- now
@@ -58,6 +56,9 @@ tic <- function(id = 1, quiet = TRUE) {
 #' @export
 #' @rdname tic
 toc <- function(id = 1, msg = "Elapsed time:", quiet = FALSE) {
+  
+  if (!sprintf("tic_%s", id) %in% names(getOption("tic")))
+    stop(sprintf("You need to tic(id = '%s') before you toc(id = '%s')", id, id))
   
   toc <- set.tictoc("toc", id)
   options("toc" = toc)
