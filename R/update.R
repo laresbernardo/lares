@@ -11,7 +11,7 @@
 #' @export
 updateLares <- function(local = FALSE, force = FALSE, n = TRUE, fb = FALSE) {
   
-  start <- Sys.time()
+  tic(id = "updateLares")
   message(paste(start, "| Started update..."))
   try_require("devtools")
   
@@ -34,8 +34,7 @@ updateLares <- function(local = FALSE, force = FALSE, n = TRUE, fb = FALSE) {
   }
   
   message("Restart your current session for update to work properly")
-  aux <- round(difftime(Sys.time(), start, units = "secs"), 2)
-  message(paste(Sys.time(), "| Duration:", aux, "s"))
+  toc(id = "updateLares", msg = paste(Sys.time(), "|"))
 }
 
 ####################################################################
@@ -49,6 +48,7 @@ updateLares <- function(local = FALSE, force = FALSE, n = TRUE, fb = FALSE) {
 #' @param lib Character. Library directories where to install h2o
 #' @export
 h2o_update <- function(run = TRUE, lib = .libPaths()){
+  tic(id = "h2o_update")
   url <- "http://h2o-release.s3.amazonaws.com/h2o/latest_stable.html"
   end <- xml2::read_html(url) %>% rvest::html_node("head") %>% 
     as.character() %>% gsub(".*url=","",.) %>% gsub("/index.html.*","",.)
@@ -60,4 +60,5 @@ h2o_update <- function(run = TRUE, lib = .libPaths()){
   message(paste("Installing h2o from", newurl))
   install.packages("h2o", type = "source", repos = newurl, lib = lib)
   if (run) h2o.init()
+  toc(id = "h2o_update", msg = paste(Sys.time(), "|"))
 }

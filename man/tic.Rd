@@ -3,11 +3,14 @@
 \name{tic}
 \alias{tic}
 \alias{toc}
+\alias{resettictoc}
 \title{Stopwatch Start}
 \usage{
 tic(id = 1, quiet = TRUE)
 
 toc(id = 1, msg = "Elapsed time:", quiet = FALSE)
+
+resettictoc(which = "both")
 }
 \arguments{
 \item{id}{Define ID if multiple tic() & toc() are being used}
@@ -15,6 +18,8 @@ toc(id = 1, msg = "Elapsed time:", quiet = FALSE)
 \item{quiet}{Boolean. Quiet messages?}
 
 \item{msg}{Character. Custom message shown}
+
+\item{which}{Character. Select: both, tic, toc}
 }
 \value{
 \code{toc} returns an (invisible) list containing the timestamps
@@ -24,6 +29,8 @@ toc(id = 1, msg = "Elapsed time:", quiet = FALSE)
 Measure timings between a tic and a toc.
 
 Measure timings between a tic and a toc.
+
+Measure timings between a tic and a toc. Reset all values
 }
 \examples{
 \dontrun{
@@ -32,10 +39,10 @@ tic(quiet = FALSE)
 toc()
 getOption("tic")
 
-# Multiple tic toc
+# Multiple tic tocs
 tic(id = 123, quiet = FALSE)
 toc(id = 123)
-getOption("tic")
+toc(id = 1)
 }
 }
 \concept{Time}

@@ -87,8 +87,9 @@ h2o_automl <- function(df, y = "tag",
                        subdir = NA,
                        project = "ML Project") {
   
-  start <- Sys.time()
-  if (!quiet) message(paste(start,"| Started process..."))
+  tic(id = "h2o_automl")
+  
+  if (!quiet) message(paste(Sys.time, "| Started process..."))
   
   # INDEPENDENT VARIABLE
   if (!y %in% colnames(df)) {
@@ -242,8 +243,7 @@ h2o_automl <- function(df, y = "tag",
     if (!quiet) message("Results and model files exported succesfully!")
   }
   
-  if (!quiet) message(paste0(
-    "Process duration: ", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
+  if (!quiet) toc(id = "h2o_automl", msg = "Process duration:")
   
   print(results$metrics$metrics)
   
