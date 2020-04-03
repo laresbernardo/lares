@@ -1031,8 +1031,11 @@ importxlsx <- function(file) {
   if (length(sheets) > 1) {
     mylist <- list()
     for (i in 1:length(sheets)) {
-      sheet <- read.xlsx(file, sheet = i, skipEmptyRows = TRUE, detectDates = TRUE)  
-      mylist[[i]] <- sheet
+      sheet <- read.xlsx(file, sheet = i, 
+                         skipEmptyRows = TRUE, 
+                         startRow = 1,
+                         detectDates = TRUE)  
+      mylist[[sheets[i]]] <- sheet
     } 
   } else {
     mylist <- read.xlsx(file, sheet = sheets, skipEmptyRows = TRUE, detectDates = TRUE)  
