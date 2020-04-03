@@ -4,7 +4,7 @@
 \alias{fb_creatives}
 \title{Facebook Creatives API}
 \usage{
-fb_creatives(token, which, api_version = "v6.0")
+fb_creatives(token, which, api_version = "v6.0", show = FALSE)
 }
 \arguments{
 \item{token}{Character. This must be a valid access token with sufficient 
@@ -14,6 +14,8 @@ privileges. Visit the Facebook API Graph Explorer to acquire one}
 or ads IDs to be queried}
 
 \item{api_version}{Character. Facebook API version}
+
+\item{show}{Boolean. Show cURL used in GET}
 }
 \description{
 For more information: \href{https://developers.facebook.com/docs/marketing-api/reference/ad-creative/}{Ad Creative}

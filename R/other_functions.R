@@ -1419,3 +1419,25 @@ check_opts <- function(inputs, options,
               vector2text(options)))
   if (!quiet) return(TRUE)
 }
+
+
+####################################################################
+#' Flatten lists into data.frame
+#' 
+#' Flatten a list with possible multiple lists within into a single
+#' data.frame with valid column names.
+#'
+#' @param x List
+#' @export
+flatten_list <- function(x) {
+  n <- length(x)
+  for (i in 1:n) {
+    if (i == 1) ret <- c()
+    values <- unlist(x[[i]])
+    aux <- data.frame(t(values))
+    ret <- suppressWarnings(bind_rows(ret, aux))
+    if (n > 100) statusbar(i, n, i)
+    if (i == n) ret <- as_tibble(ret)
+  }  
+  return(ret)
+}

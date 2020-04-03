@@ -513,21 +513,26 @@ fb_insights <- function(token,
 #' @param which Character vector. This is the ID of accounts, campaigns, adsets, 
 #' or ads IDs to be queried
 #' @param api_version Character. Facebook API version
+#' @param show Boolean. Show cURL used in GET
 #' @export
-fb_creatives <- function(token, which, api_version = "v6.0") {
+fb_creatives <- function(token, which, api_version = "v6.0", show = FALSE) {
   
   set_config(config(http_version = 0))
   
-  fields <- c("account_id","object_type","name","status",
+  fields <- c("account_id","object_type","name","status","campaign_id",
               "call_to_action_type","image_url","thumbnail_url")
   link <- paste0("https://graph.facebook.com/%s/%s/adcreatives?",
-                 "grant_type=fb_exchange_token&access_token=%s",
-                 "&fields=%s")
-  linkurl <- sprintf(link, api_version, which, token, 
-                     vector2text(fields, sep = ",", quotes = FALSE))
+                 "grant_type=fb_exchange_token",
+                 "&fields=%s",
+                 "&access_token=%s")
+  linkurl <- sprintf(link, api_version, which, 
+                     vector2text(fields, sep = ",", quotes = FALSE), 
+                     token)
+  if (show) message("cURL: ", linkurl)
   import <- GET(linkurl)
   ret <- cleanImport(import)
   if (class(ret) == "data.frame")
     ret <- as_tibble(select(ret, one_of("id", fields)))
+  attr(ret, "cURL") <- linkurl
   return(ret) 
 }

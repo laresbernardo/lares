@@ -9,17 +9,21 @@
 #' @export
 queryDummy = function(query, creds = NA) {
 
+  tic(id = "queryDummy")
+  
   dw <- get_credentials(from = "dummy", dir = creds)
-
   drv <- RPostgreSQL::PostgreSQL()
   con <- dbConnect(drv, host = dw$server, dbname = dw$database,
                    port = dw$port, user = dw$uid, password = dw$pwd)
-  start <- Sys.time()
+
   q <- dbSendQuery(con, query)
   q <- fetch(q, n = -1)
   dbDisconnect(con)
-  message(paste("Query duration:", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
+  
+  toc(id = "queryDummy", msg = "Query duration:")
+  
   return(q)
+  
 }
 
 
