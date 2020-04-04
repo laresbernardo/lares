@@ -321,8 +321,12 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
         rename(., "importance" = "percentage") else .}
     noimp <- filter(imp, importance < 0.015) %>% arrange(desc(importance))
     if (nrow(noimp) > 0) {
-      which <- vector2text(noimp$variable)
-      if (!quiet) message(paste("NOTE: The following variables were NOT important:", which))
+      top10 <- noimp %>% slice(10)
+      which <- vector2text(top10$variable)
+      if (nrow(noimp) > 10) 
+        which <- paste(which, "and", nrow(noimp) - 10, "more...")
+      if (!quiet) 
+        message(paste("NOTE: The following variables were NOT important:", which))
     } 
   }
   
