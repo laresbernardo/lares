@@ -89,7 +89,7 @@ h2o_automl <- function(df, y = "tag",
   
   tic(id = "h2o_automl")
   
-  if (!quiet) message(paste(Sys.time, "| Started process..."))
+  if (!quiet) message(paste(Sys.time(), "| Started process..."))
   
   # INDEPENDENT VARIABLE
   if (!y %in% colnames(df)) {
