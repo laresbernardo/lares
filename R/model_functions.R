@@ -106,7 +106,7 @@ h2o_automl <- function(df, y = "tag",
   if (!is.null(m)) {
     m <- mutate(m, label = paste0(variable, " (", missingness, "%)"))
     if (!quiet) {
-      top10 <- m %>% ungroup() %>% slice(10)
+      top10 <- m %>% ungroup() %>% slice(1:10)
       which <- vector2text(top10$label)
       if (nrow(m) > 10)
         which <- paste(which, "and", nrow(m) - 10, "more...")
@@ -327,7 +327,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
         rename(., "importance" = "percentage") else .}
     noimp <- filter(imp, importance < 0.015) %>% arrange(desc(importance))
     if (nrow(noimp) > 0) {
-      top10 <- noimp %>% ungroup() %>% slice(10)
+      top10 <- noimp %>% ungroup() %>% slice(1:10)
       which <- vector2text(top10$variable)
       if (nrow(noimp) > 10) 
         which <- paste(which, "and", nrow(noimp) - 10, "other...")
