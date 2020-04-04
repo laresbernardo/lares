@@ -1009,7 +1009,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
   text <- paste("*Assuming rate of",
                 vector2text(round(aux$p), sep = "/", quotes = FALSE), "for",
                 vector2text(aux$tag, sep = "/", quotes = FALSE))
-  if (!is.na(caption)) caption <- paste(text, caption, sep = "\n")
+  if (!is.na(caption)) caption <- paste(text, caption, sep = "\n") else caption <- text
   p <- p + labs(caption = caption)
   
   if (!is.na(subdir)) {
@@ -1125,7 +1125,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
   text <- paste("*Assuming rate of",
                 vector2text(round(aux$p), sep = "/", quotes = FALSE), "for",
                 vector2text(aux$tag, sep = "/", quotes = FALSE))
-  if (!is.na(caption)) caption <- paste(text, caption, sep = "\n")
+  if (!is.na(caption)) caption <- paste(text, caption, sep = "\n") else caption <- text
   p <- p + labs(caption = caption)
   
   if (!is.na(subdir)) {
