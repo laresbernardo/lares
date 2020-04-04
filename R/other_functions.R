@@ -1028,18 +1028,18 @@ left <- function(string, n = 1){
 #' @export
 importxlsx <- function(file) {
   sheets <- getSheetNames(file)
-  if (length(sheets) > 1) {
-    mylist <- list()
-    for (i in 1:length(sheets)) {
-      sheet <- read.xlsx(file, sheet = i, 
-                         skipEmptyRows = TRUE, 
-                         startRow = 1,
-                         detectDates = TRUE)  
-      mylist[[sheets[i]]] <- sheet
-    } 
-  } else {
-    mylist <- read.xlsx(file, sheet = sheets, skipEmptyRows = TRUE, detectDates = TRUE)  
-  }
+  mylist <- list()
+  for (i in 1:length(sheets)) {
+    sheet <- read.xlsx(file, 
+                       sheet = i, 
+                       skipEmptyRows = TRUE, 
+                       skipEmptyCols = TRUE,
+                       startRow = 1,
+                       detectDates = TRUE)  
+    mylist[[sheets[i]]] <- sheet
+  } 
+  if (length(sheets) == 1)
+    mylist <- mylist[[1]][[1]]
   return(mylist)
 }
 

@@ -182,24 +182,19 @@ date_feats <- function(dates,
   results <- c()
   date_cols <- df_str(dates, return = "names", quiet = TRUE)$time
   
-  if (length(date_cols) == 0) {
+  if (length(date_cols) == 0)
     return(dates)
-  }
   
-  if (!is.na(only)) {
+  if (!is.na(only))
     date_cols <- date_cols[date_cols %in% only]
-  }
   
   iters <- ifelse(date_cols == "df", 1, length(date_cols))[1]
   if (!is.na(iters)) {
-    if (summary == TRUE) {
+    if (summary)
       message(paste("Processing", iters, "date/time columns:", vector2text(date_cols))) 
-    }
-  } else {
-    return(dates)
-  }
+  } else return(dates)
   
-  if (!class(dates) == "data.frame" & iters == 1) {
+  if (!"data.frame" %in% class(dates) & iters == 1) {
     dates <- data.frame(values_date = dates)
     date_cols <- "values_date"
   }
