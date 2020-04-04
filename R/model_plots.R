@@ -1005,7 +1005,12 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
       facet_grid(label~.)
   }
   
-  if (!is.na(caption)) p <- p + labs(caption = caption)
+  aux <- freqs(data.frame(tag = tag), tag)
+  text <- paste("*Assuming rate of",
+                vector2text(round(aux$p), sep = "/", quotes = FALSE), "for",
+                vector2text(aux$tag, sep = "/", quotes = FALSE))
+  if (!is.na(caption)) caption <- paste(text, caption, sep = "\n")
+  p <- p + labs(caption = caption)
   
   if (!is.na(subdir)) {
     dir.create(file.path(getwd(), subdir), recursive = TRUE)
@@ -1116,7 +1121,12 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
       scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 20))
   }
   
-  if (!is.na(caption)) p <- p + labs(caption = caption)
+  aux <- freqs(data.frame(tag = tag), tag)
+  text <- paste("*Assuming rate of",
+                vector2text(round(aux$p), sep = "/", quotes = FALSE), "for",
+                vector2text(aux$tag, sep = "/", quotes = FALSE))
+  if (!is.na(caption)) caption <- paste(text, caption, sep = "\n")
+  p <- p + labs(caption = caption)
   
   if (!is.na(subdir)) {
     dir.create(file.path(getwd(), subdir), recursive = TRUE)

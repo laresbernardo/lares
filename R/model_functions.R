@@ -109,9 +109,9 @@ h2o_automl <- function(df, y = "tag",
       top10 <- m %>% ungroup() %>% slice(1:10)
       which <- vector2text(top10$label)
       if (nrow(m) > 10)
-        which <- paste(which, "and", nrow(m) - 10, "more...")
+        which <- paste(which, "and", nrow(m) - 10, "other.")
       message(paste0("NOTE: The following variables contain missing observations: ", which,
-                     if (!impute & !quiet) ". Consider setting the impute parameter."))
+                     if (!impute & !quiet) ". Consider using the impute parameter."))
     }
     if (impute) {
       if (!quiet) message(paste(">>> Imputing", sum(m$missing), "missing values..."))
@@ -325,7 +325,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
         rename(., "variable" = "names", "importance" = "coefficients") else .} %>%
       {if ("percentage" %in% colnames(.)) 
         rename(., "importance" = "percentage") else .}
-    noimp <- filter(imp, importance < 0.015) %>% arrange(desc(importance))
+    noimp <- dplyr::filter(imp, importance < 0.015) %>% arrange(importance)
     if (nrow(noimp) > 0) {
       top10 <- noimp %>% ungroup() %>% slice(1:10)
       which <- vector2text(top10$variable)
