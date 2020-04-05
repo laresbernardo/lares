@@ -103,7 +103,8 @@ if (getRversion() >= "2.15.1")
       "gs_auth","gs_read","gs_edit_cells","gs_title","av_audio_convert","with_proxy",
       "QuoteTime","install_github","install","drop_search","drop_download","drop_auth",
       "drop_upload","sheets_auth","read_sheet","gar_auth","geom_mark_ellipse","mice",
-      "complete","Arima","auto.arima","forecast","getDividends","getSymbols","getQuote"))
+      "complete","Arima","auto.arima","forecast","getDividends","getSymbols","getQuote",
+      "get(which)"))
 
 #' Pipe operator
 #' @name lares-exports

@@ -107,7 +107,7 @@ h2o_automl <- function(df, y = "tag",
     m <- mutate(m, label = paste0(variable, " (", missingness, "%)"))
     if (!quiet) {
       top10 <- m %>% ungroup() %>% slice(1:10)
-      which <- vector2text(top10$label)
+      which <- vector2text(top10$label, quotes = FALSE)
       if (nrow(m) > 10)
         which <- paste(which, "and", nrow(m) - 10, "other.")
       message(paste0("NOTE: The following variables contain missing observations: ", which,
@@ -328,7 +328,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     noimp <- dplyr::filter(imp, importance < 0.015) %>% arrange(importance)
     if (nrow(noimp) > 0) {
       top10 <- noimp %>% ungroup() %>% slice(1:10)
-      which <- vector2text(top10$variable)
+      which <- vector2text(top10$variable, quotes = FALSE)
       if (nrow(noimp) > 10) 
         which <- paste(which, "and", nrow(noimp) - 10, "other...")
       if (!quiet) 
@@ -385,6 +385,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     global = global, test = filter(global, train_test == "test"))
   results[["scoring_history"]] <- data.frame(m@model$scoring_history)
   results[["parameters"]] <- m@parameters
+  results[["categoricals"]] <- list_cats(filter(global, train_test == "train"))
   results[["type"]] <- model_type
   results[["model_name"]] <- as.vector(m@model_id)
   results[["algorithm"]] <- m@algorithm
