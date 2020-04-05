@@ -821,7 +821,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
   # About tags
   values <- df %>% group_by(tag) %>% tally() %>% 
     {if (abc) arrange(., tag) else arrange(., desc(n))} %>%
-    mutate(label = paste0(tag, " (", formatNum(n, 0), ")"))
+    mutate(label = sprintf("%s \n(%s)", tag, formatNum(n, 0)))
   labels <- values$tag
   df <- df %>% mutate(tag = factor(tag, levels = labels))
   
@@ -832,12 +832,11 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
     other <- means$tag[means$mean == min(means$mean)]
     df <- df %>% mutate(pred = ifelse(
       score >= thresh, as.character(target), as.character(other)))
-  } else {
-    df <- df %>% mutate(pred = score)
-  }
+  } else df <- df %>% mutate(pred = score)
   
   # Frequencies
-  plot_cf <- df %>% freqs(tag, pred) %>% ungroup() %>%
+  plot_cf <- df %>% 
+    freqs(tag, pred) %>% ungroup() %>%
     group_by(tag) %>%
     mutate(aux = 100*n/sum(n)) %>%
     mutate(label = paste0(formatNum(n, 0),"\n", 
@@ -847,7 +846,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
   total <- sum(plot_cf$n)
   acc <- round(100 * (trues / total), 2)
   obs <- formatNum(nrow(df), 0)
-  metrics <- paste0(obs, " observations | ACC ", acc, "%")
+  metrics <- sprintf("%s observations | AAC %s%", obs, acc)
   
   p <- ggplot(plot_cf, aes(
     y = as.numeric(factor(tag, levels = rev(labels))), 
@@ -874,13 +873,13 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
           strip.background = element_blank()) +
     scale_x_continuous(breaks = 1:length(labels),
                        labels = labels,
-                       position = 'right',
+                       position = 'bottom',
                        sec.axis = sec_axis(~.,
                                            breaks = 1:length(labels),
                                            labels = labels)) +
     scale_y_continuous(breaks = 1:length(labels),
                        labels = labels,
-                       position = 'bottom',
+                       position = 'right',
                        sec.axis = sec_axis(~.,
                                            breaks = 1:length(labels),
                                            labels = rev(values$label)))
