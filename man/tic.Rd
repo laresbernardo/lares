@@ -8,7 +8,7 @@
 \usage{
 tic(id = 1, quiet = TRUE)
 
-toc(id = 1, msg = "Elapsed time:", quiet = FALSE)
+toc(id = 1, msg = "Elapsed time:", units = TRUE, signif = 3, quiet = FALSE)
 
 resettictoc(which = "both")
 }
@@ -18,6 +18,10 @@ resettictoc(which = "both")
 \item{quiet}{Boolean. Quiet messages?}
 
 \item{msg}{Character. Custom message shown}
+
+\item{units}{Boolean. Do you want nice logical units? If not, seconds always}
+
+\item{signif}{Integer. Significant digits}
 
 \item{which}{Character. Select: both, tic, toc}
 }

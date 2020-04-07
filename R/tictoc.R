@@ -50,12 +50,14 @@ tic <- function(id = 1, quiet = TRUE) {
 #' @family Time
 #' @param id Define ID if multiple tic() & toc() are being used
 #' @param msg Character. Custom message shown
+#' @param units Boolean. Do you want nice logical units? If not, seconds always
+#' @param signif Integer. Significant digits
 #' @param quiet Boolean. Quiet messages?
 #' @return \code{toc} returns an (invisible) list containing the timestamps
 #' \code{tic} and \code{toc}, \code{time} in seconds and the message \code{msg}.
 #' @export
 #' @rdname tic
-toc <- function(id = 1, msg = "Elapsed time:", quiet = FALSE) {
+toc <- function(id = 1, msg = "Elapsed time:", units = TRUE, signif = 3, quiet = FALSE) {
   
   if (!sprintf("tic_%s", id) %in% names(getOption("tic")))
     stop(sprintf("You need to tic(id = '%s') before you toc(id = '%s')", id, id))
@@ -67,7 +69,14 @@ toc <- function(id = 1, msg = "Elapsed time:", quiet = FALSE) {
   toc <- getOption("toc")[[paste0("toc_", id)]]
   time <- as.numeric(toc - tic)
   
-  msg <- sprintf("%s %ss", msg, signif(time, 3))
+  if (units) {
+    x <- time
+    u <- ifelse(x < 60, "s", ifelse(x < 3600, "m", ifelse(x < 86400, "h", "d")))
+    d <- ifelse(x < 60, 1, ifelse(x < 3600, 60, ifelse(x < 86400, 3600, 86400)))
+    timer <- paste0(signif(time/d, signif), u)
+  } else timer <- paste0(signif(time, signif), "s")
+  
+  msg <- sprintf("%s %s", msg, timer)
   if (!quiet) message(msg)
   res <- list(tic = tic, toc = toc, time = time, msg = msg)
   invisible(res)

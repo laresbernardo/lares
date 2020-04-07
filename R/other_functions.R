@@ -1417,12 +1417,12 @@ check_opts <- function(inputs, options,
   aux <- base::get(type)
   not <- base::get(not)
   if (!aux(inputs %in% options))
-    not(paste("Input(s) not valid.", toupper(type), 
-              "input(s) should match your options:", 
+    not(paste("Your input", vector2text(inputs), 
+              "is not valid;", toupper(type),
+              "of the inputs should match these options:", 
               vector2text(options)))
   if (!quiet) return(TRUE)
 }
-
 
 ####################################################################
 #' Flatten lists into data.frame
@@ -1461,8 +1461,9 @@ flatten_list <- function(x) {
     ret <- list()
     for (i in 1:length(category)) {
       which <- as.character(names(category)[i])
-      #df[,which] <- as.character(df[,which])
-      aux <- freqs(df, base::get(which), ...)
+      df[,which] <- as.character(df[,which])
+      aux <- freqs(df, base::get(which), ...) %>%
+        select(-pcum, -order)
       if (abc) aux <- arrange(aux, `base::get(which)`)
       colnames(aux)[1] <- which
       ret[[which]] <- aux
