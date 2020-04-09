@@ -844,9 +844,9 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
                           formatNum(aux, 1),"%)"))
   trues <- sum(plot_cf$n[as.character(plot_cf$tag) == as.character(plot_cf$pred)])
   total <- sum(plot_cf$n)
-  acc <- round(100 * (trues / total), 2)
+  acc <- formatNum(100 * (trues / total), 2, pos = "%")
   obs <- formatNum(nrow(df), 0)
-  metrics <- sprintf("%s observations | AAC %s%", obs, acc)
+  metrics <- sprintf("%s observations | AAC %s", obs, acc)
   
   p <- ggplot(plot_cf, aes(
     y = as.numeric(factor(tag, levels = rev(labels))), 
