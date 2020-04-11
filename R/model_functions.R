@@ -171,6 +171,7 @@ h2o_automl <- function(df, y = "tag",
       if (all(unique(as.character(df$train_test)) %in% c('train', 'test'))) {
         train <- filter(df, train_test == "train")
         test <- filter(df, train_test == "test")
+        ignored <- ignore
         ignore <- c(ignore, train_test)
         if (!quiet) print(table(df$train_test))
       } else stop("Your train_test column should have 'train' and 'test' values only!") 
@@ -242,7 +243,8 @@ h2o_automl <- function(df, y = "tag",
   results <- h2o_results(
     aml, test, train, y, which = 1, 
     model_type = model_type, target = target, 
-    plots = plots, project = project, seed = seed, quiet = quiet)
+    plots = plots, project = project, ignored = ignored,
+    seed = seed, quiet = quiet)
   
   if (save) {
     export_results(results, subdir = subdir, thresh = thresh)
@@ -279,6 +281,7 @@ h2o_automl <- function(df, y = "tag",
 #' set to 'auto', the target with largest mean(score) will be 
 #' selected. Change the value to overwrite. Only used when binary
 #' categorical model.
+#' @param ignored Character vector. Which columns were ignored?
 #' @param plots Boolean. Create plots objects?
 #' @param project Character. Your project's name
 #' @param seed Integer. Set a seed for reproducibility. AutoML can only 
@@ -287,7 +290,7 @@ h2o_automl <- function(df, y = "tag",
 #' @param quiet Boolean. Quiet messages, warnings, recommendations?
 #' @export
 h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
-                        model_type, target = "auto", plots = TRUE, 
+                        model_type, target = "auto", ignored = c(), plots = TRUE, 
                         project = NULL, seed = 0, quiet = FALSE) {
   
   # MODEL TYPE
@@ -393,6 +396,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     results[["leaderboard"]] <- h2o_object@leaderboard
   results[["project"]] <- project
   results[["y"]] <- y
+  results[["ignored"]] <- ignored
   results[["seed"]] <- seed
   results[["h2o"]] <- h2o.getVersion()
   
@@ -525,7 +529,10 @@ export_results <- function(results,
         "H20 Version" = results$h2o)
       if (is.na(note)[1]) results_txt$note <- NULL
       capture.output(results_txt, file = paste0(dir, "/", name, ".txt"))
-      message(">>> Summary test file saved...")
+      cats <- lapply(results$categoricals, data.frame)
+      which <- cats[names(cats)[!names(cats) %in% results$ignored]]
+      capture.output(whichwhich, file = paste0(dir, "/", name, "_cats.txt"))
+      message(">>> Summary text files saved...")
     }
     
     # Export CSV with predictions and datasets

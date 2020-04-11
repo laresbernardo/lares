@@ -12,6 +12,7 @@ h2o_results(
   which = 1,
   model_type,
   target = "auto",
+  ignored = c(),
   plots = TRUE,
   project = NULL,
   seed = 0,
@@ -33,6 +34,8 @@ h2o_results(
 set to 'auto', the target with largest mean(score) will be 
 selected. Change the value to overwrite. Only used when binary
 categorical model.}
+
+\item{ignored}{Character vector. Which columns were ignored?}
 
 \item{plots}{Boolean. Create plots objects?}
 
