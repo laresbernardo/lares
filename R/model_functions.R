@@ -520,19 +520,19 @@ export_results <- function(results,
         "Metrics Glossary" = results$metrics$dictionary,
         "Train Metrics" = results$metrics$metrics,
         "Train Metrics by labels" = if (length(results$metrics$metrics_tags) > 1)
-          results$metrics$metrics_tags else NULL,
+          results$metrics$metrics_tags else "NA",
         "Train's Confusion Matrix" = if (length(results$metrics$confusion_matrix) > 1)
-          results$metrics$confusion_matrix else NULL,
+          results$metrics$confusion_matrix else "NA",
         "Variables Importance" = results$importance,
         "H2O Global Results" = results$model,
         "Leaderboard" = results$leaderboard,
         "10 Scoring examples" = sample_n(results$datasets$global, 10),
         "H20 Version" = results$h2o)
-      if (is.na(note)[1]) results_txt$note <- NULL
+      if (is.na(note)[1]) results_txt$Note <- NULL
       capture.output(results_txt, file = paste0(dir, "/", name, ".txt"))
       cats <- lapply(results$categoricals, data.frame)
-      which <- cats[names(cats)[!names(cats) %in% results$ignored]]
-      capture.output(whichwhich, file = paste0(dir, "/", name, "_cats.txt"))
+      aux <- cats[names(cats)[!names(cats) %in% results$ignored]]
+      capture.output(aux, file = paste0(dir, "/", name, "_cats.txt"))
       message(">>> Summary text files saved...")
     }
     
