@@ -142,6 +142,8 @@ h2o_automl <- function(df, y = "tag",
                "Please, rename", y, "into a valid column name next such as",
                paste0(y, "_labels for example.")))
   }
+  ignored <- ignore
+  
   # If target value is not an existing target value
   if (!target %in% cats & length(cats) == 2)
     if (!target %in% c(cats, "auto"))
@@ -171,7 +173,6 @@ h2o_automl <- function(df, y = "tag",
       if (all(unique(as.character(df$train_test)) %in% c('train', 'test'))) {
         train <- filter(df, train_test == "train")
         test <- filter(df, train_test == "test")
-        ignored <- ignore
         ignore <- c(ignore, train_test)
         if (!quiet) print(table(df$train_test))
       } else stop("Your train_test column should have 'train' and 'test' values only!") 
