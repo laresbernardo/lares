@@ -4,10 +4,12 @@
 \alias{flatten_list}
 \title{Flatten lists into data.frame}
 \usage{
-flatten_list(x)
+flatten_list(x, quiet = FALSE)
 }
 \arguments{
 \item{x}{List}
+
+\item{quiet}{Boolean. Keep quiet? (or show statusbar)}
 }
 \description{
 Flatten a list with possible multiple lists within into a single

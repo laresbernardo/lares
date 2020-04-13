@@ -839,7 +839,12 @@ h2o_predict_MOJO <- function(df, model_path, batch = 300){
     output <- rbind(output, res)
     if (aux > 1) statusbar(i, aux, i * batch)
   }
-  return(output)
+  if ("classProbabilities" %in% names(output)) {
+    aux <- flatten_list(output$classProbabilities, quiet = TRUE)
+    colnames(aux) <- output$responseDomainValues[[1]]
+    output <- cbind(output[,c(1,2)], aux)
+  }
+  return(as_tibble(output))
 }
 
 
