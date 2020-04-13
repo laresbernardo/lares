@@ -816,6 +816,7 @@ h2o_predict_MOJO <- function(df, model_path, batch = 300){
   quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
   
   df <- as.data.frame(df)
+  df <- mutate_if(df, is.logical, as.character)
   file <- listfiles(model_path, regex = ".zip")$filename
   zip <- paste0(model_path,"/",as.character(file))
   
@@ -825,11 +826,18 @@ h2o_predict_MOJO <- function(df, model_path, batch = 300){
   for (i in 1:aux) {
     dfi <- select(df[df$aux == i,], -aux)
     json <- toJSON(dfi)
-    res <- h2o.predict_json(zip, json)  
-    if (length(res$error) >= 1)
-      break("Error:", res$error)
+    size <- nchar(json)
+    if (size > 250000)
+      stop(paste("JSON batch is too long. Please, try with a smaller 'batch' parameter.",
+                 "Suggested size:", round(batch * 235000 / size)))
+    res <- h2o.predict_json(zip, json, labels = TRUE)  
+    if ("error" %in% names(res)) {
+      message("\nERROR: There was an issue with one of the inputs to predict...")
+      writeLines(res$error)
+      break
+    }
     output <- rbind(output, res)
-    if (aux > 1) statusbar(i, aux)
+    if (aux > 1) statusbar(i, aux, i * batch)
   }
   return(output)
 }
