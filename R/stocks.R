@@ -219,7 +219,7 @@ daily_stocks <- function(hist, trans, tickers = NA) {
   check_attr(trans, check = "stocks_file_transactions")
   if (!is.na(tickers)[1])
     check_attr(tickers, check = "stocks_file_portfolio")
-
+  
   # hist_structure <- c("Date", "Symbol", "Value", "Div", "DivReal")
   # trans_structure <- c("Symbol", "Date", "Quant", "Each", "Invested", "Cost")
   # if (!all(hist_structure %in% colnames(hist))) {
@@ -284,7 +284,7 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0) {
   check_attr(hist, check = "stocks_hist")
   check_attr(trans, check = "stocks_file_transactions")
   check_attr(cash, check = "stocks_file_cash")
-
+  
   daily <- daily_stocks(hist, trans) %>%
     arrange(Date) %>% group_by(Date) %>% 
     summarise_if(is.numeric, sum) %>%
@@ -402,7 +402,7 @@ splot_summary <- function(p, s, save = FALSE) {
 splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save = FALSE) {
   
   check_attr(p, check = "daily_portfolio")
-
+  
   n_days <- ifelse(n_days < max(ma), max(ma) + 2, n_days)
   newp <- rbind(p, mutate(tail(p, 1), Date = Date - 1, ROI = 0, CumValue = 0))
   
@@ -714,7 +714,7 @@ stocks_obj <- function(data = stocks_file(),
                        tax = 30, 
                        parg = FALSE,
                        sectors = FALSE) {
-
+  
   check_attr(data, check = "stocks_file")
   
   ret <- list()
@@ -777,6 +777,9 @@ stocks_report <- function(data = NA,
                           to = "laresbernardo@gmail.com",
                           sectors = FALSE,
                           creds = NA) {
+  
+  try_require("rmarkdown")
+  
   if (is.na(data)[1]) {
     df <- stocks_file(creds = creds) 
     data <- stocks_obj(df, sectors = sectors, parg = is.na(creds))
@@ -787,7 +790,7 @@ stocks_report <- function(data = NA,
   pandoc <- Sys.getenv("RSTUDIO_PANDOC")
   Sys.setenv(RSTUDIO_PANDOC = pandoc)
   if (is.na(dir)) dir <- getwd()
-
+  
   # Can be more accurate with names but works for me!
   params <- list(
     portf_daily_change = data$plots[["roi1"]],
@@ -805,12 +808,12 @@ stocks_report <- function(data = NA,
     to = getwd(), overwrite = TRUE, recursive = FALSE, copy.mode = TRUE))
   
   message(">>> Rendering HTML report...")
-  rmarkdown::render("stocksReport.Rmd", 
-                    output_file = "stocksReport.html",
-                    output_dir = dir,
-                    params = params,
-                    envir = new.env(parent = globalenv()),
-                    quiet = TRUE)  
+  render("stocksReport.Rmd", 
+         output_file = "stocksReport.html",
+         output_dir = dir,
+         params = params,
+         envir = new.env(parent = globalenv()),
+         quiet = TRUE)  
   
   invisible(file.remove(paste0(getwd(), "/stocksReport.Rmd")))
   message("HTML report created succesfully!")

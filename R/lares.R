@@ -34,7 +34,7 @@
 # @importFrom rdrop2 drop_auth drop_dir drop_download drop_search drop_upload
 #' @import rlist
 #' @importFrom rlang as_label
-#' @importFrom rmarkdown render
+# @importFrom rmarkdown render
 # @importFrom recipes recipe step_num2factor step_meanimpute all_numeric step_modeimpute
 # all_nominal step_scale all_outcomes step_dummy prep
 #' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text 
@@ -104,7 +104,7 @@ if (getRversion() >= "2.15.1")
       "QuoteTime","install_github","install","drop_search","drop_download","drop_auth",
       "drop_upload","sheets_auth","read_sheet","gar_auth","geom_mark_ellipse","mice",
       "complete","Arima","auto.arima","forecast","getDividends","getSymbols","getQuote",
-      "base::get(which)","PostgreSQL"))
+      "base::get(which)","PostgreSQL","render"))
 
 #' Pipe operator
 #' @name lares-exports

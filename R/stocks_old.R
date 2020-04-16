@@ -704,6 +704,7 @@ stocks_objects <- function(data, cash_fix = 0, tax = 30, expenses = 7, sectors =
 # You can use simply use the stocks_objects(data) if you didn't mess with the order!
 stocks_html <- function(results) {
   
+  try_require("rmarkdown")
   dir <- getwd()
   pandoc <- Sys.getenv("RSTUDIO_PANDOC")
   Sys.setenv(RSTUDIO_PANDOC = pandoc)
@@ -727,11 +728,11 @@ stocks_html <- function(results) {
     recursive = FALSE, 
     copy.mode = TRUE))
   
-  rmarkdown::render("stocksReport.Rmd", 
-                    output_file = "stocksReport.html",
-                    params = params,
-                    envir = new.env(parent = globalenv()),
-                    quiet = TRUE)  
+  render("stocksReport.Rmd", 
+         output_file = "stocksReport.html",
+         params = params,
+         envir = new.env(parent = globalenv()),
+         quiet = TRUE)  
   
   invisible(file.remove(paste0(dir, "/stocksReport.Rmd")))
   message("HTML report created succesfully!")
