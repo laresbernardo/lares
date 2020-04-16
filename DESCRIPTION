@@ -24,7 +24,6 @@ Imports:
     rlang,
     rlist,
     rmarkdown,
-    RPostgreSQL,
     rvest,
     scales,
     sp,
@@ -55,6 +54,7 @@ Suggests:
     quantmod,
     plotly,
     rdrop2,
+    RPostgreSQL,
     rtweet,
     shinydashboard,
     skimr

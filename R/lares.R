@@ -104,7 +104,7 @@ if (getRversion() >= "2.15.1")
       "QuoteTime","install_github","install","drop_search","drop_download","drop_auth",
       "drop_upload","sheets_auth","read_sheet","gar_auth","geom_mark_ellipse","mice",
       "complete","Arima","auto.arima","forecast","getDividends","getSymbols","getQuote",
-      "base::get(which)"))
+      "base::get(which)","PostgreSQL"))
 
 #' Pipe operator
 #' @name lares-exports

@@ -9,10 +9,11 @@
 #' @export
 queryDummy = function(query, creds = NA) {
 
+  try_require("RPostgreSQL")
   tic(id = "queryDummy")
   
   dw <- get_credentials(from = "dummy", dir = creds)
-  drv <- RPostgreSQL::PostgreSQL()
+  drv <- PostgreSQL()
   con <- dbConnect(drv, host = dw$server, dbname = dw$database,
                    port = dw$port, user = dw$uid, password = dw$pwd)
 
@@ -39,12 +40,13 @@ queryDummy = function(query, creds = NA) {
 #' @export
 queryDW = function(query, which = "soat", creds = NA) {
 
+  try_require("RPostgreSQL")
   dw <- get_credentials(from = "warehouse", dir = creds)
 
   dbname <- ifelse(which == "soat", dw$database_soat,
                    ifelse(which == "creditos", dw$database_creditos, NA))
 
-  drv <- RPostgreSQL::PostgreSQL()
+  drv <- PostgreSQL()
   con <- dbConnect(drv, host = dw$server, dbname = dw$database,
                    port = dw$port, user = dw$uid, password = dw$pwd)
   start <- Sys.time()
@@ -67,9 +69,10 @@ queryDW = function(query, which = "soat", creds = NA) {
 #' @export
 queryProduc = function(query, creds = NA) {
 
+  try_require("RPostgreSQL")
   dw <- get_credentials(from = "production", dir = creds)
 
-  drv <- RPostgreSQL::PostgreSQL()
+  drv <- PostgreSQL()
   con <- dbConnect(drv, host = dw$server, dbname = dw$database,
                    port = dw$port, user = dw$uid, password = dw$pwd)
   start <- Sys.time()
