@@ -45,7 +45,7 @@
 #' @import stringr 
 #' @importFrom tm content_transformer Corpus removeNumbers removePunctuation removeWords 
 #' stopwords stripWhitespace TermDocumentMatrix tm_map VectorSource
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather spread pivot_longer pivot_wider
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
 #' globalVariables installed.packages write.table install.packages remove.packages object.size 
 #' type.convert flush.console read.table modifyList write.csv combn browseURL type.convert
