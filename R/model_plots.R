@@ -41,19 +41,17 @@ mplot_density <- function(tag,
     }
     
     p1 <- ggplot(out) + 
-      geom_density(aes(x = as.numeric(score), 
+      geom_density(aes(x = as.numeric(score),
                        group = tag, fill = as.character(tag)), 
-                   alpha = 0.6, adjust = 0.25) + 
-      guides(fill = guide_legend(title = "Tag")) + 
+                   alpha = 0.6, adjust = 0.25, size = 0) + 
       labs(title = "Classification Model Results",
            y = "Density by tag", x = "Score", fill = NULL) + 
-      theme_lares2(pal = 1) +
-      theme(legend.position = "top",
-            legend.justification = c(0, 0),
-            legend.title = element_blank())
+      theme_lares2(pal = 1, legend = "bottom") +
+      theme(legend.title = element_blank(),
+            legend.key.size = unit(.2, "cm"))
     
     p2 <- ggplot(out) + 
-      geom_density(aes(x = score), alpha = 0.9, adjust = 0.25, fill = "deepskyblue") + 
+      geom_density(aes(x = score), size = 0, alpha = 0.9, adjust = 0.25, fill = "deepskyblue") + 
       labs(x = NULL, y = "Density") + theme_lares2()
     
     p3 <- ggplot(out) + 
@@ -63,7 +61,7 @@ mplot_density <- function(tag,
                 stat = 'ecdf', size = 0.5, colour = "black", linetype = "dotted") +
       ylab('Cumulative') + labs(x = NULL) + guides(color = FALSE) + theme_lares2(pal = 2)
     
-    p1 <- p1 + theme(plot.margin = margin(10, 5, 0, 5))
+    p1 <- p1 + theme(plot.margin = margin(10, 5, 5, 5))
     p2 <- p2 + theme(plot.margin = margin(0, 0, 5, 5))
     p3 <- p3 + theme(plot.margin = margin(0, 5, 5, 0))
     
@@ -75,10 +73,7 @@ mplot_density <- function(tag,
       file_name <- paste(subdir, file_name, sep = "/")
     }
     
-    p <- gridExtra::arrangeGrob(
-      p1, p2, p3, 
-      ncol = 2, nrow = 2, heights = 2:1,
-      layout_matrix = rbind(c(1,1), c(2,3)))
+    p <- (p1 / (p2 | p3)) + plot_layout(heights = c(1.2, 1))
     
   } else {
     
@@ -322,7 +317,7 @@ mplot_cuts <- function(score,
                   vjust = ifelse(cuts*100 < 50, -0.3, 1.3)), 
               size = 3, colour = "black", inherit.aes = TRUE, check_overlap = TRUE) +
     guides(colour = FALSE) +
-    labs(title = paste0("Score cuts (", splits, " equal-sized buckets)")) +
+    labs(title = sprintf("Score cuts (%s quantiles)", splits)) +
     theme_lares2()
   
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
@@ -424,10 +419,8 @@ mplot_cuts_error <- function(tag,
   if (!is.na(title)) p_abs <- p_abs + labs(title = title)
   if (!is.na(model_name)) pd_error <- pd_error + labs(caption = model_name)
   
-  p <- arrangeGrob(
-    p_abs, p_per, pd_error,
-    heights = c(1.8, 1.8, 1),
-    ncol = 1, nrow = 3)
+  p <- (p_abs + p_per + pd_error) +
+    plot_layout(ncol = 1, heights = c(1.8, 1.8, 1))
   
   if (save) {
     if (!is.na(subdir)) {
@@ -601,7 +594,7 @@ mplot_metrics <- function(results,
   if (!is.na(subtitle)) ll <- ll + labs(subtitle = subtitle)
   if (!is.na(model_name)) au <- au + labs(caption = model_name)
   
-  p <- arrangeGrob(ll, au, ncol = 1, nrow = 2)
+  p <- (ll / au) + plot_layout(ncol = 1)
   
   if (save) {
     
@@ -742,25 +735,24 @@ mplot_full <- function(tag,
     p2 <- mplot_splits(tag = tag, score = score, splits = splits) +
       theme(plot.margin = margin(10, 8, 5, 0))
     p3 <- mplot_roc(tag = tag, score = score, squared = FALSE) +
-      theme(plot.margin = margin(0, 8, 5, 0))
+      theme(plot.margin = margin(0, 8, 8, 0))
     p4 <- mplot_cuts(score = score) +
       theme(plot.margin = margin(-3, 0, 5, 8))
     
-    p <- arrangeGrob(
-      p1, p2, p3, p4,
-      widths = c(1.3,1),
-      layout_matrix = rbind(c(1,2), c(1,2), c(1,3), c(4,3)))
+    p <- (wrap_plots(p1) + p2 + p4 + p3) + 
+      plot_layout(ncol = 2, nrow = 2,
+                  heights = c(1.4, 1),
+                  widths = c(1.5, 1))
   }
   
   # Multi-Categorical Models
   if (length(unique(tag)) > 2 & length(unique(tag)) <= thresh) {
     m <- model_metrics(tag, score, multis)
-    p <- arrangeGrob(
-      m$plots$conf_matrix + 
-        labs(title = "Confusion Matrix", 
-             caption = if (!is.na(model_name)) model_name), 
-      m$plots$ROC, 
-      ncol = 2, nrow = 1)
+    p1 <- m$plots$conf_matrix + 
+      labs(title = "Confusion Matrix", 
+           caption = if (!is.na(model_name)) model_name)
+    p2 <- m$plots$ROC
+    p <- (p1 + p2) + plot_layout(ncol = 2, nrow = 1)
   }  
   
   # Regression Continuous Models
@@ -770,12 +762,8 @@ mplot_full <- function(tag,
       theme_lares2(bg_colour = "white")
     p2 <- mplot_density(tag = tag, score = score)
     p3 <- mplot_cuts_error(tag = tag, score = score, splits = splits)
+    p <- ((p1 / p2) | p3) + plot_layout(widths = c(1, 1.4))
     
-    p <- arrangeGrob(
-      p1, p2, p3,
-      heights = c(0.6, 0.4),
-      widths = c(0.45, 0.55),
-      layout_matrix = rbind(c(1,3), c(2,3)))
   }
   
   if (save) {

@@ -352,12 +352,8 @@ distr <- function(data, ...,
         theme(plot.margin = margin(10, 15, -15, 15))
       prop <- prop + guides(fill = FALSE) + labs(caption = note) +
         theme(plot.margin = margin(-5, 15, -15, 15))
-      if (save) {
-        png(file_name, height = 1000, width = 1300, res = 200)
-        gridExtra::arrangeGrob(count, prop, ncol = 1, nrow = 2)
-        dev.off()
-      }
-      p <- invisible(gridExtra::grid.arrange(count, prop, ncol = 1, nrow = 2))
+      p <- (count / prop) + plot_layout(ncol = 1, nrow = 2)
+      if (save) p <- p + ggsave(file_name, width = 10, height = 7)
     }
     if (type == 2) {
       count <- count + coord_flip() + 
@@ -370,17 +366,8 @@ distr <- function(data, ...,
       if (save) prop <- prop + ggsave(file_name, width = 8, height = 6)
       p <- prop
     }
-    
-    # Return table with results?
-    if (!plot) {
-      table <- freqs %>% select(-order, -row)
-      return(table)
-    }
   }
   
-  if (type == 1) {
-    return(invisible(p)) 
-  } else {
-    invisible(return(p)) 
-  }
+  if (!plot) return(freqs %>% select(-order, -row)) else return(p)
+  
 }

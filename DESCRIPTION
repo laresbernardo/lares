@@ -13,7 +13,6 @@ Imports:
     DBI,
     dplyr,
     ggplot2,
-    gridExtra,
     h2o,
     httr,
     jsonlite,

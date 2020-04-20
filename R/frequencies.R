@@ -170,10 +170,11 @@ freqs <- function(df, ..., wt = NULL,
            caption = obs)
   }
   
-  # When three features
-  else if (type == 3) { 
+  # When three or more features
+  else if (type >= 3) { 
     if (length(unique(facet_name2)) > 3) {
-      stop("Please, try with a (third) variable with 3 or less cateogries!")
+      p <- freqs_plot(df, ..., top = top, rm.na = rm.na, title = title, subtitle = subtitle)
+      return(p)
     }
     p <- p + facet_grid(as.character(facet2) ~ as.character(facet1), scales = "free") + 
       labs(title = ifelse(is.na(title), "Frequencies and Percentages:", title),

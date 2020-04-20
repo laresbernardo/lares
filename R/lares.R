@@ -16,7 +16,7 @@
 # @importFrom googlesheets4 sheets_auth read_sheet
 #' @importFrom graphics box hist plot points rasterImage rect grid 
 #' @importFrom grDevices graphics.off dev.off png dev.size
-#' @importFrom gridExtra grid.arrange tableGrob arrangeGrob ttheme_minimal 
+# @importFrom gridExtra grid.arrange tableGrob arrangeGrob ttheme_minimal 
 #' @importFrom h2o as.h2o h2o.automl h2o.accuracy h2o.getModel h2o.performance h2o.init 
 #' h2o.removeAll h2o.download_mojo h2o.download_pojo h2o.loadModel h2o.no_progress h2o.predict 
 #' h2o.predict_json h2o.saveModel h2o.varimp h2o.getVersion
@@ -29,7 +29,7 @@
 # @importFrom mice mice complete
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
-#' @importFrom patchwork plot_layout plot_annotation
+#' @importFrom patchwork plot_layout plot_annotation wrap_plots
 #' @importFrom pROC roc ci
 # @importFrom quantmod getDividends getSymbols getQuote 
 # @importFrom rdrop2 drop_auth drop_dir drop_download drop_search drop_upload

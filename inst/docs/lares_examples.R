@@ -33,6 +33,12 @@ dft %>%
         title = "People who survived the Titanic by Class",
         subtitle = paste("MEG | Keeping up con los datos:", Sys.Date()))
 
+# There's also freqs_plot function
+freqs_plot(dft, Pclass)
+freqs_plot(dft, Pclass, Survived)
+freqs_plot(dft, Pclass, Survived, Sex)
+freqs_plot(dft, Pclass, Survived, Sex, Embarked)
+freqs_plot(dft, Pclass, Survived, Sex, Embarked, top = 15)
 
 # DISTRIBUTIONS (distr): compare the distribution of a target variable vs another variable
 ?distr
@@ -77,11 +83,11 @@ dft %>% distr(Survived, Age, type = 3)
 # Correlate Survived with everything else
 dft %>% corr_var(Survived)
 # Filter out variables with more than 50% of correlation
-dft %>% corr_var(Survived, ceiling = 50)
+dft %>% corr_var(Survived_TRUE, ceiling = 50)
 # Show only 10 values
-dft %>% corr_var(Survived, top = 10)
+dft %>% corr_var(Survived_TRUE, top = 10)
 # Also calculate log(values)
-dft %>% corr_var(Survived, logs = T)
+dft %>% corr_var(Survived_TRUE, logs = T)
 
 # ALSO:
 # You can save and export a PNG file for each generated plot using:

@@ -131,7 +131,9 @@ dalex_residuals <- function(explainer) {
   p1 <- plot(resids)
   p2 <- plot(resids, geom = "boxplot")
   
-  grid.arrange(p1, p2, nrow = 2)
+  p <- p1 + p2 + plot_layout(nrow = 2)
+  
+  return(p)
   
 }
 

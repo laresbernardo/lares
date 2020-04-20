@@ -156,9 +156,8 @@ plot_cats <- function(df) {
 #' 
 #' @family Exploratory
 #' @param df Dataframe
-#' @param plot Boolean. Plot the object? Otherwise, return grid
 #' @export
-plot_df <- function(df, plot = TRUE) {
+plot_df <- function(df) {
   
   plots <- list()
   
@@ -179,6 +178,7 @@ plot_df <- function(df, plot = TRUE) {
   if (length(plots) == 1) heights <- NULL 
   
   margin <- theme(plot.margin = unit(c(0.1,0.5,0.1,0.5), "cm"))
-  p <- grid.arrange(grobs = lapply(plots, "+", margin), heights = heights)
-  if (plot) plot(p) else return(p)
+  plots <- lapply(plots, "+", margin)
+  p <- wrap_plots(plots, heights = heights)
+  return(p)
 }

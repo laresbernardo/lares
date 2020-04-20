@@ -4,12 +4,10 @@
 \alias{plot_df}
 \title{Plot Summary of Numerical and Categorical Features}
 \usage{
-plot_df(df, plot = TRUE)
+plot_df(df)
 }
 \arguments{
 \item{df}{Dataframe}
-
-\item{plot}{Boolean. Plot the object? Otherwise, return grid}
 }
 \description{
 This function plots all columns frequencies and boxplots, for 

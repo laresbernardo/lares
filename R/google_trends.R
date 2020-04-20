@@ -103,7 +103,8 @@ trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = c()
     rq1 <- rq1 + guides(fill = FALSE) + labs(caption = "")
     rq2 <- rq2 + labs(title = range) +
       theme(plot.title = element_text(size = 9))
-    return(grid.arrange(rq1, rq2, nrow = 1, ncol = 2))
+    p <- rq1 + rq2 + plot_layout(nrow = 1, ncol = 2)
+    return(p)
   }
   
   if (t | q) return(rq1)
@@ -159,5 +160,6 @@ trendsTime <- function(gtrend, title = NA) {
   
   if (!is.na(title)) int1 <- int1 + labs(title = title, subtitle = "Real hits scale")
   
-  return(grid.arrange(int1, int2, int3, nrow = 3, ncol = 1))
+  p <- int1 + int2 + int3 + plot_layout(nrow = 3, ncol = 1)
+  return(p)
 }
