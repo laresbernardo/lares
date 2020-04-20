@@ -14,7 +14,7 @@ theme_lares2(
   panel_colour = "transparent",
   legend = "right",
   grid = TRUE,
-  mg = 14,
+  mg = 9,
   pal = 0,
   which = "fct"
 )
@@ -28,7 +28,7 @@ theme_lares2(
 
 \item{grid}{Character (\code{TRUE}, \code{FALSE}, or a combination of \code{X}, \code{x}, \code{Y}, \code{y})}
 
-\item{mg}{Numeric. External margin}
+\item{mg}{Numeric. External margins}
 
 \item{pal}{Integer. 1 for fill and colour palette, 2 for only colour palette,
 3 for only fill palette, 4 for personal labels-colour palette. 0 or else for nothing.}
@@ -51,6 +51,7 @@ Other Visualization:
 \code{\link{corr_plot}()},
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
+\code{\link{freqs_plot}()},
 \code{\link{freqs}()},
 \code{\link{mplot_conf}()},
 \code{\link{mplot_cuts_error}()},

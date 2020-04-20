@@ -34,6 +34,7 @@ Other Exploratory:
 \code{\link{df_str}()},
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
+\code{\link{freqs_plot}()},
 \code{\link{freqs}()},
 \code{\link{gain_lift}()},
 \code{\link{missingness}()},

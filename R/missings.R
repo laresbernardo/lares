@@ -35,7 +35,8 @@ missingness <- function(df, plot = FALSE, full = FALSE,
                     formatNum(obs, 0), 
                     formatNum(miss, 0), 
                     formatNum(missp, 1, pos = "%"))
-    p <- df %>% mutate_all(is.na) %>% 
+    p <- df %>% 
+      mutate_all(is.na) %>% 
       tidyr::pivot_longer(cols = everything()) %>%
       {if (!full) filter(., name %in% m$variable) else .} %>% 
       mutate(type = ifelse(name %in% m$variable, "with", "without")) %>% 
@@ -51,7 +52,7 @@ missingness <- function(df, plot = FALSE, full = FALSE,
       {if (summary) scale_y_comma(note, expand = c(0, 0)) else scale_y_comma(NULL, expand = c(0, 0))} + 
       scale_fill_grey(name = NULL, labels = c("Present", "Missing"), expand = c(0, 0)) + 
       labs(title = "Missing values", x = "", subtitle = if (!is.na(subtitle)) subtitle) + 
-      lares::theme_lares2(legend = "top") + 
+      theme_lares2(legend = "top") + 
       theme(axis.text.y = element_text(size = 8))
     
     return(p)

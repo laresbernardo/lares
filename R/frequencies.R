@@ -301,3 +301,95 @@ freqs_df <- function(df,
     return(out)
   }
 }
+
+
+####################################################################
+#' Frequencies Plot for Multiple Categories
+#' 
+#' Plot frequencies of multiple categories within a data.frame in 
+#' a new fancy way. Tidyverse friendly, based on lares::freqs().
+#' 
+#' @family Exploratory
+#' @family Visualization
+#' @param df Data.frame
+#' @param ... Variables. Variables you wish to process. Order matters.
+#' If no variables are passed, the whole data.frame will be considered
+#' @param top Integer. Filter and plot the most n frequent for  values.
+#' @param rm.na Boolean. Remove NA values in the plot? (not filtered for 
+#' numerical output; use na.omit() or filter() if needed)
+#' @param title Character. Overwrite plot's title with.
+#' @param subtitle Character. Overwrite plot's subtitle with.
+#' @export
+freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, 
+                       title = NA, subtitle = NA) {
+  
+  vars <- quos(...)
+  
+  if (length(vars) == 0)
+    return(freqs(dft))
+  
+  aux <- df %>% 
+    freqs(!!!vars, rm.na = rm.na) %>% 
+    mutate_if(is.factor, as.character) %>%
+    mutate_if(is.logical, as.character) %>%
+    mutate(order = ifelse(order > top, "...", order))
+  if ("..." %in% aux$order)
+    message(paste(
+      "Showing", top, "most frequent values. Tail of",
+      nrow(aux) - top,
+      "other values grouped into one"))
+  for (i in 1:(ncol(aux) - 4))
+    aux[,i][aux$order == "...",] <- "Tail"  
+  aux <- aux %>%
+    group_by(!!!vars, order) %>%
+    summarise_all(sum) %>%
+    ungroup()
+  vars_names <- colnames(aux)[1:(ncol(aux) - 4)]
+  
+  labels <- aux %>% mutate_all(as.character) %>% 
+    tidyr::pivot_longer(colnames(aux)[1:(ncol(aux)-4)]) %>%
+    mutate(label = sprintf("%s: %s", name, value)) %>%
+    mutate(n = as.integer(n), 
+           pcum = as.numeric(pcum),
+           p = as.numeric(p)) %>%
+    ungroup() %>% arrange(desc(pcum))
+  
+  if (is.na(title))
+    title <- "Absolute Frequencies"
+  if (is.na(subtitle))
+    subtitle <- paste("Grouped by", vector2text(vars_names, quotes = FALSE))
+  mg <- 5
+  
+  p1 <- aux %>% 
+    mutate(aux = ifelse(order == "...", "grey", "black")) %>%
+    mutate(order = paste0(order, "\n", signif(as.numeric(p), 2), "%")) %>%
+    ggplot(aes(x = reorder(order, pcum), y = n, label = p)) +
+    geom_col(aes(fill = aux)) +
+    scale_fill_manual(values = c("black", "grey55")) +
+    labs(x = NULL, y = NULL, title = title, subtitle = subtitle) + 
+    scale_y_comma() +
+    guides(fill = FALSE) +
+    theme_lares2() +
+    theme(plot.margin = margin(mg, mg, 0, mg))
+  
+  p2 <- labels %>%
+    mutate(label = ifelse(order == "...", " Mixed Tail", label)) %>%
+    ggplot(aes(x = reorder(order, pcum), 
+               y = reorder(label, n), 
+               group = pcum)) +
+    geom_point(size = 4) +
+    labs(x = NULL, y = NULL, 
+         caption = paste("Total observations:", formatNum(nrow(df), 0))) + 
+    guides(colour = FALSE) +
+    theme_lares2(which = "XY") +
+    #facet_grid(name ~ ., scales = "free") +
+    theme(axis.text.x = element_blank(),
+          plot.margin = margin(0, mg, mg, mg))
+  if (length(vars) > 1)
+    p2 <- p2 + geom_path()
+  
+  p <- (p1 / p2)
+  attr(p, "data") <- aux
+  attr(p, "labels") <- labels
+  return(p)
+}

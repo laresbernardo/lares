@@ -29,6 +29,7 @@
 # @importFrom mice mice complete
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
+#' @importFrom patchwork plot_layout plot_annotation
 #' @importFrom pROC roc ci
 # @importFrom quantmod getDividends getSymbols getQuote 
 # @importFrom rdrop2 drop_auth drop_dir drop_download drop_search drop_upload

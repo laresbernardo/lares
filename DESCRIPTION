@@ -20,6 +20,7 @@ Imports:
     lubridate,
     magrittr,
     openxlsx,
+    patchwork,
     pROC,
     rlang,
     rlist,

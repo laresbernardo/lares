@@ -16,7 +16,7 @@
 #' Character. Main colours for your theme
 #' @param legend Character. Legend position: top, right, bottom, left
 #' @param grid Character (`TRUE`, `FALSE`, or a combination of `X`, `x`, `Y`, `y`)
-#' @param mg Numeric. External margin
+#' @param mg Numeric. External margins
 #' @param pal Integer. 1 for fill and colour palette, 2 for only colour palette,
 #' 3 for only fill palette, 4 for personal labels-colour palette. 0 or else for nothing.
 #' @param which Character. When pal = 3, select which colours should be
@@ -31,7 +31,7 @@ theme_lares2 <- function(font = "Arial Narrow",
                          panel_colour = "transparent",
                          legend = "right",
                          grid = TRUE,
-                         mg = 14,
+                         mg = 9,
                          pal = 0,
                          which = "fct") {
   

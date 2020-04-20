@@ -77,6 +77,7 @@ Other Exploratory:
 \code{\link{crosstab}()},
 \code{\link{df_str}()},
 \code{\link{freqs_df}()},
+\code{\link{freqs_plot}()},
 \code{\link{freqs}()},
 \code{\link{gain_lift}()},
 \code{\link{get_tweets}()},
@@ -91,6 +92,7 @@ Other Exploratory:
 Other Visualization: 
 \code{\link{corr_plot}()},
 \code{\link{freqs_df}()},
+\code{\link{freqs_plot}()},
 \code{\link{freqs}()},
 \code{\link{mplot_conf}()},
 \code{\link{mplot_cuts_error}()},

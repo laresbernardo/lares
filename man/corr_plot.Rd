@@ -38,6 +38,7 @@ This function correlates a whole dataframe with a single feature.
 Other Visualization: 
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
+\code{\link{freqs_plot}()},
 \code{\link{freqs}()},
 \code{\link{mplot_conf}()},
 \code{\link{mplot_cuts_error}()},

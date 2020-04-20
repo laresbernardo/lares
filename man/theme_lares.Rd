@@ -36,6 +36,7 @@ Other Visualization:
 \code{\link{corr_plot}()},
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
+\code{\link{freqs_plot}()},
 \code{\link{freqs}()},
 \code{\link{mplot_conf}()},
 \code{\link{mplot_cuts_error}()},
