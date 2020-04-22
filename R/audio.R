@@ -41,5 +41,4 @@ yt2mp3 <- function(url = "https://www.youtube.com/watch?v=lrlKcCdVw9Q") {
       msg <- paste(msg, "Run in Terminal: brew install youtube-dl", sep = "\n")
     stop(msg)
   })
-  message(">>> MP3 created succesfully!")
 }

@@ -4,7 +4,15 @@
 \alias{freqs_plot}
 \title{Frequencies Plot for Multiple Categories}
 \usage{
-freqs_plot(df, ..., top = 10, rm.na = FALSE, title = NA, subtitle = NA)
+freqs_plot(
+  df,
+  ...,
+  top = 10,
+  rm.na = FALSE,
+  abc = FALSE,
+  title = NA,
+  subtitle = NA
+)
 }
 \arguments{
 \item{df}{Data.frame}
@@ -16,6 +24,8 @@ If no variables are passed, the whole data.frame will be considered}
 
 \item{rm.na}{Boolean. Remove NA values in the plot? (not filtered for 
 numerical output; use na.omit() or filter() if needed)}
+
+\item{abc}{Boolean. Do you wish to sort by alphabetical order?}
 
 \item{title}{Character. Overwrite plot's title with.}
 

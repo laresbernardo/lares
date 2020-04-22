@@ -318,10 +318,11 @@ freqs_df <- function(df,
 #' @param top Integer. Filter and plot the most n frequent for  values.
 #' @param rm.na Boolean. Remove NA values in the plot? (not filtered for 
 #' numerical output; use na.omit() or filter() if needed)
+#' @param abc Boolean. Do you wish to sort by alphabetical order?
 #' @param title Character. Overwrite plot's title with.
 #' @param subtitle Character. Overwrite plot's subtitle with.
 #' @export
-freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, 
+freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
                        title = NA, subtitle = NA) {
   
   vars <- quos(...)
@@ -332,7 +333,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE,
   aux <- df %>% 
     freqs(!!!vars, rm.na = rm.na) %>% 
     mutate_if(is.factor, as.character) %>%
-    mutate_if(is.logical, as.character) %>%
+    mutate_at(1:length(vars), as.character) %>%
     mutate(order = ifelse(order > top, "...", order))
   if ("..." %in% aux$order)
     message(paste(
@@ -374,6 +375,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE,
     theme(plot.margin = margin(mg, mg, 0, mg))
   
   p2 <- labels %>%
+    {if (abc) mutate(., n = -rank(label)) else .} %>%
     mutate(label = ifelse(order == "...", " Mixed Tail", label)) %>%
     ggplot(aes(x = reorder(order, pcum), 
                y = reorder(label, n), 
