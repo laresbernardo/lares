@@ -11,7 +11,6 @@
 yt2mp3 <- function(url = "https://www.youtube.com/watch?v=lrlKcCdVw9Q") {
   
   #try_require("av")
-  
   # txt <- read_html(url) %>%
   #   html_nodes("head title") %>% 
   #   html_text() %>% 
@@ -19,8 +18,8 @@ yt2mp3 <- function(url = "https://www.youtube.com/watch?v=lrlKcCdVw9Q") {
   # message("Video: ", txt)
   # filename <- ifelse(is.na(filename), txt, filename)
   
+  message(">>> Downloading and converting video...")
   tryCatch({
-    message(">>> Downloading and converting video...")
     system(paste("youtube-dl",
                  "-f bestaudio",
                  "--extract-audio",
@@ -36,9 +35,9 @@ yt2mp3 <- function(url = "https://www.youtube.com/watch?v=lrlKcCdVw9Q") {
     # av_audio_convert(file, mp3, start_time = start) 
     # invisible(file.remove(file))
   }, error = function(err) {
-    msg <- "You need to have youtube-dl installed"
+    msg <- "You must have youtube-dl installed!"
     if (grepl("^darwin", R.version$os))
-      msg <- paste(msg, "Run in Terminal: brew install youtube-dl", sep = "\n")
+      msg <- paste(msg, "\nRun in Terminal: brew install youtube-dl", sep = "\n")
     stop(msg)
   })
 }

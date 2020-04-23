@@ -12,6 +12,10 @@ You are most welcome to install, use, and/or comment on any of the code and func
 ```{r}
 # install.packages('devtools')
 devtools::install_github("laresbernardo/lares")
+
+# Full installation with recommended dependencies (takes some time)
+devtools::install_github("laresbernardo/lares", dependencies = TRUE)
+
 # User friendly update
 lares::updateLares()
 ```
