@@ -404,7 +404,7 @@ splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save =
   check_attr(p, check = "daily_portfolio")
   
   if (n_days > nrow(p)) {
-    message(spintf("As there is less data than for %s days, changed n_days all days: %s",
+    message(sprintf("As there is less data than for %s days, changed n_days all days: %s",
                    n_days, nrow(p)))
     n_days <- nrow(p)
   }
