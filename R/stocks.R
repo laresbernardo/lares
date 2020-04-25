@@ -403,20 +403,27 @@ splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save =
   
   check_attr(p, check = "daily_portfolio")
   
+  if (n_days > nrow(p)) {
+    message(spintf("As there is less data than for %s days, changed n_days all days: %s",
+                   n_days, nrow(p)))
+    n_days <- nrow(p)
+  }
+  
   n_days <- ifelse(n_days < max(ma), max(ma) + 2, n_days)
   newp <- rbind(p, mutate(tail(p, 1), Date = Date - 1, ROI = 0, CumValue = 0))
   
-  caption <- ifelse(is.na(ma)[1], "No caption needed", 
+  caption <- ifelse(is.na(ma)[1], "", 
                     paste("Showing moving averages for", ma[1], "and", ma[2], "days."))
   
   if (!historical) newp <- mutate(newp, ROI = ROI - newp$ROI[n_days])
   if (!is.na(n_days)) {
     newp <- slice(newp, 1:n_days)
     mas <- function(x, n = 30){stats::filter(x, rep(1 / n, n), sides = 2)}
-    caption <- paste(caption, 
-                     "\nShowing last", n_days, "days,",
-                     ifelse(historical, "with historical ROI results.",
-                            "with relative ROI results."))
+    if (n_days != nrow(p))
+      caption <- paste(caption, 
+                       "\nShowing last", n_days, "days,",
+                       ifelse(historical, "with historical ROI results.",
+                              "with relative ROI results."))
   } 
   
   if (!is.na(ma)[1]) newp <- mutate(newp, ma1 = mas(ROI, ma[1]), ma2 = mas(ROI, ma[2]))
