@@ -12,7 +12,7 @@ set.tictoc <- function(which, id) {
 
 
 ####################################################################
-#' Stopwatch Start
+#' Stopwatch to measure Task Timings
 #' 
 #' Measure timings between a tic and a toc.
 #' 

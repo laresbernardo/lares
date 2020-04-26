@@ -1,6 +1,6 @@
 # lares <img src='man/figures/lares_logo.png' align="right" height="140px" />
 ### R Package for Analytics and Machine Learning
-[![Build Status](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares) [![Rdoc](http://www.rdocumentation.org/badges/version/lares)](http://www.rdocumentation.org/packages/lares) [![saythanks](https://img.shields.io/badge/say-thanks-1EAEDB.svg)](https://saythanks.io/to/laresbernardo)
+![R-CMD-check](https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg?branch=master) ![pkgdown](https://github.com/laresbernardo/lares/workflows/pkgdown/badge.svg) [![travis](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares) [![doc](https://img.shields.io/badge/documentation-lares-blue)](https://laresbernardo.github.io/lares/) [![saythanks](https://img.shields.io/badge/say-thanks-blue.svg)](https://saythanks.io/to/laresbernardo)
 ----
 
 `lares` is a library designed to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. With a wide variety of family functions within Machine Learning, Data Wrangling, EDA, and Scrappers, `lares` helps the analyst or data scientist to get quick, reproducible, and robust results, without the need of repetitive coding or extensive programming skills.
@@ -50,12 +50,12 @@ My favourite and most used functions are `freqs()`, `distr()`, and `corr_var()`.
 
 If there is space for one more, I would add `ohse()` (One Hot Smart Encoding), which has made my life much easier and my work much valuable. It converts a whole data frame into numerical values by making dummy variables (categoricals turned into new columns with 1s and 0s, ordered by frequencies and grouping less frequent into a single column) and dates into new features (such as month, year, week of the year, minutes if time is present, holidays given a country, currency exchange rates, etc).
 
-## What else is there?
+## What else is there? 
 
-You can type `lares::` in **RStudio** and you will get a pop-up with all the functions that are currently available within the package. You might also want to check the whole documentation by running `help(package = "lares")` locally or in the [rdrr.io](https://rdrr.io/github/laresbernardo/lares/man/) or [rdocumentation.org](https://www.rdocumentation.org/packages/lares/) websites. Remember to check the families and similar functions on the **See Also** sections too.
+You can check all active functions and documentations [here](https://laresbernardo.github.io/lares/reference/index.html) or type `lares::` in **RStudio** and you will get a pop-up with all the functions that are currently available within the package. You might also want to check the whole documentation by running `help(package = "lares")` in your RStudio or in the [Online Official Documentation](https://laresbernardo.github.io/lares/reference/index.html). Remember to check the families and similar functions on the **See Also** sections as well.
 
 ### Getting further help
 
-If you need help with any of the functions, use the `?` function (i.e. `?lares::function`) and the **Help** tab will display a short explanation on each function and its parameters. 
+If you need help with any of the functions when using RStudio, use the `?` function (i.e. `?lares::function`) and the **Help** tab will display a short explanation on each function and its parameters. You might also be interested in the [Online Official Documentation](https://laresbernardo.github.io/lares/reference/index.html) to check all functions and parameters.
 
 If you encounter a bug, please share with me a reproducible example on [Github issues](https://github.com/laresbernardo/lares/issues) and I'll take care of it. For inquiries, and other matters, you can [email me](mailto:laresbernardo@gmail.com "email me") directly or open a new ticket [here](https://github.com/laresbernardo/lares/issues).
