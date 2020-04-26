@@ -542,8 +542,6 @@ splot_change <- function(p, s, weighted = TRUE, group = TRUE, save = FALSE) {
 #' @export
 splot_growth <- function(p, save = FALSE) {
   
-  try_require("ggrepel")
-  
   check_attr(p, check = "daily_portfolio")
   
   labels <- filter(p, Cash != 0)
@@ -557,9 +555,6 @@ splot_growth <- function(p, save = FALSE) {
   plot <- ggplot(aux, aes(x = Date, y = Amount)) + 
     geom_area(aes(y = Amount, fill = Type), position = "stack") +
     labs(title = "  Daily Total Portfolio Value", y = NULL, x = NULL, fill = "") +
-    geom_label_repel(data = labels, 
-                     aes(x = Date, y = Portfolio, label = formatNum(Cash, 0)), 
-                     vjust = -1.3, size = 2.5) +
     scale_y_continuous(position = "right", labels = comma) +
     scale_x_date(date_labels = "%b%y", expand = c(0, 0)) +
     annotate("text", label = caption, x = max(p$Date), 
@@ -567,6 +562,14 @@ splot_growth <- function(p, save = FALSE) {
              size = 3.3, colour = "white", hjust = 1.1) +
     theme_lares2(pal = 1) +
     theme(legend.position = "top", legend.justification = c(0, 1))
+  
+  if (nrow(labels) > 0) {
+    try_require("ggrepel")
+    plot <- plot +
+      geom_label_repel(data = labels, 
+                       aes(x = Date, y = Portfolio, label = formatNum(Cash, 0)), 
+                       vjust = -1.3, size = 2.5)
+  }
   
   if (save) plot <- plot + 
     ggsave("portf_total_hist.png", width = 8, height = 5, dpi = 300)
