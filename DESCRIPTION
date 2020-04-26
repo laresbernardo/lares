@@ -57,7 +57,8 @@ Suggests:
     RPostgreSQL,
     rtweet,
     shinydashboard,
-    skimr
+    skimr,
+    testthat
 URL: https://github.com/laresbernardo/lares
 BugReports: https://github.com/laresbernardo/lares/issues
 RoxygenNote: 7.1.0

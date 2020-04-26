@@ -1,6 +1,6 @@
 # lares <img src='man/figures/lares_logo.png' align="right" height="140px" />
 ### R Package for Analytics and Machine Learning
-![R-CMD-check](https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg?branch=master) ![pkgdown](https://github.com/laresbernardo/lares/workflows/pkgdown/badge.svg) [![travis](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares) [![doc](https://img.shields.io/badge/documentation-lares-blue)](https://laresbernardo.github.io/lares/) [![saythanks](https://img.shields.io/badge/say-thanks-blue.svg)](https://saythanks.io/to/laresbernardo)
+[![R-CMD-check](https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg?branch=master)](https://github.com/laresbernardo/lares/actions?query=workflow%3AR-CMD-check) [![documentation](https://github.com/laresbernardo/lares/workflows/documentation/badge.svg)](https://laresbernardo.github.io/lares/reference/index.html) [![travis](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares)  [![saythanks](https://img.shields.io/badge/say-thanks-blue.svg)](https://saythanks.io/to/laresbernardo)
 ----
 
 `lares` is a library designed to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. With a wide variety of family functions within Machine Learning, Data Wrangling, EDA, and Scrappers, `lares` helps the analyst or data scientist to get quick, reproducible, and robust results, without the need of repetitive coding or extensive programming skills.
