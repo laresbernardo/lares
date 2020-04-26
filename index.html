@@ -74,9 +74,9 @@
 <h3 class="hasAnchor">
 <a href="#r-package-for-analytics-and-machine-learning" class="anchor"></a>R Package for Analytics and Machine Learning</h3>
 </div>
-<div id="build-status-rdoc-saythanks" class="section level2">
+<div id="r-cmd-check-pkgdown-travis-doc-saythanks" class="section level2">
 <h2 class="hasAnchor">
-<a href="#build-status-rdoc-saythanks" class="anchor"></a><a href="https://travis-ci.com/laresbernardo/lares"><img src="https://travis-ci.com/laresbernardo/lares.svg?branch=master" alt="Build Status"></a> <a href="http://www.rdocumentation.org/packages/lares"><img src="http://www.rdocumentation.org/badges/version/lares" alt="Rdoc"></a> <a href="https://saythanks.io/to/laresbernardo"><img src="https://img.shields.io/badge/say-thanks-1EAEDB.svg" alt="saythanks"></a>
+<a href="#r-cmd-check-pkgdown-travis-doc-saythanks" class="anchor"></a><img src="https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg?branch=master" alt="R-CMD-check"><img src="https://github.com/laresbernardo/lares/workflows/pkgdown/badge.svg" alt="pkgdown"><a href="https://travis-ci.com/laresbernardo/lares"><img src="https://travis-ci.com/laresbernardo/lares.svg?branch=master" alt="travis"></a> <a href="https://laresbernardo.github.io/lares/"><img src="https://img.shields.io/badge/documentation-lares-blue" alt="doc"></a> <a href="https://saythanks.io/to/laresbernardo"><img src="https://img.shields.io/badge/say-thanks-blue.svg" alt="saythanks"></a>
 </h2>
 <p><code>lares</code> is a library designed to automate, improve, and speed everyday <strong>Analysis and Machine Learning</strong> tasks. With a wide variety of family functions within Machine Learning, Data Wrangling, EDA, and Scrappers, <code>lares</code> helps the analyst or data scientist to get quick, reproducible, and robust results, without the need of repetitive coding or extensive programming skills.</p>
 <p>You are most welcome to install, use, and/or comment on any of the code and functionalities. If you are colour blind as well, glad to share my colour palettes! Feel free to contact me via <a href="https://www.linkedin.com/in/laresbernardo/">Linkedin</a>, and please, do let me know where did you got my contact from.</p>
@@ -84,14 +84,14 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<pre class="{r}"><code><a href="https://devtools.r-lib.org//reference/remote-reexports.html"># install.packages('devtools')
+<pre class="{r}"><code># install.packages('devtools')
 devtools::install_github("laresbernardo/lares")
 
 # Full installation with recommended dependencies (takes some time)
 devtools::install_github("laresbernardo/lares", dependencies = TRUE)
 
 # User friendly update
-lares::updateLares()</a></code></pre>
+lares::updateLares()</code></pre>
 <p><strong>CRAN NOTE</strong>: I currently don’t have planned to submit the library into CRAN, eventhough it passes all its quality tests (and I’m a huge fan). I think <code>lares</code> is more of an everyday useful <em>package</em> rather than a “specialized for a specific task” <em>library</em>. It has too many useful and various kinds of functions, from NLP to querying APIs to plotting Machine Learning results to market stocks and portfolio reports. I gladly share my code with the community and encourage you to use/comment/share it, but I strongly think that CRAN is not aiming for this kind of libraries in their repertoire.</p>
 </div>
 <div id="see-the-library-in-action" class="section level2">
@@ -127,11 +127,11 @@ lares::updateLares()</a></code></pre>
 <div id="what-else-is-there" class="section level2">
 <h2 class="hasAnchor">
 <a href="#what-else-is-there" class="anchor"></a>What else is there?</h2>
-<p>You can type <code>lares::</code> in <strong>RStudio</strong> and you will get a pop-up with all the functions that are currently available within the package. You might also want to check the whole documentation by running <code><a href="https://rdrr.io/pkg/lares/man">help(package = "lares")</a></code> locally or in the <a href="https://rdrr.io/github/laresbernardo/lares/man/">rdrr.io</a> or <a href="https://www.rdocumentation.org/packages/lares/">rdocumentation.org</a> websites. Remember to check the families and similar functions on the <strong>See Also</strong> sections too.</p>
+<p>You can check all active functions and documentations <a href="https://laresbernardo.github.io/lares/reference/index.html">here</a> or type <code>lares::</code> in <strong>RStudio</strong> and you will get a pop-up with all the functions that are currently available within the package. You might also want to check the whole documentation by running <code><a href="https://rdrr.io/pkg/lares/man">help(package = "lares")</a></code> in your RStudio or in the <a href="https://laresbernardo.github.io/lares/reference/index.html">Online Official Documentation</a>. Remember to check the families and similar functions on the <strong>See Also</strong> sections as well.</p>
 <div id="getting-further-help" class="section level3">
 <h3 class="hasAnchor">
 <a href="#getting-further-help" class="anchor"></a>Getting further help</h3>
-<p>If you need help with any of the functions, use the <code>?</code> function (i.e. <code>?lares::function</code>) and the <strong>Help</strong> tab will display a short explanation on each function and its parameters.</p>
+<p>If you need help with any of the functions when using RStudio, use the <code>?</code> function (i.e. <code>?lares::function</code>) and the <strong>Help</strong> tab will display a short explanation on each function and its parameters. You might also be interested in the <a href="https://laresbernardo.github.io/lares/reference/index.html">Online Official Documentation</a> to check all functions and parameters.</p>
 <p>If you encounter a bug, please share with me a reproducible example on <a href="https://github.com/laresbernardo/lares/issues">Github issues</a> and I’ll take care of it. For inquiries, and other matters, you can <a href="mailto:laresbernardo@gmail.com">email me</a> directly or open a new ticket <a href="https://github.com/laresbernardo/lares/issues">here</a>.</p>
 </div>
 </div>
@@ -170,7 +170,7 @@ lares::updateLares()</a></code></pre>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
