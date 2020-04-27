@@ -1,11 +1,11 @@
 # lares <img src='man/figures/lares_logo.png' align="right" height="140px" />
 ### R Package for Analytics and Machine Learning
-[![R-CMD-check](https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg?branch=master)](https://github.com/laresbernardo/lares/actions?query=workflow%3AR-CMD-check) [![documentation](https://github.com/laresbernardo/lares/workflows/documentation/badge.svg)](https://laresbernardo.github.io/lares/reference/index.html) [![travis](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares)  [![saythanks](https://img.shields.io/badge/say-thanks-blue.svg)](https://saythanks.io/to/laresbernardo)
+[![R-CMD-check](https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg?branch=master)](https://github.com/laresbernardo/lares/actions?query=workflow%3AR-CMD-check) [![documentation](https://github.com/laresbernardo/lares/workflows/documentation/badge.svg)](https://laresbernardo.github.io/lares/reference/index.html) [![travis](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares)  [![saythanks](https://img.shields.io/badge/say-hi-blue.svg)](https://www.linkedin.com/in/laresbernardo/)
 ----
 
-`lares` is a library designed to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. With a wide variety of family functions within Machine Learning, Data Wrangling, EDA, and Scrappers, `lares` helps the analyst or data scientist to get quick, reproducible, and robust results, without the need of repetitive coding or extensive programming skills.
+R library designed to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. With a wide variety of family functions such as Machine Learning, EDA, Investment, Queries, Scrappers, APIs, `lares` helps the analyst or data scientist to get quick, reproducible, and robust results, without the need of repetitive coding nor extensive programming skills. Feel free to install, use, and/or comment on any of the code and functionalities. Oh, and if you are also colourblind, be sure to check the colour palettes!
 
-You are most welcome to install, use, and/or comment on any of the code and functionalities. If you are colour blind as well, glad to share my colour palettes! Feel free to contact me via [Linkedin](https://www.linkedin.com/in/laresbernardo/), and please, do let me know where did you got my contact from.
+Don't hesitate to contact me via [Linkedin](https://www.linkedin.com/in/laresbernardo/), but please, do let me know where did you first hear from the library and which family of functions you are most interested in.
 
 ## Installation
 
@@ -20,7 +20,7 @@ devtools::install_github("laresbernardo/lares", dependencies = TRUE)
 lares::updateLares()
 ```
 
-**CRAN NOTE**: I currently don't have planned to submit the library into CRAN, eventhough it passes all its quality tests (and I'm a huge fan). I think `lares` is more of an everyday useful *package* rather than a "specialized for a specific task" *library*. It has too many useful and various kinds of functions, from NLP to querying APIs to plotting Machine Learning results to market stocks and portfolio reports. I gladly share my code with the community and encourage you to use/comment/share it, but I strongly think that CRAN is not aiming for this kind of libraries in their repertoire.
+**CRAN NOTE**: I currently don't have planned to submit the library to CRAN, eventhough I'm a huge fan and it passes all its quality tests. I see `lares` more of an everyday useful shareble *package* rather than a "specialized for a specific task" *library*. It has too many various kinds of functions, from NLP to querying APIs to plotting Machine Learning results to market stocks and portfolio reports. I gladly share my code with the community and encourage you to use/comment/share it, but I do think that CRAN is not aiming for this kind of libraries in their repertoire.
 
 ## See the library in action!
 
@@ -58,4 +58,4 @@ You can check all active functions and documentations [here](https://laresbernar
 
 If you need help with any of the functions when using RStudio, use the `?` function (i.e. `?lares::function`) and the **Help** tab will display a short explanation on each function and its parameters. You might also be interested in the [Online Official Documentation](https://laresbernardo.github.io/lares/reference/index.html) to check all functions and parameters.
 
-If you encounter a bug, please share with me a reproducible example on [Github issues](https://github.com/laresbernardo/lares/issues) and I'll take care of it. For inquiries, and other matters, you can [email me](mailto:laresbernardo@gmail.com "email me") directly or open a new ticket [here](https://github.com/laresbernardo/lares/issues).
+If you encounter a bug, please share with me a reproducible example on [Github issues](https://github.com/laresbernardo/lares/issues) and I'll take care of it. For inquiries, and other matters, you can [LinkedIn me](https://www.linkedin.com/in/laresbernardo/) anytime!
