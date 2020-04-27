@@ -4,12 +4,12 @@
 \alias{etf_sector}
 \title{ETF's Sectors Breakdown}
 \usage{
-etf_sector(etf = "VTI", verbose = TRUE)
+etf_sector(etf = "VTI", quiet = FALSE)
 }
 \arguments{
 \item{etf}{Character Vector. Which ETFs you wish to scrap?}
 
-\item{verbose}{Boolean. Print results and progress while downloading?}
+\item{quiet}{Boolean. Print results and progress while downloading?}
 }
 \description{
 This function scraps etf.com data for sector breakdown on ETFs.

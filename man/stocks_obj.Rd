@@ -8,8 +8,8 @@ stocks_obj(
   data = stocks_file(),
   cash_fix = 0,
   tax = 30,
-  parg = FALSE,
-  sectors = FALSE
+  sectors = TRUE,
+  parg = FALSE
 )
 }
 \arguments{
@@ -21,10 +21,10 @@ to your cash balance}
 
 \item{tax}{Numeric. How much [0-99] of your dividends are gone with taxes?}
 
+\item{sectors}{Boolean. Return sectors segmentation for ETFs?}
+
 \item{parg}{Boolean. Personal argument. Used to personalize stuff, in this
 case, taxes changed from A to B in given date (hardcoded)}
-
-\item{sectors}{Boolean. Return sectors segmentation for ETFs?}
 }
 \description{
 This function lets the user create his portfolio's calculations and

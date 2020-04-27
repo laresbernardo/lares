@@ -9,7 +9,7 @@ stocks_report(
   dir = NA,
   mail = FALSE,
   to = "laresbernardo@gmail.com",
-  sectors = FALSE,
+  sectors = TRUE,
   creds = NA
 )
 }

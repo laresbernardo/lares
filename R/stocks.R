@@ -617,38 +617,43 @@ splot_types <- function(s, save = FALSE) {
 #' 
 #' @family Investment
 #' @param etf Character Vector. Which ETFs you wish to scrap?
-#' @param verbose Boolean. Print results and progress while downloading?
+#' @param quiet Boolean. Print results and progress while downloading?
 #' @export
-etf_sector <- function(etf = "VTI", verbose = TRUE) {
+etf_sector <- function(etf = "VTI", quiet = FALSE) {
   ret <- data.frame()
   for (i in 1:length(etf)) {
-    url <- paste0("https://etfdb.com/etf/", toupper(etf[i]))
-    exists <- tryCatch({!http_error(url)}, error = function(err) {FALSE})
+    info <- toupper(etf[i])
+    url <- paste0("https://www.etf.com/", info)
+    exists <- tryCatch({!httr::http_error(url)}, error = function(err) {FALSE})
     if (exists) {
-      sector <- read_html(url) %>% 
-        html_nodes(".col-md-6") %>% 
-        html_text() %>% .[grepl("Sector Breakdown",.)] %>% .[1]
-      sector <- data.frame(matrix(unlist(strsplit(sector, split = "\n"))[-c(1:5)], 
-                                  ncol = 2, byrow = TRUE))
-      colnames(sector) <- c("Sector", "Percentage")
-      sector$Percentage <- as.integer(cleanText(sector$Percentage))/100 
-      sector$ETF <- toupper(etf[i])
-      sector <- sector %>% select(ETF, Sector, Percentage)
-      ret <- rbind(ret, sector)
-      check <- TRUE
+      sector <- read_html(url)
+      txt <- sector %>% 
+        html_nodes(".pl0") %>% 
+        html_text(trim = TRUE) %>% 
+        .[grepl("Sector/Industry Breakdown", .)] %>%
+        str_replace_all("[\r\n]" , " ") %>%
+        gsub(".*Benchmark  ", "", .) %>%
+        gsub("%", "", .) %>%
+        str_split("  ") %>% unlist() %>% .[. != ""]
+      if (!is.null(txt[1])) {
+        sector <- as.data.frame(matrix(txt, ncol = 3, byrow = TRUE))[,c(1:2)]
+        colnames(sector) <- c("Sector", "Percentage")
+        sector$Percentage <- as.numeric(as.character(sector$Percentage))
+        sector$ETF <- info
+        ret <- rbind(ret, sector)
+        check <- TRUE 
+      }
     } else {
       check <- FALSE
       Sys.sleep(1)
     }
-    if (verbose & length(etf) > 1) {
-      info <- paste(toupper(etf[i]), ifelse(check, "", "X"))
+    if (!quiet & length(etf) > 1)
       statusbar(i, length(etf), info)   
-    }
   }
   
   if (nrow(ret) == 0) {
     message("No data found for given Tickers!")
-    invisible(return())
+    invisible(return(NULL))
   } else {
     return(ret) 
   }
@@ -715,15 +720,15 @@ splot_etf <- function(s, save = FALSE) {
 #' @param cash_fix Numeric. If you wish to algebraically sum a value 
 #' to your cash balance
 #' @param tax Numeric. How much [0-99] of your dividends are gone with taxes? 
+#' @param sectors Boolean. Return sectors segmentation for ETFs?
 #' @param parg Boolean. Personal argument. Used to personalize stuff, in this
 #' case, taxes changed from A to B in given date (hardcoded)
-#' @param sectors Boolean. Return sectors segmentation for ETFs?
 #' @export
 stocks_obj <- function(data = stocks_file(), 
                        cash_fix = 0, 
                        tax = 30, 
-                       parg = FALSE,
-                       sectors = FALSE) {
+                       sectors = TRUE,
+                       parg = FALSE) {
   
   check_attr(data, check = "stocks_file")
   
@@ -753,7 +758,10 @@ stocks_obj <- function(data = stocks_file(),
   plots[["change1"]] <- splot_change(p, s, TRUE)
   plots[["change2"]] <- splot_change(p, s, FALSE)
   plots[["types"]] <- splot_types(s)
-  if (sectors == TRUE) plots[["etfs"]] <- splot_etf(s)
+  if (sectors) {
+    message(">>> Downloading sectors for each ETF...")
+    plots[["etfs"]] <- splot_etf(s)
+  } 
   ret[["plots"]] <- plots
   message("Visualizations ready...")
   
@@ -785,7 +793,7 @@ stocks_report <- function(data = NA,
                           dir = NA,
                           mail = FALSE, 
                           to = "laresbernardo@gmail.com",
-                          sectors = FALSE,
+                          sectors = TRUE,
                           creds = NA) {
   
   try_require("rmarkdown")

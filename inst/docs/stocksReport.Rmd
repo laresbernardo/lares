@@ -57,8 +57,8 @@ print(params$portf_daily)
 print(params$portf_distribution)
 ```
 
-```{r fig.width = 10, fig.height = 4, echo = FALSE}
-if ("portf_distribution_sectors" %in% names(params)) 
+```{r fig.width = 10, fig.height = 6, echo = FALSE}
+if (!is.na("portf_distribution_sectors")) 
   print(params$portf_distribution_sectors) 
 ```
 
