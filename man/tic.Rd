@@ -4,7 +4,7 @@
 \alias{tic}
 \alias{toc}
 \alias{resettictoc}
-\title{Stopwatch Start}
+\title{Stopwatch to measure Task Timings}
 \usage{
 tic(id = 1, quiet = TRUE)
 

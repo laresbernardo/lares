@@ -74,7 +74,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
          subtitle = "Where does the curve level?",
          x = "Number of Clusters",
          y = "Within Groups Sum of Squares") +
-    scale_y_continuous(labels = scales::comma) +
+    scale_y_continuous(labels = comma) +
     theme_lares2()
   results[["nclusters"]] <- nclusters
   results[["nclusters_plot"]] <- nclusters_plot

@@ -60,8 +60,8 @@ theme_lares2 <- function(font = "Arial Narrow",
   
   ## USING ASSIGN - IMPROVE:
   # envir <- as.environment(1)
-  # assign("scale_x_continuous", function(..., labels = scales::comma) scale_x_continuous(..., labels = labels), envir = envir)
-  # assign("scale_y_continuous", function(..., labels = scales::comma) scale_y_continuous(..., labels = labels), envir = envir)
+  # assign("scale_x_continuous", function(..., labels = comma) scale_x_continuous(..., labels = labels), envir = envir)
+  # assign("scale_y_continuous", function(..., labels = comma) scale_y_continuous(..., labels = labels), envir = envir)
   # assign("scale_colour_discrete", function(..., values = as.vector(colours_pal)) scale_colour_manual(..., values = values), envir = envir)
   # assign("scale_fill_discrete", function(..., values = names(colours_pal)) scale_fill_manual(..., values = values), envir = envir)
   # assign("scale_colour_continuous", function(..., low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir = envir)

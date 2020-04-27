@@ -261,24 +261,24 @@ gg_bars <- function(names, n, p = NA,
 #'
 #' @inheritDotParams ggplot2::continuous_scale -expand -position
 #' @export
-scale_x_comma <- function(...) scale_x_continuous(..., labels = scales::comma)
+scale_x_comma <- function(...) scale_x_continuous(..., labels = comma)
 
 #' @rdname scale_x_comma
 #' @export
-scale_y_comma <- function(...) scale_y_continuous(..., labels = scales::comma)
+scale_y_comma <- function(...) scale_y_continuous(..., labels = comma)
 
 #' @rdname scale_x_comma
 #' @export
-scale_x_percent <- function(...) scale_x_continuous(..., labels = scales::percent)
+scale_x_percent <- function(...) scale_x_continuous(..., labels = percent)
 
 #' @rdname scale_x_comma
 #' @export
-scale_y_percent <- function(...) scale_y_continuous(..., labels = scales::percent)
+scale_y_percent <- function(...) scale_y_continuous(..., labels = percent)
 
 #' @rdname scale_x_comma
 #' @export
-scale_x_dollar <- function(...) scale_y_continuous(..., labels = scales::dollar)
+scale_x_dollar <- function(...) scale_y_continuous(..., labels = dollar)
 
 #' @rdname scale_x_comma
 #' @export
-scale_y_dollar <- function(...) scale_y_continuous(..., labels = scales::dollar)
+scale_y_dollar <- function(...) scale_y_continuous(..., labels = dollar)

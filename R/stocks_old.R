@@ -557,7 +557,7 @@ portfolio_distr_plot <- function(portfolio_perf, save = FALSE) {
     ggplot() +
     geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
     facet_grid(. ~ label, scales = "free") +
-    scale_y_continuous(labels = scales::comma, expand = c(0, 0)) + 
+    scale_y_continuous(labels = comma, expand = c(0, 0)) + 
     theme_lares2(pal = 1) +
     labs(x = NULL, y = "Total value", title = "Portfolio's Category Distribution")
   if (save) p <- p + ggsave("portf_distribution.png", width = 8, height = 5, dpi = 300) 

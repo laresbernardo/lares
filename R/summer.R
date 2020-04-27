@@ -47,7 +47,8 @@ summer <- function(df, ...,
   
   # PLOT
   if (plot & grouped) {
-    aux <- tidyr::pivot_longer(output, which) %>% 
+    #aux <- tidyr::pivot_longer(output, which) %>% 
+    aux <- gather(output, which) %>% 
       mutate(label = paste(!!!vars)) %>%
       arrange(desc(value))
     if (!is.na(top)) {

@@ -69,7 +69,7 @@ trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = c()
       geom_text(hjust = -0.1, size = 2.8) +
       labs(y = "Relevance | % Increase", subtitle = ptitle, x = "", fill = "") +
       theme(legend.position = "bottom") +
-      scale_y_continuous(labels = scales::comma, 
+      scale_y_continuous(labels = comma, 
                          limits = c(0,110),
                          minor_breaks = seq(0, 100, 10), 
                          breaks = seq(0, 100, 20))

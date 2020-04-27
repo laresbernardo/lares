@@ -1456,18 +1456,18 @@ flatten_list <- function(x, quiet = FALSE) {
 #' @param ... Variables to segment counters
 #' @param abc Boolean. Sort alphabetically?
 #' @export
-  list_cats <- function(df, ..., abc = TRUE) {
-    is.categorical <- function(x) is.character(x) | is.factor(x)
-    category <- which(sapply(df, is.categorical))
-    ret <- list()
-    for (i in 1:length(category)) {
-      which <- as.character(names(category)[i])
-      df[,which] <- as.character(df[,which])
-      aux <- freqs(df, base::get(which), ...) %>%
-        select(-pcum, -order)
-      if (abc) aux <- arrange(aux, `base::get(which)`)
-      colnames(aux)[1] <- which
-      ret[[which]] <- aux
-    }
-    return(ret)
+list_cats <- function(df, ..., abc = TRUE) {
+  is.categorical <- function(x) is.character(x) | is.factor(x)
+  category <- which(sapply(df, is.categorical))
+  ret <- list()
+  for (i in 1:length(category)) {
+    which <- as.character(names(category)[i])
+    df[,which] <- as.character(df[,which])
+    aux <- freqs(df, base::get(which), ...) %>%
+      select(-pcum, -order)
+    if (abc) aux <- arrange(aux, `base::get(which)`)
+    colnames(aux)[1] <- which
+    ret[[which]] <- aux
   }
+  return(ret)
+}

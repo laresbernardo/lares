@@ -35,25 +35,31 @@ missingness <- function(df, plot = FALSE, full = FALSE,
                     formatNum(obs, 0), 
                     formatNum(miss, 0), 
                     formatNum(missp, 1, pos = "%"))
-    p <- df %>% 
-      mutate_all(is.na) %>% 
-      tidyr::pivot_longer(cols = everything()) %>%
-      {if (!full) filter(., name %in% m$variable) else .} %>% 
-      mutate(type = ifelse(name %in% m$variable, "with", "without")) %>% 
-      group_by(name) %>% 
-      mutate(row_num = row_number()) %>% 
-      mutate(perc = round(100 * sum(value)/nrow(df), 2)) %>% 
-      mutate(label = ifelse(type == "with", paste0(name, " | ", perc, "%"), name)) %>% 
+    
+    
+    p <- is.na(df) %>% data.frame() %>% 
+      # tidyr::pivot_longer(cols = everything()) %>% # The world is not yet prepared!
+      tidyr::gather() %>%
+      {if (!full) 
+        filter(., key %in% m$variable) else .} %>%
+      mutate(type = ifelse(key %in% m$variable, "with", "without")) %>%
+      group_by(key) %>%
+      mutate(row_num = row_number()) %>%
+      mutate(perc = round(100*sum(value)/nrow(df),2)) %>%
+      mutate(label = ifelse(type == "with", paste0(key, " | ", perc,"%"), key)) %>%
       arrange(value) %>% 
       ggplot(aes(x = reorder(label, perc), y = row_num, fill = value)) + 
       geom_raster() + 
-      coord_flip() + 
-      {if (full) facet_grid(type ~ ., space = "free", scales = "free")} + 
-      {if (summary) scale_y_comma(note, expand = c(0, 0)) else scale_y_comma(NULL, expand = c(0, 0))} + 
-      scale_fill_grey(name = NULL, labels = c("Present", "Missing"), expand = c(0, 0)) + 
-      labs(title = "Missing values", x = "", subtitle = if (!is.na(subtitle)) subtitle) + 
-      theme_lares2(legend = "top") + 
-      theme(axis.text.y = element_text(size = 8))
+      coord_flip() +
+      {if (full) 
+        facet_grid(type ~ ., space = "free", scales = "free")} +
+      {if (summary) 
+        scale_y_comma(note, expand = c(0, 0)) else 
+          scale_y_comma(NULL, expand = c(0, 0))} +
+      scale_fill_grey(name = NULL, labels = c("Present", "Missing"), expand = c(0, 0)) +
+      labs(title = "Missing values", x = "", subtitle = if (!is.na(subtitle)) subtitle) +
+      theme_lares2(legend = "top") +
+      theme(axis.text.y  = element_text(size = 8))
     
     return(p)
   }

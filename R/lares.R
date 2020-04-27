@@ -39,14 +39,14 @@
 # @importFrom recipes recipe step_num2factor step_meanimpute all_numeric step_modeimpute
 # all_nominal step_scale all_outcomes step_dummy prep
 #' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text 
-#' @importFrom scales percent comma
+#' @importFrom scales comma percent dollar
 #' @importFrom sp over coordinates proj4string proj4string<- coordinates<- spTransform
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
 #' reorder start kmeans var xtabs as.formula prcomp p.adjust pt
 #' @import stringr 
 #' @importFrom tm content_transformer Corpus removeNumbers removePunctuation removeWords 
 #' stopwords stripWhitespace TermDocumentMatrix tm_map VectorSource
-#' @importFrom tidyr gather spread pivot_longer pivot_wider
+#' @importFrom tidyr gather spread
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
 #' globalVariables installed.packages write.table install.packages remove.packages object.size 
 #' type.convert flush.console read.table modifyList write.csv combn browseURL type.convert
