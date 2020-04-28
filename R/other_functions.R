@@ -1471,3 +1471,33 @@ list_cats <- function(df, ..., abc = TRUE) {
   }
   return(ret)
 }
+
+####################################################################
+#' Replace Factor Values
+#' 
+#' This function lets the user replace levels on a factor vector.
+#' 
+#' @param x Factor (or Character) Vector
+#' @param original String or Vector. Original text you wish to replace
+#' @param change String or Vector. Values you wish to replace the originals with
+#' @examples
+#' \dontrun{
+#'  data(dft)
+#'  # Replace a single value
+#'  dft <- mutate(dft, Pclass = replacefactor(Pclass, original = "1", change = "First"))
+#'  # Replace multiple values
+#'  dft <- mutate(dft, Pclass = replacefactor(Pclass, c("2","3"), c("Second", "Third")))
+#' }
+#' @export
+replacefactor <- function(x, original, change) {
+  if (length(original) != length(change))
+    stop("You must provide same length vectors for original and change!")
+  for (i in 1:length(change)) {
+    if (!is.factor(x)) {
+      warning("Automatically turned non-factor variable into factor")
+      x <- factor(x, levels = unique(as.character(x)))
+    }
+    levels(x)[levels(x) == original[i]] <- change[i]
+  }
+  return(x)
+}
