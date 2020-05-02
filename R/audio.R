@@ -1,43 +1,50 @@
 ####################################################################
-#' YouTube to MP3
+#' Download MP3 from URL
 #' 
-#' This function downloads a YouTube video and converts it into a 
+#' This function downloads a YouTube video or Soundcloud or any other 
+#' platform supported by the youtube-dl library, and converts it into a 
 #' high quality MP3 file.
+#' 
+#' More info: \href{https://github.com/ytdl-org/youtube-dl/}{youtube-dl's Github}
 #' 
 #' @family Scrapper
 #' @family Audio
 #' @param url Characeter. YouTube URL
+#' @param mp3 Boolean. Add mp3 parameters?
+#' @param params Character. Additional parameters
+#' @param quiet Boolean. Keep quiet (or show query)?
+#' @examples 
+#' \dontrun{
+#'  # Download video from YouTube and convert to MP3
+#'  get_mp3("https://www.youtube.com/watch?v=lrlKcCdVw9Q")
+#' }
 #' @export
-yt2mp3 <- function(url = "https://www.youtube.com/watch?v=lrlKcCdVw9Q") {
+get_mp3 <- function(url, mp3 = TRUE, params = "", quiet = FALSE) {
+
+  # Build query's parameters
+  query <- "--rm-cache-dir"
+  if (mp3)
+    query <- c(query, 
+               "-f bestaudio",
+               "--extract-audio",
+               "--audio-format mp3",
+               "--audio-quality 0")
+  query <- c(query, '-o "%(title)s.%(ext)s"', params)
+  if (!quiet)
+    message(vector2text(c("Query parameters:", query), quotes = FALSE, sep = " "))
+  query <- vector2text(c("youtube-dl", query, url), quotes = FALSE, sep = " ")
   
-  #try_require("av")
-  # txt <- read_html(url) %>%
-  #   html_nodes("head title") %>% 
-  #   html_text() %>% 
-  #   gsub(" - YouTube", "", .)
-  # message("Video: ", txt)
-  # filename <- ifelse(is.na(filename), txt, filename)
-  
-  message(">>> Downloading and converting video...")
+  # Run youtube-dl
   tryCatch({
-    system(paste("youtube-dl",
-                 "-f bestaudio",
-                 "--extract-audio",
-                 "--audio-format mp3",
-                 "--audio-quality 0", 
-                 '-o "%(title)s.%(ext)s"',
-                 url))
-    # message(">>> Converting to audio...")
-    # files <- listfiles(recursive = FALSE)
-    # file <- as.character(files$filename[grepl("tempvid", files$filename)])
-    # mp3 <- paste0(filename,".mp3")
-    # if (file.exists(mp3)) invisible(file.remove(mp3))
-    # av_audio_convert(file, mp3, start_time = start) 
-    # invisible(file.remove(file))
+    if (!quiet)
+      message(">>> Downloading and converting...")
+    system(query)
+    
   }, error = function(err) {
     msg <- "You must have youtube-dl installed!"
     if (grepl("^darwin", R.version$os))
-      msg <- paste(msg, "\nRun in Terminal: brew install youtube-dl", sep = "\n")
+      msg <- paste(msg, "Run in Terminal: brew install youtube-dl", 
+                   "Then restart and try again", sep = "\n")
     stop(msg)
   })
 }

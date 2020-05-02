@@ -59,7 +59,6 @@ of the highest correlation variables obtained in a cross-table.
 }
 \seealso{
 Other Correlations: 
-\code{\link{corr_plot}()},
 \code{\link{corr_var}()},
 \code{\link{corr}()}
 

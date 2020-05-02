@@ -16,7 +16,6 @@ using filters and no data is returned.
 }
 \seealso{
 Other Visualization: 
-\code{\link{corr_plot}()},
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
 \code{\link{freqs_plot}()},

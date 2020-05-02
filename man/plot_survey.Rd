@@ -21,7 +21,6 @@ This function lets the user plot a survey's result.
 }
 \seealso{
 Other Visualization: 
-\code{\link{corr_plot}()},
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
 \code{\link{freqs_plot}()},

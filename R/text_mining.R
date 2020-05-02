@@ -193,7 +193,7 @@ textFeats <- function(text, auto = TRUE, contains = NA) {
 textCloud <- function(text, lang = "english", exclude = c(), seed = 0, 
                       keep_spaces = FALSE, min = 2, pal = NA, print = TRUE) {
   
-  # require("wordcloud")
+  try_require("wordcloud")
   set.seed(seed)
   
   d <- textTokenizer(text, lang, exclude, keep_spaces)

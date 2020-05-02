@@ -48,7 +48,6 @@ with solid default kerning pairs and geometric numbers.
 
 \seealso{
 Other Visualization: 
-\code{\link{corr_plot}()},
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
 \code{\link{freqs_plot}()},

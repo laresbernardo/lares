@@ -84,7 +84,6 @@ Other Exploratory:
 
 Other Correlations: 
 \code{\link{corr_cross}()},
-\code{\link{corr_plot}()},
 \code{\link{corr}()}
 }
 \concept{Correlations}

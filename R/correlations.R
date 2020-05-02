@@ -19,7 +19,6 @@
 #' column only has two different values, should we keep both new columns?
 #' @param logs Boolean. Automatically calculate log(values) for numerical
 #' variables (not binaries)
-#' @param plot Boolean. Do you wish to see a plot?
 #' @param top Integer. Select top N most relevant variables? Filtered 
 #' and sorted by mean of each variable's correlations
 #' @export
@@ -28,7 +27,7 @@ corr <- function(df, method = "pearson",
                  ignore = NA, 
                  dummy = TRUE, dates = FALSE, 
                  redundant = FALSE, logs = FALSE, 
-                 plot = FALSE, top = NA) {
+                 top = NA) {
   
   # Ignored columns
   if (!is.na(ignore)[1]) df <- select(df, -one_of(ignore))
@@ -55,9 +54,6 @@ corr <- function(df, method = "pearson",
     which <- as.vector(imp$variable[1:top])
     cor <- cor[which,which]
   }
-  
-  # Plot
-  if (plot) corr_plot(cor, logs = FALSE)
   
   # Statistical significance (p-value)
   if (pvalue) {
@@ -206,39 +202,6 @@ corr_var <- function(df, ...,
 
 
 ####################################################################
-#' Correlation plot
-#'
-#' This function correlates a whole dataframe with a single feature.
-#'
-#' @family Visualization
-#' @family Correlations
-#' @param df Dataframe.
-#' @param ignore Character vector. Which columns do you wish to exlude?
-#' @param method Character. Any of: c("pearson", "kendall", "spearman")
-#' @param order Character. The ordering method of the correlation matrix.
-#' Any of: c("original", "AOE", "FPC", "hclust", "alphabet")
-#' @param type Character. The visualization method of correlation matrix 
-#' to be used. 
-#' Any of c("circle", "square", "ellipse", "number", "pie", "shade" 
-#' and "color")
-#' @param logs Boolean. Automatically calculate log(values) for numerical
-#' variables (not binaries) and plot them
-#' @export
-corr_plot <- function(df, ignore = NA, method = "pearson", order = "FPC", 
-                      type = "square", logs = FALSE) {
-  
-  try_require("corrplot")
-  c <- corr(df, method, ignore, logs = logs)
-  plot <- corrplot(as.matrix(c),
-                   order = order,
-                   method = type, 
-                   type = "lower",
-                   diag = FALSE)
-  return(plot)
-}
-
-
-####################################################################
 #' Correlation Cross-Table
 #'
 #' This function creates a correlation full study and returns a rank
@@ -271,10 +234,14 @@ corr_cross <- function(df, plot = TRUE,
                        rm.na = FALSE, dummy = TRUE, redundant = FALSE,
                        method = "pearson") {
   
-  if (sum(is.na(df))) warning("There are NA values in your dataframe!")
+  if (sum(is.na(df))) 
+    warning("There are NA values in your dataframe!")
+  
   if (!is.na(contains)) redundant <- !redundant
-  cor <- corr(df, ignore = ignore, plot = FALSE, dummy = dummy, 
-              redundant = redundant, method = method, pvalue = TRUE)
+  
+  cor <- corr(df, ignore = ignore, dummy = dummy, 
+              redundant = redundant, method = method, 
+              pvalue = TRUE)
   
   aux <- function(c) {
     data.frame(gather(c)) %>% 

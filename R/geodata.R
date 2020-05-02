@@ -19,8 +19,6 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
 
   getGeoDetails <- function(address){   
     
-    options(warn = -1)
-    
     c <- get_credentials(from = "google_api", dir = creds)
     url <- "https://maps.google.com/maps/api/geocode/json?address="
     api <- as.character(c[grepl(which, names(c))]) # api_01 is my personal free API
@@ -140,6 +138,7 @@ geoStratum <- function(lon, lat, label = NA) {
 geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE, alpha = 0.3) {
   
   try_require("rgdal")
+  try_require("sp")
   
   if (!class(map)[1] == "SpatialPolygonsDataFrame") {
     message("Importing shapefile...")
@@ -212,6 +211,7 @@ geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE, 
 geoMap <- function(map, fix_coords = FALSE, title = NA, subtitle = NA) {
   
   try_require("rgdal")
+  try_require("sp")
   
   if (!class(map)[1] == "SpatialPolygonsDataFrame") {
     message("Importing shapefile...")

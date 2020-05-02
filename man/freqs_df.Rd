@@ -62,7 +62,6 @@ Other Exploratory:
 \code{\link{trendsRelated}()}
 
 Other Visualization: 
-\code{\link{corr_plot}()},
 \code{\link{distr}()},
 \code{\link{freqs_plot}()},
 \code{\link{freqs}()},

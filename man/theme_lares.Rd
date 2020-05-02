@@ -33,7 +33,6 @@ This function is lo longer mantained: use theme_lares2() instead!
 }
 \seealso{
 Other Visualization: 
-\code{\link{corr_plot}()},
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
 \code{\link{freqs_plot}()},

@@ -34,12 +34,12 @@ Other Scrapper:
 \code{\link{fb_posts}()},
 \code{\link{fb_post}()},
 \code{\link{geoStratum}()},
+\code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
 \code{\link{readGS4}()},
 \code{\link{readGS}()},
-\code{\link{trendsRelated}()},
-\code{\link{yt2mp3}()}
+\code{\link{trendsRelated}()}
 }
 \concept{Connection}
 \concept{Scrapper}

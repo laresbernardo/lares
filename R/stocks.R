@@ -11,6 +11,17 @@
 #' @param sheets Character Vector. Names of each sheet containing Portfolio summary,
 #' Cash, and Transactions information
 #' @param keep_old Boolean. Include sold tickers eventhough not currently in portfolio?
+#' @examples 
+#' \dontrun{
+#'  # Load lares' dummy data
+#'  file <- system.file("inst/docs", "dummyPortfolio.xlsx", package = "lares")
+#'  df <- stocks_file(filename = file, 
+#'                    sheets = c("Portafolio","Fondos","Transacciones"), 
+#'                    keep_old = FALSE)
+#'  # This will create a list with the following 3 dataframes:
+#'  names(df)
+#'  "portfolio" "transactions" "cash" 
+#' }
 #' @export
 stocks_file <- function(filename = NA, 
                         creds = NA, 

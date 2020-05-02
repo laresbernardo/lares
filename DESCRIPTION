@@ -1,7 +1,7 @@
 Package: lares
 Type: Package
 Title: Analytics, Data Mining & Machine Learning
-Version: 4.7
+Version: 4.8
 Author: Bernardo Lares
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
 Description: R library for better/faster analytics, visualization, data mining, and machine learning tasks. With a wide variety of family functions, such as Machine Learning, Data Wrangling, Exploratory, and Scrapper, lares helps the analyst or data scientist to get quick and robust results, without the need of repetitive coding or extensive programming skills. 
@@ -23,20 +23,14 @@ Imports:
     pROC,
     rlang,
     rlist,
-    rmarkdown,
     rvest,
     scales,
-    sp,
     stringr,
     tidyr,
-    tm,
-    wordcloud,
     xml2
 Suggests:
     beepr,
     caret,
-    circlize,
-    corrplot,
     DALEX,
     data.table,
     exifr,
@@ -49,16 +43,18 @@ Suggests:
     googleAuthR,
     googlesheets4,
     gtrendsR,
-    highcharter,
     mice,
     quantmod,
     plotly,
     rdrop2,
+    rmarkdown,
     RPostgreSQL,
     rtweet,
     shinydashboard,
     skimr,
-    testthat
+    sp,
+    tm,
+    wordcloud
 URL: https://github.com/laresbernardo/lares
 BugReports: https://github.com/laresbernardo/lares/issues
 RoxygenNote: 7.1.0

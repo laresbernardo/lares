@@ -13,7 +13,6 @@ corr(
   dates = FALSE,
   redundant = FALSE,
   logs = FALSE,
-  plot = FALSE,
   top = NA
 )
 }
@@ -38,8 +37,6 @@ column only has two different values, should we keep both new columns?}
 
 \item{logs}{Boolean. Automatically calculate log(values) for numerical
 variables (not binaries)}
-
-\item{plot}{Boolean. Do you wish to see a plot?}
 
 \item{top}{Integer. Select top N most relevant variables? Filtered 
 and sorted by mean of each variable's correlations}
@@ -67,7 +64,6 @@ Other Calculus:
 
 Other Correlations: 
 \code{\link{corr_cross}()},
-\code{\link{corr_plot}()},
 \code{\link{corr_var}()}
 }
 \concept{Calculus}

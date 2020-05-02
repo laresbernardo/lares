@@ -40,17 +40,17 @@
 # all_nominal step_scale all_outcomes step_dummy prep
 #' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text 
 #' @importFrom scales comma percent dollar
-#' @importFrom sp over coordinates proj4string proj4string<- coordinates<- spTransform
+# @importFrom sp over coordinates proj4string proj4string<- coordinates<- spTransform
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
 #' reorder start kmeans var xtabs as.formula prcomp p.adjust pt
 #' @import stringr 
-#' @importFrom tm content_transformer Corpus removeNumbers removePunctuation removeWords 
-#' stopwords stripWhitespace TermDocumentMatrix tm_map VectorSource
+# @importFrom tm content_transformer Corpus removeNumbers removePunctuation removeWords 
+# stopwords stripWhitespace TermDocumentMatrix tm_map VectorSource
 #' @importFrom tidyr gather spread
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
 #' globalVariables installed.packages write.table install.packages remove.packages object.size 
 #' type.convert flush.console read.table modifyList write.csv combn browseURL type.convert
-#' @importFrom wordcloud wordcloud textplot
+# @importFrom wordcloud wordcloud textplot
 #' @importFrom xml2 read_html
 "_PACKAGE"
 
@@ -73,6 +73,7 @@ if (getRversion() >= "2.15.1")
       "get_questionnaire","get_typeforms","endfx","to","Real","Pred","Freq","force_n",
       "hasMore","has_more","identification_date","identity_profiles","ggplotly","facet2",
       "image_darknet_detect","image_darknet_model","image_info","image_read","index",
+      "content_transformer","Corpus","removeNumbers","removePunctuation","removeWords", 
       "is_contact","key","label","label_colours","label_hjust","max_score","merge_audits",
       "merged_vids","min_score","model_performance","month.lbl","numb","Adjusted",
       "p","p_error","palette_light","portalId","portal_id","pos","get_ip","score",
@@ -105,7 +106,9 @@ if (getRversion() >= "2.15.1")
       "QuoteTime","install_github","install","drop_search","drop_download","drop_auth",
       "drop_upload","sheets_auth","read_sheet","gar_auth","geom_mark_ellipse","mice",
       "complete","Arima","auto.arima","forecast","getDividends","getSymbols","getQuote",
-      "base::get(which)","PostgreSQL","render"))
+      "base::get(which)","PostgreSQL","render","wordcloud","textplot",
+      "stopwords","stripWhitespace","TermDocumentMatrix","tm_map","VectorSource",
+      "over","coordinates","proj4string","proj4string<-","coordinates<-","spTransform"))
 
 #' Pipe operator
 #' @name lares-exports

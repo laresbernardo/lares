@@ -54,12 +54,12 @@ Other Scrapper:
 \code{\link{fb_posts}()},
 \code{\link{fb_post}()},
 \code{\link{geoStratum}()},
+\code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{readGS4}()},
 \code{\link{readGS}()},
 \code{\link{trendsRelated}()},
-\code{\link{writeGS}()},
-\code{\link{yt2mp3}()}
+\code{\link{writeGS}()}
 }
 \concept{Scrapper}
 \concept{Tools}
