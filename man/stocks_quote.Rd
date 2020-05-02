@@ -12,6 +12,14 @@ stocks_quote(ticks)
 \description{
 This function lets the user download stocks historical data
 }
+\examples{
+\dontrun{
+# One quote
+one <- stocks_quote("VTI")
+# Multiple quotes
+mult <- stocks_quote(c("VTI","VOO","TSLA"))
+}
+}
 \seealso{
 Other Investment: 
 \code{\link{daily_portfolio}()},

@@ -58,6 +58,28 @@ save the plot to?}
 This function lets the user group, count, calculate percentages 
 and cumulatives. It also plots results if needed. Tidyverse friendly.
 }
+\examples{
+\dontrun{
+data(dft)
+# How many survived?
+dft \%>\% freqs(Survived)
+# How many survived and see plot?
+dft \%>\% freqs(Survived, plot = TRUE)
+# How many survived per class?
+dft \%>\% freqs(Survived, Pclass, plot = TRUE)
+# Per class, how many survived?
+dft \%>\% freqs(Pclass, Survived, plot = TRUE)
+# Per sex and class, how many survived?
+dft \%>\% freqs(Sex, Pclass, Survived, plot = TRUE)
+# Per number of siblings, sex, and class, how many survived?
+dft \%>\% freqs(SibSp, Sex, Pclass, Survived, plot = TRUE)
+dft \%>\% freqs(SibSp, Sex, Pclass, Survived, plot = FALSE)
+# Frequency of tickets
+dft \%>\% freqs(Ticket, plot = TRUE)
+# Frequency of tickets: show me more
+dft \%>\% freqs(Ticket, plot = TRUE, top = 10)
+}
+}
 \seealso{
 Other Exploratory: 
 \code{\link{corr_cross}()},

@@ -104,6 +104,18 @@ corr <- function(df, method = "pearson",
 #' @param subdir Character. Sub directory on which you wish to 
 #' save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @examples 
+#' \dontrun{
+#' data(dft)
+#' # Correlate Survived with everything else
+#' dft %>% corr_var(Survived)
+#' # Filter out variables with more than 50% of correlation
+#' dft %>% corr_var(Survived_TRUE, ceiling = 50)
+#' # Show only 10 values
+#' dft %>% corr_var(Survived_TRUE, top = 10)
+#' # Also calculate log(values)
+#' dft %>% corr_var(Survived_TRUE, logs = TRUE)
+#' }
 #' @export
 corr_var <- function(df, ..., 
                      ignore = NA,

@@ -30,14 +30,14 @@ data, locally or from Dropbox. You can also use it for local files
 }
 \examples{
 \dontrun{
- # Load lares' dummy data
- file <- system.file("inst/docs", "dummyPortfolio.xlsx", package = "lares")
- df <- stocks_file(filename = file, 
-                   sheets = c("Portafolio","Fondos","Transacciones"), 
-                   keep_old = FALSE)
- # This will create a list with the following 3 dataframes:
- names(df)
- "portfolio" "transactions" "cash" 
+# Load lares' dummy XLSX
+file <- system.file("inst/docs", "dummyPortfolio.xlsx", package = "lares")
+df <- stocks_file(filename = file, 
+                  sheets = c("Portafolio","Fondos","Transacciones"), 
+                  keep_old = FALSE)
+# This will create a list with the following 3 dataframes:
+names(df)
+[1] "portfolio" "transactions" "cash" 
 }
 }
 \seealso{

@@ -35,6 +35,15 @@ numerical output; use na.omit() or filter() if needed)}
 Plot frequencies of multiple categories within a data.frame in 
 a new fancy way. Tidyverse friendly, based on lares::freqs().
 }
+\examples{
+\dontrun{
+freqs_plot(dft, Pclass)
+freqs_plot(dft, Pclass, Survived)
+freqs_plot(dft, Pclass, Survived, Sex)
+freqs_plot(dft, Pclass, Survived, Sex, Embarked)
+freqs_plot(dft, Pclass, Survived, Sex, Embarked, top = 15)
+}
+}
 \seealso{
 Other Exploratory: 
 \code{\link{corr_cross}()},

@@ -24,6 +24,27 @@
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
+#' @examples 
+#' \dontrun{
+#' data(dft)
+#' # How many survived?
+#' dft %>% freqs(Survived)
+#' # How many survived and see plot?
+#' dft %>% freqs(Survived, plot = TRUE)
+#' # How many survived per class?
+#' dft %>% freqs(Survived, Pclass, plot = TRUE)
+#' # Per class, how many survived?
+#' dft %>% freqs(Pclass, Survived, plot = TRUE)
+#' # Per sex and class, how many survived?
+#' dft %>% freqs(Sex, Pclass, Survived, plot = TRUE)
+#' # Per number of siblings, sex, and class, how many survived?
+#' dft %>% freqs(SibSp, Sex, Pclass, Survived, plot = TRUE)
+#' dft %>% freqs(SibSp, Sex, Pclass, Survived, plot = FALSE)
+#' # Frequency of tickets
+#' dft %>% freqs(Ticket, plot = TRUE)
+#' # Frequency of tickets: show me more
+#' dft %>% freqs(Ticket, plot = TRUE, top = 10)
+#' }
 #' @export
 freqs <- function(df, ..., wt = NULL,
                   rel = FALSE,
@@ -321,6 +342,14 @@ freqs_df <- function(df,
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
 #' @param title Character. Overwrite plot's title with.
 #' @param subtitle Character. Overwrite plot's subtitle with.
+#' @examples 
+#' \dontrun{
+#' freqs_plot(dft, Pclass)
+#' freqs_plot(dft, Pclass, Survived)
+#' freqs_plot(dft, Pclass, Survived, Sex)
+#' freqs_plot(dft, Pclass, Survived, Sex, Embarked)
+#' freqs_plot(dft, Pclass, Survived, Sex, Embarked, top = 15)
+#' }
 #' @export
 freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
                        title = NA, subtitle = NA) {

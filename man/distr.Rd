@@ -70,6 +70,46 @@ Compare the distribution of a target variable vs another variable. This
 function automatically splits into quantiles for numerical variables.
 Custom and tidyverse friendly.
 }
+\examples{
+\dontrun{
+library(dplyr)
+data(dft)
+# Relation for survived vs sex
+dft \%>\% distr(Survived, Sex)
+# Relation for sex vs survived
+dft \%>\% distr(Sex, Survived)
+# Relation for survived vs embark gate (categorical)
+dft \%>\% distr(Survived, Embarked)
+dft \%>\% distr(Embarked, Survived)
+# Relation for survived vs embark gate
+dft \%>\% distr(Survived, Fare)
+# Relation for survived vs fare with custom colours for Survived
+dft \%>\% distr(Survived, Fare, custom_colours = TRUE)
+# Relation for survived vs fare with ascending order
+dft \%>\% distr(Survived, Fare, abc = TRUE)
+# Relation for survived vs fare with only 5 splits
+dft \%>\% distr(Survived, Fare, abc = TRUE, breaks = 5)
+dft \%>\% distr(Survived, Fare, abc = TRUE, top = 5)
+dft \%>\% distr(Survived, Embarked, top = 2)
+# Relation for survived vs age (notice NA values)
+dft \%>\% distr(Survived, Age)
+dft \%>\% distr(Survived, Age, na.rm = TRUE, abc = TRUE)
+dft \%>\% distr(Survived, Ticket, top = 10)
+# Distribution of fares payed
+dft \%>\% distr(Fare)
+dft \%>\% filter(Fare < 200) \%>\% distr(Fare)
+# Distribution (frequency) of survivors
+dft \%>\% distr(Survived, force = "char")
+# Distribution of log(Fare) vs Fare
+dft \%>\% mutate(logFare = log(Fare)) \%>\% distr(Fare, logFare)
+dft \%>\% mutate(logFare = log(Fare)) \%>\% 
+  filter(Fare < 100) \%>\% distr(Fare, logFare) + 
+  geom_point(colour = "yellow")
+# Only one plot or the other
+dft \%>\% distr(Survived, Age, type = 2)
+dft \%>\% distr(Survived, Age, type = 3)
+}
+}
 \seealso{
 Other Exploratory: 
 \code{\link{corr_cross}()},
