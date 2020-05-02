@@ -230,6 +230,18 @@ save the plot</p></td>
 <code><a href='corr_cross.html'>corr_cross</a>()</code>,
 <code><a href='corr.html'>corr</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>)
+<span class='co'># Correlate Survived with everything else</span>
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='no'>Survived</span>)
+<span class='co'># Filter out variables with more than 50% of correlation</span>
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='no'>Survived_TRUE</span>, <span class='kw'>ceiling</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+<span class='co'># Show only 10 values</span>
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='no'>Survived_TRUE</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='co'># Also calculate log(values)</span>
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='no'>Survived_TRUE</span>, <span class='kw'>logs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
