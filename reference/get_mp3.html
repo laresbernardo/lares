@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Replace Factor Values — replacefactor • lares</title>
+<title>Download MP3 from URL — get_mp3 • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Replace Factor Values — replacefactor" />
-<meta property="og:description" content="This function lets the user replace levels on a factor vector." />
+<meta property="og:title" content="Download MP3 from URL — get_mp3" />
+<meta property="og:description" content="This function downloads a YouTube video or Soundcloud or any other 
+platform supported by the youtube-dl library, and converts it into a 
+high quality MP3 file." />
 
 
 
@@ -108,42 +110,63 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Replace Factor Values</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_functions.R'><code>R/other_functions.R</code></a></small>
-    <div class="hidden name"><code>replacefactor.Rd</code></div>
+    <h1>Download MP3 from URL</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/audio.R'><code>R/audio.R</code></a></small>
+    <div class="hidden name"><code>get_mp3.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user replace levels on a factor vector.</p>
+    <p>This function downloads a YouTube video or Soundcloud or any other 
+platform supported by the youtube-dl library, and converts it into a 
+high quality MP3 file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>replacefactor</span>(<span class='no'>x</span>, <span class='no'>original</span>, <span class='no'>change</span>)</pre>
+    <pre class="usage"><span class='fu'>get_mp3</span>(<span class='no'>url</span>, <span class='kw'>mp3</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>Factor (or Character) Vector</p></td>
+      <th>url</th>
+      <td><p>Characeter. YouTube URL</p></td>
     </tr>
     <tr>
-      <th>original</th>
-      <td><p>String or Vector. Original text you wish to replace</p></td>
+      <th>mp3</th>
+      <td><p>Boolean. Add mp3 parameters?</p></td>
     </tr>
     <tr>
-      <th>change</th>
-      <td><p>String or Vector. Values you wish to replace the originals with</p></td>
+      <th>params</th>
+      <td><p>Character. Additional parameters</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Boolean. Keep quiet (or show query)?</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>More info: <a href='https://github.com/ytdl-org/youtube-dl/'>youtube-dl's Github</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Scrapper: 
+<code><a href='fb_accounts.html'>fb_accounts</a>()</code>,
+<code><a href='fb_ads.html'>fb_ads</a>()</code>,
+<code><a href='fb_insights.html'>fb_insights</a>()</code>,
+<code><a href='fb_posts.html'>fb_posts</a>()</code>,
+<code><a href='fb_post.html'>fb_post</a>()</code>,
+<code><a href='geoStratum.html'>geoStratum</a>()</code>,
+<code><a href='holidays.html'>holidays</a>()</code>,
+<code><a href='ip_country.html'>ip_country</a>()</code>,
+<code><a href='readGS4.html'>readGS4</a>()</code>,
+<code><a href='readGS.html'>readGS</a>()</code>,
+<code><a href='trendsRelated.html'>trendsRelated</a>()</code>,
+<code><a href='writeGS.html'>writeGS</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
- <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>)
- <span class='co'># Replace a single value</span>
- <span class='no'>dft</span> <span class='kw'>&lt;-</span> <span class='fu'>mutate</span>(<span class='no'>dft</span>, <span class='kw'>Pclass</span> <span class='kw'>=</span> <span class='fu'>replacefactor</span>(<span class='no'>Pclass</span>, <span class='kw'>original</span> <span class='kw'>=</span> <span class='st'>"1"</span>, <span class='kw'>change</span> <span class='kw'>=</span> <span class='st'>"First"</span>))
- <span class='co'># Replace multiple values</span>
- <span class='no'>dft</span> <span class='kw'>&lt;-</span> <span class='fu'>mutate</span>(<span class='no'>dft</span>, <span class='kw'>Pclass</span> <span class='kw'>=</span> <span class='fu'>replacefactor</span>(<span class='no'>Pclass</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2"</span>,<span class='st'>"3"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Second"</span>, <span class='st'>"Third"</span>)))
+ <span class='co'># Download video from YouTube and convert to MP3</span>
+ <span class='fu'>get_mp3</span>(<span class='st'>"https://www.youtube.com/watch?v=lrlKcCdVw9Q"</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
