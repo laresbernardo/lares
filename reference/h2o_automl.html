@@ -313,7 +313,7 @@ multi-layer artificial neural network) and "StackedEnsemble". Read more:
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>)
 <span class='no'>dft</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>dft</span>, <span class='kw'>select</span> <span class='kw'>=</span> -<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>Ticket</span>, <span class='no'>PassengerId</span>, <span class='no'>Cabin</span>))
 
-<span class='co'># Classification: 2 class</span>
+<span class='co'># Classification: 2 classes</span>
 <span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='no'>dft</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Survived"</span>, <span class='kw'>max_models</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"TRUE"</span>)
 <span class='no'>r</span>$<span class='no'>plots</span>$<span class='no'>dashboard</span>
 <span class='no'>r</span>$<span class='no'>metrics</span>

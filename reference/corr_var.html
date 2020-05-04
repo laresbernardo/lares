@@ -235,7 +235,7 @@ save the plot</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>)
 <span class='co'># Correlate Survived with everything else</span>
 <span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='no'>Survived</span>)
-<span class='co'># Filter out variables with more than 50% of correlation</span>
+<span class='co'># Filter out variables with less than 50% of correlation</span>
 <span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='no'>Survived_TRUE</span>, <span class='kw'>ceiling</span> <span class='kw'>=</span> <span class='fl'>50</span>)
 <span class='co'># Show only 10 values</span>
 <span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='no'>Survived_TRUE</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>)
