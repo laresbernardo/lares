@@ -37,7 +37,7 @@ df <- stocks_file(filename = file,
                   keep_old = FALSE)
 # This will create a list with the following 3 dataframes:
 names(df)
-[1] "portfolio" "transactions" "cash" 
+\[1] "portfolio" "transactions" "cash" 
 }
 }
 \seealso{

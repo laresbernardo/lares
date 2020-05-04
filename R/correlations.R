@@ -109,7 +109,7 @@ corr <- function(df, method = "pearson",
 #' data(dft)
 #' # Correlate Survived with everything else
 #' dft %>% corr_var(Survived)
-#' # Filter out variables with more than 50% of correlation
+#' # Filter out variables with less than 50% of correlation
 #' dft %>% corr_var(Survived_TRUE, ceiling = 50)
 #' # Show only 10 values
 #' dft %>% corr_var(Survived_TRUE, top = 10)

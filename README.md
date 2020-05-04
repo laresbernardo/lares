@@ -38,7 +38,7 @@ lares::updateLares()
 
 - RPubs: [freqs(), distr(), and corr_var() Examples](http://rpubs.com/laresbernardo/freqs-distr-corr)
 
-### AutoML Simplified Map from `h2o_automl()`
+### AutoML Simplified Map from [`h2o_automl()`](https://laresbernardo.github.io/lares/reference/h2o_automl.html)
 ![AutoML Map (lares)](man/figures/automl_map.png?raw=true)
 
 ### Insights While Understanding

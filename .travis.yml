@@ -6,7 +6,7 @@ addons:
     packages:
       - libudunits2-dev
       - libgdal-dev
-# from https://discourse.mc-stan.org/t/building-rstanarm-like-packagee-on-travis-with-c-14/6054/10?
+# From https://discourse.mc-stan.org/t/building-rstanarm-like-packagee-on-travis-with-c-14/6054/10?
 before_install:
   - mkdir -p ~/.R
   - echo "CXX14FLAGS=-O3 -mtune=native -march=native -Wno-unused-variable -Wno-unused-function  -Wno-macro-redefined" >> ~/.R/Makevars

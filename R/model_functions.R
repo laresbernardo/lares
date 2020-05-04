@@ -67,7 +67,7 @@
 #' data(dft)
 #' dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 #' 
-#' # Classification: 2 class
+#' # Classification: 2 classes
 #' r <- h2o_automl(dft, y = "Survived", max_models = 1, target = "TRUE")
 #' r$plots$dashboard
 #' r$metrics
