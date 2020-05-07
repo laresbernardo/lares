@@ -42,7 +42,6 @@ Suggests:
     googleAnalyticsR,
     googleAuthR,
     googlesheets4,
-    gtrendsR,
     mice,
     quantmod,
     plotly,
