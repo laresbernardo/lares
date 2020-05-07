@@ -74,7 +74,6 @@ Other Tools:
 \code{\link{db_upload}()},
 \code{\link{export_plot}()},
 \code{\link{get_credentials}()},
-\code{\link{get_currency}()},
 \code{\link{h2o_predict_API}()},
 \code{\link{h2o_predict_MOJO}()},
 \code{\link{h2o_predict_binary}()},

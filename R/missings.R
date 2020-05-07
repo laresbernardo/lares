@@ -16,7 +16,7 @@ missingness <- function(df, plot = FALSE, full = FALSE,
   
   if (sum(is.na(df)) == 0) {
     message("No missing values found!")
-    invisible(return())
+    invisible(return(NULL))
   }
   
   m <- df %>%

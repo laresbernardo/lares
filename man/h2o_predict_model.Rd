@@ -53,7 +53,6 @@ Other Tools:
 \code{\link{export_plot}()},
 \code{\link{export_results}()},
 \code{\link{get_credentials}()},
-\code{\link{get_currency}()},
 \code{\link{h2o_predict_API}()},
 \code{\link{h2o_predict_MOJO}()},
 \code{\link{h2o_predict_binary}()},

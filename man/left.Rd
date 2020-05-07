@@ -15,6 +15,9 @@ left(string, n = 1)
 This function lets the user extract the first n characters of a
 string or vector of strings.
 }
+\examples{
+left("Bernardo", 3)
+}
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},

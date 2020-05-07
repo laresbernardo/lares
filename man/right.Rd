@@ -15,6 +15,9 @@ right(string, n = 1)
 This function lets the user extract the last n characters of a
 string or vector of strings.
 }
+\examples{
+right("Bernardo", 3)
+}
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},

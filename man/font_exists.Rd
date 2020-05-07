@@ -12,3 +12,6 @@ font_exists(font = "Arial Narrow")
 \description{
 This function check if specific font is installed
 }
+\examples{
+font_exists(font = "Arial Narrow")
+}

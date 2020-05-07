@@ -6,6 +6,11 @@
 #' @family Tools
 #' @param package Character. Name of the library
 #' @param stop Boolean. Stop if not installed
+#' @examples 
+#' # Check if library dummylibrary is installed. If not, do not break as error.
+#' try_require("dummylibrary", stop = FALSE)
+#' # Check if library base is installed. If not, stop and show error
+#' try_require("base", stop = TRUE)
 #' @export
 try_require <- function(package, stop = TRUE) {
   if (length(find.package(package, quiet = TRUE)) > 0) {
@@ -147,6 +152,7 @@ normalize <- function(x) {
 #' @param quotes Boolean. Bring simple quotes for each observation
 #' @param and Character. Add 'and' or something before last observation. 
 #' Not boolean variable so it can be used on other languages
+#' @aliases v2t
 #' @export
 vector2text <- function(vector, sep = ", ", quotes = TRUE, and = "") {
   n <- length(vector)
@@ -294,6 +300,19 @@ one_hot_encoding_commas <- function(df, variables, sep=","){
 #' @param rate Numeric. How many X for every Y we need? Default: 1. If there are
 #' more than 2 unique values, rate will represent percentage for number of rows
 #' @param seed Numeric. Seed to replicate and obtain same values
+#' @examples 
+#' \dontrun{
+#' data(dft)
+#' df <- balance_data(dft, "Survived", rate = 1, seed = 123)
+#' # Resampled from: 549 x 342
+#' # Reducing size for: FALSE
+#' # Into: 342 x 342
+#' freqs(df, Survived)
+#' #    Survived     n     p  pcum order
+#' #    <lgl>    <int> <dbl> <dbl> <int>
+#' # 1 FALSE      342    50    50     1
+#' # 2 TRUE       342    50   100     2
+#' }
 #' @export
 balance_data <- function(df, variable, rate = 1, seed = 0) {
   
@@ -701,83 +720,6 @@ myip <- function(){
 
 
 ####################################################################
-#' Plot Result with Nothing to Plot
-#' 
-#' This function lets the user print a plot without plot, with a 
-#' customizable message. It is quite useful for Shiny renderPlot when
-#' using filters and no data is returned.
-#' 
-#' @family Visualization
-#' @param message Character. What message do you wish to show?
-#' @export
-noPlot <- function(message = "Nothing to show here!") {
-  ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 
-    geom_label() + theme_minimal() +
-    theme(axis.line = element_blank(),
-          axis.text.x = element_blank(),
-          axis.text.y = element_blank(),
-          axis.ticks = element_blank(),
-          axis.title.x = element_blank(),
-          axis.title.y = element_blank(),
-          legend.position = "none",
-          panel.background = element_blank(),
-          panel.border = element_blank(),
-          panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(),
-          plot.background = element_blank())
-}
-
-####################################################################
-#' Install latest version of H2O
-#' 
-#' This function lets the user un-install the current version of
-#' H2O installed and update to latest stable version.
-#' 
-#' @family Tools
-#' @param p ggplot2 or gridExtra object. Plot to export
-#' @param name Character. File's name or sufix if vars is not null
-#' @param vars Vector. Variables in plot
-#' @param sep Character. Separator for variables
-#' @param width,height,res Numeric. Plot's width, height, and res (for grids)
-#' @param dir Character. In which directory do you wish to save 
-#' the results? Working directory as default.
-#' @param subdir Character. Into which subdirectory do you wish to save the plot to?
-#' @param quiet Boolean. Display succesful message with filename when saved?
-#' @export
-export_plot <- function(p, 
-                        name = "plot", vars = NA, sep = ".vs.", 
-                        width = 8, height = 6, res = 300,
-                        dir = getwd(), subdir = NA,
-                        quiet = FALSE) {
-  
-  # File name
-  if (!is.na(vars)) {
-    names <- vector2text(
-      cleanText(as.character(vars), spaces = FALSE), sep = sep, quotes = FALSE)
-    file_name <- paste0(name, "_", names, ".png")  
-  } else {
-    file_name <- paste0(name, ".png")  
-  }
-  
-  # Create directory if needed
-  if (!is.na(subdir)) {
-    dir <- file.path(dir, subdir)
-    if (!dir.exists(dir))
-      dir.create(dir)
-    file_name <- paste(subdir, file_name, sep = "/")
-  }
-  
-  # Export plot to file
-  png(file_name, height = height * res, width = width * res, res = res)
-  plot(p)
-  dev.off() 
-  
-  if (!quiet) message(paste("Plot saved as", file_name)) 
-  
-}
-
-
-####################################################################
 #' Calculate cuts by quantiles
 #' 
 #' This function lets the user quickly calculate cuts for quantiles
@@ -810,73 +752,6 @@ quants <- function(values, splits = 10, return = "summary") {
 
 
 ####################################################################
-#' Download Historical Currency Exchange Rate
-#' 
-#' This function lets the user download historical currency exchange
-#' rate between two currencies
-#' 
-#' @family Tools
-#' @param currency_pair Character. Which currency exchange do you
-#' wish to get the history from? i.e, USD/COP, EUR/USD...
-#' @param from Date. From date
-#' @param to Date. To date
-#' @param fill Boolean. Fill weekends and non-quoted dates with 
-#' previous values?
-#' @export
-get_currency <- function(currency_pair, 
-                         from = Sys.Date() - 99, 
-                         to = Sys.Date(), 
-                         fill = FALSE) {
-  
-  try_require("quantmod")
-  
-  options("getSymbols.warning4.0" = FALSE)
-  options("getSymbols.yahoo.warning" = FALSE)
-  string <- paste0(toupper(cleanText(currency_pair)), "=X")
-  
-  if (is.na(from) | is.na(to))
-    stop("You must insert a valid date")
-  
-  from <- as.Date(from)
-  to <- as.Date(to)
-  
-  if (from == to) to <- from + 1
-  if (to > Sys.Date()) to <- Sys.Date()
-  
-  if (Sys.Date() == from) {
-    x <- getQuote(string, auto.assign = FALSE)
-    rownames(x) <- Sys.Date()
-    x[,1] <- NULL
-  } else {
-    x <- data.frame(getSymbols(
-      string, 
-      env = NULL,
-      from = from, to = to,
-      src = "yahoo"))
-    if (substr(rownames(x),1,1)[1] == "X") {
-      x <- x[1,]
-      rownames(x) <- Sys.Date()
-    }
-  }
-  
-  rate <- data.frame(date = as.Date(rownames(x)), rate = x[,1])
-  
-  if (fill) {
-    rate <- data.frame(date = as.character(
-      as.Date(as.Date(from):Sys.Date(), origin = "1970-01-01"))) %>%
-      left_join(rate %>% mutate(date = as.character(date)), "date") %>%
-      tidyr::fill(rate, .direction = "down") %>%
-      tidyr::fill(rate, .direction = "up") %>%
-      mutate(date = as.Date(date)) %>%
-      filter(date >= as.Date(from))
-  }
-  
-  return(rate)
-  
-}
-
-
-####################################################################
 #' Convert JSON string to vector (data.frame with 1 row)
 #' 
 #' This function lets the user transform a JSON string into vector 
@@ -899,92 +774,6 @@ json2vector <- function(json) {
 
 
 ####################################################################
-#' Progressive Status Bar (Loading)
-#' 
-#' This function lets the user view a progressbar for a 'for' loop. 
-#' 
-#' @family Tools
-#' @param run Iterator. for loop or an integer with the current loop number.
-#' Start with 1 preferibly
-#' @param max.run Number. Maximum number of loops
-#' @param label String. With additionaly information to be printed 
-#' at the end of the line. The default is \code{run}.
-#' @param msg Character. Finish message
-#' @param type Character. Loading type style: equal, domino
-#' @param start_time POSIXct. Start time to consider. If NA, then
-#' when first iteration starts will be set as start time. Useful
-#' for when first iteration is showed as done but started a few 
-#' seconds/minutes ago.
-#' @examples
-#' for (i in 1:15) {
-#'   statusbar(i, 15) 
-#'   Sys.sleep(0.25)
-#' }
-#' @export
-statusbar <- function(run = 1, max.run = 100, label = run, 
-                      msg = "DONE", type = "equal",
-                      start_time = NA){
-  
-  if (length(run) > 1 & !is.numeric(run)) 
-    stop("run must be a numerical value!")
-  if (length(max.run) == 0 & !is.numeric(run)) 
-    stop("max.run needs to be greater than 0!")
-  
-  percent.max <- getOption("width") * 0.5
-  
-  # formatTimeSmart <- function(x) {
-  #   if (x < 60) {
-  #     suffix <- "s"
-  #     value <- x
-  #   } else if (x < 60 * 60) {
-  #     suffix <- "m"
-  #     value <- x / 60
-  #   } else {
-  #     suffix <- "h"
-  #     value <- x / (60 * 60)
-  #   }
-  #   return(paste0(sprintf('%.1f', value), suffix))
-  # }
-  
-  if (run == 1 & is.na(start_time))
-    options("startclock" = Sys.time())
-  if (!is.na(start_time))
-    options("startclock" = start_time)
-  
-  if (length(max.run) > 1) {
-    percent <- which(run == max.run) / length(max.run)
-  } else percent <- run / max.run
-  
-  if (type == "domino") {
-    first <- "|"
-    middle <- "/"
-    last <- "_"
-  }
-  if (type == "equal") {
-    first <- " "
-    middle <- "="
-    last <- "="
-  }
-  
-  percent.step <- trunc(percent * percent.max, 5)
-  space <- paste(rep(" ", 20), collapse = " ")
-  progress <- paste0(
-    "[", paste0(rep(last, percent.step), collapse = ""), 
-    ifelse(percent.step != percent.max, middle, last),
-    paste0(rep(first, percent.max - percent.step), collapse = ""),"] ", 
-    round(percent * 100, 0), "% | ",
-    paste(ifelse(run != max.run, paste(label, space), paste(
-      msg,paste(rep(" ", 18), collapse = ""),"\n"))))
-  
-  now <- format(.POSIXct(difftime(
-    Sys.time(), getOption("startclock"), units = "secs"), tz = "GMT"), "%H:%M:%S")
-  flush.console()
-  cat("\r", paste(now, progress))
-  if (run == max.run) options("startclock" = NULL)
-}
-
-
-####################################################################
 #' Right: Last n characters
 #' 
 #' This function lets the user extract the last n characters of a
@@ -993,6 +782,8 @@ statusbar <- function(run = 1, max.run = 100, label = run,
 #' @family Data Wrangling
 #' @param string String or Vector
 #' @param n Integer. How many characters from right to left?
+#' @examples
+#' right("Bernardo", 3)
 #' @export
 right <- function(string, n = 1){
   string <- as.character(string)
@@ -1010,6 +801,8 @@ right <- function(string, n = 1){
 #' @family Data Wrangling
 #' @param string String or Vector
 #' @param n Integer. How many characters from left to right?
+#' @examples
+#' left("Bernardo", 3)
 #' @export
 left <- function(string, n = 1){
   string <- as.character(string)
@@ -1279,9 +1072,12 @@ formatTime <- function(vector) {
 #' This function check if specific font is installed
 #' 
 #' @param font Character. Which font to check
+#' @examples
+#' font_exists(font = "Arial Narrow")
 #' @export
 font_exists <- function(font = "Arial Narrow") {
-  # Thanks to extrafont for this code
+  
+  # Thanks to extrafont for the idea for this code
   ttf_find_default_path <- function() {
     if (grepl("^darwin", R.version$os)) {
       paths <- c("/Library/Fonts/",
@@ -1353,10 +1149,9 @@ check_attr <- function(object, attr = "type", check = "h2o_automl", stop = TRUE)
 #' @param n Integer. Single numeric value, specifying number of 
 #' significant figures to show. Range 1 to 6.
 #' @return A vector of character values that contain converted values
-#' @author William Chon, \email{wchon@fb.com}
 #' @examples
-#' num_abbr(rnorm(100) * 1e6)
-#' num_abbr(rnorm(100) * 1e6, n = 1)
+#' num_abbr(rnorm(10) * 1e6)
+#' num_abbr(rnorm(10) * 1e6, n = 1)
 #' @export
 num_abbr <- function(x, n = 3) {
   
@@ -1364,11 +1159,6 @@ num_abbr <- function(x, n = 3) {
   if (!is.numeric(n)) stop('n needs to be numeric.')
   if (length(n) > 1) stop('Please make sure that n takes on a single value.')
   if (!n %in% 1:6) stop('Please make sure that n takes on an interger value between 1 to 6.')
-  if (any(x > 1e15))
-    message('Note: You have some really large numbers, note that Qa = Quadrillion; Qi = Quintillion')
-  if (any(x >= 1e21))
-    stop('You have some really large numbers, output for numbers greater 
-          than 1e21 are not supported by this function')
   
   # To handle scientific notation inputs correctly
   original_scipen <- getOption('scipen')
@@ -1394,7 +1184,11 @@ num_abbr <- function(x, n = 3) {
   
   # Qa = Quadrillion; Qi = Quintillion
   x <- paste0(x, c('', 'K', 'M', 'B', 'T', 'Qa', 'Qi')[div])
-  return(paste0(negative_positions, x))
+  
+  output <- paste0(negative_positions, x)
+  output[grepl("NA", output)] <- NA
+  
+  return(output)
   
 }
 

@@ -2,6 +2,7 @@
 % Please edit documentation in R/other_functions.R
 \name{vector2text}
 \alias{vector2text}
+\alias{v2t}
 \title{Convert a vector into a comma separated text}
 \usage{
 vector2text(vector, sep = ", ", quotes = TRUE, and = "")

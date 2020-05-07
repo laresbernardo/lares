@@ -282,3 +282,80 @@ scale_x_dollar <- function(...) scale_y_continuous(..., labels = dollar)
 #' @rdname scale_x_comma
 #' @export
 scale_y_dollar <- function(...) scale_y_continuous(..., labels = dollar)
+
+
+####################################################################
+#' Plot Result with Nothing to Plot
+#' 
+#' This function lets the user print a plot without plot, with a 
+#' customizable message. It is quite useful for Shiny renderPlot when
+#' using filters and no data is returned.
+#' 
+#' @family Visualization
+#' @param message Character. What message do you wish to show?
+#' @export
+noPlot <- function(message = "Nothing to show here!") {
+  ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 
+    geom_label() + theme_minimal() +
+    theme(axis.line = element_blank(),
+          axis.text.x = element_blank(),
+          axis.text.y = element_blank(),
+          axis.ticks = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          legend.position = "none",
+          panel.background = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          plot.background = element_blank())
+}
+
+####################################################################
+#' Install latest version of H2O
+#' 
+#' This function lets the user un-install the current version of
+#' H2O installed and update to latest stable version.
+#' 
+#' @family Tools
+#' @param p ggplot2 or gridExtra object. Plot to export
+#' @param name Character. File's name or sufix if vars is not null
+#' @param vars Vector. Variables in plot
+#' @param sep Character. Separator for variables
+#' @param width,height,res Numeric. Plot's width, height, and res (for grids)
+#' @param dir Character. In which directory do you wish to save 
+#' the results? Working directory as default.
+#' @param subdir Character. Into which subdirectory do you wish to save the plot to?
+#' @param quiet Boolean. Display succesful message with filename when saved?
+#' @export
+export_plot <- function(p, 
+                        name = "plot", vars = NA, sep = ".vs.", 
+                        width = 8, height = 6, res = 300,
+                        dir = getwd(), subdir = NA,
+                        quiet = FALSE) {
+  
+  # File name
+  if (!is.na(vars)) {
+    names <- vector2text(
+      cleanText(as.character(vars), spaces = FALSE), sep = sep, quotes = FALSE)
+    file_name <- paste0(name, "_", names, ".png")  
+  } else {
+    file_name <- paste0(name, ".png")  
+  }
+  
+  # Create directory if needed
+  if (!is.na(subdir)) {
+    dir <- file.path(dir, subdir)
+    if (!dir.exists(dir))
+      dir.create(dir)
+    file_name <- paste(subdir, file_name, sep = "/")
+  }
+  
+  # Export plot to file
+  png(file_name, height = height * res, width = width * res, res = res)
+  plot(p)
+  dev.off() 
+  
+  if (!quiet) message(paste("Plot saved as", file_name)) 
+  
+}

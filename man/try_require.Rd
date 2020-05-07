@@ -14,6 +14,12 @@ try_require(package, stop = TRUE)
 \description{
 This function checks library dependencies
 }
+\examples{
+# Check if library dummylibrary is installed. If not, do not break as error.
+try_require("dummylibrary", stop = FALSE)
+# Check if library base is installed. If not, stop and show error
+try_require("base", stop = TRUE)
+}
 \seealso{
 Other Tools: 
 \code{\link{autoline}()},
@@ -24,7 +30,6 @@ Other Tools:
 \code{\link{export_plot}()},
 \code{\link{export_results}()},
 \code{\link{get_credentials}()},
-\code{\link{get_currency}()},
 \code{\link{h2o_predict_API}()},
 \code{\link{h2o_predict_MOJO}()},
 \code{\link{h2o_predict_binary}()},

@@ -8,6 +8,40 @@
 #' @param model Model object
 #' @param y Character. Variable's column name
 #' @param ignore Character vector. Which columns should be ignored?
+#' @examples 
+#' \dontrun{
+#' data(dft) # Titanic dataset
+#' 
+#' # TRAIN A SIMPLE MODEL
+#' dfm <- h2o_automl(dft, 
+#'                   y = "Survived", 
+#'                   ignore = c("Ticket", "PassengerId", "Cabin")), 
+#'                   max_models = 3)
+#' 
+#' # EXPLAINER
+#' explainer <- dalex_explainer(df = dfm$datasets$test, model = dfm$model)
+#' explainer$data <- na.omit(explainer$data)
+#' 
+#' # CATEGORICAL EXAMPLE
+#' class <- dalex_variable(explainer, y = "Pclass")
+#' class$plot
+#' 
+#' # NUMERICAL EXAMPLE
+#' class <- dalex_variable(explainer, y = "Fare")
+#' class$plot
+#' # x <- ceteris_paribus(explainer, explainer$data, variables = "Fare")
+#' # aux <- aggregate_profiles(x)
+#' # plot(aux) + theme_lares2(legend = "none")
+#' 
+#' # LOCAL EXAMPLE
+#' print(head(explainer$data, 1))
+#'   Pclass    Sex Age SibSp Parch    Fare Embarked train_test predict    FALSE.     TRUE.
+#'        3 female  27     0     2 11.1333        S       test   FALSE 0.6844502 0.3155498
+#' local <- dalex_local(explainer, row = 1, plot = TRUE)
+#' # OR YOU COULD MANUALLY INPUT THE OBSERVATION
+#' local <- dalex_local(explainer, observation = head(explainer$data, 1))
+#' local$plot
+#' }
 #' @export
 dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
   
