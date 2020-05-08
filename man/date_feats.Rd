@@ -10,7 +10,7 @@ date_feats(
   only = NA,
   features = TRUE,
   holidays = FALSE,
-  country = "Colombia",
+  country = "Venezuela",
   currency_pair = NA,
   summary = TRUE
 )

@@ -39,6 +39,13 @@ the results? Working directory as default.}
 This function lets the user un-install the current version of
 H2O installed and update to latest stable version.
 }
+\examples{
+\dontrun{
+p <- noPlot()
+export_plot(p, name = "noplot", width = 10, height = 8, res = 300)
+export_plot(p, name = "noplot2", dir = "~/Desktop", subdir = "newplots")
+}
+}
 \seealso{
 Other Tools: 
 \code{\link{autoline}()},

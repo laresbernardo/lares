@@ -19,7 +19,7 @@ plot_chord(
 
 \item{weight}{Vector. Weight for each chor}
 
-\item{mg}{Numeric. Margin adjust for plot in case of need'}
+\item{mg}{Numeric. Margin adjust for plot in case of need}
 
 \item{title}{Character. Title for the plot}
 
@@ -29,4 +29,10 @@ plot_chord(
 }
 \description{
 This function plots discrete and continuous values results
+}
+\examples{
+\dontrun{
+df <- data.frame(from = c(1, 1, 2, 3, 4, 1, 6), to = c(4, 4, 4, 2, 2, NA, NA))
+plot_chord(df$from, df$to)
+}
 }

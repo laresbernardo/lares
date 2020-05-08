@@ -4,7 +4,7 @@
 \alias{textFeats}
 \title{Create features out of text}
 \usage{
-textFeats(text, auto = TRUE, contains = NA)
+textFeats(text, auto = TRUE, contains = NA, prc = FALSE)
 }
 \arguments{
 \item{text}{Character vector}
@@ -13,9 +13,17 @@ textFeats(text, auto = TRUE, contains = NA)
 
 \item{contains}{Character vector. Which columns do you wish to add
 with a contains (counter) string validator?}
+
+\item{prc}{Boolean. Also add percentage of each column compared with length?}
 }
 \description{
 This function creates a data.frame with features based on a text vector
+}
+\examples{
+textFeats("Bernardo Lares")
+textFeats("Bernardo Lares 123!", prc = TRUE)
+textFeats("I'm 100\% Lares...", contains = c("Lares", "lares"))
+textFeats(c("GREAT library!!", "Have you tried this 2?", "Happy faces :D :-)"))
 }
 \seealso{
 Other Data Wrangling: 

@@ -17,6 +17,12 @@ holiday dates?}
 This function lets the user automatically scrap holiday dates from
 any country and year within +- 5 years. Thanks to timeanddate.com!
 }
+\examples{
+\dontrun{
+holidays(countries = "Argentina") 
+holidays(countries = c("Argentina", "Venezuela"), years = c(2019, 2020))
+}
+}
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},

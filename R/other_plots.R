@@ -8,22 +8,48 @@
 #' @param start Vector. Start date.
 #' @param end Vector. End date. Only one day be default if not defined
 #' @param label Vector. Place, institution, or label.
-#' @param group Vector. Academic, Work, Extracurricular...
+#' @param group Vector. Academic, Work, Extracurricular... Pass as factor
+#' to keep a specific order
 #' @param title Character. Title for the plot
 #' @param subtitle Character. Subtitle for the plot
-#' @param size Numeric. Bars' width
-#' @param colour Character. Colour when not using type
+#' @param interactive Boolean. Run with plotly?
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
+#' @examples 
+#' \dontrun{
+#' cols <- c("Role", "Place", "Type", "Start", "End")
+#' today <- as.character(Sys.Date())
+#' cv <- data.frame(rbind(
+#'   c("Marketing Science Partner", "Facebook", "Work Experience", "2019-12-09", today),
+#'   c("Data Scientist Consultant", "MatrixDS", "Work Experience", "2018-09-01", today),
+#'   c("R Community Contributor", "lares library", "Extra", "2018-07-18", today),
+#'   c("Lead Data Scientist", "MEG", "Work Experience", "2019-01-15", "2019-12-09"),
+#'   c("Head Data Science & Analytics","Comparamejor/R5","Work Experience","2016-08-01","2019-01-15"),
+#'   c("Big Data & Data Science Programme", "UdC", "Academic", "2017-09-01", "2018-02-28"),
+#'   c("Project Engineer", "Polytex", "Work Experience", "2016-05-15", "2016-09-01"),
+#'   c("Big Data Analyst", "MEG", "Work Experience", "2016-01-01", "2016-04-30"),
+#'   c("Advanced Excel Instructor", "ARTS", "Work Experience", "2015-11-01", "2016-04-30"),
+#'   c("Continuous Improvement Intern", "PAVCO", "Work Experience", "2015-04-01", "2015-08-30"),
+#'   c("Mechanical Design Intern", "SIGALCA", "Work Experience", "2013-07-01", "2013-09-30"),
+#'   c("DJs Online Community Owner","LaresDJ.com / SoloParaDJs","Extra","2010-01-05","2020-05-20"),
+#'   c("Mechanical Engineer Degree", "USB", "Academic", "2009-09-15", "2015-11-20"),
+#'   c("DJ and Composer/Producer", "Legacy Discplay", "Extra", "2009-05-01", "2015-04-30")
+#' ))
+#' colnames(cv) <- cols
+#' plot_timeline(event = cv$Role, 
+#'               start = cv$Start, 
+#'               end = cv$End, 
+#'               label = cv$Place, 
+#'               # Simple trick to re-arrange the grids
+#'               group = factor(cv$Type, levels = c("Work Experience", "Academic", "Extra")))
+#' }
 #' @export
-plot_timeline <- function(event, start, 
-                          end = start + 1, 
-                          label = NA, 
-                          group = NA, 
+plot_timeline <- function(event, 
+                          start, end = start + 1, 
+                          label = NA, group = NA, 
                           title = "Curriculum Vitae Timeline", 
                           subtitle = "Bernardo Lares",
-                          size = 7,
-                          colour = "orange",
+                          interactive = FALSE,
                           save = FALSE,
                           subdir = NA) {
   
@@ -31,8 +57,8 @@ plot_timeline <- function(event, start,
   df <- data.frame(
     Role = as.character(event), 
     Place = as.character(label), 
-    Start = lubridate::date(start), 
-    End = lubridate::date(end),
+    Start = as.Date(as.character(start)), 
+    End = as.Date(as.character(end)),
     Type = group)
 
   # Duplicate data for ggplot's geom_lines
@@ -46,25 +72,26 @@ plot_timeline <- function(event, start,
 
   # Plot timeline
   maxdate <- max(df$End)
-  p <- ggplot(cvlong, aes(x = value, y = reorder(name, -pos), label = where, group = pos)) + 
-    geom_vline(xintercept = maxdate, alpha = 0.8, linetype = "dotted") +
-    labs(title = title, subtitle = subtitle, 
-         x = NULL, y = NULL, colour = NULL) +
-    #scale_x_datetime(position = "top") +
-    theme_lares2() +
+  p <- ggplot(cvlong, aes(x = value, 
+                          y = reorder(name, -pos), 
+                          label = where, 
+                          group = pos)) + 
+    geom_vline(xintercept = maxdate, alpha = 0.2) +
+    labs(title = title, subtitle = subtitle, x = NULL, y = NULL, colour = NULL) +
     theme(panel.background = element_rect(fill = "white", colour = NA),
           axis.ticks = element_blank(),
           panel.grid.major.x = element_line(size = 0.25, colour = "grey80"))
+    #scale_x_date(expand = c(0, 0))
   
   if (!is.na(cvlong$type)[1] | length(unique(cvlong$type)) > 1) {
-    p <- p + geom_line(aes(colour = type), size = size) +
+    p <- p + geom_line(aes(colour = type), size = 7) +
       facet_grid(type ~ ., scales = "free", space = "free") +
       guides(colour = FALSE)
-  } else {
-    p <- p + geom_line(size = size, colour = colour)
   }
   
-  p <- p + geom_label(aes(x = label_pos), colour = "black", size = 2, alpha = 0.7)
+  p <- p + 
+    geom_label(aes(x = label_pos), colour = "black", size = 2, alpha = 0.7) +
+    theme_lares2(pal = 2, legend = "none")
   
   # Export file name and folder for plot
   if (save) {
@@ -77,10 +104,12 @@ plot_timeline <- function(event, start,
     message(paste("Saved plot as", file_name))
   }
   
+  if (interactive) {
+    try_require("plotly")
+    p <- ggplotly(p)
+  }
+    
   return(p)
-  
-  # Possible improvememts:
-  # Add interactive plotly with more info when you hover over each role
   
 }
 
@@ -90,20 +119,26 @@ plot_timeline <- function(event, start,
 #' 
 #' This function plots discrete and continuous values results
 #' 
-#' @param df Dataframe Event, role, label, or row.
+#' @param df Dataframe
 #' @param var Variable to group, count and plot
 #' @param table Boolean. Print results as table?
-#' @param save Boolean. Save the output plot in our working directory
-#' @param subdir Character. Into which subdirectory do you wish to save the plot to?
+#' @param ... Further parameters passed to freqs()
+#' @examples 
+#' \dontrun{
+#' data(dft) # Titanic dataset
+#' gg_pie(dft, Survived)
+#' gg_pie(dft, Pclass, table = TRUE)
+#' gg_pie(dft, SibSp, table = TRUE, abc = TRUE)
+#' }
 #' @export
-gg_pie <- function(df, var, table = FALSE, save = FALSE, subdir = NA){
+gg_pie <- function(df, var, table = FALSE, ...){
   
   variable <- enquo(var)
   
   title <- paste("Pie chart for", as.character(variable)[2])
   caption <- paste("Obs:", formatNum(nrow(df),0))
   
-  n <- df %>% freqs(!!!variable)
+  n <- df %>% freqs(!!!variable, ...)
   
   if (nrow(n) > 6) {
     geom_label <- function(...){
@@ -113,32 +148,22 @@ gg_pie <- function(df, var, table = FALSE, save = FALSE, subdir = NA){
   
   if (table) { print(n) }
   
-  p <- ggplot(n, aes(x = NULL, y = reorder(p, n), 
-                     fill = as.character(!!!variable), label = p)) + 
+  p <- ggplot(n, aes(x = "", y = reorder(p, -order), 
+                     fill = as.character(!!!variable), 
+                     label = p)) + 
     geom_col() + 
     geom_label(position = position_stack(vjust = 0.4), 
                show.legend = FALSE, size = 2.5) + 
     coord_polar("y") +
-    labs(title = title, caption = caption) +
-    theme_minimal() + 
+    labs(title = title, caption = caption, x = NULL, y = NULL) +
+    theme_lares2(pal = 1) + 
     theme(legend.title = element_blank(),
-          panel.grid = element_blank(),
-          axis.text = element_blank(),
-          axis.title = element_blank(),
-          legend.position = "bottom") +
-    scale_fill_brewer(palette="Set3")
-  
-  # Export file name and folder for plot
-  if (save == TRUE) {
-    file_name <- paste0("viz_pie_",as.character(variable)[2],".png")
-    if (!is.na(subdir)) {
-      options(warn=-1)
-      dir.create(file.path(getwd(), subdir), recursive = T)
-      file_name <- paste(subdir, file_name, sep="/")
-    }
-    p <- p + ggsave(file_name, width = 8, height = 6)
-    message(paste("Saved plot as", file_name))
-  }
+          panel.grid.major.x = element_blank(),
+          panel.grid.minor.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.title.x = element_blank(),
+          legend.position = "bottom")
   return(p)
 }
 
@@ -150,12 +175,18 @@ gg_pie <- function(df, var, table = FALSE, save = FALSE, subdir = NA){
 #' 
 #' @param origin,dest Vectors. Origin and destination vectors
 #' @param weight Vector. Weight for each chor
-#' @param mg Numeric. Margin adjust for plot in case of need'
+#' @param mg Numeric. Margin adjust for plot in case of need
 #' @param title Character. Title for the plot
 #' @param subtitle Character. Subtitle for the plot
 #' @param pal Vector. Colour pallete. Order matters.
+#' @examples 
+#' \dontrun{
+#' df <- data.frame(from = c(1, 1, 2, 3, 4, 1, 6), to = c(4, 4, 4, 2, 2, NA, NA))
+#' plot_chord(df$from, df$to)
+#' }
 #' @export
-plot_chord <- function(origin, dest, weight = 1, mg = 3, 
+plot_chord <- function(origin, dest, 
+                       weight = 1, mg = 3, 
                        title = "Chord Diagram",
                        subtitle = "", pal = NA) {
   
@@ -208,11 +239,21 @@ plot_chord <- function(origin, dest, weight = 1, mg = 3,
 #' @param obs Boolean. Show observations counter?
 #' @param limit Integer. Limit n most frequent values only
 #' @param na.rm Boolean. Remove empty and NAs?
+#' @examples 
+#' \dontrun{
+#' data(dft) # Titanic dataset
+#' df <- freqs(dft, Pclass)
+#' gg_bars(df$Pclass, df$n)
+#' gg_bars(df$Pclass, df$p, axis = "Percentage of ...")
+#' }
 #' @export
 gg_bars <- function(names, n, p = NA, 
-                    title = NA, subtitle = NA, axis = "Counter", 
+                    title = NA, 
+                    subtitle = NA, 
+                    axis = "Counter", 
                     obs = TRUE, 
-                    limit = 15, na.rm = FALSE) {
+                    limit = 15, 
+                    na.rm = FALSE) {
   
   dfn <- data.frame(names, count = n) %>% arrange(desc(count), names)
   
@@ -293,6 +334,10 @@ scale_y_dollar <- function(...) scale_y_continuous(..., labels = dollar)
 #' 
 #' @family Visualization
 #' @param message Character. What message do you wish to show?
+#' @examples 
+#' \dontrun{
+#' p <- noPlot()
+#' }
 #' @export
 noPlot <- function(message = "Nothing to show here!") {
   ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 
@@ -327,6 +372,12 @@ noPlot <- function(message = "Nothing to show here!") {
 #' the results? Working directory as default.
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @param quiet Boolean. Display succesful message with filename when saved?
+#' @examples 
+#' \dontrun{
+#' p <- noPlot()
+#' export_plot(p, name = "noplot", width = 10, height = 8, res = 300)
+#' export_plot(p, name = "noplot2", dir = "~/Desktop", subdir = "newplots")
+#' }
 #' @export
 export_plot <- function(p, 
                         name = "plot", vars = NA, sep = ".vs.", 

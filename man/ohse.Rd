@@ -63,6 +63,28 @@ the filtered values with?}
 This function lets the user automatically transform a dataframe with
 categorical columns into numerical by one hot encoding technic.
 }
+\examples{
+# Example with Dataset 1
+data(dft)
+ohse(dft, limit = 3) \%>\% head(3)
+ohse(dft, limit = 3, redundant = TRUE) \%>\% head(3)
+# Getting rid of columns with no (or too much) variance
+dft$no_variance1 <- 0
+dft$no_variance2 <- c("A", rep("B", nrow(dft) - 1))
+dft$no_variance3 <- as.character(rnorm(nrow(dft)))
+dft$no_variance4 <- c(rep("A", 20), rnorm(nrow(dft) - 20))
+ohse(dft, limit = 3) \%>\% head(3)
+ohse(dft, limit = 3, var = 1) \%>\% head(3)
+
+# Examples with Dataset 2
+data(dfl)
+dfl$novar <- "novar"
+ohse(dfl, dates = TRUE) \%>\% head(3)
+ohse(dfl, dates = TRUE, ignore = "issued") \%>\% head(3)
+\dontrun{
+ohse(dfl, dates = FALSE, holidays = TRUE, country = "Venezuela") \%>\% head()
+}
+}
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},

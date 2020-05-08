@@ -9,6 +9,12 @@
 #' @param text Character Vector
 #' @param spaces Boolean. Keep spaces?
 #' @param lower Boolean. Transform all to lower case?
+#' @examples 
+#' cleanText("Bernardo Lares 123")
+#' cleanText("Bèrnärdo LáreS 123", lower = FALSE)
+#' cleanText("Bernardo Lares", spaces = FALSE)
+#' cleanText("\\@®ì÷å   %ñS  ..-X", spaces = FALSE)
+#' cleanText(c("María", "€", "Núñez"))
 #' @export
 cleanText <- function(text, spaces = TRUE, lower = TRUE) {
   text <- as.character(text)
@@ -45,7 +51,6 @@ textTokenizer <- function(text, lang = "english",
                           df = FALSE,
                           min = 2) {
   
-  options(warn = -1)
   try_require("tm")
 
   text <- as.character(text)
@@ -136,20 +141,30 @@ textTokenizer <- function(text, lang = "english",
 #' @param auto Boolean. Auto create some useful parameters?
 #' @param contains Character vector. Which columns do you wish to add
 #' with a contains (counter) string validator?
+#' @param prc Boolean. Also add percentage of each column compared with length?
+#' @examples 
+#' textFeats("Bernardo Lares")
+#' textFeats("Bernardo Lares 123!", prc = TRUE)
+#' textFeats("I'm 100% Lares...", contains = c("Lares", "lares"))
+#' textFeats(c("GREAT library!!", "Have you tried this 2?", "Happy faces :D :-)"))
 #' @export
-textFeats <- function(text, auto = TRUE, contains = NA) {
+textFeats <- function(text, auto = TRUE, contains = NA, prc = FALSE) {
   
   ret <- data.frame(text = text)
+  
   
   if (auto) {
     ret <- ret %>%
       mutate(length = str_length(text),
              ncap = str_count(text, "[A-Z]"),
-             ncap_len = ncap / length,
+             #ncap_len = round(ncap / length, 4),
+             nvoc = str_count(toupper(text), "A|E|I|O|U"),
+             #nvoc_len = round(nvoc / length, 4),
              nexcl = str_count(text, fixed("!")),
              nquest = str_count(text, fixed("?")),
              nats = str_count(text, fixed("@")),
              npunct = str_count(text, "[[:punct:]]"),
+             ndig = str_count(text, "[[0-9]]"),
              nword = 1 + str_count(text, "\\ "),
              nsymb = str_count(text, "&|@|#|\\$|%|\\*|\\^"),
              nsmile = str_count(text, "((?::|;|=)(?:-)?(?:\\)|D|P))")) 
@@ -157,7 +172,7 @@ textFeats <- function(text, auto = TRUE, contains = NA) {
 
   
   # Custom columns with contains argument
-  if (!is.na(contains)) {
+  if (!is.na(contains[1])) {
     df <- c()
     for (i in 1:length(contains)) {
       word <- as.character(contains[i])
@@ -167,9 +182,15 @@ textFeats <- function(text, auto = TRUE, contains = NA) {
     }
     ret <- data.frame(ret, df)
   }
+  
+  if (prc)
+    ret <- ret %>% 
+      rowwise() %>%
+      mutate_if(is.numeric, list(pct = ~ round(./length, 5))) %>%
+      ungroup()
+  
   return(ret)
 }
-
 
 ####################################################################
 #' Wordcloud Plot

@@ -152,19 +152,25 @@ normalize <- function(x) {
 #' @param quotes Boolean. Bring simple quotes for each observation
 #' @param and Character. Add 'and' or something before last observation. 
 #' Not boolean variable so it can be used on other languages
-#' @aliases v2t
+#' @examples
+#' vector2text(LETTERS[1:5])
+#' vector2text(c(1:5), quotes = FALSE)
+#' vector2text(c(1:5), quotes = FALSE, sep = "-")
+#' vector2text(c(1:5), and = "and also")
 #' @export
 vector2text <- function(vector, sep = ", ", quotes = TRUE, and = "") {
   n <- length(vector)
   if (and != "" & n > 1) {
-    vector <- c(x[1:(n - 1)], paste("and", vector[n]))
-    quotes <- !quotes # Makes no sense to keep quotes but keep the option
+    vector <- c(vector[1:(n - 1)], paste(and, vector[n]))
+    quotes <- !quotes # Makes no sense to keep quotes but leave the option
   } 
   output <- paste(shQuote(vector), collapse = sep)
   if (!quotes) output <- gsub("'", "", output)
   return(output)
 }
-
+#' @rdname vector2text
+#' @export
+v2t <- vector2text
 
 ####################################################################
 #' Find country from a given IP
@@ -206,11 +212,15 @@ ip_country <- function(ip) {
 #' @param c Vector. Coordinates of 2st point over the line
 #' @export
 dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
-  v1 <- b - c
-  v2 <- a - b
-  m <- cbind(v1, v2)
-  d <- abs(det(m)) / sqrt(sum(v1 * v1))
-  return(d)
+  if (length(a) == 2 & length(b) == 2 & length(c) == 2) {
+    v1 <- b - c
+    v2 <- a - b
+    m <- cbind(v1, v2)
+    d <- abs(det(m)) / sqrt(sum(v1 * v1))
+    return(d)
+  } else {
+    stop("Every point most consist of 2 values (X & Y), thus all input lengths must be 2.")
+  } 
 }
 
 

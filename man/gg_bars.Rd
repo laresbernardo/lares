@@ -32,3 +32,11 @@ gg_bars(
 \description{
 This function uses a nice template for barplots.
 }
+\examples{
+\dontrun{
+data(dft) # Titanic dataset
+df <- freqs(dft, Pclass)
+gg_bars(df$Pclass, df$n)
+gg_bars(df$Pclass, df$p, axis = "Percentage of ...")
+}
+}

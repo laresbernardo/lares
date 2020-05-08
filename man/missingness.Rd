@@ -21,6 +21,23 @@ missingness(df, plot = FALSE, full = FALSE, subtitle = NA, summary = TRUE)
 This function lets the user calculate the percentage of NAs or
 missingness in a data.frame. It also plots the results if needed.
 }
+\examples{
+# Dummy data
+df <- data.frame(A = c(1:5), 
+                 B = c(NA, NA, 1, 1, 1), 
+                 C = rep(NA, 5), 
+                 D = c(NA, LETTERS[1:4]))
+
+# Missing values summary
+missingness(df)
+
+\dontrun{
+# Visual results
+missingness(df, plot = TRUE)
+# Show all variables (including those with no missing values)
+missingness(df, plot = TRUE, full = TRUE)
+}
+}
 \seealso{
 Other Exploratory: 
 \code{\link{corr_cross}()},

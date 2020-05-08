@@ -17,6 +17,13 @@ cleanText(text, spaces = TRUE, lower = TRUE)
 This function lets the user clean text into getting only alphanumeric 
 characters and no accents/symbols on letters.
 }
+\examples{
+cleanText("Bernardo Lares 123")
+cleanText("Bèrnärdo LáreS 123", lower = FALSE)
+cleanText("Bernardo Lares", spaces = FALSE)
+cleanText("\\\\@®ì÷å   \%ñS  ..-X", spaces = FALSE)
+cleanText(c("María", "€", "Núñez"))
+}
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},

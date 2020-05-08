@@ -10,6 +10,22 @@
 #' @param full Boolean. Return all variables (or only with missings)?
 #' @param subtitle Character. Subtitle to show in plot
 #' @param summary Boolean. Show numerical summary text?
+#' @examples 
+#' # Dummy data
+#' df <- data.frame(A = c(1:5), 
+#'                  B = c(NA, NA, 1, 1, 1), 
+#'                  C = rep(NA, 5), 
+#'                  D = c(NA, LETTERS[1:4]))
+#' 
+#' # Missing values summary
+#' missingness(df)
+#' 
+#' \dontrun{
+#' # Visual results
+#' missingness(df, plot = TRUE)
+#' # Show all variables (including those with no missing values)
+#' missingness(df, plot = TRUE, full = TRUE)
+#' }
 #' @export
 missingness <- function(df, plot = FALSE, full = FALSE, 
                         subtitle = NA, summary = TRUE) {
@@ -31,7 +47,9 @@ missingness <- function(df, plot = FALSE, full = FALSE,
     obs <- nrow(df) * ncol(df)
     miss <- sum(m$missing)
     missp <- 100 * miss/obs
-    note <- sprintf("Total values: %s | Total missings: %s (%s)", 
+    note <- sprintf("%s cols x %s rows | Values: %s | Missing: %s (%s)", 
+                    formatNum(ncol(df), 0), 
+                    formatNum(nrow(df), 0), 
                     formatNum(obs, 0), 
                     formatNum(miss, 0), 
                     formatNum(missp, 1, pos = "%"))

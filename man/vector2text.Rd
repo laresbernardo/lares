@@ -6,6 +6,8 @@
 \title{Convert a vector into a comma separated text}
 \usage{
 vector2text(vector, sep = ", ", quotes = TRUE, and = "")
+
+v2t(vector, sep = ", ", quotes = TRUE, and = "")
 }
 \arguments{
 \item{vector}{Vector. Vector with more than 1 observation}
@@ -19,6 +21,12 @@ Not boolean variable so it can be used on other languages}
 }
 \description{
 Convert a vector into a comma separated text
+}
+\examples{
+vector2text(LETTERS[1:5])
+vector2text(c(1:5), quotes = FALSE)
+vector2text(c(1:5), quotes = FALSE, sep = "-")
+vector2text(c(1:5), and = "and also")
 }
 \seealso{
 Other Data Wrangling: 

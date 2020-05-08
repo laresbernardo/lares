@@ -29,6 +29,27 @@
 #' the filtered values with?
 #' @param sep Character. Separator's string
 #' @param summary Boolean. Print a summary of the operations?
+#' @examples 
+#' # Example with Dataset 1
+#' data(dft)
+#' ohse(dft, limit = 3) %>% head(3)
+#' ohse(dft, limit = 3, redundant = TRUE) %>% head(3)
+#' # Getting rid of columns with no (or too much) variance
+#' dft$no_variance1 <- 0
+#' dft$no_variance2 <- c("A", rep("B", nrow(dft) - 1))
+#' dft$no_variance3 <- as.character(rnorm(nrow(dft)))
+#' dft$no_variance4 <- c(rep("A", 20), rnorm(nrow(dft) - 20))
+#' ohse(dft, limit = 3) %>% head(3)
+#' ohse(dft, limit = 3, var = 1) %>% head(3)
+#' 
+#' # Examples with Dataset 2
+#' data(dfl)
+#' dfl$novar <- "novar"
+#' ohse(dfl, dates = TRUE) %>% head(3)
+#' ohse(dfl, dates = TRUE, ignore = "issued") %>% head(3)
+#' \dontrun{
+#' ohse(dfl, dates = FALSE, holidays = TRUE, country = "Venezuela") %>% head()
+#' }
 #' @export
 ohse <- function(df, 
                  redundant = FALSE, 
@@ -38,12 +59,23 @@ ohse <- function(df,
                  holidays = FALSE, country = "Colombia",
                  currency_pair = NA, 
                  trim = 0, 
-                 limit = 10, variance = 0.9, 
-                 other_label = "OTHER", sep = "_", 
+                 limit = 10, 
+                 variance = 0.9, 
+                 other_label = "OTHER", 
+                 sep = "_", 
                  summary = TRUE) {
   
   df <- data.frame(df)
+  order <- colnames(df)
   
+  # Dummy variables that will be filled
+  no_need_to_convert <- converted <- converted_binary <- c()
+  
+  # No variance columns
+  no_variance <- zerovar(df)
+  if (drops)
+    df <- df[,!colnames(df) %in% no_variance]
+
   # Create features out of date/time variables
   if (dates == TRUE | holidays == TRUE | !is.na(currency_pair)) {
     times <- df_str(df, return = "names", quiet = TRUE)$time
@@ -66,13 +98,10 @@ ohse <- function(df,
   
   # Leave some columns out of the logic
   if (!is.na(ignore)[1]) {
-    message("Omitting transformations for ", vector2text(ignore))
+    message(">>> Omitting transformations for ", vector2text(ignore))
     ignored <- df %>% select(one_of(ignore))
     df <- df %>% select(-one_of(ignore))
   }
-  
-  # Dummy variables that will be filled
-  no_need_to_convert <- converted <- converted_binary <- no_variance <- c()
   
   # Name and type of variables
   types <- data.frame(name = colnames(df), 
@@ -88,10 +117,9 @@ ohse <- function(df,
     # Non numeric or date/time variables
     if (!vector_type %in% c("integer","numeric","POSIXct","POSIXt","Date")) {
       
-      # Columns with no variance or too much variance (unique values vs observations)
-      if (vector_levels <= 1 | vector_levels >= variance * 
-          length(vector_values[!is.na(vector_values),1])) {
-        no_variance <- rbind(no_variance, vector_name)
+      # Char columns with too much variance (unique values vs total observations)
+      if (vector_levels >= variance * nrow(df)) {
+        no_variance <- c(no_variance, vector_name)
       }
       
       vector_values <- vector_values %>% 
@@ -130,21 +158,24 @@ ohse <- function(df,
   if (summary) {
     total_converted <- rbind(converted, converted_binary)
     if (length(total_converted) > 1) {
-      message(paste("One Hot Encoding applied to", length(total_converted), 
+      message(paste(">>> One Hot Encoding applied to", length(total_converted), 
                     "variables:", vector2text(total_converted))) 
     }
-    if (length(no_variance) > 1 & drops) {
-      message(paste0("Automatically dropped ", length(no_variance), 
-                     " columns with 0% or +", round(variance*100),
+    if (length(no_variance) > 0 & drops) {
+      message(paste0(">>> Automatically dropped ", length(no_variance), 
+                     " columns with 0% or >=", round(variance*100),
                      "% variance: ", vector2text(no_variance))) 
     }
   }
   
   # Return only useful columns
-  if (drops) df <- df[, c(!colnames(df) %in% c(no_variance, converted))] 
+  if (drops) 
+    df <- df[, c(!colnames(df) %in% c(converted, no_variance))] 
   
   # Bind ignored untouched columns
-  if (!is.na(ignore)[1]) df <- data.frame(ignored, df)
+  order <- order[order %in% colnames(df)]
+  if (!is.na(ignore)[1]) 
+    df <- df %>% select(one_of(order), everything())
   
   return(df)
   
@@ -176,7 +207,7 @@ ohse <- function(df,
 date_feats <- function(dates, 
                        keep_originals = FALSE, only = NA,
                        features = TRUE,
-                       holidays = FALSE, country = "Colombia",
+                       holidays = FALSE, country = "Venezuela",
                        currency_pair = NA,
                        summary = TRUE) {
   results <- c()
@@ -191,7 +222,7 @@ date_feats <- function(dates,
   iters <- ifelse(date_cols == "df", 1, length(date_cols))[1]
   if (!is.na(iters)) {
     if (summary)
-      message(paste("Processing", iters, "date/time columns:", vector2text(date_cols))) 
+      message(paste(">>> Processing", iters, "date/time columns:", vector2text(date_cols))) 
   } else return(dates)
   
   if (!"data.frame" %in% class(dates) & iters == 1) {
@@ -199,7 +230,7 @@ date_feats <- function(dates,
     date_cols <- "values_date"
   }
   
-  if (holidays == TRUE | !is.na(currency_pair)) {
+  if (holidays | !is.na(currency_pair)) {
     invisible(Sys.setlocale("LC_TIME", "C"))
     search_dates <- dates[, c(colnames(dates) %in% date_cols)]
     search_dates[] <- sapply(search_dates, function(x) gsub(" .*", "", as.character(x)))
@@ -207,20 +238,13 @@ date_feats <- function(dates,
     alldates <- alldates[!is.na(alldates)]
   }
   
-  if (holidays == TRUE) {
+  if (holidays) {
     years <- sort(unique(year(alldates)))
     holidays_dates <- holidays(countries = country, years)
     colnames(holidays_dates)[1] <- "values_date"
-    holidays_dates[,1] <- as.character(holidays_dates[,1])
-    cols <- paste0("values_date_holiday_",c("national","observance","season","other",tolower(country)))
-    if (ncol(holidays_dates) == 6) {
-      holidays_dates <- holidays_dates %>% 
-        mutate(dummy = TRUE) %>% 
-        tidyr::spread(country, dummy)
-    } else { 
-      cols <- cols[1:4] 
-    }
-    colnames(holidays_dates)[-1] <- cols
+    holidays_dates$values_date <- as.character(as.Date(holidays_dates$values_date))
+    cols <- paste0("values_date_holiday_", colnames(holidays_dates)[4:ncol(holidays_dates)])
+    colnames(holidays_dates)[-c(1:3)] <- cols
   }
   
   # Features creator
@@ -255,10 +279,11 @@ date_feats <- function(dates,
           #   values, floor_date(values, unit="day"), units="secs"))
         }
       }
-      
+
       # Holidays data
-      if (holidays == TRUE) {
-        result <- result %>% left_join(holidays_dates, by = "values_date") %>% 
+      if (holidays) {
+        result <- result %>% 
+          left_join(holidays_dates, by = "values_date") %>% 
           mutate_at(vars(cols), funs(replace(., which(is.na(.)), FALSE)))
       }
       
@@ -298,6 +323,11 @@ date_feats <- function(dates,
 #' holiday dates?
 #' @param countries Character or vector. For which country(ies) should the 
 #' holidays be imported?
+#' @examples 
+#' \dontrun{
+#' holidays(countries = "Argentina") 
+#' holidays(countries = c("Argentina", "Venezuela"), years = c(2019, 2020))
+#' }
 #' @export
 holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
   
@@ -309,28 +339,35 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
   years <- years[years %in% ((year-5):(year+5))]
   combs <- expand.grid(years, countries) %>% dplyr::rename(year = "Var1", country = "Var2")
   for (i in 1:nrow(combs)) {
-    message(paste0("Extracting ", combs$country[i], "'s holidays for ", combs$year[i]))
+    message(paste0(">>> Extracting ", combs$country[i], "'s holidays for ", combs$year[i]))
     url <- paste0("https://www.timeanddate.com/holidays/", tolower(combs$country[i]), "/", combs$year[i])
     holidays <- xml2::read_html(url)
-    holidays <- holidays %>% html_nodes(".tb-hover") %>% html_table() %>% data.frame(.) %>% .[-1,1:4]
+    holidays <- holidays %>% html_nodes(".table") %>% html_table(fill = TRUE) %>% data.frame(.) %>% filter(!is.na(Date))
+    holidays <- holidays[,-2]
+    colnames(holidays) <- c("Date", "Holiday", "Holiday.Type")
     holidays$Date <- paste(holidays$Date, combs$year[i])
     if (sum(grepl("de",holidays$Date)) > 0) {
       invisible(Sys.setlocale("LC_TIME", "es_ES"))
       holidays$Date <- gsub("de ","", holidays$Date)
     }
     first <- as.numeric(as.character(substr(holidays$Date,1,1)))
-    if (!is.na(first)) {
+    if (!is.na(first[1])) {
       holidays$Date <- as.Date(holidays$Date, format = c("%d %b %Y"))
     } else {
       holidays$Date <- as.Date(holidays$Date, format = c("%b %d %Y"))
     }
-    result <- data.frame(holiday = holidays$Date) %>%
+    result <- data.frame(holiday = holidays$Date,
+                         holiday_name = holidays$Holiday, 
+                         holiday_type = holidays$Holiday.Type) %>%
       mutate(national = grepl("National|Federal", holidays$Holiday.Type),
              observance = grepl("Observance", holidays$Holiday.Type),
+             bank = grepl("Bank", holidays$Holiday.Type),
+             nonwork = grepl("Non-working", holidays$Holiday.Type),
              season = grepl("Season", holidays$Holiday.Type),
-             other = !grepl("National|Federal|Observance|Season", holidays$Holiday.Type)) %>%
+             hother = !grepl("National|Federal|Observance|Season", holidays$Holiday.Type)) %>%
       if (length(unique(countries)) > 1) { mutate(., country = combs$country[i]) } else .
     results <- rbind(results, result)
   } 
+  results <- results %>% filter(!is.na(holiday)) %>% as_tibble()
   return(results)
 }
