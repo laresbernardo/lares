@@ -166,6 +166,24 @@ missingness in a data.frame. It also plots the results if needed.</p>
 <code><a href='tree_var.html'>tree_var</a>()</code>,
 <code><a href='trendsRelated.html'>trendsRelated</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Dummy data</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>),
+                 <span class='kw'>B</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>),
+                 <span class='kw'>C</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>NA</span>, <span class='fl'>5</span>),
+                 <span class='kw'>D</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>4</span>]))
+
+<span class='co'># Missing values summary</span>
+<span class='fu'>missingness</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt;   variable missing missingness
+#&gt; 1        C       5         100
+#&gt; 2        B       2          40
+#&gt; 3        D       1          20</div><div class='input'>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># Visual results</span>
+<span class='fu'>missingness</span>(<span class='no'>df</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># Show all variables (including those with no missing values)</span>
+<span class='fu'>missingness</span>(<span class='no'>df</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>full</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
