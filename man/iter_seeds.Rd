@@ -30,6 +30,7 @@ Other Machine Learning:
 \code{\link{h2o_results}()},
 \code{\link{h2o_selectmodel}()},
 \code{\link{impute}()},
+\code{\link{lasso_vars}()},
 \code{\link{model_metrics}()},
 \code{\link{mplot_conf}()},
 \code{\link{mplot_cuts_error}()},

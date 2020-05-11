@@ -9,7 +9,7 @@ dalex_explainer(df, model, y = "tag", ignore = NA)
 \arguments{
 \item{df}{Dataframe. Must contain all columns and predictions}
 
-\item{model}{Model object}
+\item{model}{Model object (H2O)}
 
 \item{y}{Character. Variable's column name}
 
@@ -20,9 +20,8 @@ DALEX function to create an explainer object
 }
 \examples{
 \dontrun{
-data(dft) # Titanic dataset
-
 # TRAIN A SIMPLE MODEL
+data(dft) # Titanic dataset
 dfm <- h2o_automl(dft, 
                   y = "Survived", 
                   ignore = c("Ticket", "PassengerId", "Cabin")), 

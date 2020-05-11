@@ -4,13 +4,19 @@
 \alias{ip_country}
 \title{Find country from a given IP}
 \usage{
-ip_country(ip)
+ip_country(ip = myip())
 }
 \arguments{
 \item{ip}{Vector. Vector with all IP's we wish to search}
 }
 \description{
 This function lets the user find a country from a given IP Address
+}
+\examples{
+\dontrun{
+ip_country(ip = myip())
+ip_country(ip = "163.114.132.0")
+}
 }
 \seealso{
 Other Tools: 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/other_functions.R
 \name{date_cuts}
 \alias{date_cuts}
-\title{Convert Date into Year-Month (YYYY-MM)}
+\title{Convert Date into Year + Cut}
 \usage{
 date_cuts(date, type = "Q")
 }
@@ -15,6 +15,10 @@ Q (3 months), T (4 months), H (6 months)}
 \description{
 This function returns categorical values for any date(s) using year
 cuts such as bimonths, quarters, terms, and halves.
+}
+\examples{
+date_cuts(Sys.Date(), type = "Q")
+date_cuts(Sys.Date(), type = "H")
 }
 \seealso{
 Other Data Wrangling: 
@@ -31,8 +35,8 @@ Other Data Wrangling:
 \code{\link{left}()},
 \code{\link{normalize}()},
 \code{\link{numericalonly}()},
+\code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{one_hot_encoding_commas}()},
 \code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},

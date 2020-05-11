@@ -4,19 +4,24 @@
 \alias{dist2d}
 \title{Distance from specific point to line}
 \usage{
-dist2d(a, b = c(0, 0), c = c(1, 1))
+dist2d(x, a = c(0, 0), b = c(1, 1))
 }
 \arguments{
-\item{a}{Vector. Coordinates of the point from which we want to 
+\item{x}{Vector. Coordinates of the point from which we want to 
 measure the distance}
 
-\item{b}{Vector. Coordinates of 1st point over the line}
+\item{a}{Vector. Coordinates of 1st point over the line}
 
-\item{c}{Vector. Coordinates of 2st point over the line}
+\item{b}{Vector. Coordinates of 2st point over the line}
 }
 \description{
 This function lets the user calculate the mathematical linear distance 
 Between a specific point and a line (given geometrical 3 points)
+}
+\examples{
+dist2d(x = c(5, 2))
+dist2d(x = c(5, 2), a = c(0, 0), b = c(0, 1))
+dist2d(x = c(5, 2), a = c(0, 0), b = c(1, 0))
 }
 \seealso{
 Other Calculus: 

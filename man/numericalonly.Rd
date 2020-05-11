@@ -18,7 +18,14 @@ set to NA no calculation will run.}
 }
 \description{
 This function lets the user remove all rows that have some or
-all values as NAs
+all values as NAs. Note that as logical columns may be treated
+as numerical (1s and 0s), those will be kept.
+}
+\examples{
+data(dft) # Titanic dataset
+str(dft)
+numericalonly(dft) \%>\% head()
+numericalonly(dft, natransform = "mean") \%>\% head()
 }
 \seealso{
 Other Data Wrangling: 
@@ -35,8 +42,8 @@ Other Data Wrangling:
 \code{\link{impute}()},
 \code{\link{left}()},
 \code{\link{normalize}()},
+\code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{one_hot_encoding_commas}()},
 \code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},

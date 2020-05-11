@@ -45,6 +45,14 @@ and sorted by mean of each variable's correlations}
 This function correlates a whole dataframe, filtering automatically
 all numerical values.
 }
+\examples{
+data(dft) # Titanic dataset
+corr(dft[,2:5])
+corr(dft[,2:5], ignore = "Pclass")
+corr(dft[,2:3], redundant = TRUE)
+corr(dft[,2:5], method = "spearman")
+corr(dft[,2:5], pvalue = TRUE)
+}
 \seealso{
 Other Calculus: 
 \code{\link{ROC}()},

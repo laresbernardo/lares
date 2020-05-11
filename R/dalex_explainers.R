@@ -5,14 +5,13 @@
 #' 
 #' @family Interpretability
 #' @param df Dataframe. Must contain all columns and predictions
-#' @param model Model object
+#' @param model Model object (H2O)
 #' @param y Character. Variable's column name
 #' @param ignore Character vector. Which columns should be ignored?
 #' @examples 
 #' \dontrun{
-#' data(dft) # Titanic dataset
-#' 
 #' # TRAIN A SIMPLE MODEL
+#' data(dft) # Titanic dataset
 #' dfm <- h2o_automl(dft, 
 #'                   y = "Survived", 
 #'                   ignore = c("Ticket", "PassengerId", "Cabin")), 

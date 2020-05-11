@@ -17,7 +17,7 @@
 #' @param df Dataframe. Dataframe containing all your data, including 
 #' the independent variable labeled as 'tag'. If you want to define 
 #' which variable should be used instead, use the y parameter.
-#' @param y Character. Name of the independent variable
+#' @param y Variable or Character. Name of the independent variable.
 #' @param ignore Character vector. Force columns for the model to ignore
 #' @param train_test Character. If needed, df's column name with 'test' 
 #' and 'train' values to split
@@ -68,12 +68,12 @@
 #' dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 #' 
 #' # Classification: 2 classes
-#' r <- h2o_automl(dft, y = "Survived", max_models = 1, target = "TRUE")
+#' r <- h2o_automl(dft, y = Survived, max_models = 1, target = "TRUE")
 #' r$plots$dashboard
 #' r$metrics
 #' 
 #' # Classification: 3 classes
-#' r <- h2o_automl(dft, y = "Pclass", ignore = "Fare", impute = TRUE)
+#' r <- h2o_automl(dft, Pclass, ignore = "Fare", impute = TRUE)
 #' r$plot$dashboard
 #' r$metrics
 #' 
@@ -120,6 +120,9 @@ h2o_automl <- function(df, y = "tag",
   tic(id = "h2o_automl")
   
   if (!quiet) message(paste(Sys.time(), "| Started process..."))
+  
+  # Tidyverse friendly
+  y <- as.character(enquo(y))[2]
   
   # INDEPENDENT VARIABLE
   if (!y %in% colnames(df)) {

@@ -21,6 +21,13 @@
 #' variables (not binaries)
 #' @param top Integer. Select top N most relevant variables? Filtered 
 #' and sorted by mean of each variable's correlations
+#' @examples 
+#' data(dft) # Titanic dataset
+#' corr(dft[,2:5])
+#' corr(dft[,2:5], ignore = "Pclass")
+#' corr(dft[,2:3], redundant = TRUE)
+#' corr(dft[,2:5], method = "spearman")
+#' corr(dft[,2:5], pvalue = TRUE)
 #' @export
 corr <- function(df, method = "pearson", 
                  pvalue = FALSE,
@@ -78,7 +85,9 @@ corr <- function(df, method = "pearson",
 ####################################################################
 #' Correlation between variable and dataframe
 #'
-#' This function correlates a whole dataframe with a single feature.
+#' This function correlates a whole dataframe with a single feature. It
+#' automatically run one-hot-smart-encoding (ohse) so no need to input
+#' only numerical values.
 #'
 #' @family Exploratory
 #' @family Correlations
@@ -104,9 +113,12 @@ corr <- function(df, method = "pearson",
 #' @param subdir Character. Sub directory on which you wish to 
 #' save the plot
 #' @param file_name Character. File name as you wish to save the plot
-#' @examples 
-#' \dontrun{
+#' @examples
 #' data(dft)
+#' dft %>% corr_var(Survived, plot = FALSE) %>% head(10)
+#' 
+#' # With plots, results are easier to compare:
+#' \dontrun{
 #' # Correlate Survived with everything else
 #' dft %>% corr_var(Survived)
 #' # Filter out variables with less than 50% of correlation
@@ -218,6 +230,9 @@ corr_var <- function(df, ...,
 #'
 #' This function creates a correlation full study and returns a rank
 #' of the highest correlation variables obtained in a cross-table.
+#' 
+#' #' DataScience+ Post: \href{https://bit.ly/2WiLsQB}{Find Insights 
+#' with Ranked Cross-Correlations}
 #'
 #' @family Correlations
 #' @family Exploratory
@@ -238,6 +253,14 @@ corr_var <- function(df, ...,
 #' @param redundant Boolean. Should we keep redundat columns? i.e. It the
 #' column only has two different values, should we keep both new columns?
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
+#' @examples 
+#' data(dft) # Titanic dataset
+#' corr_cross(dft, plot = FALSE) %>% head(10)
+#' corr_cross(dft, plot = FALSE) %>% head(10)
+#' \dontrun{
+#' # Show only most relevant results filter by pvalue
+#' corr_cross(dft, max_pvalue = 0.05)
+#' }
 #' @export
 corr_cross <- function(df, plot = TRUE, 
                        max_pvalue = 1,

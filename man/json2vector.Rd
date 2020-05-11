@@ -2,17 +2,20 @@
 % Please edit documentation in R/other_functions.R
 \name{json2vector}
 \alias{json2vector}
-\title{Convert JSON string to vector (data.frame with 1 row)}
+\title{Convert Python JSON string to R vector (data.frame with 1 row)}
 \usage{
 json2vector(json)
 }
 \arguments{
-\item{json}{Character. JSON string. Example of a string: '{"feat1": 
-null, "feat2": "M"}'}
+\item{json}{Character. JSON string}
 }
 \description{
 This function lets the user transform a JSON string into vector 
 (data.frame with 1 row). You can also pass a Python's dictionary.
+For any other JSON transformation, `jsonlite` is recommended.
+}
+\examples{
+json2vector('{"id": 1, "nodata": null, "gender": "M"}')
 }
 \seealso{
 Other Tools: 

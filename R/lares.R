@@ -19,7 +19,7 @@
 # @importFrom gridExtra grid.arrange tableGrob arrangeGrob ttheme_minimal 
 #' @importFrom h2o as.h2o h2o.automl h2o.accuracy h2o.getModel h2o.performance h2o.init 
 #' h2o.removeAll h2o.download_mojo h2o.download_pojo h2o.loadModel h2o.no_progress h2o.predict 
-#' h2o.predict_json h2o.saveModel h2o.varimp h2o.getVersion
+#' h2o.predict_json h2o.saveModel h2o.varimp h2o.getVersion h2o.glm
 #' @importFrom httr GET POST oauth_endpoint oauth_app oauth1.0_token authenticate 
 #' stop_for_status upload_file add_headers content http_error set_config config
 #' @importFrom jsonlite fromJSON toJSON flatten

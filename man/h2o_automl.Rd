@@ -36,7 +36,7 @@ h2o_automl(
 the independent variable labeled as 'tag'. If you want to define 
 which variable should be used instead, use the y parameter.}
 
-\item{y}{Character. Name of the independent variable}
+\item{y}{Variable or Character. Name of the independent variable.}
 
 \item{ignore}{Character vector. Force columns for the model to ignore}
 
@@ -122,12 +122,12 @@ data(dft)
 dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 
 # Classification: 2 classes
-r <- h2o_automl(dft, y = "Survived", max_models = 1, target = "TRUE")
+r <- h2o_automl(dft, y = Survived, max_models = 1, target = "TRUE")
 r$plots$dashboard
 r$metrics
 
 # Classification: 3 classes
-r <- h2o_automl(dft, y = "Pclass", ignore = "Fare", impute = TRUE)
+r <- h2o_automl(dft, Pclass, ignore = "Fare", impute = TRUE)
 r$plot$dashboard
 r$metrics
 
@@ -162,6 +162,7 @@ Other Machine Learning:
 \code{\link{h2o_selectmodel}()},
 \code{\link{impute}()},
 \code{\link{iter_seeds}()},
+\code{\link{lasso_vars}()},
 \code{\link{model_metrics}()},
 \code{\link{mplot_conf}()},
 \code{\link{mplot_cuts_error}()},

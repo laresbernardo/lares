@@ -61,11 +61,16 @@ save the plot}
 \item{file_name}{Character. File name as you wish to save the plot}
 }
 \description{
-This function correlates a whole dataframe with a single feature.
+This function correlates a whole dataframe with a single feature. It
+automatically run one-hot-smart-encoding (ohse) so no need to input
+only numerical values.
 }
 \examples{
-\dontrun{
 data(dft)
+dft \%>\% corr_var(Survived, plot = FALSE) \%>\% head(10)
+
+# With plots, results are easier to compare:
+\dontrun{
 # Correlate Survived with everything else
 dft \%>\% corr_var(Survived)
 # Filter out variables with less than 50\% of correlation

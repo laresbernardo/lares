@@ -57,6 +57,19 @@ column only has two different values, should we keep both new columns?}
 This function creates a correlation full study and returns a rank
 of the highest correlation variables obtained in a cross-table.
 }
+\details{
+#' DataScience+ Post: \href{https://bit.ly/2WiLsQB}{Find Insights 
+with Ranked Cross-Correlations}
+}
+\examples{
+data(dft) # Titanic dataset
+corr_cross(dft, plot = FALSE) \%>\% head(10)
+corr_cross(dft, plot = FALSE) \%>\% head(10)
+\dontrun{
+# Show only most relevant results filter by pvalue
+corr_cross(dft, max_pvalue = 0.05)
+}
+}
 \seealso{
 Other Correlations: 
 \code{\link{corr_var}()},

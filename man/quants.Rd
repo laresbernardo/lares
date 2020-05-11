@@ -17,6 +17,11 @@ quants(values, splits = 10, return = "summary")
 This function lets the user quickly calculate cuts for quantiles
 and discretize numerical values into cateogorical values.
 }
+\examples{
+data(dft) # Titanic dataset
+quants(dft$Age, splits = 5)
+quants(dft$Age, splits = 5, return = "labels")[1:10]
+}
 \seealso{
 Other Calculus: 
 \code{\link{ROC}()},

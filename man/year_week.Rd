@@ -12,6 +12,9 @@ year_week(date)
 \description{
 This function lets the user convert a date into YYYY-WW format
 }
+\examples{
+year_week(Sys.Date())
+}
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},
@@ -28,8 +31,8 @@ Other Data Wrangling:
 \code{\link{left}()},
 \code{\link{normalize}()},
 \code{\link{numericalonly}()},
+\code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{one_hot_encoding_commas}()},
 \code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},

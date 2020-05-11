@@ -35,6 +35,11 @@ the filtered values with?}
 This function lets the user reduce categorical values in a vector. 
 It is tidyverse friendly for use on pipelines
 }
+\examples{
+data(dft) # Titanic dataset
+categ_reducer(dft, Embarked, top = 2) \%>\% freqs(Embarked)
+categ_reducer(dft, Ticket, nmin = 7, other_label = "Other Ticket") \%>\% freqs(Ticket)
+}
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},
@@ -50,8 +55,8 @@ Other Data Wrangling:
 \code{\link{left}()},
 \code{\link{normalize}()},
 \code{\link{numericalonly}()},
+\code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{one_hot_encoding_commas}()},
 \code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},

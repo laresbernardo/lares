@@ -14,6 +14,10 @@ normalized vector}
 This function lets the user normalize numerical values into 
 the 0 to 1 range
 }
+\examples{
+x <- c(0, 1, 4, 7.5, 10)
+normalize(x)
+}
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},
@@ -29,8 +33,8 @@ Other Data Wrangling:
 \code{\link{impute}()},
 \code{\link{left}()},
 \code{\link{numericalonly}()},
+\code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{one_hot_encoding_commas}()},
 \code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},

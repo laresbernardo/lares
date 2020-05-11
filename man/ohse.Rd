@@ -101,7 +101,7 @@ Other Data Wrangling:
 \code{\link{left}()},
 \code{\link{normalize}()},
 \code{\link{numericalonly}()},
-\code{\link{one_hot_encoding_commas}()},
+\code{\link{ohe_commas}()},
 \code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},

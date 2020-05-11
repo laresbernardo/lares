@@ -23,6 +23,19 @@ vector or data.frame into another value. If replacing more than
 one value, order matters so they will be replaced in the same
 order that you pass them to the function.
 }
+\examples{
+df <- data.frame(one = 1:5, 
+                 two = LETTERS[1:5], 
+                 three = rep("A", 5), 
+                 four = c(NA, "Aaa", 123, "B", "C"))
+print(df)
+replaceall(df, "A", NA)
+replaceall(df, "A", "a")
+replaceall(df, 1, "*")
+# replaceall(df, NA, "Not yet")
+replaceall(df, c("A", "B"), c("'A'", "'B'"))
+replaceall(df, "a", "*", which = "four")
+}
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},
@@ -39,8 +52,8 @@ Other Data Wrangling:
 \code{\link{left}()},
 \code{\link{normalize}()},
 \code{\link{numericalonly}()},
+\code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{one_hot_encoding_commas}()},
 \code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},

@@ -28,6 +28,8 @@ try_require <- function(package, stop = TRUE) {
 #' 
 #' @family Data Wrangling
 #' @param date Date. Date we wish to transform 
+#' @examples 
+#' year_month(Sys.Date())
 #' @export
 year_month <- function(date) {
   paste(year(date),str_pad(lubridate::month(date), 2, pad = "0"), sep = "-")
@@ -35,7 +37,7 @@ year_month <- function(date) {
 
 
 ####################################################################
-#' Convert Date into Year-Month (YYYY-MM)
+#' Convert Date into Year + Cut
 #' 
 #' This function returns categorical values for any date(s) using year
 #' cuts such as bimonths, quarters, terms, and halves.
@@ -44,6 +46,9 @@ year_month <- function(date) {
 #' @param date Date. Date we wish to transform 
 #' @param type Character. Any of the following: B (2 months),
 #' Q (3 months), T (4 months), H (6 months)
+#' @examples 
+#' date_cuts(Sys.Date(), type = "Q")
+#' date_cuts(Sys.Date(), type = "H")
 #' @export
 date_cuts <- function(date, type = "Q") {
   df <- data.frame(date = as.Date(as.character(date))) %>%
@@ -69,9 +74,11 @@ date_cuts <- function(date, type = "Q") {
 #' 
 #' @family Data Wrangling
 #' @param date Date. Date we wish to transform
+#' @examples 
+#' year_week(Sys.Date())
 #' @export
 year_week <- function(date) {
-  paste(year(date), str_pad(lubridate::week(date), 2, pad = "0"),sep = "-")
+  paste(year(date), str_pad(lubridate::week(date), 2, pad = "0"), sep = "-")
 }
 
 
@@ -91,6 +98,10 @@ year_week <- function(date) {
 #' @param top Integer. Keep the n most frequently repeated values
 #' @param other_label Character. With which text do you wish to replace 
 #' the filtered values with?
+#' @examples 
+#' data(dft) # Titanic dataset
+#' categ_reducer(dft, Embarked, top = 2) %>% freqs(Embarked)
+#' categ_reducer(dft, Ticket, nmin = 7, other_label = "Other Ticket") %>% freqs(Ticket)
 #' @export
 categ_reducer <- function(df, ...,
                           nmin = 0, 
@@ -130,6 +141,9 @@ categ_reducer <- function(df, ...,
 #' @family Data Wrangling
 #' @param x Numeric Vector. Numbers to be transformed into 
 #' normalized vector
+#' @examples 
+#' x <- c(0, 1, 4, 7.5, 10)
+#' normalize(x)
 #' @export
 normalize <- function(x) {
   if (is.numeric(x)) {
@@ -157,6 +171,8 @@ normalize <- function(x) {
 #' vector2text(c(1:5), quotes = FALSE)
 #' vector2text(c(1:5), quotes = FALSE, sep = "-")
 #' vector2text(c(1:5), and = "and also")
+#' # Shorter function with same purpose
+#' v2t(LETTERS[1:5])
 #' @export
 vector2text <- function(vector, sep = ", ", quotes = TRUE, and = "") {
   n <- length(vector)
@@ -180,11 +196,16 @@ v2t <- vector2text
 #' @family Tools
 #' @family Scrapper
 #' @param ip Vector. Vector with all IP's we wish to search
+#' @examples 
+#' \dontrun{
+#' ip_country(ip = myip())
+#' ip_country(ip = "163.114.132.0")
+#' }
 #' @export
-ip_country <- function(ip) {
+ip_country <- function(ip = myip()) {
   
   ip <- ip[!is.na(ip)]
-  ip <- ip[grep("^172\\.|^192\\.168\\.|^10\\.", ip, invert = T)]
+  ip <- ip[grep("^172\\.|^192\\.168\\.|^10\\.", ip, invert = TRUE)]
   
   countries <- data.frame(ip = c(), country = c())
   for (i in 1:length(ip)) {
@@ -206,15 +227,19 @@ ip_country <- function(ip) {
 #' Between a specific point and a line (given geometrical 3 points)
 #' 
 #' @family Calculus
-#' @param a Vector. Coordinates of the point from which we want to 
+#' @param x Vector. Coordinates of the point from which we want to 
 #' measure the distance
-#' @param b Vector. Coordinates of 1st point over the line
-#' @param c Vector. Coordinates of 2st point over the line
+#' @param a Vector. Coordinates of 1st point over the line
+#' @param b Vector. Coordinates of 2st point over the line
+#' @examples 
+#' dist2d(x = c(5, 2))
+#' dist2d(x = c(5, 2), a = c(0, 0), b = c(0, 1))
+#' dist2d(x = c(5, 2), a = c(0, 0), b = c(1, 0))
 #' @export
-dist2d <- function(a, b = c(0, 0), c = c(1, 1)) {
-  if (length(a) == 2 & length(b) == 2 & length(c) == 2) {
-    v1 <- b - c
-    v2 <- a - b
+dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
+  if (all(c(length(x), length(a), length(b)) == 2)) {
+    v1 <- a - b
+    v2 <- x - a
     m <- cbind(v1, v2)
     d <- abs(det(m)) / sqrt(sum(v1 * v1))
     return(d)
@@ -272,26 +297,31 @@ formatNum <- function(x, decimals = 2, type = 2,
 #' @param df Dataframe. May contain one or more columns with comma separated
 #' values which will be separated as one hot encoding
 #' @param variables Character. Which variables should split into new columns?
-#' @param sep Character. Which character separates the elements?
+#' @param sep Character. Which regular expression separates the elements?
+#' @examples 
+#' df <- data.frame(id = c(1:5),
+#'                  x = c("AA, D", "AA,B", "B,  D", "A,D,B", NA),
+#'                  z = c("AA+BB+AA", "AA", "BB,  AA", NA, "BB+AA"))
+#' ohe_commas(df, "x")
+#' ohe_commas(df, c("x", "z"), sep = "\\+|,")
 #' @export
-one_hot_encoding_commas <- function(df, variables, sep=","){
-  # Note that variables must be provided in strings
-  for (var in seq_along(variables)) {
-    variable <- variables[var]
-    df[as.character(df) == "" | is.na(df)] <- "NAs" # Handling missingness
-    x <- as.character(df[[variable]])
-    x <- gsub(", ", ",", toString(x)) # So it can split on strings like "A1,A2" and "A1, A2"
-    vals <- unique(unlist(strsplit(x, sep)))
-    x <- paste(variable, vals, sep = "_")
-    new_columns <- sort(as.character(x))
-    if (length(new_columns) >= 15) {
-      message(paste("You are using more than 15 unique values on this variable:", variable))
+ohe_commas <- function(df, variables, sep = ",") {
+  for (var in variables) {
+    df$temp <- as.character(df[,var])
+    # Handling missingness
+    df$temp[as.character(df$temp) == "" | is.na(df$temp)] <- "NoVal"
+    vals <- v2t(as.character(df$temp), quotes = FALSE)
+    vals <- unique(trimws(unlist(strsplit(vals, sep))))
+    aux <- sprintf("--%s--", vals)
+    l <- strsplit(df$temp, sep)
+    mat <- c()
+    for (i in 1:length(vals)) {
+      which <- unlist(lapply(l, function(x) any(trimws(x) %in% vals[i])))
+      mat <- cbind(mat, which)
     }
-    for (i in seq_along(new_columns)) {
-      df$temp <- NA
-      df$temp <- ifelse(grepl(vals[i], df[[variable]]), TRUE, FALSE)
-      colnames(df)[colnames(df) == "temp"] <- new_columns[i]
-    }
+    colnames(mat) <- paste(var, vals, sep = "_")
+    df$temp <- NULL
+    df <- cbind(df, mat)
   }
   return(df)
 }
@@ -435,6 +465,16 @@ image_metadata <- function(files) {
 #' @param recursive Boolean. Should the listing recurse into directories?
 #' @param regex Character. String to use for filtering files
 #' @param images Boolean. Bring only image files?
+#' @examples 
+#' # All files in current directory (with recursive files)
+#' df <- listfiles()
+#' head(df, 3)
+#' # All files in current directory (no recursive files)
+#' df <- listfiles(recursive = FALSE)
+#' head(df, 3)
+#' # Check R files using regex
+#' df <- listfiles(regex = "\\.R$")
+#' head(df, 3)
 #' @export
 listfiles <- function(folder = getwd(), 
                       recursive = TRUE, 
@@ -479,6 +519,18 @@ listfiles <- function(folder = getwd(),
 #' @param change String or Vector. Values you wish to replace the originals with
 #' @param which Character vector. Name of columns to use. Leave "all" for everything
 #' @param quiet Boolean. Keep quiet? (or print replacements)
+#' @examples 
+#' df <- data.frame(one = 1:5, 
+#'                  two = LETTERS[1:5], 
+#'                  three = rep("A", 5), 
+#'                  four = c(NA, "Aaa", 123, "B", "C"))
+#' print(df)
+#' replaceall(df, "A", NA)
+#' replaceall(df, "A", "a")
+#' replaceall(df, 1, "*")
+#' # replaceall(df, NA, "Not yet")
+#' replaceall(df, c("A", "B"), c("'A'", "'B'"))
+#' replaceall(df, "a", "*", which = "four")
 #' @export
 replaceall <- function(df, original, change, which = "all", quiet = TRUE) {
   if (is.vector(df)) {
@@ -566,7 +618,8 @@ removenarows <- function(df, all = TRUE) {
 #' Filter only Numerical Values and
 #' 
 #' This function lets the user remove all rows that have some or
-#' all values as NAs
+#' all values as NAs. Note that as logical columns may be treated
+#' as numerical (1s and 0s), those will be kept.
 #' 
 #' @family Data Wrangling
 #' @param df Data.frame
@@ -574,6 +627,11 @@ removenarows <- function(df, all = TRUE) {
 #' @param logs Boolean. Calculate log(x)+1 for numerical columns?
 #' @param natransform String. "mean" or 0 to impute NA values. If
 #' set to NA no calculation will run.
+#' @examples 
+#' data(dft) # Titanic dataset
+#' str(dft)
+#' numericalonly(dft) %>% head()
+#' numericalonly(dft, natransform = "mean") %>% head()
 #' @export
 numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA) {
   
@@ -721,10 +779,8 @@ pass <- function(df, fun) {
 #' @family Tools
 #' @export
 myip <- function(){
-  # require(rvest)
-  # require(xml2)
   ipify <- "https://api.ipify.org/"
-  ip <- xml2::read_html(ipify) %>% rvest::html_text(.)
+  ip <- xml2::read_html(ipify) %>% html_text()
   return(ip)
 }
 
@@ -739,6 +795,10 @@ myip <- function(){
 #' @param values Vector. Values to calculate quantile cuts
 #' @param splits Integer. How many cuts should split the values?
 #' @param return Character. Return "summary" or "labels"
+#' @examples 
+#' data(dft) # Titanic dataset
+#' quants(dft$Age, splits = 5)
+#' quants(dft$Age, splits = 5, return = "labels")[1:10]
 #' @export
 quants <- function(values, splits = 10, return = "summary") {
   
@@ -762,14 +822,16 @@ quants <- function(values, splits = 10, return = "summary") {
 
 
 ####################################################################
-#' Convert JSON string to vector (data.frame with 1 row)
+#' Convert Python JSON string to R vector (data.frame with 1 row)
 #' 
 #' This function lets the user transform a JSON string into vector 
 #' (data.frame with 1 row). You can also pass a Python's dictionary.
+#' For any other JSON transformation, `jsonlite` is recommended.
 #' 
 #' @family Tools
-#' @param json Character. JSON string. Example of a string: '{"feat1": 
-#' null, "feat2": "M"}'
+#' @param json Character. JSON string
+#' @examples 
+#' json2vector('{"id": 1, "nodata": null, "gender": "M"}')
 #' @export
 json2vector <- function(json) {
   string <- paste0("[", gsub('"',"\"", json), "]")

@@ -27,6 +27,8 @@ vector2text(LETTERS[1:5])
 vector2text(c(1:5), quotes = FALSE)
 vector2text(c(1:5), quotes = FALSE, sep = "-")
 vector2text(c(1:5), and = "and also")
+# Shorter function with same purpose
+v2t(LETTERS[1:5])
 }
 \seealso{
 Other Data Wrangling: 
@@ -44,8 +46,8 @@ Other Data Wrangling:
 \code{\link{left}()},
 \code{\link{normalize}()},
 \code{\link{numericalonly}()},
+\code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{one_hot_encoding_commas}()},
 \code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
