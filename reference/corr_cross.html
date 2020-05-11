@@ -200,6 +200,10 @@ column only has two different values, should we keep both new columns?</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>#' DataScience+ Post: <a href='https://bit.ly/2WiLsQB'>Find Insights 
+with Ranked Cross-Correlations</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Correlations: 
@@ -223,6 +227,32 @@ column only has two different values, should we keep both new columns?</p></td>
 <code><a href='tree_var.html'>tree_var</a>()</code>,
 <code><a href='trendsRelated.html'>trendsRelated</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
+<span class='fu'>corr_cross</span>(<span class='no'>dft</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your dataframe!</span></div><div class='output co'>#&gt; <span class='warning'>Warning: the standard deviation is zero</span></div><div class='output co'>#&gt;              key             mix    corr pvalue   group1 group2
+#&gt; 1  Ticket_113781   Cabin_C22.C26  0.8655      0   Ticket  Cabin
+#&gt; 2       Pclass_1          Cabin_ -0.7888      0   Pclass  Cabin
+#&gt; 3          SibSp Ticket_CA..2343  0.6037      0    SibSp Ticket
+#&gt; 4           Fare        Pclass_1  0.5917      0     Fare Pclass
+#&gt; 5          SibSp    Ticket_OTHER -0.5709      0    SibSp Ticket
+#&gt; 6  Survived_TRUE        Sex_male -0.5434      0 Survived    Sex
+#&gt; 7           Fare          Cabin_ -0.4821      0     Fare  Cabin
+#&gt; 8          Parch    Ticket_OTHER -0.4398      0    Parch Ticket
+#&gt; 9          SibSp           Parch  0.4148      0    SibSp  Parch
+#&gt; 10           Age        Pclass_1  0.3489      0      Age Pclass</div><div class='input'><span class='fu'>corr_cross</span>(<span class='no'>dft</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your dataframe!</span></div><div class='output co'>#&gt; <span class='warning'>Warning: the standard deviation is zero</span></div><div class='output co'>#&gt;              key             mix    corr pvalue   group1 group2
+#&gt; 1  Ticket_113781   Cabin_C22.C26  0.8655      0   Ticket  Cabin
+#&gt; 2       Pclass_1          Cabin_ -0.7888      0   Pclass  Cabin
+#&gt; 3          SibSp Ticket_CA..2343  0.6037      0    SibSp Ticket
+#&gt; 4           Fare        Pclass_1  0.5917      0     Fare Pclass
+#&gt; 5          SibSp    Ticket_OTHER -0.5709      0    SibSp Ticket
+#&gt; 6  Survived_TRUE        Sex_male -0.5434      0 Survived    Sex
+#&gt; 7           Fare          Cabin_ -0.4821      0     Fare  Cabin
+#&gt; 8          Parch    Ticket_OTHER -0.4398      0    Parch Ticket
+#&gt; 9          SibSp           Parch  0.4148      0    SibSp  Parch
+#&gt; 10           Age        Pclass_1  0.3489      0      Age Pclass</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># Show only most relevant results filter by pvalue</span>
+<span class='fu'>corr_cross</span>(<span class='no'>dft</span>, <span class='kw'>max_pvalue</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -177,6 +177,30 @@ It also lets filter files which contains a string.</p>
 <code><a href='updateLares.html'>updateLares</a>()</code>,
 <code><a href='zerovar.html'>zerovar</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># All files in current directory (with recursive files)</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>listfiles</span>()
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df</span>, <span class='fl'>3</span>)</div><div class='output co'>#&gt;            filename size isdir mode               mtime               ctime
+#&gt; 1     autoline.html    8 FALSE  644 2020-05-11 23:33:17 2020-05-11 23:33:17
+#&gt; 2 balance_data.html    9 FALSE  644 2020-05-11 23:33:25 2020-05-11 23:33:25
+#&gt; 3    bindfiles.html    7 FALSE  644 2020-05-11 23:33:17 2020-05-11 23:33:17
+#&gt;                 atime uid gid  uname grname
+#&gt; 1 2020-05-11 23:33:25 501  20 runner  staff
+#&gt; 2 2020-05-11 23:33:25 501  20 runner  staff
+#&gt; 3 2020-05-11 23:33:25 501  20 runner  staff</div><div class='input'><span class='co'># All files in current directory (no recursive files)</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>listfiles</span>(<span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df</span>, <span class='fl'>3</span>)</div><div class='output co'>#&gt;            filename size isdir mode               mtime               ctime
+#&gt; 1     autoline.html    8 FALSE  644 2020-05-11 23:33:17 2020-05-11 23:33:17
+#&gt; 2 balance_data.html    9 FALSE  644 2020-05-11 23:33:25 2020-05-11 23:33:25
+#&gt; 3    bindfiles.html    7 FALSE  644 2020-05-11 23:33:17 2020-05-11 23:33:17
+#&gt;                 atime uid gid  uname grname
+#&gt; 1 2020-05-11 23:33:25 501  20 runner  staff
+#&gt; 2 2020-05-11 23:33:25 501  20 runner  staff
+#&gt; 3 2020-05-11 23:33:25 501  20 runner  staff</div><div class='input'><span class='co'># Check R files using regex</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>listfiles</span>(<span class='kw'>regex</span> <span class='kw'>=</span> <span class='st'>"\\.R$"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df</span>, <span class='fl'>3</span>)</div><div class='output co'>#&gt;  [1] filename size     isdir    mode     mtime    ctime    atime    uid     
+#&gt;  [9] gid      uname    grname  
+#&gt; &lt;0 rows&gt; (or 0-length row.names)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

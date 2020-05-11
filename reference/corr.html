@@ -199,6 +199,42 @@ and sorted by mean of each variable's correlations</p></td>
 <code><a href='corr_cross.html'>corr_cross</a>()</code>,
 <code><a href='corr_var.html'>corr_var</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
+<span class='fu'>corr</span>(<span class='no'>dft</span>[,<span class='fl'>2</span>:<span class='fl'>5</span>])</div><div class='output co'>#&gt;               Survived_TRUE Sex_male     Age Pclass_1 Pclass_2
+#&gt; Survived_TRUE        1.0000  -0.5434 -0.0772   0.2859   0.0933
+#&gt; Sex_male            -0.5434   1.0000  0.0933  -0.0980  -0.0647
+#&gt; Age                 -0.0772   0.0933  1.0000   0.3489   0.0070
+#&gt; Pclass_1             0.2859  -0.0980  0.3489   1.0000  -0.2886
+#&gt; Pclass_2             0.0933  -0.0647  0.0070  -0.2886   1.0000</div><div class='input'><span class='fu'>corr</span>(<span class='no'>dft</span>[,<span class='fl'>2</span>:<span class='fl'>5</span>], <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='st'>"Pclass"</span>)</div><div class='output co'>#&gt;               Survived_TRUE Sex_male     Age
+#&gt; Survived_TRUE        1.0000  -0.5434 -0.0772
+#&gt; Sex_male            -0.5434   1.0000  0.0933
+#&gt; Age                 -0.0772   0.0933  1.0000</div><div class='input'><span class='fu'>corr</span>(<span class='no'>dft</span>[,<span class='fl'>2</span>:<span class='fl'>3</span>], <span class='kw'>redundant</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                Survived_FALSE Survived_TRUE Pclass_1 Pclass_2 Pclass_3
+#&gt; Survived_FALSE         1.0000       -1.0000  -0.2859  -0.0933   0.3223
+#&gt; Survived_TRUE         -1.0000        1.0000   0.2859   0.0933  -0.3223
+#&gt; Pclass_1              -0.2859        0.2859   1.0000  -0.2886  -0.6267
+#&gt; Pclass_2              -0.0933        0.0933  -0.2886   1.0000  -0.5652
+#&gt; Pclass_3               0.3223       -0.3223  -0.6267  -0.5652   1.0000</div><div class='input'><span class='fu'>corr</span>(<span class='no'>dft</span>[,<span class='fl'>2</span>:<span class='fl'>5</span>], <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>)</div><div class='output co'>#&gt;               Survived_TRUE Sex_male     Age Pclass_1 Pclass_2
+#&gt; Survived_TRUE        1.0000  -0.5434 -0.0526   0.2859   0.0933
+#&gt; Sex_male            -0.5434   1.0000  0.0833  -0.0980  -0.0647
+#&gt; Age                 -0.0526   0.0833  1.0000   0.3339   0.0313
+#&gt; Pclass_1             0.2859  -0.0980  0.3339   1.0000  -0.2886
+#&gt; Pclass_2             0.0933  -0.0647  0.0313  -0.2886   1.0000</div><div class='input'><span class='fu'>corr</span>(<span class='no'>dft</span>[,<span class='fl'>2</span>:<span class='fl'>5</span>], <span class='kw'>pvalue</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $cor
+#&gt;               Survived_TRUE Sex_male     Age Pclass_1 Pclass_2
+#&gt; Survived_TRUE        1.0000  -0.5434 -0.0772   0.2859   0.0933
+#&gt; Sex_male            -0.5434   1.0000  0.0933  -0.0980  -0.0647
+#&gt; Age                 -0.0772   0.0933  1.0000   0.3489   0.0070
+#&gt; Pclass_1             0.2859  -0.0980  0.3489   1.0000  -0.2886
+#&gt; Pclass_2             0.0933  -0.0647  0.0070  -0.2886   1.0000
+#&gt; 
+#&gt; $pvalue
+#&gt;               Survived_TRUE   Sex_male        Age   Pclass_1   Pclass_2
+#&gt; Survived_TRUE    0.00000000 0.00000000 0.11737396 0.00000000 0.02646828
+#&gt; Sex_male         0.00000000 0.00000000 0.05068519 0.02042941 0.11737396
+#&gt; Age              0.03912465 0.01267130 0.00000000 0.00000000 0.85284187
+#&gt; Pclass_1         0.00000000 0.00340490 0.00000000 0.00000000 0.00000000
+#&gt; Pclass_2         0.00529366 0.05336354 0.85284187 0.00000000 0.00000000
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

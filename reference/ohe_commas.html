@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cuts by quantiles for score plot — mplot_cuts • lares</title>
+<title>One Hot Encoding for a Vector with Comma Separated Values — ohe_commas • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Cuts by quantiles for score plot — mplot_cuts" />
-<meta property="og:description" content="This function cuts by quantiles any score or prediction" />
+<meta property="og:title" content="One Hot Encoding for a Vector with Comma Separated Values — ohe_commas" />
+<meta property="og:description" content="This function lets the user do one hot encoding on a variable with 
+comma separated values" />
 
 
 
@@ -108,117 +109,80 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cuts by quantiles for score plot</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/model_plots.R'><code>R/model_plots.R</code></a></small>
-    <div class="hidden name"><code>mplot_cuts.Rd</code></div>
+    <h1>One Hot Encoding for a Vector with Comma Separated Values</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_functions.R'><code>R/other_functions.R</code></a></small>
+    <div class="hidden name"><code>ohe_commas.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function cuts by quantiles any score or prediction</p>
+    <p>This function lets the user do one hot encoding on a variable with 
+comma separated values</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mplot_cuts</span>(
-  <span class='no'>score</span>,
-  <span class='kw'>splits</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>table</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>file_name</span> <span class='kw'>=</span> <span class='st'>"viz_ncuts.png"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>ohe_commas</span>(<span class='no'>df</span>, <span class='no'>variables</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>","</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>score</th>
-      <td><p>Vector. Predicted value or model's result</p></td>
+      <th>df</th>
+      <td><p>Dataframe. May contain one or more columns with comma separated
+values which will be separated as one hot encoding</p></td>
     </tr>
     <tr>
-      <th>splits</th>
-      <td><p>Integer. Numer of separations to plot</p></td>
+      <th>variables</th>
+      <td><p>Character. Which variables should split into new columns?</p></td>
     </tr>
     <tr>
-      <th>model_name</th>
-      <td><p>Character. Model's name</p></td>
-    </tr>
-    <tr>
-      <th>subtitle</th>
-      <td><p>Character. Subtitle to show in plot</p></td>
-    </tr>
-    <tr>
-      <th>table</th>
-      <td><p>Boolean. Do you wish to return a table with results?</p></td>
-    </tr>
-    <tr>
-      <th>save</th>
-      <td><p>Boolean. Save output plot into working directory</p></td>
-    </tr>
-    <tr>
-      <th>subdir</th>
-      <td><p>Character. Sub directory on which you wish to save the plot</p></td>
-    </tr>
-    <tr>
-      <th>file_name</th>
-      <td><p>Character. File name as you wish to save the plot</p></td>
+      <th>sep</th>
+      <td><p>Character. Which regular expression separates the elements?</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Machine Learning: 
-<code><a href='ROC.html'>ROC</a>()</code>,
-<code><a href='clusterKmeans.html'>clusterKmeans</a>()</code>,
-<code><a href='conf_mat.html'>conf_mat</a>()</code>,
-<code><a href='export_results.html'>export_results</a>()</code>,
-<code><a href='gain_lift.html'>gain_lift</a>()</code>,
-<code><a href='h2o_automl.html'>h2o_automl</a>()</code>,
-<code><a href='h2o_predict_API.html'>h2o_predict_API</a>()</code>,
-<code><a href='h2o_predict_MOJO.html'>h2o_predict_MOJO</a>()</code>,
-<code><a href='h2o_predict_binary.html'>h2o_predict_binary</a>()</code>,
-<code><a href='h2o_predict_model.html'>h2o_predict_model</a>()</code>,
-<code><a href='h2o_results.html'>h2o_results</a>()</code>,
-<code><a href='h2o_selectmodel.html'>h2o_selectmodel</a>()</code>,
+    <div class='dont-index'><p>Other Data Wrangling: 
+<code><a href='balance_data.html'>balance_data</a>()</code>,
+<code><a href='calibrate.html'>calibrate</a>()</code>,
+<code><a href='categ_reducer.html'>categ_reducer</a>()</code>,
+<code><a href='cleanText.html'>cleanText</a>()</code>,
+<code><a href='date_cuts.html'>date_cuts</a>()</code>,
+<code><a href='date_feats.html'>date_feats</a>()</code>,
+<code><a href='dateformat.html'>dateformat</a>()</code>,
+<code><a href='formatNum.html'>formatNum</a>()</code>,
+<code><a href='formatTime.html'>formatTime</a>()</code>,
+<code><a href='holidays.html'>holidays</a>()</code>,
 <code><a href='impute.html'>impute</a>()</code>,
-<code><a href='iter_seeds.html'>iter_seeds</a>()</code>,
-<code><a href='lasso_vars.html'>lasso_vars</a>()</code>,
-<code><a href='model_metrics.html'>model_metrics</a>()</code>,
-<code><a href='mplot_conf.html'>mplot_conf</a>()</code>,
-<code><a href='mplot_cuts_error.html'>mplot_cuts_error</a>()</code>,
-<code><a href='mplot_density.html'>mplot_density</a>()</code>,
-<code><a href='mplot_full.html'>mplot_full</a>()</code>,
-<code><a href='mplot_gain.html'>mplot_gain</a>()</code>,
-<code><a href='mplot_importance.html'>mplot_importance</a>()</code>,
-<code><a href='mplot_lineal.html'>mplot_lineal</a>()</code>,
-<code><a href='mplot_metrics.html'>mplot_metrics</a>()</code>,
-<code><a href='mplot_response.html'>mplot_response</a>()</code>,
-<code><a href='mplot_roc.html'>mplot_roc</a>()</code>,
-<code><a href='mplot_splits.html'>mplot_splits</a>()</code>,
-<code><a href='msplit.html'>msplit</a>()</code></p>
-<p>Other Visualization: 
-<code><a href='distr.html'>distr</a>()</code>,
-<code><a href='freqs_df.html'>freqs_df</a>()</code>,
-<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
-<code><a href='freqs.html'>freqs</a>()</code>,
-<code><a href='mplot_conf.html'>mplot_conf</a>()</code>,
-<code><a href='mplot_cuts_error.html'>mplot_cuts_error</a>()</code>,
-<code><a href='mplot_density.html'>mplot_density</a>()</code>,
-<code><a href='mplot_full.html'>mplot_full</a>()</code>,
-<code><a href='mplot_gain.html'>mplot_gain</a>()</code>,
-<code><a href='mplot_importance.html'>mplot_importance</a>()</code>,
-<code><a href='mplot_lineal.html'>mplot_lineal</a>()</code>,
-<code><a href='mplot_metrics.html'>mplot_metrics</a>()</code>,
-<code><a href='mplot_response.html'>mplot_response</a>()</code>,
-<code><a href='mplot_roc.html'>mplot_roc</a>()</code>,
-<code><a href='mplot_splits.html'>mplot_splits</a>()</code>,
-<code><a href='noPlot.html'>noPlot</a>()</code>,
-<code><a href='plot_survey.html'>plot_survey</a>()</code>,
-<code><a href='summer.html'>summer</a>()</code>,
-<code><a href='theme_lares2.html'>theme_lares2</a>()</code>,
-<code><a href='theme_lares.html'>theme_lares</a>()</code>,
-<code><a href='tree_var.html'>tree_var</a>()</code></p></div>
+<code><a href='left.html'>left</a>()</code>,
+<code><a href='normalize.html'>normalize</a>()</code>,
+<code><a href='numericalonly.html'>numericalonly</a>()</code>,
+<code><a href='ohse.html'>ohse</a>()</code>,
+<code><a href='rbind_full.html'>rbind_full</a>()</code>,
+<code><a href='removenacols.html'>removenacols</a>()</code>,
+<code><a href='removenarows.html'>removenarows</a>()</code>,
+<code><a href='replaceall.html'>replaceall</a>()</code>,
+<code><a href='right.html'>right</a>()</code>,
+<code><a href='textFeats.html'>textFeats</a>()</code>,
+<code><a href='textTokenizer.html'>textTokenizer</a>()</code>,
+<code><a href='vector2text.html'>vector2text</a>()</code>,
+<code><a href='year_month.html'>year_month</a>()</code>,
+<code><a href='year_week.html'>year_week</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>),
+                 <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AA, D"</span>, <span class='st'>"AA,B"</span>, <span class='st'>"B,  D"</span>, <span class='st'>"A,D,B"</span>, <span class='fl'>NA</span>),
+                 <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AA+BB+AA"</span>, <span class='st'>"AA"</span>, <span class='st'>"BB,  AA"</span>, <span class='fl'>NA</span>, <span class='st'>"BB+AA"</span>))
+<span class='fu'>ohe_commas</span>(<span class='no'>df</span>, <span class='st'>"x"</span>)</div><div class='output co'>#&gt;   id     x        z  x_AA   x_D   x_B   x_A x_NoVal
+#&gt; 1  1 AA, D AA+BB+AA  TRUE  TRUE FALSE FALSE   FALSE
+#&gt; 2  2  AA,B       AA  TRUE FALSE  TRUE FALSE   FALSE
+#&gt; 3  3 B,  D  BB,  AA FALSE  TRUE  TRUE FALSE   FALSE
+#&gt; 4  4 A,D,B     &lt;NA&gt; FALSE  TRUE  TRUE  TRUE   FALSE
+#&gt; 5  5  &lt;NA&gt;    BB+AA FALSE FALSE FALSE FALSE    TRUE</div><div class='input'><span class='fu'>ohe_commas</span>(<span class='no'>df</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"x"</span>, <span class='st'>"z"</span>), <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"\\+|,"</span>)</div><div class='output co'>#&gt;   id     x        z  x_AA   x_D   x_B   x_A x_NoVal  z_AA  z_BB z_NoVal
+#&gt; 1  1 AA, D AA+BB+AA  TRUE  TRUE FALSE FALSE   FALSE  TRUE  TRUE   FALSE
+#&gt; 2  2  AA,B       AA  TRUE FALSE  TRUE FALSE   FALSE  TRUE FALSE   FALSE
+#&gt; 3  3 B,  D  BB,  AA FALSE  TRUE  TRUE FALSE   FALSE  TRUE  TRUE   FALSE
+#&gt; 4  4 A,D,B     &lt;NA&gt; FALSE  TRUE  TRUE  TRUE   FALSE FALSE FALSE    TRUE
+#&gt; 5  5  &lt;NA&gt;    BB+AA FALSE FALSE FALSE FALSE    TRUE  TRUE  TRUE   FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -161,7 +161,7 @@ which variable should be used instead, use the y parameter.</p></td>
     </tr>
     <tr>
       <th>y</th>
-      <td><p>Character. Name of the independent variable</p></td>
+      <td><p>Variable or Character. Name of the independent variable.</p></td>
     </tr>
     <tr>
       <th>ignore</th>
@@ -293,6 +293,7 @@ multi-layer artificial neural network) and "StackedEnsemble". Read more:
 <code><a href='h2o_selectmodel.html'>h2o_selectmodel</a>()</code>,
 <code><a href='impute.html'>impute</a>()</code>,
 <code><a href='iter_seeds.html'>iter_seeds</a>()</code>,
+<code><a href='lasso_vars.html'>lasso_vars</a>()</code>,
 <code><a href='model_metrics.html'>model_metrics</a>()</code>,
 <code><a href='mplot_conf.html'>mplot_conf</a>()</code>,
 <code><a href='mplot_cuts_error.html'>mplot_cuts_error</a>()</code>,
@@ -314,12 +315,12 @@ multi-layer artificial neural network) and "StackedEnsemble". Read more:
 <span class='no'>dft</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>dft</span>, <span class='kw'>select</span> <span class='kw'>=</span> -<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>Ticket</span>, <span class='no'>PassengerId</span>, <span class='no'>Cabin</span>))
 
 <span class='co'># Classification: 2 classes</span>
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='no'>dft</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Survived"</span>, <span class='kw'>max_models</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"TRUE"</span>)
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='no'>dft</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>Survived</span>, <span class='kw'>max_models</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"TRUE"</span>)
 <span class='no'>r</span>$<span class='no'>plots</span>$<span class='no'>dashboard</span>
 <span class='no'>r</span>$<span class='no'>metrics</span>
 
 <span class='co'># Classification: 3 classes</span>
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='no'>dft</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Pclass"</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='st'>"Fare"</span>, <span class='kw'>impute</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='no'>dft</span>, <span class='no'>Pclass</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='st'>"Fare"</span>, <span class='kw'>impute</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>r</span>$<span class='no'>plot</span>$<span class='no'>dashboard</span>
 <span class='no'>r</span>$<span class='no'>metrics</span>
 
