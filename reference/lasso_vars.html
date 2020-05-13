@@ -123,7 +123,15 @@ with corr_var() results for further understanding. No need to
 standardize your data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>lasso_vars</span>(<span class='no'>df</span>, <span class='no'>variable</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>nlambdas</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>123</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>lasso_vars</span>(
+  <span class='no'>df</span>,
+  <span class='no'>variable</span>,
+  <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>nlambdas</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>nfolds</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>123</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,6 +151,10 @@ standardize your data.</p>
     <tr>
       <th>nlambdas</th>
       <td><p>Integer. Number of lambdas to be used in a search</p></td>
+    </tr>
+    <tr>
+      <th>nfolds</th>
+      <td><p>Integer. Number of folds for K-fold cross-validation (&gt;= 2)</p></td>
     </tr>
     <tr>
       <th>seed</th>
@@ -188,7 +200,7 @@ standardize your data.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
 <span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'>lasso_vars</span>(<span class='no'>dft</span>, <span class='no'>Survived</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Ticket"</span>, <span class='st'>"Cabin"</span>))
 }</div></pre>
   </div>
