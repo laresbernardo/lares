@@ -4,7 +4,15 @@
 \alias{lasso_vars}
 \title{Find Most Relevant Features Using Lasso Regression}
 \usage{
-lasso_vars(df, variable, ignore = NA, nlambdas = 100, seed = 123, ...)
+lasso_vars(
+  df,
+  variable,
+  ignore = NA,
+  nlambdas = 100,
+  nfolds = 10,
+  seed = 123,
+  ...
+)
 }
 \arguments{
 \item{df}{Dataframe}
@@ -14,6 +22,8 @@ lasso_vars(df, variable, ignore = NA, nlambdas = 100, seed = 123, ...)
 \item{ignore}{Character vector. Variables to exclude from study}
 
 \item{nlambdas}{Integer. Number of lambdas to be used in a search}
+
+\item{nfolds}{Integer. Number of folds for K-fold cross-validation (>= 2)}
 
 \item{seed}{Numeric}
 
@@ -27,7 +37,7 @@ standardize your data.
 }
 \examples{
 \dontrun{
-data(dft)
+data(dft) # Titanic dataset
 m <- lasso_vars(dft, Survived, ignore = c("Ticket", "Cabin"))
 }
 }

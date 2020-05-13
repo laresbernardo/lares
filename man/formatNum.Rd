@@ -26,10 +26,19 @@ American Standards.}
 
 \item{pre, pos}{Character. Add string before or after number}
 
-\item{abbr}{Boolean. Abbreviate using num_abbr()?}
+\item{abbr}{Boolean. Abbreviate using num_abbr()? You can use
+the `decimals` parameter to set abbr's `n`(-1) parameter.}
 }
 \description{
 This function lets the user format numerical values nicely
+}
+\examples{
+formatNum(1.23456, decimals = 3)
+formatNum(1.23456, type = 1)
+formatNum(1.23456, pre = "$", pos = "/p")
+formatNum(123456, abbr = TRUE)
+formatNum(1234567890, abbr = TRUE)
+formatNum(1234567890, decimals = 0, abbr = TRUE)
 }
 \seealso{
 Other Data Wrangling: 

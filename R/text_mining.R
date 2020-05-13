@@ -189,7 +189,7 @@ textFeats <- function(text, auto = TRUE, contains = NA, prc = FALSE) {
       mutate_if(is.numeric, list(pct = ~ round(./length, 5))) %>%
       ungroup()
   
-  return(ret)
+  return(as_tibble(ret))
 }
 
 ####################################################################

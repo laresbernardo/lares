@@ -404,7 +404,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   # GET ALL RESULTS INTO A LIST
   results <- list()
   results[["model"]] <- m
-  results[["scores_test"]] <- data.frame(tag = as.vector(test$tag), scores)
+  results[["scores_test"]] <- as_tibble(data.frame(tag = as.vector(test$tag), scores))
   results[["metrics"]] <- model_metrics(
     tag = results$scores_test$tag, 
     score = results$scores_test$score,
@@ -419,8 +419,9 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   if (!stacked) results[["importance"]] <- imp
   
   results[["datasets"]] <- list(
-    global = global, test = filter(global, train_test == "test"))
-  results[["scoring_history"]] <- data.frame(m@model$scoring_history)
+    global = as_tibble(global), 
+    test = filter(global, train_test == "test"))
+  results[["scoring_history"]] <- as_tibble(m@model$scoring_history)
   results[["parameters"]] <- m@parameters
   results[["categoricals"]] <- list_cats(filter(global, train_test == "train"))
   results[["type"]] <- model_type

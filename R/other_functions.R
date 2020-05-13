@@ -261,7 +261,15 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
 #' American Standards.  
 #' @param scientific Boolean. Scientific notation?
 #' @param pre,pos Character. Add string before or after number
-#' @param abbr Boolean. Abbreviate using num_abbr()?
+#' @param abbr Boolean. Abbreviate using num_abbr()? You can use
+#' the `decimals` parameter to set abbr's `n`(-1) parameter.
+#' @examples 
+#' formatNum(1.23456, decimals = 3)
+#' formatNum(1.23456, type = 1)
+#' formatNum(1.23456, pre = "$", pos = "/p")
+#' formatNum(123456, abbr = TRUE)
+#' formatNum(1234567890, abbr = TRUE)
+#' formatNum(1234567890, decimals = 0, abbr = TRUE)
 #' @export
 formatNum <- function(x, decimals = 2, type = 2, 
                       scientific = FALSE,
@@ -271,7 +279,7 @@ formatNum <- function(x, decimals = 2, type = 2,
     on.exit(options(scipen = 999))
   } else x <- formatC(numb, format = "e", digits = 2)
   if (abbr) {
-    x <- num_abbr(x) 
+    x <- num_abbr(x, n = decimals + 1) 
   } else {
     if (type == 1) {
       x <- format(round(as.numeric(x), decimals), nsmall = decimals, 

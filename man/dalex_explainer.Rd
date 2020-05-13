@@ -20,8 +20,9 @@ DALEX function to create an explainer object
 }
 \examples{
 \dontrun{
-# TRAIN A SIMPLE MODEL
 data(dft) # Titanic dataset
+
+# TRAIN A SIMPLE MODEL
 dfm <- h2o_automl(dft, 
                   y = "Survived", 
                   ignore = c("Ticket", "PassengerId", "Cabin")), 
@@ -44,8 +45,8 @@ class$plot
 
 # LOCAL EXAMPLE
 print(head(explainer$data, 1))
-  Pclass    Sex Age SibSp Parch    Fare Embarked train_test predict    FALSE.     TRUE.
-       3 female  27     0     2 11.1333        S       test   FALSE 0.6844502 0.3155498
+Pclass    Sex Age SibSp Parch    Fare Embarked train_test predict    FALSE.     TRUE.
+     3 female  27     0     2 11.1333        S       test   FALSE 0.6844502 0.3155498
 local <- dalex_local(explainer, row = 1, plot = TRUE)
 # OR YOU COULD MANUALLY INPUT THE OBSERVATION
 local <- dalex_local(explainer, observation = head(explainer$data, 1))

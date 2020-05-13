@@ -25,12 +25,12 @@ Cash, and Transactions information}
 \item{keep_old}{Boolean. Include sold tickers eventhough not currently in portfolio?}
 }
 \description{
-This function lets me download my personal Excel with my Portfolio 
-data, locally or from Dropbox. You can also use it for local files
+This function lets the user download his personal Excel with his 
+Portfolio's data, locally or from Dropbox.
 }
 \examples{
 \dontrun{
-# Load lares' dummy XLSX
+# Load lares dummy XLSX
 file <- system.file("inst/docs", "dummyPortfolio.xlsx", package = "lares")
 df <- stocks_file(filename = file, 
                   sheets = c("Portafolio","Fondos","Transacciones"), 
