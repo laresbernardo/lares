@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Holidays in your Country — holidays • lares</title>
+<title>Install/Update Additional Recommended Libraries — install_recommended • lares</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,11 @@
 
 
 
-<meta property="og:title" content="Holidays in your Country — holidays" />
-<meta property="og:description" content="This function lets the user automatically scrap holiday dates from
-any country and year within +- 5 years. Thanks to timeanddate.com!" />
+<meta property="og:title" content="Install/Update Additional Recommended Libraries — install_recommended" />
+<meta property="og:description" content="All needed libraries to use (most) lares are already a dependency. 
+There are some functions that many people won't event know exist 
+that will require other additional libraries. Also, this may be 
+used as a Docker way of installing useful libraries on an new instance." />
 
 
 
@@ -109,81 +111,30 @@ any country and year within +- 5 years. Thanks to timeanddate.com!" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Holidays in your Country</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/onehotencoding.R'><code>R/onehotencoding.R</code></a></small>
-    <div class="hidden name"><code>holidays.Rd</code></div>
+    <h1>Install/Update Additional Recommended Libraries</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/lares.R'><code>R/lares.R</code></a></small>
+    <div class="hidden name"><code>install_recommended.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user automatically scrap holiday dates from
-any country and year within +- 5 years. Thanks to timeanddate.com!</p>
+    <p>All needed libraries to use (most) lares are already a dependency. 
+There are some functions that many people won't event know exist 
+that will require other additional libraries. Also, this may be 
+used as a Docker way of installing useful libraries on an new instance.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>holidays</span>(<span class='kw'>countries</span> <span class='kw'>=</span> <span class='st'>"Colombia"</span>, <span class='kw'>years</span> <span class='kw'>=</span> <span class='fu'>year</span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>()))</pre>
+    <pre class="usage"><span class='fu'>install_recommended</span>(<span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>countries</th>
-      <td><p>Character or vector. For which country(ies) should the 
-holidays be imported?</p></td>
-    </tr>
-    <tr>
-      <th>years</th>
-      <td><p>Character or vector. For which year(s) do you wish to import
-holiday dates?</p></td>
+      <th>progress</th>
+      <td><p>Boolean. Show status bar?</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Data Wrangling: 
-<code><a href='balance_data.html'>balance_data</a>()</code>,
-<code><a href='calibrate.html'>calibrate</a>()</code>,
-<code><a href='categ_reducer.html'>categ_reducer</a>()</code>,
-<code><a href='cleanText.html'>cleanText</a>()</code>,
-<code><a href='date_cuts.html'>date_cuts</a>()</code>,
-<code><a href='date_feats.html'>date_feats</a>()</code>,
-<code><a href='dateformat.html'>dateformat</a>()</code>,
-<code><a href='formatNum.html'>formatNum</a>()</code>,
-<code><a href='formatTime.html'>formatTime</a>()</code>,
-<code><a href='impute.html'>impute</a>()</code>,
-<code><a href='left.html'>left</a>()</code>,
-<code><a href='normalize.html'>normalize</a>()</code>,
-<code><a href='numericalonly.html'>numericalonly</a>()</code>,
-<code><a href='ohe_commas.html'>ohe_commas</a>()</code>,
-<code><a href='ohse.html'>ohse</a>()</code>,
-<code><a href='rbind_full.html'>rbind_full</a>()</code>,
-<code><a href='removenacols.html'>removenacols</a>()</code>,
-<code><a href='removenarows.html'>removenarows</a>()</code>,
-<code><a href='replaceall.html'>replaceall</a>()</code>,
-<code><a href='right.html'>right</a>()</code>,
-<code><a href='textFeats.html'>textFeats</a>()</code>,
-<code><a href='textTokenizer.html'>textTokenizer</a>()</code>,
-<code><a href='vector2text.html'>vector2text</a>()</code>,
-<code><a href='year_month.html'>year_month</a>()</code>,
-<code><a href='year_week.html'>year_week</a>()</code></p>
-<p>Other Feature Engineering: 
-<code><a href='date_feats.html'>date_feats</a>()</code>,
-<code><a href='ohse.html'>ohse</a>()</code></p>
-<p>Other Scrapper: 
-<code><a href='fb_accounts.html'>fb_accounts</a>()</code>,
-<code><a href='fb_ads.html'>fb_ads</a>()</code>,
-<code><a href='fb_insights.html'>fb_insights</a>()</code>,
-<code><a href='fb_posts.html'>fb_posts</a>()</code>,
-<code><a href='fb_post.html'>fb_post</a>()</code>,
-<code><a href='geoStratum.html'>geoStratum</a>()</code>,
-<code><a href='get_mp3.html'>get_mp3</a>()</code>,
-<code><a href='ip_country.html'>ip_country</a>()</code>,
-<code><a href='readGS.html'>readGS</a>()</code>,
-<code><a href='trendsRelated.html'>trendsRelated</a>()</code></p></div>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>holidays</span>(<span class='kw'>countries</span> <span class='kw'>=</span> <span class='st'>"Argentina"</span>)
-<span class='fu'>holidays</span>(<span class='kw'>countries</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Argentina"</span>, <span class='st'>"Venezuela"</span>), <span class='kw'>years</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2019</span>, <span class='fl'>2020</span>))
-}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

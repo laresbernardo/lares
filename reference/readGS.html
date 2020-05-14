@@ -6,7 +6,52 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Google Sheets Reading — readGS • lares</title>
+<title>####################################################################
+#' Google Sheets Reading [Deprecated]
+#' 
+#' This function lets the user read any Google Sheet's data
+#' 
+#' @family Connection
+#' @family Scrapper
+#' @param title Character. Textual title of Google Sheet
+#' @param ws Character. Working sheet to import
+#' @param first_time Boolean. Authenticate manualy
+#' @export
+readGS &lt;- function(title, ws = "Hoja 1", first_time = FALSE) 
+  try_require("googlesheets")
+  if (first_time) 
+    options(httr_oob_default = TRUE)
+    gs_auth(new_user = TRUE)
+  
+  gs &lt;- gs_title(title)
+  gs &lt;- invisible(gs_read(gs, ws = ws, verbose = FALSE) <!-- %&gt;% data.frame()) -->
+  return(gs)
+
+####################################################################
+#' Google Sheets Writing [Deprecated]
+#' 
+#' This function lets the user write on any Google Sheet
+#' 
+#' @family Connection
+#' @family Scrapper
+#' @param data Data Frame. Data to export to Google Sheet 
+#' @param title Character. Textual title of Google Sheet
+#' @param ws Character. Working sheet to export to
+#' @param cell Character. In which cell should we paste the data (upper left cell)
+#' @param first_time Boolean. Authenticate manualy
+#' @export
+writeGS &lt;- function(data, title, ws = "Hoja 1", cell = 'A1', first_time = FALSE) 
+  try_require("googlesheets")
+  if (first_time) 
+    options(httr_oob_default = TRUE)
+    gs_auth(new_user = TRUE)
+  
+  gs &lt;- gs_title(title)
+  invisible(gs_edit_cells(
+    gs, ws = ws, input = data, anchor = cell, verbose = FALSE) <!-- %&gt;%  -->
+      data.frame())
+
+Google Sheets Reading (API v4) — readGS • lares</title>
 
 
 <!-- jquery -->
@@ -39,7 +84,52 @@
 
 
 
-<meta property="og:title" content="Google Sheets Reading — readGS" />
+<meta property="og:title" content="####################################################################
+#' Google Sheets Reading [Deprecated]
+#' 
+#' This function lets the user read any Google Sheet's data
+#' 
+#' @family Connection
+#' @family Scrapper
+#' @param title Character. Textual title of Google Sheet
+#' @param ws Character. Working sheet to import
+#' @param first_time Boolean. Authenticate manualy
+#' @export
+readGS &lt;- function(title, ws = "Hoja 1", first_time = FALSE) 
+  try_require("googlesheets")
+  if (first_time) 
+    options(httr_oob_default = TRUE)
+    gs_auth(new_user = TRUE)
+  
+  gs &lt;- gs_title(title)
+  gs &lt;- invisible(gs_read(gs, ws = ws, verbose = FALSE) <!-- %&gt;% data.frame()) -->
+  return(gs)
+
+####################################################################
+#' Google Sheets Writing [Deprecated]
+#' 
+#' This function lets the user write on any Google Sheet
+#' 
+#' @family Connection
+#' @family Scrapper
+#' @param data Data Frame. Data to export to Google Sheet 
+#' @param title Character. Textual title of Google Sheet
+#' @param ws Character. Working sheet to export to
+#' @param cell Character. In which cell should we paste the data (upper left cell)
+#' @param first_time Boolean. Authenticate manualy
+#' @export
+writeGS &lt;- function(data, title, ws = "Hoja 1", cell = 'A1', first_time = FALSE) 
+  try_require("googlesheets")
+  if (first_time) 
+    options(httr_oob_default = TRUE)
+    gs_auth(new_user = TRUE)
+  
+  gs &lt;- gs_title(title)
+  invisible(gs_edit_cells(
+    gs, ws = ws, input = data, anchor = cell, verbose = FALSE) <!-- %&gt;%  -->
+      data.frame())
+
+Google Sheets Reading (API v4) — readGS" />
 <meta property="og:description" content="This function lets the user read any Google Sheet's data" />
 
 
@@ -108,7 +198,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Google Sheets Reading</h1>
+    <h1>####################################################################
+#' Google Sheets Reading [Deprecated]
+#' 
+#' This function lets the user read any Google Sheet's data
+#' 
+#' @family Connection
+#' @family Scrapper
+#' @param title Character. Textual title of Google Sheet
+#' @param ws Character. Working sheet to import
+#' @param first_time Boolean. Authenticate manualy
+#' @export
+readGS &lt;- function(title, ws = "Hoja 1", first_time = FALSE) 
+  try_require("googlesheets")
+  if (first_time) 
+    options(httr_oob_default = TRUE)
+    gs_auth(new_user = TRUE)
+  
+  gs &lt;- gs_title(title)
+  gs &lt;- invisible(gs_read(gs, ws = ws, verbose = FALSE) <!-- %&gt;% data.frame()) -->
+  return(gs)
+
+####################################################################
+#' Google Sheets Writing [Deprecated]
+#' 
+#' This function lets the user write on any Google Sheet
+#' 
+#' @family Connection
+#' @family Scrapper
+#' @param data Data Frame. Data to export to Google Sheet 
+#' @param title Character. Textual title of Google Sheet
+#' @param ws Character. Working sheet to export to
+#' @param cell Character. In which cell should we paste the data (upper left cell)
+#' @param first_time Boolean. Authenticate manualy
+#' @export
+writeGS &lt;- function(data, title, ws = "Hoja 1", cell = 'A1', first_time = FALSE) 
+  try_require("googlesheets")
+  if (first_time) 
+    options(httr_oob_default = TRUE)
+    gs_auth(new_user = TRUE)
+  
+  gs &lt;- gs_title(title)
+  invisible(gs_edit_cells(
+    gs, ws = ws, input = data, anchor = cell, verbose = FALSE) <!-- %&gt;%  -->
+      data.frame())
+
+Google Sheets Reading (API v4)</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/google_sheets.R'><code>R/google_sheets.R</code></a></small>
     <div class="hidden name"><code>readGS.Rd</code></div>
     </div>
@@ -117,7 +252,9 @@
     <p>This function lets the user read any Google Sheet's data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>readGS</span>(<span class='no'>title</span>, <span class='kw'>ws</span> <span class='kw'>=</span> <span class='st'>"Hoja 1"</span>, <span class='kw'>first_time</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>readGS</span>(<span class='no'>title</span>, <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='st'>"Hoja 1"</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>creds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='fu'>readGS4</span>(<span class='no'>title</span>, <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='st'>"Hoja 1"</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>creds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,12 +264,20 @@
       <td><p>Character. Textual title of Google Sheet</p></td>
     </tr>
     <tr>
-      <th>ws</th>
+      <th>sheet</th>
       <td><p>Character. Working sheet to import</p></td>
     </tr>
     <tr>
-      <th>first_time</th>
-      <td><p>Boolean. Authenticate manualy</p></td>
+      <th>range</th>
+      <td><p>Character. A cell range to read from</p></td>
+    </tr>
+    <tr>
+      <th>creds</th>
+      <td><p>Character. JSON filename with service auth</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Further read_sheet parameters</p></td>
     </tr>
     </table>
 
@@ -140,9 +285,7 @@
 
     <div class='dont-index'><p>Other Connection: 
 <code><a href='get_tweets.html'>get_tweets</a>()</code>,
-<code><a href='queryGA.html'>queryGA</a>()</code>,
-<code><a href='readGS4.html'>readGS4</a>()</code>,
-<code><a href='writeGS.html'>writeGS</a>()</code></p>
+<code><a href='queryGA.html'>queryGA</a>()</code></p>
 <p>Other Scrapper: 
 <code><a href='fb_accounts.html'>fb_accounts</a>()</code>,
 <code><a href='fb_ads.html'>fb_ads</a>()</code>,
@@ -153,9 +296,7 @@
 <code><a href='get_mp3.html'>get_mp3</a>()</code>,
 <code><a href='holidays.html'>holidays</a>()</code>,
 <code><a href='ip_country.html'>ip_country</a>()</code>,
-<code><a href='readGS4.html'>readGS4</a>()</code>,
-<code><a href='trendsRelated.html'>trendsRelated</a>()</code>,
-<code><a href='writeGS.html'>writeGS</a>()</code></p></div>
+<code><a href='trendsRelated.html'>trendsRelated</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
