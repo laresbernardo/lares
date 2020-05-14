@@ -15,8 +15,9 @@ plot_survey <- function(answers, ignore = c(1), title = NA, subtitle = NA){
     answers <- answers[-ignore]
   }
   p <- answers %>%
-    gather() %>% freqs(key, value) %>% 
-    ggplot(aes(x = key, y = n, fill = value, group = key, label = p)) +
+    gather() %>% freqs(.data$key, .data$value) %>% 
+    ggplot(aes(x = .data$key, y = .data$n, fill = .data$value, 
+               group = .data$key, label = .data$p)) +
     geom_bar(stat = "identity") + theme_minimal() +
     geom_text(position = position_stack(vjust = .5), colour = "white", size = 2.7) +
     coord_flip() + 

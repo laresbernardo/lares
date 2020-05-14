@@ -342,15 +342,16 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
     message(paste0(">>> Extracting ", combs$country[i], "'s holidays for ", combs$year[i]))
     url <- paste0("https://www.timeanddate.com/holidays/", tolower(combs$country[i]), "/", combs$year[i])
     holidays <- xml2::read_html(url)
-    holidays <- holidays %>% html_nodes(".table") %>% html_table(fill = TRUE) %>% data.frame(.) %>% filter(!is.na(Date))
+    holidays <- holidays %>% html_nodes(".table") %>% html_table(fill = TRUE) %>% 
+      data.frame(.) %>% filter(!is.na(.data$Date))
     holidays <- holidays[,-2]
     colnames(holidays) <- c("Date", "Holiday", "Holiday.Type")
     holidays$Date <- paste(holidays$Date, combs$year[i])
-    if (sum(grepl("de",holidays$Date)) > 0) {
+    if (sum(grepl("de", holidays$Date)) > 0) {
       invisible(Sys.setlocale("LC_TIME", "es_ES"))
       holidays$Date <- gsub("de ","", holidays$Date)
     }
-    first <- as.numeric(as.character(substr(holidays$Date,1,1)))
+    first <- as.numeric(as.character(substr(holidays$Date, 1, 1)))
     if (!is.na(first[1])) {
       holidays$Date <- as.Date(holidays$Date, format = c("%d %b %Y"))
     } else {
@@ -368,6 +369,6 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
       if (length(unique(countries)) > 1) { mutate(., country = combs$country[i]) } else .
     results <- rbind(results, result)
   } 
-  results <- results %>% filter(!is.na(holiday)) %>% as_tibble()
+  results <- results %>% filter(!is.na(.data$holiday)) %>% as_tibble()
   return(results)
 }

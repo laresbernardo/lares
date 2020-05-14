@@ -34,7 +34,8 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
     # Note: We bring the first and most probable result or prefered country only
     if (length(x$results) > 1) {
       country_pref <- data.frame(
-        is_country = as.integer(as.character(lapply(x$results, function(x) grep(paste(",",country), x)))))
+        is_country = as.integer(as.character(lapply(
+          x$results, function(x) grep(paste(",",country), x)))))
       country_pref$row <- 1:nrow(country_pref)
       country_pref <- country_pref[!is.na(country_pref$is_country),]
       which_list <- min(country_pref$row)
@@ -137,6 +138,7 @@ geoStratum <- function(lon, lat, label = NA) {
 #' @export
 geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE, alpha = 0.3) {
   
+  try_require("methods")
   try_require("rgdal")
   try_require("sp")
   
@@ -163,6 +165,7 @@ geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE, 
   # The coords and shapes coordinates MUST have the same lon/lat reference system
   proj4string(coords) <- proj4string(map)
   inside.park <- !is.na(over(coords, as(map, "SpatialPolygons")))
+  #inside.park <- !is.na(over(coords, as.SpatialPolygons.PolygonsList(map)))
   
   # What fraction of coords are inside a shape?
   frac <- round(100*mean(inside.park), 2)
@@ -182,9 +185,9 @@ geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE, 
       toplot <- results
     }
     plot <- ggplot() + 
-      geom_point(data = toplot, aes(x = longitude, y = latitude),
+      geom_point(data = toplot, aes(x = .data$longitude, y = .data$latitude),
                  colour = "deepskyblue2", alpha = alpha) +
-      geom_polygon(data = map, aes(x = long, y = lat, group = group), 
+      geom_polygon(data = map, aes(x = .data$long, y = .data$lat, group = .data$group), 
                    colour = "black", fill = "white", alpha = 0)  +
       labs(title = "Coordinates & Grid",
            subtitle = fracmsg,
@@ -221,8 +224,8 @@ geoMap <- function(map, fix_coords = FALSE, title = NA, subtitle = NA) {
     message("Fixing coordinates format...")
     map <- spTransform(map, CRS("+proj=longlat +datum=WGS84")) 
   }
-  plot <- ggplot() + geom_polygon(data = map, aes(
-    x = long, y = lat, group = group), 
+  plot <- ggplot() + 
+    geom_polygon(data = map, aes(x = .data$long, y = .data$lat, group = .data$group), 
     colour = "black", fill = "white", alpha = 0.1) +
     labs(x = "Latitude", y = "Longitude") +
     theme_bw()
@@ -248,6 +251,6 @@ deg2num <- function(coord, sep=" ") {
   z <- data.frame(str_split_fixed(as.character(coord), sep, 3)) %>% 
     mutate_all(as.numeric)
   colnames(z) <- c("days","minutes","seconds")
-    mutate(num = days + minutes/60 + seconds/3600)
+    mutate(num = .data$days + .data$minutes/60 + .data$seconds/3600)
   return(z$num)
 }

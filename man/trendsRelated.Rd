@@ -50,9 +50,7 @@ Other Scrapper:
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
-\code{\link{readGS4}()},
-\code{\link{readGS}()},
-\code{\link{writeGS}()}
+\code{\link{readGS}()}
 }
 \concept{Exploratory}
 \concept{Scrapper}

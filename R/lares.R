@@ -7,108 +7,55 @@
 #' @docType package
 #' @author Bernardo Lares (laresbernardo@@gmail.com)
 #' @importFrom config get
-#' @importFrom DBI dbDriver dbConnect dbSendQuery fetch dbDisconnect
 #' @import dplyr
-# @importFrom forecast Arima auto.arima forecast
-# @importFrom ggforce geom_mark_ellipse
 #' @import ggplot2
-# @importFrom googleAuthR gar_auth
-# @importFrom googlesheets4 sheets_auth read_sheet
-#' @importFrom graphics box hist plot points rasterImage rect grid 
+#' @importFrom graphics box hist plot points rasterImage rect grid legend
 #' @importFrom grDevices graphics.off dev.off png dev.size
-# @importFrom gridExtra grid.arrange tableGrob arrangeGrob ttheme_minimal 
 #' @importFrom h2o as.h2o h2o.automl h2o.accuracy h2o.getModel h2o.performance h2o.init 
 #' h2o.removeAll h2o.download_mojo h2o.download_pojo h2o.loadModel h2o.no_progress h2o.predict 
 #' h2o.predict_json h2o.saveModel h2o.varimp h2o.getVersion h2o.glm
 #' @importFrom httr GET POST oauth_endpoint oauth_app oauth1.0_token authenticate 
 #' stop_for_status upload_file add_headers content http_error set_config config
 #' @importFrom jsonlite fromJSON toJSON flatten
-#' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd 
-#' minute hour second %m+% floor_date 
+#' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd days
+#' minute hour second %m+% floor_date ceiling_date
 #' @importFrom magrittr %>% set_colnames
-# @importFrom mice mice complete
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom patchwork plot_layout plot_annotation wrap_plots
 #' @importFrom pROC roc ci
-# @importFrom quantmod getDividends getSymbols getQuote 
-# @importFrom rdrop2 drop_auth drop_dir drop_download drop_search drop_upload
 #' @import rlist
-#' @importFrom rlang as_label
-# @importFrom rmarkdown render
-# @importFrom recipes recipe step_num2factor step_meanimpute all_numeric step_modeimpute
-# all_nominal step_scale all_outcomes step_dummy prep
+#' @importFrom rlang as_label .data
 #' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text 
 #' @importFrom scales comma percent dollar
-# @importFrom sp over coordinates proj4string proj4string<- coordinates<- spTransform
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
-#' reorder start kmeans var xtabs as.formula prcomp p.adjust pt
+#' reorder start kmeans var xtabs as.formula prcomp p.adjust pt model.matrix
 #' @import stringr 
-# @importFrom tm content_transformer Corpus removeNumbers removePunctuation removeWords 
-# stopwords stripWhitespace TermDocumentMatrix tm_map VectorSource
 #' @importFrom tidyr gather spread
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
 #' globalVariables installed.packages write.table install.packages remove.packages object.size 
 #' type.convert flush.console read.table modifyList write.csv combn browseURL type.convert
-# @importFrom wordcloud wordcloud textplot
 #' @importFrom xml2 read_html
 "_PACKAGE"
 
-if (getRversion() >= "2.15.1")
-  globalVariables(
-    c(".","..y..","!!!",".rs.restartR","Amount","Cash","Close","CreateDate","CumCash",
-      "CumDiv","CumPortfolio","DailyCash","DailyDiv","DailyExpen","DailyStocks",
-      "DailyTrans","DailyValue","Date","DateTimeOriginal","Deciles","DifPer","DifUSD",
-      "DivIncome","DivPerc","DivReal","Expenses","FileModifyDate","High","Hist","creds",
-      "InvPerc","Invested","Perc","Quant","RealPerc","RelChangePHist","RelChangeUSD",
-      "RelPer","RelUSD","StartUSD","StockIniValue","StockValue","Stocks","Symbol","results",
-      "TotalPer","TotalUSD","Type","Value","readOGR","read_exif","pcum","fpr","tpr",
-      "accuracy","add_headers","addedAt","amount","associatedCompanyIds","associatedVids",
-      "canonical_vid","cats[, i]", "ceiling_date","color","contacts_canonical_vid","auc",
-      "contacts_form_submissions","contacts_identity_profiles", "google_analytics","perc",
-      "contacts_is_contact","contacts_merge_audits","contacts_portal_id","model.matrix",
-      "contacts_profile_token","contacts_profile_url","contacts_vid","content","size",
-      "createdate","credit","cuts","date_of_birth","days","dealId","send.mail","shapeflag",
-      "dealstage","df_status","form_submissions","gather","ceiling_date","trim","current_wd",
-      "get_questionnaire","get_typeforms","endfx","to","Real","Pred","Freq","force_n",
-      "hasMore","has_more","identification_date","identity_profiles","ggplotly","facet2",
-      "image_darknet_detect","image_darknet_model","image_info","image_read","index",
-      "content_transformer","Corpus","removeNumbers","removePunctuation","removeWords", 
-      "is_contact","key","label","label_colours","label_hjust","max_score","merge_audits",
-      "merged_vids","min_score","model_performance","month.lbl","numb","Adjusted",
-      "p","p_error","palette_light","portalId","portal_id","pos","get_ip","score",
-      "prediction_breakdown","q_na","quantile_tag","question","real_error","dummy","sale",
-      "stateChanges","step_done","str_pad","tag","test_auc","test_ll","theme_tq","p1","p2",
-      "tk_augment_timeseries_signature","tk_get_timeseries_signature","tk_index","dfl",
-      "tk_make_future_timeseries","token","train_auc","train_ll","dft","Ticker","hjust",
-      "trees","type","upload_file","value","values","variable_response","variables",
-      "vehicle_commercial","verbose","vid","vid_offset","wday.lbl","x","y","periods",
-      "cols","nums","char","logic","counter","metric","End","Start","cv","label_pos",
-      "name","where","deciles","gg_pos","colour","ptag","create_token","search_tweets",
-      "..level..","cluster","drop_na","shapes","coords","long","lat","group","longitude",
-      "latitude","as","CRS","project","minutes","seconds","Volume","BuySell","groupi",
-      "StocksValue","Dividend","Expense","Deposit","Invest","Deposited","Dividends",
-      "Portfolio","start_clean","geo","hits","keyword","legend","subject","subject.x",
-      "subject.y","type_label","facet","Total","pal","p_real","weight","ACC","AUC",
-      "Logloss","yewxname","gain","random","optimal","lift","pred","importance","stacked",
-      "percentile","cum_response","response","total","ETF","Sector","Percentage","corrplot",
-      "row_num","ncap","freq","mix","redundant","plot_ly","chordDiagram","skim","uh",
-      "fread","read.dta13","read.spss","read.xls","geom_label_repel","variable","beep",
-      "rpart","rpart.control","rpart.plot","get_sentiment_dictionary","sentiment",
-      "Cost","CumCost","CumDividend","CumInvested","CumQuant","CumROI","CumValue",
-      "Each","ROI","ValueSector","etf_sector_plot","ma1","ma2","amount_spent","model",
-      "date_start","spend","adcreatives","created_time","list_id","aux","ds","prophet",
-      "fit.prophet","prophet_plot_components","add_country_holidays","group1","group2",
-      "make_future_dataframe","train_test","aml","m","scores","aggregate_profiles",
-      "PC1","PC2","pvalue","ceteris_paribus","contribution","drive_auth","drive_find",
-      "udpipe_download_model","udpipe_load_model","udpipe_annotate","keywords_rake",
-      "gs_auth","gs_read","gs_edit_cells","gs_title","av_audio_convert","with_proxy",
-      "QuoteTime","install_github","install","drop_search","drop_download","drop_auth",
-      "drop_upload","sheets_auth","read_sheet","gar_auth","geom_mark_ellipse","mice",
-      "complete","Arima","auto.arima","forecast","getDividends","getSymbols","getQuote",
-      "base::get(which)","PostgreSQL","render","wordcloud","textplot","holiday",
-      "stopwords","stripWhitespace","TermDocumentMatrix","tm_map","VectorSource",
-      "over","coordinates","proj4string","proj4string<-","coordinates<-","spTransform"))
+
+####################################################################
+#' Install/Update Additional Recommended Libraries
+#' 
+#' All needed libraries to use (most) lares are already a dependency. 
+#' There are some functions that many people won't event know exist 
+#' that will require other additional libraries. Also, this may be 
+#' used as a Docker way of installing useful libraries on an new instance.
+#' 
+#' @param progress Boolean. Show status bar?
+#' @export
+install_recommended <- function(progress = TRUE) {
+  for (lib in names(recommended)) {
+    invisible(install.packages(lib, quiet = TRUE, verbose = FALSE))
+    if (progress)
+      statusbar(which(lib == names(recommended)), length(recommended), lib, msg = "")
+  }
+}
 
 #' Pipe operator
 #' @name lares-exports
@@ -118,3 +65,47 @@ NULL
 #' @export
 #' @rdname lares-exports
 NULL
+
+# Recommeded additional libraries to fully take advantage of lares library
+recommended <- list(
+  beepr = c("beep"),
+  circlize = c("chordDiagram", "uh"),
+  DALEX = c("explain", "model_performance", "prediction_breakdown", "variable_response"),
+  data.table = c("fread"),
+  DBI = c("dbDriver", "dbConnect", "dbSendQuery", "fetch", "dbDisconnect"),
+  devtools = c("install", "install_github", "with_proxy"),
+  exifr = c("read_exif"),
+  forecast = c("Arima", "auto.arima", "forecast"),
+  gdata = c("read.xls"),
+  ggforce = c("geom_mark_ellipse"),
+  ggrepel = c("geom_label_repel"),
+  googleAnalyticsR = c("google_analytics"),
+  googleAuthR = c("gar_auth"),
+  googledrive = c("drive_auth", "drive_find"),
+  googlesheets4 = c("sheets_auth", "read_sheet"),
+  ingredients = c("ceteris_paribus", "aggregate_profiles"),
+  methods = c("as"),
+  mice = c("mice", "complete"),
+  plotly = c("ggplotly"),
+  prophet = c("prophet", "fit.prophet", "prophet_plot_components",
+              "add_country_holidays", "make_future_dataframe"),
+  quantmod = c("getDividends", "getSymbols", "getQuote"),
+  rdrop2 = c("drop_auth", "drop_dir", "drop_download", "drop_search", "drop_upload"),
+  rgdal = c("readOGR", "project"),
+  rpart = c("rpart", "rpart.control"),
+  rpart.plot = c("rpart.plot"),
+  rtweet = c("create_token", "search_tweets"),
+  rmarkdown = c("render"),
+  skimr = c("skim"),
+  syuzhet = c("get_sentiment_dictionary"),
+  sp = c("CRS", "over", "coordinates", "proj4string", "proj4string<-", "coordinates<-", "spTransform"),
+  tm = c("content_transformer", "Corpus", "removeNumbers", "removePunctuation", "removeWords",
+         "stopwords", "stripWhitespace", "TermDocumentMatrix", "tm_map", "VectorSource"),
+  udpipe = c("keywords_rake", "udpipe_annotate", "udpipe_download_model", "udpipe_load_model"),
+  wordcloud = c("wordcloud", "textplot"))
+
+# For read.file function... will be deprecated!
+temp <- c("read.dta13", "read.spss")
+
+if (getRversion() >= "2.15.1")
+  globalVariables(c(as.vector(unlist(recommended)), temp, "."))

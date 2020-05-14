@@ -165,9 +165,9 @@ distr <- function(data, ...,
     if (is.numeric(value) | is.Date(value) | is.POSIXct(value) | is.POSIXlt(value)) {
       # Continuous and date values
       if (is.numeric(value)) {
-        p <- ggplot(df, aes(x = value))
+        p <- ggplot(df, aes(x = .data$value))
       } else {
-        p <- ggplot(df, aes(x = date(value)))
+        p <- ggplot(df, aes(x = date(.data$value)))
       }
       p <- p + 
         geom_density(fill = "deepskyblue", alpha = 0.7, adjust = 1/3) +
@@ -230,8 +230,9 @@ distr <- function(data, ...,
                            ". Obs: ", formatNum(length(value), 0))
         df <- data.frame(x = targets, y = value)
         df <- fxna_rm(df, na.rm = TRUE)
-        p <- ggplot(df, aes(x = x, y = y)) +
-          stat_density_2d(aes(fill = ..level..), geom = "polygon") +
+        p <- df %>%
+          ggplot(aes(x = .data$x, y = .data$y)) +
+          stat_density_2d(aes(fill = after_stat(.data$level)), geom = "polygon") +
           labs(title = "2D Density Distribution",
                x = targets_name, y = variable_name,
                subtitle = subtitle) +
@@ -316,9 +317,9 @@ distr <- function(data, ...,
       vadj <- ifelse(type == 1, -0.15, 0.5)
       hadj <- ifelse(type == 1, 0.5, -0.15)
       count <- ggplot(freqs, aes(
-        x = reorder(as.character(value), order), y = n, 
-        fill = as.character(targets), 
-        label = formatNum(n, 0), ymax = max(n) * 1.1)) + 
+        x = reorder(as.character(.data$value), .data$order), y = .data$n, 
+        fill = as.character(.data$targets), 
+        label = formatNum(.data$n, 0), ymax = max(.data$n) * 1.1)) + 
         geom_col(position = "dodge", colour = "transparent") +
         geom_text(colour = "black",
                   check_overlap = TRUE, 
@@ -340,13 +341,14 @@ distr <- function(data, ...,
     # Proportions (%) plot
     if (type %in% c(1,3)) {
       prop <- freqs %>%
-        group_by(value) %>%
-        mutate(size = sum(n)/sum(freqs$n)) %>%
-        mutate(ptag = ifelse(p < 3, "", as.character(round(p, 1)))) %>%
-        ggplot(aes(x = reorder(value, -order), y = p/100, label = ptag,
-                   fill = as.character(targets))) + 
+        group_by(.data$value) %>%
+        mutate(size = sum(.data$n)/sum(freqs$n)) %>%
+        mutate(ptag = ifelse(p < 3, "", as.character(round(.data$p, 1)))) %>%
+        ggplot(aes(x = reorder(.data$value, -.data$order), 
+                   y = .data$p/100, label = .data$ptag,
+                   fill = as.character(.data$targets))) + 
         geom_col(position = "fill", colour = "transparent") +
-        geom_text(aes(size = size, colour = as.character(targets)), 
+        geom_text(aes(size = .data$size, colour = as.character(.data$targets)), 
                   position = position_stack(vjust = 0.5)) +
         scale_size(range = c(2.2, 3)) +
         coord_flip() +
@@ -359,7 +361,7 @@ distr <- function(data, ...,
       
       # Show a reference line if levels = 2; quite useful when data is unbalanced (not 50/50)
       if (length(unique(targets)) == 2 & ref) {
-        distr <- df %>% freqs(targets) %>% arrange(as.character(targets))
+        distr <- df %>% freqs(.data$targets) %>% arrange(as.character(.data$targets))
         h <- signif(100 - distr$p[1], 3)
         prop <- prop +
           geom_hline(yintercept = h/100, colour = "purple", 
@@ -407,6 +409,6 @@ distr <- function(data, ...,
     }
   }
   
-  if (!plot) return(freqs %>% select(-order, -row)) else return(p)
+  if (!plot) return(freqs %>% select(-.data$order, -.data$row)) else return(p)
   
 }

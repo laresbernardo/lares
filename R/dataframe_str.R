@@ -66,29 +66,29 @@ df_str <- function(df,
     mutate(metric = row.names(.),
            type = ifelse(grepl("Column", colnames(numbers)), "Columns",
                          ifelse(grepl("Rows", colnames(numbers)), "Rows", "Values")),
-           p = ifelse(type == "Columns", 100*counter/numbers$Total.Columns,
-                      ifelse(type == "Rows", 100*counter/numbers$Total.Rows, 
-                             100*counter/numbers$Total.Values)),
-           p = round(p,2),
-           type = factor(type, levels = c("Values","Columns","Rows"))) %>%
-    select(metric, counter, type, p)
+           p = ifelse(.data$type == "Columns", 100*.data$counter/numbers$Total.Columns,
+                      ifelse(.data$type == "Rows", 100*.data$counter/numbers$Total.Rows, 
+                             100*.data$counter/numbers$Total.Values)),
+           p = round(.data$p, 2),
+           type = factor(.data$type, levels = c("Values", "Columns", "Rows"))) %>%
+    select(.data$metric, .data$counter, .data$type, .data$p)
   
-  if (return == "numbers") return(select(intro2, -type))
+  if (return == "numbers") return(select(intro2, -.data$type))
   
   if (return == "plot") {
     p <- intro2 %>%
-      filter(!metric %in% c("Memory.Usage")) %>%
-      mutate(x = ifelse(p < 75, -0.15, 1.15)) %>%
-      ggplot(aes(x = reorder(metric, as.integer(counter)), 
-                 y = p, fill = type,
-                 label = formatNum(counter, 0))) + 
+      filter(!.data$metric %in% c("Memory.Usage")) %>%
+      mutate(x = ifelse(.data$p < 75, -0.15, 1.15)) %>%
+      ggplot(aes(x = reorder(.data$metric, as.integer(.data$counter)), 
+                 y = .data$p, fill = .data$type,
+                 label = formatNum(.data$counter, 0))) + 
       geom_col() + coord_flip() + ylim(0, 100) +
       theme_minimal() + guides(fill = FALSE) +
       labs(title = "Dataset overall structure", 
            x = "", y = "% of total", fill = "", 
            caption = paste("Memory Usage:", formatNum(numbers$Memory.Usage/(1024*1024)),"Mb")) +
       facet_grid(type ~., scales = "free", space = "free") + 
-      geom_text(aes(hjust = x), size = 3) +
+      geom_text(aes(hjust = .data$x), size = 3) +
       theme_lares2(pal = 1)
     if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
     return(p)
@@ -109,11 +109,11 @@ plot_nums <- function(df) {
   which <- df %>% select_if(is.numeric)
   if (length(which) > 0) {
     p <- gather(which) %>%
-      filter(!is.na(value)) %>%
-      ggplot(aes(x = key, y = value)) +
+      filter(!is.na(.data$value)) %>%
+      ggplot(aes(x = .data$key, y = .data$value)) +
       geom_jitter(alpha = 0.2, size = 0.8) +
       geom_boxplot(alpha = 0.8, outlier.shape = NA, width = 1) +
-      facet_wrap(key~., scales = "free") + 
+      facet_wrap(.data$key~., scales = "free") + 
       labs(title = "Numerical Features Boxplots", x = NULL, y = NULL) +
       theme_lares2() +
       theme(axis.text.y = element_blank(), 

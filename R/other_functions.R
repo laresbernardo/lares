@@ -32,7 +32,7 @@ try_require <- function(package, stop = TRUE) {
 #' year_month(Sys.Date())
 #' @export
 year_month <- function(date) {
-  paste(year(date),str_pad(lubridate::month(date), 2, pad = "0"), sep = "-")
+  paste(year(date), str_pad(lubridate::month(date), 2, pad = "0"), sep = "-")
 }
 
 
@@ -50,9 +50,9 @@ year_month <- function(date) {
 #' date_cuts(Sys.Date(), type = "Q")
 #' date_cuts(Sys.Date(), type = "H")
 #' @export
-date_cuts <- function(date, type = "Q") {
+date_cuts <- function(date = Sys.Date(), type = "Q") {
   df <- data.frame(date = as.Date(as.character(date))) %>%
-    mutate(month = month(date), cut = NA)
+    mutate(month = month(.data$date), cut = NA)
   if (tolower(type) == "b") aux <- 2
   if (tolower(type) == "q") aux <- 3
   if (tolower(type) == "t") aux <- 4
@@ -60,8 +60,8 @@ date_cuts <- function(date, type = "Q") {
   cuts <- c(seq(1, 12, aux), 12)
   for (i in 1:(12/aux)) {
     df <- df %>% mutate(cut = ifelse(
-      month >= cuts[i] & month <= cuts[i+1], 
-      paste0(toupper(type), i), cut))
+      .data$month >= cuts[i] & .data$month <= cuts[i+1], 
+      paste0(toupper(type), i), .data$cut))
   }
   return(df$cut)
 }
@@ -117,7 +117,7 @@ categ_reducer <- function(df, ...,
   if (!is.na(top)) {
     tops <- dff %>% slice(1:top)
   } else {
-    tops <- dff %>% filter(n >= nmin & p >= pmin & p <= pcummax) 
+    tops <- dff %>% filter(.data$n >= nmin & .data$p >= pmin & .data$p <= pcummax) 
   }
   
   name <- as.name(names(dff[,1]))
@@ -277,7 +277,7 @@ formatNum <- function(x, decimals = 2, type = 2,
                       abbr = FALSE) {
   if (!scientific) {
     on.exit(options(scipen = 999))
-  } else x <- formatC(numb, format = "e", digits = 2)
+  } else x <- formatC(x, format = "e", digits = 2)
   if (abbr) {
     x <- num_abbr(x, n = decimals + 1) 
   } else {
@@ -379,8 +379,8 @@ balance_data <- function(df, variable, rate = 1, seed = 0) {
   } else {
     # For binary resampling:
     message(paste("Resampled from:", vector2text(formatNum(table(df$tag),0), sep = " x ", quotes = F)))
-    ones <- df %>% filter(tag %in% as.character(tags[1]))
-    zeros <- df %>% filter(tag %in% as.character(tags[2]))
+    ones <- df %>% filter(.data$tag %in% as.character(tags[1]))
+    zeros <- df %>% filter(.data$tag %in% as.character(tags[2]))
     
     if (nrow(ones) <= nrow(zeros)) {
       message(paste("Reducing size for:", tags[2]))
@@ -446,9 +446,9 @@ image_metadata <- function(files) {
   if (length(ret) > 0) {
     if ("DateTimeOriginal" %in% colnames(ret)) {
       df <- ret %>% 
-        mutate(DateTimeOriginal = ymd_hms(DateTimeOriginal),
-               CreateDate = ymd_hms(CreateDate),
-               FileModifyDate = ymd_hms(FileModifyDate))
+        mutate(DateTimeOriginal = ymd_hms(.data$DateTimeOriginal),
+               CreateDate = ymd_hms(.data$CreateDate),
+               FileModifyDate = ymd_hms(.data$FileModifyDate))
       df <- df[,colSums(is.na(df)) < nrow(df)] 
       if (aux > 10)
         tryCatch({
@@ -551,7 +551,7 @@ replaceall <- function(df, original, change, which = "all", quiet = TRUE) {
   if (length(original) != length(change))
     stop("Vectors original and change should have the same length!")
   if (length(unique(original)) != length(original)) {
-    aux <- freqs(dic, original) %>% filter(n > 1) %>% .$original
+    aux <- freqs(dic, original) %>% filter(.data$n > 1) %>% .$original
     stop("You have repeated original values to replace: ", vector2text(aux))
   }
   if (which[1] != "all") {
@@ -576,7 +576,8 @@ replaceall <- function(df, original, change, which = "all", quiet = TRUE) {
     } 
   }
   if (which[1] != "all")
-    df <- select(aux, -one_of(which)) %>% cbind(df) %>% 
+    df <- select(aux, -one_of(which)) %>% 
+      cbind(df) %>% 
       select(one_of(colnames(aux)))
   if (vector) df <- df[,1]
   return(df)
@@ -821,9 +822,9 @@ quants <- function(values, splits = 10, return = "summary") {
   if (return == "labels") return(labels)
   if (return == "summary") {
     output <- data.frame(percentile = names(cuts)[-1], cut = cuts[-1]) %>%
-      mutate(label = paste0("(", signif(lag(cut),4), "-", signif(cut,4),"]"),
-             label = gsub("\\(NA", paste0("[", signif(min(cut), 4)), label),
-             label = factor(label, levels = unique(label), ordered = T))
+      mutate(label = paste0("(", signif(lag(.data$cut),4), "-", signif(.data$cut,4),"]"),
+             label = gsub("\\(NA", paste0("[", signif(min(.data$cut), 4)), .data$label),
+             label = factor(.data$label, levels = unique(.data$label), ordered = TRUE))
     return(output) 
   }
 }
@@ -1337,9 +1338,9 @@ list_cats <- function(df, ..., abc = TRUE) {
   for (i in 1:length(category)) {
     which <- as.character(names(category)[i])
     df[,which] <- as.character(df[,which])
-    aux <- freqs(df, base::get(which), ...) %>%
-      select(-pcum, -order)
-    if (abc) aux <- arrange(aux, `base::get(which)`)
+    aux <- freqs(df, cats = base::get(which), ...) %>%
+      select(-.data$pcum, -.data$order)
+    if (abc) aux <- arrange(aux, .data$cats)
     colnames(aux)[1] <- which
     ret[[which]] <- aux
   }

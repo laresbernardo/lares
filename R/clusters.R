@@ -35,7 +35,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   # There should not be NAs
   if (sum(is.na(df)) > 0) {
     if (drop_na) { 
-      df <- df %>% removenarows(all = FALSE) 
+      df <- removenarows(df, all = FALSE) 
       message("Automatically removed rows with NA. To overwrite: fix NAs and set drop_na = FALSE")
     } else {
       stop(paste("There should be no NAs in your dataframe!",
@@ -53,7 +53,9 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   }
   
   # Data should be normalized for better results
-  if (norm) df <- df %>% transmute_all(funs(normalize)) %>% replace(., is.na(.), 0)
+  if (norm) df <- df %>% 
+    transmute_all(funs(normalize)) %>% 
+    replace(., is.na(.), 0)
   
   # Ignore some columns
   if (!is.na(ignore)[1]) {
@@ -67,7 +69,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   wss <- sum(apply(df, 2, var))*(nrow(df) - 1)
   for (i in 2:limit) wss[i] <- sum(kmeans(df, centers = i)$withinss)
   nclusters <- data.frame(n = c(1:limit), wss = wss)
-  nclusters_plot <- ggplot(nclusters, aes(x = n, y = wss)) + 
+  nclusters_plot <- ggplot(nclusters, aes(x = .data$n, y = .data$wss)) + 
     geom_line() + geom_point() +
     theme_minimal() +
     labs(title = "Total Number of Clusters",
@@ -99,7 +101,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     results[["df"]] <- df
     # Get cluster means
     results[["means"]] <- df %>% 
-      group_by(cluster) %>% 
+      group_by(.data$cluster) %>% 
       summarise_all(list(mean)) %>%
       mutate(n = as.integer(table(df$cluster)))
     
@@ -147,11 +149,11 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     PCA$pca_explained <- round(100 * pca$sdev^2/sum(pca$sdev^2), 4)
     PCA$pcadf <- PCA$pcadf[,c(PCA$pca_explained > 0.1, TRUE)]
     PCA$plotPC <- data.frame(id = 1:length(PCA$pca_explained)) %>%
-      mutate(PC = factor(paste0("PC", id), 
+      mutate(PC = factor(paste0("PC", .data$id), 
                          levels = paste0("PC", 1:length(PCA$pca_explained))),
              amount = PCA$pca_explained) %>%
-      mutate(aux = cumsum(amount)) %>%
-      ggplot(aes(x = id, y = aux)) +
+      mutate(aux = cumsum(.data$amount)) %>%
+      ggplot(aes(x = .data$id, y = .data$aux)) +
       geom_path() + geom_point() +
       labs(title = "Principal Component Analysis",
            subtitle = "Percentage of Variation Explained by Components",
@@ -159,10 +161,11 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       scale_y_continuous(limits = c(0, 100), expand = c(0, 1)) +
       scale_x_continuous(expand = c(0, 1)) +
       theme_lares2()
-    PCA$plotPCmain <- ggplot(PCA$pcadf, aes(x = PC1, y = PC2, colour = cluster)) +
+    PCA$plotPCmain <- ggplot(PCA$pcadf, aes(
+      x = .data$PC1, y = .data$PC2, colour = .data$cluster)) +
       geom_point() +
       geom_mark_ellipse(
-        aes(group = cluster, description = cluster),
+        aes(group = .data$cluster, description = .data$cluster),
         label.fill = "black", label.colour = "white") +
       labs(title = "Principal Component Analysis") +
       theme_lares2(pal = 2)

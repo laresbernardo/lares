@@ -23,11 +23,7 @@ Other Connections:
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
 \code{\link{f1_contacts}()},
-\code{\link{geoAddress}()},
-\code{\link{queryDW}()},
-\code{\link{queryDummy}()},
-\code{\link{queryProduc}()},
-\code{\link{typeform_download}()}
+\code{\link{geoAddress}()}
 
 Other Social Networks: 
 \code{\link{get_tweets}()},

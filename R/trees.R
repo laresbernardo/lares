@@ -20,6 +20,7 @@
 tree_var <- function(df, target, max = 3, min = 20, cp = 0, 
                      size = 0.7, ohse = TRUE, plot = TRUE, ...) {
   
+  # Temporal fxs
   try_require("rpart")
   try_require("rpart.plot")
   

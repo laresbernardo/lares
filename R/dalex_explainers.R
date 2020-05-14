@@ -116,17 +116,18 @@ dalex_local <- function(explainer, observation = NA, row = 1,
   aux <- range(breakdown$contribution)
   aux2 <- max(abs(aux)) * 0.12
   p <- breakdown  %>%
-    mutate(rank = rank(-abs(contribution)) + 1,
-           rank = ifelse(sign == "X", 1, rank),
-           pos = ifelse(sign == "1", -0.1, 1.1)) %>%
-    ggplot(aes(x = reorder(variable, abs(contribution)),
-               y = contribution,
-               fill = sign,
-               label = signif(contribution, 2))) +
+    mutate(rank = rank(-abs(.data$contribution)) + 1,
+           rank = ifelse(.data$sign == "X", 1, .data$rank),
+           pos = ifelse(.data$sign == "1", -0.1, 1.1)) %>%
+    ggplot(aes(x = reorder(.data$variable, abs(.data$contribution)),
+               y = .data$contribution,
+               fill = .data$sign,
+               label = signif(.data$contribution, 2))) +
     geom_hline(yintercept = 0, alpha = 0.5) +
     geom_col() +
-    facet_wrap(~label, scales = "free_y", ncol = 1) +
-    geom_text(aes(hjust = pos)) + coord_flip() +
+    facet_wrap(~.data$label, scales = "free_y", ncol = 1) +
+    geom_text(aes(hjust = .data$pos)) + 
+    coord_flip() +
     ylim(aux[1] - aux2, aux[2] + aux2) +
     labs(x = NULL, y = NULL) +
     theme_lares2(legend = "none", pal = 4, which = "f")
@@ -211,6 +212,7 @@ dalex_variable <- function(explainer, y, force_class = NA, alarm = TRUE) {
     # aux <- partial_dependency(explainer, variables = y)
     x <- ceteris_paribus(explainer, explainer$data, variables = y)
     aux <- aggregate_profiles(x)
+    
     p <- plot(aux) + 
       labs(title = paste("Partial Dependency Plot (PDP):", y), 
            subtitle = label, x = NULL, y = "Average Prediction") +

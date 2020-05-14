@@ -45,10 +45,8 @@ Other Scrapper:
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
-\code{\link{readGS4}()},
 \code{\link{readGS}()},
-\code{\link{trendsRelated}()},
-\code{\link{writeGS}()}
+\code{\link{trendsRelated}()}
 
 Other API: 
 \code{\link{bring_api}()},

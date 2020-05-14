@@ -61,13 +61,13 @@ crosstab <- function(df, ...,
   dfn <- data.frame(x, y, weight)
   colnames(dfn) <- c("x","y","weight")
   
-  ret <- freqs(dfn, x, y, wt = weight) %>% select(-pcum, -p) %>%
-    mutate(x = ifelse(x == "" | is.na(x), "NA", as.character(x)),
-           y = ifelse(x == "" | is.na(y), "NA", as.character(y)))
+  ret <- freqs(dfn, x, y, wt = weight) %>% select(-.data$pcum, -.data$p) %>%
+    mutate(x = ifelse(.data$x == "" | is.na(.data$x), "NA", as.character(.data$x)),
+           y = ifelse(.data$x == "" | is.na(.data$y), "NA", as.character(.data$y)))
 
   levels <- factor(unique(ret$x), levels = unique(ret$x))
   cols <- factor(unique(ret$y), levels = unique(ret$y))
-  tab <- spread(ret, y, n)
+  tab <- spread(ret, .data$y, .data$n)
   ret <- tab[match(levels, tab$x),]
   colnames(ret)[1] <- cross_name
   ret <- ret %>% replace(is.na(.), 0)
@@ -82,12 +82,12 @@ crosstab <- function(df, ...,
   }
   
   if (order) {
-    ret <- ret %>% arrange(desc(total)) # Rows
+    ret <- ret %>% arrange(desc(.data$total)) # Rows
     order <- c(colnames(ret)[1], as.character(cols), "total")
     ret <- ret[,order] # Columns
   }
   
-  if (!total) ret <- ret %>% select(-total)
+  if (!total) ret <- ret %>% select(-.data$total)
   
   return(ret)
   

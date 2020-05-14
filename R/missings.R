@@ -38,9 +38,9 @@ missingness <- function(df, plot = FALSE, full = FALSE,
   m <- df %>%
     summarize_all(.funs = ~ sum(is.na(.))) %>%
     gather() %>%
-    arrange(desc(value)) %>%
-    filter(value > 0) %>%
-    mutate(missing = round(100*value/nrow(df),2))
+    arrange(desc(.data$value)) %>%
+    filter(.data$value > 0) %>%
+    mutate(missing = round(100*.data$value/nrow(df),2))
   colnames(m) <- c("variable", "missing","missingness")
   
   if (plot) {
@@ -59,18 +59,18 @@ missingness <- function(df, plot = FALSE, full = FALSE,
       # tidyr::pivot_longer(cols = everything()) %>% # The world is not yet prepared!
       tidyr::gather() %>%
       {if (!full) 
-        filter(., key %in% m$variable) else .} %>%
-      mutate(type = ifelse(key %in% m$variable, "with", "without")) %>%
-      group_by(key) %>%
+        filter(., .data$key %in% m$variable) else .} %>%
+      mutate(type = ifelse(.data$key %in% m$variable, "with", "without")) %>%
+      group_by(.data$key) %>%
       mutate(row_num = row_number()) %>%
-      mutate(perc = round(100*sum(value)/nrow(df),2)) %>%
-      mutate(label = ifelse(type == "with", paste0(key, " | ", perc,"%"), key)) %>%
-      arrange(value) %>% 
-      ggplot(aes(x = reorder(label, perc), y = row_num, fill = value)) + 
+      mutate(perc = round(100*sum(.data$value)/nrow(df),2)) %>%
+      mutate(label = ifelse(.data$type == "with", paste0(.data$key, " | ", .data$perc,"%"), .data$key)) %>%
+      arrange(.data$value) %>% 
+      ggplot(aes(x = reorder(.data$label, .data$perc), y = .data$row_num, fill = .data$value)) + 
       geom_raster() + 
       coord_flip() +
       {if (full) 
-        facet_grid(type ~ ., space = "free", scales = "free")} +
+        facet_grid(.data$type ~ ., space = "free", scales = "free")} +
       {if (summary) 
         scale_y_comma(note, expand = c(0, 0)) else 
           scale_y_comma(NULL, expand = c(0, 0))} +

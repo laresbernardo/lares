@@ -182,14 +182,14 @@ f1_contacts <- function(limit = 1000, creds = NA) {
   contacts$has_more <- contacts$vid_offset <- NULL
   colnames(contacts) <- gsub("contacts_properties_|_value", "", colnames(contacts))
   contacts <- contacts %>%
-    dplyr::rename(credit_value = credit,
-                  #sale_value = sale,
-                  vehicle_commercial_value = vehicle_commercial) %>%
+    dplyr::rename(credit_value = .data$credit,
+                  #sale_value = .data$sale,
+                  vehicle_commercial_value = .data$vehicle_commercial) %>%
     mutate_at(vars(contains('timestamp')), funs(hsdates(.))) %>%
     mutate_at(vars(contains('date')), funs(hsdates(.))) %>%
     mutate_at(vars(contains('addedAt')), funs(hsdates(.))) %>% 
-    mutate(date_of_birth = as.Date(date_of_birth),
-           identification_date = as.Date(identification_date))
+    mutate(date_of_birth = as.Date(.data$date_of_birth),
+           identification_date = as.Date(.data$identification_date))
   
   contacts$last_form_filled <- ifelse(
     grepl("146f9e71-b10e-4f7d-b0ef-8b65b122301f", contacts$contacts_form_submissions), "datos_personales",
@@ -218,13 +218,13 @@ f1_contacts <- function(limit = 1000, creds = NA) {
                   ifelse(!is.na(contacts$firstname), "datos_personales", "lead"))))
   
   contacts <- contacts %>%
-    select(-contacts_identity_profiles, -contacts_profile_url, 
-           -contacts_profile_token, -contacts_portal_id,
-           -contacts_canonical_vid, -contacts_is_contact, 
-           -contacts_merge_audits, -contacts_form_submissions,
+    select(-.data$contacts_identity_profiles, -.data$contacts_profile_url, 
+           -.data$contacts_profile_token, -.data$contacts_portal_id,
+           -.data$contacts_canonical_vid, -.data$contacts_is_contact, 
+           -.data$contacts_merge_audits, -.data$contacts_form_submissions,
            -contains("files_payroll"), -contains("file_identification"), 
            -contains("files_labour")) %>%
-    select(contacts_vid, step_done, one_of(properties), everything()) %>%
+    select(.data$contacts_vid, .data$step_done, one_of(properties), everything()) %>%
     dplyr::rename(., "vid" = "contacts_vid")
   
   # # One contact

@@ -24,11 +24,7 @@ Other Connections:
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
 \code{\link{geoAddress}()},
-\code{\link{li_auth}()},
-\code{\link{queryDW}()},
-\code{\link{queryDummy}()},
-\code{\link{queryProduc}()},
-\code{\link{typeform_download}()}
+\code{\link{li_auth}()}
 }
 \concept{CRM}
 \concept{Connections}

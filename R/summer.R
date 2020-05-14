@@ -32,7 +32,7 @@ summer <- function(df, ...,
   
   # SUM ALL NUMERIC VALUES
   output <- df %>% summarise_if(is.numeric, fun, na.rm = TRUE)
-  if (grouped) output <- output %>% left_join(aux, groups)
+  if (grouped) output <- output %>% left_join(aux, .data$groups)
   
   # Select specific columns
   if (!is.na(which)[1]) {
@@ -50,10 +50,10 @@ summer <- function(df, ...,
     #aux <- tidyr::pivot_longer(output, which) %>% 
     aux <- gather(output, which) %>% 
       mutate(label = paste(!!!vars)) %>%
-      arrange(desc(value))
+      arrange(desc(.data$value))
     if (!is.na(top)) {
       message(paste("Slicing the top", top, "for each numerical variable"))
-      aux <- aux %>% group_by(name) %>% slice(1:top)
+      aux <- aux %>% group_by(.data$name) %>% slice(1:top)
     }
 
     reorder_within <- function(x, by, within, fun = mean, sep = "___", ...) {
@@ -65,10 +65,10 @@ summer <- function(df, ...,
       ggplot2::scale_x_discrete(labels = function(x) gsub(reg, "", x), ...)
     }
     
-    plot <- ggplot(aux, 
-                   aes(x = reorder_within(label, value, name), y = value)) +
+    plot <- ggplot(aux, aes(
+      x = reorder_within(.data$label, .data$value, .data$name), y = .data$value)) +
       geom_col() + coord_flip() +
-      facet_wrap(. ~ name, scales = "free", ncol = 1) +
+      facet_wrap(. ~ .data$name, scales = "free", ncol = 1) +
       theme_lares2(pal = 2, grid = "Xx") + scale_x_reordered() +
       scale_y_continuous(labels = comma) +
       labs(x = NULL, y = NULL, title = "Numerical Columns Summed")

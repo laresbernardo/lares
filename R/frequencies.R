@@ -25,10 +25,15 @@
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
 #' @examples 
-#' \dontrun{
 #' data(dft)
 #' # How many survived?
 #' dft %>% freqs(Survived)
+#' # How many survived per Class?
+#' dft %>% freqs(Pclass, Survived, abc = TRUE)
+#' # How many survived per Class with relative percentages?
+#' dft %>% freqs(Pclass, Survived, abc = TRUE, rel = TRUE)
+#' \dontrun{
+#' # Let's check the results with plots
 #' # How many survived and see plot?
 #' dft %>% freqs(Survived, plot = TRUE)
 #' # How many survived per class?
@@ -40,10 +45,10 @@
 #' # Per number of siblings, sex, and class, how many survived?
 #' dft %>% freqs(SibSp, Sex, Pclass, Survived, plot = TRUE)
 #' dft %>% freqs(SibSp, Sex, Pclass, Survived, plot = FALSE)
-#' # Frequency of tickets
-#' dft %>% freqs(Ticket, plot = TRUE)
-#' # Frequency of tickets: show me more
-#' dft %>% freqs(Ticket, plot = TRUE, top = 10)
+#' # Frequency of tickets + Survived
+#' dft %>% freqs(Survived, Ticket, plot = TRUE)
+#' # Frequency of tickets: top 10 only and order them alphabetically
+#' dft %>% freqs(Ticket, plot = TRUE, top = 10, abc = TRUE)
 #' }
 #' @export
 freqs <- function(df, ..., wt = NULL,
@@ -65,45 +70,55 @@ freqs <- function(df, ..., wt = NULL,
   }
   
   output <- df %>% 
-    group_by(!!!vars) %>% tally(wt = !!weight) %>% 
-    arrange(desc(n)) %>%
+    group_by(!!!vars) %>% 
+    tally(wt = !!weight) %>% 
+    arrange(desc(.data$n)) %>%
     {if (!rel) ungroup(.) else .} %>%
-    mutate(p = round(100*n/sum(n), 2), pcum = cumsum(p))  
+    mutate(p = round(100*.data$n/sum(.data$n), 2))
   
   # Sort values alphabetically or ascending if numeric
   if (abc) {
     message("Sorting variable(s) alphabetically")
-    output <- output %>% arrange(!!!vars, desc(n)) %>% 
+    output <- output %>% 
+      arrange(!!!vars, desc(n)) %>% 
       mutate(order = row_number())
   } else {
-    output <- output %>% arrange(desc(n)) %>%
+    output <- output %>% 
+      arrange(desc(.data$n)) %>%
       mutate(order = row_number())
   }
   
-  # No plot
-  if (!plot && !save)
-    if (results) return(output) else invisible(return())
+  # Add cumulative percentage (given the abc logic)
+  output <- mutate(output, pcum = cumsum(.data$p))
   
-  if (ncol(output) - 3 >= 4) {
+  # No plot
+  if (!plot && !save) {
+    if (results) 
+      return(output) 
+    else 
+      invisible(return())  
+  }
+  
+  if (ncol(output) - 4 >= 4) {
     stop(
       paste("Sorry, but trying to plot more than 3 features is as complex as it sounds.",
             "You should try another method to understand your analysis!"))
   }
   obs_total <- sum(output$n)
-  obs <- paste("Total Obs.:", formatNum(obs_total, 0))
+  obs <- sprintf("Total Obs.: %s", formatNum(obs_total, 0))
   weight_text <- ifelse((as_label(weight) != "NULL"), 
-                        paste0("(weighted by ", as_label(weight), ")"), "")
+                        sprintf("(weighted by %s)", as_label(weight)), "")
   
   # Use only the most n frequent values/combinations only
-  values <- unique(output[,(ncol(output) - 3)])
+  values <- unique(output[,length(vars)])
   if (nrow(values) > top) {
     if (!is.na(top)) {
-      output <- output %>% slice(1:top)
-      message(paste0("Slicing the top ", top, 
-                     " (out of ", nrow(values),
-                     ") frequencies; use 'top' parameter to overrule."))
-      note <- paste0("[", top, " most frequent]")
-      obs <- paste0("Obs.: ", formatNum(sum(output$n), 0), " (out of ", formatNum(obs_total, 0), ")")
+      output <- output %>% arrange(desc(.data$n)) %>% slice(1:top)
+      message(
+        sprintf("Slicing the top %s (out of %s) values; use 'top' parameter to overrule.", 
+                top, nrow(values)))
+      note <- sprintf("[%s most frequent]", top)
+      obs <- sprintf("Obs.: %s (out of %s)", formatNum(sum(output$n), 0), formatNum(obs_total, 0))
     }
   } else {note <- ""}
   
@@ -123,8 +138,7 @@ freqs <- function(df, ..., wt = NULL,
   if (rm.na)  plot <- plot[complete.cases(plot), ]
   
   # Create some dynamic aesthetics
-  plot$labels <- paste0(formatNum(plot$n, decimals = 0),
-                        " (", signif(plot$p, 4), "%)")
+  plot$labels <- paste0(formatNum(plot$n, decimals = 0), " (", signif(plot$p, 4), "%)")
   plot$label_colours <- ifelse(plot$p > mean(range(plot$p)) * 0.9, "m", "f")
   lim <- 0.35
   plot$label_hjust <- ifelse(
@@ -137,7 +151,8 @@ freqs <- function(df, ..., wt = NULL,
   if (ncol(output) - 3 == 2) { 
     type <- 1
     colnames(plot)[1] <- "names"
-    p <- ggplot(plot) + aes(x = reorder(names, -order), y = n, label = labels, fill = p)
+    p <- ggplot(plot, aes(x = reorder(.data$names, -.data$order), 
+                          y = .data$n, label = .data$labels, fill = .data$p))
   }
   # When two features
   else if (ncol(output) - 3 == 3) { 
@@ -147,8 +162,8 @@ freqs <- function(df, ..., wt = NULL,
     colnames(plot)[2] <- "names"
     plot$facet[is.na(plot$facet)] <- "NA"
     p <- plot %>%
-      ggplot(aes(x = reorder_within(names, -order, facet), 
-                 y = n, label = labels, fill = p)) +
+      ggplot(aes(x = reorder_within(.data$names, -.data$order, .data$facet), 
+                 y = .data$n, label = .data$labels, fill = .data$p)) +
       scale_x_reordered()
   }
   # When three features
@@ -162,14 +177,14 @@ freqs <- function(df, ..., wt = NULL,
     plot$facet2[is.na(plot$facet2)] <- "NA"
     plot$facet1[is.na(plot$facet1)] <- "NA"
     p <- plot %>%
-      ggplot(aes(x = reorder_within(names, n, facet2), 
-                 y = n, label = labels, fill = p)) +
+      ggplot(aes(x = reorder_within(.data$names, .data$n, .data$facet2), 
+                 y = .data$n, label = .data$labels, fill = .data$p)) +
       scale_x_reordered()
   }
   
   # Plot base
   p <- p + geom_col(alpha = 0.95, width = 0.8, colour = "transparent") +
-    geom_text(aes(hjust = label_hjust, colour = label_colours), size = 2.8) + 
+    geom_text(aes(hjust = .data$label_hjust, colour = .data$label_colours), size = 2.8) + 
     coord_flip() + guides(colour = FALSE) +
     labs(x = NULL, y = NULL, fill = NULL,
          title = ifelse(is.na(title), paste("Frequencies and Percentages"), title),
@@ -184,7 +199,7 @@ freqs <- function(df, ..., wt = NULL,
   # When two features
   if (type == 2) { 
     p <- p + 
-      facet_grid(as.character(facet) ~ ., scales = "free", space = "free") + 
+      facet_grid(as.character(.data$facet) ~ ., scales = "free", space = "free") + 
       labs(subtitle = ifelse(is.na(subtitle), 
                              paste("Variables:", facet_name, "grouped by", variable, "\n", note, weight_text), 
                              subtitle),
@@ -197,7 +212,7 @@ freqs <- function(df, ..., wt = NULL,
       p <- freqs_plot(df, ..., top = top, rm.na = rm.na, title = title, subtitle = subtitle)
       return(p)
     }
-    p <- p + facet_grid(as.character(facet2) ~ as.character(facet1), scales = "free") + 
+    p <- p + facet_grid(as.character(.data$facet2) ~ as.character(.data$facet1), scales = "free") + 
       labs(title = ifelse(is.na(title), "Frequencies and Percentages:", title),
            subtitle = ifelse(is.na(subtitle), 
                              paste("Variables:", facet_name2, "grouped by", facet_name1, "[x] and", 
@@ -239,7 +254,9 @@ freqs_df <- function(df,
                      quiet = FALSE,
                      save = FALSE, subdir = NA) {
   
-  if (is.vector(df)) stop("df should be a data frame, not a vector")
+  if (is.vector(df)) 
+    return(freqs(data.frame(values = df), .data$values))
+  
   df <- df[!unlist(lapply(df, is.list))]
   names <- lapply(df, function(x) length(unique(x)))
   unique <- as.data.frame(names)
@@ -277,15 +294,19 @@ freqs_df <- function(df,
       if (i == 1) out <- c()
       iter <- which[i]
       counter <- table(df[iter], useNA = "ifany")
-      res <- data.frame(value = names(counter), count = as.vector(counter), col = iter) %>%
-        arrange(desc(count))
+      res <- data.frame(value = names(counter), 
+                        count = as.vector(counter), 
+                        col = iter) %>%
+        arrange(desc(.data$count))
       out <- rbind(out, res)
     } 
     out <- out %>% 
-      mutate(p = round(100 * count / nrow(df), 2)) %>%
-      mutate(value = ifelse(p > min * 100, as.character(value), "(HF)")) %>%
-      group_by(col, value) %>% summarise(p = sum(p), count = sum(count)) %>% 
-      arrange(desc(count)) %>% ungroup()
+      mutate(p = round(100 * .data$count / nrow(df), 2)) %>%
+      mutate(value = ifelse(.data$p > min * 100, as.character(.data$value), "(HF)")) %>%
+      group_by(.data$col, .data$value) %>% 
+      summarise(p = sum(.data$p), count = sum(.data$count)) %>% 
+      arrange(desc(.data$count)) %>% 
+      ungroup()
   } else { 
     warning("No relevant information to display regarding your data.frame!") 
     return(invisible(NULL))
@@ -293,15 +314,17 @@ freqs_df <- function(df,
   
   if (plot) {
     out <-  out %>%
-      mutate(value = ifelse(is.na(value), "NA", as.character(value))) %>%
-      mutate(col = factor(col, levels = which)) %>%
-      mutate(label = ifelse(p > 8, as.character(value), "")) %>%
-      group_by(col) %>% mutate(alpha = log(count)) %>%
-      mutate(alpha = as.numeric(ifelse(value == "NA", 0, alpha))) %>%
-      mutate(alpha = as.numeric(ifelse(is.infinite(alpha), 0, alpha)))
+      mutate(value = ifelse(is.na(.data$value), "NA", as.character(.data$value))) %>%
+      mutate(col = factor(.data$col, levels = which)) %>%
+      mutate(label = ifelse(.data$p > 8, as.character(.data$value), "")) %>%
+      group_by(.data$col) %>% 
+      mutate(alpha = log(.data$count)) %>%
+      mutate(alpha = as.numeric(ifelse(.data$value == "NA", 0, .data$alpha))) %>%
+      mutate(alpha = as.numeric(ifelse(is.infinite(.data$alpha), 0, .data$alpha)))
     
-    p <- ggplot(out, aes(x = col, y = count, fill = col, label = label, colour = col)) + 
-      geom_col(aes(alpha = alpha), position = "fill", 
+    p <- ggplot(out, aes(x = .data$col, y = .data$count, fill = .data$col, 
+                         label = .data$label, colour = .data$col)) + 
+      geom_col(aes(alpha = .data$alpha), position = "fill", 
                colour = "transparent", width = 0.95, size = 0.1) + 
       geom_text(position = position_fill(vjust = .5), size = 3) +
       coord_flip() + labs(x = NULL, y = NULL, title = "Global Values Frequencies") +
@@ -316,10 +339,10 @@ freqs_df <- function(df,
     if (save) export_plot(p, "viz_freqs_df", subdir = subdir)
     return(p)
   } else {
-    out <- select(out, col, value, count, p) %>%
-      rename(n = count, variable = col) %>%
-      group_by(variable) %>%
-      mutate(pcum = round(cumsum(p), 2))
+    out <- select(out, .data$col, .data$value, .data$count, .data$p) %>%
+      rename(n = .data$count, variable = .data$col) %>%
+      group_by(.data$variable) %>%
+      mutate(pcum = round(cumsum(.data$p), 2))
     return(out)
   }
 }
@@ -357,13 +380,13 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
   vars <- quos(...)
   
   if (length(vars) == 0)
-    return(freqs(dft))
+    return(freqs(df))
   
   aux <- df %>% 
     freqs(!!!vars, rm.na = rm.na) %>% 
     mutate_if(is.factor, as.character) %>%
     mutate_at(1:length(vars), as.character) %>%
-    mutate(order = ifelse(order > top, "...", order))
+    mutate(order = ifelse(.data$order > top, "...", .data$order))
   if ("..." %in% aux$order)
     message(paste(
       "Showing", top, "most frequent values. Tail of",
@@ -372,18 +395,19 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
   for (i in 1:(ncol(aux) - 4))
     aux[,i][aux$order == "...",] <- "Tail"  
   aux <- aux %>%
-    group_by(!!!vars, order) %>%
+    group_by(!!!vars, .data$order) %>%
     summarise_all(sum) %>%
     ungroup()
   vars_names <- colnames(aux)[1:(ncol(aux) - 4)]
   
-  labels <- aux %>% mutate_all(as.character) %>% 
+  labels <- aux %>% 
+    mutate_all(as.character) %>% 
     tidyr::pivot_longer(colnames(aux)[1:(ncol(aux)-4)]) %>%
-    mutate(label = sprintf("%s: %s", name, value)) %>%
-    mutate(n = as.integer(n), 
-           pcum = as.numeric(pcum),
-           p = as.numeric(p)) %>%
-    ungroup() %>% arrange(desc(pcum))
+    mutate(label = sprintf("%s: %s", .data$name, .data$value)) %>%
+    mutate(n = as.integer(.data$n), 
+           pcum = as.numeric(.data$pcum),
+           p = as.numeric(.data$p)) %>%
+    ungroup() %>% arrange(desc(.data$pcum))
   
   if (is.na(title))
     title <- "Absolute Frequencies"
@@ -392,10 +416,10 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
   mg <- 5
   
   p1 <- aux %>% 
-    mutate(aux = ifelse(order == "...", "grey", "black")) %>%
-    mutate(order = paste0(order, "\n", signif(as.numeric(p), 2), "%")) %>%
-    ggplot(aes(x = reorder(order, pcum), y = n, label = p)) +
-    geom_col(aes(fill = aux)) +
+    mutate(aux = ifelse(.data$order == "...", "grey", "black")) %>%
+    mutate(order = paste0(.data$order, "\n", signif(as.numeric(.data$p), 2), "%")) %>%
+    ggplot(aes(x = reorder(.data$order, .data$pcum), y = .data$n, label = .data$p)) +
+    geom_col(aes(fill = .data$aux)) +
     scale_fill_manual(values = c("black", "grey55")) +
     labs(x = NULL, y = NULL, title = title, subtitle = subtitle) + 
     scale_y_comma() +
@@ -404,17 +428,16 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
     theme(plot.margin = margin(mg, mg, 0, mg))
   
   p2 <- labels %>%
-    {if (abc) mutate(., n = -rank(label)) else .} %>%
-    mutate(label = ifelse(order == "...", " Mixed Tail", label)) %>%
-    ggplot(aes(x = reorder(order, pcum), 
-               y = reorder(label, n), 
-               group = pcum)) +
+    {if (abc) mutate(., n = -rank(.data$label)) else .} %>%
+    mutate(label = ifelse(.data$order == "...", " Mixed Tail", .data$label)) %>%
+    ggplot(aes(x = reorder(.data$order, .data$pcum), 
+               y = reorder(.data$label, .data$n), 
+               group = .data$pcum)) +
     geom_point(size = 4) +
     labs(x = NULL, y = NULL, 
          caption = paste("Total observations:", formatNum(nrow(df), 0))) + 
     guides(colour = FALSE) +
     theme_lares2(which = "XY") +
-    #facet_grid(name ~ ., scales = "free") +
     theme(axis.text.x = element_blank(),
           plot.margin = margin(0, mg, mg, mg))
   if (length(vars) > 1)

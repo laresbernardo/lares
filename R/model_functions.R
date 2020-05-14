@@ -131,13 +131,13 @@ h2o_automl <- function(df, y = "tag",
   }
   colnames(df)[colnames(df) == y] <- "tag"
   df <- data.frame(df) %>% 
-    filter(!is.na(tag)) %>%
+    filter(!is.na(.data$tag)) %>%
     mutate_if(is.character, as.factor)
   
   # MISSING VALUES
   m <- missingness(df)
   if (!is.null(m)) {
-    m <- mutate(m, label = paste0(variable, " (", missingness, "%)"))
+    m <- mutate(m, label = paste0(.data$variable, " (", .data$missingness, "%)"))
     if (!quiet) {
       top10 <- m %>% ungroup() %>% slice(1:10)
       which <- vector2text(top10$label, quotes = FALSE)
@@ -160,7 +160,8 @@ h2o_automl <- function(df, y = "tag",
       "Consider using ohse() for One Hot Smart Encoding before automl if you want to custom your inputs."))
   if (scale | center & length(nums) > 0) {
     new <- data.frame(lapply(df[nums], function(x) scale(x, center = center, scale = scale)))
-    colnames(new) <- nums; df[nums] <- new
+    colnames(new) <- nums
+    df[nums] <- new
     msg <- ifelse(scale & center, "scaled and centered", ifelse(scale, "scaled", "centered"))
     if (!quiet) message(paste0("All numerical features (", length(nums), ") were ", msg))
   }
@@ -185,12 +186,12 @@ h2o_automl <- function(df, y = "tag",
   # When might seem numeric but is categorical
   if (model_type == "Classifier" & sum(grepl('^[0-9]', cats)) > 0)
     df <- mutate(df, tag = as.factor(as.character(
-      ifelse(grepl('^[0-9]', tag), paste0("n_", tag), as.character(tag)))))
+      ifelse(grepl('^[0-9]', .data$tag), paste0("n_", .data$tag), as.character(.data$tag)))))
   # When is regression should always be numerical
   if (model_type == "Regression")
     df$tag <- as.numeric(df$tag)
   # Show a summary of our tags
-  if (model_type == "Classifier" & !quiet) print(data.frame(freqs(df, tag)))
+  if (model_type == "Classifier" & !quiet) print(data.frame(freqs(df, .data$tag)))
   if (model_type == "Regression" & !quiet) print(summary(df$tag)) 
   
   # SPLIT TRAIN AND TEST DATASETS
@@ -204,8 +205,8 @@ h2o_automl <- function(df, y = "tag",
     if (train_test %in% colnames(df)) {
       colnames(df)[colnames(df) == train_test] <- "train_test"
       if (all(unique(as.character(df$train_test)) %in% c('train', 'test'))) {
-        train <- filter(df, train_test == "train")
-        test <- filter(df, train_test == "test")
+        train <- filter(df, .data$train_test == "train")
+        test <- filter(df, .data$train_test == "test")
         ignore <- c(ignore, train_test)
         if (!quiet) print(table(df$train_test))
       } else stop("Your train_test column should have 'train' and 'test' values only!") 
@@ -217,8 +218,8 @@ h2o_automl <- function(df, y = "tag",
   # BALANCE TRAINING SET
   if (model_type == "Classifier" & balance) {
     total <- nrow(train)
-    min <- freqs(train, tag) %>% .$n %>% min(., na.rm = TRUE)
-    train <- train %>% group_by(tag) %>% sample_n(min)
+    min <- freqs(train, .data$tag) %>% .$n %>% min(., na.rm = TRUE)
+    train <- train %>% group_by(.data$tag) %>% sample_n(min)
     if (!quiet) message(paste0("Training set balanced: ", min, 
                                " observations for each (",length(cats),") category; using ",
                                round(100*nrow(train)/total, 2), "% of training data..."))
@@ -362,7 +363,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
         rename(., "variable" = "names", "importance" = "coefficients") else .} %>%
       {if ("percentage" %in% colnames(.)) 
         rename(., "importance" = "percentage") else .}
-    noimp <- dplyr::filter(imp, importance < 0.015) %>% arrange(importance)
+    noimp <- dplyr::filter(imp, .data$importance < 0.015) %>% arrange(desc(.data$importance))
     if (nrow(noimp) > 0) {
       top10 <- noimp %>% ungroup() %>% slice(1:10)
       which <- vector2text(top10$variable, quotes = FALSE)
@@ -395,7 +396,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
       scores <- select_if(scores, is.numeric) %>% .[,1]
     } else {
       colnames(scores)[1] <- "score"
-      multis <- select(scores, -score)
+      multis <- select(scores, -.data$score)
     }
   } else {
     scores <- data.frame(score = as.vector(scores))
@@ -420,10 +421,10 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   
   results[["datasets"]] <- list(
     global = as_tibble(global), 
-    test = filter(global, train_test == "test"))
+    test = filter(global, .data$train_test == "test"))
   results[["scoring_history"]] <- as_tibble(m@model$scoring_history)
   results[["parameters"]] <- m@parameters
-  results[["categoricals"]] <- list_cats(filter(global, train_test == "train"))
+  results[["categoricals"]] <- list_cats(filter(global, .data$train_test == "train"))
   results[["type"]] <- model_type
   results[["model_name"]] <- as.vector(m@model_id)
   results[["algorithm"]] <- m@algorithm
@@ -484,7 +485,7 @@ h2o_selectmodel <- function(results, which_model = 1, plots = TRUE, quiet = FALS
   # Calculate everything
   output <- h2o_results(m, 
                         test = results$datasets$test, 
-                        # NOT filter(results$datasets$global, train_test == "train"),
+                        # NOT filter(results$datasets$global, .data$train_test == "train"),
                         train = results$datasets$test, 
                         y = results$y, 
                         which = which_model, 
@@ -678,7 +679,7 @@ iter_seeds <- function(df, tries = 10) {
   for (i in 1:tries) {
     iter <- h2o_automl(df, seed = i)
     seeds <- rbind(seeds, cbind(seed = as.integer(i), auc = iter$auc_test))
-    seeds <- arrange(seeds, desc(auc))
+    seeds <- arrange(seeds, desc(.data$auc))
     print(seeds)
   }
   return(seeds)
@@ -824,9 +825,9 @@ loglossBinary <- function(tag, score, eps = 0.0001) {
   if (!is.numeric(tag)) tag <- as.integer(tag) - 1
   
   score <- pmax(pmin(score, 1 - eps), eps)
-  LogLoss <- -mean(tag * log(score) + (1 - tag) * log(1 - score))
+  output <- -mean(tag * log(score) + (1 - tag) * log(1 - score))
   
-  return(LogLoss)
+  return(output)
   
 }
 
@@ -858,7 +859,7 @@ h2o_predict_MOJO <- function(df, model_path, batch = 300){
   df$aux <- rep(1:aux, each = batch)[1:nrow(df)]
   output <- c()
   for (i in 1:aux) {
-    dfi <- select(df[df$aux == i,], -aux)
+    dfi <- select(df[df$aux == i,], -.data$aux)
     json <- toJSON(dfi)
     size <- nchar(json)
     if (size > 250000)
@@ -939,8 +940,7 @@ h2o_predict_API <- function(df, api) {
       api, 
       add_headers('Content-Type' = 'application/json'), 
       body = as.list(df), 
-      encode = "json", 
-      verbose())
+      encode = "json")
     return(content(x)$probabilityToOne)
   }
   
@@ -1017,7 +1017,7 @@ target_set <- function(tag, score, target = "auto", quiet = FALSE) {
     stop("Your tag must be categorical. Your score must be numerical.") 
   
   # Get mean scores for each tag
-  means <- df %>% group_by(tag) %>% summarise(mean = mean(score))
+  means <- df %>% group_by(.data$tag) %>% summarise(mean = mean(.data$score))
   auto <- means$tag[means$mean == max(means$mean)]
   if (target == "auto")
     target <- auto
@@ -1059,29 +1059,34 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
   which <- aux$which
   
   sc <- df %>% 
-    mutate(tag = ifelse(tag == which, TRUE, FALSE)) %>%
-    arrange(desc(score)) %>%
+    mutate(tag = ifelse(.data$tag == .data$which, TRUE, FALSE)) %>%
+    arrange(desc(.data$score)) %>%
     mutate(percentile = .bincode(
-      score, quantile(score, probs = seq(0, 1, length = splits + 1), include.lowest = TRUE), 
+      .data$score, quantile(.data$score, probs = seq(0, 1, length = splits + 1), 
+                            include.lowest = TRUE), 
       right = TRUE, include.lowest = TRUE)) %>%
-    mutate(percentile = rev(factor(percentile, 1:splits)))
+    mutate(percentile = rev(factor(.data$percentile, 1:splits)))
   
-  wizard <- sc %>% filter(tag == TRUE) %>% 
+  wizard <- sc %>% 
+    filter(.data$tag == TRUE) %>% 
     mutate(percentile = sc$percentile[1:length(sc$percentile[sc$tag == TRUE])]) %>%
-    group_by(percentile) %>% tally() %>% 
-    ungroup() %>% mutate(p = 100 * n/sum(n), pcum = cumsum(p)) %>% 
-    select(percentile, pcum) %>% rename(optimal = pcum)
+    group_by(.data$percentile) %>% tally() %>% 
+    ungroup() %>% mutate(p = 100 * .data$n/sum(.data$n), pcum = cumsum(.data$p)) %>% 
+    select(.data$percentile, .data$pcum) %>% 
+    rename(optimal = .data$pcum)
   
-  gains <- sc %>% group_by(percentile) %>% 
-    summarise(total = n(), target = sum(tag), score = 100 * min(score)) %>%
-    left_join(wizard, "percentile") %>% replace(is.na(.), 100) %>% ungroup() %>%
-    mutate(gain = 100 * cumsum(target)/sum(target),
-           random = 100 * cumsum(total)/sum(total),
-           lift = 100 * (gain/random - 1),
-           response = 100 * target/sum(target),
+  gains <- sc %>% 
+    group_by(.data$percentile) %>% 
+    summarise(total = n(), target = sum(.data$tag), score = 100 * min(.data$score)) %>%
+    left_join(wizard, "percentile") %>% 
+    replace(is.na(.), 100) %>% ungroup() %>%
+    mutate(gain = 100 * cumsum(.data$target)/sum(.data$target),
+           random = 100 * cumsum(.data$total)/sum(.data$total),
+           lift = 100 * (.data$gain/.data$random - 1),
+           response = 100 * .data$target/sum(.data$target),
            value = which) %>%
-    select(percentile, value, random, target, total, 
-           gain, optimal, lift, response, score)
+    select(.data$percentile, .data$value, .data$random, .data$target, .data$total, 
+           .data$gain, .data$optimal, .data$lift, .data$response, .data$score)
   
   if (plot) {
     plots <- list()
@@ -1133,7 +1138,8 @@ ROC <- function(tag, score, multis = NA) {
   } else {
     df <- data.frame(tag = tag, score = score, multis)
     cols <- colnames(df)
-    coords <- c(); rocs <- list()
+    coords <- c()
+    rocs <- list()
     for (i in 1:(length(cols) - 2)) {
       which <- colnames(df)[2 + i]
       res <- df[,c(which)]
@@ -1178,20 +1184,23 @@ conf_mat <- function(tag, score, thresh = 0.5, plot = FALSE) {
   df <- data.frame(tag, score)
   
   # About tags
-  labels <- df %>% group_by(tag, .drop = FALSE) %>% tally(wt = NULL) %>% arrange(desc(n)) %>% .$tag
-  df <- df %>% mutate(tag = factor(tag, levels = unique(tag)))
+  labels <- df %>% group_by(.data$tag, .drop = FALSE) %>% 
+    tally(wt = NULL) %>% arrange(desc(.data$n)) %>% .$tag
+  df <- df %>% mutate(tag = factor(.data$tag, levels = unique(.data$tag)))
   
   # About scores
   if (is.numeric(df$score) & length(unique(tag)) == 2) {
-    df <- mutate(df, pred = ifelse(score >= thresh, as.character(labels[1]), as.character(labels[2])))
+    df <- mutate(df, pred = ifelse(.data$score >= .data$thresh, 
+                                   as.character(labels[1]), 
+                                   as.character(labels[2])))
   } else {
-    df <- mutate(df, pred = score)
+    df <- mutate(df, pred = .data$score)
   }
   
   # Confussion Matrix
   ret <- df %>% 
-    rename(Real = tag, Pred = pred) %>%
-    crosstab(Real, Pred, total = FALSE)
+    rename(Real = .data$tag, Pred = .data$pred) %>%
+    crosstab(.data$Real, .data$Pred, total = FALSE)
   
   return(ret)
 }
@@ -1261,7 +1270,7 @@ model_metrics <- function(tag, score, multis = NA,
     
     if (is.numeric(score)) {
       new <- data.frame(score = score) %>%
-        mutate(new = ifelse(score >= thresh_cm, cats[1], cats[2])) %>% .$new
+        mutate(new = ifelse(.data$score >= thresh_cm, cats[1], cats[2])) %>% .$new
     } else {
       new <- score
     }
@@ -1324,8 +1333,8 @@ model_metrics <- function(tag, score, multis = NA,
         }
       }
       nums$AUC <- AUCs[1:nrow(nums)]
-      nums <- left_join(freqs(select(df, tag), tag), nums, "tag") %>% 
-        select(tag, n, p, AUC, everything(), -pcum)
+      nums <- left_join(freqs(select(df, .data$tag), .data$tag), nums, "tag") %>% 
+        select(.data$tag, .data$n, .data$p, .data$AUC, everything(), -.data$pcum)
       metrics[["metrics_tags"]] <- mutate_if(nums, is.numeric, funs(signif(., 5)))
     }
     

@@ -4,7 +4,7 @@
 \alias{date_cuts}
 \title{Convert Date into Year + Cut}
 \usage{
-date_cuts(date, type = "Q")
+date_cuts(date = Sys.Date(), type = "Q")
 }
 \arguments{
 \item{date}{Date. Date we wish to transform}

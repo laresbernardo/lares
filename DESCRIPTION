@@ -10,7 +10,6 @@ Encoding: UTF-8
 LazyData: true
 Imports: 
     config,
-    DBI,
     dplyr,
     ggplot2,
     h2o,
@@ -31,16 +30,11 @@ Imports:
     xml2
 Suggests:
     beepr,
-    caret,
     DALEX,
-    data.table,
-    exifr,
+    DBI,
     forecast,
-    foreign,
-    gdata,
     ggforce,
     ggrepel,
-    googleAnalyticsR,
     googleAuthR,
     googlesheets4,
     mice,
@@ -48,9 +42,7 @@ Suggests:
     plotly,
     rdrop2,
     rmarkdown,
-    RPostgreSQL,
     rtweet,
-    shinydashboard,
     skimr,
     sp,
     tm,

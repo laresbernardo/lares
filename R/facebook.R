@@ -82,9 +82,12 @@ fb_posts <- function(token,
         names <- c(t(select(all, starts_with("from"))))
         name <- names[seq(1, 2*nrow(all),2)]
         name_id <- names[seq(2, 2*nrow(all),2)]
-        dfi <- data.frame(post_id = id, comment_id = ids, 
-                          comment_time = times, comment = coms,
-                          name = name, name_id = name_id) %>%
+        dfi <- data.frame(post_id = id, 
+                          comment_id = ids, 
+                          comment_time = times, 
+                          comment = coms,
+                          name = name, 
+                          name_id = name_id) %>%
           filter(comment != "")
         comments <- rbind(comments, dfi)
       }
@@ -110,7 +113,10 @@ fb_posts <- function(token,
         ids <- c(t(select(all, starts_with("id")))) 
         reac <- c(t(select(all, starts_with("type")))) 
         name <- c(t(select(all, starts_with("name")))) 
-        dfi <- data.frame(post_id = id, reaction_id = ids, reaction = reac, name = name)
+        dfi <- data.frame(post_id = id, 
+                          reaction_id = ids, 
+                          reaction = reac, 
+                          name = name)
         reactions <- rbind(reactions, dfi)
       }
     }
@@ -337,7 +343,7 @@ fb_accounts <- function(token,
   ))
   
   output <- suppressMessages(type.convert(output, numerals = "no.loss")) %>% 
-    arrange(desc(amount_spent)) %>%
+    arrange(desc(data$.amount_spent)) %>%
     as_tibble()
   
   return(output)
@@ -386,7 +392,7 @@ fb_ads <- function(token,
         aux <- rbind_full(aux, lx)
       }
       if ("id" %in% colnames(aux))
-        aux <- rename(aux, list_id = id)
+        aux <- rename(aux, list_id = .data$id)
     }
     return(aux)
   }
@@ -409,8 +415,8 @@ fb_ads <- function(token,
   ret <- cleanImport(import)
   if (class(ret) == "data.frame") {
     ret <- ret %>%
-      rename(adcreatives_id = list_id) %>%
-      arrange(desc(created_time)) %>%
+      rename(adcreatives_id = .data$list_id) %>%
+      arrange(desc(.data$created_time)) %>%
       as_tibble()
     return(ret) 
   }
@@ -488,8 +494,9 @@ fb_insights <- function(token,
     
     ret <- cleanImport(import)
     if (class(ret) == "data.frame") {
-      ret <- ret %>% mutate(id = aux) %>%
-        arrange(desc(date_start), desc(spend))
+      ret <- ret %>% 
+        mutate(id = .data$aux) %>%
+        arrange(desc(.data$date_start), desc(.data$spend))
       output <- rbind(output, ret)
     }
     if (length(which) == i & length(output) == 0) {
@@ -532,7 +539,7 @@ fb_creatives <- function(token, which, api_version = "v6.0", show = FALSE) {
   import <- GET(linkurl)
   ret <- cleanImport(import)
   if (class(ret) == "data.frame")
-    ret <- as_tibble(select(ret, one_of("id", fields)))
+    ret <- as_tibble(select(ret, one_of("id", .data$fields)))
   attr(ret, "cURL") <- linkurl
   return(ret) 
 }

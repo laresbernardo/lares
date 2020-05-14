@@ -72,7 +72,6 @@ temporal correlation (Cochrane, 1997: 25)
 }
 \seealso{
 Other Forecast: 
-\code{\link{forecast_ml}()},
 \code{\link{prophesize}()}
 }
 \concept{Forecast}

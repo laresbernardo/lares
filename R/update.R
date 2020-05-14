@@ -8,12 +8,14 @@
 #' @param force Boolean. Force install if needed
 #' @param n Boolean. Notify update for lares' stats
 #' @param fb Boolean. From FB instance?
+#' @param all Boolean. Install other recommended libraries? Kinda Docker install!
 #' @export
-updateLares <- function(local = FALSE, force = FALSE, n = TRUE, fb = FALSE) {
+updateLares <- function(local = FALSE, force = FALSE, n = TRUE, fb = FALSE, all = FALSE) {
+  
+  try_require("devtools")
   
   tic(id = "updateLares")
   message(paste(Sys.time(), "| Started update..."))
-  try_require("devtools")
   
   if (local) {
     install("~/Dropbox (Personal)/Documentos/R/Github/lares")
@@ -33,6 +35,8 @@ updateLares <- function(local = FALSE, force = FALSE, n = TRUE, fb = FALSE) {
     aux <- paste("User:", Sys.info()[["user"]])
     slackSend(aux, title = "New lares update", quiet = TRUE)
   }
+  
+  if (all) install_recommended()
   
   message("Restart your current session for update to work properly")
   toc(id = "updateLares", msg = paste(Sys.time(), "|"))

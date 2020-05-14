@@ -33,7 +33,8 @@ stocks_file <- function(filename = NA,
     port <- read.xlsx(file, sheet = sheets[1], skipEmptyRows = TRUE, detectDates = TRUE)
     cash <- read.xlsx(file, sheet = sheets[2], skipEmptyRows = TRUE, detectDates = TRUE)
     trans <- read.xlsx(file, sheet = sheets[3], skipEmptyRows = TRUE, detectDates = TRUE)
-    if ("Value" %in% colnames(trans)) trans <- rename(trans, Each = Value, Invested = Amount)
+    if ("Value" %in% colnames(trans)) 
+      trans <- rename(trans, Each = .data$Value, Invested = .data$Amount)
     if (!keep_old) port <- port[port$Stocks != 0,]
     mylist <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
     return(mylist)
@@ -57,7 +58,7 @@ stocks_file <- function(filename = NA,
                   xlsx = FALSE, # Do not import as Excel, just download
                   newname = file,
                   token_dir = creds)
-      results <- processFile(file, keep_old)
+      results <- processFile(file, keep_old = keep_old)
       file.remove(file)
     } 
   }
@@ -105,7 +106,7 @@ stocks_quote <- function(ticks) {
   if (length(ret) > 0) {
     colnames(ret) <- c("Symbol","Type","QuoteTime", "Value", "DailyChange", "Market", "SymbolName")
     ret <- data.frame(ret) %>%
-      mutate(QuoteTime = as.POSIXct(QuoteTime, origin = '1970-01-01 00:00:00'))
+      mutate(QuoteTime = as.POSIXct(.data$QuoteTime, origin = '1970-01-01 00:00:00'))
     row.names(ret) <- NULL 
     return(ret)
   }
@@ -157,7 +158,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
         symbol, env = NULL, from = start_date, to = to, src = "yahoo")))
       values <- cbind(row.names(values), as.character(symbol), values)
       colnames(values) <- c("Date","Symbol","Open","High","Low","Close","Volume","Adjusted")
-      values <- mutate(values, Adjusted = rowMeans(select(values, High, Close), na.rm = TRUE))
+      values <- mutate(values, Adjusted = rowMeans(select(values, .data$High, .data$Close), na.rm = TRUE))
       row.names(values) <- NULL
       # if (as.Date(from[i]) > (Sys.Date() - 4))
       #   values <- head(values, 1)
@@ -172,7 +173,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
                             Open = now$Value, High = now$Value, 
                             Low = now$Value, Close = now$Value,
                             Volume = NA, Adjusted = now$Value)
-          values <- values %>% filter(as.Date(Date) != as.Date(now$Date))
+          values <- filter(values, as.Date(.data$Date) != as.Date(now$Date))
           values <- rbind(values, now)
         }
       }
@@ -190,7 +191,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
         divs <- rbind(divs, div)
         if (parg == TRUE)
           divs <- mutate(divs, DivReal = ifelse(
-            Date < as.Date('2020-03-03'), 
+            .data$Date < as.Date('2020-03-03'), 
             as.vector(d) * 0.30, 
             as.vector(d) * 0.15))
       }
@@ -205,14 +206,17 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
   }
   
   results <- data %>% 
-    select(Date, Symbol, Adjusted) %>% 
-    rename(Value = Adjusted) %>%
-    filter(Value > 0) %>%
-    mutate(Date = as.Date(Date), Symbol = as.character(Symbol))
+    select(.data$Date, .data$Symbol, .data$Adjusted) %>% 
+    rename(Value = .data$Adjusted) %>%
+    filter(.data$Value > 0) %>%
+    mutate(Date = as.Date(.data$Date), 
+           Symbol = as.character(.data$Symbol))
   if (length(divs) > 0)
     results <- results %>% 
-    left_join(mutate(divs, Symbol = as.character(Symbol)), by = c("Date", "Symbol"))
-  results <- results %>% replace(is.na(.), 0) %>% arrange(desc(Date))
+    left_join(mutate(divs, Symbol = as.character(.data$Symbol)), by = c("Date", "Symbol"))
+  results <- results %>% 
+    replace(is.na(.), 0) %>% 
+    arrange(desc(.data$Date))
   
   attr(results, "type") <- "stocks_hist"
   
@@ -250,30 +254,34 @@ daily_stocks <- function(hist, trans, tickers = NA) {
   daily <- hist %>%
     left_join(trans, by = c("Date", "Symbol")) %>%
     replace(is.na(.), 0) %>%
-    arrange(Date) %>%
-    group_by(Symbol) %>%
-    mutate(CumQuant = cumsum(Quant),
-           CumInvested = cumsum(Invested),
-           CumCost = cumsum(Cost),
-           CumValue = CumQuant * Value,
-           CumROI = 100 * (CumValue/CumInvested - 1),
+    arrange(.data$Date) %>%
+    group_by(.data$Symbol) %>%
+    mutate(CumQuant = cumsum(.data$Quant),
+           CumInvested = cumsum(.data$Invested),
+           CumCost = cumsum(.data$Cost),
+           CumValue = .data$CumQuant * .data$Value,
+           CumROI = 100 * (.data$CumValue/.data$CumInvested - 1),
            CumROI = as.numeric(ifelse(
-             CumValue == 0, 100*(Each*abs(Quant)/lag(CumInvested) - 1), CumROI)),
-           Dividend = DivReal * CumQuant,
-           DifUSD = CumValue - Invested - lag(CumValue),
-           CumDividend = cumsum(Dividend)) %>% 
-    select(Date, Symbol, Value, Quant, Each, Invested, Cost, Dividend, 
-           CumValue, CumInvested, CumROI, CumQuant, DifUSD, CumDividend, CumCost) %>%
-    group_by(Date) %>% mutate(Weight = 100*CumValue/sum(CumValue)) %>% 
-    group_by(Date, Symbol) %>% slice(1) %>%
-    arrange(desc(Date), desc(CumValue)) %>% ungroup()
+             .data$CumValue == 0, 100*(.data$Each*abs(.data$Quant)/lag(.data$CumInvested) - 1), 
+             .data$CumROI)),
+           Dividend = .data$DivReal * .data$CumQuant,
+           DifUSD = .data$CumValue - .data$Invested - lag(.data$CumValue),
+           CumDividend = cumsum(.data$Dividend)) %>% 
+    select(.data$Date, .data$Symbol, .data$Value, .data$Quant, .data$Each, .data$Invested, 
+           .data$Cost, .data$Dividend, .data$CumValue, .data$CumInvested, .data$CumROI, 
+           .data$CumQuant, .data$DifUSD, .data$CumDividend, .data$CumCost) %>%
+    group_by(.data$Date) %>% 
+    mutate(Weight = 100*.data$CumValue/sum(.data$CumValue)) %>% 
+    group_by(.data$Date, .data$Symbol) %>% slice(1) %>%
+    arrange(desc(.data$Date), desc(.data$CumValue)) %>% 
+    ungroup()
   
   if ("Type" %in% colnames(tickers)) {
     tickers_structure <- c("Symbol", "Type")
     if (!all(tickers_structure %in% colnames(tickers))) {
       stop(paste("The structure of the 'tickers' table should be:",
                  paste(shQuote(tickers_structure), collapse = ", ")))}
-    daily <- left_join(daily, select(tickers, Symbol, Type), "Symbol")
+    daily <- left_join(daily, select(tickers, .data$Symbol, .data$Type), "Symbol")
   } else daily$Type <- "No type"
   
   daily$Symbol <- factor(daily$Symbol, levels = unique(daily$Symbol[daily$Date == max(daily$Date)]))
@@ -304,28 +312,35 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0) {
   check_attr(cash, check = "stocks_file_cash")
   
   daily <- daily_stocks(hist, trans) %>%
-    arrange(Date) %>% group_by(Date) %>% 
+    arrange(.data$Date) %>% 
+    group_by(.data$Date) %>% 
     summarise_if(is.numeric, sum) %>%
-    mutate(ROI = 100 * (CumValue/CumInvested - 1)) %>%
-    select(Date, CumInvested, CumValue, ROI, Invested, CumCost, CumDividend, Dividend) 
+    mutate(ROI = 100 * (.data$CumValue/.data$CumInvested - 1)) %>%
+    select(.data$Date, .data$CumInvested, .data$CumValue, 
+           .data$ROI, .data$Invested, .data$CumCost, .data$CumDividend, .data$Dividend) 
   
   days <- data.frame(Date = as.Date(min(hist$Date):Sys.Date(), origin = "1970-01-01")) %>%
     left_join(daily, "Date") %>%
-    tidyr::fill(ROI, CumInvested, CumValue, CumDividend, CumCost, Invested, .direction = "up") %>%
-    left_join(select(cash, Date, Cash), "Date") %>% 
+    tidyr::fill(.data$ROI, .data$CumInvested, .data$CumValue, 
+                .data$CumDividend, .data$CumCost, .data$Invested, .direction = "up") %>%
+    left_join(select(cash, .data$Date, .data$Cash), "Date") %>% 
     replace(is.na(.), 0) %>%    
-    mutate(DifUSD = CumValue - Invested - lag(CumValue),
-           Cash = as.numeric(ifelse(is.na(Cash), 0, Cash)),
-           CumCash = round(cumsum(Cash) + cumsum(Dividend) - CumInvested - CumCost + cash_fix)) %>% 
-    filter(CumInvested != 0) %>%
-    arrange(desc(Date)) %>% ungroup()
+    mutate(DifUSD = .data$CumValue - .data$Invested - lag(.data$CumValue),
+           Cash = as.numeric(ifelse(is.na(.data$Cash), 0, .data$Cash)),
+           CumCash = round(cumsum(.data$Cash) + cumsum(.data$Dividend) - .data$CumInvested - 
+                             .data$CumCost + cash_fix)) %>% 
+    filter(.data$CumInvested != 0) %>%
+    arrange(desc(.data$Date)) %>% 
+    ungroup()
   
   # One row per day only
   ret <- days %>% 
-    group_by(Date, CumInvested, CumValue, CumCost, CumDividend, ROI) %>%  
+    group_by(.data$Date, .data$CumInvested, .data$CumValue, 
+             .data$CumCost, .data$CumDividend, .data$ROI) %>%  
     summarise_if(is.numeric, sum) %>%
-    arrange(desc(Date)) %>% ungroup() %>%
-    mutate(Portfolio = CumCash + CumValue)
+    arrange(desc(.data$Date)) %>% 
+    ungroup() %>%
+    mutate(Portfolio = .data$CumCash + .data$CumValue)
   
   attr(ret, "type") <- "daily_portfolio"
   return(ret)
@@ -350,7 +365,7 @@ splot_summary <- function(p, s, save = FALSE) {
   check_attr(p, check = "daily_portfolio")
   check_attr(s, check = "daily_stocks")
   
-  today <- filter(p, Date == max(Date))
+  today <- filter(p, .data$Date == max(.data$Date))
   summary <- rbind(
     paste0("Portfolio: $", formatNum(today$Portfolio, 0)," | ", today$Date),
     paste0("Stocks: $", formatNum(today$CumValue,0)," & Cash: $", formatNum(today$CumCash,0)),
@@ -359,34 +374,39 @@ splot_summary <- function(p, s, save = FALSE) {
     paste0("Dividends: $", formatNum(today$CumDividend, 0)," | Expenses: $",
            formatNum(today$CumCost, 0)))
   
-  today <- filter(s, Date == max(Date)) %>% filter(CumQuant > 0)
+  today <- filter(s, .data$Date == max(.data$Date)) %>% filter(.data$CumQuant > 0)
   tops <- max(rbind(today$CumInvested, today$CumValue))
   plot <- today %>%
-    mutate(shapeflag = ifelse(CumROI < 0, 25, 24), 
+    mutate(shapeflag = ifelse(.data$CumROI < 0, 25, 24), 
            box = -tops/5.5,
-           Symbol = factor(paste0(Symbol, " (", formatNum(100*CumValue/sum(CumValue)), "%)"),
-                           levels = paste0(Symbol, " (", formatNum(100*CumValue/sum(CumValue)), "%)")),
-           DifUSD = CumValue - CumInvested,
-           DifPer = 100 * DifUSD / CumInvested) %>%
-    ggplot(aes(x = reorder(Symbol, CumInvested))) + 
+           Symbol = factor(
+             paste0(.data$Symbol, " (", 
+                    formatNum(100*.data$CumValue/sum(.data$CumValue)), "%)"),
+             levels = paste0(.data$Symbol, " (", formatNum(100*.data$CumValue/sum(.data$CumValue)), "%)")),
+           DifUSD = .data$CumValue - .data$CumInvested,
+           DifPer = 100 * .data$DifUSD / .data$CumInvested) %>%
+    ggplot(aes(x = reorder(.data$Symbol, .data$CumInvested))) + 
     geom_hline(yintercept = 0, colour = "black") +
-    geom_col(aes(y = CumInvested, fill = Symbol, group = 1)) +
-    geom_col(aes(y = CumInvested + DifUSD, fill = Symbol), alpha = 0.5) +
-    geom_col(aes(y = box), fill = "grey", alpha = 0.5) +
-    geom_point(aes(y = CumInvested + DifUSD, shape = shapeflag), colour = "black") +
+    geom_col(aes(y = .data$CumInvested, fill = .data$Symbol, group = 1)) +
+    geom_col(aes(y = .data$CumInvested + .data$DifUSD, fill = .data$Symbol), alpha = 0.5) +
+    geom_col(aes(y = .data$box), fill = "grey", alpha = 0.5) +
+    geom_point(aes(y = .data$CumInvested + .data$DifUSD, shape = .data$shapeflag), colour = "black") +
     scale_shape_identity() +
-    geom_text(aes(label = paste0("$",formatNum(DifUSD,0)), y = CumInvested + DifUSD), 
+    geom_text(aes(label = paste0("$",formatNum(.data$DifUSD, 0)), 
+                  y = .data$CumInvested + .data$DifUSD), 
               size = 3, hjust = -.2, vjust = -0.2) +
-    geom_text(aes(label = paste0(round(DifPer, 1), "%"), y = CumInvested + DifUSD), 
+    geom_text(aes(label = paste0(round(.data$DifPer, 1), "%"), 
+                  y = .data$CumInvested + .data$DifUSD), 
               size = 2.9, hjust = -.2, vjust = 1.2) +
-    geom_text(aes(label = paste0("$", formatNum(CumValue, 0)), y = box), 
+    geom_text(aes(label = paste0("$", formatNum(.data$CumValue, 0)), y = .data$box), 
               size = 3, hjust = -.1, vjust = -0.2) +
-    geom_text(aes(label = paste0(CumQuant, " @$", formatNum(CumValue/CumQuant, 1)), 
-                  y = box), size = 2, hjust = -.1, vjust = 1.5) +
-    geom_text(aes(label = paste0("$", formatNum(CumInvested,1)), y = 0, 
-                  colour = Symbol), size = 2, hjust = 0, vjust = -0.2) +
-    geom_text(aes(label = paste0("@$", formatNum(CumInvested/CumQuant, 1)), 
-                  y = 0, x = Symbol, colour = Symbol), 
+    geom_text(aes(label = paste0(.data$CumQuant, " @$", formatNum(.data$CumValue/.data$CumQuant, 1)), 
+                  y = .data$box), size = 2, hjust = -.1, vjust = 1.5) +
+    geom_text(aes(label = paste0("$", formatNum(.data$CumInvested,1)), 
+                  y = 0, colour = .data$Symbol), 
+              size = 2, hjust = 0, vjust = -0.2) +
+    geom_text(aes(label = paste0("@$", formatNum(.data$CumInvested/.data$CumQuant, 1)), 
+                  y = 0, x = .data$Symbol, colour = .data$Symbol), 
               size = 2, hjust = 0, vjust = 1.5) +
     annotate("label", x = length(unique(today$CumQuant)) * 0.25, y = tops * 0.6, 
              label = vector2text(summary,"\n", quotes = F), size = 3.5, hjust = 0, alpha = 0.55) +
@@ -423,17 +443,17 @@ splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save =
   
   if (n_days > nrow(p)) {
     message(sprintf("As there is less data than for %s days, changed n_days all days: %s",
-                   n_days, nrow(p)))
+                    n_days, nrow(p)))
     n_days <- nrow(p)
   }
   
   n_days <- ifelse(n_days < max(ma), max(ma) + 2, n_days)
-  newp <- rbind(p, mutate(tail(p, 1), Date = Date - 1, ROI = 0, CumValue = 0))
+  newp <- rbind(p, mutate(tail(p, 1), Date = .data$Date - 1, ROI = 0, CumValue = 0))
   
   caption <- ifelse(is.na(ma)[1], "", 
                     paste("Showing moving averages for", ma[1], "and", ma[2], "days."))
   
-  if (!historical) newp <- mutate(newp, ROI = ROI - newp$ROI[n_days])
+  if (!historical) newp <- mutate(newp, ROI = .data$ROI - newp$ROI[n_days])
   if (!is.na(n_days)) {
     newp <- slice(newp, 1:n_days)
     mas <- function(x, n = 30){stats::filter(x, rep(1 / n, n), sides = 2)}
@@ -444,12 +464,14 @@ splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save =
                               "with relative ROI results."))
   } 
   
-  if (!is.na(ma)[1]) newp <- mutate(newp, ma1 = mas(ROI, ma[1]), ma2 = mas(ROI, ma[2]))
+  if (!is.na(ma)[1]) newp <- newp %>%
+    mutate(ma1 = mas(.data$ROI, ma[1]), 
+           ma2 = mas(.data$ROI, ma[2]))
   
-  pos <- mutate(newp, ROI = ifelse(ROI >= 0, ROI, 0.0001))
-  neg <- mutate(newp, ROI = ifelse(ROI < 0, ROI, -0.0001))
+  pos <- mutate(newp, ROI = ifelse(.data$ROI >= 0, .data$ROI, 0.0001))
+  neg <- mutate(newp, ROI = ifelse(.data$ROI < 0, .data$ROI, -0.0001))
   
-  plot <- ggplot(newp, aes(x = Date)) +
+  plot <- ggplot(newp, aes(x = .data$Date)) +
     
     geom_hline(yintercept = 0, size = 0.3, color = "black") +
     geom_hline(yintercept = newp$ROI[1], alpha = 0.9, colour = "#40A4D8") +
@@ -458,10 +480,10 @@ splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save =
     geom_hline(yintercept = min(newp$ROI), size = 0.2, 
                linetype = "dashed", colour = "tomato") +
     
-    geom_area(data = pos, aes(y = ROI), fill = "#3DA4AB", alpha = 0.3) +
-    geom_area(data = neg, aes(y = ROI), fill = "tomato", alpha = 0.3) +
+    geom_area(data = pos, aes(y = .data$ROI), fill = "#3DA4AB", alpha = 0.3) +
+    geom_area(data = neg, aes(y = .data$ROI), fill = "tomato", alpha = 0.3) +
     
-    geom_line(aes(y = ROI), size = 0.5) +
+    geom_line(aes(y = .data$ROI), size = 0.5) +
     
     scale_x_date(date_labels = "%b%y") + 
     labs(y = 'ROI [%]', x = NULL,
@@ -475,9 +497,9 @@ splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save =
     theme_lares2(legend = "top")
   
   if (!is.na(ma)[1]) plot <- plot + 
-    geom_line(aes(y = ma1), size = 0.7, 
+    geom_line(aes(y = .data$ma1), size = 0.7, 
               colour = "#071D49", alpha = 0.9, na.rm = TRUE) +
-    geom_line(aes(y = ma2), size = 0.7, 
+    geom_line(aes(y = .data$ma2), size = 0.7, 
               colour = "darkorange", alpha = 0.9, na.rm = TRUE) +
     
     if (save) plot <- plot + 
@@ -510,38 +532,38 @@ splot_change <- function(p, s, weighted = TRUE, group = TRUE, save = FALSE) {
   check_attr(s, check = "daily_stocks")
   
   d <- s %>% 
-    arrange(Date) %>% group_by(Symbol) %>%
-    mutate(Hist = if (weighted) {100*(1 - cumsum(Invested)/(CumValue))} 
-           else {CumValue - CumInvested},
-           BuySell = ifelse(Invested > 0, "Bought", ifelse(Invested < 0, "Sold", NA))) %>%
-    mutate(Hist = ifelse(CumQuant > 0, Hist, NA))
+    arrange(.data$Date) %>% 
+    group_by(.data$Symbol) %>%
+    mutate(Hist = if (weighted) {100*(1 - cumsum(.data$Invested)/(.data$CumValue))} 
+           else {.data$CumValue - .data$CumInvested},
+           BuySell = ifelse(.data$Invested > 0, "Bought", ifelse(.data$Invested < 0, "Sold", NA))) %>%
+    mutate(Hist = ifelse(.data$CumQuant > 0, .data$Hist, NA))
   d$Symbol <- factor(d$Symbol, levels = rev(unique(s$Symbol)))
-  labels <- d %>% filter(Date == max(Date))
-  amounts <- d %>% filter(Invested != 0) %>%
-    mutate(label = paste0(round(Invested/1000,1),"K"))
+  labels <- filter(d, .data$Date == max(.data$Date))
+  amounts <- filter(d, .data$Invested != 0) %>%
+    mutate(label = paste0(round(.data$Invested/1000,1),"K"))
   days <- as.integer(difftime(range(d$Date)[2], range(d$Date)[1], units = "days"))
   
-  plot <- ggplot(d, aes(x = Date, y = Hist, colour = Symbol)) +
+  plot <- ggplot(d, aes(x = .data$Date, y = .data$Hist, colour = .data$Symbol)) +
     ylab('% Change since Start') +
     geom_hline(yintercept = 0, alpha = 0.8, colour = "black") +
     geom_line(alpha = 0.9, size = 0.5, na.rm = TRUE) +
-    geom_point(aes(size = abs(Invested), colour = BuySell), alpha = 0.6, na.rm = TRUE) +
+    geom_point(aes(size = abs(.data$Invested), colour = .data$BuySell), alpha = 0.6, na.rm = TRUE) +
     scale_y_continuous(position = "right") +
     scale_size(range = c(0, 3.2)) + guides(size = FALSE, colour = FALSE) + 
     xlim(min(d$Date), max(d$Date) + round(days*0.08)) +
     labs(title = 'Daily Portfolio\'s Stocks Change (%) since Start', x = '',
          subtitle = 'Showing absolute delta values since first purchase', colour = '') +
-    geom_label_repel(data = amounts, aes(label = label), 
+    geom_label_repel(data = amounts, aes(label = .data$label), 
                      size = 2, na.rm = TRUE, alpha = 0.9, min.segment.length = 1.2) +
-    geom_label(data = labels, aes(label = Symbol), 
+    geom_label(data = labels, aes(label = .data$Symbol), 
                size = 2.5, hjust = -0.2, alpha = 0.6, na.rm = TRUE) +
     theme_lares2(pal = 2)
   
-  if (group) plot <- plot + facet_grid(Type ~ ., scales = "free", switch = "both")
+  if (group) plot <- plot + facet_grid(.data$Type ~ ., scales = "free", switch = "both")
   if (weighted) plot <- plot + 
     labs(subtitle = "Showing real weighted portfolio delta values")
-  if (save) plot <- plot + 
-    ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300) 
+  if (save) plot <- plot + ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300) 
   
   return(plot)
   
@@ -562,7 +584,7 @@ splot_growth <- function(p, save = FALSE) {
   
   check_attr(p, check = "daily_portfolio")
   
-  labels <- filter(p, Cash != 0)
+  labels <- filter(p, .data$Cash != 0)
   caption <- paste0("Total Portfolio: $", formatNum(p$Portfolio[1], 0),
                     "\nInvested: $", formatNum(p$CumValue[1], 0), " (",
                     round(100*p$CumValue[1]/p$Portfolio[1],1),"%)")
@@ -570,8 +592,8 @@ splot_growth <- function(p, save = FALSE) {
   aux <- rbind(data.frame(Date = p$Date, Amount = p$CumCash, Type = "Cash"),
                data.frame(Date = p$Date, Amount = p$CumValue, Type = "Stocks"))
   
-  plot <- ggplot(aux, aes(x = Date, y = Amount)) + 
-    geom_area(aes(y = Amount, fill = Type), position = "stack") +
+  plot <- ggplot(aux, aes(x = .data$Date, y = .data$Amount)) + 
+    geom_area(aes(y = .data$Amount, fill = .data$Type), position = "stack") +
     labs(title = "  Daily Total Portfolio Value", y = NULL, x = NULL, fill = "") +
     scale_y_continuous(position = "right", labels = comma) +
     scale_x_date(date_labels = "%b%y", expand = c(0, 0)) +
@@ -585,7 +607,8 @@ splot_growth <- function(p, save = FALSE) {
     try_require("ggrepel")
     plot <- plot +
       geom_label_repel(data = labels, 
-                       aes(x = Date, y = Portfolio, label = formatNum(Cash, 0)), 
+                       aes(x = .data$Date, y = .data$Portfolio, 
+                           label = formatNum(.data$Cash, 0)), 
                        vjust = -1.3, size = 2.5)
   }
   
@@ -611,18 +634,18 @@ splot_types <- function(s, save = FALSE) {
   check_attr(s, check = "daily_stocks")
   
   plot <- s %>%
-    filter(Date == max(Date), CumQuant > 0) %>%
-    group_by(Type) %>% 
-    mutate(label = paste0(Type, "\n", formatNum(
-      100*sum(CumValue)/sum(s$CumValue[s$Date == max(s$Date)])),"%")) %>%
+    filter(.data$Date == max(.data$Date), .data$CumQuant > 0) %>%
+    group_by(.data$Type) %>% 
+    mutate(label = paste0(.data$Type, "\n", formatNum(
+      100*sum(.data$CumValue)/sum(s$CumValue[s$Date == max(s$Date)])),"%")) %>%
     ggplot() +
-    geom_bar(aes(x = "", y = CumValue, fill = Symbol), width = 1, stat = "identity") +
+    geom_bar(aes(x = "", y = .data$CumValue, fill = .data$Symbol), 
+             width = 1, stat = "identity") +
     facet_grid(. ~ label, scales = "free") +
     scale_y_continuous(labels = comma, expand = c(0, 0)) + 
     theme_lares2(pal = 1) +
     labs(x = NULL, y = "Total value", title = "Portfolio's Category Distribution")
-  if (save) plot <- plot + ggsave("portf_distribution.png", 
-                                  width = 8, height = 5, dpi = 300) 
+  if (save) plot <- plot + ggsave("portf_distribution.png", width = 8, height = 5, dpi = 300) 
   return(plot)
 }
 
@@ -652,7 +675,8 @@ etf_sector <- function(etf = "VTI", quiet = FALSE) {
         str_replace_all("[\r\n]" , " ") %>%
         gsub(".*Benchmark  ", "", .) %>%
         gsub("%", "", .) %>%
-        str_split("  ") %>% unlist() %>% .[. != ""]
+        str_split("  ") %>% 
+        unlist() %>% .[. != ""]
       if (!is.null(txt[1])) {
         sector <- as.data.frame(matrix(txt, ncol = 3, byrow = TRUE))[,c(1:2)]
         colnames(sector) <- c("Sector", "Percentage")
@@ -699,19 +723,26 @@ splot_etf <- function(s, save = FALSE) {
   
   if (nrow(etfs) > 0) {
     df <- etfs %>% 
-      right_join(select(s, Symbol, CumValue, Date) %>% 
-                   filter(Date == max(Date)) %>%
-                   mutate(Symbol = as.character(Symbol)), 
+      right_join(select(s, .data$Symbol, .data$CumValue, .data$Date) %>% 
+                   filter(.data$Date == max(.data$Date)) %>%
+                   mutate(Symbol = as.character(.data$Symbol)), 
                  by = c("ETF" = "Symbol")) %>%
-      mutate(ETF = factor(ETF, levels = s$Symbol[s$Date == max(s$Date)]),
-             Sector = ifelse(is.na(Sector), "Not Known / Not ETF", as.character(Sector))) %>%
+      mutate(ETF = factor(.data$ETF, levels = s$Symbol[s$Date == max(s$Date)]),
+             Sector = ifelse(is.na(.data$Sector), 
+                             "Not Known / Not ETF", 
+                             as.character(.data$Sector))) %>%
       replace(., is.na(.), 100) %>%
-      mutate(Value = CumValue * Percentage / 100) %>%
-      group_by(Sector) %>% mutate(ValueSector = sum(Value)) %>% ungroup() %>% 
-      group_by(Sector) %>% mutate(label = paste0(
-        Sector, " (", formatNum(100*ValueSector/sum(s$CumValue[s$Date == max(s$Date)]), 1), "%)"))
+      mutate(Value = .data$CumValue * .data$Percentage / 100) %>%
+      group_by(.data$Sector) %>% 
+      mutate(ValueSector = sum(.data$Value)) %>% 
+      ungroup() %>% 
+      group_by(.data$Sector) %>% 
+      mutate(label = paste0(
+        .data$Sector, " (", 
+        formatNum(100*.data$ValueSector/sum(s$CumValue[s$Date == max(s$Date)]), 1), "%)"))
     
-    plot <- ggplot(df, aes(x = reorder(label, ValueSector), y = Value, fill = ETF)) +
+    plot <- ggplot(df, aes(x = reorder(.data$label, .data$ValueSector), 
+                           y = .data$Value, fill = .data$ETF)) +
       geom_bar(width = 1, stat = "identity") +
       coord_flip() +
       scale_y_continuous(labels = comma, expand = c(0, 0)) + 
@@ -719,8 +750,7 @@ splot_etf <- function(s, save = FALSE) {
       labs(x = NULL, y = "Total value", fill = NULL,
            title = "Portfolio's Sector Distribution (ETFs)")
     
-    if (save) plot <- plot + ggsave("portf_distribution_etfs.png", 
-                                    width = 8, height = 5, dpi = 300) 
+    if (save) plot <- plot + ggsave("portf_distribution_etfs.png", width = 8, height = 5, dpi = 300) 
     return(plot) 
   } else return(noPlot("No data here!"))
 }
@@ -882,5 +912,5 @@ stocks_report <- function(data = NA,
 # library(scales)
 # library(httr)
 # library(rdrop2)
-# x <- stocks_obj(sectors = FALSE)
+# x <- stocks_obj()
 # stocks_report(x, dir = "~/Desktop")

@@ -57,9 +57,9 @@ corr <- function(df, method = "pearson",
     imp <- cor %>% 
       summarise_all(funs(mean(.))) %>% t() %>% 
       data.frame(variable = row.names(.), mean = abs(.)) %>%
-      arrange(desc(abs(mean)))
+      arrange(desc(abs(.data$mean)))
     which <- as.vector(imp$variable[1:top])
-    cor <- cor[which,which]
+    cor <- cor[which, which]
   }
   
   # Statistical significance (p-value)
@@ -197,13 +197,14 @@ corr_var <- function(df, ...,
   
   if (plot) {
     p <- ungroup(d) %>%
-      mutate(pos = ifelse(corr > 0, TRUE, FALSE),
-             hjust = ifelse(abs(corr) < max(abs(corr))/1.5, -0.1, 1.1)) %>%
-      ggplot(aes(x = reorder(variables, abs(corr)), 
-                 y = abs(corr), fill = pos, label = signif(100*corr, 3))) +
-      geom_hline(aes(yintercept = 0), alpha = 0.5) +
+      mutate(pos = ifelse(.data$corr > 0, TRUE, FALSE),
+             hjust = ifelse(abs(.data$corr) < max(abs(.data$corr))/1.5, -0.1, 1.1)) %>%
+      ggplot(aes(x = reorder(.data$variables, abs(.data$corr)), 
+                 y = abs(.data$corr), fill = .data$pos, 
+                 label = signif(100*.data$corr, 3))) +
+      geom_hline(yintercept = 0, alpha = 0.5) +
       geom_col(colour = "transparent") + coord_flip() + 
-      geom_text(aes(hjust = hjust), size = 3, colour = "black") +
+      geom_text(aes(hjust = .data$hjust), size = 3, colour = "black") +
       scale_fill_manual(values = c("FALSE" = "#E5586E", "TRUE" = "#59B3D2")) +
       guides(fill = FALSE) +
       labs(title = paste("Correlations of", var, "[%]"), x = NULL, y = NULL) +
@@ -275,41 +276,44 @@ corr_cross <- function(df, plot = TRUE,
   if (!is.na(contains)) redundant <- !redundant
   
   cor <- corr(df, ignore = ignore, dummy = dummy, 
-              redundant = redundant, method = method, 
-              pvalue = TRUE)
+              redundant = redundant, method = method, pvalue = TRUE)
   
   aux <- function(c) {
     data.frame(gather(c)) %>% 
       mutate(mix = rep(colnames(c), length(c))) %>%
       mutate(p1 = rep(1:length(c), each = length(c)),
              p2 = rep(1:length(c), length(c)),
-             aux = p2 - p1) %>% filter(aux > 0) %>%
-      mutate(rel = abs(value)) %>% filter(rel < max) %>% arrange(desc(rel)) %>%
+             aux = .data$p2 - .data$p1) %>% 
+      filter(.data$aux > 0) %>%
+      mutate(rel = abs(.data$value)) %>% 
+      filter(.data$rel < max) %>% 
+      arrange(desc(.data$rel)) %>%
       {if (!is.na(contains)) 
         filter(., grepl(vector2text(
-          contains, sep = "|", quotes = FALSE), mix)) else .} %>%
-      {if (rm.na) filter(., !grepl("_NAs", mix)) else .} %>%
-      filter(!grepl("_OTHER", key)) %>%
-      rename(corr = value) %>%
-      mutate(value = paste(key, mix)) %>%
-      select(key, mix, corr)
+          contains, sep = "|", quotes = FALSE), .data$mix)) else .} %>%
+      {if (rm.na) filter(., !grepl("_NAs", .data$mix)) else .} %>%
+      filter(!grepl("_OTHER", .data$key)) %>%
+      rename(corr = .data$value) %>%
+      mutate(value = paste(.data$key, .data$mix)) %>%
+      select(.data$key, .data$mix, .data$corr)
   }
   
   ret <- aux(cor$cor)
   aux <- aux(cor$pvalue)
-  ret <- left_join(ret, rename(aux, pvalue = corr), c("key", "mix")) %>%
-    mutate(pvalue = as.numeric(ifelse(is.na(pvalue), 1, pvalue))) %>%
-    filter(pvalue <= max_pvalue)
+  ret <- left_join(ret, rename(aux, pvalue = .data$corr), c("key", "mix")) %>%
+    mutate(pvalue = as.numeric(ifelse(is.na(.data$pvalue), 1, .data$pvalue))) %>%
+    filter(.data$pvalue <= max_pvalue)
   
   for (i in 1:ncol(df)) {
-    if (i == 1) ret <- mutate(ret, group1 = "fill", group2 = "fill")
+    if (i == 1) 
+      ret <- mutate(ret, group1 = "fill", group2 = "fill")
     group <- colnames(df)[i]
     aux <- ifelse(grepl(group, ret$key), group, "fill")
     ret$group1 <- ifelse(ret$group1 == "fill", aux, ret$group1)
     aux <- ifelse(grepl(group, ret$mix), group, "fill")
     ret$group2 <- ifelse(ret$group2 == "fill", aux, ret$group2)
   }
-  ret <- filter(ret, group1 != group2)
+  ret <- filter(ret, .data$group1 != .data$group2)
   
   if (plot) {
     n <- ifelse(type == 1, top, local)
@@ -319,48 +323,58 @@ corr_cross <- function(df, plot = TRUE,
     if (max < 1) subtitle <- paste0(subtitle," (excluding +", 100*max, "%)")
     if (rm.na) subtitle <- paste(subtitle, paste("[NAs removed]"))
     if (!is.na(contains)[1]) ret <- ret %>%
-      mutate(facet = gsub(vector2text(contains, sep = "|", quotes = FALSE), "", mix)) %>%
-      mutate(facet = substr(facet, 2, 20))
+      mutate(facet = gsub(vector2text(contains, sep = "|", quotes = FALSE), "", .data$mix)) %>%
+      mutate(facet = substr(.data$facet, 2, 20))
       
     if (type == 1) {
-      p <- ret %>% head(top) %>%
-        mutate(label = paste(key, "+", mix), abs = abs(corr),
-               sign = ifelse(corr < 0, "bad", "good")) %>%
-        ggplot(aes(x = reorder(label, abs), y = abs, fill = sign)) +
+      p <- ret %>% 
+        head(top) %>%
+        mutate(label = paste(.data$key, "+", .data$mix), 
+               abs = abs(.data$corr),
+               sign = ifelse(.data$corr < 0, "bad", "good")) %>%
+        ggplot(aes(x = reorder(.data$label, .data$abs), 
+                   y = .data$abs, 
+                   fill = .data$sign)) +
         geom_col(colour = "transparent") +
         # geom_hline(aes(yintercept = 0), alpha = 0.5) + 
-        geom_text(aes(label = signif(100*corr, 3)), 
+        geom_text(aes(label = signif(100*.data$corr, 3)), 
                   size = 3, colour = "white", hjust = 1.1) +
         coord_flip() + guides(fill = FALSE) +
-        labs(title = "Ranked Cross-Correlations", subtitle = subtitle,
-             x = NULL, y = "Correlation [%]") +
+        labs(title = "Ranked Cross-Correlations", 
+             subtitle = subtitle,
+             x = NULL, 
+             y = "Correlation [%]") +
         scale_fill_manual(values = c("bad" = "#E5586E", "good" = "#59B3D2")) +
-        scale_y_percent(expand = c(0, 0)) + theme_lares2(legend = "top")
+        scale_y_percent(expand = c(0, 0)) + 
+        theme_lares2(legend = "top")
       if ((!is.na(contains)[1] & length(contains) == 1) | grid) {
-        p <- p + facet_grid(facet ~ ., scales = "free", space = "free")
+        p <- p + facet_grid(.data$facet ~ ., scales = "free", space = "free")
       }
     }
     
     if (type == 2) {
       ret <- rbind(data.frame(ret, group = ret$group1), 
                    data.frame(ret, group = ret$group2)) %>%
-        arrange(desc(abs(corr)))
+        arrange(desc(abs(.data$corr)))
       aux <- position_jitter(width = 0.4, seed = 123)
       p <- ret %>% 
-        group_by(group) %>%
-        mutate(hjust = ifelse(corr > 0, 1, 0),
-               size = abs(corr),
-               alpha = ifelse(row_number() <= local, 2, size),
-               label = ifelse(row_number() <= local, paste(key, "+", mix), "")) %>%
-        ggplot(aes(x = group, y = corr, label = label, colour = group)) + 
-        geom_jitter(aes(alpha = alpha, size = size), position = aux) + 
+        group_by(.data$group) %>%
+        mutate(hjust = ifelse(.data$corr > 0, 1, 0),
+               size = abs(.data$corr),
+               alpha = ifelse(row_number() <= local, 2, .data$size),
+               label = ifelse(row_number() <= local, paste(.data$key, "+", .data$mix), "")) %>%
+        ggplot(aes(x = .data$group, y = .data$corr, 
+                   label = .data$label, colour = .data$group)) + 
+        geom_jitter(aes(alpha = .data$alpha, size = .data$size), position = aux) + 
         geom_hline(yintercept = 0, alpha = 0.3) +
-        geom_text(aes(hjust = hjust), size = 2.9, position = aux, colour = "black") +
+        geom_text(aes(hjust = .data$hjust), size = 2.9, position = aux, colour = "black") +
         guides(colour = FALSE, alpha = FALSE, size = FALSE) +
         scale_size(range = c(0.4, 2)) +
-        labs(x = NULL, y = "Correlation [%]", subtitle = subtitle,
+        labs(x = NULL, y = "Correlation [%]", 
+             subtitle = subtitle,
              title = "Local Cross-Correlations") +
-        scale_y_percent() + coord_flip() +
+        scale_y_percent() + 
+        coord_flip() +
         theme_lares2(pal = 2) 
     }
     if (max_pvalue < 1) p <- p + labs(caption = paste("Filtering p-value <", max_pvalue))

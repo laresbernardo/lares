@@ -72,10 +72,10 @@ plot_timeline <- function(event,
 
   # Plot timeline
   maxdate <- max(df$End)
-  p <- ggplot(cvlong, aes(x = value, 
-                          y = reorder(name, -pos), 
-                          label = where, 
-                          group = pos)) + 
+  p <- ggplot(cvlong, aes(x = .data$value, 
+                          y = reorder(.data$name, -.data$pos), 
+                          label = .data$where, 
+                          group = .data$pos)) + 
     geom_vline(xintercept = maxdate, alpha = 0.2) +
     labs(title = title, subtitle = subtitle, x = NULL, y = NULL, colour = NULL) +
     theme(panel.background = element_rect(fill = "white", colour = NA),
@@ -84,13 +84,13 @@ plot_timeline <- function(event,
     #scale_x_date(expand = c(0, 0))
   
   if (!is.na(cvlong$type)[1] | length(unique(cvlong$type)) > 1) {
-    p <- p + geom_line(aes(colour = type), size = 7) +
-      facet_grid(type ~ ., scales = "free", space = "free") +
+    p <- p + geom_line(aes(colour = .data$type), size = 7) +
+      facet_grid(.data$type ~ ., scales = "free", space = "free") +
       guides(colour = FALSE)
   }
   
   p <- p + 
-    geom_label(aes(x = label_pos), colour = "black", size = 2, alpha = 0.7) +
+    geom_label(aes(x = .data$label_pos), colour = "black", size = 2, alpha = 0.7) +
     theme_lares2(pal = 2, legend = "none")
   
   # Export file name and folder for plot
@@ -148,9 +148,9 @@ gg_pie <- function(df, var, table = FALSE, ...){
   
   if (table) { print(n) }
   
-  p <- ggplot(n, aes(x = "", y = reorder(p, -order), 
+  p <- ggplot(n, aes(x = "", y = reorder(.data$p, -.data$order), 
                      fill = as.character(!!!variable), 
-                     label = p)) + 
+                     label = .data$p)) + 
     geom_col() + 
     geom_label(position = position_stack(vjust = 0.4), 
                show.legend = FALSE, size = 2.5) + 
@@ -197,8 +197,8 @@ plot_chord <- function(origin, dest,
   }
   
   df <- data.frame(origin, dest, weight) %>%
-    mutate(origin = ifelse(origin == "", " ", as.character(origin)),
-           dest = ifelse(dest == "", " ", as.character(dest))) %>%
+    mutate(origin = ifelse(.data$origin == "", " ", as.character(.data$origin)),
+           dest = ifelse(.data$dest == "", " ", as.character(.data$dest))) %>%
     replaceall(NA, "NA")
   colnames(df) <- c("orig_reg", "dest_reg", "flow")
   uniq <- unique(c(as.character(df$orig_reg), as.character(df$dest_reg)))
@@ -255,19 +255,21 @@ gg_bars <- function(names, n, p = NA,
                     limit = 15, 
                     na.rm = FALSE) {
   
-  dfn <- data.frame(names, count = n) %>% arrange(desc(count), names)
+  dfn <- data.frame(names, count = n) %>% 
+    arrange(desc(.data$count), .data$names)
   
   
   if (na.rm == TRUE) {
-    dfn <- dfn %>% filter(!is.na(names), names != "")
+    dfn <- filter(dfn, !is.na(.data$names), .data$names != "")
   }
   
   if (class(n) == "integer") {
     dfn <- dfn %>% 
-      mutate(p = ifelse(!is.na(p), p, 100*count/sum(count)),
-             labels = paste0(formatNum(count, 0)," (", signif(p, 3), "%)"))
+      mutate(p = ifelse(!is.na(.data$p), .data$p, 100*.data$count/sum(.data$count)),
+             labels = paste0(formatNum(.data$count, 0)," (", signif(.data$p, 3), "%)"))
   } else {
-    dfn <- dfn %>% mutate(p = count, labels = signif(count, 3))
+    dfn <- dfn %>% 
+      mutate(p = .data$count, labels = signif(.data$count, 3))
   }
   
   if (nrow(dfn) >= limit) {
@@ -276,13 +278,16 @@ gg_bars <- function(names, n, p = NA,
   }
   
   dfn <- dfn %>%
-    mutate(label_colours = ifelse(p > mean(range(p)) * 0.9, "m", "f"),
-           label_hjust = ifelse(count < min(count) + diff(range(count)) * 0.35, -0.1, 1.05)) %>%
-    mutate(label_colours = ifelse(label_colours == "m" & label_hjust < 0.35, "f", label_colours))
+    mutate(label_colours = ifelse(p > mean(range(.data$p)) * 0.9, "m", "f"),
+           label_hjust = ifelse(.data$count < min(.data$count) + 
+                                  diff(range(.data$count)) * 0.35, -0.1, 1.05)) %>%
+    mutate(label_colours = ifelse(.data$label_colours == "m" & 
+                                    .data$label_hjust < 0.35, "f", .data$label_colours))
   
-  p <- ggplot(dfn, aes(x = reorder(names, count), y = count, label = labels, fill = p)) +
+  p <- ggplot(dfn, aes(x = reorder(.data$names, .data$count), 
+                       y = .data$count, label = .data$labels, fill = .data$p)) +
     geom_col(alpha = 0.9, width = 0.8) +
-    geom_text(aes(hjust = label_hjust, colour = label_colours), size = 3) + 
+    geom_text(aes(hjust = .data$label_hjust, colour = .data$label_colours), size = 3) + 
     coord_flip() + guides(colour = FALSE, fill = FALSE) +
     labs(x = NULL, y = axis, 
          title = if (!is.na(title)) title, 

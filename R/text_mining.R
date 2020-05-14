@@ -109,7 +109,7 @@ textTokenizer <- function(text, lang = "english",
   rownames(d) <- NULL
   
   if (df) {
-    d <- filter(d, freq >= min)
+    d <- filter(d, .data$freq >= min)
     if (min <= 1) message(paste("Filtering frequencies with less than", min))
     texts <- cleanText(unique(text))
     if (length(texts) != length(text)) message("Returning unique texts results...")
@@ -253,15 +253,17 @@ textCloud <- function(text, lang = "english", exclude = c(), seed = 0,
 #' @export
 sentimentBreakdown <- function(text, lang = "spanish", 
                                exclude = c("maduro","que"),
-                               append_file = NA, append_words = NA,
-                               plot = TRUE, subtitle = NA) {
+                               append_file = NA, 
+                               append_words = NA,
+                               plot = TRUE, 
+                               subtitle = NA) {
   
   try_require("syuzhet")
   ret <- list()
   
   dictionary <- get_sentiment_dictionary('nrc', language = lang) %>%
-    select(-lang, -value) %>%
-    filter(!word %in% exclude) %>%
+    select(-.data$lang, -.data$value) %>%
+    filter(!.data$word %in% exclude) %>%
     rbind(data.frame(word = c("(laugh)","(laugh)"), 
                      sentiment = c("positive","joy")))
   
@@ -287,20 +289,23 @@ sentimentBreakdown <- function(text, lang = "spanish",
   
   ret[["result"]] <- ret$words %>% 
     inner_join(dictionary, "word") %>% 
-    distinct(word, sentiment, .keep_all = TRUE)
+    distinct(.data$word, .data$sentiment, .keep_all = TRUE)
   
   ret[["summary"]] <- ret$result %>% 
-    group_by(sentiment) %>% 
-    summarise(freq = sum(freq)) %>% 
-    mutate(freq = 100 * freq/sum(freq)) %>%
-    arrange(desc(freq))
+    group_by(.data$sentiment) %>% 
+    summarise(freq = sum(.data$freq)) %>% 
+    mutate(freq = 100 * .data$freq/sum(.data$freq)) %>%
+    arrange(desc(.data$freq))
   
   if (plot) {
     p <- ggplot(
-      ret$summary, aes(x = reorder(sentiment, freq), y = freq, fill = sentiment)) +
+      ret$summary, aes(x = reorder(.data$sentiment, .data$freq), 
+                       y = .data$freq, fill = .data$sentiment)) +
       geom_col() + 
-      theme_lares2(pal = 0) + gg_fill_customs() + 
-      coord_flip() + guides(fill = FALSE) +
+      theme_lares2(pal = 0) + 
+      gg_fill_customs() + 
+      coord_flip() + 
+      guides(fill = FALSE) +
       labs(x = NULL, y = "Intensity", title = "Sentiment Breakdown")
     if (!is.na(subtitle)) p <- p + labs(subtitle = autoline(subtitle))
     ret[["plot"]] <- p

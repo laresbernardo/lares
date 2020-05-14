@@ -41,8 +41,9 @@ mplot_density <- function(tag,
     }
     
     p1 <- ggplot(out) + 
-      geom_density(aes(x = as.numeric(score),
-                       group = tag, fill = as.character(tag)), 
+      geom_density(aes(x = as.numeric(.data$score),
+                       group = .data$tag, 
+                       fill = as.character(.data$tag)), 
                    alpha = 0.6, adjust = 0.25, size = 0) + 
       labs(title = "Classification Model Results",
            y = "Density by tag", x = "Score", fill = NULL) + 
@@ -51,15 +52,17 @@ mplot_density <- function(tag,
             legend.key.size = unit(.2, "cm"))
     
     p2 <- ggplot(out) + 
-      geom_density(aes(x = score), size = 0, alpha = 0.9, adjust = 0.25, fill = "deepskyblue") + 
-      labs(x = NULL, y = "Density") + theme_lares2()
+      geom_density(aes(x = .data$score), 
+                   size = 0, alpha = 0.9, adjust = 0.25, fill = "deepskyblue") + 
+      labs(x = NULL, y = "Density") + 
+      theme_lares2()
     
-    p3 <- ggplot(out) + 
-      geom_line(aes(x = as.numeric(score), y = (1 - ..y..), color = as.character(tag)), 
-                stat = 'ecdf', size = 1) +
-      geom_line(aes(x = as.numeric(score), y = (1 - ..y..)), 
-                stat = 'ecdf', size = 0.5, colour = "black", linetype = "dotted") +
-      ylab('Cumulative') + labs(x = NULL) + guides(color = FALSE) + theme_lares2(pal = 2)
+    p3 <- ggplot(out, aes(x = as.numeric(.data$score), colour = as.character(.data$tag))) + 
+      stat_ecdf(size = 1) +
+      ylab('Cumulative') + 
+      labs(x = NULL) + 
+      guides(color = FALSE) + 
+      theme_lares2(pal = 2)
     
     p1 <- p1 + theme(plot.margin = margin(10, 5, 5, 5))
     p2 <- p2 + theme(plot.margin = margin(0, 0, 5, 5))
@@ -83,7 +86,7 @@ mplot_density <- function(tag,
     df$values <- as.numeric(as.character(df$values))
     
     p <- ggplot(df) + 
-      geom_density(aes(x = values, fill = as.character(type)), 
+      geom_density(aes(x = .data$values, fill = as.character(.data$type)), 
                    alpha = 0.6, adjust = 0.25) + 
       labs(y = "Density", x = "Continuous values", fill = NULL) +
       guides(colour = FALSE) +
@@ -147,10 +150,10 @@ mplot_importance <- function(var,
   output <- out[1:limit,]
   
   p <- ggplot(output, 
-              aes(x = reorder(var, imp), y = imp, 
-                  label = round(imp, 1))) + 
-    geom_col(aes(fill = Type), width = 0.08, colour = "transparent") +
-    geom_point(aes(colour = Type), size = 6.2) + 
+              aes(x = reorder(.data$var, .data$imp), y = .data$imp, 
+                  label = formatNum(.data$imp, 1))) + 
+    geom_col(aes(fill = .data$Type), width = 0.08, colour = "transparent") +
+    geom_point(aes(colour = .data$Type), size = 6.2) + 
     coord_flip() +
     geom_text(hjust = 0.5, size = 2.1, inherit.aes = TRUE, colour = "white") +
     labs(title = paste0("Most Relevant Variables (top ", limit, " of ", length(var), ")"),
@@ -227,14 +230,14 @@ mplot_roc <- function(tag,
   coords <- rocs$roc
   
   if (sample < min(table(coords$label))) {
-    coords <- coords %>% group_by(label) %>% sample_n(sample)
+    coords <- coords %>% group_by(.data$label) %>% sample_n(sample)
     message("ROC Curve Plot rendered with sampled data...")
   }
   
   scale <- function(x) sprintf("%.1f", x)
-  p <- ggplot(coords, aes(x = fpr, y = tpr, group = label)) +
+  p <- ggplot(coords, aes(x = .data$fpr, y = .data$tpr, group = .data$label)) +
     geom_line(colour = "deepskyblue", size = 0.8) +
-    geom_point(aes(colour = label), size = 0.7, alpha = 0.8) +
+    geom_point(aes(colour = .data$label), size = 0.7, alpha = 0.8) +
     geom_segment(aes(x = 0, y = 1, xend = 1, yend = 0), alpha = 0.2, linetype = "dotted") + 
     scale_x_reverse(name = "1 - Specificity [False Positive Rate]", limits = c(1,0), 
                     breaks = seq(0, 1, interval), expand = c(0.001,0.001),
@@ -310,11 +313,11 @@ mplot_cuts <- function(score,
   
   p <- deciles %>%
     #mutate(label_colours = ifelse(cuts*100 < 50, "1", "m")) %>%
-    ggplot(aes(x = reorder(range, cuts), y = cuts * 100)) + 
+    ggplot(aes(x = reorder(.data$range, .data$cuts), y = .data$cuts * 100)) + 
     geom_col(fill = "deepskyblue", colour = "transparent") + 
     xlab('Cumulative volume') + ylab('Score') + 
-    geom_text(aes(label = round(100 * cuts, 1),
-                  vjust = ifelse(cuts*100 < 50, -0.3, 1.3)), 
+    geom_text(aes(label = round(100 * .data$cuts, 1),
+                  vjust = ifelse(.data$cuts*100 < 50, -0.3, 1.3)), 
               size = 3, colour = "black", inherit.aes = TRUE, check_overlap = TRUE) +
     guides(colour = FALSE) +
     labs(title = sprintf("Score cuts (%s quantiles)", splits)) +
@@ -371,13 +374,13 @@ mplot_cuts_error <- function(tag,
   }
   
   df <- data.frame(tag = tag, score = score) %>%
-    mutate(real_error = tag - score,
-           abs_error = abs(real_error),
-           p_error = 100 * real_error/tag) %>%
-    filter(abs(p_error) <= 150)
+    mutate(real_error = .data$tag - .data$score,
+           abs_error = abs(.data$real_error),
+           p_error = 100 * .data$real_error/.data$tag) %>%
+    filter(abs(.data$p_error) <= 150)
   
   # Useful function
-  quants <- function(values, splits = 10, just = 0.3) {
+  quantsfx <- function(values, splits = 10, just = 0.3) {
     cuts <- quantile(values, 
                      probs = seq((1/splits), 1, length = splits), 
                      names = TRUE)
@@ -390,28 +393,38 @@ mplot_cuts_error <- function(tag,
   }
   
   # First: absolute errors
-  deciles_abs <- quants(df$abs_error, splits = splits, just = 0.3)
-  p_abs <- ggplot(deciles_abs, aes(x = reorder(deciles, cut), y = cut, label = signif(cut, 3))) +
+  deciles_abs <- quantsfx(df$abs_error, splits = splits, just = 0.3)
+  p_abs <- ggplot(deciles_abs, aes(x = reorder(.data$deciles, .data$cut), 
+                                   y = .data$cut, label = signif(.data$cut, 3))) +
     geom_col(fill = "deepskyblue", colour = "transparent") + 
     labs(x = NULL, y = 'Absolute [#]') +
-    geom_text(aes(vjust = gg_pos, colour = colour), size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
+    geom_text(aes(vjust = .data$gg_pos, colour = .data$colour), 
+              size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute error")) +
-    scale_y_continuous(labels = comma) + guides(colour = FALSE) +
-    gg_text_customs() + theme_lares2(bg_colour = "white")
+    scale_y_continuous(labels = comma) + 
+    guides(colour = FALSE) +
+    gg_text_customs() + 
+    theme_lares2(bg_colour = "white")
   
   # Second: percentual errors
-  deciles_perabs <- quants(abs(df$p_error), splits = splits, just = 0.3)
-  p_per <- ggplot(deciles_perabs, aes(x = reorder(deciles, cut), y = cut, label = signif(cut, 3))) +
+  deciles_perabs <- quantsfx(abs(df$p_error), splits = splits, just = 0.3)
+  p_per <- ggplot(deciles_perabs, 
+                  aes(x = reorder(.data$deciles, .data$cut), 
+                      y = .data$cut, label = signif(.data$cut, 3))) +
     geom_col(fill = "deepskyblue", colour = "transparent") + 
     labs(x = NULL, y = 'Absolute [%]') +
-    geom_text(aes(vjust = gg_pos, colour = colour), size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
+    geom_text(aes(vjust = .data$gg_pos, colour = .data$colour), 
+              size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute percentage error")) +
-    scale_y_continuous(labels = comma) + guides(colour = FALSE) +
-    gg_text_customs() + theme_lares2(bg_colour = "white")
+    scale_y_continuous(labels = comma) + 
+    guides(colour = FALSE) +
+    gg_text_customs() + 
+    theme_lares2(bg_colour = "white")
   
   # Third: errors distribution
   pd_error <- ggplot(df) + 
-    geom_density(aes(x = p_error), fill = "deepskyblue", alpha = 0.7) +
+    geom_density(aes(x = .data$p_error), 
+                 fill = "deepskyblue", alpha = 0.7) +
     labs(x = NULL, y = 'Density [%]') +
     geom_vline(xintercept = 0, alpha = 0.5, colour = "navy", linetype = "dotted") + 
     theme_lares2(bg_colour = "white")
@@ -476,39 +489,42 @@ mplot_splits <- function(tag,
   # For continuous tag values
   if (length(unique(tag)) > 6) {
     names <- df %>% 
-      mutate(tag = as.numeric(tag), 
-             quantile = ntile(tag, splits)) %>% group_by(quantile) %>%
+      mutate(tag = as.numeric(.data$tag), 
+             quantile = ntile(.data$tag, splits)) %>% 
+      group_by(.data$quantile) %>%
       summarise(n = n(), 
-                max_score = round(max(tag), 1), 
-                min_score = round(min(tag), 1)) %>%
-      mutate(quantile_tag = paste0(quantile," (",min_score,"-",max_score,")"))
+                max_score = round(max(.data$tag), 1), 
+                min_score = round(min(.data$tag), 1)) %>%
+      mutate(quantile_tag = paste0(quantile," (",.data$min_score,"-",.data$max_score,")"))
     df <- df %>% 
-      mutate(quantile = ntile(tag, splits)) %>%
-      left_join(names, by = c("quantile")) %>% mutate(tag = quantile_tag) %>% 
-      select(-quantile, -n, -max_score, -min_score)
+      mutate(quantile = ntile(.data$tag, splits)) %>%
+      left_join(names, by = c("quantile")) %>% 
+      mutate(tag = .data$quantile_tag) %>% 
+      select(-.data$quantile, -.data$n, -.data$max_score, -.data$min_score)
     
   } else {
     # For categorical tag values
     names <- df %>% 
-      mutate(quantile = ntile(score, splits)) %>% group_by(quantile) %>%
+      mutate(quantile = ntile(.data$score, splits)) %>% 
+      group_by(.data$quantile) %>%
       summarise(n = n(), 
-                max_score = signif(max(score), 2), 
-                min_score = signif(min(score), 2)) %>%
-      mutate(quantile_tag = paste0(quantile," (",
-                                   round(100*min_score,1),"-",
-                                   round(100*max_score,1),")")) 
+                max_score = signif(max(.data$score), 2), 
+                min_score = signif(min(.data$score), 2)) %>%
+      mutate(quantile_tag = paste0(.data$quantile," (",
+                                   round(100*.data$min_score,1),"-",
+                                   round(100*.data$max_score,1),")")) 
   }
   
   p <- df %>% 
-    mutate(quantile = ntile(score, splits)) %>% 
-    group_by(quantile, tag) %>% tally() %>%
-    ungroup() %>% group_by(tag) %>% 
-    arrange(desc(quantile)) %>%
-    mutate(p = round(100*n/sum(n),2),
-           cum = cumsum(100*n/sum(n))) %>%
+    mutate(quantile = ntile(.data$score, splits)) %>% 
+    group_by(.data$quantile, .data$tag) %>% tally() %>%
+    ungroup() %>% group_by(.data$tag) %>% 
+    arrange(desc(.data$quantile)) %>%
+    mutate(p = round(100*.data$n/sum(.data$n),2),
+           cum = cumsum(100*.data$n/sum(.data$n))) %>%
     left_join(names, by = c("quantile")) %>%
-    ggplot(aes(x = as.character(tag), y = p, label = as.character(p),
-               fill = reorder(as.character(quantile_tag),quantile))) +
+    ggplot(aes(x = as.character(.data$tag), y = .data$p, label = as.character(.data$p),
+               fill = reorder(as.character(.data$quantile_tag), .data$quantile))) +
     geom_col(position = "stack", colour = "transparent") + 
     geom_text(size = 3, position = position_stack(vjust = 0.5), check_overlap = TRUE) +
     xlab("Tag") + ylab("Total Percentage by Tag") +
@@ -561,33 +577,34 @@ mplot_metrics <- function(results,
     test_auc = results$model@model$scoring_history$validation_auc)
   ll <- ggplot(plots_data) + 
     geom_hline(yintercept = 0.69315, alpha = 0.5, linetype = 'dotted') + 
-    geom_line(aes(x = trees, y = train_ll, colour = "Train"), size = 0.5) +
-    geom_line(aes(x = trees, y = test_ll, colour = "Test"), size = 1) +
+    geom_line(aes(x = .data$trees, y = .data$train_ll, colour = "Train"), size = 0.5) +
+    geom_line(aes(x = .data$trees, y = .data$test_ll, colour = "Test"), size = 1) +
     labs(title = "Logarithmic Loss vs Number of Trees",
          colour = "Dataset", x = "# of trees", y = "LogLoss") +
     scale_colour_brewer(palette = "Set1") + 
-    geom_text(aes(x = trees, y = train_ll, colour = "Train", 
-                  label = round(train_ll,2)),
+    geom_text(aes(x = .data$trees, y = .data$train_ll, colour = "Train", 
+                  label = round(.data$train_ll,2)),
               check_overlap = TRUE, nudge_y = 0.03, size = 3) +
-    geom_text(aes(x = trees, y = test_ll, colour = "Test", 
-                  label = round(test_ll, 2)),
+    geom_text(aes(x = .data$trees, y = .data$test_ll, colour = "Test", 
+                  label = round(.data$test_ll, 2)),
               check_overlap = TRUE, nudge_y = 0.03, size = 3) + 
     theme_lares2(pal = 1) +
     theme(strip.text.x = element_blank(),
           strip.background = element_rect(colour = "white", fill = "white"),
           legend.position = c(0.1, 0.05))
   au <- ggplot(plots_data) + 
-    geom_line(aes(x = trees, y = train_auc*100, colour = "Train"), size = 0.5) +
-    geom_line(aes(x = trees, y = test_auc*100, colour = "Test"), size = 1) +
+    geom_line(aes(x = .data$trees, y = .data$train_auc*100, colour = "Train"), size = 0.5) +
+    geom_line(aes(x = .data$trees, y = .data$test_auc*100, colour = "Test"), size = 1) +
     geom_hline(yintercept = 50, alpha = 0.5, linetype = 'dotted', colour = "black") + 
     labs(title = "Area Under the Curve vs Number of Trees",
          colour = "Dataset", x = "# of trees", y = "AUC") +
-    scale_colour_brewer(palette = "Set1") + guides(colour = FALSE) +
-    geom_text(aes(x = trees, y = train_auc*100, colour = "Train", 
-                  label = round(train_auc*100, 2)),
+    scale_colour_brewer(palette = "Set1") + 
+    guides(colour = FALSE) +
+    geom_text(aes(x = .data$trees, y = .data$train_auc*100, colour = "Train", 
+                  label = round(.data$train_auc*100, 2)),
               check_overlap = TRUE, nudge_y = 3, size = 3) +
-    geom_text(aes(x = trees, y = test_auc*100, colour = "Test", 
-                  label = round(test_auc*100,2)),
+    geom_text(aes(x = .data$trees, y = .data$test_auc*100, colour = "Test", 
+                  label = round(.data$test_auc*100,2)),
               check_overlap = TRUE, nudge_y = 3, size = 3) +
     theme_lares2(pal = 1)
   
@@ -656,7 +673,7 @@ mplot_lineal <- function(tag,
     paste("MAE =", signif(mae(results$tag, results$score), 4)), 
     sep = "\n")
   
-  p <- ggplot(results, aes(x = tag, y = score, colour = dist)) +
+  p <- ggplot(results, aes(x = .data$tag, y = .data$score, colour = .data$dist)) +
     geom_point() +
     labs(title = "Regression Model Results",
          x = "Real value", y = "Predicted value",
@@ -807,29 +824,29 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
   df <- data.frame(tag, score)
   
   # About tags
-  values <- df %>% group_by(tag) %>% tally() %>% 
-    {if (abc) arrange(., tag) else arrange(., desc(n))} %>%
-    mutate(label = sprintf("%s \n(%s)", tag, formatNum(n, 0)))
+  values <- df %>% group_by(.data$tag) %>% tally() %>% 
+    {if (abc) arrange(., .data$tag) else arrange(., desc(.data$n))} %>%
+    mutate(label = sprintf("%s \n(%s)", .data$tag, formatNum(.data$n, 0)))
   labels <- values$tag
-  df <- df %>% mutate(tag = factor(tag, levels = labels))
+  df <- df %>% mutate(tag = factor(.data$tag, levels = .data$labels))
   
   # About scores
   if (is.numeric(df$score) & length(unique(tag)) == 2) {
-    means <- df %>% group_by(tag) %>% summarise(mean = mean(score))
+    means <- df %>% group_by(.data$tag) %>% summarise(mean = mean(.data$score))
     target <- means$tag[means$mean == max(means$mean)]
     other <- means$tag[means$mean == min(means$mean)]
     df <- df %>% mutate(pred = ifelse(
-      score >= thresh, as.character(target), as.character(other)))
-  } else df <- df %>% mutate(pred = score)
+      .data$score >= thresh, as.character(.data$target), as.character(.data$other)))
+  } else df <- df %>% mutate(pred = .data$score)
   
   # Frequencies
   plot_cf <- df %>% 
-    freqs(tag, pred) %>% ungroup() %>%
-    group_by(tag) %>%
-    mutate(aux = 100*n/sum(n)) %>%
-    mutate(label = paste0(formatNum(n, 0),"\n", 
-                          formatNum(p, 1), "%T\n(", 
-                          formatNum(aux, 1),"%)"))
+    freqs(.data$tag, .data$pred) %>% ungroup() %>%
+    group_by(.data$tag) %>%
+    mutate(aux = 100*.data$n/sum(.data$n)) %>%
+    mutate(label = paste0(formatNum(.data$n, 0),"\n", 
+                          formatNum(.data$p, 1), "%T\n(", 
+                          formatNum(.data$aux, 1),"%)"))
   trues <- sum(plot_cf$n[as.character(plot_cf$tag) == as.character(plot_cf$pred)])
   total <- sum(plot_cf$n)
   acc <- formatNum(100 * (trues / total), 2, pos = "%")
@@ -837,9 +854,9 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
   metrics <- sprintf("%s observations | AAC %s", obs, acc)
   
   p <- ggplot(plot_cf, aes(
-    y = as.numeric(factor(tag, levels = rev(labels))), 
-    x = as.numeric(factor(pred, levels = labels)), 
-    fill = aux, size = n, label = label)) +
+    y = as.numeric(factor(.data$tag, levels = rev(.data$labels))), 
+    x = as.numeric(factor(.data$pred, levels = .data$labels)), 
+    fill = .data$aux, size = .data$n, label = .data$label)) +
     geom_tile() + theme_lares2() +
     geom_text(colour = "white", lineheight = .8) + 
     scale_size(range = c(2.8, 3.5)) + coord_equal() + 
@@ -925,24 +942,28 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
     gains <- gain_lift(tag, score, target, splits, quiet = quiet) 
     aux <- data.frame(x = c(0, gains$percentile), y = c(0, gains$optimal))
     p <- gains %>%
-      mutate(percentile = as.numeric(percentile)) %>%
-      ggplot(aes(x = percentile)) + 
+      mutate(percentile = as.numeric(.data$percentile)) %>%
+      ggplot(aes(x = .data$percentile)) + 
       # Random line
       #geom_line(aes(y = random, linetype = "Random"), colour = "black", alpha = 0.6) +
       # Optimal line
       #geom_line(aes(y = optimal, linetype = "Optimal"), colour = "black", alpha = 0.6) +
       # Range area
-      geom_polygon(data = aux, aes(x, y), alpha = 0.1) +
+      geom_polygon(data = aux, aes(.data$x, .data$y), alpha = 0.1) +
       # Model line
-      geom_line(aes(y = gain), colour = "darkorange", size = 1.2) +
-      geom_label(aes(y = gain, label = ifelse(gain == 100, NA, round(gain))), alpha = 0.9) +
+      geom_line(aes(y = .data$gain), 
+                colour = "darkorange", size = 1.2) +
+      geom_label(aes(y = .data$gain, 
+                     label = ifelse(.data$gain == 100, NA, round(.data$gain))), 
+                 alpha = 0.9) +
       scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour = FALSE) +
       scale_x_continuous(minor_breaks = NULL, breaks = seq(0, splits, 1)) +
       labs(title = paste("Cumulative Gains for", gains$value[1]), 
            linetype = NULL,
            y = "Cumulative gains [%]", 
            x = paste0("Percentiles [",splits,"]")) +
-      theme_lares2(pal = 2) + theme(legend.position = c(0.88, 0.2))
+      theme_lares2(pal = 2) + 
+      theme(legend.position = c(0.88, 0.2))
     
     if (highlight == "auto") 
       highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])[1]
@@ -969,17 +990,17 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
       aux <- rbind(aux, x)
     }
     p <- out %>% 
-      mutate(factor(percentile, levels = unique(out$percentile))) %>%
-      ggplot(aes(x = percentile, group = label)) +
+      mutate(percentile = factor(.data$percentile, levels = unique(out$percentile))) %>%
+      ggplot(aes(x = .data$percentile, group = .data$label)) +
       # # Random line
       # geom_line(aes(y = random, linetype = "Random"), colour = "black") +
       # # Optimal line
       # geom_line(aes(y = optimal, colour = label, linetype = "Optimal"), size = 0.4) +
       # Possible area
-      geom_polygon(data = aux, aes(x = x, y = y, group = label), alpha = 0.1) +
+      geom_polygon(data = aux, aes(x = .data$x, y = .data$y, group = .data$label), alpha = 0.1) +
       # Model line
-      geom_line(aes(y = gain, colour = label), size = 1) +
-      geom_label(aes(y = gain, label = round(gain)), alpha = 0.8) +
+      geom_line(aes(y = .data$gain, colour = .data$label), size = 1) +
+      geom_label(aes(y = .data$gain, label = round(.data$gain)), alpha = 0.8) +
       guides(colour = FALSE) +
       theme_lares2(pal = 2) + 
       labs(title = "Cumulative Gains for Multiple Labels",
@@ -992,7 +1013,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
       facet_grid(label~.)
   }
   
-  aux <- freqs(data.frame(tag = tag), tag)
+  aux <- freqs(data.frame(tag = tag), .data$tag)
   text <- paste("*Assuming rate of",
                 vector2text(round(aux$p), sep = "/", quotes = FALSE), "for",
                 vector2text(aux$tag, sep = "/", quotes = FALSE))
@@ -1043,17 +1064,17 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
   
   if (is.na(multis)[1]) {
     gains <- gain_lift(tag, score, target, splits, quiet = quiet) %>% 
-      mutate(percentile = as.numeric(percentile),
-             cum_response = 100 * cumsum(target)/cumsum(total))
+      mutate(percentile = as.numeric(.data$percentile),
+             cum_response = 100 * cumsum(.data$target)/cumsum(.data$total))
     target <- gains$target[1]
     rand <- 100 * sum(gains$target)/sum(gains$total)
-    gains <- gains %>% mutate(cum_response_lift = 100 * cum_response/rand - 100)
+    gains <- gains %>% mutate(cum_response_lift = 100 * .data$cum_response/rand - 100)
     
     p <- gains %>%
-      ggplot(aes(x = percentile)) + theme_lares2(pal = 2) +
+      ggplot(aes(x = .data$percentile)) + theme_lares2(pal = 2) +
       geom_hline(yintercept = rand, colour = "black", linetype = "dashed") +
-      geom_line(aes(y = cum_response, colour = "x"), size = 1.2) +
-      geom_label(aes(y = cum_response, label = round(cum_response)), alpha = 0.9) +
+      geom_line(aes(y = .data$cum_response, colour = "x"), size = 1.2) +
+      geom_label(aes(y = .data$cum_response, label = round(.data$cum_response)), alpha = 0.9) +
       geom_text(label = paste0("Random: ", round(rand, 1), "%"), 
                 y = rand, x = 1, vjust = 1.2, hjust = 0, alpha = 0.2) +
       scale_y_continuous(limits = c(0,100), breaks = seq(0, 100, 10)) + 
@@ -1084,19 +1105,20 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
       out <- rbind(out, g)
     }
     p <- out %>% 
-      mutate(factor(percentile, levels = unique(out$percentile))) %>%
-      group_by(label) %>%
-      mutate(rand = 100 * sum(target)/sum(total),
-             cum_response = 100 * cumsum(target)/cumsum(total)) %>%
-      ggplot(aes(group = label, x = percentile)) +
-      geom_hline(aes(yintercept = rand), colour = "black", linetype = "dashed") + 
-      geom_line(aes(y = cum_response, colour = label), size = 1.2) + 
-      geom_label(aes(y = cum_response, label = round(cum_response)), alpha = 0.9) + 
-      geom_text(aes(label = paste0("Random: ", round(rand, 1), "%"), y = rand), 
+      mutate(percentile = factor(.data$percentile, levels = unique(out$percentile))) %>%
+      group_by(.data$label) %>%
+      mutate(rand = 100 * sum(.data$target)/sum(.data$total),
+             cum_response = 100 * cumsum(.data$target)/cumsum(.data$total)) %>%
+      ggplot(aes(group = .data$label, x = .data$percentile)) +
+      geom_hline(aes(yintercept = .data$rand), colour = "black", linetype = "dashed") + 
+      geom_line(aes(y = .data$cum_response, colour = .data$label), size = 1.2) + 
+      geom_label(aes(y = .data$cum_response, label = round(.data$cum_response)), alpha = 0.9) + 
+      geom_text(aes(label = paste0("Random: ", round(.data$rand, 1), "%"), y = .data$rand), 
                 x = 1, vjust = 1.2, hjust = 0, alpha = 0.2) + 
       labs(title = "Cumulative Response Plot", linetype = NULL, 
            y = "Cumulative response [%]", 
-           x = paste0("Percentiles [", splits, "]")) + theme(legend.position = c(0.88, 0.2)) +
+           x = paste0("Percentiles [", splits, "]")) + 
+      theme(legend.position = c(0.88, 0.2)) +
       theme_lares2(pal = 2) + 
       labs(title = "Cumulative Response for Multiple Labels",
            subtitle = paste("If we select the top nth percentile with highest probabilities,",
@@ -1104,7 +1126,8 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
            x = paste0("Percentiles [", max(as.numeric(out$percentile)), "]"), 
            y = "Cumulative Response [%]",
            linetype = "Reference", colour = "Label") +
-      facet_grid(label~.) + guides(colour = FALSE) +
+      facet_grid(.data$label~.) + 
+      guides(colour = FALSE) +
       scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 20))
   }
   
