@@ -1293,7 +1293,7 @@ num_abbr <- function(x, n = 3) {
 #' check_opts(inputs = c("A","X"), options, not = "warning")
 #' # Now let's check the "any" logic
 #' check_opts(inputs = c("A","X"), options, type = "any")
-#' check_opts(inputs = c("X"), options, type = "any")
+#' check_opts(inputs = c("X"), options, type = "any", not = "message")
 #' check_opts(inputs = c("A", NA), options, type = "any")
 #' @export
 check_opts <- function(inputs, options, 
