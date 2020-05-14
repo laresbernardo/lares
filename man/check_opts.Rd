@@ -15,9 +15,20 @@ check_opts(inputs, options, type = "all", not = "stop", quiet = TRUE)
 
 \item{not}{Character. Options: stop, message, print, return}
 
-\item{quiet}{Boolean. Keep quiet? If not, returns TRUE when checked}
+\item{quiet}{Boolean. Keep quiet? If not, returns TRUE or FALSE}
 }
 \description{
 This function validates if inputs match all/any of your options
 and return error/message with possible options to use.
+}
+\examples{
+options <- c("A", "B", "C")
+# Let's check the "all" logic
+check_opts(inputs = c("A", "B"), options, quiet = FALSE)
+check_opts(inputs = c("X"), options, not = "message", quiet = FALSE)
+check_opts(inputs = c("A","X"), options, not = "warning")
+# Now let's check the "any" logic
+check_opts(inputs = c("A","X"), options, type = "any")
+check_opts(inputs = c("X"), options, type = "any")
+check_opts(inputs = c("A", NA), options, type = "any")
 }

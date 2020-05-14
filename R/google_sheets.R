@@ -1,51 +1,3 @@
-#' ####################################################################
-#' #' Google Sheets Reading [Deprecated]
-#' #' 
-#' #' This function lets the user read any Google Sheet's data
-#' #' 
-#' #' @family Connection
-#' #' @family Scrapper
-#' #' @param title Character. Textual title of Google Sheet
-#' #' @param ws Character. Working sheet to import
-#' #' @param first_time Boolean. Authenticate manualy
-#' #' @export
-#' readGS <- function(title, ws = "Hoja 1", first_time = FALSE) {
-#'   try_require("googlesheets")
-#'   if (first_time) {
-#'     options(httr_oob_default = TRUE)
-#'     gs_auth(new_user = TRUE)
-#'   }
-#'   gs <- gs_title(title)
-#'   gs <- invisible(gs_read(gs, ws = ws, verbose = FALSE) %>% data.frame())
-#'   return(gs)
-#' }
-
-#' ####################################################################
-#' #' Google Sheets Writing [Deprecated]
-#' #' 
-#' #' This function lets the user write on any Google Sheet
-#' #' 
-#' #' @family Connection
-#' #' @family Scrapper
-#' #' @param data Data Frame. Data to export to Google Sheet 
-#' #' @param title Character. Textual title of Google Sheet
-#' #' @param ws Character. Working sheet to export to
-#' #' @param cell Character. In which cell should we paste the data (upper left cell)
-#' #' @param first_time Boolean. Authenticate manualy
-#' #' @export
-#' writeGS <- function(data, title, ws = "Hoja 1", cell = 'A1', first_time = FALSE) {
-#'   try_require("googlesheets")
-#'   if (first_time) {
-#'     options(httr_oob_default = TRUE)
-#'     gs_auth(new_user = TRUE)
-#'   }
-#'   gs <- gs_title(title)
-#'   invisible(gs_edit_cells(
-#'     gs, ws = ws, input = data, anchor = cell, verbose = FALSE) %>% 
-#'       data.frame())
-#' }
-
-
 ####################################################################
 #' Google Sheets Reading (API v4)
 #' 
@@ -81,6 +33,55 @@ readGS <- function(title, sheet = "Hoja 1", range = NULL, creds = NULL, ...) {
     return(df)
   } else return(invisible(NULL))
 }
+
 #' @rdname readGS
 #' @export
 readGS4 <- readGS
+
+
+#' ####################################################################
+#' #' Google Sheets Reading [Deprecated]
+#' #'
+#' #' This function lets the user read any Google Sheet's data
+#' #'
+#' #' @family Connection
+#' #' @family Scrapper
+#' #' @param title Character. Textual title of Google Sheet
+#' #' @param ws Character. Working sheet to import
+#' #' @param first_time Boolean. Authenticate manualy
+#' #' @export
+#' readGS <- function(title, ws = "Hoja 1", first_time = FALSE) {
+#'   try_require("googlesheets")
+#'   if (first_time) {
+#'     options(httr_oob_default = TRUE)
+#'     gs_auth(new_user = TRUE)
+#'   }
+#'   gs <- gs_title(title)
+#'   gs <- invisible(gs_read(gs, ws = ws, verbose = FALSE) %>% data.frame())
+#'   return(gs)
+#' }
+#' 
+#' ####################################################################
+#' #' Google Sheets Writing [Deprecated]
+#' #'
+#' #' This function lets the user write on any Google Sheet
+#' #'
+#' #' @family Connection
+#' #' @family Scrapper
+#' #' @param data Data Frame. Data to export to Google Sheet
+#' #' @param title Character. Textual title of Google Sheet
+#' #' @param ws Character. Working sheet to export to
+#' #' @param cell Character. In which cell should we paste the data (upper left cell)
+#' #' @param first_time Boolean. Authenticate manualy
+#' #' @export
+#' writeGS <- function(data, title, ws = "Hoja 1", cell = 'A1', first_time = FALSE) {
+#'   try_require("googlesheets")
+#'   if (first_time) {
+#'     options(httr_oob_default = TRUE)
+#'     gs_auth(new_user = TRUE)
+#'   }
+#'   gs <- gs_title(title)
+#'   invisible(gs_edit_cells(
+#'     gs, ws = ws, input = data, anchor = cell, verbose = FALSE) %>%
+#'       data.frame())
+#' }

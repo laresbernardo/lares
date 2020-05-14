@@ -16,7 +16,7 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
   message("API Documentation: https://developers.google.com/maps/documentation/geocoding/usage-and-billing")
   c <- get_credentials(from = "google_api", dir = creds)
   message("API Geocoding user: ", as.character(c[grepl(paste0("user_",right(which, 2)), names(c))]))
-
+  
   getGeoDetails <- function(address){   
     
     c <- get_credentials(from = "google_api", dir = creds)
@@ -157,7 +157,7 @@ geoGrid <- function(coords, map, fix_coords = FALSE, plot = FALSE, all = FALSE, 
   coordinates(coords) <- c("longitude", "latitude")  
   
   if (fix_coords) map <- spTransform(map, CRS("+proj=longlat +datum=WGS84"))
-
+  
   shapes_sample <- head(map@polygons[[2]]@Polygons[[1]]@coords)
   proj4string <- "+proj=utm +units=mm"
   project(shapes_sample, proj4string)
@@ -226,7 +226,7 @@ geoMap <- function(map, fix_coords = FALSE, title = NA, subtitle = NA) {
   }
   plot <- ggplot() + 
     geom_polygon(data = map, aes(x = .data$long, y = .data$lat, group = .data$group), 
-    colour = "black", fill = "white", alpha = 0.1) +
+                 colour = "black", fill = "white", alpha = 0.1) +
     labs(x = "Latitude", y = "Longitude") +
     theme_bw()
   
@@ -238,19 +238,21 @@ geoMap <- function(map, fix_coords = FALSE, title = NA, subtitle = NA) {
 
 
 ####################################################################
-#' Convert from degrees to numeric coordinates
+#' Convert from degrees to numeric coordinates [Deprecated]
 #' 
 #' This function converts degrees (DMS) coordinates into numerical. 
 #' Note that the sign (S or W) should be assigned manually if needed.
 #' 
 #' @family Calculus
-#' @param coord Character vector. Cooridnate in format c("DD MM SS")
+#' @param coord Character vector. Coordinate in format c("DD MM SS")
 #' @param sep Character. Separator
+#' @examples
+#' deg2num("11 12 12")
+#' deg2num("00-00-00", sep = "-")
 #' @export
-deg2num <- function(coord, sep=" ") {
-  z <- data.frame(str_split_fixed(as.character(coord), sep, 3)) %>% 
-    mutate_all(as.numeric)
-  colnames(z) <- c("days","minutes","seconds")
-    mutate(num = .data$days + .data$minutes/60 + .data$seconds/3600)
-  return(z$num)
+deg2num <- function(coord, sep = " ") {
+  z <- str_split_fixed(as.character(coord), sep, 3)
+  z <- as.numeric(as.character(unlist(z)))
+  num <- z[1] + z[2]/60 + z[3]/3600
+  return(num)
 }

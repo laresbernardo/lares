@@ -2,18 +2,22 @@
 % Please edit documentation in R/geodata.R
 \name{deg2num}
 \alias{deg2num}
-\title{Convert from degrees to numeric coordinates}
+\title{Convert from degrees to numeric coordinates [Deprecated]}
 \usage{
 deg2num(coord, sep = " ")
 }
 \arguments{
-\item{coord}{Character vector. Cooridnate in format c("DD MM SS")}
+\item{coord}{Character vector. Coordinate in format c("DD MM SS")}
 
 \item{sep}{Character. Separator}
 }
 \description{
 This function converts degrees (DMS) coordinates into numerical. 
 Note that the sign (S or W) should be assigned manually if needed.
+}
+\examples{
+deg2num("11 12 12")
+deg2num("00-00-00", sep = "-")
 }
 \seealso{
 Other Calculus: 

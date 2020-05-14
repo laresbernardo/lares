@@ -1284,19 +1284,34 @@ num_abbr <- function(x, n = 3) {
 #' @param options Vector character
 #' @param type Character. Options: all, any
 #' @param not Character. Options: stop, message, print, return
-#' @param quiet Boolean. Keep quiet? If not, returns TRUE when checked
+#' @param quiet Boolean. Keep quiet? If not, returns TRUE or FALSE
+#' @examples 
+#' options <- c("A", "B", "C")
+#' # Let's check the "all" logic
+#' check_opts(inputs = c("A", "B"), options, quiet = FALSE)
+#' check_opts(inputs = c("X"), options, not = "message", quiet = FALSE)
+#' check_opts(inputs = c("A","X"), options, not = "warning")
+#' # Now let's check the "any" logic
+#' check_opts(inputs = c("A","X"), options, type = "any")
+#' check_opts(inputs = c("X"), options, type = "any")
+#' check_opts(inputs = c("A", NA), options, type = "any")
 #' @export
 check_opts <- function(inputs, options, 
                        type = "all", not = "stop", 
                        quiet = TRUE) {
   aux <- base::get(type)
   not <- base::get(not)
-  if (!aux(inputs %in% options))
+  isit <- aux(inputs %in% options)
+  if (!isit) {
+    if (type == "all")
+      inputs <- inputs[which(!inputs %in% options)]
     not(paste("Your input", vector2text(inputs), 
               "is not valid;", toupper(type),
               "of the inputs should match these options:", 
-              vector2text(options)))
-  if (!quiet) return(TRUE)
+              vector2text(options))) 
+  }
+  if (!quiet) 
+    return(isit)
 }
 
 ####################################################################

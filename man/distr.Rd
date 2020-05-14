@@ -76,6 +76,8 @@ library(dplyr)
 data(dft)
 # Relation for survived vs sex
 dft \%>\% distr(Survived, Sex)
+# Get the data as a table
+dft \%>\% distr(Survived, Fare, plot = FALSE) \%>\% head(10)
 # Relation for sex vs survived
 dft \%>\% distr(Sex, Survived)
 # Relation for survived vs embark gate (categorical)
