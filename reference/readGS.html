@@ -6,52 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>####################################################################
-#' Google Sheets Reading [Deprecated]
-#' 
-#' This function lets the user read any Google Sheet's data
-#' 
-#' @family Connection
-#' @family Scrapper
-#' @param title Character. Textual title of Google Sheet
-#' @param ws Character. Working sheet to import
-#' @param first_time Boolean. Authenticate manualy
-#' @export
-readGS &lt;- function(title, ws = "Hoja 1", first_time = FALSE) 
-  try_require("googlesheets")
-  if (first_time) 
-    options(httr_oob_default = TRUE)
-    gs_auth(new_user = TRUE)
-  
-  gs &lt;- gs_title(title)
-  gs &lt;- invisible(gs_read(gs, ws = ws, verbose = FALSE) <!-- %&gt;% data.frame()) -->
-  return(gs)
-
-####################################################################
-#' Google Sheets Writing [Deprecated]
-#' 
-#' This function lets the user write on any Google Sheet
-#' 
-#' @family Connection
-#' @family Scrapper
-#' @param data Data Frame. Data to export to Google Sheet 
-#' @param title Character. Textual title of Google Sheet
-#' @param ws Character. Working sheet to export to
-#' @param cell Character. In which cell should we paste the data (upper left cell)
-#' @param first_time Boolean. Authenticate manualy
-#' @export
-writeGS &lt;- function(data, title, ws = "Hoja 1", cell = 'A1', first_time = FALSE) 
-  try_require("googlesheets")
-  if (first_time) 
-    options(httr_oob_default = TRUE)
-    gs_auth(new_user = TRUE)
-  
-  gs &lt;- gs_title(title)
-  invisible(gs_edit_cells(
-    gs, ws = ws, input = data, anchor = cell, verbose = FALSE) <!-- %&gt;%  -->
-      data.frame())
-
-Google Sheets Reading (API v4) — readGS • lares</title>
+<title>Google Sheets Reading (API v4) — readGS • lares</title>
 
 
 <!-- jquery -->
@@ -84,52 +39,7 @@ Google Sheets Reading (API v4) — readGS • lares</title>
 
 
 
-<meta property="og:title" content="####################################################################
-#' Google Sheets Reading [Deprecated]
-#' 
-#' This function lets the user read any Google Sheet's data
-#' 
-#' @family Connection
-#' @family Scrapper
-#' @param title Character. Textual title of Google Sheet
-#' @param ws Character. Working sheet to import
-#' @param first_time Boolean. Authenticate manualy
-#' @export
-readGS &lt;- function(title, ws = "Hoja 1", first_time = FALSE) 
-  try_require("googlesheets")
-  if (first_time) 
-    options(httr_oob_default = TRUE)
-    gs_auth(new_user = TRUE)
-  
-  gs &lt;- gs_title(title)
-  gs &lt;- invisible(gs_read(gs, ws = ws, verbose = FALSE) <!-- %&gt;% data.frame()) -->
-  return(gs)
-
-####################################################################
-#' Google Sheets Writing [Deprecated]
-#' 
-#' This function lets the user write on any Google Sheet
-#' 
-#' @family Connection
-#' @family Scrapper
-#' @param data Data Frame. Data to export to Google Sheet 
-#' @param title Character. Textual title of Google Sheet
-#' @param ws Character. Working sheet to export to
-#' @param cell Character. In which cell should we paste the data (upper left cell)
-#' @param first_time Boolean. Authenticate manualy
-#' @export
-writeGS &lt;- function(data, title, ws = "Hoja 1", cell = 'A1', first_time = FALSE) 
-  try_require("googlesheets")
-  if (first_time) 
-    options(httr_oob_default = TRUE)
-    gs_auth(new_user = TRUE)
-  
-  gs &lt;- gs_title(title)
-  invisible(gs_edit_cells(
-    gs, ws = ws, input = data, anchor = cell, verbose = FALSE) <!-- %&gt;%  -->
-      data.frame())
-
-Google Sheets Reading (API v4) — readGS" />
+<meta property="og:title" content="Google Sheets Reading (API v4) — readGS" />
 <meta property="og:description" content="This function lets the user read any Google Sheet's data" />
 
 
@@ -198,52 +108,7 @@ Google Sheets Reading (API v4) — readGS" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>####################################################################
-#' Google Sheets Reading [Deprecated]
-#' 
-#' This function lets the user read any Google Sheet's data
-#' 
-#' @family Connection
-#' @family Scrapper
-#' @param title Character. Textual title of Google Sheet
-#' @param ws Character. Working sheet to import
-#' @param first_time Boolean. Authenticate manualy
-#' @export
-readGS &lt;- function(title, ws = "Hoja 1", first_time = FALSE) 
-  try_require("googlesheets")
-  if (first_time) 
-    options(httr_oob_default = TRUE)
-    gs_auth(new_user = TRUE)
-  
-  gs &lt;- gs_title(title)
-  gs &lt;- invisible(gs_read(gs, ws = ws, verbose = FALSE) <!-- %&gt;% data.frame()) -->
-  return(gs)
-
-####################################################################
-#' Google Sheets Writing [Deprecated]
-#' 
-#' This function lets the user write on any Google Sheet
-#' 
-#' @family Connection
-#' @family Scrapper
-#' @param data Data Frame. Data to export to Google Sheet 
-#' @param title Character. Textual title of Google Sheet
-#' @param ws Character. Working sheet to export to
-#' @param cell Character. In which cell should we paste the data (upper left cell)
-#' @param first_time Boolean. Authenticate manualy
-#' @export
-writeGS &lt;- function(data, title, ws = "Hoja 1", cell = 'A1', first_time = FALSE) 
-  try_require("googlesheets")
-  if (first_time) 
-    options(httr_oob_default = TRUE)
-    gs_auth(new_user = TRUE)
-  
-  gs &lt;- gs_title(title)
-  invisible(gs_edit_cells(
-    gs, ws = ws, input = data, anchor = cell, verbose = FALSE) <!-- %&gt;%  -->
-      data.frame())
-
-Google Sheets Reading (API v4)</h1>
+    <h1>Google Sheets Reading (API v4)</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/google_sheets.R'><code>R/google_sheets.R</code></a></small>
     <div class="hidden name"><code>readGS.Rd</code></div>
     </div>

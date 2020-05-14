@@ -268,6 +268,8 @@ for both, target and values)</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>)
 <span class='co'># Relation for survived vs sex</span>
 <span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Sex</span>)
+<span class='co'># Get the data as a table</span>
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Fare</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>10</span>)
 <span class='co'># Relation for sex vs survived</span>
 <span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Sex</span>, <span class='no'>Survived</span>)
 <span class='co'># Relation for survived vs embark gate (categorical)</span>

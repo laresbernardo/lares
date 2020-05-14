@@ -297,7 +297,7 @@
         <td>
           <p><code><a href="deg2num.html">deg2num()</a></code> </p>
         </td>
-        <td><p>Convert from degrees to numeric coordinates</p></td>
+        <td><p>Convert from degrees to numeric coordinates [Deprecated]</p></td>
       </tr><tr>
         
         <td>
@@ -897,124 +897,7 @@
         <td>
           <p><code><a href="prophesize.html">prophesize()</a></code> </p>
         </td>
-        <td><p>####################################################################
-#' Machine Learning Forecast
-#' 
-#' This function lets the user create a forecast setting a time series
-#' and a numerical value.
-#' 
-#' @family Forecast
-#' @param time POSIX. Vector with dates or time values
-#' @param values Numeric. Vector with numerical values
-#' @param n_future Integer. How many steps do you wish to forecast?
-#' @param use_last Boolean. Use last observation?
-#' @param automl Boolean. Use lares::h2o_automl()
-#' @param plot_forecast Boolean. If you wish to plot your results
-#' @param plot_model Boolean. If you wish to plot your model's results
-#' @param project Character. Name of your forecast project for plot title
-#' @export
-forecast_ml &lt;- function(time, values, 
-                        n_future = 15, 
-                        use_last = TRUE, 
-                        automl = FALSE, 
-                        plot_forecast = TRUE, 
-                        plot_model = FALSE,
-                        project = "Simple Forecast using Machine Learning") 
-  
-  # require(timetk)
-  # require(tidyquant)
-  
-  if (length(time) != length(values)) 
-    stop("The parameters 'time' and 'values' should have the same length")
-  
-  
-  df &lt;- data.frame(time = time, amount = values)
-  if (use_last == FALSE) 
-    df &lt;- arrange(df, desc(.data$time)) <!-- %&gt;% slice(-1) -->
-    n_future &lt;- n_future + 1
-  
-  
-  # STEP 1: AUGMENT TIME SERIES SIGNATURE
-  augmented &lt;- tk_augment_timeseries_signature(df)
-  augmented &lt;- mutate(augmented, 
-                      month.lbl = as.character(.data$month.lbl),
-                      wday.lbl = as.character(.data$wday.lbl))
-  
-  # STEP 2: BUILD FUTURE (NEW) DATA
-  idx &lt;- tk_index(augmented)
-  future_idx &lt;- tk_make_future_timeseries(idx, n_future = n_future)
-  new_data_tbl &lt;- tk_get_timeseries_signature(future_idx) <!-- %&gt;% -->
-    mutate(month.lbl = as.character(month.lbl),
-           wday.lbl = as.character(wday.lbl))
-  
-  # STEP 3: MODEL
-  if (!automl) 
-    fit_lm &lt;- lm(amount ~ ., data = select(augmented, -c(time)))
-    pred &lt;- predict(fit_lm, newdata = select(new_data_tbl, -c(index)))
-    predictions_tbl &lt;- tibble(time = future_idx, amount = pred) 
-   else 
-    augmented_h2o &lt;- dplyr::rename(augmented, tag = amount)
-    fit_auto &lt;- h2o_automl(df = augmented_h2o, alarm = FALSE, project = project)
-    pred &lt;- h2o.predict(fit_auto$model, as.h2o(new_data_tbl))
-    predictions_tbl &lt;- tibble(time = future_idx, amount = as.vector(pred))
-  
-  
-  # STEP 5: COMPARE ACTUAL VS PREDICTIONS
-  rects &lt;- data.frame(start = min(future_idx), end = max(future_idx))
-  message("Predicted range: ", rects$start, " to ", rects$end)
-  forecast &lt;- ggplot(df, aes(x = time, y = amount)) + 
-    labs(title = project, y = "Amount", x = NULL,
-         subtitle = "Using simple multivariate regressions on time series with Machine Learning") +
-    # Training data
-    geom_line(color = palette_light()[[1]]) +
-    geom_point(color = palette_light()[[1]]) +
-    geom_smooth(method = 'loess', formula = 'y ~ x', alpha = 0.5) +
-    # Predictions
-    geom_line(aes(y = amount), color = palette_light()[[2]], data = predictions_tbl) +
-    geom_point(aes(y = amount), color = palette_light()[[2]], data = predictions_tbl) +
-    # Actuals
-    geom_line(color = palette_light()[[1]], data = df) +
-    geom_point(color = palette_light()[[1]], data = df) +
-    # Aesthetics
-    scale_x_date(date_breaks = "1 month", date_labels = "<!-- %b") + -->
-    theme_lares2() + 
-    geom_rect(data = rects, inherit.aes = FALSE, 
-              aes(
-                xmin = start, xmax = end, ymin = 0,
-                ymax = max(df$amount) * 1.02), 
-              color = "transparent", fill = "orange", alpha = 0.3)
-  
-  if (plot_forecast) 
-    print(forecast)
-  
-  
-  if (plot_model) 
-    Sys.sleep(1)
-    mplot_full(
-      tag = df$amount, 
-      score = predictions_tbl$amount[1:length(df$amount)],
-      subtitle = project)
-    Sys.sleep(4)
-  
-  
-  df_final &lt;- rbind(df, predictions_tbl)
-  
-  if (automl) 
-    model &lt;- fit_auto
-    score &lt;- fit_auto$scores$score
-   else 
-    model &lt;- fit_lm
-    score &lt;- fit_lm$fitted.values
-  
-  
-  output &lt;- list(data = df_final, 
-                 model = model, 
-                 errors = errors(df$amount, score))
-  
-  return(output)
-  
-  
-Facebook's Prophet Forecast</p></td>
+        <td><p>Facebook's Prophet Forecast</p></td>
       </tr><tr>
         
         <td>
@@ -1050,52 +933,7 @@ Facebook's Prophet Forecast</p></td>
         <td>
           <p><code><a href="readGS.html">readGS()</a></code> <code><a href="readGS.html">readGS4()</a></code> </p>
         </td>
-        <td><p>####################################################################
-#' Google Sheets Reading [Deprecated]
-#' 
-#' This function lets the user read any Google Sheet's data
-#' 
-#' @family Connection
-#' @family Scrapper
-#' @param title Character. Textual title of Google Sheet
-#' @param ws Character. Working sheet to import
-#' @param first_time Boolean. Authenticate manualy
-#' @export
-readGS &lt;- function(title, ws = "Hoja 1", first_time = FALSE) 
-  try_require("googlesheets")
-  if (first_time) 
-    options(httr_oob_default = TRUE)
-    gs_auth(new_user = TRUE)
-  
-  gs &lt;- gs_title(title)
-  gs &lt;- invisible(gs_read(gs, ws = ws, verbose = FALSE) <!-- %&gt;% data.frame()) -->
-  return(gs)
-
-####################################################################
-#' Google Sheets Writing [Deprecated]
-#' 
-#' This function lets the user write on any Google Sheet
-#' 
-#' @family Connection
-#' @family Scrapper
-#' @param data Data Frame. Data to export to Google Sheet 
-#' @param title Character. Textual title of Google Sheet
-#' @param ws Character. Working sheet to export to
-#' @param cell Character. In which cell should we paste the data (upper left cell)
-#' @param first_time Boolean. Authenticate manualy
-#' @export
-writeGS &lt;- function(data, title, ws = "Hoja 1", cell = 'A1', first_time = FALSE) 
-  try_require("googlesheets")
-  if (first_time) 
-    options(httr_oob_default = TRUE)
-    gs_auth(new_user = TRUE)
-  
-  gs &lt;- gs_title(title)
-  invisible(gs_edit_cells(
-    gs, ws = ws, input = data, anchor = cell, verbose = FALSE) <!-- %&gt;%  -->
-      data.frame())
-
-Google Sheets Reading (API v4)</p></td>
+        <td><p>Google Sheets Reading (API v4)</p></td>
       </tr><tr>
         
         <td>
