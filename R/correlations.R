@@ -23,11 +23,12 @@
 #' and sorted by mean of each variable's correlations
 #' @examples 
 #' data(dft) # Titanic dataset
-#' corr(dft[,2:5])
-#' corr(dft[,2:5], ignore = "Pclass")
-#' corr(dft[,2:3], redundant = TRUE)
-#' corr(dft[,2:5], method = "spearman")
-#' corr(dft[,2:5], pvalue = TRUE)
+#' df <- dft[,2:5]
+#' corr(df)
+#' corr(df, ignore = "Pclass")
+#' corr(df, redundant = TRUE)
+#' corr(df, method = "spearman")
+#' corr(df, pvalue = TRUE)
 #' @export
 corr <- function(df, method = "pearson", 
                  pvalue = FALSE,
@@ -114,20 +115,24 @@ corr <- function(df, method = "pearson",
 #' save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @examples
-#' data(dft)
-#' dft %>% corr_var(Survived, plot = FALSE) %>% head(10)
+#' options("lares.font" = NA) # Temporal
+#' data(dft) # Titanic dataset
+#' 
+#' dft %>% corr_var(Survived, method = "spearman", plot = FALSE, top = 10)
 #' 
 #' # With plots, results are easier to compare:
-#' \dontrun{
+#' 
 #' # Correlate Survived with everything else
-#' dft %>% corr_var(Survived)
+#' dft %>% corr_var(Survived_TRUE)
+#' 
 #' # Filter out variables with less than 50% of correlation
 #' dft %>% corr_var(Survived_TRUE, ceiling = 50)
+#' 
 #' # Show only 10 values
 #' dft %>% corr_var(Survived_TRUE, top = 10)
+#' 
 #' # Also calculate log(values)
-#' dft %>% corr_var(Survived_TRUE, logs = TRUE)
-#' }
+#' dft %>% corr_var(Survived_TRUE, logs = TRUE, top = 15)
 #' @export
 corr_var <- function(df, ..., 
                      ignore = NA,
@@ -256,14 +261,17 @@ corr_var <- function(df, ...,
 #' column only has two different values, should we keep both new columns?
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @examples 
+#' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
+#' 
+#' # Only data with no plot
 #' corr_cross(dft, plot = FALSE, top = 10)
-#' corr_cross(dft, plot = FALSE, rm.na = TRUE, top = 5)
-#' \dontrun{
-#' # Show only most relevant results filter by pvalue
-#' corr_cross(dft, rm.na = TRUE, max_pvalue = 0.05)
+#' 
+#' # Show only most relevant results filtered by pvalue
+#' corr_cross(dft, rm.na = TRUE, max_pvalue = 0.05, top = 15)
+#' 
+#' # Cross-Correlation max values per category
 #' corr_cross(dft, type = 2, top = NA)
-#' }
 #' @export
 corr_cross <- function(df, plot = TRUE, 
                        max_pvalue = 1,

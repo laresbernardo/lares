@@ -25,7 +25,7 @@
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
 #' @examples 
-#' options("lares.font"=NA)
+#' options("lares.font"=NA) # Temporal
 #' data(dft) # Titanic dataset
 #' 
 #' # How many survived?
@@ -41,9 +41,7 @@
 #' dft %>% freqs(Pclass, Survived, wt = Fare/100)
 #' 
 #' # Let's check the results with plots:
-#' dft %>% freqs(Survived, plot = TRUE)
 #' 
-#' \dontrun{
 #' #' # How many survived and see plot?
 #' dft %>% freqs(Survived, plot = TRUE)
 #' 
@@ -56,16 +54,11 @@
 #' # Per sex and class, how many survived?
 #' dft %>% freqs(Sex, Pclass, Survived, plot = TRUE)
 #' 
-#' # Per number of siblings, sex, and class, how many survived?
-#' dft %>% freqs(SibSp, Sex, Pclass, Survived, plot = TRUE)
-#' dft %>% freqs(SibSp, Sex, Pclass, Survived, plot = FALSE)
-#' 
 #' # Frequency of tickets + Survived
 #' dft %>% freqs(Survived, Ticket, plot = TRUE)
 #' 
 #' # Frequency of tickets: top 10 only and order them alphabetically
 #' dft %>% freqs(Ticket, plot = TRUE, top = 10, abc = TRUE)
-#' }
 #' @export
 freqs <- function(df, ..., wt = NULL,
                   rel = FALSE,

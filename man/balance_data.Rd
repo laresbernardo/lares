@@ -22,18 +22,9 @@ This function lets the user balance a given data.frame by resampling
 with a given relation rate and a binary feature.
 }
 \examples{
-\dontrun{
-data(dft)
+data(dft) # Titanic dataset
 df <- balance_data(dft, "Survived", rate = 1, seed = 123)
-# Resampled from: 549 x 342
-# Reducing size for: FALSE
-# Into: 342 x 342
 freqs(df, Survived)
-#    Survived     n     p  pcum order
-#    <lgl>    <int> <dbl> <dbl> <int>
-# 1 FALSE      342    50    50     1
-# 2 TRUE       342    50   100     2
-}
 }
 \seealso{
 Other Data Wrangling: 

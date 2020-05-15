@@ -7,7 +7,7 @@
 formatNum(
   x,
   decimals = 2,
-  type = 2,
+  type = getOption("lares.formatNum"),
   scientific = FALSE,
   pre = "",
   pos = "",
@@ -20,7 +20,8 @@ formatNum(
 \item{decimals}{Integer. Amount of decimals to display}
 
 \item{type}{Integer. 1 for International standards. 2 for 
-American Standards.}
+American Standards. Use options("lares.formatNum" = 2) to
+set this parameter globally.}
 
 \item{scientific}{Boolean. Scientific notation?}
 

@@ -15,11 +15,12 @@
 #' @param seed Numeric
 #' @param ... ohse parameters
 #' @examples 
-#' \dontrun{
 #' data(dft) # Titanic dataset
 #' m <- lasso_vars(dft, Survived, ignore = c("Ticket", "Cabin"))
 #' print(m$coef)
-#' }
+#' print(m$metrics)
+#' options("lares.font" = NA) # Temporal
+#' m$plot
 #' @export
 lasso_vars <- function(df, variable, 
                        ignore = NA, 

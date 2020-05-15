@@ -810,7 +810,7 @@ errors <- function(tag, score){
 #' @param score Vector. Predicted value or model's result
 #' @param eps Numeric. Epsilon value
 #' @export
-loglossBinary <- function(tag, score, eps = 0.0001) {
+loglossBinary <- function(tag, score, eps = 0.001) {
   
   if (length(unique(tag)) != 2)
     stop("Your 'tag' vector is not binary!")

@@ -71,42 +71,31 @@ function automatically splits into quantiles for numerical variables.
 Custom and tidyverse friendly.
 }
 \examples{
-\dontrun{
-data(dft)
-# Relation for survived vs sex
+options("lares.font" = NA) # Temporal
+data(dft) # Titanic dataset
+
+# Relation for categorical/categorical values
 dft \%>\% distr(Survived, Sex)
-# Get the data as a table
-dft \%>\% distr(Survived, Fare, plot = FALSE) \%>\% head(10)
-# Relation for sex vs survived
-dft \%>\% distr(Sex, Survived)
-# Relation for survived vs embark gate (categorical)
-dft \%>\% distr(Survived, Embarked)
 dft \%>\% distr(Embarked, Survived)
-# Relation for survived vs embark gate
-dft \%>\% distr(Survived, Fare)
-# Relation for survived vs fare with custom colours for Survived
-dft \%>\% distr(Survived, Fare, custom_colours = TRUE)
-# Relation for survived vs fare with ascending order
+
+# Relation for categorical/numeric values
+dft \%>\% distr(Survived, Fare, plot = FALSE) \%>\% head(10)
+# Sort values 
 dft \%>\% distr(Survived, Fare, abc = TRUE)
-# Relation for survived vs fare with only 5 splits
+# Less plits
 dft \%>\% distr(Survived, Fare, abc = TRUE, breaks = 5)
-dft \%>\% distr(Survived, Fare, abc = TRUE, top = 5)
-dft \%>\% distr(Survived, Embarked, top = 2)
-# Relation for survived vs age (notice NA values)
-dft \%>\% distr(Survived, Age)
-dft \%>\% distr(Survived, Age, na.rm = TRUE, abc = TRUE)
-dft \%>\% distr(Survived, Ticket, top = 10)
-# Distribution of fares payed
-dft \%>\% distr(Fare)
-dft \%>\% filter(Fare < 200) \%>\% distr(Fare)
-# Distribution (frequency) of survivors
+
+# Distribution of numerical only
+dft \%>\% dplyr::filter(Fare < 200) \%>\% distr(Fare)
+
+# Distribution of categorical only - uses freqs()
 dft \%>\% distr(Survived, force = "char")
-# Distribution of log(Fare) vs Fare
-dft \%>\% mutate(logFare = log(Fare)) \%>\% distr(Fare, logFare)
-dft \%>\% mutate(logFare = log(Fare)) \%>\% 
-  filter(Fare < 100) \%>\% distr(Fare, logFare) + 
-  geom_point(colour = "yellow")
-# Only one plot or the other
+
+# Distribution of numerical/numerical
+dft \%>\% dplyr::mutate(logFare = log(Fare)) \%>\% distr(Fare, logFare)
+
+# Select only one of the two default plots of distr()
+\dontrun{
 dft \%>\% distr(Survived, Age, type = 2)
 dft \%>\% distr(Survived, Age, type = 3)
 }

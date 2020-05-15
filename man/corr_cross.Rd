@@ -63,14 +63,17 @@ of the highest correlation variables obtained in a cross-table.
 with Ranked Cross-Correlations}
 }
 \examples{
+options("lares.font" = NA) # Temporal
 data(dft) # Titanic dataset
+
+# Only data with no plot
 corr_cross(dft, plot = FALSE, top = 10)
-corr_cross(dft, plot = FALSE, rm.na = TRUE, top = 5)
-\dontrun{
-# Show only most relevant results filter by pvalue
-corr_cross(dft, rm.na = TRUE, max_pvalue = 0.05)
+
+# Show only most relevant results filtered by pvalue
+corr_cross(dft, rm.na = TRUE, max_pvalue = 0.05, top = 15)
+
+# Cross-Correlation max values per category
 corr_cross(dft, type = 2, top = NA)
-}
 }
 \seealso{
 Other Correlations: 

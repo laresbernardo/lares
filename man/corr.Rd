@@ -47,11 +47,12 @@ all numerical values.
 }
 \examples{
 data(dft) # Titanic dataset
-corr(dft[,2:5])
-corr(dft[,2:5], ignore = "Pclass")
-corr(dft[,2:3], redundant = TRUE)
-corr(dft[,2:5], method = "spearman")
-corr(dft[,2:5], pvalue = TRUE)
+df <- dft[,2:5]
+corr(df)
+corr(df, ignore = "Pclass")
+corr(df, redundant = TRUE)
+corr(df, method = "spearman")
+corr(df, pvalue = TRUE)
 }
 \seealso{
 Other Calculus: 

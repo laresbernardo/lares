@@ -59,7 +59,7 @@ This function lets the user group, count, calculate percentages
 and cumulatives. It also plots results if needed. Tidyverse friendly.
 }
 \examples{
-options("lares.font"=NA)
+options("lares.font"=NA) # Temporal
 data(dft) # Titanic dataset
 
 # How many survived?
@@ -75,9 +75,7 @@ dft \%>\% freqs(Pclass, Survived, abc = TRUE, rel = TRUE)
 dft \%>\% freqs(Pclass, Survived, wt = Fare/100)
 
 # Let's check the results with plots:
-dft \%>\% freqs(Survived, plot = TRUE)
 
-\dontrun{
 #' # How many survived and see plot?
 dft \%>\% freqs(Survived, plot = TRUE)
 
@@ -90,16 +88,11 @@ dft \%>\% freqs(Pclass, Survived, plot = TRUE)
 # Per sex and class, how many survived?
 dft \%>\% freqs(Sex, Pclass, Survived, plot = TRUE)
 
-# Per number of siblings, sex, and class, how many survived?
-dft \%>\% freqs(SibSp, Sex, Pclass, Survived, plot = TRUE)
-dft \%>\% freqs(SibSp, Sex, Pclass, Survived, plot = FALSE)
-
 # Frequency of tickets + Survived
 dft \%>\% freqs(Survived, Ticket, plot = TRUE)
 
 # Frequency of tickets: top 10 only and order them alphabetically
 dft \%>\% freqs(Ticket, plot = TRUE, top = 10, abc = TRUE)
-}
 }
 \seealso{
 Other Exploratory: 

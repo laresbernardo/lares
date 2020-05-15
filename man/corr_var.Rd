@@ -66,20 +66,24 @@ automatically run one-hot-smart-encoding (ohse) so no need to input
 only numerical values.
 }
 \examples{
-data(dft)
-dft \%>\% corr_var(Survived, plot = FALSE) \%>\% head(10)
+options("lares.font" = NA) # Temporal
+data(dft) # Titanic dataset
+
+dft \%>\% corr_var(Survived, method = "spearman", plot = FALSE, top = 10)
 
 # With plots, results are easier to compare:
-\dontrun{
+
 # Correlate Survived with everything else
-dft \%>\% corr_var(Survived)
+dft \%>\% corr_var(Survived_TRUE)
+
 # Filter out variables with less than 50\% of correlation
 dft \%>\% corr_var(Survived_TRUE, ceiling = 50)
+
 # Show only 10 values
 dft \%>\% corr_var(Survived_TRUE, top = 10)
+
 # Also calculate log(values)
-dft \%>\% corr_var(Survived_TRUE, logs = TRUE)
-}
+dft \%>\% corr_var(Survived_TRUE, logs = TRUE, top = 15)
 }
 \seealso{
 Other Exploratory: 

@@ -20,15 +20,16 @@ This function lets the user list all files on a given directory.
 It also lets filter files which contains a string.
 }
 \examples{
+# All files in current directory (without recursive files)
+df <- listfiles(recursive = TRUE)
+head(df, 3)
+
 # All files in current directory (with recursive files)
-df <- listfiles()
-head(df, 3)
-# All files in current directory (no recursive files)
-df <- listfiles(recursive = FALSE)
-head(df, 3)
+df <- listfiles(recursive = TRUE)
+tail(df, 3)
+
 # Check R files using regex
 df <- listfiles(regex = "\\\\.R$")
-head(df, 3)
 }
 \seealso{
 Other Tools: 

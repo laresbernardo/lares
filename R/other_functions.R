@@ -258,7 +258,8 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
 #' @param x Numerical Vector
 #' @param decimals Integer. Amount of decimals to display
 #' @param type Integer. 1 for International standards. 2 for 
-#' American Standards.  
+#' American Standards. Use options("lares.formatNum" = 2) to
+#' set this parameter globally.
 #' @param scientific Boolean. Scientific notation?
 #' @param pre,pos Character. Add string before or after number
 #' @param abbr Boolean. Abbreviate using num_abbr()? You can use
@@ -271,7 +272,8 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
 #' formatNum(1234567890, abbr = TRUE)
 #' formatNum(1234567890, decimals = 0, abbr = TRUE)
 #' @export
-formatNum <- function(x, decimals = 2, type = 2, 
+formatNum <- function(x, decimals = 2, 
+                      type = getOption("lares.formatNum"), 
                       scientific = FALSE,
                       pre = "", pos = "",
                       abbr = FALSE) {
@@ -320,7 +322,7 @@ ohe_commas <- function(df, variables, sep = ",") {
     df$temp[as.character(df$temp) == "" | is.na(df$temp)] <- "NoVal"
     vals <- v2t(as.character(df$temp), quotes = FALSE)
     vals <- unique(trimws(unlist(strsplit(vals, sep))))
-    aux <- sprintf("--%s--", vals)
+    # aux <- sprintf("--%s--", vals)
     l <- strsplit(df$temp, sep)
     mat <- c()
     for (i in 1:length(vals)) {
@@ -349,18 +351,9 @@ ohe_commas <- function(df, variables, sep = ",") {
 #' more than 2 unique values, rate will represent percentage for number of rows
 #' @param seed Numeric. Seed to replicate and obtain same values
 #' @examples 
-#' \dontrun{
-#' data(dft)
+#' data(dft) # Titanic dataset
 #' df <- balance_data(dft, "Survived", rate = 1, seed = 123)
-#' # Resampled from: 549 x 342
-#' # Reducing size for: FALSE
-#' # Into: 342 x 342
 #' freqs(df, Survived)
-#' #    Survived     n     p  pcum order
-#' #    <lgl>    <int> <dbl> <dbl> <int>
-#' # 1 FALSE      342    50    50     1
-#' # 2 TRUE       342    50   100     2
-#' }
 #' @export
 balance_data <- function(df, variable, rate = 1, seed = 0) {
   
@@ -474,15 +467,16 @@ image_metadata <- function(files) {
 #' @param regex Character. String to use for filtering files
 #' @param images Boolean. Bring only image files?
 #' @examples 
+#' # All files in current directory (without recursive files)
+#' df <- listfiles(recursive = TRUE)
+#' head(df, 3)
+#' 
 #' # All files in current directory (with recursive files)
-#' df <- listfiles()
-#' head(df, 3)
-#' # All files in current directory (no recursive files)
-#' df <- listfiles(recursive = FALSE)
-#' head(df, 3)
+#' df <- listfiles(recursive = TRUE)
+#' tail(df, 3)
+#' 
 #' # Check R files using regex
 #' df <- listfiles(regex = "\\.R$")
-#' head(df, 3)
 #' @export
 listfiles <- function(folder = getwd(), 
                       recursive = TRUE, 
