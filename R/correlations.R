@@ -46,7 +46,7 @@ corr <- function(df, method = "pearson",
   d <- numericalonly(df, logs = logs)
   
   # Correlations
-  rs <- cor(d, use = "pairwise.complete.obs", method = method)
+  rs <- suppressWarnings(cor(d, use = "pairwise.complete.obs", method = method))
   rs[is.na(rs)] <- 0
   cor <- round(data.frame(rs), 4)
   row.names(cor) <- colnames(cor)
@@ -242,7 +242,8 @@ corr_var <- function(df, ...,
 #' @param max_pvalue Numeric. Filter non-significant variables. Range (0, 1]
 #' @param type Integer. Plot type. 1 is for overall rank. 2 is for local rank.
 #' @param max Numeric. Maximum correlation permited (from 0 to 1)
-#' @param top Integer. Return top n results only. Only valid when type = 1
+#' @param top Integer. Return top n results only. Only valid when type = 1. Set
+#' value to NA to use all cross-correlations
 #' @param local Integer. Label top n local correlations. Only valid when type = 2
 #' @param ignore Character vector. Which columns do you wish to exlude?
 #' @param contains Character vector and Boolean. Filter cross-correlations 
@@ -256,11 +257,12 @@ corr_var <- function(df, ...,
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @examples 
 #' data(dft) # Titanic dataset
-#' corr_cross(dft, plot = FALSE) %>% head(10)
-#' corr_cross(dft, plot = FALSE) %>% head(10)
+#' corr_cross(dft, plot = FALSE, top = 10)
+#' corr_cross(dft, plot = FALSE, rm.na = TRUE, top = 5)
 #' \dontrun{
 #' # Show only most relevant results filter by pvalue
-#' corr_cross(dft, max_pvalue = 0.05)
+#' corr_cross(dft, rm.na = TRUE, max_pvalue = 0.05)
+#' corr_cross(dft, type = 2, top = NA)
 #' }
 #' @export
 corr_cross <- function(df, plot = TRUE, 
@@ -270,8 +272,10 @@ corr_cross <- function(df, plot = TRUE,
                        rm.na = FALSE, dummy = TRUE, redundant = FALSE,
                        method = "pearson") {
   
-  if (sum(is.na(df))) 
-    warning("There are NA values in your dataframe!")
+  check_opts(type, c(1, 2))
+  
+  if (sum(is.na(df)) & rm.na == FALSE) 
+    warning("There are NA values in your data!")
   
   if (!is.na(contains)) redundant <- !redundant
   
@@ -314,6 +318,10 @@ corr_cross <- function(df, plot = TRUE,
     ret$group2 <- ifelse(ret$group2 == "fill", aux, ret$group2)
   }
   ret <- filter(ret, .data$group1 != .data$group2)
+  if (nrow(ret) > top & !is.na(top)) {
+    message(sprintf("Returning only the top %s. You may override with the `top` parameter", top))
+    ret <- slice(ret, 1:top) 
+  }
   
   if (plot) {
     n <- ifelse(type == 1, top, local)
@@ -327,7 +335,7 @@ corr_cross <- function(df, plot = TRUE,
       mutate(facet = substr(.data$facet, 2, 20))
       
     if (type == 1) {
-      p <- ret %>% 
+      p <- ret %>%
         head(top) %>%
         mutate(label = paste(.data$key, "+", .data$mix), 
                abs = abs(.data$corr),
@@ -377,7 +385,8 @@ corr_cross <- function(df, plot = TRUE,
         coord_flip() +
         theme_lares2(pal = 2) 
     }
-    if (max_pvalue < 1) p <- p + labs(caption = paste("Filtering p-value <", max_pvalue))
+    if (max_pvalue < 1) 
+      p <- p + labs(caption = paste("Filtering p-value <", max_pvalue))
     return(p)
   }
   return(ret)

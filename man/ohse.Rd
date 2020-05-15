@@ -66,8 +66,11 @@ categorical columns into numerical by one hot encoding technic.
 \examples{
 # Example with Dataset 1
 data(dft)
+dft <- dft[,c(2,3,5,9,11)]
+
 ohse(dft, limit = 3) \%>\% head(3)
 ohse(dft, limit = 3, redundant = TRUE) \%>\% head(3)
+
 # Getting rid of columns with no (or too much) variance
 dft$no_variance1 <- 0
 dft$no_variance2 <- c("A", rep("B", nrow(dft) - 1))
@@ -81,7 +84,9 @@ data(dfl)
 dfl$novar <- "novar"
 ohse(dfl, dates = TRUE) \%>\% head(3)
 ohse(dfl, dates = TRUE, ignore = "issued") \%>\% head(3)
+
 \dontrun{
+# Include holidays
 ohse(dfl, dates = FALSE, holidays = TRUE, country = "Venezuela") \%>\% head()
 }
 }

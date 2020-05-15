@@ -9,6 +9,16 @@ lares_pal()
 \description{
 This function plots a list of colours on a specific palette
 }
+\examples{
+# Raw colours and counter-colours
+nice_palette <- names(lares_pal()$palette)
+nice_palette_ctr <- as.vector(lares_pal()$palette)
+lapply(list(nice_palette, nice_palette_ctr), head)
+
+# Personal colours by name
+df <- lares_pal()$labels
+df[sample(nrow(df), 5), ]
+}
 \seealso{
 Other Auxiliary: 
 \code{\link{gg_colour_customs}()},

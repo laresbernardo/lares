@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_functions.R
 \name{ROC}
 \alias{ROC}
-\title{ROC Curves}
+\title{ROC Curves Data}
 \usage{
 ROC(tag, score, multis = NA)
 }
@@ -22,8 +22,12 @@ range. It also works for multi-categorical models.
 binary <- data.frame(
   tag = c(1,1,1,1,1,0,0,0,0,0),
   score = c(0.9, 0.5, 0.7, 0.1, 0.7, 0.1, 0.2, 0.1, 0.5, 0.3))
+
 ROC(tag = binary$tag, score = binary$score)
+
 # I owe you the multis example.. check h2o_automl()
+
+# Plot results with with mplot_roc()
 }
 \seealso{
 Other Machine Learning: 

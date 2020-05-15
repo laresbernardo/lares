@@ -72,7 +72,6 @@ Custom and tidyverse friendly.
 }
 \examples{
 \dontrun{
-library(dplyr)
 data(dft)
 # Relation for survived vs sex
 dft \%>\% distr(Survived, Sex)

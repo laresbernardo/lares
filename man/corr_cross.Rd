@@ -32,7 +32,8 @@ corr_cross(
 
 \item{max}{Numeric. Maximum correlation permited (from 0 to 1)}
 
-\item{top}{Integer. Return top n results only. Only valid when type = 1}
+\item{top}{Integer. Return top n results only. Only valid when type = 1. Set
+value to NA to use all cross-correlations}
 
 \item{local}{Integer. Label top n local correlations. Only valid when type = 2}
 
@@ -63,11 +64,12 @@ with Ranked Cross-Correlations}
 }
 \examples{
 data(dft) # Titanic dataset
-corr_cross(dft, plot = FALSE) \%>\% head(10)
-corr_cross(dft, plot = FALSE) \%>\% head(10)
+corr_cross(dft, plot = FALSE, top = 10)
+corr_cross(dft, plot = FALSE, rm.na = TRUE, top = 5)
 \dontrun{
 # Show only most relevant results filter by pvalue
-corr_cross(dft, max_pvalue = 0.05)
+corr_cross(dft, rm.na = TRUE, max_pvalue = 0.05)
+corr_cross(dft, type = 2, top = NA)
 }
 }
 \seealso{

@@ -4,6 +4,15 @@
 #' This function plots a list of colours on a specific palette
 #' 
 #' @family Auxiliary
+#' @examples 
+#' # Raw colours and counter-colours
+#' nice_palette <- names(lares_pal()$palette)
+#' nice_palette_ctr <- as.vector(lares_pal()$palette)
+#' lapply(list(nice_palette, nice_palette_ctr), head)
+#' 
+#' # Personal colours by name
+#' df <- lares_pal()$labels
+#' df[sample(nrow(df), 5), ]
 #' @export
 lares_pal <- function() {
   
@@ -136,30 +145,33 @@ lares_pal <- function() {
 #' @param fill Vector. List of colours for fills
 #' @param colour Vector. List of colours for colours
 #' @param id Vector. ID for each color
+#' @examples 
+#' nice_palette <- names(lares_pal()$palette)[1:15]
+#' nice_palette_ctr <- as.vector(lares_pal()$palette)[1:15]
+#' plot_palette(nice_palette, nice_palette_ctr)
 #' @export
 plot_palette <- function(fill, colour = "black", id = NA) {
-  
-  if (is.na(id)) id <- 1:length(fill)
-  
-  data.frame(fill = fill, 
-             colour = colour,
-             id = id) %>%
+  if (is.na(id)) 
+    id <- 1:length(fill)
+  p <- data.frame(fill = fill, colour = colour, id = id) %>%
+    distinct(.keep_all = TRUE) %>%
     ggplot(aes(x = reorder(fill, -id), y = 1)) + 
     geom_bar(aes(fill = fill), stat = "identity", position = "dodge") +
     geom_text(aes(colour = colour, label = id), hjust = 1.5) +
     scale_fill_identity() +
     scale_colour_identity() +
-    coord_flip() + labs(x = "Colours", y = NULL) +
+    coord_flip() + labs(x = NULL, y = NULL) +
     guides(fill = FALSE, colour = FALSE) +
-    theme_lares2() + 
+    theme_lares2(font = NA) + 
     theme(axis.title.x = element_blank(),
           axis.text.x = element_blank(),
           axis.ticks.x = element_blank())
+  return(p)
 }
 
 
 ####################################################################
-#' Theme for ggplot2
+#' Old theme for ggplot2 [Deprecated]
 #' 
 #' This function sets some default values into ggplot2 outputs. This
 #' function is almost as using gg_colour_customs() + gg_fill_customs() 
@@ -221,7 +233,7 @@ theme_lares <- function(labels = FALSE, colours = TRUE, cont = FALSE,
 
 
 ####################################################################
-#' Custom colours to use in ggplot as scale_color_manual
+#' Custom colours for scale_color_manual [Deprecated]
 #' 
 #' This function lets the user use pre-defined default colours
 #' 
@@ -238,7 +250,7 @@ gg_colour_customs <- function () {
 
 
 ####################################################################
-#' Custom colours to use in ggplot as scale_fill_manual
+#' Custom colours for scale_fill_manual [Deprecated]
 #' 
 #' This function lets the user use pre-defined default colours
 #' 
@@ -255,7 +267,7 @@ gg_fill_customs <- function () {
 
 
 ####################################################################
-#' Custom colours to use in ggplot as scale_color_manual on texts
+#' Custom colours for scale_color_manual on texts [Deprecated]
 #' 
 #' This function lets the user use pre-defined default colours
 #' 

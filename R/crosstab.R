@@ -48,15 +48,15 @@ crosstab <- function(df, ..., wt = NULL,
   xname <- names[1]
   yname <- names[2]
   
-  df <- df %>% mutate_at(vars(names), as.character)
+  df <- df %>% mutate_at(vars(1:2), as.character)
     
   first <- df %>% 
-    freqs(!!!vars[[1]], wt = !!wt, rm.na = rm.na) %>%
-    select(!!!vars[[1]]) %>% unlist()
+    freqs(!!vars[[1]], wt = !!wt, rm.na = rm.na) %>%
+    select(!!vars[[1]]) %>% unlist()
   
   second <- df %>% 
-    freqs(!!!vars[[2]], wt = !!wt, rm.na = rm.na) %>%
-    select(!!!vars[[2]]) %>% unlist()
+    freqs(!!vars[[2]], wt = !!wt, rm.na = rm.na) %>%
+    select(!!vars[[2]]) %>% unlist()
   
   aux <- df %>% freqs(!!!vars, wt = !!wt, rm.na = rm.na) %>% replace(is.na(.), '')
   colnames(aux)[1:2] <- c("A","B")
@@ -71,8 +71,7 @@ crosstab <- function(df, ..., wt = NULL,
   
   ret <- aux %>%
     select(.data$A, .data$B, .data$n) %>% 
-    # We are losing NAs here!
-    spread(.data$B, .data$n, drop = FALSE) %>%
+    tidyr::spread(.data$B, .data$n, drop = FALSE) %>%
     select(.data$A, one_of(levels(aux$B))) %>%
     arrange()
   colnames(ret)[1] <- sprintf("%s x %s", xname, yname)

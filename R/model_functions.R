@@ -1102,7 +1102,7 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
 
 
 ####################################################################
-#' ROC Curves
+#' ROC Curves Data
 #' 
 #' This function calculates ROC Curves and AUC values with 95\% confidence 
 #' range. It also works for multi-categorical models.
@@ -1117,8 +1117,12 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
 #' binary <- data.frame(
 #'   tag = c(1,1,1,1,1,0,0,0,0,0),
 #'   score = c(0.9, 0.5, 0.7, 0.1, 0.7, 0.1, 0.2, 0.1, 0.5, 0.3))
+#' 
 #' ROC(tag = binary$tag, score = binary$score)
+#' 
 #' # I owe you the multis example.. check h2o_automl()
+#' 
+#' # Plot results with with mplot_roc()
 #' @export
 ROC <- function(tag, score, multis = NA) {
   
@@ -1181,16 +1185,15 @@ ROC <- function(tag, score, multis = NA) {
 #' confusion matrix when binary.
 #' @param sense Character. Inequation sense for threshhold: <, <=, >=, >
 #' @param plot Boolean. Plot result?
-#' @examples 
-#' # Binary example
+#' #' @examples 
+#' Binary example
 #' binary <- data.frame(
-#'   tag = c("N","Y","Y","Y","N","N","N","Y","N","Y"),
+#'   tag = c("N","N","N","N","N","Y","Y","Y","N","Y"),
 #'   score = c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0))
 #' conf_mat(tag = binary$tag, score = binary$score)
-#' conf_mat(tag = binary$tag, score = binary$score, sense = "<")
+#' conf_mat(tag = binary$tag, score = binary$score, sense = ">")
 #' conf_mat(tag = binary$tag, score = binary$score, thresh = 0.2)
 #' @export
-
 conf_mat <- function(tag, score, thresh = 0.5, sense = ">=", plot = FALSE) {
   
   if (plot) 
@@ -1217,8 +1220,8 @@ conf_mat <- function(tag, score, thresh = 0.5, sense = ">=", plot = FALSE) {
   # Confussion Matrix
   ret <- df %>% 
     rename("Real" = .data$tag, "Pred" = .data$pred) %>%
-    crosstab(.data$Real, .data$Pred, total = FALSE) %>%
-    replaceall(NA, 0, c(colnames(.)[-1]))
+    crosstab(.data$Real, .data$Pred, total = FALSE)
+  ret[is.na(ret)] <- 0
   
   return(as_tibble(ret))
 }

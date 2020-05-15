@@ -2,7 +2,7 @@
 % Please edit documentation in R/colour_palettes.R
 \name{gg_colour_customs}
 \alias{gg_colour_customs}
-\title{Custom colours to use in ggplot as scale_color_manual}
+\title{Custom colours for scale_color_manual [Deprecated]}
 \usage{
 gg_colour_customs()
 }

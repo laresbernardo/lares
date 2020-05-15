@@ -16,6 +16,11 @@ plot_palette(fill, colour = "black", id = NA)
 \description{
 This function plots a list of colours
 }
+\examples{
+nice_palette <- names(lares_pal()$palette)[1:15]
+nice_palette_ctr <- as.vector(lares_pal()$palette)[1:15]
+plot_palette(nice_palette, nice_palette_ctr)
+}
 \seealso{
 Other Auxiliary: 
 \code{\link{gg_colour_customs}()},

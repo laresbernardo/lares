@@ -2,7 +2,7 @@
 % Please edit documentation in R/colour_palettes.R
 \name{theme_lares}
 \alias{theme_lares}
-\title{Theme for ggplot2}
+\title{Old theme for ggplot2 [Deprecated]}
 \usage{
 theme_lares(
   labels = FALSE,

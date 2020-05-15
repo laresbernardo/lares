@@ -230,7 +230,7 @@ freqs <- function(df, ..., wt = NULL,
 
 
 ####################################################################
-#' All Frequencies on Data Frame
+#' Plot for All Frequencies on Dataframe
 #' 
 #' This function lets the user analize data by visualizing the
 #' frequency of each value of each column from a whole data frame.
@@ -249,6 +249,11 @@ freqs <- function(df, ..., wt = NULL,
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
+#' @examples 
+#' \dontrun{
+#' data(dft) # Titanic dataset
+#' freqs_df(dft)
+#' }
 #' @export
 freqs_df <- function(df, 
                      max = 0.9, min = 0.0, novar = TRUE,

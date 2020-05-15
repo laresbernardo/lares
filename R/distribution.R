@@ -32,7 +32,6 @@
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @examples 
 #' \dontrun{
-#' library(dplyr)
 #' data(dft)
 #' # Relation for survived vs sex
 #' dft %>% distr(Survived, Sex)

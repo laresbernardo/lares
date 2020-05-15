@@ -2,7 +2,7 @@
 % Please edit documentation in R/frequencies.R
 \name{freqs_df}
 \alias{freqs_df}
-\title{All Frequencies on Data Frame}
+\title{Plot for All Frequencies on Dataframe}
 \usage{
 freqs_df(
   df,
@@ -41,6 +41,12 @@ save the plot to?}
 \description{
 This function lets the user analize data by visualizing the
 frequency of each value of each column from a whole data frame.
+}
+\examples{
+\dontrun{
+data(dft) # Titanic dataset
+freqs_df(dft)
+}
 }
 \seealso{
 Other Exploratory: 

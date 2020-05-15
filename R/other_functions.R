@@ -518,7 +518,7 @@ listfiles <- function(folder = getwd(),
 #' This function lets the user replace all specific values in a 
 #' vector or data.frame into another value. If replacing more than
 #' one value, order matters so they will be replaced in the same
-#' order that you pass them to the function.
+#' order that you pass them to the function. Factors will be refactored.
 #' 
 #' @family Data Wrangling
 #' @family Text Mining
@@ -528,16 +528,24 @@ listfiles <- function(folder = getwd(),
 #' @param which Character vector. Name of columns to use. Leave "all" for everything
 #' @param quiet Boolean. Keep quiet? (or print replacements)
 #' @examples 
-#' df <- data.frame(one = 1:5, 
+#' df <- data.frame(one = c(1:4, NA), 
 #'                  two = LETTERS[1:5], 
 #'                  three = rep("A", 5), 
 #'                  four = c(NA, "Aaa", 123, "B", "C"))
 #' print(df)
+#' 
 #' replaceall(df, "A", NA)
+#' 
 #' replaceall(df, "A", "a")
+#' 
 #' replaceall(df, 1, "*")
-#' # replaceall(df, NA, "Not yet")
+#' 
+#' replaceall(df, NA, "NotNA")
+#' 
+#' replaceall(df, NA, 0)
+#' 
 #' replaceall(df, c("A", "B"), c("'A'", "'B'"))
+#' 
 #' replaceall(df, "a", "*", which = "four")
 #' @export
 replaceall <- function(df, original, change, which = "all", quiet = TRUE) {
@@ -558,6 +566,7 @@ replaceall <- function(df, original, change, which = "all", quiet = TRUE) {
     aux <- df
     df <- select(df, one_of(which))
   }
+  df <- df %>% mutate_all(as.character)
   if (sum(is.na(original)) > 0) {
     df <- df %>% replace(is.na(.), change[is.na(original)])
     change <- change[!is.na(original)]
@@ -580,7 +589,8 @@ replaceall <- function(df, original, change, which = "all", quiet = TRUE) {
       cbind(df) %>% 
       select(one_of(colnames(aux)))
   if (vector) df <- df[,1]
-  return(df)
+  df <- suppressMessages(type.convert(df, numerals = "no.loss"))
+  return(as_tibble(df))
 }
 
 
