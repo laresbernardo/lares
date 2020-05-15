@@ -4,7 +4,7 @@
 \alias{tic}
 \alias{toc}
 \alias{resettictoc}
-\title{Stopwatch to measure Task Timings}
+\title{Stopwatch to measure R Timings}
 \usage{
 tic(id = 1, quiet = TRUE)
 
@@ -19,7 +19,8 @@ resettictoc(which = "both")
 
 \item{msg}{Character. Custom message shown}
 
-\item{units}{Boolean. Do you want nice logical units? If not, seconds always}
+\item{units}{Boolean. Do you want nice format for the time units? 
+If not, seconds elapsed as numerical values}
 
 \item{signif}{Integer. Significant digits}
 
@@ -30,23 +31,24 @@ resettictoc(which = "both")
 \code{tic} and \code{toc}, \code{time} in seconds and the message \code{msg}.
 }
 \description{
-Measure timings between a tic and a toc.
+Start a stopwatch.
 
-Measure timings between a tic and a toc.
+Stop a stopwatch.
 
-Measure timings between a tic and a toc. Reset all values
+Reset all tic and toc values in your environment.
 }
 \examples{
-\dontrun{
-# Basic use
-tic(quiet = FALSE)
+# Basic use (global stopwatch)
+tic()
+Sys.sleep(0.1)
 toc()
-getOption("tic")
 
 # Multiple tic tocs
-tic(id = 123, quiet = FALSE)
-toc(id = 123)
-toc(id = 1)
-}
+tic(id = "two", quiet = FALSE)
+Sys.sleep(0.2)
+toc(id = "two")
+
+# Global is still working (id = 1)
+toc(msg = "The function finished its work in")
 }
 \concept{Time}

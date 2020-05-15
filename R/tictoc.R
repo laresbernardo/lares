@@ -12,25 +12,26 @@ set.tictoc <- function(which, id) {
 
 
 ####################################################################
-#' Stopwatch to measure Task Timings
+#' Stopwatch to measure R Timings
 #' 
-#' Measure timings between a tic and a toc.
+#' Start a stopwatch.
 #' 
 #' @family Time
 #' @param id Define ID if multiple tic() & toc() are being used
 #' @param quiet Boolean. Quiet messages?
 #' @examples 
-#' \dontrun{
-#' # Basic use
-#' tic(quiet = FALSE)
+#' # Basic use (global stopwatch)
+#' tic()
+#' Sys.sleep(0.1)
 #' toc()
-#' getOption("tic")
 #' 
 #' # Multiple tic tocs
-#' tic(id = 123, quiet = FALSE)
-#' toc(id = 123)
-#' toc(id = 1)
-#' }
+#' tic(id = "two", quiet = FALSE)
+#' Sys.sleep(0.2)
+#' toc(id = "two")
+#' 
+#' # Global is still working (id = 1)
+#' toc(msg = "The function finished its work in")
 #' @export
 #' @rdname tic
 tic <- function(id = 1, quiet = TRUE) { 
@@ -45,12 +46,13 @@ tic <- function(id = 1, quiet = TRUE) {
 ####################################################################
 #' Stopwatch Stop
 #' 
-#' Measure timings between a tic and a toc.
+#' Stop a stopwatch.
 #' 
 #' @family Time
 #' @param id Define ID if multiple tic() & toc() are being used
 #' @param msg Character. Custom message shown
-#' @param units Boolean. Do you want nice logical units? If not, seconds always
+#' @param units Boolean. Do you want nice format for the time units? 
+#' If not, seconds elapsed as numerical values
 #' @param signif Integer. Significant digits
 #' @param quiet Boolean. Quiet messages?
 #' @return \code{toc} returns an (invisible) list containing the timestamps
@@ -85,7 +87,7 @@ toc <- function(id = 1, msg = "Elapsed time:", units = TRUE, signif = 3, quiet =
 ####################################################################
 #' Stopwatch Reset
 #' 
-#' Measure timings between a tic and a toc. Reset all values
+#' Reset all tic and toc values in your environment.
 #' 
 #' @family Time
 #' @param which Character. Select: both, tic, toc

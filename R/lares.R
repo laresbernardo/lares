@@ -86,7 +86,7 @@ recommended <- list(
   ingredients = c("ceteris_paribus", "aggregate_profiles"),
   methods = c("as"),
   mice = c("mice", "complete"),
-  plotly = c("ggplotly"),
+  plotly = c("ggplotly", "plot_ly", "add_markers", "add_markers"),
   prophet = c("prophet", "fit.prophet", "prophet_plot_components",
               "add_country_holidays", "make_future_dataframe"),
   quantmod = c("getDividends", "getSymbols", "getQuote"),

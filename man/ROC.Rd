@@ -18,6 +18,13 @@ ROC(tag, score, multis = NA)
 This function calculates ROC Curves and AUC values with 95\% confidence 
 range. It also works for multi-categorical models.
 }
+\examples{
+binary <- data.frame(
+  tag = c(1,1,1,1,1,0,0,0,0,0),
+  score = c(0.9, 0.5, 0.7, 0.1, 0.7, 0.1, 0.2, 0.1, 0.5, 0.3))
+ROC(tag = binary$tag, score = binary$score)
+# I owe you the multis example.. check h2o_automl()
+}
 \seealso{
 Other Machine Learning: 
 \code{\link{clusterKmeans}()},

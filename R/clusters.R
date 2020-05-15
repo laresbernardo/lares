@@ -22,13 +22,25 @@
 #' @param comb Vector. Which columns do you wish to plot? Select which
 #' two variables by name or column position.
 #' @param seed Numeric. Seed for reproducibility
+#' @examples 
+#' \dontrun{
+#' data(dft) # Titanic dataset
+#' check_k <- clusterKmeans(df)
+#' check_k$nclusters_plot
+#' clusters <- clusterKmeans(df, k = 3)
+#' lapply(clusters, names)
+#' # Cross-Correlations for each cluster
+#' clusters$correlations
+#' # PCA Results
+#' lapply(clusters$PCA, names)
+#' clusters$PCA$plotVarExp
+#' clusters$PCA$plot_1_2
+#' clusters$PCA$plot_1_2_3
+#' }
 #' @export
 clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE, 
                           ignore = NA, ohse = TRUE, norm = TRUE, 
-                          comb = c(1, 2),
-                          seed = 123){
-  
-  try_require("ggforce")
+                          comb = c(1, 2), seed = 123){
   
   results <- list()
   
@@ -46,7 +58,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   # Only numerical values
   nums <- df_str(df, return = "names", quiet = TRUE)$nums
   if (ohse & length(nums) != ncol(df)) {
-    df <- ohse(df, redundant = TRUE, dates = TRUE, limit = 8)
+    df <- ohse(df, redundant = FALSE, dates = TRUE, limit = 8)
     message("One hot encoding applied...")
   } else {
     df <- data.frame(df) %>% select_if(is.numeric)
@@ -105,41 +117,8 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       summarise_all(list(mean)) %>%
       mutate(n = as.integer(table(df$cluster)))
     
-    # # Plot clusters
-    # if (length(comb) == 2) {
-    #   axisnames <- colnames(df[,comb])
-    #   centers <- data.frame(
-    #     cluster = clusters$cluster, 
-    #     clusters[,-1][,comb],
-    #     size = clusters$n)
-    #   clusters_plot <- ggplot(df, aes(
-    #     x = df[,comb[1]], y = df[,comb[2]], colour = df$cluster)) + 
-    #     geom_point() + theme_minimal() + guides(size = FALSE) +
-    #     geom_text(data = centers, 
-    #               aes_string(x = colnames(centers)[2], 
-    #                          y = colnames(centers)[3], 
-    #                          label = "cluster", 
-    #                          size = "size"), 
-    #               colour = "black", fontface = "bold") +
-    #     labs(title = "Clusters Plot",
-    #          subtitle = paste("Number of clusters selected:", k),
-    #          x = axisnames[1], y = axisnames[2],
-    #          colour = "Cluster") + coord_flip() +
-    #     theme_lares2(pal = 2)
-    # }
-    # 
-    # if (length(comb) == 3) {
-    #   try_require("plotly")
-    #   clusters_plot <- plot_ly(x = df[,comb[1]], 
-    #                            y = df[,comb[2]], 
-    #                            z = df[,comb[3]],
-    #                            color = df$cluster,
-    #                            type = "scatter3d", mode = "markers")
-    # }
-    # if (exists("clusters_plot")) results[["clusters_plot"]] <- clusters_plot
-    
     # Correlations
-    results[["correlations"]] <- corr_cross(df, contains = "cluster", redundant = TRUE)
+    results[["correlations"]] <- corr_cross(df, contains = "cluster", redundant = FALSE)
     
     # PCA
     PCA <- list()
@@ -148,7 +127,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     PCA$pcadf <- data.frame(pca$x, cluster = results$df$cluster)
     PCA$pca_explained <- round(100 * pca$sdev^2/sum(pca$sdev^2), 4)
     PCA$pcadf <- PCA$pcadf[,c(PCA$pca_explained > 0.1, TRUE)]
-    PCA$plotPC <- data.frame(id = 1:length(PCA$pca_explained)) %>%
+    PCA$plotVarExp <- data.frame(id = 1:length(PCA$pca_explained)) %>%
       mutate(PC = factor(paste0("PC", .data$id), 
                          levels = paste0("PC", 1:length(PCA$pca_explained))),
              amount = PCA$pca_explained) %>%
@@ -161,14 +140,29 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       scale_y_continuous(limits = c(0, 100), expand = c(0, 1)) +
       scale_x_continuous(expand = c(0, 1)) +
       theme_lares2()
-    PCA$plotPCmain <- ggplot(PCA$pcadf, aes(
+    
+    PCA$plot_1_2 <- ggplot(PCA$pcadf, aes(
       x = .data$PC1, y = .data$PC2, colour = .data$cluster)) +
       geom_point() +
-      geom_mark_ellipse(
-        aes(group = .data$cluster, description = .data$cluster),
-        label.fill = "black", label.colour = "white") +
       labs(title = "Principal Component Analysis") +
       theme_lares2(pal = 2)
+    
+    if (length(find.package("ggforce", quiet = TRUE)) > 0) {
+      try_require("ggforce")
+      PCA$plot_1_2 <- PCA$plot_1_2 +
+        geom_mark_ellipse(
+          aes(group = .data$cluster, description = .data$cluster),
+          label.fill = "black", label.colour = "white")
+    } else warning("Install `ggforce` for better visualization!")
+    
+    if (length(find.package("plotly", quiet = TRUE)) > 0) {
+      try_require("plotly")
+      PCA$plot_1_2_3 <- plot_ly(
+        PCA$pcadf, x = ~PC1, y = ~PC2, z = ~PC3, color = ~cluster, 
+        colors = names(lares_pal()[[2]])[1:3]) %>%
+        add_markers()
+    } else warning("Install `plotly` to add a 3D visualization for PC1, PC2 and PC3")
+    
     PCA$pca <- pca
     results[["PCA"]] <- PCA
   }

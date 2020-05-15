@@ -2,93 +2,94 @@
 #' Weighted Cross Tabulation
 #' 
 #' A cross-tabulation function with output similar to STATA, tidy
-#' friendly, with weights if needed. If only one dependent variable
-#' crossval() will be recommended; if two, then both variables will be 
-#' crossed; if three, both variables will be crossed with third as 
-#' weighted values.
+#' friendly, with weighting possibility.
 #' 
 #' @family Exploratory
 #' @param df Data.frame. 
-#' @param ... Variables. Dependent and independent variables. If needed,
-#' third value should be the weight variable.
+#' @param ... Variables. Dependent and independent variables. 
+#' @param wt Variable, numeric. Weights.
 #' @param prow,pcol,pall Boolean. Calculate percent values for rows, columns,
 #' or the whole table, respectively.
 #' @param decimals Integer. How many decimals should be returned?
-#' @param keep_nas Boolean. Keep NAs and count them as well?
+#' @param rm.na Boolean. Remove NA values?
 #' @param total Boolean. Return total values column?
 #' @param order Boolean. Sort columns and rows by frequencies? Else, will
-#' be sorted alphabetically.
+#' be sorted alphabetically
+#' @examples 
+#' data(dft) # Titanic dataset
+#' crosstab(dft, Survived, Pclass, total = FALSE)
+#' # Show values in percentages
+#' crosstab(dft, Pclass, Survived, prow = TRUE)
+#' crosstab(dft, Pclass, Survived, pall = TRUE)
+#' # Weighted by another variable
+#' crosstab(dft, Survived, Pclass, wt = Fare, prow = TRUE)
 #' @export
-crosstab <- function(df, ..., 
+crosstab <- function(df, ..., wt = NULL,
                      prow = FALSE, pcol = FALSE, pall = FALSE, 
-                     decimals = 2, keep_nas = TRUE, total = TRUE,
+                     decimals = 2, rm.na = FALSE, total = TRUE,
                      order = TRUE) {
   
+  if (pcol) {
+    warning("Just change the order of your variables to get this results")
+    return(invisible(NULL))
+  }
+  
   vars <- quos(...)
+  wt <- enquo(wt)
   
-  names <- gsub("~", "", as.character(vars))
-  xname <- names[1]
-  yname <- names[2]
-  if (length(vars) == 3) wname <- names[3] 
-  
-  if (length(vars) == 1) {
-    message("For one variable with/out weights, use freqs(var, wt=weight) instead!")
+  if (!length(vars) %in% c(2, 3)) {
+    message("Use freqs() instead!")
     ret <- df %>% freqs(!!!vars)
     return(ret)
   }
   
-  df <- select(df, !!!vars) %>% mutate_each(funs(as.character))
-  x <- df[,1]
-  y <- df[,2]
+  names <- gsub("~", "", as.character(vars))
+  names <- gsub("\\.data\\$", "", names)
+  xname <- names[1]
+  yname <- names[2]
   
-  if (keep_nas) df <- df %>% replace(is.na(.), "NA")
+  df <- df %>% mutate_at(vars(names), as.character)
+    
+  first <- df %>% 
+    freqs(!!!vars[[1]], wt = !!wt, rm.na = rm.na) %>%
+    select(!!!vars[[1]]) %>% unlist()
   
-  if (prow) {
-    newx <- y; newy <- x; newxname <- yname; newyname <- xname;  
-    x <- newx; y <- newy; xname <- newxname; yname <- newyname
-  }
+  second <- df %>% 
+    freqs(!!!vars[[2]], wt = !!wt, rm.na = rm.na) %>%
+    select(!!!vars[[2]]) %>% unlist()
   
-  cross_name <- paste(xname, "x", yname)
-  
-  if (length(vars) == 2) {
-    weight <- rep(1, nrow(df))
-    decimals <- 0
-  } else {
-    weight <- df[,3]
-    cross_name <- paste0(cross_name, " (", wname, ")")
-  }
-  
-  dfn <- data.frame(x, y, weight)
-  colnames(dfn) <- c("x","y","weight")
-  
-  ret <- freqs(dfn, x, y, wt = weight) %>% select(-.data$pcum, -.data$p) %>%
-    mutate(x = ifelse(.data$x == "" | is.na(.data$x), "NA", as.character(.data$x)),
-           y = ifelse(.data$x == "" | is.na(.data$y), "NA", as.character(.data$y)))
+  aux <- df %>% freqs(!!!vars, wt = !!wt, rm.na = rm.na) %>% replace(is.na(.), '')
+  colnames(aux)[1:2] <- c("A","B")
 
-  levels <- factor(unique(ret$x), levels = unique(ret$x))
-  cols <- factor(unique(ret$y), levels = unique(ret$y))
-  tab <- spread(ret, .data$y, .data$n)
-  ret <- tab[match(levels, tab$x),]
-  colnames(ret)[1] <- cross_name
-  ret <- ret %>% replace(is.na(.), 0)
+  # Order by frequency
+  if (order) {
+    aux <- aux %>%
+      replaceall(NA, "NA", c("A","B")) %>%
+      mutate(A = factor(.data$A, levels = first),
+             B = factor(.data$B, levels = second)) 
+  }
+  
+  ret <- aux %>%
+    select(.data$A, .data$B, .data$n) %>% 
+    # We are losing NAs here!
+    spread(.data$B, .data$n, drop = FALSE) %>%
+    select(.data$A, one_of(levels(aux$B))) %>%
+    arrange()
+  colnames(ret)[1] <- sprintf("%s x %s", xname, yname)
   
   # Create totals
-  ret <- ret %>% mutate(total = rowSums(select_if(., is.numeric)))
+  ret <- ret %>% mutate(total = rowSums(select_if(., is.numeric), na.rm = TRUE))
   if (pcol | prow) 
-    ret <- ret %>% mutate_if(is.numeric, funs(round(100*./sum(.), decimals)))
+    ret <- ret %>% mutate_if(is.numeric, funs(round(100*./sum(., na.rm = TRUE), decimals)))
   if (pall) {
-    all <- sum(ret[,-1] %>% select(-total))
+    numericals <- ret[,-c(1, ncol(ret))]
+    all <- sum(numericals, na.rm = TRUE)
     ret <- ret %>% mutate_if(is.numeric, funs(round(100*./all, decimals)))
   }
+  ret <- arrange(ret, desc(.data$total))
   
-  if (order) {
-    ret <- ret %>% arrange(desc(.data$total)) # Rows
-    order <- c(colnames(ret)[1], as.character(cols), "total")
-    ret <- ret[,order] # Columns
-  }
-  
-  if (!total) ret <- ret %>% select(-.data$total)
-  
-  return(ret)
+  if (!total) 
+    ret <- ret %>% select(-.data$total)
+  return(as_tibble(ret))
   
 }

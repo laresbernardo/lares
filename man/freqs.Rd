@@ -66,6 +66,8 @@ dft \%>\% freqs(Survived)
 dft \%>\% freqs(Pclass, Survived, abc = TRUE)
 # How many survived per Class with relative percentages?
 dft \%>\% freqs(Pclass, Survived, abc = TRUE, rel = TRUE)
+# Using a weighted feature
+dft \%>\% freqs(Pclass, Survived, wt = Fare/100)
 \dontrun{
 # Let's check the results with plots
 # How many survived and see plot?

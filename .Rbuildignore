@@ -7,3 +7,4 @@
 ^\.travis\.yml$
 ^\.Rprofile$
 ^\.github$
+^\._pkgdown.yml

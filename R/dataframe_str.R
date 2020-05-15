@@ -9,10 +9,22 @@
 #' @param df Dataframe
 #' @param return Character. Return "skimr" for skim report, "numbers" for
 #' stats and numbers, "names" for a list with the column names of each of 
-#' the class types, "plot" for a nice plot with "numbers" output, "summary"
+#' the class types, "plot" for a nice plot with "numbers" output, "distr"
 #' for an overall summary plot showing categorical, numeric, and missing values
+#' distributions
 #' @param subtitle Character. Add subtitle to plot
 #' @param quiet Boolean. Keep quiet or show other options available?
+#' @examples 
+#' data(dft) # Titanic dataset
+#' # List with the names of the columns classified by class
+#' df_str(dft, "names")
+#' # Dataframe with numbers: total values, row, columns, complete rows....
+#' df_str(dft, "numbers", quiet = TRUE)
+#' \dontrun{
+#' # Now, some visualizations
+#' df_str(dft, "distr")
+#' df_str(dft, "plot")
+#' }
 #' @export
 df_str <- function(df, 
                    return = "plot", 
@@ -20,7 +32,7 @@ df_str <- function(df,
                    quiet = FALSE){
   
   if (!quiet) {
-    rets <- c("plot","summary","skimr","numbers","names")
+    rets <- c("skimr","numbers","names","distr","plot")
     message(paste("Other available 'return' options:", vector2text(rets[rets != return]))) 
   }
   
@@ -31,9 +43,9 @@ df_str <- function(df,
     return(skim(df))
   }
   
-  if (return == "summary") {
-    plot_df(df)
-    invisible(return(NULL))
+  if (return == "distr") {
+    p <- plot_df(df)
+    return(p)
   }
   
   names <- list(
@@ -46,7 +58,8 @@ df_str <- function(df,
     names$nums, names$char, names$factor, names$logic)]
   names[["allnas"]] <- names$cols[sapply(df, function(x) all(is.na(x)))] 
   
-  if (return == "names") return(names)
+  if (return == "names") 
+    return(names)
   
   numbers <- data.frame(
     "Total Values" = nrow(df) * ncol(df),

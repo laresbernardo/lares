@@ -7,11 +7,12 @@
 crosstab(
   df,
   ...,
+  wt = NULL,
   prow = FALSE,
   pcol = FALSE,
   pall = FALSE,
   decimals = 2,
-  keep_nas = TRUE,
+  rm.na = FALSE,
   total = TRUE,
   order = TRUE
 )
@@ -19,27 +20,34 @@ crosstab(
 \arguments{
 \item{df}{Data.frame.}
 
-\item{...}{Variables. Dependent and independent variables. If needed,
-third value should be the weight variable.}
+\item{...}{Variables. Dependent and independent variables.}
+
+\item{wt}{Variable, numeric. Weights.}
 
 \item{prow, pcol, pall}{Boolean. Calculate percent values for rows, columns,
 or the whole table, respectively.}
 
 \item{decimals}{Integer. How many decimals should be returned?}
 
-\item{keep_nas}{Boolean. Keep NAs and count them as well?}
+\item{rm.na}{Boolean. Remove NA values?}
 
 \item{total}{Boolean. Return total values column?}
 
 \item{order}{Boolean. Sort columns and rows by frequencies? Else, will
-be sorted alphabetically.}
+be sorted alphabetically}
 }
 \description{
 A cross-tabulation function with output similar to STATA, tidy
-friendly, with weights if needed. If only one dependent variable
-crossval() will be recommended; if two, then both variables will be 
-crossed; if three, both variables will be crossed with third as 
-weighted values.
+friendly, with weighting possibility.
+}
+\examples{
+data(dft) # Titanic dataset
+crosstab(dft, Survived, Pclass, total = FALSE)
+# Show values in percentages
+crosstab(dft, Pclass, Survived, prow = TRUE)
+crosstab(dft, Pclass, Survived, pall = TRUE)
+# Weighted by another variable
+crosstab(dft, Survived, Pclass, wt = Fare, prow = TRUE)
 }
 \seealso{
 Other Exploratory: 

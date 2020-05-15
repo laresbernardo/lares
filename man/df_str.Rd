@@ -11,8 +11,9 @@ df_str(df, return = "plot", subtitle = NA, quiet = FALSE)
 
 \item{return}{Character. Return "skimr" for skim report, "numbers" for
 stats and numbers, "names" for a list with the column names of each of 
-the class types, "plot" for a nice plot with "numbers" output, "summary"
-for an overall summary plot showing categorical, numeric, and missing values}
+the class types, "plot" for a nice plot with "numbers" output, "distr"
+for an overall summary plot showing categorical, numeric, and missing values
+distributions}
 
 \item{subtitle}{Character. Add subtitle to plot}
 
@@ -22,6 +23,18 @@ for an overall summary plot showing categorical, numeric, and missing values}
 This function lets the user to check quickly the structure of a
 dataset (data.frame). It returns multiple counters for useful metrics,
 a plot, and a list of column names for each of the column metrics.
+}
+\examples{
+data(dft) # Titanic dataset
+# List with the names of the columns classified by class
+df_str(dft, "names")
+# Dataframe with numbers: total values, row, columns, complete rows....
+df_str(dft, "numbers", quiet = TRUE)
+\dontrun{
+# Now, some visualizations
+df_str(dft, "distr")
+df_str(dft, "plot")
+}
 }
 \seealso{
 Other Exploratory: 

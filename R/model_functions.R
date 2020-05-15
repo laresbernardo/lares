@@ -1113,10 +1113,14 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
 #' @param score Vector. Predicted value or model's result
 #' @param multis Data.frame. Containing columns with each category score 
 #' (only used when more than 2 categories coexist)
+#' @examples 
+#' binary <- data.frame(
+#'   tag = c(1,1,1,1,1,0,0,0,0,0),
+#'   score = c(0.9, 0.5, 0.7, 0.1, 0.7, 0.1, 0.2, 0.1, 0.5, 0.3))
+#' ROC(tag = binary$tag, score = binary$score)
+#' # I owe you the multis example.. check h2o_automl()
 #' @export
 ROC <- function(tag, score, multis = NA) {
-  
-  # require(pROC)
   
   if (length(tag) != length(score)) {
     message("The tag and score vectors should be the same length.")
@@ -1175,36 +1179,49 @@ ROC <- function(tag, score, multis = NA) {
 #' @param score Vector. Predicted value or model's result
 #' @param thresh Numeric. Value which splits the results for the 
 #' confusion matrix when binary.
+#' @param sense Character. Inequation sense for threshhold: <, <=, >=, >
 #' @param plot Boolean. Plot result?
+#' @examples 
+#' # Binary example
+#' binary <- data.frame(
+#'   tag = c("N","Y","Y","Y","N","N","N","Y","N","Y"),
+#'   score = c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0))
+#' conf_mat(tag = binary$tag, score = binary$score)
+#' conf_mat(tag = binary$tag, score = binary$score, sense = "<")
+#' conf_mat(tag = binary$tag, score = binary$score, thresh = 0.2)
 #' @export
-conf_mat <- function(tag, score, thresh = 0.5, plot = FALSE) {
+
+conf_mat <- function(tag, score, thresh = 0.5, sense = ">=", plot = FALSE) {
   
-  if (plot) return(mplot_conf(tag, score, thresh = thresh))
-  
+  if (plot) 
+    return(mplot_conf(tag, score, thresh = thresh))
   df <- data.frame(tag, score)
   
   # About tags
-  labels <- df %>% group_by(.data$tag, .drop = FALSE) %>% 
-    tally(wt = NULL) %>% arrange(desc(.data$n)) %>% .$tag
+  labels <- df %>% 
+    group_by(.data$tag, .drop = FALSE) %>% 
+    tally(wt = NULL) %>% 
+    arrange(desc(.data$n)) %>% 
+    .$tag
   df <- df %>% mutate(tag = factor(.data$tag, levels = unique(.data$tag)))
   
   # About scores
   if (is.numeric(df$score) & length(unique(tag)) == 2) {
-    df <- mutate(df, pred = ifelse(.data$score >= .data$thresh, 
-                                   as.character(labels[1]), 
-                                   as.character(labels[2])))
+    check_opts(sense, c("<", "<=", ">=", ">"))
+    s <- do.call(sense, list(df$score, thresh))
+    df <- mutate(df, pred = ifelse(s, as.character(labels[1]), as.character(labels[2])))
   } else {
     df <- mutate(df, pred = .data$score)
   }
   
   # Confussion Matrix
   ret <- df %>% 
-    rename(Real = .data$tag, Pred = .data$pred) %>%
-    crosstab(.data$Real, .data$Pred, total = FALSE)
+    rename("Real" = .data$tag, "Pred" = .data$pred) %>%
+    crosstab(.data$Real, .data$Pred, total = FALSE) %>%
+    replaceall(NA, 0, c(colnames(.)[-1]))
   
-  return(ret)
+  return(as_tibble(ret))
 }
-
 
 ####################################################################
 #' Model Metrics and Performance

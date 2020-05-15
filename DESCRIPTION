@@ -1,13 +1,14 @@
 Package: lares
 Type: Package
-Title: Analytics, Data Mining & Machine Learning
+Title: Analytics, Data Mining & Machine Learning Sidekick
 Version: 4.8
-Author: Bernardo Lares
+Authors@R: c(
+    person("Bernardo", "Lares", , "laresbernardo@gmail.com", c("aut", "cre")))
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
-Description: R library for better/faster analytics, visualization, data mining, and machine learning tasks. With a wide variety of family functions, such as Machine Learning, Data Wrangling, Exploratory, and Scrapper, lares helps the analyst or data scientist to get quick and robust results, without the need of repetitive coding or extensive programming skills. 
-License: AGPL-3
-Encoding: UTF-8
-LazyData: true
+Description: R library for better/faster analytics, visualization, data mining, and machine learning 
+    tasks. With a wide variety of family functions, such as Machine Learning, Data Wrangling, 
+    Exploratory, and Scrapper, lares helps the analyst or data scientist to get quick and robust 
+    results, without the need of repetitive coding or extensive programming skills. 
 Imports: 
     config,
     dplyr,
@@ -50,3 +51,6 @@ Suggests:
 URL: https://github.com/laresbernardo/lares
 BugReports: https://github.com/laresbernardo/lares/issues
 RoxygenNote: 7.1.0
+License: AGPL-3
+Encoding: UTF-8
+LazyData: true

@@ -47,6 +47,22 @@ For consideration: Scale/standardize the data when applying kmeans.
 Also, kmeans assumes spherical shapes of clusters and doesn’t work well 
 when clusters are in different shapes such as elliptical clusters.
 }
+\examples{
+\dontrun{
+data(dft) # Titanic dataset
+check_k <- clusterKmeans(df)
+check_k$nclusters_plot
+clusters <- clusterKmeans(df, k = 3)
+lapply(clusters, names)
+# Cross-Correlations for each cluster
+clusters$correlations
+# PCA Results
+lapply(clusters$PCA, names)
+clusters$PCA$plotVarExp
+clusters$PCA$plot_1_2
+clusters$PCA$plot_1_2_3
+}
+}
 \seealso{
 Other Machine Learning: 
 \code{\link{ROC}()},
