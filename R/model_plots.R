@@ -828,7 +828,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
     {if (abc) arrange(., .data$tag) else arrange(., desc(.data$n))} %>%
     mutate(label = sprintf("%s \n(%s)", .data$tag, formatNum(.data$n, 0)))
   labels <- values$tag
-  df <- df %>% mutate(tag = factor(.data$tag, levels = .data$labels))
+  df <- df %>% mutate(tag = factor(.data$tag, levels = labels))
   
   # About scores
   if (is.numeric(df$score) & length(unique(tag)) == 2) {
@@ -836,7 +836,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
     target <- means$tag[means$mean == max(means$mean)]
     other <- means$tag[means$mean == min(means$mean)]
     df <- df %>% mutate(pred = ifelse(
-      .data$score >= thresh, as.character(.data$target), as.character(.data$other)))
+      .data$score >= thresh, as.character(target), as.character(other)))
   } else df <- df %>% mutate(pred = .data$score)
   
   # Frequencies

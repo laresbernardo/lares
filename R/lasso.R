@@ -15,10 +15,9 @@
 #' @param seed Numeric
 #' @param ... ohse parameters
 #' @examples 
-#' \dontrun{
 #' data(dft) # Titanic dataset
 #' m <- lasso_vars(dft, Survived, ignore = c("Ticket", "Cabin"))
-#' }
+#' print(m$coef)
 #' @export
 lasso_vars <- function(df, variable, 
                        ignore = NA, 

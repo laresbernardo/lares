@@ -405,7 +405,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   # GET ALL RESULTS INTO A LIST
   results <- list()
   results[["model"]] <- m
-  results[["scores_test"]] <- as_tibble(data.frame(tag = as.vector(test$tag), scores))
+  results[["scores_test"]] <- data.frame(tag = as.vector(test$tag), scores)
   results[["metrics"]] <- model_metrics(
     tag = results$scores_test$tag, 
     score = results$scores_test$score,
@@ -1027,7 +1027,8 @@ target_set <- function(tag, score, target = "auto", quiet = FALSE) {
   if (!quiet) message(paste("Target value:", target)) 
   # If the forced target value is the "lower scores" value, invert scores
   if (auto != target) df$score <- df$score * (-1) + 1
-  return(list(df = df, which = target))
+  ret <- list(df = df, which = target)
+  return(ret)
 }
 
 
@@ -1059,7 +1060,7 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
   which <- aux$which
   
   sc <- df %>% 
-    mutate(tag = ifelse(.data$tag == .data$which, TRUE, FALSE)) %>%
+    mutate(tag = ifelse(.data$tag == which, TRUE, FALSE)) %>%
     arrange(desc(.data$score)) %>%
     mutate(percentile = .bincode(
       .data$score, quantile(.data$score, probs = seq(0, 1, length = splits + 1), 
@@ -1262,6 +1263,9 @@ model_metrics <- function(tag, score, multis = NA,
                           model_name = NA,
                           plots = TRUE, subtitle = NA){
   
+  if (length(tag) != length(score))
+    stop("tag and score have different lengths!")
+  
   metrics <- list()
   cats <- sort(unique(as.character(tag)))
   model_type <- ifelse(length(cats) <= thresh, "Classifier", "Regression")    
@@ -1296,7 +1300,7 @@ model_metrics <- function(tag, score, multis = NA,
     }
     
     conf_mat <- table(Real = factor(tag, levels = unique(tag)), 
-                      Pred = factor(new, levels = unique(tag)))
+                      Pred = factor(new, levels = unique(new)))
     total <- sum(conf_mat)
     trues <- sum(diag(conf_mat))
     falses <- total - trues
@@ -1355,7 +1359,7 @@ model_metrics <- function(tag, score, multis = NA,
       nums$AUC <- AUCs[1:nrow(nums)]
       nums <- left_join(freqs(select(df, .data$tag), .data$tag), nums, "tag") %>% 
         select(.data$tag, .data$n, .data$p, .data$AUC, everything(), -.data$pcum)
-      metrics[["metrics_tags"]] <- mutate_if(nums, is.numeric, funs(signif(., 5)))
+      metrics[["metrics_tags"]] <- mutate_if(nums, is.numeric, list(~ signif(., 5)))
     }
     
     if (plots) {

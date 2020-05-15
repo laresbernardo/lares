@@ -36,10 +36,9 @@ with corr_var() results for further understanding. No need to
 standardize your data.
 }
 \examples{
-\dontrun{
 data(dft) # Titanic dataset
 m <- lasso_vars(dft, Survived, ignore = c("Ticket", "Cabin"))
-}
+print(m$coef)
 }
 \seealso{
 Other Machine Learning: 
