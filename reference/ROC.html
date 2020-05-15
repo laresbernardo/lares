@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ROC Curves — ROC • lares</title>
+<title>ROC Curves Data — ROC • lares</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="ROC Curves — ROC" />
+<meta property="og:title" content="ROC Curves Data — ROC" />
 <meta property="og:description" content="This function calculates ROC Curves and AUC values with 95% confidence 
 range. It also works for multi-categorical models." />
 
@@ -109,7 +109,7 @@ range. It also works for multi-categorical models." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>ROC Curves</h1>
+    <h1>ROC Curves Data</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/model_functions.R'><code>R/model_functions.R</code></a></small>
     <div class="hidden name"><code>ROC.Rd</code></div>
     </div>
@@ -190,6 +190,7 @@ range. It also works for multi-categorical models.</p>
     <pre class="examples"><div class='input'><span class='no'>binary</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
   <span class='kw'>tag</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>),
   <span class='kw'>score</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.9</span>, <span class='fl'>0.5</span>, <span class='fl'>0.7</span>, <span class='fl'>0.1</span>, <span class='fl'>0.7</span>, <span class='fl'>0.1</span>, <span class='fl'>0.2</span>, <span class='fl'>0.1</span>, <span class='fl'>0.5</span>, <span class='fl'>0.3</span>))
+
 <span class='fu'>ROC</span>(<span class='kw'>tag</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>tag</span>, <span class='kw'>score</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>score</span>)</div><div class='output co'>#&gt; $ci
 #&gt;        roc.ci
 #&gt; min 0.5051832
@@ -205,7 +206,10 @@ range. It also works for multi-categorical models.</p>
 #&gt; 5 0.6 0.8 2cats
 #&gt; 6 0.4 0.8 2cats
 #&gt; 7 0.0 1.0 2cats
-#&gt; </div><div class='input'># I owe you the multis example.. check h2o_automl()
+#&gt; </div><div class='input'>
+# I owe you the multis example.. check h2o_automl()
+
+# Plot results with with mplot_roc()
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

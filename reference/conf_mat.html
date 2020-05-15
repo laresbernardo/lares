@@ -145,7 +145,15 @@ confusion matrix when binary.</p></td>
     </tr>
     <tr>
       <th>plot</th>
-      <td><p>Boolean. Plot result?</p></td>
+      <td><p>Boolean. Plot result?
+#' @examples 
+Binary example
+binary &lt;- data.frame(
+  tag = c("N","N","N","N","N","Y","Y","Y","N","Y"),
+  score = c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0))
+conf_mat(tag = binary$tag, score = binary$score)
+conf_mat(tag = binary$tag, score = binary$score, sense = "&gt;")
+conf_mat(tag = binary$tag, score = binary$score, thresh = 0.2)</p></td>
     </tr>
     </table>
 
@@ -196,34 +204,6 @@ confusion matrix when binary.</p></td>
 <code><a href='rsqa.html'>rsqa</a>()</code>,
 <code><a href='rsq.html'>rsq</a>()</code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Binary example</span>
-<span class='no'>binary</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  <span class='kw'>tag</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"N"</span>,<span class='st'>"Y"</span>,<span class='st'>"Y"</span>,<span class='st'>"Y"</span>,<span class='st'>"N"</span>,<span class='st'>"N"</span>,<span class='st'>"N"</span>,<span class='st'>"Y"</span>,<span class='st'>"N"</span>,<span class='st'>"Y"</span>),
-  <span class='kw'>score</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.2</span>, <span class='fl'>0.3</span>, <span class='fl'>0.4</span>, <span class='fl'>0.5</span>, <span class='fl'>0.6</span>, <span class='fl'>0.7</span>, <span class='fl'>0.8</span>, <span class='fl'>0.9</span>, <span class='fl'>1.0</span>))
-<span class='fu'>conf_mat</span>(<span class='kw'>tag</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>tag</span>, <span class='kw'>score</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>score</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Unquoting language objects with `!!!` is deprecated as of rlang 0.4.0.</span>
-#&gt; <span class='warning'>Please use `!!` instead.</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>  # Bad:</span>
-#&gt; <span class='warning'>  dplyr::select(data, !!!enquo(x))</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>  # Good:</span>
-#&gt; <span class='warning'>  dplyr::select(data, !!enquo(x))    # Unquote single quosure</span>
-#&gt; <span class='warning'>  dplyr::select(data, !!!enquos(x))  # Splice list of quosures</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once per session.</span><span></span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 3</span><span>
-#&gt;   `Real x Pred`     N     Y
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> N                 4     1
-#&gt; </span><span style='color: #555555;'>2</span><span> Y                 2     3</div><div class='input'><span class='fu'>conf_mat</span>(<span class='kw'>tag</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>tag</span>, <span class='kw'>score</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>score</span>, <span class='kw'>sense</span> <span class='kw'>=</span> <span class='st'>"&lt;"</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 3</span><span>
-#&gt;   `Real x Pred`     Y     N
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> N                 4     1
-#&gt; </span><span style='color: #555555;'>2</span><span> Y                 2     3</div><div class='input'><span class='fu'>conf_mat</span>(<span class='kw'>tag</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>tag</span>, <span class='kw'>score</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>score</span>, <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 3</span><span>
-#&gt;   `Real x Pred`     N     Y
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> N                 4     1
-#&gt; </span><span style='color: #555555;'>2</span><span> Y                 5     0</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

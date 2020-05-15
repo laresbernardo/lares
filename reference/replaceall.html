@@ -43,7 +43,7 @@
 <meta property="og:description" content="This function lets the user replace all specific values in a 
 vector or data.frame into another value. If replacing more than
 one value, order matters so they will be replaced in the same
-order that you pass them to the function." />
+order that you pass them to the function. Factors will be refactored." />
 
 
 
@@ -120,7 +120,7 @@ order that you pass them to the function." />
     <p>This function lets the user replace all specific values in a 
 vector or data.frame into another value. If replacing more than
 one value, order matters so they will be replaced in the same
-order that you pass them to the function.</p>
+order that you pass them to the function. Factors will be refactored.</p>
     </div>
 
     <pre class="usage"><span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='no'>original</span>, <span class='no'>change</span>, <span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
@@ -187,7 +187,7 @@ order that you pass them to the function.</p>
 <code><a href='topics_rake.html'>topics_rake</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>one</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>,
+    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>one</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='fl'>NA</span>),
                  <span class='kw'>two</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>5</span>],
                  <span class='kw'>three</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"A"</span>, <span class='fl'>5</span>),
                  <span class='kw'>four</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='st'>"Aaa"</span>, <span class='fl'>123</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>))
@@ -196,33 +196,63 @@ order that you pass them to the function.</p>
 #&gt; 2   2   B     A  Aaa
 #&gt; 3   3   C     A  123
 #&gt; 4   4   D     A    B
-#&gt; 5   5   E     A    C</div><div class='input'><span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='st'>"A"</span>, <span class='fl'>NA</span>)</div><div class='output co'>#&gt;   one  two three four
-#&gt; 1   1 &lt;NA&gt;  &lt;NA&gt; &lt;NA&gt;
-#&gt; 2   2    B  &lt;NA&gt; &lt;NA&gt;
-#&gt; 3   3    C  &lt;NA&gt;  123
-#&gt; 4   4    D  &lt;NA&gt;    B
-#&gt; 5   5    E  &lt;NA&gt;    C</div><div class='input'><span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='st'>"A"</span>, <span class='st'>"a"</span>)</div><div class='output co'>#&gt;   one two three four
-#&gt; 1   1   a     a &lt;NA&gt;
-#&gt; 2   2   B     a  aaa
-#&gt; 3   3   C     a  123
-#&gt; 4   4   D     a    B
-#&gt; 5   5   E     a    C</div><div class='input'><span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='fl'>1</span>, <span class='st'>"*"</span>)</div><div class='output co'>#&gt;   one two three four
-#&gt; 1   *   A     A &lt;NA&gt;
-#&gt; 2   2   B     A  Aaa
-#&gt; 3   3   C     A  *23
-#&gt; 4   4   D     A    B
-#&gt; 5   5   E     A    C</div><div class='input'><span class='co'># replaceall(df, NA, "Not yet")</span>
-<span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"'A'"</span>, <span class='st'>"'B'"</span>))</div><div class='output co'>#&gt;   one two three  four
-#&gt; 1   1 'A'   'A'  &lt;NA&gt;
-#&gt; 2   2 'B'   'A' 'A'aa
-#&gt; 3   3   C   'A'   123
-#&gt; 4   4   D   'A'   'B'
-#&gt; 5   5   E   'A'     C</div><div class='input'><span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='st'>"a"</span>, <span class='st'>"*"</span>, <span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"four"</span>)</div><div class='output co'>#&gt;   one two three four
-#&gt; 1   1   A     A &lt;NA&gt;
-#&gt; 2   2   B     A  A**
-#&gt; 3   3   C     A  123
-#&gt; 4   4   D     A    B
-#&gt; 5   5   E     A    C</div></pre>
+#&gt; 5  NA   E     A    C</div><div class='input'>
+<span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='st'>"A"</span>, <span class='fl'>NA</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 4</span><span>
+#&gt;     one two   three four 
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     1 </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>   
+#&gt; </span><span style='color: #555555;'>2</span><span>     2 B     </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>   
+#&gt; </span><span style='color: #555555;'>3</span><span>     3 C     </span><span style='color: #BB0000;'>NA</span><span>    123  
+#&gt; </span><span style='color: #555555;'>4</span><span>     4 D     </span><span style='color: #BB0000;'>NA</span><span>    B    
+#&gt; </span><span style='color: #555555;'>5</span><span>    </span><span style='color: #BB0000;'>NA</span><span> E     </span><span style='color: #BB0000;'>NA</span><span>    C    </div><div class='input'>
+<span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='st'>"A"</span>, <span class='st'>"a"</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
+#&gt;     one two   three four 
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     1 a     a     </span><span style='color: #BB0000;'>NA</span><span>   
+#&gt; </span><span style='color: #555555;'>2</span><span>     2 B     a     aaa  
+#&gt; </span><span style='color: #555555;'>3</span><span>     3 C     a     123  
+#&gt; </span><span style='color: #555555;'>4</span><span>     4 D     a     B    
+#&gt; </span><span style='color: #555555;'>5</span><span>    </span><span style='color: #BB0000;'>NA</span><span> E     a     C    </div><div class='input'>
+<span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='fl'>1</span>, <span class='st'>"*"</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
+#&gt;   one   two   three four 
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> *     A     A     </span><span style='color: #BB0000;'>NA</span><span>   
+#&gt; </span><span style='color: #555555;'>2</span><span> 2     B     A     Aaa  
+#&gt; </span><span style='color: #555555;'>3</span><span> 3     C     A     *23  
+#&gt; </span><span style='color: #555555;'>4</span><span> 4     D     A     B    
+#&gt; </span><span style='color: #555555;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>    E     A     C    </div><div class='input'>
+<span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='fl'>NA</span>, <span class='st'>"NotNA"</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
+#&gt;   one   two   three four 
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> 1     A     A     NotNA
+#&gt; </span><span style='color: #555555;'>2</span><span> 2     B     A     Aaa  
+#&gt; </span><span style='color: #555555;'>3</span><span> 3     C     A     123  
+#&gt; </span><span style='color: #555555;'>4</span><span> 4     D     A     B    
+#&gt; </span><span style='color: #555555;'>5</span><span> NotNA E     A     C    </div><div class='input'>
+<span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='fl'>NA</span>, <span class='fl'>0</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
+#&gt;     one two   three four 
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     1 A     A     0    
+#&gt; </span><span style='color: #555555;'>2</span><span>     2 B     A     Aaa  
+#&gt; </span><span style='color: #555555;'>3</span><span>     3 C     A     123  
+#&gt; </span><span style='color: #555555;'>4</span><span>     4 D     A     B    
+#&gt; </span><span style='color: #555555;'>5</span><span>     0 E     A     C    </div><div class='input'>
+<span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"'A'"</span>, <span class='st'>"'B'"</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
+#&gt;     one two   three four 
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     1 'A'   'A'   </span><span style='color: #BB0000;'>NA</span><span>   
+#&gt; </span><span style='color: #555555;'>2</span><span>     2 'B'   'A'   'A'aa
+#&gt; </span><span style='color: #555555;'>3</span><span>     3 C     'A'   123  
+#&gt; </span><span style='color: #555555;'>4</span><span>     4 D     'A'   'B'  
+#&gt; </span><span style='color: #555555;'>5</span><span>    </span><span style='color: #BB0000;'>NA</span><span> E     'A'   C    </div><div class='input'>
+<span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='st'>"a"</span>, <span class='st'>"*"</span>, <span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"four"</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
+#&gt;     one two   three four 
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     1 A     A     </span><span style='color: #BB0000;'>NA</span><span>   
+#&gt; </span><span style='color: #555555;'>2</span><span>     2 B     A     A**  
+#&gt; </span><span style='color: #555555;'>3</span><span>     3 C     A     123  
+#&gt; </span><span style='color: #555555;'>4</span><span>     4 D     A     B    
+#&gt; </span><span style='color: #555555;'>5</span><span>    </span><span style='color: #BB0000;'>NA</span><span> E     A     C    </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
