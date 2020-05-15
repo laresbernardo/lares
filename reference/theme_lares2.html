@@ -118,7 +118,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>theme_lares2</span>(
-  <span class='kw'>font</span> <span class='kw'>=</span> <span class='st'>"Arial Narrow"</span>,
+  <span class='kw'>font</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"lares.font"</span>),
   <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>12.5</span>,
   <span class='kw'>main_colour</span> <span class='kw'>=</span> <span class='st'>"darkorange3"</span>,
   <span class='kw'>hard_colour</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
@@ -137,7 +137,9 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>font, size</th>
-      <td><p>Character and numeric. Base font family and base size for texts</p></td>
+      <td><p>Character and numeric. Base font family and base size for texts.
+Arial Narrow is set by default; you may change it with options("lares.font"="Other")
+or by using this parameter manually</p></td>
     </tr>
     <tr>
       <th>main_colour, hard_colour, soft_colour, bg_colour, panel_colour</th>
