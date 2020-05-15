@@ -120,7 +120,7 @@
     <pre class="usage"><span class='fu'>formatNum</span>(
   <span class='no'>x</span>,
   <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"lares.formatNum"</span>),
   <span class='kw'>scientific</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>pre</span> <span class='kw'>=</span> <span class='st'>""</span>,
   <span class='kw'>pos</span> <span class='kw'>=</span> <span class='st'>""</span>,
@@ -141,7 +141,8 @@
     <tr>
       <th>type</th>
       <td><p>Integer. 1 for International standards. 2 for 
-American Standards.</p></td>
+American Standards. Use options("lares.formatNum" = 2) to
+set this parameter globally.</p></td>
     </tr>
     <tr>
       <th>scientific</th>

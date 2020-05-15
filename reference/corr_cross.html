@@ -229,7 +229,10 @@ with Ranked Cross-Correlations</a></p>
 <code><a href='trendsRelated.html'>trendsRelated</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> <span class='kw'>=</span> <span class='fl'>NA</span>) <span class='co'># Temporal</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
+
+<span class='co'># Only data with no plot</span>
 <span class='fu'>corr_cross</span>(<span class='no'>dft</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='output co'>#&gt; <span class='message'>Returning only the top 10. You may override with the `top` parameter</span></div><div class='output co'>#&gt;              key             mix    corr pvalue   group1 group2
 #&gt; 1  Ticket_113781   Cabin_C22.C26  0.8655      0   Ticket  Cabin
 #&gt; 2       Pclass_1          Cabin_ -0.7888      0   Pclass  Cabin
@@ -240,16 +243,11 @@ with Ranked Cross-Correlations</a></p>
 #&gt; 7           Fare          Cabin_ -0.4821      0     Fare  Cabin
 #&gt; 8          Parch    Ticket_OTHER -0.4398      0    Parch Ticket
 #&gt; 9          SibSp           Parch  0.4148      0    SibSp  Parch
-#&gt; 10           Age        Pclass_1  0.3489      0      Age Pclass</div><div class='input'><span class='fu'>corr_cross</span>(<span class='no'>dft</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rm.na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; <span class='message'>Returning only the top 5. You may override with the `top` parameter</span></div><div class='output co'>#&gt;             key             mix    corr pvalue group1 group2
-#&gt; 1 Ticket_113781   Cabin_C22.C26  0.8655      0 Ticket  Cabin
-#&gt; 2      Pclass_1          Cabin_ -0.7888      0 Pclass  Cabin
-#&gt; 3         SibSp Ticket_CA..2343  0.6037      0  SibSp Ticket
-#&gt; 4          Fare        Pclass_1  0.5917      0   Fare Pclass
-#&gt; 5         SibSp    Ticket_OTHER -0.5709      0  SibSp Ticket</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># Show only most relevant results filter by pvalue</span>
-<span class='fu'>corr_cross</span>(<span class='no'>dft</span>, <span class='kw'>rm.na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max_pvalue</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)
-<span class='fu'>corr_cross</span>(<span class='no'>dft</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>NA</span>)
-}</div></pre>
+#&gt; 10           Age        Pclass_1  0.3489      0      Age Pclass</div><div class='input'>
+<span class='co'># Show only most relevant results filtered by pvalue</span>
+<span class='fu'>corr_cross</span>(<span class='no'>dft</span>, <span class='kw'>rm.na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max_pvalue</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='output co'>#&gt; <span class='message'>Returning only the top 15. You may override with the `top` parameter</span></div><div class='img'><img src='corr_cross-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Cross-Correlation max values per category</span>
+<span class='fu'>corr_cross</span>(<span class='no'>dft</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='img'><img src='corr_cross-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

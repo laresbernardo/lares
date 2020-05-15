@@ -263,45 +263,38 @@ for both, target and values)</p></td>
 <code><a href='tree_var.html'>tree_var</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>)
-<span class='co'># Relation for survived vs sex</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Sex</span>)
-<span class='co'># Get the data as a table</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Fare</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>10</span>)
-<span class='co'># Relation for sex vs survived</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Sex</span>, <span class='no'>Survived</span>)
-<span class='co'># Relation for survived vs embark gate (categorical)</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Embarked</span>)
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Embarked</span>, <span class='no'>Survived</span>)
-<span class='co'># Relation for survived vs embark gate</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Fare</span>)
-<span class='co'># Relation for survived vs fare with custom colours for Survived</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Fare</span>, <span class='kw'>custom_colours</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='co'># Relation for survived vs fare with ascending order</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Fare</span>, <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='co'># Relation for survived vs fare with only 5 splits</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Fare</span>, <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Fare</span>, <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Embarked</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='co'># Relation for survived vs age (notice NA values)</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Age</span>)
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Age</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Ticket</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='co'># Distribution of fares payed</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Fare</span>)
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span>(<span class='no'>Fare</span> <span class='kw'>&lt;</span> <span class='fl'>200</span>) <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Fare</span>)
-<span class='co'># Distribution (frequency) of survivors</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='st'>"char"</span>)
-<span class='co'># Distribution of log(Fare) vs Fare</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>mutate</span>(<span class='kw'>logFare</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>Fare</span>)) <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Fare</span>, <span class='no'>logFare</span>)
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>mutate</span>(<span class='kw'>logFare</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>Fare</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span>(<span class='no'>Fare</span> <span class='kw'>&lt;</span> <span class='fl'>100</span>) <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Fare</span>, <span class='no'>logFare</span>) +
-  <span class='fu'>geom_point</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>"yellow"</span>)
-<span class='co'># Only one plot or the other</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> <span class='kw'>=</span> <span class='fl'>NA</span>) <span class='co'># Temporal</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
+
+<span class='co'># Relation for categorical/categorical values</span>
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Sex</span>)</div><div class='img'><img src='distr-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Embarked</span>, <span class='no'>Survived</span>)</div><div class='img'><img src='distr-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Relation for categorical/numeric values</span>
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Fare</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 5</span><span>
+#&gt;    targets value            n     p  pcum
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> FALSE   (7.9,8.1]       87  82.1  82.1
+#&gt; </span><span style='color: #555555;'> 2</span><span> FALSE   [0,7.5]         79  85.9  85.9
+#&gt; </span><span style='color: #555555;'> 3</span><span> TRUE    (78,5.1e+02]    66  75.9  75.9
+#&gt; </span><span style='color: #555555;'> 4</span><span> FALSE   (7.5,7.9]       61  70.1  70.1
+#&gt; </span><span style='color: #555555;'> 5</span><span> FALSE   (8.1,10]        60  76.9  76.9
+#&gt; </span><span style='color: #555555;'> 6</span><span> FALSE   (27,40]         57  62.6  62.6
+#&gt; </span><span style='color: #555555;'> 7</span><span> FALSE   (14,22]         51  58.0  58.0
+#&gt; </span><span style='color: #555555;'> 8</span><span> FALSE   (10,14]         48  57.1  57.1
+#&gt; </span><span style='color: #555555;'> 9</span><span> TRUE    (40,78]         47  52.8  52.8
+#&gt; </span><span style='color: #555555;'>10</span><span> TRUE    (22,27]         46  51.7  51.7</div><div class='input'><span class='co'># Sort values </span>
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Fare</span>, <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='distr-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Less plits</span>
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Fare</span>, <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='distr-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Distribution of numerical only</span>
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>Fare</span> <span class='kw'>&lt;</span> <span class='fl'>200</span>) <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Fare</span>)</div><div class='img'><img src='distr-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Distribution of categorical only - uses freqs()</span>
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='st'>"char"</span>)</div><div class='img'><img src='distr-6.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Distribution of numerical/numerical</span>
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>logFare</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>Fare</span>)) <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Fare</span>, <span class='no'>logFare</span>)</div><div class='img'><img src='distr-7.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Select only one of the two default plots of distr()</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Age</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>distr</span>(<span class='no'>Survived</span>, <span class='no'>Age</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-}</div></pre>
+}</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

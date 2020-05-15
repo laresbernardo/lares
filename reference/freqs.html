@@ -244,7 +244,7 @@ save the plot to?</p></td>
 <code><a href='tree_var.html'>tree_var</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span><span class='kw'>=</span><span class='fl'>NA</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span><span class='kw'>=</span><span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
 
 <span class='co'># How many survived?</span>
@@ -285,30 +285,19 @@ save the plot to?</p></td>
 #&gt; </span><span style='color: #555555;'>5</span><span> 2      FALSE     18.8  6.56     5  94.3
 #&gt; </span><span style='color: #555555;'>6</span><span> 3      TRUE      16.3  5.68     6 100  </div><div class='input'>
 <span class='co'># Let's check the results with plots:</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>Survived</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='freqs-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+
 <span class='co'>#' # How many survived and see plot?</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>Survived</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>Survived</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='freqs-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># How many survived per class?</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>Survived</span>, <span class='no'>Pclass</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>Survived</span>, <span class='no'>Pclass</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='freqs-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Per class, how many survived?</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>Pclass</span>, <span class='no'>Survived</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>Pclass</span>, <span class='no'>Survived</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='freqs-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Per sex and class, how many survived?</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>Sex</span>, <span class='no'>Pclass</span>, <span class='no'>Survived</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='co'># Per number of siblings, sex, and class, how many survived?</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>SibSp</span>, <span class='no'>Sex</span>, <span class='no'>Pclass</span>, <span class='no'>Survived</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>SibSp</span>, <span class='no'>Sex</span>, <span class='no'>Pclass</span>, <span class='no'>Survived</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>Sex</span>, <span class='no'>Pclass</span>, <span class='no'>Survived</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='freqs-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Frequency of tickets + Survived</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>Survived</span>, <span class='no'>Ticket</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>Survived</span>, <span class='no'>Ticket</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Slicing the top 20 (out of 681) values; use 'top' parameter to overrule.</span></div><div class='img'><img src='freqs-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Frequency of tickets: top 10 only and order them alphabetically</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>Ticket</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div></span></pre>
+<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='no'>Ticket</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Sorting variable(s) alphabetically</span></div><div class='output co'>#&gt; <span class='message'>Slicing the top 10 (out of 681) values; use 'top' parameter to overrule.</span></div><div class='img'><img src='freqs-6.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
