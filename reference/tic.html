@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Stopwatch to measure Task Timings — tic • lares</title>
+<title>Stopwatch to measure R Timings — tic • lares</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,10 @@
 
 
 
-<meta property="og:title" content="Stopwatch to measure Task Timings — tic" />
-<meta property="og:description" content="Measure timings between a tic and a toc.
-Measure timings between a tic and a toc.
-Measure timings between a tic and a toc. Reset all values" />
+<meta property="og:title" content="Stopwatch to measure R Timings — tic" />
+<meta property="og:description" content="Start a stopwatch.
+Stop a stopwatch.
+Reset all tic and toc values in your environment." />
 
 
 
@@ -110,15 +110,15 @@ Measure timings between a tic and a toc. Reset all values" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Stopwatch to measure Task Timings</h1>
+    <h1>Stopwatch to measure R Timings</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/tictoc.R'><code>R/tictoc.R</code></a></small>
     <div class="hidden name"><code>tic.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Measure timings between a tic and a toc.</p>
-<p>Measure timings between a tic and a toc.</p>
-<p>Measure timings between a tic and a toc. Reset all values</p>
+    <p>Start a stopwatch.</p>
+<p>Stop a stopwatch.</p>
+<p>Reset all tic and toc values in your environment.</p>
     </div>
 
     <pre class="usage"><span class='fu'>tic</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -144,7 +144,8 @@ Measure timings between a tic and a toc. Reset all values" />
     </tr>
     <tr>
       <th>units</th>
-      <td><p>Boolean. Do you want nice logical units? If not, seconds always</p></td>
+      <td><p>Boolean. Do you want nice format for the time units? 
+If not, seconds elapsed as numerical values</p></td>
     </tr>
     <tr>
       <th>signif</th>
@@ -162,17 +163,15 @@ Measure timings between a tic and a toc. Reset all values" />
 <code>tic</code> and <code>toc</code>, <code>time</code> in seconds and the message <code>msg</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># Basic use</span>
-<span class='fu'>tic</span>(<span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'>toc</span>()
-<span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"tic"</span>)
-
+    <pre class="examples"><div class='input'><span class='co'># Basic use (global stopwatch)</span>
+<span class='fu'>tic</span>()
+<span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span>(<span class='fl'>0.1</span>)
+<span class='fu'>toc</span>()</div><div class='output co'>#&gt; <span class='message'>Elapsed time: 0.104s</span></div><div class='input'>
 <span class='co'># Multiple tic tocs</span>
-<span class='fu'>tic</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fl'>123</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'>toc</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fl'>123</span>)
-<span class='fu'>toc</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-}</div></pre>
+<span class='fu'>tic</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"two"</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Tic `id = two` start time: 2020-05-15 17:32:23</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span>(<span class='fl'>0.2</span>)
+<span class='fu'>toc</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"two"</span>)</div><div class='output co'>#&gt; <span class='message'>Elapsed time: 0.212s</span></div><div class='input'>
+<span class='co'># Global is still working (id = 1)</span>
+<span class='fu'>toc</span>(<span class='kw'>msg</span> <span class='kw'>=</span> <span class='st'>"The function finished its work in"</span>)</div><div class='output co'>#&gt; <span class='message'>The function finished its work in 0.319s</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

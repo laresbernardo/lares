@@ -217,6 +217,21 @@ two variables by name or column position.</p></td>
 <code><a href='mplot_splits.html'>mplot_splits</a>()</code>,
 <code><a href='msplit.html'>msplit</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
+<span class='no'>check_k</span> <span class='kw'>&lt;-</span> <span class='fu'>clusterKmeans</span>(<span class='no'>df</span>)
+<span class='no'>check_k</span>$<span class='no'>nclusters_plot</span>
+<span class='no'>clusters</span> <span class='kw'>&lt;-</span> <span class='fu'>clusterKmeans</span>(<span class='no'>df</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>clusters</span>, <span class='no'>names</span>)
+<span class='co'># Cross-Correlations for each cluster</span>
+<span class='no'>clusters</span>$<span class='no'>correlations</span>
+<span class='co'># PCA Results</span>
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>clusters</span>$<span class='no'>PCA</span>, <span class='no'>names</span>)
+<span class='no'>clusters</span>$<span class='no'>PCA</span>$<span class='no'>plotVarExp</span>
+<span class='no'>clusters</span>$<span class='no'>PCA</span>$<span class='no'>plot_1_2</span>
+<span class='no'>clusters</span>$<span class='no'>PCA</span>$<span class='no'>plot_1_2_3</span>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

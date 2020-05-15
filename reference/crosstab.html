@@ -41,10 +41,7 @@
 
 <meta property="og:title" content="Weighted Cross Tabulation — crosstab" />
 <meta property="og:description" content="A cross-tabulation function with output similar to STATA, tidy
-friendly, with weights if needed. If only one dependent variable
-crossval() will be recommended; if two, then both variables will be 
-crossed; if three, both variables will be crossed with third as 
-weighted values." />
+friendly, with weighting possibility." />
 
 
 
@@ -119,20 +116,18 @@ weighted values." />
 
     <div class="ref-description">
     <p>A cross-tabulation function with output similar to STATA, tidy
-friendly, with weights if needed. If only one dependent variable
-crossval() will be recommended; if two, then both variables will be 
-crossed; if three, both variables will be crossed with third as 
-weighted values.</p>
+friendly, with weighting possibility.</p>
     </div>
 
     <pre class="usage"><span class='fu'>crosstab</span>(
   <span class='no'>df</span>,
   <span class='no'>...</span>,
+  <span class='kw'>wt</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>prow</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>pcol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>pall</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>keep_nas</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>rm.na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>total</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
@@ -146,8 +141,11 @@ weighted values.</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Variables. Dependent and independent variables. If needed,
-third value should be the weight variable.</p></td>
+      <td><p>Variables. Dependent and independent variables.</p></td>
+    </tr>
+    <tr>
+      <th>wt</th>
+      <td><p>Variable, numeric. Weights.</p></td>
     </tr>
     <tr>
       <th>prow, pcol, pall</th>
@@ -159,8 +157,8 @@ or the whole table, respectively.</p></td>
       <td><p>Integer. How many decimals should be returned?</p></td>
     </tr>
     <tr>
-      <th>keep_nas</th>
-      <td><p>Boolean. Keep NAs and count them as well?</p></td>
+      <th>rm.na</th>
+      <td><p>Boolean. Remove NA values?</p></td>
     </tr>
     <tr>
       <th>total</th>
@@ -169,7 +167,7 @@ or the whole table, respectively.</p></td>
     <tr>
       <th>order</th>
       <td><p>Boolean. Sort columns and rows by frequencies? Else, will
-be sorted alphabetically.</p></td>
+be sorted alphabetically</p></td>
     </tr>
     </table>
 
@@ -193,6 +191,29 @@ be sorted alphabetically.</p></td>
 <code><a href='tree_var.html'>tree_var</a>()</code>,
 <code><a href='trendsRelated.html'>trendsRelated</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
+<span class='fu'>crosstab</span>(<span class='no'>dft</span>, <span class='no'>Survived</span>, <span class='no'>Pclass</span>, <span class='kw'>total</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 4</span><span>
+#&gt;   `Survived x Pclass`   `3`   `1`   `2`
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> FALSE                 372    80    97
+#&gt; </span><span style='color: #555555;'>2</span><span> TRUE                  119   136    87</div><div class='input'><span class='co'># Show values in percentages</span>
+<span class='fu'>crosstab</span>(<span class='no'>dft</span>, <span class='no'>Pclass</span>, <span class='no'>Survived</span>, <span class='kw'>prow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 4</span><span>
+#&gt;   `Pclass x Survived` `FALSE` `TRUE` total
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> 3                      67.8   34.8  55.1
+#&gt; </span><span style='color: #555555;'>2</span><span> 1                      14.6   39.8  24.2
+#&gt; </span><span style='color: #555555;'>3</span><span> 2                      17.7   25.4  20.6</div><div class='input'><span class='fu'>crosstab</span>(<span class='no'>dft</span>, <span class='no'>Pclass</span>, <span class='no'>Survived</span>, <span class='kw'>pall</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 4</span><span>
+#&gt;   `Pclass x Survived` `FALSE` `TRUE` total
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> 3                     41.8   13.4   55.1
+#&gt; </span><span style='color: #555555;'>2</span><span> 1                      8.98  15.3   24.2
+#&gt; </span><span style='color: #555555;'>3</span><span> 2                     10.9    9.76  20.6</div><div class='input'><span class='co'># Weighted by another variable</span>
+<span class='fu'>crosstab</span>(<span class='no'>dft</span>, <span class='no'>Survived</span>, <span class='no'>Pclass</span>, <span class='kw'>wt</span> <span class='kw'>=</span> <span class='no'>Fare</span>, <span class='kw'>prow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
+#&gt;   `Survived x Pclass`   `1`   `3`   `2` total
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> TRUE                 71.5  24.3  50.5  57.7
+#&gt; </span><span style='color: #555555;'>2</span><span> FALSE                28.5  75.7  49.5  42.3</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
