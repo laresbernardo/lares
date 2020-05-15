@@ -25,6 +25,7 @@
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
 #' @examples 
+#' options("lares.font"=NA)
 #' data(dft) # Titanic dataset
 #' 
 #' # How many survived?
@@ -40,6 +41,7 @@
 #' dft %>% freqs(Pclass, Survived, wt = Fare/100)
 #' 
 #' # Let's check the results with plots:
+#' dft %>% freqs(Survived, plot = TRUE)
 #' 
 #' \dontrun{
 #' #' # How many survived and see plot?

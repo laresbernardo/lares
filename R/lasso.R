@@ -26,7 +26,7 @@ lasso_vars <- function(df, variable,
                        seed = 123, ...) {
   
   tic("lasso_vars")
-  quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
+  quiet(h2o.init(nthreads = -1, port = 54321))
   h2o.no_progress()
   set.seed(seed)
   var <- enquo(variable)
