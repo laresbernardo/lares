@@ -67,9 +67,12 @@ lasso_vars <- function(df, variable,
   rsq$metrics$bestlambda <- lasso_logistic@model$lambda_best
   
   t_lasso_model_coeff <- lasso_logistic@model$coefficients_table %>%
-    arrange(desc(abs(.data$standardized_coefficients)))
+    arrange(desc(abs(.data$standardized_coefficients))) %>%
+    # To avoid numbers like -0.000000000000000364
+    mutate(standardized_coefficients = as.numeric(ifelse(
+      .data$names == "Intercept", 0, .data$standardized_coefficients)))
   
-  message(">>> Ploting results for ", as_label(var), "...")
+  message(">>> Generating plots for ", as_label(var), "...")
   p <- t_lasso_model_coeff %>%
     filter(.data$names != "Intercept") %>%
     mutate(abs = abs(.data$standardized_coefficients),

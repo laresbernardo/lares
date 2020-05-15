@@ -1168,6 +1168,7 @@ formatTime <- function(vector) {
 #' @export
 font_exists <- function(font = "Arial Narrow") {
   
+  tryCatch({
   # Thanks to extrafont for the idea for this code
   ttf_find_default_path <- function() {
     if (grepl("^darwin", R.version$os)) {
@@ -1206,6 +1207,11 @@ font_exists <- function(font = "Arial Narrow") {
     return(ret)
   }
   check(font)
+  }, error = function(err) {
+    message(paste("Font issue detected:", err))
+    options("lares.font" = NA)
+    return(FALSE)
+  })
 }
 
 

@@ -11,7 +11,9 @@
 #'
 #' @md
 #' @family Visualization
-#' @param font,size Character and numeric. Base font family and base size for texts
+#' @param font,size Character and numeric. Base font family and base size for texts. 
+#' Arial Narrow is set by default; you may change it with options("lares.font"="Other")
+#' or by using this parameter manually
 #' @param main_colour,hard_colour,soft_colour,bg_colour,panel_colour
 #' Character. Main colours for your theme
 #' @param legend Character. Legend position: top, right, bottom, left
@@ -22,7 +24,7 @@
 #' @param which Character. When pal = 3, select which colours should be
 #' added with the custom colours pelette: fill, colour, text (fct) - first letters
 #' @export
-theme_lares2 <- function(font = "Arial Narrow", 
+theme_lares2 <- function(font = getOption("lares.font"), 
                          size = 12.5, 
                          main_colour = "darkorange3", 
                          hard_colour = "black",
@@ -40,8 +42,8 @@ theme_lares2 <- function(font = "Arial Narrow",
   
   # Check and set font
   if (!font_exists(font)[1] & !is.na(font)) {
-    if (font != "Arial Narrow")
-      warning(paste(font, "font is not installed, has other name, or can't be found"))  
+    warning(paste("Font", font, "is not installed, has other name, or can't be found"))  
+    options("lares.font" = NA) # So R doesn't try again by default
     font <- NA
   } else ret <- ret + theme(text = element_text(family = font))  
   

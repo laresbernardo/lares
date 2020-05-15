@@ -854,8 +854,8 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
   metrics <- sprintf("%s observations | AAC %s", obs, acc)
   
   p <- ggplot(plot_cf, aes(
-    y = as.numeric(factor(.data$tag, levels = rev(.data$labels))), 
-    x = as.numeric(factor(.data$pred, levels = .data$labels)), 
+    y = as.numeric(factor(.data$tag, levels = rev(labels))), 
+    x = as.numeric(factor(.data$pred, levels = labels)), 
     fill = .data$aux, size = .data$n, label = .data$label)) +
     geom_tile() + theme_lares2() +
     geom_text(colour = "white", lineheight = .8) + 

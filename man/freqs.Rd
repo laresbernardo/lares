@@ -59,30 +59,42 @@ This function lets the user group, count, calculate percentages
 and cumulatives. It also plots results if needed. Tidyverse friendly.
 }
 \examples{
-data(dft)
+data(dft) # Titanic dataset
+
 # How many survived?
 dft \%>\% freqs(Survived)
+
 # How many survived per Class?
 dft \%>\% freqs(Pclass, Survived, abc = TRUE)
+
 # How many survived per Class with relative percentages?
 dft \%>\% freqs(Pclass, Survived, abc = TRUE, rel = TRUE)
+
 # Using a weighted feature
 dft \%>\% freqs(Pclass, Survived, wt = Fare/100)
+
+# Let's check the results with plots:
+
 \dontrun{
-# Let's check the results with plots
-# How many survived and see plot?
+#' # How many survived and see plot?
 dft \%>\% freqs(Survived, plot = TRUE)
+
 # How many survived per class?
 dft \%>\% freqs(Survived, Pclass, plot = TRUE)
+
 # Per class, how many survived?
 dft \%>\% freqs(Pclass, Survived, plot = TRUE)
+
 # Per sex and class, how many survived?
 dft \%>\% freqs(Sex, Pclass, Survived, plot = TRUE)
+
 # Per number of siblings, sex, and class, how many survived?
 dft \%>\% freqs(SibSp, Sex, Pclass, Survived, plot = TRUE)
 dft \%>\% freqs(SibSp, Sex, Pclass, Survived, plot = FALSE)
+
 # Frequency of tickets + Survived
 dft \%>\% freqs(Survived, Ticket, plot = TRUE)
+
 # Frequency of tickets: top 10 only and order them alphabetically
 dft \%>\% freqs(Ticket, plot = TRUE, top = 10, abc = TRUE)
 }
