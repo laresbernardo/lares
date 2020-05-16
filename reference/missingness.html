@@ -178,12 +178,11 @@ missingness in a data.frame. It also plots the results if needed.</p>
 #&gt; 1        C       5         100
 #&gt; 2        B       2          40
 #&gt; 3        D       1          20</div><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Visual results</span>
-<span class='fu'>missingness</span>(<span class='no'>df</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> <span class='kw'>=</span> <span class='fl'>NA</span>) <span class='co'># Temporal</span>
+<span class='fu'>missingness</span>(<span class='no'>df</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='missingness-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Show all variables (including those with no missing values)</span>
-<span class='fu'>missingness</span>(<span class='no'>df</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>full</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div></pre>
+<span class='fu'>missingness</span>(<span class='no'>df</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>full</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='missingness-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
