@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>K-Means Clustering + PCA Automated — clusterKmeans • lares</title>
+<title>Automated K-Means Clustering + PCA — clusterKmeans • lares</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="K-Means Clustering + PCA Automated — clusterKmeans" />
+<meta property="og:title" content="Automated K-Means Clustering + PCA — clusterKmeans" />
 <meta property="og:description" content="This function lets the user cluster a whole data.frame automatically.
 As you might know, the goal of kmeans is to group data points into 
 distinct non-overlapping subgroups. If needed, one hot encoding will 
@@ -114,7 +114,7 @@ when clusters are in different shapes such as elliptical clusters." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>K-Means Clustering + PCA Automated</h1>
+    <h1>Automated K-Means Clustering + PCA</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/clusters.R'><code>R/clusters.R</code></a></small>
     <div class="hidden name"><code>clusterKmeans.Rd</code></div>
     </div>
@@ -218,18 +218,57 @@ two variables by name or column position.</p></td>
 <code><a href='msplit.html'>msplit</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> <span class='kw'>=</span> <span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
-<span class='no'>check_k</span> <span class='kw'>&lt;-</span> <span class='fu'>clusterKmeans</span>(<span class='no'>df</span>)
-<span class='no'>check_k</span>$<span class='no'>nclusters_plot</span>
-<span class='no'>clusters</span> <span class='kw'>&lt;-</span> <span class='fu'>clusterKmeans</span>(<span class='no'>df</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>clusters</span>, <span class='no'>names</span>)
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>dft</span>, <span class='kw'>select</span> <span class='kw'>=</span> -<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>Ticket</span>, <span class='no'>PassengerId</span>))
+
+<span class='co'># Find optimal k</span>
+<span class='no'>check_k</span> <span class='kw'>&lt;-</span> <span class='fu'>clusterKmeans</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; <span class='message'>Automatically removed rows with NA. To overwrite: fix NAs and set drop_na = FALSE</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 5 variables: 'Pclass', 'Cabin', 'Embarked', 'Survived', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>One hot encoding applied...</span></div><div class='input'><span class='no'>check_k</span>$<span class='no'>nclusters_plot</span></div><div class='img'><img src='clusterKmeans-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Run with selected k</span>
+<span class='no'>clusters</span> <span class='kw'>&lt;-</span> <span class='fu'>clusterKmeans</span>(<span class='no'>df</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>Automatically removed rows with NA. To overwrite: fix NAs and set drop_na = FALSE</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 5 variables: 'Pclass', 'Cabin', 'Embarked', 'Survived', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>One hot encoding applied...</span></div><div class='output co'>#&gt; <span class='message'>Returning only the top 25. You may override with the `top` parameter</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>clusters</span>, <span class='no'>names</span>)</div><div class='output co'>#&gt; $nclusters
+#&gt; [1] "n"   "wss"
+#&gt; 
+#&gt; $nclusters_plot
+#&gt; [1] "data"        "layers"      "scales"      "mapping"     "theme"      
+#&gt; [6] "coordinates" "facet"       "plot_env"    "labels"     
+#&gt; 
+#&gt; $df
+#&gt;  [1] "Survived_TRUE"     "Sex_male"          "Age"              
+#&gt;  [4] "SibSp"             "Parch"             "Fare"             
+#&gt;  [7] "Pclass_1"          "Pclass_2"          "Cabin_"           
+#&gt; [10] "Cabin_B96.B98"     "Cabin_C22.C26"     "Cabin_C23.C25.C27"
+#&gt; [13] "Cabin_D"           "Cabin_F2"          "Cabin_F33"        
+#&gt; [16] "Cabin_G6"          "Embarked_"         "Embarked_C"       
+#&gt; [19] "Embarked_Q"        "cluster"          
+#&gt; 
+#&gt; $clusters
+#&gt; NULL
+#&gt; 
+#&gt; $fit
+#&gt; [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
+#&gt; [6] "betweenss"    "size"         "iter"         "ifault"      
+#&gt; 
+#&gt; $means
+#&gt;  [1] "cluster"           "Survived_TRUE"     "Sex_male"         
+#&gt;  [4] "Age"               "SibSp"             "Parch"            
+#&gt;  [7] "Fare"              "Pclass_1"          "Pclass_2"         
+#&gt; [10] "Cabin_"            "Cabin_B96.B98"     "Cabin_C22.C26"    
+#&gt; [13] "Cabin_C23.C25.C27" "Cabin_D"           "Cabin_F2"         
+#&gt; [16] "Cabin_F33"         "Cabin_G6"          "Embarked_"        
+#&gt; [19] "Embarked_C"        "Embarked_Q"        "n"                
+#&gt; 
+#&gt; $correlations
+#&gt;  [1] "data"        "layers"      "scales"      "mapping"     "theme"      
+#&gt;  [6] "coordinates" "facet"       "plot_env"    "labels"      "guides"     
+#&gt; 
+#&gt; $PCA
+#&gt; [1] "pcadf"         "pca_explained" "plotVarExp"    "plot_1_2"     
+#&gt; [5] "plot_1_2_3"    "pca"          
+#&gt; </div><div class='input'>
 <span class='co'># Cross-Correlations for each cluster</span>
-<span class='no'>clusters</span>$<span class='no'>correlations</span>
+<span class='no'>clusters</span>$<span class='no'>correlations</span></div><div class='img'><img src='clusterKmeans-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># PCA Results</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>clusters</span>$<span class='no'>PCA</span>, <span class='no'>names</span>)
-<span class='no'>clusters</span>$<span class='no'>PCA</span>$<span class='no'>plotVarExp</span>
-<span class='no'>clusters</span>$<span class='no'>PCA</span>$<span class='no'>plot_1_2</span>
+<span class='no'>clusters</span>$<span class='no'>PCA</span>$<span class='no'>plotVarExp</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 1 row(s) containing missing values (geom_path).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 1 rows containing missing values (geom_point).</span></div><div class='img'><img src='clusterKmeans-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>clusters</span>$<span class='no'>PCA</span>$<span class='no'>plot_1_2</span></div><div class='img'><img src='clusterKmeans-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>clusters</span>$<span class='no'>PCA</span>$<span class='no'>plot_1_2_3</span>
 }</div></pre>
   </div>

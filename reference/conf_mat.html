@@ -145,15 +145,7 @@ confusion matrix when binary.</p></td>
     </tr>
     <tr>
       <th>plot</th>
-      <td><p>Boolean. Plot result?
-#' @examples 
-Binary example
-binary &lt;- data.frame(
-  tag = c("N","N","N","N","N","Y","Y","Y","N","Y"),
-  score = c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0))
-conf_mat(tag = binary$tag, score = binary$score)
-conf_mat(tag = binary$tag, score = binary$score, sense = "&gt;")
-conf_mat(tag = binary$tag, score = binary$score, thresh = 0.2)</p></td>
+      <td><p>Boolean. Plot result?</p></td>
     </tr>
     </table>
 
@@ -195,15 +187,28 @@ conf_mat(tag = binary$tag, score = binary$score, thresh = 0.2)</p></td>
 <code><a href='dist2d.html'>dist2d</a>()</code>,
 <code><a href='errors.html'>errors</a>()</code>,
 <code><a href='loglossBinary.html'>loglossBinary</a>()</code>,
-<code><a href='mae.html'>mae</a>()</code>,
-<code><a href='mape.html'>mape</a>()</code>,
 <code><a href='model_metrics.html'>model_metrics</a>()</code>,
-<code><a href='mse.html'>mse</a>()</code>,
 <code><a href='quants.html'>quants</a>()</code>,
-<code><a href='rmse.html'>rmse</a>()</code>,
-<code><a href='rsqa.html'>rsqa</a>()</code>,
-<code><a href='rsq.html'>rsq</a>()</code></p></div>
+<code><a href='error.html'>rmse</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Binary example</span>
+<span class='no'>binary</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+  <span class='kw'>tag</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"N"</span>,<span class='st'>"N"</span>,<span class='st'>"N"</span>,<span class='st'>"N"</span>,<span class='st'>"N"</span>,<span class='st'>"Y"</span>,<span class='st'>"Y"</span>,<span class='st'>"Y"</span>,<span class='st'>"N"</span>,<span class='st'>"Y"</span>),
+  <span class='kw'>score</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.2</span>, <span class='fl'>0.3</span>, <span class='fl'>0.4</span>, <span class='fl'>0.5</span>, <span class='fl'>0.6</span>, <span class='fl'>0.7</span>, <span class='fl'>0.8</span>, <span class='fl'>0.9</span>, <span class='fl'>1.0</span>))
+<span class='fu'>conf_mat</span>(<span class='kw'>tag</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>tag</span>, <span class='kw'>score</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>score</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 3</span><span>
+#&gt;   `Real x Pred`     N     Y
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> N                 2     4
+#&gt; </span><span style='color: #555555;'>2</span><span> Y                 4     0</div><div class='input'><span class='fu'>conf_mat</span>(<span class='kw'>tag</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>tag</span>, <span class='kw'>score</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>score</span>, <span class='kw'>sense</span> <span class='kw'>=</span> <span class='st'>"&gt;"</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 3</span><span>
+#&gt;   `Real x Pred`     N     Y
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> N                 1     5
+#&gt; </span><span style='color: #555555;'>2</span><span> Y                 4     0</div><div class='input'><span class='fu'>conf_mat</span>(<span class='kw'>tag</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>tag</span>, <span class='kw'>score</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>score</span>, <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 3</span><span>
+#&gt;   `Real x Pred`     N     Y
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> N                 5     1
+#&gt; </span><span style='color: #555555;'>2</span><span> Y                 4     0</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
