@@ -171,7 +171,14 @@ Cash, and Transactions information</p></td>
 <code><a href='stocks_report.html'>stocks_report</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'><span class='co'># Load lares dummy XLSX</span>
+<span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"inst/docs"</span>, <span class='st'>"dummyPortfolio.xlsx"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"lares"</span>)
+
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>stocks_file</span>(<span class='kw'>filename</span> <span class='kw'>=</span> <span class='no'>file</span>,
+                  <span class='kw'>sheets</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Portafolio"</span>,<span class='st'>"Fondos"</span>,<span class='st'>"Transacciones"</span>),
+                  <span class='kw'>keep_old</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in stocks_file(filename = file, sheets = c("Portafolio", "Fondos",     "Transacciones"), keep_old = FALSE): Error: that file doesn't exist or it's not in your working directory!</span></div><div class='input'>
+<span class='co'># This will create a list with the following 3 dataframes:</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; NULL</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

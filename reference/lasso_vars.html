@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find Most Relevant Features Using Lasso Regression — lasso_vars • lares</title>
+<title>Most Relevant Features Using Lasso Regression — lasso_vars • lares</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,11 @@
 
 
 
-<meta property="og:title" content="Find Most Relevant Features Using Lasso Regression — lasso_vars" />
+<meta property="og:title" content="Most Relevant Features Using Lasso Regression — lasso_vars" />
 <meta property="og:description" content="Use Lasso regression to identify the most relevant variables that 
 can predict/identify another variable. You might want to compare 
-with corr_var() results for further understanding. No need to
-standardize your data." />
+with corr_var() results to compliment the analysis No need to
+standardize, center or scale your data." />
 
 
 
@@ -111,7 +111,7 @@ standardize your data." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find Most Relevant Features Using Lasso Regression</h1>
+    <h1>Most Relevant Features Using Lasso Regression</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/lasso.R'><code>R/lasso.R</code></a></small>
     <div class="hidden name"><code>lasso_vars.Rd</code></div>
     </div>
@@ -119,8 +119,8 @@ standardize your data." />
     <div class="ref-description">
     <p>Use Lasso regression to identify the most relevant variables that 
 can predict/identify another variable. You might want to compare 
-with corr_var() results for further understanding. No need to
-standardize your data.</p>
+with corr_var() results to compliment the analysis No need to
+standardize, center or scale your data.</p>
     </div>
 
     <pre class="usage"><span class='fu'>lasso_vars</span>(
@@ -201,7 +201,8 @@ standardize your data.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> <span class='kw'>=</span> <span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
-<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'>lasso_vars</span>(<span class='no'>dft</span>, <span class='no'>Survived</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Ticket"</span>, <span class='st'>"Cabin"</span>))</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Omitting transformations for 'Ticket', 'Cabin', 'Survived'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 3 variables: 'Pclass', 'Embarked', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Searching for optimal lambda with CV...</span></div><div class='output co'>#&gt; <span class='message'>Found best lambda: 0.0014426</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Fetching most relevant variables...</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots for Survived...</span></div><div class='output co'>#&gt; <span class='message'>Elapsed time: 7.09s</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>m</span>$<span class='no'>coef</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 12 x 3</span><span>
+
+<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'>lasso_vars</span>(<span class='no'>dft</span>, <span class='no'>Survived</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Ticket"</span>, <span class='st'>"Cabin"</span>))</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Omitting transformations for 'Ticket', 'Cabin', 'Survived'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 3 variables: 'Pclass', 'Embarked', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Searching for optimal lambda with CV...</span></div><div class='output co'>#&gt; <span class='message'>Found best lambda: 0.0014426</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Fetching most relevant variables...</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots for Survived...</span></div><div class='output co'>#&gt; <span class='message'>Elapsed time: 17.2s</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>m</span>$<span class='no'>coef</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 12 x 3</span><span>
 #&gt;    names       coefficients standardized_coefficients
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>                     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> Sex_male     -</span><span style='color: #BB0000;'>0.501</span><span>                       -</span><span style='color: #BB0000;'>0.239</span><span>  

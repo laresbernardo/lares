@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Root Mean Squared Error (RMSE) — rmse • lares</title>
+<title>Calculate Continuous Values Errors — errors • lares</title>
 
 
 <!-- jquery -->
@@ -39,15 +39,15 @@
 
 
 
-<meta property="og:title" content="Root Mean Squared Error (RMSE) — rmse" />
-<meta property="og:description" content="This function lets the user calculate Root Mean Squared Error
+<meta property="og:title" content="Calculate Continuous Values Errors — errors" />
+<meta property="og:description" content="This function lets the user calculate all errors and R squared 
+simultaneously.
+This function lets the user calculate Root Mean Squared Error
 This function lets the user calculate Mean Absolute Error
 This function lets the user calculate Mean Squared Error
 This function lets the user calculate Mean Squared Error
 This function lets the user calculate R Squared
-This function lets the user calculate Adjusted R Squared
-This function lets the user calculate all errors and R squared 
-simultaneously." />
+This function lets the user calculate Adjusted R Squared" />
 
 
 
@@ -115,23 +115,25 @@ simultaneously." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Root Mean Squared Error (RMSE)</h1>
+    <h1>Calculate Continuous Values Errors</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/model_functions.R'><code>R/model_functions.R</code></a></small>
     <div class="hidden name"><code>errors.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user calculate Root Mean Squared Error</p>
+    <p>This function lets the user calculate all errors and R squared 
+simultaneously.</p>
+<p>This function lets the user calculate Root Mean Squared Error</p>
 <p>This function lets the user calculate Mean Absolute Error</p>
 <p>This function lets the user calculate Mean Squared Error</p>
 <p>This function lets the user calculate Mean Squared Error</p>
 <p>This function lets the user calculate R Squared</p>
 <p>This function lets the user calculate Adjusted R Squared</p>
-<p>This function lets the user calculate all errors and R squared 
-simultaneously.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rmse</span>(<span class='no'>tag</span>, <span class='no'>score</span>)
+    <pre class="usage"><span class='fu'>errors</span>(<span class='no'>tag</span>, <span class='no'>score</span>)
+
+<span class='fu'>rmse</span>(<span class='no'>tag</span>, <span class='no'>score</span>)
 
 <span class='fu'>mae</span>(<span class='no'>tag</span>, <span class='no'>score</span>)
 
@@ -141,9 +143,7 @@ simultaneously.</p>
 
 <span class='fu'>rsq</span>(<span class='no'>tag</span>, <span class='no'>score</span>)
 
-<span class='fu'>rsqa</span>(<span class='no'>tag</span>, <span class='no'>score</span>)
-
-<span class='fu'>errors</span>(<span class='no'>tag</span>, <span class='no'>score</span>)</pre>
+<span class='fu'>rsqa</span>(<span class='no'>tag</span>, <span class='no'>score</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,15 +161,6 @@ simultaneously.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Calculus: 
-<code><a href='ROC.html'>ROC</a>()</code>,
-<code><a href='conf_mat.html'>conf_mat</a>()</code>,
-<code><a href='corr.html'>corr</a>()</code>,
-<code><a href='deg2num.html'>deg2num</a>()</code>,
-<code><a href='dist2d.html'>dist2d</a>()</code>,
-<code><a href='loglossBinary.html'>loglossBinary</a>()</code>,
-<code><a href='model_metrics.html'>model_metrics</a>()</code>,
-<code><a href='quants.html'>quants</a>()</code></p>
-<p>Other Calculus: 
 <code><a href='ROC.html'>ROC</a>()</code>,
 <code><a href='conf_mat.html'>conf_mat</a>()</code>,
 <code><a href='corr.html'>corr</a>()</code>,
