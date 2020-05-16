@@ -1,5 +1,5 @@
 ####################################################################
-#' K-Means Clustering + PCA Automated
+#' Automated K-Means Clustering + PCA
 #' 
 #' This function lets the user cluster a whole data.frame automatically.
 #' As you might know, the goal of kmeans is to group data points into 
@@ -23,18 +23,25 @@
 #' two variables by name or column position.
 #' @param seed Numeric. Seed for reproducibility
 #' @examples 
-#' \dontrun{
+#' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
+#' df <- subset(dft, select = -c(Ticket, PassengerId))
+#' 
+#' # Find optimal k
 #' check_k <- clusterKmeans(df)
 #' check_k$nclusters_plot
+#' 
+#' # Run with selected k
 #' clusters <- clusterKmeans(df, k = 3)
 #' lapply(clusters, names)
+#' 
 #' # Cross-Correlations for each cluster
 #' clusters$correlations
+#' 
 #' # PCA Results
-#' lapply(clusters$PCA, names)
 #' clusters$PCA$plotVarExp
 #' clusters$PCA$plot_1_2
+#' \dontrun{
 #' clusters$PCA$plot_1_2_3
 #' }
 #' @export

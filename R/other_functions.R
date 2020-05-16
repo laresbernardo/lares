@@ -967,6 +967,10 @@ haveInternet <- function(thresh = 3, url = "http://www.google.com") {
 #' 
 #' @family Tools
 #' @param df Dataframe
+#' @examples 
+#' df <- data.frame(a = c(1, NA, 3), b = rep(NA, 3), c = rep(5, 3))
+#' print(df)
+#' zerovar(df)
 #' @export
 zerovar <- function(df) {
   out <- lapply(df, function(x) length(unique(x)))
@@ -1159,6 +1163,7 @@ formatTime <- function(vector) {
 #' @param font Character. Which font to check
 #' @examples
 #' font_exists(font = "Arial Narrow")
+#' font_exists(font = "Weird Font")
 #' @export
 font_exists <- function(font = "Arial Narrow") {
   
@@ -1355,6 +1360,11 @@ flatten_list <- function(x, quiet = FALSE) {
 #' @param df data.frame
 #' @param ... Variables to segment counters
 #' @param abc Boolean. Sort alphabetically?
+#' @examples 
+#' data(dft) # Titanic dataset
+#' df <- dft[,1:5]
+#' head(df)
+#' list_cats(df)
 #' @export
 list_cats <- function(df, ..., abc = TRUE) {
   is.categorical <- function(x) is.character(x) | is.factor(x)

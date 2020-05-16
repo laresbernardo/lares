@@ -4,7 +4,7 @@
 \alias{msplit}
 \title{Split a dataframe for training and testing sets}
 \usage{
-msplit(df, size = 0.7, seed = 0, print = T)
+msplit(df, size = 0.7, seed = 0, print = TRUE)
 }
 \arguments{
 \item{df}{Dataframe to split}
@@ -24,6 +24,11 @@ This function splits automatically a dataframe into train and
 test datasets. You can define a seed to get the same results 
 every time, but has a default value. You can prevent it from 
 printing the split counter result.
+}
+\examples{
+data(dft) # Titanic dataset
+splits <- msplit(dft, size = 0.7, seed = 123)
+names(splits)
 }
 \seealso{
 Other Machine Learning: 

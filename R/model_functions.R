@@ -633,8 +633,12 @@ export_results <- function(results,
 #' @param seed Seed for random split
 #' @param print Print summary results
 #' @return A list with both datasets, summary, and split rate
+#' @examples 
+#' data(dft) # Titanic dataset
+#' splits <- msplit(dft, size = 0.7, seed = 123)
+#' names(splits)
 #' @export
-msplit <- function(df, size = 0.7, seed = 0, print=T) {
+msplit <- function(df, size = 0.7, seed = 0, print = TRUE) {
   
   if (size <= 0 | size > 1) stop("Set size parameter to a value >0 and <=1") 
   
@@ -694,6 +698,7 @@ iter_seeds <- function(df, tries = 10) {
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
+#' @rdname error
 rmse <- function(tag, score){
   error <- tag - score
   sqrt(mean(error^2))
@@ -709,6 +714,7 @@ rmse <- function(tag, score){
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
+#' @rdname error
 mae <- function(tag, score){
   error <- tag - score
   mean(abs(error))
@@ -724,6 +730,7 @@ mae <- function(tag, score){
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
+#' @rdname error
 mse <- function(tag, score){ 
   error <- tag - score
   mean(error^2)
@@ -739,6 +746,7 @@ mse <- function(tag, score){
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
+#' @rdname error
 mape <- function(tag, score){ 
   error <- (tag - score) / tag
   error <- error[!is.infinite(error)]
@@ -756,6 +764,7 @@ mape <- function(tag, score){
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
+#' @rdname error
 rsq <- function(tag, score){ 
   fit <- lm(score ~ tag)
   signif(summary(fit)$r.squared, 4)
@@ -770,6 +779,7 @@ rsq <- function(tag, score){
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
+#' @rdname error
 rsqa <- function(tag, score){ 
   fit <- lm(score ~ tag)
   signif(summary(fit)$adj.r.squared, 4)
@@ -785,6 +795,10 @@ rsqa <- function(tag, score){
 #' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
+#' @examples 
+#' df <- data.frame(tag = c(0, 0, 0, 1, 1, 1),
+#'                  score = c(0.1, 0.2, -.1, 0.7, 0.9, 1))
+#' errors(df$tag, df$score)
 #' @export
 errors <- function(tag, score){ 
   data.frame(
@@ -1186,8 +1200,8 @@ ROC <- function(tag, score, multis = NA) {
 #' confusion matrix when binary.
 #' @param sense Character. Inequation sense for threshhold: <, <=, >=, >
 #' @param plot Boolean. Plot result?
-#' #' @examples 
-#' Binary example
+#' @examples 
+#' # Binary example
 #' binary <- data.frame(
 #'   tag = c("N","N","N","N","N","Y","Y","Y","N","Y"),
 #'   score = c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0))

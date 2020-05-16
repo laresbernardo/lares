@@ -15,6 +15,11 @@ errors(tag, score)
 This function lets the user calculate all errors and R squared 
 simultaneously.
 }
+\examples{
+df <- data.frame(tag = c(0, 0, 0, 1, 1, 1),
+                 score = c(0.1, 0.2, -.1, 0.7, 0.9, 1))
+errors(df$tag, df$score)
+}
 \seealso{
 Other Calculus: 
 \code{\link{ROC}()},
@@ -23,13 +28,8 @@ Other Calculus:
 \code{\link{deg2num}()},
 \code{\link{dist2d}()},
 \code{\link{loglossBinary}()},
-\code{\link{mae}()},
-\code{\link{mape}()},
 \code{\link{model_metrics}()},
-\code{\link{mse}()},
 \code{\link{quants}()},
-\code{\link{rmse}()},
-\code{\link{rsqa}()},
-\code{\link{rsq}()}
+\code{\link{rmse}()}
 }
 \concept{Calculus}

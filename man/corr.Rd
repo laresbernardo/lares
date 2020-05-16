@@ -62,14 +62,9 @@ Other Calculus:
 \code{\link{dist2d}()},
 \code{\link{errors}()},
 \code{\link{loglossBinary}()},
-\code{\link{mae}()},
-\code{\link{mape}()},
 \code{\link{model_metrics}()},
-\code{\link{mse}()},
 \code{\link{quants}()},
-\code{\link{rmse}()},
-\code{\link{rsqa}()},
-\code{\link{rsq}()}
+\code{\link{rmse}()}
 
 Other Correlations: 
 \code{\link{corr_cross}()},

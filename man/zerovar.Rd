@@ -13,6 +13,11 @@ zerovar(df)
 This function quickly detectes which columns have the same value
 for each observation
 }
+\examples{
+df <- data.frame(a = c(1, NA, 3), b = rep(NA, 3), c = rep(5, 3))
+print(df)
+zerovar(df)
+}
 \seealso{
 Other Tools: 
 \code{\link{autoline}()},

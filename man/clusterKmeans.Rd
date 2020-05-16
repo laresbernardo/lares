@@ -2,7 +2,7 @@
 % Please edit documentation in R/clusters.R
 \name{clusterKmeans}
 \alias{clusterKmeans}
-\title{K-Means Clustering + PCA Automated}
+\title{Automated K-Means Clustering + PCA}
 \usage{
 clusterKmeans(
   df,
@@ -48,18 +48,25 @@ Also, kmeans assumes spherical shapes of clusters and doesn’t work well
 when clusters are in different shapes such as elliptical clusters.
 }
 \examples{
-\dontrun{
+options("lares.font" = NA) # Temporal
 data(dft) # Titanic dataset
+df <- subset(dft, select = -c(Ticket, PassengerId))
+
+# Find optimal k
 check_k <- clusterKmeans(df)
 check_k$nclusters_plot
+
+# Run with selected k
 clusters <- clusterKmeans(df, k = 3)
 lapply(clusters, names)
+
 # Cross-Correlations for each cluster
 clusters$correlations
+
 # PCA Results
-lapply(clusters$PCA, names)
 clusters$PCA$plotVarExp
 clusters$PCA$plot_1_2
+\dontrun{
 clusters$PCA$plot_1_2_3
 }
 }

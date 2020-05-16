@@ -16,20 +16,21 @@ confusion matrix when binary.}
 
 \item{sense}{Character. Inequation sense for threshhold: <, <=, >=, >}
 
-\item{plot}{Boolean. Plot result?
-#' @examples 
-Binary example
-binary <- data.frame(
-  tag = c("N","N","N","N","N","Y","Y","Y","N","Y"),
-  score = c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0))
-conf_mat(tag = binary$tag, score = binary$score)
-conf_mat(tag = binary$tag, score = binary$score, sense = ">")
-conf_mat(tag = binary$tag, score = binary$score, thresh = 0.2)}
+\item{plot}{Boolean. Plot result?}
 }
 \description{
 This function calculates a Confussion Matrix using crosstab for
 2 or more categories. You can either set the score and threshold
 or the labels you wish to cross with.
+}
+\examples{
+# Binary example
+binary <- data.frame(
+  tag = c("N","N","N","N","N","Y","Y","Y","N","Y"),
+  score = c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0))
+conf_mat(tag = binary$tag, score = binary$score)
+conf_mat(tag = binary$tag, score = binary$score, sense = ">")
+conf_mat(tag = binary$tag, score = binary$score, thresh = 0.2)
 }
 \seealso{
 Other Machine Learning: 
@@ -69,14 +70,9 @@ Other Calculus:
 \code{\link{dist2d}()},
 \code{\link{errors}()},
 \code{\link{loglossBinary}()},
-\code{\link{mae}()},
-\code{\link{mape}()},
 \code{\link{model_metrics}()},
-\code{\link{mse}()},
 \code{\link{quants}()},
-\code{\link{rmse}()},
-\code{\link{rsqa}()},
-\code{\link{rsq}()}
+\code{\link{rmse}()}
 }
 \concept{Calculus}
 \concept{Machine Learning}

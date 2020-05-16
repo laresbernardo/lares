@@ -16,3 +16,9 @@ list_cats(df, ..., abc = TRUE)
 \description{
 Make a list with all categorical values and
 }
+\examples{
+data(dft) # Titanic dataset
+df <- dft[,1:5]
+head(df)
+list_cats(df)
+}
