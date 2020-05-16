@@ -10,21 +10,24 @@
 #' @param return Character. Return "skimr" for skim report, "numbers" for
 #' stats and numbers, "names" for a list with the column names of each of 
 #' the class types, "plot" for a nice plot with "numbers" output, "distr"
-#' for an overall summary plot showing categorical, numeric, and missing values
+#' for an overall summary plot showing categorical, numeric, and missing 
+#' values by using \code{plot_df}
 #' distributions
 #' @param subtitle Character. Add subtitle to plot
 #' @param quiet Boolean. Keep quiet or show other options available?
 #' @examples 
+#' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
+#' 
 #' # List with the names of the columns classified by class
 #' df_str(dft, "names")
+#' 
 #' # Dataframe with numbers: total values, row, columns, complete rows....
 #' df_str(dft, "numbers", quiet = TRUE)
-#' \dontrun{
+#' 
 #' # Now, some visualizations
-#' df_str(dft, "distr")
-#' df_str(dft, "plot")
-#' }
+#' df_str(dft, "plot", quiet = TRUE)
+#' df_str(dft, "distr", quiet = TRUE)
 #' @export
 df_str <- function(df, 
                    return = "plot", 
@@ -116,6 +119,10 @@ df_str <- function(df,
 #' 
 #' @family Exploratory
 #' @param df Dataframe
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dft) # Titanic dataset
+#' plot_nums(dft)
 #' @export
 plot_nums <- function(df) {
   set.seed(0)
@@ -149,6 +156,10 @@ plot_nums <- function(df) {
 #' 
 #' @family Exploratory
 #' @param df Dataframe
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dft) # Titanic dataset
+#' plot_cats(dft)
 #' @export
 plot_cats <- function(df) {
   plot <- df %>% select_if(Negate(is.numeric)) 
@@ -169,6 +180,10 @@ plot_cats <- function(df) {
 #' 
 #' @family Exploratory
 #' @param df Dataframe
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dft) # Titanic dataset
+#' plot_df(dft)
 #' @export
 plot_df <- function(df) {
   

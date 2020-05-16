@@ -694,11 +694,10 @@ iter_seeds <- function(df, tries = 10) {
 #' 
 #' This function lets the user calculate Root Mean Squared Error
 #' 
-#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
-#' @rdname error
+#' @rdname errors
 rmse <- function(tag, score){
   error <- tag - score
   sqrt(mean(error^2))
@@ -710,11 +709,10 @@ rmse <- function(tag, score){
 #' 
 #' This function lets the user calculate Mean Absolute Error
 #' 
-#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
-#' @rdname error
+#' @rdname errors
 mae <- function(tag, score){
   error <- tag - score
   mean(abs(error))
@@ -726,11 +724,10 @@ mae <- function(tag, score){
 #' 
 #' This function lets the user calculate Mean Squared Error
 #' 
-#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
-#' @rdname error
+#' @rdname errors
 mse <- function(tag, score){ 
   error <- tag - score
   mean(error^2)
@@ -742,11 +739,10 @@ mse <- function(tag, score){
 #' 
 #' This function lets the user calculate Mean Squared Error
 #' 
-#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
-#' @rdname error
+#' @rdname errors
 mape <- function(tag, score){ 
   error <- (tag - score) / tag
   error <- error[!is.infinite(error)]
@@ -758,13 +754,12 @@ mape <- function(tag, score){
 ####################################################################
 #' R Squared
 #' 
-#' This function lets the user calculate r squared
+#' This function lets the user calculate R Squared
 #' 
-#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
-#' @rdname error
+#' @rdname errors
 rsq <- function(tag, score){ 
   fit <- lm(score ~ tag)
   signif(summary(fit)$r.squared, 4)
@@ -773,13 +768,13 @@ rsq <- function(tag, score){
 ####################################################################
 #' Adjusted R Squared
 #' 
-#' This function lets the user calculate adjusted r squared
+#' This function lets the user calculate Adjusted R Squared
 #' 
 #' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
-#' @rdname error
+#' @rdname errors
 rsqa <- function(tag, score){ 
   fit <- lm(score ~ tag)
   signif(summary(fit)$adj.r.squared, 4)

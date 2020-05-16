@@ -58,15 +58,16 @@ check_k$nclusters_plot
 
 # Run with selected k
 clusters <- clusterKmeans(df, k = 3)
-lapply(clusters, names)
+names(clusters)
 
 # Cross-Correlations for each cluster
-clusters$correlations
+plot(clusters$correlations)
 
 # PCA Results
-clusters$PCA$plotVarExp
-clusters$PCA$plot_1_2
+plot(clusters$PCA$plotVarExp)
+plot(clusters$PCA$plot_1_2)
 \dontrun{
+# 3D interactive plot
 clusters$PCA$plot_1_2_3
 }
 }

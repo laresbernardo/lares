@@ -31,12 +31,12 @@ df <- data.frame(A = c(1:5),
 # Missing values summary
 missingness(df)
 
-\dontrun{
 # Visual results
+options("lares.font" = NA) # Temporal
 missingness(df, plot = TRUE)
+
 # Show all variables (including those with no missing values)
 missingness(df, plot = TRUE, full = TRUE)
-}
 }
 \seealso{
 Other Exploratory: 

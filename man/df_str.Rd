@@ -12,7 +12,8 @@ df_str(df, return = "plot", subtitle = NA, quiet = FALSE)
 \item{return}{Character. Return "skimr" for skim report, "numbers" for
 stats and numbers, "names" for a list with the column names of each of 
 the class types, "plot" for a nice plot with "numbers" output, "distr"
-for an overall summary plot showing categorical, numeric, and missing values
+for an overall summary plot showing categorical, numeric, and missing 
+values by using \code{plot_df}
 distributions}
 
 \item{subtitle}{Character. Add subtitle to plot}
@@ -25,16 +26,18 @@ dataset (data.frame). It returns multiple counters for useful metrics,
 a plot, and a list of column names for each of the column metrics.
 }
 \examples{
+options("lares.font" = NA) # Temporal
 data(dft) # Titanic dataset
+
 # List with the names of the columns classified by class
 df_str(dft, "names")
+
 # Dataframe with numbers: total values, row, columns, complete rows....
 df_str(dft, "numbers", quiet = TRUE)
-\dontrun{
+
 # Now, some visualizations
-df_str(dft, "distr")
-df_str(dft, "plot")
-}
+df_str(dft, "plot", quiet = TRUE)
+df_str(dft, "distr", quiet = TRUE)
 }
 \seealso{
 Other Exploratory: 

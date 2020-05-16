@@ -12,6 +12,11 @@ plot_nums(df)
 \description{
 This function filters numerical columns and plots boxplots.
 }
+\examples{
+options("lares.font" = NA) # Temporal
+data(dft) # Titanic dataset
+plot_nums(dft)
+}
 \seealso{
 Other Exploratory: 
 \code{\link{corr_cross}()},

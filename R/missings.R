@@ -20,12 +20,12 @@
 #' # Missing values summary
 #' missingness(df)
 #' 
-#' \dontrun{
 #' # Visual results
+#' options("lares.font" = NA) # Temporal
 #' missingness(df, plot = TRUE)
+#' 
 #' # Show all variables (including those with no missing values)
 #' missingness(df, plot = TRUE, full = TRUE)
-#' }
 #' @export
 missingness <- function(df, plot = FALSE, full = FALSE, 
                         subtitle = NA, summary = TRUE) {

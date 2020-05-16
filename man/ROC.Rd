@@ -65,7 +65,6 @@ Other Calculus:
 \code{\link{corr}()},
 \code{\link{deg2num}()},
 \code{\link{dist2d}()},
-\code{\link{errors}()},
 \code{\link{loglossBinary}()},
 \code{\link{model_metrics}()},
 \code{\link{quants}()},
