@@ -7,12 +7,17 @@
 get_credentials(from = NA, dir = NA, filename = "config.yml")
 }
 \arguments{
-\item{from}{Character. Which account do we need to import? If
-used for personal use, you might use any of aux1:aux10 slacks}
+\item{from}{Character. Family of values to import from the YML file.
+If you don't know these names, you can run 
+\code{get_credentials(dir = "yourdir")} and a warning will display these values.}
 
-\item{dir}{Character. Credentials directory where your YML file is}
+\item{dir}{Character. Credentials directory where your YML file is.
+If used with frequency, set your directory with 
+\code{Sys.setenv(LARES_CREDS = "/your/creds/dir")} once and leave `dir` 
+as `NA` to fetch this directory automatically. Remember to reset your
+session the first time you set this parameter for it to work.}
 
-\item{filename}{Character. YML with credentials}
+\item{filename}{Character. YML filename with your credentials.}
 }
 \description{
 This function lets the user load parameters and credentials
@@ -47,6 +52,7 @@ Other Tools:
 \code{\link{read.file}()},
 \code{\link{slackSend}()},
 \code{\link{statusbar}()},
+\code{\link{tic}()},
 \code{\link{try_require}()},
 \code{\link{updateLares}()},
 \code{\link{zerovar}()}

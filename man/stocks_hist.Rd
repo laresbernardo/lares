@@ -33,6 +33,12 @@ case, taxes changed from A to B in given date (hardcoded)}
 \description{
 This function lets the user download stocks historical data
 }
+\examples{
+\dontrun{
+df <- stocks_hist(symbols = c("VTI", "FB"), from = Sys.Date() - 7)
+head(df)
+}
+}
 \seealso{
 Other Investment: 
 \code{\link{daily_portfolio}()},

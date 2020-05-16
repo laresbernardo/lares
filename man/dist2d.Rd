@@ -29,9 +29,9 @@ Other Calculus:
 \code{\link{conf_mat}()},
 \code{\link{corr}()},
 \code{\link{deg2num}()},
+\code{\link{errors}()},
 \code{\link{loglossBinary}()},
 \code{\link{model_metrics}()},
-\code{\link{quants}()},
-\code{\link{rmse}()}
+\code{\link{quants}()}
 }
 \concept{Calculus}

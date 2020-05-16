@@ -43,12 +43,15 @@ This function lets the user analize data by visualizing the
 frequency of each value of each column from a whole data frame.
 }
 \examples{
-\dontrun{
+options("lares.font" = NA) # Temporal
 data(dft) # Titanic dataset
 freqs_df(dft)
 }
-}
 \seealso{
+Other Frequency: 
+\code{\link{freqs_plot}()},
+\code{\link{freqs}()}
+
 Other Exploratory: 
 \code{\link{corr_cross}()},
 \code{\link{corr_var}()},
@@ -91,4 +94,5 @@ Other Visualization:
 \code{\link{tree_var}()}
 }
 \concept{Exploratory}
+\concept{Frequency}
 \concept{Visualization}

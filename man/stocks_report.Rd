@@ -34,6 +34,12 @@ sending mail and Dropbox interaction}
 This function lets the user create his portfolio's full report with 
 plots and send it to an email with the HTML report attached
 }
+\examples{
+\dontrun{
+list <- stocks_obj()
+stocks_report(list, dir = "~/Desktop")
+}
+}
 \seealso{
 Other Investment: 
 \code{\link{daily_portfolio}()},

@@ -45,6 +45,7 @@ Other Tools:
 \code{\link{read.file}()},
 \code{\link{slackSend}()},
 \code{\link{statusbar}()},
+\code{\link{tic}()},
 \code{\link{try_require}()},
 \code{\link{updateLares}()},
 \code{\link{zerovar}()}

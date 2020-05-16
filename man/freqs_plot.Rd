@@ -2,7 +2,7 @@
 % Please edit documentation in R/frequencies.R
 \name{freqs_plot}
 \alias{freqs_plot}
-\title{Frequencies Plot for Multiple Categories}
+\title{Combinated Frequencies Plot for Categoral Features}
 \usage{
 freqs_plot(
   df,
@@ -33,18 +33,26 @@ numerical output; use na.omit() or filter() if needed)}
 }
 \description{
 Plot frequencies of multiple categories within a data.frame in 
-a new fancy way. Tidyverse friendly, based on lares::freqs().
+a new fancy way. Tidyverse friendly, based on lares::freqs(),
+no limits on amount of features to evaluate.
 }
 \examples{
-\dontrun{
-freqs_plot(dft, Pclass)
-freqs_plot(dft, Pclass, Survived)
-freqs_plot(dft, Pclass, Survived, Sex)
+options("lares.font" = NA) # Temporal
+data(dft) # Titanic dataset
+
+df <- freqs_plot(dft, Pclass, Survived)
+head(df$data)
+plot(df)
+
 freqs_plot(dft, Pclass, Survived, Sex, Embarked)
+
 freqs_plot(dft, Pclass, Survived, Sex, Embarked, top = 15)
 }
-}
 \seealso{
+Other Frequency: 
+\code{\link{freqs_df}()},
+\code{\link{freqs}()}
+
 Other Exploratory: 
 \code{\link{corr_cross}()},
 \code{\link{corr_var}()},
@@ -87,4 +95,5 @@ Other Visualization:
 \code{\link{tree_var}()}
 }
 \concept{Exploratory}
+\concept{Frequency}
 \concept{Visualization}

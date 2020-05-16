@@ -13,12 +13,8 @@ stocks_quote(ticks)
 This function lets the user download stocks historical data
 }
 \examples{
-\dontrun{
-# One quote
-one <- stocks_quote("VTI")
-# Multiple quotes
-mult <- stocks_quote(c("VTI","VOO","TSLA"))
-}
+# Multiple quotes at the same time
+stocks_quote(c("VTI","VOO","TSLA"))
 }
 \seealso{
 Other Investment: 

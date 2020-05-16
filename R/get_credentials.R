@@ -4,57 +4,40 @@
 #' This function lets the user load parameters and credentials
 #' 
 #' @family Tools
-#' @param from Character. Which account do we need to import? If
-#' used for personal use, you might use any of aux1:aux10 slacks
-#' @param dir Character. Credentials directory where your YML file is
-#' @param filename Character. YML with credentials
+#' @param from Character. Family of values to import from the YML file.
+#' If you don't know these names, you can run 
+#' \code{get_credentials(dir = "yourdir")} and a warning will display these values.
+#' @param dir Character. Credentials directory where your YML file is.
+#' If used with frequency, set your directory with 
+#' \code{Sys.setenv(LARES_CREDS = "/your/creds/dir")} once and leave `dir` 
+#' as `NA` to fetch this directory automatically. Remember to reset your
+#' session the first time you set this parameter for it to work.
+#' @param filename Character. YML filename with your credentials.
 #' @export
 get_credentials <- function(from = NA, dir = NA, filename = "config.yml") {
   
-  # require(config)
-  
-  froms <- c("dummy",
-             "production",
-             "warehouse",
-             "dummy_cm",
-             "production_cm",
-             "warehouse_cm",
-             "sendgrid",
-             "mailgun",
-             "redshift",
-             "hubspot",
-             "github",
-             "bitbucket",
-             "typeform",
-             "google_api",
-             "google_analytics_somosf1",
-             "google_analytics_comparamejor",
-             "twitter",
-             "other",
-             paste0("aux", 1:10))
-
-  if (is.na(dir)) { dir <- "~/Dropbox (Personal)/Documentos/Docs/Data" }
-  if (dir == "personal") { dir <- "~/Dropbox (Personal)/Documentos/Docs/Data" }
-  if (dir == "juan") { dir <- "~/Documents/somosf1/analitica" }
-  if (dir == "matrix") { dir <- "/srv/creds" }
-  if (dir == "alex") { dir <- "/Users/alexswift/Documents" }
-  if (dir == "fer") { dir <- "/Users/fernandosucre/Documents" }
-
-  file <- paste0(dir,"/",filename)
-
-  # Check if the credential type asked exists
-  if (from %in% froms) {
-    # Check if the cretendials .yml file exists
-    if (!file.exists(file)) {
-      message("Please, try again by defining where your YML file with the credentials is!")
-    } else {
-      wd <- getwd()
-      setwd(dir)
-      credentials <- config::get(from)
-      setwd(wd)
-      return(credentials)
+  if (is.na(dir)) { 
+    dir <- Sys.getenv("LARES_CREDS")
+    if (dir == "") {
+      stop(paste('Please, set your creds directory once with:',
+                 'Sys.setenv(LARES_CREDS = "/your/creds/dir")',
+                 'After doing so, reset your session for it to work...', sep = "\n"))
     }
+  }
+  
+  file <- paste0(dir,"/",filename)
+  if (!file.exists(file)) {
+    message(sprintf("YML file with credentials not found in %s", dir))
   } else {
-    message(paste("Not a valid 'from' value. Try any of the following:\n", vector2text(froms)))
+    wd <- getwd()
+    setwd(dir)
+    credentials <- config::get(from)
+    if (is.null(credentials)) {
+      trues <- names(config::get())
+      warning(paste("No credentials for", from, "found in your YML file.",
+                    "\nTry any of the following:", v2t(trues)))
+    }
+    setwd(wd)
+    return(credentials)
   }
 }

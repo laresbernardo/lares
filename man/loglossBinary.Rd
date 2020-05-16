@@ -25,8 +25,8 @@ Other Calculus:
 \code{\link{corr}()},
 \code{\link{deg2num}()},
 \code{\link{dist2d}()},
+\code{\link{errors}()},
 \code{\link{model_metrics}()},
-\code{\link{quants}()},
-\code{\link{rmse}()}
+\code{\link{quants}()}
 }
 \concept{Calculus}

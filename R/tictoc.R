@@ -17,6 +17,7 @@ set.tictoc <- function(which, id) {
 #' Start a stopwatch.
 #' 
 #' @family Time
+#' @family Tools
 #' @param id Define ID if multiple tic() & toc() are being used
 #' @param quiet Boolean. Quiet messages?
 #' @examples 
@@ -48,7 +49,6 @@ tic <- function(id = 1, quiet = TRUE) {
 #' 
 #' Stop a stopwatch.
 #' 
-#' @family Time
 #' @param id Define ID if multiple tic() & toc() are being used
 #' @param msg Character. Custom message shown
 #' @param units Boolean. Do you want nice format for the time units? 
@@ -89,7 +89,6 @@ toc <- function(id = 1, msg = "Elapsed time:", units = TRUE, signif = 3, quiet =
 #' 
 #' Reset all tic and toc values in your environment.
 #' 
-#' @family Time
 #' @param which Character. Select: both, tic, toc
 #' @export
 #' @rdname tic

@@ -11,7 +11,8 @@
 #' @param xlsx Boolean. Is it an Excel file? Can be returned as a list
 #' for each tab and not as a file if needed
 #' @param newname Character. Name for new file
-#' @param token_dir Character. RDS with token local directory
+#' @param token_dir Character. RDS with token local directory. You may set to
+#' NA if you already set your credentials as mentioned in `get_credentials()`
 #' @param token_name Character. RDS file name with your token's data
 #' @export
 db_download <- function(filename, 
@@ -21,15 +22,13 @@ db_download <- function(filename,
                         token_name = "token_pers.rds"){
   
   try_require("rdrop2")
+  
   if (is.na(token_dir)) {
-    load(paste0("~/Dropbox (Personal)/Documentos/Docs/Data/", token_name))
+    load(paste0(Sys.getenv("LARES_CREDS"), "/", token_name))
   } else {
-    if (dir.exists(token_dir)) {
-      if (token_dir == "matrix") {
-        load("~/creds/token_pers.rds") 
-      } else {
-        load(paste0(token_dir,"/", token_name))
-      }
+    token_file <- paste0(token_dir,"/", token_name)
+    if (file.exists(token_dir)) {
+      load(token_file)
     } else {
       token <- drop_auth() 
     }
@@ -48,7 +47,8 @@ db_download <- function(filename,
     invisible(file.remove(newname))
     return(results)
   } else {
-    return(message("File downloaded succesfully"))
+    message("File downloaded succesfully")
+    return(invisible(NULL))
   }
 }
 
@@ -71,15 +71,13 @@ db_upload <- function(filename, dir, delete_file = FALSE, token_dir = NA,
                       token_name = "token_pers.rds") {
   
   try_require("rdrop2")
+  
   if (is.na(token_dir)) {
-    load(paste0("~/Dropbox (Personal)/Documentos/Docs/Data/", token_name))
+    load(paste0(Sys.getenv("LARES_CREDS"), "/", token_name))
   } else {
-    if (dir.exists(token_dir)) {
-      if (token_dir == "matrix") {
-        load("~/creds/token_pers.rds") 
-      } else {
-        load(paste0(token_dir,"/", token_name))
-      }
+    token_file <- paste0(token_dir,"/", token_name)
+    if (file.exists(token_dir)) {
+      load(token_file)
     } else {
       token <- drop_auth() 
     }
@@ -87,7 +85,7 @@ db_upload <- function(filename, dir, delete_file = FALSE, token_dir = NA,
   
   invisible(drop_upload(filename, path = dir, dtoken = token))
   
-  if (delete_file == TRUE) {
+  if (delete_file)
     file.remove(filename)
-  }
+  
 }

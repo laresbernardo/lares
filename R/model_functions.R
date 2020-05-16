@@ -690,6 +690,31 @@ iter_seeds <- function(df, tries = 10) {
 }
 
 ####################################################################
+#' Calculate Continuous Values Errors
+#' 
+#' This function lets the user calculate all errors and R squared 
+#' simultaneously.
+#' 
+#' @family Calculus
+#' @param tag Vector. Real known label
+#' @param score Vector. Predicted value or model's result
+#' @examples 
+#' df <- data.frame(tag = c(0, 0, 0, 1, 1, 1),
+#'                  score = c(0.1, 0.2, -.1, 0.7, 0.9, 1))
+#' errors(df$tag, df$score)
+#' @export
+errors <- function(tag, score){ 
+  data.frame(
+    rmse = rmse(tag, score),
+    mae = mae(tag, score),
+    mape = mape(tag, score),
+    mse = mse(tag, score),
+    rsq = rsq(tag, score),
+    rsqa = rsqa(tag, score)
+  )
+}
+
+####################################################################
 #' Root Mean Squared Error (RMSE)
 #' 
 #' This function lets the user calculate Root Mean Squared Error
@@ -770,7 +795,6 @@ rsq <- function(tag, score){
 #' 
 #' This function lets the user calculate Adjusted R Squared
 #' 
-#' @family Calculus
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @export
@@ -778,32 +802,6 @@ rsq <- function(tag, score){
 rsqa <- function(tag, score){ 
   fit <- lm(score ~ tag)
   signif(summary(fit)$adj.r.squared, 4)
-}
-
-
-####################################################################
-#' Calculate Errors
-#' 
-#' This function lets the user calculate all errors and R squared 
-#' simultaneously.
-#' 
-#' @family Calculus
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
-#' @examples 
-#' df <- data.frame(tag = c(0, 0, 0, 1, 1, 1),
-#'                  score = c(0.1, 0.2, -.1, 0.7, 0.9, 1))
-#' errors(df$tag, df$score)
-#' @export
-errors <- function(tag, score){ 
-  data.frame(
-    rmse = rmse(tag, score),
-    mae = mae(tag, score),
-    mape = mape(tag, score),
-    mse = mse(tag, score),
-    rsq = rsq(tag, score),
-    rsqa = rsqa(tag, score)
-  )
 }
 
 

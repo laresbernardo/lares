@@ -95,6 +95,10 @@ dft \%>\% freqs(Survived, Ticket, plot = TRUE)
 dft \%>\% freqs(Ticket, plot = TRUE, top = 10, abc = TRUE)
 }
 \seealso{
+Other Frequency: 
+\code{\link{freqs_df}()},
+\code{\link{freqs_plot}()}
+
 Other Exploratory: 
 \code{\link{corr_cross}()},
 \code{\link{corr_var}()},
@@ -137,4 +141,5 @@ Other Visualization:
 \code{\link{tree_var}()}
 }
 \concept{Exploratory}
+\concept{Frequency}
 \concept{Visualization}

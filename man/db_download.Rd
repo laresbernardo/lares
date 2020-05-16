@@ -20,7 +20,8 @@ for each tab and not as a file if needed}
 
 \item{newname}{Character. Name for new file}
 
-\item{token_dir}{Character. RDS with token local directory}
+\item{token_dir}{Character. RDS with token local directory. You may set to
+NA if you already set your credentials as mentioned in `get_credentials()`}
 
 \item{token_name}{Character. RDS file name with your token's data}
 }
@@ -58,6 +59,7 @@ Other Tools:
 \code{\link{read.file}()},
 \code{\link{slackSend}()},
 \code{\link{statusbar}()},
+\code{\link{tic}()},
 \code{\link{try_require}()},
 \code{\link{updateLares}()},
 \code{\link{zerovar}()}

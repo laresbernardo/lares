@@ -1310,6 +1310,8 @@ num_abbr <- function(x, n = 3) {
 #' check_opts(inputs = c("A","X"), options, type = "any")
 #' check_opts(inputs = c("X"), options, type = "any", not = "message")
 #' check_opts(inputs = c("A", NA), options, type = "any")
+#' # Final trick: just ignore results
+#' check_opts(inputs = "X", options, not = "invisible")
 #' @export
 check_opts <- function(inputs, options, 
                        type = "all", not = "stop", 

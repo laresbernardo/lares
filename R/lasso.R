@@ -1,10 +1,10 @@
 ####################################################################
-#' Find Most Relevant Features Using Lasso Regression
+#' Most Relevant Features Using Lasso Regression
 #' 
 #' Use Lasso regression to identify the most relevant variables that 
 #' can predict/identify another variable. You might want to compare 
-#' with corr_var() results for further understanding. No need to
-#' standardize your data.
+#' with corr_var() results to compliment the analysis No need to
+#' standardize, center or scale your data.
 #' 
 #' @family Machine Learning
 #' @param df Dataframe

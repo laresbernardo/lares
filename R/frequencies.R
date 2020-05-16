@@ -4,6 +4,7 @@
 #' This function lets the user group, count, calculate percentages 
 #' and cumulatives. It also plots results if needed. Tidyverse friendly.
 #' 
+#' @family Frequency
 #' @family Exploratory
 #' @family Visualization
 #' @param df Data.frame
@@ -242,6 +243,7 @@ freqs <- function(df, ..., wt = NULL,
 #' This function lets the user analize data by visualizing the
 #' frequency of each value of each column from a whole data frame.
 #' 
+#' @family Frequency
 #' @family Exploratory
 #' @family Visualization
 #' @param df Data.frame
@@ -257,10 +259,9 @@ freqs <- function(df, ..., wt = NULL,
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
 #' @examples 
-#' \dontrun{
+#' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
 #' freqs_df(dft)
-#' }
 #' @export
 freqs_df <- function(df, 
                      max = 0.9, min = 0.0, novar = TRUE,
@@ -363,11 +364,13 @@ freqs_df <- function(df,
 
 
 ####################################################################
-#' Frequencies Plot for Multiple Categories
+#' Combinated Frequencies Plot for Categoral Features
 #' 
 #' Plot frequencies of multiple categories within a data.frame in 
-#' a new fancy way. Tidyverse friendly, based on lares::freqs().
+#' a new fancy way. Tidyverse friendly, based on lares::freqs(),
+#' no limits on amount of features to evaluate.
 #' 
+#' @family Frequency
 #' @family Exploratory
 #' @family Visualization
 #' @param df Data.frame
@@ -380,13 +383,16 @@ freqs_df <- function(df,
 #' @param title Character. Overwrite plot's title with.
 #' @param subtitle Character. Overwrite plot's subtitle with.
 #' @examples 
-#' \dontrun{
-#' freqs_plot(dft, Pclass)
-#' freqs_plot(dft, Pclass, Survived)
-#' freqs_plot(dft, Pclass, Survived, Sex)
+#' options("lares.font" = NA) # Temporal
+#' data(dft) # Titanic dataset
+#' 
+#' df <- freqs_plot(dft, Pclass, Survived)
+#' head(df$data)
+#' plot(df)
+#' 
 #' freqs_plot(dft, Pclass, Survived, Sex, Embarked)
+#' 
 #' freqs_plot(dft, Pclass, Survived, Sex, Embarked, top = 15)
-#' }
 #' @export
 freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
                        title = NA, subtitle = NA) {
@@ -416,7 +422,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
   
   labels <- aux %>% 
     mutate_all(as.character) %>% 
-    tidyr::pivot_longer(colnames(aux)[1:(ncol(aux)-4)]) %>%
+    tidyr::pivot_longer(colnames(aux)[1:(ncol(aux) - 4)]) %>%
     mutate(label = sprintf("%s: %s", .data$name, .data$value)) %>%
     mutate(n = as.integer(.data$n), 
            pcum = as.numeric(.data$pcum),

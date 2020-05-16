@@ -2,7 +2,7 @@
 % Please edit documentation in R/lasso.R
 \name{lasso_vars}
 \alias{lasso_vars}
-\title{Find Most Relevant Features Using Lasso Regression}
+\title{Most Relevant Features Using Lasso Regression}
 \usage{
 lasso_vars(
   df,
@@ -32,12 +32,13 @@ lasso_vars(
 \description{
 Use Lasso regression to identify the most relevant variables that 
 can predict/identify another variable. You might want to compare 
-with corr_var() results for further understanding. No need to
-standardize your data.
+with corr_var() results to compliment the analysis No need to
+standardize, center or scale your data.
 }
 \examples{
 options("lares.font" = NA) # Temporal
 data(dft) # Titanic dataset
+
 m <- lasso_vars(dft, Survived, ignore = c("Ticket", "Cabin"))
 print(m$coef)
 print(m$metrics)

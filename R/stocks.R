@@ -12,16 +12,15 @@
 #' Cash, and Transactions information
 #' @param keep_old Boolean. Include sold tickers eventhough not currently in portfolio?
 #' @examples 
-#' \dontrun{
 #' # Load lares dummy XLSX
 #' file <- system.file("inst/docs", "dummyPortfolio.xlsx", package = "lares")
+#' 
 #' df <- stocks_file(filename = file, 
 #'                   sheets = c("Portafolio","Fondos","Transacciones"), 
 #'                   keep_old = FALSE)
+#'                   
 #' # This will create a list with the following 3 dataframes:
 #' names(df)
-#' "portfolio" "transactions" "cash" 
-#' }
 #' @export
 stocks_file <- function(filename = NA, 
                         creds = NA, 
@@ -44,7 +43,7 @@ stocks_file <- function(filename = NA,
   local <- Sys.info()
   if (local[["nodename"]] == "MacBook-Pro-de-Bernardo.local" & auto) {
     message("Using BL's local file...")
-    local <- "~/Dropbox (Personal)/Documentos/Interactive Brokers/Portfolio/Portfolio LC.xlsx"
+    local <- Sys.getenv("LARES_PORTFOLIO")
     results <- processFile(local, keep_old) 
   } else {
     # FOR EVERYONE'S USE
@@ -80,12 +79,8 @@ stocks_file <- function(filename = NA,
 #' @family Investment
 #' @param ticks Character Vector. Symbols/Tickers to quote in real time
 #' @examples 
-#' \dontrun{
-#' # One quote
-#' one <- stocks_quote("VTI")
-#' # Multiple quotes
-#' mult <- stocks_quote(c("VTI","VOO","TSLA"))
-#' }
+#' # Multiple quotes at the same time
+#' stocks_quote(c("VTI","VOO","TSLA"))
 #' @export
 stocks_quote <- function(ticks) {
   ret <- noret <- c()
@@ -128,6 +123,18 @@ stocks_quote <- function(ticks) {
 #' @param parg Boolean. Personal argument. Used to personalize stuff, in this
 #' case, taxes changed from A to B in given date (hardcoded)
 #' @param verbose Boolean. Print results and progress while downloading?
+#' @examples 
+#' \dontrun{
+#' df <- stocks_hist(symbols = c("VTI", "FB"), from = Sys.Date() - 7)
+#' head(df)
+#          Date Symbol  Value
+# 1  2020-05-15    VTI 143.83
+# 2  2020-05-15     FB 210.88
+# 3  2020-05-14    VTI 143.03
+# 4  2020-05-14     FB 206.87
+# 5  2020-05-13    VTI 142.88
+# 6  2020-05-13     FB 207.94
+#' }
 #' @export
 stocks_hist <- function(symbols = c("VTI", "TSLA"), 
                         from = Sys.Date() - 365, 
@@ -836,6 +843,11 @@ stocks_obj <- function(data = stocks_file(),
 #' @param sectors Boolean. Return sectors segmentation for ETFs?
 #' @param creds Character. Credential's user (see get_credentials) for 
 #' sending mail and Dropbox interaction
+#' @examples
+#' \dontrun{
+#' list <- stocks_obj()
+#' stocks_report(list, dir = "~/Desktop")
+#' }
 #' @export
 stocks_report <- function(data = NA,
                           dir = NA,
