@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get Tweets — get_tweets • lares</title>
+<title>PostgreSQL Queries on Database (Read) — queryDB • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Get Tweets — get_tweets" />
-<meta property="og:description" content="This function downloads tweets with personal credentials" />
+<meta property="og:title" content="PostgreSQL Queries on Database (Read) — queryDB" />
+<meta property="og:description" content="This function lets the user query a PostgreSQL database. Previously
+was called `queryDummy()` but was replaced and deprecated for a 
+more general function by using the `from` parameter." />
 
 
 
@@ -108,31 +110,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get Tweets</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/twitter.R'><code>R/twitter.R</code></a></small>
-    <div class="hidden name"><code>get_tweets.Rd</code></div>
+    <h1>PostgreSQL Queries on Database (Read)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/querieSQL.R'><code>R/querieSQL.R</code></a></small>
+    <div class="hidden name"><code>queryDB.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function downloads tweets with personal credentials</p>
+    <p>This function lets the user query a PostgreSQL database. Previously
+was called `queryDummy()` but was replaced and deprecated for a 
+more general function by using the `from` parameter.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_tweets</span>(<span class='no'>q</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>creds</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
+    <pre class="usage"><span class='fu'>queryDB</span>(<span class='no'>query</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='st'>"dummy"</span>, <span class='kw'>creds</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>q</th>
-      <td><p>Query. Check for ?rtweet::search_tweets()</p></td>
+      <th>query</th>
+      <td><p>Character. SQL Query</p></td>
     </tr>
     <tr>
-      <th>n</th>
-      <td><p>Integer. Total of tweets to return</p></td>
+      <th>from</th>
+      <td><p>Character. Credential's user (see `get_credentials`)</p></td>
     </tr>
     <tr>
       <th>creds</th>
-      <td><p>Character. Credential's user (see `get_credentials`)</p></td>
+      <td><p>Character. Credential's directory (see `get_credentials`)</p></td>
     </tr>
     </table>
 
@@ -143,8 +147,8 @@
 <code><a href='f1_contacts.html'>f1_contacts</a>()</code>,
 <code><a href='geoAddress.html'>geoAddress</a>()</code>,
 <code><a href='get_credentials.html'>get_credentials</a>()</code>,
+<code><a href='get_tweets.html'>get_tweets</a>()</code>,
 <code><a href='mailSend.html'>mailSend</a>()</code>,
-<code><a href='queryDB.html'>queryDB</a>()</code>,
 <code><a href='queryGA.html'>queryGA</a>()</code>,
 <code><a href='stocks_report.html'>stocks_report</a>()</code></p></div>
 
