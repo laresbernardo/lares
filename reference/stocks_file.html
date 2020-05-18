@@ -136,7 +136,7 @@ Portfolio's data, locally or from Dropbox.</p>
     </tr>
     <tr>
       <th>creds</th>
-      <td><p>Character. Dropbox's credentials (see <code>get_creds</code>)</p></td>
+      <td><p>Character. Dropbox's credentials (see <code><a href='get_credentials.html'>get_creds()</a></code>)</p></td>
     </tr>
     <tr>
       <th>auto</th>
@@ -178,13 +178,13 @@ Cash, and Transactions information</p></td>
 <code><a href='mailSend.html'>mailSend</a>()</code>,
 <code><a href='queryDB.html'>queryDB</a>()</code>,
 <code><a href='queryGA.html'>queryGA</a>()</code>,
+<code><a href='slackSend.html'>slackSend</a>()</code>,
 <code><a href='stocks_report.html'>stocks_report</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># Load lares dummy XLSX</span>
+<span class='co'># Load lares dummy portfolio XLSX</span>
 <span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"inst/docs"</span>, <span class='st'>"dummyPortfolio.xlsx"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"lares"</span>)
-
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>stocks_file</span>(<span class='kw'>filename</span> <span class='kw'>=</span> <span class='no'>file</span>,
                   <span class='kw'>sheets</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Portafolio"</span>,<span class='st'>"Fondos"</span>,<span class='st'>"Transacciones"</span>),
                   <span class='kw'>keep_old</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)

@@ -185,18 +185,6 @@ process categorical values, and values will be standardize automatically.</p></t
 <code><a href='impute.html'>impute</a>()</code>,
 <code><a href='iter_seeds.html'>iter_seeds</a>()</code>,
 <code><a href='model_metrics.html'>model_metrics</a>()</code>,
-<code><a href='mplot_conf.html'>mplot_conf</a>()</code>,
-<code><a href='mplot_cuts_error.html'>mplot_cuts_error</a>()</code>,
-<code><a href='mplot_cuts.html'>mplot_cuts</a>()</code>,
-<code><a href='mplot_density.html'>mplot_density</a>()</code>,
-<code><a href='mplot_full.html'>mplot_full</a>()</code>,
-<code><a href='mplot_gain.html'>mplot_gain</a>()</code>,
-<code><a href='mplot_importance.html'>mplot_importance</a>()</code>,
-<code><a href='mplot_lineal.html'>mplot_lineal</a>()</code>,
-<code><a href='mplot_metrics.html'>mplot_metrics</a>()</code>,
-<code><a href='mplot_response.html'>mplot_response</a>()</code>,
-<code><a href='mplot_roc.html'>mplot_roc</a>()</code>,
-<code><a href='mplot_splits.html'>mplot_splits</a>()</code>,
 <code><a href='msplit.html'>msplit</a>()</code></p>
 <p>Other Exploratory: 
 <code><a href='corr_cross.html'>corr_cross</a>()</code>,
@@ -220,7 +208,7 @@ process categorical values, and values will be standardize automatically.</p></t
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> <span class='kw'>=</span> <span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
 
-<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'>lasso_vars</span>(<span class='no'>dft</span>, <span class='no'>Survived</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Cabin"</span>))</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Omitting transformations for 'Cabin', 'Survived'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 4 variables: 'Pclass', 'Ticket', 'Embarked', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Searching for optimal lambda with CV...</span></div><div class='output co'>#&gt; <span class='message'>Found best lambda: 0.0063914</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Fetching most relevant variables...</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots for Survived...</span></div><div class='output co'>#&gt; <span class='message'>Elapsed time: 10.2s</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>m</span>$<span class='no'>coef</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 22 x 3</span><span>
+<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'>lasso_vars</span>(<span class='no'>dft</span>, <span class='no'>Survived</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Cabin"</span>))</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Omitting transformations for 'Cabin', 'Survived'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 4 variables: 'Pclass', 'Ticket', 'Embarked', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Searching for optimal lambda with CV...</span></div><div class='output co'>#&gt; <span class='message'>Found best lambda: 0.0063914</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Fetching most relevant variables...</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots for Survived...</span></div><div class='output co'>#&gt; <span class='message'>Elapsed time: 19.3s</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>m</span>$<span class='no'>coef</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 22 x 3</span><span>
 #&gt;    names         coefficients standardized_coefficients
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>                     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> Sex_male          -</span><span style='color: #BB0000;'>0.493</span><span>                     -</span><span style='color: #BB0000;'>0.236</span><span> 
