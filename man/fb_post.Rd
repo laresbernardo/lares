@@ -38,7 +38,8 @@ Other API:
 \code{\link{fb_posts}()},
 \code{\link{li_auth}()},
 \code{\link{li_profile}()},
-\code{\link{queryGA}()}
+\code{\link{queryGA}()},
+\code{\link{slackSend}()}
 
 Other Facebook: 
 \code{\link{fb_accounts}()},

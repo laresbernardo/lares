@@ -10,7 +10,7 @@
 #' #' do you wish to use?
 #' #' @param form Character. Define which form you wish to import. Should
 #' #' be the same as the form's name at the online platform
-#' #' @param creds Character. Credential's user (see `get_credentials`)
+#' #' @param creds Character. Credential's user (see \code{get_creds})
 #' #' @export
 #' typeform_download <- function(account = "tabunga", form, creds = NA) {
 #'   

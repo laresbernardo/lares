@@ -10,7 +10,7 @@
 #' @family Hubspot
 #' @param limit Integer. Limit the amount of contacts to return. 
 #' Multiples of 100 or round up will occur.
-#' @param creds Character. Credential's user (see `get_credentials`)
+#' @param creds Character. Credential's user (see \code{get_creds})
 #' @export
 f1_contacts <- function(limit = 1000, creds = NA) {
   

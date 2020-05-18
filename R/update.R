@@ -24,27 +24,26 @@ updateLares <- function(local = FALSE, force = FALSE, n = TRUE, fb = FALSE, all 
       try_require("fbr", stop = TRUE)
       n <- FALSE
       # Personal access token
-      # aux <- lares::get_credentials("github")$laresfb
-      aux <- paste0("b7b59665f63ad91b6c577", "17c3148c63d12db63f5")
+      aux <- get_credentials("github")$fb
       with_proxy(install_github(
         "laresbernardo/laresfb", force = force, auth_token = aux))
     } else install_github("laresbernardo/lares", force = force) 
   }
 
   if (n) {
-    aux <- paste("User:", Sys.info()[["user"]])
-    slackSend(aux, title = "New lares update", quiet = TRUE)
+    aux <- paste("User updated:", Sys.info()[["user"]])
+    slackSend(aux, title = "New lares update")
   }
   
   if (all) install_recommended()
   
-  toc(id = "updateLares", msg = paste(Sys.time(), "|"))  
-  
   if ("lares" %in% names(utils::sessionInfo()$otherPkgs)) { 
-    message("Reloading library... ready to use!")
+    message("Reloading library...")
     detach(package:lares, unload = TRUE)
     library(lares)
   }
+  
+  toc(id = "updateLares", msg = paste(Sys.time(), "|"))  
 
 }
 

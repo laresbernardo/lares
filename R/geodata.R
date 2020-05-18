@@ -8,8 +8,9 @@
 #' @family Google
 #' @param address Character Vector. Addresses you wish to query
 #' @param country Character. Default Country if known
-#' @param index Character Vector. If you wish to keep an id on each address, set this values
-#' @param creds Character. Credential's user (see `get_credentials`)
+#' @param index Character Vector. If you wish to keep an id on each 
+#' address, set this values
+#' @param creds Character. Credential's user (see \code{get_creds})
 #' @param which Character. Which of the APIs should be used?
 #' @export
 geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, which = "api_01") {

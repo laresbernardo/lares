@@ -4,14 +4,16 @@
 \alias{slackSend}
 \title{Send Slack Message (Webhook)}
 \usage{
-slackSend(text, title = "", pretext = "", hook = NA, quiet = FALSE)
+slackSend(text, title = "", pretext = "", hook = NA, creds = NA)
 }
 \arguments{
-\item{text, title, pretext}{Character}
+\item{text, title, pretext}{Character. Content on you Slack message.}
 
-\item{hook}{Character. Web hook URL}
+\item{hook}{Character. Web hook URL. Ths value will be overwritten by
+creds if correctly used.}
 
-\item{quiet}{Boolean}
+\item{creds}{Character. Credential's dir (see \code{get_creds}). Set
+hook URL into the "slack" list in your YML file. Will use first value.}
 }
 \description{
 This function send a Slack message using its Webhooks.
@@ -21,39 +23,22 @@ For more help, you can follow the
 \href{https://api.slack.com/messaging/webhooks#posting_with_webhooks}{Sending messages using Incoming Webhooks}
 original documentarion.
 }
-\seealso{
-Other Tools: 
-\code{\link{autoline}()},
-\code{\link{bindfiles}()},
-\code{\link{bring_api}()},
-\code{\link{db_download}()},
-\code{\link{db_upload}()},
-\code{\link{export_plot}()},
-\code{\link{export_results}()},
-\code{\link{get_credentials}()},
-\code{\link{h2o_predict_API}()},
-\code{\link{h2o_predict_MOJO}()},
-\code{\link{h2o_predict_binary}()},
-\code{\link{h2o_predict_model}()},
-\code{\link{h2o_selectmodel}()},
-\code{\link{h2o_update}()},
-\code{\link{haveInternet}()},
-\code{\link{image_metadata}()},
-\code{\link{importxlsx}()},
-\code{\link{ip_country}()},
-\code{\link{iter_seeds}()},
-\code{\link{json2vector}()},
-\code{\link{listfiles}()},
-\code{\link{mailSend}()},
-\code{\link{msplit}()},
-\code{\link{myip}()},
-\code{\link{pass}()},
-\code{\link{quiet}()},
-\code{\link{read.file}()},
-\code{\link{statusbar}()},
-\code{\link{tic}()},
-\code{\link{try_require}()},
-\code{\link{updateLares}()},
-\code{\link{zerovar}()}
+\examples{
+\dontrun{
+slackSend(text = "This is a message", title = "TEST", pretext = Sys.info()["user"])
 }
-\concept{Tools}
+}
+\seealso{
+Other API: 
+\code{\link{bring_api}()},
+\code{\link{fb_accounts}()},
+\code{\link{fb_ads}()},
+\code{\link{fb_creatives}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()},
+\code{\link{li_auth}()},
+\code{\link{li_profile}()},
+\code{\link{queryGA}()}
+}
+\concept{API}

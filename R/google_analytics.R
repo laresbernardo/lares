@@ -10,8 +10,8 @@
 #' @family Google
 #' @family API
 #' @param account Character. Personal named accounts
-#' @param creds Character. Credential's user (see `get_credentials`)
-#' @param token_dir Character. Credential's user (see `get_credentials`)
+#' @param creds Character. Credential's user (see \code{get_creds})
+#' @param token_dir Character. Credential's directory (see \code{get_creds})
 #' @param metrics Character. Which metrics we wish to bring
 #' @param dimensions Character. Which dimensions we wish to bring
 #' @param met_filters,dim_filters A filter_clause_ga4 for filtering 

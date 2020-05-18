@@ -20,10 +20,10 @@ If you don't know these names, you can run
 \code{get_credentials(dir = "your/dir")} and a warning will display these values.}
 
 \item{dir}{Character. Credentials directory where your YML file is.
-If used frequently, set your directory once with 
-\code{Sys.setenv(LARES_CREDS = "/your/creds/dir")} and leave \code{dir}
-as \code{NA} to fetch this directory automatically every time. Remember to reset your
-session the first time you set this parameter for it to work.}
+If used frequently, set your directory by using the `.Renvironment` file. To do so,
+leave \code{dir} as \code{NA} and follow the steps. Next time, everytime you need 
+to fetch your credentials' YML this directory will be used automatically.
+Remember to reset your session the first time you set this parameter.}
 
 \item{filename}{Character. YML filename with your credentials.}
 
@@ -61,7 +61,6 @@ Other Tools:
 \code{\link{pass}()},
 \code{\link{quiet}()},
 \code{\link{read.file}()},
-\code{\link{slackSend}()},
 \code{\link{statusbar}()},
 \code{\link{tic}()},
 \code{\link{try_require}()},
@@ -76,6 +75,7 @@ Other Credentials:
 \code{\link{mailSend}()},
 \code{\link{queryDB}()},
 \code{\link{queryGA}()},
+\code{\link{stocks_file}()},
 \code{\link{stocks_report}()}
 }
 \concept{Credentials}

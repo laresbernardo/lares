@@ -26,7 +26,8 @@ Other API:
 \code{\link{fb_posts}()},
 \code{\link{fb_post}()},
 \code{\link{li_auth}()},
-\code{\link{queryGA}()}
+\code{\link{queryGA}()},
+\code{\link{slackSend}()}
 }
 \concept{API}
 \concept{Connections}

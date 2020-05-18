@@ -27,7 +27,7 @@ If not, an HTML file will be created in dir}
 
 \item{sectors}{Boolean. Return sectors segmentation for ETFs?}
 
-\item{creds}{Character. Credential's user (see `get_credentials`) for 
+\item{creds}{Character. Credential's user (see \code{get_creds}) for 
 sending mail and Dropbox interaction}
 }
 \description{
@@ -64,7 +64,8 @@ Other Credentials:
 \code{\link{get_tweets}()},
 \code{\link{mailSend}()},
 \code{\link{queryDB}()},
-\code{\link{queryGA}()}
+\code{\link{queryGA}()},
+\code{\link{stocks_file}()}
 }
 \concept{Credentials}
 \concept{Investment}

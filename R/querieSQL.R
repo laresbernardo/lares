@@ -8,8 +8,8 @@
 #' @family Credentials
 #' @family Database
 #' @param query Character. SQL Query
-#' @param from Character. Credential's user (see `get_credentials`)
-#' @param creds Character. Credential's directory (see `get_credentials`)
+#' @param from Character. Credential's user (see \code{get_creds})
+#' @param creds Character. Credential's directory (see \code{get_creds})
 #' @export
 queryDB = function(query, from = "dummy", creds = NA) {
 

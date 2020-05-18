@@ -6,7 +6,7 @@
 #' #' @family Credentials
 #' #' @family Hubspot
 #' #' @param limit Integer. Limit how many contacts you wish to bring
-#' #' @param creds Character. Credential's user (see `get_credentials`)
+#' #' @param creds Character. Credential's user (see \code{get_creds})
 #' #' @export
 #' hs_contacts <- function(limit=1000, creds = NA) {
 #'   
@@ -97,7 +97,7 @@
 #' #' @family Credentials
 #' #' @family Hubspot
 #' #' @param limit Integer. Limit how many contacts you wish to bring
-#' #' @param creds Character. Credential's user (see `get_credentials`)
+#' #' @param creds Character. Credential's user (see \code{get_creds})
 #' #' @export
 #' hs_deals <- function(limit=10000, creds = NA) {
 #'   

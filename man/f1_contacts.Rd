@@ -10,7 +10,7 @@ f1_contacts(limit = 1000, creds = NA)
 \item{limit}{Integer. Limit the amount of contacts to return. 
 Multiples of 100 or round up will occur.}
 
-\item{creds}{Character. Credential's user (see `get_credentials`)}
+\item{creds}{Character. Credential's user (see \code{get_creds})}
 }
 \description{
 This function brings all contacts from Somos F1's Hubspot account. 
@@ -27,6 +27,7 @@ Other Credentials:
 \code{\link{mailSend}()},
 \code{\link{queryDB}()},
 \code{\link{queryGA}()},
+\code{\link{stocks_file}()},
 \code{\link{stocks_report}()}
 }
 \concept{Credentials}

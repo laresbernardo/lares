@@ -9,9 +9,9 @@ queryDB(query, from = "dummy", creds = NA)
 \arguments{
 \item{query}{Character. SQL Query}
 
-\item{from}{Character. Credential's user (see `get_credentials`)}
+\item{from}{Character. Credential's user (see \code{get_creds})}
 
-\item{creds}{Character. Credential's directory (see `get_credentials`)}
+\item{creds}{Character. Credential's directory (see \code{get_creds})}
 }
 \description{
 This function lets the user query a PostgreSQL database. Previously
@@ -27,6 +27,7 @@ Other Credentials:
 \code{\link{get_tweets}()},
 \code{\link{mailSend}()},
 \code{\link{queryGA}()},
+\code{\link{stocks_file}()},
 \code{\link{stocks_report}()}
 }
 \concept{Credentials}

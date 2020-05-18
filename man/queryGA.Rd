@@ -19,9 +19,9 @@ queryGA(
 \arguments{
 \item{account}{Character. Personal named accounts}
 
-\item{creds}{Character. Credential's user (see `get_credentials`)}
+\item{creds}{Character. Credential's user (see \code{get_creds})}
 
-\item{token_dir}{Character. Credential's user (see `get_credentials`)}
+\item{token_dir}{Character. Credential's directory (see \code{get_creds})}
 
 \item{metrics}{Character. Which metrics we wish to bring}
 
@@ -49,6 +49,7 @@ Other Credentials:
 \code{\link{get_tweets}()},
 \code{\link{mailSend}()},
 \code{\link{queryDB}()},
+\code{\link{stocks_file}()},
 \code{\link{stocks_report}()}
 
 Other Google: 
@@ -66,7 +67,8 @@ Other API:
 \code{\link{fb_posts}()},
 \code{\link{fb_post}()},
 \code{\link{li_auth}()},
-\code{\link{li_profile}()}
+\code{\link{li_profile}()},
+\code{\link{slackSend}()}
 }
 \concept{API}
 \concept{Credentials}

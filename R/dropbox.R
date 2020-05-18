@@ -12,7 +12,7 @@
 #' for each tab and not as a file if needed
 #' @param newname Character. Name for new file
 #' @param token_dir Character. RDS with token local directory. You may set to
-#' NA if you already set your credentials as mentioned in `get_credentials()`
+#' NA if you already set your credentials (see \code{get_creds})
 #' @param token_name Character. RDS file name with your token's data
 #' @export
 db_download <- function(filename, 

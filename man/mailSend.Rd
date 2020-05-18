@@ -29,7 +29,7 @@ plot as PNG or data.frame as CSV, respectively.}
 
 \item{quiet}{Boolean. Keep quite or display messages?}
 
-\item{creds}{Character. Credential's user (see `get_credentials`).
+\item{creds}{Character. Credential's user (see \code{get_creds}).
 Must contain: url (POST address), api (api key)}
 }
 \description{
@@ -63,7 +63,6 @@ Other Tools:
 \code{\link{pass}()},
 \code{\link{quiet}()},
 \code{\link{read.file}()},
-\code{\link{slackSend}()},
 \code{\link{statusbar}()},
 \code{\link{tic}()},
 \code{\link{try_require}()},
@@ -78,6 +77,7 @@ Other Credentials:
 \code{\link{get_tweets}()},
 \code{\link{queryDB}()},
 \code{\link{queryGA}()},
+\code{\link{stocks_file}()},
 \code{\link{stocks_report}()}
 }
 \concept{Credentials}

@@ -7,28 +7,35 @@
 #' \href{https://api.slack.com/messaging/webhooks#posting_with_webhooks}{Sending messages using Incoming Webhooks}
 #' original documentarion.
 #' 
-#' @family Tools
-#' @param text,title,pretext Character
-#' @param hook Character. Web hook URL
-#' @param quiet Boolean
+#' @family API
+#' @param text,title,pretext Character. Content on you Slack message.
+#' @param hook Character. Web hook URL. Ths value will be overwritten by
+#' creds if correctly used.
+#' @param creds Character. Credential's dir (see \code{get_creds}). Set
+#' hook URL into the "slack" list in your YML file. Will use first value.
+#' @examples 
+#' \dontrun{
+#' slackSend(text = "This is a message", title = "TEST", pretext = Sys.info()["user"])
+#' }
 #' @export
-slackSend <- function(text, title = "", pretext = "", hook = NA, quiet = FALSE) {
+slackSend <- function(text, title = "", pretext = "", 
+                      hook = NA, 
+                      creds = NA) {
   
   if (is.na(text))
     stop("You must write something for message to be sent!")
   
   if (is.na(hook)) {
-    hook <- paste0("https://hooks.slack.com/services/",
-                   "T5TUJPK1D/BRDPQ34DD/FAvAG6l1tFJP4SiBtyxsp1Va")
-    if (!quiet)
-      warning("Using lares' default hook. Please, use yours for it to work as it should.")
+    c <- get_credentials(from = "slack", dir = creds)
+    hook <- c[[1]]
   } 
   
   aux <- paste(
     '{"attachments": [{',
     '"title": "', title, '",',
     '"pretext": "', text, '",',
-    '"text": "', pretext, '", "color": "#ee0000"',
+    '"text": "', pretext, '", 
+    "color": "#ee0000"',
     '}]}',
     sep = '')
   

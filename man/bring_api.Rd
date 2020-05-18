@@ -43,7 +43,6 @@ Other Tools:
 \code{\link{pass}()},
 \code{\link{quiet}()},
 \code{\link{read.file}()},
-\code{\link{slackSend}()},
 \code{\link{statusbar}()},
 \code{\link{tic}()},
 \code{\link{try_require}()},
@@ -59,7 +58,8 @@ Other API:
 \code{\link{fb_post}()},
 \code{\link{li_auth}()},
 \code{\link{li_profile}()},
-\code{\link{queryGA}()}
+\code{\link{queryGA}()},
+\code{\link{slackSend}()}
 }
 \concept{API}
 \concept{Tools}

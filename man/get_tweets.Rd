@@ -11,7 +11,7 @@ get_tweets(q, n = 10000, creds = NA)
 
 \item{n}{Integer. Total of tweets to return}
 
-\item{creds}{Character. Credential's user (see `get_credentials`)}
+\item{creds}{Character. Credential's user (see \code{get_creds})}
 }
 \description{
 This function downloads tweets with personal credentials
@@ -25,6 +25,7 @@ Other Credentials:
 \code{\link{mailSend}()},
 \code{\link{queryDB}()},
 \code{\link{queryGA}()},
+\code{\link{stocks_file}()},
 \code{\link{stocks_report}()}
 }
 \concept{Credentials}

@@ -15,7 +15,7 @@ stocks_file(
 \arguments{
 \item{filename}{Characeter. Import a local Excel file}
 
-\item{creds}{Character. Where is my personal token for Dropbox connection?}
+\item{creds}{Character. Dropbox's credentials (see \code{get_creds})}
 
 \item{auto}{Boolean. Automatically use my local personal file?}
 
@@ -53,5 +53,17 @@ Other Investment:
 \code{\link{stocks_obj}()},
 \code{\link{stocks_quote}()},
 \code{\link{stocks_report}()}
+
+Other Credentials: 
+\code{\link{db_download}()},
+\code{\link{f1_contacts}()},
+\code{\link{geoAddress}()},
+\code{\link{get_credentials}()},
+\code{\link{get_tweets}()},
+\code{\link{mailSend}()},
+\code{\link{queryDB}()},
+\code{\link{queryGA}()},
+\code{\link{stocks_report}()}
 }
+\concept{Credentials}
 \concept{Investment}

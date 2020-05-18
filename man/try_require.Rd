@@ -49,7 +49,6 @@ Other Tools:
 \code{\link{pass}()},
 \code{\link{quiet}()},
 \code{\link{read.file}()},
-\code{\link{slackSend}()},
 \code{\link{statusbar}()},
 \code{\link{tic}()},
 \code{\link{updateLares}()},

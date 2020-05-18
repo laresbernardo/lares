@@ -5,8 +5,9 @@
 #' Portfolio's data, locally or from Dropbox.
 #' 
 #' @family Investment
+#' @family Credentials
 #' @param filename Characeter. Import a local Excel file
-#' @param creds Character. Where is my personal token for Dropbox connection?
+#' @param creds Character. Dropbox's credentials (see \code{get_creds})
 #' @param auto Boolean. Automatically use my local personal file? 
 #' @param sheets Character Vector. Names of each sheet containing Portfolio summary,
 #' Cash, and Transactions information
@@ -841,7 +842,7 @@ stocks_obj <- function(data = stocks_file(),
 #' If not, an HTML file will be created in dir
 #' @param to Character. Email to send the report to
 #' @param sectors Boolean. Return sectors segmentation for ETFs?
-#' @param creds Character. Credential's user (see `get_credentials`) for 
+#' @param creds Character. Credential's user (see \code{get_creds}) for 
 #' sending mail and Dropbox interaction
 #' @examples
 #' \dontrun{

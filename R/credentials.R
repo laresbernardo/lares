@@ -9,10 +9,10 @@
 #' If you don't know these names, you can run 
 #' \code{get_credentials(dir = "your/dir")} and a warning will display these values.
 #' @param dir Character. Credentials directory where your YML file is.
-#' If used frequently, set your directory once with 
-#' \code{Sys.setenv(LARES_CREDS = "/your/creds/dir")} and leave \code{dir}
-#' as \code{NA} to fetch this directory automatically every time. Remember to reset your
-#' session the first time you set this parameter for it to work.
+#' If used frequently, set your directory by using the `.Renvironment` file. To do so,
+#' leave \code{dir} as \code{NA} and follow the steps. Next time, everytime you need 
+#' to fetch your credentials' YML this directory will be used automatically.
+#' Remember to reset your session the first time you set this parameter.
 #' @param filename Character. YML filename with your credentials.
 #' @param env Character. Environment variable name. No need to set differently
 #' for any function that uses this library. Only for external use
@@ -24,9 +24,15 @@ get_credentials <- function(from = NA, dir = NA,
   if (is.na(dir)) { 
     dir <- Sys.getenv(env)
     if (dir == "") {
-      stop(paste('Please, set your creds directory once with:',
-                 sprintf('Sys.setenv(%s = "/your/creds/dir")', env),
-                 'After doing so, reset your session for it to work...', sep = "\n"))
+      message(sprintf(
+        "Please, set your creds directory (one-time only step to set %s):", env))
+      dir <- readline(sprintf("Set directory where your %s file is saved: ", filename))
+      if (!dir.exists(dir))
+        stop(sprintf("Directory: %s. \nCan't find or does not exist. Please try again...", dir))
+      line <- sprintf("%s=%s", env, dir)
+      write(line, file = "~/.Renviron", append = TRUE)
+      message("ALL's SET! But, you must reset your session for it to work!")
+      return(invisible(NULL))
     }
   }
   
