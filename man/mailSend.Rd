@@ -29,7 +29,7 @@ plot as PNG or data.frame as CSV, respectively.}
 
 \item{quiet}{Boolean. Keep quite or display messages?}
 
-\item{creds}{Character. Credential's user (see get_credentials).
+\item{creds}{Character. Credential's user (see `get_credentials`).
 Must contain: url (POST address), api (api key)}
 }
 \description{
@@ -69,5 +69,16 @@ Other Tools:
 \code{\link{try_require}()},
 \code{\link{updateLares}()},
 \code{\link{zerovar}()}
+
+Other Credentials: 
+\code{\link{db_download}()},
+\code{\link{f1_contacts}()},
+\code{\link{geoAddress}()},
+\code{\link{get_credentials}()},
+\code{\link{get_tweets}()},
+\code{\link{queryDB}()},
+\code{\link{queryGA}()},
+\code{\link{stocks_report}()}
 }
+\concept{Credentials}
 \concept{Tools}

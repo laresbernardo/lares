@@ -6,6 +6,8 @@
 #'
 #' @family Exploratory
 #' @family Scrapper
+#' @family Google Trends
+#' @family Google
 #' @param gtrend List. Result from gtrends(keyword, geo, time)
 #' @param top Integer. Filter top n results only
 #' @param title Character. Custom title for the plot
@@ -121,6 +123,8 @@ trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = c()
 #' This function creates a plot with google trend's data on timelines
 #' and let the user compare different keywords.
 #'
+#' @family Google Trends
+#' @family Google
 #' @param gtrend List. Result from gtrends(keyword, geo, time)
 #' @param title Character. Custom title for the plot
 #' @export

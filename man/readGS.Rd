@@ -24,10 +24,6 @@ readGS4(title, sheet = "Hoja 1", range = NULL, creds = NULL, ...)
 This function lets the user read any Google Sheet's data
 }
 \seealso{
-Other Connection: 
-\code{\link{get_tweets}()},
-\code{\link{queryGA}()}
-
 Other Scrapper: 
 \code{\link{fb_accounts}()},
 \code{\link{fb_ads}()},
@@ -39,6 +35,12 @@ Other Scrapper:
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
 \code{\link{trendsRelated}()}
+
+Other Google: 
+\code{\link{geoAddress}()},
+\code{\link{queryGA}()},
+\code{\link{trendsRelated}()},
+\code{\link{trendsTime}()}
 }
-\concept{Connection}
+\concept{Google}
 \concept{Scrapper}

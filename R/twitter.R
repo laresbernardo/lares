@@ -3,12 +3,11 @@
 #' 
 #' This function downloads tweets with personal credentials
 #' 
-#' @family Connection
-#' @family Social Networks
-#' @family Exploratory
+#' @family Credentials
+#' @family Twitter
 #' @param q Query. Check for ?rtweet::search_tweets()
 #' @param n Integer. Total of tweets to return
-#' @param creds Character. Credential's user (see get_credentials)
+#' @param creds Character. Credential's user (see `get_credentials`)
 #' @export
 get_tweets <- function(q, n = 10000, creds = NA) {
 

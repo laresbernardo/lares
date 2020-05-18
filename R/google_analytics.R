@@ -6,10 +6,12 @@
 #' google_analytics or Google Analytics'
 #' \url{https://developers.google.com/analytics/devguides/reporting/core/dimsmets}{API}
 #' 
-#' @family Connection
+#' @family Credentials
+#' @family Google
+#' @family API
 #' @param account Character. Personal named accounts
-#' @param creds Character. Credential's user (see get_credentials)
-#' @param token_dir Character. Credential's user (see get_credentials)
+#' @param creds Character. Credential's user (see `get_credentials`)
+#' @param token_dir Character. Credential's user (see `get_credentials`)
 #' @param metrics Character. Which metrics we wish to bring
 #' @param dimensions Character. Which dimensions we wish to bring
 #' @param met_filters,dim_filters A filter_clause_ga4 for filtering 

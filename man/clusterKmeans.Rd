@@ -102,4 +102,6 @@ Other Machine Learning:
 \code{\link{mplot_splits}()},
 \code{\link{msplit}()}
 }
+\concept{Clusters}
 \concept{Machine Learning}
+\concept{PCA}

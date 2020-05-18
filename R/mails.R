@@ -4,13 +4,14 @@
 #' This function lets the user send Emails with Attachments using MailGun
 #'
 #' @family Tools
+#' @family Credentials
 #' @param from,to,cc,bcc Character. Emails
 #' @param subject Character. Subject for the email
 #' @param text,html Character. Text or HTML to send in the body
 #' @param attachment Character, plot or data.frame. Will send the file, 
 #' plot as PNG or data.frame as CSV, respectively. 
 #' @param quiet Boolean. Keep quite or display messages?
-#' @param creds Character. Credential's user (see get_credentials).
+#' @param creds Character. Credential's user (see `get_credentials`).
 #' Must contain: url (POST address), api (api key)
 #' @export
 mailSend <- function(from = "RMail <laresbernardo@gmail.com>",

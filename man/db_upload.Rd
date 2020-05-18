@@ -63,11 +63,8 @@ Other Tools:
 \code{\link{zerovar}()}
 
 Other Connections: 
-\code{\link{bring_api}()},
-\code{\link{db_download}()},
-\code{\link{f1_contacts}()},
-\code{\link{geoAddress}()},
-\code{\link{li_auth}()}
+\code{\link{li_auth}()},
+\code{\link{li_profile}()}
 
 Other Dropbox: 
 \code{\link{db_download}()}

@@ -50,21 +50,16 @@ Other Tools:
 \code{\link{updateLares}()},
 \code{\link{zerovar}()}
 
-Other Connections: 
-\code{\link{db_download}()},
-\code{\link{db_upload}()},
-\code{\link{f1_contacts}()},
-\code{\link{geoAddress}()},
-\code{\link{li_auth}()}
-
 Other API: 
 \code{\link{fb_accounts}()},
 \code{\link{fb_ads}()},
 \code{\link{fb_creatives}()},
 \code{\link{fb_insights}()},
 \code{\link{fb_posts}()},
-\code{\link{fb_post}()}
+\code{\link{fb_post}()},
+\code{\link{li_auth}()},
+\code{\link{li_profile}()},
+\code{\link{queryGA}()}
 }
 \concept{API}
-\concept{Connections}
 \concept{Tools}

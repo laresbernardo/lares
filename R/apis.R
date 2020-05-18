@@ -5,7 +5,6 @@
 #' into data.frame. Designed initially for Hubspot but may work on other API
 #' 
 #' @family Tools
-#' @family Connections
 #' @family API
 #' @param url Character. API's URL
 #' @param status Boolean. Display status message?
@@ -13,7 +12,8 @@
 bring_api <- function(url, status = TRUE) {
   
   get <- GET(url = url)
-  if (status) message(paste0("Status: ", ifelse(get$status_code == 200, "OK", "ERROR"))) 
+  if (status) 
+    message(paste0("Status: ", ifelse(get$status_code == 200, "OK", "ERROR"))) 
   char <- rawToChar(get$content)
   json <- fromJSON(char)
   

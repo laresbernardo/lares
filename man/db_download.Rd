@@ -64,16 +64,19 @@ Other Tools:
 \code{\link{updateLares}()},
 \code{\link{zerovar}()}
 
-Other Connections: 
-\code{\link{bring_api}()},
-\code{\link{db_upload}()},
+Other Credentials: 
 \code{\link{f1_contacts}()},
 \code{\link{geoAddress}()},
-\code{\link{li_auth}()}
+\code{\link{get_credentials}()},
+\code{\link{get_tweets}()},
+\code{\link{mailSend}()},
+\code{\link{queryDB}()},
+\code{\link{queryGA}()},
+\code{\link{stocks_report}()}
 
 Other Dropbox: 
 \code{\link{db_upload}()}
 }
-\concept{Connections}
+\concept{Credentials}
 \concept{Dropbox}
 \concept{Tools}

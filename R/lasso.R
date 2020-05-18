@@ -4,21 +4,23 @@
 #' Use Lasso regression to identify the most relevant variables that 
 #' can predict/identify another variable. You might want to compare 
 #' with corr_var() results to compliment the analysis No need to
-#' standardize, center or scale your data.
+#' standardize, center or scale your data. Tidyverse friendly.
 #' 
 #' @family Machine Learning
-#' @param df Dataframe
-#' @param variable Variable.
-#' @param ignore Character vector. Variables to exclude from study
-#' @param nlambdas Integer. Number of lambdas to be used in a search
-#' @param nfolds Integer. Number of folds for K-fold cross-validation (>= 2)
-#' @param seed Numeric
-#' @param ... ohse parameters
+#' @family Exploratory
+#' @param df Dataframe. Any dataframe is valid as `ohse` will be applied to
+#' process categorical values, and values will be standardize automatically.
+#' @param variable Variable. 
+#' @param ignore Character vector. Variables to exclude from study.
+#' @param nlambdas Integer. Number of lambdas to be used in a search.
+#' @param nfolds Integer. Number of folds for K-fold cross-validation (>= 2).
+#' @param seed Numeric.
+#' @param ... ohse parameters.
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
 #' 
-#' m <- lasso_vars(dft, Survived, ignore = c("Ticket", "Cabin"))
+#' m <- lasso_vars(dft, Survived, ignore = c("Cabin"))
 #' print(m$coef)
 #' print(m$metrics)
 #' m$plot

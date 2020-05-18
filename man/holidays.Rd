@@ -66,7 +66,12 @@ Other Scrapper:
 \code{\link{ip_country}()},
 \code{\link{readGS}()},
 \code{\link{trendsRelated}()}
+
+Other One Hot Encoding: 
+\code{\link{date_feats}()},
+\code{\link{ohse}()}
 }
 \concept{Data Wrangling}
 \concept{Feature Engineering}
+\concept{One Hot Encoding}
 \concept{Scrapper}

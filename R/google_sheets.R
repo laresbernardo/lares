@@ -3,8 +3,8 @@
 #' 
 #' This function lets the user read any Google Sheet's data
 #' 
-#' @family Connection
 #' @family Scrapper
+#' @family Google
 #' @param title Character. Textual title of Google Sheet
 #' @param sheet Character. Working sheet to import
 #' @param range Character. A cell range to read from

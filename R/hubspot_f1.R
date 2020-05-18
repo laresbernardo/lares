@@ -6,11 +6,11 @@
 #' or data.frame. Keep in mind that it will always bring the latest
 #' value for each parameter (column).
 #'
-#' @family Connections
-#' @family CRM
+#' @family Credentials
+#' @family Hubspot
 #' @param limit Integer. Limit the amount of contacts to return. 
 #' Multiples of 100 or round up will occur.
-#' @param creds Character. Credential's user (see get_credentials)
+#' @param creds Character. Credential's user (see `get_credentials`)
 #' @export
 f1_contacts <- function(limit = 1000, creds = NA) {
   

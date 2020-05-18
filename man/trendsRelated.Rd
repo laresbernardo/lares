@@ -32,7 +32,7 @@ Other Exploratory:
 \code{\link{freqs_plot}()},
 \code{\link{freqs}()},
 \code{\link{gain_lift}()},
-\code{\link{get_tweets}()},
+\code{\link{lasso_vars}()},
 \code{\link{missingness}()},
 \code{\link{plot_cats}()},
 \code{\link{plot_df}()},
@@ -51,6 +51,17 @@ Other Scrapper:
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
 \code{\link{readGS}()}
+
+Other Google Trends: 
+\code{\link{trendsTime}()}
+
+Other Google: 
+\code{\link{geoAddress}()},
+\code{\link{queryGA}()},
+\code{\link{readGS}()},
+\code{\link{trendsTime}()}
 }
 \concept{Exploratory}
+\concept{Google}
+\concept{Google Trends}
 \concept{Scrapper}

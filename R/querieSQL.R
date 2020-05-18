@@ -1,84 +1,32 @@
-#' ####################################################################
-#' #' PostgreSQL Queries on Dummy Database (read only)
-#' #' 
-#' #' This function lets the user query our Dummy Database
-#' #' 
-#' #' @family Connections
-#' #' @param query Character. SQL Query
-#' #' @param creds Character. Credential's user (see get_credentials)
-#' #' @export
-#' queryDummy = function(query, creds = NA) {
-#' 
-#'   try_require("RPostgreSQL")
-#'   tic(id = "queryDummy")
-#'   
-#'   dw <- get_credentials(from = "dummy", dir = creds)
-#'   drv <- PostgreSQL()
-#'   con <- dbConnect(drv, host = dw$server, dbname = dw$database,
-#'                    port = dw$port, user = dw$uid, password = dw$pwd)
-#' 
-#'   q <- dbSendQuery(con, query)
-#'   q <- fetch(q, n = -1)
-#'   dbDisconnect(con)
-#'   
-#'   toc(id = "queryDummy", msg = "Query duration:")
-#'   
-#'   return(q)
-#'   
-#' }
-#' 
-#' 
-#' ####################################################################
-#' #' PostgreSQL Queries on Redshift Database (read-write)
-#' #' 
-#' #' This function lets the user query our Data Warehouse Database
-#' #' 
-#' #' @family Connections
-#' #' @param query Character. SQL Query
-#' #' @param which Character. Which database do you wish to connect to: seguros, tabunga...
-#' #' @param creds Character. Credential's user (see get_credentials)
-#' #' @export
-#' queryDW = function(query, which = "soat", creds = NA) {
-#' 
-#'   try_require("RPostgreSQL")
-#'   dw <- get_credentials(from = "warehouse", dir = creds)
-#' 
-#'   dbname <- ifelse(which == "soat", dw$database_soat,
-#'                    ifelse(which == "creditos", dw$database_creditos, NA))
-#' 
-#'   drv <- PostgreSQL()
-#'   con <- dbConnect(drv, host = dw$server, dbname = dw$database,
-#'                    port = dw$port, user = dw$uid, password = dw$pwd)
-#'   start <- Sys.time()
-#'   q <- dbSendQuery(con, query)
-#'   q <- fetch(q, n = -1)
-#'   dbDisconnect(con)
-#'   message(paste("Query duration:", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
-#'   return(q)
-#' }
-#' 
-#' 
-#' ####################################################################
-#' #' PostgreSQL Queries on Production Database (read-write)
-#' #' 
-#' #' This function lets the user query our Production Database
-#' #' 
-#' #' @family Connections
-#' #' @param query Character. SQL Query
-#' #' @param creds Character. Credential's user (see get_credentials)
-#' #' @export
-#' queryProduc = function(query, creds = NA) {
-#' 
-#'   try_require("RPostgreSQL")
-#'   dw <- get_credentials(from = "production", dir = creds)
-#' 
-#'   drv <- PostgreSQL()
-#'   con <- dbConnect(drv, host = dw$server, dbname = dw$database,
-#'                    port = dw$port, user = dw$uid, password = dw$pwd)
-#'   start <- Sys.time()
-#'   q <- dbSendQuery(con, query)
-#'   q <- fetch(q, n = -1)
-#'   dbDisconnect(con)
-#'   message(paste("Query duration:", round(difftime(Sys.time(), start, units = "secs"), 2), "s"))
-#'   return(q)
-#' }
+####################################################################
+#' PostgreSQL Queries on Database (Read)
+#'
+#' This function lets the user query a PostgreSQL database. Previously
+#' was called `queryDummy()` but was replaced and deprecated for a 
+#' more general function by using the `from` parameter.
+#'
+#' @family Credentials
+#' @family Database
+#' @param query Character. SQL Query
+#' @param from Character. Credential's user (see `get_credentials`)
+#' @param creds Character. Credential's directory (see `get_credentials`)
+#' @export
+queryDB = function(query, from = "dummy", creds = NA) {
+
+  try_require("RPostgreSQL")
+  tic(id = "queryDummy")
+
+  dw <- get_credentials(from = from, dir = creds)
+  drv <- PostgreSQL()
+  con <- dbConnect(drv, host = dw$server, dbname = dw$database,
+                   port = dw$port, user = dw$uid, password = dw$pwd)
+
+  q <- dbSendQuery(con, query)
+  q <- fetch(q, n = -1)
+  dbDisconnect(con)
+
+  toc(id = "queryDummy", msg = "Query duration:")
+
+  return(q)
+
+}

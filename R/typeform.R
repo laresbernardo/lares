@@ -4,17 +4,17 @@
 #' #' This function lets the user download surveys results from a
 #' #' Typeform account.
 #' #'
-#' #' @family Connections
+#' #' @family Typeform
+#' #' @family Credentials
 #' #' @param account Character. Which of the accounts in config.yml 
 #' #' do you wish to use?
 #' #' @param form Character. Define which form you wish to import. Should
 #' #' be the same as the form's name at the online platform
-#' #' @param creds Character. Credential's user (see get_credentials)
+#' #' @param creds Character. Credential's user (see `get_credentials`)
 #' #' @export
 #' typeform_download <- function(account = "tabunga", form, creds = NA) {
 #'   
-#'   # require(rtypeform)
-#'   # require(dplyr)
+#'   try_require("rtypeform")
 #'   
 #'   accounts <- c("tabunga")
 #'   

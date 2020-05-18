@@ -11,38 +11,21 @@ get_tweets(q, n = 10000, creds = NA)
 
 \item{n}{Integer. Total of tweets to return}
 
-\item{creds}{Character. Credential's user (see get_credentials)}
+\item{creds}{Character. Credential's user (see `get_credentials`)}
 }
 \description{
 This function downloads tweets with personal credentials
 }
 \seealso{
-Other Connection: 
+Other Credentials: 
+\code{\link{db_download}()},
+\code{\link{f1_contacts}()},
+\code{\link{geoAddress}()},
+\code{\link{get_credentials}()},
+\code{\link{mailSend}()},
+\code{\link{queryDB}()},
 \code{\link{queryGA}()},
-\code{\link{readGS}()}
-
-Other Social Networks: 
-\code{\link{li_auth}()},
-\code{\link{li_profile}()}
-
-Other Exploratory: 
-\code{\link{corr_cross}()},
-\code{\link{corr_var}()},
-\code{\link{crosstab}()},
-\code{\link{df_str}()},
-\code{\link{distr}()},
-\code{\link{freqs_df}()},
-\code{\link{freqs_plot}()},
-\code{\link{freqs}()},
-\code{\link{gain_lift}()},
-\code{\link{missingness}()},
-\code{\link{plot_cats}()},
-\code{\link{plot_df}()},
-\code{\link{plot_nums}()},
-\code{\link{summer}()},
-\code{\link{tree_var}()},
-\code{\link{trendsRelated}()}
+\code{\link{stocks_report}()}
 }
-\concept{Connection}
-\concept{Exploratory}
-\concept{Social Networks}
+\concept{Credentials}
+\concept{Twitter}

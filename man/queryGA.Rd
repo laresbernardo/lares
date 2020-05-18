@@ -19,9 +19,9 @@ queryGA(
 \arguments{
 \item{account}{Character. Personal named accounts}
 
-\item{creds}{Character. Credential's user (see get_credentials)}
+\item{creds}{Character. Credential's user (see `get_credentials`)}
 
-\item{token_dir}{Character. Credential's user (see get_credentials)}
+\item{token_dir}{Character. Credential's user (see `get_credentials`)}
 
 \item{metrics}{Character. Which metrics we wish to bring}
 
@@ -41,8 +41,33 @@ google_analytics or Google Analytics'
 \url{https://developers.google.com/analytics/devguides/reporting/core/dimsmets}{API}
 }
 \seealso{
-Other Connection: 
+Other Credentials: 
+\code{\link{db_download}()},
+\code{\link{f1_contacts}()},
+\code{\link{geoAddress}()},
+\code{\link{get_credentials}()},
 \code{\link{get_tweets}()},
-\code{\link{readGS}()}
+\code{\link{mailSend}()},
+\code{\link{queryDB}()},
+\code{\link{stocks_report}()}
+
+Other Google: 
+\code{\link{geoAddress}()},
+\code{\link{readGS}()},
+\code{\link{trendsRelated}()},
+\code{\link{trendsTime}()}
+
+Other API: 
+\code{\link{bring_api}()},
+\code{\link{fb_accounts}()},
+\code{\link{fb_ads}()},
+\code{\link{fb_creatives}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()},
+\code{\link{li_auth}()},
+\code{\link{li_profile}()}
 }
-\concept{Connection}
+\concept{API}
+\concept{Credentials}
+\concept{Google}

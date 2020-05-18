@@ -15,31 +15,32 @@ lasso_vars(
 )
 }
 \arguments{
-\item{df}{Dataframe}
+\item{df}{Dataframe. Any dataframe is valid as `ohse` will be applied to
+process categorical values, and values will be standardize automatically.}
 
 \item{variable}{Variable.}
 
-\item{ignore}{Character vector. Variables to exclude from study}
+\item{ignore}{Character vector. Variables to exclude from study.}
 
-\item{nlambdas}{Integer. Number of lambdas to be used in a search}
+\item{nlambdas}{Integer. Number of lambdas to be used in a search.}
 
-\item{nfolds}{Integer. Number of folds for K-fold cross-validation (>= 2)}
+\item{nfolds}{Integer. Number of folds for K-fold cross-validation (>= 2).}
 
-\item{seed}{Numeric}
+\item{seed}{Numeric.}
 
-\item{...}{ohse parameters}
+\item{...}{ohse parameters.}
 }
 \description{
 Use Lasso regression to identify the most relevant variables that 
 can predict/identify another variable. You might want to compare 
 with corr_var() results to compliment the analysis No need to
-standardize, center or scale your data.
+standardize, center or scale your data. Tidyverse friendly.
 }
 \examples{
 options("lares.font" = NA) # Temporal
 data(dft) # Titanic dataset
 
-m <- lasso_vars(dft, Survived, ignore = c("Ticket", "Cabin"))
+m <- lasso_vars(dft, Survived, ignore = c("Cabin"))
 print(m$coef)
 print(m$metrics)
 m$plot
@@ -74,5 +75,24 @@ Other Machine Learning:
 \code{\link{mplot_roc}()},
 \code{\link{mplot_splits}()},
 \code{\link{msplit}()}
+
+Other Exploratory: 
+\code{\link{corr_cross}()},
+\code{\link{corr_var}()},
+\code{\link{crosstab}()},
+\code{\link{df_str}()},
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs_plot}()},
+\code{\link{freqs}()},
+\code{\link{gain_lift}()},
+\code{\link{missingness}()},
+\code{\link{plot_cats}()},
+\code{\link{plot_df}()},
+\code{\link{plot_nums}()},
+\code{\link{summer}()},
+\code{\link{tree_var}()},
+\code{\link{trendsRelated}()}
 }
+\concept{Exploratory}
 \concept{Machine Learning}

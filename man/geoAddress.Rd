@@ -19,7 +19,7 @@ geoAddress(
 
 \item{index}{Character Vector. If you wish to keep an id on each address, set this values}
 
-\item{creds}{Character. Credential's user (see get_credentials)}
+\item{creds}{Character. Credential's user (see `get_credentials`)}
 
 \item{which}{Character. Which of the APIs should be used?}
 }
@@ -32,12 +32,22 @@ Other Geographical:
 \code{\link{geoMap}()},
 \code{\link{geoStratum}()}
 
-Other Connections: 
-\code{\link{bring_api}()},
+Other Credentials: 
 \code{\link{db_download}()},
-\code{\link{db_upload}()},
 \code{\link{f1_contacts}()},
-\code{\link{li_auth}()}
+\code{\link{get_credentials}()},
+\code{\link{get_tweets}()},
+\code{\link{mailSend}()},
+\code{\link{queryDB}()},
+\code{\link{queryGA}()},
+\code{\link{stocks_report}()}
+
+Other Google: 
+\code{\link{queryGA}()},
+\code{\link{readGS}()},
+\code{\link{trendsRelated}()},
+\code{\link{trendsTime}()}
 }
-\concept{Connections}
+\concept{Credentials}
 \concept{Geographical}
+\concept{Google}

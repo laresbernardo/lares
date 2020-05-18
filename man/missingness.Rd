@@ -49,12 +49,16 @@ Other Exploratory:
 \code{\link{freqs_plot}()},
 \code{\link{freqs}()},
 \code{\link{gain_lift}()},
-\code{\link{get_tweets}()},
+\code{\link{lasso_vars}()},
 \code{\link{plot_cats}()},
 \code{\link{plot_df}()},
 \code{\link{plot_nums}()},
 \code{\link{summer}()},
 \code{\link{tree_var}()},
 \code{\link{trendsRelated}()}
+
+Other Missing Values: 
+\code{\link{impute}()}
 }
 \concept{Exploratory}
+\concept{Missing Values}

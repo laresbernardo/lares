@@ -5,7 +5,7 @@
 #' its name and using a previously created token.
 #' 
 #' @family Tools
-#' @family Connections
+#' @family Credentials
 #' @family Dropbox
 #' @param filename String. File's name
 #' @param xlsx Boolean. Is it an Excel file? Can be returned as a list

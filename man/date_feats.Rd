@@ -17,10 +17,10 @@ date_feats(
 }
 \arguments{
 \item{dates}{Vector or dataframe. Non-date/time columns will be 
-automatically ignored.}
+automatically ignored/extracted.}
 
 \item{keep_originals}{Boolean. Should the original date/time columns be
-kept in the results?}
+kept in the results? Only valid when input is a dataframe.}
 
 \item{only}{Character or vector. Which columns do you wish to process? If
 non are explicitly defined, all will be processed}
@@ -40,6 +40,13 @@ wish to get the history from? i.e, USD/COP, EUR/USD...}
 \description{
 This function lets the user automatically create new columns out
 of a dataframe or vector with date/time variables.
+}
+\examples{
+data(dfl) # Dummy dataset
+# Imput as a vector or dataframe
+df <- date_feats(dfl, keep_originals = TRUE)
+# Same as running date_feats(dfl$opp_date)
+head(df, 10)
 }
 \seealso{
 Other Data Wrangling: 
@@ -72,6 +79,11 @@ Other Data Wrangling:
 Other Feature Engineering: 
 \code{\link{holidays}()},
 \code{\link{ohse}()}
+
+Other One Hot Encoding: 
+\code{\link{holidays}()},
+\code{\link{ohse}()}
 }
 \concept{Data Wrangling}
 \concept{Feature Engineering}
+\concept{One Hot Encoding}

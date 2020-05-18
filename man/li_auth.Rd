@@ -19,15 +19,19 @@ API REST
 }
 \seealso{
 Other Connections: 
-\code{\link{bring_api}()},
-\code{\link{db_download}()},
 \code{\link{db_upload}()},
-\code{\link{f1_contacts}()},
-\code{\link{geoAddress}()}
-
-Other Social Networks: 
-\code{\link{get_tweets}()},
 \code{\link{li_profile}()}
+
+Other API: 
+\code{\link{bring_api}()},
+\code{\link{fb_accounts}()},
+\code{\link{fb_ads}()},
+\code{\link{fb_creatives}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()},
+\code{\link{li_profile}()},
+\code{\link{queryGA}()}
 }
+\concept{API}
 \concept{Connections}
-\concept{Social Networks}

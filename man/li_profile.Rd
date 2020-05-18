@@ -13,8 +13,20 @@ li_profile(token = NA)
 This function brings a list with your personal LinkedIn data
 }
 \seealso{
-Other Social Networks: 
-\code{\link{get_tweets}()},
+Other Connections: 
+\code{\link{db_upload}()},
 \code{\link{li_auth}()}
+
+Other API: 
+\code{\link{bring_api}()},
+\code{\link{fb_accounts}()},
+\code{\link{fb_ads}()},
+\code{\link{fb_creatives}()},
+\code{\link{fb_insights}()},
+\code{\link{fb_posts}()},
+\code{\link{fb_post}()},
+\code{\link{li_auth}()},
+\code{\link{queryGA}()}
 }
-\concept{Social Networks}
+\concept{API}
+\concept{Connections}

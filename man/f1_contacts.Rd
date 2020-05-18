@@ -10,7 +10,7 @@ f1_contacts(limit = 1000, creds = NA)
 \item{limit}{Integer. Limit the amount of contacts to return. 
 Multiples of 100 or round up will occur.}
 
-\item{creds}{Character. Credential's user (see get_credentials)}
+\item{creds}{Character. Credential's user (see `get_credentials`)}
 }
 \description{
 This function brings all contacts from Somos F1's Hubspot account. 
@@ -19,12 +19,15 @@ or data.frame. Keep in mind that it will always bring the latest
 value for each parameter (column).
 }
 \seealso{
-Other Connections: 
-\code{\link{bring_api}()},
+Other Credentials: 
 \code{\link{db_download}()},
-\code{\link{db_upload}()},
 \code{\link{geoAddress}()},
-\code{\link{li_auth}()}
+\code{\link{get_credentials}()},
+\code{\link{get_tweets}()},
+\code{\link{mailSend}()},
+\code{\link{queryDB}()},
+\code{\link{queryGA}()},
+\code{\link{stocks_report}()}
 }
-\concept{CRM}
-\concept{Connections}
+\concept{Credentials}
+\concept{Hubspot}

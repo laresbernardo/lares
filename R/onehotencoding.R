@@ -6,6 +6,7 @@
 #'
 #' @family Data Wrangling
 #' @family Feature Engineering
+#' @family One Hot Encoding
 #' @param df Dataframe
 #' @param redundant Boolean. Should we keep redundat columns? i.e. If the
 #' column only has two different values, should we keep both new columns?
@@ -195,10 +196,11 @@ ohse <- function(df,
 #'
 #' @family Data Wrangling
 #' @family Feature Engineering
+#' @family One Hot Encoding
 #' @param dates Vector or dataframe. Non-date/time columns will be 
-#' automatically ignored.
+#' automatically ignored/extracted.
 #' @param keep_originals Boolean. Should the original date/time columns be
-#' kept in the results?
+#' kept in the results? Only valid when input is a dataframe.
 #' @param only Character or vector. Which columns do you wish to process? If
 #' non are explicitly defined, all will be processed
 #' @param features Create features out of date/time columns?
@@ -208,6 +210,12 @@ ohse <- function(df,
 #' @param currency_pair Character. Which currency exchange do you
 #' wish to get the history from? i.e, USD/COP, EUR/USD...
 #' @param summary Boolean. Print a summary of the operations?
+#' @examples 
+#' data(dfl) # Dummy dataset
+#' # Imput as a vector or dataframe
+#' df <- date_feats(dfl, keep_originals = TRUE)
+#' # Same as running date_feats(dfl$opp_date)
+#' head(df, 10)
 #' @export
 date_feats <- function(dates, 
                        keep_originals = FALSE, only = NA,
@@ -308,7 +316,8 @@ date_feats <- function(dates,
     }
   }
   
-  if (!keep_originals) results <- results[, c(!colnames(results) %in% date_cols)]
+  if (!keep_originals) 
+    results <- results[, c(!colnames(results) %in% date_cols)]
   
   return(results)
   
@@ -324,6 +333,7 @@ date_feats <- function(dates,
 #' @family Data Wrangling
 #' @family Feature Engineering
 #' @family Scrapper
+#' @family One Hot Encoding
 #' @param years Character or vector. For which year(s) do you wish to import
 #' holiday dates?
 #' @param countries Character or vector. For which country(ies) should the 

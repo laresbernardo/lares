@@ -832,6 +832,7 @@ stocks_obj <- function(data = stocks_file(),
 #' plots and send it to an email with the HTML report attached
 #' 
 #' @family Investment
+#' @family Credentials
 #' @param data Character. stocks_file() output. If NA, automatic report
 #' parameters will be used
 #' @param dir Character. Directory for HTML report output. If set to NA, 
@@ -840,7 +841,7 @@ stocks_obj <- function(data = stocks_file(),
 #' If not, an HTML file will be created in dir
 #' @param to Character. Email to send the report to
 #' @param sectors Boolean. Return sectors segmentation for ETFs?
-#' @param creds Character. Credential's user (see get_credentials) for 
+#' @param creds Character. Credential's user (see `get_credentials`) for 
 #' sending mail and Dropbox interaction
 #' @examples
 #' \dontrun{

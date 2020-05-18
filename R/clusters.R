@@ -10,6 +10,8 @@
 #' when clusters are in different shapes such as elliptical clusters.
 #' 
 #' @family Machine Learning
+#' @family Clusters
+#' @family PCA
 #' @param df Dataframe
 #' @param k Integer. Number of clusters
 #' @param limit Integer. How many clusters should be considered?
@@ -74,7 +76,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   
   # Data should be normalized for better results
   if (norm) df <- df %>% 
-    transmute_all(funs(normalize)) %>% 
+    transmute_all(list(normalize)) %>% 
     replace(., is.na(.), 0)
   
   # Ignore some columns
@@ -93,7 +95,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     geom_line() + geom_point() +
     theme_minimal() +
     labs(title = "Total Number of Clusters",
-         subtitle = "Where does the curve level?",
+         subtitle = "HINT: Where does the curve level?",
          x = "Number of Clusters",
          y = "Within Groups Sum of Squares") +
     scale_y_continuous(labels = comma) +
@@ -176,4 +178,31 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   }
   
   return(results)
+}
+
+# Testing new functions
+if (FALSE) {
+  df <- dft[1:100,]
+  top <- 5
+  clusters <- 3
+  
+  try_require("factoextra")
+  dfp <- ohse(df)
+  dfp <- quiet(impute(dfp))
+  lasso <- lasso_vars(dfp, Survived_TRUE)
+  which <- lasso$coef$names[1:top]
+  most_imp_cols <- select(dfp, Survived_TRUE, one_of(which))
+  
+  # Optimal number of clusters
+  #fviz_nbclust(most_imp_cols, kmeans, method = "wss")
+  optimal <- clusterKmeans(most_imp_cols)
+  optimal$nclusters_plot
+  
+  kclus <- kmeans(most_imp_cols, centers = clusters, nstart = 10)
+  fviz_cluster(kclus, data = most_imp_cols, repel = TRUE, labelsize = 15)
+  
+  #Based on the coefficient, identified the best for this dataset (close to 1 is the best)
+  hclust_output <- cluster::agnes(most_imp_cols, diss = FALSE, metric = "euclidiean", method = 'ward')
+  fviz_dend(hclust_output, cex = 0.8, k = clusters, main = "Dendrogram", repel = TRUE)
+  
 }

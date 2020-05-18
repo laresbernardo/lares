@@ -94,6 +94,7 @@ recommended <- list(
   rgdal = c("readOGR", "project"),
   rpart = c("rpart", "rpart.control"),
   rpart.plot = c("rpart.plot"),
+  RPostgreSQL = c("PostgreSQL"),
   rtweet = c("create_token", "search_tweets"),
   rmarkdown = c("render"),
   skimr = c("skim"),

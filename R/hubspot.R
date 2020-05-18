@@ -3,8 +3,10 @@
 #' #' 
 #' #' This function brings ALL contacts with Hubspot's HAPI key
 #' #' 
+#' #' @family Credentials
+#' #' @family Hubspot
 #' #' @param limit Integer. Limit how many contacts you wish to bring
-#' #' @param creds Character. Credential's user (see get_credentials)
+#' #' @param creds Character. Credential's user (see `get_credentials`)
 #' #' @export
 #' hs_contacts <- function(limit=1000, creds = NA) {
 #'   
@@ -92,8 +94,10 @@
 #' #' 
 #' #' This function brings ALL deals with Hubspot's HAPI key
 #' #' 
+#' #' @family Credentials
+#' #' @family Hubspot
 #' #' @param limit Integer. Limit how many contacts you wish to bring
-#' #' @param creds Character. Credential's user (see get_credentials)
+#' #' @param creds Character. Credential's user (see `get_credentials`)
 #' #' @export
 #' hs_deals <- function(limit=10000, creds = NA) {
 #'   

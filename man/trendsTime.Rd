@@ -15,3 +15,15 @@ trendsTime(gtrend, title = NA)
 This function creates a plot with google trend's data on timelines
 and let the user compare different keywords.
 }
+\seealso{
+Other Google Trends: 
+\code{\link{trendsRelated}()}
+
+Other Google: 
+\code{\link{geoAddress}()},
+\code{\link{queryGA}()},
+\code{\link{readGS}()},
+\code{\link{trendsRelated}()}
+}
+\concept{Google}
+\concept{Google Trends}

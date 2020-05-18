@@ -77,6 +77,10 @@ Other Machine Learning:
 \code{\link{mplot_roc}()},
 \code{\link{mplot_splits}()},
 \code{\link{msplit}()}
+
+Other Missing Values: 
+\code{\link{missingness}()}
 }
 \concept{Data Wrangling}
 \concept{Machine Learning}
+\concept{Missing Values}

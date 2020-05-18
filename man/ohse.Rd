@@ -121,6 +121,11 @@ Other Data Wrangling:
 Other Feature Engineering: 
 \code{\link{date_feats}()},
 \code{\link{holidays}()}
+
+Other One Hot Encoding: 
+\code{\link{date_feats}()},
+\code{\link{holidays}()}
 }
 \concept{Data Wrangling}
 \concept{Feature Engineering}
+\concept{One Hot Encoding}

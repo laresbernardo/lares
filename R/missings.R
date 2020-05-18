@@ -5,6 +5,7 @@
 #' missingness in a data.frame. It also plots the results if needed.
 #' 
 #' @family Exploratory
+#' @family Missing Values
 #' @param df Dataframe. Dataframe to study
 #' @param plot Boolean. Do you wish to plot results?
 #' @param full Boolean. Return all variables (or only with missings)?
@@ -92,6 +93,7 @@ missingness <- function(df, plot = FALSE, full = FALSE,
 #' 
 #' @family Data Wrangling
 #' @family Machine Learning
+#' @family Missing Values
 #' @param df Dataframe. Dataframe to transform
 #' @param m Integer. Number of multiple imputations
 #' @param iters Integer. Number of iterations
