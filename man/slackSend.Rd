@@ -12,7 +12,7 @@ slackSend(text, title = "", pretext = "", hook = NA, creds = NA)
 \item{hook}{Character. Web hook URL. Ths value will be overwritten by
 creds if correctly used.}
 
-\item{creds}{Character. Credential's dir (see \code{get_creds}). Set
+\item{creds}{Character. Credential's dir (see \code{get_creds()}). Set
 hook URL into the "slack" list in your YML file. Will use first value.}
 }
 \description{
@@ -40,5 +40,18 @@ Other API:
 \code{\link{li_auth}()},
 \code{\link{li_profile}()},
 \code{\link{queryGA}()}
+
+Other Credentials: 
+\code{\link{db_download}()},
+\code{\link{f1_contacts}()},
+\code{\link{geoAddress}()},
+\code{\link{get_credentials}()},
+\code{\link{get_tweets}()},
+\code{\link{mailSend}()},
+\code{\link{queryDB}()},
+\code{\link{queryGA}()},
+\code{\link{stocks_file}()},
+\code{\link{stocks_report}()}
 }
 \concept{API}
+\concept{Credentials}

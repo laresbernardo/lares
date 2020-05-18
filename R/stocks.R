@@ -7,16 +7,15 @@
 #' @family Investment
 #' @family Credentials
 #' @param filename Characeter. Import a local Excel file
-#' @param creds Character. Dropbox's credentials (see \code{get_creds})
+#' @param creds Character. Dropbox's credentials (see \code{get_creds()})
 #' @param auto Boolean. Automatically use my local personal file? 
 #' @param sheets Character Vector. Names of each sheet containing Portfolio summary,
 #' Cash, and Transactions information
 #' @param keep_old Boolean. Include sold tickers eventhough not currently in portfolio?
 #' @examples 
 #' \dontrun{
-#' # Load lares dummy XLSX
+#' # Load lares dummy portfolio XLSX
 #' file <- system.file("inst/docs", "dummyPortfolio.xlsx", package = "lares")
-#' 
 #' df <- stocks_file(filename = file, 
 #'                   sheets = c("Portafolio","Fondos","Transacciones"), 
 #'                   keep_old = FALSE)
@@ -363,6 +362,7 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0) {
 #' how much have you invested, how much has each ticker changed, etc.
 #' 
 #' @family Investment
+#' @family Investment Plots
 #' @param p Dataframe. Result from daily_portfolio()
 #' @param s Dataframe. Result from daily_stocks()
 #' @param save Boolean. Save plot into a local file?
@@ -436,6 +436,7 @@ splot_summary <- function(p, s, save = FALSE) {
 #' or since last n days, with 2 moving average lines.
 #' 
 #' @family Investment
+#' @family Investment Plots
 #' @param p Dataframe. Result from daily_portfolio()
 #' @param n_days Integer. How many days back you want to see?
 #' @param historical Boolean. Historical ROI metric? If not, ROI
@@ -524,6 +525,7 @@ splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save =
 #' inception, with weighted attributions or absolute values.
 #' 
 #' @family Investment
+#' @family Investment Plots
 #' @param p Dataframe. Result from daily_portfolio()
 #' @param s Dataframe. Result from daily_stocks()
 #' @param weighted Boolean. Should variation values be weighted to the
@@ -584,6 +586,7 @@ splot_change <- function(p, s, weighted = TRUE, group = TRUE, save = FALSE) {
 #' since inception.
 #' 
 #' @family Investment
+#' @family Investment Plots
 #' @param p Dataframe. Result from daily_portfolio()
 #' @param save Boolean. Save plot into a local file?
 #' @export
@@ -633,6 +636,7 @@ splot_growth <- function(p, save = FALSE) {
 #' This function lets the user plot types or categories of tickers.
 #' 
 #' @family Investment
+#' @family Investment Plots
 #' @param s Dataframe. Result from daily_stocks()
 #' @param save Boolean. Save plot into a local file?
 #' @export
@@ -716,6 +720,7 @@ etf_sector <- function(etf = "VTI", quiet = FALSE) {
 #' specifically ETF's sectors
 #' 
 #' @family Investment
+#' @family Investment Plots
 #' @param s Dataframe. Result from daily_stocks()
 #' @param save Boolean. Save plot into a local file?
 #' @export
@@ -842,7 +847,7 @@ stocks_obj <- function(data = stocks_file(),
 #' If not, an HTML file will be created in dir
 #' @param to Character. Email to send the report to
 #' @param sectors Boolean. Return sectors segmentation for ETFs?
-#' @param creds Character. Credential's user (see \code{get_creds}) for 
+#' @param creds Character. Credential's user (see \code{get_creds()}) for 
 #' sending mail and Dropbox interaction
 #' @examples
 #' \dontrun{

@@ -20,7 +20,7 @@ geoAddress(
 \item{index}{Character Vector. If you wish to keep an id on each 
 address, set this values}
 
-\item{creds}{Character. Credential's user (see \code{get_creds})}
+\item{creds}{Character. Credential's user (see \code{get_creds()})}
 
 \item{which}{Character. Which of the APIs should be used?}
 }
@@ -41,6 +41,7 @@ Other Credentials:
 \code{\link{mailSend}()},
 \code{\link{queryDB}()},
 \code{\link{queryGA}()},
+\code{\link{slackSend}()},
 \code{\link{stocks_file}()},
 \code{\link{stocks_report}()}
 

@@ -21,7 +21,7 @@ for each tab and not as a file if needed}
 \item{newname}{Character. Name for new file}
 
 \item{token_dir}{Character. RDS with token local directory. You may set to
-NA if you already set your credentials (see \code{get_creds})}
+NA if you already set your credentials (see \code{get_creds()})}
 
 \item{token_name}{Character. RDS file name with your token's data}
 }
@@ -71,6 +71,7 @@ Other Credentials:
 \code{\link{mailSend}()},
 \code{\link{queryDB}()},
 \code{\link{queryGA}()},
+\code{\link{slackSend}()},
 \code{\link{stocks_file}()},
 \code{\link{stocks_report}()}
 

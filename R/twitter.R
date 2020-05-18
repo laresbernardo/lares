@@ -7,7 +7,7 @@
 #' @family Twitter
 #' @param q Query. Check for ?rtweet::search_tweets()
 #' @param n Integer. Total of tweets to return
-#' @param creds Character. Credential's user (see \code{get_creds})
+#' @param creds Character. Credential's user (see \code{get_creds()})
 #' @export
 get_tweets <- function(q, n = 10000, creds = NA) {
 

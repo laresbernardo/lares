@@ -19,9 +19,9 @@ queryGA(
 \arguments{
 \item{account}{Character. Personal named accounts}
 
-\item{creds}{Character. Credential's user (see \code{get_creds})}
+\item{creds}{Character. Credential's user (see \code{get_creds()})}
 
-\item{token_dir}{Character. Credential's directory (see \code{get_creds})}
+\item{token_dir}{Character. Credential's directory (see \code{get_creds()})}
 
 \item{metrics}{Character. Which metrics we wish to bring}
 
@@ -49,6 +49,7 @@ Other Credentials:
 \code{\link{get_tweets}()},
 \code{\link{mailSend}()},
 \code{\link{queryDB}()},
+\code{\link{slackSend}()},
 \code{\link{stocks_file}()},
 \code{\link{stocks_report}()}
 

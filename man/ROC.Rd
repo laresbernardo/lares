@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_functions.R
 \name{ROC}
 \alias{ROC}
-\title{ROC Curves Data}
+\title{AUC and ROC Curves Data}
 \usage{
 ROC(tag, score, multis = NA)
 }
@@ -18,6 +18,11 @@ ROC(tag, score, multis = NA)
 This function calculates ROC Curves and AUC values with 95\% confidence 
 range. It also works for multi-categorical models.
 }
+\section{Plot Results}{
+
+To plot results, use the \code{mplot_roc()} function.
+}
+
 \examples{
 binary <- data.frame(
   tag = c(1,1,1,1,1,0,0,0,0,0),
@@ -46,18 +51,6 @@ Other Machine Learning:
 \code{\link{iter_seeds}()},
 \code{\link{lasso_vars}()},
 \code{\link{model_metrics}()},
-\code{\link{mplot_conf}()},
-\code{\link{mplot_cuts_error}()},
-\code{\link{mplot_cuts}()},
-\code{\link{mplot_density}()},
-\code{\link{mplot_full}()},
-\code{\link{mplot_gain}()},
-\code{\link{mplot_importance}()},
-\code{\link{mplot_lineal}()},
-\code{\link{mplot_metrics}()},
-\code{\link{mplot_response}()},
-\code{\link{mplot_roc}()},
-\code{\link{mplot_splits}()},
 \code{\link{msplit}()}
 
 Other Calculus: 

@@ -6,7 +6,12 @@
 #' its parameters, datasets, performance metrics, variables 
 #' importances, and other useful metrics.
 #' 
-#' Full list of algorithms: "DRF" (Distributed Random Forest, including 
+#' @section Plot Results into Dashboard:
+#' Use the \code{mplot_full()} function to generate a dashboard with
+#' your model's results and metrics.
+#' 
+#' @section List of algorithms:
+#' "DRF" (Distributed Random Forest, including 
 #' Random Forest (RF) and Extremely-Randomized Trees (XRT)), "GLM" 
 #' (Generalized Linear Model), "XGBoost" (eXtreme Grading Boosting), 
 #' "GBM" (Gradient Boosting Machine), "DeepLearning" (Fully-connected 
@@ -1110,10 +1115,13 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
 
 
 ####################################################################
-#' ROC Curves Data
+#' AUC and ROC Curves Data
 #' 
 #' This function calculates ROC Curves and AUC values with 95\% confidence 
 #' range. It also works for multi-categorical models.
+#' 
+#' @section Plot Results:
+#' To plot results, use the \code{mplot_roc()} function.
 #' 
 #' @family Machine Learning
 #' @family Calculus

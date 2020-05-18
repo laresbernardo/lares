@@ -11,7 +11,7 @@
 #' @param attachment Character, plot or data.frame. Will send the file, 
 #' plot as PNG or data.frame as CSV, respectively. 
 #' @param quiet Boolean. Keep quite or display messages?
-#' @param creds Character. Credential's user (see \code{get_creds}).
+#' @param creds Character. Credential's user (see \code{get_creds()}).
 #' Must contain: url (POST address), api (api key)
 #' @export
 mailSend <- function(from = "RMail <laresbernardo@gmail.com>",

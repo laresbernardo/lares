@@ -108,14 +108,22 @@ H2O's AutoML function. The result is a list with the best model,
 its parameters, datasets, performance metrics, variables 
 importances, and other useful metrics.
 }
-\details{
-Full list of algorithms: "DRF" (Distributed Random Forest, including 
+\section{Plot Results into Dashboard}{
+
+Use the \code{mplot_full()} function to generate a dashboard with
+your model's results and metrics.
+}
+
+\section{List of algorithms}{
+
+"DRF" (Distributed Random Forest, including 
 Random Forest (RF) and Extremely-Randomized Trees (XRT)), "GLM" 
 (Generalized Linear Model), "XGBoost" (eXtreme Grading Boosting), 
 "GBM" (Gradient Boosting Machine), "DeepLearning" (Fully-connected 
 multi-layer artificial neural network) and "StackedEnsemble". Read more: 
 \url{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}
 }
+
 \examples{
 \dontrun{
 data(dft)
@@ -164,18 +172,6 @@ Other Machine Learning:
 \code{\link{iter_seeds}()},
 \code{\link{lasso_vars}()},
 \code{\link{model_metrics}()},
-\code{\link{mplot_conf}()},
-\code{\link{mplot_cuts_error}()},
-\code{\link{mplot_cuts}()},
-\code{\link{mplot_density}()},
-\code{\link{mplot_full}()},
-\code{\link{mplot_gain}()},
-\code{\link{mplot_importance}()},
-\code{\link{mplot_lineal}()},
-\code{\link{mplot_metrics}()},
-\code{\link{mplot_response}()},
-\code{\link{mplot_roc}()},
-\code{\link{mplot_splits}()},
 \code{\link{msplit}()}
 }
 \concept{Machine Learning}

@@ -8,10 +8,11 @@
 #' original documentarion.
 #' 
 #' @family API
+#' @family Credentials
 #' @param text,title,pretext Character. Content on you Slack message.
 #' @param hook Character. Web hook URL. Ths value will be overwritten by
 #' creds if correctly used.
-#' @param creds Character. Credential's dir (see \code{get_creds}). Set
+#' @param creds Character. Credential's dir (see \code{get_creds()}). Set
 #' hook URL into the "slack" list in your YML file. Will use first value.
 #' @examples 
 #' \dontrun{

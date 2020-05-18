@@ -15,7 +15,7 @@ stocks_file(
 \arguments{
 \item{filename}{Characeter. Import a local Excel file}
 
-\item{creds}{Character. Dropbox's credentials (see \code{get_creds})}
+\item{creds}{Character. Dropbox's credentials (see \code{get_creds()})}
 
 \item{auto}{Boolean. Automatically use my local personal file?}
 
@@ -30,9 +30,8 @@ Portfolio's data, locally or from Dropbox.
 }
 \examples{
 \dontrun{
-# Load lares dummy XLSX
+# Load lares dummy portfolio XLSX
 file <- system.file("inst/docs", "dummyPortfolio.xlsx", package = "lares")
-
 df <- stocks_file(filename = file, 
                   sheets = c("Portafolio","Fondos","Transacciones"), 
                   keep_old = FALSE)
@@ -63,6 +62,7 @@ Other Credentials:
 \code{\link{mailSend}()},
 \code{\link{queryDB}()},
 \code{\link{queryGA}()},
+\code{\link{slackSend}()},
 \code{\link{stocks_report}()}
 }
 \concept{Credentials}

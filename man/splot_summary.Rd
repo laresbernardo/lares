@@ -32,5 +32,13 @@ Other Investment:
 \code{\link{stocks_obj}()},
 \code{\link{stocks_quote}()},
 \code{\link{stocks_report}()}
+
+Other Investment Plots: 
+\code{\link{splot_change}()},
+\code{\link{splot_etf}()},
+\code{\link{splot_growth}()},
+\code{\link{splot_roi}()},
+\code{\link{splot_types}()}
 }
 \concept{Investment}
+\concept{Investment Plots}
