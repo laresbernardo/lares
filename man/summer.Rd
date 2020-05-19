@@ -49,8 +49,12 @@ Other Visualization:
 \code{\link{freqs_df}()},
 \code{\link{freqs_plot}()},
 \code{\link{freqs}()},
+\code{\link{gg_bars}()},
+\code{\link{gg_pie}()},
 \code{\link{noPlot}()},
+\code{\link{plot_chord}()},
 \code{\link{plot_survey}()},
+\code{\link{plot_timeline}()},
 \code{\link{theme_lares2}()},
 \code{\link{theme_lares}()},
 \code{\link{tree_var}()}

@@ -15,9 +15,8 @@ customizable message. It is quite useful for Shiny renderPlot when
 using filters and no data is returned.
 }
 \examples{
-\dontrun{
-p <- noPlot()
-}
+options("lares.font" = NA) # Temporal
+noPlot(message = "No plot to show!")
 }
 \seealso{
 Other Visualization: 
@@ -25,7 +24,11 @@ Other Visualization:
 \code{\link{freqs_df}()},
 \code{\link{freqs_plot}()},
 \code{\link{freqs}()},
+\code{\link{gg_bars}()},
+\code{\link{gg_pie}()},
+\code{\link{plot_chord}()},
 \code{\link{plot_survey}()},
+\code{\link{plot_timeline}()},
 \code{\link{summer}()},
 \code{\link{theme_lares2}()},
 \code{\link{theme_lares}()},

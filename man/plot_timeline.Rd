@@ -44,7 +44,7 @@ This function plots groups of observartions with timelines in a
 Gantt Plot way. Only works if start and end are date format values.
 }
 \examples{
-\dontrun{
+options("lares.font" = NA) # Temporal
 cols <- c("Role", "Place", "Type", "Start", "End")
 today <- as.character(Sys.Date())
 cv <- data.frame(rbind(
@@ -71,4 +71,20 @@ plot_timeline(event = cv$Role,
               # Simple trick to re-arrange the grids
               group = factor(cv$Type, levels = c("Work Experience", "Academic", "Extra")))
 }
+\seealso{
+Other Visualization: 
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs_plot}()},
+\code{\link{freqs}()},
+\code{\link{gg_bars}()},
+\code{\link{gg_pie}()},
+\code{\link{noPlot}()},
+\code{\link{plot_chord}()},
+\code{\link{plot_survey}()},
+\code{\link{summer}()},
+\code{\link{theme_lares2}()},
+\code{\link{theme_lares}()},
+\code{\link{tree_var}()}
 }
+\concept{Visualization}

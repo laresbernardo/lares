@@ -5,7 +5,12 @@
 \alias{dfr}
 \title{Dataset: Results for AutoML Predictions}
 \format{
-An object of class \code{"list"} and length = 3
+An object of class \code{"list"} with 3 \code{"data.frame"}
+\describe{
+  \item{class2}{Predictions for a Binomial Classification Model}
+  \item{class3}{Predictions for a Multi-Categorical Classification Model}
+  \item{regr}{Predictions for a Continuous Regression Model}
+}
 }
 \usage{
 data(dfr)

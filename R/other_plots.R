@@ -4,6 +4,7 @@
 #' This function plots groups of observartions with timelines in a 
 #' Gantt Plot way. Only works if start and end are date format values.
 #' 
+#' @family Visualization
 #' @param event Vector. Event, role, label, or row.
 #' @param start Vector. Start date.
 #' @param end Vector. End date. Only one day be default if not defined
@@ -16,7 +17,7 @@
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @examples 
-#' \dontrun{
+#' options("lares.font" = NA) # Temporal
 #' cols <- c("Role", "Place", "Type", "Start", "End")
 #' today <- as.character(Sys.Date())
 #' cv <- data.frame(rbind(
@@ -42,7 +43,6 @@
 #'               label = cv$Place, 
 #'               # Simple trick to re-arrange the grids
 #'               group = factor(cv$Type, levels = c("Work Experience", "Academic", "Extra")))
-#' }
 #' @export
 plot_timeline <- function(event, 
                           start, end = start + 1, 
@@ -119,17 +119,17 @@ plot_timeline <- function(event,
 #' 
 #' This function plots discrete and continuous values results
 #' 
+#' @family Visualization
 #' @param df Dataframe
 #' @param var Variable to group, count and plot
 #' @param table Boolean. Print results as table?
 #' @param ... Further parameters passed to freqs()
 #' @examples 
-#' \dontrun{
+#' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
 #' gg_pie(dft, Survived)
 #' gg_pie(dft, Pclass, table = TRUE)
 #' gg_pie(dft, SibSp, table = TRUE, abc = TRUE)
-#' }
 #' @export
 gg_pie <- function(df, var, table = FALSE, ...){
   
@@ -173,6 +173,7 @@ gg_pie <- function(df, var, table = FALSE, ...){
 #' 
 #' This function plots discrete and continuous values results
 #' 
+#' @family Visualization
 #' @param origin,dest Vectors. Origin and destination vectors
 #' @param weight Vector. Weight for each chor
 #' @param mg Numeric. Margin adjust for plot in case of need
@@ -233,6 +234,7 @@ plot_chord <- function(origin, dest,
 #' 
 #' This function uses a nice template for barplots.
 #' 
+#' @family Visualization
 #' @param names Character Vector. Bar names
 #' @param n,p Numeric Vectors. n for counter, p to force percentage.
 #' @param title,subtitle,axis Character. Texts for plot
@@ -240,12 +242,11 @@ plot_chord <- function(origin, dest,
 #' @param limit Integer. Limit n most frequent values only
 #' @param na.rm Boolean. Remove empty and NAs?
 #' @examples 
-#' \dontrun{
+#' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
 #' df <- freqs(dft, Pclass)
-#' gg_bars(df$Pclass, df$n)
-#' gg_bars(df$Pclass, df$p, axis = "Percentage of ...")
-#' }
+#' gg_bars(df$Pclass, n = df$n)
+#' gg_bars(df$Pclass, n = df$n, p = df$p, axis = "Percentage of ...")
 #' @export
 gg_bars <- function(names, n, p = NA, 
                     title = NA, 
@@ -265,7 +266,7 @@ gg_bars <- function(names, n, p = NA,
   
   if (class(n) == "integer") {
     dfn <- dfn %>% 
-      mutate(p = ifelse(!is.na(.data$p), .data$p, 100*.data$count/sum(.data$count)),
+      mutate(p = ifelse(!is.na(p), p, 100*.data$count/sum(.data$count)),
              labels = paste0(formatNum(.data$count, 0)," (", signif(.data$p, 3), "%)"))
   } else {
     dfn <- dfn %>% 
@@ -340,9 +341,8 @@ scale_y_dollar <- function(...) scale_y_continuous(..., labels = dollar)
 #' @family Visualization
 #' @param message Character. What message do you wish to show?
 #' @examples 
-#' \dontrun{
-#' p <- noPlot()
-#' }
+#' options("lares.font" = NA) # Temporal
+#' noPlot(message = "No plot to show!")
 #' @export
 noPlot <- function(message = "Nothing to show here!") {
   ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 

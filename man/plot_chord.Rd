@@ -36,3 +36,20 @@ df <- data.frame(from = c(1, 1, 2, 3, 4, 1, 6), to = c(4, 4, 4, 2, 2, NA, NA))
 plot_chord(df$from, df$to)
 }
 }
+\seealso{
+Other Visualization: 
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs_plot}()},
+\code{\link{freqs}()},
+\code{\link{gg_bars}()},
+\code{\link{gg_pie}()},
+\code{\link{noPlot}()},
+\code{\link{plot_survey}()},
+\code{\link{plot_timeline}()},
+\code{\link{summer}()},
+\code{\link{theme_lares2}()},
+\code{\link{theme_lares}()},
+\code{\link{tree_var}()}
+}
+\concept{Visualization}

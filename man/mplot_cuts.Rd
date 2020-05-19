@@ -38,7 +38,7 @@ This function cuts by quantiles any score or prediction.
 \examples{
 options("lares.font" = NA) # Temporal
 data(dfr) # Results for AutoML Predictions
-lapply(dfr, head)
+head(dfr$class2)
 
 # Data
 mplot_cuts(dfr$class2$scores, splits = 5, table = TRUE)

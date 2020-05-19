@@ -33,10 +33,26 @@ gg_bars(
 This function uses a nice template for barplots.
 }
 \examples{
-\dontrun{
+options("lares.font" = NA) # Temporal
 data(dft) # Titanic dataset
 df <- freqs(dft, Pclass)
-gg_bars(df$Pclass, df$n)
-gg_bars(df$Pclass, df$p, axis = "Percentage of ...")
+gg_bars(df$Pclass, n = df$n)
+gg_bars(df$Pclass, n = df$n, p = df$p, axis = "Percentage of ...")
 }
+\seealso{
+Other Visualization: 
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs_plot}()},
+\code{\link{freqs}()},
+\code{\link{gg_pie}()},
+\code{\link{noPlot}()},
+\code{\link{plot_chord}()},
+\code{\link{plot_survey}()},
+\code{\link{plot_timeline}()},
+\code{\link{summer}()},
+\code{\link{theme_lares2}()},
+\code{\link{theme_lares}()},
+\code{\link{tree_var}()}
 }
+\concept{Visualization}

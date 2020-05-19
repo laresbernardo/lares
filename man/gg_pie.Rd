@@ -19,10 +19,26 @@ gg_pie(df, var, table = FALSE, ...)
 This function plots discrete and continuous values results
 }
 \examples{
-\dontrun{
+options("lares.font" = NA) # Temporal
 data(dft) # Titanic dataset
 gg_pie(dft, Survived)
 gg_pie(dft, Pclass, table = TRUE)
 gg_pie(dft, SibSp, table = TRUE, abc = TRUE)
 }
+\seealso{
+Other Visualization: 
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs_plot}()},
+\code{\link{freqs}()},
+\code{\link{gg_bars}()},
+\code{\link{noPlot}()},
+\code{\link{plot_chord}()},
+\code{\link{plot_survey}()},
+\code{\link{plot_timeline}()},
+\code{\link{summer}()},
+\code{\link{theme_lares2}()},
+\code{\link{theme_lares}()},
+\code{\link{tree_var}()}
 }
+\concept{Visualization}

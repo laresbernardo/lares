@@ -38,7 +38,7 @@ This function cuts by quantiles on absolut and percentual errors
 \examples{
 options("lares.font" = NA) # Temporal
 data(dfr) # Results for AutoML Predictions
-lapply(dfr, head)
+head(dfr$regr)
 mplot_cuts_error(dfr$regr$tag, dfr$regr$score,
                  model_name = "Titanic Fare Model")
 }

@@ -16,12 +16,14 @@
 #' @section YML File example:
 #' A YML file is a text file, with \code{.yml} file format. The following example 
 #' shows the structure you must follow to set your credentials file.
+#' ```
 #' service1:
 #'   user: 'bernardo'
 #'   pass: 0123456789
 #' service2:
 #'   user: 'blv'
 #'   token: 'AbC123'
+#' ```
 #' 
 #' @family Tools
 #' @family Credentials

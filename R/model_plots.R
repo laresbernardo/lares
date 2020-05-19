@@ -332,7 +332,7 @@ mplot_roc <- function(tag,
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dfr) # Results for AutoML Predictions
-#' lapply(dfr, head)
+#' head(dfr$class2)
 #' 
 #' # Data
 #' mplot_cuts(dfr$class2$scores, splits = 5, table = TRUE)
@@ -405,7 +405,7 @@ mplot_cuts <- function(score,
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dfr) # Results for AutoML Predictions
-#' lapply(dfr, head)
+#' head(dfr$regr)
 #' mplot_cuts_error(dfr$regr$tag, dfr$regr$score,
 #'                  model_name = "Titanic Fare Model")
 #' @export
@@ -597,7 +597,7 @@ mplot_splits <- function(tag,
     geom_text(size = 3, position = position_stack(vjust = 0.5), check_overlap = TRUE) +
     xlab("Tag") + ylab("Total Percentage by Tag") +
     guides(fill = guide_legend(title = paste0("~",npersplit," p/split"))) +
-    labs(title = "Tag vs Score Splits Comparison") +
+    labs(title = "Split Groups") +
     scale_fill_brewer(palette = "Spectral") +
     theme_lares2()
   
