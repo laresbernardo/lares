@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_plots.R
 \name{mplot_metrics}
 \alias{mplot_metrics}
-\title{AUC and LogLoss Plots}
+\title{Model Metrics and Performance Plots}
 \usage{
 mplot_metrics(
   results,
@@ -27,7 +27,9 @@ mplot_metrics(
 \item{file_name}{Character. File name as you wish to save the plot}
 }
 \description{
-This function can plot AUC and LogLoss Plots from a h2o_automl results object
+This function generates plots of the metrics of a predictive model.
+This is an auxiliary function used in \code{model_metrics()} when
+the parameter `plot` is set to `TRUE`.
 }
 \seealso{
 Other ML Visualization: 

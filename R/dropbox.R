@@ -59,7 +59,6 @@ db_download <- function(filename,
 #' its name and using a previously created token. 
 #' 
 #' @family Tools
-#' @family Connections
 #' @family Dropbox
 #' @param filename String. File's name
 #' @param dir String. Directory you wish to upload the file to

@@ -48,7 +48,8 @@ resource limited.}
 \item{quiet}{Boolean. Quiet messages, warnings, recommendations?}
 }
 \description{
-Automated H2O's AutoML Results
+This is an auxiliary function to calculate predictions and results
+when using the \code{h2o_automl()} function.
 }
 \seealso{
 Other Machine Learning: 

@@ -7,7 +7,8 @@
 iter_seeds(df, tries = 10)
 }
 \arguments{
-\item{df}{Dataframe. Dataframe with all your data you wish to model (see h2o_automl's df)}
+\item{df}{Dataframe. Dataframe with all your data you wish to model 
+(see \code{h2o_automl()}'s df)}
 
 \item{tries}{Integer. How many seed do you wish to try?}
 }

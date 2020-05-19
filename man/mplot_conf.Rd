@@ -39,6 +39,9 @@ confusion matrix.}
 \description{
 This function plots a confussion matrix.
 }
+\details{
+You may use \code{conf_mat()} to get calculate values.
+}
 \examples{
 options("lares.font" = NA) # Temporal
 data(dfr) # Results for AutoML Predictions

@@ -7,7 +7,7 @@
 h2o_selectmodel(results, which_model = 1, plots = TRUE, quiet = FALSE)
 }
 \arguments{
-\item{results}{Object. h2o_automl output}
+\item{results}{Object. h2o_automl output from \code{h2o_automl()}}
 
 \item{which_model}{Integer. Which model from the leaderboard you wish to use?}
 

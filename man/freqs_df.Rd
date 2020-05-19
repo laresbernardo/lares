@@ -60,7 +60,6 @@ Other Exploratory:
 \code{\link{distr}()},
 \code{\link{freqs_plot}()},
 \code{\link{freqs}()},
-\code{\link{gain_lift}()},
 \code{\link{lasso_vars}()},
 \code{\link{missingness}()},
 \code{\link{plot_cats}()},

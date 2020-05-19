@@ -40,7 +40,7 @@ This function plots discrete and continuous values results
 \examples{
 options("lares.font" = NA) # Temporal
 data(dfr) # Results for AutoML Predictions
-lapply(dfr, head)
+lapply(dfr[c(1,3)], head)
 
 # Plot for binomial results
 mplot_density(dfr$class2$tag, dfr$class2$scores, subtitle = "Titanic Survived Model")

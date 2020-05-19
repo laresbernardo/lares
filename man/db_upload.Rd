@@ -61,13 +61,8 @@ Other Tools:
 \code{\link{updateLares}()},
 \code{\link{zerovar}()}
 
-Other Connections: 
-\code{\link{li_auth}()},
-\code{\link{li_profile}()}
-
 Other Dropbox: 
 \code{\link{db_download}()}
 }
-\concept{Connections}
 \concept{Dropbox}
 \concept{Tools}

@@ -23,7 +23,6 @@ date_cuts(Sys.Date(), type = "H")
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},
-\code{\link{calibrate}()},
 \code{\link{categ_reducer}()},
 \code{\link{cleanText}()},
 \code{\link{date_feats}()},

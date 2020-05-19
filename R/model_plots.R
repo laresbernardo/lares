@@ -17,7 +17,7 @@
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dfr) # Results for AutoML Predictions
-#' lapply(dfr, head)
+#' lapply(dfr[c(1,3)], head)
 #' 
 #' # Plot for binomial results
 #' mplot_density(dfr$class2$tag, dfr$class2$scores, subtitle = "Titanic Survived Model")
@@ -233,7 +233,7 @@ mplot_importance <- function(var,
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dfr) # Results for AutoML Predictions
-#' lapply(dfr, head)
+#' lapply(dfr[c(1,2)], head)
 #' 
 #' # ROC Curve for Binomial Model
 #' mplot_roc(dfr$class2$tag, dfr$class2$scores, 
@@ -617,9 +617,11 @@ mplot_splits <- function(tag,
 
 
 ####################################################################
-#' AUC and LogLoss Plots
+#' Model Metrics and Performance Plots
 #' 
-#' This function can plot AUC and LogLoss Plots from a h2o_automl results object
+#' This function generates plots of the metrics of a predictive model.
+#' This is an auxiliary function used in \code{model_metrics()} when
+#' the parameter `plot` is set to `TRUE`.
 #' 
 #' @family ML Visualization
 #' @param results Object. Results object from h2o_automl function
@@ -889,6 +891,8 @@ mplot_full <- function(tag,
 #' Confussion Matrix Plot
 #' 
 #' This function plots a confussion matrix.
+#' 
+#' You may use \code{conf_mat()} to get calculate values.
 #' 
 #' @family ML Visualization
 #' @param tag Vector. Real known label

@@ -27,7 +27,6 @@ cleanText(c("María", "€", "Núñez"))
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},
-\code{\link{calibrate}()},
 \code{\link{categ_reducer}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},

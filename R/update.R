@@ -4,13 +4,13 @@
 #' This function lets the user update from repository or local source.
 #'
 #' @family Tools
-#' @param local Boolean. Install package with local files (TRUE) or Github repository
-#' @param force Boolean. Force install if needed
-#' @param n Boolean. Notify update for lares' stats
-#' @param fb Boolean. From FB instance?
+#' @param force Boolean. Force install
 #' @param all Boolean. Install other recommended libraries? Kinda Docker install!
+#' @param local Boolean. Install package with local files? (or Github repo)
+#' @param n Boolean. Notify update for lares' stats
+#' @param fb Boolean. From FB instance? Personal use
 #' @export
-updateLares <- function(local = FALSE, force = FALSE, n = TRUE, fb = FALSE, all = FALSE) {
+updateLares <- function(force = FALSE, all = FALSE, local = FALSE, n = TRUE, fb = FALSE) {
   
   try_require("devtools")
   

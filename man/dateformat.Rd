@@ -25,7 +25,6 @@ the permitted: 10-05-2019, 2019-10-05 5/22/2015, 9:45:03 AM,
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},
-\code{\link{calibrate}()},
 \code{\link{categ_reducer}()},
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},

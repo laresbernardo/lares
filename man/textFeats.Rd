@@ -28,7 +28,6 @@ textFeats(c("GREAT library!!", "Have you tried this 2?", "Happy faces :D :-)"))
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},
-\code{\link{calibrate}()},
 \code{\link{categ_reducer}()},
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},

@@ -43,7 +43,6 @@ categ_reducer(dft, Ticket, nmin = 7, other_label = "Other Ticket") \%>\% freqs(T
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},
-\code{\link{calibrate}()},
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},

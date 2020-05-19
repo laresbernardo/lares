@@ -51,7 +51,6 @@ head(df, 10)
 \seealso{
 Other Data Wrangling: 
 \code{\link{balance_data}()},
-\code{\link{calibrate}()},
 \code{\link{categ_reducer}()},
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},

@@ -18,10 +18,6 @@ This function authenticates and creates a token for LinkedIn's
 API REST
 }
 \seealso{
-Other Connections: 
-\code{\link{db_upload}()},
-\code{\link{li_profile}()}
-
 Other API: 
 \code{\link{bring_api}()},
 \code{\link{fb_accounts}()},
@@ -33,6 +29,9 @@ Other API:
 \code{\link{li_profile}()},
 \code{\link{queryGA}()},
 \code{\link{slackSend}()}
+
+Other LinkedIn: 
+\code{\link{li_profile}()}
 }
 \concept{API}
-\concept{Connections}
+\concept{LinkedIn}

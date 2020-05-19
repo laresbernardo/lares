@@ -20,5 +20,5 @@ categorical model.}
 }
 \description{
 This function detects or forces the target value when predicting
-a categorical binary model.
+a categorical binary model. This is an auxiliary function.
 }

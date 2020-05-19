@@ -13,17 +13,11 @@
 #' This will be asked once and will be set for further R sessions. Remember to
 #' reset your session for this setup to start working properly.
 #' 
-#' @section YML File example:
-#' A YML file is a text file, with \code{.yml} file format. The following example 
-#' shows the structure you must follow to set your credentials file.
-#' ```
-#' service1:
-#'   user: 'bernardo'
-#'   pass: 0123456789
-#' service2:
-#'   user: 'blv'
-#'   token: 'AbC123'
-#' ```
+#' @section YML file format:
+#' A YML file is a text file, with \code{.yml} file format. You may start from 
+#' the dummy YML file shared which shows the structure you must follow to set your 
+#' credentials file. Check it out \href{https://bit.ly/2ZhJMse}{here} or find it
+#' locally using \code{system.file("docs", "config.yml", package = "lares")}.
 #' 
 #' @family Tools
 #' @family Credentials
@@ -36,6 +30,21 @@
 #' @param filename Character. YML filename with your credentials.
 #' @param env Character. Environment variable name. No need to set differently
 #' for any function that uses this library. Only for external use
+#' @examples 
+#' \dontrun{
+#' # Load dummy config.yml file from the library
+#' # Recommendation: set dir with NA (read documentation)
+#' yml <- system.file("docs", "config.yml", package = "lares")
+#' yml <- gsub("/config\\.yml", "", yml) # We need the directory, not the file
+#' 
+#' # Let's see which credentials we have in our file
+#' get_credentials(dir = yml)
+#' # Warning message: No credentials for NA found in your YML file. 
+#' # Try any of the following: 'service1', 'service2', 'service3'
+#'   
+#' # Get credentials for service1
+#' get_credentials("service1", dir = yml)
+#' }
 #' @export
 get_credentials <- function(from = NA, dir = NA, 
                             filename = "config.yml", 

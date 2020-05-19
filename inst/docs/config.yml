@@ -1,0 +1,14 @@
+default:
+  service1:
+    driver: 'PostgreSQL' 
+    server: 'production-url.amazonaws.com'
+    uid: 'dummyuser'
+    pwd: 'dummypass123'  
+    port: 5432
+    database: 'laresdb'
+  service2:
+    email: 'dummymail@gmail.com'
+  service3:
+    username: 'myusername'
+    repo: 'laresbernardo/lares'
+    token: 'clntbjnrdbgvutdlkcecricuurtjtnbe'

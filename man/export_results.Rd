@@ -14,7 +14,7 @@ export_results(
 )
 }
 \arguments{
-\item{results}{Object. h2o_automl output}
+\item{results}{Object. h2o_automl output from \code{h2o_automl()}}
 
 \item{thresh}{Integer. Threshold for selecting binary or regression 
 models: this number is the threshold of unique values we should 
@@ -34,7 +34,7 @@ the results?}
 \item{save}{Boolean. Do you wish to save/export results?}
 }
 \description{
-Export RDS, TXT, POJO, MOJO and all results from h2o_automl
+Export RDS, TXT, POJO, MOJO and all results from \code{h2o_automl()}.
 }
 \seealso{
 Other Machine Learning: 

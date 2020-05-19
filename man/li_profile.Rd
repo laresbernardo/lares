@@ -13,10 +13,6 @@ li_profile(token = NA)
 This function brings a list with your personal LinkedIn data
 }
 \seealso{
-Other Connections: 
-\code{\link{db_upload}()},
-\code{\link{li_auth}()}
-
 Other API: 
 \code{\link{bring_api}()},
 \code{\link{fb_accounts}()},
@@ -28,6 +24,9 @@ Other API:
 \code{\link{li_auth}()},
 \code{\link{queryGA}()},
 \code{\link{slackSend}()}
+
+Other LinkedIn: 
+\code{\link{li_auth}()}
 }
 \concept{API}
-\concept{Connections}
+\concept{LinkedIn}

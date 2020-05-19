@@ -4,8 +4,8 @@
 #' This function authenticates and creates a token for LinkedIn's 
 #' API REST
 #'
-#' @family Connections
 #' @family API
+#' @family LinkedIn
 #' @param app_name Character. Your App's given name
 #' @param client_id Character. Your App's client ID
 #' @param client_secret Character. Your App's client secret
@@ -34,8 +34,8 @@ li_auth <- function(app_name = NA, client_id = NA, client_secret = NA){
 #'
 #' This function brings a list with your personal LinkedIn data
 #'
-#' @family Connections
 #' @family API
+#' @family LinkedIn
 #' @param token Object. OAuth Authentication: li_auth()'s output
 #' @export
 li_profile <- function(token = NA) {

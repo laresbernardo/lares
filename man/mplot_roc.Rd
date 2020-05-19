@@ -52,7 +52,7 @@ range. It also works for multi-categorical models.
 \examples{
 options("lares.font" = NA) # Temporal
 data(dfr) # Results for AutoML Predictions
-lapply(dfr, head)
+lapply(dfr[c(1,2)], head)
 
 # ROC Curve for Binomial Model
 mplot_roc(dfr$class2$tag, dfr$class2$scores, 

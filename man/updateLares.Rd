@@ -4,18 +4,18 @@
 \alias{updateLares}
 \title{Update the library}
 \usage{
-updateLares(local = FALSE, force = FALSE, n = TRUE, fb = FALSE, all = FALSE)
+updateLares(force = FALSE, all = FALSE, local = FALSE, n = TRUE, fb = FALSE)
 }
 \arguments{
-\item{local}{Boolean. Install package with local files (TRUE) or Github repository}
+\item{force}{Boolean. Force install}
 
-\item{force}{Boolean. Force install if needed}
+\item{all}{Boolean. Install other recommended libraries? Kinda Docker install!}
+
+\item{local}{Boolean. Install package with local files? (or Github repo)}
 
 \item{n}{Boolean. Notify update for lares' stats}
 
-\item{fb}{Boolean. From FB instance?}
-
-\item{all}{Boolean. Install other recommended libraries? Kinda Docker install!}
+\item{fb}{Boolean. From FB instance? Personal use}
 }
 \description{
 This function lets the user update from repository or local source.
