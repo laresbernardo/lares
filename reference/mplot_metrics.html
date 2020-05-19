@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AUC and LogLoss Plots — mplot_metrics • lares</title>
+<title>Model Metrics and Performance Plots — mplot_metrics • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="AUC and LogLoss Plots — mplot_metrics" />
-<meta property="og:description" content="This function can plot AUC and LogLoss Plots from a h2o_automl results object" />
+<meta property="og:title" content="Model Metrics and Performance Plots — mplot_metrics" />
+<meta property="og:description" content="This function generates plots of the metrics of a predictive model.
+This is an auxiliary function used in model_metrics() when
+the parameter `plot` is set to `TRUE`." />
 
 
 
@@ -108,13 +110,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>AUC and LogLoss Plots</h1>
+    <h1>Model Metrics and Performance Plots</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/model_plots.R'><code>R/model_plots.R</code></a></small>
     <div class="hidden name"><code>mplot_metrics.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function can plot AUC and LogLoss Plots from a h2o_automl results object</p>
+    <p>This function generates plots of the metrics of a predictive model.
+This is an auxiliary function used in <code><a href='model_metrics.html'>model_metrics()</a></code> when
+the parameter `plot` is set to `TRUE`.</p>
     </div>
 
     <pre class="usage"><span class='fu'>mplot_metrics</span>(

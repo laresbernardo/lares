@@ -110,7 +110,7 @@ range. It also works for multi-categorical models." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>AUC and ROC Curves Data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/model_functions.R'><code>R/model_functions.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/model_metrics.R'><code>R/model_metrics.R</code></a></small>
     <div class="hidden name"><code>ROC.Rd</code></div>
     </div>
 
@@ -163,41 +163,97 @@ range. It also works for multi-categorical models.</p>
 <code><a href='lasso_vars.html'>lasso_vars</a>()</code>,
 <code><a href='model_metrics.html'>model_metrics</a>()</code>,
 <code><a href='msplit.html'>msplit</a>()</code></p>
-<p>Other Calculus: 
+<p>Other Model metrics: 
 <code><a href='conf_mat.html'>conf_mat</a>()</code>,
-<code><a href='corr.html'>corr</a>()</code>,
-<code><a href='deg2num.html'>deg2num</a>()</code>,
-<code><a href='dist2d.html'>dist2d</a>()</code>,
 <code><a href='errors.html'>errors</a>()</code>,
+<code><a href='gain_lift.html'>gain_lift</a>()</code>,
 <code><a href='loglossBinary.html'>loglossBinary</a>()</code>,
-<code><a href='model_metrics.html'>model_metrics</a>()</code>,
-<code><a href='quants.html'>quants</a>()</code></p></div>
+<code><a href='model_metrics.html'>model_metrics</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>binary</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  <span class='kw'>tag</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>),
-  <span class='kw'>score</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.9</span>, <span class='fl'>0.5</span>, <span class='fl'>0.7</span>, <span class='fl'>0.1</span>, <span class='fl'>0.7</span>, <span class='fl'>0.1</span>, <span class='fl'>0.2</span>, <span class='fl'>0.1</span>, <span class='fl'>0.5</span>, <span class='fl'>0.3</span>))
-
-<span class='fu'>ROC</span>(<span class='kw'>tag</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>tag</span>, <span class='kw'>score</span> <span class='kw'>=</span> <span class='no'>binary</span>$<span class='no'>score</span>)</div><div class='output co'>#&gt; $ci
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>dfr</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>)], <span class='no'>head</span>)</div><div class='output co'>#&gt; $class2
+#&gt;     tag    scores
+#&gt; 1  TRUE 0.3155498
+#&gt; 2  TRUE 0.8747599
+#&gt; 3  TRUE 0.8952823
+#&gt; 4 FALSE 0.0436517
+#&gt; 5  TRUE 0.2196593
+#&gt; 6 FALSE 0.2816101
+#&gt; 
+#&gt; $class3
+#&gt;   tag score        n_1        n_2        n_3
+#&gt; 1 n_3   n_2 0.20343865 0.60825062 0.18831071
+#&gt; 2 n_2   n_3 0.17856154 0.07657769 0.74486071
+#&gt; 3 n_1   n_1 0.50516951 0.40168718 0.09314334
+#&gt; 4 n_3   n_2 0.30880713 0.39062151 0.30057135
+#&gt; 5 n_2   n_3 0.01956827 0.07069011 0.90974158
+#&gt; 6 n_2   n_3 0.07830017 0.15408720 0.76761264
+#&gt; </div><div class='input'>
+<span class='co'># ROC Data for Binomial Model</span>
+<span class='no'>roc1</span> <span class='kw'>&lt;-</span> <span class='fu'>ROC</span>(<span class='no'>dfr</span>$<span class='no'>class2</span>$<span class='no'>tag</span>, <span class='no'>dfr</span>$<span class='no'>class2</span>$<span class='no'>scores</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>roc1</span>, <span class='no'>head</span>)</div><div class='output co'>#&gt; $ci
 #&gt;        roc.ci
-#&gt; min 0.5051832
-#&gt; AUC 0.8200000
-#&gt; max 1.0000000
+#&gt; min 0.8542079
+#&gt; AUC 0.8946749
+#&gt; max 0.9351419
 #&gt; 
 #&gt; $roc
-#&gt;   fpr tpr label
-#&gt; 1 1.0 0.0 2cats
-#&gt; 2 1.0 0.2 2cats
-#&gt; 3 1.0 0.6 2cats
-#&gt; 4 0.8 0.8 2cats
-#&gt; 5 0.6 0.8 2cats
-#&gt; 6 0.4 0.8 2cats
-#&gt; 7 0.0 1.0 2cats
+#&gt;   fpr         tpr label
+#&gt; 1   1 0.000000000 2cats
+#&gt; 2   1 0.009708738 2cats
+#&gt; 3   1 0.019417476 2cats
+#&gt; 4   1 0.029126214 2cats
+#&gt; 5   1 0.038834951 2cats
+#&gt; 6   1 0.048543689 2cats
 #&gt; </div><div class='input'>
-# I owe you the multis example.. check h2o_automl()
-
-# Plot results with with mplot_roc()
-</div></pre>
+<span class='co'># ROC Data for Multi-Categorical Model</span>
+<span class='no'>roc2</span> <span class='kw'>&lt;-</span> <span class='fu'>ROC</span>(<span class='no'>dfr</span>$<span class='no'>class3</span>$<span class='no'>tag</span>, <span class='no'>dfr</span>$<span class='no'>class3</span>$<span class='no'>score</span>,
+            <span class='kw'>multis</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>dfr</span>$<span class='no'>class3</span>, <span class='kw'>select</span> <span class='kw'>=</span> -<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>tag</span>, <span class='no'>score</span>)))
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>roc2</span>, <span class='no'>head</span>)</div><div class='output co'>#&gt; $ci
+#&gt;           n_1       n_2       n_3      mean
+#&gt; min 0.8198601 0.6018566 0.7774864 0.7330677
+#&gt; AUC 0.8669377 0.6754127 0.8264621 0.7896042
+#&gt; max 0.9140153 0.7489689 0.8754379 0.8461407
+#&gt; 
+#&gt; $roc
+#&gt;   fpr         tpr        label
+#&gt; 1   1 0.000000000 86.69% | n_1
+#&gt; 2   1 0.004878049 86.69% | n_1
+#&gt; 3   1 0.009756098 86.69% | n_1
+#&gt; 4   1 0.019512195 86.69% | n_1
+#&gt; 5   1 0.024390244 86.69% | n_1
+#&gt; 6   1 0.029268293 86.69% | n_1
+#&gt; 
+#&gt; $rocs
+#&gt; $rocs$n_1
+#&gt; 
+#&gt; Call:
+#&gt; roc.default(response = label, predictor = res, quiet = TRUE,     ci = TRUE)
+#&gt; 
+#&gt; Data: res in 63 controls (label n_1) &gt; 205 cases (label other).
+#&gt; Area under the curve: 0.8669
+#&gt; 95% CI: 0.8199-0.914 (DeLong)
+#&gt; 
+#&gt; $rocs$n_2
+#&gt; 
+#&gt; Call:
+#&gt; roc.default(response = label, predictor = res, quiet = TRUE,     ci = TRUE)
+#&gt; 
+#&gt; Data: res in 56 controls (label n_2) &gt; 212 cases (label other).
+#&gt; Area under the curve: 0.6754
+#&gt; 95% CI: 0.6019-0.749 (DeLong)
+#&gt; 
+#&gt; $rocs$n_3
+#&gt; 
+#&gt; Call:
+#&gt; roc.default(response = label, predictor = res, quiet = TRUE,     ci = TRUE)
+#&gt; 
+#&gt; Data: res in 149 controls (label n_3) &gt; 119 cases (label other).
+#&gt; Area under the curve: 0.8265
+#&gt; 95% CI: 0.7775-0.8754 (DeLong)
+#&gt; 
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
