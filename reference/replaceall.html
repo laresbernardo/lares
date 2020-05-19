@@ -123,7 +123,7 @@ one value, order matters so they will be replaced in the same
 order that you pass them to the function. Factors will be refactored.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='no'>original</span>, <span class='no'>change</span>, <span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='no'>original</span>, <span class='no'>change</span>, <span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>fixclass</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,6 +143,11 @@ order that you pass them to the function. Factors will be refactored.</p>
     <tr>
       <th>which</th>
       <td><p>Character vector. Name of columns to use. Leave "all" for everything</p></td>
+    </tr>
+    <tr>
+      <th>fixclass</th>
+      <td><p>Boolean. Try to detect logical classes after transformations (or 
+leave as default classes as character)?</p></td>
     </tr>
     <tr>
       <th>quiet</th>
@@ -199,7 +204,7 @@ order that you pass them to the function. Factors will be refactored.</p>
 #&gt; 5  NA   E     A    C</div><div class='input'>
 <span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='st'>"A"</span>, <span class='fl'>NA</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 4</span><span>
 #&gt;     one two   three four 
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>     1 </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>   
 #&gt; </span><span style='color: #555555;'>2</span><span>     2 B     </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>   
 #&gt; </span><span style='color: #555555;'>3</span><span>     3 C     </span><span style='color: #BB0000;'>NA</span><span>    123  
@@ -207,7 +212,7 @@ order that you pass them to the function. Factors will be refactored.</p>
 #&gt; </span><span style='color: #555555;'>5</span><span>    </span><span style='color: #BB0000;'>NA</span><span> E     </span><span style='color: #BB0000;'>NA</span><span>    C    </div><div class='input'>
 <span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='st'>"A"</span>, <span class='st'>"a"</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
 #&gt;     one two   three four 
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>     1 a     a     </span><span style='color: #BB0000;'>NA</span><span>   
 #&gt; </span><span style='color: #555555;'>2</span><span>     2 B     a     aaa  
 #&gt; </span><span style='color: #555555;'>3</span><span>     3 C     a     123  
@@ -215,7 +220,7 @@ order that you pass them to the function. Factors will be refactored.</p>
 #&gt; </span><span style='color: #555555;'>5</span><span>    </span><span style='color: #BB0000;'>NA</span><span> E     a     C    </div><div class='input'>
 <span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='fl'>1</span>, <span class='st'>"*"</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
 #&gt;   one   two   three four 
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> *     A     A     </span><span style='color: #BB0000;'>NA</span><span>   
 #&gt; </span><span style='color: #555555;'>2</span><span> 2     B     A     Aaa  
 #&gt; </span><span style='color: #555555;'>3</span><span> 3     C     A     *23  
@@ -223,7 +228,7 @@ order that you pass them to the function. Factors will be refactored.</p>
 #&gt; </span><span style='color: #555555;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>    E     A     C    </div><div class='input'>
 <span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='fl'>NA</span>, <span class='st'>"NotNA"</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
 #&gt;   one   two   three four 
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> 1     A     A     NotNA
 #&gt; </span><span style='color: #555555;'>2</span><span> 2     B     A     Aaa  
 #&gt; </span><span style='color: #555555;'>3</span><span> 3     C     A     123  
@@ -231,7 +236,7 @@ order that you pass them to the function. Factors will be refactored.</p>
 #&gt; </span><span style='color: #555555;'>5</span><span> NotNA E     A     C    </div><div class='input'>
 <span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='fl'>NA</span>, <span class='fl'>0</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
 #&gt;     one two   three four 
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>     1 A     A     0    
 #&gt; </span><span style='color: #555555;'>2</span><span>     2 B     A     Aaa  
 #&gt; </span><span style='color: #555555;'>3</span><span>     3 C     A     123  
@@ -239,7 +244,7 @@ order that you pass them to the function. Factors will be refactored.</p>
 #&gt; </span><span style='color: #555555;'>5</span><span>     0 E     A     C    </div><div class='input'>
 <span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"'A'"</span>, <span class='st'>"'B'"</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
 #&gt;     one two   three four 
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>     1 'A'   'A'   </span><span style='color: #BB0000;'>NA</span><span>   
 #&gt; </span><span style='color: #555555;'>2</span><span>     2 'B'   'A'   'A'aa
 #&gt; </span><span style='color: #555555;'>3</span><span>     3 C     'A'   123  
@@ -247,7 +252,7 @@ order that you pass them to the function. Factors will be refactored.</p>
 #&gt; </span><span style='color: #555555;'>5</span><span>    </span><span style='color: #BB0000;'>NA</span><span> E     'A'   C    </div><div class='input'>
 <span class='fu'>replaceall</span>(<span class='no'>df</span>, <span class='st'>"a"</span>, <span class='st'>"*"</span>, <span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"four"</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 4</span><span>
 #&gt;     one two   three four 
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>     1 A     A     </span><span style='color: #BB0000;'>NA</span><span>   
 #&gt; </span><span style='color: #555555;'>2</span><span>     2 B     A     A**  
 #&gt; </span><span style='color: #555555;'>3</span><span>     3 C     A     123  

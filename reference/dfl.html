@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dataset: Random Data for Examples — dfl • lares</title>
+<title>Dataset: Random Transactional Data — dfl • lares</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Dataset: Random Data for Examples — dfl" />
+<meta property="og:title" content="Dataset: Random Transactional Data — dfl" />
 <meta property="og:description" content="Data randomly generated for examples." />
 
 
@@ -108,7 +108,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Dataset: Random Data for Examples</h1>
+    <h1>Dataset: Random Transactional Data</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
     <div class="hidden name"><code>dfl.Rd</code></div>
     </div>
@@ -123,9 +123,21 @@
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>An object of class <code>"data.frame"</code></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Dataset: 
+<code><a href='dfr.html'>dfr</a></code>,
+<code><a href='dft.html'>dft</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dfl</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dfl</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>dfl</span>)</div><div class='output co'>#&gt;   opp_id            opp_date  type values promo issued novar kind
+#&gt; 1 992349 2019-02-06 12:22:48  TRUE 480100     0   TRUE  soat  red
+#&gt; 2 999436 2019-02-11 20:50:40 FALSE 421750 50000   TRUE  soat  web
+#&gt; 3 991823 2019-02-05 21:47:31  TRUE 480100 12100  FALSE  soat  web
+#&gt; 4 999060 2019-02-11 16:40:53  TRUE 480100     0  FALSE  soat  web
+#&gt; 5 981663 2019-01-29 17:08:57 FALSE 387250     0   TRUE  soat  red
+#&gt; 6 982039 2019-01-30 01:19:15  TRUE 480100 36100  FALSE  soat  web</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

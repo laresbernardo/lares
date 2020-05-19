@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download Historical Currency Exchange Rate — get_currency • lares</title>
+<title>Dataset: Results for AutoML Predictions — dfr • lares</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,11 @@
 
 
 
-<meta property="og:title" content="Download Historical Currency Exchange Rate — get_currency" />
-<meta property="og:description" content="This function lets the user download historical currency exchange
-rate between two currencies" />
+<meta property="og:title" content="Dataset: Results for AutoML Predictions — dfr" />
+<meta property="og:description" content="List with categorical (2 and 3 classes) and continuous predictions, 
+generated with h2o_automl() and the dft 
+Titanic dataset. Data.frames contain the actual values and model's 
+predictions over the test set observations." />
 
 
 
@@ -109,58 +111,59 @@ rate between two currencies" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download Historical Currency Exchange Rate</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/currency.R'><code>R/currency.R</code></a></small>
-    <div class="hidden name"><code>get_currency.Rd</code></div>
+    <h1>Dataset: Results for AutoML Predictions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
+    <div class="hidden name"><code>dfr.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user download historical currency exchange
-rate between two currencies</p>
+    <p>List with categorical (2 and 3 classes) and continuous predictions, 
+generated with <code><a href='h2o_automl.html'>h2o_automl()</a></code> and the <code>dft</code> 
+Titanic dataset. Data.frames contain the actual values and model's 
+predictions over the test set observations.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_currency</span>(
-  <span class='no'>currency_pair</span>,
-  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>() - <span class='fl'>99</span>,
-  <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(),
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dfr</span>)</pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>currency_pair</th>
-      <td><p>Character. Which currency exchange do you
-wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
-    </tr>
-    <tr>
-      <th>from</th>
-      <td><p>Date. From date</p></td>
-    </tr>
-    <tr>
-      <th>to</th>
-      <td><p>Date. To date</p></td>
-    </tr>
-    <tr>
-      <th>fill</th>
-      <td><p>Boolean. Fill weekends and non-quoted dates with 
-previous values?</p></td>
-    </tr>
-    </table>
 
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>"list"</code> and length = 3</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Dataset: 
+<code><a href='dfl.html'>dfl</a></code>,
+<code><a href='dft.html'>dft</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>get_currency</span>(<span class='st'>"USD/ARS"</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>())</div><div class='output co'>#&gt;         date rate
-#&gt; 1 2020-05-19 67.9</div><div class='input'><span class='fu'>get_currency</span>(<span class='st'>"EUR/USD"</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>() - <span class='fl'>7</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;         date     rate
-#&gt; 1 2020-05-12 1.080917
-#&gt; 2 2020-05-13 1.084634
-#&gt; 3 2020-05-14 1.082193
-#&gt; 4 2020-05-15 1.080625
-#&gt; 5 2020-05-16 1.080625
-#&gt; 6 2020-05-17 1.080625
-#&gt; 7 2020-05-18 1.081947
-#&gt; 8 2020-05-19 1.092061</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dfr</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>dfr</span>, <span class='no'>head</span>)</div><div class='output co'>#&gt; $class2
+#&gt;     tag    scores
+#&gt; 1  TRUE 0.3155498
+#&gt; 2  TRUE 0.8747599
+#&gt; 3  TRUE 0.8952823
+#&gt; 4 FALSE 0.0436517
+#&gt; 5  TRUE 0.2196593
+#&gt; 6 FALSE 0.2816101
+#&gt; 
+#&gt; $class3
+#&gt;   tag score        n_1        n_2        n_3
+#&gt; 1 n_3   n_2 0.20343865 0.60825062 0.18831071
+#&gt; 2 n_2   n_3 0.17856154 0.07657769 0.74486071
+#&gt; 3 n_1   n_1 0.50516951 0.40168718 0.09314334
+#&gt; 4 n_3   n_2 0.30880713 0.39062151 0.30057135
+#&gt; 5 n_2   n_3 0.01956827 0.07069011 0.90974158
+#&gt; 6 n_2   n_3 0.07830017 0.15408720 0.76761264
+#&gt; 
+#&gt; $regr
+#&gt;       tag    score
+#&gt; 1 11.1333 21.52605
+#&gt; 2 30.0708 35.02605
+#&gt; 3 26.5500 14.84241
+#&gt; 4 31.2750 67.41018
+#&gt; 5 13.0000 28.95657
+#&gt; 6 26.0000 17.55153
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
