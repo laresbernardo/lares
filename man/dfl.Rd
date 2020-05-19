@@ -3,7 +3,7 @@
 \docType{data}
 \name{dfl}
 \alias{dfl}
-\title{Dataset: Random Data for Examples}
+\title{Dataset: Random Transactional Data}
 \format{
 An object of class \code{"data.frame"}
 }
@@ -15,6 +15,12 @@ Data randomly generated for examples.
 }
 \examples{
 data(dfl)
+head(dfl)
 }
+\seealso{
+Other Dataset: 
+\code{\link{dfr}},
+\code{\link{dft}}
+}
+\concept{Dataset}
 \keyword{datasets}
-\keyword{random}

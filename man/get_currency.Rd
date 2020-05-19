@@ -26,4 +26,8 @@ previous values?}
 This function lets the user download historical currency exchange
 rate between two currencies
 }
+\examples{
+get_currency("USD/ARS", from = Sys.Date())
+get_currency("EUR/USD", from = Sys.Date() - 7, fill = TRUE)
+}
 \concept{Currency}

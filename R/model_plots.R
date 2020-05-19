@@ -14,6 +14,16 @@
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dfr) # Results for AutoML Predictions
+#' lapply(dfr, head)
+#' 
+#' # Plot for binomial results
+#' mplot_density(dfr$class2$tag, dfr$class2$scores, subtitle = "Titanic Survived Model")
+#' 
+#' # Plot for regression results
+#' mplot_density(dfr$regr$tag, dfr$regr$score, model_name = "Titanic Fare Model")
 #' @export
 mplot_density <- function(tag, 
                           score, 
@@ -123,6 +133,22 @@ mplot_density <- function(tag,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' df <- data.frame(variable = LETTERS[1:6],
+#'                  importance = c(4,6,6.7,3,4.8,6.2)/100,
+#'                  positive = c(TRUE,TRUE,FALSE,TRUE,FALSE,FALSE))
+#' head(df)
+#' 
+#' mplot_importance(var = df$variable,
+#'                  imp = df$importance,
+#'                  model_name = "Random values model")
+#' 
+#' # Add a colour for categories
+#' mplot_importance(var = df$variable,
+#'                  imp = df$importance,
+#'                  colours = df$positive,
+#'                  limit = 4)
 #' @export
 mplot_importance <- function(var, 
                              imp, 
@@ -139,7 +165,8 @@ mplot_importance <- function(var,
     stop(message(paste("Currently, there are",length(var),"variables and",length(imp),"importance values!")))
   }
   
-  if (is.na(colours)) colours <- "deepskyblue" 
+  if (is.na(colours[1])) 
+    colours <- "deepskyblue" 
   
   out <- data.frame(var = var, imp = 100 * imp, Type = colours)
   
@@ -203,6 +230,20 @@ mplot_importance <- function(var,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dfr) # Results for AutoML Predictions
+#' lapply(dfr, head)
+#' 
+#' # ROC Curve for Binomial Model
+#' mplot_roc(dfr$class2$tag, dfr$class2$scores, 
+#'           model_name = "Titanic Survived Model")
+#' 
+#' # ROC Curves for Multi-Categorical Model
+#' mplot_roc(dfr$class3$tag, dfr$class3$score,
+#'           multis = subset(dfr$class3, select = -c(tag, score)),
+#'           squared = FALSE,
+#'           model_name = "Titanic Class Model")
 #' @export
 mplot_roc <- function(tag, 
                       score, 
@@ -277,7 +318,7 @@ mplot_roc <- function(tag,
 ####################################################################
 #' Cuts by quantiles for score plot
 #' 
-#' This function cuts by quantiles any score or prediction
+#' This function cuts by quantiles any score or prediction.
 #' 
 #' @family ML Visualization
 #' @param score Vector. Predicted value or model's result
@@ -288,6 +329,16 @@ mplot_roc <- function(tag,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dfr) # Results for AutoML Predictions
+#' lapply(dfr, head)
+#' 
+#' # Data
+#' mplot_cuts(dfr$class2$scores, splits = 5, table = TRUE)
+#' 
+#' # Plot
+#' mplot_cuts(dfr$class2$scores, model_name = "Titanic Survived Model")
 #' @export
 mplot_cuts <- function(score, 
                        splits = 10, 
@@ -351,6 +402,12 @@ mplot_cuts <- function(score,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dfr) # Results for AutoML Predictions
+#' lapply(dfr, head)
+#' mplot_cuts_error(dfr$regr$tag, dfr$regr$score,
+#'                  model_name = "Titanic Fare Model")
 #' @export
 mplot_cuts_error <- function(tag, 
                              score, 
@@ -460,6 +517,23 @@ mplot_cuts_error <- function(tag,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dfr) # Results for AutoML Predictions
+#' lapply(dfr, head)
+#' 
+#' # For categorical (binary) values
+#' mplot_splits(dfr$class2$tag, dfr$class2$scores,
+#'              splits = 4,
+#'              model_name = "Titanic Survived Model")
+#' 
+#' # For categorical (+2) values
+#' mplot_splits(dfr$class3$tag, dfr$class2$scores,
+#'              model_name = "Titanic Class Model")
+#' 
+#' # For continuous values
+#' mplot_splits(dfr$regr$tag, dfr$regr$score, splits = 4,
+#'              model_name = "Titanic Fare Model")
 #' @export
 mplot_splits <- function(tag, 
                          score, 
@@ -636,6 +710,11 @@ mplot_metrics <- function(results,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dfr) # Results for AutoML Predictions
+#' lapply(dfr, head)
+#' mplot_lineal(dfr$regr$tag, dfr$regr$score, model_name = "Titanic Fare Model")
 #' @export
 mplot_lineal <- function(tag, 
                          score, 
@@ -717,6 +796,23 @@ mplot_lineal <- function(tag,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dfr) # Results for AutoML Predictions
+#' lapply(dfr, head)
+#' 
+#' # Dasboard for Binomial Model
+#' mplot_full(dfr$class2$tag, dfr$class2$scores, 
+#'           model_name = "Titanic Survived Model")
+#' 
+#' # Dasboard for Multi-Categorical Model
+#' mplot_full(dfr$class3$tag, dfr$class3$score,
+#'           multis = subset(dfr$class3, select = -c(tag, score)),
+#'           model_name = "Titanic Class Model")
+#'           
+#' # Dasboard for Regression Model
+#' mplot_full(dfr$regr$tag, dfr$regr$score, 
+#'           model_name = "Titanic Fare Model")
 #' @export
 mplot_full <- function(tag, 
                        score, 
@@ -805,6 +901,18 @@ mplot_full <- function(tag,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dfr) # Results for AutoML Predictions
+#' lapply(dfr, head)
+#' 
+#' # Plot for Binomial Model
+#' mplot_conf(dfr$class2$tag, dfr$class2$scores,
+#'           model_name = "Titanic Survived Model")
+#' 
+#' # Plot for Multi-Categorical Model
+#' mplot_conf(dfr$class3$tag, dfr$class3$score,
+#'           model_name = "Titanic Class Model")
 #' @export
 mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE, 
                        subtitle = NA, model_name = NA,
@@ -921,6 +1029,23 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @param quiet Boolean. Do not show message for auto target?
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dfr) # Results for AutoML Predictions
+#' lapply(dfr, head)
+#' 
+#' # Plot for Binomial Model
+#' mplot_gain(dfr$class2$tag, dfr$class2$scores,
+#'            caption = "Titanic Survived Model",
+#'            target = "FALSE")
+#' mplot_gain(dfr$class2$tag, dfr$class2$scores,
+#'            caption = "Titanic Survived Model",
+#'            target = "TRUE")
+#' 
+#' # Plot for Multi-Categorical Model
+#' mplot_gain(dfr$class3$tag, dfr$class3$score,
+#'           multis = subset(dfr$class3, select = -c(tag, score)),
+#'           caption = "Titanic Class Model")
 #' @export
 mplot_gain <- function(tag, score, multis = NA, target = "auto", 
                        splits = 10, highlight = "auto", 
@@ -942,9 +1067,10 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
       # Model line
       geom_line(aes(y = .data$gain), 
                 colour = "darkorange", size = 1.2) +
-      geom_label(aes(y = .data$gain, 
-                     label = ifelse(.data$gain == 100, NA, round(.data$gain))), 
-                 alpha = 0.9) +
+      suppressWarnings(
+        geom_label(aes(y = .data$gain, 
+                       label = ifelse(.data$gain == 100, NA, round(.data$gain))), 
+                   alpha = 0.9)) +
       scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour = FALSE) +
       scale_x_continuous(minor_breaks = NULL, breaks = seq(0, splits, 1)) +
       labs(title = paste("Cumulative Gains for", gains$value[1]), 
@@ -1003,7 +1129,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
   }
   
   aux <- freqs(data.frame(tag = tag), .data$tag)
-  text <- paste("*Assuming rate of",
+  text <- paste("Assuming rate of",
                 vector2text(round(aux$p), sep = "/", quotes = FALSE), "for",
                 vector2text(aux$tag, sep = "/", quotes = FALSE))
   if (!is.na(caption)) caption <- paste(text, caption, sep = "\n") else caption <- text
@@ -1044,6 +1170,23 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @param quiet Boolean. Do not show message for auto target?
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dfr) # Results for AutoML Predictions
+#' lapply(dfr, head)
+#' 
+#' # Plot for Binomial Model
+#' mplot_response(dfr$class2$tag, dfr$class2$scores,
+#'                caption = "Titanic Survived Model",
+#'                target = "TRUE")
+#' mplot_response(dfr$class2$tag, dfr$class2$scores,
+#'                caption = "Titanic Survived Model",
+#'                target = "FALSE")
+#' 
+#' # Plot for Multi-Categorical Model
+#' mplot_response(dfr$class3$tag, dfr$class3$score,
+#'                multis = subset(dfr$class3, select = -c(tag, score)),
+#'                caption = "Titanic Class Model")
 #' @export
 mplot_response <- function(tag, score, multis = NA, target = "auto", 
                            splits = 10, highlight = "auto", 
@@ -1120,7 +1263,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
   }
   
   aux <- freqs(data.frame(tag = tag), tag)
-  text <- paste("*Assuming rate of",
+  text <- paste("Assuming rate of",
                 vector2text(round(aux$p), sep = "/", quotes = FALSE), "for",
                 vector2text(aux$tag, sep = "/", quotes = FALSE))
   if (!is.na(caption)) caption <- paste(text, caption, sep = "\n") else caption <- text

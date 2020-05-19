@@ -10,7 +10,7 @@ font_exists(font = "Arial Narrow")
 \item{font}{Character. Which font to check}
 }
 \description{
-This function check if specific font is installed
+This function checks if a font is installed in your machine.
 }
 \examples{
 font_exists(font = "Arial Narrow")

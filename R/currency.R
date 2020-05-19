@@ -11,6 +11,9 @@
 #' @param to Date. To date
 #' @param fill Boolean. Fill weekends and non-quoted dates with 
 #' previous values?
+#' @examples 
+#' get_currency("USD/ARS", from = Sys.Date())
+#' get_currency("EUR/USD", from = Sys.Date() - 7, fill = TRUE)
 #' @export
 get_currency <- function(currency_pair, 
                          from = Sys.Date() - 99, 
@@ -33,15 +36,15 @@ get_currency <- function(currency_pair,
   if (to > Sys.Date()) to <- Sys.Date()
   
   if (Sys.Date() == from) {
-    x <- getQuote(string, auto.assign = FALSE)
+    x <- suppressWarnings(getQuote(string, auto.assign = FALSE))
     rownames(x) <- Sys.Date()
     x[,1] <- NULL
   } else {
-    x <- data.frame(getSymbols(
+    x <- data.frame(suppressWarnings(getSymbols(
       string, 
       env = NULL,
       from = from, to = to,
-      src = "yahoo"))
+      src = "yahoo")))
     if (substr(rownames(x),1,1)[1] == "X") {
       x <- x[1,]
       rownames(x) <- Sys.Date()

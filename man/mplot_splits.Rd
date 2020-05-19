@@ -36,6 +36,24 @@ mplot_splits(
 This function lets us split and compare quantiles on a given prediction to
 compare different categorical values vs scores grouped by equal sized buckets.
 }
+\examples{
+options("lares.font" = NA) # Temporal
+data(dfr) # Results for AutoML Predictions
+lapply(dfr, head)
+
+# For categorical (binary) values
+mplot_splits(dfr$class2$tag, dfr$class2$scores,
+             splits = 4,
+             model_name = "Titanic Survived Model")
+
+# For categorical (+2) values
+mplot_splits(dfr$class3$tag, dfr$class2$scores,
+             model_name = "Titanic Class Model")
+
+# For continuous values
+mplot_splits(dfr$regr$tag, dfr$regr$score, splits = 4,
+             model_name = "Titanic Fare Model")
+}
 \seealso{
 Other ML Visualization: 
 \code{\link{mplot_conf}()},

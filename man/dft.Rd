@@ -15,6 +15,12 @@ Data generated from a Titanic dataset.
 }
 \examples{
 data(dft)
+head(dft)
 }
+\seealso{
+Other Dataset: 
+\code{\link{dfl}},
+\code{\link{dfr}}
+}
+\concept{Dataset}
 \keyword{datasets}
-\keyword{titanic}

@@ -520,6 +520,8 @@ listfiles <- function(folder = getwd(),
 #' @param original String or Vector. Original text you wish to replace
 #' @param change String or Vector. Values you wish to replace the originals with
 #' @param which Character vector. Name of columns to use. Leave "all" for everything
+#' @param fixclass Boolean. Try to detect logical classes after transformations (or 
+#' leave as default classes as character)?
 #' @param quiet Boolean. Keep quiet? (or print replacements)
 #' @examples 
 #' df <- data.frame(one = c(1:4, NA), 
@@ -542,7 +544,8 @@ listfiles <- function(folder = getwd(),
 #' 
 #' replaceall(df, "a", "*", which = "four")
 #' @export
-replaceall <- function(df, original, change, which = "all", quiet = TRUE) {
+replaceall <- function(df, original, change, which = "all", 
+                       fixclass = TRUE, quiet = TRUE) {
   if (is.vector(df)) {
     vector <- TRUE
     df <- data.frame(x = df)
@@ -582,8 +585,13 @@ replaceall <- function(df, original, change, which = "all", quiet = TRUE) {
     df <- select(aux, -one_of(which)) %>% 
       cbind(df) %>% 
       select(one_of(colnames(aux)))
-  if (vector) df <- df[,1]
-  df <- suppressMessages(type.convert(df, numerals = "no.loss"))
+  if (vector) 
+    df <- df[,1]
+  if (fixclass)
+    df <- suppressMessages(type.convert(df, numerals = "no.loss", as.is = TRUE))
+  if (vector)
+    return(as.vector(df))
+  else 
   return(as_tibble(df))
 }
 
@@ -1073,11 +1081,17 @@ bindfiles <- function(files) {
 #' @param text Character.
 #' @param top Integer. How many characters aprox should be on each line
 #' @param rel Numeric. Relation of pixels and characters per line
+#' @examples 
+#' \dontrun{
+#' autoline("This is a long text that may not fit into a single line")
+#' autoline("This is a long text that may not fit into a single line", rel = 25)
+#' }
 #' @export
 autoline <- function(text, top = "auto", rel = 9.5) {
   
   # Auto-maximum
-  if (top == "auto") top <- round(dev.size("px")[1]/rel)
+  if (top == "auto") 
+    top <- round(dev.size("px")[1]/rel)
   # Auto-minimum
   if (top < 15) top <- 15 
   
@@ -1158,7 +1172,7 @@ formatTime <- function(vector) {
 ####################################################################
 #' Check if Font is Installed
 #' 
-#' This function check if specific font is installed
+#' This function checks if a font is installed in your machine.
 #' 
 #' @param font Character. Which font to check
 #' @examples
@@ -1168,6 +1182,7 @@ formatTime <- function(vector) {
 font_exists <- function(font = "Arial Narrow") {
   
   tryCatch({
+    
   # Thanks to extrafont for the idea for this code
   ttf_find_default_path <- function() {
     if (grepl("^darwin", R.version$os)) {

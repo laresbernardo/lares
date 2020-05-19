@@ -4,7 +4,7 @@
 \alias{replaceall}
 \title{Replace Values With}
 \usage{
-replaceall(df, original, change, which = "all", quiet = TRUE)
+replaceall(df, original, change, which = "all", fixclass = TRUE, quiet = TRUE)
 }
 \arguments{
 \item{df}{Data.frame or Vector}
@@ -14,6 +14,9 @@ replaceall(df, original, change, which = "all", quiet = TRUE)
 \item{change}{String or Vector. Values you wish to replace the originals with}
 
 \item{which}{Character vector. Name of columns to use. Leave "all" for everything}
+
+\item{fixclass}{Boolean. Try to detect logical classes after transformations (or 
+leave as default classes as character)?}
 
 \item{quiet}{Boolean. Keep quiet? (or print replacements)}
 }

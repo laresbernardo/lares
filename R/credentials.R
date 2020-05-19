@@ -1,10 +1,10 @@
 ####################################################################
-#' Load parameters and credentials from YML file
+#' Load Credentials from a YML File
 #' 
-#' Load credentials from a local YML file. Uses your \code{.Renviron} file
+#' Load credentials from a local YML file. You can set your \code{.Renviron}
 #' and the \code{LARES_CREDS} parameter to remember (forever) the directory 
-#' of your credentials' file and uses it when \code{dir = NA}. You may use
-#' this function as well for external (non-\code{lares}) code.
+#' of your credentials' file. To use it later, you may leave \code{dir = NA}. 
+#' You may also use this function for external (non-\code{lares}) code/use.
 #' 
 #' @section Set the default directory:
 #' The first time you use any function that has the \code{creds} parameter, if
@@ -12,6 +12,16 @@
 #' set the directory where you save your YML local file with your credentials.
 #' This will be asked once and will be set for further R sessions. Remember to
 #' reset your session for this setup to start working properly.
+#' 
+#' @section YML File example:
+#' A YML file is a text file, with \code{.yml} file format. The following example 
+#' shows the structure you must follow to set your credentials file.
+#' service1:
+#'   user: 'bernardo'
+#'   pass: 0123456789
+#' service2:
+#'   user: 'blv'
+#'   token: 'AbC123'
 #' 
 #' @family Tools
 #' @family Credentials

@@ -27,18 +27,6 @@ For more information on Ad Insights' API, go to the
 \href{https://developers.facebook.com/docs/marketing-api/reference/ad-account/insights/}{original documentaion}
 }
 \seealso{
-Other Scrapper: 
-\code{\link{fb_ads}()},
-\code{\link{fb_insights}()},
-\code{\link{fb_posts}()},
-\code{\link{fb_post}()},
-\code{\link{geoStratum}()},
-\code{\link{get_mp3}()},
-\code{\link{holidays}()},
-\code{\link{ip_country}()},
-\code{\link{readGS}()},
-\code{\link{trendsRelated}()}
-
 Other API: 
 \code{\link{bring_api}()},
 \code{\link{fb_ads}()},
@@ -60,4 +48,3 @@ Other Facebook:
 }
 \concept{API}
 \concept{Facebook}
-\concept{Scrapper}

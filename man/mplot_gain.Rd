@@ -54,6 +54,24 @@ expect to target? The cumulative gains chart shows the percentage
 of the overall number of cases in a given category "gained" by 
 targeting a percentage of the total number of cases.
 }
+\examples{
+options("lares.font" = NA) # Temporal
+data(dfr) # Results for AutoML Predictions
+lapply(dfr, head)
+
+# Plot for Binomial Model
+mplot_gain(dfr$class2$tag, dfr$class2$scores,
+           caption = "Titanic Survived Model",
+           target = "FALSE")
+mplot_gain(dfr$class2$tag, dfr$class2$scores,
+           caption = "Titanic Survived Model",
+           target = "TRUE")
+
+# Plot for Multi-Categorical Model
+mplot_gain(dfr$class3$tag, dfr$class3$score,
+          multis = subset(dfr$class3, select = -c(tag, score)),
+          caption = "Titanic Class Model")
+}
 \seealso{
 Other ML Visualization: 
 \code{\link{mplot_conf}()},

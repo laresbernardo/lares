@@ -36,18 +36,6 @@ For more information on Ad' API, go to the
 This function was based on FBinsightsR.
 }
 \seealso{
-Other Scrapper: 
-\code{\link{fb_accounts}()},
-\code{\link{fb_insights}()},
-\code{\link{fb_posts}()},
-\code{\link{fb_post}()},
-\code{\link{geoStratum}()},
-\code{\link{get_mp3}()},
-\code{\link{holidays}()},
-\code{\link{ip_country}()},
-\code{\link{readGS}()},
-\code{\link{trendsRelated}()}
-
 Other API: 
 \code{\link{bring_api}()},
 \code{\link{fb_accounts}()},
@@ -69,4 +57,3 @@ Other Facebook:
 }
 \concept{API}
 \concept{Facebook}
-\concept{Scrapper}

@@ -33,7 +33,8 @@ plot as PNG or data.frame as CSV, respectively.}
 Must contain: url (POST address), api (api key)}
 }
 \description{
-This function lets the user send Emails with Attachments using MailGun
+This function lets the user send Emails with Attachments using MailGun's
+API service.
 }
 \seealso{
 Other Tools: 

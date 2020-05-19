@@ -51,6 +51,24 @@ This function plots a whole dashboard with a model's results. It will automatica
 detect if it's a categorical or regression's model by checking how many different
 unique values the independent variable (tag) has.
 }
+\examples{
+options("lares.font" = NA) # Temporal
+data(dfr) # Results for AutoML Predictions
+lapply(dfr, head)
+
+# Dasboard for Binomial Model
+mplot_full(dfr$class2$tag, dfr$class2$scores, 
+          model_name = "Titanic Survived Model")
+
+# Dasboard for Multi-Categorical Model
+mplot_full(dfr$class3$tag, dfr$class3$score,
+          multis = subset(dfr$class3, select = -c(tag, score)),
+          model_name = "Titanic Class Model")
+          
+# Dasboard for Regression Model
+mplot_full(dfr$regr$tag, dfr$regr$score, 
+          model_name = "Titanic Fare Model")
+}
 \seealso{
 Other ML Visualization: 
 \code{\link{mplot_conf}()},

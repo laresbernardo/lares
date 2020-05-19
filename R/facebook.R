@@ -21,7 +21,7 @@ cleanImport <- function(result) {
       ret <- bind_rows(ret, data.frame(out$data))
     }
   }
-  ret <- suppressMessages(type.convert(ret, numerals = "no.loss")) %>%
+  ret <- suppressMessages(type.convert(ret, numerals = "no.loss", as.is = TRUE))
     mutate_at(vars(contains("date")), list(as.Date)) %>%
     mutate_at(vars(contains("id")), list(as.character)) %>%
     mutate_at(vars(contains("url")), list(as.character)) %>%
@@ -35,7 +35,6 @@ cleanImport <- function(result) {
 #' Connect to an API Graph's token of a given page and get posts, 
 #' comments, shares, and reactions of n posts (with no limits).
 #' 
-#' @family Scrapper
 #' @family API
 #' @family Facebook
 #' @param token Character. Access token. Generate it for any of your
@@ -218,7 +217,6 @@ fb_posts <- function(token,
 #' Connect to an API Graph's token and get posts comments given the
 #' post(s) id.
 #' 
-#' @family Scrapper
 #' @family API
 #' @family Facebook
 #' @param token Character. Access token. Generate it for any of your
@@ -279,7 +277,6 @@ fb_post <- function(token, post_id) {
 #' For more information on Ad Insights' API, go to the 
 #' \href{https://developers.facebook.com/docs/marketing-api/reference/ad-account/insights/}{original documentaion}
 #' 
-#' @family Scrapper
 #' @family API
 #' @family Facebook
 #' @param token Character. This must be a valid access token with sufficient 
@@ -358,7 +355,6 @@ fb_accounts <- function(token,
 #' 
 #' This function was based on FBinsightsR.
 #' 
-#' @family Scrapper
 #' @family API
 #' @family Facebook
 #' @param token Character. This must be a valid access token with sufficient 
@@ -433,7 +429,6 @@ fb_ads <- function(token,
 #' 
 #' This function was based on FBinsightsR.
 #' 
-#' @family Scrapper
 #' @family API
 #' @family Facebook
 #' @param token Character. This must be a valid access token with sufficient 

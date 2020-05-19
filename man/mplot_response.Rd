@@ -51,6 +51,24 @@ The response gains plot helps us answer the question: When we
 apply the model and select up until ntile X, what is the expected 
 % of target class observations in the selection?
 }
+\examples{
+options("lares.font" = NA) # Temporal
+data(dfr) # Results for AutoML Predictions
+lapply(dfr, head)
+
+# Plot for Binomial Model
+mplot_response(dfr$class2$tag, dfr$class2$scores,
+               caption = "Titanic Survived Model",
+               target = "TRUE")
+mplot_response(dfr$class2$tag, dfr$class2$scores,
+               caption = "Titanic Survived Model",
+               target = "FALSE")
+
+# Plot for Multi-Categorical Model
+mplot_response(dfr$class3$tag, dfr$class3$score,
+               multis = subset(dfr$class3, select = -c(tag, score)),
+               caption = "Titanic Class Model")
+}
 \seealso{
 Other ML Visualization: 
 \code{\link{mplot_conf}()},

@@ -39,6 +39,19 @@ confusion matrix.}
 \description{
 This function plots a confussion matrix.
 }
+\examples{
+options("lares.font" = NA) # Temporal
+data(dfr) # Results for AutoML Predictions
+lapply(dfr, head)
+
+# Plot for Binomial Model
+mplot_conf(dfr$class2$tag, dfr$class2$scores,
+          model_name = "Titanic Survived Model")
+
+# Plot for Multi-Categorical Model
+mplot_conf(dfr$class3$tag, dfr$class3$score,
+          model_name = "Titanic Class Model")
+}
 \seealso{
 Other ML Visualization: 
 \code{\link{mplot_cuts_error}()},

@@ -1,7 +1,8 @@
 ####################################################################
 #' Send Emails with Attachments (POST)
 #' 
-#' This function lets the user send Emails with Attachments using MailGun
+#' This function lets the user send Emails with Attachments using MailGun's
+#' API service.
 #'
 #' @family Tools
 #' @family Credentials

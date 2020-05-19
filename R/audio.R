@@ -5,7 +5,9 @@
 #' platform supported by the youtube-dl library, and converts it into a 
 #' high quality MP3 file.
 #' 
-#' More info: \href{https://github.com/ytdl-org/youtube-dl/}{youtube-dl's Github}
+#' @section youtube-dl:
+#' More info from the original developers and its code: 
+#' \href{https://github.com/ytdl-org/youtube-dl/}{youtube-dl's Github}
 #' 
 #' @family Scrapper
 #' @family Audio

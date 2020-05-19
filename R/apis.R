@@ -24,7 +24,7 @@ bring_api <- function(url, status = TRUE) {
     import[import == "list()"] <- NA
     import[import == "integer(0)"] <- 0
     colnames(import) <- gsub("\\.", "_", colnames(import))
-    import <- suppressMessages(type.convert(import))
+    import <- suppressMessages(type.convert(import, numerals = "no.loss", as.is = TRUE))
     return(import)
   } else invisible(return())
 }

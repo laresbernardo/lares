@@ -33,7 +33,18 @@ mplot_cuts(
 \item{file_name}{Character. File name as you wish to save the plot}
 }
 \description{
-This function cuts by quantiles any score or prediction
+This function cuts by quantiles any score or prediction.
+}
+\examples{
+options("lares.font" = NA) # Temporal
+data(dfr) # Results for AutoML Predictions
+lapply(dfr, head)
+
+# Data
+mplot_cuts(dfr$class2$scores, splits = 5, table = TRUE)
+
+# Plot
+mplot_cuts(dfr$class2$scores, model_name = "Titanic Survived Model")
 }
 \seealso{
 Other ML Visualization: 

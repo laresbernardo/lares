@@ -19,6 +19,12 @@ the function can detect your plot's width and will dynamically
 set an auto width. You can adjust the relation (rel) parameter
 for different fonts and sizes until perfect harmony found.
 }
+\examples{
+\dontrun{
+autoline("This is a long text that may not fit into a single line")
+autoline("This is a long text that may not fit into a single line", rel = 25)
+}
+}
 \seealso{
 Other Tools: 
 \code{\link{bindfiles}()},

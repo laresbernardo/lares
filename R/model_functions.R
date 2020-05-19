@@ -15,8 +15,8 @@
 #' Random Forest (RF) and Extremely-Randomized Trees (XRT)), "GLM" 
 #' (Generalized Linear Model), "XGBoost" (eXtreme Grading Boosting), 
 #' "GBM" (Gradient Boosting Machine), "DeepLearning" (Fully-connected 
-#' multi-layer artificial neural network) and "StackedEnsemble". Read more: 
-#' \url{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}
+#' multi-layer artificial neural network) and "StackedEnsemble". 
+#' \href{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}{Read more here}.
 #'
 #' @family Machine Learning
 #' @param df Dataframe. Dataframe containing all your data, including 

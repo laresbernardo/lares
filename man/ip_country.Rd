@@ -53,11 +53,6 @@ Other Tools:
 \code{\link{zerovar}()}
 
 Other Scrapper: 
-\code{\link{fb_accounts}()},
-\code{\link{fb_ads}()},
-\code{\link{fb_insights}()},
-\code{\link{fb_posts}()},
-\code{\link{fb_post}()},
 \code{\link{geoStratum}()},
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},

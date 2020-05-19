@@ -20,9 +20,12 @@ This function downloads a YouTube video or Soundcloud or any other
 platform supported by the youtube-dl library, and converts it into a 
 high quality MP3 file.
 }
-\details{
-More info: \href{https://github.com/ytdl-org/youtube-dl/}{youtube-dl's Github}
+\section{youtube-dl}{
+
+More info from the original developers and its code: 
+\href{https://github.com/ytdl-org/youtube-dl/}{youtube-dl's Github}
 }
+
 \examples{
 \dontrun{
  # Download video from YouTube and convert to MP3
@@ -31,11 +34,6 @@ More info: \href{https://github.com/ytdl-org/youtube-dl/}{youtube-dl's Github}
 }
 \seealso{
 Other Scrapper: 
-\code{\link{fb_accounts}()},
-\code{\link{fb_ads}()},
-\code{\link{fb_insights}()},
-\code{\link{fb_posts}()},
-\code{\link{fb_post}()},
 \code{\link{geoStratum}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
