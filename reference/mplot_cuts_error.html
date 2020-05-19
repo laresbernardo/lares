@@ -183,33 +183,13 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> <span class='kw'>=</span> <span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>dfr</span>, <span class='no'>head</span>)</div><div class='output co'>#&gt; $class2
-#&gt;     tag    scores
-#&gt; 1  TRUE 0.3155498
-#&gt; 2  TRUE 0.8747599
-#&gt; 3  TRUE 0.8952823
-#&gt; 4 FALSE 0.0436517
-#&gt; 5  TRUE 0.2196593
-#&gt; 6 FALSE 0.2816101
-#&gt; 
-#&gt; $class3
-#&gt;   tag score        n_1        n_2        n_3
-#&gt; 1 n_3   n_2 0.20343865 0.60825062 0.18831071
-#&gt; 2 n_2   n_3 0.17856154 0.07657769 0.74486071
-#&gt; 3 n_1   n_1 0.50516951 0.40168718 0.09314334
-#&gt; 4 n_3   n_2 0.30880713 0.39062151 0.30057135
-#&gt; 5 n_2   n_3 0.01956827 0.07069011 0.90974158
-#&gt; 6 n_2   n_3 0.07830017 0.15408720 0.76761264
-#&gt; 
-#&gt; $regr
-#&gt;       tag    score
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>dfr</span>$<span class='no'>regr</span>)</div><div class='output co'>#&gt;       tag    score
 #&gt; 1 11.1333 21.52605
 #&gt; 2 30.0708 35.02605
 #&gt; 3 26.5500 14.84241
 #&gt; 4 31.2750 67.41018
 #&gt; 5 13.0000 28.95657
-#&gt; 6 26.0000 17.55153
-#&gt; </div><div class='input'><span class='fu'>mplot_cuts_error</span>(<span class='no'>dfr</span>$<span class='no'>regr</span>$<span class='no'>tag</span>, <span class='no'>dfr</span>$<span class='no'>regr</span>$<span class='no'>score</span>,
+#&gt; 6 26.0000 17.55153</div><div class='input'><span class='fu'>mplot_cuts_error</span>(<span class='no'>dfr</span>$<span class='no'>regr</span>$<span class='no'>tag</span>, <span class='no'>dfr</span>$<span class='no'>regr</span>$<span class='no'>score</span>,
                  <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='st'>"Titanic Fare Model"</span>)</div><div class='img'><img src='mplot_cuts_error-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
