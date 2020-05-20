@@ -317,17 +317,126 @@ multi-layer artificial neural network) and "StackedEnsemble".
 <span class='no'>dft</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>dft</span>, <span class='kw'>select</span> <span class='kw'>=</span> -<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>Ticket</span>, <span class='no'>PassengerId</span>, <span class='no'>Cabin</span>))
 
 <span class='co'># Classification: Binomial - 2 Classes</span>
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='no'>dft</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>Survived</span>, <span class='kw'>max_models</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>impute</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"TRUE"</span>)</div><div class='output co'>#&gt; <span class='message'>2020-05-20 12:51:41 | Started process...</span></div><div class='output co'>#&gt; <span class='error'>Error in h2o_automl(dft, y = Survived, max_models = 1, impute = FALSE,     target = "TRUE"): You should have a 'tag' column in your data.frame or select an independent varialbe using the 'y' parameter.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>r</span>, <span class='no'>names</span>)</div><div class='output co'>#&gt; <span class='error'>Error in lapply(r, names): object 'r' not found</span></div><div class='input'>
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='no'>dft</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>Survived</span>, <span class='kw'>max_models</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>impute</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"TRUE"</span>)</div><div class='output co'>#&gt; <span class='message'>2020-05-20 15:30:20 | Started process...</span></div><div class='output co'>#&gt; <span class='message'>NOTE: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span></div><div class='output co'>#&gt; <span class='message'>NOTE: There are 4 non-numerical features. Consider using ohse() for One Hot Smart Encoding before automl if you want to custom your inputs.</span></div><div class='output co'>#&gt; <span class='message'>Model type: Classifier</span></div><div class='output co'>#&gt;     tag   n     p order   pcum
+#&gt; 1 FALSE 549 61.62     1  61.62
+#&gt; 2  TRUE 342 38.38     2 100.00</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Splitting datasets</span></div><div class='output co'>#&gt; train_size  test_size 
+#&gt;        623        268 </div><div class='output co'>#&gt; <span class='message'>Algorithms excluded: 'StackedEnsemble', 'DeepLearning'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Iterating until 1 models or 600 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Succesfully generated 1 models:</span></div><div class='output co'>#&gt;                           model_id       auc   logloss
+#&gt; 1 XGBoost_1_AutoML_20200520_153027 0.8946749 0.3931082
+#&gt; 
+#&gt; [1 row x 3 columns] </div><div class='output co'>#&gt; <span class='message'>Check results in H2O Flow's nice interface: http://localhost:54321/flow/index.html</span></div><div class='output co'>#&gt; <span class='message'>Model selected: XGBoost_1_AutoML_20200520_153027</span></div><div class='output co'>#&gt; <span class='message'>NOTE: The following variables were NOT important: SibSp, Pclass.2, Embarked.C</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Running predictions for Survived...</span></div><div class='output co'>#&gt; <span class='message'>Target value: TRUE</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots...</span></div><div class='output co'>#&gt; <span class='message'>Process duration: 27.6s</span></div><div class='output co'>#&gt;       AUC     ACC     PRC      TPR     TNR
+#&gt; 1 0.89467 0.16418 0.11688 0.054545 0.33981</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>r</span>, <span class='no'>names</span>)</div><div class='output co'>#&gt; $model
+#&gt; NULL
+#&gt; 
+#&gt; $scores_test
+#&gt; [1] "tag"    "scores"
+#&gt; 
+#&gt; $metrics
+#&gt; [1] "dictionary"       "confusion_matrix" "gain_lift"        "metrics"         
+#&gt; [5] "plots"            "max_metrics"     
+#&gt; 
+#&gt; $importance
+#&gt; [1] "variable"            "relative_importance" "scaled_importance"  
+#&gt; [4] "importance"         
+#&gt; 
+#&gt; $datasets
+#&gt; [1] "global" "test"  
+#&gt; 
+#&gt; $scoring_history
+#&gt; [1] "timestamp"                     "duration"                     
+#&gt; [3] "number_of_trees"               "training_rmse"                
+#&gt; [5] "training_logloss"              "training_auc"                 
+#&gt; [7] "training_pr_auc"               "training_lift"                
+#&gt; [9] "training_classification_error"
+#&gt; 
+#&gt; $parameters
+#&gt;  [1] "model_id"                          "training_frame"                   
+#&gt;  [3] "nfolds"                            "keep_cross_validation_models"     
+#&gt;  [5] "keep_cross_validation_predictions" "fold_assignment"                  
+#&gt;  [7] "stopping_tolerance"                "seed"                             
+#&gt;  [9] "distribution"                      "ntrees"                           
+#&gt; [11] "max_depth"                         "min_rows"                         
+#&gt; [13] "min_child_weight"                  "sample_rate"                      
+#&gt; [15] "subsample"                         "col_sample_rate"                  
+#&gt; [17] "colsample_bylevel"                 "col_sample_rate_per_tree"         
+#&gt; [19] "colsample_bytree"                  "score_tree_interval"              
+#&gt; [21] "x"                                 "y"                                
+#&gt; 
+#&gt; $categoricals
+#&gt; [1] "Pclass"     "Sex"        "Embarked"   "train_test" "predict"   
+#&gt; 
+#&gt; $type
+#&gt; NULL
+#&gt; 
+#&gt; $model_name
+#&gt; NULL
+#&gt; 
+#&gt; $algorithm
+#&gt; NULL
+#&gt; 
+#&gt; $leaderboard
+#&gt; [1] "model_id"             "auc"                  "logloss"             
+#&gt; [4] "aucpr"                "mean_per_class_error" "rmse"                
+#&gt; [7] "mse"                 
+#&gt; 
+#&gt; $project
+#&gt; NULL
+#&gt; 
+#&gt; $y
+#&gt; NULL
+#&gt; 
+#&gt; $seed
+#&gt; NULL
+#&gt; 
+#&gt; $h2o
+#&gt; NULL
+#&gt; 
+#&gt; $plots
+#&gt; [1] "dashboard"   "importance"  "ROC"         "conf_matrix" "response"   
+#&gt; [6] "gains"      
+#&gt; </div><div class='input'>
 <span class='co'># Classification: Multi-Categorical - 3 Classes</span>
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='no'>dft</span>, <span class='no'>Pclass</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Fare"</span>, <span class='st'>"Cabin"</span>), <span class='kw'>max_time</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>plots</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>2020-05-20 12:51:41 | Started process...</span></div><div class='output co'>#&gt; <span class='error'>Error in h2o_automl(dft, Pclass, ignore = c("Fare", "Cabin"), max_time = 30,     plots = FALSE): You should have a 'tag' column in your data.frame or select an independent varialbe using the 'y' parameter.</span></div><div class='input'>
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='no'>dft</span>, <span class='no'>Pclass</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Fare"</span>, <span class='st'>"Cabin"</span>), <span class='kw'>max_time</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>plots</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>2020-05-20 15:30:48 | Started process...</span></div><div class='output co'>#&gt; <span class='message'>NOTE: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span></div><div class='output co'>#&gt; <span class='message'>NOTE: There are 4 non-numerical features. Consider using ohse() for One Hot Smart Encoding before automl if you want to custom your inputs.</span></div><div class='output co'>#&gt; <span class='message'>Model type: Classifier</span></div><div class='output co'>#&gt;   tag   n     p order   pcum
+#&gt; 1 n_3 491 55.11     1  55.11
+#&gt; 2 n_1 216 24.24     2  79.35
+#&gt; 3 n_2 184 20.65     3 100.00</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Splitting datasets</span></div><div class='output co'>#&gt; train_size  test_size 
+#&gt;        623        268 </div><div class='output co'>#&gt; <span class='message'>Ignored variables for training models: 'Fare', 'Cabin'</span></div><div class='output co'>#&gt; <span class='message'>Algorithms excluded: 'StackedEnsemble', 'DeepLearning'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Iterating until 3 models or 30 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Succesfully generated 3 models:</span></div><div class='output co'>#&gt;                           model_id mean_per_class_error   logloss
+#&gt; 1 XGBoost_3_AutoML_20200520_153049            0.4188283 0.7697650
+#&gt; 2 XGBoost_2_AutoML_20200520_153049            0.4457494 0.7808271
+#&gt; 3 XGBoost_1_AutoML_20200520_153049            0.4838962 0.9322582
+#&gt; 
+#&gt; [3 rows x 3 columns] </div><div class='output co'>#&gt; <span class='message'>Check results in H2O Flow's nice interface: http://localhost:54321/flow/index.html</span></div><div class='output co'>#&gt; <span class='message'>Model selected: XGBoost_3_AutoML_20200520_153049</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Running predictions for Pclass...</span></div><div class='output co'>#&gt; <span class='message'>Process duration: 20.1s</span></div><div class='output co'>#&gt;       AUC     ACC
+#&gt; 1 0.79245 0.29104</div><div class='input'>
 <span class='co'># Regression: Continuous Values</span>
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='no'>dft</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Fare"</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Pclass"</span>), <span class='kw'>exclude_algos</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; <span class='message'>2020-05-20 12:51:41 | Started process...</span></div><div class='output co'>#&gt; <span class='error'>Error in h2o_automl(dft, y = "Fare", ignore = c("Pclass"), exclude_algos = NULL): You should have a 'tag' column in your data.frame or select an independent varialbe using the 'y' parameter.</span></div><div class='input'>
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='no'>dft</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"Fare"</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Pclass"</span>), <span class='kw'>exclude_algos</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; <span class='message'>2020-05-20 15:31:08 | Started process...</span></div><div class='output co'>#&gt; <span class='message'>NOTE: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span></div><div class='output co'>#&gt; <span class='message'>NOTE: There are 4 non-numerical features. Consider using ohse() for One Hot Smart Encoding before automl if you want to custom your inputs.</span></div><div class='output co'>#&gt; <span class='message'>Model type: Regression</span></div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#&gt;    0.00    7.91   14.45   32.20   31.00  512.33 </div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Splitting datasets</span></div><div class='output co'>#&gt; train_size  test_size 
+#&gt;        623        268 </div><div class='output co'>#&gt; <span class='message'>Ignored variables for training models: 'Pclass'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Iterating until 3 models or 600 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Succesfully generated 4 models:</span></div><div class='output co'>#&gt;                                           model_id mean_residual_deviance
+#&gt; 1 StackedEnsemble_AllModels_AutoML_20200520_153109               1136.126
+#&gt; 2                 XGBoost_2_AutoML_20200520_153109               1305.349
+#&gt; 3                 XGBoost_1_AutoML_20200520_153109               1429.366
+#&gt; 4                 XGBoost_3_AutoML_20200520_153109               1479.646
+#&gt;       rmse
+#&gt; 1 33.70647
+#&gt; 2 36.12961
+#&gt; 3 37.80696
+#&gt; 4 38.46617
+#&gt; 
+#&gt; [4 rows x 3 columns] </div><div class='output co'>#&gt; <span class='message'>Check results in H2O Flow's nice interface: http://localhost:54321/flow/index.html</span></div><div class='output co'>#&gt; <span class='message'>Model selected: StackedEnsemble_AllModels_AutoML_20200520_153109</span></div><div class='output co'>#&gt; <span class='message'>NOTE: No importance features for Stacked Ensemble Models</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Running predictions for Fare...</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots...</span></div><div class='output co'>#&gt; <span class='message'>Process duration: 15.2s</span></div><div class='output co'>#&gt;       rmse      mae     mape      mse    rsq   rsqa
+#&gt; 1 33.70647 21.26019 0.116584 1136.126 0.1438 0.1406</div><div class='input'>
 <span class='co'># WITH PRE-DEFINED TRAIN/TEST DATAFRAMES</span>
 <span class='no'>splits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='msplit.html'>msplit</a></span>(<span class='no'>dft</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.8</span>)</div><div class='output co'>#&gt; train_size  test_size 
 #&gt;        712        179 </div><div class='input'><span class='no'>splits</span>$<span class='no'>train</span>$<span class='no'>split</span> <span class='kw'>&lt;-</span> <span class='st'>"train"</span>
 <span class='no'>splits</span>$<span class='no'>test</span>$<span class='no'>split</span> <span class='kw'>&lt;-</span> <span class='st'>"test"</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='no'>splits</span>$<span class='no'>train</span>, <span class='no'>splits</span>$<span class='no'>test</span>)
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='no'>df</span>, <span class='st'>"Survived"</span>, <span class='kw'>max_models</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>train_test</span> <span class='kw'>=</span> <span class='st'>"split"</span>)</div><div class='output co'>#&gt; <span class='message'>2020-05-20 12:51:41 | Started process...</span></div><div class='output co'>#&gt; <span class='error'>Error in h2o_automl(df, "Survived", max_models = 1, train_test = "split"): You should have a 'tag' column in your data.frame or select an independent varialbe using the 'y' parameter.</span></div><div class='input'><span class='co'># }</span></div></pre>
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='no'>df</span>, <span class='st'>"Survived"</span>, <span class='kw'>max_models</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>train_test</span> <span class='kw'>=</span> <span class='st'>"split"</span>)</div><div class='output co'>#&gt; <span class='message'>2020-05-20 15:31:23 | Started process...</span></div><div class='output co'>#&gt; <span class='message'>NOTE: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span></div><div class='output co'>#&gt; <span class='message'>NOTE: There are 5 non-numerical features. Consider using ohse() for One Hot Smart Encoding before automl if you want to custom your inputs.</span></div><div class='output co'>#&gt; <span class='message'>Model type: Classifier</span></div><div class='output co'>#&gt;     tag   n     p order   pcum
+#&gt; 1 FALSE 549 61.62     1  61.62
+#&gt; 2  TRUE 342 38.38     2 100.00
+#&gt; 
+#&gt;  test train 
+#&gt;   179   712 </div><div class='output co'>#&gt; <span class='message'>Ignored variables for training models: 'split'</span></div><div class='output co'>#&gt; <span class='message'>Algorithms excluded: 'StackedEnsemble', 'DeepLearning'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Iterating until 1 models or 600 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Succesfully generated 1 models:</span></div><div class='output co'>#&gt;                           model_id       auc   logloss
+#&gt; 1 XGBoost_1_AutoML_20200520_153124 0.8838028 0.4011806
+#&gt; 
+#&gt; [1 row x 3 columns] </div><div class='output co'>#&gt; <span class='message'>Check results in H2O Flow's nice interface: http://localhost:54321/flow/index.html</span></div><div class='output co'>#&gt; <span class='message'>Model selected: XGBoost_1_AutoML_20200520_153124</span></div><div class='output co'>#&gt; <span class='message'>NOTE: The following variables were NOT important: Embarked.S, Embarked.Q</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Running predictions for Survived...</span></div><div class='output co'>#&gt; <span class='message'>Target value: FALSE</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots...</span></div><div class='output co'>#&gt; <span class='message'>Process duration: 11.8s</span></div><div class='output co'>#&gt;      AUC     ACC     PRC     TPR     TNR
+#&gt; 1 0.8838 0.86034 0.84298 0.94444 0.73239</div><div class='input'><span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
