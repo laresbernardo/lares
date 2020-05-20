@@ -123,7 +123,7 @@ h2o_automl <- function(df, y = "tag",
   if (!quiet) message(paste(Sys.time(), "| Started process..."))
   
   # Tidyverse friendly
-  y <- as_label(enquo(y))[2]
+  y <- as_name(enquo(y))
   
   # INDEPENDENT VARIABLE
   if (!y %in% colnames(df)) {
