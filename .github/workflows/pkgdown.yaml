@@ -1,3 +1,4 @@
+# Template: https://github.com/r-lib/actions/blob/master/.github/workflows/pkgdown.yaml
 on:
   push:
     branches: master
@@ -7,6 +8,8 @@ name: documentation
 jobs:
   documentation:
     runs-on: macOS-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
 
@@ -20,7 +23,7 @@ jobs:
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
           writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
         shell: Rscript {0}
-        
+
       - name: Cache R packages
         uses: actions/cache@v1
         with:

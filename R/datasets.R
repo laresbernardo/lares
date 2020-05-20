@@ -95,7 +95,7 @@
 # # Regression (Continuous Values)
 # regr <- h2o_automl(dft, y = "Fare", ignore = c("Pclass","Cabin"), exclude_algos = NULL)
 # # Save results
-# dfr <- list(class2 = r$class2$scores_test,
-#             class3 = r$class3$scores_test,
-#             regr = r$regr$scores_test)
-# save(dfr, file="data/dfr.RData")
+# dfr <- list(class2 = class2$scores_test,
+#             class3 = class3$scores_test,
+#             regr = regr$scores_test)
+# save(dfr, file = "data/dfr.RData", version = 2)
