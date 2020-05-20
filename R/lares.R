@@ -25,7 +25,7 @@
 #' @importFrom patchwork plot_layout plot_annotation wrap_plots
 #' @importFrom pROC roc ci
 #' @import rlist
-#' @importFrom rlang as_label .data as_name
+#' @importFrom rlang as_label .data
 #' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text 
 #' @importFrom scales comma percent dollar
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 

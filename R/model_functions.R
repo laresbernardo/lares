@@ -123,13 +123,16 @@ h2o_automl <- function(df, y = "tag",
   if (!quiet) message(paste(Sys.time(), "| Started process..."))
   
   # Tidyverse friendly
-  y <- as_name(enquo(y))
+  y <- gsub('"', "", as_label(enquo(y)))
   
   # INDEPENDENT VARIABLE
   if (!y %in% colnames(df)) {
     stop(paste("You should have a 'tag' column in your data.frame or select",
                "an independent varialbe using the 'y' parameter."))
   }
+  
+  if (!quiet) message(sprintf("Variable to predict: %s", y))
+            
   colnames(df)[colnames(df) == y] <- "tag"
   df <- data.frame(df) %>% 
     filter(!is.na(.data$tag)) %>%
