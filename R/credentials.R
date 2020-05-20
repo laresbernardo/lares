@@ -13,7 +13,7 @@
 #' This will be asked once and will be set for further R sessions. Remember to
 #' reset your session for this setup to start working properly.
 #' 
-#' @section YML file format:
+#' ## YML file format:
 #' A YML file is a text file, with \code{.yml} file format. You may start from 
 #' the dummy YML file shared which shows the structure you must follow to set your 
 #' credentials file. Check it out \href{https://bit.ly/2ZhJMse}{here} or find it

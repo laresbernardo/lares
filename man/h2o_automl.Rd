@@ -106,12 +106,16 @@ the results? Working directory as default.}
 This function lets the user create a robust and fast model, using 
 H2O's AutoML function. The result is a list with the best model, 
 its parameters, datasets, performance metrics, variables 
-importances, and other useful metrics.
+importances, and plots. If the input is categorical, classification
+models will be trained and if is a continuous variable, regression
+models will be trained.
 }
 \section{Plot Results into Dashboard}{
 
 Use the \code{mplot_full()} function to generate a dashboard with
-your model's results and metrics.
+your model's results and metrics, or find them in your `plots` 
+element within your `h2o_automl` object (be sure to have your 
+`plots` to `TRUE`).
 }
 
 \section{List of algorithms}{
@@ -125,34 +129,26 @@ multi-layer artificial neural network) and "StackedEnsemble".
 }
 
 \examples{
-\dontrun{
-data(dft)
+\donttest{
+data(dft) # Titanic dataset
 dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 
-# Classification: 2 classes
-r <- h2o_automl(dft, y = Survived, max_models = 1, target = "TRUE")
-r$plots$dashboard
-r$metrics
+# Classification: Binomial - 2 Classes
+r <- h2o_automl(dft, y = Survived, max_models = 1, impute = FALSE, target = "TRUE")
+lapply(r, names)
 
-# Classification: 3 classes
-r <- h2o_automl(dft, Pclass, ignore = "Fare", impute = TRUE)
-r$plot$dashboard
-r$metrics
+# Classification: Multi-Categorical - 3 Classes
+r <- h2o_automl(dft, Pclass, ignore = c("Fare", "Cabin"), max_time = 30, plots = FALSE)
 
-# Regression (Continuous Values)
-r <- h2o_automl(dft, y = "Fare", ignore = c("Pclass","Cabin"), exclude_algos = NULL)
-r$plot$dashboard
-r$metrics
-
-# Variables importances for any model
-r$plots$importance
+# Regression: Continuous Values
+r <- h2o_automl(dft, y = "Fare", ignore = c("Pclass"), exclude_algos = NULL)
 
 # WITH PRE-DEFINED TRAIN/TEST DATAFRAMES
 splits <- msplit(dft, size = 0.8)
 splits$train$split <- "train"
 splits$test$split <- "test"
 df <- rbind(splits$train, splits$test)
-r <- h2o_automl(df, "Survived", max_models = 3, train_test = "split")
+r <- h2o_automl(df, "Survived", max_models = 1, train_test = "split")
 }
 }
 \seealso{

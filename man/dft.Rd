@@ -7,17 +7,17 @@
 \format{
 An object of class \code{"data.frame"}
 \describe{
-  \item{PassengerId}{Unique ID for each passenger (1--891)}
+  \item{PassengerId}{Unique ID for each passenger (1-891)}
   \item{Survived}{Did the passenger survive? (TRUE, FALSE)}
   \item{Pclass}{Ticket class, from first to third (1, 2, 3)}
   \item{Sex}{Gender (female, male)}
-  \item{Age}{Age for each passenger in years (0.42--80)}
-  \item{SibSp}{Amount of siblings / spouses aboard the Titanic (0--8)}
-  \item{Parch}{Amount of parents / children aboard the Titanic (0--6)}
+  \item{Age}{Age for each passenger in years (0.42-80)}
+  \item{SibSp}{Amount of siblings / spouses aboard the Titanic (0-8)}
+  \item{Parch}{Amount of parents / children aboard the Titanic (0-6)}
   \item{Ticket}{Ticket IDs}
-  \item{Fare}{Amount paid for passenger's ticket (0--512.3292)}
-  \item{Cabin}{width of top of diamond relative to widest point (43--95)}
-  \item{Embarked}{Port of Embarkation (43--95)}
+  \item{Fare}{Amount paid for passenger's ticket (0-512.3292)}
+  \item{Cabin}{width of top of diamond relative to widest point (43-95)}
+  \item{Embarked}{Port of Embarkation (43-95)}
 }
 }
 \usage{
