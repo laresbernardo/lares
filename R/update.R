@@ -7,10 +7,9 @@
 #' @param force Boolean. Force install
 #' @param all Boolean. Install other recommended libraries? Kinda Docker install!
 #' @param local Boolean. Install package with local files? (or Github repo)
-#' @param n Boolean. Notify update for lares' stats
 #' @param fb Boolean. From FB instance? Personal use
 #' @export
-updateLares <- function(force = FALSE, all = FALSE, local = FALSE, n = TRUE, fb = FALSE) {
+updateLares <- function(force = FALSE, all = FALSE, local = FALSE, fb = FALSE) {
   
   try_require("devtools")
   
@@ -30,10 +29,10 @@ updateLares <- function(force = FALSE, all = FALSE, local = FALSE, n = TRUE, fb 
     } else install_github("laresbernardo/lares", force = force) 
   }
 
-  if (n) {
-    aux <- paste("User updated:", Sys.info()[["user"]])
-    slackSend(aux, title = "New lares update")
-  }
+  # if (n) {
+  #   aux <- paste("User updated:", Sys.info()[["user"]])
+  #   slackSend(aux, title = "New lares update")
+  # }
   
   if (all) install_recommended()
   

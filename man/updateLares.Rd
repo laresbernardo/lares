@@ -4,7 +4,7 @@
 \alias{updateLares}
 \title{Update the library}
 \usage{
-updateLares(force = FALSE, all = FALSE, local = FALSE, n = TRUE, fb = FALSE)
+updateLares(force = FALSE, all = FALSE, local = FALSE, fb = FALSE)
 }
 \arguments{
 \item{force}{Boolean. Force install}
@@ -12,8 +12,6 @@ updateLares(force = FALSE, all = FALSE, local = FALSE, n = TRUE, fb = FALSE)
 \item{all}{Boolean. Install other recommended libraries? Kinda Docker install!}
 
 \item{local}{Boolean. Install package with local files? (or Github repo)}
-
-\item{n}{Boolean. Notify update for lares' stats}
 
 \item{fb}{Boolean. From FB instance? Personal use}
 }
