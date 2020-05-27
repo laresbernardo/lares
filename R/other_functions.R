@@ -165,7 +165,9 @@ normalize <- function(x) {
 #' @param sep Character. String text wished to insert between values
 #' @param quotes Boolean. Bring simple quotes for each observation
 #' @param and Character. Add 'and' or something before last observation. 
-#' Not boolean variable so it can be used on other languages
+#' Not boolean variable so it can be used on other languages. Note that
+#' the last comma will be suppressed if `options("lares.formatNum")`` is set
+#' to `1` and you have less than 3 values.
 #' @examples
 #' vector2text(LETTERS[1:5])
 #' vector2text(c(1:5), quotes = FALSE)
@@ -175,13 +177,28 @@ normalize <- function(x) {
 #' v2t(LETTERS[1:5])
 #' @export
 vector2text <- function(vector, sep = ", ", quotes = TRUE, and = "") {
+  
+  # Add "and" or something before the last value
   n <- length(vector)
   if (and != "" & n > 1) {
     vector <- c(vector[1:(n - 1)], paste(and, vector[n]))
     quotes <- !quotes # Makes no sense to keep quotes but leave the option
   } 
+  
+  # Paste everythign together
   output <- paste(shQuote(vector), collapse = sep)
-  if (!quotes) output <- gsub("'", "", output)
+  
+  # Get rid of quotes
+  if (!quotes) 
+    output <- gsub("'", "", output)
+  
+  # Get rid of the last comma when using and?
+  if (and != "" & (getOption("lares.formatNum") == 1 | n == 2)) {
+    last_comma <- tail(c(gregexpr(",", output)[[1]]), 1)
+    output <- paste0(substr(output, 1, last_comma - 1),
+                     substr(output, last_comma + 1, nchar(output)))
+  }
+    
   return(output)
 }
 #' @rdname vector2text

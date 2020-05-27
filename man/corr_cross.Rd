@@ -2,7 +2,7 @@
 % Please edit documentation in R/correlations.R
 \name{corr_cross}
 \alias{corr_cross}
-\title{Correlation Cross-Table}
+\title{Ranked Cross-Correlation}
 \usage{
 corr_cross(
   df,

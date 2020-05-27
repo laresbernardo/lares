@@ -232,7 +232,7 @@ corr_var <- function(df, ...,
 
 
 ####################################################################
-#' Correlation Cross-Table
+#' Ranked Cross-Correlation
 #'
 #' This function creates a correlation full study and returns a rank
 #' of the highest correlation variables obtained in a cross-table.

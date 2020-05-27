@@ -12,7 +12,7 @@ theme_lares2(
   soft_colour = "grey30",
   bg_colour = "white",
   panel_colour = "transparent",
-  legend = "right",
+  legend = NA,
   grid = TRUE,
   mg = 9,
   pal = 0,

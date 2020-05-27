@@ -31,7 +31,7 @@ theme_lares2 <- function(font = getOption("lares.font"),
                          soft_colour = "grey30",
                          bg_colour = "white",
                          panel_colour = "transparent",
-                         legend = "right",
+                         legend = NA,
                          grid = TRUE,
                          mg = 9,
                          pal = 0,
@@ -134,14 +134,15 @@ theme_lares2 <- function(font = getOption("lares.font"),
     family = font, color = soft_colour))
   
   # Legend 
-  ret <- ret + theme(legend.title = element_text(
-    color = soft_colour, size = size * 0.9, face = "bold"),
-    legend.position = legend,
-    legend.justification = c(ifelse(legend %in% c("top","bottom"), 0, .5),
-                             ifelse(legend == "top", 0, .5)),
-    legend.margin = margin(-3,0,-5,0))
-    # guides(colour = guide_legend(override.aes = list(size = 4)),
-    #        fill = guide_legend(override.aes = list(size = 4)))
+  if (!is.na(legend))
+    ret <- ret + theme(legend.title = element_text(
+      color = soft_colour, size = size * 0.9, face = "bold"),
+      legend.position = legend,
+      legend.justification = c(ifelse(legend %in% c("top","bottom"), 0, .5),
+                               ifelse(legend == "top", 0, .5)),
+      legend.margin = margin(-3,0,-5,0))
+  # guides(colour = guide_legend(override.aes = list(size = 4)),
+  #        fill = guide_legend(override.aes = list(size = 4)))
   
   # Background
   ret <- ret + theme(

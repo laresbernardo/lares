@@ -17,7 +17,9 @@ v2t(vector, sep = ", ", quotes = TRUE, and = "")
 \item{quotes}{Boolean. Bring simple quotes for each observation}
 
 \item{and}{Character. Add 'and' or something before last observation. 
-Not boolean variable so it can be used on other languages}
+Not boolean variable so it can be used on other languages. Note that
+the last comma will be suppressed if `options("lares.formatNum")`` is set
+to `1` and you have less than 3 values.}
 }
 \description{
 Convert a vector into a comma separated text
