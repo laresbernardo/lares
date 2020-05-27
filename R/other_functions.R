@@ -179,8 +179,8 @@ normalize <- function(x) {
 vector2text <- function(vector, sep = ", ", quotes = TRUE, and = "") {
   
   # Add "and" or something before the last value
+  n <- length(vector)
   if (and != "") {
-    n <- length(vector)
     # Makes no sense to keep quotes but leave the option
     quotes <- !quotes 
     if (n > 1) {
