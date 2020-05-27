@@ -173,29 +173,7 @@ distributions</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
 
 <span class='co'># List with the names of the columns classified by class</span>
-<span class='fu'>df_str</span>(<span class='no'>dft</span>, <span class='st'>"names"</span>)</div><div class='output co'>#&gt; <span class='message'>Other available 'return' options: 'skimr', 'numbers', 'distr', 'plot'</span></div><div class='output co'>#&gt; $cols
-#&gt;  [1] "PassengerId" "Survived"    "Pclass"      "Sex"         "Age"        
-#&gt;  [6] "SibSp"       "Parch"       "Ticket"      "Fare"        "Cabin"      
-#&gt; [11] "Embarked"   
-#&gt; 
-#&gt; $nums
-#&gt; [1] "PassengerId" "Age"         "SibSp"       "Parch"       "Fare"       
-#&gt; 
-#&gt; $char
-#&gt; [1] "Ticket"
-#&gt; 
-#&gt; $factor
-#&gt; [1] "Pclass"   "Sex"      "Cabin"    "Embarked"
-#&gt; 
-#&gt; $logic
-#&gt; [1] "Survived"
-#&gt; 
-#&gt; $time
-#&gt; character(0)
-#&gt; 
-#&gt; $allnas
-#&gt; character(0)
-#&gt; </div><div class='input'>
+<span class='fu'>df_str</span>(<span class='no'>dft</span>, <span class='st'>"names"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in n == 2: comparison (1) is possible only for atomic and list types</span></div><div class='input'>
 <span class='co'># Dataframe with numbers: total values, row, columns, complete rows....</span>
 <span class='fu'>df_str</span>(<span class='no'>dft</span>, <span class='st'>"numbers"</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                 metric counter       p
 #&gt; 1         Total.Values    9801  100.00

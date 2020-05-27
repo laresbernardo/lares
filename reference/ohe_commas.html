@@ -171,17 +171,7 @@ values which will be separated as one hot encoding</p></td>
     <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>),
                  <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AA, D"</span>, <span class='st'>"AA,B"</span>, <span class='st'>"B,  D"</span>, <span class='st'>"A,D,B"</span>, <span class='fl'>NA</span>),
                  <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AA+BB+AA"</span>, <span class='st'>"AA"</span>, <span class='st'>"BB,  AA"</span>, <span class='fl'>NA</span>, <span class='st'>"BB+AA"</span>))
-<span class='fu'>ohe_commas</span>(<span class='no'>df</span>, <span class='st'>"x"</span>)</div><div class='output co'>#&gt;   id     x        z  x_AA   x_D   x_B   x_A x_NoVal
-#&gt; 1  1 AA, D AA+BB+AA  TRUE  TRUE FALSE FALSE   FALSE
-#&gt; 2  2  AA,B       AA  TRUE FALSE  TRUE FALSE   FALSE
-#&gt; 3  3 B,  D  BB,  AA FALSE  TRUE  TRUE FALSE   FALSE
-#&gt; 4  4 A,D,B     &lt;NA&gt; FALSE  TRUE  TRUE  TRUE   FALSE
-#&gt; 5  5  &lt;NA&gt;    BB+AA FALSE FALSE FALSE FALSE    TRUE</div><div class='input'><span class='fu'>ohe_commas</span>(<span class='no'>df</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"x"</span>, <span class='st'>"z"</span>), <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"\\+|,"</span>)</div><div class='output co'>#&gt;   id     x        z  x_AA   x_D   x_B   x_A x_NoVal  z_AA  z_BB z_NoVal
-#&gt; 1  1 AA, D AA+BB+AA  TRUE  TRUE FALSE FALSE   FALSE  TRUE  TRUE   FALSE
-#&gt; 2  2  AA,B       AA  TRUE FALSE  TRUE FALSE   FALSE  TRUE FALSE   FALSE
-#&gt; 3  3 B,  D  BB,  AA FALSE  TRUE  TRUE FALSE   FALSE  TRUE  TRUE   FALSE
-#&gt; 4  4 A,D,B     &lt;NA&gt; FALSE  TRUE  TRUE  TRUE   FALSE FALSE FALSE    TRUE
-#&gt; 5  5  &lt;NA&gt;    BB+AA FALSE FALSE FALSE FALSE    TRUE  TRUE  TRUE   FALSE</div></pre>
+<span class='fu'>ohe_commas</span>(<span class='no'>df</span>, <span class='st'>"x"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in n == 2: comparison (1) is possible only for atomic and list types</span></div><div class='input'><span class='fu'>ohe_commas</span>(<span class='no'>df</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"x"</span>, <span class='st'>"z"</span>), <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"\\+|,"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in n == 2: comparison (1) is possible only for atomic and list types</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -245,95 +245,17 @@ the filtered values with?</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>)
 <span class='no'>dft</span> <span class='kw'>&lt;-</span> <span class='no'>dft</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>9</span>,<span class='fl'>11</span>)]
 
-<span class='fu'>ohse</span>(<span class='no'>dft</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>3</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 3 variables: 'Pclass', 'Embarked', 'Survived'</span></div><div class='output co'>#&gt;   Survived_TRUE Age    Fare Pclass_1 Pclass_2 Embarked_C Embarked_OTHER
-#&gt; 1             0  22  7.2500        0        0          0              0
-#&gt; 2             1  38 71.2833        1        0          1              0
-#&gt; 3             1  26  7.9250        0        0          0              0
-#&gt;   Embarked_Q
-#&gt; 1          0
-#&gt; 2          0
-#&gt; 3          0</div><div class='input'><span class='fu'>ohse</span>(<span class='no'>dft</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>redundant</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 3 variables: 'Survived', 'Pclass', 'Embarked'</span></div><div class='output co'>#&gt;   Age    Fare Survived_FALSE Survived_TRUE Pclass_1 Pclass_2 Pclass_3
-#&gt; 1  22  7.2500              1             0        0        0        1
-#&gt; 2  38 71.2833              0             1        1        0        0
-#&gt; 3  26  7.9250              0             1        0        0        1
-#&gt;   Embarked_C Embarked_OTHER Embarked_Q Embarked_S
-#&gt; 1          0              0          0          1
-#&gt; 2          1              0          0          0
-#&gt; 3          0              0          0          1</div><div class='input'>
+<span class='fu'>ohse</span>(<span class='no'>dft</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>3</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='error'>Error in n == 2: comparison (1) is possible only for atomic and list types</span></div><div class='input'><span class='fu'>ohse</span>(<span class='no'>dft</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>redundant</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='error'>Error in n == 2: comparison (1) is possible only for atomic and list types</span></div><div class='input'>
 <span class='co'># Getting rid of columns with no (or too much) variance</span>
 <span class='no'>dft</span>$<span class='no'>no_variance1</span> <span class='kw'>&lt;-</span> <span class='fl'>0</span>
 <span class='no'>dft</span>$<span class='no'>no_variance2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"B"</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>dft</span>) - <span class='fl'>1</span>))
 <span class='no'>dft</span>$<span class='no'>no_variance3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>dft</span>)))
 <span class='no'>dft</span>$<span class='no'>no_variance4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"A"</span>, <span class='fl'>20</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>dft</span>) - <span class='fl'>20</span>))
-<span class='fu'>ohse</span>(<span class='no'>dft</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>3</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 4 variables: 'Pclass', 'Embarked', 'Survived', 'no_variance2'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Automatically dropped 3 columns with 0% or &gt;=90% variance: 'no_variance1', 'no_variance3', 'no_variance4'</span></div><div class='output co'>#&gt;   Survived_TRUE Age    Fare no_variance2_B Pclass_1 Pclass_2 Embarked_C
-#&gt; 1             0  22  7.2500              0        0        0          0
-#&gt; 2             1  38 71.2833              1        1        0          1
-#&gt; 3             1  26  7.9250              1        0        0          0
-#&gt;   Embarked_OTHER Embarked_Q
-#&gt; 1              0          0
-#&gt; 2              0          0
-#&gt; 3              0          0</div><div class='input'><span class='fu'>ohse</span>(<span class='no'>dft</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>var</span> <span class='kw'>=</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 5 variables: 'Pclass', 'Embarked', 'no_variance4', 'Survived', 'no_variance2'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Automatically dropped 2 columns with 0% or &gt;=100% variance: 'no_variance1', 'no_variance3'</span></div><div class='output co'>#&gt;   Survived_TRUE Age    Fare no_variance2_B Pclass_1 Pclass_2 Embarked_C
-#&gt; 1             0  22  7.2500              0        0        0          0
-#&gt; 2             1  38 71.2833              1        1        0          1
-#&gt; 3             1  26  7.9250              1        0        0          0
-#&gt;   Embarked_OTHER Embarked_Q no_variance4_.0.000452797290706798
-#&gt; 1              0          0                                  0
-#&gt; 2              0          0                                  0
-#&gt; 3              0          0                                  0
-#&gt;   no_variance4_.0.00350143698256707 no_variance4_A
-#&gt; 1                                 0              1
-#&gt; 2                                 0              1
-#&gt; 3                                 0              1</div><div class='input'>
+<span class='fu'>ohse</span>(<span class='no'>dft</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>3</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='error'>Error in n == 2: comparison (1) is possible only for atomic and list types</span></div><div class='input'><span class='fu'>ohse</span>(<span class='no'>dft</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>var</span> <span class='kw'>=</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='error'>Error in n == 2: comparison (1) is possible only for atomic and list types</span></div><div class='input'>
 <span class='co'># Examples with Dataset 2</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dfl</span>)
 <span class='no'>dfl</span>$<span class='no'>novar</span> <span class='kw'>&lt;-</span> <span class='st'>"novar"</span>
-<span class='fu'>ohse</span>(<span class='no'>dfl</span>, <span class='kw'>dates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 1 date/time columns: 'opp_date'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 5 variables: 'kind', 'opp_date_weekday', 'type', 'issued', 'opp_date_weekend'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Automatically dropped 1 columns with 0% or &gt;=90% variance: 'novar'</span></div><div class='output co'>#&gt;   opp_id            opp_date type_TRUE values promo issued_TRUE opp_date_year
-#&gt; 1 992349 2019-02-06 12:22:48         1 480100     0           1          2019
-#&gt; 2 999436 2019-02-11 20:50:40         0 421750 50000           1          2019
-#&gt; 3 991823 2019-02-05 21:47:31         1 480100 12100           0          2019
-#&gt;   opp_date_month opp_date_day opp_date_week opp_date_weekend_TRUE
-#&gt; 1              2            6             6                     0
-#&gt; 2              2           11             6                     0
-#&gt; 3              2            5             6                     0
-#&gt;   opp_date_year_day opp_date_hour opp_date_minute opp_date_minutes
-#&gt; 1                36            12              22              742
-#&gt; 2                41            20              50             1250
-#&gt; 3                35            21              47             1307
-#&gt;   opp_date_second kind_NAs kind_red opp_date_weekday_Fri opp_date_weekday_Mon
-#&gt; 1              48        0        1                    0                    0
-#&gt; 2              40        0        0                    0                    1
-#&gt; 3              31        0        0                    0                    0
-#&gt;   opp_date_weekday_Sat opp_date_weekday_Sun opp_date_weekday_Thu
-#&gt; 1                    0                    0                    0
-#&gt; 2                    0                    0                    0
-#&gt; 3                    0                    0                    0
-#&gt;   opp_date_weekday_Tue
-#&gt; 1                    0
-#&gt; 2                    0
-#&gt; 3                    1</div><div class='input'><span class='fu'>ohse</span>(<span class='no'>dfl</span>, <span class='kw'>dates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='st'>"issued"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 1 date/time columns: 'opp_date'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Omitting transformations for 'issued'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 4 variables: 'kind', 'opp_date_weekday', 'type', 'opp_date_weekend'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Automatically dropped 1 columns with 0% or &gt;=90% variance: 'novar'</span></div><div class='output co'>#&gt;   opp_id            opp_date values promo type_TRUE opp_date_year
-#&gt; 1 992349 2019-02-06 12:22:48 480100     0         1          2019
-#&gt; 2 999436 2019-02-11 20:50:40 421750 50000         0          2019
-#&gt; 3 991823 2019-02-05 21:47:31 480100 12100         1          2019
-#&gt;   opp_date_month opp_date_day opp_date_week opp_date_weekend_TRUE
-#&gt; 1              2            6             6                     0
-#&gt; 2              2           11             6                     0
-#&gt; 3              2            5             6                     0
-#&gt;   opp_date_year_day opp_date_hour opp_date_minute opp_date_minutes
-#&gt; 1                36            12              22              742
-#&gt; 2                41            20              50             1250
-#&gt; 3                35            21              47             1307
-#&gt;   opp_date_second kind_NAs kind_red opp_date_weekday_Fri opp_date_weekday_Mon
-#&gt; 1              48        0        1                    0                    0
-#&gt; 2              40        0        0                    0                    1
-#&gt; 3              31        0        0                    0                    0
-#&gt;   opp_date_weekday_Sat opp_date_weekday_Sun opp_date_weekday_Thu
-#&gt; 1                    0                    0                    0
-#&gt; 2                    0                    0                    0
-#&gt; 3                    0                    0                    0
-#&gt;   opp_date_weekday_Tue
-#&gt; 1                    0
-#&gt; 2                    0
-#&gt; 3                    1</div><div class='input'>
+<span class='fu'>ohse</span>(<span class='no'>dfl</span>, <span class='kw'>dates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='error'>Error in n == 2: comparison (1) is possible only for atomic and list types</span></div><div class='input'><span class='fu'>ohse</span>(<span class='no'>dfl</span>, <span class='kw'>dates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='st'>"issued"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='error'>Error in n == 2: comparison (1) is possible only for atomic and list types</span></div><div class='input'>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Include holidays</span>
 <span class='fu'>ohse</span>(<span class='no'>dfl</span>, <span class='kw'>dates</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>holidays</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='st'>"Venezuela"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()
