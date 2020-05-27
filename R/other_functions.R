@@ -161,13 +161,13 @@ normalize <- function(x) {
 #' Convert a vector into a comma separated text
 #' 
 #' @family Data Wrangling
-#' @param vector Vector. Vector with more than 1 observation
-#' @param sep Character. String text wished to insert between values
-#' @param quotes Boolean. Bring simple quotes for each observation
+#' @param vector Vector. Vector with more than 1 observation.
+#' @param sep Character. String text wished to insert between values.
+#' @param quotes Boolean. Bring simple quotes for each observation.
 #' @param and Character. Add 'and' or something before last observation. 
 #' Not boolean variable so it can be used on other languages. Note that
-#' the last comma will be suppressed if `options("lares.formatNum")`` is set
-#' to `1` and you have less than 3 values.
+#' the last comma will be suppressed if \code{options("lares.formatNum")} 
+#' is set to \code{1} and you have less than 3 values.
 #' @examples
 #' vector2text(LETTERS[1:5])
 #' vector2text(c(1:5), quotes = FALSE)
@@ -182,7 +182,8 @@ vector2text <- function(vector, sep = ", ", quotes = TRUE, and = "") {
   n <- length(vector)
   if (and != "" & n > 1) {
     vector <- c(vector[1:(n - 1)], paste(and, vector[n]))
-    quotes <- !quotes # Makes no sense to keep quotes but leave the option
+    # Makes no sense to keep quotes but leave the option
+    quotes <- !quotes 
   } 
   
   # Paste everythign together

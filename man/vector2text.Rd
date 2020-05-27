@@ -10,16 +10,16 @@ vector2text(vector, sep = ", ", quotes = TRUE, and = "")
 v2t(vector, sep = ", ", quotes = TRUE, and = "")
 }
 \arguments{
-\item{vector}{Vector. Vector with more than 1 observation}
+\item{vector}{Vector. Vector with more than 1 observation.}
 
-\item{sep}{Character. String text wished to insert between values}
+\item{sep}{Character. String text wished to insert between values.}
 
-\item{quotes}{Boolean. Bring simple quotes for each observation}
+\item{quotes}{Boolean. Bring simple quotes for each observation.}
 
 \item{and}{Character. Add 'and' or something before last observation. 
 Not boolean variable so it can be used on other languages. Note that
-the last comma will be suppressed if `options("lares.formatNum")`` is set
-to `1` and you have less than 3 values.}
+the last comma will be suppressed if \code{options("lares.formatNum")} 
+is set to \code{1} and you have less than 3 values.}
 }
 \description{
 Convert a vector into a comma separated text
