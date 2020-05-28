@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download Stocks Historical Data — stocks_quote • lares</title>
+<title>List all functions used in an R script file by package — list_fxs_file • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,11 @@
 
 
 
-<meta property="og:title" content="Download Stocks Historical Data — stocks_quote" />
-<meta property="og:description" content="This function lets the user download stocks historical data" />
+<meta property="og:title" content="List all functions used in an R script file by package — list_fxs_file" />
+<meta property="og:description" content="Parses all functions called by an R script and then lists
+them by package. Wrapper for 'getParseData'. May be of great
+use for those developing a package to help see what 
+namespace 'importsFrom' calls will be required." />
 
 
 
@@ -108,53 +111,49 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download Stocks Historical Data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/stocks.R'><code>R/stocks.R</code></a></small>
-    <div class="hidden name"><code>stocks_quote.Rd</code></div>
+    <h1>List all functions used in an R script file by package</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_functions.R'><code>R/other_functions.R</code></a></small>
+    <div class="hidden name"><code>list_fxs_file.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user download stocks historical data</p>
+    <p>Parses all functions called by an R script and then lists
+them by package. Wrapper for 'getParseData'. May be of great
+use for those developing a package to help see what 
+namespace 'importsFrom' calls will be required.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>stocks_quote</span>(<span class='no'>ticks</span>)</pre>
+    <pre class="usage"><span class='fu'>list_fxs_file</span>(<span class='no'>filename</span>, <span class='kw'>alphabetic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>ticks</th>
-      <td><p>Character Vector. Symbols/Tickers to quote in real time</p></td>
+      <th>filename</th>
+      <td><p>Character. Path to an R file containing R code.</p></td>
+    </tr>
+    <tr>
+      <th>alphabetic</th>
+      <td><p>Boolean. List functions alphabetically.
+If FALSE, will list in order of appearance.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <div class='dont-index'><p>Other Investment: 
-<code><a href='daily_portfolio.html'>daily_portfolio</a>()</code>,
-<code><a href='daily_stocks.html'>daily_stocks</a>()</code>,
-<code><a href='etf_sector.html'>etf_sector</a>()</code>,
-<code><a href='splot_change.html'>splot_change</a>()</code>,
-<code><a href='splot_etf.html'>splot_etf</a>()</code>,
-<code><a href='splot_growth.html'>splot_growth</a>()</code>,
-<code><a href='splot_roi.html'>splot_roi</a>()</code>,
-<code><a href='splot_summary.html'>splot_summary</a>()</code>,
-<code><a href='splot_types.html'>splot_types</a>()</code>,
-<code><a href='stocks_file.html'>stocks_file</a>()</code>,
-<code><a href='stocks_hist.html'>stocks_hist</a>()</code>,
-<code><a href='stocks_obj.html'>stocks_obj</a>()</code>,
-<code><a href='stocks_report.html'>stocks_report</a>()</code></p></div>
+    <p>Returns a list. Parses all functions called by an R script 
+and then lists them by package. Those from the script itself are listed
+under '.GlobalEnv' and any functions that may originate
+from multiple packages have all possibilities listed. Those listed under
+'character(0)' are those for which a package could not be found- may be
+functions within functions, or from packages that aren't loaded.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Multiple quotes at the same time</span>
-<span class='fu'>stocks_quote</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"VTI"</span>,<span class='st'>"VOO"</span>,<span class='st'>"TSLA"</span>))</div><div class='output co'>#&gt;   Symbol   Type           QuoteTime  Value DailyChange    Market
-#&gt; 1    VTI    ETF 2020-05-27 20:00:00 153.73    2.389999 us_market
-#&gt; 2    VOO    ETF 2020-05-27 20:00:00 279.05    4.009980 us_market
-#&gt; 3   TSLA EQUITY 2020-05-27 20:00:02 820.23    1.359985 us_market
-#&gt;                                          SymbolName
-#&gt; 1 Vanguard Total Stock Market Index Fund ETF Shares
-#&gt; 2                              Vanguard S&amp;P 500 ETF
-#&gt; 3                                       Tesla, Inc.</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># Choose an R script file with functions</span>
+<span class='no'>rfile</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.choose.html'>file.choose</a></span>()
+<span class='fu'>list_fxs_file</span>(<span class='no'>rfile</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
