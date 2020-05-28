@@ -8,7 +8,9 @@
 #' @family Credentials
 #' @param filename Characeter. Import a local Excel file
 #' @param creds Character. Dropbox's credentials (see \code{get_creds()})
-#' @param auto Boolean. Automatically use my local personal file? 
+#' @param auto Boolean. Automatically use my local personal file? You might want
+#' to set in into your .Renviron \code{LARES_PORTFOLIO=~/dir/to/your/file.xlsx} so you
+#' can leave all other parameters as \code{NA} and use it every time.
 #' @param sheets Character Vector. Names of each sheet containing Portfolio summary,
 #' Cash, and Transactions information
 #' @param keep_old Boolean. Include sold tickers eventhough not currently in portfolio?
@@ -40,7 +42,7 @@ stocks_file <- function(filename = NA,
   
   # FOR PERSONAL USE
   local <- Sys.info()
-  if (local[["nodename"]] == "MacBook-Pro-de-Bernardo.local" & auto) {
+  if (auto & Sys.getenv("LARES_PORTFOLIO") != "") {
     message("Using BL's local file...")
     local <- Sys.getenv("LARES_PORTFOLIO")
     results <- processFile(local, keep_old) 

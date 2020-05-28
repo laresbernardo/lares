@@ -1448,3 +1448,39 @@ replacefactor <- function(x, original, change) {
   }
   return(x)
 }
+
+####################################################################
+#' List all functions used in an R script file by package
+#'
+#' Parses all functions called by an R script and then lists
+#' them by package. Wrapper for 'getParseData'. May be of great
+#' use for those developing a package to help see what 
+#' namespace 'importsFrom' calls will be required.
+#' @param filename Character. Path to an R file containing R code.
+#' @param alphabetic Boolean. List functions alphabetically.
+#' If FALSE, will list in order of appearance.
+#' @return Returns a list. Parses all functions called by an R script 
+#' and then lists them by package. Those from the script itself are listed
+#' under '.GlobalEnv' and any functions that may originate
+#' from multiple packages have all possibilities listed. Those listed under
+#' 'character(0)' are those for which a package could not be found- may be
+#' functions within functions, or from packages that aren't loaded.
+#' @examples
+#' \dontrun{
+#' # Choose an R script file with functions
+#' rfile <- file.choose()
+#' list_fxs_file(rfile)
+#' }
+#' @export 
+list_fxs_file <- function(filename, alphabetic = TRUE) {
+  if (!file.exists(filename)) 
+    stop("Couldn't find file ", filename)
+  if (!right(toupper(filename), 1) == "R")
+    warning("Expecting *.R file, will try to proceed")
+  tmp <- getParseData(parse(filename, keep.source = TRUE))
+  nms <- tmp$text[which(tmp$token == "SYMBOL_FUNCTION_CALL")]
+  funs <- unique(if (alphabetic) {sort(nms)} else {nms})
+  src <- paste(as.vector(sapply(funs, find)))
+  outlist <- tapply(funs, factor(src), c)
+  return(outlist)
+}

@@ -17,7 +17,9 @@ stocks_file(
 
 \item{creds}{Character. Dropbox's credentials (see \code{get_creds()})}
 
-\item{auto}{Boolean. Automatically use my local personal file?}
+\item{auto}{Boolean. Automatically use my local personal file? You might want
+to set in into your .Renviron \code{LARES_PORTFOLIO=~/dir/to/your/file.xlsx} so you
+can leave all other parameters as \code{NA} and use it every time.}
 
 \item{sheets}{Character Vector. Names of each sheet containing Portfolio summary,
 Cash, and Transactions information}

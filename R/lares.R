@@ -34,7 +34,8 @@
 #' @importFrom tidyr gather spread
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
 #' globalVariables installed.packages write.table install.packages remove.packages object.size 
-#' type.convert flush.console read.table modifyList write.csv combn browseURL type.convert
+#' type.convert flush.console read.table modifyList write.csv combn browseURL type.convert 
+#' getParseData find
 #' @importFrom xml2 read_html
 "_PACKAGE"
 
