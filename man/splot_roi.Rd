@@ -7,7 +7,7 @@
 splot_roi(p, n_days = 365, historical = TRUE, ma = c(12, 50), save = FALSE)
 }
 \arguments{
-\item{p}{Dataframe. Result from daily_portfolio()}
+\item{p}{Dataframe. Result from \code{daily_portfolio()}}
 
 \item{n_days}{Integer. How many days back you want to see?}
 

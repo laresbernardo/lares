@@ -7,11 +7,11 @@
 daily_stocks(hist, trans, tickers = NA)
 }
 \arguments{
-\item{hist}{Dataframe. Result from stocks_hist()}
+\item{hist}{Dataframe. Result from \code{stocks_hist()}}
 
-\item{trans}{Dataframe. Result from stocks_file()$transactions}
+\item{trans}{Dataframe. Result from \code{stocks_file()$transactions}}
 
-\item{tickers}{Dataframe. Result from stocks_file()$portfolio}
+\item{tickers}{Dataframe. Result from \code{stocks_file()$portfolio}}
 }
 \description{
 This function creates a dataframe will all relevant metrics and values,

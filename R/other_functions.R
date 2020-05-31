@@ -201,7 +201,7 @@ vector2text <- function(vector, sep = ", ", quotes = TRUE, and = "") {
     output <- paste0(substr(output, 1, last_comma - 1),
                      substr(output, last_comma + 1, nchar(output)))
   }
-    
+  
   return(output)
 }
 #' @rdname vector2text
@@ -603,8 +603,8 @@ replaceall <- function(df, original, change, which = "all",
   }
   if (which[1] != "all")
     df <- select(aux, -one_of(which)) %>% 
-      cbind(df) %>% 
-      select(one_of(colnames(aux)))
+    cbind(df) %>% 
+    select(one_of(colnames(aux)))
   if (vector) 
     df <- df[,1]
   if (fixclass)
@@ -612,7 +612,7 @@ replaceall <- function(df, original, change, which = "all",
   if (vector)
     return(as.vector(df))
   else 
-  return(as_tibble(df))
+    return(as_tibble(df))
 }
 
 
@@ -1203,44 +1203,44 @@ font_exists <- function(font = "Arial Narrow") {
   
   tryCatch({
     
-  # Thanks to extrafont for the idea for this code
-  ttf_find_default_path <- function() {
-    if (grepl("^darwin", R.version$os)) {
-      paths <- c("/Library/Fonts/",
-                 "/System/Library/Fonts",
-                 "/System/Library/Fonts/Supplemental",
-                 "~/Library/Fonts/")
-      return(paths[file.exists(paths)])
-      
-    } else if (grepl("^linux-gnu", R.version$os)) {
-      # Possible font paths, depending on the system
-      paths <- c("/usr/share/fonts/",
-                 "/usr/X11R6/lib/X11/fonts/TrueType/",
-                 "~/.fonts/")
-      return(paths[file.exists(paths)])
-      
-    } else if (grepl("^freebsd", R.version$os)) {
-      # Possible font paths, depending on installed ports
-      paths <- c("/usr/local/share/fonts/truetype/",
-                 "/usr/local/lib/X11/fonts/",
-                 "~/.fonts/")
-      return(paths[file.exists(paths)])
-      
-    } else if (grepl("^mingw", R.version$os)) {
-      return(paste(Sys.getenv("SystemRoot"), "\\Fonts", sep = ""))
-    } else {
-      stop("Unknown platform. Don't know where to look for truetype fonts. Sorry!")
+    # Thanks to extrafont for the idea for this code
+    ttf_find_default_path <- function() {
+      if (grepl("^darwin", R.version$os)) {
+        paths <- c("/Library/Fonts/",
+                   "/System/Library/Fonts",
+                   "/System/Library/Fonts/Supplemental",
+                   "~/Library/Fonts/")
+        return(paths[file.exists(paths)])
+        
+      } else if (grepl("^linux-gnu", R.version$os)) {
+        # Possible font paths, depending on the system
+        paths <- c("/usr/share/fonts/",
+                   "/usr/X11R6/lib/X11/fonts/TrueType/",
+                   "~/.fonts/")
+        return(paths[file.exists(paths)])
+        
+      } else if (grepl("^freebsd", R.version$os)) {
+        # Possible font paths, depending on installed ports
+        paths <- c("/usr/local/share/fonts/truetype/",
+                   "/usr/local/lib/X11/fonts/",
+                   "~/.fonts/")
+        return(paths[file.exists(paths)])
+        
+      } else if (grepl("^mingw", R.version$os)) {
+        return(paste(Sys.getenv("SystemRoot"), "\\Fonts", sep = ""))
+      } else {
+        stop("Unknown platform. Don't know where to look for truetype fonts. Sorry!")
+      }
     }
-  }
-  check <- function(font) {
-    pattern <- "\\.ttf$|\\.otf"
-    fonts_path <- ttf_find_default_path()
-    ttfiles <- list.files(fonts_path, pattern = pattern,
-                          full.names = TRUE, ignore.case = TRUE)
-    ret <- font %in% gsub(pattern, "", basename(ttfiles))
-    return(ret)
-  }
-  check(font)
+    check <- function(font) {
+      pattern <- "\\.ttf$|\\.otf"
+      fonts_path <- ttf_find_default_path()
+      ttfiles <- list.files(fonts_path, pattern = pattern,
+                            full.names = TRUE, ignore.case = TRUE)
+      ret <- font %in% gsub(pattern, "", basename(ttfiles))
+      return(ret)
+    }
+    check(font)
   }, error = function(err) {
     message(paste("Font issue detected:", err))
     options("lares.font" = NA)
@@ -1483,4 +1483,58 @@ list_fxs_file <- function(filename, alphabetic = TRUE) {
   src <- paste(as.vector(sapply(funs, find)))
   outlist <- tapply(funs, factor(src), c)
   return(outlist)
+}
+
+
+####################################################################
+#' Move files from A to B
+#'
+#' Move one or more files from a directory to another using R.
+#'
+#' @param from Character. Filanames and directories. All files 
+#' will be moved recursively. 
+#' @param to Character. Filenames for each \code{from} file or 
+#' directory. If directory does not exist, it will be created.
+#' @export 
+move_files <- function(from, to) {
+  
+  froms <- dirs <- c()
+  for (i in 1:length(from)) {
+    fromi <- from[i]
+    if (isTRUE(file.info(fromi)$isdir)) {
+      fromi <- list.files(fromi, recursive = TRUE)
+      fromi <- paste(from[i], fromi, sep = "/")
+      dirs <- c(dirs, from[i])
+    }
+    froms <- c(froms, fromi)   
+  }
+  froms <- froms[grepl("\\.", basename(froms))]
+  froms <- gsub(paste0(getwd(),"/"), "", froms)
+  
+  tos <- to
+  # If it is a directory
+  if (length(tos) == 1) {
+    if (!isTRUE(file.info(tos)$isdir)) {
+      dir.create(tos, recursive = FALSE)
+      message(sprintf("Directory '%s' did not exist and was created", tos))
+    }
+    tos <- paste(to, sub(".*?/", "", froms), sep = "/")
+  }
+  
+  # Final check for all files
+  if (length(froms) == 0) {
+    warning(sprintf("No files to move from %s...", from))
+    return(invisible(NULL)) 
+  }
+  if (length(tos) != length(froms))
+    stop("Every 'from' must have a respective 'to' filename")
+  
+  # Now move/rename all files
+  for (i in 1:length(froms)) {
+    todir <- dirname(tos[i])
+    if (!isTRUE(file.info(todir)$isdir)) 
+      dir.create(todir, recursive = FALSE)
+    file.rename(from = froms[i],  to = tos[i])
+  }
+  
 }

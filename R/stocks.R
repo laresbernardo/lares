@@ -6,14 +6,14 @@
 #' 
 #' @family Investment
 #' @family Credentials
-#' @param filename Characeter. Import a local Excel file
+#' @param filename Character. Import a local Excel file
 #' @param creds Character. Dropbox's credentials (see \code{get_creds()})
 #' @param auto Boolean. Automatically use my local personal file? You might want
 #' to set in into your .Renviron \code{LARES_PORTFOLIO=~/dir/to/your/file.xlsx} so you
 #' can leave all other parameters as \code{NA} and use it every time.
 #' @param sheets Character Vector. Names of each sheet containing Portfolio summary,
 #' Cash, and Transactions information
-#' @param keep_old Boolean. Include sold tickers eventhough not currently in portfolio?
+#' @param keep_old Boolean. Include sold tickers even though not currently in portfolio?
 #' @examples 
 #' \dontrun{
 #' # Load lares dummy portfolio XLSX
@@ -75,10 +75,10 @@ stocks_file <- function(filename = NA,
 ####################################################################
 #' Download Stocks Historical Data
 #' 
-#' This function lets the user download stocks historical data
+#' This function lets the user download stocks historical data.
 #' 
 #' @family Investment
-#' @param ticks Character Vector. Symbols/Tickers to quote in real time
+#' @param ticks Character Vector. Symbols/Tickers to quote in real time.
 #' @examples 
 #' # Multiple quotes at the same time
 #' stocks_quote(c("VTI","VOO","TSLA"))
@@ -122,7 +122,7 @@ stocks_quote <- function(ticks) {
 #' only if to value is the same as today's date
 #' @param tax Numeric. How much [0-99] of your dividends are gone with taxes? 
 #' @param parg Boolean. Personal argument. Used to personalize stuff, in this
-#' case, taxes changed from A to B in given date (hardcoded)
+#' case, taxes changed from A to B in given date (hard-coded)
 #' @param verbose Boolean. Print results and progress while downloading?
 #' @examples 
 #' \dontrun{
@@ -239,9 +239,9 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
 #' for each ticker or symbol, for every day since inception.
 #' 
 #' @family Investment
-#' @param hist Dataframe. Result from stocks_hist()
-#' @param trans Dataframe. Result from stocks_file()$transactions
-#' @param tickers Dataframe. Result from stocks_file()$portfolio
+#' @param hist Dataframe. Result from \code{stocks_hist()}
+#' @param trans Dataframe. Result from \code{stocks_file()$transactions}
+#' @param tickers Dataframe. Result from \code{stocks_file()$portfolio}
 #' @export
 daily_stocks <- function(hist, trans, tickers = NA) {
   
@@ -307,9 +307,9 @@ daily_stocks <- function(hist, trans, tickers = NA) {
 #' for the overall portfolio, for every day since inception.
 #' 
 #' @family Investment
-#' @param hist Dataframe. Result from stocks_hist()
-#' @param trans Dataframe. Result from stocks_file()$transactions
-#' @param cash Dataframe. Result from stocks_file()$cash
+#' @param hist Dataframe. Result from \code{stocks_hist()}
+#' @param trans Dataframe. Result from \code{stocks_file()$transactions}
+#' @param cash Dataframe. Result from \code{stocks_file()$cash}
 #' @param cash_fix Numeric. If, for some reason, you need to fix your 
 #' cash amount for all reports, set the amount here
 #' @export
@@ -365,8 +365,8 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0) {
 #' 
 #' @family Investment
 #' @family Investment Plots
-#' @param p Dataframe. Result from daily_portfolio()
-#' @param s Dataframe. Result from daily_stocks()
+#' @param p Dataframe. Result from \code{daily_portfolio()}
+#' @param s Dataframe. Result from \code{daily_stocks()}
 #' @param save Boolean. Save plot into a local file?
 #' @export
 splot_summary <- function(p, s, save = FALSE) {
@@ -439,7 +439,7 @@ splot_summary <- function(p, s, save = FALSE) {
 #' 
 #' @family Investment
 #' @family Investment Plots
-#' @param p Dataframe. Result from daily_portfolio()
+#' @param p Dataframe. Result from \code{daily_portfolio()}
 #' @param n_days Integer. How many days back you want to see?
 #' @param historical Boolean. Historical ROI metric? If not, ROI
 #' will be calculated locally for n_days parameter
@@ -523,13 +523,13 @@ splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save =
 ####################################################################
 #' Portfolio Plots: Daily Change
 #' 
-#' This function plots each stock's change throught history, since
+#' This function plots each stock's change through history, since
 #' inception, with weighted attributions or absolute values.
 #' 
 #' @family Investment
 #' @family Investment Plots
-#' @param p Dataframe. Result from daily_portfolio()
-#' @param s Dataframe. Result from daily_stocks()
+#' @param p Dataframe. Result from \code{daily_portfolio()}
+#' @param s Dataframe. Result from \code{daily_stocks()}
 #' @param weighted Boolean. Should variation values be weighted to the
 #' portfolio (or simply compared with value since inception)?
 #' @param group Boolean. Group stocks by stocks type?
@@ -589,7 +589,7 @@ splot_change <- function(p, s, weighted = TRUE, group = TRUE, save = FALSE) {
 #' 
 #' @family Investment
 #' @family Investment Plots
-#' @param p Dataframe. Result from daily_portfolio()
+#' @param p Dataframe. Result from \code{daily_portfolio()}
 #' @param save Boolean. Save plot into a local file?
 #' @export
 splot_growth <- function(p, save = FALSE) {
@@ -667,7 +667,7 @@ splot_types <- function(s, save = FALSE) {
 #' ETF's Sectors Breakdown
 #' 
 #' This function scraps etf.com data for sector breakdown on ETFs.
-#' Use splot_etf() for visualization.
+#' Use \code{splot_etf()} for visualization.
 #' 
 #' @family Investment
 #' @param etf Character Vector. Which ETFs you wish to scrap?
@@ -724,9 +724,10 @@ etf_sector <- function(etf = "VTI", quiet = FALSE) {
 #' @family Investment
 #' @family Investment Plots
 #' @param s Dataframe. Result from daily_stocks()
+#' @param keep_all Boolean. Keep "Unknown" and group them together?
 #' @param save Boolean. Save plot into a local file?
 #' @export
-splot_etf <- function(s, save = FALSE) {
+splot_etf <- function(s, keep_all = FALSE, save = FALSE) {
   
   check_attr(s, check = "daily_stocks")
   
@@ -754,6 +755,8 @@ splot_etf <- function(s, save = FALSE) {
       mutate(label = paste0(
         .data$Sector, " (", 
         formatNum(100*.data$ValueSector/sum(s$CumValue[s$Date == max(s$Date)]), 1), "%)"))
+    if (keep_all == FALSE)
+      df <- filter(df, .data$ETF != "Not Known / Not ETF")
     
     plot <- ggplot(df, aes(x = reorder(.data$label, .data$ValueSector), 
                            y = .data$Value, fill = .data$ETF)) +

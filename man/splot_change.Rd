@@ -7,9 +7,9 @@
 splot_change(p, s, weighted = TRUE, group = TRUE, save = FALSE)
 }
 \arguments{
-\item{p}{Dataframe. Result from daily_portfolio()}
+\item{p}{Dataframe. Result from \code{daily_portfolio()}}
 
-\item{s}{Dataframe. Result from daily_stocks()}
+\item{s}{Dataframe. Result from \code{daily_stocks()}}
 
 \item{weighted}{Boolean. Should variation values be weighted to the
 portfolio (or simply compared with value since inception)?}
@@ -19,7 +19,7 @@ portfolio (or simply compared with value since inception)?}
 \item{save}{Boolean. Save plot into a local file?}
 }
 \description{
-This function plots each stock's change throught history, since
+This function plots each stock's change through history, since
 inception, with weighted attributions or absolute values.
 }
 \seealso{

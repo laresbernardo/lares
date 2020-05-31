@@ -26,7 +26,7 @@ only if to value is the same as today's date}
 \item{tax}{Numeric. How much [0-99] of your dividends are gone with taxes?}
 
 \item{parg}{Boolean. Personal argument. Used to personalize stuff, in this
-case, taxes changed from A to B in given date (hardcoded)}
+case, taxes changed from A to B in given date (hard-coded)}
 
 \item{verbose}{Boolean. Print results and progress while downloading?}
 }

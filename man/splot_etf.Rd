@@ -4,10 +4,12 @@
 \alias{splot_etf}
 \title{Portfolio's Sector Distribution (ETFs)}
 \usage{
-splot_etf(s, save = FALSE)
+splot_etf(s, keep_all = FALSE, save = FALSE)
 }
 \arguments{
 \item{s}{Dataframe. Result from daily_stocks()}
+
+\item{keep_all}{Boolean. Keep "Unknown" and group them together?}
 
 \item{save}{Boolean. Save plot into a local file?}
 }

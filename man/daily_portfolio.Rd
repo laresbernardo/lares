@@ -7,11 +7,11 @@
 daily_portfolio(hist, trans, cash, cash_fix = 0)
 }
 \arguments{
-\item{hist}{Dataframe. Result from stocks_hist()}
+\item{hist}{Dataframe. Result from \code{stocks_hist()}}
 
-\item{trans}{Dataframe. Result from stocks_file()$transactions}
+\item{trans}{Dataframe. Result from \code{stocks_file()$transactions}}
 
-\item{cash}{Dataframe. Result from stocks_file()$cash}
+\item{cash}{Dataframe. Result from \code{stocks_file()$cash}}
 
 \item{cash_fix}{Numeric. If, for some reason, you need to fix your 
 cash amount for all reports, set the amount here}

@@ -13,7 +13,7 @@ etf_sector(etf = "VTI", quiet = FALSE)
 }
 \description{
 This function scraps etf.com data for sector breakdown on ETFs.
-Use splot_etf() for visualization.
+Use \code{splot_etf()} for visualization.
 }
 \seealso{
 Other Investment: 

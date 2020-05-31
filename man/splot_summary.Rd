@@ -7,9 +7,9 @@
 splot_summary(p, s, save = FALSE)
 }
 \arguments{
-\item{p}{Dataframe. Result from daily_portfolio()}
+\item{p}{Dataframe. Result from \code{daily_portfolio()}}
 
-\item{s}{Dataframe. Result from daily_stocks()}
+\item{s}{Dataframe. Result from \code{daily_stocks()}}
 
 \item{save}{Boolean. Save plot into a local file?}
 }

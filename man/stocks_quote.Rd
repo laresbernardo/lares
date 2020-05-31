@@ -7,10 +7,10 @@
 stocks_quote(ticks)
 }
 \arguments{
-\item{ticks}{Character Vector. Symbols/Tickers to quote in real time}
+\item{ticks}{Character Vector. Symbols/Tickers to quote in real time.}
 }
 \description{
-This function lets the user download stocks historical data
+This function lets the user download stocks historical data.
 }
 \examples{
 # Multiple quotes at the same time

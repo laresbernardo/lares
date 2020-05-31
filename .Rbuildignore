@@ -8,3 +8,4 @@
 ^\.Rprofile$
 ^\.github$
 ^\._pkgdown.yml
+^\.DS_Store

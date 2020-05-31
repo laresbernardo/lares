@@ -13,7 +13,7 @@ stocks_file(
 )
 }
 \arguments{
-\item{filename}{Characeter. Import a local Excel file}
+\item{filename}{Character. Import a local Excel file}
 
 \item{creds}{Character. Dropbox's credentials (see \code{get_creds()})}
 
@@ -24,7 +24,7 @@ can leave all other parameters as \code{NA} and use it every time.}
 \item{sheets}{Character Vector. Names of each sheet containing Portfolio summary,
 Cash, and Transactions information}
 
-\item{keep_old}{Boolean. Include sold tickers eventhough not currently in portfolio?}
+\item{keep_old}{Boolean. Include sold tickers even though not currently in portfolio?}
 }
 \description{
 This function lets the user download his personal Excel with his 

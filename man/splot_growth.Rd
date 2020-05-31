@@ -7,7 +7,7 @@
 splot_growth(p, save = FALSE)
 }
 \arguments{
-\item{p}{Dataframe. Result from daily_portfolio()}
+\item{p}{Dataframe. Result from \code{daily_portfolio()}}
 
 \item{save}{Boolean. Save plot into a local file?}
 }
