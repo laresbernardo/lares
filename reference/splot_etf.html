@@ -119,7 +119,7 @@ specifically ETF's sectors" />
 specifically ETF's sectors</p>
     </div>
 
-    <pre class="usage"><span class='fu'>splot_etf</span>(<span class='no'>s</span>, <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>splot_etf</span>(<span class='no'>s</span>, <span class='kw'>keep_all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,6 +127,10 @@ specifically ETF's sectors</p>
     <tr>
       <th>s</th>
       <td><p>Dataframe. Result from daily_stocks()</p></td>
+    </tr>
+    <tr>
+      <th>keep_all</th>
+      <td><p>Boolean. Keep "Unknown" and group them together?</p></td>
     </tr>
     <tr>
       <th>save</th>
