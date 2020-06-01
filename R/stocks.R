@@ -723,8 +723,8 @@ etf_sector <- function(etf = "VTI", quiet = FALSE) {
 #' 
 #' @family Investment
 #' @family Investment Plots
-#' @param s Dataframe. Result from daily_stocks()
-#' @param keep_all Boolean. Keep "Unknown" and group them together?
+#' @param s Dataframe. Result from \code{daily_stocks()}.
+#' @param keep_all Boolean. Keep "Not Known / Not ETF"?
 #' @param save Boolean. Save plot into a local file?
 #' @export
 splot_etf <- function(s, keep_all = FALSE, save = FALSE) {
@@ -787,7 +787,7 @@ splot_etf <- function(s, keep_all = FALSE, save = FALSE) {
 #' @param tax Numeric. How much [0-99] of your dividends are gone with taxes? 
 #' @param sectors Boolean. Return sectors segmentation for ETFs?
 #' @param parg Boolean. Personal argument. Used to personalize stuff, in this
-#' case, taxes changed from A to B in given date (hardcoded)
+#' case, taxes changed from A to B in given date (hard-coded)
 #' @export
 stocks_obj <- function(data = stocks_file(), 
                        cash_fix = 0, 
@@ -844,7 +844,7 @@ stocks_obj <- function(data = stocks_file(),
 #' 
 #' @family Investment
 #' @family Credentials
-#' @param data Character. stocks_file() output. If NA, automatic report
+#' @param data Character. \code{stocks_file()} output. If NA, automatic report
 #' parameters will be used
 #' @param dir Character. Directory for HTML report output. If set to NA, 
 #' current working directory will be used. If mail sent, file will be erased

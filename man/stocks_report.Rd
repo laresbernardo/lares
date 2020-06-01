@@ -14,7 +14,7 @@ stocks_report(
 )
 }
 \arguments{
-\item{data}{Character. stocks_file() output. If NA, automatic report
+\item{data}{Character. \code{stocks_file()} output. If NA, automatic report
 parameters will be used}
 
 \item{dir}{Character. Directory for HTML report output. If set to NA, 

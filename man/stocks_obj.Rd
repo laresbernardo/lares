@@ -24,7 +24,7 @@ to your cash balance}
 \item{sectors}{Boolean. Return sectors segmentation for ETFs?}
 
 \item{parg}{Boolean. Personal argument. Used to personalize stuff, in this
-case, taxes changed from A to B in given date (hardcoded)}
+case, taxes changed from A to B in given date (hard-coded)}
 }
 \description{
 This function lets the user create his portfolio's calculations and
