@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download Historical Currency Exchange Rate — get_currency • lares</title>
+<title>Scrabble: Highest score words finder — scrabble_words • lares</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,10 @@
 
 
 
-<meta property="og:title" content="Download Historical Currency Exchange Rate — get_currency" />
-<meta property="og:description" content="This function lets the user download historical currency exchange
-rate between two currencies" />
+<meta property="og:title" content="Scrabble: Highest score words finder — scrabble_words" />
+<meta property="og:description" content="Find highest score words given a set of letters, rules, and 
+language to win at Scrabble! You just have to find the best 
+place to post your tiles." />
 
 
 
@@ -109,58 +110,76 @@ rate between two currencies" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download Historical Currency Exchange Rate</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/currency.R'><code>R/currency.R</code></a></small>
-    <div class="hidden name"><code>get_currency.Rd</code></div>
+    <h1>Scrabble: Highest score words finder</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/scrabble.R'><code>R/scrabble.R</code></a></small>
+    <div class="hidden name"><code>scrabble_words.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user download historical currency exchange
-rate between two currencies</p>
+    <p>Find highest score words given a set of letters, rules, and 
+language to win at Scrabble! You just have to find the best 
+place to post your tiles.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_currency</span>(
-  <span class='no'>currency_pair</span>,
-  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>() - <span class='fl'>99</span>,
-  <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(),
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+    <pre class="usage"><span class='fu'>scrabble_words</span>(
+  <span class='no'>tiles</span>,
+  <span class='no'>words</span>,
+  <span class='no'>scores</span>,
+  <span class='kw'>free</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>force_start</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>force_end</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>force_str</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>force_n</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>currency_pair</th>
-      <td><p>Character. Which currency exchange do you
-wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
+      <th>tiles</th>
+      <td><p>Character. The letters you wish to consider</p></td>
     </tr>
     <tr>
-      <th>from</th>
-      <td><p>Date. From date</p></td>
+      <th>words</th>
+      <td><p>Dataframe. Words from <code><a href='scrabble_dictionary.html'>scrabble_dictionary()</a></code></p></td>
     </tr>
     <tr>
-      <th>to</th>
-      <td><p>Date. To date</p></td>
+      <th>scores</th>
+      <td><p>Dataframe. Must contain two columns: "tiles" with every
+letter of the alphabet and "scores" for each letter's score.</p></td>
     </tr>
     <tr>
-      <th>fill</th>
-      <td><p>Boolean. Fill weekends and non-quoted dates with 
-previous values?</p></td>
+      <th>free</th>
+      <td><p>Integer. How many free blank tiles you have?</p></td>
+    </tr>
+    <tr>
+      <th>force_start, force_end</th>
+      <td><p>Character. Force words to start or end with
+a pattern of letters and position. Examples: "S" or "SO" or "__S_O"...</p></td>
+    </tr>
+    <tr>
+      <th>force_str</th>
+      <td><p>Character vector. Force words to contain strings.</p></td>
+    </tr>
+    <tr>
+      <th>force_n</th>
+      <td><p>Integer. Force words to be n characters long.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Boolean. Do not print words as they are being searched.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Scrabble: 
+<code><a href='scrabble_dictionary.html'>scrabble_dictionary</a>()</code>,
+<code><a href='scrabble_score.html'>scrabble_score</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>get_currency</span>(<span class='st'>"USD/ARS"</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>())</div><div class='output co'>#&gt;         date  rate
-#&gt; 1 2020-06-01 68.46</div><div class='input'><span class='fu'>get_currency</span>(<span class='st'>"EUR/USD"</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>() - <span class='fl'>7</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;         date     rate
-#&gt; 1 2020-05-25 1.090905
-#&gt; 2 2020-05-26 1.090108
-#&gt; 3 2020-05-27 1.098056
-#&gt; 4 2020-05-28 1.101528
-#&gt; 5 2020-05-29 1.107812
-#&gt; 6 2020-05-30 1.107812
-#&gt; 7 2020-05-31 1.107812
-#&gt; 8 2020-06-01 1.113462</div></pre>
+    <pre class="examples"></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert Date into Year-Month (YYYY-MM) — year_month • lares</title>
+<title>Scrabble: Scores — scrabble_score • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Convert Date into Year-Month (YYYY-MM) — year_month" />
-<meta property="og:description" content="This function lets the user convert a date into YYYY-MM format" />
+<meta property="og:title" content="Scrabble: Scores — scrabble_score" />
+<meta property="og:description" content="Get score for any word or list of words. You may set manually depending
+on the rules and languages you are playing with. Check the examples
+for Spanish and English values when I played Words With Friends." />
 
 
 
@@ -108,56 +110,57 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert Date into Year-Month (YYYY-MM)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_functions.R'><code>R/other_functions.R</code></a></small>
-    <div class="hidden name"><code>year_month.Rd</code></div>
+    <h1>Scrabble: Scores</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/scrabble.R'><code>R/scrabble.R</code></a></small>
+    <div class="hidden name"><code>scrabble_score.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user convert a date into YYYY-MM format</p>
+    <p>Get score for any word or list of words. You may set manually depending
+on the rules and languages you are playing with. Check the examples
+for Spanish and English values when I played Words With Friends.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>year_month</span>(<span class='no'>date</span>)</pre>
+    <pre class="usage"><span class='fu'>scrabble_score</span>(<span class='no'>words</span>, <span class='no'>scores</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>date</th>
-      <td><p>Date. Date we wish to transform</p></td>
+      <th>words</th>
+      <td><p>Character vector. Words to score</p></td>
+    </tr>
+    <tr>
+      <th>scores</th>
+      <td><p>Dataframe. Must contain two columns: "tiles" with every
+letter of the alphabet and "scores" for each letter's score.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Data Wrangling: 
-<code><a href='balance_data.html'>balance_data</a>()</code>,
-<code><a href='categ_reducer.html'>categ_reducer</a>()</code>,
-<code><a href='cleanText.html'>cleanText</a>()</code>,
-<code><a href='date_cuts.html'>date_cuts</a>()</code>,
-<code><a href='date_feats.html'>date_feats</a>()</code>,
-<code><a href='dateformat.html'>dateformat</a>()</code>,
-<code><a href='formatNum.html'>formatNum</a>()</code>,
-<code><a href='formatTime.html'>formatTime</a>()</code>,
-<code><a href='holidays.html'>holidays</a>()</code>,
-<code><a href='impute.html'>impute</a>()</code>,
-<code><a href='left.html'>left</a>()</code>,
-<code><a href='normalize.html'>normalize</a>()</code>,
-<code><a href='numericalonly.html'>numericalonly</a>()</code>,
-<code><a href='ohe_commas.html'>ohe_commas</a>()</code>,
-<code><a href='ohse.html'>ohse</a>()</code>,
-<code><a href='rbind_full.html'>rbind_full</a>()</code>,
-<code><a href='removenacols.html'>removenacols</a>()</code>,
-<code><a href='removenarows.html'>removenarows</a>()</code>,
-<code><a href='replaceall.html'>replaceall</a>()</code>,
-<code><a href='right.html'>right</a>()</code>,
-<code><a href='textFeats.html'>textFeats</a>()</code>,
-<code><a href='textTokenizer.html'>textTokenizer</a>()</code>,
-<code><a href='vector2text.html'>vector2text</a>()</code>,
-<code><a href='year_week.html'>year_week</a>()</code></p></div>
+    <div class='dont-index'><p>Other Scrabble: 
+<code><a href='scrabble_dictionary.html'>scrabble_dictionary</a>()</code>,
+<code><a href='scrabble_words.html'>scrabble_words</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>year_month</span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>())</div><div class='output co'>#&gt; [1] "2020-06"</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># For Spanish words</span>
+<span class='no'>es_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+  <span class='kw'>tiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span>(<span class='no'>LETTERS</span>)[<span class='fl'>1</span>:<span class='fl'>14</span>],<span class='st'>"ñ"</span>,<span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span>(<span class='no'>LETTERS</span>)[<span class='fl'>15</span>:<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>LETTERS</span>)]),
+  <span class='kw'>scores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>1</span>,<span class='fl'>8</span>,<span class='fl'>10</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>8</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>10</span>,<span class='fl'>10</span>,<span class='fl'>5</span>,<span class='fl'>10</span>))
+<span class='co'># For English words</span>
+<span class='no'>en_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+  <span class='kw'>tiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span>(<span class='no'>LETTERS</span>),
+  <span class='kw'>scores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>4</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>10</span>,<span class='fl'>5</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>10</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>5</span>,<span class='fl'>4</span>,<span class='fl'>8</span>,<span class='fl'>3</span>,<span class='fl'>10</span>))
+<span class='no'>words</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Bernardo"</span>, <span class='st'>"whiskey"</span>, <span class='st'>"R is great"</span>)
+<span class='co'># Score values for each language's rules</span>
+<span class='fu'>scrabble_score</span>(<span class='no'>words</span>, <span class='no'>es_scores</span>)</div><div class='output co'>#&gt;         word scores
+#&gt; 1   Bernardo      8
+#&gt; 2    whiskey     32
+#&gt; 3 R is great      9</div><div class='input'><span class='fu'>scrabble_score</span>(<span class='no'>words</span>, <span class='no'>en_scores</span>)</div><div class='output co'>#&gt;         word scores
+#&gt; 1   Bernardo      9
+#&gt; 2    whiskey     18
+#&gt; 3 R is great      9</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

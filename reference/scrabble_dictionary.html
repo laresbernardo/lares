@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download Historical Currency Exchange Rate — get_currency • lares</title>
+<title>Scrabble: Dictionaries — scrabble_dictionary • lares</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Download Historical Currency Exchange Rate — get_currency" />
-<meta property="og:description" content="This function lets the user download historical currency exchange
-rate between two currencies" />
+<meta property="og:title" content="Scrabble: Dictionaries — scrabble_dictionary" />
+<meta property="og:description" content="Download words from 4 different languages: English, Spanish, 
+German, and French. Thanks to &quot;lorenbrichter&quot; for sharing them." />
 
 
 
@@ -109,58 +109,38 @@ rate between two currencies" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download Historical Currency Exchange Rate</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/currency.R'><code>R/currency.R</code></a></small>
-    <div class="hidden name"><code>get_currency.Rd</code></div>
+    <h1>Scrabble: Dictionaries</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/scrabble.R'><code>R/scrabble.R</code></a></small>
+    <div class="hidden name"><code>scrabble_dictionary.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user download historical currency exchange
-rate between two currencies</p>
+    <p>Download words from 4 different languages: English, Spanish, 
+German, and French. Thanks to "lorenbrichter" for sharing them.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_currency</span>(
-  <span class='no'>currency_pair</span>,
-  <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>() - <span class='fl'>99</span>,
-  <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(),
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>scrabble_dictionary</span>(<span class='no'>language</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>currency_pair</th>
-      <td><p>Character. Which currency exchange do you
-wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
-    </tr>
-    <tr>
-      <th>from</th>
-      <td><p>Date. From date</p></td>
-    </tr>
-    <tr>
-      <th>to</th>
-      <td><p>Date. To date</p></td>
-    </tr>
-    <tr>
-      <th>fill</th>
-      <td><p>Boolean. Fill weekends and non-quoted dates with 
-previous values?</p></td>
+      <th>language</th>
+      <td><p>Character. Any of "en","es","de","fr"</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Scrabble: 
+<code><a href='scrabble_score.html'>scrabble_score</a>()</code>,
+<code><a href='scrabble_words.html'>scrabble_words</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>get_currency</span>(<span class='st'>"USD/ARS"</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>())</div><div class='output co'>#&gt;         date  rate
-#&gt; 1 2020-06-01 68.46</div><div class='input'><span class='fu'>get_currency</span>(<span class='st'>"EUR/USD"</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>() - <span class='fl'>7</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;         date     rate
-#&gt; 1 2020-05-25 1.090905
-#&gt; 2 2020-05-26 1.090108
-#&gt; 3 2020-05-27 1.098056
-#&gt; 4 2020-05-28 1.101528
-#&gt; 5 2020-05-29 1.107812
-#&gt; 6 2020-05-30 1.107812
-#&gt; 7 2020-05-31 1.107812
-#&gt; 8 2020-06-01 1.113462</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># For Spanish words</span>
+<span class='no'>dictionary</span> <span class='kw'>&lt;-</span> <span class='fu'>scrabble_dictionary</span>(<span class='st'>"es"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
