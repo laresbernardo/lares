@@ -21,7 +21,7 @@ Imports:
     openxlsx,
     patchwork,
     pROC,
-    rlang,
+    rlang (>= 0.4.6),
     rlist,
     rvest,
     scales,
