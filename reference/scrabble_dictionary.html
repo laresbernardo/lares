@@ -41,7 +41,9 @@
 
 <meta property="og:title" content="Scrabble: Dictionaries — scrabble_dictionary" />
 <meta property="og:description" content="Download words from 4 different languages: English, Spanish, 
-German, and French. Thanks to &quot;lorenbrichter&quot; for sharing them." />
+German, and French. Words will be save into the temp directory. 
+This is an auxiliary function. You may want to use scrabble_words
+directly if you are searching for the highest score words!" />
 
 
 
@@ -116,7 +118,9 @@ German, and French. Thanks to &quot;lorenbrichter&quot; for sharing them." />
 
     <div class="ref-description">
     <p>Download words from 4 different languages: English, Spanish, 
-German, and French. Thanks to "lorenbrichter" for sharing them.</p>
+German, and French. Words will be save into the <code>temp</code> directory. 
+This is an auxiliary function. You may want to use <code>scrabble_words</code>
+directly if you are searching for the highest score words!</p>
     </div>
 
     <pre class="usage"><span class='fu'>scrabble_dictionary</span>(<span class='no'>language</span>)</pre>
@@ -126,13 +130,16 @@ German, and French. Thanks to "lorenbrichter" for sharing them.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>language</th>
-      <td><p>Character. Any of "en","es","de","fr"</p></td>
+      <td><p>Character. Any of "en","es","de","fr". Set to "none"
+if you wish to skip this step (and use <code>words</code> parameter in 
+<code>scrabble_words</code> instead).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Scrabble: 
+<code><a href='scrabble_points.html'>scrabble_points</a>()</code>,
 <code><a href='scrabble_score.html'>scrabble_score</a>()</code>,
 <code><a href='scrabble_words.html'>scrabble_words</a>()</code></p></div>
 
