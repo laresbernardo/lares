@@ -7,4 +7,6 @@
   options("lares.font" = "Arial Narrow")
   # Standard format for `formatNum`
   options("lares.formatNum" = 2)
+  # Scrabble and other language settings
+  options("lares.lang" = "es")
 }

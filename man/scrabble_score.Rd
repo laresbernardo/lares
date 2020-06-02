@@ -2,7 +2,7 @@
 % Please edit documentation in R/scrabble.R
 \name{scrabble_score}
 \alias{scrabble_score}
-\title{Scrabble: Scores}
+\title{Scrabble: Word Scores}
 \usage{
 scrabble_score(words, scores)
 }
@@ -19,21 +19,22 @@ for Spanish and English values when I played Words With Friends.
 }
 \examples{
 # For Spanish words
-es_scores <- data.frame(
-  tiles = c(tolower(LETTERS)[1:14],"ñ",tolower(LETTERS)[15:length(LETTERS)]),
-  scores = c(1,3,2,2,1,4,3,4,1,8,10,1,3,1,8,1,3,5,1,1,1,2,4,10,10,5,10))
-# For English words
-en_scores <- data.frame(
+es_scores <- scrabble_points("es")
+  
+# Custom scores
+cu_scores <- data.frame(
   tiles = tolower(LETTERS),
   scores = c(1,4,4,2,1,4,3,3,1,10,5,2,4,2,1,4,10,1,1,1,2,5,4,8,3,10))
+
+# Score values for each set of rules
 words <- c("Bernardo", "whiskey", "R is great")
-# Score values for each language's rules
 scrabble_score(words, es_scores)
-scrabble_score(words, en_scores)
+scrabble_score(words, cu_scores)
 }
 \seealso{
 Other Scrabble: 
 \code{\link{scrabble_dictionary}()},
+\code{\link{scrabble_points}()},
 \code{\link{scrabble_words}()}
 }
 \concept{Scrabble}

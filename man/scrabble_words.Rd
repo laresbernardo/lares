@@ -6,23 +6,20 @@
 \usage{
 scrabble_words(
   tiles,
-  words,
-  scores,
   free = 0,
   force_start = "",
   force_end = "",
   force_str = "",
-  force_n = NA,
+  force_n = 0,
+  force_max = 0,
+  scores = getOption("lares.lang"),
+  language = getOption("lares.lang"),
+  words = NA,
   quiet = FALSE
 )
 }
 \arguments{
 \item{tiles}{Character. The letters you wish to consider}
-
-\item{words}{Dataframe. Words from \code{scrabble_dictionary()}}
-
-\item{scores}{Dataframe. Must contain two columns: "tiles" with every
-letter of the alphabet and "scores" for each letter's score.}
 
 \item{free}{Integer. How many free blank tiles you have?}
 
@@ -31,7 +28,19 @@ a pattern of letters and position. Examples: "S" or "SO" or "__S_O"...}
 
 \item{force_str}{Character vector. Force words to contain strings.}
 
-\item{force_n}{Integer. Force words to be n characters long.}
+\item{force_n, force_max}{Integer. Force words to be n or max n characters 
+long. Leave 0 to ignore parameter.}
+
+\item{scores, language}{Character. Any of "en","es","de","fr". 
+If scores is not any of those languages, must be a data.frame that 
+contains two columns: "tiles" with every letter of the alphabet and 
+"scores" for each letter's score. If you wish
+to overwrite or complement this dictionaries other words you can set to
+\code{"none"} and/or use the \code{words} parameter.
+You might also want to set this parameter globally with
+\code{options("lares.lang" = "en")} and forget about it!}
+
+\item{words}{Character vector. Use if you wish to manually add words.}
 
 \item{quiet}{Boolean. Do not print words as they are being searched.}
 }
@@ -42,17 +51,39 @@ place to post your tiles.
 }
 \examples{
 \dontrun{
-# Dictionary for Spanish Words
-es_words <- scrabble_dictionary("es")
-
-# scores for Spanish words
-es_scores <- data.frame(
-  tiles = c(tolower(LETTERS)[1:14],"ñ",tolower(LETTERS)[15:length(LETTERS)]),
-  scores = c(1,3,2,2,1,4,3,4,1,8,10,1,3,1,8,1,3,5,1,1,1,2,4,10,10,5,10))
+# Automatic use of languages and scores
+options("lares.lang" = "es")
+scrabble_words(tiles = "holasa",
+               free = 1,
+               force_start = "",
+               force_end = "",
+               force_str = "_o_a",
+               force_n = 6,
+               force_max = 0,
+               quiet = FALSE)
+# A tibble: 43 x 2
+word   scores
+<chr>   <int>
+1 haloza     18
+2 azolas     15
+3 solaza     15
+4 ahoyas     13
+5 alojas     13
+6 ahogas     11
+7 achola     10
+8 aloyas     10
+9 chaola     10
+10 cholas    10
+# … with 33 more rows
+               
+# Custom scores table and manual language input
+cu_scores <- data.frame(
+  tiles = c(tolower(LETTERS)[1:14],"_",tolower(LETTERS)[15:length(LETTERS)]),
+  scores = c(1,1,1,1,1,1,1,1,1,1,1,1,3,1,8,1,3,5,1,1,1,2,4,10,10,5,10))
   
 scrabble_words(tiles = "holase",
-               words = es_words$words,
-               scores = es_scores,
+               language = "es",
+               scores = cu_scores,
                free = 1,
                force_start = "_o_a")
 # A tibble: 96 x 2
@@ -69,11 +100,15 @@ scrabble_words(tiles = "holase",
 9 hoyase     13
 10 loza      13
 # … with 86 more rows
+
+# Words considered for a language
+es_words <- scrabble_dictionary("es")
 }
 }
 \seealso{
 Other Scrabble: 
 \code{\link{scrabble_dictionary}()},
+\code{\link{scrabble_points}()},
 \code{\link{scrabble_score}()}
 }
 \concept{Scrabble}

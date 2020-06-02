@@ -2,10 +2,14 @@
 #' Scrabble: Dictionaries
 #' 
 #' Download words from 4 different languages: English, Spanish, 
-#' German, and French. Thanks to "lorenbrichter" for sharing them.
+#' German, and French. Words will be save into the \code{temp} directory. 
+#' This is an auxiliary function. You may want to use \code{scrabble_words}
+#' directly if you are searching for the highest score words!
 #' 
 #' @family Scrabble
-#' @param language Character. Any of "en","es","de","fr"
+#' @param language Character. Any of "en","es","de","fr". Set to "none"
+#' if you wish to skip this step (and use \code{words} parameter in 
+#' \code{scrabble_words} instead).
 #' @examples 
 #' \dontrun{
 #' # For Spanish words
@@ -13,20 +17,32 @@
 #' }
 #' @export
 scrabble_dictionary <- function(language) {
-  check_opts(language, c("en","es","de","fr"))
-  message(sprintf(">>> Downloading words from '%s' dictionary. Source: %s", 
+  if (length(language) != 1)
+    stop("Select only 1 language at a time...")
+  check_opts(language, c("en","es","de","fr","none"))
+  if (language == "none") return(invisible(NULL))
+  filename <- file.path(tempdir(), paste0(language, ".RData"))
+  if (file.exists(filename)) {
+    load(filename)
+    message(sprintf(">>> Loaded %s '%s' words", 
+                    formatNum(nrow(words), 0), language))
+    return(words)
+  }
+  message(sprintf(">>> Downloading '%s' words. Source: %s", 
                   language, "github.com/lorenbrichter/Words"))
   url <- sprintf(
     "https://raw.githubusercontent.com/lorenbrichter/Words/master/Words/%s.txt", 
     language)
-  df <- read.table(url, col.names = "words")
-  df$language <- language
-  return(df)
+  words <- read.table(url, col.names = "words")
+  words$language <- language
+  save(words, file = filename, version = 2)
+  message(">>> Saved into ", filename)
+  return(words)
 }
 
 
 ####################################################################
-#' Scrabble: Scores
+#' Scrabble: Word Scores
 #' 
 #' Get score for any word or list of words. You may set manually depending
 #' on the rules and languages you are playing with. Check the examples
@@ -38,17 +54,17 @@ scrabble_dictionary <- function(language) {
 #' letter of the alphabet and "scores" for each letter's score.
 #' @examples 
 #' # For Spanish words
-#' es_scores <- data.frame(
-#'   tiles = c(tolower(LETTERS)[1:14],"ñ",tolower(LETTERS)[15:length(LETTERS)]),
-#'   scores = c(1,3,2,2,1,4,3,4,1,8,10,1,3,1,8,1,3,5,1,1,1,2,4,10,10,5,10))
-#' # For English words
-#' en_scores <- data.frame(
+#' es_scores <- scrabble_points("es")
+#'   
+#' # Custom scores
+#' cu_scores <- data.frame(
 #'   tiles = tolower(LETTERS),
 #'   scores = c(1,4,4,2,1,4,3,3,1,10,5,2,4,2,1,4,10,1,1,1,2,5,4,8,3,10))
+#' 
+#' # Score values for each set of rules
 #' words <- c("Bernardo", "whiskey", "R is great")
-#' # Score values for each language's rules
 #' scrabble_score(words, es_scores)
-#' scrabble_score(words, en_scores)
+#' scrabble_score(words, cu_scores)
 #' @export
 scrabble_score <- function(words, scores) {
   scores <- data.frame(tiles = tolower(scores$tiles), 
@@ -63,6 +79,34 @@ scrabble_score <- function(words, scores) {
   return(done)
 }
 
+
+####################################################################
+#' Scrabble: Tiles Points
+#' 
+#' Dataframe for every letter and points given a language.
+#' 
+#' @family Scrabble
+#' @param language Character. Any of "en","es".
+#' @export
+scrabble_points <- function(language) {
+  if (!language %in% c("en","es")) {
+    message("We do not have the points for this language yet!")
+    return(invisible(NULL))
+  }
+  if (language == "es")
+    scores <- data.frame(
+      tiles = c(tolower(LETTERS)[1:14], intToUtf8(241),
+                tolower(LETTERS)[15:length(LETTERS)]),
+      scores = c(1,3,2,2,1,4,3,4,1,8,10,1,3,1,8,1,3,5,1,1,1,2,4,10,10,5,10))
+  if (language == "en")
+    scores <- data.frame(
+      tiles = tolower(LETTERS),
+      scores = c(1,4,4,2,1,4,3,3,1,10,5,2,4,2,1,4,10,1,1,1,2,5,4,8,3,10)) 
+  
+  message(sprintf(">>> Auto-loaded points for '%s'", language))
+  return(scores)
+}
+
 ####################################################################
 #' Scrabble: Highest score words finder
 #' 
@@ -72,28 +116,57 @@ scrabble_score <- function(words, scores) {
 #' 
 #' @family Scrabble
 #' @param tiles Character. The letters you wish to consider
-#' @param words Dataframe. Words from \code{scrabble_dictionary()}
-#' @param scores Dataframe. Must contain two columns: "tiles" with every
-#' letter of the alphabet and "scores" for each letter's score.
 #' @param free Integer. How many free blank tiles you have?
 #' @param force_start,force_end Character. Force words to start or end with
 #' a pattern of letters and position. Examples: "S" or "SO" or "__S_O"...
 #' @param force_str Character vector. Force words to contain strings.
-#' @param force_n Integer. Force words to be n characters long.
+#' @param force_n,force_max Integer. Force words to be n or max n characters 
+#' long. Leave 0 to ignore parameter.
+#' @param scores,language Character. Any of "en","es","de","fr". 
+#' If scores is not any of those languages, must be a data.frame that 
+#' contains two columns: "tiles" with every letter of the alphabet and 
+#' "scores" for each letter's score. If you wish
+#' to overwrite or complement this dictionaries other words you can set to
+#' \code{"none"} and/or use the \code{words} parameter.
+#' You might also want to set this parameter globally with
+#' \code{options("lares.lang" = "en")} and forget about it!
+#' @param words Character vector. Use if you wish to manually add words.
 #' @param quiet Boolean. Do not print words as they are being searched.
 #' @examples 
 #' \dontrun{
-#' # Dictionary for Spanish Words
-#' es_words <- scrabble_dictionary("es")
-#' 
-#' # scores for Spanish words
-#' es_scores <- data.frame(
-#'   tiles = c(tolower(LETTERS)[1:14],"ñ",tolower(LETTERS)[15:length(LETTERS)]),
-#'   scores = c(1,3,2,2,1,4,3,4,1,8,10,1,3,1,8,1,3,5,1,1,1,2,4,10,10,5,10))
+#' # Automatic use of languages and scores
+#' options("lares.lang" = "es")
+#' scrabble_words(tiles = "holasa",
+#'                free = 1,
+#'                force_start = "",
+#'                force_end = "",
+#'                force_str = "_o_a",
+#'                force_n = 6,
+#'                force_max = 0,
+#'                quiet = FALSE)
+#' # A tibble: 43 x 2
+#' word   scores
+#' <chr>   <int>
+#' 1 haloza     18
+#' 2 azolas     15
+#' 3 solaza     15
+#' 4 ahoyas     13
+#' 5 alojas     13
+#' 6 ahogas     11
+#' 7 achola     10
+#' 8 aloyas     10
+#' 9 chaola     10
+#' 10 cholas    10
+#' # … with 33 more rows
+#'                
+#' # Custom scores table and manual language input
+#' cu_scores <- data.frame(
+#'   tiles = c(tolower(LETTERS)[1:14],"_",tolower(LETTERS)[15:length(LETTERS)]),
+#'   scores = c(1,1,1,1,1,1,1,1,1,1,1,1,3,1,8,1,3,5,1,1,1,2,4,10,10,5,10))
 #'   
 #' scrabble_words(tiles = "holase",
-#'                words = es_words$words,
-#'                scores = es_scores,
+#'                language = "es",
+#'                scores = cu_scores,
 #'                free = 1,
 #'                force_start = "_o_a")
 #' # A tibble: 96 x 2
@@ -110,31 +183,34 @@ scrabble_score <- function(words, scores) {
 #' 9 hoyase     13
 #' 10 loza      13
 #' # … with 86 more rows
+#' 
+#' # Words considered for a language
+#' es_words <- scrabble_dictionary("es")
 #' }
 #' @export
-scrabble_words <- function(tiles, words, scores, 
+scrabble_words <- function(tiles, 
                            free = 0, 
                            force_start = "", 
                            force_end = "", 
                            force_str = "",
-                           force_n = NA, 
+                           force_n = 0, 
+                           force_max = 0,
+                           scores = getOption("lares.lang"), 
+                           language = getOption("lares.lang"), 
+                           words = NA,
                            quiet = FALSE) {
   
-  force_words <- function(words, string, rev = FALSE) {
-    forced <- tolower(unlist(strsplit(string, "")))
-    forced_which <- which(forced != "_")
-    for (i in forced_which)
-      words <- words[substr(words, i, i) == forced[i]]
-    if (rev) words <- reverse(words)
-    return(words)
-  }
+  if (is.data.frame(scores)) {
+    if (!colnames(scores) %in% c("tiles","scores"))
+      stop("Please, provide a valid scores data.frame with 'tiles' and 'scores' columns")
+  } else scores <- scrabble_points(scores)
   
-  reverse <- function(words) {
-    splits <- sapply(words, function(x) strsplit(x, ""))
-    reversed <- lapply(splits, rev)
-    words <- as.vector(unlist(sapply(reversed, function(x) paste(x, collapse = ""))))
-    return(words)
+  dictionary <- scrabble_dictionary(language)[,1]
+  if (!is.na(words)) {
+    message(paste(">>> Added", formatNum(length(words), 0), "custom words"))
+    dictionary <- c(words, dictionary) 
   }
+  words <- dictionary
   
   # Split letters
   tiles <- tolower(unlist(strsplit(tiles, "")))
@@ -146,14 +222,15 @@ scrabble_words <- function(tiles, words, scores,
   # Words can't have more letters than inputs
   words <- words[nchar(words) <= ntiles]
   # You may want to force their lengths
-  if (!is.na(force_n)) words <- words[nchar(words) == force_n]
+  if (force_n > 0) words <- words[nchar(words) == force_n]
+  if (force_max > 0) words <- words[nchar(words) <= force_max]
   # Words can't have different letters than inputs
   words <- words[grepl(v2t(tiles, sep = "|", quotes = FALSE), words)]
   
   # Force strings that must be contained
   if (force_str[1] != "")
     for (str in force_str)
-      words <- words[grepl(tolower(str), words)] 
+      words <- words[grepl_anywhere(words, pattern = tolower(str), blank = "_")] 
   # Force start/end strings
   words <- force_words(words, force_start)
   words <- force_words(reverse(words), reverse(force_end), rev = TRUE)
@@ -180,21 +257,37 @@ scrabble_words <- function(tiles, words, scores,
   } 
 }
 
-# # Dictionary for Spanish Words
-# es_words <- scrabble_dictionary("es")
+force_words <- function(words, pattern, rev = FALSE) {
+  forced <- tolower(unlist(strsplit(pattern, "")))
+  forced_which <- which(forced != "_")
+  for (i in forced_which)
+    words <- words[substr(words, i, i) == forced[i]]
+  if (rev) words <- reverse(words)
+  return(words)
+}
+
+reverse <- function(words) {
+  splits <- sapply(words, function(x) strsplit(x, ""))
+  reversed <- lapply(splits, rev)
+  words <- as.vector(unlist(sapply(reversed, function(x) paste(x, collapse = ""))))
+  return(words)
+}
+
+# library(lares)
+# library(dplyr)
+# library(stringr)
+# options("lares.lang" = "en")
 # 
-# # scores for Spanish words
-# es_scores <- data.frame(
-#   tiles = c(tolower(LETTERS)[1:14],"ñ",tolower(LETTERS)[15:length(LETTERS)]),
-#   scores = c(1,3,2,2,1,4,3,4,1,8,10,1,3,1,8,1,3,5,1,1,1,2,4,10,10,5,10))
+# words <- scrabble_dictionary("es")$words
 # 
 # # Play and win!
-# scrabble_words(tiles = "hilos",
-#                words = es_words$words,
-#                scores = es_scores,
+# scrabble_words(tiles = "hola",
 #                free = 0,
 #                force_start = "",
 #                force_end = "",
-#                force_str = "i",
-#                force_n = NA,
-#                quiet = FALSE)
+#                force_str = "",
+#                force_n = 0,
+#                force_max = 0,
+#                quiet = TRUE)
+# 
+# x <- scrabble_score(words, scores)

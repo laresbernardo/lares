@@ -1538,3 +1538,42 @@ move_files <- function(from, to) {
   }
   
 }
+
+
+####################################################################
+#' Pattern Matching and Replacement Anywhere with Blanks
+#'
+#' Match and replace pattern with blanks within each element of a 
+#' character vector, allowing counted characters between patterns.
+#'
+#' @param vector Character vector
+#' @param pattern Character. Character string containing a 
+#' semi-regular expression which uses the following logic:
+#' "a_b" means any character that contains "a" followed by 
+#' something followed by "b", anywhere in the string.
+#' @param blank Character. String to use between regular expressions.
+#' @export 
+grepl_anywhere <- function(vector, pattern, blank = "_") {
+  if (!grepl(blank, pattern))
+    return(grepl(pattern, vector))
+  # if (nchar(blank != 1))
+  #   stop(paste("Your 'blank' parameter", v2t(blank), "must be length 1"))
+  forced <- tolower(unlist(strsplit(pattern, "")))
+  forced_which <- which(forced != blank)
+  combs <- res <- c()
+  for(i in 0:(max(nchar(vector))-max(forced_which)))
+    combs <- rbind(combs, (forced_which + i))
+  for (i in 1:length(vector)) {
+    temp <- c()
+    for (k in 1:nrow(combs)) {
+      aux <- c()
+      for (j in 1:ncol(combs)) {
+        aux <- c(aux, substr(vector[i], combs[k, j], combs[k, j]))
+      }
+      aux <- paste0(aux, collapse = "") == gsub(blank, "", pattern)
+      temp <- c(temp, aux)
+    }
+    res <- c(res, any(temp))
+  }
+  return(res)
+}

@@ -7,11 +7,15 @@
 scrabble_dictionary(language)
 }
 \arguments{
-\item{language}{Character. Any of "en","es","de","fr"}
+\item{language}{Character. Any of "en","es","de","fr". Set to "none"
+if you wish to skip this step (and use \code{words} parameter in 
+\code{scrabble_words} instead).}
 }
 \description{
 Download words from 4 different languages: English, Spanish, 
-German, and French. Thanks to "lorenbrichter" for sharing them.
+German, and French. Words will be save into the \code{temp} directory. 
+This is an auxiliary function. You may want to use \code{scrabble_words}
+directly if you are searching for the highest score words!
 }
 \examples{
 \dontrun{
@@ -21,6 +25,7 @@ dictionary <- scrabble_dictionary("es")
 }
 \seealso{
 Other Scrabble: 
+\code{\link{scrabble_points}()},
 \code{\link{scrabble_score}()},
 \code{\link{scrabble_words}()}
 }

@@ -20,7 +20,6 @@ Imports:
     magrittr,
     openxlsx,
     patchwork,
-    pillar,
     pROC,
     rlang,
     rlist,
