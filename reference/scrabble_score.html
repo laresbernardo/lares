@@ -150,17 +150,17 @@ letter of the alphabet and "scores" for each letter's score.</p></td>
 <span class='co'># Custom scores</span>
 <span class='no'>cu_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
   <span class='kw'>tiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span>(<span class='no'>LETTERS</span>),
-  <span class='kw'>scores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>4</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>10</span>,<span class='fl'>5</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>10</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>5</span>,<span class='fl'>4</span>,<span class='fl'>8</span>,<span class='fl'>3</span>,<span class='fl'>10</span>))
+  <span class='kw'>scores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>5</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>5</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>10</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>5</span>,<span class='fl'>4</span>,<span class='fl'>8</span>,<span class='fl'>3</span>,<span class='fl'>10</span>))
 
 <span class='co'># Score values for each set of rules</span>
 <span class='no'>words</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Bernardo"</span>, <span class='st'>"whiskey"</span>, <span class='st'>"R is great"</span>)
 <span class='fu'>scrabble_score</span>(<span class='no'>words</span>, <span class='no'>es_scores</span>)</div><div class='output co'>#&gt;         word scores
-#&gt; 1   Bernardo      8
-#&gt; 2    whiskey     32
-#&gt; 3 R is great      9</div><div class='input'><span class='fu'>scrabble_score</span>(<span class='no'>words</span>, <span class='no'>cu_scores</span>)</div><div class='output co'>#&gt;         word scores
-#&gt; 1   Bernardo      9
-#&gt; 2    whiskey     18
-#&gt; 3 R is great      9</div></pre>
+#&gt; 1    whiskey     32
+#&gt; 2 R is great      9
+#&gt; 3   Bernardo      8</div><div class='input'><span class='fu'>scrabble_score</span>(<span class='no'>words</span>, <span class='no'>cu_scores</span>)</div><div class='output co'>#&gt;         word scores
+#&gt; 1    whiskey     20
+#&gt; 2   Bernardo      8
+#&gt; 3 R is great      7</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
