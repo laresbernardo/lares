@@ -24,7 +24,7 @@ es_scores <- scrabble_points("es")
 # Custom scores
 cu_scores <- data.frame(
   tiles = tolower(LETTERS),
-  scores = c(1,4,4,2,1,4,3,3,1,10,5,2,4,2,1,4,10,1,1,1,2,5,4,8,3,10))
+  scores = c(1,1,1,1,1,1,1,5,1,1,5,2,4,2,1,4,10,1,1,1,2,5,4,8,3,10))
 
 # Score values for each set of rules
 words <- c("Bernardo", "whiskey", "R is great")

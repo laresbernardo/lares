@@ -7,7 +7,7 @@
 autoline(text, top = "auto", rel = 9.5)
 }
 \arguments{
-\item{text}{Character.}
+\item{text}{Character vector.}
 
 \item{top}{Integer. How many characters aprox should be on each line}
 

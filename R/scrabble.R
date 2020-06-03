@@ -59,7 +59,7 @@ scrabble_dictionary <- function(language) {
 #' # Custom scores
 #' cu_scores <- data.frame(
 #'   tiles = tolower(LETTERS),
-#'   scores = c(1,4,4,2,1,4,3,3,1,10,5,2,4,2,1,4,10,1,1,1,2,5,4,8,3,10))
+#'   scores = c(1,1,1,1,1,1,1,5,1,1,5,2,4,2,1,4,10,1,1,1,2,5,4,8,3,10))
 #' 
 #' # Score values for each set of rules
 #' words <- c("Bernardo", "whiskey", "R is great")
@@ -75,7 +75,7 @@ scrabble_score <- function(words, scores) {
     })
   })
   scores <- unlist(lapply(counter, function(x) sum(unlist(x) * scores$scores)))
-  done <- data.frame(word = words, scores)
+  done <- data.frame(word = words, scores) %>% arrange(desc(scores))
   return(done)
 }
 
@@ -87,6 +87,13 @@ scrabble_score <- function(words, scores) {
 #' 
 #' @family Scrabble
 #' @param language Character. Any of "en","es".
+#' @examples 
+#' scrabble_points("es")
+#' 
+#' scrabble_points("en")
+#' 
+#' # Not yet available
+#' scrabble_points("fr")
 #' @export
 scrabble_points <- function(language) {
   if (!language %in% c("en","es")) {

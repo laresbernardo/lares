@@ -12,6 +12,14 @@ scrabble_points(language)
 \description{
 Dataframe for every letter and points given a language.
 }
+\examples{
+scrabble_points("es")
+
+scrabble_points("en")
+
+# Not yet available
+scrabble_points("fr")
+}
 \seealso{
 Other Scrabble: 
 \code{\link{scrabble_dictionary}()},

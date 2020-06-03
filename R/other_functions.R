@@ -1098,7 +1098,7 @@ bindfiles <- function(files) {
 #' for different fonts and sizes until perfect harmony found.
 #' 
 #' @family Tools
-#' @param text Character.
+#' @param text Character vector.
 #' @param top Integer. How many characters aprox should be on each line
 #' @param rel Numeric. Relation of pixels and characters per line
 #' @examples 
@@ -1110,26 +1110,28 @@ bindfiles <- function(files) {
 autoline <- function(text, top = "auto", rel = 9.5) {
   
   # Auto-maximum
-  if (top == "auto") 
-    top <- round(dev.size("px")[1]/rel)
+  if (top == "auto") top <- round(dev.size("px")[1]/rel)
   # Auto-minimum
-  if (top < 15) top <- 15 
+  if (top < 5) top <- 5
   
-  # Add new lines for long texts
-  iters <- ceiling(nchar(text)/top)
-  if (iters > 1) {
-    for (i in 1:iters) {
-      if (i == 1) texti <- text
-      if (i == 1) n <- 0
-      texti <- gsub(".*\\n", "", text)
-      pos <- as.vector(gregexpr(' ', texti)[[1]])
-      sp <- pos[pos > top][1]
-      if (is.na(sp) & i > 1) break
-      n <- n + sp + ifelse(i > 1, 1, 0)
-      text <- gsub(paste0('^(.{', n, '})(.*)$'), '\\1\n\\2', text)
-    } 
-  }
-  return(text)
+  ret <- lapply(text, function(x) {
+    # Add new lines for long texts
+    iters <- ceiling(nchar(x)/top)
+    if (iters > 1) {
+      for (i in 1:iters) {
+        if (i == 1) texti <- x
+        if (i == 1) n <- 0
+        texti <- gsub(".*\\n", "", x)
+        pos <- as.vector(gregexpr(' ', texti)[[1]])
+        sp <- pos[pos > top][1]
+        if (is.na(sp)) break
+        n <- n + sp + ifelse(i > 1, 1, 0)
+        x <- gsub(paste0('^(.{', n, '})(.*)$'), '\\1\n\\2', x)
+      } 
+    } else x
+    return(x)
+  })
+  return(unlist(ret))
 }
 
 
