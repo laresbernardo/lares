@@ -119,27 +119,23 @@ variable's responses vs independent vector." />
 variable's responses vs independent vector.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dalex_variable</span>(<span class='no'>explainer</span>, <span class='no'>y</span>, <span class='kw'>force_class</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>alarm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>dalex_variable</span>(<span class='no'>explainer</span>, <span class='no'>vars</span>, <span class='kw'>force_class</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>explainer</th>
-      <td><p>Object. Result from dalex_explainer function</p></td>
+      <td><p>Object. Result from <code>dalex_explainer</code> function.</p></td>
     </tr>
     <tr>
-      <th>y</th>
-      <td><p>Character. Which character do you wish to study?</p></td>
+      <th>vars</th>
+      <td><p>Character vector. Which features do you wish to study?</p></td>
     </tr>
     <tr>
       <th>force_class</th>
       <td><p>Character. If you wish to force a class on your 
-y, which one do you need?</p></td>
-    </tr>
-    <tr>
-      <th>alarm</th>
-      <td><p>Boolean. Ping an alarm when ready! Needs beepr installed</p></td>
+vars, which one do you need?</p></td>
     </tr>
     </table>
 
@@ -150,6 +146,13 @@ y, which one do you need?</p></td>
 <code><a href='dalex_local.html'>dalex_local</a>()</code>,
 <code><a href='dalex_residuals.html'>dalex_residuals</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># For numerical variables</span>
+<span class='fu'>dalex_variable</span>(<span class='no'>explainer</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Age"</span>, <span class='st'>"Fare"</span>))
+<span class='co'># For categorical variables</span>
+<span class='fu'>dalex_variable</span>(<span class='no'>explainer</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Pclass"</span>,<span class='st'>"Sex"</span>))
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

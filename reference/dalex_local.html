@@ -117,14 +117,7 @@
     <p>DALEX function for local interpretations</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dalex_local</span>(
-  <span class='no'>explainer</span>,
-  <span class='kw'>observation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>row</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>alarm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>dalex_local</span>(<span class='no'>explainer</span>, <span class='kw'>observation</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>row</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"break_down"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,19 +133,12 @@ that was not in the original explainer function, add here. Else, use row</p></td
     </tr>
     <tr>
       <th>row</th>
-      <td><p>Dataframe. Row number from the data.frame used in explainer</p></td>
+      <td><p>Dataframe. Row number from the data.frame used in explainer.</p></td>
     </tr>
     <tr>
-      <th>plot</th>
-      <td><p>Boolean. Do you wish to see the results plot?</p></td>
-    </tr>
-    <tr>
-      <th>print</th>
-      <td><p>Boolean. Do you wish to see the results table?</p></td>
-    </tr>
-    <tr>
-      <th>alarm</th>
-      <td><p>Boolean. Ping an alarm when ready! Needs beepr installed</p></td>
+      <th>type</th>
+      <td><p>Character. The type of variable attributions. 
+Either shap, oscillations, break_down or break_down_interactions.</p></td>
     </tr>
     </table>
 
