@@ -21,7 +21,7 @@
 #' wish to get the history from? i.e, USD/COP, EUR/USD...
 #' @param trim Integer. Trim names until the nth character
 #' @param limit Integer. Limit one hot encoding to the n most frequent 
-#' values of each column
+#' values of each column. Set to \code{NA} to ignore argument.
 #' @param variance Numeric. Drop columns with more than n variance. 
 #' Range: 0-1. For example: if a variable contains 91 unique different
 #' values out of 100 observations, this column will be suppressed if 

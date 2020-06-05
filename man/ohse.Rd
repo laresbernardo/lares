@@ -45,7 +45,7 @@ wish to get the history from? i.e, USD/COP, EUR/USD...}
 \item{trim}{Integer. Trim names until the nth character}
 
 \item{limit}{Integer. Limit one hot encoding to the n most frequent 
-values of each column}
+values of each column. Set to \code{NA} to ignore argument.}
 
 \item{variance}{Numeric. Drop columns with more than n variance. 
 Range: 0-1. For example: if a variable contains 91 unique different

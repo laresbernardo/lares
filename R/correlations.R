@@ -13,6 +13,8 @@
 #' significance (p-value) for each value
 #' @param ignore Character vector. Which columns do you wish to exlude?
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
+#' @param limit Integer. Limit one hot encoding to the n most frequent 
+#' values of each column. Set to \code{NA} to ignore argument.
 #' @param dates Boolean. Do you want the function to create more features
 #' out of the date/time columns?
 #' @param redundant Boolean. Should we keep redundat columns? i.e. It the
@@ -33,7 +35,7 @@
 corr <- function(df, method = "pearson", 
                  pvalue = FALSE,
                  ignore = NA, 
-                 dummy = TRUE, dates = FALSE, 
+                 dummy = TRUE, limit = 10, dates = FALSE, 
                  redundant = FALSE, logs = FALSE, 
                  top = NA) {
   
@@ -41,7 +43,8 @@ corr <- function(df, method = "pearson",
   if (!is.na(ignore)[1]) df <- select(df, -one_of(ignore))
   
   # One hot encoding for categorical features
-  if (dummy) df <- ohse(df, summary = FALSE, redundant = redundant, dates = dates)
+  if (dummy) 
+    df <- ohse(df, summary = FALSE, limit = limit, redundant = redundant, dates = dates)
   
   # Select only numerical features and create log+1 for each one
   d <- numericalonly(df, logs = logs)
@@ -109,6 +112,8 @@ corr <- function(df, method = "pearson",
 #' @param top Integer. If you want to plot the top correlations, 
 #' define how many
 #' @param ceiling Numeric. Remove all correlations above... Range: (0-100]
+#' @param limit Integer. Limit one hot encoding to the n most frequent 
+#' values of each column. Set to \code{NA} to ignore argument.
 #' @param zeroes Do you wish to keep zeroes in correlations too?
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to 
@@ -144,6 +149,7 @@ corr_var <- function(df, ...,
                      dates = TRUE,
                      top = NA, 
                      ceiling = 100, 
+                     limit = 10,
                      zeroes = FALSE,
                      save = FALSE, 
                      subdir = NA,
@@ -154,7 +160,7 @@ corr_var <- function(df, ...,
   df <- select(df, -contains(paste0(var,"_log")))
   
   # Calculate correlations
-  rs <- corr(df, method = method, ignore = ignore, 
+  rs <- corr(df, method = method, ignore = ignore, limit = limit,
              logs = logs, dates = dates, pvalue = TRUE)
   
   # Check if main variable exists
@@ -257,6 +263,8 @@ corr_var <- function(df, ...,
 #' @param grid Boolean. Separate into grids?
 #' @param rm.na Boolean. Remove NAs?
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
+#' @param limit Integer. Limit one hot encoding to the n most frequent 
+#' values of each column. Set to \code{NA} to ignore argument.
 #' @param redundant Boolean. Should we keep redundat columns? i.e. It the
 #' column only has two different values, should we keep both new columns?
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
@@ -277,7 +285,7 @@ corr_cross <- function(df, plot = TRUE,
                        max_pvalue = 1,
                        type = 1, max = 1, top = 25, local = 1,
                        ignore = NA, contains = NA, grid = FALSE,
-                       rm.na = FALSE, dummy = TRUE, redundant = FALSE,
+                       rm.na = FALSE, dummy = TRUE, limit = 10, redundant = FALSE,
                        method = "pearson") {
   
   check_opts(type, c(1, 2))
@@ -287,7 +295,7 @@ corr_cross <- function(df, plot = TRUE,
   
   if (!is.na(contains)) redundant <- !redundant
   
-  cor <- corr(df, ignore = ignore, dummy = dummy, 
+  cor <- corr(df, ignore = ignore, dummy = dummy, limit = limit,
               redundant = redundant, method = method, pvalue = TRUE)
   
   aux <- function(c) {

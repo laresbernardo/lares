@@ -10,6 +10,7 @@ corr(
   pvalue = FALSE,
   ignore = NA,
   dummy = TRUE,
+  limit = 10,
   dates = FALSE,
   redundant = FALSE,
   logs = FALSE,
@@ -28,6 +29,9 @@ significance (p-value) for each value}
 \item{ignore}{Character vector. Which columns do you wish to exlude?}
 
 \item{dummy}{Boolean. Should One Hot Encoding be applied to categorical columns?}
+
+\item{limit}{Integer. Limit one hot encoding to the n most frequent 
+values of each column. Set to \code{NA} to ignore argument.}
 
 \item{dates}{Boolean. Do you want the function to create more features
 out of the date/time columns?}

@@ -17,6 +17,7 @@ corr_cross(
   grid = FALSE,
   rm.na = FALSE,
   dummy = TRUE,
+  limit = 10,
   redundant = FALSE,
   method = "pearson"
 )
@@ -48,6 +49,9 @@ This will automatically invert redundant default value.}
 \item{rm.na}{Boolean. Remove NAs?}
 
 \item{dummy}{Boolean. Should One Hot Encoding be applied to categorical columns?}
+
+\item{limit}{Integer. Limit one hot encoding to the n most frequent 
+values of each column. Set to \code{NA} to ignore argument.}
 
 \item{redundant}{Boolean. Should we keep redundat columns? i.e. It the
 column only has two different values, should we keep both new columns?}

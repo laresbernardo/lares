@@ -16,6 +16,7 @@ corr_var(
   dates = TRUE,
   top = NA,
   ceiling = 100,
+  limit = 10,
   zeroes = FALSE,
   save = FALSE,
   subdir = NA,
@@ -50,6 +51,9 @@ out of the date/time columns?}
 define how many}
 
 \item{ceiling}{Numeric. Remove all correlations above... Range: (0-100]}
+
+\item{limit}{Integer. Limit one hot encoding to the n most frequent 
+values of each column. Set to \code{NA} to ignore argument.}
 
 \item{zeroes}{Do you wish to keep zeroes in correlations too?}
 
