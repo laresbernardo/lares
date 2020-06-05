@@ -133,6 +133,7 @@ only numerical values.</p>
   <span class='kw'>dates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>ceiling</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>10</span>,
   <span class='kw'>zeroes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
@@ -191,6 +192,11 @@ define how many</p></td>
     <tr>
       <th>ceiling</th>
       <td><p>Numeric. Remove all correlations above... Range: (0-100]</p></td>
+    </tr>
+    <tr>
+      <th>limit</th>
+      <td><p>Integer. Limit one hot encoding to the n most frequent 
+values of each column. Set to <code>NA</code> to ignore argument.</p></td>
     </tr>
     <tr>
       <th>zeroes</th>

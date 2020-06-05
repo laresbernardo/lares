@@ -132,6 +132,7 @@ of the highest correlation variables obtained in a cross-table.</p>
   <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>rm.na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>dummy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>10</span>,
   <span class='kw'>redundant</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>
 )</pre>
@@ -189,6 +190,11 @@ This will automatically invert redundant default value.</p></td>
     <tr>
       <th>dummy</th>
       <td><p>Boolean. Should One Hot Encoding be applied to categorical columns?</p></td>
+    </tr>
+    <tr>
+      <th>limit</th>
+      <td><p>Integer. Limit one hot encoding to the n most frequent 
+values of each column. Set to <code>NA</code> to ignore argument.</p></td>
     </tr>
     <tr>
       <th>redundant</th>
