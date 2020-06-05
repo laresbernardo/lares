@@ -4,21 +4,27 @@
 \alias{dalex_variable}
 \title{DALEX Partial Dependency Plots (PDP)}
 \usage{
-dalex_variable(explainer, y, force_class = NA, alarm = TRUE)
+dalex_variable(explainer, vars, force_class = NA)
 }
 \arguments{
-\item{explainer}{Object. Result from dalex_explainer function}
+\item{explainer}{Object. Result from \code{dalex_explainer} function.}
 
-\item{y}{Character. Which character do you wish to study?}
+\item{vars}{Character vector. Which features do you wish to study?}
 
 \item{force_class}{Character. If you wish to force a class on your 
-y, which one do you need?}
-
-\item{alarm}{Boolean. Ping an alarm when ready! Needs beepr installed}
+vars, which one do you need?}
 }
 \description{
 DALEX function for creating Partial Dependency Plots and study
 variable's responses vs independent vector.
+}
+\examples{
+\dontrun{
+# For numerical variables
+dalex_variable(explainer, vars = c("Age", "Fare"))
+# For categorical variables
+dalex_variable(explainer, vars = c("Pclass","Sex"))
+}
 }
 \seealso{
 Other Interpretability: 

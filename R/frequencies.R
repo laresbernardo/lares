@@ -170,7 +170,7 @@ freqs <- function(df, ..., wt = NULL,
     facet_name <- colnames(plot)[2]
     colnames(plot)[1] <- "facet"
     colnames(plot)[2] <- "names"
-    plot$facet[is.na(plot$facet)] <- "NA"
+    plot$facet <- suppressWarnings(replacefactor(plot$facet, NA, "NA"))
     p <- plot %>%
       ggplot(aes(x = reorder_within(.data$names, -.data$order, .data$facet), 
                  y = .data$n, label = .data$labels, fill = .data$p)) +
@@ -184,8 +184,8 @@ freqs <- function(df, ..., wt = NULL,
     colnames(plot)[1] <- "facet2"
     colnames(plot)[2] <- "facet1"
     colnames(plot)[3] <- "names"
-    plot$facet2[is.na(plot$facet2)] <- "NA"
-    plot$facet1[is.na(plot$facet1)] <- "NA"
+    plot$facet2 <- suppressWarnings(replacefactor(plot$facet2, NA, "NA"))
+    plot$facet1 <- suppressWarnings(replacefactor(plot$facet1, NA, "NA"))
     p <- plot %>%
       ggplot(aes(x = reorder_within(.data$names, .data$n, .data$facet2), 
                  y = .data$n, label = .data$labels, fill = .data$p)) +

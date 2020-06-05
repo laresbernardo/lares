@@ -4,14 +4,7 @@
 \alias{dalex_local}
 \title{DALEX Local}
 \usage{
-dalex_local(
-  explainer,
-  observation = NA,
-  row = 1,
-  plot = TRUE,
-  print = TRUE,
-  alarm = TRUE
-)
+dalex_local(explainer, observation = NA, row = 1, type = "break_down")
 }
 \arguments{
 \item{explainer}{Object. Result from dalex_explainer function}
@@ -19,13 +12,10 @@ dalex_local(
 \item{observation}{Data.frame. If you want to use an observation
 that was not in the original explainer function, add here. Else, use row}
 
-\item{row}{Dataframe. Row number from the data.frame used in explainer}
+\item{row}{Dataframe. Row number from the data.frame used in explainer.}
 
-\item{plot}{Boolean. Do you wish to see the results plot?}
-
-\item{print}{Boolean. Do you wish to see the results table?}
-
-\item{alarm}{Boolean. Ping an alarm when ready! Needs beepr installed}
+\item{type}{Character. The type of variable attributions. 
+Either shap, oscillations, break_down or break_down_interactions.}
 }
 \description{
 DALEX function for local interpretations

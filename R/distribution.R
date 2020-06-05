@@ -325,7 +325,8 @@ distr <- function(data, ...,
         count <- count + theme(axis.text.x = element_text(angle = 30, hjust = 1))
       } 
       # Custom colours if wanted...
-      if (custom_colours) count <- count + gg_fill_customs()
+      if (custom_colours) count <- count + 
+        suppressWarnings(gg_fill_customs())
     }
     
     # Proportions (%) plot
@@ -360,7 +361,8 @@ distr <- function(data, ...,
                      size = 2.5, fill = "white", alpha = 0.8)
       }
       # Custom colours if wanted...
-      if (custom_colours) prop <- prop + gg_fill_customs()
+      if (custom_colours) prop <- prop + 
+          suppressMessages(gg_fill_customs())
     }
     
     # Export file name and folder

@@ -71,7 +71,7 @@ NULL
 recommended <- list(
   beepr = c("beep"),
   circlize = c("chordDiagram", "uh"),
-  DALEX = c("explain", "model_performance", "prediction_breakdown", "variable_response"),
+  DALEX = c("explain", "model_performance"),
   data.table = c("fread"),
   DBI = c("dbDriver", "dbConnect", "dbSendQuery", "fetch", "dbDisconnect"),
   devtools = c("install", "install_github", "with_proxy"),
@@ -84,7 +84,6 @@ recommended <- list(
   googleAuthR = c("gar_auth"),
   googledrive = c("drive_auth", "drive_find"),
   googlesheets4 = c("sheets_auth", "read_sheet"),
-  ingredients = c("ceteris_paribus", "aggregate_profiles"),
   methods = c("as"),
   mice = c("mice", "complete"),
   plotly = c("ggplotly", "plot_ly", "add_markers", "add_markers"),

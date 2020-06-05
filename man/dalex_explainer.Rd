@@ -23,31 +23,27 @@ DALEX function to create an explainer object
 data(dft) # Titanic dataset
 
 # TRAIN A SIMPLE MODEL
-dfm <- h2o_automl(dft, 
-                  y = "Survived", 
-                  ignore = c("Ticket", "PassengerId", "Cabin")), 
-                  max_models = 3)
+dfm <- h2o_automl(dft, y = "Survived",
+                  ignore = c("Ticket", "PassengerId", "Cabin"),
+                  max_models = 1)
 
 # EXPLAINER
-explainer <- dalex_explainer(df = dfm$datasets$test, model = dfm$model)
+explainer <- dalex_explainer(df = dfm$datasets$test, model = dfm$model, y = "Survived")
 explainer$data <- na.omit(explainer$data)
 
 # CATEGORICAL EXAMPLE
-class <- dalex_variable(explainer, y = "Pclass")
+class <- dalex_variable(explainer, vars = c("Pclass", "Sex"))
 class$plot
 
 # NUMERICAL EXAMPLE
-class <- dalex_variable(explainer, y = "Fare")
-class$plot
-# x <- ceteris_paribus(explainer, explainer$data, variables = "Fare")
-# aux <- aggregate_profiles(x)
-# plot(aux) + theme_lares2(legend = "none")
+num <- dalex_variable(explainer, vars = c("Fare", "Age"))
+num$plot
 
 # LOCAL EXAMPLE
 print(head(explainer$data, 1))
 Pclass    Sex Age SibSp Parch    Fare Embarked train_test predict    FALSE.     TRUE.
      3 female  27     0     2 11.1333        S       test   FALSE 0.6844502 0.3155498
-local <- dalex_local(explainer, row = 1, plot = TRUE)
+local <- dalex_local(explainer, row = 1)
 # OR YOU COULD MANUALLY INPUT THE OBSERVATION
 local <- dalex_local(explainer, observation = head(explainer$data, 1))
 local$plot
