@@ -126,6 +126,7 @@ a character vector with comma separated values or a list vector.</p>
   <span class='no'>var</span>,
   <span class='kw'>wt</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>fx</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
+  <span class='kw'>rm.na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>10</span>,
   <span class='kw'>unique</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -153,6 +154,10 @@ of the combinations.</p></td>
     <tr>
       <th>fx</th>
       <td><p>Character. Set operation: mean, sum</p></td>
+    </tr>
+    <tr>
+      <th>rm.na</th>
+      <td><p>Boolean. Remove NA value from <code>wt</code>?</p></td>
     </tr>
     <tr>
       <th>limit</th>
