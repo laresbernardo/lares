@@ -4,10 +4,18 @@
 \alias{noPlot}
 \title{Plot Result with Nothing to Plot}
 \usage{
-noPlot(message = "Nothing to show here!")
+noPlot(
+  message = "Nothing to show here!",
+  size = 4,
+  font = getOption("lares.font")
+)
 }
 \arguments{
 \item{message}{Character. What message do you wish to show?}
+
+\item{size}{Numeric. Text size.}
+
+\item{font}{Character. Font name}
 }
 \description{
 This function lets the user print a plot without plot, with a 
@@ -22,6 +30,7 @@ noPlot(message = "No plot to show!")
 Other Visualization: 
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
+\code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
 \code{\link{freqs}()},
 \code{\link{gg_bars}()},

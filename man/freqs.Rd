@@ -97,6 +97,7 @@ dft \%>\% freqs(Ticket, plot = TRUE, top = 10, abc = TRUE)
 \seealso{
 Other Frequency: 
 \code{\link{freqs_df}()},
+\code{\link{freqs_list}()},
 \code{\link{freqs_plot}()}
 
 Other Exploratory: 
@@ -106,6 +107,7 @@ Other Exploratory:
 \code{\link{df_str}()},
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
+\code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
 \code{\link{lasso_vars}()},
 \code{\link{missingness}()},
@@ -119,6 +121,7 @@ Other Exploratory:
 Other Visualization: 
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
+\code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
 \code{\link{gg_bars}()},
 \code{\link{gg_pie}()},

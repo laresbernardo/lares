@@ -340,13 +340,18 @@ scale_y_dollar <- function(...) scale_y_continuous(..., labels = dollar)
 #' 
 #' @family Visualization
 #' @param message Character. What message do you wish to show?
+#' @param size Numeric. Text size.
+#' @param font Character. Font name
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' noPlot(message = "No plot to show!")
 #' @export
-noPlot <- function(message = "Nothing to show here!") {
-  ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 
-    geom_label() + theme_minimal() +
+noPlot <- function(message = "Nothing to show here!", 
+                   size = 4, 
+                   font = getOption("lares.font")) {
+  
+  p <- ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 
+    geom_text(size = size) + theme_minimal() +
     theme(axis.line = element_blank(),
           axis.text.x = element_blank(),
           axis.text.y = element_blank(),
@@ -359,7 +364,17 @@ noPlot <- function(message = "Nothing to show here!") {
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           plot.background = element_blank())
+  
+  # Check and set font
+  if (!font_exists(font)[1] & !is.na(font)) {
+    warning(paste("Font", font, "is not installed, has other name, or can't be found"))  
+    options("lares.font" = NA) # So R doesn't try again by default
+    font <- NA
+  } else p <- p + theme(text = element_text(family = font)) 
+  
+  return(p)
 }
+
 
 ####################################################################
 #' Install latest version of H2O

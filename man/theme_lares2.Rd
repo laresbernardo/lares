@@ -52,6 +52,7 @@ with solid default kerning pairs and geometric numbers.
 Other Visualization: 
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
+\code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
 \code{\link{freqs}()},
 \code{\link{gg_bars}()},

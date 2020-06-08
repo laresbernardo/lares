@@ -43,6 +43,7 @@ gg_bars(df$Pclass, n = df$n, p = df$p, axis = "Percentage of ...")
 Other Visualization: 
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
+\code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
 \code{\link{freqs}()},
 \code{\link{gg_pie}()},

@@ -107,6 +107,7 @@ Other Exploratory:
 \code{\link{crosstab}()},
 \code{\link{df_str}()},
 \code{\link{freqs_df}()},
+\code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
 \code{\link{freqs}()},
 \code{\link{lasso_vars}()},
@@ -120,6 +121,7 @@ Other Exploratory:
 
 Other Visualization: 
 \code{\link{freqs_df}()},
+\code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
 \code{\link{freqs}()},
 \code{\link{gg_bars}()},

@@ -51,6 +51,7 @@ freqs_plot(dft, Pclass, Survived, Sex, Embarked, top = 15)
 \seealso{
 Other Frequency: 
 \code{\link{freqs_df}()},
+\code{\link{freqs_list}()},
 \code{\link{freqs}()}
 
 Other Exploratory: 
@@ -60,6 +61,7 @@ Other Exploratory:
 \code{\link{df_str}()},
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
+\code{\link{freqs_list}()},
 \code{\link{freqs}()},
 \code{\link{lasso_vars}()},
 \code{\link{missingness}()},
@@ -73,6 +75,7 @@ Other Exploratory:
 Other Visualization: 
 \code{\link{distr}()},
 \code{\link{freqs_df}()},
+\code{\link{freqs_list}()},
 \code{\link{freqs}()},
 \code{\link{gg_bars}()},
 \code{\link{gg_pie}()},

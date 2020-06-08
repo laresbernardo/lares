@@ -4,7 +4,7 @@
 \alias{ohe_commas}
 \title{One Hot Encoding for a Vector with Comma Separated Values}
 \usage{
-ohe_commas(df, variables, sep = ",")
+ohe_commas(df, variables, sep = ",", noval = "NoVal")
 }
 \arguments{
 \item{df}{Dataframe. May contain one or more columns with comma separated
@@ -13,6 +13,8 @@ values which will be separated as one hot encoding}
 \item{variables}{Character. Which variables should split into new columns?}
 
 \item{sep}{Character. Which regular expression separates the elements?}
+
+\item{noval}{Character. No value text}
 }
 \description{
 This function lets the user do one hot encoding on a variable with 

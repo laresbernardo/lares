@@ -468,3 +468,173 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
   attr(p, "labels") <- labels
   return(p)
 }
+
+
+####################################################################
+#' Frequencies on Lists and Plot
+#' 
+#' Visualize frequency of elements on a list or list vector, which
+#' combinations and elements are the most frequent. Your variable can be
+#' a character vector with comma separated values or a list vector.
+#' 
+#' @family Frequency
+#' @family Exploratory
+#' @family Visualization
+#' @param df Data.frame
+#' @param var Variable. Variables you wish to process. 
+#' @param wt Variable, numeric. Select a numeric column to use 
+#' in the colour scale, used as sum, mean... of those values for each
+#' of the combinations. 
+#' @param fx Character. Set operation: mean, sum
+#' @param limit Integer. Show top n combinations and elements. The rest
+#' will be grouped into a single element.
+#' @param unique Boolean. a,b = b,a?
+#' @param abc Boolean. Do you wish to sort by alphabetical order?
+#' @param title Character. 
+#' @examples 
+#' options("lares.font"=NA) # Temporal
+#' df <- dplyr::starwars
+#' df %>% freqs_list(films)
+#' freqs_list(df, films, wt = height, abc = TRUE, limit = 10, 
+#'            title = "Star Wars:\nCharacter's\nHeights per Film")
+#' @export
+freqs_list <- function(df, var, 
+                       wt = NA, fx = "mean",
+                       limit = 10, 
+                       unique = TRUE, 
+                       abc = FALSE, 
+                       title = "") {
+  
+  var_str <- deparse(substitute(var))
+  check_opts(var_str, colnames(df))
+  
+  # Change column names for easier manipulation
+  colnames(df)[colnames(df) == var_str] <- "which"
+  
+  wt_str <- deparse(substitute(wt))
+  if (wt_str != "NA") {
+    if (wt_str %in% colnames(df)) {
+      message(paste(">>> Colour weight:", fx, wt_str))
+      colnames(df)[colnames(df) == wt_str] <- "wt" 
+    }
+  } else df$wt <- 0
+  if (!is.numeric(df$wt)) stop("Input ", wt_str, " must be a numeric column.")
+  
+  # If list then convert
+  if (is.list(df$which))
+    df$which <- unlist(lapply(df$which, function(x) paste(x, collapse = ","))) 
+  
+  # check if it's a valid column
+  if(!any(grepl(",", df$which)))
+    stop(sprintf(
+      "Your input (%s) is not valid: does NOT contain commas or is no a list.", var_str))
+  
+  # Order values so a,b = b,a
+  if (unique) {
+    values <- strsplit(unlist(df$which), ",")
+    values <- lapply(values, sort)
+    values <- unlist(lapply(values, function(x) paste(x, collapse=","))) 
+  } else values <- df$which
+  # One hot encoding
+  top_combs <- head(freqs(values), limit)
+  vals <- data.frame(var = values, wt = df$wt) %>% 
+    group_by(.data$var) %>%
+    summarise(n = n(),
+              wt = ifelse(
+                fx == "mean", mean(.data$wt, na.rm = TRUE), 
+                ifelse(fx == "sum", sum(.data$wt, na.rm = TRUE), 1)),
+              .groups = "drop") %>%
+    arrange(desc(.data$n)) %>%
+    mutate(p = 100*.data$n/sum(.data$n),
+           order = row_number()) %>%
+    data.frame() %>%
+    ohe_commas("var")
+  
+  elements <- vals %>%
+    tidyr::gather() %>%
+    mutate(n = rep(vals$n, ncol(vals))) %>%
+    mutate(wt = rep(vals$wt, ncol(vals))) %>%
+    filter(.data$value == TRUE) %>% 
+    group_by(.data$key) %>%
+    summarise(n = sum(.data$n),
+              wt = ifelse(
+                fx == "mean", mean(.data$wt, na.rm = TRUE), 
+                ifelse(fx == "sum", sum(.data$wt, na.rm = TRUE), 1)),
+              .groups = "drop") %>%
+    {if (abc) arrange(., .data$key) else arrange(., desc(.data$n))} %>%
+    mutate(p = 100 * .data$n/nrow(df), order = row_number()) %>%
+    mutate(key = as.factor(.data$key)) %>%
+    mutate(label = sprintf("%s\n(%s)", .data$key, formatNum(.data$p, 0, pos = "%"))) %>%
+    mutate(label = ifelse(.data$order > limit, "...", .data$label)) %>%
+    mutate(label = as.factor(.data$label))
+  
+  tgthr <- vals %>% 
+    select(contains("var_")) %>%
+    tidyr::gather("var") %>%
+    mutate(var = factor(.data$var, levels = rev(elements$key))) %>%
+    mutate(order = rep(vals$order, nrow(elements))) %>%
+    group_by(.data$var) %>% mutate(id = row_number()) %>%
+    mutate(label = sprintf(
+      "#%s\n%s", 
+      id, formatNum(vals$p, 0, pos = "%"))) %>%
+    filter(.data$value == TRUE) %>%
+    mutate(label = ifelse(.data$order > limit, "...", .data$label))
+  
+  # Scatter plot: combinations
+  p1 <- tgthr %>%
+    ggplot(aes(x = reorder(.data$label, .data$order), 
+               y = .data$var, group = .data$label)) +
+    geom_point(size = 4) + geom_path() +
+    theme_lares2(mg = -1, which = "XY") +
+    labs(x = NULL, y = NULL) +
+    theme(axis.text.y = element_blank())
+  
+  # Bar plot: elements
+  p2 <- elements %>%
+    mutate(label = gsub("var_","", .data$label)) %>%
+    ggplot(aes(x = reorder(.data$label, -.data$order), 
+               y = -.data$n, label = .data$p, fill = .data$wt)) +
+    coord_flip() + geom_col() +
+    labs(y = NULL, x = NULL) +
+    theme_lares2(mg = -1) +
+    scale_y_continuous(position = "right", 
+                       labels = function(x) formatNum(abs(x), 0)) +
+    theme(panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank()) +
+    guides(fill = FALSE)
+  
+  # Bar plot: combinations
+  p3 <- vals %>%
+    mutate(var = ifelse(row_number() > limit, "...", .data$var)) %>%
+    ggplot(aes(x = reorder(.data$var, .data$order), 
+               y = .data$n, fill = .data$wt)) +
+    geom_col() +
+    theme_lares2(mg = -1) + 
+    scale_y_continuous(labels = function(x) formatNum(abs(x), 0)) +
+    labs(x = NULL, y = "Frequency",
+         fill = if (wt_str != "NA") str_to_title(paste(fx, wt_str, sep = "\n")) else NULL) +
+    theme(axis.text.x  = element_blank(),
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank()) +
+    scale_fill_continuous(guide = guide_colourbar(direction = "horizontal"))
+  if (wt_str == "NA") p3 <- p3 + guides(fill = FALSE)
+  
+  # Join all plots
+  layout <- "
+  AAABBBBB
+  CCCBBBBB
+  DDDEEEEE
+  DDDEEEEE
+  DDDEEEEE"
+  plot <- noPlot(title, 5) + p3 + guide_area() + 
+    p2 + p1 + plot_layout(design = layout) +
+    plot_layout(guides = 'collect')
+  plot(plot)
+  
+  results <- list(plot = plot, 
+                  ohe = ohe_commas(data.frame(vals = values), "vals"), 
+                  elements = elements, 
+                  combinations = tgthr)
+  
+  return(invisible(results))
+}

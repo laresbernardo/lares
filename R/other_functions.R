@@ -328,6 +328,7 @@ formatNum <- function(x, decimals = 2,
 #' values which will be separated as one hot encoding
 #' @param variables Character. Which variables should split into new columns?
 #' @param sep Character. Which regular expression separates the elements?
+#' @param noval Character. No value text
 #' @examples 
 #' df <- data.frame(id = c(1:5),
 #'                  x = c("AA, D", "AA,B", "B,  D", "A,D,B", NA),
@@ -335,11 +336,12 @@ formatNum <- function(x, decimals = 2,
 #' ohe_commas(df, "x")
 #' ohe_commas(df, c("x", "z"), sep = "\\+|,")
 #' @export
-ohe_commas <- function(df, variables, sep = ",") {
+ohe_commas <- function(df, variables, sep = ",", noval = "NoVal") {
+  df <- as.data.frame(df)
   for (var in variables) {
     df$temp <- as.character(df[,var])
     # Handling missingness
-    df$temp[as.character(df$temp) == "" | is.na(df$temp)] <- "NoVal"
+    df$temp[as.character(df$temp) == "" | is.na(df$temp)] <- noval
     vals <- v2t(as.character(df$temp), quotes = FALSE)
     vals <- unique(trimws(unlist(strsplit(vals, sep))))
     # aux <- sprintf("--%s--", vals)
@@ -353,7 +355,7 @@ ohe_commas <- function(df, variables, sep = ",") {
     df$temp <- NULL
     df <- cbind(df, mat)
   }
-  return(df)
+  return(as_tibble(df))
 }
 
 

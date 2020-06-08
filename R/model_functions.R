@@ -296,7 +296,7 @@ h2o_automl <- function(df, y = "tag",
   
   if (alarm & !quiet) {
     tryCatch({
-      try_require("beepr", stop = FALSE)
+      try_require("beepr", stop = TRUE)
       beep() 
     })
   }

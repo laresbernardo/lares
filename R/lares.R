@@ -22,7 +22,7 @@
 #' @importFrom magrittr %>% set_colnames
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
-#' @importFrom patchwork plot_layout plot_annotation wrap_plots
+#' @importFrom patchwork guide_area plot_layout plot_annotation wrap_plots
 #' @importFrom pROC roc ci
 #' @import rlist
 #' @importFrom rlang as_label .data
@@ -71,7 +71,7 @@ NULL
 recommended <- list(
   beepr = c("beep"),
   circlize = c("chordDiagram", "uh"),
-  DALEX = c("explain", "model_performance"),
+  DALEX = c("explain.default", "model_performance", "model_profile", "predict_parts"),
   data.table = c("fread"),
   DBI = c("dbDriver", "dbConnect", "dbSendQuery", "fetch", "dbDisconnect"),
   devtools = c("install", "install_github", "with_proxy"),
