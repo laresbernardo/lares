@@ -129,7 +129,8 @@ a character vector with comma separated values or a list vector.</p>
   <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>10</span>,
   <span class='kw'>unique</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>""</span>
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -168,7 +169,11 @@ will be grouped into a single element.</p></td>
     </tr>
     <tr>
       <th>title</th>
-      <td><p>Character.</p></td>
+      <td><p>Character. Added to the plot.</p></td>
+    </tr>
+    <tr>
+      <th>plot</th>
+      <td><p>Boolean. Plot viz?</p></td>
     </tr>
     </table>
 
@@ -214,8 +219,9 @@ will be grouped into a single element.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span><span class='kw'>=</span><span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='no'><a href='https://dplyr.tidyverse.org/reference/starwars.html'>starwars</a></span>
-<span class='no'>df</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs_list</span>(<span class='no'>films</span>)</div><div class='img'><img src='freqs_list-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>freqs_list</span>(<span class='no'>df</span>, <span class='no'>films</span>, <span class='kw'>wt</span> <span class='kw'>=</span> <span class='no'>height</span>, <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-           <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Star Wars:\nCharacter's\nHeights per Film"</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Colour weight: mean height</span></div><div class='img'><img src='freqs_list-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>df</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs_list</span>(<span class='no'>films</span>)
+<span class='fu'>freqs_list</span>(<span class='no'>df</span>, <span class='no'>films</span>, <span class='kw'>wt</span> <span class='kw'>=</span> <span class='no'>height</span>, <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+           <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Star Wars:\nCharacter's\nHeights per Film"</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Colour weight: mean height</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
