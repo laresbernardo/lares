@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Combinated Frequencies Plot for Categoral Features — freqs_plot • lares</title>
+<title>Frequencies on Lists and Plot — freqs_list • lares</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,10 @@
 
 
 
-<meta property="og:title" content="Combinated Frequencies Plot for Categoral Features — freqs_plot" />
-<meta property="og:description" content="Plot frequencies of multiple categories within a data.frame in 
-a new fancy way. Tidyverse friendly, based on lares::freqs(),
-no limits on amount of features to evaluate." />
+<meta property="og:title" content="Frequencies on Lists and Plot — freqs_list" />
+<meta property="og:description" content="Visualize frequency of elements on a list or list vector, which
+combinations and elements are the most frequent. Your variable can be
+a character vector with comma separated values or a list vector." />
 
 
 
@@ -110,25 +110,26 @@ no limits on amount of features to evaluate." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Combinated Frequencies Plot for Categoral Features</h1>
+    <h1>Frequencies on Lists and Plot</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/frequencies.R'><code>R/frequencies.R</code></a></small>
-    <div class="hidden name"><code>freqs_plot.Rd</code></div>
+    <div class="hidden name"><code>freqs_list.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot frequencies of multiple categories within a data.frame in 
-a new fancy way. Tidyverse friendly, based on lares::freqs(),
-no limits on amount of features to evaluate.</p>
+    <p>Visualize frequency of elements on a list or list vector, which
+combinations and elements are the most frequent. Your variable can be
+a character vector with comma separated values or a list vector.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>freqs_plot</span>(
+    <pre class="usage"><span class='fu'>freqs_list</span>(
   <span class='no'>df</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>rm.na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>var</span>,
+  <span class='kw'>wt</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>fx</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
+  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>unique</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fl'>NA</span>
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>""</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -139,18 +140,27 @@ no limits on amount of features to evaluate.</p>
       <td><p>Data.frame</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Variables. Variables you wish to process. Order matters.
-If no variables are passed, the whole data.frame will be considered</p></td>
+      <th>var</th>
+      <td><p>Variable. Variables you wish to process.</p></td>
     </tr>
     <tr>
-      <th>top</th>
-      <td><p>Integer. Filter and plot the most n frequent for  values.</p></td>
+      <th>wt</th>
+      <td><p>Variable, numeric. Select a numeric column to use 
+in the colour scale, used as sum, mean... of those values for each
+of the combinations.</p></td>
     </tr>
     <tr>
-      <th>rm.na</th>
-      <td><p>Boolean. Remove NA values in the plot? (not filtered for 
-numerical output; use na.omit() or filter() if needed)</p></td>
+      <th>fx</th>
+      <td><p>Character. Set operation: mean, sum</p></td>
+    </tr>
+    <tr>
+      <th>limit</th>
+      <td><p>Integer. Show top n combinations and elements. The rest
+will be grouped into a single element.</p></td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td><p>Boolean. a,b = b,a?</p></td>
     </tr>
     <tr>
       <th>abc</th>
@@ -158,11 +168,7 @@ numerical output; use na.omit() or filter() if needed)</p></td>
     </tr>
     <tr>
       <th>title</th>
-      <td><p>Character. Overwrite plot's title with.</p></td>
-    </tr>
-    <tr>
-      <th>subtitle</th>
-      <td><p>Character. Overwrite plot's subtitle with.</p></td>
+      <td><p>Character.</p></td>
     </tr>
     </table>
 
@@ -170,7 +176,7 @@ numerical output; use na.omit() or filter() if needed)</p></td>
 
     <div class='dont-index'><p>Other Frequency: 
 <code><a href='freqs_df.html'>freqs_df</a>()</code>,
-<code><a href='freqs_list.html'>freqs_list</a>()</code>,
+<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
 <code><a href='freqs.html'>freqs</a>()</code></p>
 <p>Other Exploratory: 
 <code><a href='corr_cross.html'>corr_cross</a>()</code>,
@@ -179,7 +185,7 @@ numerical output; use na.omit() or filter() if needed)</p></td>
 <code><a href='df_str.html'>df_str</a>()</code>,
 <code><a href='distr.html'>distr</a>()</code>,
 <code><a href='freqs_df.html'>freqs_df</a>()</code>,
-<code><a href='freqs_list.html'>freqs_list</a>()</code>,
+<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
 <code><a href='freqs.html'>freqs</a>()</code>,
 <code><a href='lasso_vars.html'>lasso_vars</a>()</code>,
 <code><a href='missingness.html'>missingness</a>()</code>,
@@ -192,7 +198,7 @@ numerical output; use na.omit() or filter() if needed)</p></td>
 <p>Other Visualization: 
 <code><a href='distr.html'>distr</a>()</code>,
 <code><a href='freqs_df.html'>freqs_df</a>()</code>,
-<code><a href='freqs_list.html'>freqs_list</a>()</code>,
+<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
 <code><a href='freqs.html'>freqs</a>()</code>,
 <code><a href='gg_bars.html'>gg_bars</a>()</code>,
 <code><a href='gg_pie.html'>gg_pie</a>()</code>,
@@ -206,21 +212,10 @@ numerical output; use na.omit() or filter() if needed)</p></td>
 <code><a href='tree_var.html'>tree_var</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> <span class='kw'>=</span> <span class='fl'>NA</span>) <span class='co'># Temporal</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
-
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>freqs_plot</span>(<span class='no'>dft</span>, <span class='no'>Pclass</span>, <span class='no'>Survived</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df</span>$<span class='no'>data</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 7</span><span>
-#&gt;   order     n     p  pcum name     value label          
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #555555;'>1</span><span> 6        80  8.98 100   Pclass   1     Pclass: 1      
-#&gt; </span><span style='color: #555555;'>2</span><span> 6        80  8.98 100   Survived FALSE Survived: FALSE
-#&gt; </span><span style='color: #555555;'>3</span><span> 5        87  9.76  91.0 Pclass   2     Pclass: 2      
-#&gt; </span><span style='color: #555555;'>4</span><span> 5        87  9.76  91.0 Survived TRUE  Survived: TRUE 
-#&gt; </span><span style='color: #555555;'>5</span><span> 4        97 10.9   81.3 Pclass   2     Pclass: 2      
-#&gt; </span><span style='color: #555555;'>6</span><span> 4        97 10.9   81.3 Survived FALSE Survived: FALSE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>df</span>)</div><div class='img'><img src='freqs_plot-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'>freqs_plot</span>(<span class='no'>dft</span>, <span class='no'>Pclass</span>, <span class='no'>Survived</span>, <span class='no'>Sex</span>, <span class='no'>Embarked</span>)</div><div class='output co'>#&gt; <span class='message'>Showing 10 most frequent values. Tail of 22 other values grouped into one</span></div><div class='img'><img src='freqs_plot-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'>freqs_plot</span>(<span class='no'>dft</span>, <span class='no'>Pclass</span>, <span class='no'>Survived</span>, <span class='no'>Sex</span>, <span class='no'>Embarked</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='output co'>#&gt; <span class='message'>Showing 15 most frequent values. Tail of 17 other values grouped into one</span></div><div class='img'><img src='freqs_plot-3.png' alt='' width='700' height='433' /></div></span></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span><span class='kw'>=</span><span class='fl'>NA</span>) <span class='co'># Temporal</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='no'><a href='https://dplyr.tidyverse.org/reference/starwars.html'>starwars</a></span>
+<span class='no'>df</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs_list</span>(<span class='no'>films</span>)</div><div class='img'><img src='freqs_list-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>freqs_list</span>(<span class='no'>df</span>, <span class='no'>films</span>, <span class='kw'>wt</span> <span class='kw'>=</span> <span class='no'>height</span>, <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+           <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Star Wars:\nCharacter's\nHeights per Film"</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Colour weight: mean height</span></div><div class='img'><img src='freqs_list-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
