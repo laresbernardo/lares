@@ -581,13 +581,14 @@ freqs_list <- function(df, var,
     mutate(label = ifelse(.data$id > limit, "...", .data$label)) %>%
     mutate(var = ifelse(
       as.character(.data$var) %in% as.character(elements$key[elements$label != "..."]),
-      as.character(.data$var), "..."
-    ))
+      as.character(.data$var), "...")) %>% 
+    mutate(var = factor(.data$var, levels = c(levels(elements$key), "...")))
   
   # Scatter plot: combinations
   p1 <- tgthr %>%
     ggplot(aes(x = reorder(.data$label, .data$order), 
-               y = .data$var, group = .data$label)) +
+               y = reorder(.data$var, -.data$order), 
+               group = .data$label)) +
     geom_point(size = 4) + geom_path() +
     theme_lares2(mg = -1, which = "XY") +
     labs(x = NULL, y = NULL) +
