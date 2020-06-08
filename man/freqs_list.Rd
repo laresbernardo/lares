@@ -12,7 +12,8 @@ freqs_list(
   limit = 10,
   unique = TRUE,
   abc = FALSE,
-  title = ""
+  title = "",
+  plot = FALSE
 )
 }
 \arguments{
@@ -33,7 +34,9 @@ will be grouped into a single element.}
 
 \item{abc}{Boolean. Do you wish to sort by alphabetical order?}
 
-\item{title}{Character.}
+\item{title}{Character. Added to the plot.}
+
+\item{plot}{Boolean. Plot viz?}
 }
 \description{
 Visualize frequency of elements on a list or list vector, which

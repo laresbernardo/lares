@@ -490,7 +490,8 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' will be grouped into a single element.
 #' @param unique Boolean. a,b = b,a?
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
-#' @param title Character. 
+#' @param title Character. Added to the plot.
+#' @param plot Boolean. Plot viz?
 #' @examples 
 #' options("lares.font"=NA) # Temporal
 #' df <- dplyr::starwars
@@ -503,7 +504,8 @@ freqs_list <- function(df, var,
                        limit = 10, 
                        unique = TRUE, 
                        abc = FALSE, 
-                       title = "") {
+                       title = "",
+                       plot = FALSE) {
   
   var_str <- deparse(substitute(var))
   check_opts(var_str, colnames(df))
@@ -626,15 +628,23 @@ freqs_list <- function(df, var,
   DDDEEEEE
   DDDEEEEE
   DDDEEEEE"
-  plot <- noPlot(title, 5) + p3 + guide_area() + 
+  p <- noPlot(title, 5) + p3 + guide_area() + 
     p2 + p1 + plot_layout(design = layout) +
     plot_layout(guides = 'collect')
-  plot(plot)
+  if (plot) plot(p)
+
+  # Prepare dataframe outputs
+  ohe <- ohe_commas(data.frame(vals = values), "vals")
+  colnames(ohe) <- gsub("vals_", "", colnames(ohe))
+  elements <- mutate(elements, key = gsub("vals_", "", .data$key)) %>%
+    rename("element" = .data$key) %>% select(-.data$label)
+  vals <- mutate(vals, var = gsub("vals_", "", .data$var)) %>%
+    rename("element" = .data$var)
   
-  results <- list(plot = plot, 
-                  ohe = ohe_commas(data.frame(vals = values), "vals"), 
-                  elements = elements, 
-                  combinations = tgthr)
+  results <- list(plot = p, 
+                  ohe = ohe, 
+                  elements = elements,
+                  combinations = vals)
   
   return(invisible(results))
 }
