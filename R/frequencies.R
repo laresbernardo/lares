@@ -486,6 +486,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' in the colour scale, used as sum, mean... of those values for each
 #' of the combinations. 
 #' @param fx Character. Set operation: mean, sum
+#' @param rm.na Boolean. Remove NA value from \code{wt}?
 #' @param limit Integer. Show top n combinations and elements. The rest
 #' will be grouped into a single element.
 #' @param unique Boolean. a,b = b,a?
@@ -501,6 +502,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @export
 freqs_list <- function(df, var, 
                        wt = NA, fx = "mean",
+                       rm.na = FALSE,
                        limit = 10, 
                        unique = TRUE, 
                        abc = FALSE, 
@@ -540,6 +542,7 @@ freqs_list <- function(df, var,
   # One hot encoding
   top_combs <- head(freqs(values), limit)
   vals <- data.frame(var = values, wt = df$wt) %>% 
+    {if (rm.na) filter(., !is.na(.data$wt)) else .}%>%
     group_by(.data$var) %>%
     summarise(n = n(),
               wt = ifelse(
@@ -547,13 +550,12 @@ freqs_list <- function(df, var,
                 ifelse(fx == "sum", sum(.data$wt, na.rm = TRUE), 1)),
               .groups = "drop") %>%
     arrange(desc(.data$n)) %>%
-    mutate(p = 100*.data$n/sum(.data$n),
-           order = row_number()) %>%
+    mutate(p = 100*.data$n/sum(.data$n), order = row_number()) %>%
     data.frame() %>%
     ohe_commas("var")
   
   elements <- vals %>%
-    tidyr::gather() %>%
+    tidyr::gather(.) %>% 
     mutate(n = rep(vals$n, ncol(vals))) %>%
     mutate(wt = rep(vals$wt, ncol(vals))) %>%
     filter(.data$value == TRUE) %>% 
@@ -582,13 +584,12 @@ freqs_list <- function(df, var,
     mutate(var = ifelse(
       as.character(.data$var) %in% as.character(elements$key[elements$label != "..."]),
       as.character(.data$var), "...")) %>% 
-    mutate(var = factor(.data$var, levels = c(levels(elements$key), "...")))
+    mutate(var = factor(.data$var, levels = rev(c(as.character(elements$key), "..."))))
   
   # Scatter plot: combinations
   p1 <- tgthr %>%
     ggplot(aes(x = reorder(.data$label, .data$order), 
-               y = reorder(.data$var, -.data$order), 
-               group = .data$label)) +
+               y = var, group = .data$label)) +
     geom_point(size = 4) + geom_path() +
     theme_lares2(mg = -1, which = "XY") +
     labs(x = NULL, y = NULL) +
@@ -600,7 +601,8 @@ freqs_list <- function(df, var,
   p2 <- elements %>%
     mutate(label = gsub("var_","", .data$label)) %>%
     ggplot(aes(x = reorder(.data$label, -.data$order), 
-               y = -.data$n, label = .data$p, fill = .data$wt)) +
+               y = -.data$n, 
+               fill = .data$wt)) +
     coord_flip() + geom_col() +
     labs(y = NULL, x = NULL) +
     theme_lares2(mg = -1) +
@@ -641,10 +643,11 @@ freqs_list <- function(df, var,
   # Prepare dataframe outputs
   ohe <- ohe_commas(data.frame(vals = values), "vals")
   colnames(ohe) <- gsub("vals_", "", colnames(ohe))
-  elements <- mutate(elements, key = gsub("vals_", "", .data$key)) %>%
+  elements <- mutate(elements, key = gsub("var_", "", .data$key)) %>%
     rename("element" = .data$key) %>% select(-.data$label)
-  vals <- mutate(vals, var = gsub("vals_", "", .data$var)) %>%
-    rename("element" = .data$var)
+  vals <- mutate(vals, var = gsub("var_", "", .data$var)) %>%
+    rename("combination" = .data$var)
+  colnames(vals) <- gsub("var_", "", colnames(vals))
   
   results <- list(plot = p, 
                   ohe = ohe, 

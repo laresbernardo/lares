@@ -9,6 +9,7 @@ freqs_list(
   var,
   wt = NA,
   fx = "mean",
+  rm.na = FALSE,
   limit = 10,
   unique = TRUE,
   abc = FALSE,
@@ -26,6 +27,8 @@ in the colour scale, used as sum, mean... of those values for each
 of the combinations.}
 
 \item{fx}{Character. Set operation: mean, sum}
+
+\item{rm.na}{Boolean. Remove NA value from \code{wt}?}
 
 \item{limit}{Integer. Show top n combinations and elements. The rest
 will be grouped into a single element.}
