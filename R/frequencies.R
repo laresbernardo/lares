@@ -496,8 +496,18 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @examples 
 #' options("lares.font"=NA) # Temporal
 #' df <- dplyr::starwars
-#' df %>% freqs_list(films, limit = 5)
-#' freqs_list(df, films, wt = height, abc = TRUE, 
+#' 
+#' # Characters per movies combinations in a list column
+#' print(head(df$films, 2))
+#' df %>% freqs_list(films)
+#' 
+#' # Skin colour pero movies in a comma-separated column
+#' print(head(df$skin_color))
+#' x <- freqs_list(df, skin_color)
+#' lapply(x, head)
+#' 
+#' # A more complex parameter set using the 'wt' argument
+#' freqs_list(df, films, wt = height, abc = TRUE, limit = 9,
 #'            title = "Star Wars:\nCharacter's\nHeights per Film")
 #' @export
 freqs_list <- function(df, var, 
@@ -539,9 +549,10 @@ freqs_list <- function(df, var,
     values <- lapply(values, sort)
     values <- unlist(lapply(values, function(x) paste(x, collapse=","))) 
   } else values <- df$which
+  
   # One hot encoding
-  top_combs <- head(freqs(values), limit)
   vals <- data.frame(var = values, wt = df$wt) %>% 
+    filter(.data$var != "") %>%
     {if (rm.na) filter(., !is.na(.data$wt)) else .}%>%
     group_by(.data$var) %>%
     summarise(n = n(),
@@ -635,7 +646,7 @@ freqs_list <- function(df, var,
   DDDEEEEE
   DDDEEEEE
   DDDEEEEE"
-  p <- noPlot(title, 5) + p3 + guide_area() + 
+  p <- noPlot(title, 4) + p3 + guide_area() + 
     p2 + p1 + plot_layout(design = layout) +
     plot_layout(guides = 'collect')
   if (plot) plot(p)

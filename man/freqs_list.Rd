@@ -49,8 +49,18 @@ a character vector with comma separated values or a list vector.
 \examples{
 options("lares.font"=NA) # Temporal
 df <- dplyr::starwars
-df \%>\% freqs_list(films, limit = 5)
-freqs_list(df, films, wt = height, abc = TRUE, 
+
+# Characters per movies combinations in a list column
+print(head(df$films, 2))
+df \%>\% freqs_list(films)
+
+# Skin colour pero movies in a comma-separated column
+print(head(df$skin_color))
+x <- freqs_list(df, skin_color)
+lapply(x, head)
+
+# A more complex parameter set using the 'wt' argument
+freqs_list(df, films, wt = height, abc = TRUE, limit = 9,
            title = "Star Wars:\nCharacter's\nHeights per Film")
 }
 \seealso{
