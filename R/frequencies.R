@@ -495,8 +495,8 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @examples 
 #' options("lares.font"=NA) # Temporal
 #' df <- dplyr::starwars
-#' df %>% freqs_list(films)
-#' freqs_list(df, films, wt = height, abc = TRUE, limit = 10, 
+#' df %>% freqs_list(films, limit = 5)
+#' freqs_list(df, films, wt = height, abc = TRUE, 
 #'            title = "Star Wars:\nCharacter's\nHeights per Film")
 #' @export
 freqs_list <- function(df, var, 
@@ -505,7 +505,7 @@ freqs_list <- function(df, var,
                        unique = TRUE, 
                        abc = FALSE, 
                        title = "",
-                       plot = FALSE) {
+                       plot = TRUE) {
   
   var_str <- deparse(substitute(var))
   check_opts(var_str, colnames(df))
@@ -566,7 +566,7 @@ freqs_list <- function(df, var,
     {if (abc) arrange(., .data$key) else arrange(., desc(.data$n))} %>%
     mutate(p = 100 * .data$n/nrow(df), order = row_number()) %>%
     mutate(key = as.factor(.data$key)) %>%
-    mutate(label = sprintf("%s\n(%s)", .data$key, formatNum(.data$p, 0, pos = "%"))) %>%
+    mutate(label = sprintf("%s (%s)", .data$key, formatNum(.data$p, 0, pos = "%"))) %>%
     mutate(label = ifelse(.data$order > limit, "...", .data$label)) %>%
     mutate(label = as.factor(.data$label))
   
@@ -574,13 +574,15 @@ freqs_list <- function(df, var,
     select(contains("var_")) %>%
     tidyr::gather("var") %>%
     mutate(var = factor(.data$var, levels = rev(elements$key))) %>%
-    mutate(order = rep(vals$order, nrow(elements))) %>%
-    group_by(.data$var) %>% mutate(id = row_number()) %>%
-    mutate(label = sprintf(
-      "#%s\n%s", 
-      id, formatNum(vals$p, 0, pos = "%"))) %>%
+    group_by(.data$var) %>% 
+    mutate(id = row_number(), order = row_number()) %>%
+    mutate(label = sprintf("#%s", id)) %>%
     filter(.data$value == TRUE) %>%
-    mutate(label = ifelse(.data$order > limit, "...", .data$label))
+    mutate(label = ifelse(.data$id > limit, "...", .data$label)) %>%
+    mutate(var = ifelse(
+      as.character(.data$var) %in% as.character(elements$key[elements$label != "..."]),
+      as.character(.data$var), "..."
+    ))
   
   # Scatter plot: combinations
   p1 <- tgthr %>%
@@ -589,7 +591,9 @@ freqs_list <- function(df, var,
     geom_point(size = 4) + geom_path() +
     theme_lares2(mg = -1, which = "XY") +
     labs(x = NULL, y = NULL) +
-    theme(axis.text.y = element_blank())
+    theme(axis.text.y = element_blank(),
+          plot.margin = margin(0,0,0,0)) +
+    scale_x_discrete(position = "top")
   
   # Bar plot: elements
   p2 <- elements %>%
@@ -610,10 +614,10 @@ freqs_list <- function(df, var,
     mutate(var = ifelse(row_number() > limit, "...", .data$var)) %>%
     ggplot(aes(x = reorder(.data$var, .data$order), 
                y = .data$n, fill = .data$wt)) +
-    geom_col() +
+    geom_col() + 
     theme_lares2(mg = -1) + 
     scale_y_continuous(labels = function(x) formatNum(abs(x), 0)) +
-    labs(x = NULL, y = "Frequency",
+    labs(x = NULL, y = "Combination Frequency",
          fill = if (wt_str != "NA") str_to_title(paste(fx, wt_str, sep = "\n")) else NULL) +
     theme(axis.text.x  = element_blank(),
           panel.grid.major = element_blank(), 

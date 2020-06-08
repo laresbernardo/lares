@@ -363,7 +363,8 @@ noPlot <- function(message = "Nothing to show here!",
           panel.border = element_blank(),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
-          plot.background = element_blank())
+          plot.background = element_blank(),
+          plot.margin = margin(0, 0, 0, 0))
   
   # Check and set font
   if (!font_exists(font)[1] & !is.na(font)) {
