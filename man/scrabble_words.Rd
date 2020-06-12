@@ -19,7 +19,7 @@ scrabble_words(
 )
 }
 \arguments{
-\item{tiles}{Character. The letters you wish to consider}
+\item{tiles}{Character. The letters you wish to consider.}
 
 \item{free}{Integer. How many free blank tiles you have?}
 

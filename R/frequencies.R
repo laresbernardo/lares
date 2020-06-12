@@ -496,6 +496,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @examples 
 #' options("lares.font"=NA) # Temporal
 #' df <- dplyr::starwars
+#' print(head(df))
 #' 
 #' # Characters per movies combinations in a list column
 #' print(head(df$films, 2))
@@ -504,7 +505,8 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' # Skin colour pero movies in a comma-separated column
 #' print(head(df$skin_color))
 #' x <- freqs_list(df, skin_color)
-#' lapply(x, head)
+#' # Inside "x" we'll have:
+#' lapply(x, names)
 #' 
 #' # A more complex parameter set using the 'wt' argument
 #' freqs_list(df, films, wt = height, abc = TRUE, limit = 9,

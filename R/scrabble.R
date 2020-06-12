@@ -75,7 +75,9 @@ scrabble_score <- function(words, scores) {
     })
   })
   scores <- unlist(lapply(counter, function(x) sum(unlist(x) * scores$scores)))
-  done <- data.frame(word = words, scores) %>% arrange(desc(scores))
+  done <- data.frame(word = words, scores) %>%
+    mutate(length = nchar(word)) %>%
+    arrange(desc(scores))
   return(done)
 }
 
@@ -122,7 +124,7 @@ scrabble_points <- function(language) {
 #' place to post your tiles.
 #' 
 #' @family Scrabble
-#' @param tiles Character. The letters you wish to consider
+#' @param tiles Character. The letters you wish to consider.
 #' @param free Integer. How many free blank tiles you have?
 #' @param force_start,force_end Character. Force words to start or end with
 #' a pattern of letters and position. Examples: "S" or "SO" or "__S_O"...
