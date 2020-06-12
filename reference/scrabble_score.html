@@ -154,13 +154,13 @@ letter of the alphabet and "scores" for each letter's score.</p></td>
 
 <span class='co'># Score values for each set of rules</span>
 <span class='no'>words</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Bernardo"</span>, <span class='st'>"whiskey"</span>, <span class='st'>"R is great"</span>)
-<span class='fu'>scrabble_score</span>(<span class='no'>words</span>, <span class='no'>es_scores</span>)</div><div class='output co'>#&gt;         word scores
-#&gt; 1    whiskey     32
-#&gt; 2 R is great      9
-#&gt; 3   Bernardo      8</div><div class='input'><span class='fu'>scrabble_score</span>(<span class='no'>words</span>, <span class='no'>cu_scores</span>)</div><div class='output co'>#&gt;         word scores
-#&gt; 1    whiskey     20
-#&gt; 2   Bernardo      8
-#&gt; 3 R is great      7</div></pre>
+<span class='fu'>scrabble_score</span>(<span class='no'>words</span>, <span class='no'>es_scores</span>)</div><div class='output co'>#&gt;         word scores length
+#&gt; 1    whiskey     32      7
+#&gt; 2 R is great      9     10
+#&gt; 3   Bernardo      8      8</div><div class='input'><span class='fu'>scrabble_score</span>(<span class='no'>words</span>, <span class='no'>cu_scores</span>)</div><div class='output co'>#&gt;         word scores length
+#&gt; 1    whiskey     20      7
+#&gt; 2   Bernardo      8      8
+#&gt; 3 R is great      7     10</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
