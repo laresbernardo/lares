@@ -233,13 +233,23 @@ scrabble_words <- function(tiles,
   # You may want to force their lengths
   if (force_n > 0) words <- words[nchar(words) == force_n]
   if (force_max > 0) words <- words[nchar(words) <= force_max]
-  # Words can't have different letters than inputs
-  words <- words[grepl(v2t(tiles, sep = "|", quotes = FALSE), words)]
   
   # Force strings that must be contained
-  if (force_str[1] != "")
-    for (str in force_str)
+  if (force_str[1] != "") {
+    for (str in force_str) {
+      if (nchar(str) == 1 & !any(grepl(str, tiles))) {
+        message(sprintf(">>> '%s' was not in your tiles; including it!", str))
+        tiles <- c(tiles, str)
+      } else {
+        if (!all(tolower(unlist(strsplit(str, ""))) %in% tiles))
+          stop(sprintf("Make sure to include '%s' into your 'tiles' argument.", str))
+      }
       words <- words[grepl_anywhere(words, pattern = tolower(str), blank = "_")] 
+    }
+  }
+  
+  # Words can't have different letters than inputs
+  words <- words[grepl(v2t(tiles, sep = "|", quotes = FALSE), words)]
   # Force start/end strings
   words <- force_words(words, force_start)
   words <- force_words(reverse(words), reverse(force_end), rev = TRUE)
