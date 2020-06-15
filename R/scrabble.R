@@ -225,8 +225,12 @@ scrabble_words <- function(tiles,
   tiles <- tolower(unlist(strsplit(tiles, "")))
   ntiles <- as.integer(length(tiles))
   # Add free letters/tiles
-  if (free > 0)
-    ntiles <- ntiles + free
+  if (free > 0) ntiles <- ntiles + free
+  
+  # Add logical tiles when using force_ arguments
+  tiles <- addletters(force_start, tiles)
+  tiles <- addletters(force_end, tiles)
+  ntiles <- as.integer(length(tiles))
   
   # Words can't have more letters than inputs
   words <- words[nchar(words) <= ntiles]
@@ -237,13 +241,7 @@ scrabble_words <- function(tiles,
   # Force strings that must be contained
   if (force_str[1] != "") {
     for (str in force_str) {
-      if (nchar(str) == 1 & !any(grepl(str, tiles))) {
-        message(sprintf(">>> '%s' was not in your tiles; including it!", str))
-        tiles <- c(tiles, str)
-      } else {
-        if (!all(tolower(unlist(strsplit(str, ""))) %in% tiles))
-          stop(sprintf("Make sure to include '%s' into your 'tiles' argument.", str))
-      }
+      tiles <- addletters(str, tiles)
       words <- words[grepl_anywhere(words, pattern = tolower(str), blank = "_")] 
     }
   }
@@ -292,21 +290,34 @@ reverse <- function(words) {
   return(words)
 }
 
+addletters <- function(str, tiles) {
+  if (str != "") {
+    str_tiles <- tolower(unlist(strsplit(str, "")))
+    which <- !str_tiles %in% c(tiles, "_")
+    if (any(which)) {
+      new <- str_tiles[which]
+      tiles <- c(tiles, new)
+      message(sprintf(">>> %s was not in your tiles; including it!", v2t(new)))
+    }
+  }
+  return(tiles)
+}
+
 # library(lares)
 # library(dplyr)
 # library(stringr)
-# options("lares.lang" = "en")
+# options("lares.lang" = "es")
 # 
 # words <- scrabble_dictionary("es")$words
 # 
 # # Play and win!
-# scrabble_words(tiles = "hola",
+# scrabble_words(tiles = "abcdef",
 #                free = 0,
-#                force_start = "",
-#                force_end = "",
-#                force_str = "",
+#                force_start = "be",
+#                force_end = "do",
+#                force_str = "n",
 #                force_n = 0,
 #                force_max = 0,
-#                quiet = TRUE)
+#                quiet = FALSE)
 # 
 # x <- scrabble_score(words, scores)
