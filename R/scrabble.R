@@ -128,7 +128,11 @@ scrabble_points <- function(language) {
 #' @param free Integer. How many free blank tiles you have?
 #' @param force_start,force_end Character. Force words to start or end with
 #' a pattern of letters and position. Examples: "S" or "SO" or "__S_O"...
+#' If the string contains tiles that were not specified in \code{tiles}, they
+#' will automatically be included.
 #' @param force_str Character vector. Force words to contain strings.
+#' If the string contains tiles that were not specified in \code{tiles}, they
+#' will automatically be included.
 #' @param force_n,force_max Integer. Force words to be n or max n characters 
 #' long. Leave 0 to ignore parameter.
 #' @param scores,language Character. Any of "en","es","de","fr". 

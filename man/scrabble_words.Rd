@@ -24,9 +24,13 @@ scrabble_words(
 \item{free}{Integer. How many free blank tiles you have?}
 
 \item{force_start, force_end}{Character. Force words to start or end with
-a pattern of letters and position. Examples: "S" or "SO" or "__S_O"...}
+a pattern of letters and position. Examples: "S" or "SO" or "__S_O"...
+If the string contains tiles that were not specified in \code{tiles}, they
+will automatically be included.}
 
-\item{force_str}{Character vector. Force words to contain strings.}
+\item{force_str}{Character vector. Force words to contain strings.
+If the string contains tiles that were not specified in \code{tiles}, they
+will automatically be included.}
 
 \item{force_n, force_max}{Integer. Force words to be n or max n characters 
 long. Leave 0 to ignore parameter.}
