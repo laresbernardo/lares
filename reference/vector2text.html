@@ -117,9 +117,9 @@
     <p>Convert a vector into a comma separated text</p>
     </div>
 
-    <pre class="usage"><span class='fu'>vector2text</span>(<span class='no'>vector</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>", "</span>, <span class='kw'>quotes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>and</span> <span class='kw'>=</span> <span class='st'>""</span>)
+    <pre class="usage"><span class='fu'>vector2text</span>(<span class='kw'>vector</span>, sep = <span class='st'>", "</span>, quotes = <span class='fl'>TRUE</span>, and = <span class='st'>""</span>)
 
-<span class='fu'>v2t</span>(<span class='no'>vector</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>", "</span>, <span class='kw'>quotes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>and</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
+<span class='fu'>v2t</span>(<span class='kw'>vector</span>, sep = <span class='st'>", "</span>, quotes = <span class='fl'>TRUE</span>, and = <span class='st'>""</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,34 +148,34 @@ is set to <code>1</code> and you have less than 3 values.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Data Wrangling: 
-<code><a href='balance_data.html'>balance_data</a>()</code>,
-<code><a href='categ_reducer.html'>categ_reducer</a>()</code>,
-<code><a href='cleanText.html'>cleanText</a>()</code>,
-<code><a href='date_cuts.html'>date_cuts</a>()</code>,
-<code><a href='date_feats.html'>date_feats</a>()</code>,
-<code><a href='dateformat.html'>dateformat</a>()</code>,
-<code><a href='formatNum.html'>formatNum</a>()</code>,
-<code><a href='formatTime.html'>formatTime</a>()</code>,
-<code><a href='holidays.html'>holidays</a>()</code>,
-<code><a href='impute.html'>impute</a>()</code>,
-<code><a href='left.html'>left</a>()</code>,
-<code><a href='normalize.html'>normalize</a>()</code>,
-<code><a href='numericalonly.html'>numericalonly</a>()</code>,
-<code><a href='ohe_commas.html'>ohe_commas</a>()</code>,
-<code><a href='ohse.html'>ohse</a>()</code>,
-<code><a href='rbind_full.html'>rbind_full</a>()</code>,
-<code><a href='removenacols.html'>removenacols</a>()</code>,
-<code><a href='removenarows.html'>removenarows</a>()</code>,
-<code><a href='replaceall.html'>replaceall</a>()</code>,
-<code><a href='right.html'>right</a>()</code>,
-<code><a href='textFeats.html'>textFeats</a>()</code>,
-<code><a href='textTokenizer.html'>textTokenizer</a>()</code>,
-<code><a href='year_month.html'>year_month</a>()</code>,
-<code><a href='year_week.html'>year_week</a>()</code></p></div>
+<code>balance_data()</code>,
+<code>categ_reducer()</code>,
+<code>cleanText()</code>,
+<code>date_cuts()</code>,
+<code>date_feats()</code>,
+<code>dateformat()</code>,
+<code>formatNum()</code>,
+<code>formatTime()</code>,
+<code>holidays()</code>,
+<code>impute()</code>,
+<code>left()</code>,
+<code>normalize()</code>,
+<code>numericalonly()</code>,
+<code>ohe_commas()</code>,
+<code>ohse()</code>,
+<code>rbind_full()</code>,
+<code>removenacols()</code>,
+<code>removenarows()</code>,
+<code>replaceall()</code>,
+<code>right()</code>,
+<code>textFeats()</code>,
+<code>textTokenizer()</code>,
+<code>year_month()</code>,
+<code>year_week()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>vector2text</span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>5</span>])</div><div class='output co'>#&gt; [1] "'A', 'B', 'C', 'D', 'E'"</div><div class='input'><span class='fu'>vector2text</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>), <span class='kw'>quotes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "1, 2, 3, 4, 5"</div><div class='input'><span class='fu'>vector2text</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>), <span class='kw'>quotes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"-"</span>)</div><div class='output co'>#&gt; [1] "1-2-3-4-5"</div><div class='input'><span class='fu'>vector2text</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>), <span class='kw'>and</span> <span class='kw'>=</span> <span class='st'>"and also"</span>)</div><div class='output co'>#&gt; [1] "1, 2, 3, 4, and also 5"</div><div class='input'><span class='co'># Shorter function with same purpose</span>
-<span class='fu'>v2t</span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>5</span>])</div><div class='output co'>#&gt; [1] "'A', 'B', 'C', 'D', 'E'"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>vector2text</span>(<span class='kw'>LETTERS</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>])</div><div class='output co'>#&gt; [1] "'A', 'B', 'C', 'D', 'E'"</div><div class='input'><span class='fu'>vector2text</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>), quotes = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "1, 2, 3, 4, 5"</div><div class='input'><span class='fu'>vector2text</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>), quotes = <span class='fl'>FALSE</span>, sep = <span class='st'>"-"</span>)</div><div class='output co'>#&gt; [1] "1-2-3-4-5"</div><div class='input'><span class='fu'>vector2text</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>), and = <span class='st'>"and also"</span>)</div><div class='output co'>#&gt; [1] "1, 2, 3, 4, and also 5"</div><div class='input'><span class='co'># Shorter function with same purpose</span>
+<span class='fu'>v2t</span>(<span class='kw'>LETTERS</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>])</div><div class='output co'>#&gt; [1] "'A', 'B', 'C', 'D', 'E'"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

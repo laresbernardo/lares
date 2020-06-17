@@ -120,15 +120,15 @@ frequency of each value of each column from a whole data frame.</p>
     </div>
 
     <pre class="usage"><span class='fu'>freqs_df</span>(
-  <span class='no'>df</span>,
-  <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>novar</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='fl'>NA</span>
+  <span class='kw'>df</span>,
+  max = <span class='fl'>0.9</span>,
+  min = <span class='fl'>0</span>,
+  novar = <span class='fl'>TRUE</span>,
+  plot = <span class='fl'>TRUE</span>,
+  top = <span class='fl'>30</span>,
+  quiet = <span class='fl'>FALSE</span>,
+  save = <span class='fl'>FALSE</span>,
+  subdir = <span class='fl'>NA</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -178,46 +178,46 @@ save the plot to?</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Frequency: 
-<code><a href='freqs_list.html'>freqs_list</a>()</code>,
-<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
-<code><a href='freqs.html'>freqs</a>()</code></p>
+<code>freqs_list()</code>,
+<code>freqs_plot()</code>,
+<code>freqs()</code></p>
 <p>Other Exploratory: 
-<code><a href='corr_cross.html'>corr_cross</a>()</code>,
-<code><a href='corr_var.html'>corr_var</a>()</code>,
-<code><a href='crosstab.html'>crosstab</a>()</code>,
-<code><a href='df_str.html'>df_str</a>()</code>,
-<code><a href='distr.html'>distr</a>()</code>,
-<code><a href='freqs_list.html'>freqs_list</a>()</code>,
-<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
-<code><a href='freqs.html'>freqs</a>()</code>,
-<code><a href='lasso_vars.html'>lasso_vars</a>()</code>,
-<code><a href='missingness.html'>missingness</a>()</code>,
-<code><a href='plot_cats.html'>plot_cats</a>()</code>,
-<code><a href='plot_df.html'>plot_df</a>()</code>,
-<code><a href='plot_nums.html'>plot_nums</a>()</code>,
-<code><a href='summer.html'>summer</a>()</code>,
-<code><a href='tree_var.html'>tree_var</a>()</code>,
-<code><a href='trendsRelated.html'>trendsRelated</a>()</code></p>
+<code>corr_cross()</code>,
+<code>corr_var()</code>,
+<code>crosstab()</code>,
+<code>df_str()</code>,
+<code>distr()</code>,
+<code>freqs_list()</code>,
+<code>freqs_plot()</code>,
+<code>freqs()</code>,
+<code>lasso_vars()</code>,
+<code>missingness()</code>,
+<code>plot_cats()</code>,
+<code>plot_df()</code>,
+<code>plot_nums()</code>,
+<code>summer()</code>,
+<code>tree_var()</code>,
+<code>trendsRelated()</code></p>
 <p>Other Visualization: 
-<code><a href='distr.html'>distr</a>()</code>,
-<code><a href='freqs_list.html'>freqs_list</a>()</code>,
-<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
-<code><a href='freqs.html'>freqs</a>()</code>,
-<code><a href='gg_bars.html'>gg_bars</a>()</code>,
-<code><a href='gg_pie.html'>gg_pie</a>()</code>,
-<code><a href='noPlot.html'>noPlot</a>()</code>,
-<code><a href='plot_chord.html'>plot_chord</a>()</code>,
-<code><a href='plot_survey.html'>plot_survey</a>()</code>,
-<code><a href='plot_timeline.html'>plot_timeline</a>()</code>,
-<code><a href='summer.html'>summer</a>()</code>,
-<code><a href='theme_lares2.html'>theme_lares2</a>()</code>,
-<code><a href='theme_lares.html'>theme_lares</a>()</code>,
-<code><a href='tree_var.html'>tree_var</a>()</code></p></div>
+<code>distr()</code>,
+<code>freqs_list()</code>,
+<code>freqs_plot()</code>,
+<code>freqs()</code>,
+<code>gg_bars()</code>,
+<code>gg_pie()</code>,
+<code>noPlot()</code>,
+<code>plot_chord()</code>,
+<code>plot_survey()</code>,
+<code>plot_timeline()</code>,
+<code>summer()</code>,
+<code>theme_lares2()</code>,
+<code>theme_lares()</code>,
+<code>tree_var()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> <span class='kw'>=</span> <span class='fl'>NA</span>) <span class='co'># Temporal</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
-<span class='fu'>freqs_df</span>(<span class='no'>dft</span>)</div><div class='output co'>#&gt; <span class='message'>1 variables with more than 0.9 variance exluded: 'PassengerId'</span></div><div class='img'><img src='freqs_df-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
+<span class='fu'>freqs_df</span>(<span class='kw'>dft</span>)</div><div class='output co'>#&gt; <span class='message'>1 variables with more than 0.9 variance exluded: 'PassengerId'</span></div><div class='img'><img src='freqs_df-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

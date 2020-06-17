@@ -119,7 +119,7 @@ variable's responses vs independent vector." />
 variable's responses vs independent vector.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dalex_variable</span>(<span class='no'>explainer</span>, <span class='no'>vars</span>, <span class='kw'>force_class</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
+    <pre class="usage"><span class='fu'>dalex_variable</span>(<span class='kw'>explainer</span>, <span class='kw'>vars</span>, force_class = <span class='fl'>NA</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,16 +142,16 @@ vars, which one do you need?</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Interpretability: 
-<code><a href='dalex_explainer.html'>dalex_explainer</a>()</code>,
-<code><a href='dalex_local.html'>dalex_local</a>()</code>,
-<code><a href='dalex_residuals.html'>dalex_residuals</a>()</code></p></div>
+<code>dalex_explainer()</code>,
+<code>dalex_local()</code>,
+<code>dalex_residuals()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># For numerical variables</span>
-<span class='fu'>dalex_variable</span>(<span class='no'>explainer</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Age"</span>, <span class='st'>"Fare"</span>))
+<span class='fu'>dalex_variable</span>(<span class='kw'>explainer</span>, vars = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Age"</span>, <span class='st'>"Fare"</span>))
 <span class='co'># For categorical variables</span>
-<span class='fu'>dalex_variable</span>(<span class='no'>explainer</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Pclass"</span>,<span class='st'>"Sex"</span>))
+<span class='fu'>dalex_variable</span>(<span class='kw'>explainer</span>, vars = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Pclass"</span>,<span class='st'>"Sex"</span>))
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

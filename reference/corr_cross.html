@@ -120,21 +120,21 @@ of the highest correlation variables obtained in a cross-table.</p>
     </div>
 
     <pre class="usage"><span class='fu'>corr_cross</span>(
-  <span class='no'>df</span>,
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>max_pvalue</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>25</span>,
-  <span class='kw'>local</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>contains</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>rm.na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>dummy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>redundant</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>
+  <span class='kw'>df</span>,
+  plot = <span class='fl'>TRUE</span>,
+  max_pvalue = <span class='fl'>1</span>,
+  type = <span class='fl'>1</span>,
+  max = <span class='fl'>1</span>,
+  top = <span class='fl'>25</span>,
+  local = <span class='fl'>1</span>,
+  ignore = <span class='fl'>NA</span>,
+  contains = <span class='fl'>NA</span>,
+  grid = <span class='fl'>FALSE</span>,
+  rm.na = <span class='fl'>FALSE</span>,
+  dummy = <span class='fl'>TRUE</span>,
+  limit = <span class='fl'>10</span>,
+  redundant = <span class='fl'>FALSE</span>,
+  method = <span class='st'>"pearson"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -214,32 +214,32 @@ with Ranked Cross-Correlations</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Correlations: 
-<code><a href='corr_var.html'>corr_var</a>()</code>,
-<code><a href='corr.html'>corr</a>()</code></p>
+<code>corr_var()</code>,
+<code>corr()</code></p>
 <p>Other Exploratory: 
-<code><a href='corr_var.html'>corr_var</a>()</code>,
-<code><a href='crosstab.html'>crosstab</a>()</code>,
-<code><a href='df_str.html'>df_str</a>()</code>,
-<code><a href='distr.html'>distr</a>()</code>,
-<code><a href='freqs_df.html'>freqs_df</a>()</code>,
-<code><a href='freqs_list.html'>freqs_list</a>()</code>,
-<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
-<code><a href='freqs.html'>freqs</a>()</code>,
-<code><a href='lasso_vars.html'>lasso_vars</a>()</code>,
-<code><a href='missingness.html'>missingness</a>()</code>,
-<code><a href='plot_cats.html'>plot_cats</a>()</code>,
-<code><a href='plot_df.html'>plot_df</a>()</code>,
-<code><a href='plot_nums.html'>plot_nums</a>()</code>,
-<code><a href='summer.html'>summer</a>()</code>,
-<code><a href='tree_var.html'>tree_var</a>()</code>,
-<code><a href='trendsRelated.html'>trendsRelated</a>()</code></p></div>
+<code>corr_var()</code>,
+<code>crosstab()</code>,
+<code>df_str()</code>,
+<code>distr()</code>,
+<code>freqs_df()</code>,
+<code>freqs_list()</code>,
+<code>freqs_plot()</code>,
+<code>freqs()</code>,
+<code>lasso_vars()</code>,
+<code>missingness()</code>,
+<code>plot_cats()</code>,
+<code>plot_df()</code>,
+<code>plot_nums()</code>,
+<code>summer()</code>,
+<code>tree_var()</code>,
+<code>trendsRelated()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> <span class='kw'>=</span> <span class='fl'>NA</span>) <span class='co'># Temporal</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 
 <span class='co'># Only data with no plot</span>
-<span class='fu'>corr_cross</span>(<span class='no'>dft</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='output co'>#&gt; <span class='message'>Returning only the top 10. You may override with the `top` parameter</span></div><div class='output co'>#&gt;              key             mix    corr pvalue   group1 group2
+<span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, plot = <span class='fl'>FALSE</span>, top = <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='output co'>#&gt; <span class='message'>Returning only the top 10. You may override with the `top` parameter</span></div><div class='output co'>#&gt;              key             mix    corr pvalue   group1 group2
 #&gt; 1  Ticket_113781   Cabin_C22.C26  0.8655      0   Ticket  Cabin
 #&gt; 2       Pclass_1          Cabin_ -0.7888      0   Pclass  Cabin
 #&gt; 3          SibSp Ticket_CA..2343  0.6037      0    SibSp Ticket
@@ -251,9 +251,9 @@ with Ranked Cross-Correlations</a></p>
 #&gt; 9          SibSp           Parch  0.4148      0    SibSp  Parch
 #&gt; 10           Age        Pclass_1  0.3489      0      Age Pclass</div><div class='input'>
 <span class='co'># Show only most relevant results filtered by pvalue</span>
-<span class='fu'>corr_cross</span>(<span class='no'>dft</span>, <span class='kw'>rm.na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max_pvalue</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='output co'>#&gt; <span class='message'>Returning only the top 15. You may override with the `top` parameter</span></div><div class='img'><img src='corr_cross-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, rm.na = <span class='fl'>TRUE</span>, max_pvalue = <span class='fl'>0.05</span>, top = <span class='fl'>15</span>)</div><div class='output co'>#&gt; <span class='message'>Returning only the top 15. You may override with the `top` parameter</span></div><div class='img'><img src='corr_cross-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Cross-Correlation max values per category</span>
-<span class='fu'>corr_cross</span>(<span class='no'>dft</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='img'><img src='corr_cross-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, type = <span class='fl'>2</span>, top = <span class='fl'>NA</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='img'><img src='corr_cross-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

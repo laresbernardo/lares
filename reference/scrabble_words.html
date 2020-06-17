@@ -122,17 +122,17 @@ place to post your tiles.</p>
     </div>
 
     <pre class="usage"><span class='fu'>scrabble_words</span>(
-  <span class='no'>tiles</span>,
-  <span class='kw'>free</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>force_start</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>force_end</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>force_str</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>force_n</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>force_max</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>scores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"lares.lang"</span>),
-  <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"lares.lang"</span>),
-  <span class='kw'>words</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>tiles</span>,
+  free = <span class='fl'>0</span>,
+  force_start = <span class='st'>""</span>,
+  force_end = <span class='st'>""</span>,
+  force_str = <span class='st'>""</span>,
+  force_n = <span class='fl'>0</span>,
+  force_max = <span class='fl'>0</span>,
+  scores = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"lares.lang"</span>),
+  language = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"lares.lang"</span>),
+  words = <span class='fl'>NA</span>,
+  quiet = <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -149,11 +149,15 @@ place to post your tiles.</p>
     <tr>
       <th>force_start, force_end</th>
       <td><p>Character. Force words to start or end with
-a pattern of letters and position. Examples: "S" or "SO" or "__S_O"...</p></td>
+a pattern of letters and position. Examples: "S" or "SO" or "__S_O"...
+If the string contains tiles that were not specified in <code>tiles</code>, they
+will automatically be included.</p></td>
     </tr>
     <tr>
       <th>force_str</th>
-      <td><p>Character vector. Force words to contain strings.</p></td>
+      <td><p>Character vector. Force words to contain strings.
+If the string contains tiles that were not specified in <code>tiles</code>, they
+will automatically be included.</p></td>
     </tr>
     <tr>
       <th>force_n, force_max</th>
@@ -184,9 +188,9 @@ You might also want to set this parameter globally with
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Scrabble: 
-<code><a href='scrabble_dictionary.html'>scrabble_dictionary</a>()</code>,
-<code><a href='scrabble_points.html'>scrabble_points</a>()</code>,
-<code><a href='scrabble_score.html'>scrabble_score</a>()</code></p></div>
+<code>scrabble_dictionary()</code>,
+<code>scrabble_points()</code>,
+<code>scrabble_score()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"></pre>

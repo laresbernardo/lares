@@ -117,7 +117,7 @@
     <p>This function lets the user replace levels on a factor vector.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>replacefactor</span>(<span class='no'>x</span>, <span class='no'>original</span>, <span class='no'>change</span>)</pre>
+    <pre class="usage"><span class='fu'>replacefactor</span>(<span class='kw'>x</span>, <span class='kw'>original</span>, <span class='kw'>change</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,12 +138,12 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
- <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>)
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+ <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>)
  <span class='co'># Replace a single value</span>
- <span class='no'>dft</span> <span class='kw'>&lt;-</span> <span class='fu'>mutate</span>(<span class='no'>dft</span>, <span class='kw'>Pclass</span> <span class='kw'>=</span> <span class='fu'>replacefactor</span>(<span class='no'>Pclass</span>, <span class='kw'>original</span> <span class='kw'>=</span> <span class='st'>"1"</span>, <span class='kw'>change</span> <span class='kw'>=</span> <span class='st'>"First"</span>))
+ <span class='kw'>dft</span> <span class='op'>&lt;-</span> <span class='fu'>mutate</span>(<span class='kw'>dft</span>, Pclass = <span class='fu'>replacefactor</span>(<span class='kw'>Pclass</span>, original = <span class='st'>"1"</span>, change = <span class='st'>"First"</span>))
  <span class='co'># Replace multiple values</span>
- <span class='no'>dft</span> <span class='kw'>&lt;-</span> <span class='fu'>mutate</span>(<span class='no'>dft</span>, <span class='kw'>Pclass</span> <span class='kw'>=</span> <span class='fu'>replacefactor</span>(<span class='no'>Pclass</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2"</span>,<span class='st'>"3"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Second"</span>, <span class='st'>"Third"</span>)))
+ <span class='kw'>dft</span> <span class='op'>&lt;-</span> <span class='fu'>mutate</span>(<span class='kw'>dft</span>, Pclass = <span class='fu'>replacefactor</span>(<span class='kw'>Pclass</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2"</span>,<span class='st'>"3"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Second"</span>, <span class='st'>"Third"</span>)))
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

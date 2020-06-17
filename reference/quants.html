@@ -119,7 +119,7 @@ and discretize numerical values into cateogorical values." />
 and discretize numerical values into cateogorical values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>quants</span>(<span class='no'>values</span>, <span class='kw'>splits</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"summary"</span>)</pre>
+    <pre class="usage"><span class='fu'>quants</span>(<span class='kw'>values</span>, splits = <span class='fl'>10</span>, return = <span class='st'>"summary"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,19 +141,19 @@ and discretize numerical values into cateogorical values.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Calculus: 
-<code><a href='corr.html'>corr</a>()</code>,
-<code><a href='deg2num.html'>deg2num</a>()</code>,
-<code><a href='dist2d.html'>dist2d</a>()</code>,
-<code><a href='model_metrics.html'>model_metrics</a>()</code></p></div>
+<code>corr()</code>,
+<code>deg2num()</code>,
+<code>dist2d()</code>,
+<code>model_metrics()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
-<span class='fu'>quants</span>(<span class='no'>dft</span>$<span class='no'>Age</span>, <span class='kw'>splits</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt;   percentile  cut     label
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
+<span class='fu'>quants</span>(<span class='kw'>dft</span><span class='op'>$</span><span class='kw'>Age</span>, splits = <span class='fl'>5</span>)</div><div class='output co'>#&gt;   percentile  cut     label
 #&gt; 1        20% 19.0   [19-19]
 #&gt; 2        40% 25.0   (19-25]
 #&gt; 3        60% 31.8 (25-31.8]
 #&gt; 4        80% 41.0 (31.8-41]
-#&gt; 5       100% 80.0   (41-80]</div><div class='input'><span class='fu'>quants</span>(<span class='no'>dft</span>$<span class='no'>Age</span>, <span class='kw'>splits</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"labels"</span>)[<span class='fl'>1</span>:<span class='fl'>10</span>]</div><div class='output co'>#&gt;  [1] (19,25]   (32,41]   (25,32]   (32,41]   (32,41]   &lt;NA&gt;      (41,80]  
+#&gt; 5       100% 80.0   (41-80]</div><div class='input'><span class='fu'>quants</span>(<span class='kw'>dft</span><span class='op'>$</span><span class='kw'>Age</span>, splits = <span class='fl'>5</span>, return = <span class='st'>"labels"</span>)[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>]</div><div class='output co'>#&gt;  [1] (19,25]   (32,41]   (25,32]   (32,41]   (32,41]   &lt;NA&gt;      (41,80]  
 #&gt;  [8] [0.42,19] (25,32]   [0.42,19]
 #&gt; Levels: [0.42,19] (19,25] (25,32] (32,41] (41,80]</div></pre>
   </div>

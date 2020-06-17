@@ -131,19 +131,19 @@ simultaneously.</p>
 <p>This function lets the user calculate Adjusted R Squared</p>
     </div>
 
-    <pre class="usage"><span class='fu'>errors</span>(<span class='no'>tag</span>, <span class='no'>score</span>)
+    <pre class="usage"><span class='fu'>errors</span>(<span class='kw'>tag</span>, <span class='kw'>score</span>)
 
-<span class='fu'>rmse</span>(<span class='no'>tag</span>, <span class='no'>score</span>)
+<span class='fu'>rmse</span>(<span class='kw'>tag</span>, <span class='kw'>score</span>)
 
-<span class='fu'>mae</span>(<span class='no'>tag</span>, <span class='no'>score</span>)
+<span class='fu'>mae</span>(<span class='kw'>tag</span>, <span class='kw'>score</span>)
 
-<span class='fu'>mse</span>(<span class='no'>tag</span>, <span class='no'>score</span>)
+<span class='fu'>mse</span>(<span class='kw'>tag</span>, <span class='kw'>score</span>)
 
-<span class='fu'>mape</span>(<span class='no'>tag</span>, <span class='no'>score</span>)
+<span class='fu'>mape</span>(<span class='kw'>tag</span>, <span class='kw'>score</span>)
 
-<span class='fu'>rsq</span>(<span class='no'>tag</span>, <span class='no'>score</span>)
+<span class='fu'>rsq</span>(<span class='kw'>tag</span>, <span class='kw'>score</span>)
 
-<span class='fu'>rsqa</span>(<span class='no'>tag</span>, <span class='no'>score</span>)</pre>
+<span class='fu'>rsqa</span>(<span class='kw'>tag</span>, <span class='kw'>score</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,22 +161,22 @@ simultaneously.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Model metrics: 
-<code><a href='ROC.html'>ROC</a>()</code>,
-<code><a href='conf_mat.html'>conf_mat</a>()</code>,
-<code><a href='gain_lift.html'>gain_lift</a>()</code>,
-<code><a href='loglossBinary.html'>loglossBinary</a>()</code>,
-<code><a href='model_metrics.html'>model_metrics</a>()</code></p></div>
+<code>ROC()</code>,
+<code>conf_mat()</code>,
+<code>gain_lift()</code>,
+<code>loglossBinary()</code>,
+<code>model_metrics()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>dfr</span>$<span class='no'>regr</span>)</div><div class='output co'>#&gt;       tag    score
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span>)</div><div class='output co'>#&gt;       tag    score
 #&gt; 1 11.1333 21.52605
 #&gt; 2 30.0708 35.02605
 #&gt; 3 26.5500 14.84241
 #&gt; 4 31.2750 67.41018
 #&gt; 5 13.0000 28.95657
-#&gt; 6 26.0000 17.55153</div><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>errors</span>(<span class='no'>dfr</span>$<span class='no'>regr</span>$<span class='no'>tag</span>, <span class='no'>dfr</span>$<span class='no'>regr</span>$<span class='no'>score</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df</span>)</div><div class='output co'>#&gt;       rmse      mae     mape      mse    rsq   rsqa
+#&gt; 6 26.0000 17.55153</div><div class='input'><span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>errors</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>score</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span>)</div><div class='output co'>#&gt;       rmse      mae     mape      mse    rsq   rsqa
 #&gt; 1 33.70647 21.26019 0.116584 1136.126 0.1438 0.1406</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

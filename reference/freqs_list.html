@@ -122,16 +122,16 @@ a character vector with comma separated values or a list vector.</p>
     </div>
 
     <pre class="usage"><span class='fu'>freqs_list</span>(
-  <span class='no'>df</span>,
-  <span class='no'>var</span>,
-  <span class='kw'>wt</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>fx</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>rm.na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>unique</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>df</span>,
+  <span class='kw'>var</span>,
+  wt = <span class='fl'>NA</span>,
+  fx = <span class='st'>"mean"</span>,
+  rm.na = <span class='fl'>FALSE</span>,
+  limit = <span class='fl'>10</span>,
+  unique = <span class='fl'>TRUE</span>,
+  abc = <span class='fl'>FALSE</span>,
+  title = <span class='st'>""</span>,
+  plot = <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -185,46 +185,46 @@ will be grouped into a single element.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Frequency: 
-<code><a href='freqs_df.html'>freqs_df</a>()</code>,
-<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
-<code><a href='freqs.html'>freqs</a>()</code></p>
+<code>freqs_df()</code>,
+<code>freqs_plot()</code>,
+<code>freqs()</code></p>
 <p>Other Exploratory: 
-<code><a href='corr_cross.html'>corr_cross</a>()</code>,
-<code><a href='corr_var.html'>corr_var</a>()</code>,
-<code><a href='crosstab.html'>crosstab</a>()</code>,
-<code><a href='df_str.html'>df_str</a>()</code>,
-<code><a href='distr.html'>distr</a>()</code>,
-<code><a href='freqs_df.html'>freqs_df</a>()</code>,
-<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
-<code><a href='freqs.html'>freqs</a>()</code>,
-<code><a href='lasso_vars.html'>lasso_vars</a>()</code>,
-<code><a href='missingness.html'>missingness</a>()</code>,
-<code><a href='plot_cats.html'>plot_cats</a>()</code>,
-<code><a href='plot_df.html'>plot_df</a>()</code>,
-<code><a href='plot_nums.html'>plot_nums</a>()</code>,
-<code><a href='summer.html'>summer</a>()</code>,
-<code><a href='tree_var.html'>tree_var</a>()</code>,
-<code><a href='trendsRelated.html'>trendsRelated</a>()</code></p>
+<code>corr_cross()</code>,
+<code>corr_var()</code>,
+<code>crosstab()</code>,
+<code>df_str()</code>,
+<code>distr()</code>,
+<code>freqs_df()</code>,
+<code>freqs_plot()</code>,
+<code>freqs()</code>,
+<code>lasso_vars()</code>,
+<code>missingness()</code>,
+<code>plot_cats()</code>,
+<code>plot_df()</code>,
+<code>plot_nums()</code>,
+<code>summer()</code>,
+<code>tree_var()</code>,
+<code>trendsRelated()</code></p>
 <p>Other Visualization: 
-<code><a href='distr.html'>distr</a>()</code>,
-<code><a href='freqs_df.html'>freqs_df</a>()</code>,
-<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
-<code><a href='freqs.html'>freqs</a>()</code>,
-<code><a href='gg_bars.html'>gg_bars</a>()</code>,
-<code><a href='gg_pie.html'>gg_pie</a>()</code>,
-<code><a href='noPlot.html'>noPlot</a>()</code>,
-<code><a href='plot_chord.html'>plot_chord</a>()</code>,
-<code><a href='plot_survey.html'>plot_survey</a>()</code>,
-<code><a href='plot_timeline.html'>plot_timeline</a>()</code>,
-<code><a href='summer.html'>summer</a>()</code>,
-<code><a href='theme_lares2.html'>theme_lares2</a>()</code>,
-<code><a href='theme_lares.html'>theme_lares</a>()</code>,
-<code><a href='tree_var.html'>tree_var</a>()</code></p></div>
+<code>distr()</code>,
+<code>freqs_df()</code>,
+<code>freqs_plot()</code>,
+<code>freqs()</code>,
+<code>gg_bars()</code>,
+<code>gg_pie()</code>,
+<code>noPlot()</code>,
+<code>plot_chord()</code>,
+<code>plot_survey()</code>,
+<code>plot_timeline()</code>,
+<code>summer()</code>,
+<code>theme_lares2()</code>,
+<code>theme_lares()</code>,
+<code>tree_var()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span><span class='kw'>=</span><span class='fl'>NA</span>) <span class='co'># Temporal</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='no'><a href='https://dplyr.tidyverse.org/reference/starwars.html'>starwars</a></span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 14</span><span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span>=<span class='fl'>NA</span>) <span class='co'># Temporal</span>
+<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='kw'>dplyr</span>::<span class='kw'><a href='https://dplyr.tidyverse.org/reference/starwars.html'>starwars</a></span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 14</span><span>
 #&gt;   name  height  mass hair_color skin_color eye_color birth_year sex   gender
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> 
 #&gt; </span><span style='color: #555555;'>1</span><span> Luke…    172    77 blond      fair       blue            19   male  mascu…
@@ -236,7 +236,7 @@ will be grouped into a single element.</p></td>
 #&gt; </span><span style='color: #555555;'># … with 5 more variables: homeworld </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, species </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, films </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   vehicles </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>, starships </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
 <span class='co'># Characters per movies combinations in a list column</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df</span>$<span class='no'>films</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt; [[1]]
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>films</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "The Empire Strikes Back" "Revenge of the Sith"    
 #&gt; [3] "Return of the Jedi"      "A New Hope"             
 #&gt; [5] "The Force Awakens"      
@@ -245,11 +245,11 @@ will be grouped into a single element.</p></td>
 #&gt; [1] "The Empire Strikes Back" "Attack of the Clones"   
 #&gt; [3] "The Phantom Menace"      "Revenge of the Sith"    
 #&gt; [5] "Return of the Jedi"      "A New Hope"             
-#&gt; </div><div class='input'><span class='no'>df</span> <span class='kw'>%&gt;%</span> <span class='fu'>freqs_list</span>(<span class='no'>films</span>)</div><div class='img'><img src='freqs_list-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; </div><div class='input'><span class='kw'>df</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs_list</span>(<span class='kw'>films</span>)</div><div class='img'><img src='freqs_list-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Skin colour pero movies in a comma-separated column</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df</span>$<span class='no'>skin_color</span>))</div><div class='output co'>#&gt; [1] "fair"        "gold"        "white, blue" "white"       "light"      
-#&gt; [6] "light"      </div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>freqs_list</span>(<span class='no'>df</span>, <span class='no'>skin_color</span>)</div><div class='img'><img src='freqs_list-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Inside "x" we'll have:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>x</span>, <span class='no'>names</span>)</div><div class='output co'>#&gt; $plot
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>skin_color</span>))</div><div class='output co'>#&gt; [1] "fair"        "gold"        "white, blue" "white"       "light"      
+#&gt; [6] "light"      </div><div class='input'><span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>freqs_list</span>(<span class='kw'>df</span>, <span class='kw'>skin_color</span>)</div><div class='img'><img src='freqs_list-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Inside "x" we'll have:</span>
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>x</span>, <span class='kw'>names</span>)</div><div class='output co'>#&gt; $plot
 #&gt;  [1] "data"        "layers"      "scales"      "mapping"     "theme"      
 #&gt;  [6] "coordinates" "facet"       "plot_env"    "labels"      "patches"    
 #&gt; 
@@ -274,8 +274,8 @@ will be grouped into a single element.</p></td>
 #&gt; [25] "mottled green" "none"         
 #&gt; </div><div class='input'>
 <span class='co'># A more complex parameter set using the 'wt' argument</span>
-<span class='fu'>freqs_list</span>(<span class='no'>df</span>, <span class='no'>films</span>, <span class='kw'>wt</span> <span class='kw'>=</span> <span class='no'>height</span>, <span class='kw'>abc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>9</span>,
-           <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Star Wars:\nCharacter's\nHeights per Film"</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Colour weight: mean height</span></div><div class='img'><img src='freqs_list-3.png' alt='' width='700' height='433' /></div></span></pre>
+<span class='fu'>freqs_list</span>(<span class='kw'>df</span>, <span class='kw'>films</span>, wt = <span class='kw'>height</span>, abc = <span class='fl'>TRUE</span>, limit = <span class='fl'>9</span>,
+           title = <span class='st'>"Star Wars:\nCharacter's\nHeights per Film"</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Colour weight: mean height</span></div><div class='img'><img src='freqs_list-3.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -118,13 +118,13 @@
     </div>
 
     <pre class="usage"><span class='fu'>mplot_lineal</span>(
-  <span class='no'>tag</span>,
-  <span class='no'>score</span>,
-  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>file_name</span> <span class='kw'>=</span> <span class='st'>"viz_lineal.png"</span>
+  <span class='kw'>tag</span>,
+  <span class='kw'>score</span>,
+  subtitle = <span class='fl'>NA</span>,
+  model_name = <span class='fl'>NA</span>,
+  save = <span class='fl'>FALSE</span>,
+  subdir = <span class='fl'>NA</span>,
+  file_name = <span class='st'>"viz_lineal.png"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -163,22 +163,22 @@
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other ML Visualization: 
-<code><a href='mplot_conf.html'>mplot_conf</a>()</code>,
-<code><a href='mplot_cuts_error.html'>mplot_cuts_error</a>()</code>,
-<code><a href='mplot_cuts.html'>mplot_cuts</a>()</code>,
-<code><a href='mplot_density.html'>mplot_density</a>()</code>,
-<code><a href='mplot_full.html'>mplot_full</a>()</code>,
-<code><a href='mplot_gain.html'>mplot_gain</a>()</code>,
-<code><a href='mplot_importance.html'>mplot_importance</a>()</code>,
-<code><a href='mplot_metrics.html'>mplot_metrics</a>()</code>,
-<code><a href='mplot_response.html'>mplot_response</a>()</code>,
-<code><a href='mplot_roc.html'>mplot_roc</a>()</code>,
-<code><a href='mplot_splits.html'>mplot_splits</a>()</code></p></div>
+<code>mplot_conf()</code>,
+<code>mplot_cuts_error()</code>,
+<code>mplot_cuts()</code>,
+<code>mplot_density()</code>,
+<code>mplot_full()</code>,
+<code>mplot_gain()</code>,
+<code>mplot_importance()</code>,
+<code>mplot_metrics()</code>,
+<code>mplot_response()</code>,
+<code>mplot_roc()</code>,
+<code>mplot_splits()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> <span class='kw'>=</span> <span class='fl'>NA</span>) <span class='co'># Temporal</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>dfr</span>, <span class='no'>head</span>)</div><div class='output co'>#&gt; $class2
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>dfr</span>, <span class='kw'>head</span>)</div><div class='output co'>#&gt; $class2
 #&gt;     tag    scores
 #&gt; 1  TRUE 0.3155498
 #&gt; 2  TRUE 0.8747599
@@ -204,7 +204,7 @@
 #&gt; 4 31.2750 67.41018
 #&gt; 5 13.0000 28.95657
 #&gt; 6 26.0000 17.55153
-#&gt; </div><div class='input'><span class='fu'>mplot_lineal</span>(<span class='no'>dfr</span>$<span class='no'>regr</span>$<span class='no'>tag</span>, <span class='no'>dfr</span>$<span class='no'>regr</span>$<span class='no'>score</span>, <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='st'>"Titanic Fare Model"</span>)</div><div class='img'><img src='mplot_lineal-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt; </div><div class='input'><span class='fu'>mplot_lineal</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>score</span>, model_name = <span class='st'>"Titanic Fare Model"</span>)</div><div class='img'><img src='mplot_lineal-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

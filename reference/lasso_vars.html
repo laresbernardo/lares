@@ -124,13 +124,13 @@ standardize, center or scale your data. Tidyverse friendly.</p>
     </div>
 
     <pre class="usage"><span class='fu'>lasso_vars</span>(
-  <span class='no'>df</span>,
-  <span class='no'>variable</span>,
-  <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>nlambdas</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>nfolds</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>123</span>,
-  <span class='no'>...</span>
+  <span class='kw'>df</span>,
+  <span class='kw'>variable</span>,
+  ignore = <span class='fl'>NA</span>,
+  nlambdas = <span class='fl'>100</span>,
+  nfolds = <span class='fl'>10</span>,
+  seed = <span class='fl'>123</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -170,45 +170,45 @@ process categorical values, and values will be standardize automatically.</p></t
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Machine Learning: 
-<code><a href='ROC.html'>ROC</a>()</code>,
-<code><a href='clusterKmeans.html'>clusterKmeans</a>()</code>,
-<code><a href='conf_mat.html'>conf_mat</a>()</code>,
-<code><a href='export_results.html'>export_results</a>()</code>,
-<code><a href='gain_lift.html'>gain_lift</a>()</code>,
-<code><a href='h2o_automl.html'>h2o_automl</a>()</code>,
-<code><a href='h2o_predict_API.html'>h2o_predict_API</a>()</code>,
-<code><a href='h2o_predict_MOJO.html'>h2o_predict_MOJO</a>()</code>,
-<code><a href='h2o_predict_binary.html'>h2o_predict_binary</a>()</code>,
-<code><a href='h2o_predict_model.html'>h2o_predict_model</a>()</code>,
-<code><a href='h2o_results.html'>h2o_results</a>()</code>,
-<code><a href='h2o_selectmodel.html'>h2o_selectmodel</a>()</code>,
-<code><a href='impute.html'>impute</a>()</code>,
-<code><a href='iter_seeds.html'>iter_seeds</a>()</code>,
-<code><a href='model_metrics.html'>model_metrics</a>()</code>,
-<code><a href='msplit.html'>msplit</a>()</code></p>
+<code>ROC()</code>,
+<code>clusterKmeans()</code>,
+<code>conf_mat()</code>,
+<code>export_results()</code>,
+<code>gain_lift()</code>,
+<code>h2o_automl()</code>,
+<code>h2o_predict_API()</code>,
+<code>h2o_predict_MOJO()</code>,
+<code>h2o_predict_binary()</code>,
+<code>h2o_predict_model()</code>,
+<code>h2o_results()</code>,
+<code>h2o_selectmodel()</code>,
+<code>impute()</code>,
+<code>iter_seeds()</code>,
+<code>model_metrics()</code>,
+<code>msplit()</code></p>
 <p>Other Exploratory: 
-<code><a href='corr_cross.html'>corr_cross</a>()</code>,
-<code><a href='corr_var.html'>corr_var</a>()</code>,
-<code><a href='crosstab.html'>crosstab</a>()</code>,
-<code><a href='df_str.html'>df_str</a>()</code>,
-<code><a href='distr.html'>distr</a>()</code>,
-<code><a href='freqs_df.html'>freqs_df</a>()</code>,
-<code><a href='freqs_list.html'>freqs_list</a>()</code>,
-<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
-<code><a href='freqs.html'>freqs</a>()</code>,
-<code><a href='missingness.html'>missingness</a>()</code>,
-<code><a href='plot_cats.html'>plot_cats</a>()</code>,
-<code><a href='plot_df.html'>plot_df</a>()</code>,
-<code><a href='plot_nums.html'>plot_nums</a>()</code>,
-<code><a href='summer.html'>summer</a>()</code>,
-<code><a href='tree_var.html'>tree_var</a>()</code>,
-<code><a href='trendsRelated.html'>trendsRelated</a>()</code></p></div>
+<code>corr_cross()</code>,
+<code>corr_var()</code>,
+<code>crosstab()</code>,
+<code>df_str()</code>,
+<code>distr()</code>,
+<code>freqs_df()</code>,
+<code>freqs_list()</code>,
+<code>freqs_plot()</code>,
+<code>freqs()</code>,
+<code>missingness()</code>,
+<code>plot_cats()</code>,
+<code>plot_df()</code>,
+<code>plot_nums()</code>,
+<code>summer()</code>,
+<code>tree_var()</code>,
+<code>trendsRelated()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> <span class='kw'>=</span> <span class='fl'>NA</span>) <span class='co'># Temporal</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 
-<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'>lasso_vars</span>(<span class='no'>dft</span>, <span class='no'>Survived</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Cabin"</span>))</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Omitting transformations for 'Cabin', 'Survived'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 4 variables: 'Pclass', 'Ticket', 'Embarked', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Searching for optimal lambda with CV...</span></div><div class='output co'>#&gt; <span class='message'>Found best lambda: 0.0063914</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Fetching most relevant variables...</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots for Survived...</span></div><div class='output co'>#&gt; <span class='message'>Elapsed time: 3.79s</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>m</span>$<span class='no'>coef</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 22 x 3</span><span>
+<span class='kw'>m</span> <span class='op'>&lt;-</span> <span class='fu'>lasso_vars</span>(<span class='kw'>dft</span>, <span class='kw'>Survived</span>, ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Cabin"</span>))</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Omitting transformations for 'Cabin', 'Survived'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 4 variables: 'Pclass', 'Ticket', 'Embarked', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Searching for optimal lambda with CV...</span></div><div class='output co'>#&gt; <span class='message'>Found best lambda: 0.0063914</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Fetching most relevant variables...</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots for Survived...</span></div><div class='output co'>#&gt; <span class='message'>Elapsed time: 3.35s</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>m</span><span class='op'>$</span><span class='kw'>coef</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 22 x 3</span><span>
 #&gt;    names         coefficients standardized_coefficients
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>                     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> Sex_male          -</span><span style='color: #BB0000;'>0.493</span><span>                     -</span><span style='color: #BB0000;'>0.236</span><span> 
@@ -221,10 +221,10 @@ process categorical values, and values will be standardize automatically.</p></t
 #&gt; </span><span style='color: #555555;'> 8</span><span> Embarked_C         0.053</span><span style='text-decoration: underline;'>0</span><span>                     0.020</span><span style='text-decoration: underline;'>7</span><span>
 #&gt; </span><span style='color: #555555;'> 9</span><span> Ticket_347082     -</span><span style='color: #BB0000;'>0.172</span><span>                     -</span><span style='color: #BB0000;'>0.015</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span>
 #&gt; </span><span style='color: #555555;'>10</span><span> Embarked_Q         0.045</span><span style='text-decoration: underline;'>8</span><span>                     0.012</span><span style='text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #555555;'># … with 12 more rows</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>m</span>$<span class='no'>metrics</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 7</span><span>
+#&gt; </span><span style='color: #555555;'># … with 12 more rows</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>m</span><span class='op'>$</span><span class='kw'>metrics</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 7</span><span>
 #&gt;    rmse   mae  mape   mse   rsq  rsqa bestlambda
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> 0.367 0.288  1.37 0.135 0.430 0.429    0.006</span><span style='text-decoration: underline;'>39</span><span></div><div class='input'><span class='no'>m</span>$<span class='no'>plot</span></div><div class='img'><img src='lasso_vars-1.png' alt='' width='700' height='433' /></div></span></pre>
+#&gt; </span><span style='color: #555555;'>1</span><span> 0.367 0.288  1.37 0.135 0.430 0.429    0.006</span><span style='text-decoration: underline;'>39</span><span></div><div class='input'><span class='kw'>m</span><span class='op'>$</span><span class='kw'>plot</span></div><div class='img'><img src='lasso_vars-1.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

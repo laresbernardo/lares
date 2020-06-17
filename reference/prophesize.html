@@ -128,13 +128,13 @@ data and shifts in the trend, and typically handles outliers well.</p>
     </div>
 
     <pre class="usage"><span class='fu'>prophesize</span>(
-  <span class='no'>df</span>,
-  <span class='kw'>n_future</span> <span class='kw'>=</span> <span class='fl'>60</span>,
-  <span class='kw'>country</span> <span class='kw'>=</span> <span class='st'>"AR"</span>,
-  <span class='kw'>trend.param</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>logged</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>pout</span> <span class='kw'>=</span> <span class='fl'>0.03</span>,
-  <span class='kw'>project</span> <span class='kw'>=</span> <span class='st'>"Prophet Forecast"</span>
+  <span class='kw'>df</span>,
+  n_future = <span class='fl'>60</span>,
+  country = <span class='st'>"AR"</span>,
+  trend.param = <span class='fl'>0.05</span>,
+  logged = <span class='fl'>FALSE</span>,
+  pout = <span class='fl'>0.03</span>,
+  project = <span class='st'>"Prophet Forecast"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -177,7 +177,7 @@ and as this value becomes larger, the trend component will be more flexible.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Forecast: 
-<code><a href='forecast_arima.html'>forecast_arima</a>()</code></p></div>
+<code>forecast_arima()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -122,22 +122,22 @@ only numerical values.</p>
     </div>
 
     <pre class="usage"><span class='fu'>corr_var</span>(
-  <span class='no'>df</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>,
-  <span class='kw'>trim</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>logs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>dates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>ceiling</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>zeroes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>file_name</span> <span class='kw'>=</span> <span class='st'>"viz_corrvar.png"</span>
+  <span class='kw'>df</span>,
+  <span class='kw'>...</span>,
+  ignore = <span class='fl'>NA</span>,
+  method = <span class='st'>"pearson"</span>,
+  trim = <span class='fl'>0</span>,
+  clean = <span class='fl'>FALSE</span>,
+  plot = <span class='fl'>TRUE</span>,
+  logs = <span class='fl'>FALSE</span>,
+  dates = <span class='fl'>TRUE</span>,
+  top = <span class='fl'>NA</span>,
+  ceiling = <span class='fl'>100</span>,
+  limit = <span class='fl'>10</span>,
+  zeroes = <span class='fl'>FALSE</span>,
+  save = <span class='fl'>FALSE</span>,
+  subdir = <span class='fl'>NA</span>,
+  file_name = <span class='st'>"viz_corrvar.png"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -220,31 +220,31 @@ save the plot</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Exploratory: 
-<code><a href='corr_cross.html'>corr_cross</a>()</code>,
-<code><a href='crosstab.html'>crosstab</a>()</code>,
-<code><a href='df_str.html'>df_str</a>()</code>,
-<code><a href='distr.html'>distr</a>()</code>,
-<code><a href='freqs_df.html'>freqs_df</a>()</code>,
-<code><a href='freqs_list.html'>freqs_list</a>()</code>,
-<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
-<code><a href='freqs.html'>freqs</a>()</code>,
-<code><a href='lasso_vars.html'>lasso_vars</a>()</code>,
-<code><a href='missingness.html'>missingness</a>()</code>,
-<code><a href='plot_cats.html'>plot_cats</a>()</code>,
-<code><a href='plot_df.html'>plot_df</a>()</code>,
-<code><a href='plot_nums.html'>plot_nums</a>()</code>,
-<code><a href='summer.html'>summer</a>()</code>,
-<code><a href='tree_var.html'>tree_var</a>()</code>,
-<code><a href='trendsRelated.html'>trendsRelated</a>()</code></p>
+<code>corr_cross()</code>,
+<code>crosstab()</code>,
+<code>df_str()</code>,
+<code>distr()</code>,
+<code>freqs_df()</code>,
+<code>freqs_list()</code>,
+<code>freqs_plot()</code>,
+<code>freqs()</code>,
+<code>lasso_vars()</code>,
+<code>missingness()</code>,
+<code>plot_cats()</code>,
+<code>plot_df()</code>,
+<code>plot_nums()</code>,
+<code>summer()</code>,
+<code>tree_var()</code>,
+<code>trendsRelated()</code></p>
 <p>Other Correlations: 
-<code><a href='corr_cross.html'>corr_cross</a>()</code>,
-<code><a href='corr.html'>corr</a>()</code></p></div>
+<code>corr_cross()</code>,
+<code>corr()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> <span class='kw'>=</span> <span class='fl'>NA</span>) <span class='co'># Temporal</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='no'>Survived</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Not a valid input: Survived was transformed or does not exist.</span></div><div class='output co'>#&gt; <span class='message'>Maybe you meant one of: 'Survived_TRUE'. Automatically using 'Survived_TRUE'</span></div><div class='output co'>#&gt;        variables    corr     pvalue
+<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived</span>, method = <span class='st'>"spearman"</span>, plot = <span class='fl'>FALSE</span>, top = <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Not a valid input: Survived was transformed or does not exist.</span></div><div class='output co'>#&gt; <span class='message'>Maybe you meant one of: 'Survived_TRUE'. Automatically using 'Survived_TRUE'</span></div><div class='output co'>#&gt;        variables    corr     pvalue
 #&gt; 3       Sex_male -0.5434 0.00000000
 #&gt; 7           Fare  0.3237 0.00000000
 #&gt; 20        Cabin_ -0.3169 0.00000000
@@ -258,13 +258,13 @@ save the plot</p></td>
 <span class='co'># With plots, results are easier to compare:</span>
 
 <span class='co'># Correlate Survived with everything else</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='no'>Survived_TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Automatically reduced results to the top 30 variables. Use the 'top' parameter to override this limit.</span></div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Automatically reduced results to the top 30 variables. Use the 'top' parameter to override this limit.</span></div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Filter out variables with less than 50% of correlation</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='no'>Survived_TRUE</span>, <span class='kw'>ceiling</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='message'>Automatically reduced results to the top 30 variables. Use the 'top' parameter to override this limit.</span></div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 50% (absolute)</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, ceiling = <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='message'>Automatically reduced results to the top 30 variables. Use the 'top' parameter to override this limit.</span></div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 50% (absolute)</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Show only 10 values</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='no'>Survived_TRUE</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='img'><img src='corr_var-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, top = <span class='fl'>10</span>)</div><div class='img'><img src='corr_var-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Also calculate log(values)</span>
-<span class='no'>dft</span> <span class='kw'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='no'>Survived_TRUE</span>, <span class='kw'>logs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='img'><img src='corr_var-4.png' alt='' width='700' height='433' /></div></pre>
+<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, logs = <span class='fl'>TRUE</span>, top = <span class='fl'>15</span>)</div><div class='img'><img src='corr_var-4.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

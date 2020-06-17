@@ -120,16 +120,16 @@ friendly, with weighting possibility.</p>
     </div>
 
     <pre class="usage"><span class='fu'>crosstab</span>(
-  <span class='no'>df</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>wt</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>prow</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>pcol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>pall</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>rm.na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>total</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>df</span>,
+  <span class='kw'>...</span>,
+  wt = <span class='kw'>NULL</span>,
+  prow = <span class='fl'>FALSE</span>,
+  pcol = <span class='fl'>FALSE</span>,
+  pall = <span class='fl'>FALSE</span>,
+  decimals = <span class='fl'>2</span>,
+  rm.na = <span class='fl'>FALSE</span>,
+  total = <span class='fl'>TRUE</span>,
+  order = <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -174,42 +174,42 @@ be sorted alphabetically</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Exploratory: 
-<code><a href='corr_cross.html'>corr_cross</a>()</code>,
-<code><a href='corr_var.html'>corr_var</a>()</code>,
-<code><a href='df_str.html'>df_str</a>()</code>,
-<code><a href='distr.html'>distr</a>()</code>,
-<code><a href='freqs_df.html'>freqs_df</a>()</code>,
-<code><a href='freqs_list.html'>freqs_list</a>()</code>,
-<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
-<code><a href='freqs.html'>freqs</a>()</code>,
-<code><a href='lasso_vars.html'>lasso_vars</a>()</code>,
-<code><a href='missingness.html'>missingness</a>()</code>,
-<code><a href='plot_cats.html'>plot_cats</a>()</code>,
-<code><a href='plot_df.html'>plot_df</a>()</code>,
-<code><a href='plot_nums.html'>plot_nums</a>()</code>,
-<code><a href='summer.html'>summer</a>()</code>,
-<code><a href='tree_var.html'>tree_var</a>()</code>,
-<code><a href='trendsRelated.html'>trendsRelated</a>()</code></p></div>
+<code>corr_cross()</code>,
+<code>corr_var()</code>,
+<code>df_str()</code>,
+<code>distr()</code>,
+<code>freqs_df()</code>,
+<code>freqs_list()</code>,
+<code>freqs_plot()</code>,
+<code>freqs()</code>,
+<code>lasso_vars()</code>,
+<code>missingness()</code>,
+<code>plot_cats()</code>,
+<code>plot_df()</code>,
+<code>plot_nums()</code>,
+<code>summer()</code>,
+<code>tree_var()</code>,
+<code>trendsRelated()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dft</span>) <span class='co'># Titanic dataset</span>
-<span class='fu'>crosstab</span>(<span class='no'>dft</span>, <span class='no'>Survived</span>, <span class='no'>Pclass</span>, <span class='kw'>total</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 4</span><span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
+<span class='fu'>crosstab</span>(<span class='kw'>dft</span>, <span class='kw'>Survived</span>, <span class='kw'>Pclass</span>, total = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 4</span><span>
 #&gt;   `Survived x Pclass`   `3`   `1`   `2`
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> FALSE                 372    80    97
 #&gt; </span><span style='color: #555555;'>2</span><span> TRUE                  119   136    87</div><div class='input'><span class='co'># Show values in percentages</span>
-<span class='fu'>crosstab</span>(<span class='no'>dft</span>, <span class='no'>Pclass</span>, <span class='no'>Survived</span>, <span class='kw'>prow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 4</span><span>
+<span class='fu'>crosstab</span>(<span class='kw'>dft</span>, <span class='kw'>Pclass</span>, <span class='kw'>Survived</span>, prow = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 4</span><span>
 #&gt;   `Pclass x Survived` `FALSE` `TRUE` total
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> 3                      67.8   34.8  55.1
 #&gt; </span><span style='color: #555555;'>2</span><span> 1                      14.6   39.8  24.2
-#&gt; </span><span style='color: #555555;'>3</span><span> 2                      17.7   25.4  20.6</div><div class='input'><span class='fu'>crosstab</span>(<span class='no'>dft</span>, <span class='no'>Pclass</span>, <span class='no'>Survived</span>, <span class='kw'>pall</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 4</span><span>
+#&gt; </span><span style='color: #555555;'>3</span><span> 2                      17.7   25.4  20.6</div><div class='input'><span class='fu'>crosstab</span>(<span class='kw'>dft</span>, <span class='kw'>Pclass</span>, <span class='kw'>Survived</span>, pall = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 4</span><span>
 #&gt;   `Pclass x Survived` `FALSE` `TRUE` total
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> 3                     41.8   13.4   55.1
 #&gt; </span><span style='color: #555555;'>2</span><span> 1                      8.98  15.3   24.2
 #&gt; </span><span style='color: #555555;'>3</span><span> 2                     10.9    9.76  20.6</div><div class='input'><span class='co'># Weighted by another variable</span>
-<span class='fu'>crosstab</span>(<span class='no'>dft</span>, <span class='no'>Survived</span>, <span class='no'>Pclass</span>, <span class='kw'>wt</span> <span class='kw'>=</span> <span class='no'>Fare</span>, <span class='kw'>prow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
+<span class='fu'>crosstab</span>(<span class='kw'>dft</span>, <span class='kw'>Survived</span>, <span class='kw'>Pclass</span>, wt = <span class='kw'>Fare</span>, prow = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
 #&gt;   `Survived x Pclass`   `1`   `3`   `2` total
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> TRUE                 71.5  24.3  50.5  57.7
