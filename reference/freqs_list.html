@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Frequencies on Lists and Plot — freqs_list • lares</title>
+<title>Frequencies on Lists and UpSet Plot — freqs_list • lares</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,12 @@
 
 
 
-<meta property="og:title" content="Frequencies on Lists and Plot — freqs_list" />
-<meta property="og:description" content="Visualize frequency of elements on a list or list vector, which
-combinations and elements are the most frequent. Your variable can be
-a character vector with comma separated values or a list vector." />
+<meta property="og:title" content="Frequencies on Lists and UpSet Plot — freqs_list" />
+<meta property="og:description" content="Visualize frequency of elements on a list, list vector, or vector with
+comma separated values. Detect which combinations and elements are 
+the most frequent and how much they represent of your total observations.
+This is similar to the [UpSet Plots](http://vcg.github.io/upset/) which 
+may be used as an alternative to Venn diagrams." />
 
 
 
@@ -110,25 +112,29 @@ a character vector with comma separated values or a list vector." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Frequencies on Lists and Plot</h1>
+    <h1>Frequencies on Lists and UpSet Plot</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/frequencies.R'><code>R/frequencies.R</code></a></small>
     <div class="hidden name"><code>freqs_list.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Visualize frequency of elements on a list or list vector, which
-combinations and elements are the most frequent. Your variable can be
-a character vector with comma separated values or a list vector.</p>
+    <p>Visualize frequency of elements on a list, list vector, or vector with
+comma separated values. Detect which combinations and elements are 
+the most frequent and how much they represent of your total observations.
+This is similar to the [UpSet Plots](http://vcg.github.io/upset/) which 
+may be used as an alternative to Venn diagrams.</p>
     </div>
 
     <pre class="usage"><span class='fu'>freqs_list</span>(
   <span class='kw'>df</span>,
-  <span class='kw'>var</span>,
+  var = <span class='kw'>NULL</span>,
   wt = <span class='fl'>NA</span>,
   fx = <span class='st'>"mean"</span>,
   rm.na = <span class='fl'>FALSE</span>,
   min_elements = <span class='fl'>1</span>,
   limit = <span class='fl'>10</span>,
+  tail = <span class='fl'>TRUE</span>,
+  size = <span class='fl'>10</span>,
   unique = <span class='fl'>TRUE</span>,
   abc = <span class='fl'>FALSE</span>,
   title = <span class='st'>""</span>,
@@ -168,6 +174,14 @@ of the combinations.</p></td>
       <th>limit</th>
       <td><p>Integer. Show top n combinations and elements. The rest
 will be grouped into a single element.</p></td>
+    </tr>
+    <tr>
+      <th>tail</th>
+      <td><p>Boolean. Show tail grouped into "..." on the plots?</p></td>
+    </tr>
+    <tr>
+      <th>size</th>
+      <td><p>Numeric. Text base size</p></td>
     </tr>
     <tr>
       <th>unique</th>
@@ -261,13 +275,10 @@ will be grouped into a single element.</p></td>
 #&gt;  [1] "data"        "layers"      "scales"      "mapping"     "theme"      
 #&gt;  [6] "coordinates" "facet"       "plot_env"    "labels"      "patches"    
 #&gt; 
-#&gt; $ohe
-#&gt;  [1] "vals"          "fair"          "gold"          "blue"         
-#&gt;  [5] "white"         "light"         "red"           "unknown"      
-#&gt;  [9] "green"         "brown"         "green-tan"     "pale"         
-#&gt; [13] "metal"         "dark"          "brown mottle"  "grey"         
-#&gt; [17] "mottled green" "orange"        "yellow"        "tan"          
-#&gt; [21] "silver"        "none"         
+#&gt; $data
+#&gt;  [1] "name"        "height"      "mass"        "hair_color"  "combination"
+#&gt;  [6] "eye_color"   "birth_year"  "sex"         "gender"      "homeworld"  
+#&gt; [11] "species"     "films"       "vehicles"    "starships"  
 #&gt; 
 #&gt; $elements
 #&gt; [1] "element" "n"       "wt"      "p"       "order"  
@@ -281,9 +292,32 @@ will be grouped into a single element.</p></td>
 #&gt; [21] "silver"        "brown mottle"  "gold"          "metal"        
 #&gt; [25] "mottled green" "none"         
 #&gt; </div><div class='input'><span class='kw'>x</span><span class='op'>$</span><span class='kw'>plot</span></div><div class='img'><img src='freqs_list-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Using the 'wt' argument to add a continuous value dimension</span>
-<span class='fu'>freqs_list</span>(<span class='kw'>df</span>, <span class='kw'>films</span>, wt = <span class='kw'>height</span>, abc = <span class='fl'>TRUE</span>, limit = <span class='fl'>8</span>, min_elements = <span class='fl'>2</span>,
-           title = <span class='st'>"Star Wars:\nCharacter's\nHeights per Films"</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Colour weight: mean height</span></div><div class='img'><img src='freqs_list-3.png' alt='' width='700' height='433' /></div></span></pre>
+<span class='co'># Using the 'wt' argument to add a continuous value metric</span>
+<span class='co'># into an already one-hot encoded columns dataset (and hide tail)</span>
+<span class='kw'>csv</span> <span class='op'>&lt;-</span> <span class='st'>"https://raw.githubusercontent.com/hms-dbmi/UpSetR/master/inst/extdata/movies.csv"</span>
+<span class='kw'>movies</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span>(<span class='kw'>csv</span>, sep = <span class='st'>";"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>movies</span>)</div><div class='output co'>#&gt;                                 Name ReleaseDate Action Adventure Children
+#&gt; 1                   Toy Story (1995)        1995      0         0        1
+#&gt; 2                     Jumanji (1995)        1995      0         1        1
+#&gt; 3            Grumpier Old Men (1995)        1995      0         0        0
+#&gt; 4           Waiting to Exhale (1995)        1995      0         0        0
+#&gt; 5 Father of the Bride Part II (1995)        1995      0         0        0
+#&gt; 6                        Heat (1995)        1995      1         0        0
+#&gt;   Comedy Crime Documentary Drama Fantasy Noir Horror Musical Mystery Romance
+#&gt; 1      1     0           0     0       0    0      0       0       0       0
+#&gt; 2      0     0           0     0       1    0      0       0       0       0
+#&gt; 3      1     0           0     0       0    0      0       0       0       1
+#&gt; 4      1     0           0     1       0    0      0       0       0       0
+#&gt; 5      1     0           0     0       0    0      0       0       0       0
+#&gt; 6      0     1           0     0       0    0      0       0       0       0
+#&gt;   SciFi Thriller War Western AvgRating Watches
+#&gt; 1     0        0   0       0      4.15    2077
+#&gt; 2     0        0   0       0      3.20     701
+#&gt; 3     0        0   0       0      3.02     478
+#&gt; 4     0        0   0       0      2.73     170
+#&gt; 5     0        0   0       0      3.01     296
+#&gt; 6     0        1   0       0      3.88     940</div><div class='input'><span class='fu'>freqs_list</span>(<span class='kw'>movies</span>, wt = <span class='kw'>AvgRating</span>, min_elements = <span class='fl'>2</span>, tail = <span class='fl'>FALSE</span>,
+           title = <span class='st'>"Movies\nMixed Genres\nRanking"</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Binary columns detected: 'Action', 'Adventure', 'Children', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Fantasy', 'Noir', 'Horror', 'Musical', 'Mystery', 'Romance', 'SciFi', 'Thriller', 'War', 'Western'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Colour weight: mean AvgRating</span></div><div class='img'><img src='freqs_list-3.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
