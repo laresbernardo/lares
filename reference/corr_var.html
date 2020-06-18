@@ -123,7 +123,7 @@ only numerical values.</p>
 
     <pre class="usage"><span class='fu'>corr_var</span>(
   <span class='kw'>df</span>,
-  <span class='kw'>...</span>,
+  <span class='kw'>var</span>,
   ignore = <span class='fl'>NA</span>,
   method = <span class='st'>"pearson"</span>,
   trim = <span class='fl'>0</span>,
@@ -133,6 +133,7 @@ only numerical values.</p>
   dates = <span class='fl'>TRUE</span>,
   top = <span class='fl'>NA</span>,
   ceiling = <span class='fl'>100</span>,
+  max_pvalue = <span class='fl'>1</span>,
   limit = <span class='fl'>10</span>,
   zeroes = <span class='fl'>FALSE</span>,
   save = <span class='fl'>FALSE</span>,
@@ -148,8 +149,8 @@ only numerical values.</p>
       <td><p>Dataframe.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Object. Name of the variable to correlate</p></td>
+      <th>var</th>
+      <td><p>Variable. Name of the variable to correlate</p></td>
     </tr>
     <tr>
       <th>ignore</th>
@@ -192,6 +193,10 @@ define how many</p></td>
     <tr>
       <th>ceiling</th>
       <td><p>Numeric. Remove all correlations above... Range: (0-100]</p></td>
+    </tr>
+    <tr>
+      <th>max_pvalue</th>
+      <td><p>Numeric. Filter non-significant variables. Range (0, 1]</p></td>
     </tr>
     <tr>
       <th>limit</th>
@@ -257,8 +262,8 @@ save the plot</p></td>
 #&gt; 10 Ticket_113760  0.0851 0.01106214</div><div class='input'>
 <span class='co'># With plots, results are easier to compare:</span>
 
-<span class='co'># Correlate Survived with everything else</span>
-<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Automatically reduced results to the top 30 variables. Use the 'top' parameter to override this limit.</span></div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Correlate Survived with everything else and show only significant results</span>
+<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, max_pvalue = <span class='fl'>0.05</span>)</div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Filter out variables with less than 50% of correlation</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, ceiling = <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='message'>Automatically reduced results to the top 30 variables. Use the 'top' parameter to override this limit.</span></div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 50% (absolute)</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Show only 10 values</span>
