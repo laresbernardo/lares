@@ -127,6 +127,7 @@ a character vector with comma separated values or a list vector.</p>
   wt = <span class='fl'>NA</span>,
   fx = <span class='st'>"mean"</span>,
   rm.na = <span class='fl'>FALSE</span>,
+  min_elements = <span class='fl'>1</span>,
   limit = <span class='fl'>10</span>,
   unique = <span class='fl'>TRUE</span>,
   abc = <span class='fl'>FALSE</span>,
@@ -160,6 +161,10 @@ of the combinations.</p></td>
       <td><p>Boolean. Remove NA value from <code>wt</code>?</p></td>
     </tr>
     <tr>
+      <th>min_elements</th>
+      <td><p>Integer. Exclude combinations with less than n elements</p></td>
+    </tr>
+    <tr>
       <th>limit</th>
       <td><p>Integer. Show top n combinations and elements. The rest
 will be grouped into a single element.</p></td>
@@ -178,7 +183,7 @@ will be grouped into a single element.</p></td>
     </tr>
     <tr>
       <th>plot</th>
-      <td><p>Boolean. Plot viz?</p></td>
+      <td><p>Boolean. Plot viz? Will be generated anyways in the output object</p></td>
     </tr>
     </table>
 
@@ -246,36 +251,13 @@ will be grouped into a single element.</p></td>
 #&gt; [3] "The Phantom Menace"      "Revenge of the Sith"    
 #&gt; [5] "Return of the Jedi"      "A New Hope"             
 #&gt; </div><div class='input'><span class='kw'>df</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs_list</span>(<span class='kw'>films</span>)</div><div class='img'><img src='freqs_list-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Skin colour pero movies in a comma-separated column</span>
+<span class='co'># Skin colours in a comma-separated column</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>skin_color</span>))</div><div class='output co'>#&gt; [1] "fair"        "gold"        "white, blue" "white"       "light"      
-#&gt; [6] "light"      </div><div class='input'><span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>freqs_list</span>(<span class='kw'>df</span>, <span class='kw'>skin_color</span>)</div><div class='img'><img src='freqs_list-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Inside "x" we'll have:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>x</span>, <span class='kw'>names</span>)</div><div class='output co'>#&gt; $plot
-#&gt;  [1] "data"        "layers"      "scales"      "mapping"     "theme"      
-#&gt;  [6] "coordinates" "facet"       "plot_env"    "labels"      "patches"    
-#&gt; 
-#&gt; $ohe
-#&gt;  [1] "vals"          "fair"          "gold"          "blue"         
-#&gt;  [5] "white"         "light"         "red"           "unknown"      
-#&gt;  [9] "green"         "brown"         "green-tan"     "pale"         
-#&gt; [13] "metal"         "dark"          "brown mottle"  "grey"         
-#&gt; [17] "mottled green" "orange"        "yellow"        "tan"          
-#&gt; [21] "silver"        "none"         
-#&gt; 
-#&gt; $elements
-#&gt; [1] "element" "n"       "wt"      "p"       "order"  
-#&gt; 
-#&gt; $combinations
-#&gt;  [1] "combination"   "n"             "wt"            "p"            
-#&gt;  [5] "order"         "fair"          "light"         "dark"         
-#&gt;  [9] "green"         "grey"          "pale"          "brown"        
-#&gt; [13] "blue"          "white"         "orange"        "tan"          
-#&gt; [17] "unknown"       "yellow"        "red"           "green-tan"    
-#&gt; [21] "silver"        "brown mottle"  "gold"          "metal"        
-#&gt; [25] "mottled green" "none"         
-#&gt; </div><div class='input'>
-<span class='co'># A more complex parameter set using the 'wt' argument</span>
-<span class='fu'>freqs_list</span>(<span class='kw'>df</span>, <span class='kw'>films</span>, wt = <span class='kw'>height</span>, abc = <span class='fl'>TRUE</span>, limit = <span class='fl'>9</span>,
-           title = <span class='st'>"Star Wars:\nCharacter's\nHeights per Film"</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Colour weight: mean height</span></div><div class='img'><img src='freqs_list-3.png' alt='' width='700' height='433' /></div></span></pre>
+#&gt; [6] "light"      </div><div class='input'><span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>freqs_list</span>(<span class='kw'>starwars</span>, <span class='kw'>skin_color</span>, min_elements = <span class='fl'>2</span>, plot = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in is.data.frame(x): object 'starwars' not found</span></div><div class='input'><span class='co'># Inside "x" we'll have:</span>
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>x</span>, <span class='kw'>names</span>)</div><div class='output co'>#&gt; <span class='error'>Error in lapply(x, names): object 'x' not found</span></div><div class='input'><span class='kw'>x</span><span class='op'>$</span><span class='kw'>plot</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'x' not found</span></div><div class='input'>
+<span class='co'># Using the 'wt' argument to add a continuous value dimension</span>
+<span class='fu'>freqs_list</span>(<span class='kw'>df</span>, <span class='kw'>films</span>, wt = <span class='kw'>height</span>, abc = <span class='fl'>TRUE</span>, limit = <span class='fl'>8</span>, min_elements = <span class='fl'>2</span>,
+           title = <span class='st'>"Star Wars:\nCharacter's\nHeights per Films"</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Colour weight: mean height</span></div><div class='img'><img src='freqs_list-2.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
