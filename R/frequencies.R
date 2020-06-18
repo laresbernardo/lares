@@ -487,12 +487,13 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' of the combinations. 
 #' @param fx Character. Set operation: mean, sum
 #' @param rm.na Boolean. Remove NA value from \code{wt}?
+#' @param min_elements Integer. Exclude combinations with less than n elements
 #' @param limit Integer. Show top n combinations and elements. The rest
 #' will be grouped into a single element.
 #' @param unique Boolean. a,b = b,a?
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
 #' @param title Character. Added to the plot.
-#' @param plot Boolean. Plot viz?
+#' @param plot Boolean. Plot viz? Will be generated anyways in the output object
 #' @examples 
 #' options("lares.font"=NA) # Temporal
 #' df <- dplyr::starwars
@@ -502,19 +503,21 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' print(head(df$films, 2))
 #' df %>% freqs_list(films)
 #' 
-#' # Skin colour pero movies in a comma-separated column
+#' # Skin colours in a comma-separated column
 #' print(head(df$skin_color))
-#' x <- freqs_list(df, skin_color)
+#' x <- freqs_list(starwars, skin_color, min_elements = 2, plot = FALSE)
 #' # Inside "x" we'll have:
 #' lapply(x, names)
+#' x$plot
 #' 
-#' # A more complex parameter set using the 'wt' argument
-#' freqs_list(df, films, wt = height, abc = TRUE, limit = 9,
-#'            title = "Star Wars:\nCharacter's\nHeights per Film")
+#' # Using the 'wt' argument to add a continuous value dimension
+#' freqs_list(df, films, wt = height, abc = TRUE, limit = 8, min_elements = 2,
+#'            title = "Star Wars:\nCharacter's\nHeights per Films")
 #' @export
 freqs_list <- function(df, var, 
                        wt = NA, fx = "mean",
                        rm.na = FALSE,
+                       min_elements = 1,
                        limit = 10, 
                        unique = TRUE, 
                        abc = FALSE, 
@@ -565,7 +568,10 @@ freqs_list <- function(df, var,
     arrange(desc(.data$n)) %>%
     mutate(p = 100*.data$n/sum(.data$n), order = row_number()) %>%
     data.frame() %>%
-    ohe_commas("var")
+    ohe_commas("var") %>%
+    # Remove combinations with less than "min_elements" elements
+    mutate(combs = rowSums(.[unlist(lapply(., is.logical))], na.rm = TRUE)) %>%
+    filter(.data$combs >= min_elements) %>% select(-.data$combs)
   
   elements <- vals %>%
     tidyr::gather(.) %>% 
@@ -599,13 +605,19 @@ freqs_list <- function(df, var,
       as.character(.data$var), "...")) %>% 
     mutate(var = factor(.data$var, levels = rev(c(as.character(elements$key), "..."))))
   
+  # Amount of data considered
+  caption <- sprintf("Observations: %s | Elements: %s", sum(vals$n), sum(elements$n))
+  if (min_elements > 1) caption <- v2t(c(caption, sprintf(
+      "Excluding combinations with less than %s elements", min_elements)),
+      quotes = FALSE, sep = "\n")
+  
   # Scatter plot: combinations
   p1 <- tgthr %>%
     ggplot(aes(x = reorder(.data$label, .data$order), 
                y = var, group = .data$label)) +
     geom_point(size = 4) + geom_path() +
     theme_lares2(mg = -1, which = "XY") +
-    labs(x = NULL, y = NULL) +
+    labs(x = NULL, y = NULL, caption = caption) +
     theme(axis.text.y = element_blank(),
           plot.margin = margin(0,0,0,0)) +
     scale_x_discrete(position = "top")

@@ -10,6 +10,7 @@ freqs_list(
   wt = NA,
   fx = "mean",
   rm.na = FALSE,
+  min_elements = 1,
   limit = 10,
   unique = TRUE,
   abc = FALSE,
@@ -30,6 +31,8 @@ of the combinations.}
 
 \item{rm.na}{Boolean. Remove NA value from \code{wt}?}
 
+\item{min_elements}{Integer. Exclude combinations with less than n elements}
+
 \item{limit}{Integer. Show top n combinations and elements. The rest
 will be grouped into a single element.}
 
@@ -39,7 +42,7 @@ will be grouped into a single element.}
 
 \item{title}{Character. Added to the plot.}
 
-\item{plot}{Boolean. Plot viz?}
+\item{plot}{Boolean. Plot viz? Will be generated anyways in the output object}
 }
 \description{
 Visualize frequency of elements on a list or list vector, which
@@ -55,15 +58,16 @@ print(head(df))
 print(head(df$films, 2))
 df \%>\% freqs_list(films)
 
-# Skin colour pero movies in a comma-separated column
+# Skin colours in a comma-separated column
 print(head(df$skin_color))
-x <- freqs_list(df, skin_color)
+x <- freqs_list(starwars, skin_color, min_elements = 2, plot = FALSE)
 # Inside "x" we'll have:
 lapply(x, names)
+x$plot
 
-# A more complex parameter set using the 'wt' argument
-freqs_list(df, films, wt = height, abc = TRUE, limit = 9,
-           title = "Star Wars:\nCharacter's\nHeights per Film")
+# Using the 'wt' argument to add a continuous value dimension
+freqs_list(df, films, wt = height, abc = TRUE, limit = 8, min_elements = 2,
+           title = "Star Wars:\nCharacter's\nHeights per Films")
 }
 \seealso{
 Other Frequency: 
