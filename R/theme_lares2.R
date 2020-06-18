@@ -22,10 +22,10 @@
 #' @param pal Integer. 1 for fill and colour palette, 2 for only colour palette,
 #' 3 for only fill palette, 4 for personal labels-colour palette. 0 or else for nothing.
 #' @param which Character. When pal = 3, select which colours should be
-#' added with the custom colours pelette: fill, colour, text (fct) - first letters
+#' added with the custom colours palette: fill, colour, text (fct) - first letters
 #' @export
 theme_lares2 <- function(font = getOption("lares.font"), 
-                         size = 12.5, 
+                         size = 12, 
                          main_colour = "darkorange3", 
                          hard_colour = "black",
                          soft_colour = "grey30",

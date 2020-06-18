@@ -15,8 +15,8 @@ try_require(package, stop = TRUE)
 This function checks library dependencies
 }
 \examples{
-# Check if library dummylibrary is installed. If not, do not break as error.
-try_require("dummylibrary", stop = FALSE)
+# Check if library "dummy" is installed. If not, do not break as error.
+try_require("dummy", stop = FALSE)
 # Check if library base is installed. If not, stop and show error
 try_require("base", stop = TRUE)
 }

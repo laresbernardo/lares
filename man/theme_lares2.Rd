@@ -6,7 +6,7 @@
 \usage{
 theme_lares2(
   font = getOption("lares.font"),
-  size = 12.5,
+  size = 12,
   main_colour = "darkorange3",
   hard_colour = "black",
   soft_colour = "grey30",
@@ -36,7 +36,7 @@ or by using this parameter manually}
 3 for only fill palette, 4 for personal labels-colour palette. 0 or else for nothing.}
 
 \item{which}{Character. When pal = 3, select which colours should be
-added with the custom colours pelette: fill, colour, text (fct) - first letters}
+added with the custom colours palette: fill, colour, text (fct) - first letters}
 }
 \description{
 Based on hrbrthemes' theme_ipsum and customized for lares' use.

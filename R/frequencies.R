@@ -471,11 +471,13 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 
 
 ####################################################################
-#' Frequencies on Lists and Plot
+#' Frequencies on Lists and UpSet Plot
 #' 
-#' Visualize frequency of elements on a list or list vector, which
-#' combinations and elements are the most frequent. Your variable can be
-#' a character vector with comma separated values or a list vector.
+#' Visualize frequency of elements on a list, list vector, or vector with
+#' comma separated values. Detect which combinations and elements are 
+#' the most frequent and how much they represent of your total observations.
+#' This is similar to the [UpSet Plots](http://vcg.github.io/upset/) which 
+#' may be used as an alternative to Venn diagrams.
 #' 
 #' @family Frequency
 #' @family Exploratory
@@ -490,6 +492,8 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @param min_elements Integer. Exclude combinations with less than n elements
 #' @param limit Integer. Show top n combinations and elements. The rest
 #' will be grouped into a single element.
+#' @param tail Boolean. Show tail grouped into "..." on the plots?
+#' @param size Numeric. Text base size
 #' @param unique Boolean. a,b = b,a?
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
 #' @param title Character. Added to the plot.
@@ -510,34 +514,56 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' lapply(x, names)
 #' x$plot
 #' 
-#' # Using the 'wt' argument to add a continuous value dimension
-#' freqs_list(df, films, wt = height, abc = TRUE, limit = 8, min_elements = 2,
-#'            title = "Star Wars:\nCharacter's\nHeights per Films")
+#' # Using the 'wt' argument to add a continuous value metric
+#' # into an already one-hot encoded columns dataset (and hide tail)
+#' csv <- "https://raw.githubusercontent.com/hms-dbmi/UpSetR/master/inst/extdata/movies.csv"
+#' movies <- read.csv(csv, sep = ";")
+#' head(movies)
+#' freqs_list(movies, wt = AvgRating, min_elements = 2, tail = FALSE,
+#'            title = "Movies\nMixed Genres\nRanking")
 #' @export
-freqs_list <- function(df, var, 
+freqs_list <- function(df, var = NULL, 
                        wt = NA, fx = "mean",
                        rm.na = FALSE,
                        min_elements = 1,
                        limit = 10, 
+                       tail = TRUE,
+                       size = 10,
                        unique = TRUE, 
                        abc = FALSE, 
                        title = "",
                        plot = TRUE) {
-  
+  dff <- df
   var_str <- deparse(substitute(var))
-  check_opts(var_str, colnames(df))
+  if (var_str != 'NULL') {
+    check_opts(var_str, colnames(df)) 
+    colnames(df)[colnames(df) == var_str] <- "which"
+  } else {
+    # If user has an already one hot encoded data.frame
+    duos <- data.frame(
+      count = sapply(df, function(x) length(unique(x)))) %>% 
+      filter(.data$count == 2)
+    if (nrow(duos) == 0)
+      stop("Please, define a valid 'var' column or make sure to have binary/logical columns.")
+    duos <- rownames(duos)
+    message(paste(">>> Binary columns detected:", v2t(duos)))
+    which <- sapply(df[,duos], function(x) x == 1)
+    result <- c()
+    for (i in 1:nrow(df[,duos])) {
+      result <- c(result, v2t(colnames(df[,duos])[which[i,]], quotes = FALSE))
+    }
+    df$which <- result
+  }
   
-  # Change column names for easier manipulation
-  colnames(df)[colnames(df) == var_str] <- "which"
-  
+  # Weighted column
   wt_str <- deparse(substitute(wt))
   if (wt_str != "NA") {
     if (wt_str %in% colnames(df)) {
       message(paste(">>> Colour weight:", fx, wt_str))
       colnames(df)[colnames(df) == wt_str] <- "wt" 
-    }
-  } else df$wt <- 0
-  if (!is.numeric(df$wt)) stop("Input ", wt_str, " must be a numeric column.")
+      weights <- as.numeric(df$wt)
+    } else stop(sprintf("'%s' is not a valid weight column", wt_str))
+  } else weights <- 0
   
   # If list then convert
   if (is.list(df$which))
@@ -545,8 +571,8 @@ freqs_list <- function(df, var,
   
   # check if it's a valid column
   if(!any(grepl(",", df$which)))
-    stop(sprintf(
-      "Your input (%s) is not valid: does NOT contain commas or is no a list.", var_str))
+    stop(paste("Your inputs may not be valid: no valid binary columns OR",
+               "'var' does NOT contain commas nor is a list vector."))
   
   # Order values so a,b = b,a
   if (unique) {
@@ -556,7 +582,7 @@ freqs_list <- function(df, var,
   } else values <- df$which
   
   # One hot encoding
-  vals <- data.frame(var = values, wt = df$wt) %>% 
+  vals <- data.frame(var = values, wt = weights) %>% 
     filter(.data$var != "") %>%
     {if (rm.na) filter(., !is.na(.data$wt)) else .}%>%
     group_by(.data$var) %>%
@@ -608,16 +634,22 @@ freqs_list <- function(df, var,
   # Amount of data considered
   caption <- sprintf("Observations: %s | Elements: %s", sum(vals$n), sum(elements$n))
   if (min_elements > 1) caption <- v2t(c(caption, sprintf(
-      "Excluding combinations with less than %s elements", min_elements)),
-      quotes = FALSE, sep = "\n")
+    "Excluding combinations with less than %s elements", min_elements)),
+    quotes = FALSE, sep = "\n")
+  
+  # Get rid of the tail?
+  if (!tail) {
+    elements <- elements[as.character(elements$label) != "...",]
+    tgthr <- tgthr[as.character(tgthr$label) != "...",]
+  }
   
   # Scatter plot: combinations
   p1 <- tgthr %>%
     ggplot(aes(x = reorder(.data$label, .data$order), 
                y = var, group = .data$label)) +
-    geom_point(size = 4) + geom_path() +
-    theme_lares2(mg = -1, which = "XY") +
-    labs(x = NULL, y = NULL, caption = caption) +
+    geom_point(size = 3.5) + geom_path() +
+    theme_lares2(size = size, mg = -1, grid = "XY") +
+    labs(x = "Combination rank", y = NULL, caption = caption) +
     theme(axis.text.y = element_blank(),
           plot.margin = margin(0,0,0,0)) +
     scale_x_discrete(position = "top")
@@ -625,49 +657,45 @@ freqs_list <- function(df, var,
   # Bar plot: elements
   p2 <- elements %>%
     mutate(label = gsub("var_","", .data$label)) %>%
-    ggplot(aes(x = reorder(.data$label, -.data$order), 
+    ggplot(aes(x = reorder(autoline(as.character(.data$label)), -.data$order), 
                y = -.data$n, 
                fill = .data$wt)) +
     coord_flip() + geom_col() +
-    labs(y = NULL, x = NULL) +
-    theme_lares2(mg = -1) +
+    labs(y = "Element Size", x = NULL) +
+    theme_lares2(size = size, mg = -1, grid = "X") +
+    theme(plot.margin = margin(0,0,0,0)) +
     scale_y_continuous(position = "right", 
                        labels = function(x) formatNum(abs(x), 0)) +
-    theme(panel.grid.major = element_blank(), 
-          panel.grid.minor = element_blank()) +
     guides(fill = FALSE)
   
   # Bar plot: combinations
   p3 <- vals %>%
     mutate(var = ifelse(row_number() > limit, "...", .data$var)) %>%
+    {if (!tail) filter(., .data$var != "...") else .} %>%
     ggplot(aes(x = reorder(.data$var, .data$order), 
                y = .data$n, fill = .data$wt)) +
     geom_col() + 
-    theme_lares2(mg = -1) + 
+    theme_lares2(size = size, mg = -1, grid = "Y") + 
     scale_y_continuous(labels = function(x) formatNum(abs(x), 0)) +
-    labs(x = NULL, y = "Combination Frequency",
+    labs(x = NULL, y = "Combination Size",
          fill = if (wt_str != "NA") str_to_title(paste(fx, wt_str, sep = "\n")) else NULL) +
     theme(axis.text.x  = element_blank(),
-          panel.grid.major = element_blank(), 
-          panel.grid.minor = element_blank()) +
+          plot.margin = margin(0,0,0,0)) +
     scale_fill_continuous(guide = guide_colourbar(direction = "horizontal"))
   if (wt_str == "NA") p3 <- p3 + guides(fill = FALSE)
   
   # Join all plots
   layout <- "
-  AAABBBBB
-  CCCBBBBB
-  DDDEEEEE
-  DDDEEEEE
-  DDDEEEEE"
+  ABBB
+  CBBB
+  DEEE
+  DEEE"
   p <- noPlot(title, 4) + p3 + guide_area() + 
     p2 + p1 + plot_layout(design = layout) +
     plot_layout(guides = 'collect')
   if (plot) plot(p)
-
+  
   # Prepare dataframe outputs
-  ohe <- ohe_commas(data.frame(vals = values), "vals")
-  colnames(ohe) <- gsub("vals_", "", colnames(ohe))
   elements <- mutate(elements, key = gsub("var_", "", .data$key)) %>%
     rename("element" = .data$key) %>% select(-.data$label)
   vals <- mutate(vals, var = gsub("var_", "", .data$var)) %>%
@@ -675,7 +703,7 @@ freqs_list <- function(df, var,
   colnames(vals) <- gsub("var_", "", colnames(vals))
   
   results <- list(plot = p, 
-                  ohe = ohe, 
+                  data = rename(df, "combination" = "which"),
                   elements = elements,
                   combinations = vals)
   

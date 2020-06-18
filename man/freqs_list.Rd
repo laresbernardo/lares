@@ -2,16 +2,18 @@
 % Please edit documentation in R/frequencies.R
 \name{freqs_list}
 \alias{freqs_list}
-\title{Frequencies on Lists and Plot}
+\title{Frequencies on Lists and UpSet Plot}
 \usage{
 freqs_list(
   df,
-  var,
+  var = NULL,
   wt = NA,
   fx = "mean",
   rm.na = FALSE,
   min_elements = 1,
   limit = 10,
+  tail = TRUE,
+  size = 10,
   unique = TRUE,
   abc = FALSE,
   title = "",
@@ -36,6 +38,10 @@ of the combinations.}
 \item{limit}{Integer. Show top n combinations and elements. The rest
 will be grouped into a single element.}
 
+\item{tail}{Boolean. Show tail grouped into "..." on the plots?}
+
+\item{size}{Numeric. Text base size}
+
 \item{unique}{Boolean. a,b = b,a?}
 
 \item{abc}{Boolean. Do you wish to sort by alphabetical order?}
@@ -45,9 +51,11 @@ will be grouped into a single element.}
 \item{plot}{Boolean. Plot viz? Will be generated anyways in the output object}
 }
 \description{
-Visualize frequency of elements on a list or list vector, which
-combinations and elements are the most frequent. Your variable can be
-a character vector with comma separated values or a list vector.
+Visualize frequency of elements on a list, list vector, or vector with
+comma separated values. Detect which combinations and elements are 
+the most frequent and how much they represent of your total observations.
+This is similar to the [UpSet Plots](http://vcg.github.io/upset/) which 
+may be used as an alternative to Venn diagrams.
 }
 \examples{
 options("lares.font"=NA) # Temporal
@@ -65,9 +73,13 @@ x <- freqs_list(df, skin_color, min_elements = 2, plot = FALSE)
 lapply(x, names)
 x$plot
 
-# Using the 'wt' argument to add a continuous value dimension
-freqs_list(df, films, wt = height, abc = TRUE, limit = 8, min_elements = 2,
-           title = "Star Wars:\nCharacter's\nHeights per Films")
+# Using the 'wt' argument to add a continuous value metric
+# into an already one-hot encoded columns dataset (and hide tail)
+csv <- "https://raw.githubusercontent.com/hms-dbmi/UpSetR/master/inst/extdata/movies.csv"
+movies <- read.csv(csv, sep = ";")
+head(movies)
+freqs_list(movies, wt = AvgRating, min_elements = 2, tail = FALSE,
+           title = "Movies\nMixed Genres\nRanking")
 }
 \seealso{
 Other Frequency: 

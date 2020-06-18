@@ -7,8 +7,8 @@
 #' @param package Character. Name of the library
 #' @param stop Boolean. Stop if not installed
 #' @examples 
-#' # Check if library dummylibrary is installed. If not, do not break as error.
-#' try_require("dummylibrary", stop = FALSE)
+#' # Check if library "dummy" is installed. If not, do not break as error.
+#' try_require("dummy", stop = FALSE)
 #' # Check if library base is installed. If not, stop and show error
 #' try_require("base", stop = TRUE)
 #' @export
