@@ -52,15 +52,15 @@ a character vector with comma separated values or a list vector.
 \examples{
 options("lares.font"=NA) # Temporal
 df <- dplyr::starwars
-print(head(df))
+head(df[,c(1,4,5,12)], 10)
 
 # Characters per movies combinations in a list column
-print(head(df$films, 2))
+head(df$films, 2)
 df \%>\% freqs_list(films)
 
 # Skin colours in a comma-separated column
-print(head(df$skin_color))
-x <- freqs_list(starwars, skin_color, min_elements = 2, plot = FALSE)
+head(df$skin_color)
+x <- freqs_list(df, skin_color, min_elements = 2, plot = FALSE)
 # Inside "x" we'll have:
 lapply(x, names)
 x$plot
