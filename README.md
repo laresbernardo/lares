@@ -1,11 +1,11 @@
 # lares <img src='man/figures/lares_logo.png' align="right" height="140px" />
 ### R Package for Analytics and Machine Learning
-[![R-CMD-check](https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg?branch=master)](https://github.com/laresbernardo/lares/actions?query=workflow%3AR-CMD-check) [![documentation](https://github.com/laresbernardo/lares/workflows/documentation/badge.svg)](https://laresbernardo.github.io/lares/reference/index.html) [![travis](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares)  [![saythanks](https://img.shields.io/badge/say-hi-blue.svg)](https://www.linkedin.com/in/laresbernardo/)
+[![R-CMD-check](https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg?branch=master)](https://github.com/laresbernardo/lares/actions?query=workflow%3AR-CMD-check) [![documentation](https://github.com/laresbernardo/lares/workflows/documentation/badge.svg)](https://laresbernardo.github.io/lares/reference/index.html) [![travis](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares)  [![saythanks](https://img.shields.io/badge/say-hi-blue.svg)](https://www.linkedin.com/in/laresbernardo)
 ----
 
 R library designed to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. With a wide variety of family functions such as Machine Learning, EDA, Investment, Queries, Scrappers, APIs, `lares` helps the analyst or data scientist to get quick, reproducible, and robust results, without the need of repetitive coding nor extensive programming skills. Feel free to install, use, and/or comment on any of the code and functionalities. Oh, and if you are also colourblind, be sure to check the colour palettes!
 
-Don't hesitate to contact me via [Linkedin](https://www.linkedin.com/in/laresbernardo/), but please, do let me know where did you first hear from the library and which family of functions you are most interested in.
+Don't hesitate to contact me, and please, do let me know where did you first hear from the library and which family of functions you are most interested in.
 
 ## Installation
 

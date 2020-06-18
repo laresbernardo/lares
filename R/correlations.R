@@ -96,7 +96,7 @@ corr <- function(df, method = "pearson",
 #' @family Exploratory
 #' @family Correlations
 #' @param df Dataframe.
-#' @param ... Object. Name of the variable to correlate
+#' @param var Variable. Name of the variable to correlate
 #' @param ignore Character vector. Which columns do you wish to exlude?
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @param trim Integer. Trim words until the nth character for 
@@ -112,6 +112,7 @@ corr <- function(df, method = "pearson",
 #' @param top Integer. If you want to plot the top correlations, 
 #' define how many
 #' @param ceiling Numeric. Remove all correlations above... Range: (0-100]
+#' @param max_pvalue Numeric. Filter non-significant variables. Range (0, 1]
 #' @param limit Integer. Limit one hot encoding to the n most frequent 
 #' values of each column. Set to \code{NA} to ignore argument.
 #' @param zeroes Do you wish to keep zeroes in correlations too?
@@ -127,8 +128,8 @@ corr <- function(df, method = "pearson",
 #' 
 #' # With plots, results are easier to compare:
 #' 
-#' # Correlate Survived with everything else
-#' dft %>% corr_var(Survived_TRUE)
+#' # Correlate Survived with everything else and show only significant results
+#' dft %>% corr_var(Survived_TRUE, max_pvalue = 0.05)
 #' 
 #' # Filter out variables with less than 50% of correlation
 #' dft %>% corr_var(Survived_TRUE, ceiling = 50)
@@ -139,7 +140,7 @@ corr <- function(df, method = "pearson",
 #' # Also calculate log(values)
 #' dft %>% corr_var(Survived_TRUE, logs = TRUE, top = 15)
 #' @export
-corr_var <- function(df, ..., 
+corr_var <- function(df, var, 
                      ignore = NA,
                      method = "pearson", 
                      trim = 0,
@@ -149,14 +150,14 @@ corr_var <- function(df, ...,
                      dates = TRUE,
                      top = NA, 
                      ceiling = 100, 
+                     max_pvalue = 1,
                      limit = 10,
                      zeroes = FALSE,
                      save = FALSE, 
                      subdir = NA,
                      file_name = "viz_corrvar.png") {
   
-  vars <- quos(...)
-  var <- as_label(vars[[1]])
+  var <- deparse(substitute(var))
   df <- select(df, -contains(paste0(var,"_log")))
   
   # Calculate correlations
@@ -184,6 +185,11 @@ corr_var <- function(df, ...,
   
   if (!zeroes) d <- d[d$corr != 0, ]
   
+  # Suppress non-statistical significant correlations
+  if (max_pvalue < 1) d <- d %>%
+    mutate(pvalue = as.numeric(ifelse(is.na(.data$pvalue), 1, .data$pvalue))) %>%
+    filter(.data$pvalue <= max_pvalue)
+  
   # Limit automatically when more than 30 observations
   if (is.na(top) & nrow(d) > 30) {
     top <- 30
@@ -196,7 +202,7 @@ corr_var <- function(df, ...,
     message(paste0("Removing all correlations greater than ", ceiling, "% (absolute)"))
   }
   
-  if (!is.na(top)) d <- d[1:as.integer(top), ]
+  if (!is.na(top)) d <- head(d, top)
   
   d <- d[complete.cases(d), ]
   
@@ -225,6 +231,9 @@ corr_var <- function(df, ...,
     if (!is.na(top) & top < original_n) p <- p + 
         labs(subtitle = paste(
           "Top", top, "out of", original_n, "variables (original & dummy)"))
+    
+    if (max_pvalue < 1) 
+      p <- p + labs(caption = paste("Correlations with p-value <", max_pvalue))
   }
   
   if (!is.na(subdir)) {
@@ -397,12 +406,12 @@ corr_cross <- function(df, plot = TRUE,
         labs(x = NULL, y = "Correlation [%]", 
              subtitle = subtitle,
              title = "Local Cross-Correlations") +
-        scale_y_percent() + 
+        scale_y_continuous(labels = function(x) formatNum(x, 0, pos = "%")) + 
         coord_flip() +
         theme_lares2(pal = 2) 
     }
     if (max_pvalue < 1) 
-      p <- p + labs(caption = paste("Filtering p-value <", max_pvalue))
+      p <- p + labs(caption = paste("Correlations with p-value <", max_pvalue))
     return(p)
   }
   return(ret)

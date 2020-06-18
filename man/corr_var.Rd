@@ -6,7 +6,7 @@
 \usage{
 corr_var(
   df,
-  ...,
+  var,
   ignore = NA,
   method = "pearson",
   trim = 0,
@@ -16,6 +16,7 @@ corr_var(
   dates = TRUE,
   top = NA,
   ceiling = 100,
+  max_pvalue = 1,
   limit = 10,
   zeroes = FALSE,
   save = FALSE,
@@ -26,7 +27,7 @@ corr_var(
 \arguments{
 \item{df}{Dataframe.}
 
-\item{...}{Object. Name of the variable to correlate}
+\item{var}{Variable. Name of the variable to correlate}
 
 \item{ignore}{Character vector. Which columns do you wish to exlude?}
 
@@ -51,6 +52,8 @@ out of the date/time columns?}
 define how many}
 
 \item{ceiling}{Numeric. Remove all correlations above... Range: (0-100]}
+
+\item{max_pvalue}{Numeric. Filter non-significant variables. Range (0, 1]}
 
 \item{limit}{Integer. Limit one hot encoding to the n most frequent 
 values of each column. Set to \code{NA} to ignore argument.}
@@ -77,8 +80,8 @@ dft \%>\% corr_var(Survived, method = "spearman", plot = FALSE, top = 10)
 
 # With plots, results are easier to compare:
 
-# Correlate Survived with everything else
-dft \%>\% corr_var(Survived_TRUE)
+# Correlate Survived with everything else and show only significant results
+dft \%>\% corr_var(Survived_TRUE, max_pvalue = 0.05)
 
 # Filter out variables with less than 50\% of correlation
 dft \%>\% corr_var(Survived_TRUE, ceiling = 50)
