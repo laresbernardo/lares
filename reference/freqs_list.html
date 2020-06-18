@@ -229,19 +229,21 @@ will be grouped into a single element.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span>=<span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='kw'>dplyr</span>::<span class='kw'><a href='https://dplyr.tidyverse.org/reference/starwars.html'>starwars</a></span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 14</span><span>
-#&gt;   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> 
-#&gt; </span><span style='color: #555555;'>1</span><span> Luke…    172    77 blond      fair       blue            19   male  mascu…
-#&gt; </span><span style='color: #555555;'>2</span><span> C-3PO    167    75 </span><span style='color: #BB0000;'>NA</span><span>         gold       yellow         112   none  mascu…
-#&gt; </span><span style='color: #555555;'>3</span><span> R2-D2     96    32 </span><span style='color: #BB0000;'>NA</span><span>         white, bl… red             33   none  mascu…
-#&gt; </span><span style='color: #555555;'>4</span><span> Dart…    202   136 none       white      yellow          41.9 male  mascu…
-#&gt; </span><span style='color: #555555;'>5</span><span> Leia…    150    49 brown      light      brown           19   fema… femin…
-#&gt; </span><span style='color: #555555;'>6</span><span> Owen…    178   120 brown, gr… light      blue            52   male  mascu…
-#&gt; </span><span style='color: #555555;'># … with 5 more variables: homeworld </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, species </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, films </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   vehicles </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>, starships </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>12</span>)], <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 4</span><span>
+#&gt;    name               hair_color    skin_color  films    
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>   
+#&gt; </span><span style='color: #555555;'> 1</span><span> Luke Skywalker     blond         fair        </span><span style='color: #555555;'>&lt;chr [5]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 2</span><span> C-3PO              </span><span style='color: #BB0000;'>NA</span><span>            gold        </span><span style='color: #555555;'>&lt;chr [6]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 3</span><span> R2-D2              </span><span style='color: #BB0000;'>NA</span><span>            white, blue </span><span style='color: #555555;'>&lt;chr [7]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 4</span><span> Darth Vader        none          white       </span><span style='color: #555555;'>&lt;chr [4]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 5</span><span> Leia Organa        brown         light       </span><span style='color: #555555;'>&lt;chr [5]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 6</span><span> Owen Lars          brown, grey   light       </span><span style='color: #555555;'>&lt;chr [3]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 7</span><span> Beru Whitesun lars brown         light       </span><span style='color: #555555;'>&lt;chr [3]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 8</span><span> R5-D4              </span><span style='color: #BB0000;'>NA</span><span>            white, red  </span><span style='color: #555555;'>&lt;chr [1]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 9</span><span> Biggs Darklighter  black         light       </span><span style='color: #555555;'>&lt;chr [1]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>10</span><span> Obi-Wan Kenobi     auburn, white fair        </span><span style='color: #555555;'>&lt;chr [6]&gt;</span><span></div><div class='input'>
 <span class='co'># Characters per movies combinations in a list column</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>films</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt; [[1]]
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>films</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "The Empire Strikes Back" "Revenge of the Sith"    
 #&gt; [3] "Return of the Jedi"      "A New Hope"             
 #&gt; [5] "The Force Awakens"      
@@ -252,12 +254,36 @@ will be grouped into a single element.</p></td>
 #&gt; [5] "Return of the Jedi"      "A New Hope"             
 #&gt; </div><div class='input'><span class='kw'>df</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs_list</span>(<span class='kw'>films</span>)</div><div class='img'><img src='freqs_list-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Skin colours in a comma-separated column</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>skin_color</span>))</div><div class='output co'>#&gt; [1] "fair"        "gold"        "white, blue" "white"       "light"      
-#&gt; [6] "light"      </div><div class='input'><span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>freqs_list</span>(<span class='kw'>starwars</span>, <span class='kw'>skin_color</span>, min_elements = <span class='fl'>2</span>, plot = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in is.data.frame(x): object 'starwars' not found</span></div><div class='input'><span class='co'># Inside "x" we'll have:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>x</span>, <span class='kw'>names</span>)</div><div class='output co'>#&gt; <span class='error'>Error in lapply(x, names): object 'x' not found</span></div><div class='input'><span class='kw'>x</span><span class='op'>$</span><span class='kw'>plot</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'x' not found</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>skin_color</span>)</div><div class='output co'>#&gt; [1] "fair"        "gold"        "white, blue" "white"       "light"      
+#&gt; [6] "light"      </div><div class='input'><span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>freqs_list</span>(<span class='kw'>df</span>, <span class='kw'>skin_color</span>, min_elements = <span class='fl'>2</span>, plot = <span class='fl'>FALSE</span>)
+<span class='co'># Inside "x" we'll have:</span>
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>x</span>, <span class='kw'>names</span>)</div><div class='output co'>#&gt; $plot
+#&gt;  [1] "data"        "layers"      "scales"      "mapping"     "theme"      
+#&gt;  [6] "coordinates" "facet"       "plot_env"    "labels"      "patches"    
+#&gt; 
+#&gt; $ohe
+#&gt;  [1] "vals"          "fair"          "gold"          "blue"         
+#&gt;  [5] "white"         "light"         "red"           "unknown"      
+#&gt;  [9] "green"         "brown"         "green-tan"     "pale"         
+#&gt; [13] "metal"         "dark"          "brown mottle"  "grey"         
+#&gt; [17] "mottled green" "orange"        "yellow"        "tan"          
+#&gt; [21] "silver"        "none"         
+#&gt; 
+#&gt; $elements
+#&gt; [1] "element" "n"       "wt"      "p"       "order"  
+#&gt; 
+#&gt; $combinations
+#&gt;  [1] "combination"   "n"             "wt"            "p"            
+#&gt;  [5] "order"         "fair"          "light"         "dark"         
+#&gt;  [9] "green"         "grey"          "pale"          "brown"        
+#&gt; [13] "blue"          "white"         "orange"        "tan"          
+#&gt; [17] "unknown"       "yellow"        "red"           "green-tan"    
+#&gt; [21] "silver"        "brown mottle"  "gold"          "metal"        
+#&gt; [25] "mottled green" "none"         
+#&gt; </div><div class='input'><span class='kw'>x</span><span class='op'>$</span><span class='kw'>plot</span></div><div class='img'><img src='freqs_list-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using the 'wt' argument to add a continuous value dimension</span>
 <span class='fu'>freqs_list</span>(<span class='kw'>df</span>, <span class='kw'>films</span>, wt = <span class='kw'>height</span>, abc = <span class='fl'>TRUE</span>, limit = <span class='fl'>8</span>, min_elements = <span class='fl'>2</span>,
-           title = <span class='st'>"Star Wars:\nCharacter's\nHeights per Films"</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Colour weight: mean height</span></div><div class='img'><img src='freqs_list-2.png' alt='' width='700' height='433' /></div></span></pre>
+           title = <span class='st'>"Star Wars:\nCharacter's\nHeights per Films"</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Colour weight: mean height</span></div><div class='img'><img src='freqs_list-3.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
