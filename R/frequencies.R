@@ -631,17 +631,19 @@ freqs_list <- function(df, var = NULL,
       as.character(.data$var), "...")) %>% 
     mutate(var = factor(.data$var, levels = rev(c(as.character(elements$key), "..."))))
   
-  # Amount of data considered
-  caption <- sprintf("Observations: %s | Elements: %s", sum(vals$n), sum(elements$n))
-  if (min_elements > 1) caption <- v2t(c(caption, sprintf(
-    "Excluding combinations with less than %s elements", min_elements)),
-    quotes = FALSE, sep = "\n")
-  
   # Get rid of the tail?
   if (!tail) {
     elements <- elements[as.character(elements$label) != "...",]
     tgthr <- tgthr[as.character(tgthr$label) != "...",]
   }
+  
+  # Amount of data considered
+  caption <- sprintf("Observations: %s | Elements: %s", 
+                     formatNum(sum(vals$n), 0),
+                     formatNum(sum(elements$n), 0))
+  if (min_elements > 1) caption <- v2t(c(caption, sprintf(
+    "Excluding combinations with less than %s elements", min_elements)),
+    quotes = FALSE, sep = "\n")
   
   # Scatter plot: combinations
   p1 <- tgthr %>%
@@ -657,9 +659,8 @@ freqs_list <- function(df, var = NULL,
   # Bar plot: elements
   p2 <- elements %>%
     mutate(label = gsub("var_","", .data$label)) %>%
-    ggplot(aes(x = reorder(autoline(as.character(.data$label)), -.data$order), 
-               y = -.data$n, 
-               fill = .data$wt)) +
+    ggplot(aes(x = reorder(.data$label, -.data$order), 
+               y = -.data$n, fill = .data$wt)) +
     coord_flip() + geom_col() +
     labs(y = "Element Size", x = NULL) +
     theme_lares2(size = size, mg = -1, grid = "X") +
@@ -678,7 +679,8 @@ freqs_list <- function(df, var = NULL,
     theme_lares2(size = size, mg = -1, grid = "Y") + 
     scale_y_continuous(labels = function(x) formatNum(abs(x), 0)) +
     labs(x = NULL, y = "Combination Size",
-         fill = if (wt_str != "NA") str_to_title(paste(fx, wt_str, sep = "\n")) else NULL) +
+         fill = if (wt_str != "NA") 
+           paste(str_to_title(fx), wt_str, sep = "\n") else NULL) +
     theme(axis.text.x  = element_blank(),
           plot.margin = margin(0,0,0,0)) +
     scale_fill_continuous(guide = guide_colourbar(direction = "horizontal"))

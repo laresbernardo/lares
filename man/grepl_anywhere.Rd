@@ -20,3 +20,10 @@ something followed by "b", anywhere in the string.}
 Match and replace pattern with blanks within each element of a 
 character vector, allowing counted characters between patterns.
 }
+\examples{
+x <- c("aaaa", "bbbb", "abab", "aabb", "a", "ab")
+grepl_anywhere(x, "ab")
+grepl_anywhere(x, "_ab")
+grepl_anywhere(x, "a_a")
+grepl_anywhere(x, "c")
+}

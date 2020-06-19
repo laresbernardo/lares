@@ -1556,28 +1556,40 @@ move_files <- function(from, to) {
 #' "a_b" means any character that contains "a" followed by 
 #' something followed by "b", anywhere in the string.
 #' @param blank Character. String to use between regular expressions.
+#' @examples 
+#' x <- c("aaaa", "bbbb", "abab", "aabb", "a", "ab")
+#' grepl_anywhere(x, "ab")
+#' grepl_anywhere(x, "_ab")
+#' grepl_anywhere(x, "a_a")
+#' grepl_anywhere(x, "c")
 #' @export 
 grepl_anywhere <- function(vector, pattern, blank = "_") {
   if (!grepl(blank, pattern))
     return(grepl(pattern, vector))
-  # if (nchar(blank != 1))
-  #   stop(paste("Your 'blank' parameter", v2t(blank), "must be length 1"))
   forced <- tolower(unlist(strsplit(pattern, "")))
   forced_which <- which(forced != blank)
   combs <- res <- c()
   for(i in 0:(max(nchar(vector))-max(forced_which)))
     combs <- rbind(combs, (forced_which + i))
+  # We can skip those that do NOT have all the letters
+  run <- sapply(forced[forced_which], function(x) grepl(x, vector))
+  run <- apply(run, 1, all) 
+  # Let's iterate all combinations for each element
   for (i in 1:length(vector)) {
     temp <- c()
-    for (k in 1:nrow(combs)) {
-      aux <- c()
-      for (j in 1:ncol(combs)) {
-        aux <- c(aux, substr(vector[i], combs[k, j], combs[k, j]))
-      }
-      aux <- paste0(aux, collapse = "") == gsub(blank, "", pattern)
-      temp <- c(temp, aux)
-    }
-    res <- c(res, any(temp))
+    if (run[i]) {
+      for (k in 1:nrow(combs)) {
+        aux <- c()
+        for (j in 1:ncol(combs)) {
+          aux <- c(aux, substr(vector[i], combs[k, j], combs[k, j]))
+        }
+        aux <- paste0(aux, collapse = "") == gsub(blank, "", pattern)
+        temp <- any(c(temp, aux))
+      } 
+    } else {
+      temp <- FALSE
+    } 
+    res <- c(res, temp)
   }
   return(res)
 }
