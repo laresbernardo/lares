@@ -116,6 +116,60 @@ scrabble_points <- function(language) {
   return(scores)
 }
 
+
+####################################################################
+#' Pattern Matching for Letters considering Blanks
+#'
+#' Match pattern of letters considering blanks within each element of a 
+#' character vector, allowing counted characters between and around 
+#' each letter. Used as an auxiliary function for the Scrabble family
+#' of functions.
+#'
+#' @param vector Character vector
+#' @param pattern Character. Character string containing a 
+#' semi-regular expression which uses the following logic:
+#' "a_b" means any character that contains "a" followed by 
+#' something followed by "b", anywhere in the string.
+#' @param blank Character. String to use between letters.
+#' @examples 
+#' x <- c("aaaa", "bbbb", "abab", "aabb", "a", "ab")
+#' grepl_letters(x, "ab")
+#' grepl_letters(x, "_ab")
+#' grepl_letters(x, "a_a")
+#' grepl_letters(x, "c")
+#' @export 
+grepl_letters <- function(vector, pattern, blank = "_") {
+  if (!grepl(blank, pattern))
+    return(grepl(pattern, vector))
+  forced <- tolower(unlist(strsplit(pattern, "")))
+  forced_which <- which(forced != blank)
+  combs <- res <- c()
+  for(i in 0:(max(nchar(vector))-max(forced_which)))
+    combs <- rbind(combs, (forced_which + i))
+  # We can skip those that do NOT have all the letters
+  run <- sapply(forced[forced_which], function(x) grepl(x, vector))
+  run <- apply(run, 1, all) 
+  # Let's iterate all combinations for each element
+  for (i in 1:length(vector)) {
+    temp <- c()
+    if (run[i]) {
+      for (k in 1:nrow(combs)) {
+        aux <- c()
+        for (j in 1:ncol(combs)) {
+          aux <- c(aux, substr(vector[i], combs[k, j], combs[k, j]))
+        }
+        aux <- paste0(aux, collapse = "") == gsub(blank, "", pattern)
+        temp <- any(c(temp, aux))
+      } 
+    } else {
+      temp <- FALSE
+    } 
+    res <- c(res, temp)
+  }
+  return(res)
+}
+
+
 ####################################################################
 #' Scrabble: Highest score words finder
 #' 
@@ -197,7 +251,7 @@ scrabble_points <- function(language) {
 #' 10 loza      13
 #' # … with 86 more rows
 #' 
-#' # Words considered for a language
+#' # Words considered for a language (you can custom it too!)
 #' es_words <- scrabble_dictionary("es")
 #' }
 #' @export
@@ -246,7 +300,7 @@ scrabble_words <- function(tiles,
   if (force_str[1] != "") {
     for (str in force_str) {
       tiles <- addletters(str, tiles)
-      words <- words[grepl_anywhere(words, pattern = tolower(str), blank = "_")] 
+      words <- words[grepl_letters(words, pattern = tolower(str), blank = "_")] 
     }
   }
   
@@ -301,7 +355,10 @@ addletters <- function(str, tiles) {
     if (any(which)) {
       new <- str_tiles[which]
       tiles <- c(tiles, new)
-      message(sprintf(">>> %s was not in your tiles; including it!", v2t(new)))
+      message(sprintf(
+        ">>> %s %s not in your tiles; included!", 
+        v2t(new, and = "and"), 
+        ifelse(length(new) > 1, "were", "was")))
     }
   }
   return(tiles)

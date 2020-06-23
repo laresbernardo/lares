@@ -105,7 +105,7 @@ scrabble_words(tiles = "holase",
 10 loza      13
 # … with 86 more rows
 
-# Words considered for a language
+# Words considered for a language (you can custom it too!)
 es_words <- scrabble_dictionary("es")
 }
 }

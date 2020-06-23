@@ -12,6 +12,8 @@ freqs_list(
   rm.na = FALSE,
   min_elements = 1,
   limit = 10,
+  limit_x = NA,
+  limit_y = NA,
   tail = TRUE,
   size = 10,
   unique = TRUE,
@@ -35,8 +37,10 @@ of the combinations.}
 
 \item{min_elements}{Integer. Exclude combinations with less than n elements}
 
-\item{limit}{Integer. Show top n combinations and elements. The rest
-will be grouped into a single element.}
+\item{limit, limit_x, limit_y}{Integer. Show top n combinations (x) and/or 
+elements (y). The rest will be grouped into a single element. 
+Set argument to 0 to ignore. \code{limit_x}/\code{limit_y} answer to 
+\code{limit}'s argument.}
 
 \item{tail}{Boolean. Show tail grouped into "..." on the plots?}
 
@@ -54,10 +58,11 @@ will be grouped into a single element.}
 Visualize frequency of elements on a list, list vector, or vector with
 comma separated values. Detect which combinations and elements are 
 the most frequent and how much they represent of your total observations.
-This is similar to the [UpSet Plots](http://vcg.github.io/upset/) which 
-may be used as an alternative to Venn diagrams.
+This is similar to the \href{http://vcg.github.io/upset/}{UpSet Plots}
+which may be used as an alternative to Venn diagrams.
 }
 \examples{
+\dontrun{
 options("lares.font"=NA) # Temporal
 df <- dplyr::starwars
 head(df[,c(1,4,5,12)], 10)
@@ -68,10 +73,9 @@ df \%>\% freqs_list(films)
 
 # Skin colours in a comma-separated column
 head(df$skin_color)
-x <- freqs_list(df, skin_color, min_elements = 2, plot = FALSE)
+x <- freqs_list(df, skin_color, min_elements = 2, limit = 5, plot = FALSE)
 # Inside "x" we'll have:
-lapply(x, names)
-x$plot
+names(x)
 
 # Using the 'wt' argument to add a continuous value metric
 # into an already one-hot encoded columns dataset (and hide tail)
@@ -80,6 +84,8 @@ movies <- read.csv(csv, sep = ";")
 head(movies)
 freqs_list(movies, wt = AvgRating, min_elements = 2, tail = FALSE,
            title = "Movies\nMixed Genres\nRanking")
+# So, please: no more Comedy+SciFi and more Drama+Horror films (based on ~50 movies)!
+}
 }
 \seealso{
 Other Frequency: 

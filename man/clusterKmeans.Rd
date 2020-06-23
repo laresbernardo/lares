@@ -48,6 +48,7 @@ Also, kmeans assumes spherical shapes of clusters and doesn’t work well
 when clusters are in different shapes such as elliptical clusters.
 }
 \examples{
+\dontrun{
 options("lares.font" = NA) # Temporal
 data(dft) # Titanic dataset
 df <- subset(dft, select = -c(Ticket, PassengerId))
@@ -67,7 +68,6 @@ plot(clusters$correlations)
 plot(clusters$PCA$plotVarExp)
 plot(clusters$PCA$plot_1_2)
 
-\dontrun{
 # 3D interactive plot
 clusters$PCA$plot_1_2_3
 }

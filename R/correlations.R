@@ -157,7 +157,8 @@ corr_var <- function(df, var,
                      subdir = NA,
                      file_name = "viz_corrvar.png") {
   
-  var <- deparse(substitute(var))
+  vars <- enquo(var)
+  var <- as.character(vars[[2]])
   df <- select(df, -contains(paste0(var,"_log")))
   
   # Calculate correlations
@@ -213,7 +214,7 @@ corr_var <- function(df, var,
   }
   
   if (plot) {
-    p <- ungroup(d) %>%
+    p <- ungroup(d) %>% select(-.data$pvalue) %>%
       mutate(pos = ifelse(.data$corr > 0, TRUE, FALSE),
              hjust = ifelse(abs(.data$corr) < max(abs(.data$corr))/1.5, -0.1, 1.1)) %>%
       ggplot(aes(x = reorder(.data$variables, abs(.data$corr)), 

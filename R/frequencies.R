@@ -476,8 +476,8 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' Visualize frequency of elements on a list, list vector, or vector with
 #' comma separated values. Detect which combinations and elements are 
 #' the most frequent and how much they represent of your total observations.
-#' This is similar to the [UpSet Plots](http://vcg.github.io/upset/) which 
-#' may be used as an alternative to Venn diagrams.
+#' This is similar to the \href{http://vcg.github.io/upset/}{UpSet Plots}
+#' which may be used as an alternative to Venn diagrams.
 #' 
 #' @family Frequency
 #' @family Exploratory
@@ -490,8 +490,10 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @param fx Character. Set operation: mean, sum
 #' @param rm.na Boolean. Remove NA value from \code{wt}?
 #' @param min_elements Integer. Exclude combinations with less than n elements
-#' @param limit Integer. Show top n combinations and elements. The rest
-#' will be grouped into a single element.
+#' @param limit,limit_x,limit_y Integer. Show top n combinations (x) and/or 
+#' elements (y). The rest will be grouped into a single element. 
+#' Set argument to 0 to ignore. \code{limit_x}/\code{limit_y} answer to 
+#' \code{limit}'s argument.
 #' @param tail Boolean. Show tail grouped into "..." on the plots?
 #' @param size Numeric. Text base size
 #' @param unique Boolean. a,b = b,a?
@@ -499,6 +501,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @param title Character. Added to the plot.
 #' @param plot Boolean. Plot viz? Will be generated anyways in the output object
 #' @examples 
+#' \dontrun{
 #' options("lares.font"=NA) # Temporal
 #' df <- dplyr::starwars
 #' head(df[,c(1,4,5,12)], 10)
@@ -509,10 +512,9 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' 
 #' # Skin colours in a comma-separated column
 #' head(df$skin_color)
-#' x <- freqs_list(df, skin_color, min_elements = 2, plot = FALSE)
+#' x <- freqs_list(df, skin_color, min_elements = 2, limit = 5, plot = FALSE)
 #' # Inside "x" we'll have:
-#' lapply(x, names)
-#' x$plot
+#' names(x)
 #' 
 #' # Using the 'wt' argument to add a continuous value metric
 #' # into an already one-hot encoded columns dataset (and hide tail)
@@ -521,12 +523,16 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' head(movies)
 #' freqs_list(movies, wt = AvgRating, min_elements = 2, tail = FALSE,
 #'            title = "Movies\nMixed Genres\nRanking")
+#' # So, please: no more Comedy+SciFi and more Drama+Horror films (based on ~50 movies)!
+#' }
 #' @export
 freqs_list <- function(df, var = NULL, 
                        wt = NA, fx = "mean",
                        rm.na = FALSE,
                        min_elements = 1,
                        limit = 10, 
+                       limit_x = NA,
+                       limit_y = NA,
                        tail = TRUE,
                        size = 10,
                        unique = TRUE, 
@@ -534,7 +540,7 @@ freqs_list <- function(df, var = NULL,
                        title = "",
                        plot = TRUE) {
   dff <- df
-  var_str <- deparse(substitute(var))
+  var_str <- as.character(enquo(var)[[2]])
   if (var_str != 'NULL') {
     check_opts(var_str, colnames(df)) 
     colnames(df)[colnames(df) == var_str] <- "which"
@@ -556,10 +562,10 @@ freqs_list <- function(df, var = NULL,
   }
   
   # Weighted column
-  wt_str <- deparse(substitute(wt))
+  wt_str <- as.character(enquo(wt)[[2]])
   if (wt_str != "NA") {
     if (wt_str %in% colnames(df)) {
-      message(paste(">>> Colour weight:", fx, wt_str))
+      # message(paste(">>> Colour weight:", fx, wt_str))
       colnames(df)[colnames(df) == wt_str] <- "wt" 
       weights <- as.numeric(df$wt)
     } else stop(sprintf("'%s' is not a valid weight column", wt_str))
@@ -599,6 +605,11 @@ freqs_list <- function(df, var = NULL,
     mutate(combs = rowSums(.[unlist(lapply(., is.logical))], na.rm = TRUE)) %>%
     filter(.data$combs >= min_elements) %>% select(-.data$combs)
   
+  # Set limits
+  if (limit == 0) limit <- nrow(df)
+  if (is.na(limit_x)) limit_x <- nrow(vals)
+  if (is.na(limit_y)) limit_y <- nrow(vals)
+  
   elements <- vals %>%
     tidyr::gather(.) %>% 
     mutate(n = rep(vals$n, ncol(vals))) %>%
@@ -614,7 +625,7 @@ freqs_list <- function(df, var = NULL,
     mutate(p = 100 * .data$n/nrow(df), order = row_number()) %>%
     mutate(key = as.factor(.data$key)) %>%
     mutate(label = sprintf("%s (%s)", .data$key, formatNum(.data$p, 0, pos = "%"))) %>%
-    mutate(label = ifelse(.data$order > limit, "...", .data$label)) %>%
+    mutate(label = ifelse(.data$order > min(limit, limit_y), "...", .data$label)) %>%
     mutate(label = as.factor(.data$label))
   
   tgthr <- vals %>% 
@@ -625,7 +636,7 @@ freqs_list <- function(df, var = NULL,
     mutate(id = row_number(), order = row_number()) %>%
     mutate(label = sprintf("#%s", id)) %>%
     filter(.data$value == TRUE) %>%
-    mutate(label = ifelse(.data$id > limit, "...", .data$label)) %>%
+    mutate(label = ifelse(.data$id > min(limit, limit_x), "...", .data$label)) %>%
     mutate(var = ifelse(
       as.character(.data$var) %in% as.character(elements$key[elements$label != "..."]),
       as.character(.data$var), "...")) %>% 
@@ -633,7 +644,7 @@ freqs_list <- function(df, var = NULL,
   
   # Get rid of the tail?
   if (!tail) {
-    elements <- elements[as.character(elements$label) != "...",]
+    #elements <- elements[as.character(elements$label) != "...",]
     tgthr <- tgthr[as.character(tgthr$label) != "...",]
   }
   
@@ -644,6 +655,7 @@ freqs_list <- function(df, var = NULL,
   if (min_elements > 1) caption <- v2t(c(caption, sprintf(
     "Excluding combinations with less than %s elements", min_elements)),
     quotes = FALSE, sep = "\n")
+  if (!tail) caption <- paste(caption, "Tail combinations suppressed from plot", sep = "\n")
   
   # Scatter plot: combinations
   p1 <- tgthr %>%
@@ -671,11 +683,11 @@ freqs_list <- function(df, var = NULL,
   
   # Bar plot: combinations
   p3 <- vals %>%
-    mutate(var = ifelse(row_number() > limit, "...", .data$var)) %>%
+    mutate(var = ifelse(row_number() > min(limit, limit_x), "...", .data$var)) %>%
     {if (!tail) filter(., .data$var != "...") else .} %>%
     ggplot(aes(x = reorder(.data$var, .data$order), 
                y = .data$n, fill = .data$wt)) +
-    geom_col() + 
+    geom_col() + #ggfittext::geom_bar_text(size = 9) +
     theme_lares2(size = size, mg = -1, grid = "Y") + 
     scale_y_continuous(labels = function(x) formatNum(abs(x), 0)) +
     labs(x = NULL, y = "Combination Size",
@@ -692,7 +704,7 @@ freqs_list <- function(df, var = NULL,
   CBBB
   DEEE
   DEEE"
-  p <- noPlot(title, 4) + p3 + guide_area() + 
+  p <- noPlot(title, size = 3.5) + p3 + guide_area() + 
     p2 + p1 + plot_layout(design = layout) +
     plot_layout(guides = 'collect')
   if (plot) plot(p)
@@ -711,3 +723,4 @@ freqs_list <- function(df, var = NULL,
   
   return(invisible(results))
 }
+

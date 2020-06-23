@@ -1460,6 +1460,7 @@ replacefactor <- function(x, original, change) {
 #' them by package. Wrapper for 'getParseData'. May be of great
 #' use for those developing a package to help see what 
 #' namespace 'importsFrom' calls will be required.
+#' 
 #' @param filename Character. Path to an R file containing R code.
 #' @param alphabetic Boolean. List functions alphabetically.
 #' If FALSE, will list in order of appearance.
@@ -1473,10 +1474,10 @@ replacefactor <- function(x, original, change) {
 #' \dontrun{
 #' # Choose an R script file with functions
 #' rfile <- file.choose()
-#' list_fxs_file(rfile)
+#' list_fun_file(rfile)
 #' }
 #' @export 
-list_fxs_file <- function(filename, alphabetic = TRUE) {
+list_fun_file <- function(filename, alphabetic = TRUE) {
   if (!file.exists(filename)) 
     stop("Couldn't find file ", filename)
   if (!right(toupper(filename), 1) == "R")
@@ -1541,55 +1542,4 @@ move_files <- function(from, to) {
     file.rename(from = froms[i],  to = tos[i])
   }
   
-}
-
-
-####################################################################
-#' Pattern Matching and Replacement Anywhere with Blanks
-#'
-#' Match and replace pattern with blanks within each element of a 
-#' character vector, allowing counted characters between patterns.
-#'
-#' @param vector Character vector
-#' @param pattern Character. Character string containing a 
-#' semi-regular expression which uses the following logic:
-#' "a_b" means any character that contains "a" followed by 
-#' something followed by "b", anywhere in the string.
-#' @param blank Character. String to use between regular expressions.
-#' @examples 
-#' x <- c("aaaa", "bbbb", "abab", "aabb", "a", "ab")
-#' grepl_anywhere(x, "ab")
-#' grepl_anywhere(x, "_ab")
-#' grepl_anywhere(x, "a_a")
-#' grepl_anywhere(x, "c")
-#' @export 
-grepl_anywhere <- function(vector, pattern, blank = "_") {
-  if (!grepl(blank, pattern))
-    return(grepl(pattern, vector))
-  forced <- tolower(unlist(strsplit(pattern, "")))
-  forced_which <- which(forced != blank)
-  combs <- res <- c()
-  for(i in 0:(max(nchar(vector))-max(forced_which)))
-    combs <- rbind(combs, (forced_which + i))
-  # We can skip those that do NOT have all the letters
-  run <- sapply(forced[forced_which], function(x) grepl(x, vector))
-  run <- apply(run, 1, all) 
-  # Let's iterate all combinations for each element
-  for (i in 1:length(vector)) {
-    temp <- c()
-    if (run[i]) {
-      for (k in 1:nrow(combs)) {
-        aux <- c()
-        for (j in 1:ncol(combs)) {
-          aux <- c(aux, substr(vector[i], combs[k, j], combs[k, j]))
-        }
-        aux <- paste0(aux, collapse = "") == gsub(blank, "", pattern)
-        temp <- any(c(temp, aux))
-      } 
-    } else {
-      temp <- FALSE
-    } 
-    res <- c(res, temp)
-  }
-  return(res)
 }
