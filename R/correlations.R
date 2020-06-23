@@ -157,8 +157,8 @@ corr_var <- function(df, var,
                      subdir = NA,
                      file_name = "viz_corrvar.png") {
   
-  vars <- enquo(var)
-  var <- as.character(vars[[2]])
+  vars <- enquos(var)
+  var <- as_label(vars[[1]])
   df <- select(df, -contains(paste0(var,"_log")))
   
   # Calculate correlations
@@ -170,8 +170,8 @@ corr_var <- function(df, var,
     warning(paste("Not a valid input:", var, "was transformed or does not exist."))
     maybes <- colnames(rs$cor)[grepl(var, colnames(rs$cor))]
     if (length(maybes) > 0 & maybes[1] %in% colnames(rs$cor)) {
-      message(paste0("Maybe you meant one of: ", vector2text(maybes), ". ",
-                     "Automatically using '", maybes[1], "'"))
+      warning(sprintf("Maybe you meant one of: %s", vector2text(head(maybes, 10))))
+      message(sprintf("Automatically using '%s", maybes[1]))
       var <- maybes[1]
     } else stop()
   }
@@ -203,7 +203,7 @@ corr_var <- function(df, var,
     message(paste0("Removing all correlations greater than ", ceiling, "% (absolute)"))
   }
   
-  if (!is.na(top)) d <- head(d, top)
+  if (!is.na(top)) d <- head(d, top + 1)
   
   d <- d[complete.cases(d), ]
   
@@ -214,7 +214,8 @@ corr_var <- function(df, var,
   }
   
   if (plot) {
-    p <- ungroup(d) %>% select(-.data$pvalue) %>%
+    p <- ungroup(d) %>% 
+      filter(.data$variables != "pvalue") %>%
       mutate(pos = ifelse(.data$corr > 0, TRUE, FALSE),
              hjust = ifelse(abs(.data$corr) < max(abs(.data$corr))/1.5, -0.1, 1.1)) %>%
       ggplot(aes(x = reorder(.data$variables, abs(.data$corr)), 
@@ -298,7 +299,7 @@ corr_cross <- function(df, plot = TRUE,
                        rm.na = FALSE, dummy = TRUE, limit = 10, redundant = FALSE,
                        method = "pearson") {
   
-  check_opts(type, c(1, 2))
+  check_opts(type, 1:2)
   
   if (sum(is.na(df)) & rm.na == FALSE) 
     warning("There are NA values in your data!")
