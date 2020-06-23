@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Split a dataframe for training and testing sets — msplit • lares</title>
+<title>List all functions used in an R script file by package — list_fun_file • lares</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,11 @@
 
 
 
-<meta property="og:title" content="Split a dataframe for training and testing sets — msplit" />
-<meta property="og:description" content="This function splits automatically a dataframe into train and 
-test datasets. You can define a seed to get the same results 
-every time, but has a default value. You can prevent it from 
-printing the split counter result." />
+<meta property="og:title" content="List all functions used in an R script file by package — list_fun_file" />
+<meta property="og:description" content="Parses all functions called by an R script and then lists
+them by package. Wrapper for 'getParseData'. May be of great
+use for those developing a package to help see what 
+namespace 'importsFrom' calls will be required." />
 
 
 
@@ -111,101 +111,49 @@ printing the split counter result." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Split a dataframe for training and testing sets</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/model_functions.R'><code>R/model_functions.R</code></a></small>
-    <div class="hidden name"><code>msplit.Rd</code></div>
+    <h1>List all functions used in an R script file by package</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_functions.R'><code>R/other_functions.R</code></a></small>
+    <div class="hidden name"><code>list_fun_file.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function splits automatically a dataframe into train and 
-test datasets. You can define a seed to get the same results 
-every time, but has a default value. You can prevent it from 
-printing the split counter result.</p>
+    <p>Parses all functions called by an R script and then lists
+them by package. Wrapper for 'getParseData'. May be of great
+use for those developing a package to help see what 
+namespace 'importsFrom' calls will be required.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>msplit</span>(<span class='kw'>df</span>, size = <span class='fl'>0.7</span>, seed = <span class='fl'>0</span>, print = <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>list_fun_file</span>(<span class='kw'>filename</span>, alphabetic = <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>df</th>
-      <td><p>Dataframe to split</p></td>
+      <th>filename</th>
+      <td><p>Character. Path to an R file containing R code.</p></td>
     </tr>
     <tr>
-      <th>size</th>
-      <td><p>Numeric. Split rate value, between 0 and 1. If set to
-1, the train and test set will be the same.</p></td>
-    </tr>
-    <tr>
-      <th>seed</th>
-      <td><p>Seed for random split</p></td>
-    </tr>
-    <tr>
-      <th>print</th>
-      <td><p>Print summary results</p></td>
+      <th>alphabetic</th>
+      <td><p>Boolean. List functions alphabetically.
+If FALSE, will list in order of appearance.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list with both datasets, summary, and split rate</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other Machine Learning: 
-<code>ROC()</code>,
-<code>clusterKmeans()</code>,
-<code>conf_mat()</code>,
-<code>export_results()</code>,
-<code>gain_lift()</code>,
-<code>h2o_automl()</code>,
-<code>h2o_predict_API()</code>,
-<code>h2o_predict_MOJO()</code>,
-<code>h2o_predict_binary()</code>,
-<code>h2o_predict_model()</code>,
-<code>h2o_results()</code>,
-<code>h2o_selectmodel()</code>,
-<code>impute()</code>,
-<code>iter_seeds()</code>,
-<code>lasso_vars()</code>,
-<code>model_metrics()</code></p>
-<p>Other Tools: 
-<code>autoline()</code>,
-<code>bindfiles()</code>,
-<code>bring_api()</code>,
-<code>db_download()</code>,
-<code>db_upload()</code>,
-<code>export_plot()</code>,
-<code>export_results()</code>,
-<code>get_credentials()</code>,
-<code>h2o_predict_API()</code>,
-<code>h2o_predict_MOJO()</code>,
-<code>h2o_predict_binary()</code>,
-<code>h2o_predict_model()</code>,
-<code>h2o_selectmodel()</code>,
-<code>h2o_update()</code>,
-<code>haveInternet()</code>,
-<code>image_metadata()</code>,
-<code>importxlsx()</code>,
-<code>ip_country()</code>,
-<code>iter_seeds()</code>,
-<code>json2vector()</code>,
-<code>listfiles()</code>,
-<code>mailSend()</code>,
-<code>myip()</code>,
-<code>pass()</code>,
-<code>quiet()</code>,
-<code>read.file()</code>,
-<code>statusbar()</code>,
-<code>tic()</code>,
-<code>try_require()</code>,
-<code>updateLares()</code>,
-<code>zerovar()</code></p></div>
+    <p>Returns a list. Parses all functions called by an R script 
+and then lists them by package. Those from the script itself are listed
+under '.GlobalEnv' and any functions that may originate
+from multiple packages have all possibilities listed. Those listed under
+'character(0)' are those for which a package could not be found- may be
+functions within functions, or from packages that aren't loaded.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
-<span class='kw'>splits</span> <span class='op'>&lt;-</span> <span class='fu'>msplit</span>(<span class='kw'>dft</span>, size = <span class='fl'>0.7</span>, seed = <span class='fl'>123</span>)</div><div class='output co'>#&gt; train_size  test_size 
-#&gt;        623        268 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>splits</span>)</div><div class='output co'>#&gt; [1] "train"      "test"       "summary"    "split_size"</div></pre>
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># Choose an R script file with functions</span>
+<span class='kw'>rfile</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.choose.html'>file.choose</a></span>()
+<span class='fu'>list_fun_file</span>(<span class='kw'>rfile</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
