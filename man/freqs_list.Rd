@@ -7,7 +7,7 @@
 freqs_list(
   df,
   var = NULL,
-  wt = NA,
+  wt = NULL,
   fx = "mean",
   rm.na = FALSE,
   min_elements = 1,

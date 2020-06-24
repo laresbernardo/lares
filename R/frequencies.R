@@ -526,8 +526,9 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' # So, please: no more Comedy+SciFi and more Drama+Horror films (based on ~50 movies)!
 #' }
 #' @export
-freqs_list <- function(df, var = NULL, 
-                       wt = NA, fx = "mean",
+freqs_list <- function(df, 
+                       var = NULL, 
+                       wt = NULL, fx = "mean",
                        rm.na = FALSE,
                        min_elements = 1,
                        limit = 10, 
@@ -563,7 +564,7 @@ freqs_list <- function(df, var = NULL,
   
   # Weighted column
   wt_str <- as.character(enquo(wt)[[2]])
-  if (wt_str != "NA") {
+  if (length(wt_str) > 0) {
     if (wt_str %in% colnames(df)) {
       # message(paste(">>> Colour weight:", fx, wt_str))
       colnames(df)[colnames(df) == wt_str] <- "wt" 
@@ -691,12 +692,12 @@ freqs_list <- function(df, var = NULL,
     theme_lares2(size = size, mg = -1, grid = "Y") + 
     scale_y_continuous(labels = function(x) formatNum(abs(x), 0)) +
     labs(x = NULL, y = "Combination Size",
-         fill = if (wt_str != "NA") 
+         fill = if (length(wt_str) > 0) 
            paste(str_to_title(fx), wt_str, sep = "\n") else NULL) +
     theme(axis.text.x  = element_blank(),
           plot.margin = margin(0,0,0,0)) +
     scale_fill_continuous(guide = guide_colourbar(direction = "horizontal"))
-  if (wt_str == "NA") p3 <- p3 + guides(fill = FALSE)
+  if (length(wt_str) == 0) p3 <- p3 + guides(fill = FALSE)
   
   # Join all plots
   layout <- "
@@ -723,4 +724,3 @@ freqs_list <- function(df, var = NULL,
   
   return(invisible(results))
 }
-
