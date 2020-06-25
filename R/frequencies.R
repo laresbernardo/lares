@@ -541,7 +541,7 @@ freqs_list <- function(df,
                        title = "",
                        plot = TRUE) {
   dff <- df
-  var_str <- as.character(enquo(var)[[2]])
+  var_str <- as_label(enquo(var))
   if (var_str != 'NULL') {
     check_opts(var_str, colnames(df)) 
     colnames(df)[colnames(df) == var_str] <- "which"
@@ -563,7 +563,8 @@ freqs_list <- function(df,
   }
   
   # Weighted column
-  wt_str <- as.character(enquo(wt)[[2]])
+  wt_str <- as_label(enquo(wt))
+  if (wt_str == "NULL") wt_str <- NULL
   if (length(wt_str) > 0) {
     if (wt_str %in% colnames(df)) {
       # message(paste(">>> Colour weight:", fx, wt_str))
