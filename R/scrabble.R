@@ -213,7 +213,7 @@ grepl_letters <- function(vector, pattern, blank = "_") {
 #'                force_max = 0,
 #'                quiet = FALSE)
 #'                
-#' # Custom scores table and manual language input
+#' # Custom scores table and manual language input 
 #' cu_scores <- data.frame(
 #'   tiles = c(tolower(LETTERS)[1:14],"_",tolower(LETTERS)[15:length(LETTERS)]),
 #'   scores = c(1,1,1,1,1,1,1,1,1,1,1,1,3,1,8,1,3,5,1,1,1,2,4,10,10,5,10))
