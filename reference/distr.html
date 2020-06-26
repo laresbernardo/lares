@@ -284,10 +284,8 @@ for both, target and values)</p></td>
 <span class='co'># Distribution of numerical/numerical</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(logFare = <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='kw'>Fare</span>)) <span class='op'>%&gt;%</span> <span class='fu'>distr</span>(<span class='kw'>Fare</span>, <span class='kw'>logFare</span>)</div><div class='img'><img src='distr-7.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Select only one of the two default plots of distr()</span>
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span>(<span class='kw'>Survived</span>, <span class='kw'>Age</span>, type = <span class='fl'>2</span>)
-<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span>(<span class='kw'>Survived</span>, <span class='kw'>Age</span>, type = <span class='fl'>3</span>)
-}</div></span></pre>
+<span class='co'># \donttest{</span>
+<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span>(<span class='kw'>Survived</span>, <span class='kw'>Age</span>, type = <span class='fl'>2</span>)</div><div class='img'><img src='distr-8.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span>(<span class='kw'>Survived</span>, <span class='kw'>Age</span>, type = <span class='fl'>3</span>)</div><div class='img'><img src='distr-9.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

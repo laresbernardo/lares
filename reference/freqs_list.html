@@ -245,30 +245,65 @@ Set argument to 0 to ignore. <code>limit_x</code>/<code>limit_y</code> answer to
 <code>tree_var()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span>=<span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='kw'>dplyr</span>::<span class='kw'><a href='https://dplyr.tidyverse.org/reference/starwars.html'>starwars</a></span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>12</span>)], <span class='fl'>10</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>12</span>)], <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 4</span><span>
+#&gt;    name               hair_color    skin_color  films    
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>   
+#&gt; </span><span style='color: #555555;'> 1</span><span> Luke Skywalker     blond         fair        </span><span style='color: #555555;'>&lt;chr [5]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 2</span><span> C-3PO              </span><span style='color: #BB0000;'>NA</span><span>            gold        </span><span style='color: #555555;'>&lt;chr [6]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 3</span><span> R2-D2              </span><span style='color: #BB0000;'>NA</span><span>            white, blue </span><span style='color: #555555;'>&lt;chr [7]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 4</span><span> Darth Vader        none          white       </span><span style='color: #555555;'>&lt;chr [4]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 5</span><span> Leia Organa        brown         light       </span><span style='color: #555555;'>&lt;chr [5]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 6</span><span> Owen Lars          brown, grey   light       </span><span style='color: #555555;'>&lt;chr [3]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 7</span><span> Beru Whitesun lars brown         light       </span><span style='color: #555555;'>&lt;chr [3]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 8</span><span> R5-D4              </span><span style='color: #BB0000;'>NA</span><span>            white, red  </span><span style='color: #555555;'>&lt;chr [1]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 9</span><span> Biggs Darklighter  black         light       </span><span style='color: #555555;'>&lt;chr [1]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>10</span><span> Obi-Wan Kenobi     auburn, white fair        </span><span style='color: #555555;'>&lt;chr [6]&gt;</span><span></div><div class='input'>
 <span class='co'># Characters per movies combinations in a list column</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>films</span>, <span class='fl'>2</span>)
-<span class='kw'>df</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs_list</span>(<span class='kw'>films</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>films</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "The Empire Strikes Back" "Revenge of the Sith"    
+#&gt; [3] "Return of the Jedi"      "A New Hope"             
+#&gt; [5] "The Force Awakens"      
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] "The Empire Strikes Back" "Attack of the Clones"   
+#&gt; [3] "The Phantom Menace"      "Revenge of the Sith"    
+#&gt; [5] "Return of the Jedi"      "A New Hope"             
+#&gt; </div><div class='input'><span class='kw'>df</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs_list</span>(<span class='kw'>films</span>)</div><div class='img'><img src='freqs_list-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Skin colours in a comma-separated column</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>skin_color</span>)
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>freqs_list</span>(<span class='kw'>df</span>, <span class='kw'>skin_color</span>, min_elements = <span class='fl'>2</span>, limit = <span class='fl'>5</span>, plot = <span class='fl'>FALSE</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>skin_color</span>)</div><div class='output co'>#&gt; [1] "fair"        "gold"        "white, blue" "white"       "light"      
+#&gt; [6] "light"      </div><div class='input'><span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>freqs_list</span>(<span class='kw'>df</span>, <span class='kw'>skin_color</span>, min_elements = <span class='fl'>2</span>, limit = <span class='fl'>5</span>, plot = <span class='fl'>FALSE</span>)
 <span class='co'># Inside "x" we'll have:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>x</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>x</span>)</div><div class='output co'>#&gt; [1] "plot"         "data"         "elements"     "combinations"</div><div class='input'>
 <span class='co'># Using the 'wt' argument to add a continuous value metric</span>
 <span class='co'># into an already one-hot encoded columns dataset (and hide tail)</span>
 <span class='kw'>csv</span> <span class='op'>&lt;-</span> <span class='st'>"https://raw.githubusercontent.com/hms-dbmi/UpSetR/master/inst/extdata/movies.csv"</span>
 <span class='kw'>movies</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span>(<span class='kw'>csv</span>, sep = <span class='st'>";"</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>movies</span>)
-<span class='fu'>freqs_list</span>(<span class='kw'>movies</span>, wt = <span class='kw'>AvgRating</span>, min_elements = <span class='fl'>2</span>, tail = <span class='fl'>FALSE</span>,
-           title = <span class='st'>"Movies\nMixed Genres\nRanking"</span>)
-<span class='co'># So, please: no more Comedy+SciFi and more Drama+Horror films (based on ~50 movies)!</span>
-}</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>movies</span>)</div><div class='output co'>#&gt;                                 Name ReleaseDate Action Adventure Children
+#&gt; 1                   Toy Story (1995)        1995      0         0        1
+#&gt; 2                     Jumanji (1995)        1995      0         1        1
+#&gt; 3            Grumpier Old Men (1995)        1995      0         0        0
+#&gt; 4           Waiting to Exhale (1995)        1995      0         0        0
+#&gt; 5 Father of the Bride Part II (1995)        1995      0         0        0
+#&gt; 6                        Heat (1995)        1995      1         0        0
+#&gt;   Comedy Crime Documentary Drama Fantasy Noir Horror Musical Mystery Romance
+#&gt; 1      1     0           0     0       0    0      0       0       0       0
+#&gt; 2      0     0           0     0       1    0      0       0       0       0
+#&gt; 3      1     0           0     0       0    0      0       0       0       1
+#&gt; 4      1     0           0     1       0    0      0       0       0       0
+#&gt; 5      1     0           0     0       0    0      0       0       0       0
+#&gt; 6      0     1           0     0       0    0      0       0       0       0
+#&gt;   SciFi Thriller War Western AvgRating Watches
+#&gt; 1     0        0   0       0      4.15    2077
+#&gt; 2     0        0   0       0      3.20     701
+#&gt; 3     0        0   0       0      3.02     478
+#&gt; 4     0        0   0       0      2.73     170
+#&gt; 5     0        0   0       0      3.01     296
+#&gt; 6     0        1   0       0      3.88     940</div><div class='input'><span class='fu'>freqs_list</span>(<span class='kw'>movies</span>, wt = <span class='kw'>AvgRating</span>, min_elements = <span class='fl'>2</span>, tail = <span class='fl'>FALSE</span>,
+           title = <span class='st'>"Movies\nMixed Genres\nRanking"</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Binary columns detected: 'Action', 'Adventure', 'Children', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Fantasy', 'Noir', 'Horror', 'Musical', 'Mystery', 'Romance', 'SciFi', 'Thriller', 'War', 'Western'</span></div><div class='img'><img src='freqs_list-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># So, please: no more Comedy+SciFi and more Drama+Horror films (based on ~50 movies)!</span>
+<span class='co'># }</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
