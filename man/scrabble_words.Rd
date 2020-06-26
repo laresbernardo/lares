@@ -54,9 +54,10 @@ language to win at Scrabble! You just have to find the best
 place to post your tiles.
 }
 \examples{
-\donttest{
+\dontrun{
 # Automatic use of languages and scores
 options("lares.lang" = "es")
+
 scrabble_words(tiles = "holasa",
                free = 1,
                force_start = "",
@@ -65,20 +66,6 @@ scrabble_words(tiles = "holasa",
                force_n = 6,
                force_max = 0,
                quiet = FALSE)
-# A tibble: 43 x 2
-word   scores
-<chr>   <int>
-1 haloza     18
-2 azolas     15
-3 solaza     15
-4 ahoyas     13
-5 alojas     13
-6 ahogas     11
-7 achola     10
-8 aloyas     10
-9 chaola     10
-10 cholas    10
-# … with 33 more rows
                
 # Custom scores table and manual language input
 cu_scores <- data.frame(
@@ -90,20 +77,6 @@ scrabble_words(tiles = "holase",
                scores = cu_scores,
                free = 1,
                force_start = "_o_a")
-# A tibble: 96 x 2
-  word    scores
-  <chr>    <int>
-1 hozase     18
-2 hozas      17
-3 hoza       16
-4 hojas      15
-5 hoja       14
-6 lozas      14
-7 solaz      14
-8 xolas      14
-9 hoyase     13
-10 loza      13
-# … with 86 more rows
 
 # Words considered for a language (you can custom it too!)
 es_words <- scrabble_dictionary("es")

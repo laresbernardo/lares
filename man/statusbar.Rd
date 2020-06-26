@@ -34,6 +34,12 @@ seconds/minutes ago.}
 \description{
 This function lets the user view a progressbar for a 'for' loop.
 }
+\examples{
+for (i in 1:5) {
+  statusbar(i, 5)
+  Sys.sleep(0.2)
+}
+}
 \seealso{
 Other Tools: 
 \code{\link{autoline}()},

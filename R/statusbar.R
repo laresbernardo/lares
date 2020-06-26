@@ -16,10 +16,10 @@
 #' for when first iteration is showed as done but started a few 
 #' seconds/minutes ago.
 #' @examples
-# for (i in 1:10) {
-#   statusbar(i, 10)
-#   Sys.sleep(0.2)
-# }
+#' for (i in 1:5) {
+#'   statusbar(i, 5)
+#'   Sys.sleep(0.2)
+#' }
 #' @export
 statusbar <- function(run = 1, max.run = 100, label = run, 
                       msg = "DONE", type = "equal",
