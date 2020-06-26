@@ -9,7 +9,7 @@
 #' @param y Character. Variable's column name
 #' @param ignore Character vector. Which columns should be ignored?
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' data(dft) # Titanic dataset
 #' 
 #' # TRAIN A SIMPLE MODEL
@@ -31,8 +31,6 @@
 #' 
 #' # LOCAL EXAMPLE
 #' print(head(explainer$data, 1))
-#' Pclass    Sex Age SibSp Parch    Fare Embarked train_test predict    FALSE.     TRUE.
-#'      3 female  27     0     2 11.1333        S       test   FALSE 0.6844502 0.3155498
 #' local <- dalex_local(explainer, row = 1)
 #' # OR YOU COULD MANUALLY INPUT THE OBSERVATION
 #' local <- dalex_local(explainer, observation = head(explainer$data, 1))

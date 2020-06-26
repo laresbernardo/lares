@@ -37,7 +37,7 @@ This function lets the user view a progressbar for a 'for' loop.
 \examples{
 for (i in 1:5) {
   statusbar(i, 5)
-  Sys.sleep(0.2)
+  Sys.sleep(0.5)
 }
 }
 \seealso{
