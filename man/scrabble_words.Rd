@@ -54,7 +54,7 @@ language to win at Scrabble! You just have to find the best
 place to post your tiles.
 }
 \examples{
-\dontrun{
+\donttest{
 # Automatic use of languages and scores
 options("lares.lang" = "es")
 scrabble_words(tiles = "holasa",

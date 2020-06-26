@@ -85,7 +85,7 @@ dfl$novar <- "novar"
 ohse(dfl, dates = TRUE) \%>\% head(3)
 ohse(dfl, dates = TRUE, ignore = "issued") \%>\% head(3)
 
-\dontrun{
+\donttest{
 # Include holidays
 ohse(dfl, dates = FALSE, holidays = TRUE, country = "Venezuela") \%>\% head()
 }

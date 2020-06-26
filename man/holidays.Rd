@@ -18,7 +18,7 @@ This function lets the user automatically scrap holiday dates from
 any country and year within +- 5 years. Thanks to timeanddate.com!
 }
 \examples{
-\dontrun{
+\donttest{
 holidays(countries = "Argentina") 
 holidays(countries = c("Argentina", "Venezuela"), years = c(2019, 2020))
 }

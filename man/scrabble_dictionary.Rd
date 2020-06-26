@@ -18,7 +18,7 @@ This is an auxiliary function. You may want to use \code{scrabble_words}
 directly if you are searching for the highest score words!
 }
 \examples{
-\dontrun{
+\donttest{
 # For Spanish words
 dictionary <- scrabble_dictionary("es")
 }

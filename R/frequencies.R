@@ -501,7 +501,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @param title Character. Added to the plot.
 #' @param plot Boolean. Plot viz? Will be generated anyways in the output object
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' options("lares.font"=NA) # Temporal
 #' df <- dplyr::starwars
 #' head(df[,c(1,4,5,12)], 10)
@@ -644,12 +644,6 @@ freqs_list <- function(df,
       as.character(.data$var), "...")) %>% 
     mutate(var = factor(.data$var, levels = rev(c(as.character(elements$key), "..."))))
   
-  # Get rid of the tail?
-  if (!tail) {
-    #elements <- elements[as.character(elements$label) != "...",]
-    tgthr <- tgthr[as.character(tgthr$label) != "...",]
-  }
-  
   # Amount of data considered
   caption <- sprintf("Observations: %s | Elements: %s", 
                      formatNum(sum(vals$n), 0),
@@ -686,7 +680,7 @@ freqs_list <- function(df,
   # Bar plot: combinations
   p3 <- vals %>%
     mutate(var = ifelse(row_number() > min(limit, limit_x), "...", .data$var)) %>%
-    {if (!tail) filter(., .data$var != "...") else .} %>%
+    {if (!tail) mutate(., n = ifelse(.data$var == "...", 1e-8, .data$n)) else .} %>%
     ggplot(aes(x = reorder(.data$var, .data$order), 
                y = .data$n, fill = .data$wt)) +
     geom_col() + #ggfittext::geom_bar_text(size = 9) +

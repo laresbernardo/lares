@@ -52,7 +52,7 @@
 #' ohse(dfl, dates = TRUE) %>% head(3)
 #' ohse(dfl, dates = TRUE, ignore = "issued") %>% head(3)
 #' 
-#' \dontrun{
+#' \donttest{
 #' # Include holidays
 #' ohse(dfl, dates = FALSE, holidays = TRUE, country = "Venezuela") %>% head()
 #' }
@@ -339,7 +339,7 @@ date_feats <- function(dates,
 #' @param countries Character or vector. For which country(ies) should the 
 #' holidays be imported?
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' holidays(countries = "Argentina") 
 #' holidays(countries = c("Argentina", "Venezuela"), years = c(2019, 2020))
 #' }

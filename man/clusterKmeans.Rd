@@ -48,7 +48,7 @@ Also, kmeans assumes spherical shapes of clusters and doesn’t work well
 when clusters are in different shapes such as elliptical clusters.
 }
 \examples{
-\dontrun{
+\donttest{
 options("lares.font" = NA) # Temporal
 data(dft) # Titanic dataset
 df <- subset(dft, select = -c(Ticket, PassengerId))
