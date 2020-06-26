@@ -148,7 +148,42 @@
 <code>dalex_variable()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
+
+<span class='co'># TRAIN A SIMPLE MODEL</span>
+<span class='kw'>dfm</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, y = <span class='st'>"Survived"</span>,
+                  ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Ticket"</span>, <span class='st'>"PassengerId"</span>, <span class='st'>"Cabin"</span>),
+                  max_models = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='message'>2020-06-26 15:35:12 | Started process...</span></div><div class='output co'>#&gt; <span class='message'>Variable to predict: Survived</span></div><div class='output co'>#&gt; <span class='message'>NOTE: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span></div><div class='output co'>#&gt; <span class='message'>NOTE: There are 6 non-numerical features. Consider using ohse() for One Hot Smart Encoding before automl if you want to custom your inputs.</span></div><div class='output co'>#&gt; <span class='message'>Model type: Classifier</span></div><div class='output co'>#&gt;     tag   n     p order   pcum
+#&gt; 1 FALSE 549 61.62     1  61.62
+#&gt; 2  TRUE 342 38.38     2 100.00</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Splitting datasets</span></div><div class='output co'>#&gt; train_size  test_size 
+#&gt;        623        268 </div><div class='output co'>#&gt; <span class='message'>Ignored variables for training models: 'Ticket', 'PassengerId', 'Cabin'</span></div><div class='output co'>#&gt; <span class='message'>Algorithms excluded: 'StackedEnsemble', 'DeepLearning'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Iterating until 1 models or 600 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Succesfully generated 1 models:</span></div><div class='output co'>#&gt;                           model_id       auc   logloss
+#&gt; 1 XGBoost_1_AutoML_20200626_153518 0.8946749 0.3931082
+#&gt; 
+#&gt; [1 row x 3 columns] </div><div class='output co'>#&gt; <span class='message'>Check results in H2O Flow's nice interface: http://localhost:54321/flow/index.html</span></div><div class='output co'>#&gt; <span class='message'>Model selected: XGBoost_1_AutoML_20200626_153518</span></div><div class='output co'>#&gt; <span class='message'>NOTE: The following variables were NOT important: SibSp, Pclass.2, Embarked.C</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Running predictions for Survived...</span></div><div class='output co'>#&gt; <span class='message'>Target value: FALSE</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots...</span></div><div class='output co'>#&gt; <span class='message'>Process duration: 16.8s</span></div><div class='output co'>#&gt;       AUC     ACC     PRC      TPR     TNR
+#&gt; 1 0.89467 0.16418 0.11688 0.054545 0.33981</div><div class='input'>
+<span class='co'># EXPLAINER</span>
+<span class='kw'>explainer</span> <span class='op'>&lt;-</span> <span class='fu'>dalex_explainer</span>(df = <span class='kw'>dfm</span><span class='op'>$</span><span class='kw'>datasets</span><span class='op'>$</span><span class='kw'>test</span>, model = <span class='kw'>dfm</span><span class='op'>$</span><span class='kw'>model</span>, y = <span class='st'>"Survived"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+#&gt;   -&gt; model label       :  XGBoost_1_AutoML_20200626_153518 
+#&gt;   -&gt; data              :  268  rows  14  cols 
+#&gt;   -&gt; target variable   :  268  values 
+#&gt;   -&gt; model_info        :  package Model of class: H2OBinomialModel package unrecognized , ver. Unknown , task regression ( <span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; predict function  :  h2o 
+#&gt;   -&gt; predicted values  :  numerical, min =  0.0319424 , mean =  0.3592367 , max =  0.9824154  
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; residuals         :  numerical, min =  -0.9483296 , mean =  0.02509162 , max =  0.9373911  
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='kw'>explainer</span><span class='op'>$</span><span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='kw'>explainer</span><span class='op'>$</span><span class='kw'>data</span>)
+
+<span class='co'># CATEGORICAL EXAMPLE</span>
+<span class='kw'>class</span> <span class='op'>&lt;-</span> <span class='fu'>dalex_variable</span>(<span class='kw'>explainer</span>, vars = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Pclass"</span>, <span class='st'>"Sex"</span>))</div><div class='output co'>#&gt; <span class='message'>'variable_type' changed to 'categorical' due to lack of numerical variables.</span></div><div class='output co'>#&gt; <span class='message'>Elapsed time: 1.24s</span></div><div class='input'><span class='kw'>class</span><span class='op'>$</span><span class='kw'>plot</span></div><div class='img'><img src='dalex_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># NUMERICAL EXAMPLE</span>
+<span class='kw'>num</span> <span class='op'>&lt;-</span> <span class='fu'>dalex_variable</span>(<span class='kw'>explainer</span>, vars = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Fare"</span>, <span class='st'>"Age"</span>))</div><div class='output co'>#&gt; <span class='message'>Elapsed time: 3.76s</span></div><div class='input'><span class='kw'>num</span><span class='op'>$</span><span class='kw'>plot</span></div><div class='img'><img src='dalex_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># LOCAL EXAMPLE</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>explainer</span><span class='op'>$</span><span class='kw'>data</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt;   PassengerId Pclass    Sex Age SibSp Parch Ticket    Fare Cabin Embarked
+#&gt; 1           9      3 female  27     0     2 347742 11.1333              S
+#&gt;   train_test predict    FALSE.     TRUE.
+#&gt; 1       test   FALSE 0.6844502 0.3155498</div><div class='input'><span class='kw'>local</span> <span class='op'>&lt;-</span> <span class='fu'>dalex_local</span>(<span class='kw'>explainer</span>, row = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='message'>Elapsed time: 10.5s</span></div><div class='input'><span class='co'># OR YOU COULD MANUALLY INPUT THE OBSERVATION</span>
+<span class='kw'>local</span> <span class='op'>&lt;-</span> <span class='fu'>dalex_local</span>(<span class='kw'>explainer</span>, observation = <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>explainer</span><span class='op'>$</span><span class='kw'>data</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='message'>Elapsed time: 9.17s</span></div><div class='input'><span class='kw'>local</span><span class='op'>$</span><span class='kw'>plot</span></div><div class='img'><img src='dalex_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
