@@ -193,7 +193,33 @@ You might also want to set this parameter globally with
 <code>scrabble_score()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># Automatic use of languages and scores</span>
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.lang"</span> = <span class='st'>"es"</span>)
+
+<span class='fu'>scrabble_words</span>(tiles = <span class='st'>"holasa"</span>,
+               free = <span class='fl'>1</span>,
+               force_start = <span class='st'>""</span>,
+               force_end = <span class='st'>""</span>,
+               force_str = <span class='st'>"_o_a"</span>,
+               force_n = <span class='fl'>6</span>,
+               force_max = <span class='fl'>0</span>,
+               quiet = <span class='fl'>FALSE</span>)
+               
+<span class='co'># Custom scores table and manual language input </span>
+<span class='kw'>cu_scores</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+  tiles = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span>(<span class='kw'>LETTERS</span>)[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>14</span>],<span class='st'>"_"</span>,<span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span>(<span class='kw'>LETTERS</span>)[<span class='fl'>15</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>LETTERS</span>)]),
+  scores = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>8</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>10</span>,<span class='fl'>10</span>,<span class='fl'>5</span>,<span class='fl'>10</span>))
+  
+<span class='fu'>scrabble_words</span>(tiles = <span class='st'>"holase"</span>,
+               language = <span class='st'>"es"</span>,
+               scores = <span class='kw'>cu_scores</span>,
+               free = <span class='fl'>1</span>,
+               force_start = <span class='st'>"_o_a"</span>)
+
+<span class='co'># Words considered for a language (you can custom it too!)</span>
+<span class='kw'>es_words</span> <span class='op'>&lt;-</span> <span class='fu'>scrabble_dictionary</span>(<span class='st'>"es"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
