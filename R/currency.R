@@ -12,8 +12,12 @@
 #' @param fill Boolean. Fill weekends and non-quoted dates with 
 #' previous values?
 #' @examples 
+#' \donttest{
+#' # For today (or any one single date)
 #' get_currency("USD/ARS", from = Sys.Date())
+#' # For multiple dates
 #' get_currency("EUR/USD", from = Sys.Date() - 7, fill = TRUE)
+#' }
 #' @export
 get_currency <- function(currency_pair, 
                          from = Sys.Date() - 99, 
