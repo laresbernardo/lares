@@ -501,7 +501,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @param title Character. Added to the plot.
 #' @param plot Boolean. Plot viz? Will be generated anyways in the output object
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' options("lares.font"=NA) # Temporal
 #' df <- dplyr::starwars
 #' head(df[,c(1,4,5,12)], 10)

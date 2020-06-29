@@ -55,7 +55,7 @@
 #' dft %>% dplyr::mutate(logFare = log(Fare)) %>% distr(Fare, logFare)
 #' 
 #' # Select only one of the two default plots of distr()
-#' \donttest{
+#' \dontrun{
 #' dft %>% distr(Survived, Age, type = 2)
 #' dft %>% distr(Survived, Age, type = 3)
 #' }

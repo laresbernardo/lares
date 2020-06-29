@@ -9,7 +9,7 @@
 #' @param y Character. Variable's column name
 #' @param ignore Character vector. Which columns should be ignored?
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' data(dft) # Titanic dataset
 #' 
 #' # TRAIN A SIMPLE MODEL

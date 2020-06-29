@@ -72,7 +72,7 @@
 #' the results? Working directory as default.
 #' @param project Character. Your project's name
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' data(dft) # Titanic dataset
 #' dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 #' 

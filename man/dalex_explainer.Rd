@@ -19,7 +19,7 @@ dalex_explainer(df, model, y = "tag", ignore = NA)
 DALEX function to create an explainer object
 }
 \examples{
-\donttest{
+\dontrun{
 data(dft) # Titanic dataset
 
 # TRAIN A SIMPLE MODEL

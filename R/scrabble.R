@@ -11,7 +11,7 @@
 #' if you wish to skip this step (and use \code{words} parameter in 
 #' \code{scrabble_words} instead).
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' # For Spanish words
 #' dictionary <- scrabble_dictionary("es")
 #' }

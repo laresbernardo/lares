@@ -25,7 +25,7 @@
 #' two variables by name or column position.
 #' @param seed Numeric. Seed for reproducibility
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
 #' df <- subset(dft, select = -c(Ticket, PassengerId))
