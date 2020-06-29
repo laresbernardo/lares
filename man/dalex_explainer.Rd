@@ -40,10 +40,9 @@ num <- dalex_variable(explainer, vars = c("Fare", "Age"))
 num$plot
 
 # LOCAL EXAMPLE
-print(head(explainer$data, 1))
 local <- dalex_local(explainer, row = 1)
 # OR YOU COULD MANUALLY INPUT THE OBSERVATION
-local <- dalex_local(explainer, observation = head(explainer$data, 1))
+local <- dalex_local(explainer, observation = explainer$data[1,])
 local$plot
 }
 }

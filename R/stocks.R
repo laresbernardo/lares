@@ -792,7 +792,7 @@ splot_etf <- function(s, keep_all = FALSE, save = FALSE) {
 stocks_obj <- function(data = stocks_file(), 
                        cash_fix = 0, 
                        tax = 30, 
-                       sectors = TRUE,
+                       sectors = FALSE,
                        parg = FALSE) {
   
   check_attr(data, check = "stocks_file")
@@ -864,7 +864,7 @@ stocks_report <- function(data = NA,
                           dir = NA,
                           mail = FALSE, 
                           to = "laresbernardo@gmail.com",
-                          sectors = TRUE,
+                          sectors = FALSE,
                           creds = NA) {
   
   try_require("rmarkdown")

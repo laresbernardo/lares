@@ -254,7 +254,7 @@ corr_var <- function(df, var,
 #' This function creates a correlation full study and returns a rank
 #' of the highest correlation variables obtained in a cross-table.
 #' 
-#' #' DataScience+ Post: \href{https://bit.ly/2WiLsQB}{Find Insights 
+#' DataScience+ Post: \href{https://bit.ly/2WiLsQB}{Find Insights 
 #' with Ranked Cross-Correlations}
 #'
 #' @family Correlations
@@ -263,20 +263,19 @@ corr_var <- function(df, var,
 #' @param plot Boolean. Show and return a plot?
 #' @param max_pvalue Numeric. Filter non-significant variables. Range (0, 1]
 #' @param type Integer. Plot type. 1 is for overall rank. 2 is for local rank.
-#' @param max Numeric. Maximum correlation permited (from 0 to 1)
+#' @param max Numeric. Maximum correlation permitted (from 0 to 1)
 #' @param top Integer. Return top n results only. Only valid when type = 1. Set
 #' value to NA to use all cross-correlations
 #' @param local Integer. Label top n local correlations. Only valid when type = 2
 #' @param ignore Character vector. Which columns do you wish to exlude?
-#' @param contains Character vector and Boolean. Filter cross-correlations 
+#' @param contains Character vector. Filter cross-correlations 
 #' with variables that contains certain strings (using any value if vector used).
-#' This will automatically invert redundant default value.
 #' @param grid Boolean. Separate into grids?
 #' @param rm.na Boolean. Remove NAs?
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
 #' @param limit Integer. Limit one hot encoding to the n most frequent 
 #' values of each column. Set to \code{NA} to ignore argument.
-#' @param redundant Boolean. Should we keep redundat columns? i.e. It the
+#' @param redundant Boolean. Should we keep redundant columns? i.e. It the
 #' column only has two different values, should we keep both new columns?
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @examples 
@@ -291,20 +290,22 @@ corr_var <- function(df, var,
 #' 
 #' # Cross-Correlation max values per category
 #' corr_cross(dft, type = 2, top = NA)
+#' 
+#' # Cross-Correlation for certain variables
+#' corr_cross(dft, contains = c("Survived", "Fare"))
 #' @export
 corr_cross <- function(df, plot = TRUE, 
                        max_pvalue = 1,
                        type = 1, max = 1, top = 25, local = 1,
                        ignore = NA, contains = NA, grid = FALSE,
-                       rm.na = FALSE, dummy = TRUE, limit = 10, redundant = FALSE,
+                       rm.na = FALSE, dummy = TRUE, 
+                       limit = 10, redundant = FALSE,
                        method = "pearson") {
   
   check_opts(type, 1:2)
   
   if (sum(is.na(df)) & rm.na == FALSE) 
     warning("There are NA values in your data!")
-  
-  if (!is.na(contains)) redundant <- !redundant
   
   cor <- corr(df, ignore = ignore, dummy = dummy, limit = limit,
               redundant = redundant, method = method, pvalue = TRUE)
@@ -319,9 +320,10 @@ corr_cross <- function(df, plot = TRUE,
       mutate(rel = abs(.data$value)) %>% 
       filter(.data$rel < max) %>% 
       arrange(desc(.data$rel)) %>%
-      {if (!is.na(contains)) 
-        filter(., grepl(vector2text(
-          contains, sep = "|", quotes = FALSE), .data$mix)) else .} %>%
+      {if (!is.na(contains[1])) 
+        filter(., grepl(paste(
+          contains, collapse = ifelse(length(contains) > 1, "|", "")), 
+          paste(.data$mix, .data$key))) else .} %>%
       {if (rm.na) filter(., !grepl("_NAs", .data$mix)) else .} %>%
       filter(!grepl("_OTHER", .data$key)) %>%
       rename(corr = .data$value) %>%
@@ -357,10 +359,10 @@ corr_cross <- function(df, plot = TRUE,
     if (!is.na(contains)[1]) subtitle <- paste(subtitle, "containing", vector2text(contains))
     if (max < 1) subtitle <- paste0(subtitle," (excluding +", 100*max, "%)")
     if (rm.na) subtitle <- paste(subtitle, paste("[NAs removed]"))
-    if (!is.na(contains)[1]) ret <- ret %>%
+    if (!is.na(contains[1])) ret <- ret %>%
       mutate(facet = gsub(vector2text(contains, sep = "|", quotes = FALSE), "", .data$mix)) %>%
-      mutate(facet = substr(.data$facet, 2, 20))
-      
+      mutate(facet = gsub("_", "", .data$facet))
+    
     if (type == 1) {
       p <- ret %>%
         head(top) %>%
@@ -418,3 +420,4 @@ corr_cross <- function(df, plot = TRUE,
   }
   return(ret)
 }
+

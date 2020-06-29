@@ -31,7 +31,7 @@ corr_cross(
 
 \item{type}{Integer. Plot type. 1 is for overall rank. 2 is for local rank.}
 
-\item{max}{Numeric. Maximum correlation permited (from 0 to 1)}
+\item{max}{Numeric. Maximum correlation permitted (from 0 to 1)}
 
 \item{top}{Integer. Return top n results only. Only valid when type = 1. Set
 value to NA to use all cross-correlations}
@@ -40,9 +40,8 @@ value to NA to use all cross-correlations}
 
 \item{ignore}{Character vector. Which columns do you wish to exlude?}
 
-\item{contains}{Character vector and Boolean. Filter cross-correlations 
-with variables that contains certain strings (using any value if vector used).
-This will automatically invert redundant default value.}
+\item{contains}{Character vector. Filter cross-correlations 
+with variables that contains certain strings (using any value if vector used).}
 
 \item{grid}{Boolean. Separate into grids?}
 
@@ -53,7 +52,7 @@ This will automatically invert redundant default value.}
 \item{limit}{Integer. Limit one hot encoding to the n most frequent 
 values of each column. Set to \code{NA} to ignore argument.}
 
-\item{redundant}{Boolean. Should we keep redundat columns? i.e. It the
+\item{redundant}{Boolean. Should we keep redundant columns? i.e. It the
 column only has two different values, should we keep both new columns?}
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
@@ -63,7 +62,7 @@ This function creates a correlation full study and returns a rank
 of the highest correlation variables obtained in a cross-table.
 }
 \details{
-#' DataScience+ Post: \href{https://bit.ly/2WiLsQB}{Find Insights 
+DataScience+ Post: \href{https://bit.ly/2WiLsQB}{Find Insights 
 with Ranked Cross-Correlations}
 }
 \examples{
@@ -78,6 +77,9 @@ corr_cross(dft, rm.na = TRUE, max_pvalue = 0.05, top = 15)
 
 # Cross-Correlation max values per category
 corr_cross(dft, type = 2, top = NA)
+
+# Cross-Correlation for certain variables
+corr_cross(dft, contains = c("Survived", "Fare"))
 }
 \seealso{
 Other Correlations: 

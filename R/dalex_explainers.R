@@ -30,10 +30,9 @@
 #' num$plot
 #' 
 #' # LOCAL EXAMPLE
-#' print(head(explainer$data, 1))
 #' local <- dalex_local(explainer, row = 1)
 #' # OR YOU COULD MANUALLY INPUT THE OBSERVATION
-#' local <- dalex_local(explainer, observation = head(explainer$data, 1))
+#' local <- dalex_local(explainer, observation = explainer$data[1,])
 #' local$plot
 #' }
 #' @export
@@ -49,7 +48,7 @@ dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
   if (!y %in% colnames(df))
     stop(paste("The y value", y, "is not in your data.frame"))
   
-  if (!is.na(ignore)[1])
+  if (!is.na(ignore[1]))
     df <- df[,!(colnames(df) %in% ignore)]
   
   x_valid <- select(df, -all_of(y))
@@ -93,7 +92,7 @@ dalex_local <- function(explainer, observation = NA, row = 1, type = "break_down
   tic("dalex_local")
   
   subtitle <- paste0("Observation #", v2t(row, quotes = FALSE))
-  if (is.na(observation)) {
+  if (!is.data.frame(observation)) {
     observation <- explainer$data[row,] 
   } else {
     if (!all(colnames(observation) %in% colnames(explainer$data)))
@@ -106,7 +105,7 @@ dalex_local <- function(explainer, observation = NA, row = 1, type = "break_down
   
   p <- plot(breakdown) + 
     theme_lares2(legend = "none") + 
-    labs(subtitle = NULL)
+    labs(subtitle = NULL, caption = subtitle)
   
   return <- list(observation = observation, breakdown = breakdown, plot = p)
   toc("dalex_local")
@@ -152,6 +151,7 @@ dalex_residuals <- function(explainer) {
 #' vars, which one do you need?
 #' @examples 
 #' \dontrun{
+#' # Having an "explainer" object created with `dalex_explainer`:
 #' # For numerical variables
 #' dalex_variable(explainer, vars = c("Age", "Fare"))
 #' # For categorical variables

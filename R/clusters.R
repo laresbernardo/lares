@@ -129,7 +129,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       mutate(n = as.integer(table(df$cluster)))
     
     # Correlations
-    results[["correlations"]] <- corr_cross(df, contains = "cluster", redundant = FALSE)
+    results[["correlations"]] <- corr_cross(df, contains = "cluster", redundant = TRUE)
     
     # PCA
     PCA <- list()

@@ -8,7 +8,7 @@ stocks_obj(
   data = stocks_file(),
   cash_fix = 0,
   tax = 30,
-  sectors = TRUE,
+  sectors = FALSE,
   parg = FALSE
 )
 }
