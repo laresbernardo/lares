@@ -158,7 +158,7 @@ of the highest correlation variables obtained in a cross-table.</p>
     </tr>
     <tr>
       <th>max</th>
-      <td><p>Numeric. Maximum correlation permited (from 0 to 1)</p></td>
+      <td><p>Numeric. Maximum correlation permitted (from 0 to 1)</p></td>
     </tr>
     <tr>
       <th>top</th>
@@ -175,9 +175,8 @@ value to NA to use all cross-correlations</p></td>
     </tr>
     <tr>
       <th>contains</th>
-      <td><p>Character vector and Boolean. Filter cross-correlations 
-with variables that contains certain strings (using any value if vector used).
-This will automatically invert redundant default value.</p></td>
+      <td><p>Character vector. Filter cross-correlations 
+with variables that contains certain strings (using any value if vector used).</p></td>
     </tr>
     <tr>
       <th>grid</th>
@@ -198,7 +197,7 @@ values of each column. Set to <code>NA</code> to ignore argument.</p></td>
     </tr>
     <tr>
       <th>redundant</th>
-      <td><p>Boolean. Should we keep redundat columns? i.e. It the
+      <td><p>Boolean. Should we keep redundant columns? i.e. It the
 column only has two different values, should we keep both new columns?</p></td>
     </tr>
     <tr>
@@ -209,7 +208,7 @@ column only has two different values, should we keep both new columns?</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>#' DataScience+ Post: <a href='https://bit.ly/2WiLsQB'>Find Insights 
+    <p>DataScience+ Post: <a href='https://bit.ly/2WiLsQB'>Find Insights 
 with Ranked Cross-Correlations</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -253,7 +252,9 @@ with Ranked Cross-Correlations</a></p>
 <span class='co'># Show only most relevant results filtered by pvalue</span>
 <span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, rm.na = <span class='fl'>TRUE</span>, max_pvalue = <span class='fl'>0.05</span>, top = <span class='fl'>15</span>)</div><div class='output co'>#&gt; <span class='message'>Returning only the top 15. You may override with the `top` parameter</span></div><div class='img'><img src='corr_cross-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Cross-Correlation max values per category</span>
-<span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, type = <span class='fl'>2</span>, top = <span class='fl'>NA</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='img'><img src='corr_cross-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, type = <span class='fl'>2</span>, top = <span class='fl'>NA</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='img'><img src='corr_cross-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Cross-Correlation for certain variables</span>
+<span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, contains = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Survived"</span>, <span class='st'>"Fare"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='output co'>#&gt; <span class='message'>Returning only the top 25. You may override with the `top` parameter</span></div><div class='img'><img src='corr_cross-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

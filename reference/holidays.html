@@ -177,34 +177,10 @@ holiday dates?</p></td>
 <code>ohse()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>holidays</span>(countries = <span class='st'>"Argentina"</span>) </div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Extracting Argentina's holidays for 2020</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 43 x 9</span><span>
-#&gt;    holiday    holiday_name holiday_type national observance bank  nonwork season
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> 
-#&gt; </span><span style='color: #555555;'> 1</span><span> 2020-01-01 New Year's … National ho… TRUE     FALSE      FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'> 2</span><span> 2020-02-24 Carnival / … National ho… TRUE     FALSE      FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'> 3</span><span> 2020-02-25 Carnival / … National ho… TRUE     FALSE      FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'> 4</span><span> 2020-03-20 March Equin… Season       FALSE    FALSE      FALSE FALSE   TRUE  
-#&gt; </span><span style='color: #555555;'> 5</span><span> 2020-03-23 Bridge Publ… National ho… TRUE     FALSE      FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'> 6</span><span> 2020-03-24 Memorial Day National ho… TRUE     FALSE      FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'> 7</span><span> 2020-03-30 Bridge Publ… National ho… TRUE     FALSE      FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'> 8</span><span> 2020-03-31 Holiday for… National ho… TRUE     FALSE      FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'> 9</span><span> 2020-04-02 Day of the … Observance   FALSE    TRUE       FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'>10</span><span> 2020-04-08 Passover Eve Observance   FALSE    TRUE       FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'># … with 33 more rows, and 1 more variable: hother </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span></div><div class='input'><span class='fu'>holidays</span>(countries = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Argentina"</span>, <span class='st'>"Venezuela"</span>), years = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2019</span>, <span class='fl'>2020</span>))</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Extracting Argentina's holidays for 2019</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Extracting Argentina's holidays for 2020</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Extracting Venezuela's holidays for 2019</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Extracting Venezuela's holidays for 2020</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 158 x 10</span><span>
-#&gt;    holiday    holiday_name holiday_type national observance bank  nonwork season
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> 
-#&gt; </span><span style='color: #555555;'> 1</span><span> 2019-01-01 New Year's … National ho… TRUE     FALSE      FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'> 2</span><span> 2019-03-04 Carnival / … National ho… TRUE     FALSE      FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'> 3</span><span> 2019-03-05 Carnival / … National ho… TRUE     FALSE      FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'> 4</span><span> 2019-03-20 March Equin… Season       FALSE    FALSE      FALSE FALSE   TRUE  
-#&gt; </span><span style='color: #555555;'> 5</span><span> 2019-03-24 Memorial Day National ho… TRUE     FALSE      FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'> 6</span><span> 2019-04-02 Day of the … National ho… TRUE     FALSE      FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'> 7</span><span> 2019-04-18 Maundy Thur… National ho… TRUE     FALSE      FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'> 8</span><span> 2019-04-19 Good Friday  National ho… TRUE     FALSE      FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'> 9</span><span> 2019-04-19 Passover Eve Observance   FALSE    TRUE       FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'>10</span><span> 2019-04-20 First day o… Observance   FALSE    TRUE       FALSE FALSE   FALSE 
-#&gt; </span><span style='color: #555555;'># … with 148 more rows, and 2 more variables: hother </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, country </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span></div><div class='input'><span class='co'># }</span></div></span></pre>
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>holidays</span>(countries = <span class='st'>"Argentina"</span>) 
+<span class='fu'>holidays</span>(countries = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Argentina"</span>, <span class='st'>"Venezuela"</span>), years = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2019</span>, <span class='fl'>2020</span>))
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
