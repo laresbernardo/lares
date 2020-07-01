@@ -639,6 +639,7 @@ freqs_list <- function(df,
     mutate(label = sprintf("#%s", id)) %>%
     filter(.data$value == TRUE) %>%
     mutate(label = ifelse(.data$id > min(limit, limit_x), "...", .data$label)) %>%
+    ungroup() %>%
     mutate(var = ifelse(
       as.character(.data$var) %in% as.character(elements$key[elements$label != "..."]),
       as.character(.data$var), "...")) %>% 
