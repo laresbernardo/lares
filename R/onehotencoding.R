@@ -71,7 +71,11 @@ ohse <- function(df,
                  sep = "_", 
                  summary = TRUE) {
   
-  df <- data.frame(df)
+  if (is.vector(df))
+    df <- data.frame(var = df)
+  else 
+    df <- data.frame(df)
+  
   order <- colnames(df)
   
   # Dummy variables that will be filled

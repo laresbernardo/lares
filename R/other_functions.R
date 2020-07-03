@@ -1543,3 +1543,92 @@ move_files <- function(from, to) {
   }
   
 }
+
+
+####################################################################
+#' Spread list column into new columns
+#'
+#' Spread an existing list column into new columns on a data.frame. Note
+#' that every element on every observation must have a name for the function
+#' to do its work. Original column will be automatically suppressed but you
+#' can set the `replace` argument to avoid it.
+#'
+#' @param df Dataframe
+#' @param col Variable name. 
+#' @param str Character. Start column names with. If set to `NA`, original
+#' name of column will be used.
+#' @param replace Boolean. Replace original values (delete column)
+#' @export
+spread_list <- function(df, col, str = NA, replace = TRUE) {
+  
+  var <- enquo(col)
+  col <- as_label(var)
+  cols <- colnames(df)
+  
+  if (!col %in% cols)
+    stop("You must provide a variable contained in your dataframe")
+  if (!"list" %in% sapply(df[,cols == col], class))
+    stop("The variable provided is not a list variable")
+  
+  unlisted <- lapply(df[,cols == col], bind_rows)
+  binded <- bind_rows(unlisted) %>% replace(is.na(.), 0)
+  if (is.na(str)) str <- paste0(col, "_")
+  colnames(binded) <- paste0(str, colnames(binded))
+  done <- df %>% bind_cols(binded)
+  pos <- which(cols == col)
+  ncols <- length(cols)
+  done <- done[, c(1:pos, (ncols+1):(ncols+ncol(binded)), (pos + 1):ncols)]
+  if (replace) done <- done[, -pos]
+  return(as_tibble(done))
+}
+
+####################################################################
+#' Confidence Intervals on Dataframe
+#'
+#' Calculate confidence intervals for a continuous numerical column on
+#' a dataframe, given a confidence level. You may also group results 
+#' using another variable. Tidyverse friendly.
+#'
+#' @param df Dataframe
+#' @param var Variable name. Must be a numerical column.
+#' @param group_var Variable name. Group results by another variable.
+#' @param conf_level Numeric. Confidence level (0-1).
+#' @examples 
+#' data(dft) # Titanic dataset
+#' ci_var(dft, Fare)
+#' ci_var(dft, Fare, Pclass)
+#' ci_var(dft, Fare, Pclass, conf_level = 0.99)
+#' @export
+ci_var <- function(df, var, group_var = NULL, conf_level = 0.95){
+  
+  var <- enquo(var)
+  group_var <- enquo(group_var)
+  
+  lower_ci <- function(mean, ssd, n, conf_level = 0.95){
+    se <- ssd / sqrt(n) 
+    lower_ci <- mean - qt(1 - ((1 - conf_level) / 2), n - 1) * se
+    return(lower_ci)
+  }
+  upper_ci <- function(mean, ssd, n, conf_level = 0.95){
+    se <- ssd / sqrt(n) 
+    upper_ci <- mean + qt(1 - ((1 - conf_level) / 2), n - 1) * se
+    return(upper_ci)
+  }
+  
+  if (as_label(group_var) != "NULL")
+    df <- df %>% group_by(!!group_var)
+  
+  aux <- df %>%
+    summarise(smean = mean(!!var, na.rm = TRUE),
+              ssd = sd(!!var, na.rm = TRUE),
+              n = n()) %>% 
+    mutate(lower_ci = lower_ci(.data$smean, .data$ssd, .data$n, conf_level),
+           upper_ci = upper_ci(.data$smean, .data$ssd, .data$n, conf_level))
+  
+  varname <- as_label(var)
+  cols <- colnames(aux)
+  colnames(aux)[cols == "smean"] <- sprintf("%s_mean", varname)
+  colnames(aux)[cols == "ssd"] <- sprintf("%s_sd", varname)
+  
+  return(as_tibble(aux))
+}
