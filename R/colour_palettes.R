@@ -18,12 +18,12 @@ lares_pal <- function() {
   
   black <- "#000000"
   white <- "#FFFFFF"
-  red <- "tomato"
+  red <- "E63946"
   green <- "#3DA4AB" 
-  pink <- "lightpink2"
-  blue <- "#0E9AA7"
-  orange <- "#FE8A71"
-  grey <- "azure4"
+  pink <- "FFCAD4"
+  blue <- "#ffcad4z"
+  orange <- "#F4A261"
+  grey <- "#8D99AE"
   
   colours_list <- data.frame(rbind(
     c("allianz", "#0038A8", black),
@@ -101,18 +101,18 @@ lares_pal <- function() {
     "#EBB600" = black,
     "#40A4D8" = black,
     "#5D3A9B" = white,
-    "#7ADf90" = black,
+    "#2A9D8F" = black,
+    "#A8DADC" = black,
     "#D35FB7" = black,
-    "#DC3220" = black,
+    "#D62828" = black,
     "#F29595" = black,
-    "#32CD32" = black,
-    "#2FC9FE" = black,
     "#2FFECC" = black,
+    "#7ADf90" = black,
     "#290452" = white,
     "#0C7BDC" = black,
     "#817B7B" = black,
     "#F66320" = black,
-    "#FEFE95" = black,
+    "#F4A261" = black,
     "#005AB5" = white,
     "#9A9A9A" = black,
     "#00008B" = white,
@@ -129,7 +129,8 @@ lares_pal <- function() {
     "#0072B2" = white,
     "#D55E00" = black)
   
-  pal <- list(labels = colours_list, palette = rep(colours_names, 4))
+  pal <- list(labels = colours_list, 
+              palette = rep(colours_names, 4))
   return(pal)
 }
 

@@ -29,7 +29,7 @@
 #' @param other_label Character. With which text do you wish to replace 
 #' the filtered values with?
 #' @param sep Character. Separator's string
-#' @param summary Boolean. Print a summary of the operations?
+#' @param quiet Boolean. Quiet all messages and summaries?
 #' @examples 
 #' # Example with Dataset 1
 #' data(dft)
@@ -69,7 +69,7 @@ ohse <- function(df,
                  variance = 0.9, 
                  other_label = "OTHER", 
                  sep = "_", 
-                 summary = TRUE) {
+                 quiet = FALSE) {
   
   if (is.vector(df))
     df <- data.frame(var = df)
@@ -96,19 +96,19 @@ ohse <- function(df,
                              holidays = holidays, 
                              country = country, 
                              currency_pair = currency_pair, 
-                             summary = summary)
+                             quiet = quiet)
       
       if (ncol(df_dates) != ncol(df)) {
         df <- df %>% left_join(df_dates, by = as.character(times[1])) %>% distinct()
       } 
     } else {
-      message("Can't join more than one date feature yet!")
+      if (!quiet) message("Can't join more than one date feature yet!")
     }
   }
   
   # Leave some columns out of the logic
   if (!is.na(ignore)[1]) {
-    message(">>> Omitting transformations for ", vector2text(ignore))
+    if (!quiet) message(">>> Omitting transformations for ", vector2text(ignore))
     ignored <- df %>% select(one_of(ignore))
     df <- df %>% select(-one_of(ignore))
   }
@@ -164,8 +164,8 @@ ohse <- function(df,
   # Shorten up the long names of some variables
   if (trim > 0) colnames(df) <- substr(colnames(df), 1, trim)
   
-  # Summary
-  if (summary) {
+  # Summary of transformations
+  if (!quiet) {
     total_converted <- rbind(converted, converted_binary)
     if (length(total_converted) > 1) {
       message(paste(">>> One Hot Encoding applied to", length(total_converted), 
@@ -187,7 +187,7 @@ ohse <- function(df,
   if (!is.na(ignore)[1]) 
     df <- df %>% select(one_of(order), everything())
   
-  return(df)
+  return(as_tibble(df))
   
 }
 
@@ -213,7 +213,7 @@ ohse <- function(df,
 #' be included?
 #' @param currency_pair Character. Which currency exchange do you
 #' wish to get the history from? i.e, USD/COP, EUR/USD...
-#' @param summary Boolean. Print a summary of the operations?
+#' @param quiet Boolean. Quiet all messages?
 #' @examples 
 #' data(dfl) # Dummy dataset
 #' # Imput as a vector or dataframe
@@ -226,7 +226,7 @@ date_feats <- function(dates,
                        features = TRUE,
                        holidays = FALSE, country = "Venezuela",
                        currency_pair = NA,
-                       summary = TRUE) {
+                       quiet = FALSE) {
   results <- c()
   date_cols <- df_str(dates, return = "names", quiet = TRUE)$time
   
@@ -238,7 +238,7 @@ date_feats <- function(dates,
   
   iters <- ifelse(date_cols == "df", 1, length(date_cols))[1]
   if (!is.na(iters)) {
-    if (summary)
+    if (!quiet)
       message(paste(">>> Processing", iters, "date/time columns:", vector2text(date_cols))) 
   } else return(dates)
   

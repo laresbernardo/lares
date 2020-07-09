@@ -12,7 +12,7 @@ date_feats(
   holidays = FALSE,
   country = "Venezuela",
   currency_pair = NA,
-  summary = TRUE
+  quiet = FALSE
 )
 }
 \arguments{
@@ -35,7 +35,7 @@ be included?}
 \item{currency_pair}{Character. Which currency exchange do you
 wish to get the history from? i.e, USD/COP, EUR/USD...}
 
-\item{summary}{Boolean. Print a summary of the operations?}
+\item{quiet}{Boolean. Quiet all messages?}
 }
 \description{
 This function lets the user automatically create new columns out

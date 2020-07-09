@@ -18,7 +18,7 @@ ohse(
   variance = 0.9,
   other_label = "OTHER",
   sep = "_",
-  summary = TRUE
+  quiet = FALSE
 )
 }
 \arguments{
@@ -57,7 +57,7 @@ the filtered values with?}
 
 \item{sep}{Character. Separator's string}
 
-\item{summary}{Boolean. Print a summary of the operations?}
+\item{quiet}{Boolean. Quiet all messages and summaries?}
 }
 \description{
 This function lets the user automatically transform a dataframe with

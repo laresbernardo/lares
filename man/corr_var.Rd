@@ -69,7 +69,7 @@ save the plot}
 }
 \description{
 This function correlates a whole dataframe with a single feature. It
-automatically run one-hot-smart-encoding (ohse) so no need to input
+automatically runs \code{ohse} (one-hot-smart-encoding) so no need to input
 only numerical values.
 }
 \examples{

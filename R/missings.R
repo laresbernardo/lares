@@ -37,6 +37,7 @@ missingness <- function(df, plot = FALSE, full = FALSE,
   }
   
   m <- df %>%
+    ungroup() %>%
     summarize_all(.funs = ~ sum(is.na(.))) %>%
     gather() %>%
     arrange(desc(.data$value)) %>%

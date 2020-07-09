@@ -161,7 +161,7 @@ h2o_automl <- function(df, y = "tag",
   if (length(nums) != ncol(df) & !quiet) 
     message(paste(
       "NOTE: There are", ncol(df) - length(nums), "non-numerical features.",
-      "Consider using ohse() for One Hot Smart Encoding before automl if you want to custom your inputs."))
+      "Consider using ohse() prior for One Hot Smart Encoding your categorical variables."))
   if (scale | center & length(nums) > 0) {
     new <- data.frame(lapply(df[nums], function(x) scale(x, center = center, scale = scale)))
     colnames(new) <- nums
