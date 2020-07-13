@@ -17,9 +17,9 @@ plot_palette(fill, colour = "black", id = NA)
 This function plots a list of colours
 }
 \examples{
-nice_palette <- names(lares_pal()$palette)[1:15]
-nice_palette_ctr <- as.vector(lares_pal()$palette)[1:15]
-plot_palette(nice_palette, nice_palette_ctr)
+pal <- lares_pal()$palette[1:15]
+head(pal)
+plot_palette(fill = names(pal), colour = as.vector(pal))
 }
 \seealso{
 Other Auxiliary: 

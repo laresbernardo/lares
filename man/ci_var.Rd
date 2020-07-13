@@ -4,7 +4,7 @@
 \alias{ci_var}
 \title{Confidence Intervals on Dataframe}
 \usage{
-ci_var(df, var, group_var = NULL, conf_level = 0.95)
+ci_var(df, var, group_var = NULL, conf = 0.95)
 }
 \arguments{
 \item{df}{Dataframe}
@@ -13,7 +13,9 @@ ci_var(df, var, group_var = NULL, conf_level = 0.95)
 
 \item{group_var}{Variable name. Group results by another variable.}
 
-\item{conf_level}{Numeric. Confidence level (0-1).}
+\item{conf}{Numeric. Confidence level (0-1).}
+
+\item{family}{Confidence Intervals}
 }
 \description{
 Calculate confidence intervals for a continuous numerical column on
@@ -24,5 +26,5 @@ using another variable. Tidyverse friendly.
 data(dft) # Titanic dataset
 ci_var(dft, Fare)
 ci_var(dft, Fare, Pclass)
-ci_var(dft, Fare, Pclass, conf_level = 0.99)
+ci_var(dft, Fare, Pclass, conf = 0.99)
 }

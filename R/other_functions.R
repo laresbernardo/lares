@@ -1583,37 +1583,56 @@ spread_list <- function(df, col, str = NA, replace = TRUE) {
 }
 
 ####################################################################
+#' Lower/Upper Confidence Intervals
+#' 
+#' Calculate lower and upper confidence intervals given a mean,
+#' standard deviation, sample size, and confidence level. You may
+#' want to use \code{ci_var()} to calculate all values quickly.
+#'
+#' @param family Confidence Intervals
+#' @param mean Numeric. Mean: `mean(var, na.rm = TRUE)`
+#' @param ssd Numeric. Standard deviation: `sd(var, na.rm = TRUE)`
+#' @param n Integer. Amount of observations: `n()`
+#' @param conf Numeric (0-1). Confidence level.
+#' @examples 
+#' ci_lower(100, 5, 10)
+#' ci_upper(100, 5, 10)
+#' @export
+ci_lower <- function(mean, ssd, n, conf = 0.95){
+  se <- ssd / sqrt(n) 
+  lower_ci <- mean - qt(1 - ((1 - conf) / 2), n - 1) * se
+  return(lower_ci)
+}
+#' @rdname ci_lower
+#' @export
+ci_upper <- function(mean, ssd, n, conf = 0.95){
+  se <- ssd / sqrt(n) 
+  upper_ci <- mean + qt(1 - ((1 - conf) / 2), n - 1) * se
+  return(upper_ci)
+}
+
+####################################################################
 #' Confidence Intervals on Dataframe
 #'
 #' Calculate confidence intervals for a continuous numerical column on
 #' a dataframe, given a confidence level. You may also group results 
 #' using another variable. Tidyverse friendly.
 #'
+#' @param family Confidence Intervals
 #' @param df Dataframe
 #' @param var Variable name. Must be a numerical column.
 #' @param group_var Variable name. Group results by another variable.
-#' @param conf_level Numeric. Confidence level (0-1).
+#' @param conf Numeric. Confidence level (0-1).
 #' @examples 
 #' data(dft) # Titanic dataset
 #' ci_var(dft, Fare)
 #' ci_var(dft, Fare, Pclass)
-#' ci_var(dft, Fare, Pclass, conf_level = 0.99)
+#' ci_var(dft, Fare, Pclass, conf = 0.99)
 #' @export
-ci_var <- function(df, var, group_var = NULL, conf_level = 0.95){
+ci_var <- function(df, var, group_var = NULL, conf = 0.95){
   
   var <- enquo(var)
   group_var <- enquo(group_var)
-  
-  lower_ci <- function(mean, ssd, n, conf_level = 0.95){
-    se <- ssd / sqrt(n) 
-    lower_ci <- mean - qt(1 - ((1 - conf_level) / 2), n - 1) * se
-    return(lower_ci)
-  }
-  upper_ci <- function(mean, ssd, n, conf_level = 0.95){
-    se <- ssd / sqrt(n) 
-    upper_ci <- mean + qt(1 - ((1 - conf_level) / 2), n - 1) * se
-    return(upper_ci)
-  }
   
   if (as_label(group_var) != "NULL")
     df <- df %>% group_by(!!group_var)
@@ -1622,8 +1641,8 @@ ci_var <- function(df, var, group_var = NULL, conf_level = 0.95){
     summarise(smean = mean(!!var, na.rm = TRUE),
               ssd = sd(!!var, na.rm = TRUE),
               n = n()) %>% 
-    mutate(lower_ci = lower_ci(.data$smean, .data$ssd, .data$n, conf_level),
-           upper_ci = upper_ci(.data$smean, .data$ssd, .data$n, conf_level))
+    mutate(lower_ci = ci_lower(.data$smean, .data$ssd, .data$n, conf),
+           upper_ci = ci_upper(.data$smean, .data$ssd, .data$n, conf))
   
   varname <- as_label(var)
   cols <- colnames(aux)
