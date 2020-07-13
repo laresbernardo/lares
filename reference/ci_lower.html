@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List files in a directory — listfiles • lares</title>
+<title>Lower/Upper Confidence Intervals — ci_lower • lares</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,10 @@
 
 
 
-<meta property="og:title" content="List files in a directory — listfiles" />
-<meta property="og:description" content="This function lets the user list all files on a given directory.
-It also lets filter files which contains a string." />
+<meta property="og:title" content="Lower/Upper Confidence Intervals — ci_lower" />
+<meta property="og:description" content="Calculate lower and upper confidence intervals given a mean,
+standard deviation, sample size, and confidence level. You may
+want to use ci_var() to calculate all values quickly." />
 
 
 
@@ -109,97 +110,49 @@ It also lets filter files which contains a string." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>List files in a directory</h1>
+    <h1>Lower/Upper Confidence Intervals</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_functions.R'><code>R/other_functions.R</code></a></small>
-    <div class="hidden name"><code>listfiles.Rd</code></div>
+    <div class="hidden name"><code>ci_lower.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user list all files on a given directory.
-It also lets filter files which contains a string.</p>
+    <p>Calculate lower and upper confidence intervals given a mean,
+standard deviation, sample size, and confidence level. You may
+want to use <code>ci_var()</code> to calculate all values quickly.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>listfiles</span>(folder = <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>(), recursive = <span class='fl'>TRUE</span>, regex = <span class='fl'>NA</span>, images = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>ci_lower</span>(<span class='kw'>mean</span>, <span class='kw'>ssd</span>, <span class='kw'>n</span>, conf = <span class='fl'>0.95</span>)
+
+<span class='fu'>ci_upper</span>(<span class='kw'>mean</span>, <span class='kw'>ssd</span>, <span class='kw'>n</span>, conf = <span class='fl'>0.95</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>folder</th>
-      <td><p>Character. Directory which contains files</p></td>
+      <th>mean</th>
+      <td><p>Numeric. Mean: `mean(var, na.rm = TRUE)`</p></td>
     </tr>
     <tr>
-      <th>recursive</th>
-      <td><p>Boolean. Should the listing recurse into directories?</p></td>
+      <th>ssd</th>
+      <td><p>Numeric. Standard deviation: `sd(var, na.rm = TRUE)`</p></td>
     </tr>
     <tr>
-      <th>regex</th>
-      <td><p>Character. String to use for filtering files</p></td>
+      <th>n</th>
+      <td><p>Integer. Amount of observations: `n()`</p></td>
     </tr>
     <tr>
-      <th>images</th>
-      <td><p>Boolean. Bring only image files?</p></td>
+      <th>conf</th>
+      <td><p>Numeric (0-1). Confidence level.</p></td>
+    </tr>
+    <tr>
+      <th>family</th>
+      <td><p>Confidence Intervals</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other Tools: 
-<code>autoline()</code>,
-<code>bindfiles()</code>,
-<code>bring_api()</code>,
-<code>db_download()</code>,
-<code>db_upload()</code>,
-<code>export_plot()</code>,
-<code>export_results()</code>,
-<code>get_credentials()</code>,
-<code>h2o_predict_API()</code>,
-<code>h2o_predict_MOJO()</code>,
-<code>h2o_predict_binary()</code>,
-<code>h2o_predict_model()</code>,
-<code>h2o_selectmodel()</code>,
-<code>h2o_update()</code>,
-<code>haveInternet()</code>,
-<code>image_metadata()</code>,
-<code>importxlsx()</code>,
-<code>ip_country()</code>,
-<code>iter_seeds()</code>,
-<code>json2vector()</code>,
-<code>mailSend()</code>,
-<code>msplit()</code>,
-<code>myip()</code>,
-<code>pass()</code>,
-<code>quiet()</code>,
-<code>read.file()</code>,
-<code>statusbar()</code>,
-<code>tic()</code>,
-<code>try_require()</code>,
-<code>updateLares()</code>,
-<code>zerovar()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># All files in current directory (without recursive files)</span>
-<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span>(recursive = <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span>, <span class='fl'>3</span>)</div><div class='output co'>#&gt;            filename size isdir mode               mtime               ctime
-#&gt; 1     autoline.html    7 FALSE  644 2020-07-13 21:39:52 2020-07-13 21:39:52
-#&gt; 2 balance_data.html    9 FALSE  644 2020-07-13 21:39:52 2020-07-13 21:39:52
-#&gt; 3    bindfiles.html    6 FALSE  644 2020-07-13 21:39:52 2020-07-13 21:39:52
-#&gt;                 atime uid gid  uname grname
-#&gt; 1 2020-07-13 21:39:59 501  20 runner  staff
-#&gt; 2 2020-07-13 21:40:00 501  20 runner  staff
-#&gt; 3 2020-07-13 21:40:00 501  20 runner  staff</div><div class='input'>
-<span class='co'># All files in current directory (with recursive files)</span>
-<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span>(recursive = <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span>(<span class='kw'>df</span>, <span class='fl'>3</span>)</div><div class='output co'>#&gt;           filename size isdir mode               mtime               ctime
-#&gt; 278 year_week.html    6 FALSE  644 2020-07-13 21:39:52 2020-07-13 21:39:52
-#&gt; 279    yt2mp3.html    6 FALSE  644 2020-07-13 21:39:52 2020-07-13 21:39:52
-#&gt; 280   zerovar.html    7 FALSE  644 2020-07-13 21:39:52 2020-07-13 21:39:52
-#&gt;                   atime uid gid  uname grname
-#&gt; 278 2020-07-13 21:39:52 501  20 runner  staff
-#&gt; 279 2020-07-13 21:39:52 501  20 runner  staff
-#&gt; 280 2020-07-13 21:39:52 501  20 runner  staff</div><div class='input'>
-<span class='co'># Check R files using regex</span>
-<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span>(regex = <span class='st'>"\\.R$"</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>ci_lower</span>(<span class='fl'>100</span>, <span class='fl'>5</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 96.42322</div><div class='input'><span class='fu'>ci_upper</span>(<span class='fl'>100</span>, <span class='fl'>5</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 103.5768</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -121,7 +121,7 @@ a dataframe, given a confidence level. You may also group results
 using another variable. Tidyverse friendly.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ci_var</span>(<span class='kw'>df</span>, <span class='kw'>var</span>, group_var = <span class='kw'>NULL</span>, conf_level = <span class='fl'>0.95</span>)</pre>
+    <pre class="usage"><span class='fu'>ci_var</span>(<span class='kw'>df</span>, <span class='kw'>var</span>, group_var = <span class='kw'>NULL</span>, conf = <span class='fl'>0.95</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,8 +139,12 @@ using another variable. Tidyverse friendly.</p>
       <td><p>Variable name. Group results by another variable.</p></td>
     </tr>
     <tr>
-      <th>conf_level</th>
+      <th>conf</th>
       <td><p>Numeric. Confidence level (0-1).</p></td>
+    </tr>
+    <tr>
+      <th>family</th>
+      <td><p>Confidence Intervals</p></td>
     </tr>
     </table>
 
@@ -155,7 +159,7 @@ using another variable. Tidyverse friendly.</p>
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> 1           84.2    78.4   216     73.6     94.7
 #&gt; </span><span style='color: #555555;'>2</span><span> 2           20.7    13.4   184     18.7     22.6
-#&gt; </span><span style='color: #555555;'>3</span><span> 3           13.7    11.8   491     12.6     14.7</div><div class='input'><span class='fu'>ci_var</span>(<span class='kw'>dft</span>, <span class='kw'>Fare</span>, <span class='kw'>Pclass</span>, conf_level = <span class='fl'>0.99</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 6</span><span>
+#&gt; </span><span style='color: #555555;'>3</span><span> 3           13.7    11.8   491     12.6     14.7</div><div class='input'><span class='fu'>ci_var</span>(<span class='kw'>dft</span>, <span class='kw'>Fare</span>, <span class='kw'>Pclass</span>, conf = <span class='fl'>0.99</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 6</span><span>
 #&gt;   Pclass Fare_mean Fare_sd     n lower_ci upper_ci
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> 1           84.2    78.4   216     70.3     98.0
