@@ -4,12 +4,12 @@
 \alias{outlier_zscore}
 \title{Outliers: Z-score method}
 \usage{
-outlier_zscore(x, thres = 3, mad = FALSE)
+outlier_zscore(x, thresh = 3, mad = FALSE)
 }
 \arguments{
 \item{x}{Numeric. Distribution}
 
-\item{thres}{Numeric. Z-Score threshold for n standard deviations.}
+\item{thresh}{Numeric. Z-Score threshold for n standard deviations.}
 
 \item{mad}{Boolean. Use median absolute deviation instead?}
 }

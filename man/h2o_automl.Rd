@@ -14,6 +14,7 @@ h2o_automl(
   target = "auto",
   balance = FALSE,
   impute = FALSE,
+  no_outliers = TRUE,
   center = FALSE,
   scale = FALSE,
   seed = 0,
@@ -61,6 +62,11 @@ categorical model.}
 \item{balance}{Boolean. Auto-balance train dataset with under-sampling?}
 
 \item{impute}{Boolean. Fill NA values with MICE?}
+
+\item{no_outliers}{Boolean/Numeric. Remove y's outliers in the dataset? 
+Will remove those values that are farther than n standard deviations from
+the independent variable's mean (Z-score). Set to `TRUE` for default (3) 
+or numeric to set a different multiplier.}
 
 \item{center, scale}{Boolean. Using the base function scale, do you wish
 to center and/or scale all numerical values?}

@@ -44,6 +44,10 @@
 #' categorical model.
 #' @param balance Boolean. Auto-balance train dataset with under-sampling?
 #' @param impute Boolean. Fill NA values with MICE?
+#' @param no_outliers Boolean/Numeric. Remove y's outliers in the dataset? 
+#' Will remove those values that are farther than n standard deviations from
+#' the independent variable's mean (Z-score). Set to `TRUE` for default (3) 
+#' or numeric to set a different multiplier.
 #' @param center,scale Boolean. Using the base function scale, do you wish
 #' to center and/or scale all numerical values? 
 #' @param seed Integer. Set a seed for reproducibility. AutoML can only 
@@ -102,6 +106,7 @@ h2o_automl <- function(df, y = "tag",
                        target = "auto",
                        balance = FALSE,
                        impute = FALSE,
+                       no_outliers = TRUE,
                        center = FALSE,
                        scale = FALSE,
                        seed = 0,
@@ -132,7 +137,7 @@ h2o_automl <- function(df, y = "tag",
   }
   
   if (!quiet) message(sprintf("Variable to predict: %s", y))
-            
+  
   colnames(df)[colnames(df) == y] <- "tag"
   df <- data.frame(df) %>% 
     filter(!is.na(.data$tag)) %>%
@@ -147,7 +152,7 @@ h2o_automl <- function(df, y = "tag",
       which <- vector2text(top10$label, quotes = FALSE)
       if (nrow(m) > 10)
         which <- paste(which, "and", nrow(m) - 10, "other.")
-      message(paste0("NOTE: The following variables contain missing observations: ", which,
+      message(paste0("- NOTE: The following variables contain missing observations: ", which,
                      if (!impute & !quiet) ". Consider using the impute parameter."))
     }
     if (impute) {
@@ -156,11 +161,27 @@ h2o_automl <- function(df, y = "tag",
     }
   }
   
+  # OUTLIERS ON INDEPENDENT VARIABLE
+  if (is.numeric(df$tag)) {
+    thresh <- ifelse(is.numeric(outliers), outliers, 3)
+    is_outlier <- outlier_zscore(df$tag, thresh = thresh)
+    if (!quiet)
+      message(sprintf(
+        "- NOTE: %s (%s) of %s values are considered outliers (Z-Score: >%ssd). %s",
+        formatNum(100*sum(is_outlier)/nrow(df), 1, pos = "%"),
+        formatNum(sum(is_outlier), 0), y, thresh,
+        ifelse(no_outliers, 
+               paste("Removing them from the dataset for better results.",
+                     "To keep them, set the 'no_outliers' parameter."), 
+               "Consider using the 'no_outliers' parameter to remove them.")))
+    if (no_outliers) df <- df[!is_outlier,] 
+  }
+  
   # ONE HOT SMART ENCODING
   nums <- df_str(df, "names", quiet = TRUE)$nums
   if (length(nums) != ncol(df) & !quiet) 
     message(paste(
-      "NOTE: There are", ncol(df) - length(nums), "non-numerical features.",
+      "- NOTE: There are", ncol(df) - length(nums), "non-numerical features.",
       "Consider using ohse() prior for One Hot Smart Encoding your categorical variables."))
   if (scale | center & length(nums) > 0) {
     new <- data.frame(lapply(df[nums], function(x) scale(x, center = center, scale = scale)))
@@ -217,7 +238,7 @@ h2o_automl <- function(df, y = "tag",
     } else stop(paste("There is no column named", train_test))
   }
   if (nrow(train) > 10000)
-    message("NOTE: Consider sampling your dataset for faster results")
+    message("- NOTE: Consider sampling your dataset for faster results")
   
   # BALANCE TRAINING SET
   if (model_type == "Classifier" & balance) {
