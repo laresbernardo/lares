@@ -36,5 +36,5 @@ outlier_zscore <- function(x, thres = 3, mad = FALSE) {
 outlier_turkey <- function(x, k = 1.5) {
   quar <- quantile(x, probs = c(0.25, 0.75), na.rm = TRUE)
   iqr <- diff(quar)
-  (quar[1] - k * iqr <= x) & (x <= quar[2] + k * iqr)
+  !((quar[1] - k * iqr <= x) & (x <= quar[2] + k * iqr))
 }
