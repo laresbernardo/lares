@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download Stocks Historical Data — stocks_quote • lares</title>
+<title>Outliers: Z-score method — outlier_zscore • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,13 @@
 
 
 
-<meta property="og:title" content="Download Stocks Historical Data — stocks_quote" />
-<meta property="og:description" content="This function lets the user download stocks historical data." />
+<meta property="og:title" content="Outliers: Z-score method — outlier_zscore" />
+<meta property="og:description" content="Z-score, also called a standard score, of an observation is a 
+distance from the population center measured in number of normalization 
+units. The default choice for center is sample mean and for 
+normalization unit is standard deviation. Values are considered 
+outliers based on z-score if its absolute value of 
+default z-score is higher then the threshold (popular choice is 3)." />
 
 
 
@@ -108,53 +113,44 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download Stocks Historical Data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/stocks.R'><code>R/stocks.R</code></a></small>
-    <div class="hidden name"><code>stocks_quote.Rd</code></div>
+    <h1>Outliers: Z-score method</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/outliers.R'><code>R/outliers.R</code></a></small>
+    <div class="hidden name"><code>outlier_zscore.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user download stocks historical data.</p>
+    <p>Z-score, also called a standard score, of an observation is a 
+distance from the population center measured in number of normalization 
+units. The default choice for center is sample mean and for 
+normalization unit is standard deviation. Values are considered 
+outliers based on z-score if its absolute value of 
+default z-score is higher then the threshold (popular choice is 3).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>stocks_quote</span>(<span class='kw'>ticks</span>)</pre>
+    <pre class="usage"><span class='fu'>outlier_zscore</span>(<span class='kw'>x</span>, thres = <span class='fl'>3</span>, mad = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>ticks</th>
-      <td><p>Character Vector. Symbols/Tickers to quote in real time.</p></td>
+      <th>x</th>
+      <td><p>Numeric. Distribution</p></td>
+    </tr>
+    <tr>
+      <th>thres</th>
+      <td><p>Numeric. Z-Score threshold for n standard deviations.</p></td>
+    </tr>
+    <tr>
+      <th>mad</th>
+      <td><p>Boolean. Use median absolute deviation instead?</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Investment: 
-<code>daily_portfolio()</code>,
-<code>daily_stocks()</code>,
-<code>etf_sector()</code>,
-<code>splot_change()</code>,
-<code>splot_etf()</code>,
-<code>splot_growth()</code>,
-<code>splot_roi()</code>,
-<code>splot_summary()</code>,
-<code>splot_types()</code>,
-<code>stocks_file()</code>,
-<code>stocks_hist()</code>,
-<code>stocks_obj()</code>,
-<code>stocks_report()</code></p></div>
+    <div class='dont-index'><p>Other Outliers: 
+<code>outlier_turkey()</code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Multiple quotes at the same time</span>
-<span class='fu'>stocks_quote</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"VTI"</span>,<span class='st'>"VOO"</span>,<span class='st'>"TSLA"</span>))</div><div class='output co'>#&gt;   Symbol   Type           QuoteTime   Value DailyChange    Market
-#&gt; 1    VTI    ETF 2020-07-13 20:00:00  159.21   -1.739990 us_market
-#&gt; 2    VOO    ETF 2020-07-13 20:00:00  289.24   -2.559998 us_market
-#&gt; 3   TSLA EQUITY 2020-07-13 20:00:01 1497.06  -47.589966 us_market
-#&gt;                                          SymbolName
-#&gt; 1 Vanguard Total Stock Market Index Fund ETF Shares
-#&gt; 2                              Vanguard S&amp;P 500 ETF
-#&gt; 3                                       Tesla, Inc.</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

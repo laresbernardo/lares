@@ -111,7 +111,7 @@ want to use ci_var() to calculate all values quickly." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Lower/Upper Confidence Intervals</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_functions.R'><code>R/other_functions.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/confidence.R'><code>R/confidence.R</code></a></small>
     <div class="hidden name"><code>ci_lower.Rd</code></div>
     </div>
 
@@ -144,12 +144,12 @@ want to use <code>ci_var()</code> to calculate all values quickly.</p>
       <th>conf</th>
       <td><p>Numeric (0-1). Confidence level.</p></td>
     </tr>
-    <tr>
-      <th>family</th>
-      <td><p>Confidence Intervals</p></td>
-    </tr>
     </table>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Confidence: 
+<code>ci_var()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>ci_lower</span>(<span class='fl'>100</span>, <span class='fl'>5</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 96.42322</div><div class='input'><span class='fu'>ci_upper</span>(<span class='fl'>100</span>, <span class='fl'>5</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 103.5768</div></pre>
