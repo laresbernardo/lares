@@ -1567,17 +1567,24 @@ spread_list <- function(df, col, str = NA, replace = TRUE) {
   
   if (!col %in% cols)
     stop("You must provide a variable contained in your dataframe")
-  if (!"list" %in% sapply(df[,cols == col], class))
-    stop("The variable provided is not a list variable")
+  if (!"list" %in% sapply(df[,cols == col], class)) {
+    warning("The variable provided is not a list variable")
+    return(df)
+  }
   
-  unlisted <- lapply(df[,cols == col], bind_rows)
-  binded <- bind_rows(unlisted) %>% replace(is.na(.), 0)
-  if (is.na(str)) str <- paste0(col, "_")
-  colnames(binded) <- paste0(str, colnames(binded))
-  done <- df %>% bind_cols(binded)
-  pos <- which(cols == col)
-  ncols <- length(cols)
-  done <- done[, c(1:pos, (ncols+1):(ncols+ncol(binded)), (pos + 1):ncols)]
-  if (replace) done <- done[, -pos]
-  return(as_tibble(done))
+  tryCatch({
+    unlisted <- lapply(df[,cols == col], bind_rows)
+    binded <- bind_rows(unlisted) %>% replace(is.na(.), 0)
+    if (is.na(str)) str <- paste0(col, "_")
+    colnames(binded) <- paste0(str, colnames(binded))
+    done <- df %>% bind_cols(binded)
+    pos <- which(cols == col)
+    ncols <- length(cols)
+    done <- done[, c(1:pos, (ncols+1):(ncols+ncol(binded)), (pos + 1):ncols)]
+    if (replace) done <- done[, -pos]
+    return(as_tibble(done))
+  }, error = function(err) {
+    warning(err)
+    return(df)
+  })
 }
