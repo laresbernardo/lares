@@ -62,7 +62,7 @@ scrabble_dictionary <- function(language) {
 #'   tiles = tolower(LETTERS),
 #'   scores = c(1,1,1,1,1,1,1,5,1,1,5,2,4,2,1,4,10,1,1,1,2,5,4,8,3,10))
 #' 
-#' # Score values for each set of rules
+#' # Score values for each set of rules 
 #' words <- c("Bernardo", "Whiskey", "R is great")
 #' scrabble_score(words, es_scores)
 #' scrabble_score(words, cu_scores)
