@@ -18,6 +18,7 @@ on the rules and languages you are playing with. Check the examples
 for Spanish and English values when I played Words With Friends.
 }
 \examples{
+\dontrun{
 # For Spanish words
 es_scores <- scrabble_points("es")
   
@@ -27,9 +28,10 @@ cu_scores <- data.frame(
   scores = c(1,1,1,1,1,1,1,5,1,1,5,2,4,2,1,4,10,1,1,1,2,5,4,8,3,10))
 
 # Score values for each set of rules
-words <- c("Bernardo", "whiskey", "R is great")
+words <- c("Bernardo", "Whiskey", "R is great")
 scrabble_score(words, es_scores)
 scrabble_score(words, cu_scores)
+}
 }
 \seealso{
 Other Scrabble: 
