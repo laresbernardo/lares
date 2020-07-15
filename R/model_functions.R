@@ -163,7 +163,7 @@ h2o_automl <- function(df, y = "tag",
   
   # OUTLIERS ON INDEPENDENT VARIABLE
   if (is.numeric(df$tag)) {
-    thresh <- ifelse(is.numeric(outliers), outliers, 3)
+    thresh <- ifelse(is.numeric(no_outliers), no_outliers, 3)
     is_outlier <- outlier_zscore(df$tag, thresh = thresh)
     if (!quiet)
       message(sprintf(

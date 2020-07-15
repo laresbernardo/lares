@@ -1565,10 +1565,14 @@ spread_list <- function(df, col, str = NA, replace = TRUE) {
   col <- as_label(var)
   cols <- colnames(df)
   
-  if (!col %in% cols)
-    stop("You must provide a variable contained in your dataframe")
   if (!"list" %in% sapply(df[,cols == col], class)) {
     warning("The variable provided is not a list variable")
+    return(df)
+  }
+  
+  # If all values are NA, no need to proceed but to change into vector with NAs
+  if (all(unlist(lapply(df[,cols == col], is.na)))) {
+    df[,cols == col] <- rep(NA, nrow(df))
     return(df)
   }
   

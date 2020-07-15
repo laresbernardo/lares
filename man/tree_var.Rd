@@ -72,7 +72,6 @@ Other Visualization:
 \code{\link{plot_survey}()},
 \code{\link{plot_timeline}()},
 \code{\link{summer}()},
-\code{\link{theme_lares2}()},
 \code{\link{theme_lares}()}
 }
 \concept{Exploratory}

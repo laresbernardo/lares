@@ -1,5 +1,5 @@
 ####################################################################
-#' lares Theme for ggplot2
+#' Theme for ggplot2 (lares)
 #' 
 #' Based on hrbrthemes' theme_ipsum and customized for lares' use.
 #'
@@ -24,18 +24,18 @@
 #' @param which Character. When pal = 3, select which colours should be
 #' added with the custom colours palette: fill, colour, text (fct) - first letters
 #' @export
-theme_lares2 <- function(font = getOption("lares.font"), 
-                         size = 12, 
-                         main_colour = "darkorange3", 
-                         hard_colour = "black",
-                         soft_colour = "grey30",
-                         bg_colour = "white",
-                         panel_colour = "transparent",
-                         legend = NA,
-                         grid = TRUE,
-                         mg = 9,
-                         pal = 0,
-                         which = "fct") {
+theme_lares <- function(font = getOption("lares.font"), 
+                        size = 12, 
+                        main_colour = "darkorange3", 
+                        hard_colour = "black",
+                        soft_colour = "grey30",
+                        bg_colour = "white",
+                        panel_colour = "transparent",
+                        legend = NA,
+                        grid = TRUE,
+                        mg = 9,
+                        pal = 0,
+                        which = "fct") {
   
   # Start from theme_minimal()
   ret <- theme_minimal(base_size = size)
@@ -190,3 +190,7 @@ theme_lares2 <- function(font = getOption("lares.font"),
   return(ret)
   
 }
+
+#' @rdname theme_lares
+#' @export
+theme_lares2 <- theme_lares
