@@ -77,7 +77,7 @@ models will be trained." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.8.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.0</span>
       </span>
     </div>
 
@@ -137,6 +137,7 @@ models will be trained.</p>
   target = <span class='st'>"auto"</span>,
   balance = <span class='fl'>FALSE</span>,
   impute = <span class='fl'>FALSE</span>,
+  no_outliers = <span class='fl'>TRUE</span>,
   center = <span class='fl'>FALSE</span>,
   scale = <span class='fl'>FALSE</span>,
   seed = <span class='fl'>0</span>,
@@ -204,6 +205,13 @@ categorical model.</p></td>
     <tr>
       <th>impute</th>
       <td><p>Boolean. Fill NA values with MICE?</p></td>
+    </tr>
+    <tr>
+      <th>no_outliers</th>
+      <td><p>Boolean/Numeric. Remove y's outliers in the dataset? 
+Will remove those values that are farther than n standard deviations from
+the independent variable's mean (Z-score). Set to `TRUE` for default (3) 
+or numeric to set a different multiplier.</p></td>
     </tr>
     <tr>
       <th>center, scale</th>

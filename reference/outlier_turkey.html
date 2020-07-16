@@ -41,8 +41,8 @@
 
 <meta property="og:title" content="Outliers: Tukey’s fences — outlier_turkey" />
 <meta property="og:description" content="Tukey’s fences is a technique used in box plots. The non-outlier 
-range is defined with [Q1−k(Q3−Q1), Q3+k(Q3−Q1)], where Q1 and Q3 
-are the lower and upper quartiles respectively, k - some nonnegative 
+range is defined with [Q1-k(Q3-Q1), Q3+k(Q3-Q1)], where Q1 and Q3 
+are the lower and upper quartiles respectively, k - some non-negative 
 constant (popular choice is 1.5). A value is an outlier based 
 on Tukey’s fences when its value does not lie in non-outlier range." />
 
@@ -76,7 +76,7 @@ on Tukey’s fences when its value does not lie in non-outlier range." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.8.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.0</span>
       </span>
     </div>
 
@@ -119,8 +119,8 @@ on Tukey’s fences when its value does not lie in non-outlier range." />
 
     <div class="ref-description">
     <p>Tukey’s fences is a technique used in box plots. The non-outlier 
-range is defined with [Q1−k(Q3−Q1), Q3+k(Q3−Q1)], where Q1 and Q3 
-are the lower and upper quartiles respectively, k - some nonnegative 
+range is defined with <code>[Q1-k(Q3-Q1), Q3+k(Q3-Q1)]</code>, where Q1 and Q3 
+are the lower and upper quartiles respectively, k - some non-negative 
 constant (popular choice is 1.5). A value is an outlier based 
 on Tukey’s fences when its value does not lie in non-outlier range.</p>
     </div>
@@ -136,7 +136,7 @@ on Tukey’s fences when its value does not lie in non-outlier range.</p>
     </tr>
     <tr>
       <th>k</th>
-      <td><p>Numeric. Range</p></td>
+      <td><p>Positive Numeric. K-multiplier</p></td>
     </tr>
     </table>
 

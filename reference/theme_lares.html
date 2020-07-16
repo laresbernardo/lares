@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Old theme for ggplot2 [Deprecated] — theme_lares • lares</title>
+<title>Theme for ggplot2 (lares) — theme_lares • lares</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Old theme for ggplot2 [Deprecated] — theme_lares" />
-<meta property="og:description" content="This function sets some default values into ggplot2 outputs. This
-function is almost as using gg_colour_customs() + gg_fill_customs() 
-+ gg_text_customs = but these won't be mantained any longer." />
+<meta property="og:title" content="Theme for ggplot2 (lares) — theme_lares" />
+<meta property="og:description" content="Based on hrbrthemes' theme_ipsum and customized for lares' use." />
 
 
 
@@ -74,7 +72,7 @@ function is almost as using gg_colour_customs() + gg_fill_customs()
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.8.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.0</span>
       </span>
     </div>
 
@@ -110,53 +108,89 @@ function is almost as using gg_colour_customs() + gg_fill_customs()
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Old theme for ggplot2 [Deprecated]</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/colour_palettes.R'><code>R/colour_palettes.R</code></a></small>
+    <h1>Theme for ggplot2 (lares)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/theme_lares.R'><code>R/theme_lares.R</code></a></small>
     <div class="hidden name"><code>theme_lares.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function sets some default values into ggplot2 outputs. This
-function is almost as using gg_colour_customs() + gg_fill_customs() 
-+ gg_text_customs = but these won't be mantained any longer.</p>
+    <p>Based on hrbrthemes' theme_ipsum and customized for lares' use.</p>
     </div>
 
     <pre class="usage"><span class='fu'>theme_lares</span>(
-  labels = <span class='fl'>FALSE</span>,
-  colours = <span class='fl'>TRUE</span>,
-  cont = <span class='fl'>FALSE</span>,
-  xcommas = <span class='fl'>FALSE</span>,
-  ycommas = <span class='fl'>FALSE</span>
+  font = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"lares.font"</span>),
+  size = <span class='fl'>12</span>,
+  main_colour = <span class='st'>"darkorange3"</span>,
+  hard_colour = <span class='st'>"black"</span>,
+  soft_colour = <span class='st'>"grey30"</span>,
+  bg_colour = <span class='st'>"white"</span>,
+  panel_colour = <span class='st'>"transparent"</span>,
+  legend = <span class='fl'>NA</span>,
+  grid = <span class='fl'>TRUE</span>,
+  mg = <span class='fl'>9</span>,
+  pal = <span class='fl'>0</span>,
+  which = <span class='st'>"fct"</span>
+)
+
+<span class='fu'>theme_lares2</span>(
+  font = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"lares.font"</span>),
+  size = <span class='fl'>12</span>,
+  main_colour = <span class='st'>"darkorange3"</span>,
+  hard_colour = <span class='st'>"black"</span>,
+  soft_colour = <span class='st'>"grey30"</span>,
+  bg_colour = <span class='st'>"white"</span>,
+  panel_colour = <span class='st'>"transparent"</span>,
+  legend = <span class='fl'>NA</span>,
+  grid = <span class='fl'>TRUE</span>,
+  mg = <span class='fl'>9</span>,
+  pal = <span class='fl'>0</span>,
+  which = <span class='st'>"fct"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>labels</th>
-      <td><p>Boolean. Add labels to plot?</p></td>
+      <th>font, size</th>
+      <td><p>Character and numeric. Base font family and base size for texts.
+Arial Narrow is set by default; you may change it with options("lares.font"="Other")
+or by using this parameter manually</p></td>
     </tr>
     <tr>
-      <th>colours</th>
-      <td><p>Boolean. Personalize colour palettes?</p></td>
+      <th>main_colour, hard_colour, soft_colour, bg_colour, panel_colour</th>
+      <td><p>Character. Main colours for your theme</p></td>
     </tr>
     <tr>
-      <th>cont</th>
-      <td><p>Boolean. Is the value continuous? Discrete by default</p></td>
+      <th>legend</th>
+      <td><p>Character. Legend position: top, right, bottom, left</p></td>
     </tr>
     <tr>
-      <th>xcommas</th>
-      <td><p>Boolean. Nice format for x continuous values?</p></td>
+      <th>grid</th>
+      <td><p>Character (<code>TRUE</code>, <code>FALSE</code>, or a combination of <code>X</code>, <code>x</code>, <code>Y</code>, <code>y</code>)</p></td>
     </tr>
     <tr>
-      <th>ycommas</th>
-      <td><p>Boolean. Nice format for y continuous values?</p></td>
+      <th>mg</th>
+      <td><p>Numeric. External margins</p></td>
+    </tr>
+    <tr>
+      <th>pal</th>
+      <td><p>Integer. 1 for fill and colour palette, 2 for only colour palette,
+3 for only fill palette, 4 for personal labels-colour palette. 0 or else for nothing.</p></td>
+    </tr>
+    <tr>
+      <th>which</th>
+      <td><p>Character. When pal = 3, select which colours should be
+added with the custom colours palette: fill, colour, text (fct) - first letters</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="why-arial-narrow-"><a class="anchor" href="#why-arial-narrow-"></a>Why Arial Narrow?</h2>
 
-    <p>This function is lo longer mantained: use theme_lares2() instead!</p>
+    
+
+<p>First and foremost, Arial Narrow is generally installed by default or readily
+available on any modern system, so it's "free"-ish; plus, it is a condensed font
+with solid default kerning pairs and geometric numbers.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Visualization: 
@@ -172,7 +206,6 @@ function is almost as using gg_colour_customs() + gg_fill_customs()
 <code>plot_survey()</code>,
 <code>plot_timeline()</code>,
 <code>summer()</code>,
-<code>theme_lares2()</code>,
 <code>tree_var()</code></p></div>
 
   </div>
