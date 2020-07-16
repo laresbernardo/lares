@@ -170,68 +170,6 @@ plot_palette <- function(fill, colour = "black", id = NA) {
 }
 
 
-#' ####################################################################
-#' #' Old theme for ggplot2 [Deprecated]
-#' #' 
-#' #' This function sets some default values into ggplot2 outputs. This
-#' #' function is almost as using gg_colour_customs() + gg_fill_customs() 
-#' #' + gg_text_customs = but these won't be mantained any longer. 
-#' #' 
-#' #' This function is lo longer mantained: use theme_lares2() instead!
-#' #' 
-#' #' @family Visualization
-#' #' @param labels Boolean. Add labels to plot?
-#' #' @param colours Boolean. Personalize colour palettes?
-#' #' @param cont Boolean. Is the value continuous? Discrete by default
-#' #' @param xcommas Boolean. Nice format for x continuous values?
-#' #' @param ycommas Boolean. Nice format for y continuous values?
-#' #' @export
-#' theme_lares <- function(labels = FALSE, colours = TRUE, cont = FALSE,
-#'                         xcommas = FALSE, ycommas = FALSE) {
-#'   
-#'   r <- list(theme_minimal())
-#'   
-#'   if (labels) {
-#'     r <- c(r, geom_label(show.legend = FALSE, size = 3))
-#'   }
-#'   
-#'   if (xcommas) {
-#'     r <- c(r, scale_x_continuous(labels = comma))
-#'   }
-#'   if (ycommas) {
-#'     r <- c(r, scale_y_continuous(labels = comma))
-#'   }
-#'   
-#'   if (colours) {
-#'     
-#'     colours_list <- lares_pal()$labels
-#'     
-#'     scale_fill_lares <- function(){
-#'       values <- as.character(t(colours_list$fill)[1,])
-#'       names(values) <- colours_list$values
-#'       structure(list(scale_fill_manual(values = values)))
-#'     }
-#'     
-#'     scale_colour_lares <- function(){
-#'       values <- as.character(t(colours_list$colour)[1,])
-#'       names(values) <- colours_list$values
-#'       structure(list(scale_color_manual(values = values)))
-#'     }
-#'     
-#'     if (cont) {
-#'       scale_colour_lares <- function(){
-#'         pal_lares <- lares_pal()$palette
-#'         structure(list(scale_color_gradientn(colours = pal_lares)))
-#'       } 
-#'     }
-#'     r <- c(r, scale_fill_lares(), scale_colour_lares())
-#'   }
-#'   
-#'   return(r)
-#'   
-#' }
-
-
 ####################################################################
 #' Custom colours for scale_color_manual [Deprecated]
 #' 
