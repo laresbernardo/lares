@@ -40,6 +40,11 @@ jobs:
 
       - name: Install package
         run: R CMD INSTALL .
+        
+      - name: Who am I?
+        run: |
+          git config --global user.email "laresbernardo@gmail.com"
+          git config --global user.name "Bernardo Lares"
 
       - name: Deploy package documentation
         run: pkgdown::deploy_to_branch(new_process = FALSE)
