@@ -14,10 +14,72 @@
 #' @param mad Boolean. Use median absolute deviation instead?
 #' @export
 outlier_zscore <- function(x, thresh = 3, mad = FALSE) {
-  if (mad == FALSE)
-    !abs(x - mean(x, na.rm = TRUE)) <= thresh * sd(x, na.rm = TRUE)
-  else
-    !abs(x - median(x, na.rm = TRUE)) <= thresh * mad(x, na.rm = TRUE)
+  if (mad == FALSE) {
+    calc <- mean(x, na.rm = TRUE)
+    std <- sd(x, na.rm = TRUE)
+    z <- thresh * std
+    ret <- !abs(x - calc) <= z
+    attr(ret, "std") <- std
+    attr(ret, "mean") <- calc
+  } else {
+    calc <- median(x, na.rm = TRUE)
+    mad <- mad(x, na.rm = TRUE)
+    z <- thresh * mad
+    ret <- !abs(x - calc) <= z
+    attr(ret, "mad") <- mad
+    attr(ret, "median") <- calc
+  }
+  attr(ret, "zscore") <- z
+  return(ret)
+}
+
+
+####################################################################
+#' Outliers: Z-score method plot
+#' 
+#' Test several Z-score thresholds to visualize outliers. Tidyverse
+#' friendly.
+#'
+#' @family Outliers
+#' @param df Dataframe
+#' @param var Numeric variable
+#' @param thresh Numeric vector. Z-Score threshold for n standard deviations.
+#' @param mad Boolean. Use median absolute deviation instead?
+#' @param plot Boolean. Show plot?
+#' @export
+outlier_zscore_plot <- function(df, var, thresh = c(2, 3, 5), 
+                                mad = FALSE, plot = TRUE) {
+  
+  var <- enquo(var)
+  name <- as_label(var)
+  
+  zs <- ref <- c()
+  for (i in thresh) {
+    aux <- outlier_zscore(df[,name], i, mad = mad)
+    df[,paste0("Z-", i)] <- aux
+    zs <- c(zs, attr(aux, "zscore"))
+  }
+  ref <- ifelse(!mad, attr(aux, "std"), attr(aux, "mad"))
+  
+  aux <- select(df, !!var, one_of(paste0("Z-", thresh))) %>%
+    replaceall(c(TRUE, FALSE), c("#BFBEBE", "#F79747"))
+  caption <- sprintf("Using %s absolute deviation", ifelse(mad, "median", "mean"))
+  p <- ggplot(aux, aes(y = !!var)) +
+    lapply(thresh, function(t)
+      lapply(select(aux, one_of(paste0("Z-", t))), function(x)
+        geom_jitter(aes(colour = x, x = paste("Z-", t)))
+      )) +
+    scale_color_identity() +
+    geom_hline(yintercept = ref, linetype = "dashed", alpha = 0.6) +
+    labs(title = "Outliers (Z-Scores)",
+         subtitle = sprintf("Variable: %s", name),
+         caption = caption, x = NULL) +
+    theme_lares(legend = "top")
+  
+  df <- select(df, !!var, one_of(paste0("Z-", thresh)))
+  ret <- list(plot = p, data = df, zs = zs, ref = ref)
+  if (plot) plot(p)
+  return(invisible(ret))
 }
 
 ####################################################################

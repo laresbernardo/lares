@@ -1592,3 +1592,53 @@ spread_list <- function(df, col, str = NA, replace = TRUE) {
     return(df)
   })
 }
+
+####################################################################
+#' Quote object's name (deparse + substitute)
+#'
+#' @param x (Unquoted) Object
+#' @param env Environment where object lives
+#' @return Character
+#' @export
+quo_val <- function(x, env = parent.frame()) {
+  x <- deparse(substitute(x, env))
+  x <- gsub("\\.data", "", x)
+  x <- gsub(".*\\$", "", x)
+  return(x)
+}
+
+####################################################################
+#' Format a string text as markdown/HTML
+#' 
+#' @param text Character
+#' @param color Character
+#' @param size Numeric
+#' @param bold Boolean
+#' @examples 
+#' \dontrun{
+#' col1 <- "grey"
+#' col2 <- "orange"
+#' pt <- data.frame(
+#'   label = paste0(
+#'     format_text(123, color = col2, size = 120, bold = TRUE), "<br/>",
+#'     format_text("of children had a", col1),"<br/>",
+#'     format_text("traditional stay-at-home mom", color = col2, bold = TRUE), "<br/>",
+#'     format_text(paste0("in 2012, compared to ", 321," in 1970"), color = col1)))
+#'   ggplot(pt, aes(x = 0, y = 0))  +
+#'   ggtext::geom_richtext(
+#'     aes(label = label), 
+#'     hjust = 0, 
+#'     label.color = NA, 
+#'     lineheight = 1.5) +
+#'   xlim(0, 0.01) +
+#'   theme_void()
+#' }
+#' @export
+format_text <- function(text, color = "black", size = 20, bold = FALSE) {
+  opening_span <- paste0("<span style='font-size:", size,"px; color:", color,"'>")
+  if (bold) text <- paste0("**", text, "**")
+  closing_span <- "</span>"
+  text <- paste(text, collapse = "<br/>")
+  ret <- paste0(opening_span, text, closing_span)
+  return(ret)
+}

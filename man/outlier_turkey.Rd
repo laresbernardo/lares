@@ -20,6 +20,7 @@ on Tukey’s fences when its value does not lie in non-outlier range.
 }
 \seealso{
 Other Outliers: 
+\code{\link{outlier_zscore_plot}()},
 \code{\link{outlier_zscore}()}
 }
 \concept{Outliers}

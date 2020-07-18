@@ -73,7 +73,8 @@ freqs <- function(df, ..., wt = NULL,
   vars <- quos(...)
   weight <- enquo(wt)
   
-  # Probably an error but might be usefull for the user instead
+  # Probably an error but might be useful for the user instead
+  # When it's a vector, frequencies; when it's a dataframe, global frequencies
   if (length(vars) == 0) {
     output <- freqs_df(df, plot = !plot, save = save, subdir = subdir)
     return(output)
@@ -269,9 +270,12 @@ freqs_df <- function(df,
                      quiet = FALSE,
                      save = FALSE, subdir = NA) {
   
-  if (is.vector(df)) 
-    return(freqs(data.frame(values = df), .data$values))
-  
+  if (is.vector(df)) {
+    temp <- data.frame(values = df)
+    ret <- freqs(temp, .data$values)
+    return(ret)
+  }
+    
   df <- df[!unlist(lapply(df, is.list))]
   names <- lapply(df, function(x) length(unique(x)))
   unique <- as.data.frame(names)
@@ -720,3 +724,4 @@ freqs_list <- function(df,
   
   return(invisible(results))
 }
+
