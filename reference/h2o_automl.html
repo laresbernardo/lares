@@ -285,7 +285,7 @@ the results? Working directory as default.</p></td>
 
     
 
-<p>Use the <code>mplot_full()</code> function to generate a dashboard with
+<p>Use the <code><a href='mplot_full.html'>mplot_full()</a></code> function to generate a dashboard with
 your model's results and metrics, or find them in your `plots` 
 element within your `h2o_automl` object (be sure to have your 
 `plots` to `TRUE`).</p>
@@ -302,22 +302,22 @@ multi-layer artificial neural network) and "StackedEnsemble".
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Machine Learning: 
-<code>ROC()</code>,
-<code>clusterKmeans()</code>,
-<code>conf_mat()</code>,
-<code>export_results()</code>,
-<code>gain_lift()</code>,
-<code>h2o_predict_API()</code>,
-<code>h2o_predict_MOJO()</code>,
-<code>h2o_predict_binary()</code>,
-<code>h2o_predict_model()</code>,
-<code>h2o_results()</code>,
-<code>h2o_selectmodel()</code>,
-<code>impute()</code>,
-<code>iter_seeds()</code>,
-<code>lasso_vars()</code>,
-<code>model_metrics()</code>,
-<code>msplit()</code></p></div>
+<code><a href='ROC.html'>ROC</a>()</code>,
+<code><a href='clusterKmeans.html'>clusterKmeans</a>()</code>,
+<code><a href='conf_mat.html'>conf_mat</a>()</code>,
+<code><a href='export_results.html'>export_results</a>()</code>,
+<code><a href='gain_lift.html'>gain_lift</a>()</code>,
+<code><a href='h2o_predict_API.html'>h2o_predict_API</a>()</code>,
+<code><a href='h2o_predict_MOJO.html'>h2o_predict_MOJO</a>()</code>,
+<code><a href='h2o_predict_binary.html'>h2o_predict_binary</a>()</code>,
+<code><a href='h2o_predict_model.html'>h2o_predict_model</a>()</code>,
+<code><a href='h2o_results.html'>h2o_results</a>()</code>,
+<code><a href='h2o_selectmodel.html'>h2o_selectmodel</a>()</code>,
+<code><a href='impute.html'>impute</a>()</code>,
+<code><a href='iter_seeds.html'>iter_seeds</a>()</code>,
+<code><a href='lasso_vars.html'>lasso_vars</a>()</code>,
+<code><a href='model_metrics.html'>model_metrics</a>()</code>,
+<code><a href='msplit.html'>msplit</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
@@ -335,7 +335,7 @@ multi-layer artificial neural network) and "StackedEnsemble".
 <span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, y = <span class='st'>"Fare"</span>, ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Pclass"</span>), exclude_algos = <span class='kw'>NULL</span>)
 
 <span class='co'># WITH PRE-DEFINED TRAIN/TEST DATAFRAMES</span>
-<span class='kw'>splits</span> <span class='op'>&lt;-</span> <span class='fu'>msplit</span>(<span class='kw'>dft</span>, size = <span class='fl'>0.8</span>)
+<span class='kw'>splits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='msplit.html'>msplit</a></span>(<span class='kw'>dft</span>, size = <span class='fl'>0.8</span>)
 <span class='kw'>splits</span><span class='op'>$</span><span class='kw'>train</span><span class='op'>$</span><span class='kw'>split</span> <span class='op'>&lt;-</span> <span class='st'>"train"</span>
 <span class='kw'>splits</span><span class='op'>$</span><span class='kw'>test</span><span class='op'>$</span><span class='kw'>split</span> <span class='op'>&lt;-</span> <span class='st'>"test"</span>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='kw'>splits</span><span class='op'>$</span><span class='kw'>train</span>, <span class='kw'>splits</span><span class='op'>$</span><span class='kw'>test</span>)

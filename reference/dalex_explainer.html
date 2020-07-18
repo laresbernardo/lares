@@ -143,16 +143,16 @@
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Interpretability: 
-<code>dalex_local()</code>,
-<code>dalex_residuals()</code>,
-<code>dalex_variable()</code></p></div>
+<code><a href='dalex_local.html'>dalex_local</a>()</code>,
+<code><a href='dalex_residuals.html'>dalex_residuals</a>()</code>,
+<code><a href='dalex_variable.html'>dalex_variable</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 
 <span class='co'># TRAIN A SIMPLE MODEL</span>
-<span class='kw'>dfm</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, y = <span class='st'>"Survived"</span>,
+<span class='kw'>dfm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='h2o_automl.html'>h2o_automl</a></span>(<span class='kw'>dft</span>, y = <span class='st'>"Survived"</span>,
                   ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Ticket"</span>, <span class='st'>"PassengerId"</span>, <span class='st'>"Cabin"</span>),
                   max_models = <span class='fl'>1</span>)
 
@@ -161,17 +161,17 @@
 <span class='kw'>explainer</span><span class='op'>$</span><span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='kw'>explainer</span><span class='op'>$</span><span class='kw'>data</span>)
 
 <span class='co'># CATEGORICAL EXAMPLE</span>
-<span class='kw'>class</span> <span class='op'>&lt;-</span> <span class='fu'>dalex_variable</span>(<span class='kw'>explainer</span>, vars = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Pclass"</span>, <span class='st'>"Sex"</span>))
+<span class='kw'>class</span> <span class='op'>&lt;-</span> <span class='fu'><a href='dalex_variable.html'>dalex_variable</a></span>(<span class='kw'>explainer</span>, vars = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Pclass"</span>, <span class='st'>"Sex"</span>))
 <span class='kw'>class</span><span class='op'>$</span><span class='kw'>plot</span>
 
 <span class='co'># NUMERICAL EXAMPLE</span>
-<span class='kw'>num</span> <span class='op'>&lt;-</span> <span class='fu'>dalex_variable</span>(<span class='kw'>explainer</span>, vars = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Fare"</span>, <span class='st'>"Age"</span>))
+<span class='kw'>num</span> <span class='op'>&lt;-</span> <span class='fu'><a href='dalex_variable.html'>dalex_variable</a></span>(<span class='kw'>explainer</span>, vars = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Fare"</span>, <span class='st'>"Age"</span>))
 <span class='kw'>num</span><span class='op'>$</span><span class='kw'>plot</span>
 
 <span class='co'># LOCAL EXAMPLE</span>
-<span class='kw'>local</span> <span class='op'>&lt;-</span> <span class='fu'>dalex_local</span>(<span class='kw'>explainer</span>, row = <span class='fl'>1</span>)
+<span class='kw'>local</span> <span class='op'>&lt;-</span> <span class='fu'><a href='dalex_local.html'>dalex_local</a></span>(<span class='kw'>explainer</span>, row = <span class='fl'>1</span>)
 <span class='co'># OR YOU COULD MANUALLY INPUT THE OBSERVATION</span>
-<span class='kw'>local</span> <span class='op'>&lt;-</span> <span class='fu'>dalex_local</span>(<span class='kw'>explainer</span>, observation = <span class='kw'>explainer</span><span class='op'>$</span><span class='kw'>data</span>[<span class='fl'>1</span>,])
+<span class='kw'>local</span> <span class='op'>&lt;-</span> <span class='fu'><a href='dalex_local.html'>dalex_local</a></span>(<span class='kw'>explainer</span>, observation = <span class='kw'>explainer</span><span class='op'>$</span><span class='kw'>data</span>[<span class='fl'>1</span>,])
 <span class='kw'>local</span><span class='op'>$</span><span class='kw'>plot</span>
 }</div></pre>
   </div>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get Meta Data from Image Files — image_metadata • lares</title>
+<title>Quote object's name (deparse + substitute) — quo_val • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Get Meta Data from Image Files — image_metadata" />
-<meta property="og:description" content="This function lets the user get meta data from image files or directory." />
+<meta property="og:title" content="Quote object's name (deparse + substitute) — quo_val" />
+<meta property="og:description" content="Quote object's name (deparse + substitute)" />
 
 
 
@@ -108,60 +108,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get Meta Data from Image Files</h1>
+    <h1>Quote object's name (deparse + substitute)</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_functions.R'><code>R/other_functions.R</code></a></small>
-    <div class="hidden name"><code>image_metadata.Rd</code></div>
+    <div class="hidden name"><code>quo_val.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user get meta data from image files or directory.</p>
+    <p>Quote object's name (deparse + substitute)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>image_metadata</span>(<span class='kw'>files</span>)</pre>
+    <pre class="usage"><span class='fu'>quo_val</span>(<span class='kw'>x</span>, env = <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span>())</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>files</th>
-      <td><p>Character vector. Files or directory which contains files.</p></td>
+      <th>x</th>
+      <td><p>(Unquoted) Object</p></td>
+    </tr>
+    <tr>
+      <th>env</th>
+      <td><p>Environment where object lives</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <div class='dont-index'><p>Other Tools: 
-<code><a href='autoline.html'>autoline</a>()</code>,
-<code><a href='bindfiles.html'>bindfiles</a>()</code>,
-<code><a href='bring_api.html'>bring_api</a>()</code>,
-<code><a href='db_download.html'>db_download</a>()</code>,
-<code><a href='db_upload.html'>db_upload</a>()</code>,
-<code><a href='export_plot.html'>export_plot</a>()</code>,
-<code><a href='export_results.html'>export_results</a>()</code>,
-<code><a href='get_credentials.html'>get_credentials</a>()</code>,
-<code><a href='h2o_predict_API.html'>h2o_predict_API</a>()</code>,
-<code><a href='h2o_predict_MOJO.html'>h2o_predict_MOJO</a>()</code>,
-<code><a href='h2o_predict_binary.html'>h2o_predict_binary</a>()</code>,
-<code><a href='h2o_predict_model.html'>h2o_predict_model</a>()</code>,
-<code><a href='h2o_selectmodel.html'>h2o_selectmodel</a>()</code>,
-<code><a href='h2o_update.html'>h2o_update</a>()</code>,
-<code><a href='haveInternet.html'>haveInternet</a>()</code>,
-<code><a href='importxlsx.html'>importxlsx</a>()</code>,
-<code><a href='ip_country.html'>ip_country</a>()</code>,
-<code><a href='iter_seeds.html'>iter_seeds</a>()</code>,
-<code><a href='json2vector.html'>json2vector</a>()</code>,
-<code><a href='listfiles.html'>listfiles</a>()</code>,
-<code><a href='mailSend.html'>mailSend</a>()</code>,
-<code><a href='msplit.html'>msplit</a>()</code>,
-<code><a href='myip.html'>myip</a>()</code>,
-<code><a href='pass.html'>pass</a>()</code>,
-<code><a href='quiet.html'>quiet</a>()</code>,
-<code><a href='read.file.html'>read.file</a>()</code>,
-<code><a href='statusbar.html'>statusbar</a>()</code>,
-<code><a href='tic.html'>tic</a>()</code>,
-<code><a href='try_require.html'>try_require</a>()</code>,
-<code><a href='updateLares.html'>updateLares</a>()</code>,
-<code><a href='zerovar.html'>zerovar</a>()</code></p></div>
+    <p>Character</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
