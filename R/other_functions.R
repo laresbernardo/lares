@@ -1634,7 +1634,7 @@ quo_val <- function(x, env = parent.frame()) {
 #'   theme_void()
 #' }
 #' @export
-format_text <- function(text, color = "black", size = 20, bold = FALSE) {
+formatText <- function(text, color = "black", size = 20, bold = FALSE) {
   opening_span <- paste0("<span style='font-size:", size,"px; color:", color,"'>")
   if (bold) text <- paste0("**", text, "**")
   closing_span <- "</span>"
