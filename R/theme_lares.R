@@ -115,13 +115,14 @@ theme_lares <- function(font = getOption("lares.font"),
   
   # facet_grid
   ret <- ret + theme(strip.text = element_text(
-    hjust = 0, size = size * 1, colour = soft_colour, face = "bold", family = font))
+    hjust = 0, size = size * 0.9, colour = soft_colour, face = "bold", family = font))
   ret <- ret + theme(panel.spacing = grid::unit(0.8, "lines"))
   
   # Plot title
   ret <- ret + theme(plot.title = element_text(
-    hjust = 0, size = size * 1.25, margin = margin(b = size * 0.3), 
-    family = font, face = "bold", color = "black"))
+    size = size * 1.25, margin = margin(b = size * 0.3), #hjust = 0, 
+    family = font, face = "bold", color = "black"),
+    plot.title.position = "plot") # Aligns plot title to the very left edge (more space)
   
   # Plot subtitle
   ret <- ret + theme(plot.subtitle = element_text(

@@ -46,6 +46,12 @@ outlier_zscore <- function(x, thresh = 3, mad = FALSE) {
 #' @param thresh Numeric vector. Z-Score threshold for n standard deviations.
 #' @param mad Boolean. Use median absolute deviation instead?
 #' @param plot Boolean. Show plot?
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dft) # Titanic dataset
+#' x <- outlier_zscore_plot(dft, Fare)
+#' x <- outlier_zscore_plot(dft, Age, thresh = 1:4)
+#' lapply(x[-1], head)
 #' @export
 outlier_zscore_plot <- function(df, var, thresh = c(2, 3, 5), 
                                 mad = FALSE, plot = TRUE) {
@@ -59,25 +65,47 @@ outlier_zscore_plot <- function(df, var, thresh = c(2, 3, 5),
     df[,paste0("Z-", i)] <- aux
     zs <- c(zs, attr(aux, "zscore"))
   }
-  ref <- ifelse(!mad, attr(aux, "std"), attr(aux, "mad"))
   
-  aux <- select(df, !!var, one_of(paste0("Z-", thresh))) %>%
-    replaceall(c(TRUE, FALSE), c("#BFBEBE", "#F79747"))
-  caption <- sprintf("Using %s absolute deviation", ifelse(mad, "median", "mean"))
-  p <- ggplot(aux, aes(y = !!var)) +
+  centre <- ifelse(!mad, attr(aux, "mean"), attr(aux, "median"))
+  std <- ifelse(!mad, attr(aux, "std"), attr(aux, "mad"))
+  
+  # # For geom_rects
+  # temp <- data.frame(thresh, std)
+  # aux2 <- lapply(thresh, function(t)
+  #     data.frame(x = paste0("Z-", t), xmin = -Inf, xmax = Inf) %>%
+  #       mutate(ymin = centre - t * temp$std[temp$thresh == t],
+  #              ymax = centre + t * temp$std[temp$thresh == t])
+  # )
+  
+  temp <- select(df, !!var, one_of(paste0("Z-", thresh))) %>%
+    replaceall(c(TRUE, FALSE), c("purple", "#F79747")) %>%
+    filter(!is.na(!!var))
+  
+  caption <- sprintf("Using %s absolute deviation (%s)", 
+                     ifelse(mad, "median", "mean"),
+                     signif(std, 4))
+  
+  p <- ggplot(temp) +
     lapply(thresh, function(t)
-      lapply(select(aux, one_of(paste0("Z-", t))), function(x)
-        geom_jitter(aes(colour = x, x = paste("Z-", t)))
+      lapply(select(temp, one_of(paste0("Z-", t))), function(x)
+        geom_jitter(aes(
+          x = paste0("Z-", str_pad(t, nchar(max(thresh)), pad = "0"),
+                     sprintf("\n(%s)", sum(x == "purple"))),
+          colour = x, y = !!var))
       )) +
+    # lapply(aux2, function(r)
+    #   geom_rect(data = r, 
+    #             aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, group = x),
+    #             fill = "grey", colour = "black", alpha = 0.1)) +
     scale_color_identity() +
-    geom_hline(yintercept = ref, linetype = "dashed", alpha = 0.6) +
+    geom_hline(yintercept = centre, linetype = "dashed", alpha = 0.6) +
     labs(title = "Outliers (Z-Scores)",
          subtitle = sprintf("Variable: %s", name),
          caption = caption, x = NULL) +
     theme_lares(legend = "top")
   
   df <- select(df, !!var, one_of(paste0("Z-", thresh)))
-  ret <- list(plot = p, data = df, zs = zs, ref = ref)
+  ret <- list(plot = p, data = df, zs = zs, ref = centre)
   if (plot) plot(p)
   return(invisible(ret))
 }

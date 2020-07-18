@@ -21,6 +21,13 @@ outlier_zscore_plot(df, var, thresh = c(2, 3, 5), mad = FALSE, plot = TRUE)
 Test several Z-score thresholds to visualize outliers. Tidyverse
 friendly.
 }
+\examples{
+options("lares.font" = NA) # Temporal
+data(dft) # Titanic dataset
+x <- outlier_zscore_plot(dft, Fare)
+x <- outlier_zscore_plot(dft, Age, thresh = 1:4)
+lapply(x[-1], head)
+}
 \seealso{
 Other Outliers: 
 \code{\link{outlier_turkey}()},
