@@ -129,16 +129,10 @@ corr <- function(df, method = "pearson",
 #' # With plots, results are easier to compare:
 #' 
 #' # Correlate Survived with everything else and show only significant results
-#' dft %>% corr_var(Survived_TRUE, max_pvalue = 0.05)
+#' dft %>% corr_var(Survived_TRUE, max_pvalue = 0.01)
 #' 
-#' # Filter out variables with less than 50% of correlation
-#' dft %>% corr_var(Survived_TRUE, ceiling = 50)
-#' 
-#' # Show only 10 values
-#' dft %>% corr_var(Survived_TRUE, top = 10)
-#' 
-#' # Also calculate log(values)
-#' dft %>% corr_var(Survived_TRUE, logs = TRUE, top = 15)
+#' # Top 15 with less than 50% correlation
+#' dft %>% corr_var(Survived_TRUE, ceiling = 60, top = 15)
 #' @export
 corr_var <- function(df, var, 
                      ignore = NA,

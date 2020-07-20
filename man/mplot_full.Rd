@@ -28,13 +28,13 @@ be categorical for multi-categorical models (also need multis param).}
 \item{multis}{Data.frame. Containing columns with each category score 
 (only used when more than 2 categories coexist)}
 
-\item{splits}{Integer. Numer of separations to plot}
+\item{splits}{Integer. Number of separations to plot}
 
 \item{thresh}{Integer. Threshold for selecting binary or regression 
 models: this number is the threshold of unique values we should 
 have in 'tag' (more than: regression; less than: classification)}
 
-\item{subtitle}{Character. Subitle to show in plot}
+\item{subtitle}{Character. Subtitle to show in plot}
 
 \item{model_name}{Character. Model's name}
 
@@ -52,6 +52,7 @@ detect if it's a categorical or regression's model by checking how many differen
 unique values the independent variable (tag) has.
 }
 \examples{
+\donttest{
 options("lares.font" = NA) # Temporal
 data(dfr) # Results for AutoML Predictions
 lapply(dfr, head)
@@ -68,6 +69,7 @@ mplot_full(dfr$class3$tag, dfr$class3$score,
 # Dasboard for Regression Model
 mplot_full(dfr$regr$tag, dfr$regr$score, 
           model_name = "Titanic Fare Model")
+}
 }
 \seealso{
 Other ML Visualization: 

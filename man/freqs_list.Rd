@@ -62,6 +62,7 @@ This is similar to the \href{http://vcg.github.io/upset/}{UpSet Plots}
 which may be used as an alternative to Venn diagrams.
 }
 \examples{
+\donttest{
 options("lares.font"=NA) # Temporal
 df <- dplyr::starwars
 head(df[,c(1,4,5,12)], 10)
@@ -84,6 +85,7 @@ head(movies)
 freqs_list(movies, wt = AvgRating, min_elements = 2, tail = FALSE,
            title = "Movies\nMixed Genres\nRanking")
 # So, please: no more Comedy+SciFi and more Drama+Horror films (based on ~50 movies)!
+}
 }
 \seealso{
 Other Frequency: 

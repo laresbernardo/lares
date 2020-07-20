@@ -18,10 +18,10 @@ lares_pal <- function() {
   
   black <- "#000000"
   white <- "#FFFFFF"
-  red <- "E63946"
+  red <- "#E63946"
   green <- "#3DA4AB" 
-  pink <- "FFCAD4"
-  blue <- "#ffcad4z"
+  pink <- "#FFCAD4"
+  blue <- "#FFCAD4Z"
   orange <- "#F4A261"
   grey <- "#8D99AE"
   

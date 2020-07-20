@@ -7,7 +7,7 @@
 bindfiles(files)
 }
 \arguments{
-\item{files}{Dataframe}
+\item{files}{Character vector. Filenames.}
 }
 \description{
 This function imports and binds multiple files into a single 

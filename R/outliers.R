@@ -110,7 +110,7 @@ outlier_zscore_plot <- function(df, var, group = NULL,
     theme_lares()
   if (original_n != filtered_n)
     p <- p + labs(caption = sprintf(
-      "Considering only the %s most frequent grouping categories", top))
+      "Showing only the %s most frequent grouping categories", top))
   
   attr(p, "labels") <- select(df, !!var, one_of(paste0("Z-", thresh)), starts_with("outlier_"))
   attr(p, "z_values") <- zs

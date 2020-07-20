@@ -15,7 +15,7 @@
 try_require <- function(package, stop = TRUE) {
   if (length(find.package(package, quiet = TRUE)) > 0) {
     suppressMessages(library(package, character.only = TRUE))
-    return(invisible())
+    return(invisible(NULL))
   }
   if (stop)
     stop(paste0("Package `", package, "` required. Install and try again."), call. = FALSE)
@@ -1077,7 +1077,7 @@ read.file <- function(filename, current_wd = TRUE, sheet = 1, quiet = FALSE) {
 #' data.frame. Files must be inserted with absolute roots filenames. 
 #' 
 #' @family Tools
-#' @param files Dataframe
+#' @param files Character vector. Filenames.
 #' @export
 bindfiles <- function(files) {
   alldat <- data.frame()

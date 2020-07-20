@@ -31,31 +31,27 @@
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @examples 
+#' \donttest{
 #' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
 #' 
 #' # Relation for categorical/categorical values
 #' dft %>% distr(Survived, Sex)
-#' dft %>% distr(Embarked, Survived)
 #' 
 #' # Relation for categorical/numeric values
 #' dft %>% distr(Survived, Fare, plot = FALSE) %>% head(10)
 #' # Sort values 
 #' dft %>% distr(Survived, Fare, abc = TRUE)
-#' # Less plits
+#' # Less splits/breaks
 #' dft %>% distr(Survived, Fare, abc = TRUE, breaks = 5)
 #' 
 #' # Distribution of numerical only
-#' dft %>% dplyr::filter(Fare < 200) %>% distr(Fare)
-#' 
-#' # Distribution of categorical only - uses freqs()
-#' dft %>% distr(Survived, force = "char")
+#' dft[dft$Fare < 20,] %>% distr(Fare)
 #' 
 #' # Distribution of numerical/numerical
-#' dft %>% dplyr::mutate(logFare = log(Fare)) %>% distr(Fare, logFare)
+#' dft %>% distr(Fare, Age)
 #' 
 #' # Select only one of the two default plots of distr()
-#' \dontrun{
 #' dft %>% distr(Survived, Age, type = 2)
 #' dft %>% distr(Survived, Age, type = 3)
 #' }

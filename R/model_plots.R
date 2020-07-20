@@ -788,17 +788,18 @@ mplot_lineal <- function(tag,
 #' be categorical for multi-categorical models (also need multis param).
 #' @param multis Data.frame. Containing columns with each category score 
 #' (only used when more than 2 categories coexist)
-#' @param splits Integer. Numer of separations to plot
+#' @param splits Integer. Number of separations to plot
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
 #' have in 'tag' (more than: regression; less than: classification)
-#' @param subtitle Character. Subitle to show in plot
+#' @param subtitle Character. Subtitle to show in plot
 #' @param model_name Character. Model's name
 #' @param plot Boolean. Plot results? If not, plot grid object returned
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @examples 
+#' \donttest{
 #' options("lares.font" = NA) # Temporal
 #' data(dfr) # Results for AutoML Predictions
 #' lapply(dfr, head)
@@ -815,6 +816,7 @@ mplot_lineal <- function(tag,
 #' # Dasboard for Regression Model
 #' mplot_full(dfr$regr$tag, dfr$regr$score, 
 #'           model_name = "Titanic Fare Model")
+#' }
 #' @export
 mplot_full <- function(tag, 
                        score, 
