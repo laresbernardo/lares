@@ -4,18 +4,19 @@
 \alias{outlier_zscore_plot}
 \title{Outliers: Z-score method plot}
 \usage{
-outlier_zscore_plot(df, var, thresh = c(2, 3, 5), mad = FALSE, plot = TRUE)
+outlier_zscore_plot(df, var, group = NULL, thresh = c(2, 3, 5), top = 5)
 }
 \arguments{
-\item{df}{Dataframe}
+\item{df}{Dataframe.}
 
-\item{var}{Numeric variable}
+\item{var}{Numeric variable.}
+
+\item{group}{Categorical variable. Grouping variable.}
 
 \item{thresh}{Numeric vector. Z-Score threshold for n standard deviations.}
 
-\item{mad}{Boolean. Use median absolute deviation instead?}
-
-\item{plot}{Boolean. Show plot?}
+\item{top}{Integer. Show only n most frequent categorical values when 
+using the `group` argument.}
 }
 \description{
 Test several Z-score thresholds to visualize outliers. Tidyverse
@@ -24,9 +25,11 @@ friendly.
 \examples{
 options("lares.font" = NA) # Temporal
 data(dft) # Titanic dataset
-x <- outlier_zscore_plot(dft, Fare)
-x <- outlier_zscore_plot(dft, Age, thresh = 1:4)
-lapply(x[-1], head)
+outlier_zscore_plot(dft, Fare)
+p <- outlier_zscore_plot(dft, Fare, Pclass, thresh = c(3, 5))
+plot(p)
+attr(p, "z_values")
+head(attr(p, "labels"))
 }
 \seealso{
 Other Outliers: 

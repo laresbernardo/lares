@@ -19,20 +19,16 @@ outlier_zscore <- function(x, thresh = 3, mad = FALSE) {
     std <- sd(x, na.rm = TRUE)
     z <- thresh * std
     ret <- !abs(x - calc) <= z
-    attr(ret, "std") <- std
-    attr(ret, "mean") <- calc
+    attr(ret, "values") <- data.frame(z = z, std = std, mean = calc)
   } else {
     calc <- median(x, na.rm = TRUE)
     mad <- mad(x, na.rm = TRUE)
     z <- thresh * mad
     ret <- !abs(x - calc) <= z
-    attr(ret, "mad") <- mad
-    attr(ret, "median") <- calc
+    attr(ret, "values") <- data.frame(z = z, mad = mad, med = calc)
   }
-  attr(ret, "zscore") <- z
   return(ret)
 }
-
 
 ####################################################################
 #' Outliers: Z-score method plot
@@ -41,73 +37,84 @@ outlier_zscore <- function(x, thresh = 3, mad = FALSE) {
 #' friendly.
 #'
 #' @family Outliers
-#' @param df Dataframe
-#' @param var Numeric variable
+#' @param df Dataframe.
+#' @param var Numeric variable.
+#' @param group Categorical variable. Grouping variable.
 #' @param thresh Numeric vector. Z-Score threshold for n standard deviations.
-#' @param mad Boolean. Use median absolute deviation instead?
-#' @param plot Boolean. Show plot?
+#' @param top Integer. Show only n most frequent categorical values when 
+#' using the `group` argument.
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
-#' x <- outlier_zscore_plot(dft, Fare)
-#' x <- outlier_zscore_plot(dft, Age, thresh = 1:4)
-#' lapply(x[-1], head)
+#' outlier_zscore_plot(dft, Fare)
+#' p <- outlier_zscore_plot(dft, Fare, Pclass, thresh = c(3, 5))
+#' plot(p)
+#' attr(p, "z_values")
+#' head(attr(p, "labels"))
 #' @export
-outlier_zscore_plot <- function(df, var, thresh = c(2, 3, 5), 
-                                mad = FALSE, plot = TRUE) {
+outlier_zscore_plot <- function(df, var, group = NULL,
+                                thresh = c(2, 3, 5), 
+                                top = 5) {
   
   var <- enquo(var)
-  name <- as_label(var)
+  group <- enquo(group)
+  grouped <- !rlang::quo_is_null(group)
   
-  zs <- ref <- c()
+  df <- filter(df, !is.na(!!var))
+  original_n <-filtered_n <-  nrow(df)
+  
+  if (grouped) {
+    if (!is.na(top)) {
+      f <- freqs(df, !!group) %>% head(top)
+      use <- unlist(f[,as_label(group)])
+      df <- filter(df, !!group %in% use)
+      filtered_n <- nrow(df)
+    }
+    df <- group_by(df, !!group)
+  } 
+  
+  df <- df %>% 
+    mutate(outlier_std = sd(!!var), 
+           outlier_mean = mean(!!var),
+           outlier_group = ifelse(grouped, !!group, "Across all observations"))
+
+  zs <- ref <- centre <- c()
   for (i in thresh) {
-    aux <- outlier_zscore(df[,name], i, mad = mad)
-    df[,paste0("Z-", i)] <- aux
-    zs <- c(zs, attr(aux, "zscore"))
+    aux <- df %>% 
+      group_by(.data$outlier_group) %>%
+      mutate(outlier = outlier_zscore(!!var, i))
+    df[,paste0("Z-", i)] <- aux$outlier
+    zs <- rbind(zs, c(i, unique(aux$outlier_std) * i))
   }
+
+  df <- ungroup(df)
+  temp <- select(df, starts_with("outlier_"), !!var, one_of(paste0("Z-", thresh))) %>%
+    replaceall(c(TRUE, FALSE), c("purple", "#F79747"))
   
-  centre <- ifelse(!mad, attr(aux, "mean"), attr(aux, "median"))
-  std <- ifelse(!mad, attr(aux, "std"), attr(aux, "mad"))
-  
-  # # For geom_rects
-  # temp <- data.frame(thresh, std)
-  # aux2 <- lapply(thresh, function(t)
-  #     data.frame(x = paste0("Z-", t), xmin = -Inf, xmax = Inf) %>%
-  #       mutate(ymin = centre - t * temp$std[temp$thresh == t],
-  #              ymax = centre + t * temp$std[temp$thresh == t])
-  # )
-  
-  temp <- select(df, !!var, one_of(paste0("Z-", thresh))) %>%
-    replaceall(c(TRUE, FALSE), c("purple", "#F79747")) %>%
-    filter(!is.na(!!var))
-  
-  caption <- sprintf("Using %s absolute deviation (%s)", 
-                     ifelse(mad, "median", "mean"),
-                     signif(std, 4))
+  subtitle <- sprintf("Variable: %s", as_label(var))
+  if (grouped) subtitle <- paste(subtitle, "| Grouped by:", as_label(group))
   
   p <- ggplot(temp) +
+    facet_grid(outlier_group ~ ., scales = "free") +
     lapply(thresh, function(t)
       lapply(select(temp, one_of(paste0("Z-", t))), function(x)
         geom_jitter(aes(
           x = paste0("Z-", str_pad(t, nchar(max(thresh)), pad = "0"),
                      sprintf("\n(%s)", sum(x == "purple"))),
-          colour = x, y = !!var))
+          colour = x, y = !!var), width = .2, alpha = 0.7)
       )) +
-    # lapply(aux2, function(r)
-    #   geom_rect(data = r, 
-    #             aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, group = x),
-    #             fill = "grey", colour = "black", alpha = 0.1)) +
     scale_color_identity() +
-    geom_hline(yintercept = centre, linetype = "dashed", alpha = 0.6) +
-    labs(title = "Outliers (Z-Scores)",
-         subtitle = sprintf("Variable: %s", name),
-         caption = caption, x = NULL) +
-    theme_lares(legend = "top")
+    geom_hline(aes(yintercept = .data$outlier_mean), linetype = "dashed", alpha = 0.7) +
+    labs(title = "Outliers thresholds test (Z-Scores)",
+         subtitle = subtitle, x = NULL) +
+    theme_lares()
+  if (original_n != filtered_n)
+    p <- p + labs(caption = sprintf(
+      "Considering only the %s most frequent grouping categories", top))
   
-  df <- select(df, !!var, one_of(paste0("Z-", thresh)))
-  ret <- list(plot = p, data = df, zs = zs, ref = centre)
-  if (plot) plot(p)
-  return(invisible(ret))
+  attr(p, "labels") <- select(df, !!var, one_of(paste0("Z-", thresh)), starts_with("outlier_"))
+  attr(p, "z_values") <- zs
+  return(p)
 }
 
 ####################################################################

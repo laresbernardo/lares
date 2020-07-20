@@ -17,6 +17,7 @@
 #' @param seed Numeric.
 #' @param ... ohse parameters.
 #' @examples 
+#' \donttest{
 #' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
 #' 
@@ -24,6 +25,7 @@
 #' print(m$coef)
 #' print(m$metrics)
 #' m$plot
+#' }
 #' @export
 lasso_vars <- function(df, variable, 
                        ignore = NA, 

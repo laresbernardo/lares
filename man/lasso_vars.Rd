@@ -37,6 +37,7 @@ with corr_var() results to compliment the analysis No need to
 standardize, center or scale your data. Tidyverse friendly.
 }
 \examples{
+\donttest{
 options("lares.font" = NA) # Temporal
 data(dft) # Titanic dataset
 
@@ -44,6 +45,7 @@ m <- lasso_vars(dft, Survived, ignore = c("Cabin"))
 print(m$coef)
 print(m$metrics)
 m$plot
+}
 }
 \seealso{
 Other Machine Learning: 
