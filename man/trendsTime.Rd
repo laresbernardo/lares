@@ -23,7 +23,8 @@ Other Google:
 \code{\link{geoAddress}()},
 \code{\link{queryGA}()},
 \code{\link{readGS}()},
-\code{\link{trendsRelated}()}
+\code{\link{trendsRelated}()},
+\code{\link{writeGS}()}
 }
 \concept{Google}
 \concept{Google Trends}

@@ -38,7 +38,8 @@ Other Scrapper:
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
 \code{\link{readGS}()},
-\code{\link{trendsRelated}()}
+\code{\link{trendsRelated}()},
+\code{\link{writeGS}()}
 }
 \concept{Audio}
 \concept{Scrapper}

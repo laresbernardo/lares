@@ -57,7 +57,8 @@ Other Google:
 \code{\link{geoAddress}()},
 \code{\link{readGS}()},
 \code{\link{trendsRelated}()},
-\code{\link{trendsTime}()}
+\code{\link{trendsTime}()},
+\code{\link{writeGS}()}
 
 Other API: 
 \code{\link{bring_api}()},

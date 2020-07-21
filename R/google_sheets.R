@@ -1,7 +1,7 @@
 ####################################################################
 #' Google Sheets Reading (API v4)
 #' 
-#' This function lets the user read any Google Sheet's data
+#' Read data from a Google Sheets.
 #' 
 #' @family Scrapper
 #' @family Google
@@ -9,79 +9,74 @@
 #' @param sheet Character. Working sheet to import
 #' @param range Character. A cell range to read from
 #' @param creds Character. JSON filename with service auth
+#' @param server Boolean. Force interacting auth process?
 #' @param ... Further read_sheet parameters
+#' @aliases readGS4
 #' @export
-readGS <- function(title, sheet = "Hoja 1", range = NULL, creds = NULL, ...) {
+readGS <- function(title, sheet = "Hoja 1", range = NULL, 
+                   creds = NULL, server = FALSE, ...) {
+  files <- get_drive_files(title, server, creds)
+  if (nrow(files) > 0) {
+    message(sprintf("Using: %s (%s)", files$name[1], files$id[1]))
+    df <- read_sheet(files$id[1], sheet = sheet, range = range, ...)   
+    return(df)
+  }
+}
+
+####################################################################
+#' Google Sheets Writing (API v4)
+#' 
+#' Write data into Google Sheets.
+#' 
+#' @family Scrapper
+#' @family Google
+#' @inheritParams readGS
+#' @param data Object (value, vector, dataframe, list)
+#' @param reformat Boolean. Reformat the affected cells?
+#' @aliases writeGS4
+#' @export
+writeGS <- function(data, title, sheet = "Hoja 1", range = 'A1', reformat = FALSE,
+                    creds = NULL, server = FALSE, ...) {
+  files <- get_drive_files(title, server, creds)
+  if (nrow(files) > 0) {
+    if (nrow(files) == 0) {
+      message("Google Sheet filename not found: created one for you!")
+      gs4_create(title, sheets = data)
+    }
+    message(sprintf("Using: %s (%s)", files$name[1], files$id[1]))
+    invisible(
+      range_write(files$id[1], sheet = sheet, data = data, 
+                  range = range, reformat = reformat, ...))
+  }
+}
+
+get_drive_files <- function(title, server, creds, api_key = NULL) {
   
   try_require("googledrive")
   try_require("googlesheets4")
+  options(gargle_oob_default = server)
+  
+  if (!is.null(api_key))
+    gs4_auth_configure(api_key = api_key)
   
   if (!is.null(creds)) {
     if (file.exists(creds)) {
       sheets_auth(path = creds)
       drive_auth(path = creds)  
-    } else stop("No credentials found on ", creds)
+    } else {
+      stop("No credentials found on ", creds)
+    } 
   }
-  aux <- drive_find(pattern = title, n_max = 199, 
-                    type = "spreadsheet", 
-                    verbose = FALSE)
-  message(paste(nrow(aux), "files found with pattern:", title))
-  if (nrow(aux) > 0) {
-    if (nrow(aux) > 1)
-      message(sprintf("Using: %s (%s)", aux$name[1], aux$id[1]))
-    df <- read_sheet(aux$id[1], sheet = sheet, range = range, ...)   
-    return(df)
-  } else return(invisible(NULL))
+  
+  files <- drive_find(pattern = title,
+                      n_max = 199, 
+                      type = "spreadsheet", 
+                      verbose = FALSE)
+  
+  if (nrow(files) > 1) {
+    message(paste(nrow(files), "files found with pattern:", title))
+  }
+  
+  return(files)
+  
 }
-
-#' @rdname readGS
-#' @export
-readGS4 <- readGS
-
-
-#' ####################################################################
-#' #' Google Sheets Reading [Deprecated]
-#' #'
-#' #' This function lets the user read any Google Sheet's data
-#' #'
-#' #' @family Connection
-#' #' @family Scrapper
-#' #' @param title Character. Textual title of Google Sheet
-#' #' @param ws Character. Working sheet to import
-#' #' @param first_time Boolean. Authenticate manualy
-#' #' @export
-#' readGS <- function(title, ws = "Hoja 1", first_time = FALSE) {
-#'   try_require("googlesheets")
-#'   if (first_time) {
-#'     options(httr_oob_default = TRUE)
-#'     gs_auth(new_user = TRUE)
-#'   }
-#'   gs <- gs_title(title)
-#'   gs <- invisible(gs_read(gs, ws = ws, verbose = FALSE) %>% data.frame())
-#'   return(gs)
-#' }
-#' 
-#' ####################################################################
-#' #' Google Sheets Writing [Deprecated]
-#' #'
-#' #' This function lets the user write on any Google Sheet
-#' #'
-#' #' @family Connection
-#' #' @family Scrapper
-#' #' @param data Data Frame. Data to export to Google Sheet
-#' #' @param title Character. Textual title of Google Sheet
-#' #' @param ws Character. Working sheet to export to
-#' #' @param cell Character. In which cell should we paste the data (upper left cell)
-#' #' @param first_time Boolean. Authenticate manualy
-#' #' @export
-#' writeGS <- function(data, title, ws = "Hoja 1", cell = 'A1', first_time = FALSE) {
-#'   try_require("googlesheets")
-#'   if (first_time) {
-#'     options(httr_oob_default = TRUE)
-#'     gs_auth(new_user = TRUE)
-#'   }
-#'   gs <- gs_title(title)
-#'   invisible(gs_edit_cells(
-#'     gs, ws = ws, input = data, anchor = cell, verbose = FALSE) %>%
-#'       data.frame())
-#' }

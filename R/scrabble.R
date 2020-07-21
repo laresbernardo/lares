@@ -142,14 +142,14 @@ scrabble_points <- function(language) {
 #' @export 
 grepl_letters <- function(vector, pattern, blank = "_") {
   if (!grepl(blank, pattern))
-    return(grepl(pattern, vector))
+    return(grepl(pattern, vector, fixed = TRUE))
   forced <- tolower(unlist(strsplit(pattern, "")))
   forced_which <- which(forced != blank)
   combs <- res <- c()
   for(i in 0:(max(nchar(vector))-max(forced_which)))
     combs <- rbind(combs, (forced_which + i))
   # We can skip those that do NOT have all the letters
-  run <- sapply(forced[forced_which], function(x) grepl(x, vector))
+  run <- sapply(forced[forced_which], function(x) grepl(x, vector, fixed = TRUE))
   run <- apply(run, 1, all) 
   # Let's iterate all combinations for each element
   for (i in 1:length(vector)) {
@@ -163,9 +163,7 @@ grepl_letters <- function(vector, pattern, blank = "_") {
         aux <- paste0(aux, collapse = "") == gsub(blank, "", pattern)
         temp <- any(c(temp, aux))
       } 
-    } else {
-      temp <- FALSE
-    } 
+    } else temp <- FALSE
     res <- c(res, temp)
   }
   return(res)
@@ -280,7 +278,7 @@ scrabble_words <- function(tiles,
   }
   
   # Words can't have different letters than inputs
-  words <- words[grepl(v2t(tiles, sep = "|", quotes = FALSE), words)]
+  words <- words[grepl(v2t(tiles, sep = "|", quotes = FALSE), words, fixed = TRUE)]
   # Force start/end strings
   words <- force_words(words, force_start)
   words <- force_words(reverse(words), reverse(force_end), rev = TRUE)

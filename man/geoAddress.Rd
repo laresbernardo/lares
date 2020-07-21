@@ -49,7 +49,8 @@ Other Google:
 \code{\link{queryGA}()},
 \code{\link{readGS}()},
 \code{\link{trendsRelated}()},
-\code{\link{trendsTime}()}
+\code{\link{trendsTime}()},
+\code{\link{writeGS}()}
 }
 \concept{Credentials}
 \concept{Geographical}

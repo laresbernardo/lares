@@ -10,6 +10,7 @@ lasso_vars(
   ignore = NA,
   nlambdas = 100,
   nfolds = 10,
+  quiet = FALSE,
   seed = 123,
   ...
 )
@@ -25,6 +26,8 @@ process categorical values, and values will be standardize automatically.}
 \item{nlambdas}{Integer. Number of lambdas to be used in a search.}
 
 \item{nfolds}{Integer. Number of folds for K-fold cross-validation (>= 2).}
+
+\item{quiet}{Boolean. Keep quiet? Else, show messages}
 
 \item{seed}{Numeric.}
 

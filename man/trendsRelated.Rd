@@ -45,7 +45,8 @@ Other Scrapper:
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
-\code{\link{readGS}()}
+\code{\link{readGS}()},
+\code{\link{writeGS}()}
 
 Other Google Trends: 
 \code{\link{trendsTime}()}
@@ -54,7 +55,8 @@ Other Google:
 \code{\link{geoAddress}()},
 \code{\link{queryGA}()},
 \code{\link{readGS}()},
-\code{\link{trendsTime}()}
+\code{\link{trendsTime}()},
+\code{\link{writeGS}()}
 }
 \concept{Exploratory}
 \concept{Google}

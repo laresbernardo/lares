@@ -59,7 +59,8 @@ Other Scrapper:
 \code{\link{get_mp3}()},
 \code{\link{ip_country}()},
 \code{\link{readGS}()},
-\code{\link{trendsRelated}()}
+\code{\link{trendsRelated}()},
+\code{\link{writeGS}()}
 
 Other One Hot Encoding: 
 \code{\link{date_feats}()},

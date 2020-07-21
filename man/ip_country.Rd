@@ -57,7 +57,8 @@ Other Scrapper:
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{readGS}()},
-\code{\link{trendsRelated}()}
+\code{\link{trendsRelated}()},
+\code{\link{writeGS}()}
 }
 \concept{Scrapper}
 \concept{Tools}

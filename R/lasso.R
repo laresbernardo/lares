@@ -14,6 +14,7 @@
 #' @param ignore Character vector. Variables to exclude from study.
 #' @param nlambdas Integer. Number of lambdas to be used in a search.
 #' @param nfolds Integer. Number of folds for K-fold cross-validation (>= 2).
+#' @param quiet Boolean. Keep quiet? Else, show messages
 #' @param seed Numeric.
 #' @param ... ohse parameters.
 #' @examples 
@@ -31,6 +32,7 @@ lasso_vars <- function(df, variable,
                        ignore = NA, 
                        nlambdas = 100, 
                        nfolds = 10, 
+                       quiet = FALSE,
                        seed = 123, ...) {
   
   tic("lasso_vars")
@@ -47,13 +49,13 @@ lasso_vars <- function(df, variable,
   }
     
   # Run one-hot-smart-encoding
-  temp <- data.frame(as.vector(df[,1]), ohse(df, ignore = ignore, ...))
+  temp <- data.frame(as.vector(df[,1]), ohse(df, ignore = ignore, quiet = quiet, ...))
   colnames(temp)[1] <- "main"
   temp <- temp %>%
     filter(!is.na(.data$main)) %>%
     mutate(main = as.vector(base::scale(as.numeric(.data$main), scale = FALSE, center = TRUE)))
   
-  message(">>> Searching for optimal lambda with CV...")
+  if (!quiet) message(">>> Searching for optimal lambda with CV...")
   lasso_logistic <- h2o.glm(alpha = 1,
                             seed = seed,
                             y = "main",
@@ -62,8 +64,8 @@ lasso_vars <- function(df, variable,
                             lambda_search = TRUE,
                             nlambdas = nlambdas,
                             standardize = TRUE)
-  message("Found best lambda: ", signif(lasso_logistic@model$lambda_best, 5))
-  message(">>> Fetching most relevant variables...")
+  if (!quiet) message("Found best lambda: ", signif(lasso_logistic@model$lambda_best, 5))
+  if (!quiet) message(">>> Fetching most relevant variables...")
   t_lasso_model_val <- h2o.glm(y = "main", 
                                training_frame = as.h2o(temp), 
                                alpha = 1, 
@@ -80,24 +82,28 @@ lasso_vars <- function(df, variable,
     mutate(standardized_coefficients = as.numeric(ifelse(
       .data$names == "Intercept", 0, .data$standardized_coefficients)))
   
-  message(">>> Generating plots for ", as_label(var), "...")
+  if (!quiet) message(">>> Generating plots for ", as_label(var), "...")
+  red <- "#E63946"
+  green <- "#3DA4AB" 
   p <- t_lasso_model_coeff %>%
     filter(.data$names != "Intercept") %>%
     mutate(abs = abs(.data$standardized_coefficients),
-           prc = .data$abs/sum(.data$abs)) %>%
+           prc = .data$abs/sum(.data$abs),
+           coef = ifelse(.data$coefficients > 0, green, red)) %>%
     filter(.data$prc > 0) %>%
     ggplot(aes(x = reorder(.data$names, .data$prc),
                y = abs(.data$standardized_coefficients),
-               fill = .data$coefficients > 0)) + 
+               fill = .data$coef)) + 
+    scale_fill_identity() +
     coord_flip() + geom_col() +
     labs(x = NULL, y = "Absolute Standarized Coefficient",
          title = "Most Relevant Features (Lasso Regression)",
          subtitle = paste("RSQ =", round(rsq$metrics$rsq, 4)),
          fill = "Coeff > 0") +
-    theme_lares2(pal = 1, legend = "top") +
+    theme_lares2(legend = "top") +
     scale_y_percent(expand = c(0, 0))
   
-  toc("lasso_vars")
+  toc("lasso_vars", quiet = quiet)
   
   return(list(coef = as_tibble(t_lasso_model_coeff), 
               metrics = as_tibble(rsq$metrics),
