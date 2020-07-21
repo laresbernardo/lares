@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Google Sheets Writing — writeGS • lares</title>
+<title>Google Sheets Writing (API v4) — writeGS • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Google Sheets Writing — writeGS" />
-<meta property="og:description" content="This function lets the user write on any Google Sheet" />
+<meta property="og:title" content="Google Sheets Writing (API v4) — writeGS" />
+<meta property="og:description" content="Write data into Google Sheets." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.0</span>
       </span>
     </div>
 
@@ -108,62 +108,78 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Google Sheets Writing</h1>
+    <h1>Google Sheets Writing (API v4)</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/google_sheets.R'><code>R/google_sheets.R</code></a></small>
     <div class="hidden name"><code>writeGS.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user write on any Google Sheet</p>
+    <p>Write data into Google Sheets.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>writeGS</span>(<span class='no'>data</span>, <span class='no'>title</span>, <span class='kw'>ws</span> <span class='kw'>=</span> <span class='st'>"Hoja 1"</span>, <span class='kw'>cell</span> <span class='kw'>=</span> <span class='st'>"A1"</span>, <span class='kw'>first_time</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>writeGS</span>(
+  <span class='kw'>data</span>,
+  <span class='kw'>title</span>,
+  sheet = <span class='st'>"Hoja 1"</span>,
+  range = <span class='st'>"A1"</span>,
+  reformat = <span class='fl'>FALSE</span>,
+  creds = <span class='kw'>NULL</span>,
+  server = <span class='fl'>FALSE</span>,
+  <span class='kw'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>Data Frame. Data to export to Google Sheet</p></td>
+      <td><p>Object (value, vector, dataframe, list)</p></td>
     </tr>
     <tr>
       <th>title</th>
       <td><p>Character. Textual title of Google Sheet</p></td>
     </tr>
     <tr>
-      <th>ws</th>
-      <td><p>Character. Working sheet to export to</p></td>
+      <th>sheet</th>
+      <td><p>Character. Working sheet to import</p></td>
     </tr>
     <tr>
-      <th>cell</th>
-      <td><p>Character. In which cell should we paste the data (upper left cell)</p></td>
+      <th>range</th>
+      <td><p>Character. A cell range to read from</p></td>
     </tr>
     <tr>
-      <th>first_time</th>
-      <td><p>Boolean. Authenticate manualy</p></td>
+      <th>reformat</th>
+      <td><p>Boolean. Reformat the affected cells?</p></td>
+    </tr>
+    <tr>
+      <th>creds</th>
+      <td><p>Character. JSON filename with service auth</p></td>
+    </tr>
+    <tr>
+      <th>server</th>
+      <td><p>Boolean. Force interacting auth process?</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Further read_sheet parameters</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Connection: 
-<code><a href='get_tweets.html'>get_tweets</a>()</code>,
-<code><a href='queryGA.html'>queryGA</a>()</code>,
-<code><a href='readGS4.html'>readGS4</a>()</code>,
-<code><a href='readGS.html'>readGS</a>()</code></p>
-<p>Other Scrapper: 
-<code><a href='fb_accounts.html'>fb_accounts</a>()</code>,
-<code><a href='fb_ads.html'>fb_ads</a>()</code>,
-<code><a href='fb_insights.html'>fb_insights</a>()</code>,
-<code><a href='fb_posts.html'>fb_posts</a>()</code>,
-<code><a href='fb_post.html'>fb_post</a>()</code>,
+    <div class='dont-index'><p>Other Scrapper: 
 <code><a href='geoStratum.html'>geoStratum</a>()</code>,
 <code><a href='get_mp3.html'>get_mp3</a>()</code>,
 <code><a href='holidays.html'>holidays</a>()</code>,
 <code><a href='ip_country.html'>ip_country</a>()</code>,
-<code><a href='readGS4.html'>readGS4</a>()</code>,
 <code><a href='readGS.html'>readGS</a>()</code>,
-<code><a href='trendsRelated.html'>trendsRelated</a>()</code></p></div>
+<code><a href='trendsRelated.html'>trendsRelated</a>()</code></p>
+<p>Other Google: 
+<code><a href='geoAddress.html'>geoAddress</a>()</code>,
+<code><a href='queryGA.html'>queryGA</a>()</code>,
+<code><a href='readGS.html'>readGS</a>()</code>,
+<code><a href='trendsRelated.html'>trendsRelated</a>()</code>,
+<code><a href='trendsTime.html'>trendsTime</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
