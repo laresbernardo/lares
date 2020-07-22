@@ -1642,3 +1642,51 @@ formatText <- function(text, color = "black", size = 20, bold = FALSE) {
   ret <- paste0(opening_span, text, closing_span)
   return(ret)
 }
+
+
+####################################################################
+#' Interpolate a string [glue wrapper]
+#' 
+#' Format and interpolate a string using a `glue` wrapper. Allows
+#' simple operations, `NULL` values as input, and interactions with
+#' internal (created within `glued`) and external (environment) objects.
+#' 
+#' @inheritParams stringr::str_glue
+#' @examples 
+#' name <- "Bernardo"
+#' age <- 29
+#' anniversary <- as.Date("2016-04-30")
+#' glued("
+#'   My name is {name},
+#'   my age next year will be {age + 1},
+#'   and I got married on {format(anniversary, '%A, %B %d, %Y')}.")
+#' 
+#' # Single braces can be inserted by doubling them
+#' glued("My name is {name}, not {{name}}.")
+#' 
+#' # You can also used named arguments
+#' glued(
+#'   "My name is {name}, ",
+#'   "and my age next year will be {age + 1}.",
+#'   name = "Maru",
+#'   age = 6)
+#'   
+#' # And run operations with memories (beware!)
+#' glued("My name, {name}, has {n <- nchar(name); n} characters.
+#'        If we multiply by ten, we'll have {10 * n} characters!")
+#' 
+#' # If you pass a vector, the operation wil be repeated for each element
+#' glued("Here's the value #{1:3}")
+#' @export
+glued <- function (..., .sep = "", .envir = parent.frame()) {
+  null_transformer <- function(text, envir) {
+    out <- eval(parse(text = text, keep.source = FALSE), envir)
+    if (is.null(out)) return("")
+    out
+  }
+  ret <- stringr::str_glue(
+    ..., .sep = .sep, 
+    .transformer = null_transformer, 
+    .envir = .envir)
+  return(ret)
+}
