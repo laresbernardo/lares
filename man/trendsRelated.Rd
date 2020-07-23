@@ -41,6 +41,7 @@ Other Exploratory:
 \code{\link{tree_var}()}
 
 Other Scrapper: 
+\code{\link{filesGD}()},
 \code{\link{geoStratum}()},
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
@@ -52,6 +53,7 @@ Other Google Trends:
 \code{\link{trendsTime}()}
 
 Other Google: 
+\code{\link{filesGD}()},
 \code{\link{geoAddress}()},
 \code{\link{queryGA}()},
 \code{\link{readGS}()},

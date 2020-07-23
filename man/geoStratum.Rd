@@ -23,6 +23,7 @@ Other Geographical:
 \code{\link{geoMap}()}
 
 Other Scrapper: 
+\code{\link{filesGD}()},
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},

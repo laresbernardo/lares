@@ -55,6 +55,7 @@ Other Feature Engineering:
 \code{\link{ohse}()}
 
 Other Scrapper: 
+\code{\link{filesGD}()},
 \code{\link{geoStratum}()},
 \code{\link{get_mp3}()},
 \code{\link{ip_country}()},

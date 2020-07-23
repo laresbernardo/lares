@@ -46,6 +46,7 @@ Other Credentials:
 \code{\link{stocks_report}()}
 
 Other Google: 
+\code{\link{filesGD}()},
 \code{\link{queryGA}()},
 \code{\link{readGS}()},
 \code{\link{trendsRelated}()},

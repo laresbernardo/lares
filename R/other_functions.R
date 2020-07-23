@@ -1675,13 +1675,13 @@ formatText <- function(text, color = "black", size = 20, bold = FALSE) {
 #' glued("My name, {name}, has {n <- nchar(name); n} characters.
 #'        If we multiply by ten, we'll have {10 * n} characters!")
 #' 
-#' # If you pass a vector, the operation wil be repeated for each element
+#' # If you pass a vector, the operation will be repeated for each element
 #' glued("Here's the value #{1:3}")
 #' @export
 glued <- function (..., .sep = "", .envir = parent.frame()) {
   null_transformer <- function(text, envir) {
     out <- eval(parse(text = text, keep.source = FALSE), envir)
-    if (is.null(out)) return("")
+    if (is.null(out)) out <- ""
     out
   }
   ret <- stringr::str_glue(

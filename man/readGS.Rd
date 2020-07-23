@@ -9,7 +9,8 @@ readGS(
   title,
   sheet = "Hoja 1",
   range = NULL,
-  creds = NULL,
+  json = NULL,
+  email = NULL,
   server = FALSE,
   ...
 )
@@ -21,7 +22,11 @@ readGS(
 
 \item{range}{Character. A cell range to read from}
 
-\item{creds}{Character. JSON filename with service auth}
+\item{json}{Character. JSON filename with service auth}
+
+\item{email}{Character. If you have multiple pre-authorized
+accounts in your machine, you may non-interactively select
+which one you wish to use.}
 
 \item{server}{Boolean. Force interacting auth process?}
 
@@ -32,6 +37,7 @@ Read data from a Google Sheets.
 }
 \seealso{
 Other Scrapper: 
+\code{\link{filesGD}()},
 \code{\link{geoStratum}()},
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
@@ -40,6 +46,7 @@ Other Scrapper:
 \code{\link{writeGS}()}
 
 Other Google: 
+\code{\link{filesGD}()},
 \code{\link{geoAddress}()},
 \code{\link{queryGA}()},
 \code{\link{trendsRelated}()},

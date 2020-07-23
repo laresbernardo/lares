@@ -8,14 +8,17 @@
 #' @param title Character. Textual title of Google Sheet
 #' @param sheet Character. Working sheet to import
 #' @param range Character. A cell range to read from
-#' @param creds Character. JSON filename with service auth
+#' @param json Character. JSON filename with service auth
+#' @param email Character. If you have multiple pre-authorized
+#' accounts in your machine, you may non-interactively select
+#' which one you wish to use.
 #' @param server Boolean. Force interacting auth process?
 #' @param ... Further read_sheet parameters
 #' @aliases readGS4
 #' @export
 readGS <- function(title, sheet = "Hoja 1", range = NULL, 
-                   creds = NULL, server = FALSE, ...) {
-  files <- get_drive_files(title, server, creds)
+                   json = NULL, email = NULL, server = FALSE,...) {
+  files <- filesGD(title = title, server = server, json = json, email = email)
   if (nrow(files) > 0) {
     message(sprintf("Using: %s (%s)", files$name[1], files$id[1]))
     df <- read_sheet(files$id[1], sheet = sheet, range = range, ...)   
@@ -36,8 +39,8 @@ readGS <- function(title, sheet = "Hoja 1", range = NULL,
 #' @aliases writeGS4
 #' @export
 writeGS <- function(data, title, sheet = "Hoja 1", range = 'A1', reformat = FALSE,
-                    creds = NULL, server = FALSE, ...) {
-  files <- get_drive_files(title, server, creds)
+                    json = NULL, email = NULL, server = FALSE,...) {
+  files <- filesGD(title = title, server = server, json = json, email = email)
   if (nrow(files) > 0) {
     if (nrow(files) == 0) {
       message("Google Sheet filename not found: created one for you!")
@@ -50,22 +53,43 @@ writeGS <- function(data, title, sheet = "Hoja 1", range = 'A1', reformat = FALS
   }
 }
 
-get_drive_files <- function(title, server, creds, api_key = NULL) {
+
+####################################################################
+#' Google Drive Files (API v4)
+#' 
+#' Authenticate and find Google Drive files and IDs by name.
+#' 
+#' @family Scrapper
+#' @family Google
+#' @inheritParams readGS
+#' @param data Object (value, vector, dataframe, list)
+#' @param reformat Boolean. Reformat the affected cells?
+#' @aliases writeGS4
+#' @export
+filesGD <- function(title, server = FALSE, json = NULL, 
+                    api_key = NULL, email = NULL) {
   
   try_require("googledrive")
   try_require("googlesheets4")
-  options(gargle_oob_default = server)
+  options("gargle_oob_default" = server)
   
-  if (!is.null(api_key))
-    gs4_auth_configure(api_key = api_key)
-  
-  if (!is.null(creds)) {
-    if (file.exists(creds)) {
-      sheets_auth(path = creds)
-      drive_auth(path = creds)  
+  if (!is.null(json)) {
+    if (file.exists(json)) {
+      drive_auth(path = json)  
+      sheets_auth(path = json)
     } else {
-      stop("No credentials found on ", creds)
+      stop("No credentials found on ", json)
     } 
+  } else {
+    
+    if (!is.null(api_key))
+      gs4_auth_configure(api_key = api_key)
+    
+    if (!is.null(email)) {
+      drive_auth(email = email)  
+      sheets_auth(email = email)
+    }
+    
   }
   
   files <- drive_find(pattern = title,

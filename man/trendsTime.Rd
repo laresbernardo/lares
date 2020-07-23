@@ -20,6 +20,7 @@ Other Google Trends:
 \code{\link{trendsRelated}()}
 
 Other Google: 
+\code{\link{filesGD}()},
 \code{\link{geoAddress}()},
 \code{\link{queryGA}()},
 \code{\link{readGS}()},

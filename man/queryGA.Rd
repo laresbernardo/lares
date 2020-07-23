@@ -54,6 +54,7 @@ Other Credentials:
 \code{\link{stocks_report}()}
 
 Other Google: 
+\code{\link{filesGD}()},
 \code{\link{geoAddress}()},
 \code{\link{readGS}()},
 \code{\link{trendsRelated}()},

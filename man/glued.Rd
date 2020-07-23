@@ -43,6 +43,6 @@ glued(
 glued("My name, {name}, has {n <- nchar(name); n} characters.
        If we multiply by ten, we'll have {10 * n} characters!")
 
-# If you pass a vector, the operation wil be repeated for each element
+# If you pass a vector, the operation will be repeated for each element
 glued("Here's the value #{1:3}")
 }
