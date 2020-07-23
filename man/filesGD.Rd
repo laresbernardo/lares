@@ -2,7 +2,6 @@
 % Please edit documentation in R/google_sheets.R
 \name{filesGD}
 \alias{filesGD}
-\alias{writeGS4}
 \title{Google Drive Files (API v4)}
 \usage{
 filesGD(title, server = FALSE, json = NULL, api_key = NULL, email = NULL)
@@ -14,13 +13,13 @@ filesGD(title, server = FALSE, json = NULL, api_key = NULL, email = NULL)
 
 \item{json}{Character. JSON filename with service auth}
 
+\item{api_key}{Character. If you have multiple pre-authorized
+accounts in your machine, you may non-interactively select
+which one you wish to use by email and/or api_key.}
+
 \item{email}{Character. If you have multiple pre-authorized
 accounts in your machine, you may non-interactively select
-which one you wish to use.}
-
-\item{data}{Object (value, vector, dataframe, list)}
-
-\item{reformat}{Boolean. Reformat the affected cells?}
+which one you wish to use by email and/or api_key.}
 }
 \description{
 Authenticate and find Google Drive files and IDs by name.

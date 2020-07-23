@@ -84,7 +84,7 @@ recommended <- list(
   googleAuthR = c("gar_auth"),
   googledrive = c("drive_auth", "drive_find"),
   googlesheets4 = c("sheets_auth", "read_sheet", "gs4_create", "range_write",
-                    "gs4_auth_configure"),
+                    "gs4_auth_configure", "gs4_auth"),
   methods = c("as"),
   mice = c("mice", "complete"),
   plotly = c("ggplotly", "plot_ly", "add_markers", "add_markers"),

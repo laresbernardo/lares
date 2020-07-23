@@ -11,6 +11,7 @@ readGS(
   range = NULL,
   json = NULL,
   email = NULL,
+  api_key = NULL,
   server = FALSE,
   ...
 )
@@ -24,9 +25,9 @@ readGS(
 
 \item{json}{Character. JSON filename with service auth}
 
-\item{email}{Character. If you have multiple pre-authorized
+\item{email, api_key}{Character. If you have multiple pre-authorized
 accounts in your machine, you may non-interactively select
-which one you wish to use.}
+which one you wish to use by email and/or api_key.}
 
 \item{server}{Boolean. Force interacting auth process?}
 
