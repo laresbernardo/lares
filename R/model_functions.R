@@ -769,6 +769,19 @@ h2o_predict_MOJO <- function(df, model_path, batch = 300){
   return(as_tibble(output))
 }
 
+flatten_list <- function(x, quiet = FALSE) {
+  n <- length(x)
+  for (i in 1:n) {
+    if (i == 1) ret <- c()
+    values <- unlist(x[[i]])
+    aux <- data.frame(t(values))
+    ret <- suppressWarnings(bind_rows(ret, aux))
+    if (n > 500 & !quiet) statusbar(i, n, i)
+    if (i == n) ret <- as_tibble(ret)
+  }  
+  return(ret)
+}
+
 
 ####################################################################
 #' H2O Predict using Binary file
