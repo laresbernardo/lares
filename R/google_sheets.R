@@ -1,11 +1,12 @@
 ####################################################################
 #' Google Sheets Reading (API v4)
 #' 
-#' Read data from a Google Sheets.
+#' Read data from Google Sheets.
 #' 
 #' @family Scrapper
 #' @family Google
-#' @param title Character. Textual title of Google Sheet
+#' @param title Character. Title of Google Drive file. Uses regular
+#' expressions so you may fetch with patterns instead of names.
 #' @param sheet Character. Working sheet to import
 #' @param range Character. A cell range to read from
 #' @param json Character. JSON filename with service auth

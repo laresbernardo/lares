@@ -39,6 +39,9 @@ Other Scrapper:
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
 \code{\link{readGS}()},
+\code{\link{splot_etf}()},
+\code{\link{stocks_hist}()},
+\code{\link{stocks_quote}()},
 \code{\link{trendsRelated}()},
 \code{\link{writeGS}()}
 }

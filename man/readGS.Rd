@@ -17,7 +17,8 @@ readGS(
 )
 }
 \arguments{
-\item{title}{Character. Textual title of Google Sheet}
+\item{title}{Character. Title of Google Drive file. Uses regular
+expressions so you may fetch with patterns instead of names.}
 
 \item{sheet}{Character. Working sheet to import}
 
@@ -34,7 +35,7 @@ which one you wish to use by email and/or api_key.}
 \item{...}{Further read_sheet parameters}
 }
 \description{
-Read data from a Google Sheets.
+Read data from Google Sheets.
 }
 \seealso{
 Other Scrapper: 
@@ -43,6 +44,9 @@ Other Scrapper:
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
+\code{\link{splot_etf}()},
+\code{\link{stocks_hist}()},
+\code{\link{stocks_quote}()},
 \code{\link{trendsRelated}()},
 \code{\link{writeGS}()}
 

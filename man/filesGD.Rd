@@ -7,7 +7,8 @@
 filesGD(title, server = FALSE, json = NULL, api_key = NULL, email = NULL)
 }
 \arguments{
-\item{title}{Character. Textual title of Google Sheet}
+\item{title}{Character. Title of Google Drive file. Uses regular
+expressions so you may fetch with patterns instead of names.}
 
 \item{server}{Boolean. Force interacting auth process?}
 
@@ -31,6 +32,9 @@ Other Scrapper:
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
 \code{\link{readGS}()},
+\code{\link{splot_etf}()},
+\code{\link{stocks_hist}()},
+\code{\link{stocks_quote}()},
 \code{\link{trendsRelated}()},
 \code{\link{writeGS}()}
 

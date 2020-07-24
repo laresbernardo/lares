@@ -54,5 +54,18 @@ Other Investment:
 \code{\link{stocks_obj}()},
 \code{\link{stocks_quote}()},
 \code{\link{stocks_report}()}
+
+Other Scrapper: 
+\code{\link{filesGD}()},
+\code{\link{geoStratum}()},
+\code{\link{get_mp3}()},
+\code{\link{holidays}()},
+\code{\link{ip_country}()},
+\code{\link{readGS}()},
+\code{\link{splot_etf}()},
+\code{\link{stocks_quote}()},
+\code{\link{trendsRelated}()},
+\code{\link{writeGS}()}
 }
 \concept{Investment}
+\concept{Scrapper}

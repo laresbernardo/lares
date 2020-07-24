@@ -39,6 +39,19 @@ Other Investment Plots:
 \code{\link{splot_roi}()},
 \code{\link{splot_summary}()},
 \code{\link{splot_types}()}
+
+Other Scrapper: 
+\code{\link{filesGD}()},
+\code{\link{geoStratum}()},
+\code{\link{get_mp3}()},
+\code{\link{holidays}()},
+\code{\link{ip_country}()},
+\code{\link{readGS}()},
+\code{\link{stocks_hist}()},
+\code{\link{stocks_quote}()},
+\code{\link{trendsRelated}()},
+\code{\link{writeGS}()}
 }
 \concept{Investment}
 \concept{Investment Plots}
+\concept{Scrapper}

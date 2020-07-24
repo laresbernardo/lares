@@ -78,6 +78,7 @@ stocks_file <- function(filename = NA,
 #' This function lets the user download stocks historical data.
 #' 
 #' @family Investment
+#' @family Scrapper
 #' @param ticks Character Vector. Symbols/Tickers to quote in real time.
 #' @examples 
 #' # Multiple quotes at the same time
@@ -115,6 +116,7 @@ stocks_quote <- function(ticks) {
 #' This function lets the user download stocks historical data
 #' 
 #' @family Investment
+#' @family Scrapper
 #' @param symbols Character Vector. List of symbols to download historical data
 #' @param from,to Date. Dates for range. If not set, 1 year will be downloaded.
 #' Do use more than 4 days or will be over-written.
@@ -723,6 +725,7 @@ etf_sector <- function(etf = "VTI", quiet = FALSE) {
 #' 
 #' @family Investment
 #' @family Investment Plots
+#' @family Scrapper
 #' @param s Dataframe. Result from \code{daily_stocks()}.
 #' @param keep_all Boolean. Keep "Not Known / Not ETF"?
 #' @param save Boolean. Save plot into a local file?

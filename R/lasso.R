@@ -14,6 +14,7 @@
 #' @param ignore Character vector. Variables to exclude from study.
 #' @param nlambdas Integer. Number of lambdas to be used in a search.
 #' @param nfolds Integer. Number of folds for K-fold cross-validation (>= 2).
+#' @param top Integer. Plot top n results only.
 #' @param quiet Boolean. Keep quiet? Else, show messages
 #' @param seed Numeric.
 #' @param ... ohse parameters.
@@ -32,6 +33,7 @@ lasso_vars <- function(df, variable,
                        ignore = NA, 
                        nlambdas = 100, 
                        nfolds = 10, 
+                       top = 20,
                        quiet = FALSE,
                        seed = 123, ...) {
   
@@ -85,7 +87,9 @@ lasso_vars <- function(df, variable,
   if (!quiet) message(">>> Generating plots for ", as_label(var), "...")
   red <- "#E63946"
   green <- "#3DA4AB" 
-  p <- t_lasso_model_coeff %>%
+  if (nrow(t_lasso_model_coeff) > top & !quiet)
+    message(paste("- Plotting only the", top, "most relevant features..."))
+  p <- t_lasso_model_coeff %>% head(top) %>%
     filter(.data$names != "Intercept") %>%
     mutate(abs = abs(.data$standardized_coefficients),
            prc = .data$abs/sum(.data$abs),
@@ -101,7 +105,7 @@ lasso_vars <- function(df, variable,
          subtitle = paste("RSQ =", round(rsq$metrics$rsq, 4)),
          fill = "Coeff > 0") +
     theme_lares2(legend = "top") +
-    scale_y_percent(expand = c(0, 0))
+    scale_y_continuous(expand = c(0, 0))
   
   toc("lasso_vars", quiet = quiet)
   
