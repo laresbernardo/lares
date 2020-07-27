@@ -1,4 +1,31 @@
 ####################################################################
+#' Outliers: Winsorized
+#' 
+#' Winsorizing a vector means that a predefined quantum of the smallest 
+#' and/or the largest values are replaced by less extreme values. 
+#' Thereby the substitute values are the most extreme retained values.
+#'
+#' @family Outliers
+#' @param x Numeric vector. Distribution to be winsorized.
+#' @param thresh Numeric vector. Lower and upper quantiles thresholds.
+#' Set values within [0,1].
+#' @param na.rm Boolean. Should NAs be omitted to calculate the quantiles? 
+#' Note that NAs in x are preserved and left unchanged anyway.
+#' @export
+winsorize <- function(x, thresh = c(0.05, 0.95), na.rm = FALSE){
+  if (length(thresh) != 2 | any(abs(thresh) > 1))
+    stop("thresh: pass a valid numeric vector of length 2 and values within [0, 1]")
+  cut_point_bottom <- quantile(x, thresh[1], na.rm = na.rm)
+  cut_point_top <- quantile(x, thresh[2], na.rm = na.rm)
+  j <- which(x <= cut_point_bottom) 
+  x[j] <- cut_point_bottom
+  i <- which(x >= cut_point_top) 
+  x[i] <- cut_point_top
+  attr(x, "thresh") <- thresh
+  return(x)
+}
+
+####################################################################
 #' Outliers: Z-score method
 #' 
 #' Z-score, also called a standard score, of an observation is a 
