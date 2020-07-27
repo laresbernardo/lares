@@ -34,6 +34,7 @@ head(attr(p, "labels"))
 \seealso{
 Other Outliers: 
 \code{\link{outlier_turkey}()},
-\code{\link{outlier_zscore}()}
+\code{\link{outlier_zscore}()},
+\code{\link{winsorize}()}
 }
 \concept{Outliers}
