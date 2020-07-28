@@ -78,15 +78,12 @@ filesGD <- function(title, server = FALSE, json = NULL, api_key = NULL, email = 
       stop("No credentials found on ", json)
     } 
   } else {
-    
     if (!is.null(api_key))
       gs4_auth_configure(api_key = api_key)
-    
     if (!is.null(email)) {
       drive_auth(email = email)  
       gs4_auth(email = email)
     }
-    
   }
   
   files <- drive_find(pattern = title,
@@ -94,9 +91,9 @@ filesGD <- function(title, server = FALSE, json = NULL, api_key = NULL, email = 
                       type = "spreadsheet", 
                       verbose = FALSE)
   
-  if (nrow(files) > 1) {
-    message(paste(nrow(files), "files found with pattern:", title))
-  }
+  nfiles <- nrow(files)
+  if (nfiles != 1)
+    message(glued("{nfiles} files found with pattern: {title}"))
   
   return(files)
   
