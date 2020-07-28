@@ -1,9 +1,10 @@
 ####################################################################
 #' Download MP3 from URL
 #' 
-#' This function downloads a YouTube video or Soundcloud or any other 
-#' platform supported by the youtube-dl library, and converts it into a 
-#' high quality MP3 file.
+#' This function downloads YouTube videos or Soundcloud or any other 
+#' platform supported by the youtube-dl library, and converts them into 
+#' high quality MP3 files. The URL can be for a single video or a whole 
+#' playlist.
 #' 
 #' @section youtube-dl:
 #' More info from the original developers and its code: 

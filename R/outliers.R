@@ -1,5 +1,5 @@
 ####################################################################
-#' Outliers: Winsorized
+#' Outliers: Winsorize
 #' 
 #' Winsorizing a vector means that a predefined quantum of the smallest 
 #' and/or the largest values are replaced by less extreme values. 

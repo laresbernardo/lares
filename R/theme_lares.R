@@ -122,7 +122,7 @@ theme_lares <- function(font = getOption("lares.font"),
   ret <- ret + theme(plot.title = element_text(
     size = size * 1.25, margin = margin(b = size * 0.3), #hjust = 0, 
     family = font, face = "bold", color = "black"),
-    plot.title.position = "plot") # Aligns plot title to the very left edge (more space)
+    plot.title.position = "plot") # Aligns plot title to the very left edge (more space)) 
   
   # Plot subtitle
   ret <- ret + theme(plot.subtitle = element_text(

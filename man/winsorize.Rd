@@ -2,7 +2,7 @@
 % Please edit documentation in R/outliers.R
 \name{winsorize}
 \alias{winsorize}
-\title{Outliers: Winsorized}
+\title{Outliers: Winsorize}
 \usage{
 winsorize(x, thresh = c(0.05, 0.95), na.rm = FALSE)
 }
