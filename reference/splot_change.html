@@ -119,7 +119,15 @@ inception, with weighted attributions or absolute values." />
 inception, with weighted attributions or absolute values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>splot_change</span>(<span class='kw'>p</span>, <span class='kw'>s</span>, weighted = <span class='fl'>TRUE</span>, group = <span class='fl'>TRUE</span>, save = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>splot_change</span>(
+  <span class='kw'>p</span>,
+  <span class='kw'>s</span>,
+  weighted = <span class='fl'>TRUE</span>,
+  group = <span class='fl'>FALSE</span>,
+  n_days = <span class='fl'>365</span>,
+  keep_old = <span class='fl'>TRUE</span>,
+  save = <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,6 +148,15 @@ portfolio (or simply compared with value since inception)?</p></td>
     <tr>
       <th>group</th>
       <td><p>Boolean. Group stocks by stocks type?</p></td>
+    </tr>
+    <tr>
+      <th>n_days</th>
+      <td><p>Integer. How many days back you want to see?</p></td>
+    </tr>
+    <tr>
+      <th>keep_old</th>
+      <td><p>Boolean. Plot tickers that were already 
+sold entirely?</p></td>
     </tr>
     <tr>
       <th>save</th>
