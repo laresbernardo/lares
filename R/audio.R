@@ -42,12 +42,13 @@ get_mp3 <- function(url, mp3 = TRUE, params = "", quiet = FALSE) {
     if (!quiet)
       message(">>> Downloading and converting...")
     system(query)
-    
   }, error = function(err) {
     msg <- "You must have youtube-dl installed!"
     if (grepl("^darwin", R.version$os))
       msg <- paste(msg, "Run in Terminal: brew install youtube-dl", 
                    "Then restart and try again", sep = "\n")
+    msg <- paste(msg, "If already installed, try updating it with:",
+                 "sudo pip3 install --upgrade youtube_dl", sep = "\n")
     stop(msg)
   })
 }

@@ -535,47 +535,68 @@ splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save =
 #' @param weighted Boolean. Should variation values be weighted to the
 #' portfolio (or simply compared with value since inception)?
 #' @param group Boolean. Group stocks by stocks type?
+#' @param n_days Integer. How many days back you want to see?
+#' @param keep_old Boolean. Plot tickers that were already 
+#' sold entirely?
 #' @param save Boolean. Save plot into a local file?
 #' @export
-splot_change <- function(p, s, weighted = TRUE, group = TRUE, save = FALSE) {
+splot_change <- function(p, s, weighted = TRUE, group = FALSE, 
+                         n_days = 365, keep_old = TRUE,
+                         save = FALSE) {
   
   try_require("ggrepel")
   
   check_attr(p, check = "daily_portfolio")
   check_attr(s, check = "daily_stocks")
   
+  current <- s[s$Date == max(s$Date),]
+  current_stocks <- as.character(current$Symbol[current$CumValue > 0])
+  
   d <- s %>% 
+    {if (!keep_old) filter(., as.character(.data$Symbol) %in% current_stocks) else .} %>%
     arrange(.data$Date) %>% 
     group_by(.data$Symbol) %>%
     mutate(Hist = if (weighted) {100*(1 - cumsum(.data$Invested)/(.data$CumValue))} 
            else {.data$CumValue - .data$CumInvested},
            BuySell = ifelse(.data$Invested > 0, "Bought", ifelse(.data$Invested < 0, "Sold", NA))) %>%
-    mutate(Hist = ifelse(.data$CumQuant > 0, .data$Hist, NA))
-  d$Symbol <- factor(d$Symbol, levels = rev(unique(s$Symbol)))
-  labels <- filter(d, .data$Date == max(.data$Date))
+    filter(!is.infinite(.data$Hist) & !is.na(.data$Hist)) %>%
+    mutate(Hist = ifelse(.data$CumQuant > 0, .data$Hist, tail(.data$Hist, 1))) %>%
+    {if (!is.na(n_days)) filter(., .data$Date >= max(s$Date) - n_days) else .} %>%
+    filter(.data$CumValue > 0)
+  
+  d$Symbol <- factor(d$Symbol, levels = current$Symbol)
+  labels <- group_by(d, .data$Symbol) %>% filter(.data$Date == max(.data$Date))
   amounts <- filter(d, .data$Invested != 0) %>%
-    mutate(label = paste0(round(.data$Invested/1000,1),"K"))
+    mutate(label = formatNum(.data$Invested, abbr = TRUE))
   days <- as.integer(difftime(range(d$Date)[2], range(d$Date)[1], units = "days"))
   
-  plot <- ggplot(d, aes(x = .data$Date, y = .data$Hist, colour = .data$Symbol)) +
-    ylab('% Change since Start') +
+  plot <- ggplot(d, aes(x = .data$Date, 
+                        y = .data$Hist, 
+                        colour = .data$Symbol)) +
+    geom_vline(xintercept = max(s$Date), linetype = "dashed", alpha = 0.7) +
+    ylab(glued('Total changed since start [{x}]', x = ifelse(weighted, "%", "$"))) +
     geom_hline(yintercept = 0, alpha = 0.8, colour = "black") +
     geom_line(alpha = 0.9, size = 0.5, na.rm = TRUE) +
     geom_point(aes(size = abs(.data$Invested), colour = .data$BuySell), alpha = 0.6, na.rm = TRUE) +
-    scale_y_continuous(position = "right") +
+    scale_y_comma(position = "right") +
     scale_size(range = c(0, 3.2)) + guides(size = FALSE, colour = FALSE) + 
     xlim(min(d$Date), max(d$Date) + round(days*0.08)) +
-    labs(title = 'Daily Portfolio\'s Stocks Change (%) since Start', x = '',
-         subtitle = 'Showing absolute delta values since first purchase', colour = '') +
+    labs(title = glued(
+      "Stocks Daily Change [{x}] since Start", x = ifelse(weighted, "%", "$")), 
+      x = NULL, colour = NULL,
+      subtitle = 'Showing absolute delta values since first purchase') +
     geom_label_repel(data = amounts, aes(label = .data$label), 
                      size = 2, na.rm = TRUE, alpha = 0.9, min.segment.length = 1.2) +
-    geom_label(data = labels, aes(label = .data$Symbol), 
-               size = 2.5, hjust = -0.2, alpha = 0.6, na.rm = TRUE) +
-    theme_lares2(pal = 2)
+    geom_label_repel(data = labels, aes(label = .data$Symbol), 
+                     size = 2.5, hjust = -0.2, alpha = 0.6, na.rm = TRUE) +
+    theme_lares2(pal = 2) +
   
   if (group) plot <- plot + facet_grid(.data$Type ~ ., scales = "free", switch = "both")
   if (weighted) plot <- plot + 
     labs(subtitle = "Showing real weighted portfolio delta values")
+  if (!is.na(n_days)) plot <- plot + 
+    labs(caption = glued("Showing last {n_days} days"))
+
   if (save) plot <- plot + ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300) 
   
   return(plot)

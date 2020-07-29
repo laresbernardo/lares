@@ -4,7 +4,15 @@
 \alias{splot_change}
 \title{Portfolio Plots: Daily Change}
 \usage{
-splot_change(p, s, weighted = TRUE, group = TRUE, save = FALSE)
+splot_change(
+  p,
+  s,
+  weighted = TRUE,
+  group = FALSE,
+  n_days = 365,
+  keep_old = TRUE,
+  save = FALSE
+)
 }
 \arguments{
 \item{p}{Dataframe. Result from \code{daily_portfolio()}}
@@ -15,6 +23,11 @@ splot_change(p, s, weighted = TRUE, group = TRUE, save = FALSE)
 portfolio (or simply compared with value since inception)?}
 
 \item{group}{Boolean. Group stocks by stocks type?}
+
+\item{n_days}{Integer. How many days back you want to see?}
+
+\item{keep_old}{Boolean. Plot tickers that were already 
+sold entirely?}
 
 \item{save}{Boolean. Save plot into a local file?}
 }
