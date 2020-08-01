@@ -34,8 +34,8 @@
 #' \dontrun{
 #' # Load dummy config.yml file from the library
 #' # Recommendation: set dir with NA (read documentation)
-#' yml <- system.file("docs", "config.yml", package = "lares")
-#' yml <- gsub("/config\\.yml", "", yml) # We need the directory, not the file
+#' # We need the directory, not the file
+#' yml <- dirname(system.file("docs", "config.yml", package = "lares"))
 #' 
 #' # Let's see which credentials we have in our file
 #' get_credentials(dir = yml)

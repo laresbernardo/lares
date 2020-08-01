@@ -1452,10 +1452,10 @@ replacefactor <- function(x, original, change) {
 #' \dontrun{
 #' # Choose an R script file with functions
 #' rfile <- file.choose()
-#' list_fun_file(rfile)
+#' files_functions(rfile)
 #' }
 #' @export 
-list_fun_file <- function(filename, alphabetic = TRUE) {
+files_functions <- function(filename, alphabetic = TRUE) {
   if (!file.exists(filename)) 
     stop("Couldn't find file ", filename)
   if (!right(toupper(filename), 1) == "R")
@@ -1644,8 +1644,8 @@ formatText <- function(text, color = "black", size = 20, bold = FALSE) {
 #' 
 #' # You can also used named arguments
 #' glued(
-#'   "My name is {name}, ",
-#'   "and my age next year will be {age + 1}.",
+#'   "Her name is {name}, ",
+#'   "and her age next year will be {age + 1}.",
 #'   name = "Maru",
 #'   age = 6)
 #'   
@@ -1662,9 +1662,8 @@ glued <- function (..., .sep = "", .envir = parent.frame()) {
     if (is.null(out)) out <- ""
     out
   }
-  ret <- stringr::str_glue(
+  stringr::str_glue(
     ..., .sep = .sep, 
     .transformer = null_transformer, 
     .envir = .envir)
-  return(ret)
 }

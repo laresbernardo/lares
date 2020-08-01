@@ -141,7 +141,7 @@ theme_lares <- function(font = getOption("lares.font"),
       legend.position = legend,
       legend.justification = c(ifelse(legend %in% c("top","bottom"), 0, .5),
                                ifelse(legend == "top", 0, .5)),
-      legend.margin = margin(-3,0,-5,0))
+      legend.margin = margin(-3,0,-4,0))
   # guides(colour = guide_legend(override.aes = list(size = 4)),
   #        fill = guide_legend(override.aes = list(size = 4)))
   

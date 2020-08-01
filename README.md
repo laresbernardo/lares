@@ -34,6 +34,8 @@ lares::updateLares()
 
 - DataScience+: [Portfolio's Performance and Reporting](https://datascienceplus.com/visualize-your-portfolios-performance-and-generate-a-nice-report-with-r)
 
+- DataScience+: [Manage Credentials Safely in R](https://datascienceplus.com/how-to-manage-credentials-and-secrets-safely-in-r/)
+
 - DataScience+: [Plot Timelines with Gantt Charts](https://datascienceplus.com/visualize-your-cvs-timeline-with-r-gantt-style/)
 
 - RPubs: [freqs(), distr(), and corr_var() Examples](http://rpubs.com/laresbernardo/freqs-distr-corr)
