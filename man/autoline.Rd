@@ -2,14 +2,14 @@
 % Please edit documentation in R/other_functions.R
 \name{autoline}
 \alias{autoline}
-\title{New Line Feed for Long Character Strings}
+\title{New Line Feed for Long Strings (Wrapper)}
 \usage{
-autoline(text, top = "auto", rel = 9.5)
+autoline(text, top = "auto", rel = 9)
 }
 \arguments{
-\item{text}{Character vector.}
+\item{text}{Character or factor vector.}
 
-\item{top}{Integer. How many characters aprox should be on each line}
+\item{top}{Integer. How many characters aprox should be on each line?}
 
 \item{rel}{Numeric. Relation of pixels and characters per line}
 }
@@ -17,13 +17,21 @@ autoline(text, top = "auto", rel = 9.5)
 Add a break or new line without breaking words. Automatically,
 the function can detect your plot's width and will dynamically
 set an auto width. You can adjust the relation (rel) parameter
-for different fonts and sizes until perfect harmony found.
+for different fonts and sizes until perfect harmony found. 
+Quite similar to `stringr::str_wrap()` but, if the text vector
+is a factor, the levels will be kept in order and transformed.
 }
 \examples{
-\dontrun{
 autoline("This is a long text that may not fit into a single line")
-autoline("This is a long text that may not fit into a single line", rel = 25)
-}
+autoline("This is a long text that may not fit into a single line", top = 10)
+
+text <- factor(c("First value", "Second value", "First value"), 
+               levels = c("First value", "Second value"))
+autoline(text, 1)
+
+path <- file.path(R.home("doc"), "THANKS")
+text <- paste(readLines(path), collapse = " ")
+cat(autoline(text))
 }
 \seealso{
 Other Tools: 

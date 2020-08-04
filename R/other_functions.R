@@ -1092,48 +1092,71 @@ bindfiles <- function(files) {
 
 
 ####################################################################
-#' New Line Feed for Long Character Strings
+#' New Line Feed for Long Strings (Wrapper)
 #' 
 #' Add a break or new line without breaking words. Automatically,
 #' the function can detect your plot's width and will dynamically
 #' set an auto width. You can adjust the relation (rel) parameter
-#' for different fonts and sizes until perfect harmony found.
+#' for different fonts and sizes until perfect harmony found. 
+#' Quite similar to `stringr::str_wrap()` but, if the text vector
+#' is a factor, the levels will be kept in order and transformed. 
 #' 
 #' @family Tools
-#' @param text Character vector.
-#' @param top Integer. How many characters aprox should be on each line
+#' @param text Character or factor vector.
+#' @param top Integer. How many characters aprox should be on each line?
 #' @param rel Numeric. Relation of pixels and characters per line
 #' @examples 
-#' \dontrun{
 #' autoline("This is a long text that may not fit into a single line")
-#' autoline("This is a long text that may not fit into a single line", rel = 25)
-#' }
+#' autoline("This is a long text that may not fit into a single line", top = 10)
+#' 
+#' text <- factor(c("First value", "Second value", "First value"), 
+#'                levels = c("First value", "Second value"))
+#' autoline(text, 1)
+#' 
+#' path <- file.path(R.home("doc"), "THANKS")
+#' text <- paste(readLines(path), collapse = " ")
+#' cat(autoline(text))
 #' @export
-autoline <- function(text, top = "auto", rel = 9.5) {
+autoline <- function(text, top = "auto", rel = 9) {
   
   # Auto-maximum
   if (top == "auto") top <- round(dev.size("px")[1]/rel)
-  # Auto-minimum
-  if (top < 5) top <- 5
   
-  ret <- lapply(text, function(x) {
-    # Add new lines for long texts
-    iters <- ceiling(nchar(x)/top)
-    if (iters > 1) {
-      for (i in 1:iters) {
-        if (i == 1) texti <- x
-        if (i == 1) n <- 0
-        texti <- gsub(".*\\n", "", x)
-        pos <- as.vector(gregexpr(' ', texti)[[1]])
-        sp <- pos[pos > top][1]
-        if (is.na(sp)) break
-        n <- n + sp + ifelse(i > 1, 1, 0)
-        x <- gsub(paste0('^(.{', n, '})(.*)$'), '\\1\n\\2', x)
-      } 
-    } else x
-    return(x)
-  })
-  return(unlist(ret))
+  # Keep factors
+  is_factor <- is.factor(text)
+  if (is_factor) {
+    levs <- levels(text)
+    text <- as.character(text)
+  } 
+  
+  ret <- stringr::str_wrap(text, top)
+  
+  # ret <- lapply(text, function(x) {
+  #   # Add new lines for long texts
+  #   iters <- ceiling(nchar(x)/top)
+  #   if (iters > 1) {
+  #     for (i in 1:iters) {
+  #       if (i == 1) texti <- x
+  #       if (i == 1) n <- 0
+  #       texti <- gsub(".*\\n", "", x)
+  #       pos <- as.vector(gregexpr(' ', texti)[[1]])
+  #       sp <- pos[pos > top][1]
+  #       if (is.na(sp)) break
+  #       n <- n + sp + ifelse(i > 1, 1, 0)
+  #       x <- gsub(paste0('^(.{', n, '})(.*)$'), '\\1\n\\2', x)
+  #     } 
+  #   } else x
+  #   return(x)
+  # })
+  # ret <- unlist(ret)
+  
+  if (is_factor) {
+    aux <- data.frame(ret, text) %>% 
+      mutate(text = factor(text, levels = levs)) %>%
+      arrange(text) %>% unique()
+    ret <- factor(ret, levels = aux$ret)
+  } 
+  return(ret)
 }
 
 
