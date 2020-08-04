@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>New Line Feed for Long Character Strings — autoline • lares</title>
+<title>New Line Feed for Long Strings (Wrapper) — autoline • lares</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,13 @@
 
 
 
-<meta property="og:title" content="New Line Feed for Long Character Strings — autoline" />
+<meta property="og:title" content="New Line Feed for Long Strings (Wrapper) — autoline" />
 <meta property="og:description" content="Add a break or new line without breaking words. Automatically,
 the function can detect your plot's width and will dynamically
 set an auto width. You can adjust the relation (rel) parameter
-for different fonts and sizes until perfect harmony found." />
+for different fonts and sizes until perfect harmony found. 
+Quite similar to `stringr::str_wrap()` but, if the text vector
+is a factor, the levels will be kept in order and transformed." />
 
 
 
@@ -111,7 +113,7 @@ for different fonts and sizes until perfect harmony found." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>New Line Feed for Long Character Strings</h1>
+    <h1>New Line Feed for Long Strings (Wrapper)</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_functions.R'><code>R/other_functions.R</code></a></small>
     <div class="hidden name"><code>autoline.Rd</code></div>
     </div>
@@ -120,21 +122,23 @@ for different fonts and sizes until perfect harmony found." />
     <p>Add a break or new line without breaking words. Automatically,
 the function can detect your plot's width and will dynamically
 set an auto width. You can adjust the relation (rel) parameter
-for different fonts and sizes until perfect harmony found.</p>
+for different fonts and sizes until perfect harmony found. 
+Quite similar to `stringr::str_wrap()` but, if the text vector
+is a factor, the levels will be kept in order and transformed.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>autoline</span>(<span class='kw'>text</span>, top = <span class='st'>"auto"</span>, rel = <span class='fl'>9.5</span>)</pre>
+    <pre class="usage"><span class='fu'>autoline</span>(<span class='kw'>text</span>, top = <span class='st'>"auto"</span>, rel = <span class='fl'>9</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>text</th>
-      <td><p>Character vector.</p></td>
+      <td><p>Character or factor vector.</p></td>
     </tr>
     <tr>
       <th>top</th>
-      <td><p>Integer. How many characters aprox should be on each line</p></td>
+      <td><p>Integer. How many characters aprox should be on each line?</p></td>
     </tr>
     <tr>
       <th>rel</th>
@@ -178,10 +182,83 @@ for different fonts and sizes until perfect harmony found.</p>
 <code><a href='zerovar.html'>zerovar</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>autoline</span>(<span class='st'>"This is a long text that may not fit into a single line"</span>)
-<span class='fu'>autoline</span>(<span class='st'>"This is a long text that may not fit into a single line"</span>, rel = <span class='fl'>25</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>autoline</span>(<span class='st'>"This is a long text that may not fit into a single line"</span>)</div><div class='output co'>#&gt; [1] "This is a long text that may not fit into a single line"</div><div class='input'><span class='fu'>autoline</span>(<span class='st'>"This is a long text that may not fit into a single line"</span>, top = <span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] "This is\na long\ntext that\nmay not\nfit into\na single\nline"</div><div class='input'>
+<span class='kw'>text</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"First value"</span>, <span class='st'>"Second value"</span>, <span class='st'>"First value"</span>), 
+               levels = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"First value"</span>, <span class='st'>"Second value"</span>))
+<span class='fu'>autoline</span>(<span class='kw'>text</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] First\nvalue  Second\nvalue First\nvalue 
+#&gt; Levels: First\nvalue Second\nvalue</div><div class='input'>
+<span class='kw'>path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Rhome.html'>R.home</a></span>(<span class='st'>"doc"</span>), <span class='st'>"THANKS"</span>)
+<span class='kw'>text</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(<span class='kw'>path</span>), collapse = <span class='st'>" "</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>(<span class='fu'>autoline</span>(<span class='kw'>text</span>))</div><div class='output co'>#&gt; R would not be what it is today without the invaluable
+#&gt; help of these people outside of the (former and current)
+#&gt; R Core team, who contributed by donating code, bug fixes
+#&gt; and documentation: Valerio Aimale, Suharto Anggono,
+#&gt; Thomas Baier, Gabe Becker, Henrik Bengtsson, Roger
+#&gt; Bivand, Ben Bolker, David Brahm, G"oran Brostr"om,
+#&gt; Patrick Burns, Vince Carey, Saikat DebRoy, Matt
+#&gt; Dowle, Brian D'Urso, Lyndon Drake, Dirk Eddelbuettel,
+#&gt; Claus Ekstrom, Sebastian Fischmeister, John Fox, Paul
+#&gt; Gilbert, Yu Gong, Gabor Grothendieck, Frank E Harrell
+#&gt; Jr, Peter M. Haverty, Torsten Hothorn, Robert King,
+#&gt; Kjetil Kjernsmo, Roger Koenker, Philippe Lambert, Jan de
+#&gt; Leeuw, Jim Lindsey, Patrick Lindsey, Catherine Loader,
+#&gt; Gordon Maclean, Arni Magnusson, John Maindonald, David
+#&gt; Meyer, Ei-ji Nakama, Jens Oehlschl"agel, Steve Oncley,
+#&gt; Richard O'Keefe, Hubert Palme, Roger D. Peng, Jose'
+#&gt; C. Pinheiro, Tony Plate, Anthony Rossini, Jonathan
+#&gt; Rougier, Petr Savicky, Guenther Sawitzki, Marc Schwartz,
+#&gt; Arun Srinivasan, Detlef Steuer, Bill Simpson, Gordon
+#&gt; Smyth, Adrian Trapletti, Terry Therneau, Rolf Turner,
+#&gt; Bill Venables, Gregory R. Warnes, Andreas Weingessel,
+#&gt; Morten Welinder, James Wettenhall, Simon Wood, and Achim
+#&gt; Zeileis. Others have written code that has been adopted
+#&gt; by R and is acknowledged in the code files, including
+#&gt; J. D. Beasley, David J. Best, Richard Brent, Kevin Buhr,
+#&gt; Michael A. Covington, Bill Cleveland, Robert Cleveland,,
+#&gt; G. W. Cran, C. G. Ding, Ulrich Drepper, Paul Eggert, J.
+#&gt; O. Evans, David M. Gay, H. Frick, G. W. Hill, Richard
+#&gt; H. Jones, Eric Grosse, Shelby Haberman, Bruno Haible,
+#&gt; John Hartigan, Andrew Harvey, Trevor Hastie, Min Long
+#&gt; Lam, George Marsaglia, K. J. Martin, Gordon Matzigkeit,
+#&gt; C. R. Mckenzie, Jean McRae, Cyrus Mehta, Fionn Murtagh,
+#&gt; John C. Nash, Finbarr O'Sullivan, R. E. Odeh, William
+#&gt; Patefield, Nitin Patel, Alan Richardson, D. E. Roberts,
+#&gt; Patrick Royston, Russell Lenth, Ming-Jen Shyu, Richard
+#&gt; C. Singleton, S. G. Springer, Supoj Sutanthavibul,
+#&gt; Irma Terpenning, G. E. Thomas, Rob Tibshirani, Wai
+#&gt; Wan Tsang, Berwin Turlach, Gary V. Vaughan, Michael
+#&gt; Wichura, Jingbo Wang, M. A. Wong, and the Free Software
+#&gt; Foundation (for autoconf code and utilities). See also
+#&gt; files under src/extras. Many more, too numerous to
+#&gt; mention here, have contributed by sending bug reports
+#&gt; and suggesting various improvements. Simon Davies whilst
+#&gt; at the University of Auckland wrote the original version
+#&gt; of glm(). Julian Harris and Wing Kwong (Tiki) Wan whilst
+#&gt; at the University of Auckland assisted Ross Ihaka with
+#&gt; the original Macintosh port. R was inspired by the S
+#&gt; environment which has been principally developed by
+#&gt; John Chambers, with substantial input from Douglas
+#&gt; Bates, Rick Becker, Bill Cleveland, Trevor Hastie, Daryl
+#&gt; Pregibon and Allan Wilks. A special debt is owed to
+#&gt; John Chambers who has graciously contributed advice and
+#&gt; encouragement in the early days of R and later became a
+#&gt; member of the core team. Stefano Iacus (a former member
+#&gt; of R Core) and Simon Urbanek developed the macOS port,
+#&gt; including the R.app GUI, toolchains and packaging. The
+#&gt; Windows port was developed by Guido Masarotto (for a
+#&gt; while a member of R Core) and Brian Ripley, then Duncan
+#&gt; Murdoch (a former member of R Core) and currently by
+#&gt; Jeroen Ooms (base) and Uwe Ligges (packages). Tomas
+#&gt; Kalibera's work has been sponsored by Jan Vitek and
+#&gt; funded by his European Research Council grant "Evolving
+#&gt; Language Ecosystems (ELE)". Computing support (including
+#&gt; hardware, hosting and infrastructure) has been provided/
+#&gt; funded by the R Foundation, employers of R-Core members
+#&gt; (notably WU Wien, ETH Zurich, U Oxford and U Iowa)
+#&gt; and by Northeastern University and the University
+#&gt; of Kent. Distributions of R contain the recommended
+#&gt; packages, whose authors/contributors are listed in their
+#&gt; DESCRIPTION files.</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
