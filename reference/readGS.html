@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Google Sheets Reading (API v4) — readGS" />
-<meta property="og:description" content="Read data from Google Sheets." />
+<meta property="og:description" content="Read data from Google Sheets knowing its title." />
 
 
 
@@ -114,13 +114,14 @@
     </div>
 
     <div class="ref-description">
-    <p>Read data from Google Sheets.</p>
+    <p>Read data from Google Sheets knowing its title.</p>
     </div>
 
     <pre class="usage"><span class='fu'>readGS</span>(
   <span class='kw'>title</span>,
   sheet = <span class='st'>"Hoja 1"</span>,
   range = <span class='kw'>NULL</span>,
+  drop_nas = <span class='fl'>TRUE</span>,
   json = <span class='kw'>NULL</span>,
   email = <span class='kw'>NULL</span>,
   api_key = <span class='kw'>NULL</span>,
@@ -143,6 +144,10 @@ expressions so you may fetch with patterns instead of names.</p></td>
     <tr>
       <th>range</th>
       <td><p>Character. A cell range to read from</p></td>
+    </tr>
+    <tr>
+      <th>drop_nas</th>
+      <td><p>Boolean. Remove columns and rows that contain only NAs?</p></td>
     </tr>
     <tr>
       <th>json</th>

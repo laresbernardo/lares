@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Google Sheets Writing (API v4) — writeGS" />
-<meta property="og:description" content="Write data into Google Sheets." />
+<meta property="og:description" content="Write data into Google Sheets knowing its title." />
 
 
 
@@ -114,7 +114,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Write data into Google Sheets.</p>
+    <p>Write data into Google Sheets knowing its title.</p>
     </div>
 
     <pre class="usage"><span class='fu'>writeGS</span>(
@@ -123,6 +123,7 @@
   sheet = <span class='st'>"Hoja 1"</span>,
   range = <span class='st'>"A1"</span>,
   reformat = <span class='fl'>FALSE</span>,
+  append = <span class='fl'>FALSE</span>,
   json = <span class='kw'>NULL</span>,
   email = <span class='kw'>NULL</span>,
   api_key = <span class='kw'>NULL</span>,
@@ -153,6 +154,10 @@ expressions so you may fetch with patterns instead of names.</p></td>
     <tr>
       <th>reformat</th>
       <td><p>Boolean. Reformat the affected cells?</p></td>
+    </tr>
+    <tr>
+      <th>append</th>
+      <td><p>Boolean.</p></td>
     </tr>
     <tr>
       <th>json</th>
