@@ -11,6 +11,7 @@ writeGS(
   sheet = "Hoja 1",
   range = "A1",
   reformat = FALSE,
+  append = FALSE,
   json = NULL,
   email = NULL,
   api_key = NULL,
@@ -30,6 +31,8 @@ expressions so you may fetch with patterns instead of names.}
 
 \item{reformat}{Boolean. Reformat the affected cells?}
 
+\item{append}{Boolean.}
+
 \item{json}{Character. JSON filename with service auth}
 
 \item{email}{Character. If you have multiple pre-authorized
@@ -45,7 +48,7 @@ which one you wish to use by email and/or api_key.}
 \item{...}{Further read_sheet parameters}
 }
 \description{
-Write data into Google Sheets.
+Write data into Google Sheets knowing its title.
 }
 \seealso{
 Other Scrapper: 

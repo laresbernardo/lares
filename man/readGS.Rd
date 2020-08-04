@@ -9,6 +9,7 @@ readGS(
   title,
   sheet = "Hoja 1",
   range = NULL,
+  drop_nas = TRUE,
   json = NULL,
   email = NULL,
   api_key = NULL,
@@ -24,6 +25,8 @@ expressions so you may fetch with patterns instead of names.}
 
 \item{range}{Character. A cell range to read from}
 
+\item{drop_nas}{Boolean. Remove columns and rows that contain only NAs?}
+
 \item{json}{Character. JSON filename with service auth}
 
 \item{email, api_key}{Character. If you have multiple pre-authorized
@@ -35,7 +38,7 @@ which one you wish to use by email and/or api_key.}
 \item{...}{Further read_sheet parameters}
 }
 \description{
-Read data from Google Sheets.
+Read data from Google Sheets knowing its title.
 }
 \seealso{
 Other Scrapper: 

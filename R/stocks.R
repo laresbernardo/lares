@@ -252,6 +252,8 @@ daily_stocks <- function(hist, trans, tickers = NA) {
   if (!is.na(tickers)[1])
     check_attr(tickers, check = "stocks_file_portfolio")
   
+  with_div <- "DivReal" %in% colnames(trans)
+  
   # hist_structure <- c("Date", "Symbol", "Value", "Div", "DivReal")
   # trans_structure <- c("Symbol", "Date", "Quant", "Each", "Invested", "Cost")
   # if (!all(hist_structure %in% colnames(hist))) {
@@ -274,7 +276,7 @@ daily_stocks <- function(hist, trans, tickers = NA) {
            CumROI = as.numeric(ifelse(
              .data$CumValue == 0, 100*(.data$Each*abs(.data$Quant)/lag(.data$CumInvested) - 1), 
              .data$CumROI)),
-           Dividend = .data$DivReal * .data$CumQuant,
+           Dividend = ifelse(with_div, .data$DivReal * .data$CumQuant, 0),
            DifUSD = .data$CumValue - .data$Invested - lag(.data$CumValue),
            CumDividend = cumsum(.data$Dividend)) %>% 
     select(.data$Date, .data$Symbol, .data$Value, .data$Quant, .data$Each, .data$Invested, 
@@ -567,7 +569,8 @@ splot_change <- function(p, s, weighted = TRUE, group = FALSE,
   d$Symbol <- factor(d$Symbol, levels = current$Symbol)
   labels <- group_by(d, .data$Symbol) %>% filter(.data$Date == max(.data$Date))
   amounts <- filter(d, .data$Invested != 0) %>%
-    mutate(label = formatNum(.data$Invested, abbr = TRUE))
+    mutate(label = paste0(round(.data$Invested/1000,1),"K"))
+  #mutate(label = formatNum(.data$Invested, abbr = TRUE))
   days <- as.integer(difftime(range(d$Date)[2], range(d$Date)[1], units = "days"))
   
   plot <- ggplot(d, aes(x = .data$Date, 

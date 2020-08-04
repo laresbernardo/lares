@@ -1,7 +1,7 @@
 ####################################################################
 #' Google Sheets Reading (API v4)
 #' 
-#' Read data from Google Sheets.
+#' Read data from Google Sheets knowing its title.
 #' 
 #' @family Scrapper
 #' @family Google
@@ -9,6 +9,7 @@
 #' expressions so you may fetch with patterns instead of names.
 #' @param sheet Character. Working sheet to import
 #' @param range Character. A cell range to read from
+#' @param drop_nas Boolean. Remove columns and rows that contain only NAs?
 #' @param json Character. JSON filename with service auth
 #' @param email,api_key Character. If you have multiple pre-authorized
 #' accounts in your machine, you may non-interactively select
@@ -17,12 +18,14 @@
 #' @param ... Further read_sheet parameters
 #' @aliases readGS4
 #' @export
-readGS <- function(title, sheet = "Hoja 1", range = NULL, 
+readGS <- function(title, sheet = "Hoja 1", range = NULL, drop_nas = TRUE,
                    json = NULL, email = NULL, api_key = NULL, server = FALSE,...) {
   files <- filesGD(title = title, server = server, json = json, email = email)
   if (nrow(files) > 0) {
     message(sprintf("Using: %s (%s)", files$name[1], files$id[1]))
-    df <- read_sheet(files$id[1], sheet = sheet, range = range, ...)   
+    df <- read_sheet(files$id[1], sheet = sheet, range = range, ...)
+    if (drop_nas & isTRUE(ncol(df) > 0) & isTRUE(nrow(df) > 0)) 
+      df <- df %>% removenacols() %>% removenarows()
     return(df)
   }
 }
@@ -30,16 +33,18 @@ readGS <- function(title, sheet = "Hoja 1", range = NULL,
 ####################################################################
 #' Google Sheets Writing (API v4)
 #' 
-#' Write data into Google Sheets.
+#' Write data into Google Sheets knowing its title.
 #' 
 #' @family Scrapper
 #' @family Google
 #' @inheritParams readGS
 #' @param data Object (value, vector, dataframe, list)
 #' @param reformat Boolean. Reformat the affected cells?
+#' @param append Boolean.
 #' @aliases writeGS4
 #' @export
-writeGS <- function(data, title, sheet = "Hoja 1", range = 'A1', reformat = FALSE,
+writeGS <- function(data, title, sheet = "Hoja 1", range = 'A1', 
+                    reformat = FALSE, append = FALSE,
                     json = NULL, email = NULL, api_key = NULL, server = FALSE,...) {
   files <- filesGD(title = title, server = server, json = json, email = email)
   if (nrow(files) > 0) {
@@ -48,9 +53,15 @@ writeGS <- function(data, title, sheet = "Hoja 1", range = 'A1', reformat = FALS
       gs4_create(title, sheets = data)
     }
     message(sprintf("Using: %s (%s)", files$name[1], files$id[1]))
-    invisible(
-      range_write(files$id[1], sheet = sheet, data = data, 
-                  range = range, reformat = reformat, ...))
+    
+    if (append) {
+      invisible(
+        sheet_append(files$id[1], sheet = sheet, data = data))  
+    } else {
+      invisible(
+        range_write(files$id[1], sheet = sheet, data = data, 
+                    range = range, reformat = reformat, ...)) 
+    }
   }
 }
 
