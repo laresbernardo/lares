@@ -92,9 +92,12 @@ stocks_quote <- function(ticks) {
   for (i in 1:length(ticks)) {
     z <- fromJSON(paste(qRoot, paste(ticks[i], collapse = ","), sep = ""))
     if (length(z$quoteResponse$result) > 0) {
-      z <- z$quoteResponse$result[,c(
-        "symbol", "quoteType", "regularMarketTime", "regularMarketPrice", 
-        "regularMarketChange", "market", "longName")]
+      cols <- c("symbol", "quoteType", "regularMarketTime", 
+                "regularMarketPrice", "regularMarketChange", 
+                "market", "longName")
+      if (!"longName" %in% colnames(z$quoteResponse$result))
+        z$quoteResponse$result$longName <- z$quoteResponse$result$symbol
+      z <- select(z$quoteResponse$result, one_of(cols))
       ret <- rbind(ret, z) 
     } else noret <- rbind(noret, ticks[i])
   }
