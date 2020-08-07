@@ -48,7 +48,8 @@ which one you wish to use by email and/or api_key.}
 \item{...}{Further read_sheet parameters}
 }
 \description{
-Write data into Google Sheets knowing its title.
+Write data into Google Sheets knowing the file's title. You may write
+a single value into a cell or a data.frame into a cell range.
 }
 \seealso{
 Other Scrapper: 

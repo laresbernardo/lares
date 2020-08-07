@@ -38,8 +38,8 @@ which one you wish to use by email and/or api_key.}
 \item{...}{Further read_sheet parameters}
 }
 \description{
-Read data from Google Sheets knowing the file's title. It will 
-return a data.frame with your range's data or a vector if a cell.
+Read data from Google Sheets knowing the file's title. You may read
+a single value from a cell or a data.frame from a cell range.
 }
 \seealso{
 Other Scrapper: 
