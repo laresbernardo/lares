@@ -1,7 +1,8 @@
 ####################################################################
 #' Google Sheets Reading (API v4)
 #' 
-#' Read data from Google Sheets knowing its title.
+#' Read data from Google Sheets knowing the file's title. It will 
+#' return a data.frame with your range's data or a vector if a cell.
 #' 
 #' @family Scrapper
 #' @family Google
@@ -26,6 +27,8 @@ readGS <- function(title, sheet = "Hoja 1", range = NULL, drop_nas = TRUE,
     df <- read_sheet(files$id[1], sheet = sheet, range = range, ...)
     if (drop_nas & isTRUE(ncol(df) > 0) & isTRUE(nrow(df) > 0)) 
       df <- df %>% removenacols() %>% removenarows()
+    if (length(df) > 0 & nrow(df == 0))
+      df <- names(df)
     return(df)
   }
 }
