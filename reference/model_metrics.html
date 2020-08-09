@@ -262,9 +262,9 @@ categorical model.</p></td>
 #&gt; 
 #&gt; $confusion_matrix
 #&gt;        Pred
-#&gt; Real    TRUE FALSE
-#&gt;   TRUE    35    68
-#&gt;   FALSE  156     9
+#&gt; Real    FALSE TRUE
+#&gt;   FALSE     9  156
+#&gt;   TRUE     68   35
 #&gt; 
 #&gt; $gain_lift
 #&gt; <span style='color: #555555;'># A tibble: 10 x 10</span><span>
@@ -282,8 +282,8 @@ categorical model.</p></td>
 #&gt; </span><span style='color: #555555;'>10</span><span> 10         TRUE   100        0    27 100     100     0       0     3.19
 #&gt; 
 #&gt; $metrics
-#&gt;       AUC     ACC     PRC      TPR     TNR
-#&gt; 1 0.89467 0.16418 0.11688 0.054545 0.33981
+#&gt;       AUC     ACC     PRC     TPR      TNR
+#&gt; 1 0.89467 0.16418 0.18325 0.33981 0.054545
 #&gt; </div><div class='input'>
 <span class='co'># Metrics for Multi-Categorical Model</span>
 <span class='kw'>met2</span> <span class='op'>&lt;-</span> <span class='fu'>model_metrics</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>score</span>,
@@ -310,15 +310,15 @@ categorical model.</p></td>
 #&gt; 
 #&gt; $metrics
 #&gt;      AUC     ACC
-#&gt; 1 0.7896 0.32463
+#&gt; 1 0.7896 0.66418
 #&gt; 
 #&gt; $metrics_tags
 #&gt; </span><span style='color: #555555;'># A tibble: 3 x 9</span><span>
 #&gt;   tag       n     p   AUC order   ACC   PRC   TPR   TNR
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> n_3     149  55.6 0.826     1 0.75  0.736 0.681 0.805
-#&gt; </span><span style='color: #555555;'>2</span><span> n_1      63  23.5 0.867     2 0.828 0.900 0.873 0.683
-#&gt; </span><span style='color: #555555;'>3</span><span> n_2      56  20.9 0.675     3 0.75  0.819 0.877 0.268
+#&gt; </span><span style='color: #555555;'>1</span><span> n_3     149  55.6 0.826     1 0.75  0.759 0.805 0.681
+#&gt; </span><span style='color: #555555;'>2</span><span> n_1      63  23.5 0.867     2 0.828 0.623 0.683 0.873
+#&gt; </span><span style='color: #555555;'>3</span><span> n_2      56  20.9 0.675     3 0.75  0.366 0.268 0.877
 #&gt; </div><div class='input'>          
 <span class='co'># Metrics for Regression Model</span>
 <span class='kw'>met3</span> <span class='op'>&lt;-</span> <span class='fu'>model_metrics</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>score</span>,
