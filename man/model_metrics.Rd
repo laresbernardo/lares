@@ -12,6 +12,7 @@ model_metrics(
   thresh = 10,
   thresh_cm = 0.5,
   target = "auto",
+  type = "test",
   model_name = NA,
   plots = TRUE,
   subtitle = NA
@@ -39,6 +40,8 @@ confusion matrix. Range of values: (0-1)}
 set to 'auto', the target with largest mean(score) will be 
 selected. Change the value to overwrite. Only used when binary
 categorical model.}
+
+\item{type}{Character. One of: "train", "test".}
 
 \item{model_name}{Character. Model's name}
 

@@ -11,7 +11,7 @@ h2o_selectmodel(results, which_model = 1, plots = TRUE, quiet = FALSE)
 
 \item{which_model}{Integer. Which model from the leaderboard you wish to use?}
 
-\item{plots}{Boolean. Create plots too?}
+\item{plots}{Boolean. Create plots objects?}
 
 \item{quiet}{Boolean. Quiet messages, warnings, recommendations?}
 }
@@ -55,7 +55,6 @@ Other Tools:
 \code{\link{image_metadata}()},
 \code{\link{importxlsx}()},
 \code{\link{ip_country}()},
-\code{\link{iter_seeds}()},
 \code{\link{json2vector}()},
 \code{\link{listfiles}()},
 \code{\link{mailSend}()},

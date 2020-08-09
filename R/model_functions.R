@@ -82,13 +82,18 @@
 #' 
 #' # Classification: Binomial - 2 Classes
 #' r <- h2o_automl(dft, y = Survived, max_models = 1, impute = FALSE, target = "TRUE")
+#' print(r)
+#' 
+#' # Let's see all the stuff we have inside:
 #' lapply(r, names)
 #' 
 #' # Classification: Multi-Categorical - 3 Classes
 #' r <- h2o_automl(dft, Pclass, ignore = c("Fare", "Cabin"), max_time = 30, plots = FALSE)
+#' print(r)
 #' 
 #' # Regression: Continuous Values
 #' r <- h2o_automl(dft, y = "Fare", ignore = c("Pclass"), exclude_algos = NULL)
+#' print(r)
 #' 
 #' # WITH PRE-DEFINED TRAIN/TEST DATAFRAMES
 #' splits <- msplit(dft, size = 0.8)
@@ -96,6 +101,7 @@
 #' splits$test$split <- "test"
 #' df <- rbind(splits$train, splits$test)
 #' r <- h2o_automl(df, "Survived", max_models = 1, train_test = "split")
+#' print(r)
 #' }
 #' @export
 h2o_automl <- function(df, y = "tag",
@@ -232,6 +238,7 @@ h2o_automl <- function(df, y = "tag",
       if (all(unique(as.character(df$train_test)) %in% c('train', 'test'))) {
         train <- filter(df, .data$train_test == "train")
         test <- filter(df, .data$train_test == "test")
+        split <- nrow(train)/nrow(df)
         ignore <- c(ignore, train_test)
         if (!quiet) print(table(df$train_test))
       } else stop("Your train_test column should have 'train' and 'test' values only!") 
@@ -301,8 +308,8 @@ h2o_automl <- function(df, y = "tag",
   
   # GET RESULTS AND PERFORMANCE
   results <- h2o_results(
-    aml, test, train, y, which = 1, 
-    model_type = model_type, target = target, 
+    aml, test, train, y, which = 1,
+    model_type = model_type, target = target, split = split,
     plots = plots, project = project, ignored = ignored,
     seed = seed, quiet = quiet)
   
@@ -335,25 +342,16 @@ h2o_automl <- function(df, y = "tag",
 #' when using the \code{h2o_automl()} function. 
 #'
 #' @family Machine Learning
+#' @inheritParams h2o_automl
 #' @param h2o_object H2O Leaderboard (H2OFrame/H2OAutoML) or Model (h2o)
 #' @param test,train Dataframe. Must have the same columns
-#' @param y Character. Name of the independent variable
 #' @param which Integer. Which model to select from leaderboard
 #' @param model_type Character. Select "Classifier" or "Regression"
-#' @param target Value. Which is your target positive value? If 
-#' set to 'auto', the target with largest mean(score) will be 
-#' selected. Change the value to overwrite. Only used when binary
-#' categorical model.
-#' @param ignored Character vector. Which columns were ignored?
-#' @param plots Boolean. Create plots objects?
-#' @param project Character. Your project's name
-#' @param seed Integer. Set a seed for reproducibility. AutoML can only 
-#' guarantee reproducibility if max_models is used because max_time is 
-#' resource limited.
-#' @param quiet Boolean. Quiet messages, warnings, recommendations?
+#' @param ignored Character vector. Columns ignored.
 #' @export
 h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
-                        model_type, target = "auto", ignored = c(), plots = TRUE, 
+                        model_type, target = "auto", split = 0.7,
+                        ignored = c(), plots = TRUE, 
                         project = NULL, seed = 0, quiet = FALSE) {
   
   # MODEL TYPE
@@ -409,30 +407,28 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   # Change dots for space
   if (sum(grepl(" ", cats)) > 0)
     colnames(global) <- str_replace_all(colnames(global), "\\.", " ")
-  # For test performance metrics
-  scores <- predictions[1:nrow(test),]
-  # Selected target value
-  if (target != "auto" & length(cats) == 2)
-    scores <- target_set(tag = as.vector(test$tag), 
-                         score = scores[,2], 
-                         target = target, 
-                         quiet = TRUE)$df
-  # Multis object and standard predictions output
-  multis <- NA
-  if (model_type == "Classifier") {
-    if (length(cats) == 2) {
-      scores <- select_if(scores, is.numeric) %>% .[,1]
-    } else {
-      colnames(scores)[1] <- "score"
-      multis <- select(scores, -.data$score)
-    }
-  } else {
-    scores <- data.frame(score = as.vector(scores))
-  }
+  
+  # For performance metrics
+  scores_test <- get_scores(
+    predictions, test, 
+    model_type = model_type, 
+    target = target, cats = cats)
+  multis <- scores_test$multis
+  scores <- scores_test$scores
+  
+  # # Used for train metrics
+  # scores_train <- get_scores(
+  #   predictions, train, 
+  #   model_type = model_type, 
+  #   target = target, cats = cats)
+  # scores_tr <- scores_train$scores
+  # multis_tr <- scores_train$multis
+  # scores_train <- data.frame(tag = as.vector(train$tag), scores_tr)
   
   # GET ALL RESULTS INTO A LIST
   results <- list()
   results[["model"]] <- m
+  results[["y"]] <- y
   results[["scores_test"]] <- data.frame(tag = as.vector(test$tag), scores)
   results[["metrics"]] <- model_metrics(
     tag = results$scores_test$tag, 
@@ -446,14 +442,24 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     results$metrics[["max_metrics"]] <- data.frame(
       m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores)
   if (!stacked) results[["importance"]] <- imp
-  
   results[["datasets"]] <- list(
     global = as_tibble(global), 
     test = filter(global, .data$train_test == "test"))
+  # results[["metrics_train"]] <- model_metrics(
+  #   tag = scores_train$tag, 
+  #   score = scores_train$score,
+  #   multis = multis_tr,
+  #   thresh = thresh,
+  #   target = target,
+  #   model_name = as.vector(m@model_id),
+  #   type = "train")
   results[["scoring_history"]] <- as_tibble(m@model$scoring_history)
   results[["parameters"]] <- m@parameters
   results[["categoricals"]] <- list_cats(filter(global, .data$train_test == "train"))
   results[["type"]] <- model_type
+  results[["split"]] <- split
+  if (model_type == "Classifier") 
+    results[["threshold"]] <- thresh
   results[["model_name"]] <- as.vector(m@model_id)
   results[["algorithm"]] <- m@algorithm
   if (any(c("H2OFrame","H2OAutoML") %in% class(h2o_object)))
@@ -486,7 +492,115 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   } 
   
   attr(results, "type") <- "h2o_automl"
+  class(results) <- c("h2o_automl", class(results))
+  
   return(results)
+  
+}
+
+get_scores <- function(predictions, 
+                       traintest, 
+                       model_type,
+                       target = "auto", 
+                       cats) {
+  
+  type <- deparse(substitute(traintest))
+  
+  # Train or Test data
+  nrows <- nrow(traintest)
+  if (type == "test")
+    scores <- predictions[1:nrows,]
+  if (type == "train")
+    scores <- predictions[(nrows+1):nrows,]
+  
+  # Selected target value
+  if (target != "auto" & length(cats) == 2)
+    scores <- target_set(tag = as.vector(traintest$tag), 
+                         score = scores[,2], 
+                         target = target, 
+                         quiet = TRUE)$df
+  
+  # Multis object and standard predictions output
+  multis <- NA
+  if (model_type == "Classifier") {
+    if (length(cats) == 2) {
+      scores <- select_if(scores, is.numeric) %>% .[,1]
+    } else {
+      colnames(scores)[1] <- "score"
+      multis <- select(scores, -.data$score)
+    }
+  } else {
+    scores <- data.frame(score = as.vector(scores))
+  } 
+  ret <- list(scores = scores, multis = multis)
+  return(ret)
+}
+
+
+####################################################################
+#' Plotting function for h2o_automl
+#'
+#' Plotting function for \code{h2o_automl}.
+#'
+#' @param x h2o_automl object.
+#' @param ... Additional arguments
+#' @export
+plot.h2o_automl <- function(x, ...) {
+  if (!inherits(x, 'h2o_automl'))
+    stop('Object must be class h2o_automl')
+  if ("plots" %in% names(x)) {
+    x$plots$dashboard 
+  } else {
+    message("Nothing to plot: set 'plots = TRUE' when using h2o_automl.") 
+  } 
+}
+
+####################################################################
+#' Print function for h2o_automl
+#'
+#' Print function for \code{h2o_automl}.
+#'
+#' @param x h2o_automl object.
+#' @param ... Additional parameters
+#' @export
+print.h2o_automl <- function(x, ...) {
+  
+  if (!inherits(x, 'h2o_automl'))
+    stop('Object must be class h2o_automl')
+  
+  aux <- list()
+  
+  aux[["met"]] <- glued(
+    "Metrics: 
+{v2t({met}, sep = '\n', quotes = FALSE)}", met = paste(
+  "  ",
+  names(x$metrics$metrics), "=",
+  signif(x$metrics$metrics, 5)))
+  
+  if ("importance" %in% names(x)) {
+    aux[["imp"]] <- glued(
+      "Most important variables:
+{v2t({imp}, sep = '\n', quotes = FALSE)}", imp = paste(
+  "  ",
+  x$importance %>% head(5) %>%
+    mutate(label = sprintf(
+      "%s (%s)", 
+      .data$variable, 
+      formatNum(100*.data$importance, 1, pos = "%"))) %>%
+    pull(.data$label)))
+  }
+  
+  print(glued("
+Leader Model: {x$model_name}
+Independent Variable: {x$y}
+Type: {x$type}
+Trained: {nrow(x$leaderboard)} models
+Split: {round(100*x$split)}% training data (of {nrow(x$datasets$global)} observations)
+Seed: {x$seed}
+
+{aux$met}
+
+{aux$imp}"))
   
 }
 
@@ -498,10 +612,9 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
 #' 
 #' @family Machine Learning
 #' @family Tools
+#' @inheritParams h2o_automl
 #' @param results Object. h2o_automl output from \code{h2o_automl()}
 #' @param which_model Integer. Which model from the leaderboard you wish to use?
-#' @param plots Boolean. Create plots too?
-#' @param quiet Boolean. Quiet messages, warnings, recommendations?
 #' @export
 h2o_selectmodel <- function(results, which_model = 1, plots = TRUE, quiet = FALSE) {
   
@@ -513,7 +626,6 @@ h2o_selectmodel <- function(results, which_model = 1, plots = TRUE, quiet = FALS
   # Calculate everything
   output <- h2o_results(m, 
                         test = results$datasets$test, 
-                        # NOT filter(results$datasets$global, .data$train_test == "train"),
                         train = results$datasets$test, 
                         y = results$y, 
                         which = which_model, 
@@ -694,26 +806,23 @@ msplit <- function(df, size = 0.7, seed = 0, print = TRUE) {
 
 
 ####################################################################
-#' Iterate and Search for Best Seed
+#' Iterate Seeds on AutoML
 #' 
 #' This functions lets the user iterate and search for best seed. Note that if
 #' the results change a lot, you are having a high variance in your data.
 #' 
 #' @family Machine Learning
-#' @family Tools
-#' @param df Dataframe. Dataframe with all your data you wish to model 
-#' (see \code{h2o_automl()}'s df)
-#' @param tries Integer. How many seed do you wish to try?
+#' @inheritParams h2o_automl
+#' @param tries Integer. Number of iterations
+#' @param ... Additional arguments passed to \code{h2o_automl}
 #' @export
-iter_seeds <- function(df, tries = 10) {
-  
+iter_seeds <- function(df, y, tries = 10, ...) {
   seeds <- data.frame()
-  
   for (i in 1:tries) {
-    iter <- h2o_automl(df, seed = i)
-    seeds <- rbind(seeds, cbind(seed = as.integer(i), auc = iter$auc_test))
-    seeds <- arrange(seeds, desc(.data$auc))
-    print(seeds)
+    model <- h2o_automl(df, y, seed = i, quiet = TRUE, ...)
+    seeds <- rbind(seeds, cbind(seed = i, model$metrics$metrics))
+    seeds <- arrange(seeds, desc(2))
+    statusbar(i, tries, seeds[1,1])
   }
   return(seeds)
 }

@@ -12,6 +12,7 @@ h2o_results(
   which = 1,
   model_type,
   target = "auto",
+  split = 0.7,
   ignored = c(),
   plots = TRUE,
   project = NULL,
@@ -24,7 +25,7 @@ h2o_results(
 
 \item{test, train}{Dataframe. Must have the same columns}
 
-\item{y}{Character. Name of the independent variable}
+\item{y}{Variable or Character. Name of the independent variable.}
 
 \item{which}{Integer. Which model to select from leaderboard}
 
@@ -35,7 +36,12 @@ set to 'auto', the target with largest mean(score) will be
 selected. Change the value to overwrite. Only used when binary
 categorical model.}
 
-\item{ignored}{Character vector. Which columns were ignored?}
+\item{split}{Numeric. Value between 0 and 1 to split as train/test 
+datasets. Value is for training set. Set value to 1 to train will all 
+available data and test with same data (cross-validation will still be 
+used when training)}
+
+\item{ignored}{Character vector. Columns ignored.}
 
 \item{plots}{Boolean. Create plots objects?}
 

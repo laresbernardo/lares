@@ -2,15 +2,20 @@
 % Please edit documentation in R/model_functions.R
 \name{iter_seeds}
 \alias{iter_seeds}
-\title{Iterate and Search for Best Seed}
+\title{Iterate Seeds on AutoML}
 \usage{
-iter_seeds(df, tries = 10)
+iter_seeds(df, y, tries = 10, ...)
 }
 \arguments{
-\item{df}{Dataframe. Dataframe with all your data you wish to model 
-(see \code{h2o_automl()}'s df)}
+\item{df}{Dataframe. Dataframe containing all your data, including 
+the independent variable labeled as 'tag'. If you want to define 
+which variable should be used instead, use the y parameter.}
 
-\item{tries}{Integer. How many seed do you wish to try?}
+\item{y}{Variable or Character. Name of the independent variable.}
+
+\item{tries}{Integer. Number of iterations}
+
+\item{...}{Additional arguments passed to \code{h2o_automl}}
 }
 \description{
 This functions lets the user iterate and search for best seed. Note that if
@@ -34,39 +39,5 @@ Other Machine Learning:
 \code{\link{lasso_vars}()},
 \code{\link{model_metrics}()},
 \code{\link{msplit}()}
-
-Other Tools: 
-\code{\link{autoline}()},
-\code{\link{bindfiles}()},
-\code{\link{bring_api}()},
-\code{\link{db_download}()},
-\code{\link{db_upload}()},
-\code{\link{export_plot}()},
-\code{\link{export_results}()},
-\code{\link{get_credentials}()},
-\code{\link{h2o_predict_API}()},
-\code{\link{h2o_predict_MOJO}()},
-\code{\link{h2o_predict_binary}()},
-\code{\link{h2o_predict_model}()},
-\code{\link{h2o_selectmodel}()},
-\code{\link{h2o_update}()},
-\code{\link{haveInternet}()},
-\code{\link{image_metadata}()},
-\code{\link{importxlsx}()},
-\code{\link{ip_country}()},
-\code{\link{json2vector}()},
-\code{\link{listfiles}()},
-\code{\link{mailSend}()},
-\code{\link{msplit}()},
-\code{\link{myip}()},
-\code{\link{pass}()},
-\code{\link{quiet}()},
-\code{\link{read.file}()},
-\code{\link{statusbar}()},
-\code{\link{tic}()},
-\code{\link{try_require}()},
-\code{\link{updateLares}()},
-\code{\link{zerovar}()}
 }
 \concept{Machine Learning}
-\concept{Tools}

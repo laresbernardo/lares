@@ -141,13 +141,18 @@ dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 
 # Classification: Binomial - 2 Classes
 r <- h2o_automl(dft, y = Survived, max_models = 1, impute = FALSE, target = "TRUE")
+print(r)
+
+# Let's see all the stuff we have inside:
 lapply(r, names)
 
 # Classification: Multi-Categorical - 3 Classes
 r <- h2o_automl(dft, Pclass, ignore = c("Fare", "Cabin"), max_time = 30, plots = FALSE)
+print(r)
 
 # Regression: Continuous Values
 r <- h2o_automl(dft, y = "Fare", ignore = c("Pclass"), exclude_algos = NULL)
+print(r)
 
 # WITH PRE-DEFINED TRAIN/TEST DATAFRAMES
 splits <- msplit(dft, size = 0.8)
@@ -155,6 +160,7 @@ splits$train$split <- "train"
 splits$test$split <- "test"
 df <- rbind(splits$train, splits$test)
 r <- h2o_automl(df, "Survived", max_models = 1, train_test = "split")
+print(r)
 }
 }
 \seealso{

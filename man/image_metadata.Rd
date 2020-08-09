@@ -31,7 +31,6 @@ Other Tools:
 \code{\link{haveInternet}()},
 \code{\link{importxlsx}()},
 \code{\link{ip_country}()},
-\code{\link{iter_seeds}()},
 \code{\link{json2vector}()},
 \code{\link{listfiles}()},
 \code{\link{mailSend}()},

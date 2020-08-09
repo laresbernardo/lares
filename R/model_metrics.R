@@ -23,6 +23,7 @@
 #' set to 'auto', the target with largest mean(score) will be 
 #' selected. Change the value to overwrite. Only used when binary
 #' categorical model.
+#' @param type Character. One of: "train", "test".
 #' @param model_name Character. Model's name
 #' @param plots Boolean. Include plots?
 #' @param subtitle Character. Subtitle for plots
@@ -54,8 +55,10 @@ model_metrics <- function(tag, score, multis = NA,
                           thresh = 10, 
                           thresh_cm = 0.5, 
                           target = "auto",
+                          type = "test",
                           model_name = NA,
-                          plots = TRUE, subtitle = NA){
+                          plots = TRUE, 
+                          subtitle = NA){
   
   if (length(tag) != length(score))
     stop("tag and score have different lengths!")
@@ -155,7 +158,7 @@ model_metrics <- function(tag, score, multis = NA,
       metrics[["metrics_tags"]] <- mutate_if(nums, is.numeric, list(~ signif(., 5)))
     }
     
-    if (plots) {
+    if (plots & type == "test") {
       plots <- list()
       # CUMULATIVE GAINS PLOT
       plots[["gains"]] <- mplot_gain(
@@ -186,6 +189,10 @@ model_metrics <- function(tag, score, multis = NA,
     
     metrics[["metrics"]] <- errors(tag, score)
   }
+  
+  if (type == "train")
+    metrics$dictionary <- NULL
+  
   return(metrics)
 }
 
