@@ -1087,7 +1087,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
       theme(legend.position = c(0.88, 0.2))
     
     if (highlight == "auto") 
-      highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])[1]
+      highlight <- gains %>% arrange(desc(.data$lift)) %>% slice(1) %>% .$percentile
     if (highlight %in% gains$percentile & highlight != "none") {
       highlight <- as.integer(highlight)
       note <- paste0("If we select the top ", 
@@ -1224,7 +1224,8 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
       theme(legend.position = c(0.88, 0.2)) +
       guides(colour = FALSE)
     
-    if (highlight == "auto") highlight <- as.integer(gains$percentile[gains$lift == max(gains$lift)])
+    if (highlight == "auto") 
+      highlight <- gains %>% arrange(desc(.data$lift)) %>% slice(1) %>% .$percentile
     if (highlight %in% gains$percentile & highlight != "none") {
       highlight <- as.integer(highlight)
       note <- paste0("If we select the top ", 

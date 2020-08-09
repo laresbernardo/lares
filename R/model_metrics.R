@@ -93,22 +93,21 @@ model_metrics <- function(tag, score, multis = NA,
       new <- score
     }
     
-    conf_mat <- table(Real = factor(tag, levels = unique(tag)), 
-                      Pred = factor(new, levels = unique(new)))
-    total <- sum(conf_mat)
-    trues <- sum(diag(conf_mat))
+    conf <- squareTable(tag, new)
+    total <- sum(conf)
+    trues <- sum(diag(conf))
     falses <- total - trues
     
     # For Binaries
     if (length(cats) == 2) {
-      metrics[["confusion_matrix"]] <- conf_mat
+      metrics[["confusion_matrix"]] <- conf
       ROC <- pROC::roc(tag, as.numeric(score), ci = TRUE, quiet = TRUE)
       nums <- data.frame(
         AUC = ROC$auc,
         ACC = trues / total,
-        PRC = conf_mat[2,2] / (conf_mat[2,2] + conf_mat[1,2]),
-        TPR = conf_mat[2,2] / (conf_mat[2,2] + conf_mat[2,1]),
-        TNR = conf_mat[1,1] / (conf_mat[1,1] + conf_mat[1,2]))
+        PRC = conf[2,2] / (conf[2,2] + conf[1,2]),
+        TPR = conf[2,2] / (conf[2,2] + conf[2,1]),
+        TNR = conf[1,1] / (conf[1,1] + conf[1,2]))
       metrics[["gain_lift"]] <- gain_lift(tag, score, target = target, quiet = FALSE)
       metrics[["metrics"]] <- signif(nums, 5)
     } else {
@@ -132,11 +131,11 @@ model_metrics <- function(tag, score, multis = NA,
         ACC = trues / total)
       metrics[["metrics"]] <- signif(m, 5)
       nums <- c()
+      
       for (i in 1:length(cats)) {
         tagi <- ifelse(tag == cats[i], 1, 0)
         predi <- as.numeric(ifelse(score == cats[i], 1, 0))
-        conf_mati <- table(Real = factor(tagi, levels = c(1, 0)), 
-                           Pred = factor(predi, levels = c(1, 0)))
+        conf_mati <- squareTable(tagi, predi)
         if (nrow(data.frame(conf_mati)) == 4) {
           total <- sum(conf_mati)
           trues <- sum(diag(conf_mati))
@@ -553,4 +552,13 @@ loglossBinary <- function(tag, score, eps = 0.001) {
   
   return(output)
   
+}
+
+squareTable <- function(x, y) {
+  x <- factor(x)
+  y <- factor(y)
+  commonLevels <- sort(unique(c(levels(x), levels(y))))
+  Real <- factor(x, levels = commonLevels)
+  Pred <- factor(y, levels = commonLevels)
+  table(Real, Pred)
 }
