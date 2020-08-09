@@ -127,6 +127,7 @@ when using the <code><a href='h2o_automl.html'>h2o_automl()</a></code> function.
   which = <span class='fl'>1</span>,
   <span class='kw'>model_type</span>,
   target = <span class='st'>"auto"</span>,
+  split = <span class='fl'>0.7</span>,
   ignored = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
   plots = <span class='fl'>TRUE</span>,
   project = <span class='kw'>NULL</span>,
@@ -147,7 +148,7 @@ when using the <code><a href='h2o_automl.html'>h2o_automl()</a></code> function.
     </tr>
     <tr>
       <th>y</th>
-      <td><p>Character. Name of the independent variable</p></td>
+      <td><p>Variable or Character. Name of the independent variable.</p></td>
     </tr>
     <tr>
       <th>which</th>
@@ -165,8 +166,15 @@ selected. Change the value to overwrite. Only used when binary
 categorical model.</p></td>
     </tr>
     <tr>
+      <th>split</th>
+      <td><p>Numeric. Value between 0 and 1 to split as train/test 
+datasets. Value is for training set. Set value to 1 to train will all 
+available data and test with same data (cross-validation will still be 
+used when training)</p></td>
+    </tr>
+    <tr>
       <th>ignored</th>
-      <td><p>Character vector. Which columns were ignored?</p></td>
+      <td><p>Character vector. Columns ignored.</p></td>
     </tr>
     <tr>
       <th>plots</th>

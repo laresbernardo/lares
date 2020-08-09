@@ -129,6 +129,7 @@ Specificity.</p>
   thresh = <span class='fl'>10</span>,
   thresh_cm = <span class='fl'>0.5</span>,
   target = <span class='st'>"auto"</span>,
+  type = <span class='st'>"test"</span>,
   model_name = <span class='fl'>NA</span>,
   plots = <span class='fl'>TRUE</span>,
   subtitle = <span class='fl'>NA</span>
@@ -172,6 +173,10 @@ confusion matrix. Range of values: (0-1)</p></td>
 set to 'auto', the target with largest mean(score) will be 
 selected. Change the value to overwrite. Only used when binary
 categorical model.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>Character. One of: "train", "test".</p></td>
     </tr>
     <tr>
       <th>model_name</th>
