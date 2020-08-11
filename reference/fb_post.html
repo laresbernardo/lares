@@ -119,7 +119,7 @@ post(s) id." />
 post(s) id.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fb_post</span>(<span class='kw'>token</span>, <span class='kw'>post_id</span>)</pre>
+    <pre class="usage"><span class='fu'>fb_post</span>(<span class='kw'>token</span>, <span class='kw'>post_id</span>, limit = <span class='fl'>5000</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -132,6 +132,10 @@ privileges. Visit the Facebook API Graph Explorer to acquire one</p></td>
     <tr>
       <th>post_id</th>
       <td><p>Character vector. Post id(s)</p></td>
+    </tr>
+    <tr>
+      <th>limit</th>
+      <td><p>Integer. Query limit</p></td>
     </tr>
     </table>
 
