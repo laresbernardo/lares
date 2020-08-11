@@ -8,6 +8,7 @@ fb_accounts(
   token,
   business_id = "904189322962915",
   type = c("owned", "client"),
+  flatten = TRUE,
   api_version = "v3.3"
 )
 }
@@ -18,6 +19,8 @@ privileges. Visit the Facebook API Graph Explorer to acquire one}
 \item{business_id}{Character. Business ID}
 
 \item{type}{Character vector. Values: owned, client}
+
+\item{flatten}{Boolean. Flatten lists within lists?}
 
 \item{api_version}{Character. Facebook API version}
 }

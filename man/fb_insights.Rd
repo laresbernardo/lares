@@ -12,7 +12,8 @@ fb_insights(
   time_increment = "1",
   report_level = "campaign",
   breakdowns = NA,
-  api_version = "v3.3"
+  flatten = TRUE,
+  api_version = "v8.0"
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ Default: each day separatly (i.e. "1").}
 
 \item{breakdowns}{Character Vector. One or more of breakdowns for 
 segmentation results. Set to NA for no breakdowns}
+
+\item{flatten}{Boolean. Flatten lists within lists?}
 
 \item{api_version}{Character. Facebook API version}
 }

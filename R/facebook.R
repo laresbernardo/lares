@@ -7,8 +7,9 @@
 #' @family API
 #' @family Facebook
 #' @param response GET's output object, class response
+#' @param flatten Boolean. Flatten lists within lists?
 #' @export
-fb_process <- function(response) {
+fb_process <- function(response, flatten = TRUE) {
   
   if (!"response" %in% class(response))
     stop("You must provide a response object (GET's output)")
@@ -25,6 +26,13 @@ fb_process <- function(response) {
     message("No data found!")
     invisible(return(list(NULL)))
   }
+  
+  if (flatten) {
+    tofix <- list_to_fix(import$data)
+    transformed <- list_fixed(import$data, tofix)
+    import$data <- list_suppress(import$data, tofix)
+  } 
+  
   ret <- data.frame(bind_rows(import$data))
   
   # Looping through subsequent returned pages
@@ -37,6 +45,9 @@ fb_process <- function(response) {
     }
   }
   
+  if (flatten) for (col in tofix)
+    ret <- cbind(ret, transformed[[col]])
+  
   ret <- suppressMessages(type.convert(ret, numerals = "no.loss", as.is = TRUE))
   ret <- ret %>%
     mutate_at(vars(contains("date")), list(as.Date)) %>%
@@ -48,6 +59,142 @@ fb_process <- function(response) {
   return(ret)
 }
 
+list_to_fix <- function(data) {
+  temp <- bind_rows(lapply(data, function(x) lapply(x, class)))
+  are_lists <- lapply(temp, function(x) any(grepl("list", x)))
+  to_fix <- colnames(temp)[unlist(are_lists)] 
+  return(to_fix)
+}
+
+list_fixer <- function(data, which_list) {
+  
+  target <- lapply(data, `[`, which_list)
+  x <- lapply(target, unlist)
+  
+  getvals <- function(x, col) {
+    ret <- sapply(x, function(i) i[grepl(col, names(i))])
+    ret <- lapply(ret, as.vector)
+    ret <- lapply(ret, function(i) if (length(i) == 0) "" else i)
+    ret <- lapply(ret, function(i) paste(i, collapse = ","))
+    return(unlist(ret))
+  }
+  
+  joinvals <- function(x, which_list) {
+    types <- unique(unlist(lapply(x, names)))
+    # Column names
+    types <- gsub(paste0(which_list, "\\."), "", types)  
+    squared <- lapply(types, function(i) getvals(x, i))
+    all <- data.frame(lapply(squared, cbind))
+    colnames(all) <- types
+    rownames(all) <- NULL
+    return(all)
+  }
+  
+  ret <- joinvals(x, which_list)
+  colnames(ret) <- gsub("data\\.", "", colnames(ret))  
+  colnames(ret) <- paste(which_list, colnames(ret), sep = "_")
+  return(as_tibble(ret))
+}
+
+list_fixed <- function(data, to_fix) {
+  message(paste("Features flattened:", v2t(to_fix)))
+  ret <- lapply(to_fix, function(x) list_fixer(data, x))
+  names(ret) <- to_fix
+  return(ret)
+}
+
+list_suppress <- function(data, which_list) {
+  lapply(data, function(x) { x[which_list] <- NULL; x })
+}
+
+
+####################################################################
+#' Facebook Insights API
+#' 
+#' This returns all available FB insights per day including any given
+#' breakdown to the specified report level, and place into a data frame.
+#' For more information on Ad Insights' API, go to the 
+#' \href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}
+#' 
+#' This function was based on FBinsightsR.
+#' 
+#' @family API
+#' @family Facebook
+#' @inheritParams fb_process
+#' @param token Character. This must be a valid access token with sufficient 
+#' privileges. Visit the Facebook API Graph Explorer to acquire one
+#' @param which Character vector. This is the accounts, campaigns, adsets, 
+#' or ads IDs to be queried. Remember: if report_level = "account", you must 
+#' start the ID with `act_`.
+#' @param start Character. The first full day to report, in the 
+#' format "YYYY-MM-DD"
+#' @param end Character. The last full day to report, in the 
+#' format "YYYY-MM-DD"
+#' @param time_increment Character. Group by months ("monthly"), 
+#' everything together ("all_days") or an integer per days [1-90].
+#' Default: each day separatly (i.e. "1").
+#' @param report_level Character. One of "ad", "adset", "campaign", or "account"
+#' @param breakdowns Character Vector. One or more of breakdowns for 
+#' segmentation results. Set to NA for no breakdowns
+#' @param api_version Character. Facebook API version
+#' @export
+fb_insights <- function(token,
+                        which,
+                        start = Sys.Date() - 7, 
+                        end = Sys.Date(), 
+                        time_increment = "1",
+                        report_level = "campaign",
+                        breakdowns = NA,
+                        flatten = TRUE,
+                        api_version = "v8.0"){
+  
+  set_config(config(http_version = 0))
+  check_opts(report_level, c("ad","adset","campaign","account"))
+  
+  # Starting URL
+  url <- "https://graph.facebook.com"
+  output <- c()
+  
+  for (i in 1:length(which)) {
+    
+    aux <- as.character(which[i])
+    URL <- glued("{url}/{api_version}/{aux}/insights")
+    ret <- c()
+    
+    # Call insights
+    import <- GET(
+      URL,
+      query = list(
+        access_token = token,
+        time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
+        level = report_level,
+        fields = paste(
+          "campaign_name, campaign_id, objective, adset_id, adset_name, ad_id, ad_name,",
+          "impressions, cpm, spend, reach, clicks, unique_clicks, ctr, cpc, unique_ctr,",
+          "cost_per_unique_click"), 
+        breakdowns = if (!is.na(breakdowns[1])) 
+          vector2text(breakdowns, sep = ", ", quotes = FALSE) else NULL,
+        time_increment = time_increment,
+        limit = "1000000"
+      ),
+      encode = "json")
+    
+    ret <- fb_process(import, flatten = flatten)
+    if ("data.frame" %in% class(ret)) {
+      ret <- ret %>% 
+        mutate(id = aux) %>%
+        arrange(desc(.data$date_start), desc(.data$spend))
+      output <- rbind(output, ret)
+    }
+    if (length(which) == i & length(output) == 0) {
+      message("No data found!")
+      return(invisible(NULL))
+    }
+    return(as_tibble(output))
+  }
+}
+
+
 ####################################################################
 #' Get Facebook's Page Posts (API Graph)
 #' 
@@ -56,8 +203,7 @@ fb_process <- function(response) {
 #' 
 #' @family API
 #' @family Facebook
-#' @param token Character. Access token. Generate it for any of your
-#' users or apps in \url{https://developers.facebook.com/tools/explorer}
+#' @inheritParams fb_insights
 #' @param total Integer. How many most recent posts do you need?
 #' @param limit Integer. For each post, hoy many results do you need?
 #' @param comments,shares,reactions Boolean. Include in your query?
@@ -238,8 +384,7 @@ fb_posts <- function(token,
 #' 
 #' @family API
 #' @family Facebook
-#' @param token Character. Access token. Generate it for any of your
-#' users or apps in \url{https://developers.facebook.com/tools/explorer}
+#' @inheritParams fb_insights
 #' @param post_id Character vector. Post id(s)
 #' @export
 fb_post <- function(token, post_id) {
@@ -298,15 +443,15 @@ fb_post <- function(token, post_id) {
 #' 
 #' @family API
 #' @family Facebook
-#' @param token Character. This must be a valid access token with sufficient 
-#' privileges. Visit the Facebook API Graph Explorer to acquire one
+#' @inheritParams fb_insights
+#' @inheritParams fb_process
 #' @param business_id Character. Business ID
 #' @param type Character vector. Values: owned, client
-#' @param api_version Character. Facebook API version
 #' @export
 fb_accounts <- function(token,
                         business_id = "904189322962915",
                         type = c("owned", "client"),
+                        flatten = TRUE,
                         api_version = "v3.3"){
   
   set_config(config(http_version = 0))
@@ -334,7 +479,7 @@ fb_accounts <- function(token,
       ),
       encode = "json")
     
-    ret <- fb_process(import)
+    ret <- fb_process(import, flatten = flatten)
     if ("data.frame" %in% class(ret)) {
       ret$type <- type[i]
       output <- bind_rows(output, ret)
@@ -376,41 +521,33 @@ fb_accounts <- function(token,
 #' 
 #' @family API
 #' @family Facebook
-#' @param token Character. This must be a valid access token with sufficient 
-#' privileges. Visit the Facebook API Graph Explorer to acquire one
-#' @param which Character. This is the ad account, campaign, adset, 
-#' or ad ID to be queried
-#' @param start Character. The first full day to report, in the 
-#' format "YYYY-MM-DD"
-#' @param end Character. The last full day to report, in the 
-#' format "YYYY-MM-DD"
-#' @param api_version Character. Facebook API version
+#' @inheritParams fb_insights
+#' @inheritParams fb_process
 #' @export
 fb_ads <- function(token,
                    which,
                    start = Sys.Date() - 31, 
                    end = Sys.Date(), 
-                   api_version = "v3.3"){
+                   flatten = TRUE,
+                   api_version = "v8.0"){
   
   set_config(config(http_version = 0))
   
-  # Starting URL
-  url <- "https://graph.facebook.com/"
-  URL <- paste0(url, api_version, "/", which, "/ads")
-  
   # Call insights
   import <- GET(
-    URL,
+    glued("https://graph.facebook.com/{api_version}/{which}/ads"),
     query = list(
       access_token = token,
       time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
       fields = paste("id,name,created_time,status,adset_id,campaign_id,",
+                     "targeting{age_max,age_min,genders,targeting_optimization,",
+                     "flexible_spec{interests{name}}},", 
                      "adcreatives{id,body,image_url,thumbnail_url,object_type}"),
       limit = "100000"
     ),
     encode = "json")
   
-  ret <- fb_process(import)
+  ret <- fb_process(import, flatten = flatten)
   if ("data.frame" %in% class(ret)) {
     ret <- ret %>%
       #rename(adcreatives_id = .data$list_id) %>%
@@ -422,104 +559,16 @@ fb_ads <- function(token,
 
 
 ####################################################################
-#' Facebook Insights API
-#' 
-#' This returns all available FB insights per day including any given
-#' breakdown to the specified report level, and place into a data frame.
-#' For more information on Ad Insights' API, go to the 
-#' \href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}
-#' 
-#' This function was based on FBinsightsR.
-#' 
-#' @family API
-#' @family Facebook
-#' @param token Character. This must be a valid access token with sufficient 
-#' privileges. Visit the Facebook API Graph Explorer to acquire one
-#' @param which Character vector. This is the accounts, campaigns, adsets, 
-#' or ads IDs to be queried. Remember: if report_level = "account", you must 
-#' start the ID with `act_`.
-#' @param start Character. The first full day to report, in the 
-#' format "YYYY-MM-DD"
-#' @param end Character. The last full day to report, in the 
-#' format "YYYY-MM-DD"
-#' @param time_increment Character. Group by months ("monthly"), 
-#' everything together ("all_days") or an integer per days [1-90].
-#' Default: each day separatly (i.e. "1").
-#' @param report_level Character. One of "ad", "adset", "campaign", or "account"
-#' @param breakdowns Character Vector. One or more of breakdowns for 
-#' segmentation results. Set to NA for no breakdowns
-#' @param api_version Character. Facebook API version
-#' @export
-fb_insights <- function(token,
-                        which,
-                        start = Sys.Date() - 7, 
-                        end = Sys.Date(), 
-                        time_increment = "1",
-                        report_level = "campaign",
-                        breakdowns = NA,
-                        api_version = "v3.3"){
-  
-  set_config(config(http_version = 0))
-  check_opts(report_level, c("ad","adset","campaign","account"))
-  
-  # Starting URL
-  url <- "https://graph.facebook.com/"
-  output <- c()
-  
-  for (i in 1:length(which)) {
-    
-    URL <- paste0(url, api_version, "/", aux, "/insights")
-    ret <- c()
-    
-    # Call insights
-    import <- GET(
-      URL,
-      query = list(
-        access_token = token,
-        time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
-        level = report_level,
-        fields = paste(
-          "campaign_name, campaign_id, objective, adset_id, adset_name, ad_id, ad_name,",
-          "impressions, cpm, spend, reach, clicks, unique_clicks, ctr, cpc, unique_ctr,",
-          "cost_per_unique_click"), 
-        breakdowns = if (!is.na(breakdowns[1])) 
-          vector2text(breakdowns, sep = ", ", quotes = FALSE) else NULL,
-        time_increment = time_increment,
-        limit = "1000000"
-      ),
-      encode = "json")
-    
-    ret <- fb_process(import)
-    if ("data.frame" %in% class(ret)) {
-      ret <- ret %>% 
-        mutate(id = aux) %>%
-        arrange(desc(.data$date_start), desc(.data$spend))
-      output <- rbind(output, ret)
-    }
-    if (length(which) == i & length(output) == 0) {
-      message("No data found!")
-      return(invisible(NULL))
-    }
-    return(as_tibble(output))
-  }
-}
-
-
-####################################################################
 #' Facebook Creatives API
 #' 
 #' For more information: \href{https://developers.facebook.com/docs/marketing-api/reference/ad-creative/}{Ad Creative} 
 #' 
 #' @family API
 #' @family Facebook
-#' @param token Character. This must be a valid access token with sufficient 
-#' privileges. Visit the Facebook API Graph Explorer to acquire one
-#' @param which Character vector. This is the ID of accounts, campaigns, adsets, 
-#' or ads IDs to be queried
-#' @param api_version Character. Facebook API version
-#' @param show Boolean. Show cURL used in GET
+#' @inheritParams fb_process
+#' @inheritParams fb_insights
 #' @export
-fb_creatives <- function(token, which, api_version = "v6.0", show = FALSE) {
+fb_creatives <- function(token, which, flatten = TRUE, api_version = "v8.0") {
   
   set_config(config(http_version = 0))
   
@@ -532,9 +581,8 @@ fb_creatives <- function(token, which, api_version = "v6.0", show = FALSE) {
   linkurl <- sprintf(link, api_version, which, 
                      vector2text(fields, sep = ",", quotes = FALSE), 
                      token)
-  if (show) message("cURL: ", linkurl)
   import <- GET(linkurl)
-  ret <- fb_process(import)
+  ret <- fb_process(import, flatten = flatten)
   if ("data.frame" %in% class(ret))
     ret <- select(ret, one_of("id", .data$fields))
   attr(ret, "cURL") <- linkurl

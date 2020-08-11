@@ -4,18 +4,19 @@
 \alias{fb_creatives}
 \title{Facebook Creatives API}
 \usage{
-fb_creatives(token, which, api_version = "v6.0", show = FALSE)
+fb_creatives(token, which, flatten = TRUE, api_version = "v8.0")
 }
 \arguments{
 \item{token}{Character. This must be a valid access token with sufficient 
 privileges. Visit the Facebook API Graph Explorer to acquire one}
 
-\item{which}{Character vector. This is the ID of accounts, campaigns, adsets, 
-or ads IDs to be queried}
+\item{which}{Character vector. This is the accounts, campaigns, adsets, 
+or ads IDs to be queried. Remember: if report_level = "account", you must 
+start the ID with `act_`.}
+
+\item{flatten}{Boolean. Flatten lists within lists?}
 
 \item{api_version}{Character. Facebook API version}
-
-\item{show}{Boolean. Show cURL used in GET}
 }
 \description{
 For more information: \href{https://developers.facebook.com/docs/marketing-api/reference/ad-creative/}{Ad Creative}

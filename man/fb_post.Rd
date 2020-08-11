@@ -7,8 +7,8 @@
 fb_post(token, post_id)
 }
 \arguments{
-\item{token}{Character. Access token. Generate it for any of your
-users or apps in \url{https://developers.facebook.com/tools/explorer}}
+\item{token}{Character. This must be a valid access token with sufficient 
+privileges. Visit the Facebook API Graph Explorer to acquire one}
 
 \item{post_id}{Character vector. Post id(s)}
 }
