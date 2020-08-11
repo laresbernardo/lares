@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Facebook Creatives API — fb_creatives • lares</title>
+<title>Process Facebook's API Objects — fb_process • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Facebook Creatives API — fb_creatives" />
-<meta property="og:description" content="For more information: Ad Creative" />
+<meta property="og:title" content="Process Facebook's API Objects — fb_process" />
+<meta property="og:description" content="Process and paginate raw results from Facebook's API, result of 
+querying the API with httr::GET." />
 
 
 
@@ -108,37 +109,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Facebook Creatives API</h1>
+    <h1>Process Facebook's API Objects</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/facebook.R'><code>R/facebook.R</code></a></small>
-    <div class="hidden name"><code>fb_creatives.Rd</code></div>
+    <div class="hidden name"><code>fb_process.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>For more information: <a href='https://developers.facebook.com/docs/marketing-api/reference/ad-creative/'>Ad Creative</a></p>
+    <p>Process and paginate raw results from Facebook's API, result of 
+querying the API with <code><a href='https://httr.r-lib.org/reference/GET.html'>httr::GET</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fb_creatives</span>(<span class='kw'>token</span>, <span class='kw'>which</span>, api_version = <span class='st'>"v6.0"</span>, show = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>fb_process</span>(<span class='kw'>response</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>token</th>
-      <td><p>Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one</p></td>
-    </tr>
-    <tr>
-      <th>which</th>
-      <td><p>Character vector. This is the ID of accounts, campaigns, adsets, 
-or ads IDs to be queried</p></td>
-    </tr>
-    <tr>
-      <th>api_version</th>
-      <td><p>Character. Facebook API version</p></td>
-    </tr>
-    <tr>
-      <th>show</th>
-      <td><p>Boolean. Show cURL used in GET</p></td>
+      <th>response</th>
+      <td><p>GET's output object, class response</p></td>
     </tr>
     </table>
 
@@ -148,10 +136,10 @@ or ads IDs to be queried</p></td>
 <code><a href='bring_api.html'>bring_api</a>()</code>,
 <code><a href='fb_accounts.html'>fb_accounts</a>()</code>,
 <code><a href='fb_ads.html'>fb_ads</a>()</code>,
+<code><a href='fb_creatives.html'>fb_creatives</a>()</code>,
 <code><a href='fb_insights.html'>fb_insights</a>()</code>,
 <code><a href='fb_posts.html'>fb_posts</a>()</code>,
 <code><a href='fb_post.html'>fb_post</a>()</code>,
-<code><a href='fb_process.html'>fb_process</a>()</code>,
 <code><a href='li_auth.html'>li_auth</a>()</code>,
 <code><a href='li_profile.html'>li_profile</a>()</code>,
 <code><a href='queryGA.html'>queryGA</a>()</code>,
@@ -159,10 +147,10 @@ or ads IDs to be queried</p></td>
 <p>Other Facebook: 
 <code><a href='fb_accounts.html'>fb_accounts</a>()</code>,
 <code><a href='fb_ads.html'>fb_ads</a>()</code>,
+<code><a href='fb_creatives.html'>fb_creatives</a>()</code>,
 <code><a href='fb_insights.html'>fb_insights</a>()</code>,
 <code><a href='fb_posts.html'>fb_posts</a>()</code>,
-<code><a href='fb_post.html'>fb_post</a>()</code>,
-<code><a href='fb_process.html'>fb_process</a>()</code></p></div>
+<code><a href='fb_post.html'>fb_post</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
