@@ -125,10 +125,6 @@ its parameters, datasets, performance metrics, variables
 importances, and plots. If the input is categorical, classification
 models will be trained and if is a continuous variable, regression
 models will be trained.
-
-Plotting function for \code{h2o_automl}.
-
-Print function for \code{h2o_automl}.
 }
 \section{Plot Results into Dashboard}{
 

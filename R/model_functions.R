@@ -535,13 +535,9 @@ get_scores <- function(predictions,
   return(ret)
 }
 
-
-####################################################################
-#' Plotting function for h2o_automl
-#'
-#' Plotting function for \code{h2o_automl}.
-#'
 #' @rdname h2o_automl
+#' @param x h2o_automl object.
+#' @param ... Additional parameters
 #' @export
 plot.h2o_automl <- function(x, ...) {
   if (!inherits(x, 'h2o_automl'))
@@ -553,14 +549,7 @@ plot.h2o_automl <- function(x, ...) {
   } 
 }
 
-####################################################################
-#' Print function for h2o_automl
-#'
-#' Print function for \code{h2o_automl}.
-#'
 #' @rdname h2o_automl
-#' @param x h2o_automl object.
-#' @param ... Additional parameters
 #' @export
 print.h2o_automl <- function(x, ...) {
   

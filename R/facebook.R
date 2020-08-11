@@ -97,7 +97,8 @@ list_fixer <- function(data, which_list) {
 }
 
 list_fixed <- function(data, to_fix) {
-  message(paste("Features flattened:", v2t(to_fix)))
+  if (length(to_fix) > 0) 
+    message(paste("Features flattened:", v2t(to_fix)))
   ret <- lapply(to_fix, function(x) list_fixer(data, x))
   names(ret) <- to_fix
   return(ret)
