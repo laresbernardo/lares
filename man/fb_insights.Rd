@@ -13,6 +13,7 @@ fb_insights(
   report_level = "campaign",
   breakdowns = NA,
   flatten = TRUE,
+  limit = 1e+05,
   api_version = "v8.0"
 )
 }
@@ -40,6 +41,8 @@ Default: each day separatly (i.e. "1").}
 segmentation results. Set to NA for no breakdowns}
 
 \item{flatten}{Boolean. Flatten lists within lists?}
+
+\item{limit}{Integer. Query limit}
 
 \item{api_version}{Character. Facebook API version}
 }

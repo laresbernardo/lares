@@ -4,13 +4,15 @@
 \alias{fb_post}
 \title{Get Facebook's Post Comments (API Graph)}
 \usage{
-fb_post(token, post_id)
+fb_post(token, post_id, limit = 5000)
 }
 \arguments{
 \item{token}{Character. This must be a valid access token with sufficient 
 privileges. Visit the Facebook API Graph Explorer to acquire one}
 
 \item{post_id}{Character vector. Post id(s)}
+
+\item{limit}{Integer. Query limit}
 }
 \description{
 Connect to an API Graph's token and get posts comments given the

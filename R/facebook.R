@@ -136,6 +136,7 @@ list_suppress <- function(data, which_list) {
 #' @param report_level Character. One of "ad", "adset", "campaign", or "account"
 #' @param breakdowns Character Vector. One or more of breakdowns for 
 #' segmentation results. Set to NA for no breakdowns
+#' @param limit Integer. Query limit
 #' @param api_version Character. Facebook API version
 #' @export
 fb_insights <- function(token,
@@ -146,19 +147,17 @@ fb_insights <- function(token,
                         report_level = "campaign",
                         breakdowns = NA,
                         flatten = TRUE,
+                        limit = 100000,
                         api_version = "v8.0"){
   
   set_config(config(http_version = 0))
   check_opts(report_level, c("ad","adset","campaign","account"))
-  
-  # Starting URL
-  url <- "https://graph.facebook.com"
   output <- c()
   
   for (i in 1:length(which)) {
     
     aux <- as.character(which[i])
-    URL <- glued("{url}/{api_version}/{aux}/insights")
+    URL <- glued("https://graph.facebook.com/{api_version}/{aux}/insights")
     ret <- c()
     
     # Call insights
@@ -175,7 +174,7 @@ fb_insights <- function(token,
         breakdowns = if (!is.na(breakdowns[1])) 
           vector2text(breakdowns, sep = ", ", quotes = FALSE) else NULL,
         time_increment = time_increment,
-        limit = "1000000"
+        limit = as.character(limit)
       ),
       encode = "json")
     
@@ -205,12 +204,12 @@ fb_insights <- function(token,
 #' @family Facebook
 #' @inheritParams fb_insights
 #' @param total Integer. How many most recent posts do you need?
-#' @param limit Integer. For each post, hoy many results do you need?
+#' @param posts_limit Integer. For each post, hoy many results do you need?
 #' @param comments,shares,reactions Boolean. Include in your query?
 #' @export
 fb_posts <- function(token, 
                      total = 150, 
-                     limit = 100,
+                     posts_limit = 100,
                      comments = FALSE, 
                      shares = FALSE, 
                      reactions = FALSE) {
@@ -326,8 +325,8 @@ fb_posts <- function(token,
       url <- paste0("https://graph.facebook.com/v3.3/me?fields=",
                     "id,name,posts.limit(",limit_posts,")",
                     "{created_time,message,status_type,",
-                    ifelse(comments, paste0("comments.limit(",limit,"),"), ""),
-                    ifelse(reactions, paste0("reactions.limit(",limit,"),"), ""),
+                    ifelse(comments, paste0("comments.limit(",posts_limit,"),"), ""),
+                    ifelse(reactions, paste0("reactions.limit(",posts_limit,"),"), ""),
                     ifelse(shares, "shares,", ""),
                     "permalink_url}",
                     "&access_token=",token)
@@ -387,7 +386,7 @@ fb_posts <- function(token,
 #' @inheritParams fb_insights
 #' @param post_id Character vector. Post id(s)
 #' @export
-fb_post <- function(token, post_id) {
+fb_post <- function(token, post_id, limit = 5000) {
   
   set_config(config(http_version = 0))
   
@@ -396,7 +395,7 @@ fb_post <- function(token, post_id) {
     if (i == 1) ret <- c()
     if (i == 1) nodata <- c()
     url <- paste0("https://graph.facebook.com/v3.0/", post_id[i],
-                  "/comments?limit=50000","&access_token=", token)
+                  "/comments?limit=",limit,"&access_token=", token)
     get <- GET(url = url)
     char <- rawToChar(get$content)
     json <- fromJSON(char)
@@ -452,6 +451,7 @@ fb_accounts <- function(token,
                         business_id = "904189322962915",
                         type = c("owned", "client"),
                         flatten = TRUE,
+                        limit = 100000,
                         api_version = "v3.3"){
   
   set_config(config(http_version = 0))
@@ -475,7 +475,7 @@ fb_accounts <- function(token,
       query = list(
         access_token = token,
         fields = "name,account_status,amount_spent,business_country_code",
-        limit = "1000000"
+        limit = as.character(limit)
       ),
       encode = "json")
     
@@ -529,6 +529,7 @@ fb_ads <- function(token,
                    start = Sys.Date() - 31, 
                    end = Sys.Date(), 
                    flatten = TRUE,
+                   limit = 100000,
                    api_version = "v8.0"){
   
   set_config(config(http_version = 0))
@@ -543,7 +544,7 @@ fb_ads <- function(token,
                      "targeting{age_max,age_min,genders,targeting_optimization,",
                      "flexible_spec{interests{name}}},", 
                      "adcreatives{id,body,image_url,thumbnail_url,object_type}"),
-      limit = "100000"
+      limit = as.character(limit)
     ),
     encode = "json")
   

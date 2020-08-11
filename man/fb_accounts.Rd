@@ -9,6 +9,7 @@ fb_accounts(
   business_id = "904189322962915",
   type = c("owned", "client"),
   flatten = TRUE,
+  limit = 1e+05,
   api_version = "v3.3"
 )
 }
@@ -21,6 +22,8 @@ privileges. Visit the Facebook API Graph Explorer to acquire one}
 \item{type}{Character vector. Values: owned, client}
 
 \item{flatten}{Boolean. Flatten lists within lists?}
+
+\item{limit}{Integer. Query limit}
 
 \item{api_version}{Character. Facebook API version}
 }

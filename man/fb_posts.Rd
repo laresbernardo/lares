@@ -7,7 +7,7 @@
 fb_posts(
   token,
   total = 150,
-  limit = 100,
+  posts_limit = 100,
   comments = FALSE,
   shares = FALSE,
   reactions = FALSE
@@ -19,7 +19,7 @@ privileges. Visit the Facebook API Graph Explorer to acquire one}
 
 \item{total}{Integer. How many most recent posts do you need?}
 
-\item{limit}{Integer. For each post, hoy many results do you need?}
+\item{posts_limit}{Integer. For each post, hoy many results do you need?}
 
 \item{comments, shares, reactions}{Boolean. Include in your query?}
 }

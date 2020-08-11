@@ -10,6 +10,7 @@ fb_ads(
   start = Sys.Date() - 31,
   end = Sys.Date(),
   flatten = TRUE,
+  limit = 1e+05,
   api_version = "v8.0"
 )
 }
@@ -28,6 +29,8 @@ format "YYYY-MM-DD"}
 format "YYYY-MM-DD"}
 
 \item{flatten}{Boolean. Flatten lists within lists?}
+
+\item{limit}{Integer. Query limit}
 
 \item{api_version}{Character. Facebook API version}
 }
