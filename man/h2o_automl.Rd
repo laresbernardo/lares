@@ -2,6 +2,8 @@
 % Please edit documentation in R/model_functions.R
 \name{h2o_automl}
 \alias{h2o_automl}
+\alias{plot.h2o_automl}
+\alias{print.h2o_automl}
 \title{Automated H2O's AutoML}
 \usage{
 h2o_automl(
@@ -31,6 +33,10 @@ h2o_automl(
   subdir = NA,
   project = "ML Project"
 )
+
+\method{plot}{h2o_automl}(x, ...)
+
+\method{print}{h2o_automl}(x, ...)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
@@ -107,6 +113,10 @@ working directory?}
 the results? Working directory as default.}
 
 \item{project}{Character. Your project's name}
+
+\item{x}{h2o_automl object.}
+
+\item{...}{Additional parameters}
 }
 \description{
 This function lets the user create a robust and fast model, using 
@@ -115,6 +125,10 @@ its parameters, datasets, performance metrics, variables
 importances, and plots. If the input is categorical, classification
 models will be trained and if is a continuous variable, regression
 models will be trained.
+
+Plotting function for \code{h2o_automl}.
+
+Print function for \code{h2o_automl}.
 }
 \section{Plot Results into Dashboard}{
 
@@ -174,7 +188,6 @@ Other Machine Learning:
 \code{\link{h2o_predict_MOJO}()},
 \code{\link{h2o_predict_binary}()},
 \code{\link{h2o_predict_model}()},
-\code{\link{h2o_results}()},
 \code{\link{h2o_selectmodel}()},
 \code{\link{impute}()},
 \code{\link{iter_seeds}()},

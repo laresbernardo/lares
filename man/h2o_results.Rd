@@ -57,23 +57,3 @@ resource limited.}
 This is an auxiliary function to calculate predictions and results
 when using the \code{h2o_automl()} function.
 }
-\seealso{
-Other Machine Learning: 
-\code{\link{ROC}()},
-\code{\link{clusterKmeans}()},
-\code{\link{conf_mat}()},
-\code{\link{export_results}()},
-\code{\link{gain_lift}()},
-\code{\link{h2o_automl}()},
-\code{\link{h2o_predict_API}()},
-\code{\link{h2o_predict_MOJO}()},
-\code{\link{h2o_predict_binary}()},
-\code{\link{h2o_predict_model}()},
-\code{\link{h2o_selectmodel}()},
-\code{\link{impute}()},
-\code{\link{iter_seeds}()},
-\code{\link{lasso_vars}()},
-\code{\link{model_metrics}()},
-\code{\link{msplit}()}
-}
-\concept{Machine Learning}

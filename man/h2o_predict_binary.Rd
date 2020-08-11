@@ -31,7 +31,6 @@ Other Machine Learning:
 \code{\link{h2o_predict_API}()},
 \code{\link{h2o_predict_MOJO}()},
 \code{\link{h2o_predict_model}()},
-\code{\link{h2o_results}()},
 \code{\link{h2o_selectmodel}()},
 \code{\link{impute}()},
 \code{\link{iter_seeds}()},

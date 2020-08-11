@@ -341,7 +341,6 @@ h2o_automl <- function(df, y = "tag",
 #' This is an auxiliary function to calculate predictions and results
 #' when using the \code{h2o_automl()} function. 
 #'
-#' @family Machine Learning
 #' @inheritParams h2o_automl
 #' @param h2o_object H2O Leaderboard (H2OFrame/H2OAutoML) or Model (h2o)
 #' @param test,train Dataframe. Must have the same columns
@@ -542,8 +541,7 @@ get_scores <- function(predictions,
 #'
 #' Plotting function for \code{h2o_automl}.
 #'
-#' @param x h2o_automl object.
-#' @param ... Additional arguments
+#' @rdname h2o_automl
 #' @export
 plot.h2o_automl <- function(x, ...) {
   if (!inherits(x, 'h2o_automl'))
@@ -560,6 +558,7 @@ plot.h2o_automl <- function(x, ...) {
 #'
 #' Print function for \code{h2o_automl}.
 #'
+#' @rdname h2o_automl
 #' @param x h2o_automl object.
 #' @param ... Additional parameters
 #' @export
