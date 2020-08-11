@@ -21,6 +21,7 @@ Other API:
 \code{\link{fb_insights}()},
 \code{\link{fb_posts}()},
 \code{\link{fb_post}()},
+\code{\link{fb_process}()},
 \code{\link{li_auth}()},
 \code{\link{queryGA}()},
 \code{\link{slackSend}()}

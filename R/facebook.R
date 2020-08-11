@@ -1,17 +1,32 @@
-# Auxiliary function
-cleanImport <- function(result) {
-  import <- content(result) 
+####################################################################
+#' Process Facebook's API Objects
+#' 
+#' Process and paginate raw results from Facebook's API, result of 
+#' querying the API with \code{httr::GET}.
+#' 
+#' @family API
+#' @family Facebook
+#' @param response GET's output object, class response
+#' @export
+fb_process <- function(response) {
+  
+  if (!"response" %in% class(response))
+    stop("You must provide a response object (GET's output)")
+  
+  import <- content(response) 
   # Show and return error
   if ("error" %in% names(import)) {
     message(paste("API ERROR:", import$error$message))
     invisible(return(import$error))
   }
+  
   # Check for no-data (user might think there was an error on GET request - warn him!)
   if (length(import$data) == 0) {
     message("No data found!")
     invisible(return(list(NULL)))
   }
   ret <- data.frame(bind_rows(import$data))
+  
   # Looping through subsequent returned pages
   if (exists("next", import$paging)) {
     out <- fromJSON(import$paging$`next`)
@@ -21,13 +36,16 @@ cleanImport <- function(result) {
       ret <- bind_rows(ret, data.frame(out$data))
     }
   }
+  
   ret <- suppressMessages(type.convert(ret, numerals = "no.loss", as.is = TRUE))
   ret <- ret %>%
     mutate_at(vars(contains("date")), list(as.Date)) %>%
     mutate_at(vars(contains("id")), list(as.character)) %>%
     mutate_at(vars(contains("url")), list(as.character)) %>%
-    mutate_at(vars(contains("name")), list(as.character))
-  return(data.frame(ret))
+    mutate_at(vars(contains("name")), list(as.character)) %>%
+    as_tibble()
+  
+  return(ret)
 }
 
 ####################################################################
@@ -307,17 +325,17 @@ fb_accounts <- function(token,
     continue <- TRUE
     
     # Call insights
-    import <- content(GET(
+    import <- GET(
       URL,
       query = list(
         access_token = token,
         fields = "name,account_status,amount_spent,business_country_code",
         limit = "1000000"
       ),
-      encode = "json"))
+      encode = "json")
     
-    ret <- cleanImport(import)
-    if (class(ret) == "data.frame") {
+    ret <- fb_process(import)
+    if ("data.frame" %in% class(ret)) {
       ret$type <- type[i]
       output <- bind_rows(output, ret)
     }
@@ -376,43 +394,26 @@ fb_ads <- function(token,
   
   set_config(config(http_version = 0))
   
-  # Auxiliary process sub-lists function
-  process_list <- function(l) {
-    # islist <- lapply(l[[1]][[1]], is.list)
-    # names(islist)[unlist(islist)]
-    l <- as.list(l)
-    if ("data" %in% names(l)) l <- l$data
-    aux <- data.frame(l[[1]])
-    if (length(l) > 1) {
-      for (i in 2:length(l)) {
-        lx <- data.frame(l[[i]])
-        aux <- rbind_full(aux, lx)
-      }
-      if ("id" %in% colnames(aux))
-        aux <- rename(aux, list_id = .data$id)
-    }
-    return(aux)
-  }
-  
   # Starting URL
   url <- "https://graph.facebook.com/"
   URL <- paste0(url, api_version, "/", which, "/ads")
   
   # Call insights
-  import <- content(GET(
+  import <- GET(
     URL,
     query = list(
       access_token = token,
       time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
       fields = paste("id,name,created_time,status,adset_id,campaign_id,",
-                     "adcreatives{id,body,image_url,thumbnail_url,object_type}")
+                     "adcreatives{id,body,image_url,thumbnail_url,object_type}"),
+      limit = "100000"
     ),
-    encode = "json"))
+    encode = "json")
   
-  ret <- cleanImport(import)
-  if (class(ret) == "data.frame") {
+  ret <- fb_process(import)
+  if ("data.frame" %in% class(ret)) {
     ret <- ret %>%
-      rename(adcreatives_id = .data$list_id) %>%
+      #rename(adcreatives_id = .data$list_id) %>%
       arrange(desc(.data$created_time)) %>%
       as_tibble()
     return(ret) 
@@ -435,8 +436,8 @@ fb_ads <- function(token,
 #' @param token Character. This must be a valid access token with sufficient 
 #' privileges. Visit the Facebook API Graph Explorer to acquire one
 #' @param which Character vector. This is the accounts, campaigns, adsets, 
-#' or ads IDs to be queried. If report_level = "account", you may 
-#' or may not start the ID with `act_`.
+#' or ads IDs to be queried. Remember: if report_level = "account", you must 
+#' start the ID with `act_`.
 #' @param start Character. The first full day to report, in the 
 #' format "YYYY-MM-DD"
 #' @param end Character. The last full day to report, in the 
@@ -467,10 +468,6 @@ fb_insights <- function(token,
   
   for (i in 1:length(which)) {
     
-    aux <- as.character(which[i])
-    if (report_level == "account" & !startsWith(aux, "act_"))
-      aux <- paste0("act_", aux)
-    
     URL <- paste0(url, api_version, "/", aux, "/insights")
     ret <- c()
     
@@ -492,8 +489,8 @@ fb_insights <- function(token,
       ),
       encode = "json")
     
-    ret <- cleanImport(import)
-    if (class(ret) == "data.frame") {
+    ret <- fb_process(import)
+    if ("data.frame" %in% class(ret)) {
       ret <- ret %>% 
         mutate(id = aux) %>%
         arrange(desc(.data$date_start), desc(.data$spend))
@@ -537,9 +534,9 @@ fb_creatives <- function(token, which, api_version = "v6.0", show = FALSE) {
                      token)
   if (show) message("cURL: ", linkurl)
   import <- GET(linkurl)
-  ret <- cleanImport(import)
-  if (class(ret) == "data.frame")
-    ret <- as_tibble(select(ret, one_of("id", .data$fields)))
+  ret <- fb_process(import)
+  if ("data.frame" %in% class(ret))
+    ret <- select(ret, one_of("id", .data$fields))
   attr(ret, "cURL") <- linkurl
   return(ret) 
 }

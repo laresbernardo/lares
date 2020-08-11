@@ -20,8 +20,8 @@ fb_insights(
 privileges. Visit the Facebook API Graph Explorer to acquire one}
 
 \item{which}{Character vector. This is the accounts, campaigns, adsets, 
-or ads IDs to be queried. If report_level = "account", you may 
-or may not start the ID with `act_`.}
+or ads IDs to be queried. Remember: if report_level = "account", you must 
+start the ID with `act_`.}
 
 \item{start}{Character. The first full day to report, in the 
 format "YYYY-MM-DD"}
@@ -57,6 +57,7 @@ Other API:
 \code{\link{fb_creatives}()},
 \code{\link{fb_posts}()},
 \code{\link{fb_post}()},
+\code{\link{fb_process}()},
 \code{\link{li_auth}()},
 \code{\link{li_profile}()},
 \code{\link{queryGA}()},
@@ -67,7 +68,8 @@ Other Facebook:
 \code{\link{fb_ads}()},
 \code{\link{fb_creatives}()},
 \code{\link{fb_posts}()},
-\code{\link{fb_post}()}
+\code{\link{fb_post}()},
+\code{\link{fb_process}()}
 }
 \concept{API}
 \concept{Facebook}
