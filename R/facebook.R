@@ -435,15 +435,16 @@ fb_ads <- function(token,
 #' @param token Character. This must be a valid access token with sufficient 
 #' privileges. Visit the Facebook API Graph Explorer to acquire one
 #' @param which Character vector. This is the accounts, campaigns, adsets, 
-#' or ads IDs to be queried. If account, you may or may not start with `act_`.
+#' or ads IDs to be queried. If report_level = "account", you may 
+#' or may not start the ID with `act_`.
 #' @param start Character. The first full day to report, in the 
 #' format "YYYY-MM-DD"
 #' @param end Character. The last full day to report, in the 
 #' format "YYYY-MM-DD"
-#' @param time_increment Character. Agrupación por meses (monthly), 
-#' para todo junto (all_days) o un entero para cantidad de días [1-90].
-#' Por defecto, traerá cada día por separado (i.e.=1)
-#' @param report_level Character. One of ad, adset, campaign, or account
+#' @param time_increment Character. Group by months ("monthly"), 
+#' everything together ("all_days") or an integer per days [1-90].
+#' Default: each day separatly (i.e. "1").
+#' @param report_level Character. One of "ad", "adset", "campaign", or "account"
 #' @param breakdowns Character Vector. One or more of breakdowns for 
 #' segmentation results. Set to NA for no breakdowns
 #' @param api_version Character. Facebook API version
@@ -484,7 +485,7 @@ fb_insights <- function(token,
           "campaign_name, campaign_id, objective, adset_id, adset_name, ad_id, ad_name,",
           "impressions, cpm, spend, reach, clicks, unique_clicks, ctr, cpc, unique_ctr,",
           "cost_per_unique_click"), 
-        breakdowns = if (!is.na(breakdowns)) 
+        breakdowns = if (!is.na(breakdowns[1])) 
           vector2text(breakdowns, sep = ", ", quotes = FALSE) else NULL,
         time_increment = time_increment,
         limit = "1000000"

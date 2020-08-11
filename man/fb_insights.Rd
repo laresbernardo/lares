@@ -20,7 +20,8 @@ fb_insights(
 privileges. Visit the Facebook API Graph Explorer to acquire one}
 
 \item{which}{Character vector. This is the accounts, campaigns, adsets, 
-or ads IDs to be queried. If account, you may or may not start with `act_`.}
+or ads IDs to be queried. If report_level = "account", you may 
+or may not start the ID with `act_`.}
 
 \item{start}{Character. The first full day to report, in the 
 format "YYYY-MM-DD"}
@@ -28,11 +29,11 @@ format "YYYY-MM-DD"}
 \item{end}{Character. The last full day to report, in the 
 format "YYYY-MM-DD"}
 
-\item{time_increment}{Character. Agrupación por meses (monthly), 
-para todo junto (all_days) o un entero para cantidad de días [1-90].
-Por defecto, traerá cada día por separado (i.e.=1)}
+\item{time_increment}{Character. Group by months ("monthly"), 
+everything together ("all_days") or an integer per days [1-90].
+Default: each day separatly (i.e. "1").}
 
-\item{report_level}{Character. One of ad, adset, campaign, or account}
+\item{report_level}{Character. One of "ad", "adset", "campaign", or "account"}
 
 \item{breakdowns}{Character Vector. One or more of breakdowns for 
 segmentation results. Set to NA for no breakdowns}
