@@ -145,7 +145,8 @@ privileges. Visit the Facebook API Graph Explorer to acquire one</p></td>
     <tr>
       <th>which</th>
       <td><p>Character vector. This is the accounts, campaigns, adsets, 
-or ads IDs to be queried. If account, you may or may not start with `act_`.</p></td>
+or ads IDs to be queried. If report_level = "account", you may 
+or may not start the ID with `act_`.</p></td>
     </tr>
     <tr>
       <th>start</th>
@@ -159,13 +160,13 @@ format "YYYY-MM-DD"</p></td>
     </tr>
     <tr>
       <th>time_increment</th>
-      <td><p>Character. Agrupación por meses (monthly), 
-para todo junto (all_days) o un entero para cantidad de días [1-90].
-Por defecto, traerá cada día por separado (i.e.=1)</p></td>
+      <td><p>Character. Group by months ("monthly"), 
+everything together ("all_days") or an integer per days [1-90].
+Default: each day separatly (i.e. "1").</p></td>
     </tr>
     <tr>
       <th>report_level</th>
-      <td><p>Character. One of ad, adset, campaign, or account</p></td>
+      <td><p>Character. One of "ad", "adset", "campaign", or "account"</p></td>
     </tr>
     <tr>
       <th>breakdowns</th>
