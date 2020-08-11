@@ -45,7 +45,9 @@ H2O's AutoML function. The result is a list with the best model,
 its parameters, datasets, performance metrics, variables 
 importances, and plots. If the input is categorical, classification
 models will be trained and if is a continuous variable, regression
-models will be trained." />
+models will be trained.
+Plotting function for h2o_automl.
+Print function for h2o_automl." />
 
 
 
@@ -125,6 +127,8 @@ its parameters, datasets, performance metrics, variables
 importances, and plots. If the input is categorical, classification
 models will be trained and if is a continuous variable, regression
 models will be trained.</p>
+<p>Plotting function for <code>h2o_automl</code>.</p>
+<p>Print function for <code>h2o_automl</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>h2o_automl</span>(
@@ -153,7 +157,13 @@ models will be trained.</p>
   save = <span class='fl'>FALSE</span>,
   subdir = <span class='fl'>NA</span>,
   project = <span class='st'>"ML Project"</span>
-)</pre>
+)
+
+<span class='co'># S3 method for h2o_automl</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+
+<span class='co'># S3 method for h2o_automl</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -279,6 +289,14 @@ the results? Working directory as default.</p></td>
       <th>project</th>
       <td><p>Character. Your project's name</p></td>
     </tr>
+    <tr>
+      <th>x</th>
+      <td><p>h2o_automl object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="plot-results-into-dashboard"><a class="anchor" href="#plot-results-into-dashboard"></a>Plot Results into Dashboard</h2>
@@ -311,7 +329,6 @@ multi-layer artificial neural network) and "StackedEnsemble".
 <code><a href='h2o_predict_MOJO.html'>h2o_predict_MOJO</a>()</code>,
 <code><a href='h2o_predict_binary.html'>h2o_predict_binary</a>()</code>,
 <code><a href='h2o_predict_model.html'>h2o_predict_model</a>()</code>,
-<code><a href='h2o_results.html'>h2o_results</a>()</code>,
 <code><a href='h2o_selectmodel.html'>h2o_selectmodel</a>()</code>,
 <code><a href='impute.html'>impute</a>()</code>,
 <code><a href='iter_seeds.html'>iter_seeds</a>()</code>,
