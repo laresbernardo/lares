@@ -458,19 +458,20 @@ fb_insights <- function(token,
                         api_version = "v3.3"){
   
   set_config(config(http_version = 0))
+  check_opts(report_level, c("ad","adset","campaign","account"))
   
   # Starting URL
   url <- "https://graph.facebook.com/"
   output <- c()
+  
   for (i in 1:length(which)) {
-    aux <- which[i]
+    
+    aux <- as.character(which[i])
+    if (report_level == "account" & !startsWith(aux, "act_"))
+      aux <- paste0("act_", aux)
+    
     URL <- paste0(url, api_version, "/", aux, "/insights")
     ret <- c()
-    type <- c("ad","adset","campaign","account")
-    if (!report_level %in% type) 
-      stop(paste("Your report_level must be one of:", vector2text(type)))
-    if (report_level == "account" & !startsWith(which, "act_"))
-      which <- paste0("act_", which)
     
     # Call insights
     import <- GET(
@@ -493,7 +494,7 @@ fb_insights <- function(token,
     ret <- cleanImport(import)
     if (class(ret) == "data.frame") {
       ret <- ret %>% 
-        mutate(id = .data$aux) %>%
+        mutate(id = aux) %>%
         arrange(desc(.data$date_start), desc(.data$spend))
       output <- rbind(output, ret)
     }
