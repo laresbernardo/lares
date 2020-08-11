@@ -594,6 +594,7 @@ print.h2o_automl <- function(x, ...) {
 Leader Model: {x$model_name}
 Independent Variable: {x$y}
 Type: {x$type}
+Algorithm: {toupper(x$algorithm)}
 Trained: {nrow(x$leaderboard)} models
 Split: {round(100*x$split)}% training data (of {nrow(x$datasets$global)} observations)
 Seed: {x$seed}

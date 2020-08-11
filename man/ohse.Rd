@@ -123,7 +123,8 @@ Other Feature Engineering:
 
 Other One Hot Encoding: 
 \code{\link{date_feats}()},
-\code{\link{holidays}()}
+\code{\link{holidays}()},
+\code{\link{ohe_commas}()}
 }
 \concept{Data Wrangling}
 \concept{Feature Engineering}

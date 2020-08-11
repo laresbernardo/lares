@@ -606,7 +606,7 @@ freqs_list <- function(df,
     arrange(desc(.data$n)) %>%
     mutate(p = 100*.data$n/sum(.data$n), order = row_number()) %>%
     data.frame() %>%
-    ohe_commas("var") %>%
+    ohe_commas(var) %>%
     # Remove combinations with less than "min_elements" elements
     mutate(combs = rowSums(.[unlist(lapply(., is.logical))], na.rm = TRUE)) %>%
     filter(.data$combs >= min_elements) %>% select(-.data$combs)

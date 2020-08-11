@@ -22,6 +22,7 @@ cleanImport <- function(result) {
     }
   }
   ret <- suppressMessages(type.convert(ret, numerals = "no.loss", as.is = TRUE))
+  ret <- ret %>%
     mutate_at(vars(contains("date")), list(as.Date)) %>%
     mutate_at(vars(contains("id")), list(as.character)) %>%
     mutate_at(vars(contains("url")), list(as.character)) %>%
@@ -434,7 +435,7 @@ fb_ads <- function(token,
 #' @param token Character. This must be a valid access token with sufficient 
 #' privileges. Visit the Facebook API Graph Explorer to acquire one
 #' @param which Character vector. This is the accounts, campaigns, adsets, 
-#' or ads IDs to be queried
+#' or ads IDs to be queried. If account, you may or may not start with `act_`.
 #' @param start Character. The first full day to report, in the 
 #' format "YYYY-MM-DD"
 #' @param end Character. The last full day to report, in the 
@@ -468,9 +469,11 @@ fb_insights <- function(token,
     type <- c("ad","adset","campaign","account")
     if (!report_level %in% type) 
       stop(paste("Your report_level must be one of:", vector2text(type)))
+    if (report_level == "account" & !startsWith(which, "act_"))
+      which <- paste0("act_", which)
     
     # Call insights
-    import <- content(GET(
+    import <- GET(
       URL,
       query = list(
         access_token = token,
@@ -485,7 +488,7 @@ fb_insights <- function(token,
         time_increment = time_increment,
         limit = "1000000"
       ),
-      encode = "json"))
+      encode = "json")
     
     ret <- cleanImport(import)
     if (class(ret) == "data.frame") {

@@ -20,7 +20,7 @@ fb_insights(
 privileges. Visit the Facebook API Graph Explorer to acquire one}
 
 \item{which}{Character vector. This is the accounts, campaigns, adsets, 
-or ads IDs to be queried}
+or ads IDs to be queried. If account, you may or may not start with `act_`.}
 
 \item{start}{Character. The first full day to report, in the 
 format "YYYY-MM-DD"}

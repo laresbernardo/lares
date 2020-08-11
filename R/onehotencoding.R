@@ -1,4 +1,52 @@
 ####################################################################
+#' One Hot Encoding for a Vector with Comma Separated Values
+#' 
+#' This function lets the user do one hot encoding on a variable with 
+#' comma separated values
+#' 
+#' @family Data Wrangling
+#' @family One Hot Encoding
+#' @param df Dataframe. May contain one or more columns with comma separated
+#' values which will be separated as one hot encoding
+#' @param ... Variables. Which variables to split into new columns?
+#' @param sep Character. Which regular expression separates the elements?
+#' @param noval Character. No value text
+#' @examples 
+#' df <- data.frame(id = c(1:5),
+#'                  x = c("AA, D", "AA,B", "B,  D", "A,D,B", NA),
+#'                  z = c("AA+BB+AA", "AA", "BB,  AA", NA, "BB+AA"))
+#' ohe_commas(df, x)
+#' ohe_commas(df, z, sep = "\\+")
+#' ohe_commas(df, x, z)
+#' @export
+ohe_commas <- function(df, ..., sep = ",", noval = "NoVal") {
+  
+  vars <- quos(...)
+  var <- gsub("~", "", as.character(vars))
+  
+  df <- as.data.frame(df)
+  
+  for (i in var) {
+    df$temp <- as.character(df[,i])
+    # Handling missingness
+    df$temp[as.character(df$temp) == "" | is.na(df$temp)] <- noval
+    vals <- v2t(as.character(df$temp), quotes = FALSE)
+    vals <- unique(trimws(unlist(strsplit(vals, sep))))
+    # aux <- sprintf("--%s--", vals)
+    l <- strsplit(df$temp, sep)
+    mat <- c()
+    for (i in 1:length(vals)) {
+      which <- unlist(lapply(l, function(x) any(trimws(x) %in% vals[i])))
+      mat <- cbind(mat, which)
+    }
+    colnames(mat) <- gsub('"', '', paste(var, vals, sep = "_"))
+    df$temp <- NULL
+    df <- cbind(df, mat)
+  }
+  return(as_tibble(df))
+}
+
+####################################################################
 #' One Hot Smart Encoding (Dummy Variables)
 #'
 #' This function lets the user automatically transform a dataframe with

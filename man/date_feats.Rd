@@ -81,6 +81,7 @@ Other Feature Engineering:
 
 Other One Hot Encoding: 
 \code{\link{holidays}()},
+\code{\link{ohe_commas}()},
 \code{\link{ohse}()}
 }
 \concept{Data Wrangling}

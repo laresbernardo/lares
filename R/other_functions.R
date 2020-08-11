@@ -318,48 +318,6 @@ formatNum <- function(x, decimals = 2,
 
 
 ####################################################################
-#' One Hot Encoding for a Vector with Comma Separated Values
-#' 
-#' This function lets the user do one hot encoding on a variable with 
-#' comma separated values
-#' 
-#' @family Data Wrangling
-#' @param df Dataframe. May contain one or more columns with comma separated
-#' values which will be separated as one hot encoding
-#' @param variables Character. Which variables should split into new columns?
-#' @param sep Character. Which regular expression separates the elements?
-#' @param noval Character. No value text
-#' @examples 
-#' df <- data.frame(id = c(1:5),
-#'                  x = c("AA, D", "AA,B", "B,  D", "A,D,B", NA),
-#'                  z = c("AA+BB+AA", "AA", "BB,  AA", NA, "BB+AA"))
-#' ohe_commas(df, "x")
-#' ohe_commas(df, c("x", "z"), sep = "\\+|,")
-#' @export
-ohe_commas <- function(df, variables, sep = ",", noval = "NoVal") {
-  df <- as.data.frame(df)
-  for (var in variables) {
-    df$temp <- as.character(df[,var])
-    # Handling missingness
-    df$temp[as.character(df$temp) == "" | is.na(df$temp)] <- noval
-    vals <- v2t(as.character(df$temp), quotes = FALSE)
-    vals <- unique(trimws(unlist(strsplit(vals, sep))))
-    # aux <- sprintf("--%s--", vals)
-    l <- strsplit(df$temp, sep)
-    mat <- c()
-    for (i in 1:length(vals)) {
-      which <- unlist(lapply(l, function(x) any(trimws(x) %in% vals[i])))
-      mat <- cbind(mat, which)
-    }
-    colnames(mat) <- paste(var, vals, sep = "_")
-    df$temp <- NULL
-    df <- cbind(df, mat)
-  }
-  return(as_tibble(df))
-}
-
-
-####################################################################
 #' Balance Binary Data by Resampling: Under-Over Sampling
 #' 
 #' This function lets the user balance a given data.frame by resampling

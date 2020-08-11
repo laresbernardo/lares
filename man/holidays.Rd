@@ -68,6 +68,7 @@ Other Scrapper:
 
 Other One Hot Encoding: 
 \code{\link{date_feats}()},
+\code{\link{ohe_commas}()},
 \code{\link{ohse}()}
 }
 \concept{Data Wrangling}
