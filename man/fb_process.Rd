@@ -4,12 +4,10 @@
 \alias{fb_process}
 \title{Process Facebook's API Objects}
 \usage{
-fb_process(response, flatten = TRUE)
+fb_process(response)
 }
 \arguments{
 \item{response}{GET's output object, class response}
-
-\item{flatten}{Boolean. Flatten lists within lists?}
 }
 \description{
 Process and paginate raw results from Facebook's API, result of 

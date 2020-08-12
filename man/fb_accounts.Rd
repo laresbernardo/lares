@@ -8,9 +8,8 @@ fb_accounts(
   token,
   business_id = "904189322962915",
   type = c("owned", "client"),
-  limit = 1e+05,
-  api_version = "v3.3",
-  flatten = TRUE
+  limit = 10000,
+  api_version = "v3.3"
 )
 }
 \arguments{
@@ -24,8 +23,6 @@ privileges. Visit the Facebook API Graph Explorer to acquire one}
 \item{limit}{Integer. Query limit}
 
 \item{api_version}{Character. Facebook API version}
-
-\item{flatten}{Boolean. Flatten lists within lists?}
 }
 \description{
 This returns all ad accounts for a FB Business Account FB.

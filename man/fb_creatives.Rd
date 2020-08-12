@@ -4,13 +4,7 @@
 \alias{fb_creatives}
 \title{Facebook Creatives API}
 \usage{
-fb_creatives(
-  token,
-  which,
-  api_version = "v8.0",
-  process = TRUE,
-  flatten = TRUE
-)
+fb_creatives(token, which, api_version = "v8.0", process = TRUE)
 }
 \arguments{
 \item{token}{Character. This must be a valid access token with sufficient 
@@ -23,8 +17,6 @@ start the ID with `act_`.}
 \item{api_version}{Character. Facebook API version}
 
 \item{process}{Boolean. Process GET results to a more friendly format?}
-
-\item{flatten}{Boolean. Flatten lists within lists?}
 }
 \description{
 For more information: \href{https://developers.facebook.com/docs/marketing-api/reference/ad-creative/}{Ad Creative}

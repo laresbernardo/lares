@@ -11,8 +11,7 @@ fb_ads(
   end = Sys.Date(),
   fields = NA,
   api_version = "v8.0",
-  process = TRUE,
-  flatten = TRUE
+  process = TRUE
 )
 }
 \arguments{
@@ -34,8 +33,6 @@ format "YYYY-MM-DD"}
 \item{api_version}{Character. Facebook API version}
 
 \item{process}{Boolean. Process GET results to a more friendly format?}
-
-\item{flatten}{Boolean. Flatten lists within lists?}
 }
 \description{
 This returns all available FB ads for any account, campaign, or ad set id.

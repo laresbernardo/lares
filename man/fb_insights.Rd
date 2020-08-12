@@ -11,12 +11,12 @@ fb_insights(
   end = Sys.Date(),
   time_increment = "1",
   report_level = "campaign",
+  ad_object = "insights",
   breakdowns = NA,
   fields = NA,
   limit = 10000,
   api_version = "v8.0",
-  process = TRUE,
-  flatten = TRUE
+  process = TRUE
 )
 }
 \arguments{
@@ -39,6 +39,8 @@ Default: each day separatly (i.e. "1").}
 
 \item{report_level}{Character. One of "ad", "adset", "campaign", or "account"}
 
+\item{ad_object}{Character. One of: "insights" (default), "adsets", ...}
+
 \item{breakdowns}{Character Vector. One or more of breakdowns for 
 segmentation results. Set to NA for no breakdowns}
 
@@ -49,8 +51,6 @@ segmentation results. Set to NA for no breakdowns}
 \item{api_version}{Character. Facebook API version}
 
 \item{process}{Boolean. Process GET results to a more friendly format?}
-
-\item{flatten}{Boolean. Flatten lists within lists?}
 }
 \description{
 This returns all available FB insights per day including any given
