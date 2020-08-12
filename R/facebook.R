@@ -15,6 +15,7 @@ fb_process <- function(response, flatten = TRUE) {
     stop("You must provide a response object (GET's output)")
   
   import <- content(response) 
+  
   # Show and return error
   if ("error" %in% names(import)) {
     message(paste("API ERROR:", import$error$message))
@@ -27,29 +28,41 @@ fb_process <- function(response, flatten = TRUE) {
     invisible(return(list(NULL)))
   }
   
-  if (flatten) {
-    tofix <- list_to_fix(import$data)
-    transformed <- list_fixed(import$data, tofix)
-    import$data <- list_suppress(import$data, tofix)
-  } 
+  # Deal with GET+response vs jsonlite
+  import <- fromJSON(toJSON(import))
   
-  ret <- data.frame(bind_rows(import$data))
+  # bind_rows(lapply(x, bind_rows)) %>%
+  flattener <- function(x, i = 1) {
+    bind_rows(x) %>%
+      mutate(get_id = paste(i, row_number(), sep = "-")) %>%
+      select(get_id, everything()) %>%
+      data.frame
+  }
   
-  # Looping through subsequent returned pages
+  # First pagination
+  results <- list(); i <- 1
+  results[[i]] <- flattener(import$data)
+  
+  # Following iterations
   if (exists("next", import$paging)) {
+    i <- i + 1
     out <- fromJSON(import$paging$`next`)
-    ret <- bind_rows(ret, data.frame(out$data))
+    results[[i]] <- flattener(out$data, i)
+    # Re-run first iteration as everything MUST match to bind
+    if (i == 2) {
+      out <- fromJSON(out$paging$`previous`)
+      results[[1]] <- flattener(out$data, i) 
+    }
     while (exists("next", out$paging)) {
+      i <- i + 1
       out <- fromJSON(out$paging$`next`)
-      ret <- bind_rows(ret, data.frame(out$data))
+      results[[i]] <- flattener(out$data, i)
     }
   }
   
-  if (flatten) for (col in tofix)
-    ret <- cbind(ret, transformed[[col]])
-  
-  ret <- suppressMessages(type.convert(ret, numerals = "no.loss", as.is = TRUE))
-  ret <- ret %>%
+  ret <- suppressMessages(type.convert(
+    bind_rows(results),
+    numerals = "no.loss", as.is = TRUE)) %>%
     mutate_at(vars(contains("date")), list(as.Date)) %>%
     mutate_at(vars(contains("id")), list(as.character)) %>%
     mutate_at(vars(contains("url")), list(as.character)) %>%
@@ -57,55 +70,6 @@ fb_process <- function(response, flatten = TRUE) {
     as_tibble()
   
   return(ret)
-}
-
-list_to_fix <- function(data) {
-  temp <- bind_rows(lapply(data, function(x) lapply(x, class)))
-  are_lists <- lapply(temp, function(x) any(grepl("list", x)))
-  to_fix <- colnames(temp)[unlist(are_lists)] 
-  return(to_fix)
-}
-
-list_fixer <- function(data, which_list) {
-  
-  target <- lapply(data, `[`, which_list)
-  x <- lapply(target, unlist)
-  
-  getvals <- function(x, col) {
-    ret <- sapply(x, function(i) i[grepl(col, names(i))])
-    ret <- lapply(ret, as.vector)
-    ret <- lapply(ret, function(i) if (length(i) == 0) "" else i)
-    ret <- lapply(ret, function(i) paste(i, collapse = ","))
-    return(unlist(ret))
-  }
-  
-  joinvals <- function(x, which_list) {
-    types <- unique(unlist(lapply(x, names)))
-    # Column names
-    types <- gsub(paste0(which_list, "\\."), "", types)  
-    squared <- lapply(types, function(i) getvals(x, i))
-    all <- data.frame(lapply(squared, cbind))
-    colnames(all) <- types
-    rownames(all) <- NULL
-    return(all)
-  }
-  
-  ret <- joinvals(x, which_list)
-  colnames(ret) <- gsub("data\\.", "", colnames(ret))  
-  colnames(ret) <- paste(which_list, colnames(ret), sep = "_")
-  return(as_tibble(ret))
-}
-
-list_fixed <- function(data, to_fix) {
-  if (length(to_fix) > 0) 
-    message(paste("Features flattened:", v2t(to_fix)))
-  ret <- lapply(to_fix, function(x) list_fixer(data, x))
-  names(ret) <- to_fix
-  return(ret)
-}
-
-list_suppress <- function(data, which_list) {
-  lapply(data, function(x) { x[which_list] <- NULL; x })
 }
 
 
@@ -137,8 +101,10 @@ list_suppress <- function(data, which_list) {
 #' @param report_level Character. One of "ad", "adset", "campaign", or "account"
 #' @param breakdowns Character Vector. One or more of breakdowns for 
 #' segmentation results. Set to NA for no breakdowns
+#' @param fields Character, json format. Leave `NA` for default fields.
 #' @param limit Integer. Query limit
 #' @param api_version Character. Facebook API version
+#' @param process Boolean. Process GET results to a more friendly format?
 #' @export
 fb_insights <- function(token,
                         which,
@@ -147,16 +113,23 @@ fb_insights <- function(token,
                         time_increment = "1",
                         report_level = "campaign",
                         breakdowns = NA,
-                        flatten = TRUE,
-                        limit = 100000,
-                        api_version = "v8.0"){
+                        fields = NA,
+                        limit = 10000,
+                        api_version = "v8.0",
+                        process = TRUE,
+                        flatten = TRUE){
   
   set_config(config(http_version = 0))
   check_opts(report_level, c("ad","adset","campaign","account"))
-  output <- c()
+  
+  if (is.na(fields[1]))
+    fields <- paste(
+      "campaign_name, campaign_id, objective, adset_id, adset_name, ad_id, ad_name,",
+      "impressions, cpm, spend, reach, clicks, unique_clicks, ctr, cpc, unique_ctr,",
+      "cost_per_unique_click")
   
   for (i in 1:length(which)) {
-    
+    if (i == 1) output <- c()
     aux <- as.character(which[i])
     URL <- glued("https://graph.facebook.com/{api_version}/{aux}/insights")
     ret <- c()
@@ -168,22 +141,22 @@ fb_insights <- function(token,
         access_token = token,
         time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
         level = report_level,
-        fields = paste(
-          "campaign_name, campaign_id, objective, adset_id, adset_name, ad_id, ad_name,",
-          "impressions, cpm, spend, reach, clicks, unique_clicks, ctr, cpc, unique_ctr,",
-          "cost_per_unique_click"), 
+        fields = if (length(fields) > 1) 
+          vector2text(fields, sep = ",", quotes = FALSE) else fields,
         breakdowns = if (!is.na(breakdowns[1])) 
-          vector2text(breakdowns, sep = ", ", quotes = FALSE) else NULL,
+          vector2text(breakdowns, sep = ",", quotes = FALSE) else NULL,
         time_increment = time_increment,
         limit = as.character(limit)
       ),
       encode = "json")
     
+    if (!process) return(import)
+    
     ret <- fb_process(import, flatten = flatten)
     if ("data.frame" %in% class(ret)) {
       ret <- ret %>% 
         mutate(id = aux) %>%
-        arrange(desc(.data$date_start), desc(.data$spend))
+        arrange(desc(.data$date_start))
       output <- rbind(output, ret)
     }
     if (length(which) == i & length(output) == 0) {
@@ -451,9 +424,9 @@ fb_post <- function(token, post_id, limit = 5000) {
 fb_accounts <- function(token,
                         business_id = "904189322962915",
                         type = c("owned", "client"),
-                        flatten = TRUE,
                         limit = 100000,
-                        api_version = "v3.3"){
+                        api_version = "v3.3",
+                        flatten = TRUE){
   
   set_config(config(http_version = 0))
   
@@ -529,11 +502,18 @@ fb_ads <- function(token,
                    which,
                    start = Sys.Date() - 31, 
                    end = Sys.Date(), 
-                   flatten = TRUE,
-                   limit = 100000,
-                   api_version = "v8.0"){
+                   fields = NA,
+                   api_version = "v8.0",
+                   process = TRUE,
+                   flatten = TRUE){
   
   set_config(config(http_version = 0))
+  
+  if (is.na(fields[1]))
+    fields <- paste(
+      "campaign_name, campaign_id, objective, adset_id, adset_name, ad_id, ad_name,",
+      "impressions, cpm, spend, reach, clicks, unique_clicks, ctr, cpc, unique_ctr,",
+      "cost_per_unique_click")
   
   # Call insights
   import <- GET(
@@ -541,19 +521,18 @@ fb_ads <- function(token,
     query = list(
       access_token = token,
       time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
-      fields = paste("id,name,created_time,status,adset_id,campaign_id,",
-                     "targeting{age_max,age_min,genders,targeting_optimization,",
-                     "flexible_spec{interests{name}}},", 
-                     "adcreatives{id,body,image_url,thumbnail_url,object_type}"),
-      limit = as.character(limit)
+      fields = if (length(fields) > 1) 
+        vector2text(fields, sep = ",", quotes = FALSE) else fields
     ),
     encode = "json")
+  
+  if (!process) return(import)
   
   ret <- fb_process(import, flatten = flatten)
   if ("data.frame" %in% class(ret)) {
     ret <- ret %>%
       #rename(adcreatives_id = .data$list_id) %>%
-      arrange(desc(.data$created_time)) %>%
+      #arrange(desc(.data$created_time)) %>%
       as_tibble()
     return(ret) 
   }
@@ -570,7 +549,10 @@ fb_ads <- function(token,
 #' @inheritParams fb_process
 #' @inheritParams fb_insights
 #' @export
-fb_creatives <- function(token, which, flatten = TRUE, api_version = "v8.0") {
+fb_creatives <- function(token, which, 
+                         api_version = "v8.0", 
+                         process = TRUE,
+                         flatten = TRUE) {
   
   set_config(config(http_version = 0))
   
@@ -584,6 +566,7 @@ fb_creatives <- function(token, which, flatten = TRUE, api_version = "v8.0") {
                      vector2text(fields, sep = ",", quotes = FALSE), 
                      token)
   import <- GET(linkurl)
+  if (!process) return(import)
   ret <- fb_process(import, flatten = flatten)
   if ("data.frame" %in% class(ret))
     ret <- select(ret, one_of("id", .data$fields))

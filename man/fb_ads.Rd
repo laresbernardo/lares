@@ -9,9 +9,10 @@ fb_ads(
   which,
   start = Sys.Date() - 31,
   end = Sys.Date(),
-  flatten = TRUE,
-  limit = 1e+05,
-  api_version = "v8.0"
+  fields = NA,
+  api_version = "v8.0",
+  process = TRUE,
+  flatten = TRUE
 )
 }
 \arguments{
@@ -28,11 +29,13 @@ format "YYYY-MM-DD"}
 \item{end}{Character. The last full day to report, in the 
 format "YYYY-MM-DD"}
 
-\item{flatten}{Boolean. Flatten lists within lists?}
-
-\item{limit}{Integer. Query limit}
+\item{fields}{Character, json format. Leave `NA` for default fields.}
 
 \item{api_version}{Character. Facebook API version}
+
+\item{process}{Boolean. Process GET results to a more friendly format?}
+
+\item{flatten}{Boolean. Flatten lists within lists?}
 }
 \description{
 This returns all available FB ads for any account, campaign, or ad set id.
