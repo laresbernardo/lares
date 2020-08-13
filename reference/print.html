@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get Facebook's Page Posts (API Graph) — fb_posts • lares</title>
+<title>Plot methods for lares — plot.h2o_automl • lares</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Get Facebook's Page Posts (API Graph) — fb_posts" />
-<meta property="og:description" content="Connect to an API Graph's token of a given page and get posts, 
-comments, shares, and reactions of n posts (with no limits)." />
+<meta property="og:title" content="Plot methods for lares — plot.h2o_automl" />
+<meta property="og:description" content="Plot methods for lares" />
 
 
 
@@ -109,68 +108,31 @@ comments, shares, and reactions of n posts (with no limits)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get Facebook's Page Posts (API Graph)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/facebook.R'><code>R/facebook.R</code></a></small>
-    <div class="hidden name"><code>fb_posts.Rd</code></div>
+    <h1>Plot methods for lares</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/plot_methods.R'><code>R/plot_methods.R</code></a></small>
+    <div class="hidden name"><code>print.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Connect to an API Graph's token of a given page and get posts, 
-comments, shares, and reactions of n posts (with no limits).</p>
+    <p>Plot methods for lares</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fb_posts</span>(
-  <span class='kw'>token</span>,
-  total = <span class='fl'>150</span>,
-  posts_limit = <span class='fl'>100</span>,
-  comments = <span class='fl'>FALSE</span>,
-  shares = <span class='fl'>FALSE</span>,
-  reactions = <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='co'># S3 method for h2o_automl</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>token</th>
-      <td><p>Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one</p></td>
+      <th>x</th>
+      <td><p><code>h2o_automl</code> object</p></td>
     </tr>
     <tr>
-      <th>total</th>
-      <td><p>Integer. How many most recent posts do you need?</p></td>
-    </tr>
-    <tr>
-      <th>posts_limit</th>
-      <td><p>Integer. For each post, hoy many results do you need?</p></td>
-    </tr>
-    <tr>
-      <th>comments, shares, reactions</th>
-      <td><p>Boolean. Include in your query?</p></td>
+      <th>...</th>
+      <td><p>Additional parameters</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other API: 
-<code><a href='bring_api.html'>bring_api</a>()</code>,
-<code><a href='fb_accounts.html'>fb_accounts</a>()</code>,
-<code><a href='fb_ads.html'>fb_ads</a>()</code>,
-<code><a href='fb_creatives.html'>fb_creatives</a>()</code>,
-<code><a href='fb_insights.html'>fb_insights</a>()</code>,
-<code><a href='fb_post.html'>fb_post</a>()</code>,
-<code><a href='fb_process.html'>fb_process</a>()</code>,
-<code><a href='li_auth.html'>li_auth</a>()</code>,
-<code><a href='li_profile.html'>li_profile</a>()</code>,
-<code><a href='queryGA.html'>queryGA</a>()</code>,
-<code><a href='slackSend.html'>slackSend</a>()</code></p>
-<p>Other Facebook: 
-<code><a href='fb_accounts.html'>fb_accounts</a>()</code>,
-<code><a href='fb_ads.html'>fb_ads</a>()</code>,
-<code><a href='fb_creatives.html'>fb_creatives</a>()</code>,
-<code><a href='fb_insights.html'>fb_insights</a>()</code>,
-<code><a href='fb_post.html'>fb_post</a>()</code>,
-<code><a href='fb_process.html'>fb_process</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

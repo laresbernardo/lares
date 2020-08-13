@@ -153,13 +153,7 @@ models will be trained.</p>
   save = <span class='fl'>FALSE</span>,
   subdir = <span class='fl'>NA</span>,
   project = <span class='st'>"ML Project"</span>
-)
-
-<span class='co'># S3 method for h2o_automl</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
-
-<span class='co'># S3 method for h2o_automl</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -285,24 +279,8 @@ the results? Working directory as default.</p></td>
       <th>project</th>
       <td><p>Character. Your project's name</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>h2o_automl object.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional parameters</p></td>
-    </tr>
     </table>
 
-    <h2 class="hasAnchor" id="plot-results-into-dashboard"><a class="anchor" href="#plot-results-into-dashboard"></a>Plot Results into Dashboard</h2>
-
-    
-
-<p>Use the <code><a href='mplot_full.html'>mplot_full()</a></code> function to generate a dashboard with
-your model's results and metrics, or find them in your `plots` 
-element within your `h2o_automl` object (be sure to have your 
-`plots` to `TRUE`).</p>
     <h2 class="hasAnchor" id="list-of-algorithms"><a class="anchor" href="#list-of-algorithms"></a>List of algorithms</h2>
 
     
@@ -333,33 +311,212 @@ multi-layer artificial neural network) and "StackedEnsemble".
 <code><a href='msplit.html'>msplit</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 <span class='kw'>dft</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>dft</span>, select = <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>Ticket</span>, <span class='kw'>PassengerId</span>, <span class='kw'>Cabin</span>))
 
 <span class='co'># Classification: Binomial - 2 Classes</span>
-<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, y = <span class='kw'>Survived</span>, max_models = <span class='fl'>1</span>, impute = <span class='fl'>FALSE</span>, target = <span class='st'>"TRUE"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>r</span>)
-
+<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, y = <span class='kw'>Survived</span>, max_models = <span class='fl'>1</span>, impute = <span class='fl'>FALSE</span>, target = <span class='st'>"TRUE"</span>)</div><div class='output co'>#&gt; <span class='message'>2020-08-13 00:45:28 | Started process...</span></div><div class='output co'>#&gt; <span class='message'>Variable to predict: Survived</span></div><div class='output co'>#&gt; <span class='message'>- NOTE: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span></div><div class='output co'>#&gt; <span class='message'>- NOTE: There are 4 non-numerical features. Consider using ohse() prior for One Hot Smart Encoding your categorical variables.</span></div><div class='output co'>#&gt; <span class='message'>Model type: Classifier</span></div><div class='output co'>#&gt;     tag   n     p order   pcum
+#&gt; 1 FALSE 549 61.62     1  61.62
+#&gt; 2  TRUE 342 38.38     2 100.00</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Splitting datasets</span></div><div class='output co'>#&gt; train_size  test_size 
+#&gt;        623        268 </div><div class='output co'>#&gt; <span class='message'>Algorithms excluded: 'StackedEnsemble', 'DeepLearning'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Iterating until 1 models or 600 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Succesfully generated 1 models:</span></div><div class='output co'>#&gt;                           model_id       auc   logloss
+#&gt; 1 XGBoost_1_AutoML_20200813_004540 0.8946749 0.3931082
+#&gt; 
+#&gt; [1 row x 3 columns] </div><div class='output co'>#&gt; <span class='message'>Check results in H2O Flow's nice interface: http://localhost:54321/flow/index.html</span></div><div class='output co'>#&gt; <span class='message'>Model selected: XGBoost_1_AutoML_20200813_004540</span></div><div class='output co'>#&gt; <span class='message'>NOTE: The following variables were NOT important: SibSp, Pclass.2, Embarked.C</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Running predictions for Survived...</span></div><div class='output co'>#&gt; <span class='message'>Target value: TRUE</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots...</span></div><div class='output co'>#&gt; <span class='message'>Process duration: 21.6s</span></div><div class='output co'>#&gt;       AUC     ACC     PRC     TPR      TNR
+#&gt; 1 0.89467 0.16418 0.18325 0.33981 0.054545</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>r</span>)</div><div class='output co'>#&gt; Leader Model: XGBoost_1_AutoML_20200813_004540
+#&gt; Independent Variable: Survived
+#&gt; Type: Classifier
+#&gt; Algorithm: XGBOOST
+#&gt; Trained: 1 models
+#&gt; Split: 70% training data (of 891 observations)
+#&gt; Seed: 0
+#&gt; 
+#&gt; Metrics: 
+#&gt;    AUC = 0.89467
+#&gt;    ACC = 0.16418
+#&gt;    PRC = 0.18325
+#&gt;    TPR = 0.33981
+#&gt;    TNR = 0.054545
+#&gt; 
+#&gt; Most important variables:
+#&gt;    Sex.female (29.7%)
+#&gt;    Fare (25.9%)
+#&gt;    Age (20.1%)
+#&gt;    Pclass.3 (8.1%)
+#&gt;    Sex.male (4.3%)</div><div class='input'>
 <span class='co'># Let's see all the stuff we have inside:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>r</span>, <span class='kw'>names</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>r</span>, <span class='kw'>names</span>)</div><div class='output co'>#&gt; $model
+#&gt; NULL
+#&gt; 
+#&gt; $y
+#&gt; NULL
+#&gt; 
+#&gt; $scores_test
+#&gt; [1] "tag"    "scores"
+#&gt; 
+#&gt; $metrics
+#&gt; [1] "dictionary"       "confusion_matrix" "gain_lift"        "metrics"         
+#&gt; [5] "plots"            "max_metrics"     
+#&gt; 
+#&gt; $importance
+#&gt; [1] "variable"            "relative_importance" "scaled_importance"  
+#&gt; [4] "importance"         
+#&gt; 
+#&gt; $datasets
+#&gt; [1] "global" "test"  
+#&gt; 
+#&gt; $scoring_history
+#&gt; [1] "timestamp"                     "duration"                     
+#&gt; [3] "number_of_trees"               "training_rmse"                
+#&gt; [5] "training_logloss"              "training_auc"                 
+#&gt; [7] "training_pr_auc"               "training_lift"                
+#&gt; [9] "training_classification_error"
+#&gt; 
+#&gt; $parameters
+#&gt;  [1] "model_id"                          "training_frame"                   
+#&gt;  [3] "nfolds"                            "keep_cross_validation_models"     
+#&gt;  [5] "keep_cross_validation_predictions" "fold_assignment"                  
+#&gt;  [7] "stopping_tolerance"                "seed"                             
+#&gt;  [9] "distribution"                      "ntrees"                           
+#&gt; [11] "max_depth"                         "min_rows"                         
+#&gt; [13] "min_child_weight"                  "sample_rate"                      
+#&gt; [15] "subsample"                         "col_sample_rate"                  
+#&gt; [17] "colsample_bylevel"                 "col_sample_rate_per_tree"         
+#&gt; [19] "colsample_bytree"                  "score_tree_interval"              
+#&gt; [21] "x"                                 "y"                                
+#&gt; 
+#&gt; $categoricals
+#&gt; [1] "Pclass"     "Sex"        "Embarked"   "train_test" "predict"   
+#&gt; 
+#&gt; $type
+#&gt; NULL
+#&gt; 
+#&gt; $split
+#&gt; NULL
+#&gt; 
+#&gt; $threshold
+#&gt; NULL
+#&gt; 
+#&gt; $model_name
+#&gt; NULL
+#&gt; 
+#&gt; $algorithm
+#&gt; NULL
+#&gt; 
+#&gt; $leaderboard
+#&gt; [1] "model_id"             "auc"                  "logloss"             
+#&gt; [4] "aucpr"                "mean_per_class_error" "rmse"                
+#&gt; [7] "mse"                 
+#&gt; 
+#&gt; $project
+#&gt; NULL
+#&gt; 
+#&gt; $seed
+#&gt; NULL
+#&gt; 
+#&gt; $h2o
+#&gt; NULL
+#&gt; 
+#&gt; $plots
+#&gt; [1] "dashboard"   "importance"  "ROC"         "conf_matrix" "response"   
+#&gt; [6] "gains"      
+#&gt; </div><div class='input'>
 <span class='co'># Classification: Multi-Categorical - 3 Classes</span>
-<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, <span class='kw'>Pclass</span>, ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Fare"</span>, <span class='st'>"Cabin"</span>), max_time = <span class='fl'>30</span>, plots = <span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>r</span>)
-
+<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, <span class='kw'>Pclass</span>, ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Fare"</span>, <span class='st'>"Cabin"</span>), max_time = <span class='fl'>30</span>, plots = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>2020-08-13 00:45:50 | Started process...</span></div><div class='output co'>#&gt; <span class='message'>Variable to predict: Pclass</span></div><div class='output co'>#&gt; <span class='message'>- NOTE: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span></div><div class='output co'>#&gt; <span class='message'>- NOTE: There are 4 non-numerical features. Consider using ohse() prior for One Hot Smart Encoding your categorical variables.</span></div><div class='output co'>#&gt; <span class='message'>Model type: Classifier</span></div><div class='output co'>#&gt;   tag   n     p order   pcum
+#&gt; 1 n_3 491 55.11     1  55.11
+#&gt; 2 n_1 216 24.24     2  79.35
+#&gt; 3 n_2 184 20.65     3 100.00</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Splitting datasets</span></div><div class='output co'>#&gt; train_size  test_size 
+#&gt;        623        268 </div><div class='output co'>#&gt; <span class='message'>Ignored variables for training models: 'Fare', 'Cabin'</span></div><div class='output co'>#&gt; <span class='message'>Algorithms excluded: 'StackedEnsemble', 'DeepLearning'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Iterating until 3 models or 30 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Succesfully generated 3 models:</span></div><div class='output co'>#&gt;                           model_id mean_per_class_error   logloss
+#&gt; 1 XGBoost_2_AutoML_20200813_004551            0.4413151 0.7750237
+#&gt; 2 XGBoost_3_AutoML_20200813_004551            0.4434945 0.8010866
+#&gt; 3 XGBoost_1_AutoML_20200813_004551            0.4458870 0.7725101
+#&gt; 
+#&gt; [3 rows x 3 columns] </div><div class='output co'>#&gt; <span class='message'>Check results in H2O Flow's nice interface: http://localhost:54321/flow/index.html</span></div><div class='output co'>#&gt; <span class='message'>Model selected: XGBoost_2_AutoML_20200813_004551</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Running predictions for Pclass...</span></div><div class='output co'>#&gt; <span class='message'>Process duration: 11.8s</span></div><div class='output co'>#&gt;       AUC     ACC
+#&gt; 1 0.78358 0.66791</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>r</span>)</div><div class='output co'>#&gt; Leader Model: XGBoost_2_AutoML_20200813_004551
+#&gt; Independent Variable: Pclass
+#&gt; Type: Classifier
+#&gt; Algorithm: XGBOOST
+#&gt; Trained: 3 models
+#&gt; Split: 70% training data (of 891 observations)
+#&gt; Seed: 0
+#&gt; 
+#&gt; Metrics: 
+#&gt;    AUC = 0.78358
+#&gt;    ACC = 0.66791
+#&gt; 
+#&gt; Most important variables:
+#&gt;    Age (51.7%)
+#&gt;    Survived.FALSE (12.3%)
+#&gt;    Embarked.C (7.6%)
+#&gt;    Sex.female (5.6%)
+#&gt;    Survived.TRUE (5.3%)</div><div class='input'>
 <span class='co'># Regression: Continuous Values</span>
-<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, y = <span class='st'>"Fare"</span>, ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Pclass"</span>), exclude_algos = <span class='kw'>NULL</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>r</span>)
-
+<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, y = <span class='st'>"Fare"</span>, ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Pclass"</span>), exclude_algos = <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; <span class='message'>2020-08-13 00:46:02 | Started process...</span></div><div class='output co'>#&gt; <span class='message'>Variable to predict: Fare</span></div><div class='output co'>#&gt; <span class='message'>- NOTE: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span></div><div class='output co'>#&gt; <span class='message'>- NOTE: 2.2% (20) of Fare values are considered outliers (Z-Score: &gt;3sd). Removing them from the dataset for better results. To keep them, set the 'no_outliers' parameter.</span></div><div class='output co'>#&gt; <span class='message'>- NOTE: There are 4 non-numerical features. Consider using ohse() prior for One Hot Smart Encoding your categorical variables.</span></div><div class='output co'>#&gt; <span class='message'>Model type: Regression</span></div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#&gt;   0.000   7.896  13.863  26.530  30.000 164.867 </div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Splitting datasets</span></div><div class='output co'>#&gt; train_size  test_size 
+#&gt;        609        262 </div><div class='output co'>#&gt; <span class='message'>Ignored variables for training models: 'Pclass'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Iterating until 3 models or 600 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Succesfully generated 4 models:</span></div><div class='output co'>#&gt;                                           model_id mean_residual_deviance
+#&gt; 1 StackedEnsemble_AllModels_AutoML_20200813_004603               412.4477
+#&gt; 2                 XGBoost_2_AutoML_20200813_004603               445.0766
+#&gt; 3                 XGBoost_1_AutoML_20200813_004603               461.0355
+#&gt; 4                 XGBoost_3_AutoML_20200813_004603               519.5304
+#&gt;       rmse
+#&gt; 1 20.30881
+#&gt; 2 21.09684
+#&gt; 3 21.47174
+#&gt; 4 22.79321
+#&gt; 
+#&gt; [4 rows x 3 columns] </div><div class='output co'>#&gt; <span class='message'>Check results in H2O Flow's nice interface: http://localhost:54321/flow/index.html</span></div><div class='output co'>#&gt; <span class='message'>Model selected: StackedEnsemble_AllModels_AutoML_20200813_004603</span></div><div class='output co'>#&gt; <span class='message'>NOTE: No importance features for Stacked Ensemble Models</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Running predictions for Fare...</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots...</span></div><div class='output co'>#&gt; <span class='message'>Process duration: 12.5s</span></div><div class='output co'>#&gt;       rmse      mae       mape      mse    rsq   rsqa
+#&gt; 1 20.30881 14.24359 0.07303959 412.4477 0.3169 0.3143</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>r</span>)</div><div class='output co'>#&gt; Leader Model: StackedEnsemble_AllModels_AutoML_20200813_004603
+#&gt; Independent Variable: Fare
+#&gt; Type: Regression
+#&gt; Algorithm: STACKEDENSEMBLE
+#&gt; Trained: 4 models
+#&gt; Split: 70% training data (of 871 observations)
+#&gt; Seed: 0
+#&gt; 
+#&gt; Metrics: 
+#&gt;    rmse = 20.309
+#&gt;    mae = 14.244
+#&gt;    mape = 0.07304
+#&gt;    mse = 412.45
+#&gt;    rsq = 0.3169
+#&gt;    rsqa = 0.3143
+#&gt; 
+#&gt; </div><div class='input'>
 <span class='co'># WITH PRE-DEFINED TRAIN/TEST DATAFRAMES</span>
-<span class='kw'>splits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='msplit.html'>msplit</a></span>(<span class='kw'>dft</span>, size = <span class='fl'>0.8</span>)
-<span class='kw'>splits</span><span class='op'>$</span><span class='kw'>train</span><span class='op'>$</span><span class='kw'>split</span> <span class='op'>&lt;-</span> <span class='st'>"train"</span>
+<span class='kw'>splits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='msplit.html'>msplit</a></span>(<span class='kw'>dft</span>, size = <span class='fl'>0.8</span>)</div><div class='output co'>#&gt; train_size  test_size 
+#&gt;        712        179 </div><div class='input'><span class='kw'>splits</span><span class='op'>$</span><span class='kw'>train</span><span class='op'>$</span><span class='kw'>split</span> <span class='op'>&lt;-</span> <span class='st'>"train"</span>
 <span class='kw'>splits</span><span class='op'>$</span><span class='kw'>test</span><span class='op'>$</span><span class='kw'>split</span> <span class='op'>&lt;-</span> <span class='st'>"test"</span>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='kw'>splits</span><span class='op'>$</span><span class='kw'>train</span>, <span class='kw'>splits</span><span class='op'>$</span><span class='kw'>test</span>)
-<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>df</span>, <span class='st'>"Survived"</span>, max_models = <span class='fl'>1</span>, train_test = <span class='st'>"split"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>r</span>)
-}</div></pre>
+<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>df</span>, <span class='st'>"Survived"</span>, max_models = <span class='fl'>1</span>, train_test = <span class='st'>"split"</span>)</div><div class='output co'>#&gt; <span class='message'>2020-08-13 00:46:14 | Started process...</span></div><div class='output co'>#&gt; <span class='message'>Variable to predict: Survived</span></div><div class='output co'>#&gt; <span class='message'>- NOTE: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span></div><div class='output co'>#&gt; <span class='message'>- NOTE: There are 5 non-numerical features. Consider using ohse() prior for One Hot Smart Encoding your categorical variables.</span></div><div class='output co'>#&gt; <span class='message'>Model type: Classifier</span></div><div class='output co'>#&gt;     tag   n     p order   pcum
+#&gt; 1 FALSE 549 61.62     1  61.62
+#&gt; 2  TRUE 342 38.38     2 100.00
+#&gt; 
+#&gt;  test train 
+#&gt;   179   712 </div><div class='output co'>#&gt; <span class='message'>Ignored variables for training models: 'split'</span></div><div class='output co'>#&gt; <span class='message'>Algorithms excluded: 'StackedEnsemble', 'DeepLearning'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Iterating until 1 models or 600 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Succesfully generated 1 models:</span></div><div class='output co'>#&gt;                           model_id       auc   logloss
+#&gt; 1 XGBoost_1_AutoML_20200813_004615 0.8838028 0.4011806
+#&gt; 
+#&gt; [1 row x 3 columns] </div><div class='output co'>#&gt; <span class='message'>Check results in H2O Flow's nice interface: http://localhost:54321/flow/index.html</span></div><div class='output co'>#&gt; <span class='message'>Model selected: XGBoost_1_AutoML_20200813_004615</span></div><div class='output co'>#&gt; <span class='message'>NOTE: The following variables were NOT important: Embarked.S, Embarked.Q</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Running predictions for Survived...</span></div><div class='output co'>#&gt; <span class='message'>Target value: FALSE</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots...</span></div><div class='output co'>#&gt; <span class='message'>Process duration: 8.63s</span></div><div class='output co'>#&gt;      AUC     ACC     PRC     TPR     TNR
+#&gt; 1 0.8838 0.86034 0.89655 0.73239 0.94444</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>r</span>)</div><div class='output co'>#&gt; Leader Model: XGBoost_1_AutoML_20200813_004615
+#&gt; Independent Variable: Survived
+#&gt; Type: Classifier
+#&gt; Algorithm: XGBOOST
+#&gt; Trained: 1 models
+#&gt; Split: 80% training data (of 891 observations)
+#&gt; Seed: 0
+#&gt; 
+#&gt; Metrics: 
+#&gt;    AUC = 0.8838
+#&gt;    ACC = 0.86034
+#&gt;    PRC = 0.89655
+#&gt;    TPR = 0.73239
+#&gt;    TNR = 0.94444
+#&gt; 
+#&gt; Most important variables:
+#&gt;    Sex.female (26.5%)
+#&gt;    Fare (23.7%)
+#&gt;    Age (18.2%)
+#&gt;    Pclass.3 (7.8%)
+#&gt;    Sex.male (7.3%)</div><div class='input'><span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
