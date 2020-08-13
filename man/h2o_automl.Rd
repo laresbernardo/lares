@@ -2,8 +2,6 @@
 % Please edit documentation in R/model_functions.R
 \name{h2o_automl}
 \alias{h2o_automl}
-\alias{plot.h2o_automl}
-\alias{print.h2o_automl}
 \title{Automated H2O's AutoML}
 \usage{
 h2o_automl(
@@ -33,10 +31,6 @@ h2o_automl(
   subdir = NA,
   project = "ML Project"
 )
-
-\method{plot}{h2o_automl}(x, ...)
-
-\method{print}{h2o_automl}(x, ...)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
@@ -113,10 +107,6 @@ working directory?}
 the results? Working directory as default.}
 
 \item{project}{Character. Your project's name}
-
-\item{x}{h2o_automl object.}
-
-\item{...}{Additional parameters}
 }
 \description{
 This function lets the user create a robust and fast model, using 
@@ -126,14 +116,6 @@ importances, and plots. If the input is categorical, classification
 models will be trained and if is a continuous variable, regression
 models will be trained.
 }
-\section{Plot Results into Dashboard}{
-
-Use the \code{mplot_full()} function to generate a dashboard with
-your model's results and metrics, or find them in your `plots` 
-element within your `h2o_automl` object (be sure to have your 
-`plots` to `TRUE`).
-}
-
 \section{List of algorithms}{
 
 "DRF" (Distributed Random Forest, including 
@@ -145,7 +127,7 @@ multi-layer artificial neural network) and "StackedEnsemble".
 }
 
 \examples{
-\dontrun{
+\donttest{
 data(dft) # Titanic dataset
 dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 

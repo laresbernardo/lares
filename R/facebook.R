@@ -34,7 +34,7 @@ fb_process <- function(response) {
   flattener <- function(x, i = 1) {
     bind_rows(x) %>%
       mutate(get_id = paste(i, row_number(), sep = "-")) %>%
-      select(get_id, everything()) %>%
+      select(.data$get_id, everything()) %>%
       data.frame
   }
   
@@ -96,9 +96,7 @@ fb_process <- function(response) {
 #' This returns all available FB insights per day including any given
 #' breakdown to the specified report level, and place into a data frame.
 #' For more information on Ad Insights' API, go to the 
-#' \href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}
-#' 
-#' This function was based on FBinsightsR.
+#' \href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}.
 #' 
 #' @family API
 #' @family Facebook
@@ -168,54 +166,6 @@ fb_insights <- function(token,
     output <- fb_process(import)
     return(as_tibble(output))
 }
-
-
-#' ####################################################################
-#' #' Facebook Marketing API
-#' #' 
-#' #' For more information on Ad Insights' API, go to the 
-#' #' \href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}
-#' #' 
-#' #' @family API
-#' #' @family Facebook
-#' #' @inheritParams fb_process
-#' #' @inheritParams fb_insights
-#' #' @export
-#' fb_marketing <- function(token,
-#'                          which,
-#'                          start = Sys.Date() - 7, 
-#'                          end = Sys.Date(), 
-#'                          ad_object = "adsets",
-#'                          fields = NA,
-#'                          api_version = "v8.0",
-#'                          process = TRUE){
-#'   
-#'   set_config(config(http_version = 0))
-#'   
-#'   which <- v2t(which, quotes = FALSE)
-#'   if (is.na(fields[1]))
-#'     fields <- paste(
-#'       "name,configured_status,effective_status,bid_strategy,",
-#'       "billing_event,targeting")
-#'   
-#'   URL <- glued("https://graph.facebook.com/{api_version}/{which}/{ad_object}")
-#'   
-#'   # Call insights
-#'   import <- GET(
-#'     URL,
-#'     query = list(
-#'       access_token = token,
-#'       time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
-#'       fields = if (length(fields) > 1) 
-#'         vector2text(fields, sep = ",", quotes = FALSE) else fields
-#'     ),
-#'     encode = "json")
-#'   
-#'   if (!process) return(import)
-#'   output <- fb_process(import)
-#'   return(as_tibble(output))
-#' }
-
 
 ####################################################################
 #' Get Facebook's Page Posts (API Graph)

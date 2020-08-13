@@ -8,12 +8,6 @@
 #' models will be trained and if is a continuous variable, regression
 #' models will be trained. 
 #' 
-#' @section Plot Results into Dashboard:
-#' Use the \code{mplot_full()} function to generate a dashboard with
-#' your model's results and metrics, or find them in your `plots` 
-#' element within your `h2o_automl` object (be sure to have your 
-#' `plots` to `TRUE`).
-#' 
 #' @section List of algorithms:
 #' "DRF" (Distributed Random Forest, including 
 #' Random Forest (RF) and Extremely-Randomized Trees (XRT)), "GLM" 
@@ -76,7 +70,7 @@
 #' the results? Working directory as default.
 #' @param project Character. Your project's name
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' data(dft) # Titanic dataset
 #' dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 #' 
@@ -533,64 +527,6 @@ get_scores <- function(predictions,
   } 
   ret <- list(scores = scores, multis = multis)
   return(ret)
-}
-
-#' @rdname h2o_automl
-#' @param x h2o_automl object.
-#' @param ... Additional parameters
-#' @export
-plot.h2o_automl <- function(x, ...) {
-  if (!inherits(x, 'h2o_automl'))
-    stop('Object must be class h2o_automl')
-  if ("plots" %in% names(x)) {
-    x$plots$dashboard 
-  } else {
-    message("Nothing to plot: set 'plots = TRUE' when using h2o_automl.") 
-  } 
-}
-
-#' @rdname h2o_automl
-#' @export
-print.h2o_automl <- function(x, ...) {
-  
-  if (!inherits(x, 'h2o_automl'))
-    stop('Object must be class h2o_automl')
-  
-  aux <- list()
-  
-  aux[["met"]] <- glued(
-    "Metrics: 
-{v2t({met}, sep = '\n', quotes = FALSE)}", met = paste(
-  "  ",
-  names(x$metrics$metrics), "=",
-  signif(x$metrics$metrics, 5)))
-  
-  if ("importance" %in% names(x)) {
-    aux[["imp"]] <- glued(
-      "Most important variables:
-{v2t({imp}, sep = '\n', quotes = FALSE)}", imp = paste(
-  "  ",
-  x$importance %>% head(5) %>%
-    mutate(label = sprintf(
-      "%s (%s)", 
-      .data$variable, 
-      formatNum(100*.data$importance, 1, pos = "%"))) %>%
-    pull(.data$label)))
-  }
-  
-  print(glued("
-Leader Model: {x$model_name}
-Independent Variable: {x$y}
-Type: {x$type}
-Algorithm: {toupper(x$algorithm)}
-Trained: {nrow(x$leaderboard)} models
-Split: {round(100*x$split)}% training data (of {nrow(x$datasets$global)} observations)
-Seed: {x$seed}
-
-{aux$met}
-
-{aux$imp}"))
-  
 }
 
 

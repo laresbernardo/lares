@@ -56,10 +56,7 @@ segmentation results. Set to NA for no breakdowns}
 This returns all available FB insights per day including any given
 breakdown to the specified report level, and place into a data frame.
 For more information on Ad Insights' API, go to the 
-\href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}
-}
-\details{
-This function was based on FBinsightsR.
+\href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}.
 }
 \seealso{
 Other API: 
