@@ -127,7 +127,7 @@ multi-layer artificial neural network) and "StackedEnsemble".
 }
 
 \examples{
-\donttest{
+\dontrun{
 data(dft) # Titanic dataset
 dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 

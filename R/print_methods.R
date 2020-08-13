@@ -12,7 +12,7 @@ print.h2o_automl <- function(x, ...) {
   aux <- list()
   
   aux[["met"]] <- glued(
-    "Metrics: 
+    "Test metrics: 
 {v2t({met}, sep = '\n', quotes = FALSE)}", met = paste(
   "  ",
   names(x$metrics$metrics), "=",
