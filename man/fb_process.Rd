@@ -4,10 +4,13 @@
 \alias{fb_process}
 \title{Process Facebook's API Objects}
 \usage{
-fb_process(response)
+fb_process(response, paginate = TRUE)
 }
 \arguments{
 \item{response}{GET's output object, class response}
+
+\item{paginate}{Boolean. Run through all paginations? If not,
+only the first one will be processed.}
 }
 \description{
 Process and paginate raw results from Facebook's API, result of 

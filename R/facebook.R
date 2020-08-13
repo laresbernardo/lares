@@ -7,8 +7,10 @@
 #' @family API
 #' @family Facebook
 #' @param response GET's output object, class response
+#' @param paginate Boolean. Run through all paginations? If not,
+#' only the first one will be processed.
 #' @export
-fb_process <- function(response) {
+fb_process <- function(response, paginate = TRUE) {
   
   if (!"response" %in% class(response))
     stop("You must provide a response object (GET's output)")
@@ -22,7 +24,7 @@ fb_process <- function(response) {
   }
   
   # Check for no-data (user might think there was an error on GET request - warn him!)
-  if (length(import$data) == 0) {
+  if (length(import[[1]]) == 0) {
     message("No data found!")
     invisible(return(list(NULL)))
   }
@@ -30,35 +32,28 @@ fb_process <- function(response) {
   # Deal with GET+response vs jsonlite
   import <- fromJSON(toJSON(import))
   
-  # bind_rows(lapply(x, bind_rows)) %>%
-  flattener <- function(x, i = 1) {
-    bind_rows(x) %>%
-      mutate(get_id = paste(i, row_number(), sep = "-")) %>%
-      select(.data$get_id, everything()) %>%
-      data.frame
-  }
-  
   # First pagination
   results <- list(); i <- 1
-  results[[i]] <- flattener(import$data)
+  results[[i]] <- flattener(import[[1]])
   
   # Following iterations
-  if (exists("next", import$paging)) {
-    i <- i + 1
-    out <- fromJSON(import$paging$`next`)
-    results[[i]] <- flattener(out$data, i)
-    # Re-run first iteration as everything MUST match to bind
-    if (i == 2) {
-      out <- fromJSON(out$paging$`previous`)
-      results[[1]] <- flattener(out$data, i) 
-    }
-    while (exists("next", out$paging)) {
+  if (exists("paging", import) & paginate) {
+    if (exists("next", import$paging)) {
       i <- i + 1
-      out <- fromJSON(out$paging$`next`)
+      out <- fromJSON(import$paging$`next`)
       results[[i]] <- flattener(out$data, i)
+      # Re-run first iteration as everything MUST match to bind
+      if (i == 2) {
+        out <- fromJSON(out$paging$`previous`)
+        results[[1]] <- flattener(out$data, i) 
+      }
+      while (exists("next", out$paging)) {
+        i <- i + 1
+        out <- fromJSON(out$paging$`next`)
+        results[[i]] <- flattener(out$data, i)
+      }
     }
   }
-  
   done <- bind_rows(results)
   
   # So columns that consist in lists but only have 1 element may be used as normal vectors
@@ -87,6 +82,13 @@ fb_process <- function(response) {
     mutate_at(vars(contains("name")), list(as.character)) %>%
     as_tibble()
   return(ret)
+}
+
+flattener <- function(x, i = 1) {
+  bind_rows(x) %>%
+    mutate(get_id = paste(i, row_number(), sep = "-")) %>%
+    select(.data$get_id, everything()) %>%
+    data.frame
 }
 
 
