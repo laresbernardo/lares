@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Facebook Insights API — fb_insights • lares</title>
+<title>Facebook Reach and Frequency API — fb_rf • lares</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,9 @@
 
 
 
-<meta property="og:title" content="Facebook Insights API — fb_insights" />
-<meta property="og:description" content="This returns all available FB insights per day including any given
-breakdown to the specified report level, and place into a data frame.
-For more information on Ad Insights' API, go to the 
+<meta property="og:title" content="Facebook Reach and Frequency API — fb_rf" />
+<meta property="og:description" content="Create or query reach and frequency predictions using Facebook's 
+Reach and Frequency API. For more information on the API and its parameters, go to the 
 original documentaion." />
 
 
@@ -111,31 +110,32 @@ original documentaion." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Facebook Insights API</h1>
+    <h1>Facebook Reach and Frequency API</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/facebook.R'><code>R/facebook.R</code></a></small>
-    <div class="hidden name"><code>fb_insights.Rd</code></div>
+    <div class="hidden name"><code>fb_rf.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This returns all available FB insights per day including any given
-breakdown to the specified report level, and place into a data frame.
-For more information on Ad Insights' API, go to the 
+    <p>Create or query reach and frequency predictions using Facebook's 
+Reach and Frequency API. For more information on the API and its parameters, go to the 
 <a href='https://developers.facebook.com/docs/marketing-api/insights'>original documentaion</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fb_insights</span>(
+    <pre class="usage"><span class='fu'>fb_rf</span>(
   <span class='kw'>token</span>,
-  <span class='kw'>which</span>,
-  start = <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>() <span class='op'>-</span> <span class='fl'>7</span>,
-  end = <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(),
-  time_increment = <span class='st'>"1"</span>,
-  report_level = <span class='st'>"campaign"</span>,
-  ad_object = <span class='st'>"insights"</span>,
-  breakdowns = <span class='fl'>NA</span>,
-  fields = <span class='fl'>NA</span>,
-  limit = <span class='fl'>10000</span>,
+  ad_account = <span class='fl'>NA</span>,
+  prediction = <span class='fl'>NA</span>,
+  objective = <span class='st'>"REACH"</span>,
+  days = <span class='fl'>28</span>,
+  budget = <span class='fl'>2e+06</span>,
+  destination_ids = <span class='fl'>NA</span>,
+  countries = <span class='st'>"MX"</span>,
+  frequency_cap = <span class='fl'>8</span>,
+  prediction_mode = <span class='fl'>1</span>,
+  curve = <span class='fl'>TRUE</span>,
   api_version = <span class='st'>"v8.0"</span>,
-  process = <span class='fl'>TRUE</span>
+  process = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -147,47 +147,49 @@ For more information on Ad Insights' API, go to the
 privileges. Visit the Facebook API Graph Explorer to acquire one</p></td>
     </tr>
     <tr>
-      <th>which</th>
-      <td><p>Character vector. This is the accounts, campaigns, adsets, 
-or ads IDs to be queried. Remember: if report_level = "account", you must 
-start the ID with `act_`.</p></td>
+      <th>ad_account</th>
+      <td><p>Character. Ad Account. Remember to start with `act_`. If you 
+use the `prediction` argument, no need to provide this parameter.</p></td>
     </tr>
     <tr>
-      <th>start</th>
-      <td><p>Character. The first full day to report, in the 
-format "YYYY-MM-DD"</p></td>
+      <th>prediction</th>
+      <td><p>Integer. Prediction ID if you already created the prediction
+and wish to query the curve's data. As this prediction already exists, the 
+rest of arguments of this function will be ignored.</p></td>
     </tr>
     <tr>
-      <th>end</th>
-      <td><p>Character. The last full day to report, in the 
-format "YYYY-MM-DD"</p></td>
+      <th>objective</th>
+      <td><p>Character. Any of: "BRAND_AWARENESS", "LINK_CLICKS", "POST_ENGAGEMENT", 
+"MOBILE_APP_INSTALLS", "CONVERSIONS", "REACH", or "VIDEO_VIEWS".</p></td>
     </tr>
     <tr>
-      <th>time_increment</th>
-      <td><p>Character. Group by months ("monthly"), 
-everything together ("all_days") or an integer per days [1-90].
-Default: each day separatly (i.e. "1").</p></td>
+      <th>days</th>
+      <td><p>Integer. Amount of days for your campaign's predictions.</p></td>
     </tr>
     <tr>
-      <th>report_level</th>
-      <td><p>Character. One of "ad", "adset", "campaign", or "account"</p></td>
+      <th>budget</th>
+      <td><p>Integer. The budget in the Ad Account currency in cents.</p></td>
     </tr>
     <tr>
-      <th>ad_object</th>
-      <td><p>Character. One of: "insights" (default), "adsets", ...</p></td>
+      <th>destination_ids</th>
+      <td><p>Integer vector. Page ID and/or Instagram Account ID.</p></td>
     </tr>
     <tr>
-      <th>breakdowns</th>
-      <td><p>Character Vector. One or more of breakdowns for 
-segmentation results. Set to NA for no breakdowns</p></td>
+      <th>countries</th>
+      <td><p>Character vector. Country's acronyms.</p></td>
     </tr>
     <tr>
-      <th>fields</th>
-      <td><p>Character, json format. Leave `NA` for default fields.</p></td>
+      <th>frequency_cap</th>
+      <td><p>Integer. Frequency cap over all the campaign duration.</p></td>
     </tr>
     <tr>
-      <th>limit</th>
-      <td><p>Integer. Query limit</p></td>
+      <th>prediction_mode</th>
+      <td><p>Integer. "1" for predicting Reach by providing budget, 
+"2" is for predicting Budget given a specific Reach.</p></td>
+    </tr>
+    <tr>
+      <th>curve</th>
+      <td><p>Boolean. Return curve data? If not, only prediction will be created.</p></td>
     </tr>
     <tr>
       <th>api_version</th>
@@ -196,6 +198,10 @@ segmentation results. Set to NA for no breakdowns</p></td>
     <tr>
       <th>process</th>
       <td><p>Boolean. Process GET results to a more friendly format?</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters passed to target specs.</p></td>
     </tr>
     </table>
 
@@ -206,10 +212,10 @@ segmentation results. Set to NA for no breakdowns</p></td>
 <code><a href='fb_accounts.html'>fb_accounts</a>()</code>,
 <code><a href='fb_ads.html'>fb_ads</a>()</code>,
 <code><a href='fb_creatives.html'>fb_creatives</a>()</code>,
+<code><a href='fb_insights.html'>fb_insights</a>()</code>,
 <code><a href='fb_posts.html'>fb_posts</a>()</code>,
 <code><a href='fb_post.html'>fb_post</a>()</code>,
 <code><a href='fb_process.html'>fb_process</a>()</code>,
-<code><a href='fb_rf.html'>fb_rf</a>()</code>,
 <code><a href='li_auth.html'>li_auth</a>()</code>,
 <code><a href='li_profile.html'>li_profile</a>()</code>,
 <code><a href='queryGA.html'>queryGA</a>()</code>,
@@ -218,11 +224,61 @@ segmentation results. Set to NA for no breakdowns</p></td>
 <code><a href='fb_accounts.html'>fb_accounts</a>()</code>,
 <code><a href='fb_ads.html'>fb_ads</a>()</code>,
 <code><a href='fb_creatives.html'>fb_creatives</a>()</code>,
+<code><a href='fb_insights.html'>fb_insights</a>()</code>,
 <code><a href='fb_posts.html'>fb_posts</a>()</code>,
 <code><a href='fb_post.html'>fb_post</a>()</code>,
-<code><a href='fb_process.html'>fb_process</a>()</code>,
-<code><a href='fb_rf.html'>fb_rf</a>()</code></p></div>
+<code><a href='fb_process.html'>fb_process</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># token &lt;- YOURTOKEN</span>
+<span class='co'># account_id &lt;- act_ADACCOUNT</span>
+
+<span class='co'>#BASIC 1: Create and return data for a new prediction</span>
+<span class='kw'>basic1</span> <span class='op'>&lt;-</span> <span class='fu'>fb_rf</span>(<span class='kw'>token</span>, <span class='kw'>account_id</span>, destination_ids = <span class='fl'>187071108930</span>, countries = <span class='st'>"AR"</span>)
+
+<span class='co'># BASIC 2: Fetch data for an existing prediction ID</span>
+<span class='kw'>basic2</span> <span class='op'>&lt;-</span> <span class='fu'>fb_rf</span>(<span class='kw'>token</span>, <span class='kw'>account_id</span>, prediction = <span class='fl'>23845375632160284</span>)
+
+<span class='co'># ADVANCED (Fully custom prediction)</span>
+<span class='kw'>advanced</span> <span class='op'>&lt;-</span> <span class='fu'>fb_rf</span>(<span class='kw'>token</span>, <span class='kw'>account_id</span>,
+                  objective = <span class='st'>'REACH'</span>,
+                  days = <span class='fl'>28</span>,
+                  budget = <span class='fl'>2000000</span>,
+                  destination_ids = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>187071108930</span>, <span class='fl'>1142958119078556</span>),
+                  age_min = <span class='fl'>15</span>,
+                  age_max = <span class='fl'>65</span>,
+                  genders = <span class='fl'>2</span>,
+                  countries = <span class='st'>"MX"</span>,
+                  publisher_platforms = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+                    <span class='st'>'facebook'</span>,
+                    <span class='st'>'instagram'</span>,
+                    <span class='co'>#'audience_network',</span>
+                    <span class='st'>'messenger'</span>),
+                  <span class='co'>#interests_ids = NA,</span>
+                  facebook_positions = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+                    <span class='st'>'feed'</span>,
+                    <span class='co'>#'instant_article',</span>
+                    <span class='st'>'marketplace'</span>,
+                    <span class='st'>'video_feeds'</span>,
+                    <span class='st'>'story'</span>,
+                    <span class='st'>'search'</span>,
+                    <span class='st'>'instream_video'</span>),
+                  instagram_positions = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+                    <span class='st'>'stream'</span>,
+                    <span class='st'>'story'</span>,
+                    <span class='st'>'explore'</span>),
+                  <span class='co'># audience_network_positions = c(</span>
+                  <span class='co'>#  'classic',</span>
+                  <span class='co'>#  'instream_video')</span>
+                  messenger_positions = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+                    <span class='st'>'messenger_home'</span>,
+                    <span class='st'>'sponsored_messages'</span>,
+                    <span class='st'>'story'</span>),
+                  device_platforms = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+                    <span class='st'>'mobile'</span>,
+                    <span class='st'>'desktop'</span>))
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
