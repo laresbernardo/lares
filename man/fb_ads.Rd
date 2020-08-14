@@ -16,7 +16,7 @@ fb_ads(
 }
 \arguments{
 \item{token}{Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one}
+privileges. Visit the Facebook API Graph Explorer to acquire one.}
 
 \item{which}{Character vector. This is the accounts, campaigns, adsets, 
 or ads IDs to be queried. Remember: if report_level = "account", you must 
@@ -41,6 +41,15 @@ For more information on Ad' API, go to the
 }
 \details{
 This function was based on FBinsightsR.
+}
+\examples{
+\dontrun{
+token <- YOURTOKEN
+which <- act_ADACCOUNT
+
+# Query all ads for "which" with results in the last 10 days
+ads <- fb_accounts(YOURTOKEN, which, start = Sys.Date() - 10) 
+}
 }
 \seealso{
 Other API: 

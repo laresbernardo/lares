@@ -103,7 +103,7 @@ flattener <- function(x, i = 1) {
 #' @family API
 #' @family Facebook
 #' @param token Character. This must be a valid access token with sufficient 
-#' privileges. Visit the Facebook API Graph Explorer to acquire one
+#' privileges. Visit the Facebook API Graph Explorer to acquire one.
 #' @param which Character vector. This is the accounts, campaigns, adsets, 
 #' or ads IDs to be queried. Remember: if report_level = "account", you must 
 #' start the ID with `act_`.
@@ -122,6 +122,40 @@ flattener <- function(x, i = 1) {
 #' @param limit Integer. Query limit
 #' @param api_version Character. Facebook API version
 #' @param process Boolean. Process GET results to a more friendly format?
+#' @examples 
+#' \dontrun{
+#' token <- YOURTOKEN
+#' which <- act_ADACCOUNT
+#' 
+#' # Platforms' Insights: all ad-sets platforms of "which" account, 
+#' # aggregated, for the last 30 days
+#' platforms <- fb_insights(
+#'   token, which, 
+#'   start = Sys.Date() - 30, 
+#'   time_increment = "all_days",
+#'   report_level = "adset", 
+#'   fields = c("account_name",
+#'              "adset_id",
+#'              "adset_start",
+#'              "adset_end"),
+#'   breakdowns = c("publisher_platform", 
+#'                  "platform_position", 
+#'                  "device_platform"))
+#'             
+#' # Daily results for all campaigns of "which" account,
+#' with custom performance fields with no breakdowns.
+#' insights_adset <- fb_insights(
+#'   token, which, 
+#'   time_increment = "1",
+#'   report_level = "campaign", 
+#'   fields = c("adset_id",
+#'              "reach",
+#'              "frequency",
+#'              "spend",
+#'              "cpm",
+#'              "objective",
+#'              "optimization_goal"))
+#' }
 #' @export
 fb_insights <- function(token,
                         which,
@@ -195,10 +229,10 @@ fb_insights <- function(token,
 #' "2" is for predicting Budget given a specific Reach.
 #' @param curve Boolean. Return curve data? If not, only prediction will be created.
 #' @param ... Additional parameters passed to target specs.
-#' @examples 
+#' @examples
 #' \dontrun{
-#' # token <- YOURTOKEN
-#' # account_id <- act_ADACCOUNT
+#' token <- YOURTOKEN
+#' account_id <- act_ADACCOUNT
 #' 
 #' #BASIC 1: Create and return data for a new prediction
 #' basic1 <- fb_rf(token, account_id, destination_ids = 187071108930, countries = "AR")
@@ -344,13 +378,19 @@ fb_rf <- function(token,
 #' @family API
 #' @family Facebook
 #' @inheritParams fb_insights
-#' @param total Integer. How many most recent posts do you need?
-#' @param posts_limit Integer. For each post, hoy many results do you need?
+#' @param n Integer. How many most recent posts do you need?
+#' @param limits Integer. For each post, hoy many results do you need?
 #' @param comments,shares,reactions Boolean. Include in your query?
+#' @examples 
+#' \dontrun{
+#' token <- YOURTOKEN
+#' # Query latest 10 posts and 50 comments for each
+#' posts <- fb_posts(token, n = 10, limits = 50, comments = TRUE)
+#' }
 #' @export
 fb_posts <- function(token, 
-                     total = 150, 
-                     posts_limit = 100,
+                     n = 150, 
+                     limits = 100,
                      comments = FALSE, 
                      shares = FALSE, 
                      reactions = FALSE) {
@@ -456,18 +496,18 @@ fb_posts <- function(token,
   }
   
   limit_posts <- 100
-  total_iters <- ceiling(total/limit_posts)
+  total_iters <- ceiling(n/limit_posts)
   all_comments <- all_shares <- all_reactions <- all_posts <- ret <- c()
   
   for (iter in 1:total_iters) {
-    limit_posts <- ifelse(iter == total_iters, limit_posts - (iter*limit_posts - total), limit_posts)
-    limit_posts <- ifelse(total < limit_posts, total, limit_posts)
+    limit_posts <- ifelse(iter == total_iters, limit_posts - (iter*limit_posts - n), limit_posts)
+    limit_posts <- ifelse(n < limit_posts, n, limit_posts)
     if (iter == 1) {
       url <- paste0("https://graph.facebook.com/v3.3/me?fields=",
                     "id,name,posts.limit(",limit_posts,")",
                     "{created_time,message,status_type,",
-                    ifelse(comments, paste0("comments.limit(",posts_limit,"),"), ""),
-                    ifelse(reactions, paste0("reactions.limit(",posts_limit,"),"), ""),
+                    ifelse(comments, paste0("comments.limit(",limits,"),"), ""),
+                    ifelse(reactions, paste0("reactions.limit(",limits,"),"), ""),
                     ifelse(shares, "shares,", ""),
                     "permalink_url}",
                     "&access_token=",token)
@@ -505,7 +545,7 @@ fb_posts <- function(token,
   ret[["shares"]] <- all_shares
   #ret[["json"]] <- json
   
-  msg <- paste("Succesfully exported", total, "posts from", ret$account$name, "with")
+  msg <- paste("Succesfully exported", n, "posts from", ret$account$name, "with")
   msg <- ifelse(!is.null(ret$comments),paste(msg, nrow(ret$comments),"comments,"),msg)
   msg <- ifelse(!is.null(ret$reactions),paste(msg, nrow(ret$reactions),"reactions,"),msg)
   msg <- ifelse(!is.null(ret$shares),paste(msg, nrow(ret$shares),"reactions,"),msg)
@@ -526,6 +566,14 @@ fb_posts <- function(token,
 #' @family Facebook
 #' @inheritParams fb_insights
 #' @param post_id Character vector. Post id(s)
+#' @examples 
+#' \dontrun{
+#' token <- YOURTOKEN
+#' ids <- c(POST_ID1, POST_ID2)
+#' 
+#' # Query 50 comments for two post ids
+#' posts <- fb_post(token, ids, 50)
+#' }
 #' @export
 fb_post <- function(token, post_id, limit = 5000) {
   
@@ -587,12 +635,17 @@ fb_post <- function(token, post_id, limit = 5000) {
 #' @inheritParams fb_process
 #' @param business_id Character. Business ID
 #' @param type Character vector. Values: owned, client
+#' @examples 
+#' \dontrun{
+#' # Query all accounts (owned and with permissions) of a Business ID
+#' accounts <- fb_accounts(YOURTOKEN, YOURBUSINESS)
+#' }
 #' @export
 fb_accounts <- function(token,
                         business_id = "904189322962915",
                         type = c("owned", "client"),
-                        limit = 10000,
-                        api_version = "v3.3"){
+                        limit = 1000,
+                        api_version = "v8.0"){
   
   set_config(config(http_version = 0))
   
@@ -664,6 +717,14 @@ fb_accounts <- function(token,
 #' @family Facebook
 #' @inheritParams fb_insights
 #' @inheritParams fb_process
+#' @examples
+#' \dontrun{
+#' token <- YOURTOKEN
+#' which <- act_ADACCOUNT
+#' 
+#' # Query all ads for "which" with results in the last 10 days
+#' ads <- fb_accounts(YOURTOKEN, which, start = Sys.Date() - 10) 
+#' }
 #' @export
 fb_ads <- function(token,
                    which,
@@ -714,6 +775,14 @@ fb_ads <- function(token,
 #' @family Facebook
 #' @inheritParams fb_process
 #' @inheritParams fb_insights
+#' @examples 
+#' \dontrun{
+#' token <- YOURTOKEN
+#' which <- act_ADACCOUNT
+#' 
+#' # Query all creatives for "which"
+#' creatives <- fb_creatives(YOURTOKEN, which)
+#' }
 #' @export
 fb_creatives <- function(token, which, 
                          api_version = "v8.0", 

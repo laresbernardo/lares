@@ -21,7 +21,7 @@ fb_insights(
 }
 \arguments{
 \item{token}{Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one}
+privileges. Visit the Facebook API Graph Explorer to acquire one.}
 
 \item{which}{Character vector. This is the accounts, campaigns, adsets, 
 or ads IDs to be queried. Remember: if report_level = "account", you must 
@@ -57,6 +57,41 @@ This returns all available FB insights per day including any given
 breakdown to the specified report level, and place into a data frame.
 For more information on Ad Insights' API, go to the 
 \href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}.
+}
+\examples{
+\dontrun{
+token <- YOURTOKEN
+which <- act_ADACCOUNT
+
+# Platforms' Insights: all ad-sets platforms of "which" account, 
+# aggregated, for the last 30 days
+platforms <- fb_insights(
+  token, which, 
+  start = Sys.Date() - 30, 
+  time_increment = "all_days",
+  report_level = "adset", 
+  fields = c("account_name",
+             "adset_id",
+             "adset_start",
+             "adset_end"),
+  breakdowns = c("publisher_platform", 
+                 "platform_position", 
+                 "device_platform"))
+            
+# Daily results for all campaigns of "which" account,
+with custom performance fields with no breakdowns.
+insights_adset <- fb_insights(
+  token, which, 
+  time_increment = "1",
+  report_level = "campaign", 
+  fields = c("adset_id",
+             "reach",
+             "frequency",
+             "spend",
+             "cpm",
+             "objective",
+             "optimization_goal"))
+}
 }
 \seealso{
 Other API: 

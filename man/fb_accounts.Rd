@@ -8,13 +8,13 @@ fb_accounts(
   token,
   business_id = "904189322962915",
   type = c("owned", "client"),
-  limit = 10000,
-  api_version = "v3.3"
+  limit = 1000,
+  api_version = "v8.0"
 )
 }
 \arguments{
 \item{token}{Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one}
+privileges. Visit the Facebook API Graph Explorer to acquire one.}
 
 \item{business_id}{Character. Business ID}
 
@@ -28,6 +28,12 @@ privileges. Visit the Facebook API Graph Explorer to acquire one}
 This returns all ad accounts for a FB Business Account FB.
 For more information on Ad Insights' API, go to the 
 \href{https://developers.facebook.com/docs/marketing-api/reference/ad-account/insights/}{original documentaion}
+}
+\examples{
+\dontrun{
+# Query all accounts (owned and with permissions) of a Business ID
+accounts <- fb_accounts(YOURTOKEN, YOURBUSINESS)
+}
 }
 \seealso{
 Other API: 

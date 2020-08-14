@@ -6,8 +6,8 @@
 \usage{
 fb_posts(
   token,
-  total = 150,
-  posts_limit = 100,
+  n = 150,
+  limits = 100,
   comments = FALSE,
   shares = FALSE,
   reactions = FALSE
@@ -15,17 +15,24 @@ fb_posts(
 }
 \arguments{
 \item{token}{Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one}
+privileges. Visit the Facebook API Graph Explorer to acquire one.}
 
-\item{total}{Integer. How many most recent posts do you need?}
+\item{n}{Integer. How many most recent posts do you need?}
 
-\item{posts_limit}{Integer. For each post, hoy many results do you need?}
+\item{limits}{Integer. For each post, hoy many results do you need?}
 
 \item{comments, shares, reactions}{Boolean. Include in your query?}
 }
 \description{
 Connect to an API Graph's token of a given page and get posts, 
 comments, shares, and reactions of n posts (with no limits).
+}
+\examples{
+\dontrun{
+token <- YOURTOKEN
+# Query latest 10 posts and 50 comments for each
+posts <- fb_posts(token, n = 10, limits = 50, comments = TRUE)
+}
 }
 \seealso{
 Other API: 

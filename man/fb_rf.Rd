@@ -23,7 +23,7 @@ fb_rf(
 }
 \arguments{
 \item{token}{Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one}
+privileges. Visit the Facebook API Graph Explorer to acquire one.}
 
 \item{ad_account}{Character. Ad Account. Remember to start with `act_`. If you 
 use the `prediction` argument, no need to provide this parameter.}
@@ -63,8 +63,8 @@ Reach and Frequency API. For more information on the API and its parameters, go 
 }
 \examples{
 \dontrun{
-# token <- YOURTOKEN
-# account_id <- act_ADACCOUNT
+token <- YOURTOKEN
+account_id <- act_ADACCOUNT
 
 #BASIC 1: Create and return data for a new prediction
 basic1 <- fb_rf(token, account_id, destination_ids = 187071108930, countries = "AR")

@@ -8,7 +8,7 @@ fb_post(token, post_id, limit = 5000)
 }
 \arguments{
 \item{token}{Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one}
+privileges. Visit the Facebook API Graph Explorer to acquire one.}
 
 \item{post_id}{Character vector. Post id(s)}
 
@@ -17,6 +17,15 @@ privileges. Visit the Facebook API Graph Explorer to acquire one}
 \description{
 Connect to an API Graph's token and get posts comments given the
 post(s) id.
+}
+\examples{
+\dontrun{
+token <- YOURTOKEN
+ids <- c(POST_ID1, POST_ID2)
+
+# Query 50 comments for two post ids
+posts <- fb_post(token, ids, 50)
+}
 }
 \seealso{
 Other API: 
