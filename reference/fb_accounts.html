@@ -125,8 +125,8 @@ For more information on Ad Insights' API, go to the
   <span class='kw'>token</span>,
   business_id = <span class='st'>"904189322962915"</span>,
   type = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"owned"</span>, <span class='st'>"client"</span>),
-  limit = <span class='fl'>10000</span>,
-  api_version = <span class='st'>"v3.3"</span>
+  limit = <span class='fl'>1000</span>,
+  api_version = <span class='st'>"v8.0"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -135,7 +135,7 @@ For more information on Ad Insights' API, go to the
     <tr>
       <th>token</th>
       <td><p>Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one</p></td>
+privileges. Visit the Facebook API Graph Explorer to acquire one.</p></td>
     </tr>
     <tr>
       <th>business_id</th>
@@ -179,6 +179,11 @@ privileges. Visit the Facebook API Graph Explorer to acquire one</p></td>
 <code><a href='fb_process.html'>fb_process</a>()</code>,
 <code><a href='fb_rf.html'>fb_rf</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># Query all accounts (owned and with permissions) of a Business ID</span>
+<span class='kw'>accounts</span> <span class='op'>&lt;-</span> <span class='fu'>fb_accounts</span>(<span class='kw'>YOURTOKEN</span>, <span class='kw'>YOURBUSINESS</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

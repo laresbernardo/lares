@@ -144,7 +144,7 @@ Reach and Frequency API. For more information on the API and its parameters, go 
     <tr>
       <th>token</th>
       <td><p>Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one</p></td>
+privileges. Visit the Facebook API Graph Explorer to acquire one.</p></td>
     </tr>
     <tr>
       <th>ad_account</th>
@@ -231,8 +231,8 @@ rest of arguments of this function will be ignored.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># token &lt;- YOURTOKEN</span>
-<span class='co'># account_id &lt;- act_ADACCOUNT</span>
+<span class='kw'>token</span> <span class='op'>&lt;-</span> <span class='kw'>YOURTOKEN</span>
+<span class='kw'>account_id</span> <span class='op'>&lt;-</span> <span class='kw'>act_ADACCOUNT</span>
 
 <span class='co'>#BASIC 1: Create and return data for a new prediction</span>
 <span class='kw'>basic1</span> <span class='op'>&lt;-</span> <span class='fu'>fb_rf</span>(<span class='kw'>token</span>, <span class='kw'>account_id</span>, destination_ids = <span class='fl'>187071108930</span>, countries = <span class='st'>"AR"</span>)
