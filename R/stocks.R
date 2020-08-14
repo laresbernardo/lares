@@ -325,18 +325,24 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0) {
   check_attr(trans, check = "stocks_file_transactions")
   check_attr(cash, check = "stocks_file_cash")
   
-  daily <- daily_stocks(hist, trans) %>%
-    arrange(.data$Date) %>% 
+  temp <- expand.grid(Date = unique(hist$Date), Symbol = unique(hist$Symbol)) %>%
+    left_join(daily_stocks(hist, trans), c("Date", "Symbol")) %>%
+    mutate(Date = as.Date(.data$Date)) %>%
+    arrange(desc(.data$Date), .data$Symbol) %>%
+    group_by(.data$Symbol) %>%
+    tidyr::fill(.data$Value, .data$CumInvested, .data$CumValue, 
+                .data$CumDividend, .data$CumCost, .direction = "up") %>%
     group_by(.data$Date) %>% 
-    summarise_if(is.numeric, sum) %>%
+    summarise_if(is.numeric, list(~sum(., na.rm = TRUE))) %>%
+    arrange(desc(.data$Date)) %>%
     mutate(ROI = 100 * (.data$CumValue/.data$CumInvested - 1)) %>%
     select(.data$Date, .data$CumInvested, .data$CumValue, 
-           .data$ROI, .data$Invested, .data$CumCost, .data$CumDividend, .data$Dividend) 
+           .data$ROI, .data$Invested, .data$CumCost, .data$CumDividend, .data$Dividend)
   
   days <- data.frame(Date = as.Date(min(hist$Date):Sys.Date(), origin = "1970-01-01")) %>%
-    left_join(daily, "Date") %>%
+    left_join(temp, c("Date")) %>%
     tidyr::fill(.data$ROI, .data$CumInvested, .data$CumValue, 
-                .data$CumDividend, .data$CumCost, .data$Invested, .direction = "up") %>%
+                .data$CumDividend, .data$CumCost, .direction = "up") %>%
     left_join(select(cash, .data$Date, .data$Cash), "Date") %>% 
     replace(is.na(.), 0) %>%    
     mutate(DifUSD = .data$CumValue - .data$Invested - lag(.data$CumValue),
