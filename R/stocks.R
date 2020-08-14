@@ -255,7 +255,7 @@ daily_stocks <- function(hist, trans, tickers = NA) {
   if (!is.na(tickers)[1])
     check_attr(tickers, check = "stocks_file_portfolio")
   
-  with_div <- "DivReal" %in% colnames(trans)
+  with_div <- "DivReal" %in% colnames(hist)
   
   # hist_structure <- c("Date", "Symbol", "Value", "Div", "DivReal")
   # trans_structure <- c("Symbol", "Date", "Quant", "Each", "Invested", "Cost")
@@ -270,6 +270,7 @@ daily_stocks <- function(hist, trans, tickers = NA) {
     left_join(trans, by = c("Date", "Symbol")) %>%
     replace(is.na(.), 0) %>%
     arrange(.data$Date) %>%
+    {if (!with_div) mutate(., DivReal = 0) else .} %>%
     group_by(.data$Symbol) %>%
     mutate(CumQuant = cumsum(.data$Quant),
            CumInvested = cumsum(.data$Invested),
@@ -279,14 +280,12 @@ daily_stocks <- function(hist, trans, tickers = NA) {
            CumROI = as.numeric(ifelse(
              .data$CumValue == 0, 100*(.data$Each*abs(.data$Quant)/lag(.data$CumInvested) - 1), 
              .data$CumROI)),
-           Dividend = ifelse(with_div, .data$DivReal * .data$CumQuant, 0),
+           Dividend = .data$DivReal * .data$CumQuant,
            DifUSD = .data$CumValue - .data$Invested - lag(.data$CumValue),
            CumDividend = cumsum(.data$Dividend)) %>% 
     select(.data$Date, .data$Symbol, .data$Value, .data$Quant, .data$Each, .data$Invested, 
            .data$Cost, .data$Dividend, .data$CumValue, .data$CumInvested, .data$CumROI, 
            .data$CumQuant, .data$DifUSD, .data$CumDividend, .data$CumCost) %>%
-    group_by(.data$Date) %>% 
-    mutate(Weight = 100*.data$CumValue/sum(.data$CumValue)) %>% 
     group_by(.data$Date, .data$Symbol) %>% slice(1) %>%
     arrange(desc(.data$Date), desc(.data$CumValue)) %>% 
     ungroup()
