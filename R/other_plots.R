@@ -324,7 +324,7 @@ scale_y_percent <- function(...) scale_y_continuous(..., labels = percent)
 
 #' @rdname scale_x_comma
 #' @export
-scale_x_dollar <- function(...) scale_y_continuous(..., labels = dollar)
+scale_x_dollar <- function(...) scale_x_continuous(..., labels = dollar)
 
 #' @rdname scale_x_comma
 #' @export

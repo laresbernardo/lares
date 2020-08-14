@@ -145,28 +145,194 @@ fb_insights <- function(token,
       "impressions, cpm, spend, reach, clicks, unique_clicks, ctr, cpc, unique_ctr,",
       "cost_per_unique_click")
   
-    aux <- v2t(which, quotes = FALSE)
-    URL <- glued("https://graph.facebook.com/{api_version}/{aux}/{ad_object}")
+  aux <- v2t(which, quotes = FALSE)
+  URL <- glued("https://graph.facebook.com/{api_version}/{aux}/{ad_object}")
+  
+  # Call insights
+  import <- GET(
+    URL,
+    query = list(
+      access_token = token,
+      time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
+      level = report_level,
+      fields = if (length(fields) > 1) 
+        vector2text(fields, sep = ",", quotes = FALSE) else fields,
+      breakdowns = if (!is.na(breakdowns[1])) 
+        vector2text(breakdowns, sep = ",", quotes = FALSE) else NULL,
+      time_increment = time_increment,
+      limit = as.character(limit)
+    ),
+    encode = "json")
+  
+  if (!process) return(import)
+  output <- fb_process(import)
+  return(as_tibble(output))
+}
+
+####################################################################
+#' Facebook Reach and Frequency API
+#' 
+#' Create or query reach and frequency predictions using Facebook's 
+#' Reach and Frequency API. For more information on the API and its parameters, go to the 
+#' \href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}.
+#' 
+#' @family API
+#' @family Facebook
+#' @inheritParams fb_insights
+#' @param ad_account Character. Ad Account. Remember to start with `act_`. If you 
+#' use the `prediction` argument, no need to provide this parameter.
+#' @param prediction Integer. Prediction ID if you already created the prediction
+#' and wish to query the curve's data. As this prediction already exists, the 
+#' rest of arguments of this function will be ignored.
+#' @param objective Character. Any of: "BRAND_AWARENESS", "LINK_CLICKS", "POST_ENGAGEMENT", 
+#' "MOBILE_APP_INSTALLS", "CONVERSIONS", "REACH", or "VIDEO_VIEWS".
+#' @param days Integer. Amount of days for your campaign's predictions.
+#' @param budget Integer. The budget in the Ad Account currency in cents.
+#' @param destination_ids Integer vector. Page ID and/or Instagram Account ID.
+#' @param countries Character vector. Country's acronyms.
+#' @param frequency_cap Integer. Frequency cap over all the campaign duration.
+#' @param prediction_mode Integer. "1" for predicting Reach by providing budget, 
+#' "2" is for predicting Budget given a specific Reach.
+#' @param curve Boolean. Return curve data? If not, only prediction will be created.
+#' @param ... Additional parameters passed to target specs.
+#' @examples 
+#' \dontrun{
+#' # token <- YOURTOKEN
+#' # account_id <- act_ADACCOUNT
+#' 
+#' #BASIC 1: Create and return data for a new prediction
+#' basic1 <- fb_rf(token, account_id, destination_ids = 187071108930, countries = "AR")
+#' 
+#' # BASIC 2: Fetch data for an existing prediction ID
+#' basic2 <- fb_rf(token, account_id, prediction = 23845375632160284)
+#' 
+#' # ADVANCED (Fully custom prediction)
+#' advanced <- fb_rf(token, account_id,
+#'                   objective = 'REACH',
+#'                   days = 28,
+#'                   budget = 2000000,
+#'                   destination_ids = c(187071108930, 1142958119078556),
+#'                   age_min = 15,
+#'                   age_max = 65,
+#'                   genders = 2,
+#'                   countries = "MX",
+#'                   publisher_platforms = c(
+#'                     'facebook',
+#'                     'instagram',
+#'                     #'audience_network',
+#'                     'messenger'),
+#'                   #interests_ids = NA,
+#'                   facebook_positions = c(
+#'                     'feed',
+#'                     #'instant_article',
+#'                     'marketplace',
+#'                     'video_feeds',
+#'                     'story',
+#'                     'search',
+#'                     'instream_video'),
+#'                   instagram_positions = c(
+#'                     'stream',
+#'                     'story',
+#'                     'explore'),
+#'                   # audience_network_positions = c(
+#'                   #  'classic',
+#'                   #  'instream_video')
+#'                   messenger_positions = c(
+#'                     'messenger_home',
+#'                     'sponsored_messages',
+#'                     'story'),
+#'                   device_platforms = c(
+#'                     'mobile',
+#'                     'desktop'))
+#' }
+#' @export
+fb_rf <- function(token, 
+                  ad_account = NA,
+                  prediction = NA,
+                  objective = 'REACH',
+                  days = 28,
+                  budget = 2000000,
+                  destination_ids = NA,
+                  countries = "MX",
+                  frequency_cap = 8,
+                  prediction_mode = 1,
+                  curve = TRUE,
+                  api_version = "v8.0",
+                  process = TRUE,
+                  ...) {
+  
+  set_config(config(http_version = 0))
+  
+  if (is.na(prediction[1])) {
     
-    # Call insights
-    import <- GET(
-      URL,
+    message(">>> Creating prediction...")
+    
+    # Transform target_spec from list to JSON format
+    target_spec <- list(
+      geo_locations = if (length(countries) > 0)
+        list(countries = countries) else NULL,
+      ...)
+    ts <- toJSON(target_spec)
+    
+    # Force some values that must be integers
+    if ("age_min" %in% names(target_spec))
+      ts <- gsub(paste0("\\[",target_spec[["age_min"]],"\\]"), target_spec[["age_min"]], ts)
+    if ("age_max" %in% names(target_spec))
+      ts <- gsub(paste0("\\[",target_spec[["age_max"]],"\\]"), target_spec[["age_max"]], ts)
+    
+    # Create a prediction (returns ID if successful)
+    daysecs <- 60 * 60 * 24
+    current_time <- as.integer(Sys.time())
+    prediction <- content(POST(
+      glued("https://graph.facebook.com/{api_version}/{ad_account}/reachfrequencypredictions"),
       query = list(
         access_token = token,
-        time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
-        level = report_level,
-        fields = if (length(fields) > 1) 
-          vector2text(fields, sep = ",", quotes = FALSE) else fields,
-        breakdowns = if (!is.na(breakdowns[1])) 
-          vector2text(breakdowns, sep = ",", quotes = FALSE) else NULL,
-        time_increment = time_increment,
-        limit = as.character(limit)
-      ),
-      encode = "json")
+        start_time = current_time + daysecs,
+        end_time = min((current_time + daysecs + (days) * daysecs), 
+                       (current_time + daysecs + (89*daysecs))),
+        objective = toupper(objective),
+        frequency_cap = frequency_cap,
+        prediction_mode = prediction_mode,
+        budget = as.integer(budget),
+        destination_ids = toJSON(as.character(destination_ids)),
+        target_spec = ts),
+      encode = "json"))[[1]]
     
-    if (!process) return(import)
-    output <- fb_process(import)
-    return(as_tibble(output))
+    if ("message" %in% names(prediction)) {
+      message(paste(
+        prediction$message,
+        prediction$error_user_title, 
+        prediction$error_user_msg, 
+        sep = "\n"))
+      return(invisible(prediction))
+    }
+    message(glued("Prediction created: {prediction}"))
+  }
+  
+  if (curve) {
+    if (length(prediction) > 1)
+      stop("Please, provide only 1 prediction per query")
+    curves <- GET(
+      glued("https://graph.facebook.com/{api_version}/{prediction}"),
+      query = list(
+        access_token = token,
+        fields = "curve_budget_reach"))
+    
+    if (process) {
+      curves <- fb_process(curves) %>%
+        select(-one_of(zerovar(.))) %>%
+        mutate(budget = .data$budget/100,
+               frequency = .data$impression/.data$reach,
+               weekly_frequency = .data$frequency / (days/7),
+               cpm = 1000 * .data$budget / .data$impression,
+               prediction = prediction) 
+    }
+    
+    attr(curves, "prediction") <- prediction
+    class(curves) <- c(class(curves), "fb_rf")
+    return(curves) 
+  } 
+  return(prediction)
 }
 
 ####################################################################
