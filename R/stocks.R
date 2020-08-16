@@ -266,8 +266,14 @@ daily_stocks <- function(hist, trans, tickers = NA) {
   #   stop(paste("The structure of the 'trans' table should be:",
   #              paste(shQuote(trans_structure), collapse = ", ")))}
   
-  daily <- hist %>%
+  daily <- expand.grid(Date = unique(hist$Date), Symbol = unique(hist$Symbol)) %>%
+    left_join(hist, c("Date", "Symbol")) %>%
     left_join(trans, by = c("Date", "Symbol")) %>%
+    select(-.data$CODE, -.data$Description) %>%
+    mutate(Date = as.Date(.data$Date)) %>%
+    arrange(desc(.data$Date), .data$Symbol) %>%
+    group_by(.data$Symbol) %>%
+    tidyr::fill(.data$Value, .direction = "up") %>%
     replace(is.na(.), 0) %>%
     arrange(.data$Date) %>%
     {if (!with_div) mutate(., DivReal = 0) else .} %>%
