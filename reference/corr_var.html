@@ -249,7 +249,8 @@ save the plot</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 
-<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived</span>, method = <span class='st'>"spearman"</span>, plot = <span class='fl'>FALSE</span>, top = <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Not a valid input: Survived was transformed or does not exist.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Maybe you meant one of: 'Survived_TRUE'</span></div><div class='output co'>#&gt; <span class='message'>Automatically using 'Survived_TRUE</span></div><div class='output co'>#&gt;        variables    corr     pvalue
+<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived</span>, method = <span class='st'>"spearman"</span>, plot = <span class='fl'>FALSE</span>, top = <span class='fl'>10</span>)
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Not a valid input: Survived was transformed or does not exist.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Maybe you meant one of: 'Survived_TRUE'</span></div><div class='output co'>#&gt; <span class='message'>Automatically using 'Survived_TRUE</span></div><div class='output co'>#&gt;        variables    corr     pvalue
 #&gt; 3       Sex_male -0.5434 0.00000000
 #&gt; 7           Fare  0.3237 0.00000000
 #&gt; 20        Cabin_ -0.3169 0.00000000
@@ -264,9 +265,11 @@ save the plot</p></td>
 <span class='co'># With plots, results are easier to compare:</span>
 
 <span class='co'># Correlate Survived with everything else and show only significant results</span>
-<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, max_pvalue = <span class='fl'>0.01</span>)</div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, max_pvalue = <span class='fl'>0.01</span>)
+</div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Top 15 with less than 50% correlation</span>
-<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, ceiling = <span class='fl'>60</span>, top = <span class='fl'>15</span>)</div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 60% (absolute)</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, ceiling = <span class='fl'>60</span>, top = <span class='fl'>15</span>)
+</div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 60% (absolute)</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

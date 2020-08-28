@@ -174,7 +174,8 @@ distributions</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 
 <span class='co'># List with the names of the columns classified by class</span>
-<span class='fu'>df_str</span>(<span class='kw'>dft</span>, <span class='st'>"names"</span>)</div><div class='output co'>#&gt; <span class='message'>Other available 'return' options: 'skimr', 'numbers', 'distr', 'plot'</span></div><div class='output co'>#&gt; $cols
+<span class='fu'>df_str</span>(<span class='kw'>dft</span>, <span class='st'>"names"</span>)
+</div><div class='output co'>#&gt; <span class='message'>Other available 'return' options: 'skimr', 'numbers', 'distr', 'plot'</span></div><div class='output co'>#&gt; $cols
 #&gt;  [1] "PassengerId" "Survived"    "Pclass"      "Sex"         "Age"        
 #&gt;  [6] "SibSp"       "Parch"       "Ticket"      "Fare"        "Cabin"      
 #&gt; [11] "Embarked"   
@@ -198,7 +199,8 @@ distributions</p></td>
 #&gt; character(0)
 #&gt; </div><div class='input'>
 <span class='co'># Dataframe with numbers: total values, row, columns, complete rows....</span>
-<span class='fu'>df_str</span>(<span class='kw'>dft</span>, <span class='st'>"numbers"</span>, quiet = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                 metric counter       p
+<span class='fu'>df_str</span>(<span class='kw'>dft</span>, <span class='st'>"numbers"</span>, quiet = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt;                 metric counter       p
 #&gt; 1         Total.Values    9801  100.00
 #&gt; 2           Total.Rows     891  100.00
 #&gt; 3        Total.Columns      11  100.00
@@ -212,7 +214,9 @@ distributions</p></td>
 #&gt; 11       Complete.Rows     714   80.13
 #&gt; 12        Memory.Usage  103448 1055.48</div><div class='input'>
 <span class='co'># Now, some visualizations</span>
-<span class='fu'>df_str</span>(<span class='kw'>dft</span>, <span class='st'>"plot"</span>, quiet = <span class='fl'>TRUE</span>)</div><div class='img'><img src='df_str-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>df_str</span>(<span class='kw'>dft</span>, <span class='st'>"distr"</span>, quiet = <span class='fl'>TRUE</span>)</div><div class='img'><img src='df_str-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>df_str</span>(<span class='kw'>dft</span>, <span class='st'>"plot"</span>, quiet = <span class='fl'>TRUE</span>)
+</div><div class='img'><img src='df_str-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>df_str</span>(<span class='kw'>dft</span>, <span class='st'>"distr"</span>, quiet = <span class='fl'>TRUE</span>)
+</div><div class='img'><img src='df_str-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

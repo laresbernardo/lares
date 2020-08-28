@@ -202,8 +202,10 @@ printing the split counter result.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
-<span class='kw'>splits</span> <span class='op'>&lt;-</span> <span class='fu'>msplit</span>(<span class='kw'>dft</span>, size = <span class='fl'>0.7</span>, seed = <span class='fl'>123</span>)</div><div class='output co'>#&gt; train_size  test_size 
-#&gt;        623        268 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>splits</span>)</div><div class='output co'>#&gt; [1] "train"      "test"       "summary"    "split_size"</div></pre>
+<span class='kw'>splits</span> <span class='op'>&lt;-</span> <span class='fu'>msplit</span>(<span class='kw'>dft</span>, size = <span class='fl'>0.7</span>, seed = <span class='fl'>123</span>)
+</div><div class='output co'>#&gt; train_size  test_size 
+#&gt;        623        268 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>splits</span>)
+</div><div class='output co'>#&gt; [1] "train"      "test"       "summary"    "split_size"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

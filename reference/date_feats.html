@@ -210,8 +210,10 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dfl</span>) <span class='co'># Dummy dataset</span>
 <span class='co'># Imput as a vector or dataframe</span>
-<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>date_feats</span>(<span class='kw'>dfl</span>, keep_originals = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 1 date/time columns: 'opp_date'</span></div><div class='input'><span class='co'># Same as running date_feats(dfl$opp_date)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt;               opp_date opp_date_year opp_date_month opp_date_day opp_date_week
+<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>date_feats</span>(<span class='kw'>dfl</span>, keep_originals = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 1 date/time columns: 'opp_date'</span></div><div class='input'><span class='co'># Same as running date_feats(dfl$opp_date)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span>, <span class='fl'>10</span>)
+</div><div class='output co'>#&gt;               opp_date opp_date_year opp_date_month opp_date_day opp_date_week
 #&gt; 1  2019-02-06 12:22:48          2019              2            6             6
 #&gt; 2  2019-02-11 20:50:40          2019              2           11             6
 #&gt; 3  2019-02-05 21:47:31          2019              2            5             6

@@ -171,7 +171,8 @@ range. It also works for multi-categorical models.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>dfr</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>)], <span class='kw'>head</span>)</div><div class='output co'>#&gt; $class2
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>dfr</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>)], <span class='kw'>head</span>)
+</div><div class='output co'>#&gt; $class2
 #&gt;     tag    scores
 #&gt; 1  TRUE 0.3155498
 #&gt; 2  TRUE 0.8747599
@@ -191,7 +192,8 @@ range. It also works for multi-categorical models.</p>
 #&gt; </div><div class='input'>
 <span class='co'># ROC Data for Binomial Model</span>
 <span class='kw'>roc1</span> <span class='op'>&lt;-</span> <span class='fu'>ROC</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>roc1</span>, <span class='kw'>head</span>)</div><div class='output co'>#&gt; $ci
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>roc1</span>, <span class='kw'>head</span>)
+</div><div class='output co'>#&gt; $ci
 #&gt;        roc.ci
 #&gt; min 0.8542079
 #&gt; AUC 0.8946749
@@ -209,7 +211,8 @@ range. It also works for multi-categorical models.</p>
 <span class='co'># ROC Data for Multi-Categorical Model</span>
 <span class='kw'>roc2</span> <span class='op'>&lt;-</span> <span class='fu'>ROC</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>score</span>,
             multis = <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span>, select = <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>tag</span>, <span class='kw'>score</span>)))
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>roc2</span>, <span class='kw'>head</span>)</div><div class='output co'>#&gt; $ci
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>roc2</span>, <span class='kw'>head</span>)
+</div><div class='output co'>#&gt; $ci
 #&gt;           n_1       n_2       n_3      mean
 #&gt; min 0.8198601 0.6018566 0.7774864 0.7330677
 #&gt; AUC 0.8669377 0.6754127 0.8264621 0.7896042

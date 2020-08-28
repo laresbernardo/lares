@@ -174,7 +174,12 @@ characters and no accents/symbols on letters.</p>
 <code><a href='topics_rake.html'>topics_rake</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bernardo Lares 123"</span>)</div><div class='output co'>#&gt; [1] "bernardo lares 123"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bèrnärdo LáreS 123"</span>, lower = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "Bernardo LareS 123"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bernardo Lares"</span>, spaces = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "bernardolares"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"\\@®ì÷å   %ñS  ..-X"</span>, spaces = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "riansx"</div><div class='input'><span class='fu'>cleanText</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"María"</span>, <span class='st'>"€"</span>, <span class='st'>"Núñez"</span>))</div><div class='output co'>#&gt; [1] "maria" "eur"   "nunez"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bernardo Lares 123"</span>)
+</div><div class='output co'>#&gt; [1] "bernardo lares 123"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bèrnärdo LáreS 123"</span>, lower = <span class='fl'>FALSE</span>)
+</div><div class='output co'>#&gt; [1] "Bernardo LareS 123"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bernardo Lares"</span>, spaces = <span class='fl'>FALSE</span>)
+</div><div class='output co'>#&gt; [1] "bernardolares"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"\\@®ì÷å   %ñS  ..-X"</span>, spaces = <span class='fl'>FALSE</span>)
+</div><div class='output co'>#&gt; [1] "riansx"</div><div class='input'><span class='fu'>cleanText</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"María"</span>, <span class='st'>"€"</span>, <span class='st'>"Núñez"</span>))
+</div><div class='output co'>#&gt; [1] "maria" "eur"   "nunez"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

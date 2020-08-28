@@ -208,7 +208,8 @@ have in 'tag' (more than: regression; less than: classification)</p></td>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>dfr</span>, <span class='kw'>head</span>)</div><div class='output co'>#&gt; $class2
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>dfr</span>, <span class='kw'>head</span>)
+</div><div class='output co'>#&gt; $class2
 #&gt;     tag    scores
 #&gt; 1  TRUE 0.3155498
 #&gt; 2  TRUE 0.8747599
@@ -237,14 +238,18 @@ have in 'tag' (more than: regression; less than: classification)</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># Dasboard for Binomial Model</span>
 <span class='fu'>mplot_full</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, 
-          model_name = <span class='st'>"Titanic Survived Model"</span>)</div><div class='img'><img src='mplot_full-1.png' alt='' width='700' height='433' /></div><div class='input'>
+          model_name = <span class='st'>"Titanic Survived Model"</span>)
+</div><div class='img'><img src='mplot_full-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Dasboard for Multi-Categorical Model</span>
 <span class='fu'>mplot_full</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>score</span>,
           multis = <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span>, select = <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>tag</span>, <span class='kw'>score</span>)),
-          model_name = <span class='st'>"Titanic Class Model"</span>)</div><div class='output co'>#&gt; <span class='message'>Target value: n_1</span></div><div class='output co'>#&gt; <span class='message'>Target value: n_2</span></div><div class='output co'>#&gt; <span class='message'>Target value: n_3</span></div><div class='img'><img src='mplot_full-2.png' alt='' width='700' height='433' /></div><div class='input'>          
+          model_name = <span class='st'>"Titanic Class Model"</span>)
+</div><div class='output co'>#&gt; <span class='message'>Target value: n_1</span></div><div class='output co'>#&gt; <span class='message'>Target value: n_2</span></div><div class='output co'>#&gt; <span class='message'>Target value: n_3</span></div><div class='img'><img src='mplot_full-2.png' alt='' width='700' height='433' /></div><div class='input'>          
 <span class='co'># Dasboard for Regression Model</span>
 <span class='fu'>mplot_full</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>score</span>, 
-          model_name = <span class='st'>"Titanic Fare Model"</span>)</div><div class='img'><img src='mplot_full-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span></div></pre>
+          model_name = <span class='st'>"Titanic Fare Model"</span>)
+</div><div class='img'><img src='mplot_full-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

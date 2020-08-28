@@ -337,7 +337,8 @@ multi-layer artificial neural network) and "StackedEnsemble".
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='kw'>splits</span><span class='op'>$</span><span class='kw'>train</span>, <span class='kw'>splits</span><span class='op'>$</span><span class='kw'>test</span>)
 <span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>df</span>, <span class='st'>"Survived"</span>, max_models = <span class='fl'>1</span>, train_test = <span class='st'>"split"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>r</span>)
-}</div></pre>
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

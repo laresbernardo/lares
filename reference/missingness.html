@@ -176,15 +176,18 @@ missingness in a data.frame. It also plots the results if needed.</p>
                  D = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='kw'>LETTERS</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>]))
 
 <span class='co'># Missing values summary</span>
-<span class='fu'>missingness</span>(<span class='kw'>df</span>)</div><div class='output co'>#&gt;   variable missing missingness
+<span class='fu'>missingness</span>(<span class='kw'>df</span>)
+</div><div class='output co'>#&gt;   variable missing missingness
 #&gt; 1        C       5         100
 #&gt; 2        B       2          40
 #&gt; 3        D       1          20</div><div class='input'>
 <span class='co'># Visual results</span>
 <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
-<span class='fu'>missingness</span>(<span class='kw'>df</span>, plot = <span class='fl'>TRUE</span>)</div><div class='img'><img src='missingness-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>missingness</span>(<span class='kw'>df</span>, plot = <span class='fl'>TRUE</span>)
+</div><div class='img'><img src='missingness-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Show all variables (including those with no missing values)</span>
-<span class='fu'>missingness</span>(<span class='kw'>df</span>, plot = <span class='fl'>TRUE</span>, full = <span class='fl'>TRUE</span>)</div><div class='img'><img src='missingness-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>missingness</span>(<span class='kw'>df</span>, plot = <span class='fl'>TRUE</span>, full = <span class='fl'>TRUE</span>)
+</div><div class='img'><img src='missingness-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

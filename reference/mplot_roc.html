@@ -206,7 +206,8 @@ range. It also works for multi-categorical models.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>dfr</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>)], <span class='kw'>head</span>)</div><div class='output co'>#&gt; $class2
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>dfr</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>)], <span class='kw'>head</span>)
+</div><div class='output co'>#&gt; $class2
 #&gt;     tag    scores
 #&gt; 1  TRUE 0.3155498
 #&gt; 2  TRUE 0.8747599
@@ -226,12 +227,14 @@ range. It also works for multi-categorical models.</p>
 #&gt; </div><div class='input'>
 <span class='co'># ROC Curve for Binomial Model</span>
 <span class='fu'>mplot_roc</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, 
-          model_name = <span class='st'>"Titanic Survived Model"</span>)</div><div class='img'><img src='mplot_roc-1.png' alt='' width='700' height='433' /></div><div class='input'>
+          model_name = <span class='st'>"Titanic Survived Model"</span>)
+</div><div class='img'><img src='mplot_roc-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># ROC Curves for Multi-Categorical Model</span>
 <span class='fu'>mplot_roc</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>score</span>,
           multis = <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span>, select = <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>tag</span>, <span class='kw'>score</span>)),
           squared = <span class='fl'>FALSE</span>,
-          model_name = <span class='st'>"Titanic Class Model"</span>)</div><div class='img'><img src='mplot_roc-2.png' alt='' width='700' height='433' /></div></pre>
+          model_name = <span class='st'>"Titanic Class Model"</span>)
+</div><div class='img'><img src='mplot_roc-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -224,7 +224,8 @@ categorical model.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>dfr</span>, <span class='kw'>head</span>)</div><div class='output co'>#&gt; $class2
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>dfr</span>, <span class='kw'>head</span>)
+</div><div class='output co'>#&gt; $class2
 #&gt;     tag    scores
 #&gt; 1  TRUE 0.3155498
 #&gt; 2  TRUE 0.8747599
@@ -254,7 +255,9 @@ categorical model.</p></td>
 <span class='co'># Metrics for Binomial Model</span>
 <span class='kw'>met1</span> <span class='op'>&lt;-</span> <span class='fu'>model_metrics</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>,
                       model_name = <span class='st'>"Titanic Survived Model"</span>,
-                      plots = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Target value: TRUE</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>met1</span>)</div><div class='output co'>#&gt; $dictionary
+                      plots = <span class='fl'>FALSE</span>)
+</div><div class='output co'>#&gt; <span class='message'>Target value: TRUE</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>met1</span>)
+</div><div class='output co'>#&gt; $dictionary
 #&gt; [1] "AUC: Area Under the Curve"                                                             
 #&gt; [2] "ACC: Accuracy"                                                                         
 #&gt; [3] "PRC: Precision = Positive Predictive Value"                                            
@@ -294,7 +297,8 @@ categorical model.</p></td>
                       multis = <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span>, select = <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>tag</span>, <span class='kw'>score</span>)),
                       model_name = <span class='st'>"Titanic Class Model"</span>,
                       plots = <span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>met2</span>)</div><div class='output co'>#&gt; $dictionary
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>met2</span>)
+</div><div class='output co'>#&gt; $dictionary
 #&gt; [1] "AUC: Area Under the Curve"                                                             
 #&gt; [2] "ACC: Accuracy"                                                                         
 #&gt; [3] "PRC: Precision = Positive Predictive Value"                                            
@@ -328,7 +332,8 @@ categorical model.</p></td>
 <span class='kw'>met3</span> <span class='op'>&lt;-</span> <span class='fu'>model_metrics</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>score</span>,
                       model_name = <span class='st'>"Titanic Fare Model"</span>,
                       plots = <span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>met3</span>)</div><div class='output co'>#&gt; $dictionary
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>met3</span>)
+</div><div class='output co'>#&gt; $dictionary
 #&gt; [1] "RMSE: Root Mean Squared Error"       
 #&gt; [2] "MAE: Mean Average Error"             
 #&gt; [3] "MAPE: Mean Absolute Percentage Error"

@@ -132,7 +132,8 @@
     <pre class="examples"><div class='input'><span class='co'># Raw colours and counter-colours</span>
 <span class='kw'>nice_palette</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='fu'>lares_pal</span>()<span class='op'>$</span><span class='kw'>palette</span>)
 <span class='kw'>nice_palette_ctr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span>(<span class='fu'>lares_pal</span>()<span class='op'>$</span><span class='kw'>palette</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>nice_palette</span>, <span class='kw'>nice_palette_ctr</span>), <span class='kw'>head</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>nice_palette</span>, <span class='kw'>nice_palette_ctr</span>), <span class='kw'>head</span>)
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "#EBB600" "#40A4D8" "#5D3A9B" "#2A9D8F" "#A8DADC" "#D35FB7"
 #&gt; 
 #&gt; [[2]]
@@ -140,7 +141,8 @@
 #&gt; </div><div class='input'>
 <span class='co'># Personal colours by name</span>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>lares_pal</span>()<span class='op'>$</span><span class='kw'>labels</span>
-<span class='kw'>df</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>df</span>), <span class='fl'>5</span>), ]</div><div class='output co'>#&gt;      values    fill  colour
+<span class='kw'>df</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>df</span>), <span class='fl'>5</span>), ]
+</div><div class='output co'>#&gt;      values    fill  colour
 #&gt; 62    anger #FE9B13 #000000
 #&gt; 55 eltiempo #E5E5E5 #000000
 #&gt; 8       aig #C71585 #000000

@@ -183,14 +183,16 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span>)</div><div class='output co'>#&gt;       tag    score
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span>)
+</div><div class='output co'>#&gt;       tag    score
 #&gt; 1 11.1333 21.52605
 #&gt; 2 30.0708 35.02605
 #&gt; 3 26.5500 14.84241
 #&gt; 4 31.2750 67.41018
 #&gt; 5 13.0000 28.95657
 #&gt; 6 26.0000 17.55153</div><div class='input'><span class='fu'>mplot_cuts_error</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>score</span>,
-                 model_name = <span class='st'>"Titanic Fare Model"</span>)</div><div class='img'><img src='mplot_cuts_error-1.png' alt='' width='700' height='433' /></div></pre>
+                 model_name = <span class='st'>"Titanic Fare Model"</span>)
+</div><div class='img'><img src='mplot_cuts_error-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

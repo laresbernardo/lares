@@ -198,15 +198,18 @@ and sorted by mean of each variable's correlations</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='kw'>dft</span>[,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span>]
-<span class='fu'>corr</span>(<span class='kw'>df</span>)</div><div class='output co'>#&gt;               Survived_TRUE Sex_male     Age Pclass_1 Pclass_2
+<span class='fu'>corr</span>(<span class='kw'>df</span>)
+</div><div class='output co'>#&gt;               Survived_TRUE Sex_male     Age Pclass_1 Pclass_2
 #&gt; Survived_TRUE        1.0000  -0.5434 -0.0772   0.2859   0.0933
 #&gt; Sex_male            -0.5434   1.0000  0.0933  -0.0980  -0.0647
 #&gt; Age                 -0.0772   0.0933  1.0000   0.3489   0.0070
 #&gt; Pclass_1             0.2859  -0.0980  0.3489   1.0000  -0.2886
-#&gt; Pclass_2             0.0933  -0.0647  0.0070  -0.2886   1.0000</div><div class='input'><span class='fu'>corr</span>(<span class='kw'>df</span>, ignore = <span class='st'>"Pclass"</span>)</div><div class='output co'>#&gt;               Survived_TRUE Sex_male     Age
+#&gt; Pclass_2             0.0933  -0.0647  0.0070  -0.2886   1.0000</div><div class='input'><span class='fu'>corr</span>(<span class='kw'>df</span>, ignore = <span class='st'>"Pclass"</span>)
+</div><div class='output co'>#&gt;               Survived_TRUE Sex_male     Age
 #&gt; Survived_TRUE        1.0000  -0.5434 -0.0772
 #&gt; Sex_male            -0.5434   1.0000  0.0933
-#&gt; Age                 -0.0772   0.0933  1.0000</div><div class='input'><span class='fu'>corr</span>(<span class='kw'>df</span>, redundant = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                    Age Survived_FALSE Survived_TRUE Pclass_1 Pclass_2 Pclass_3
+#&gt; Age                 -0.0772   0.0933  1.0000</div><div class='input'><span class='fu'>corr</span>(<span class='kw'>df</span>, redundant = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt;                    Age Survived_FALSE Survived_TRUE Pclass_1 Pclass_2 Pclass_3
 #&gt; Age             1.0000         0.0772       -0.0772   0.3489   0.0070  -0.3123
 #&gt; Survived_FALSE  0.0772         1.0000       -1.0000  -0.2859  -0.0933   0.3223
 #&gt; Survived_TRUE  -0.0772        -1.0000        1.0000   0.2859   0.0933  -0.3223
@@ -223,12 +226,14 @@ and sorted by mean of each variable's correlations</p></td>
 #&gt; Pclass_2           0.0647  -0.0647
 #&gt; Pclass_3          -0.1371   0.1371
 #&gt; Sex_female         1.0000  -1.0000
-#&gt; Sex_male          -1.0000   1.0000</div><div class='input'><span class='fu'>corr</span>(<span class='kw'>df</span>, method = <span class='st'>"spearman"</span>)</div><div class='output co'>#&gt;               Survived_TRUE Sex_male     Age Pclass_1 Pclass_2
+#&gt; Sex_male          -1.0000   1.0000</div><div class='input'><span class='fu'>corr</span>(<span class='kw'>df</span>, method = <span class='st'>"spearman"</span>)
+</div><div class='output co'>#&gt;               Survived_TRUE Sex_male     Age Pclass_1 Pclass_2
 #&gt; Survived_TRUE        1.0000  -0.5434 -0.0526   0.2859   0.0933
 #&gt; Sex_male            -0.5434   1.0000  0.0833  -0.0980  -0.0647
 #&gt; Age                 -0.0526   0.0833  1.0000   0.3339   0.0313
 #&gt; Pclass_1             0.2859  -0.0980  0.3339   1.0000  -0.2886
-#&gt; Pclass_2             0.0933  -0.0647  0.0313  -0.2886   1.0000</div><div class='input'><span class='fu'>corr</span>(<span class='kw'>df</span>, pvalue = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $cor
+#&gt; Pclass_2             0.0933  -0.0647  0.0313  -0.2886   1.0000</div><div class='input'><span class='fu'>corr</span>(<span class='kw'>df</span>, pvalue = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt; $cor
 #&gt;               Survived_TRUE Sex_male     Age Pclass_1 Pclass_2
 #&gt; Survived_TRUE        1.0000  -0.5434 -0.0772   0.2859   0.0933
 #&gt; Sex_male            -0.5434   1.0000  0.0933  -0.0980  -0.0647

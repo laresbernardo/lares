@@ -183,7 +183,8 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span>)</div><div class='output co'>#&gt;     tag    scores
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span>)
+</div><div class='output co'>#&gt;     tag    scores
 #&gt; 1  TRUE 0.3155498
 #&gt; 2  TRUE 0.8747599
 #&gt; 3  TRUE 0.8952823
@@ -191,14 +192,16 @@
 #&gt; 5  TRUE 0.2196593
 #&gt; 6 FALSE 0.2816101</div><div class='input'>
 <span class='co'># Data</span>
-<span class='fu'>mplot_cuts</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, splits = <span class='fl'>5</span>, table = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   range     cuts
+<span class='fu'>mplot_cuts</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, splits = <span class='fl'>5</span>, table = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt;   range     cuts
 #&gt; 1   20% 0.074886
 #&gt; 2   40% 0.132404
 #&gt; 3   60% 0.312343
 #&gt; 4   80% 0.799710
 #&gt; 5  100% 0.982415</div><div class='input'>
 <span class='co'># Plot</span>
-<span class='fu'>mplot_cuts</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, model_name = <span class='st'>"Titanic Survived Model"</span>)</div><div class='img'><img src='mplot_cuts-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>mplot_cuts</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, model_name = <span class='st'>"Titanic Survived Model"</span>)
+</div><div class='img'><img src='mplot_cuts-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

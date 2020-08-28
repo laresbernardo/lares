@@ -190,7 +190,8 @@
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(variable = <span class='kw'>LETTERS</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>],
                  importance = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>,<span class='fl'>6</span>,<span class='fl'>6.7</span>,<span class='fl'>3</span>,<span class='fl'>4.8</span>,<span class='fl'>6.2</span>)<span class='op'>/</span><span class='fl'>100</span>,
                  positive = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>,<span class='fl'>TRUE</span>,<span class='fl'>FALSE</span>,<span class='fl'>TRUE</span>,<span class='fl'>FALSE</span>,<span class='fl'>FALSE</span>))
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span>)</div><div class='output co'>#&gt;   variable importance positive
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span>)
+</div><div class='output co'>#&gt;   variable importance positive
 #&gt; 1        A      0.040     TRUE
 #&gt; 2        B      0.060     TRUE
 #&gt; 3        C      0.067    FALSE
@@ -199,12 +200,14 @@
 #&gt; 6        F      0.062    FALSE</div><div class='input'>
 <span class='fu'>mplot_importance</span>(var = <span class='kw'>df</span><span class='op'>$</span><span class='kw'>variable</span>,
                  imp = <span class='kw'>df</span><span class='op'>$</span><span class='kw'>importance</span>,
-                 model_name = <span class='st'>"Random values model"</span>)</div><div class='img'><img src='mplot_importance-1.png' alt='' width='700' height='433' /></div><div class='input'>
+                 model_name = <span class='st'>"Random values model"</span>)
+</div><div class='img'><img src='mplot_importance-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Add a colour for categories</span>
 <span class='fu'>mplot_importance</span>(var = <span class='kw'>df</span><span class='op'>$</span><span class='kw'>variable</span>,
                  imp = <span class='kw'>df</span><span class='op'>$</span><span class='kw'>importance</span>,
                  colours = <span class='kw'>df</span><span class='op'>$</span><span class='kw'>positive</span>,
-                 limit = <span class='fl'>4</span>)</div><div class='img'><img src='mplot_importance-2.png' alt='' width='700' height='433' /></div></pre>
+                 limit = <span class='fl'>4</span>)
+</div><div class='img'><img src='mplot_importance-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
