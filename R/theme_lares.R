@@ -121,8 +121,11 @@ theme_lares <- function(font = getOption("lares.font"),
   # Plot title
   ret <- ret + theme(plot.title = element_text(
     size = size * 1.25, margin = margin(b = size * 0.3), #hjust = 0, 
-    family = font, face = "bold", color = "black"),
-    plot.title.position = "plot") # Aligns plot title to the very left edge (more space)) 
+    family = font, face = "bold", color = "black"))
+  # Align plot title to the very left edge (more space) [>=3.3.0]
+  ggc <- stringr::str_split(as.character(packageVersion("ggplot2")), "\\.")[[1]]
+  if (ggc[1] >= 3 & ggc[2] >= 3)
+    ret <- ret + theme(plot.title.position = "plot")
   
   # Plot subtitle
   ret <- ret + theme(plot.subtitle = element_text(

@@ -4,22 +4,24 @@
 \alias{get_mp3}
 \title{Download MP3 from URL}
 \usage{
-get_mp3(url, mp3 = TRUE, params = "", quiet = FALSE)
+get_mp3(id, mp3 = TRUE, params = "", info = TRUE, cover = FALSE)
 }
 \arguments{
-\item{url}{Characeter. YouTube URL}
+\item{id}{Characeter. YouTube URL or ID to search for}
 
-\item{mp3}{Boolean. Add mp3 parameters?}
+\item{mp3}{Boolean. Add mp3 optimal parameters?}
 
 \item{params}{Character. Additional parameters}
 
-\item{quiet}{Boolean. Keep quiet (or show query)?}
+\item{info}{Boolean. Import and return metadata?}
+
+\item{cover}{Boolean. Google Search its squared cover?}
 }
 \description{
 This function downloads YouTube videos or Soundcloud or any other 
 platform supported by the youtube-dl library, and converts them into 
 high quality MP3 files. The URL can be for a single video or a whole 
-playlist.
+playlist. It also returns metadata into an (invisible) list.
 }
 \section{youtube-dl}{
 
