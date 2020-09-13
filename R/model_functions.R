@@ -165,7 +165,7 @@ h2o_automl <- function(df, y = "tag",
   if (is.numeric(df$tag)) {
     thresh <- ifelse(is.numeric(no_outliers), no_outliers, 3)
     is_outlier <- outlier_zscore(df$tag, thresh = thresh)
-    if (!quiet)
+    if (!quiet & !isTRUE(no_outliers))
       message(sprintf(
         "- NOTE: %s (%s) of %s values are considered outliers (Z-Score: >%ssd). %s",
         formatNum(100*sum(is_outlier)/nrow(df), 1, pos = "%"),
@@ -317,10 +317,8 @@ h2o_automl <- function(df, y = "tag",
   print(results$metrics$metrics)
   
   if (alarm & !quiet) {
-    tryCatch({
-      try_require("beepr", stop = TRUE)
-      beep() 
-    })
+    try_require("beepr", stop = TRUE)
+    try(beep())
   }
   
   attr(results, "type") <- "h2o_automl"
@@ -431,6 +429,9 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     target = target,
     model_name = as.vector(m@model_id),
     plots = plots)
+  # cvresults <- m@model$cross_validation_metrics_summary
+  # results$metrics[["cv"]] <- as_tibble(
+  #   data.frame(metric = rownames(cvresults), cvresults))
   if (model_type == "Classifier" & length(cats) == 2) 
     results$metrics[["max_metrics"]] <- data.frame(
       m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores)

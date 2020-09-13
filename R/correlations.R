@@ -11,7 +11,8 @@
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @param pvalue Boolean. Returns a list, with correlations and statistical 
 #' significance (p-value) for each value
-#' @param ignore Character vector. Which columns do you wish to exlude?
+#' @param dec Integer. Number of decimals to round correlations and p-values
+#' @param ignore Character vector. Which columns do you wish to exclude?
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
 #' @param limit Integer. Limit one hot encoding to the n most frequent 
 #' values of each column. Set to \code{NA} to ignore argument.
@@ -26,14 +27,20 @@
 #' @examples 
 #' data(dft) # Titanic dataset
 #' df <- dft[,2:5]
+#' 
 #' corr(df)
+#' 
 #' corr(df, ignore = "Pclass")
+#' 
 #' corr(df, redundant = TRUE)
+#' 
 #' corr(df, method = "spearman")
+#' 
 #' corr(df, pvalue = TRUE)
 #' @export
 corr <- function(df, method = "pearson", 
                  pvalue = FALSE,
+                 dec = 6,
                  ignore = NA, 
                  dummy = TRUE, limit = 10, dates = FALSE, 
                  redundant = FALSE, logs = FALSE, 
@@ -52,7 +59,7 @@ corr <- function(df, method = "pearson",
   # Correlations
   rs <- suppressWarnings(cor(d, use = "pairwise.complete.obs", method = method))
   rs[is.na(rs)] <- 0
-  cor <- round(data.frame(rs), 4)
+  cor <- round(data.frame(rs), dec)
   row.names(cor) <- colnames(cor)
   
   # Top N
@@ -68,16 +75,30 @@ corr <- function(df, method = "pearson",
   
   # Statistical significance (p-value)
   if (pvalue) {
-    n <- t(!is.na(d)) %*% (!is.na(d))
-    t <- (rs*sqrt(n - 2))/sqrt(1 - rs^2)
-    p <- -2 * expm1(pt(abs(t), (n - 2), log.p = TRUE))
-    p[p > 1] <- 1
-    lp <- upper.tri(p)
-    pa <- p[lp]
-    pa <- p.adjust(pa, "holm")
-    p[upper.tri(p, diag = FALSE)] <- pa
-    p <- round(data.frame(p), 8)
-    row.names(p) <- colnames(rs)
+    cor.test.p <- function(x){
+      FUN <- function(x, y) suppressWarnings(
+        cor.test(x, y, method = method, conf.level = 0.95)[["p.value"]])
+      z <- outer(
+        colnames(x), 
+        colnames(x), 
+        Vectorize(function(i,j) FUN(x[,i], x[,j]))
+      )
+      dimnames(z) <- list(colnames(x), colnames(x))
+      round(z, dec)
+    }
+    p <- cor.test.p(d)
+    
+    # n <- t(!is.na(d)) %*% (!is.na(d))
+    # t <- (rs*sqrt(n - 2))/sqrt(1 - rs^2)
+    # p <- -2 * expm1(pt(abs(t), (n - 2), log.p = TRUE))
+    # p[p > 1] <- 1
+    # lp <- upper.tri(p)
+    # pa <- p[lp]
+    # pa <- p.adjust(pa, "holm")
+    # p[upper.tri(p, diag = FALSE)] <- pa
+    # p <- round(data.frame(p), 8)
+    # row.names(p) <- colnames(rs)
+    
     return(list(cor = cor, pvalue = p))
   }
   
@@ -156,8 +177,10 @@ corr_var <- function(df, var,
   df <- select(df, -contains(paste0(var,"_log")))
   
   # Calculate correlations
-  rs <- corr(df, method = method, ignore = ignore, limit = limit,
-             logs = logs, dates = dates, pvalue = TRUE)
+  rs <- corr(df, method = method, 
+             ignore = ignore, limit = limit,
+             logs = logs, dates = dates, 
+             pvalue = TRUE)
   
   # Check if main variable exists
   if (!var %in% colnames(rs$cor)) {
@@ -167,7 +190,7 @@ corr_var <- function(df, var,
       warning(sprintf("Maybe you meant one of: %s", vector2text(head(maybes, 10))))
       message(sprintf("Automatically using '%s", maybes[1]))
       var <- maybes[1]
-    } else stop()
+    } else stop("Select a valid var value")
   }
   
   d <- data.frame(variables = colnames(rs$cor), 
@@ -288,130 +311,133 @@ corr_var <- function(df, var,
 #' # Cross-Correlation for certain variables
 #' corr_cross(dft, contains = c("Survived", "Fare"))
 #' @export
-  corr_cross <- function(df, plot = TRUE, 
-                         max_pvalue = 1,
-                         type = 1, max = 1, top = 25, local = 1,
-                         ignore = NA, contains = NA, grid = FALSE,
-                         rm.na = FALSE, dummy = TRUE, 
-                         limit = 10, redundant = FALSE,
-                         method = "pearson") {
-    
-    check_opts(type, 1:2)
-    
-    if (sum(is.na(df)) & rm.na == FALSE) 
-      warning("There are NA values in your data!")
-    
-    cor <- corr(df, ignore = ignore, dummy = dummy, limit = limit,
-                redundant = redundant, method = method, pvalue = TRUE)
-    
-    aux <- function(c) {
-      data.frame(gather(c)) %>% 
-        mutate(mix = rep(colnames(c), length(c))) %>%
-        mutate(p1 = rep(1:length(c), each = length(c)),
-               p2 = rep(1:length(c), length(c)),
-               aux = .data$p2 - .data$p1) %>% 
-        filter(.data$aux > 0) %>%
-        mutate(rel = abs(.data$value)) %>% 
-        filter(.data$rel < max) %>% 
-        arrange(desc(.data$rel)) %>%
-        {if (!is.na(contains[1])) 
-          filter(., grepl(paste(
-            contains, collapse = ifelse(length(contains) > 1, "|", "")), 
-            paste(.data$mix, .data$key))) else .} %>% # add key?
-        {if (rm.na) filter(., !grepl("_NAs", .data$mix)) else .} %>%
-        filter(!grepl("_OTHER", .data$key)) %>%
-        rename(corr = .data$value) %>%
-        mutate(value = paste(.data$key, .data$mix)) %>%
-        select(.data$key, .data$mix, .data$corr)
-    }
-    
-    ret <- aux(cor$cor)
-    aux <- aux(cor$pvalue)
-    ret <- left_join(ret, rename(aux, pvalue = .data$corr), c("key", "mix")) %>%
-      mutate(pvalue = as.numeric(ifelse(is.na(.data$pvalue), 1, .data$pvalue))) %>%
-      filter(.data$pvalue <= max_pvalue)
-    
-    for (i in 1:ncol(df)) {
-      if (i == 1) 
-        ret <- mutate(ret, group1 = "fill", group2 = "fill")
-      group <- colnames(df)[i]
-      aux <- ifelse(grepl(group, ret$key), group, "fill")
-      ret$group1 <- ifelse(ret$group1 == "fill", aux, ret$group1)
-      aux <- ifelse(grepl(group, ret$mix), group, "fill")
-      ret$group2 <- ifelse(ret$group2 == "fill", aux, ret$group2)
-    }
-    ret <- filter(ret, .data$group1 != .data$group2)
-    if (nrow(ret) > top & !is.na(top)) {
-      message(sprintf("Returning only the top %s. You may override with the `top` parameter", top))
-      ret <- slice(ret, 1:top) 
-    }
-    
-    if (plot) {
-      n <- ifelse(type == 1, top, local)
-      n <- ifelse(n > nrow(ret), nrow(ret), n)
-      subtitle <- paste(n, "most relevant")
-      if (!is.na(contains)[1]) subtitle <- paste(subtitle, "containing", vector2text(contains))
-      if (max < 1) subtitle <- paste0(subtitle," (excluding +", 100*max, "%)")
-      if (rm.na) subtitle <- paste(subtitle, paste("[NAs removed]"))
-      if (!is.na(contains[1])) ret <- ret %>%
-        mutate(facet = gsub(vector2text(contains, sep = "|", quotes = FALSE), "", .data$mix)) %>%
-        mutate(facet = gsub("_", "", .data$facet))
-      
-      if (type == 1) {
-        p <- ret %>%
-          head(top) %>%
-          mutate(label = paste(.data$key, "+", .data$mix), 
-                 abs = abs(.data$corr),
-                 sign = ifelse(.data$corr < 0, "bad", "good")) %>%
-          ggplot(aes(x = reorder(.data$label, .data$abs), 
-                     y = .data$abs, 
-                     fill = .data$sign)) +
-          geom_col(colour = "transparent") +
-          # geom_hline(aes(yintercept = 0), alpha = 0.5) + 
-          geom_text(aes(label = signif(100*.data$corr, 3)), 
-                    size = 3, colour = "white", hjust = 1.1) +
-          coord_flip() + guides(fill = FALSE) +
-          labs(title = "Ranked Cross-Correlations", 
-               subtitle = subtitle,
-               x = NULL, 
-               y = "Correlation [%]") +
-          scale_fill_manual(values = c("bad" = "#E5586E", "good" = "#59B3D2")) +
-          scale_y_percent(expand = c(0, 0)) + 
-          theme_lares2(legend = "top")
-        if ((!is.na(contains)[1] & length(contains) == 1) | grid) {
-          p <- p + facet_grid(.data$facet ~ ., scales = "free", space = "free")
-        }
-      }
-      
-      if (type == 2) {
-        ret <- rbind(data.frame(ret, group = ret$group1), 
-                     data.frame(ret, group = ret$group2)) %>%
-          arrange(desc(abs(.data$corr)))
-        aux <- position_jitter(width = 0.4, seed = 123)
-        p <- ret %>% 
-          group_by(.data$group) %>%
-          mutate(hjust = ifelse(.data$corr > 0, 1, 0),
-                 size = abs(.data$corr),
-                 alpha = ifelse(row_number() <= local, 2, .data$size),
-                 label = ifelse(row_number() <= local, paste(.data$key, "+", .data$mix), "")) %>%
-          ggplot(aes(x = .data$group, y = .data$corr, 
-                     label = .data$label, colour = .data$group)) + 
-          geom_jitter(aes(alpha = .data$alpha, size = .data$size), position = aux) + 
-          geom_hline(yintercept = 0, alpha = 0.3) +
-          geom_text(aes(hjust = .data$hjust), size = 2.9, position = aux, colour = "black") +
-          guides(colour = FALSE, alpha = FALSE, size = FALSE) +
-          scale_size(range = c(0.4, 2)) +
-          labs(x = NULL, y = "Correlation [%]", 
-               subtitle = subtitle,
-               title = "Local Cross-Correlations") +
-          scale_y_continuous(labels = function(x) formatNum(x, 0, pos = "%")) + 
-          coord_flip() +
-          theme_lares2(pal = 2) 
-      }
-      if (max_pvalue < 1) 
-        p <- p + labs(caption = paste("Correlations with p-value <", max_pvalue))
-      return(p)
-    }
+corr_cross <- function(df, plot = TRUE, 
+                       max_pvalue = 1,
+                       type = 1, max = 1, top = 25, local = 1,
+                       ignore = NA, contains = NA, grid = FALSE,
+                       rm.na = FALSE, dummy = TRUE, 
+                       limit = 10, redundant = FALSE,
+                       method = "pearson") {
+  
+  check_opts(type, 1:2)
+  
+  if (sum(is.na(df)) & rm.na == FALSE) 
+    warning("There are NA values in your data!")
+  
+  cor <- corr(df, ignore = ignore, dummy = dummy, limit = limit,
+              redundant = redundant, method = method, pvalue = TRUE)
+  
+  transf <- function(c) {
+    c <- data.frame(c)
+    ret <- gather(c) %>% 
+      gather %>%
+      mutate(mix = rep(colnames(c), length(c))) %>%
+      mutate(p1 = rep(1:length(c), each = length(c)),
+             p2 = rep(1:length(c), length(c)),
+             aux = .data$p2 - .data$p1) %>% 
+      filter(.data$aux > 0) %>%
+      mutate(rel = abs(.data$value)) %>% 
+      filter(.data$rel < max) %>% 
+      arrange(desc(.data$rel)) %>%
+      {if (!is.na(contains[1])) 
+        filter(., grepl(paste(
+          contains, collapse = ifelse(length(contains) > 1, "|", "")), 
+          paste(.data$mix, .data$key))) else .} %>% # add key?
+      {if (rm.na) filter(., !grepl("_NAs", .data$mix)) else .} %>%
+      filter(!grepl("_OTHER", .data$key)) %>%
+      rename(corr = .data$value) %>%
+      mutate(value = paste(.data$key, .data$mix)) %>%
+      select(.data$key, .data$mix, .data$corr)
     return(ret)
   }
   
+  ret <- transf(cor$cor)
+  aux <- transf(cor$pvalue)
+  ret <- left_join(ret, rename(aux, pvalue = .data$corr), c("key", "mix")) %>%
+    mutate(pvalue = as.numeric(ifelse(is.na(.data$pvalue), 1, .data$pvalue))) %>%
+    filter(.data$pvalue <= max_pvalue)
+  
+  for (i in 1:ncol(df)) {
+    if (i == 1) 
+      ret <- mutate(ret, group1 = "fill", group2 = "fill")
+    group <- colnames(df)[i]
+    aux <- ifelse(grepl(group, ret$key), group, "fill")
+    ret$group1 <- ifelse(ret$group1 == "fill", aux, ret$group1)
+    aux <- ifelse(grepl(group, ret$mix), group, "fill")
+    ret$group2 <- ifelse(ret$group2 == "fill", aux, ret$group2)
+  }
+  ret <- filter(ret, .data$group1 != .data$group2)
+  if (nrow(ret) > top & !is.na(top)) {
+    message(sprintf("Returning only the top %s. You may override with the `top` parameter", top))
+    ret <- slice(ret, 1:top) 
+  }
+  
+  if (plot) {
+    n <- ifelse(type == 1, top, local)
+    n <- ifelse(n > nrow(ret), nrow(ret), n)
+    subtitle <- paste(n, "most relevant")
+    if (!is.na(contains)[1]) subtitle <- paste(subtitle, "containing", vector2text(contains))
+    if (max < 1) subtitle <- paste0(subtitle," (excluding +", 100*max, "%)")
+    if (rm.na) subtitle <- paste(subtitle, paste("[NAs removed]"))
+    if (!is.na(contains[1])) ret <- ret %>%
+      mutate(facet = gsub(vector2text(contains, sep = "|", quotes = FALSE), "", .data$mix)) %>%
+      mutate(facet = gsub("_", "", .data$facet))
+    
+    if (type == 1) {
+      p <- ret %>%
+        head(top) %>%
+        mutate(label = paste(.data$key, "+", .data$mix), 
+               abs = abs(.data$corr),
+               sign = ifelse(.data$corr < 0, "bad", "good")) %>%
+        ggplot(aes(x = reorder(.data$label, .data$abs), 
+                   y = .data$abs, 
+                   fill = .data$sign)) +
+        geom_col(colour = "transparent") +
+        # geom_hline(aes(yintercept = 0), alpha = 0.5) + 
+        geom_text(aes(label = signif(100*.data$corr, 3)), 
+                  size = 3, colour = "white", hjust = 1.1) +
+        coord_flip() + guides(fill = FALSE) +
+        labs(title = "Ranked Cross-Correlations", 
+             subtitle = subtitle,
+             x = NULL, 
+             y = "Correlation [%]") +
+        scale_fill_manual(values = c("bad" = "#E5586E", "good" = "#59B3D2")) +
+        scale_y_percent(expand = c(0, 0)) + 
+        theme_lares2(legend = "top")
+      if ((!is.na(contains)[1] & length(contains) == 1) | grid) {
+        p <- p + facet_grid(.data$facet ~ ., scales = "free", space = "free")
+      }
+    }
+    
+    if (type == 2) {
+      ret <- rbind(data.frame(ret, group = ret$group1), 
+                   data.frame(ret, group = ret$group2)) %>%
+        arrange(desc(abs(.data$corr)))
+      aux <- position_jitter(width = 0.4, seed = 123)
+      p <- ret %>% 
+        group_by(.data$group) %>%
+        mutate(hjust = ifelse(.data$corr > 0, 1, 0),
+               size = abs(.data$corr),
+               alpha = ifelse(row_number() <= local, 2, .data$size),
+               label = ifelse(row_number() <= local, paste(.data$key, "+", .data$mix), "")) %>%
+        ggplot(aes(x = .data$group, y = .data$corr, 
+                   label = .data$label, colour = .data$group)) + 
+        geom_jitter(aes(alpha = .data$alpha, size = .data$size), position = aux) + 
+        geom_hline(yintercept = 0, alpha = 0.3) +
+        geom_text(aes(hjust = .data$hjust), size = 2.9, position = aux, colour = "black") +
+        guides(colour = FALSE, alpha = FALSE, size = FALSE) +
+        scale_size(range = c(0.4, 2)) +
+        labs(x = NULL, y = "Correlation [%]", 
+             subtitle = subtitle,
+             title = "Local Cross-Correlations") +
+        scale_y_continuous(labels = function(x) formatNum(x, 0, pos = "%")) + 
+        coord_flip() +
+        theme_lares2(pal = 2) 
+    }
+    if (max_pvalue < 1) 
+      p <- p + labs(caption = paste("Correlations with p-value <", max_pvalue))
+    return(p)
+  }
+  return(ret)
+}
+

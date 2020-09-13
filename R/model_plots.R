@@ -759,11 +759,20 @@ mplot_lineal <- function(tag,
     guides(colour = guide_colorbar(barwidth = 0.9, barheight = 4.5)) +
     theme_lares2()
   
-  # Draw reference line for correlation
+  # Draw reference lines for correlation
   intercept <- summary(fit)$coefficients[1]
   slope <- summary(fit)$coefficients[2]
-  p <- p + geom_abline(slope = slope, intercept = intercept, 
-                       alpha = 0.5, colour = "orange", size = 0.6)
+  p <- p + 
+    geom_abline(slope = 1, 
+                intercept = 0, 
+                alpha = 0.3, 
+                colour = "grey70", 
+                size = 0.6) +
+    geom_abline(slope = slope, 
+                intercept = intercept, 
+                alpha = 0.5, 
+                colour = "orange", 
+                size = 0.6)
   
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   if (!is.na(model_name)) p <- p + labs(caption = model_name)

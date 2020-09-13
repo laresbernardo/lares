@@ -8,6 +8,7 @@ corr(
   df,
   method = "pearson",
   pvalue = FALSE,
+  dec = 6,
   ignore = NA,
   dummy = TRUE,
   limit = 10,
@@ -26,7 +27,9 @@ columns: they will be filtered!}
 \item{pvalue}{Boolean. Returns a list, with correlations and statistical 
 significance (p-value) for each value}
 
-\item{ignore}{Character vector. Which columns do you wish to exlude?}
+\item{dec}{Integer. Number of decimals to round correlations and p-values}
+
+\item{ignore}{Character vector. Which columns do you wish to exclude?}
 
 \item{dummy}{Boolean. Should One Hot Encoding be applied to categorical columns?}
 
@@ -52,10 +55,15 @@ all numerical values.
 \examples{
 data(dft) # Titanic dataset
 df <- dft[,2:5]
+
 corr(df)
+
 corr(df, ignore = "Pclass")
+
 corr(df, redundant = TRUE)
+
 corr(df, method = "spearman")
+
 corr(df, pvalue = TRUE)
 }
 \seealso{
