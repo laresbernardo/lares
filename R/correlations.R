@@ -1,8 +1,10 @@
 ####################################################################
 #' Correlation table
 #'
-#' This function correlates a whole dataframe, filtering automatically
-#' all numerical values.
+#' This function correlates a whole dataframe, running one hot smart 
+#' encoding (\code{ohse}) to transform non-numerical features. 
+#' Note that it will automatically suppress columns 
+#' with less than 3 non missing values and warn the user.
 #'
 #' @family Calculus
 #' @family Correlations
@@ -55,6 +57,15 @@ corr <- function(df, method = "pearson",
   
   # Select only numerical features and create log+1 for each one
   d <- numericalonly(df, logs = logs)
+  
+  # Drop columns with not enough data to calculate correlations / p-values
+  toDrop <- missingness(d) %>%
+    mutate(drop = nrow(d) - missing < 3L) %>%
+    filter(drop) %>% pull(variable)
+  if (length(toDrop) > 0) {
+    warning("Dropped columns with less than 3 non-missing values: ", v2t(toDrop))
+    d <- select(d, -one_of(toDrop))
+  }
   
   # Correlations
   rs <- suppressWarnings(cor(d, use = "pairwise.complete.obs", method = method))

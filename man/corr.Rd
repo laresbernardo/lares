@@ -49,8 +49,10 @@ variables (not binaries)}
 and sorted by mean of each variable's correlations}
 }
 \description{
-This function correlates a whole dataframe, filtering automatically
-all numerical values.
+This function correlates a whole dataframe, running one hot smart 
+encoding (\code{ohse}) to transform non-numerical features. 
+Note that it will automatically suppress columns 
+with less than 3 non missing values and warn the user.
 }
 \examples{
 data(dft) # Titanic dataset
