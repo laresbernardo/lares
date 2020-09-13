@@ -239,17 +239,17 @@ with Ranked Cross-Correlations</a></p>
 
 <span class='co'># Only data with no plot</span>
 <span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, plot = <span class='fl'>FALSE</span>, top = <span class='fl'>10</span>)
-</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='output co'>#&gt; <span class='message'>Returning only the top 10. You may override with the `top` parameter</span></div><div class='output co'>#&gt;              key             mix    corr pvalue   group1 group2
-#&gt; 1  Ticket_113781   Cabin_C22.C26  0.8655      0   Ticket  Cabin
-#&gt; 2       Pclass_1          Cabin_ -0.7888      0   Pclass  Cabin
-#&gt; 3          SibSp Ticket_CA..2343  0.6037      0    SibSp Ticket
-#&gt; 4           Fare        Pclass_1  0.5917      0     Fare Pclass
-#&gt; 5          SibSp    Ticket_OTHER -0.5709      0    SibSp Ticket
-#&gt; 6  Survived_TRUE        Sex_male -0.5434      0 Survived    Sex
-#&gt; 7           Fare          Cabin_ -0.4821      0     Fare  Cabin
-#&gt; 8          Parch    Ticket_OTHER -0.4398      0    Parch Ticket
-#&gt; 9          SibSp           Parch  0.4148      0    SibSp  Parch
-#&gt; 10           Age        Pclass_1  0.3489      0      Age Pclass</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='output co'>#&gt; <span class='message'>Returning only the top 10. You may override with the `top` parameter</span></div><div class='output co'>#&gt;              key             mix      corr pvalue   group1 group2
+#&gt; 1  Ticket_113781   Cabin_C22.C26  0.865538      0   Ticket  Cabin
+#&gt; 2       Pclass_1          Cabin_ -0.788773      0   Pclass  Cabin
+#&gt; 3          SibSp Ticket_CA..2343  0.603697      0    SibSp Ticket
+#&gt; 4           Fare        Pclass_1  0.591711      0     Fare Pclass
+#&gt; 5          SibSp    Ticket_OTHER -0.570909      0    SibSp Ticket
+#&gt; 6  Survived_TRUE        Sex_male -0.543351      0 Survived    Sex
+#&gt; 7           Fare          Cabin_ -0.482075      0     Fare  Cabin
+#&gt; 8          Parch    Ticket_OTHER -0.439796      0    Parch Ticket
+#&gt; 9          SibSp           Parch  0.414838      0    SibSp  Parch
+#&gt; 10           Age        Pclass_1  0.348941      0      Age Pclass</div><div class='input'>
 <span class='co'># Show only most relevant results filtered by pvalue</span>
 <span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, rm.na = <span class='fl'>TRUE</span>, max_pvalue = <span class='fl'>0.05</span>, top = <span class='fl'>15</span>)
 </div><div class='output co'>#&gt; <span class='message'>Returning only the top 15. You may override with the `top` parameter</span></div><div class='img'><img src='corr_cross-1.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -274,7 +274,7 @@ with Ranked Cross-Correlations</a></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
