@@ -215,24 +215,21 @@ two variables by name or column position.</p></td>
 </div><div class='img'><img src='clusterKmeans-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Run with selected k</span>
 <span class='kw'>clusters</span> <span class='op'>&lt;-</span> <span class='fu'>clusterKmeans</span>(<span class='kw'>df</span>, k = <span class='fl'>3</span>)
-</div><div class='output co'>#&gt; <span class='message'>Automatically removed rows with NA. To overwrite: fix NAs and set drop_na = FALSE</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 5 variables: 'Pclass', 'Cabin', 'Embarked', 'Survived', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>One hot encoding applied...</span></div><div class='output co'>#&gt; <span class='message'>No missing values found!</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `mutate_()` is deprecated as of dplyr 0.7.0.</span>
-#&gt; <span class='warning'>Please use `mutate()` instead.</span>
-#&gt; <span class='warning'>See vignette('programming') for more help</span>
-#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
-#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("mutate_"): no applicable method for 'mutate_' applied to an object of class "NULL"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>clusters</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'clusters' not found</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Automatically removed rows with NA. To overwrite: fix NAs and set drop_na = FALSE</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 5 variables: 'Pclass', 'Cabin', 'Embarked', 'Survived', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>One hot encoding applied...</span></div><div class='output co'>#&gt; <span class='message'>Returning only the top 25. You may override with the `top` parameter</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>clusters</span>)
+</div><div class='output co'>#&gt; [1] "nclusters"      "nclusters_plot" "df"             "clusters"      
+#&gt; [5] "fit"            "means"          "correlations"   "PCA"           </div><div class='input'>
 <span class='co'># Cross-Correlations for each cluster</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>clusters</span><span class='op'>$</span><span class='kw'>correlations</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in plot(clusters$correlations): object 'clusters' not found</span></div><div class='input'>
+</div><div class='img'><img src='clusterKmeans-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># PCA Results</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>clusters</span><span class='op'>$</span><span class='kw'>PCA</span><span class='op'>$</span><span class='kw'>plotVarExp</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in plot(clusters$PCA$plotVarExp): object 'clusters' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>clusters</span><span class='op'>$</span><span class='kw'>PCA</span><span class='op'>$</span><span class='kw'>plot_1_2</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in plot(clusters$PCA$plot_1_2): object 'clusters' not found</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 1 row(s) containing missing values (geom_path).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 1 rows containing missing values (geom_point).</span></div><div class='img'><img src='clusterKmeans-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>clusters</span><span class='op'>$</span><span class='kw'>PCA</span><span class='op'>$</span><span class='kw'>plot_1_2</span>)
+</div><div class='img'><img src='clusterKmeans-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># 3D interactive plot</span>
 <span class='kw'>clusters</span><span class='op'>$</span><span class='kw'>PCA</span><span class='op'>$</span><span class='kw'>plot_1_2_3</span>
 }
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

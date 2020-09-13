@@ -209,19 +209,19 @@ and sorted by mean of each variable's correlations</p></td>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='kw'>dft</span>[,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span>]
 
 <span class='fu'>corr</span>(<span class='kw'>df</span>)
-</div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Dropped columns with less than 3 non-missing values: </span></div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2
 #&gt; Survived_TRUE      1.000000 -0.543351 -0.077221  0.285904  0.093349
 #&gt; Sex_male          -0.543351  1.000000  0.093254 -0.098013 -0.064746
 #&gt; Age               -0.077221  0.093254  1.000000  0.348941  0.006954
 #&gt; Pclass_1           0.285904 -0.098013  0.348941  1.000000 -0.288585
 #&gt; Pclass_2           0.093349 -0.064746  0.006954 -0.288585  1.000000</div><div class='input'>
 <span class='fu'>corr</span>(<span class='kw'>df</span>, ignore = <span class='st'>"Pclass"</span>)
-</div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Dropped columns with less than 3 non-missing values: </span></div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age
 #&gt; Survived_TRUE      1.000000 -0.543351 -0.077221
 #&gt; Sex_male          -0.543351  1.000000  0.093254
 #&gt; Age               -0.077221  0.093254  1.000000</div><div class='input'>
 <span class='fu'>corr</span>(<span class='kw'>df</span>, redundant = <span class='fl'>TRUE</span>)
-</div><div class='output co'>#&gt;                      Age Survived_FALSE Survived_TRUE  Pclass_1  Pclass_2
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Dropped columns with less than 3 non-missing values: </span></div><div class='output co'>#&gt;                      Age Survived_FALSE Survived_TRUE  Pclass_1  Pclass_2
 #&gt; Age             1.000000       0.077221     -0.077221  0.348941  0.006954
 #&gt; Survived_FALSE  0.077221       1.000000     -1.000000 -0.285904 -0.093349
 #&gt; Survived_TRUE  -0.077221      -1.000000      1.000000  0.285904  0.093349
@@ -240,14 +240,14 @@ and sorted by mean of each variable's correlations</p></td>
 #&gt; Sex_female     -0.137143   1.000000 -1.000000
 #&gt; Sex_male        0.137143  -1.000000  1.000000</div><div class='input'>
 <span class='fu'>corr</span>(<span class='kw'>df</span>, method = <span class='st'>"spearman"</span>)
-</div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Dropped columns with less than 3 non-missing values: </span></div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2
 #&gt; Survived_TRUE      1.000000 -0.543351 -0.052565  0.285904  0.093349
 #&gt; Sex_male          -0.543351  1.000000  0.083330 -0.098013 -0.064746
 #&gt; Age               -0.052565  0.083330  1.000000  0.333881  0.031291
 #&gt; Pclass_1           0.285904 -0.098013  0.333881  1.000000 -0.288585
 #&gt; Pclass_2           0.093349 -0.064746  0.031291 -0.288585  1.000000</div><div class='input'>
 <span class='fu'>corr</span>(<span class='kw'>df</span>, pvalue = <span class='fl'>TRUE</span>)
-</div><div class='output co'>#&gt; $cor
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Dropped columns with less than 3 non-missing values: </span></div><div class='output co'>#&gt; $cor
 #&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2
 #&gt; Survived_TRUE      1.000000 -0.543351 -0.077221  0.285904  0.093349
 #&gt; Sex_male          -0.543351  1.000000  0.093254 -0.098013 -0.064746
