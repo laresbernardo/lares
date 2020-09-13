@@ -32,13 +32,19 @@
 #' 
 #' corr(df)
 #' 
+#' # Ignore specific column
 #' corr(df, ignore = "Pclass")
 #' 
+#' # Keep redundant combinations
 #' corr(df, redundant = TRUE)
 #' 
-#' corr(df, method = "spearman")
-#' 
+#' #' # Calculate p-values as well
 #' corr(df, pvalue = TRUE)
+#' 
+#' # Test when no more than 2 non-missing values
+#' df$trash <- c(1, rep(NA, nrow(df)-1))
+#' # and another method...
+#' corr(df, method = "spearman")
 #' @export
 corr <- function(df, method = "pearson", 
                  pvalue = FALSE,
@@ -59,13 +65,15 @@ corr <- function(df, method = "pearson",
   d <- numericalonly(df, logs = logs)
   
   # Drop columns with not enough data to calculate correlations / p-values
-  toDrop <- missingness(d, summary = FALSE)
-  if (is.data.frame(toDrop)) {
-    toDrop <- toDrop %>%
+  miss <- missingness(d, summary = FALSE)
+  if (is.data.frame(miss)) {
+    toDrop <- miss %>%
       mutate(drop = nrow(d) - missing < 3L) %>%
       filter(drop) %>% pull(variable)
-    d <- select(d, -one_of(toDrop))
-    warning("Dropped columns with less than 3 non-missing values: ", v2t(toDrop))
+    if (length(toDrop) > 0) {
+      warning("Dropped columns with less than 3 non-missing values: ", v2t(toDrop))      
+      d <- select(d, -one_of(toDrop))
+    }
   }
   
   # Correlations
@@ -78,7 +86,7 @@ corr <- function(df, method = "pearson",
   if (!is.na(top)) {
     message(paste("Returning the top", top, "variables only..."))
     imp <- cor %>% 
-      summarise_all(funs(mean(.))) %>% t() %>% 
+      summarise_all(list(~mean(.))) %>% t() %>% 
       data.frame(variable = row.names(.), mean = abs(.)) %>%
       arrange(desc(abs(.data$mean)))
     which <- as.vector(imp$variable[1:top])

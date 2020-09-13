@@ -60,13 +60,19 @@ df <- dft[,2:5]
 
 corr(df)
 
+# Ignore specific column
 corr(df, ignore = "Pclass")
 
+# Keep redundant combinations
 corr(df, redundant = TRUE)
 
-corr(df, method = "spearman")
-
+#' # Calculate p-values as well
 corr(df, pvalue = TRUE)
+
+# Test when no more than 2 non-missing values
+df$trash <- c(1, rep(NA, nrow(df)-1))
+# and another method...
+corr(df, method = "spearman")
 }
 \seealso{
 Other Calculus: 
