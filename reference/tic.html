@@ -200,15 +200,15 @@ If not, seconds elapsed as numerical values</p></td>
 <span class='fu'>tic</span>()
 <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span>(<span class='fl'>0.1</span>)
 <span class='fu'>toc</span>()
-</div><div class='output co'>#&gt; <span class='message'>Elapsed time: 0.185s</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Elapsed time: 0.14s</span></div><div class='input'>
 <span class='co'># Multiple tic tocs</span>
 <span class='fu'>tic</span>(id = <span class='st'>"two"</span>, quiet = <span class='fl'>FALSE</span>)
-</div><div class='output co'>#&gt; <span class='message'>Tic `id = two` start time: 2020-09-13 18:08:42</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span>(<span class='fl'>0.2</span>)
+</div><div class='output co'>#&gt; <span class='message'>Tic `id = two` start time: 2020-09-13 18:30:17</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span>(<span class='fl'>0.2</span>)
 <span class='fu'>toc</span>(id = <span class='st'>"two"</span>)
-</div><div class='output co'>#&gt; <span class='message'>Elapsed time: 0.205s</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Elapsed time: 0.299s</span></div><div class='input'>
 <span class='co'># Global is still working (id = 1)</span>
 <span class='fu'>toc</span>(msg = <span class='st'>"The function finished its work in"</span>)
-</div><div class='output co'>#&gt; <span class='message'>The function finished its work in 0.393s</span></div></pre>
+</div><div class='output co'>#&gt; <span class='message'>The function finished its work in 0.447s</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
