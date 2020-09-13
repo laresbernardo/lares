@@ -59,12 +59,13 @@ corr <- function(df, method = "pearson",
   d <- numericalonly(df, logs = logs)
   
   # Drop columns with not enough data to calculate correlations / p-values
-  toDrop <- missingness(d) %>%
-    mutate(drop = nrow(d) - missing < 3L) %>%
-    filter(drop) %>% pull(variable)
-  if (length(toDrop) > 0) {
-    warning("Dropped columns with less than 3 non-missing values: ", v2t(toDrop))
+  toDrop <- missingness(d, summary = FALSE)
+  if (is.data.frame(toDrop)) {
+    toDrop <- toDrop %>%
+      mutate(drop = nrow(d) - missing < 3L) %>%
+      filter(drop) %>% pull(variable)
     d <- select(d, -one_of(toDrop))
+    warning("Dropped columns with less than 3 non-missing values: ", v2t(toDrop))
   }
   
   # Correlations

@@ -31,7 +31,7 @@
 missingness <- function(df, plot = FALSE, full = FALSE, 
                         subtitle = NA, summary = TRUE) {
   
-  if (sum(is.na(df)) == 0) {
+  if (sum(is.na(df)) == 0 & summary) {
     message("No missing values found!")
     invisible(return(NULL))
   }
