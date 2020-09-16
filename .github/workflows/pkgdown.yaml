@@ -44,8 +44,8 @@ jobs:
       - name: Who am I?
         env:
           # Set in Github repo Settings > Secrets
-          PERSONAL_EMAIL: ${{ secrets.$PERSONAL_EMAIL }}
-          PERSONAL_NAME: ${{ secrets.$PERSONAL_NAME }}
+          PERSONAL_EMAIL: ${{ secrets.PERSONAL_EMAIL }}
+          PERSONAL_NAME: ${{ secrets.PERSONAL_NAME }}
         run: |
           git config --global user.email "$PERSONAL_EMAIL"
           git config --global user.name "$PERSONAL_NAME"
