@@ -1648,3 +1648,35 @@ glued <- function (..., .sep = "", .envir = parent.frame()) {
     .transformer = null_transformer, 
     .envir = .envir)
 }
+
+####################################################################
+#' Clean title names of a data.frame/tibble object
+#' 
+#' Resulting names are unique and consist only of the \code{_} character, 
+#' numbers, and ASCII letters. Capitalization preferences can be specified using 
+#' the \code{lower} parameter. Inspired by `janitor::clean_names`.
+#'
+#' @param df data.frame/tibble
+#' @param num Add character before only-numeric names
+#' @param ... Additional parameters passed to `cleanText`
+#' @return data.frame/tibble with new clean titles
+#' @examples 
+#' df <- dft[1:5,1:5] # Dummy data
+#' colnames(df) <- c("ID.", "34", "Num 123", "Nòn-äscì", "  white   Spaces  ")
+#' print(df)
+#' cleanNames(df)
+#' @export
+cleanNames <- function(df, num = "x", ...) {
+  # Initial cleanse
+  cols <- cleanText(colnames(df), ...)
+  # Simple spaces turned into "_"
+  cols <- trimws(gsub("[[:space:].]+", "_", cols))
+  # If only numeric, add x at the begining
+  onlynum <- !grepl('[[:alpha:]]', cols)
+  cols[onlynum] <- paste0(num, cols[onlynum])
+  # Change column names
+  df <- stats::setNames(df, cols)
+  # Keep tibble if original data.frame is tibble
+  if ("tbl_df" %in% class(df)) df <- as_tibble(df)
+  return(df)
+}
