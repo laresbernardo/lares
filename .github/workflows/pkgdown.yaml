@@ -42,9 +42,13 @@ jobs:
         run: R CMD INSTALL .
         
       - name: Who am I?
+        env:
+          # Set in Github repo Settings > Secrets
+          PERSONAL_EMAIL: ${{ secrets.$PERSONAL_EMAIL }}
+          PERSONAL_NAME: ${{ secrets.$PERSONAL_NAME }}
         run: |
-          git config --global user.email "laresbernardo@gmail.com"
-          git config --global user.name "Bernardo Lares"
+          git config --global user.email "$PERSONAL_EMAIL"
+          git config --global user.name "$PERSONAL_NAME"
 
       - name: Deploy package documentation
         run: pkgdown::deploy_to_branch(new_process = FALSE)

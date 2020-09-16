@@ -68,8 +68,9 @@ corr <- function(df, method = "pearson",
   miss <- missingness(d, summary = FALSE)
   if (is.data.frame(miss)) {
     toDrop <- miss %>%
-      mutate(drop = nrow(d) - missing < 3L) %>%
-      filter(drop) %>% pull(variable)
+      mutate(drop = nrow(d) - .data$missing < 3L) %>%
+      filter(.data$drop) %>% 
+      pull(.data$variable)
     if (length(toDrop) > 0) {
       warning("Dropped columns with less than 3 non-missing values: ", v2t(toDrop))      
       d <- select(d, -one_of(toDrop))

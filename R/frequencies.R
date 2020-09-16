@@ -72,6 +72,7 @@ freqs <- function(df, ..., wt = NULL,
   
   vars <- quos(...)
   weight <- enquo(wt)
+  df <- as.data.frame(df)
   
   # Probably an error but might be useful for the user instead
   # When it's a vector, frequencies; when it's a dataframe, global frequencies
