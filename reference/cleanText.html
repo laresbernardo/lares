@@ -73,19 +73,13 @@ characters and no accents/symbols on letters." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
@@ -119,7 +113,7 @@ characters and no accents/symbols on letters." />
 characters and no accents/symbols on letters.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cleanText</span>(<span class='kw'>text</span>, spaces = <span class='fl'>TRUE</span>, lower = <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>cleanText</span>(<span class='kw'>text</span>, spaces = <span class='fl'>TRUE</span>, lower = <span class='fl'>TRUE</span>, ascii = <span class='fl'>TRUE</span>, title = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,6 +129,14 @@ characters and no accents/symbols on letters.</p>
     <tr>
       <th>lower</th>
       <td><p>Boolean. Transform all to lower case?</p></td>
+    </tr>
+    <tr>
+      <th>ascii</th>
+      <td><p>Boolean. Only ASCII characters?</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>Boolean. Transform to title format (upper case on first letters)</p></td>
     </tr>
     </table>
 
@@ -176,10 +178,10 @@ characters and no accents/symbols on letters.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bernardo Lares 123"</span>)
 </div><div class='output co'>#&gt; [1] "bernardo lares 123"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bèrnärdo LáreS 123"</span>, lower = <span class='fl'>FALSE</span>)
-</div><div class='output co'>#&gt; [1] "Bernardo LareS 123"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bernardo Lares"</span>, spaces = <span class='fl'>FALSE</span>)
-</div><div class='output co'>#&gt; [1] "bernardolares"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"\\@®ì÷å   %ñS  ..-X"</span>, spaces = <span class='fl'>FALSE</span>)
-</div><div class='output co'>#&gt; [1] "riansx"</div><div class='input'><span class='fu'>cleanText</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"María"</span>, <span class='st'>"€"</span>, <span class='st'>"Núñez"</span>))
-</div><div class='output co'>#&gt; [1] "maria" "eur"   "nunez"</div></pre>
+</div><div class='output co'>#&gt; [1] "Bernardo LareS 123"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bernardo Lare$"</span>, spaces = <span class='fl'>FALSE</span>, ascii = <span class='fl'>FALSE</span>)
+</div><div class='output co'>#&gt; [1] "bernardolare$"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"\\@®ì÷å   %ñS  ..-X"</span>, spaces = <span class='fl'>FALSE</span>)
+</div><div class='output co'>#&gt; [1] "riansx"</div><div class='input'><span class='fu'>cleanText</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"maría"</span>, <span class='st'>"€"</span>, <span class='st'>"núñez a."</span>), title = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt; [1] "Maria"   "Eur"     "Nunez A"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

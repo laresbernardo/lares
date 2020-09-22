@@ -77,19 +77,13 @@ models will be trained." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
@@ -152,7 +146,8 @@ models will be trained.</p>
   quiet = <span class='fl'>FALSE</span>,
   save = <span class='fl'>FALSE</span>,
   subdir = <span class='fl'>NA</span>,
-  project = <span class='st'>"ML Project"</span>
+  project = <span class='st'>"ML Project"</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -279,18 +274,35 @@ the results? Working directory as default.</p></td>
       <th>project</th>
       <td><p>Character. Your project's name</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters on <code><a href='https://rdrr.io/pkg/h2o/man/h2o.automl.html'>h2o::h2o.automl</a></code></p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="list-of-algorithms"><a class="anchor" href="#list-of-algorithms"></a>List of algorithms</h2>
 
     
 
-<p>"DRF" (Distributed Random Forest, including 
-Random Forest (RF) and Extremely-Randomized Trees (XRT)), "GLM" 
-(Generalized Linear Model), "XGBoost" (eXtreme Grading Boosting), 
-"GBM" (Gradient Boosting Machine), "DeepLearning" (Fully-connected 
-multi-layer artificial neural network) and "StackedEnsemble". 
-<a href='http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html'>Read more here</a>.</p>
+<dl>
+  <dt>DRF</dt><dd><p>Distributed Random Forest, including Random Forest (RF) and Extremely-Randomized Trees (XRT)</p></dd>
+  <dt>GLM</dt><dd><p>Generalized Linear Model</p></dd>
+  <dt>XGBoost</dt><dd><p>eXtreme Grading Boosting</p></dd>
+  <dt>GBM</dt><dd><p>Gradient Boosting Machine</p></dd>
+  <dt>DeepLearning</dt><dd><p>Fully-connected multi-layer artificial neural network</p></dd>
+  <dt>StackedEnsemble</dt><dd><p>Stacked Ensemble</p></dd>
+
+</dl><p><a href='http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html'>Read more here</a>.</p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
+    
+
+<dl>
+  <dt>print</dt><dd><p>Use `print` method to print models stats and summary</p></dd>
+  <dt>plot</dt><dd><p>Use `plot` method to plot results using <code><a href='mplot_full.html'>mplot_full()</a></code></p></dd>
+
+</dl>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Machine Learning: 

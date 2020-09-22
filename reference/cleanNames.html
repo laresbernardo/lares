@@ -42,7 +42,7 @@
 <meta property="og:title" content="Clean title names of a data.frame/tibble object — cleanNames" />
 <meta property="og:description" content="Resulting names are unique and consist only of the _ character, 
 numbers, and ASCII letters. Capitalization preferences can be specified using 
-the lower parameter. Inspired by `janitor::clean_names`." />
+the lower parameter. Inspired by janitor::clean_names." />
 
 
 
@@ -74,19 +74,13 @@ the lower parameter. Inspired by `janitor::clean_names`." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
@@ -118,7 +112,7 @@ the lower parameter. Inspired by `janitor::clean_names`." />
     <div class="ref-description">
     <p>Resulting names are unique and consist only of the <code>_</code> character, 
 numbers, and ASCII letters. Capitalization preferences can be specified using 
-the <code>lower</code> parameter. Inspired by `janitor::clean_names`.</p>
+the <code>lower</code> parameter. Inspired by <code>janitor::clean_names</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>cleanNames</span>(<span class='kw'>df</span>, num = <span class='st'>"x"</span>, <span class='kw'>...</span>)</pre>
@@ -136,7 +130,7 @@ the <code>lower</code> parameter. Inspired by `janitor::clean_names`.</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional parameters passed to `cleanText`</p></td>
+      <td><p>Additional parameters passed to <code>cleanText</code></p></td>
     </tr>
     </table>
 
@@ -155,6 +149,12 @@ the <code>lower</code> parameter. Inspired by `janitor::clean_names`.</p>
 #&gt; 4   4  TRUE       1   female                 35
 #&gt; 5   5 FALSE       3     male                 35</div><div class='input'><span class='fu'>cleanNames</span>(<span class='kw'>df</span>)
 </div><div class='output co'>#&gt;   id   x34 num_123 nonasci white_spaces
+#&gt; 1  1 FALSE       3    male           22
+#&gt; 2  2  TRUE       1  female           38
+#&gt; 3  3  TRUE       3  female           26
+#&gt; 4  4  TRUE       1  female           35
+#&gt; 5  5 FALSE       3    male           35</div><div class='input'><span class='fu'>cleanNames</span>(<span class='kw'>df</span>, lower = <span class='fl'>FALSE</span>)
+</div><div class='output co'>#&gt;   ID   x34 Num_123 Nonasci white_Spaces
 #&gt; 1  1 FALSE       3    male           22
 #&gt; 2  2  TRUE       1  female           38
 #&gt; 3  3  TRUE       3  female           26

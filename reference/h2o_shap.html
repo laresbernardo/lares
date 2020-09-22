@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Portfolio's Calculations and Plots — stocks_obj • lares</title>
+<title>SHAP values for H2O Models — h2o_shap • lares</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,12 @@
 
 
 
-<meta property="og:title" content="Portfolio's Calculations and Plots — stocks_obj" />
-<meta property="og:description" content="This function lets the user create his portfolio's calculations and
-plots for further study." />
+<meta property="og:title" content="SHAP values for H2O Models — h2o_shap" />
+<meta property="og:description" content="SHAP (SHapley Additive exPlanations) by Lundberg and Lee (2016) is a 
+method to explain individual predictions. SHAP is based on the game 
+theoretically optimal Shapley Values. Calculate SHAP values for
+h2o models in which each row is an observation and each column a feature.
+Use `plot` method to visualize features importance and distributions." />
 
 
 
@@ -103,69 +106,46 @@ plots for further study." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Portfolio's Calculations and Plots</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/stocks.R'><code>R/stocks.R</code></a></small>
-    <div class="hidden name"><code>stocks_obj.Rd</code></div>
+    <h1>SHAP values for H2O Models</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/shapley.R'><code>R/shapley.R</code></a></small>
+    <div class="hidden name"><code>h2o_shap.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user create his portfolio's calculations and
-plots for further study.</p>
+    <p>SHAP (SHapley Additive exPlanations) by Lundberg and Lee (2016) is a 
+method to explain individual predictions. SHAP is based on the game 
+theoretically optimal Shapley Values. Calculate SHAP values for
+h2o models in which each row is an observation and each column a feature.
+Use `plot` method to visualize features importance and distributions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>stocks_obj</span>(
-  data = <span class='fu'><a href='stocks_file.html'>stocks_file</a></span>(),
-  cash_fix = <span class='fl'>0</span>,
-  tax = <span class='fl'>30</span>,
-  sectors = <span class='fl'>FALSE</span>,
-  parg = <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>h2o_shap</span>(<span class='kw'>model</span>, test = <span class='st'>"auto"</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>List. Containing the following dataframes: portfolio,
-transactions, cash. They have to follow the original xlsx format</p></td>
+      <th>model</th>
+      <td><p><code>h2o_automl</code> object or <code>h2o</code> model.</p></td>
     </tr>
     <tr>
-      <th>cash_fix</th>
-      <td><p>Numeric. If you wish to algebraically sum a value 
-to your cash balance</p></td>
+      <th>test</th>
+      <td><p>String or Dataframe. Leave "auto" to use <code>h2o_automl</code>'s
+test dataset or pass a valid dataframe.</p></td>
     </tr>
     <tr>
-      <th>tax</th>
-      <td><p>Numeric. How much [0-99] of your dividends are gone with taxes?</p></td>
-    </tr>
-    <tr>
-      <th>sectors</th>
-      <td><p>Boolean. Return sectors segmentation for ETFs?</p></td>
-    </tr>
-    <tr>
-      <th>parg</th>
-      <td><p>Boolean. Personal argument. Used to personalize stuff, in this
-case, taxes changed from A to B in given date (hard-coded)</p></td>
+      <th>...</th>
+      <td><p>Additional argument for <code>predict_contributions.H2OModel</code></p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Investment: 
-<code><a href='daily_portfolio.html'>daily_portfolio</a>()</code>,
-<code><a href='daily_stocks.html'>daily_stocks</a>()</code>,
-<code><a href='etf_sector.html'>etf_sector</a>()</code>,
-<code><a href='splot_change.html'>splot_change</a>()</code>,
-<code><a href='splot_etf.html'>splot_etf</a>()</code>,
-<code><a href='splot_growth.html'>splot_growth</a>()</code>,
-<code><a href='splot_roi.html'>splot_roi</a>()</code>,
-<code><a href='splot_summary.html'>splot_summary</a>()</code>,
-<code><a href='splot_types.html'>splot_types</a>()</code>,
-<code><a href='stocks_file.html'>stocks_file</a>()</code>,
-<code><a href='stocks_hist.html'>stocks_hist</a>()</code>,
-<code><a href='stocks_quote.html'>stocks_quote</a>()</code>,
-<code><a href='stocks_report.html'>stocks_report</a>()</code></p></div>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>shap_df</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_shap</span>(<span class='kw'>h2o_automl_object</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>shap_df</span>)
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
