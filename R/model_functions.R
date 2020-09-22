@@ -339,7 +339,7 @@ h2o_automl <- function(df, y = "tag",
 
 ####################################################################
 #' Plot methods for lares
-#' @rdname print
+#' @rdname plot
 #' @param x Object
 #' @param ... Additional parameters
 #' @export
@@ -355,7 +355,7 @@ plot.h2o_automl <- function(x, ...) {
 
 ####################################################################
 #' Print methods for lares
-#' @rdname plot
+#' @rdname print
 #' @param x Object
 #' @param ... Additional parameters
 #' @export

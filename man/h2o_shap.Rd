@@ -23,21 +23,21 @@ Use `plot` method to visualize features importance and distributions.
 }
 \examples{
 \dontrun{
-df <- data.frame(
-  y = rep(c(0,1), c(1000,1000)),
-  x1 = rnorm(2000),
-  x2 = rf(2000, df1 = 5, df2 = 2),
-  x3 = runif(2000),
-  x4 = c(sample(rep(c('A', 'B', 'C'), c(300, 300, 400))),
-         sample(c('A', 'B', 'C'), 1000, prob = c(0.25, 0.25, 0.5), replace = TRUE)),
-  x5 = c(rnorm(1000), rnorm(1000, 0.25)))
 # Train a model
-model <- h2o_automl(df, y, max_models = 1)
-# Calculate SHAP values 
+model <- h2o_automl(dft, Survived, 
+                    max_models = 1, 
+                    target = TRUE,
+                    ignore = c("Ticket", "Cabin", "PassengerId"))
+
+# Calculate SHAP values
 SHAP_values <- h2o_shap(model)
+plot(SHAP_values)
+
 # Plot some of the variables (categorical and numerical)
-shap_var(SHAP_values, x4)
-shap_var(SHAP_values, x5)
+shap_var(SHAP_values, Pclass)
+shap_var(SHAP_values, Age)
+shap_var(SHAP_values, Fare)
+shap_var(SHAP_values, Fare, keep_outliers = TRUE)
 }
 }
 \seealso{

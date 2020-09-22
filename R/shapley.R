@@ -49,7 +49,7 @@ h2o_shap <- function(model, test = "auto", ...) {
 
 ####################################################################
 #' @family SHAP
-#' @rdname print
+#' @rdname plot
 #' @param relevant Boolean. Keep only relevant non-trivial (>0) features
 #' @param top Integer. Plot only top n values (as in importance)
 #' @param quiet Boolean. Print messages?
@@ -132,24 +132,21 @@ plot.h2o_shap <- function(x, relevant = TRUE, top = 15, quiet = FALSE, ...) {
 #' may be suppress or kept in your plot. Keep them?
 #' @examples 
 #' \dontrun{
-#' df <- data.frame(
-#'   y = rep(c(0,1), c(1000,1000)),
-#'   x1 = rnorm(2000),
-#'   x2 = rf(2000, df1 = 5, df2 = 2),
-#'   x3 = runif(2000),
-#'   x4 = c(sample(rep(c('A', 'B', 'C'), c(300, 300, 400))),
-#'          sample(c('A', 'B', 'C'), 1000, prob = c(0.25, 0.25, 0.5), replace = TRUE)),
-#'   x5 = c(rnorm(1000), rnorm(1000, 0.25)))
-#' 
 #' # Train a model
-#' model <- h2o_automl(df, y, max_models = 1)
+#' model <- h2o_automl(dft, Survived, 
+#'                     max_models = 1, 
+#'                     target = TRUE,
+#'                     ignore = c("Ticket", "Cabin", "PassengerId"))
 #' 
-#' # Calculate SHAP values 
+#' # Calculate SHAP values
 #' SHAP_values <- h2o_shap(model)
+#' plot(SHAP_values)
 #' 
 #' # Plot some of the variables (categorical and numerical)
-#' shap_var(SHAP_values, x4)
-#' shap_var(SHAP_values, x5)
+#' shap_var(SHAP_values, Pclass)
+#' shap_var(SHAP_values, Age)
+#' shap_var(SHAP_values, Fare)
+#' shap_var(SHAP_values, Fare, keep_outliers = TRUE)
 #' }
 #' @export
 shap_var <- function(x, var, keep_outliers = FALSE) {
@@ -190,6 +187,8 @@ shap_var <- function(x, var, keep_outliers = FALSE) {
   p <- shap_df2 %>%
     ggplot(aes(x = .data$real_value, y = .data$shap, colour = .data$model_result)) +
     geom_hline(yintercept = 0, alpha = 0.5) +
+    geom_smooth(method = 'loess', formula = 'y ~ x', colour = "black", size = 0.8) +
+    geom_smooth(method = 'lm', formula = 'y ~ x', colour = "black", size = 0.2) +
     geom_quasirandom(
       groupOnX = TRUE, varwidth = TRUE, size = 1, 
       alpha = 0.6, width = 0.4) +
@@ -198,9 +197,22 @@ shap_var <- function(x, var, keep_outliers = FALSE) {
          colour = "Prediction",
          title = title, caption = outs_msg,
          subtitle = paste("Predicted variable:", y)) +
-    geom_smooth(method = 'loess', formula = 'y ~ x') +
     theme_lares()
   
   return(p)
   
 }
+
+# # Train a model
+# model <- h2o_automl(dft, Survived, max_models = 1, 
+#                     target = TRUE,
+#                     ignore = c("Ticket", "Cabin", "PassengerId"))
+# 
+# # Calculate SHAP values
+# SHAP_values <- h2o_shap(model)
+# 
+# # Plot some of the variables (categorical and numerical)
+# shap_var(SHAP_values, Pclass)
+# shap_var(SHAP_values, Fare)
+# shap_var(SHAP_values, Fare, keep_outliers = TRUE)
+# shap_var(SHAP_values, Age)
