@@ -3,23 +3,23 @@
 \name{plot.h2o_automl}
 \alias{plot.h2o_automl}
 \alias{plot.h2o_shap}
-\title{Plot methods}
+\title{Plot methods for lares}
 \usage{
 \method{plot}{h2o_automl}(x, ...)
 
 \method{plot}{h2o_shap}(x, relevant = TRUE, top = 15, quiet = FALSE, ...)
 }
 \arguments{
-\item{x}{\code{h2o_shap} object}
+\item{x}{Object}
 
 \item{...}{Additional parameters}
 
 \item{relevant}{Boolean. Keep only relevant non-trivial (>0) features}
 
-\item{top}{Integer. Plot only top n values (as in imoprtance)}
+\item{top}{Integer. Plot only top n values (as in importance)}
 
 \item{quiet}{Boolean. Print messages?}
 }
 \description{
-Plot methods
+Plot methods for lares
 }

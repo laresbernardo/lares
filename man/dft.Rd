@@ -32,7 +32,6 @@ head(dft)
 }
 \seealso{
 Other Dataset: 
-\code{\link{dfl}},
 \code{\link{dfr}}
 }
 \concept{Dataset}

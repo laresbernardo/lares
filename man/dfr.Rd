@@ -17,9 +17,8 @@ data(dfr)
 }
 \description{
 List with categorical (2 and 3 classes) and continuous predictions, 
-generated with \code{h2o_automl()} and the \code{dft} 
-Titanic dataset. Data.frames contain the actual values and model's 
-predictions over the test set observations.
+generated with \code{h2o_automl()} and the \code{dft}. Note that
+the models per se won't work to predict.
 }
 \examples{
 data(dfr)
@@ -27,7 +26,6 @@ lapply(dfr, head)
 }
 \seealso{
 Other Dataset: 
-\code{\link{dfl}},
 \code{\link{dft}}
 }
 \concept{Dataset}

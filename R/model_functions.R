@@ -324,8 +324,8 @@ h2o_automl <- function(df, y = "tag",
     if (!quiet) message("Results and model files exported succesfully!")
   }
   
-  if (!quiet) print(results)
   if (!quiet) toc(id = "h2o_automl", msg = "Process duration:")
+  if (!quiet) print(results)
   
   if (alarm & !quiet) {
     try_require("beepr", stop = TRUE)
@@ -338,9 +338,9 @@ h2o_automl <- function(df, y = "tag",
 }
 
 ####################################################################
-#' Plot methods
+#' Plot methods for lares
 #' @rdname print
-#' @param x \code{h2o_automl} object
+#' @param x Object
 #' @param ... Additional parameters
 #' @export
 plot.h2o_automl <- function(x, ...) {
@@ -354,9 +354,9 @@ plot.h2o_automl <- function(x, ...) {
 }
 
 ####################################################################
-#' Print methods
+#' Print methods for lares
 #' @rdname plot
-#' @param x \code{h2o_automl} object
+#' @param x Object
 #' @param ... Additional parameters
 #' @export
 print.h2o_automl <- function(x, ...) {

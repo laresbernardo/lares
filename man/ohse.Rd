@@ -78,17 +78,6 @@ dft$no_variance3 <- as.character(rnorm(nrow(dft)))
 dft$no_variance4 <- c(rep("A", 20), rnorm(nrow(dft) - 20))
 ohse(dft, limit = 3) \%>\% head(3)
 ohse(dft, limit = 3, var = 1) \%>\% head(3)
-
-# Examples with Dataset 2
-data(dfl)
-dfl$novar <- "novar"
-ohse(dfl, dates = TRUE) \%>\% head(3)
-ohse(dfl, dates = TRUE, ignore = "issued") \%>\% head(3)
-
-\dontrun{
-# Include holidays
-ohse(dfl, dates = FALSE, holidays = TRUE, country = "Venezuela") \%>\% head()
-}
 }
 \seealso{
 Other Data Wrangling: 

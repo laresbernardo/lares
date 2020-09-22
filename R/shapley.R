@@ -43,11 +43,9 @@ h2o_shap <- function(model, test = "auto", ...) {
 
 ####################################################################
 #' @rdname print
-#' @param x \code{h2o_shap} object
 #' @param relevant Boolean. Keep only relevant non-trivial (>0) features
-#' @param top Integer. Plot only top n values (as in imoprtance)
+#' @param top Integer. Plot only top n values (as in importance)
 #' @param quiet Boolean. Print messages?
-#' @param ... Additional parameters
 #' @export
 plot.h2o_shap <- function(x, relevant = TRUE, top = 15, quiet = FALSE, ...) {
   

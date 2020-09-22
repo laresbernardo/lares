@@ -93,17 +93,6 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal") {
 #' dft$no_variance4 <- c(rep("A", 20), rnorm(nrow(dft) - 20))
 #' ohse(dft, limit = 3) %>% head(3)
 #' ohse(dft, limit = 3, var = 1) %>% head(3)
-#' 
-#' # Examples with Dataset 2
-#' data(dfl)
-#' dfl$novar <- "novar"
-#' ohse(dfl, dates = TRUE) %>% head(3)
-#' ohse(dfl, dates = TRUE, ignore = "issued") %>% head(3)
-#' 
-#' \dontrun{
-#' # Include holidays
-#' ohse(dfl, dates = FALSE, holidays = TRUE, country = "Venezuela") %>% head()
-#' }
 #' @export
 ohse <- function(df, 
                  redundant = FALSE, 
@@ -133,7 +122,7 @@ ohse <- function(df,
   no_variance <- zerovar(df)
   if (drops)
     df <- df[,!colnames(df) %in% no_variance]
-
+  
   # Create features out of date/time variables
   if (dates == TRUE | holidays == TRUE | !is.na(currency_pair)) {
     times <- df_str(df, return = "names", quiet = TRUE)$time
@@ -263,11 +252,22 @@ ohse <- function(df,
 #' wish to get the history from? i.e, USD/COP, EUR/USD...
 #' @param quiet Boolean. Quiet all messages?
 #' @examples 
-#' data(dfl) # Dummy dataset
-#' # Imput as a vector or dataframe
-#' df <- date_feats(dfl, keep_originals = TRUE)
-#' # Same as running date_feats(dfl$opp_date)
-#' head(df, 10)
+#' df <- data.frame(
+#'   dates = sample(seq(Sys.Date() - 365, Sys.Date(), by = 1), 50),
+#'   times = sample(seq(Sys.time() - 1e7, Sys.time(), by = 1), 50))
+#'   
+#' # Input as a vector or dataframe
+#' date_feats(df, keep_originals = TRUE) %>% head(10)
+#' 
+#' # Holidays
+#' \dontrun{
+#'   hol <- date_feats(
+#'     seq(Sys.Date() - 365, Sys.Date(), by = 1), 
+#'     keep_originals = TRUE, 
+#'     holidays = TRUE, 
+#'     country = "Colombia")
+#'   head(hol[!is.na(hol$holidayname),])
+#' }
 #' @export
 date_feats <- function(dates, 
                        keep_originals = FALSE, only = NA,
@@ -436,6 +436,9 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
       if (length(unique(countries)) > 1) { mutate(., country = combs$country[i]) } else .
     results <- rbind(results, result)
   } 
-  results <- results %>% filter(!is.na(.data$holiday)) %>% as_tibble()
+  results <- results %>% 
+    filter(!is.na(.data$holiday)) %>% 
+    cleanNames() %>%
+    as_tibble()
   return(results)
 }

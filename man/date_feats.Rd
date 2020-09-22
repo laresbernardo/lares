@@ -42,11 +42,22 @@ This function lets the user automatically create new columns out
 of a dataframe or vector with date/time variables.
 }
 \examples{
-data(dfl) # Dummy dataset
-# Imput as a vector or dataframe
-df <- date_feats(dfl, keep_originals = TRUE)
-# Same as running date_feats(dfl$opp_date)
-head(df, 10)
+df <- data.frame(
+  dates = sample(seq(Sys.Date() - 365, Sys.Date(), by = 1), 50),
+  times = sample(seq(Sys.time() - 1e7, Sys.time(), by = 1), 50))
+  
+# Input as a vector or dataframe
+date_feats(df, keep_originals = TRUE) \%>\% head(10)
+
+# Holidays
+\dontrun{
+  hol <- date_feats(
+    seq(Sys.Date() - 365, Sys.Date(), by = 1), 
+    keep_originals = TRUE, 
+    holidays = TRUE, 
+    country = "Colombia")
+  head(hol[!is.na(hol$holidayname),])
+}
 }
 \seealso{
 Other Data Wrangling: 

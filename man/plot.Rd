@@ -2,15 +2,15 @@
 % Please edit documentation in R/model_functions.R
 \name{print.h2o_automl}
 \alias{print.h2o_automl}
-\title{Print methods}
+\title{Print methods for lares}
 \usage{
 \method{print}{h2o_automl}(x, ...)
 }
 \arguments{
-\item{x}{\code{h2o_automl} object}
+\item{x}{Object}
 
 \item{...}{Additional parameters}
 }
 \description{
-Print methods
+Print methods for lares
 }
