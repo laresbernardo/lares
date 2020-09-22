@@ -164,7 +164,8 @@ plot_nums <- function(df) {
 plot_cats <- function(df) {
   plot <- df %>% select_if(Negate(is.numeric)) 
   if (length(plot) > 0) {
-    p <- plot %>% freqs() + labs(title = "Categorical Features Frequencies") 
+    p <- plot %>% freqs(plot = TRUE) + 
+      labs(title = "Categorical Features Frequencies") 
     return(p)
   } else {
     message("No categorical variables found!")

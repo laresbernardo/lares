@@ -77,7 +77,7 @@ freqs <- function(df, ..., wt = NULL,
   # Probably an error but might be useful for the user instead
   # When it's a vector, frequencies; when it's a dataframe, global frequencies
   if (length(vars) == 0) {
-    output <- freqs_df(df, plot = !plot, save = save, subdir = subdir)
+    output <- freqs_df(df, plot = plot, save = save, subdir = subdir)
     return(output)
   }
   
@@ -267,9 +267,10 @@ freqs <- function(df, ..., wt = NULL,
 #' @export
 freqs_df <- function(df, 
                      max = 0.9, min = 0.0, novar = TRUE,
-                     plot = TRUE, top = 30,
+                     plot = FALSE, top = 30,
                      quiet = FALSE,
-                     save = FALSE, subdir = NA) {
+                     save = FALSE, 
+                     subdir = NA) {
   
   if (is.vector(df)) {
     temp <- data.frame(values = df)

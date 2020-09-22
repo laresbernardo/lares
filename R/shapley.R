@@ -7,15 +7,12 @@
 #' h2o models in which each row is an observation and each column a feature.
 #' Use `plot` method to visualize features importance and distributions.
 #'
+#' @family SHAP
 #' @param model \code{h2o_automl} object or \code{h2o} model.
 #' @param test String or Dataframe. Leave "auto" to use \code{h2o_automl}'s
 #' test dataset or pass a valid dataframe.
 #' @param ... Additional argument for \code{predict_contributions.H2OModel}
-#' @examples 
-#' \dontrun{
-#' shap_df <- h2o_shap(h2o_automl_object)
-#' plot(shap_df)
-#' }
+#' @inherit shap_var examples
 #' @export
 h2o_shap <- function(model, test = "auto", ...) {
   
@@ -25,8 +22,14 @@ h2o_shap <- function(model, test = "auto", ...) {
       if (test == "auto") {
         test <- model$datasets$test
         scores <- model$scores_test
-        model <- model$model 
+        algos <- c('DRF', 'GBM', 'XGBoost')
+        if (toupper(model$algorithm) %in% algos)
+          warning(paste(
+            "You've passed a", model$algorithm, "model.",
+            "Accepted algorithms:", v2t(algos)))
         auto <- TRUE
+        y <- model$y
+        model <- model$model 
       } 
     }
   } else auto <- FALSE
@@ -36,12 +39,16 @@ h2o_shap <- function(model, test = "auto", ...) {
   shap <- quiet(predict_contributions.H2OModel(model, test, ...))
   
   class(shap) <- c(class(shap), "h2o_shap")
-  if (auto) attr(shap, "scores") <- scores
   attr(shap, "test") <- as_tibble(test)
+  if (auto) {
+    attr(shap, "scores") <- scores
+    attr(shap, "y") <- y
+  } 
   return(shap)
 }
 
 ####################################################################
+#' @family SHAP
 #' @rdname print
 #' @param relevant Boolean. Keep only relevant non-trivial (>0) features
 #' @param top Integer. Plot only top n values (as in importance)
@@ -49,8 +56,9 @@ h2o_shap <- function(model, test = "auto", ...) {
 #' @export
 plot.h2o_shap <- function(x, relevant = TRUE, top = 15, quiet = FALSE, ...) {
   
-  # if (!inherits(x, 'h2o_shap'))
-  #   stop('Object must be class h2o_shap')
+  if (!inherits(x, 'h2o_shap'))
+    stop('Pass a valid h2o_shap object to proceed!')
+  
   try_require("ggbeeswarm")
   scores <- attr(x, "scores")[,2]
   
@@ -106,6 +114,93 @@ plot.h2o_shap <- function(x, relevant = TRUE, top = 15, quiet = FALSE, ...) {
   
   # Combine plots
   p <- p1 + p2
+  return(p)
+  
+}
+
+
+####################################################################
+#' SHAP-based dependence plots for categorical/numerical features (PDP)
+#' 
+#' Having a \code{h2o_shap} object, plot a dependence plot for any
+#' categorical or numerical feature.
+#'
+#' @family SHAP
+#' @param x \code{h2o_shap} object
+#' @param var Variable name
+#' @param keep_outliers Boolean. Outliers detected with z-score and 3sd
+#' may be suppress or kept in your plot. Keep them?
+#' @examples 
+#' \dontrun{
+#' df <- data.frame(
+#'   y = rep(c(0,1), c(1000,1000)),
+#'   x1 = rnorm(2000),
+#'   x2 = rf(2000, df1 = 5, df2 = 2),
+#'   x3 = runif(2000),
+#'   x4 = c(sample(rep(c('A', 'B', 'C'), c(300, 300, 400))),
+#'          sample(c('A', 'B', 'C'), 1000, prob = c(0.25, 0.25, 0.5), replace = TRUE)),
+#'   x5 = c(rnorm(1000), rnorm(1000, 0.25)))
+#' 
+#' # Train a model
+#' model <- h2o_automl(df, y, max_models = 1)
+#' 
+#' # Calculate SHAP values 
+#' SHAP_values <- h2o_shap(model)
+#' 
+#' # Plot some of the variables (categorical and numerical)
+#' shap_var(SHAP_values, x4)
+#' shap_var(SHAP_values, x5)
+#' }
+#' @export
+shap_var <- function(x, var, keep_outliers = FALSE) {
+  
+  if (!inherits(x, 'h2o_shap'))
+    stop('Pass a valid h2o_shap object to proceed!')
+  
+  test <- attr(x, "test")
+  scores <- attr(x, "scores")[,2]
+  y <- attr(x, "y")
+  var <- enquo(var)
+  name <- as_label(var)
+  
+  # Gather everything up
+  shap_df2 <- x %>% 
+    as.data.frame %>%
+    select(starts_with(name)) %>%
+    mutate(model_result = attr(x, "scores")[,2],
+           real_value = pull(attr(x, "test")[name],1)) %>%
+    tidyr::gather(starts_with(name), key = "feature", value = "shap")
+  
+  type <- if (is.numeric(pull(shap_df2, .data$real_value)[1])) "numerical" else "categorical"
+  title <- glued("SHAP values for {type} feature: {as_label(var)}")
+  
+  # Outliers
+  if (type == "numerical") {
+    shap_df2 <- mutate(shap_df2, outlier = outlier_zscore(.data$real_value))
+  } else shap_df2$outlier <- FALSE
+  outs <- freqs(shap_df2, .data$outlier)
+  outs_msg <- NULL
+  if (!keep_outliers) {
+    if (nrow(outs) > 1) {
+      outs_msg <- glued("{outs$n[2]} outlier data points excluded (out of {nrow(shap_df2)})")
+      shap_df2 <- filter(shap_df2, .data$outlier == FALSE)
+    }
+  }
+  
+  p <- shap_df2 %>%
+    ggplot(aes(x = .data$real_value, y = .data$shap, colour = .data$model_result)) +
+    geom_hline(yintercept = 0, alpha = 0.5) +
+    geom_quasirandom(
+      groupOnX = TRUE, varwidth = TRUE, size = 1, 
+      alpha = 0.6, width = 0.4) +
+    scale_colour_gradient(low = "red", high = "blue") +
+    labs(x = name, y = paste("SHAP values for", name), 
+         colour = "Prediction",
+         title = title, caption = outs_msg,
+         subtitle = paste("Predicted variable:", y)) +
+    geom_smooth(method = 'loess', formula = 'y ~ x') +
+    theme_lares()
+  
   return(p)
   
 }

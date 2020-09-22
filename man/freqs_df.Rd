@@ -9,7 +9,7 @@ freqs_df(
   max = 0.9,
   min = 0,
   novar = TRUE,
-  plot = TRUE,
+  plot = FALSE,
   top = 30,
   quiet = FALSE,
   save = FALSE,
