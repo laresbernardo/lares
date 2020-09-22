@@ -24,8 +24,8 @@ h2o_shap <- function(model, test = "auto", scores = "auto", y = "y",...) {
       if (test == "auto") {
         test <- model$datasets$test
         scores <- model$scores_test[,2]
-        algos <- c('DRF', 'GBM', 'XGBoost')
-        if (toupper(model$algorithm) %in% algos)
+        algos <- c('DRF', 'GBM', 'XGBOOST')
+        if (!toupper(model$algorithm) %in% algos)
           warning(paste(
             "You've passed a", model$algorithm, "model.",
             "Accepted algorithms:", v2t(algos)))
@@ -157,6 +157,7 @@ shap_var <- function(x, var, keep_outliers = FALSE) {
   
   if (!inherits(x, 'h2o_shap'))
     stop('Pass a valid h2o_shap object to proceed!')
+  try_require("ggbeeswarm")
   
   test <- attr(x, "test")
   scores <- attr(x, "scores")

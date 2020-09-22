@@ -287,8 +287,7 @@ h2o_automl <- function(df, y = "tag",
   if (length(exclude_algos) > 0 & !quiet) 
     message(paste("Algorithms excluded:", vector2text(exclude_algos)))
   if (!quiet) 
-    message(paste(">>> Iterating until", max_models, 
-                  "models or", max_time, "seconds..."))
+    message(sprintf(">>> Iterating until %s models or seconds...", max_models, max_time))
   aml <- quiet(h2o.automl(
     x = colnames(df)[!colnames(df) %in% c("tag", ignore)],
     y = "tag",
@@ -387,10 +386,11 @@ print.h2o_automl <- function(x, ...) {
   }
   
   print(glued("
-Leader Model (1 of {nrow(x$leaderboard)}): {x$model_name}
+Leader Model: {x$model_name}
 Independent Variable: {x$y}
 Type: {x$type}
 Algorithm: {toupper(x$algorithm)}
+Trained: {nrow(x$leaderboard)} models
 Split: {round(100*x$split)}% training data (of {nrow(x$datasets$global)} observations)
 Seed: {x$seed}
 
@@ -416,19 +416,25 @@ Seed: {x$seed}
 #' @export
 h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
                         model_type, target = "auto", split = 0.7,
-                        ignored = c(), plots = TRUE, 
-                        project = NULL, seed = 0, quiet = FALSE) {
+                        ignored = c(), quiet = FALSE, 
+                        project = "ML Project", seed = 0,
+                        plots = TRUE, ...) {
   
   # MODEL TYPE
   types <- c("Classifier", "Regression")
-  if (!model_type %in% types) 
-    stop(paste("model_type must be any of:", vector2text(types)))
-  if (model_type == types[1]) thresh <- 100 else thresh <- 0
+  check_opts(model_type, types)
+  thresh <- ifelse(model_type == types[1], 100, 0)
+  
+  # When using h2o_select
+  colnames(test)[colnames(test) == y] <- "tag"
+  colnames(train)[colnames(train) == y] <- "tag"
+  test <- test[,1:(which(colnames(test) == "train_test")-1)]
+  train <- train[,1:(which(colnames(train) == "train_test")-1)]
   
   # GLOBAL DATAFRAME FROM TEST AND TRAIN
   if (!all(colnames(test) == colnames(train)))
     stop("All columns from test and train datasets must be exactly the same")
-  global <- data.frame(test) %>%  bind_rows(train) %>%
+  global <- data.frame(test) %>% bind_rows(train) %>%
     mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
   colnames(global)[colnames(global) == "tag"] <- y
   if (model_type == "Classifier")
@@ -478,7 +484,8 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   scores_test <- get_scores(
     predictions, test, 
     model_type = model_type, 
-    target = target, cats = cats)
+    target = target, 
+    cats = cats)
   multis <- scores_test$multis
   scores <- scores_test$scores
   
@@ -617,7 +624,7 @@ get_scores <- function(predictions,
 #' @param results Object. h2o_automl output from \code{h2o_automl()}
 #' @param which_model Integer. Which model from the leaderboard you wish to use?
 #' @export
-h2o_selectmodel <- function(results, which_model = 1, plots = TRUE, quiet = FALSE) {
+h2o_selectmodel <- function(results, which_model = 1, ...) {
   
   check_attr(results, attr = "type", check = "h2o_automl")
   
@@ -627,14 +634,14 @@ h2o_selectmodel <- function(results, which_model = 1, plots = TRUE, quiet = FALS
   # Calculate everything
   output <- h2o_results(m, 
                         test = results$datasets$test, 
-                        train = results$datasets$test, 
+                        train = results$datasets$global[
+                          results$datasets$global$train_test=="train",], 
                         y = results$y, 
                         which = which_model, 
-                        model_type = results$model_type, 
-                        plots = plots, 
+                        model_type = results$type, 
                         project = results$project, 
                         seed = results$seed, 
-                        quiet = quiet)
+                        ...)
   return(output)
 }
 

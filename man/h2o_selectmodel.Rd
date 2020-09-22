@@ -4,16 +4,14 @@
 \alias{h2o_selectmodel}
 \title{Select Model from h2o_automl's Leaderboard}
 \usage{
-h2o_selectmodel(results, which_model = 1, plots = TRUE, quiet = FALSE)
+h2o_selectmodel(results, which_model = 1, ...)
 }
 \arguments{
 \item{results}{Object. h2o_automl output from \code{h2o_automl()}}
 
 \item{which_model}{Integer. Which model from the leaderboard you wish to use?}
 
-\item{plots}{Boolean. Create plots objects?}
-
-\item{quiet}{Boolean. Quiet messages, warnings, recommendations?}
+\item{...}{Additional parameters on \code{h2o::h2o.automl}}
 }
 \description{
 Select wich model from the h2o_automl function to use

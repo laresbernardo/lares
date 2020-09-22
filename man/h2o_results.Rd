@@ -14,10 +14,11 @@ h2o_results(
   target = "auto",
   split = 0.7,
   ignored = c(),
-  plots = TRUE,
-  project = NULL,
+  quiet = FALSE,
+  project = "ML Project",
   seed = 0,
-  quiet = FALSE
+  plots = TRUE,
+  ...
 )
 }
 \arguments{
@@ -43,7 +44,7 @@ used when training)}
 
 \item{ignored}{Character vector. Columns ignored.}
 
-\item{plots}{Boolean. Create plots objects?}
+\item{quiet}{Boolean. Quiet messages, warnings, recommendations?}
 
 \item{project}{Character. Your project's name}
 
@@ -51,7 +52,9 @@ used when training)}
 guarantee reproducibility if max_models is used because max_time is 
 resource limited.}
 
-\item{quiet}{Boolean. Quiet messages, warnings, recommendations?}
+\item{plots}{Boolean. Create plots objects?}
+
+\item{...}{Additional parameters on \code{h2o::h2o.automl}}
 }
 \description{
 This is an auxiliary function to calculate predictions and results
