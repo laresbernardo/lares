@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download Stocks Historical Data — stocks_quote • lares</title>
+<title>SHAP-based dependence plots for categorical/numerical features (PDP) — shap_var • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Download Stocks Historical Data — stocks_quote" />
-<meta property="og:description" content="This function lets the user download stocks historical data." />
+<meta property="og:title" content="SHAP-based dependence plots for categorical/numerical features (PDP) — shap_var" />
+<meta property="og:description" content="Having a h2o_shap object, plot a dependence plot for any
+categorical or numerical feature." />
 
 
 
@@ -102,65 +103,61 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download Stocks Historical Data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/stocks.R'><code>R/stocks.R</code></a></small>
-    <div class="hidden name"><code>stocks_quote.Rd</code></div>
+    <h1>SHAP-based dependence plots for categorical/numerical features (PDP)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/shapley.R'><code>R/shapley.R</code></a></small>
+    <div class="hidden name"><code>shap_var.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user download stocks historical data.</p>
+    <p>Having a <code>h2o_shap</code> object, plot a dependence plot for any
+categorical or numerical feature.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>stocks_quote</span>(<span class='kw'>ticks</span>)</pre>
+    <pre class="usage"><span class='fu'>shap_var</span>(<span class='kw'>x</span>, <span class='kw'>var</span>, keep_outliers = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>ticks</th>
-      <td><p>Character Vector. Symbols/Tickers to quote in real time.</p></td>
+      <th>x</th>
+      <td><p><code>h2o_shap</code> object</p></td>
+    </tr>
+    <tr>
+      <th>var</th>
+      <td><p>Variable name</p></td>
+    </tr>
+    <tr>
+      <th>keep_outliers</th>
+      <td><p>Boolean. Outliers detected with z-score and 3sd
+may be suppress or kept in your plot. Keep them?</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Investment: 
-<code><a href='daily_portfolio.html'>daily_portfolio</a>()</code>,
-<code><a href='daily_stocks.html'>daily_stocks</a>()</code>,
-<code><a href='etf_sector.html'>etf_sector</a>()</code>,
-<code><a href='splot_change.html'>splot_change</a>()</code>,
-<code><a href='splot_etf.html'>splot_etf</a>()</code>,
-<code><a href='splot_growth.html'>splot_growth</a>()</code>,
-<code><a href='splot_roi.html'>splot_roi</a>()</code>,
-<code><a href='splot_summary.html'>splot_summary</a>()</code>,
-<code><a href='splot_types.html'>splot_types</a>()</code>,
-<code><a href='stocks_file.html'>stocks_file</a>()</code>,
-<code><a href='stocks_hist.html'>stocks_hist</a>()</code>,
-<code><a href='stocks_obj.html'>stocks_obj</a>()</code>,
-<code><a href='stocks_report.html'>stocks_report</a>()</code></p>
-<p>Other Scrapper: 
-<code><a href='filesGD.html'>filesGD</a>()</code>,
-<code><a href='geoStratum.html'>geoStratum</a>()</code>,
-<code><a href='get_mp3.html'>get_mp3</a>()</code>,
-<code><a href='holidays.html'>holidays</a>()</code>,
-<code><a href='ip_country.html'>ip_country</a>()</code>,
-<code><a href='readGS.html'>readGS</a>()</code>,
-<code><a href='splot_etf.html'>splot_etf</a>()</code>,
-<code><a href='stocks_hist.html'>stocks_hist</a>()</code>,
-<code><a href='trendsRelated.html'>trendsRelated</a>()</code>,
-<code><a href='writeGS.html'>writeGS</a>()</code></p></div>
+    <div class='dont-index'><p>Other SHAP: 
+<code><a href='h2o_shap.html'>h2o_shap</a>()</code>,
+<code><a href='plot.h2o_automl.html'>plot.h2o_automl</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Multiple quotes at the same time</span>
-<span class='fu'>stocks_quote</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"VTI"</span>,<span class='st'>"VOO"</span>,<span class='st'>"TSLA"</span>))
-</div><div class='output co'>#&gt;   Symbol   Type           QuoteTime  Value DailyChange    Market
-#&gt; 1    VTI    ETF 2020-09-22 19:59:58 168.65    1.599991 us_market
-#&gt; 2    VOO    ETF 2020-09-22 20:00:00 304.72    3.029999 us_market
-#&gt; 3   TSLA EQUITY 2020-09-22 20:00:01 424.23  -25.160004 us_market
-#&gt;                                          SymbolName
-#&gt; 1 Vanguard Total Stock Market Index Fund ETF Shares
-#&gt; 2                              Vanguard S&amp;P 500 ETF
-#&gt; 3                                       Tesla, Inc.</div></pre>
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+  y = <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>,<span class='fl'>1000</span>)),
+  x1 = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>2000</span>),
+  x2 = <span class='fu'><a href='https://rdrr.io/r/stats/Fdist.html'>rf</a></span>(<span class='fl'>2000</span>, df1 = <span class='fl'>5</span>, df2 = <span class='fl'>2</span>),
+  x3 = <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>2000</span>),
+  x4 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'A'</span>, <span class='st'>'B'</span>, <span class='st'>'C'</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>300</span>, <span class='fl'>300</span>, <span class='fl'>400</span>))),
+         <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'A'</span>, <span class='st'>'B'</span>, <span class='st'>'C'</span>), <span class='fl'>1000</span>, prob = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.25</span>, <span class='fl'>0.25</span>, <span class='fl'>0.5</span>), replace = <span class='fl'>TRUE</span>)),
+  x5 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0.25</span>)))
+<span class='co'># Train a model</span>
+<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='h2o_automl.html'>h2o_automl</a></span>(<span class='kw'>df</span>, <span class='kw'>y</span>, max_models = <span class='fl'>1</span>)
+<span class='co'># Calculate SHAP values </span>
+<span class='kw'>SHAP_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='h2o_shap.html'>h2o_shap</a></span>(<span class='kw'>model</span>)
+<span class='co'># Plot some of the variables (categorical and numerical)</span>
+<span class='fu'>shap_var</span>(<span class='kw'>SHAP_values</span>, <span class='kw'>x4</span>)
+<span class='fu'>shap_var</span>(<span class='kw'>SHAP_values</span>, <span class='kw'>x5</span>)
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
