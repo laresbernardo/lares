@@ -10,7 +10,7 @@ fb_rf(
   prediction = NA,
   objective = "REACH",
   days = 28,
-  budget = 2000000,
+  budget = 2e+06,
   destination_ids = NA,
   countries = "MX",
   frequency_cap = 8,

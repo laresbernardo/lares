@@ -11,17 +11,19 @@
 #' @param model \code{h2o_automl} object or \code{h2o} model.
 #' @param test String or Dataframe. Leave "auto" to use \code{h2o_automl}'s
 #' test dataset or pass a valid dataframe.
+#' @param scores Numeric vector. If test != "auto", you must provide predicted values
+#' @param y Character. If test != "auto", you must provide y variable's name
 #' @param ... Additional argument for \code{predict_contributions.H2OModel}
 #' @inherit shap_var examples
 #' @export
-h2o_shap <- function(model, test = "auto", ...) {
+h2o_shap <- function(model, test = "auto", scores = "auto", y = "y",...) {
   
   # When h2o_automl object and test = "auto"
   if (!is.null(attr(model, "type"))) {
     if (!is.data.frame(test)) {
       if (test == "auto") {
         test <- model$datasets$test
-        scores <- model$scores_test
+        scores <- model$scores_test[,2]
         algos <- c('DRF', 'GBM', 'XGBoost')
         if (toupper(model$algorithm) %in% algos)
           warning(paste(
@@ -40,15 +42,12 @@ h2o_shap <- function(model, test = "auto", ...) {
   
   class(shap) <- c(class(shap), "h2o_shap")
   attr(shap, "test") <- as_tibble(test)
-  if (auto) {
-    attr(shap, "scores") <- scores
-    attr(shap, "y") <- y
-  } 
+  attr(shap, "scores") <- scores
+  if (auto) attr(shap, "y") <- y
   return(shap)
 }
 
 ####################################################################
-#' @family SHAP
 #' @rdname plot
 #' @param relevant Boolean. Keep only relevant non-trivial (>0) features
 #' @param top Integer. Plot only top n values (as in importance)
@@ -60,7 +59,7 @@ plot.h2o_shap <- function(x, relevant = TRUE, top = 15, quiet = FALSE, ...) {
     stop('Pass a valid h2o_shap object to proceed!')
   
   try_require("ggbeeswarm")
-  scores <- attr(x, "scores")[,2]
+  scores <- attr(x, "scores")
   
   df <- x %>%
     as.data.frame %>%
@@ -140,6 +139,11 @@ plot.h2o_shap <- function(x, relevant = TRUE, top = 15, quiet = FALSE, ...) {
 #' 
 #' # Calculate SHAP values
 #' SHAP_values <- h2o_shap(model)
+#' # Equivalent to:
+#' SHAP_values <- h2o_shap(
+#'   model = model$model,
+#'   test = model$datasets$test,
+#'   scores = model$scores_test$scores)
 #' plot(SHAP_values)
 #' 
 #' # Plot some of the variables (categorical and numerical)
@@ -155,7 +159,7 @@ shap_var <- function(x, var, keep_outliers = FALSE) {
     stop('Pass a valid h2o_shap object to proceed!')
   
   test <- attr(x, "test")
-  scores <- attr(x, "scores")[,2]
+  scores <- attr(x, "scores")
   y <- attr(x, "y")
   var <- enquo(var)
   name <- as_label(var)
@@ -164,7 +168,7 @@ shap_var <- function(x, var, keep_outliers = FALSE) {
   shap_df2 <- x %>% 
     as.data.frame %>%
     select(starts_with(name)) %>%
-    mutate(model_result = attr(x, "scores")[,2],
+    mutate(model_result = attr(x, "scores"),
            real_value = pull(attr(x, "test")[name],1)) %>%
     tidyr::gather(starts_with(name), key = "feature", value = "shap")
   

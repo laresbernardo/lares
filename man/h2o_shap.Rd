@@ -4,13 +4,17 @@
 \alias{h2o_shap}
 \title{SHAP values for H2O Models}
 \usage{
-h2o_shap(model, test = "auto", ...)
+h2o_shap(model, test = "auto", scores = "auto", y = "y", ...)
 }
 \arguments{
 \item{model}{\code{h2o_automl} object or \code{h2o} model.}
 
 \item{test}{String or Dataframe. Leave "auto" to use \code{h2o_automl}'s
 test dataset or pass a valid dataframe.}
+
+\item{scores}{Numeric vector. If test != "auto", you must provide predicted values}
+
+\item{y}{Character. If test != "auto", you must provide y variable's name}
 
 \item{...}{Additional argument for \code{predict_contributions.H2OModel}}
 }
@@ -31,6 +35,11 @@ model <- h2o_automl(dft, Survived,
 
 # Calculate SHAP values
 SHAP_values <- h2o_shap(model)
+# Equivalent to:
+SHAP_values <- h2o_shap(
+  model = model$model,
+  test = model$datasets$test,
+  scores = model$scores_test$scores)
 plot(SHAP_values)
 
 # Plot some of the variables (categorical and numerical)
@@ -42,7 +51,6 @@ shap_var(SHAP_values, Fare, keep_outliers = TRUE)
 }
 \seealso{
 Other SHAP: 
-\code{\link{plot.h2o_automl}()},
 \code{\link{shap_var}()}
 }
 \concept{SHAP}

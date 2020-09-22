@@ -23,9 +23,3 @@
 \description{
 Plot methods for lares
 }
-\seealso{
-Other SHAP: 
-\code{\link{h2o_shap}()},
-\code{\link{shap_var}()}
-}
-\concept{SHAP}

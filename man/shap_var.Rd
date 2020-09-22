@@ -28,6 +28,11 @@ model <- h2o_automl(dft, Survived,
 
 # Calculate SHAP values
 SHAP_values <- h2o_shap(model)
+# Equivalent to:
+SHAP_values <- h2o_shap(
+  model = model$model,
+  test = model$datasets$test,
+  scores = model$scores_test$scores)
 plot(SHAP_values)
 
 # Plot some of the variables (categorical and numerical)
@@ -39,7 +44,6 @@ shap_var(SHAP_values, Fare, keep_outliers = TRUE)
 }
 \seealso{
 Other SHAP: 
-\code{\link{h2o_shap}()},
-\code{\link{plot.h2o_automl}()}
+\code{\link{h2o_shap}()}
 }
 \concept{SHAP}
