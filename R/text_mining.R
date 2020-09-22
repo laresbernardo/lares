@@ -9,22 +9,27 @@
 #' @param text Character Vector
 #' @param spaces Boolean. Keep spaces?
 #' @param lower Boolean. Transform all to lower case?
+#' @param ascii Boolean. Only ASCII characters?
+#' @param title Boolean. Transform to title format (upper case on first letters)
 #' @examples 
 #' cleanText("Bernardo Lares 123")
 #' cleanText("Bèrnärdo LáreS 123", lower = FALSE)
-#' cleanText("Bernardo Lares", spaces = FALSE)
+#' cleanText("Bernardo Lare$", spaces = FALSE, ascii = FALSE)
 #' cleanText("\\@®ì÷å   %ñS  ..-X", spaces = FALSE)
-#' cleanText(c("María", "€", "Núñez"))
+#' cleanText(c("maría", "€", "núñez a."), title = TRUE)
 #' @export
-cleanText <- function(text, spaces = TRUE, lower = TRUE) {
+cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = FALSE) {
   text <- as.character(text)
   text <- trimws(gsub("[[:space:].]+", " ", text))
-  output <- gsub("[^[:alnum:] ]", "", iconv(text, from = "UTF-8", to = "ASCII//TRANSLIT"))
-  if (lower) output <- tolower(output)
-  if (!spaces) output <- gsub(" ", "", output)
-  return(output)
+  if (ascii) {
+    text <- iconv(text, from = "UTF-8", to = "ASCII//TRANSLIT")
+    text <- gsub("[^[:alnum:] ]", "", text)
+  } 
+  if (lower) text <- tolower(text)
+  if (title) text  <- stringr::str_to_title(text)
+  if (!spaces) text <- gsub(" ", "", text)
+  return(text)
 }
-
 
 ####################################################################
 #' Tokenize Vectors into Words

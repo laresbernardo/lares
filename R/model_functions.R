@@ -9,12 +9,21 @@
 #' models will be trained. 
 #' 
 #' @section List of algorithms:
-#' "DRF" (Distributed Random Forest, including 
-#' Random Forest (RF) and Extremely-Randomized Trees (XRT)), "GLM" 
-#' (Generalized Linear Model), "XGBoost" (eXtreme Grading Boosting), 
-#' "GBM" (Gradient Boosting Machine), "DeepLearning" (Fully-connected 
-#' multi-layer artificial neural network) and "StackedEnsemble". 
+#' \describe{
+#'   \item{DRF}{Distributed Random Forest, including Random Forest (RF) and Extremely-Randomized Trees (XRT)}
+#'   \item{GLM}{Generalized Linear Model}
+#'   \item{XGBoost}{eXtreme Grading Boosting}
+#'   \item{GBM}{Gradient Boosting Machine}
+#'   \item{DeepLearning}{Fully-connected multi-layer artificial neural network}
+#'   \item{StackedEnsemble}{Stacked Ensemble}
+#' }
 #' \href{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}{Read more here}.
+#' 
+#' @section Methods:
+#' \describe{
+#'   \item{print}{Use `print` method to print models stats and summary}
+#'   \item{plot}{Use `plot` method to plot results using \code{mplot_full()}}
+#' }
 #'
 #' @family Machine Learning
 #' @param df Dataframe. Dataframe containing all your data, including 
@@ -69,6 +78,7 @@
 #' @param subdir Character. In which directory do you wish to save 
 #' the results? Working directory as default.
 #' @param project Character. Your project's name
+#' @param ... Additional parameters on \code{h2o::h2o.automl}
 #' @examples 
 #' \dontrun{
 #' data(dft) # Titanic dataset
@@ -121,7 +131,8 @@ h2o_automl <- function(df, y = "tag",
                        quiet = FALSE,
                        save = FALSE,
                        subdir = NA,
-                       project = "ML Project") {
+                       project = "ML Project",
+                       ...) {
   
   tic(id = "h2o_automl")
   
@@ -289,7 +300,8 @@ h2o_automl <- function(df, y = "tag",
     exclude_algos = exclude_algos,
     nfolds = nfolds, 
     #project_name = project,
-    seed = seed))
+    seed = seed,
+    ...))
   if (nrow(aml@leaderboard) == 0) {
     stop("NO MODELS TRAINED. Please set max_models to at least 1 and increase max_time")
   } else {
@@ -312,9 +324,8 @@ h2o_automl <- function(df, y = "tag",
     if (!quiet) message("Results and model files exported succesfully!")
   }
   
+  if (!quiet) print(results)
   if (!quiet) toc(id = "h2o_automl", msg = "Process duration:")
-  
-  print(results$metrics$metrics)
   
   if (alarm & !quiet) {
     try_require("beepr", stop = TRUE)
@@ -323,6 +334,69 @@ h2o_automl <- function(df, y = "tag",
   
   attr(results, "type") <- "h2o_automl"
   return(results)
+  
+}
+
+####################################################################
+#' Plot methods
+#' @rdname print
+#' @param x \code{h2o_automl} object
+#' @param ... Additional parameters
+#' @export
+plot.h2o_automl <- function(x, ...) {
+  if (!inherits(x, 'h2o_automl'))
+    stop('Object must be class h2o_automl')
+  if ("plots" %in% names(x)) {
+    x$plots$dashboard 
+  } else { message(
+    "Nothing to plot: set 'plots = TRUE' when creating h2o_automl object") 
+  } 
+}
+
+####################################################################
+#' Print methods
+#' @rdname plot
+#' @param x \code{h2o_automl} object
+#' @param ... Additional parameters
+#' @export
+print.h2o_automl <- function(x, ...) {
+  
+  if (!inherits(x, 'h2o_automl'))
+    stop('Object must be class h2o_automl')
+  
+  aux <- list()
+  
+  aux[["met"]] <- glued(
+    "Test metrics: 
+{v2t({met}, sep = '\n', quotes = FALSE)}", met = paste(
+  "  ",
+  names(x$metrics$metrics), "=",
+  signif(x$metrics$metrics, 5)))
+  
+  if ("importance" %in% names(x)) {
+    aux[["imp"]] <- glued(
+      "Most important variables:
+{v2t({imp}, sep = '\n', quotes = FALSE)}", imp = paste(
+  "  ",
+  x$importance %>% head(5) %>%
+    mutate(label = sprintf(
+      "%s (%s)", 
+      .data$variable, 
+      formatNum(100*.data$importance, 1, pos = "%"))) %>%
+    pull(.data$label)))
+  }
+  
+  print(glued("
+Leader Model (1 of {nrow(x$leaderboard)}): {x$model_name}
+Independent Variable: {x$y}
+Type: {x$type}
+Algorithm: {toupper(x$algorithm)}
+Split: {round(100*x$split)}% training data (of {nrow(x$datasets$global)} observations)
+Seed: {x$seed}
+
+{aux$met}
+
+{aux$imp}"))
   
 }
 
@@ -370,6 +444,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   }
   
   # VARIABLES IMPORTANCES
+  # https://docs.h2o.ai/h2o/latest-stable/h2o-docs/variable-importance.html
   if (sum(grepl("Stacked", as.vector(m@model_id))) > 0) {
     stacked <- TRUE
     if (!quiet) message("NOTE: No importance features for Stacked Ensemble Models")

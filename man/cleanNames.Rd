@@ -11,7 +11,7 @@ cleanNames(df, num = "x", ...)
 
 \item{num}{Add character before only-numeric names}
 
-\item{...}{Additional parameters passed to `cleanText`}
+\item{...}{Additional parameters passed to \code{cleanText}}
 }
 \value{
 data.frame/tibble with new clean titles
@@ -19,11 +19,12 @@ data.frame/tibble with new clean titles
 \description{
 Resulting names are unique and consist only of the \code{_} character, 
 numbers, and ASCII letters. Capitalization preferences can be specified using 
-the \code{lower} parameter. Inspired by `janitor::clean_names`.
+the \code{lower} parameter. Inspired by \code{janitor::clean_names}.
 }
 \examples{
 df <- dft[1:5,1:5] # Dummy data
 colnames(df) <- c("ID.", "34", "Num 123", "Nòn-äscì", "  white   Spaces  ")
 print(df)
 cleanNames(df)
+cleanNames(df, lower = FALSE)
 }

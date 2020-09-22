@@ -29,7 +29,8 @@ h2o_automl(
   quiet = FALSE,
   save = FALSE,
   subdir = NA,
-  project = "ML Project"
+  project = "ML Project",
+  ...
 )
 }
 \arguments{
@@ -107,6 +108,8 @@ working directory?}
 the results? Working directory as default.}
 
 \item{project}{Character. Your project's name}
+
+\item{...}{Additional parameters on \code{h2o::h2o.automl}}
 }
 \description{
 This function lets the user create a robust and fast model, using 
@@ -118,12 +121,23 @@ models will be trained.
 }
 \section{List of algorithms}{
 
-"DRF" (Distributed Random Forest, including 
-Random Forest (RF) and Extremely-Randomized Trees (XRT)), "GLM" 
-(Generalized Linear Model), "XGBoost" (eXtreme Grading Boosting), 
-"GBM" (Gradient Boosting Machine), "DeepLearning" (Fully-connected 
-multi-layer artificial neural network) and "StackedEnsemble". 
+\describe{
+  \item{DRF}{Distributed Random Forest, including Random Forest (RF) and Extremely-Randomized Trees (XRT)}
+  \item{GLM}{Generalized Linear Model}
+  \item{XGBoost}{eXtreme Grading Boosting}
+  \item{GBM}{Gradient Boosting Machine}
+  \item{DeepLearning}{Fully-connected multi-layer artificial neural network}
+  \item{StackedEnsemble}{Stacked Ensemble}
+}
 \href{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}{Read more here}.
+}
+
+\section{Methods}{
+
+\describe{
+  \item{print}{Use `print` method to print models stats and summary}
+  \item{plot}{Use `plot` method to plot results using \code{mplot_full()}}
+}
 }
 
 \examples{

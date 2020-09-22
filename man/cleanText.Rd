@@ -4,7 +4,7 @@
 \alias{cleanText}
 \title{Clean text}
 \usage{
-cleanText(text, spaces = TRUE, lower = TRUE)
+cleanText(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = FALSE)
 }
 \arguments{
 \item{text}{Character Vector}
@@ -12,6 +12,10 @@ cleanText(text, spaces = TRUE, lower = TRUE)
 \item{spaces}{Boolean. Keep spaces?}
 
 \item{lower}{Boolean. Transform all to lower case?}
+
+\item{ascii}{Boolean. Only ASCII characters?}
+
+\item{title}{Boolean. Transform to title format (upper case on first letters)}
 }
 \description{
 This function lets the user clean text into getting only alphanumeric 
@@ -20,9 +24,9 @@ characters and no accents/symbols on letters.
 \examples{
 cleanText("Bernardo Lares 123")
 cleanText("Bèrnärdo LáreS 123", lower = FALSE)
-cleanText("Bernardo Lares", spaces = FALSE)
+cleanText("Bernardo Lare$", spaces = FALSE, ascii = FALSE)
 cleanText("\\\\@®ì÷å   \%ñS  ..-X", spaces = FALSE)
-cleanText(c("María", "€", "Núñez"))
+cleanText(c("maría", "€", "núñez a."), title = TRUE)
 }
 \seealso{
 Other Data Wrangling: 

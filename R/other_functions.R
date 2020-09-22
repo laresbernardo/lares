@@ -1654,17 +1654,18 @@ glued <- function (..., .sep = "", .envir = parent.frame()) {
 #' 
 #' Resulting names are unique and consist only of the \code{_} character, 
 #' numbers, and ASCII letters. Capitalization preferences can be specified using 
-#' the \code{lower} parameter. Inspired by `janitor::clean_names`.
+#' the \code{lower} parameter. Inspired by \code{janitor::clean_names}.
 #'
 #' @param df data.frame/tibble
 #' @param num Add character before only-numeric names
-#' @param ... Additional parameters passed to `cleanText`
+#' @param ... Additional parameters passed to \code{cleanText}
 #' @return data.frame/tibble with new clean titles
 #' @examples 
 #' df <- dft[1:5,1:5] # Dummy data
 #' colnames(df) <- c("ID.", "34", "Num 123", "Nòn-äscì", "  white   Spaces  ")
 #' print(df)
 #' cleanNames(df)
+#' cleanNames(df, lower = FALSE)
 #' @export
 cleanNames <- function(df, num = "x", ...) {
   # Initial cleanse
