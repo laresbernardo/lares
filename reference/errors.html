@@ -165,15 +165,15 @@ simultaneously.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span>)
 </div><div class='output co'>#&gt;       tag    score
-#&gt; 1 11.1333 21.52605
-#&gt; 2 30.0708 35.02605
-#&gt; 3 26.5500 14.84241
-#&gt; 4 31.2750 67.41018
-#&gt; 5 13.0000 28.95657
-#&gt; 6 26.0000 17.55153</div><div class='input'><span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>errors</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>score</span>)
+#&gt; 1 11.1333 25.93200
+#&gt; 2 30.0708 39.91900
+#&gt; 3 26.5500 50.72246
+#&gt; 4 31.2750 47.81292
+#&gt; 5 13.0000 30.12853
+#&gt; 6 26.0000 13.24153</div><div class='input'><span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>errors</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>score</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span>)
-</div><div class='output co'>#&gt;       rmse      mae     mape      mse    rsq   rsqa
-#&gt; 1 33.70647 21.26019 0.116584 1136.126 0.1438 0.1406</div></pre>
+</div><div class='output co'>#&gt;       rmse      mae       mape      mse    rsq   rsqa
+#&gt; 1 20.30881 14.24359 0.07303959 412.4477 0.3169 0.3143</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
