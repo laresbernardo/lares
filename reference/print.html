@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot methods for lares — plot.h2o_automl • lares</title>
+<title>Print methods for lares — print.h2o_automl • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Plot methods for lares — plot.h2o_automl" />
-<meta property="og:description" content="Plot methods for lares" />
+<meta property="og:title" content="Print methods for lares — print.h2o_automl" />
+<meta property="og:description" content="Print methods for lares" />
 
 
 
@@ -102,20 +102,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot methods for lares</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/model_functions.R'><code>R/model_functions.R</code></a>, <a href='https://github.com/laresbernardo/lares/blob/master/R/shapley.R'><code>R/shapley.R</code></a></small>
+    <h1>Print methods for lares</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/model_functions.R'><code>R/model_functions.R</code></a></small>
     <div class="hidden name"><code>print.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot methods for lares</p>
+    <p>Print methods for lares</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for h2o_automl</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
-
-<span class='co'># S3 method for h2o_shap</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>, relevant = <span class='fl'>TRUE</span>, top = <span class='fl'>15</span>, quiet = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -128,25 +125,8 @@
       <th>...</th>
       <td><p>Additional parameters</p></td>
     </tr>
-    <tr>
-      <th>relevant</th>
-      <td><p>Boolean. Keep only relevant non-trivial (&gt;0) features</p></td>
-    </tr>
-    <tr>
-      <th>top</th>
-      <td><p>Integer. Plot only top n values (as in importance)</p></td>
-    </tr>
-    <tr>
-      <th>quiet</th>
-      <td><p>Boolean. Print messages?</p></td>
-    </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other SHAP: 
-<code><a href='h2o_shap.html'>h2o_shap</a>()</code>,
-<code><a href='shap_var.html'>shap_var</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
