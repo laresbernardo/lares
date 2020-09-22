@@ -136,8 +136,7 @@ may be suppress or kept in your plot. Keep them?</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other SHAP: 
-<code><a href='h2o_shap.html'>h2o_shap</a>()</code>,
-<code><a href='plot.h2o_automl.html'>plot.h2o_automl</a>()</code></p></div>
+<code><a href='h2o_shap.html'>h2o_shap</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
@@ -149,6 +148,11 @@ may be suppress or kept in your plot. Keep them?</p></td>
 
 <span class='co'># Calculate SHAP values</span>
 <span class='kw'>SHAP_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='h2o_shap.html'>h2o_shap</a></span>(<span class='kw'>model</span>)
+<span class='co'># Equivalent to:</span>
+<span class='kw'>SHAP_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='h2o_shap.html'>h2o_shap</a></span>(
+  model = <span class='kw'>model</span><span class='op'>$</span><span class='kw'>model</span>,
+  test = <span class='kw'>model</span><span class='op'>$</span><span class='kw'>datasets</span><span class='op'>$</span><span class='kw'>test</span>,
+  scores = <span class='kw'>model</span><span class='op'>$</span><span class='kw'>scores_test</span><span class='op'>$</span><span class='kw'>scores</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>SHAP_values</span>)
 
 <span class='co'># Plot some of the variables (categorical and numerical)</span>
