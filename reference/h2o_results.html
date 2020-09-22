@@ -123,10 +123,11 @@ when using the <code><a href='h2o_automl.html'>h2o_automl()</a></code> function.
   target = <span class='st'>"auto"</span>,
   split = <span class='fl'>0.7</span>,
   ignored = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
-  plots = <span class='fl'>TRUE</span>,
-  project = <span class='kw'>NULL</span>,
+  quiet = <span class='fl'>FALSE</span>,
+  project = <span class='st'>"ML Project"</span>,
   seed = <span class='fl'>0</span>,
-  quiet = <span class='fl'>FALSE</span>
+  plots = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -171,8 +172,8 @@ used when training)</p></td>
       <td><p>Character vector. Columns ignored.</p></td>
     </tr>
     <tr>
-      <th>plots</th>
-      <td><p>Boolean. Create plots objects?</p></td>
+      <th>quiet</th>
+      <td><p>Boolean. Quiet messages, warnings, recommendations?</p></td>
     </tr>
     <tr>
       <th>project</th>
@@ -185,8 +186,12 @@ guarantee reproducibility if max_models is used because max_time is
 resource limited.</p></td>
     </tr>
     <tr>
-      <th>quiet</th>
-      <td><p>Boolean. Quiet messages, warnings, recommendations?</p></td>
+      <th>plots</th>
+      <td><p>Boolean. Create plots objects?</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters on <code><a href='https://rdrr.io/pkg/h2o/man/h2o.automl.html'>h2o::h2o.automl</a></code></p></td>
     </tr>
     </table>
 

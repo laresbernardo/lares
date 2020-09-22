@@ -111,7 +111,7 @@
     <p>Select wich model from the h2o_automl function to use</p>
     </div>
 
-    <pre class="usage"><span class='fu'>h2o_selectmodel</span>(<span class='kw'>results</span>, which_model = <span class='fl'>1</span>, plots = <span class='fl'>TRUE</span>, quiet = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>h2o_selectmodel</span>(<span class='kw'>results</span>, which_model = <span class='fl'>1</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -125,12 +125,8 @@
       <td><p>Integer. Which model from the leaderboard you wish to use?</p></td>
     </tr>
     <tr>
-      <th>plots</th>
-      <td><p>Boolean. Create plots objects?</p></td>
-    </tr>
-    <tr>
-      <th>quiet</th>
-      <td><p>Boolean. Quiet messages, warnings, recommendations?</p></td>
+      <th>...</th>
+      <td><p>Additional parameters on <code><a href='https://rdrr.io/pkg/h2o/man/h2o.automl.html'>h2o::h2o.automl</a></code></p></td>
     </tr>
     </table>
 
