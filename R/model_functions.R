@@ -364,6 +364,10 @@ print.h2o_automl <- function(x, ...) {
     stop('Object must be class h2o_automl')
   
   aux <- list()
+  selected <- which(as.vector(x$leaderboard$model_id) == x$model_name)
+  n_models <- nrow(x$leaderboard)
+  data_points <- nrow(x$datasets$global)
+  split <- round(100*x$split)
   
   aux[["met"]] <- glued(
     "Test metrics: 
@@ -385,13 +389,13 @@ print.h2o_automl <- function(x, ...) {
     pull(.data$label)))
   }
   
+  
   print(glued("
-Leader Model: {x$model_name}
+Main Model ({selected}/{n_models}): {x$model_name}
 Independent Variable: {x$y}
 Type: {x$type}
 Algorithm: {toupper(x$algorithm)}
-Trained: {nrow(x$leaderboard)} models
-Split: {round(100*x$split)}% training data (of {nrow(x$datasets$global)} observations)
+Split: {split}% training data (of {data_points} observations)
 Seed: {x$seed}
 
 {aux$met}
@@ -413,23 +417,28 @@ Seed: {x$seed}
 #' @param which Integer. Which model to select from leaderboard
 #' @param model_type Character. Select "Classifier" or "Regression"
 #' @param ignored Character vector. Columns ignored.
+#' @param leaderboard H2O's Leaderboard. Passed when using 
+#' \code{h2o_selectmodel} as it contains plain model and no leader board.
 #' @export
 h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
                         model_type, target = "auto", split = 0.7,
                         ignored = c(), quiet = FALSE, 
                         project = "ML Project", seed = 0,
+                        leaderboard = list(),
                         plots = TRUE, ...) {
-  
+
   # MODEL TYPE
   types <- c("Classifier", "Regression")
   check_opts(model_type, types)
   thresh <- ifelse(model_type == types[1], 100, 0)
   
   # When using h2o_select
-  colnames(test)[colnames(test) == y] <- "tag"
-  colnames(train)[colnames(train) == y] <- "tag"
-  test <- test[,1:(which(colnames(test) == "train_test")-1)]
-  train <- train[,1:(which(colnames(train) == "train_test")-1)]
+  if ("train_test" %in% colnames(test)) {
+    colnames(test)[colnames(test) == y] <- "tag"
+    colnames(train)[colnames(train) == y] <- "tag"
+    test <- test[,1:(which(colnames(test) == "train_test") - 1)]
+    train <- train[,1:(which(colnames(train) == "train_test") - 1)]
+  }
   
   # GLOBAL DATAFRAME FROM TEST AND TRAIN
   if (!all(colnames(test) == colnames(train)))
@@ -443,7 +452,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   # SELECT MODEL FROM h2o_automl()
   if (any(c("H2OFrame","H2OAutoML") %in% class(h2o_object))) {
     # Note: Best model from leaderboard is which = 1
-    m <- h2o.getModel(as.vector(h2o_object@leaderboard$model_id[which]))     
+    m <- h2o.getModel(as.vector(h2o_object@leaderboard$model_id[which]))
     if (!quiet) message(paste("Model selected:", as.vector(m@model_id)))
   } else {
     m <- h2o_object
@@ -540,6 +549,8 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   results[["algorithm"]] <- m@algorithm
   if (any(c("H2OFrame","H2OAutoML") %in% class(h2o_object)))
     results[["leaderboard"]] <- h2o_object@leaderboard
+  if (length(leaderboard) > 0)
+    results[["leaderboard"]] <- leaderboard
   results[["project"]] <- project
   results[["y"]] <- y
   results[["ignored"]] <- ignored
@@ -624,24 +635,31 @@ get_scores <- function(predictions,
 #' @param results Object. h2o_automl output from \code{h2o_automl()}
 #' @param which_model Integer. Which model from the leaderboard you wish to use?
 #' @export
-h2o_selectmodel <- function(results, which_model = 1, ...) {
+h2o_selectmodel <- function(results, which_model = 1, quiet = FALSE, ...) {
   
   check_attr(results, attr = "type", check = "h2o_automl")
   
   # Select model (Best one by default)
-  m <- h2o.getModel(as.vector(results$leaderboard$model_id[which_model]))  
+  model_id <- as.vector(results$leaderboard$model_id[which_model])
+  if (!quiet) message("Model selected: ", model_id)
+  m <- h2o.getModel(model_id)  
+  d <- results$datasets
   
   # Calculate everything
-  output <- h2o_results(m, 
-                        test = results$datasets$test, 
-                        train = results$datasets$global[
-                          results$datasets$global$train_test=="train",], 
-                        y = results$y, 
-                        which = which_model, 
-                        model_type = results$type, 
-                        project = results$project, 
-                        seed = results$seed, 
-                        ...)
+  output <- h2o_results(
+    m, 
+    test = d$test, 
+    train = d$global[d$global$train_test=="train",], 
+    y = results$y, 
+    which = which_model, 
+    model_type = results$type, 
+    project = results$project, 
+    leaderboard = results$leaderboard,
+    seed = results$seed, 
+    quiet = TRUE,
+    ...)
+  
+  if (!quiet) print(output)
   return(output)
 }
 

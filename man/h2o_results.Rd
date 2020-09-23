@@ -17,6 +17,7 @@ h2o_results(
   quiet = FALSE,
   project = "ML Project",
   seed = 0,
+  leaderboard = list(),
   plots = TRUE,
   ...
 )
@@ -51,6 +52,9 @@ used when training)}
 \item{seed}{Integer. Set a seed for reproducibility. AutoML can only 
 guarantee reproducibility if max_models is used because max_time is 
 resource limited.}
+
+\item{leaderboard}{H2O's Leaderboard. Passed when using 
+\code{h2o_selectmodel} as it contains plain model and no leader board.}
 
 \item{plots}{Boolean. Create plots objects?}
 
