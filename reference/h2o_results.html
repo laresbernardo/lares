@@ -126,6 +126,7 @@ when using the <code><a href='h2o_automl.html'>h2o_automl()</a></code> function.
   quiet = <span class='fl'>FALSE</span>,
   project = <span class='st'>"ML Project"</span>,
   seed = <span class='fl'>0</span>,
+  leaderboard = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
   plots = <span class='fl'>TRUE</span>,
   <span class='kw'>...</span>
 )</pre>
@@ -184,6 +185,11 @@ used when training)</p></td>
       <td><p>Integer. Set a seed for reproducibility. AutoML can only 
 guarantee reproducibility if max_models is used because max_time is 
 resource limited.</p></td>
+    </tr>
+    <tr>
+      <th>leaderboard</th>
+      <td><p>H2O's Leaderboard. Passed when using 
+<code>h2o_selectmodel</code> as it contains plain model and no leader board.</p></td>
     </tr>
     <tr>
       <th>plots</th>
