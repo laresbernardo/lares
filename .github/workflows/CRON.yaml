@@ -1,7 +1,7 @@
 name: Cron Jobs [Mon-Fri]
 on:
   schedule:
-    - cron: '0 18 * * 1-5'
+    - cron: '0 21 * * 1-5'
 
 jobs:
   reporting:

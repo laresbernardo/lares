@@ -184,11 +184,11 @@ ohse <- function(df,
       if (!colnames(vector_values) %in% c(converted_binary, no_variance)) {
         if (vector_levels >= 2 & !vector_name %in% converted_binary) {
           options(na.action = 'na.pass')
-          vector_values <- categ_reducer(
+          reduced <- categ_reducer(
             vector_values, !!as.name(vector_name), top = limit,
             other_label = paste0(sep, other_label))
-          # This changes spaces for dots: fix sometime!
-          dummy_matx <- data.frame(model.matrix( ~ . -1, data = vector_values))
+          dummy_matx <- data.frame(model.matrix(~ . -1, reduced))
+          colnames(dummy_matx) <- paste0(vector_name, sort(unique(reduced[,1]))) 
           if (!redundant) dummy_matx <- dummy_matx[, 1:(ncol(dummy_matx) - 1)]
           df <- cbind(df, dummy_matx)
           converted <- rbind(converted, vector_name)
