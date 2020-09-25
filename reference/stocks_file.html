@@ -73,7 +73,7 @@ Portfolio's data, locally or from Dropbox." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.3</span>
       </span>
     </div>
 
@@ -114,7 +114,7 @@ Portfolio's data, locally or from Dropbox.</p>
     </div>
 
     <pre class="usage"><span class='fu'>stocks_file</span>(
-  filename = <span class='fl'>NA</span>,
+  file = <span class='fl'>NA</span>,
   creds = <span class='fl'>NA</span>,
   auto = <span class='fl'>TRUE</span>,
   sheets = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Portafolio"</span>, <span class='st'>"Fondos"</span>, <span class='st'>"Transacciones"</span>),
@@ -125,8 +125,8 @@ Portfolio's data, locally or from Dropbox.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>filename</th>
-      <td><p>Character. Import a local Excel file</p></td>
+      <th>file</th>
+      <td><p>Character. Import an Excel file, local or from URL.</p></td>
     </tr>
     <tr>
       <th>creds</th>
@@ -181,7 +181,7 @@ Cash, and Transactions information</p></td>
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Load lares dummy portfolio XLSX</span>
 <span class='kw'>file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"inst/docs"</span>, <span class='st'>"dummyPortfolio.xlsx"</span>, package = <span class='st'>"lares"</span>)
-<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>stocks_file</span>(filename = <span class='kw'>file</span>, 
+<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>stocks_file</span>(file = <span class='kw'>file</span>, 
                   sheets = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Portafolio"</span>,<span class='st'>"Fondos"</span>,<span class='st'>"Transacciones"</span>), 
                   keep_old = <span class='fl'>FALSE</span>)
 }

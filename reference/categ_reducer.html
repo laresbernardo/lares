@@ -73,7 +73,7 @@ It is tidyverse friendly for use on pipelines" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.3</span>
       </span>
     </div>
 
@@ -115,12 +115,16 @@ It is tidyverse friendly for use on pipelines</p>
 
     <pre class="usage"><span class='fu'>categ_reducer</span>(
   <span class='kw'>df</span>,
-  <span class='kw'>...</span>,
+  <span class='kw'>var</span>,
   nmin = <span class='fl'>0</span>,
   pmin = <span class='fl'>0</span>,
   pcummax = <span class='fl'>100</span>,
   top = <span class='fl'>NA</span>,
-  other_label = <span class='st'>"other"</span>
+  pvalue_max = <span class='fl'>1</span>,
+  cor_var = <span class='st'>"tag"</span>,
+  limit = <span class='fl'>20</span>,
+  other_label = <span class='st'>"other"</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -131,8 +135,8 @@ It is tidyverse friendly for use on pipelines</p>
       <td><p>Categorical Vector</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Variables. Which variable do you wish to reduce?</p></td>
+      <th>var</th>
+      <td><p>Variable. Which variable do you wish to reduce?</p></td>
     </tr>
     <tr>
       <th>nmin</th>
@@ -140,11 +144,11 @@ It is tidyverse friendly for use on pipelines</p>
     </tr>
     <tr>
       <th>pmin</th>
-      <td><p>Numerical. Porcentage of minimum times a value is repeated</p></td>
+      <td><p>Numerical. Percentage of minimum times a value is repeated</p></td>
     </tr>
     <tr>
       <th>pcummax</th>
-      <td><p>Numerical. Top cumulative porcentage of most 
+      <td><p>Numerical. Top cumulative percentage of most 
 repeated values</p></td>
     </tr>
     <tr>
@@ -152,9 +156,27 @@ repeated values</p></td>
       <td><p>Integer. Keep the n most frequently repeated values</p></td>
     </tr>
     <tr>
+      <th>pvalue_max</th>
+      <td><p>Numeric (0-1]. Max pvalue categories</p></td>
+    </tr>
+    <tr>
+      <th>cor_var</th>
+      <td><p>Character. If pvalue_max &lt; 1, you must define which
+column name will be compared with (numerical or binary).</p></td>
+    </tr>
+    <tr>
+      <th>limit</th>
+      <td><p>Integer. Limit one hot encoding to the n most frequent 
+values of each column. Set to <code>NA</code> to ignore argument.</p></td>
+    </tr>
+    <tr>
       <th>other_label</th>
       <td><p>Character. With which text do you wish to replace 
 the filtered values with?</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters</p></td>
     </tr>
     </table>
 
@@ -201,7 +223,16 @@ the filtered values with?</p></td>
 #&gt; </span><span style='color: #555555;'>1</span><span> Other Ticket   870 97.6      1  97.6
 #&gt; </span><span style='color: #555555;'>2</span><span> 1601             7  0.79     2  98.4
 #&gt; </span><span style='color: #555555;'>3</span><span> 347082           7  0.79     3  99.2
-#&gt; </span><span style='color: #555555;'>4</span><span> CA. 2343         7  0.79     4 100. </div></span></pre>
+#&gt; </span><span style='color: #555555;'>4</span><span> CA. 2343         7  0.79     4 100. </div><div class='input'><span class='fu'>categ_reducer</span>(<span class='kw'>dft</span>, <span class='kw'>Ticket</span>, pvalue_max = <span class='fl'>0.05</span>, cor_var = <span class='st'>"Survived"</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='freqs.html'>freqs</a></span>(<span class='kw'>Ticket</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 5</span><span>
+#&gt;   Ticket       n     p order  pcum
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> other      866 97.2      1  97.2
+#&gt; </span><span style='color: #555555;'>2</span><span> 347082       7  0.79     2  98.0
+#&gt; </span><span style='color: #555555;'>3</span><span> CA. 2343     7  0.79     3  98.8
+#&gt; </span><span style='color: #555555;'>4</span><span> 113760       4  0.45     4  99.2
+#&gt; </span><span style='color: #555555;'>5</span><span> 2666         4  0.45     5  99.7
+#&gt; </span><span style='color: #555555;'>6</span><span> 110152       3  0.34     6 100. </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -74,7 +74,7 @@ only numerical values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.3</span>
       </span>
     </div>
 
@@ -123,8 +123,6 @@ only numerical values.</p>
   trim = <span class='fl'>0</span>,
   clean = <span class='fl'>FALSE</span>,
   plot = <span class='fl'>TRUE</span>,
-  logs = <span class='fl'>FALSE</span>,
-  dates = <span class='fl'>TRUE</span>,
   top = <span class='fl'>NA</span>,
   ceiling = <span class='fl'>100</span>,
   max_pvalue = <span class='fl'>1</span>,
@@ -132,7 +130,9 @@ only numerical values.</p>
   zeroes = <span class='fl'>FALSE</span>,
   save = <span class='fl'>FALSE</span>,
   subdir = <span class='fl'>NA</span>,
-  file_name = <span class='st'>"viz_corrvar.png"</span>
+  file_name = <span class='st'>"viz_corrvar.png"</span>,
+  quiet = <span class='fl'>FALSE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -140,7 +140,8 @@ only numerical values.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>df</th>
-      <td><p>Dataframe.</p></td>
+      <td><p>Dataframe. It doesn't matter if it's got non-numerical
+columns: they will be filtered!</p></td>
     </tr>
     <tr>
       <th>var</th>
@@ -168,16 +169,6 @@ for both, target and values)</p></td>
       <th>plot</th>
       <td><p>Boolean. Do you wish to plot the result? If set to TRUE, the
 function will return only the plot and not the result's data</p></td>
-    </tr>
-    <tr>
-      <th>logs</th>
-      <td><p>Boolean. Automatically calculate log(values) for numerical
-variables (not binaries)</p></td>
-    </tr>
-    <tr>
-      <th>dates</th>
-      <td><p>Boolean. Do you want the function to create more features
-out of the date/time columns?</p></td>
     </tr>
     <tr>
       <th>top</th>
@@ -214,6 +205,14 @@ save the plot</p></td>
       <th>file_name</th>
       <td><p>Character. File name as you wish to save the plot</p></td>
     </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Boolean. Keep quiet? If not, show messages</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -244,7 +243,7 @@ save the plot</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived</span>, method = <span class='st'>"spearman"</span>, plot = <span class='fl'>FALSE</span>, top = <span class='fl'>10</span>)
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Not a valid input: Survived was transformed or does not exist.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Maybe you meant one of: 'Survived_TRUE'</span></div><div class='output co'>#&gt; <span class='message'>Automatically using 'Survived_TRUE</span></div><div class='output co'>#&gt;                   variables      corr   pvalue
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Maybe you meant one of: 'Survived_TRUE'</span></div><div class='output co'>#&gt; <span class='message'>Automatically using 'Survived_TRUE</span></div><div class='output co'>#&gt;                   variables      corr   pvalue
 #&gt; Sex_male           Sex_male -0.543351 0.000000
 #&gt; Fare                   Fare  0.323736 0.000000
 #&gt; Cabin_               Cabin_ -0.316912 0.000000
@@ -255,15 +254,15 @@ save the plot</p></td>
 #&gt; Pclass_2           Pclass_2  0.093349 0.005294
 #&gt; SibSp                 SibSp  0.088879 0.007941
 #&gt; Ticket_113760 Ticket_113760  0.085083 0.011062
-#&gt; Cabin_B96 B98 Cabin_B96.B98  0.085083 0.011062</div><div class='input'>
+#&gt; Cabin_B96 B98 Cabin_B96 B98  0.085083 0.011062</div><div class='input'>
 <span class='co'># With plots, results are easier to compare:</span>
 
 <span class='co'># Correlate Survived with everything else and show only significant results</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, max_pvalue = <span class='fl'>0.01</span>)
-</div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Not a valid input: Survived_TRUE was transformed or does not exist.</span></div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Top 15 with less than 50% correlation</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, ceiling = <span class='fl'>60</span>, top = <span class='fl'>15</span>)
-</div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 60% (absolute)</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Not a valid input: Survived_TRUE was transformed or does not exist.</span></div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 60% (absolute)</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

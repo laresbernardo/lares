@@ -75,7 +75,7 @@ with less than 3 non missing values and warn the user." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.3</span>
       </span>
     </div>
 
@@ -124,11 +124,10 @@ with less than 3 non missing values and warn the user.</p>
   dec = <span class='fl'>6</span>,
   ignore = <span class='fl'>NA</span>,
   dummy = <span class='fl'>TRUE</span>,
-  limit = <span class='fl'>10</span>,
-  dates = <span class='fl'>FALSE</span>,
-  redundant = <span class='fl'>FALSE</span>,
   logs = <span class='fl'>FALSE</span>,
-  top = <span class='fl'>NA</span>
+  limit = <span class='fl'>10</span>,
+  top = <span class='fl'>NA</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -154,11 +153,15 @@ significance (p-value) for each value</p></td>
     </tr>
     <tr>
       <th>ignore</th>
-      <td><p>Character vector. Which columns do you wish to exclude?</p></td>
+      <td><p>Vector or character. Which column should be ignored?</p></td>
     </tr>
     <tr>
       <th>dummy</th>
       <td><p>Boolean. Should One Hot Encoding be applied to categorical columns?</p></td>
+    </tr>
+    <tr>
+      <th>logs</th>
+      <td><p>Boolean. Calculate log(x)+1 for numerical columns?</p></td>
     </tr>
     <tr>
       <th>limit</th>
@@ -166,24 +169,13 @@ significance (p-value) for each value</p></td>
 values of each column. Set to <code>NA</code> to ignore argument.</p></td>
     </tr>
     <tr>
-      <th>dates</th>
-      <td><p>Boolean. Do you want the function to create more features
-out of the date/time columns?</p></td>
-    </tr>
-    <tr>
-      <th>redundant</th>
-      <td><p>Boolean. Should we keep redundat columns? i.e. It the
-column only has two different values, should we keep both new columns?</p></td>
-    </tr>
-    <tr>
-      <th>logs</th>
-      <td><p>Boolean. Automatically calculate log(values) for numerical
-variables (not binaries)</p></td>
-    </tr>
-    <tr>
       <th>top</th>
       <td><p>Integer. Select top N most relevant variables? Filtered 
 and sorted by mean of each variable's correlations</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters</p></td>
     </tr>
     </table>
 
