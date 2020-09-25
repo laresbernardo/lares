@@ -4,18 +4,20 @@
 \alias{balance_data}
 \title{Balance Binary Data by Resampling: Under-Over Sampling}
 \usage{
-balance_data(df, variable, rate = 1, seed = 0)
+balance_data(df, variable, rate = 1, seed = 0, quiet = FALSE)
 }
 \arguments{
 \item{df}{Vector or Dataframe. Contains different variables in each 
 column, separated by a specific character}
 
-\item{variable}{Character. Which binary variable should we use to resample df}
+\item{variable}{Variable. Which variable should we used to re-sample dataset?}
 
 \item{rate}{Numeric. How many X for every Y we need? Default: 1. If there are
 more than 2 unique values, rate will represent percentage for number of rows}
 
 \item{seed}{Numeric. Seed to replicate and obtain same values}
+
+\item{quiet}{Boolean. Keep quiet? If not, messages will be printed}
 }
 \description{
 This function lets the user balance a given data.frame by resampling
@@ -23,7 +25,7 @@ with a given relation rate and a binary feature.
 }
 \examples{
 data(dft) # Titanic dataset
-df <- balance_data(dft, "Survived", rate = 1, seed = 123)
+df <- balance_data(dft, Survived, rate = 1, seed = 123)
 freqs(df, Survived)
 }
 \seealso{

@@ -308,8 +308,10 @@ h2o_automl <- function(df, y = "tag",
       if (!quiet) message(paste("Succesfully generated", nrow(aml@leaderboard), "models:")) 
   }
   if (!quiet) print(aml@leaderboard[,1:3])
+  
   flow <- "http://localhost:54321/flow/index.html"
-  if (!quiet) message("Check results in H2O Flow's nice interface: ", flow)
+  if (!quiet & Sys.getenv('HOSTNAME') == "") 
+    message("Check results in H2O Flow's nice interface: ", flow)
   
   # GET RESULTS AND PERFORMANCE
   results <- h2o_results(
@@ -327,7 +329,7 @@ h2o_automl <- function(df, y = "tag",
   if (!quiet) print(results)
   
   if (alarm & !quiet) {
-    try_require("beepr", stop = TRUE)
+    try_require("beepr", stop = FALSE)
     try(beep())
   }
   

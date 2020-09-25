@@ -326,47 +326,51 @@ formatNum <- function(x, decimals = 2,
 #' @family Data Wrangling
 #' @param df Vector or Dataframe. Contains different variables in each 
 #' column, separated by a specific character
-#' @param variable Character. Which binary variable should we use to resample df
+#' @param variable Variable. Which variable should we used to re-sample dataset?
 #' @param rate Numeric. How many X for every Y we need? Default: 1. If there are
 #' more than 2 unique values, rate will represent percentage for number of rows
 #' @param seed Numeric. Seed to replicate and obtain same values
+#' @param quiet Boolean. Keep quiet? If not, messages will be printed
 #' @examples 
 #' data(dft) # Titanic dataset
-#' df <- balance_data(dft, "Survived", rate = 1, seed = 123)
+#' df <- balance_data(dft, Survived, rate = 1, seed = 123)
 #' freqs(df, Survived)
 #' @export
-balance_data <- function(df, variable, rate = 1, seed = 0) {
+balance_data <- function(df, variable, rate = 1, seed = 0, quiet = FALSE) {
   
   set.seed(seed)
   
+  variable <- gsub('\"', '', deparse(substitute(variable)))
   names(df)[names(df) == variable] <- 'tag'
   tags <- unique(df$tag)
   
   if (length(tags) != 2) {
-    # For numerical resampling:
+    # For numerical re-sampling:
     samp <- round(rate * nrow(df))
     balanced <- sample_n(df, samp)
     if (nrow(df) != samp) {
-      message(paste("Resampled from", nrow(df), "to", samp, "rows")) 
+      if (!quiet) message(paste("Resampled from", nrow(df), "to", samp, "rows")) 
     }
   } else {
-    # For binary resampling:
-    message(paste("Resampled from:", vector2text(formatNum(table(df$tag),0), sep = " x ", quotes = F)))
+    # For binary re-sampling:
+    if (!quiet) message(paste("Resampled from:", vector2text(
+        formatNum(table(df$tag),0), sep = " v ", quotes = F)))
     ones <- df %>% filter(.data$tag %in% as.character(tags[1]))
     zeros <- df %>% filter(.data$tag %in% as.character(tags[2]))
     
     if (nrow(ones) <= nrow(zeros)) {
-      message(paste("Reducing size for:", tags[2]))
+      if (!quiet) message(paste("Reducing size for label:", tags[2]))
       zeros <- sample_n(zeros, round(rate * nrow(ones)))
     } else {
-      message(paste("Reducing size for:", tags[1]))
+      if (!quiet) message(paste("Reducing size for label:", tags[1]))
       ones <- sample_n(ones, round(rate * nrow(zeros)))
     }
     balanced <- rbind(ones, zeros)
-    message(paste("Into:", vector2text(formatNum(table(balanced$tag),0), sep = " x ", quotes = F)))
+    if (!quiet) message(paste("New label distribution:", vector2text(
+      formatNum(table(balanced$tag),0), sep = " v ", quotes = F)))
   }
   
-  balanced <- rename_at(balanced, vars("tag"), funs(paste0(variable)))
+  balanced <- rename_at(balanced, vars("tag"), list(~paste0(variable)))
   return(balanced)
 }
 
@@ -1680,4 +1684,20 @@ cleanNames <- function(df, num = "x", ...) {
   # Keep tibble if original data.frame is tibble
   if ("tbl_df" %in% class(df)) df <- as_tibble(df)
   return(df)
+}
+
+####################################################################
+#' Regular Expression for URLs
+#'
+#' @param x Character vector
+#' @param ... Additional parameters passed to \code{grepl}
+#' @examples 
+#' isURL("test")
+#' isURL("google.com")
+#' isURL("http://google.com")
+#' isURL("test@mail.com")
+#' isURL("https://stackoverflow.com/help")
+#' @export
+isURL <- function(x, ...) {
+  grepl("(http|https)://[a-zA-Z0-9./?=_%:-]*", x, ...) 
 }
