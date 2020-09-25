@@ -119,11 +119,12 @@ API service.</p>
   cc = <span class='fl'>NA</span>,
   bcc = <span class='fl'>NA</span>,
   subject = <span class='st'>"Mail from R"</span>,
-  text = <span class='fl'>NA</span>,
+  text = <span class='st'>" \n"</span>,
   html = <span class='fl'>NA</span>,
   attachment = <span class='fl'>NA</span>,
-  quiet = <span class='fl'>FALSE</span>,
-  creds = <span class='fl'>NA</span>
+  service = <span class='st'>"mailgun"</span>,
+  creds = <span class='fl'>NA</span>,
+  quiet = <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -147,13 +148,17 @@ API service.</p>
 plot as PNG or data.frame as CSV, respectively.</p></td>
     </tr>
     <tr>
-      <th>quiet</th>
-      <td><p>Boolean. Keep quite or display messages?</p></td>
+      <th>service</th>
+      <td><p>Character. Service platform to search on <code>creds</code>.</p></td>
     </tr>
     <tr>
       <th>creds</th>
       <td><p>Character. Credential's user (see <code><a href='get_credentials.html'>get_creds()</a></code>).
 Must contain: url (POST address), api (api key)</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Boolean. Keep quite or display messages?</p></td>
     </tr>
     </table>
 
