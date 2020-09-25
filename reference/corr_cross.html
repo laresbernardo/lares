@@ -233,17 +233,20 @@ with Ranked Cross-Correlations</a></p>
 
 <span class='co'># Only data with no plot</span>
 <span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, plot = <span class='fl'>FALSE</span>, top = <span class='fl'>10</span>)
-</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='output co'>#&gt; <span class='message'>Returning only the top 10. You may override with the `top` parameter</span></div><div class='output co'>#&gt;              key             mix      corr pvalue   group1 group2
-#&gt; 1  Ticket_113781   Cabin_C22.C26  0.865538      0   Ticket  Cabin
-#&gt; 2       Pclass_1          Cabin_ -0.788773      0   Pclass  Cabin
-#&gt; 3          SibSp Ticket_CA..2343  0.603697      0    SibSp Ticket
-#&gt; 4           Fare        Pclass_1  0.591711      0     Fare Pclass
-#&gt; 5          SibSp    Ticket_OTHER -0.570909      0    SibSp Ticket
-#&gt; 6  Survived_TRUE        Sex_male -0.543351      0 Survived    Sex
-#&gt; 7           Fare          Cabin_ -0.482075      0     Fare  Cabin
-#&gt; 8          Parch    Ticket_OTHER -0.439796      0    Parch Ticket
-#&gt; 9          SibSp           Parch  0.414838      0    SibSp  Parch
-#&gt; 10           Age        Pclass_1  0.348941      0      Age Pclass</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='output co'>#&gt; <span class='message'>Returning only the top 10. You may override with the `top` parameter</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 8</span><span>
+#&gt; </span><span style='color: #555555;'># Rowwise: </span><span>
+#&gt;    key           mix               corr pvalue group1   group2 cat1   cat2      
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
+#&gt; </span><span style='color: #555555;'> 1</span><span> Ticket_113781 Cabin_C22.C26    0.866      0 Ticket   Cabin  113781 </span><span style='color: #555555;'>"</span><span>C22.C26</span><span style='color: #555555;'>"</span><span> 
+#&gt; </span><span style='color: #555555;'> 2</span><span> Pclass_1      Cabin_          -</span><span style='color: #BB0000;'>0.789</span><span>      0 Pclass   Cabin  1      </span><span style='color: #555555;'>""</span><span>        
+#&gt; </span><span style='color: #555555;'> 3</span><span> SibSp         Ticket_CA..2343  0.604      0 SibSp    Ticket SibSp  </span><span style='color: #555555;'>"</span><span>CA..2343</span><span style='color: #555555;'>"</span><span>
+#&gt; </span><span style='color: #555555;'> 4</span><span> Fare          Pclass_1         0.592      0 Fare     Pclass Fare   </span><span style='color: #555555;'>"</span><span>1</span><span style='color: #555555;'>"</span><span>       
+#&gt; </span><span style='color: #555555;'> 5</span><span> SibSp         Ticket_OTHER    -</span><span style='color: #BB0000;'>0.571</span><span>      0 SibSp    Ticket SibSp  </span><span style='color: #555555;'>"</span><span>OTHER</span><span style='color: #555555;'>"</span><span>   
+#&gt; </span><span style='color: #555555;'> 6</span><span> Survived_TRUE Sex_male        -</span><span style='color: #BB0000;'>0.543</span><span>      0 Survived Sex    TRUE   </span><span style='color: #555555;'>"</span><span>male</span><span style='color: #555555;'>"</span><span>    
+#&gt; </span><span style='color: #555555;'> 7</span><span> Fare          Cabin_          -</span><span style='color: #BB0000;'>0.482</span><span>      0 Fare     Cabin  Fare   </span><span style='color: #555555;'>""</span><span>        
+#&gt; </span><span style='color: #555555;'> 8</span><span> Parch         Ticket_OTHER    -</span><span style='color: #BB0000;'>0.440</span><span>      0 Parch    Ticket Parch  </span><span style='color: #555555;'>"</span><span>OTHER</span><span style='color: #555555;'>"</span><span>   
+#&gt; </span><span style='color: #555555;'> 9</span><span> SibSp         Parch            0.415      0 SibSp    Parch  SibSp  </span><span style='color: #555555;'>"</span><span>Parch</span><span style='color: #555555;'>"</span><span>   
+#&gt; </span><span style='color: #555555;'>10</span><span> Age           Pclass_1         0.349      0 Age      Pclass Age    </span><span style='color: #555555;'>"</span><span>1</span><span style='color: #555555;'>"</span><span>       </div><div class='input'>
 <span class='co'># Show only most relevant results filtered by pvalue</span>
 <span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, rm.na = <span class='fl'>TRUE</span>, max_pvalue = <span class='fl'>0.05</span>, top = <span class='fl'>15</span>)
 </div><div class='output co'>#&gt; <span class='message'>Returning only the top 15. You may override with the `top` parameter</span></div><div class='img'><img src='corr_cross-1.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -252,7 +255,7 @@ with Ranked Cross-Correlations</a></p>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='img'><img src='corr_cross-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Cross-Correlation for certain variables</span>
 <span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, contains = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Survived"</span>, <span class='st'>"Fare"</span>))
-</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='output co'>#&gt; <span class='message'>Returning only the top 25. You may override with the `top` parameter</span></div><div class='img'><img src='corr_cross-3.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='output co'>#&gt; <span class='message'>Returning only the top 25. You may override with the `top` parameter</span></div><div class='img'><img src='corr_cross-3.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
