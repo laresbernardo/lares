@@ -640,6 +640,9 @@ h2o_selectmodel <- function(results, which_model = 1, quiet = FALSE, ...) {
   check_attr(results, attr = "type", check = "h2o_automl")
   
   # Select model (Best one by default)
+  ntop <- nrow(results$leaderboard)
+  if (which_model > ntop)
+    stop("Select a valid model ID. Range: 1 to ", ntop)
   model_id <- as.vector(results$leaderboard$model_id[which_model])
   if (!quiet) message("Model selected: ", model_id)
   m <- h2o.getModel(model_id)  

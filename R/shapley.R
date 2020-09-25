@@ -192,11 +192,11 @@ shap_var <- function(x, var, keep_outliers = FALSE) {
   p <- shap_df2 %>%
     ggplot(aes(x = .data$real_value, y = .data$shap, colour = .data$model_result)) +
     geom_hline(yintercept = 0, alpha = 0.5) +
-    geom_smooth(method = 'loess', formula = 'y ~ x', colour = "black", size = 0.8) +
-    geom_smooth(method = 'lm', formula = 'y ~ x', colour = "black", size = 0.2) +
     geom_quasirandom(
       groupOnX = TRUE, varwidth = TRUE, size = 1, 
       alpha = 0.6, width = 0.4) +
+    geom_smooth(method = 'loess', formula = 'y ~ x', colour = "black", size = 0.6) +
+    geom_smooth(method = 'lm', formula = 'y ~ x', colour = "black", size = 0.3) +
     scale_colour_gradient(low = "red", high = "blue") +
     labs(x = name, y = paste("SHAP values for", name), 
          colour = "Prediction",

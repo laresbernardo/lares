@@ -893,6 +893,7 @@ stocks_obj <- function(data = stocks_file(),
 #' If not, an HTML file will be created in dir
 #' @param to Character. Email to send the report to
 #' @param sectors Boolean. Return sectors segmentation for ETFs?
+#' @param keep Boolean. Keep HTML file when sended by email?
 #' @param creds Character. Credential's user (see \code{get_creds()}) for 
 #' sending mail and Dropbox interaction
 #' @examples
@@ -906,6 +907,7 @@ stocks_report <- function(data = NA,
                           mail = FALSE, 
                           to = "laresbernardo@gmail.com",
                           sectors = FALSE,
+                          keep = FALSE,
                           creds = NA) {
   
   try_require("rmarkdown")
@@ -933,19 +935,14 @@ stocks_report <- function(data = NA,
   if ("etfs" %in% names(data$plots)) 
     params[["portf_distribution_sectors"]] <- data$plots[["etfs"]]
   
-  invisible(file.copy(
-    from = system.file("docs", "stocksReport.Rmd", package = "lares"),
-    to = getwd(), overwrite = TRUE, recursive = FALSE, copy.mode = TRUE))
-  
   message(">>> Rendering HTML report...")
-  render("stocksReport.Rmd", 
-         output_file = "stocksReport.html",
+  html_file <- "stocksReport.html"
+  render(system.file("docs", "stocksReport.Rmd", package = "lares"), 
+         output_file = html_file,
          output_dir = dir,
          params = params,
          envir = new.env(parent = globalenv()),
          quiet = TRUE)  
-  
-  invisible(file.remove(paste0(getwd(), "/stocksReport.Rmd")))
   message("HTML report created succesfully!")
   
   if (mail) {
@@ -958,10 +955,10 @@ stocks_report <- function(data = NA,
     message(">>> Sending email...")
     mailSend(to = to, text = " \n", 
              subject = paste("Portfolio:", max(data$portfolio$Date)),
-             attachment = paste0(getwd(), "/stocksReport.html"),
+             attachment = paste0(getwd(), html_file),
              creds = creds,
              quiet = FALSE) 
-    invisible(file.remove(paste0(getwd(), "/stocksReport.html")))
+    if (!keep) invisible(file.remove(paste0(getwd(), html_file)))
   }
 }
 

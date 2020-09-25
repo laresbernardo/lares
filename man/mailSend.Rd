@@ -10,11 +10,12 @@ mailSend(
   cc = NA,
   bcc = NA,
   subject = "Mail from R",
-  text = NA,
+  text = " \\n",
   html = NA,
   attachment = NA,
-  quiet = FALSE,
-  creds = NA
+  service = "mailgun",
+  creds = NA,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -27,10 +28,12 @@ mailSend(
 \item{attachment}{Character, plot or data.frame. Will send the file, 
 plot as PNG or data.frame as CSV, respectively.}
 
-\item{quiet}{Boolean. Keep quite or display messages?}
+\item{service}{Character. Service platform to search on \code{creds}.}
 
 \item{creds}{Character. Credential's user (see \code{get_creds()}).
 Must contain: url (POST address), api (api key)}
+
+\item{quiet}{Boolean. Keep quite or display messages?}
 }
 \description{
 This function lets the user send Emails with Attachments using MailGun's

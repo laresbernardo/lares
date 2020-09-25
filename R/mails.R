@@ -11,23 +11,26 @@
 #' @param text,html Character. Text or HTML to send in the body
 #' @param attachment Character, plot or data.frame. Will send the file, 
 #' plot as PNG or data.frame as CSV, respectively. 
-#' @param quiet Boolean. Keep quite or display messages?
+#' @param service Character. Service platform to search on \code{creds}.
 #' @param creds Character. Credential's user (see \code{get_creds()}).
 #' Must contain: url (POST address), api (api key)
+#' @param quiet Boolean. Keep quite or display messages?
 #' @export
 mailSend <- function(from = "RMail <laresbernardo@gmail.com>",
                      to = "laresbernardo@gmail.com",
                      cc = NA, bcc = NA,
                      subject = "Mail from R",
-                     text = NA, html = NA,
+                     text = " \n", 
+                     html = NA,
                      attachment = NA,
-                     quiet = FALSE,
-                     creds = NA){
+                     service = "mailgun",
+                     creds = NA,
+                     quiet = FALSE){
 
   # MailGun documentation:
   # https://documentation.mailgun.com/en/latest/api-sending.html#sending
   
-  credentials <- get_credentials(from = "mailgun", dir = creds)
+  credentials <- get_credentials(from = service, dir = creds)
   url <- credentials$url
   api_key <- credentials$api
   
