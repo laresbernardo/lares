@@ -24,10 +24,10 @@
 #' @param from Character. Family of values to import from the YML file.
 #' If you don't know these names, set \code{from = NA}
 #' and a warning will display all possible values, depending on your YML file.
-#' If \code{from} is a list, it'll return \code{from} (manual credentials input).
 #' @param dir Character. Credentials directory where your YML file is.
 #' If used frequently, set your directory by using the \code{.Renviron} file. 
 #' To do so, leave \code{dir} as \code{NA} and follow the steps.
+#' If \code{dir} is a list, it'll return \code{dir} (manual credentials input).
 #' @param filename Character. YML filename with your credentials.
 #' @param env Character. Environment variable name. No need to set differently
 #' for any function that uses this library. Only for external use
@@ -51,8 +51,7 @@ get_credentials <- function(from = NA, dir = NA,
                             filename = "config.yml", 
                             env = "LARES_CREDS") {
   
-  if (is.list(from)) 
-    return(from)
+  if (is.list(dir)) return(dir)
   
   if (is.na(dir)) { 
     dir <- Sys.getenv(env)
