@@ -6,30 +6,44 @@
 \usage{
 categ_reducer(
   df,
-  ...,
+  var,
   nmin = 0,
   pmin = 0,
   pcummax = 100,
   top = NA,
-  other_label = "other"
+  pvalue_max = 1,
+  cor_var = "tag",
+  limit = 20,
+  other_label = "other",
+  ...
 )
 }
 \arguments{
 \item{df}{Categorical Vector}
 
-\item{...}{Variables. Which variable do you wish to reduce?}
+\item{var}{Variable. Which variable do you wish to reduce?}
 
 \item{nmin}{Integer. Number of minimum times a value is repeated}
 
-\item{pmin}{Numerical. Porcentage of minimum times a value is repeated}
+\item{pmin}{Numerical. Percentage of minimum times a value is repeated}
 
-\item{pcummax}{Numerical. Top cumulative porcentage of most 
+\item{pcummax}{Numerical. Top cumulative percentage of most 
 repeated values}
 
 \item{top}{Integer. Keep the n most frequently repeated values}
 
+\item{pvalue_max}{Numeric (0-1]. Max pvalue categories}
+
+\item{cor_var}{Character. If pvalue_max < 1, you must define which
+column name will be compared with (numerical or binary).}
+
+\item{limit}{Integer. Limit one hot encoding to the n most frequent 
+values of each column. Set to \code{NA} to ignore argument.}
+
 \item{other_label}{Character. With which text do you wish to replace 
 the filtered values with?}
+
+\item{...}{Additional parameters}
 }
 \description{
 This function lets the user reduce categorical values in a vector. 
@@ -39,6 +53,7 @@ It is tidyverse friendly for use on pipelines
 data(dft) # Titanic dataset
 categ_reducer(dft, Embarked, top = 2) \%>\% freqs(Embarked)
 categ_reducer(dft, Ticket, nmin = 7, other_label = "Other Ticket") \%>\% freqs(Ticket)
+categ_reducer(dft, Ticket, pvalue_max = 0.05, cor_var = "Survived") \%>\% freqs(Ticket)
 }
 \seealso{
 Other Data Wrangling: 

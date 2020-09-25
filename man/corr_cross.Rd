@@ -23,7 +23,8 @@ corr_cross(
 )
 }
 \arguments{
-\item{df}{Dataframe.}
+\item{df}{Dataframe. It doesn't matter if it's got non-numerical
+columns: they will be filtered!}
 
 \item{plot}{Boolean. Show and return a plot?}
 

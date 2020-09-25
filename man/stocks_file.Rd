@@ -5,7 +5,7 @@
 \title{Get Personal Portfolio's Data}
 \usage{
 stocks_file(
-  filename = NA,
+  file = NA,
   creds = NA,
   auto = TRUE,
   sheets = c("Portafolio", "Fondos", "Transacciones"),
@@ -13,7 +13,7 @@ stocks_file(
 )
 }
 \arguments{
-\item{filename}{Character. Import a local Excel file}
+\item{file}{Character. Import an Excel file, local or from URL.}
 
 \item{creds}{Character. Dropbox's credentials (see \code{get_creds()})}
 
@@ -34,7 +34,7 @@ Portfolio's data, locally or from Dropbox.
 \dontrun{
 # Load lares dummy portfolio XLSX
 file <- system.file("inst/docs", "dummyPortfolio.xlsx", package = "lares")
-df <- stocks_file(filename = file, 
+df <- stocks_file(file = file, 
                   sheets = c("Portafolio","Fondos","Transacciones"), 
                   keep_old = FALSE)
 }

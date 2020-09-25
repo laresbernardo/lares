@@ -6,7 +6,7 @@
 #' 
 #' @family Investment
 #' @family Credentials
-#' @param filename Character. Import a local Excel file
+#' @param file Character. Import an Excel file, local or from URL.
 #' @param creds Character. Dropbox's credentials (see \code{get_creds()})
 #' @param auto Boolean. Automatically use my local personal file? You might want
 #' to set in into your .Renviron \code{LARES_PORTFOLIO=~/dir/to/your/file.xlsx} so you
@@ -18,12 +18,12 @@
 #' \dontrun{
 #' # Load lares dummy portfolio XLSX
 #' file <- system.file("inst/docs", "dummyPortfolio.xlsx", package = "lares")
-#' df <- stocks_file(filename = file, 
+#' df <- stocks_file(file = file, 
 #'                   sheets = c("Portafolio","Fondos","Transacciones"), 
 #'                   keep_old = FALSE)
 #' }
 #' @export
-stocks_file <- function(filename = NA, 
+stocks_file <- function(file = NA, 
                         creds = NA, 
                         auto = TRUE, 
                         sheets = c("Portafolio","Fondos","Transacciones"),
@@ -48,8 +48,8 @@ stocks_file <- function(filename = NA,
     results <- processFile(local, keep_old) 
   } else {
     # FOR EVERYONE'S USE
-    if (!is.na(filename)) {
-      if (file.exists(filename)) results <- processFile(filename, keep_old) else
+    if (!is.na(file)) {
+      if (file.exists(file) | isURL(file)) results <- processFile(file, keep_old) else
         stop("Error: that file doesn't exist or it's not in your working directory!")
     } else {
       # FOR DROPBOX'S USE

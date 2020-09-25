@@ -89,30 +89,40 @@ year_week <- function(date) {
 #' It is tidyverse friendly for use on pipelines
 #' 
 #' @family Data Wrangling
+#' @inheritParams ohse
 #' @param df Categorical Vector
-#' @param ... Variables. Which variable do you wish to reduce?
+#' @param var Variable. Which variable do you wish to reduce?
 #' @param nmin Integer. Number of minimum times a value is repeated
-#' @param pmin Numerical. Porcentage of minimum times a value is repeated
-#' @param pcummax Numerical. Top cumulative porcentage of most 
+#' @param pmin Numerical. Percentage of minimum times a value is repeated
+#' @param pcummax Numerical. Top cumulative percentage of most 
 #' repeated values
 #' @param top Integer. Keep the n most frequently repeated values
+#' @param pvalue_max Numeric (0-1]. Max pvalue categories
+#' @param cor_var Character. If pvalue_max < 1, you must define which
+#' column name will be compared with (numerical or binary).
 #' @param other_label Character. With which text do you wish to replace 
 #' the filtered values with?
+#' @param ... Additional parameters
 #' @examples 
 #' data(dft) # Titanic dataset
 #' categ_reducer(dft, Embarked, top = 2) %>% freqs(Embarked)
 #' categ_reducer(dft, Ticket, nmin = 7, other_label = "Other Ticket") %>% freqs(Ticket)
+#' categ_reducer(dft, Ticket, pvalue_max = 0.05, cor_var = "Survived") %>% freqs(Ticket)
 #' @export
-categ_reducer <- function(df, ...,
+categ_reducer <- function(df, var,
                           nmin = 0, 
                           pmin = 0, 
                           pcummax = 100, 
                           top = NA, 
-                          other_label = "other") {
+                          pvalue_max = 1,
+                          cor_var = "tag",
+                          limit = 20,
+                          other_label = "other",
+                          ...) {
   
-  vars <- quos(...)
+  var <- enquo(var)
   
-  dff <- freqs(df, !!!vars)
+  dff <- freqs(df, !!var)
   
   if (!is.na(top)) {
     tops <- dff %>% slice(1:top)
@@ -125,11 +135,24 @@ categ_reducer <- function(df, ...,
   new_vector <- ifelse(vector[[as.character(name)]] %in% tops[[as.character(name)]], 
                        as.character(vector[[as.character(name)]]), 
                        other_label)
-  df[[as.character(name)]] <- new_vector
   
+  if (pvalue_max < 1) {
+    best_vars <- df %>% 
+      mutate(cor_var_temp = unlist(df[,cor_var])) %>%
+      select(ncol(.), !!var) %>%
+      corr_var(.data$cor_var_temp, plot = FALSE, 
+               limit = limit, quiet = TRUE, ...) %>%
+      filter(.data$pvalue < pvalue_max) %>% rowwise() %>%
+      mutate(variables = gsub(paste0(name, "_"), "", .data$variables)) %>%
+      pull(.data$variables)
+    new_vector[!new_vector %in% best_vars] <- other_label
+  }
+  
+  df[[as.character(name)]] <- new_vector
   return(df)
   
 }
+
 
 
 ####################################################################

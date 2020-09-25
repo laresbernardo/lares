@@ -177,7 +177,7 @@ ohse <- function(df,
         which <- as.character(levels(as.factor(df[,c(vector_name)]))[2])
         df[,c(vector_name)] <- as.integer(as.factor(df[,c(vector_name)])) - 1
         converted_binary <- rbind(converted_binary, vector_name)
-        df <- rename_at(df, vars(vector_name), list(~paste0(vector_name, "_", which)))
+        df <- rename_at(df, all_of(vector_name), list(~paste0(vector_name, "_", which)))
       }
       
       # ONE HOT ENCODING

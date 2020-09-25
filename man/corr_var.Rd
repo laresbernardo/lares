@@ -12,8 +12,6 @@ corr_var(
   trim = 0,
   clean = FALSE,
   plot = TRUE,
-  logs = FALSE,
-  dates = TRUE,
   top = NA,
   ceiling = 100,
   max_pvalue = 1,
@@ -21,11 +19,14 @@ corr_var(
   zeroes = FALSE,
   save = FALSE,
   subdir = NA,
-  file_name = "viz_corrvar.png"
+  file_name = "viz_corrvar.png",
+  quiet = FALSE,
+  ...
 )
 }
 \arguments{
-\item{df}{Dataframe.}
+\item{df}{Dataframe. It doesn't matter if it's got non-numerical
+columns: they will be filtered!}
 
 \item{var}{Variable. Name of the variable to correlate}
 
@@ -41,12 +42,6 @@ for both, target and values)}
 
 \item{plot}{Boolean. Do you wish to plot the result? If set to TRUE, the
 function will return only the plot and not the result's data}
-
-\item{logs}{Boolean. Automatically calculate log(values) for numerical
-variables (not binaries)}
-
-\item{dates}{Boolean. Do you want the function to create more features
-out of the date/time columns?}
 
 \item{top}{Integer. If you want to plot the top correlations, 
 define how many}
@@ -66,6 +61,10 @@ values of each column. Set to \code{NA} to ignore argument.}
 save the plot}
 
 \item{file_name}{Character. File name as you wish to save the plot}
+
+\item{quiet}{Boolean. Keep quiet? If not, show messages}
+
+\item{...}{Additional parameters}
 }
 \description{
 This function correlates a whole dataframe with a single feature. It

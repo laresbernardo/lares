@@ -11,11 +11,10 @@ corr(
   dec = 6,
   ignore = NA,
   dummy = TRUE,
-  limit = 10,
-  dates = FALSE,
-  redundant = FALSE,
   logs = FALSE,
-  top = NA
+  limit = 10,
+  top = NA,
+  ...
 )
 }
 \arguments{
@@ -29,24 +28,19 @@ significance (p-value) for each value}
 
 \item{dec}{Integer. Number of decimals to round correlations and p-values}
 
-\item{ignore}{Character vector. Which columns do you wish to exclude?}
+\item{ignore}{Vector or character. Which column should be ignored?}
 
 \item{dummy}{Boolean. Should One Hot Encoding be applied to categorical columns?}
+
+\item{logs}{Boolean. Calculate log(x)+1 for numerical columns?}
 
 \item{limit}{Integer. Limit one hot encoding to the n most frequent 
 values of each column. Set to \code{NA} to ignore argument.}
 
-\item{dates}{Boolean. Do you want the function to create more features
-out of the date/time columns?}
-
-\item{redundant}{Boolean. Should we keep redundat columns? i.e. It the
-column only has two different values, should we keep both new columns?}
-
-\item{logs}{Boolean. Automatically calculate log(values) for numerical
-variables (not binaries)}
-
 \item{top}{Integer. Select top N most relevant variables? Filtered 
 and sorted by mean of each variable's correlations}
+
+\item{...}{Additional parameters}
 }
 \description{
 This function correlates a whole dataframe, running one hot smart 

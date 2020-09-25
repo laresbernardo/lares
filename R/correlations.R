@@ -8,24 +8,18 @@
 #'
 #' @family Calculus
 #' @family Correlations
+#' @inheritParams ohse
+#' @inheritParams numericalonly
 #' @param df Dataframe. It doesn't matter if it's got non-numerical
 #' columns: they will be filtered!
 #' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @param pvalue Boolean. Returns a list, with correlations and statistical 
 #' significance (p-value) for each value
 #' @param dec Integer. Number of decimals to round correlations and p-values
-#' @param ignore Character vector. Which columns do you wish to exclude?
 #' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
-#' @param limit Integer. Limit one hot encoding to the n most frequent 
-#' values of each column. Set to \code{NA} to ignore argument.
-#' @param dates Boolean. Do you want the function to create more features
-#' out of the date/time columns?
-#' @param redundant Boolean. Should we keep redundat columns? i.e. It the
-#' column only has two different values, should we keep both new columns?
-#' @param logs Boolean. Automatically calculate log(values) for numerical
-#' variables (not binaries)
 #' @param top Integer. Select top N most relevant variables? Filtered 
 #' and sorted by mean of each variable's correlations
+#' @param ... Additional parameters
 #' @examples 
 #' data(dft) # Titanic dataset
 #' df <- dft[,2:5]
@@ -50,16 +44,18 @@ corr <- function(df, method = "pearson",
                  pvalue = FALSE,
                  dec = 6,
                  ignore = NA, 
-                 dummy = TRUE, limit = 10, dates = FALSE, 
-                 redundant = FALSE, logs = FALSE, 
-                 top = NA) {
+                 dummy = TRUE, 
+                 logs = FALSE,
+                 limit = 10, 
+                 top = NA,
+                 ...) {
   
   # Ignored columns
   if (!is.na(ignore)[1]) df <- select(df, -one_of(ignore))
   
   # One hot encoding for categorical features
   if (dummy) 
-    df <- ohse(df, quiet = TRUE, limit = limit, redundant = redundant, dates = dates)
+    df <- ohse(df, quiet = TRUE, limit = limit, ...)
   
   # Select only numerical features and create log+1 for each one
   d <- numericalonly(df, logs = logs)
@@ -81,7 +77,7 @@ corr <- function(df, method = "pearson",
   rs <- suppressWarnings(cor(d, use = "pairwise.complete.obs", method = method))
   rs[is.na(rs)] <- 0
   cor <- round(data.frame(rs), dec)
-  row.names(cor) <- colnames(cor)
+  colnames(cor) <- row.names(cor) <- colnames(d)
   
   # Top N
   if (!is.na(top)) {
@@ -137,20 +133,15 @@ corr <- function(df, method = "pearson",
 #'
 #' @family Exploratory
 #' @family Correlations
-#' @param df Dataframe.
+#' @inheritParams corr
 #' @param var Variable. Name of the variable to correlate
 #' @param ignore Character vector. Which columns do you wish to exlude?
-#' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @param trim Integer. Trim words until the nth character for 
 #' categorical values (applies for both, target and values)
 #' @param clean Boolean. Use lares::cleanText for categorical values (applies 
 #' for both, target and values)
 #' @param plot Boolean. Do you wish to plot the result? If set to TRUE, the
 #' function will return only the plot and not the result's data
-#' @param logs Boolean. Automatically calculate log(values) for numerical
-#' variables (not binaries)
-#' @param dates Boolean. Do you want the function to create more features
-#' out of the date/time columns?
 #' @param top Integer. If you want to plot the top correlations, 
 #' define how many
 #' @param ceiling Numeric. Remove all correlations above... Range: (0-100]
@@ -162,6 +153,8 @@ corr <- function(df, method = "pearson",
 #' @param subdir Character. Sub directory on which you wish to 
 #' save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @param quiet Boolean. Keep quiet? If not, show messages
+#' @param ... Additional parameters
 #' @examples
 #' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
@@ -182,8 +175,6 @@ corr_var <- function(df, var,
                      trim = 0,
                      clean = FALSE,
                      plot = TRUE,
-                     logs = FALSE, 
-                     dates = TRUE,
                      top = NA, 
                      ceiling = 100, 
                      max_pvalue = 1,
@@ -191,7 +182,9 @@ corr_var <- function(df, var,
                      zeroes = FALSE,
                      save = FALSE, 
                      subdir = NA,
-                     file_name = "viz_corrvar.png") {
+                     file_name = "viz_corrvar.png",
+                     quiet = FALSE,
+                     ...) {
   
   vars <- enquos(var)
   var <- as_label(vars[[1]])
@@ -200,19 +193,18 @@ corr_var <- function(df, var,
   # Calculate correlations
   rs <- corr(df, method = method, 
              ignore = ignore, limit = limit,
-             logs = logs, dates = dates, 
-             pvalue = TRUE)
+             pvalue = TRUE,
+             ...)
   
   # Check if main variable exists
   if (!var %in% colnames(rs$cor)) {
-    warning(paste("Not a valid input:", var, "was transformed or does not exist."))
     maybes <- colnames(rs$cor)[grepl(var, colnames(rs$cor))]
     if (length(maybes) > 0 & maybes[1] %in% colnames(rs$cor)) {
-      warning(sprintf("Maybe you meant one of: %s", vector2text(head(maybes, 10))))
-      message(sprintf("Automatically using '%s", maybes[1]))
+      if (!quiet) warning(sprintf("Maybe you meant one of: %s", vector2text(head(maybes, 10))))
+      if (!quiet) message(sprintf("Automatically using '%s", maybes[1]))
       var <- maybes[1]
     } else stop("Select a valid var value")
-  }
+  } else warning(paste("Not a valid input:", var, "was transformed or does not exist."))
   
   d <- data.frame(variables = colnames(rs$cor), 
                   corr = rs$cor[, c(var)],
@@ -297,7 +289,7 @@ corr_var <- function(df, var,
 #'
 #' @family Correlations
 #' @family Exploratory
-#' @param df Dataframe.
+#' @inheritParams corr
 #' @param plot Boolean. Show and return a plot?
 #' @param max_pvalue Numeric. Filter non-significant variables. Range (0, 1]
 #' @param type Integer. Plot type. 1 is for overall rank. 2 is for local rank.
@@ -315,7 +307,6 @@ corr_var <- function(df, var,
 #' values of each column. Set to \code{NA} to ignore argument.
 #' @param redundant Boolean. Should we keep redundant columns? i.e. It the
 #' column only has two different values, should we keep both new columns?
-#' @param method Character. Any of: c("pearson", "kendall", "spearman")
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
@@ -348,13 +339,12 @@ corr_cross <- function(df, plot = TRUE,
   cor <- corr(df, ignore = ignore, dummy = dummy, limit = limit,
               redundant = redundant, method = method, pvalue = TRUE)
   
-  transf <- function(c) {
-    c <- data.frame(c)
-    ret <- gather(c) %>% 
-      gather %>%
-      mutate(mix = rep(colnames(c), length(c))) %>%
-      mutate(p1 = rep(1:length(c), each = length(c)),
-             p2 = rep(1:length(c), length(c)),
+  transf <- function(x) {
+    x <- data.frame(x)
+    ret <- gather(x) %>% 
+      mutate(mix = rep(colnames(x), length(x))) %>%
+      mutate(p1 = rep(1:length(x), each = length(x)),
+             p2 = rep(1:length(x), length(x)),
              aux = .data$p2 - .data$p1) %>% 
       filter(.data$aux > 0) %>%
       mutate(rel = abs(.data$value)) %>% 
@@ -395,7 +385,8 @@ corr_cross <- function(df, plot = TRUE,
   
   ret <- ret %>% rowwise() %>%
     mutate(cat1 = gsub(paste0(.data$group1, "_"), "", .data$key),
-           cat2 = gsub(paste0(.data$group2, "_"), "", .data$mix))
+           cat2 = gsub(paste0(.data$group2, "_"), "", .data$mix)) %>%
+    select(1:4, .data$group1, .data$cat1, .data$group2, .data$cat2)
   
   if (plot) {
     n <- ifelse(type == 1, top, local)
