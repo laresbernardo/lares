@@ -17,7 +17,8 @@ get_creds(from = NA, dir = NA, filename = "config.yml", env = "LARES_CREDS")
 \arguments{
 \item{from}{Character. Family of values to import from the YML file.
 If you don't know these names, set \code{from = NA}
-and a warning will display all possible values, depending on your YML file.}
+and a warning will display all possible values, depending on your YML file.
+If \code{from} is a list, it'll return \code{from} (manual credentials input).}
 
 \item{dir}{Character. Credentials directory where your YML file is.
 If used frequently, set your directory by using the \code{.Renviron} file. 

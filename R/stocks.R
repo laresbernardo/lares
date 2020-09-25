@@ -885,8 +885,8 @@ stocks_obj <- function(data = stocks_file(),
 #' 
 #' @family Investment
 #' @family Credentials
-#' @param data Character. \code{stocks_file()} output. If NA, automatic report
-#' parameters will be used
+#' @param data Character. \code{stocks_obj()} output. If NA, automatic 
+#' parameters and \code{stocks_file()} defaults will be used.
 #' @param dir Character. Directory for HTML report output. If set to NA, 
 #' current working directory will be used. If mail sent, file will be erased
 #' @param mail Boolean. Do you want to send an email with the report attached? 
