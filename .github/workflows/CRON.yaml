@@ -4,7 +4,7 @@ on:
     - cron: '0 18 * * 1-5'
 
 jobs:
-  documentation:
+  reporting:
     runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -43,9 +43,9 @@ jobs:
         env:
           PORTFOLIO_XLXS: ${{ secrets.PORTFOLIO_XLXS }}
         run: |
-          data <- lares::stocks_file(Sys.getenv("PORTFOLIO_XLXS"))'
+          data <- lares::stocks_file(Sys.getenv("PORTFOLIO_XLXS"))
           rep  <- lares::stocks_obj(data)
-          lares::stocks_report(rep, dir = tempdir())'
+          lares::stocks_report(rep, dir = tempdir())
         shell: Rscript {0}
       
       - name: Send report
@@ -54,7 +54,7 @@ jobs:
           MAILGUN_TOKEN: ${{ secrets.MAILGUN_TOKEN }}
         run: |
           report <- paste0(tempdir(), "/stocksReport.html")
-          lares::mailSend(text = " \n", attachment = report, creds = list(
+          lares::mailSend(attachment = report, creds = list(
             url = Sys.getenv("MAILGUN_URL"), 
             api = Sys.getenv("MAILGUN_TOKEN"))
         shell: Rscript {0}
