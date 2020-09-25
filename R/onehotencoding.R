@@ -136,10 +136,8 @@ ohse <- function(df,
                              quiet = quiet)
       
       if (ncol(df_dates) != ncol(df)) {
-        df <- df %>% left_join(df_dates, by = as.character(times[1])) %>% distinct()
+        df <- left_join(df, df_dates, by = as.character(times[1])) %>% distinct()
       } 
-    } else {
-      if (!quiet) message("Can't join more than one date feature yet!")
     }
   }
   
@@ -179,15 +177,17 @@ ohse <- function(df,
         which <- as.character(levels(as.factor(df[,c(vector_name)]))[2])
         df[,c(vector_name)] <- as.integer(as.factor(df[,c(vector_name)])) - 1
         converted_binary <- rbind(converted_binary, vector_name)
-        df <- rename_at(df, vars(vector_name), funs(paste0(vector_name, "_", which)))
+        df <- rename_at(df, vars(vector_name), list(~paste0(vector_name, "_", which)))
       }
       
       # ONE HOT ENCODING
       if (!colnames(vector_values) %in% c(converted_binary, no_variance)) {
         if (vector_levels >= 2 & !vector_name %in% converted_binary) {
           options(na.action = 'na.pass')
-          vector_values <- categ_reducer(vector_values, !!as.name(vector_name), top = limit,
-                                         other_label = paste0(sep, other_label))
+          vector_values <- categ_reducer(
+            vector_values, !!as.name(vector_name), top = limit,
+            other_label = paste0(sep, other_label))
+          # This changes spaces for dots: fix sometime!
           dummy_matx <- data.frame(model.matrix( ~ . -1, data = vector_values))
           if (!redundant) dummy_matx <- dummy_matx[, 1:(ncol(dummy_matx) - 1)]
           df <- cbind(df, dummy_matx)

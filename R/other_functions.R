@@ -648,7 +648,7 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
   which <- names(transformable[transformable == 2])
   dfn <- data.frame(df[,colnames(df) %in% which])
   colnames(dfn) <- which
-  non_numeric <- mutate_all(dfn, function(x) as.integer(as.factor(x)) - 1)
+  non_numeric <- mutate_all(dfn, list(~as.integer(as.factor(.)) - 1))
   # Which are already numeric?
   numeric <- select_if(df, is.numeric)
   
@@ -656,7 +656,7 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
   if (logs) {
     # Non binary numeric features
     whichlog <- colnames(numeric)[!colnames(numeric) %in% which]
-    numeric <- numeric %>% mutate_at(vars(whichlog), funs(log = log(. + 1)))
+    numeric <- numeric %>% mutate_at(vars(whichlog), list(log = ~log(. + 1)))
     is.na(numeric) <- do.call(cbind, lapply(numeric, is.infinite))
   }
   

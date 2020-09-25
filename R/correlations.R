@@ -393,6 +393,10 @@ corr_cross <- function(df, plot = TRUE,
     ret <- slice(ret, 1:top) 
   }
   
+  ret <- ret %>% rowwise() %>%
+    mutate(cat1 = gsub(paste0(.data$group1, "_"), "", .data$key),
+           cat2 = gsub(paste0(.data$group2, "_"), "", .data$mix))
+  
   if (plot) {
     n <- ifelse(type == 1, top, local)
     n <- ifelse(n > nrow(ret), nrow(ret), n)
