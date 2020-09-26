@@ -115,6 +115,7 @@ plots and send it to an email with the HTML report attached</p>
 
     <pre class="usage"><span class='fu'>stocks_report</span>(
   data = <span class='fl'>NA</span>,
+  keep_old = <span class='fl'>TRUE</span>,
   dir = <span class='fl'>NA</span>,
   mail = <span class='fl'>FALSE</span>,
   to = <span class='st'>"laresbernardo@gmail.com"</span>,
@@ -130,6 +131,10 @@ plots and send it to an email with the HTML report attached</p>
       <th>data</th>
       <td><p>Character. <code><a href='stocks_obj.html'>stocks_obj()</a></code> output. If NA, automatic 
 parameters and <code><a href='stocks_file.html'>stocks_file()</a></code> defaults will be used.</p></td>
+    </tr>
+    <tr>
+      <th>keep_old</th>
+      <td><p>Boolean. Include sold tickers even though not currently in portfolio?</p></td>
     </tr>
     <tr>
       <th>dir</th>

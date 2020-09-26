@@ -118,7 +118,8 @@ plots for further study.</p>
   cash_fix = <span class='fl'>0</span>,
   tax = <span class='fl'>30</span>,
   sectors = <span class='fl'>FALSE</span>,
-  parg = <span class='fl'>FALSE</span>
+  parg = <span class='fl'>FALSE</span>,
+  quiet = <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -131,8 +132,8 @@ transactions, cash. They have to follow the original xlsx format</p></td>
     </tr>
     <tr>
       <th>cash_fix</th>
-      <td><p>Numeric. If you wish to algebraically sum a value 
-to your cash balance</p></td>
+      <td><p>Numeric. If, for some reason, you need to fix your 
+cash amount for all reports, set the amount here</p></td>
     </tr>
     <tr>
       <th>tax</th>
@@ -146,6 +147,10 @@ to your cash balance</p></td>
       <th>parg</th>
       <td><p>Boolean. Personal argument. Used to personalize stuff, in this
 case, taxes changed from A to B in given date (hard-coded)</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Boolean. Keep quiet? If not, print messages and status bars</p></td>
     </tr>
     </table>
 
