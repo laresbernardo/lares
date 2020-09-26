@@ -24,10 +24,10 @@ portfolio (or simply compared with value since inception)?}
 
 \item{group}{Boolean. Group stocks by stocks type?}
 
-\item{n_days}{Integer. How many days back you want to see?}
-
-\item{keep_old}{Boolean. Plot tickers that were already 
+\item{n_days}{Integer. How many days back you want to see?
 sold entirely?}
+
+\item{keep_old}{Boolean. Include sold tickers even though not currently in portfolio?}
 
 \item{save}{Boolean. Save plot into a local file?}
 }

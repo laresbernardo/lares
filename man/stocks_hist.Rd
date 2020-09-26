@@ -11,7 +11,7 @@ stocks_hist(
   today = TRUE,
   tax = 30,
   parg = FALSE,
-  verbose = TRUE
+  quiet = FALSE
 )
 }
 \arguments{
@@ -28,7 +28,7 @@ only if to value is the same as today's date}
 \item{parg}{Boolean. Personal argument. Used to personalize stuff, in this
 case, taxes changed from A to B in given date (hard-coded)}
 
-\item{verbose}{Boolean. Print results and progress while downloading?}
+\item{quiet}{Boolean. Keep quiet? If not, print messages and status bars}
 }
 \description{
 This function lets the user download stocks historical data

@@ -9,15 +9,16 @@ stocks_obj(
   cash_fix = 0,
   tax = 30,
   sectors = FALSE,
-  parg = FALSE
+  parg = FALSE,
+  quiet = FALSE
 )
 }
 \arguments{
 \item{data}{List. Containing the following dataframes: portfolio,
 transactions, cash. They have to follow the original xlsx format}
 
-\item{cash_fix}{Numeric. If you wish to algebraically sum a value 
-to your cash balance}
+\item{cash_fix}{Numeric. If, for some reason, you need to fix your 
+cash amount for all reports, set the amount here}
 
 \item{tax}{Numeric. How much [0-99] of your dividends are gone with taxes?}
 
@@ -25,6 +26,8 @@ to your cash balance}
 
 \item{parg}{Boolean. Personal argument. Used to personalize stuff, in this
 case, taxes changed from A to B in given date (hard-coded)}
+
+\item{quiet}{Boolean. Keep quiet? If not, print messages and status bars}
 }
 \description{
 This function lets the user create his portfolio's calculations and

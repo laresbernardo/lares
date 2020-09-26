@@ -7,7 +7,7 @@
 splot_types(s, save = FALSE)
 }
 \arguments{
-\item{s}{Dataframe. Result from daily_stocks()}
+\item{s}{Dataframe. Result from \code{daily_stocks()}}
 
 \item{save}{Boolean. Save plot into a local file?}
 }

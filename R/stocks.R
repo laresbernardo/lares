@@ -128,7 +128,7 @@ stocks_quote <- function(ticks) {
 #' @param tax Numeric. How much [0-99] of your dividends are gone with taxes? 
 #' @param parg Boolean. Personal argument. Used to personalize stuff, in this
 #' case, taxes changed from A to B in given date (hard-coded)
-#' @param verbose Boolean. Print results and progress while downloading?
+#' @param quiet Boolean. Keep quiet? If not, print messages and status bars
 #' @examples 
 #' \dontrun{
 #' df <- stocks_hist(symbols = c("VTI", "FB"), from = Sys.Date() - 7)
@@ -148,7 +148,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
                         today = TRUE,
                         tax = 30, 
                         parg = FALSE,
-                        verbose = TRUE) {
+                        quiet = FALSE) {
   
   try_require("quantmod")
   
@@ -209,7 +209,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
             as.vector(d) * 0.15))
       }
       
-      if (verbose & length(symbols) > 1) {
+      if (!quiet & length(symbols) > 1) {
         info <- paste(symbol, "since", start_date, "   ")
         statusbar(i, length(symbols), info)  
       }
@@ -319,8 +319,7 @@ daily_stocks <- function(hist, trans, tickers = NA) {
 #' for the overall portfolio, for every day since inception.
 #' 
 #' @family Investment
-#' @param hist Dataframe. Result from \code{stocks_hist()}
-#' @param trans Dataframe. Result from \code{stocks_file()$transactions}
+#' @inheritParams daily_stocks
 #' @param cash Dataframe. Result from \code{stocks_file()$cash}
 #' @param cash_fix Numeric. If, for some reason, you need to fix your 
 #' cash amount for all reports, set the amount here
@@ -457,13 +456,12 @@ splot_summary <- function(p, s, save = FALSE) {
 #' 
 #' @family Investment
 #' @family Investment Plots
-#' @param p Dataframe. Result from \code{daily_portfolio()}
+#' @inheritParams splot_summary
 #' @param n_days Integer. How many days back you want to see?
 #' @param historical Boolean. Historical ROI metric? If not, ROI
 #' will be calculated locally for n_days parameter
 #' @param ma Numeric Vector. Select 2 values for moving averages. 
 #' Set to NA to turn this metric off
-#' @param save Boolean. Save plot into a local file?
 #' @export
 splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save = FALSE) {
   
@@ -546,15 +544,13 @@ splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save =
 #' 
 #' @family Investment
 #' @family Investment Plots
-#' @param p Dataframe. Result from \code{daily_portfolio()}
-#' @param s Dataframe. Result from \code{daily_stocks()}
+#' @inheritParams splot_summary
+#' @inheritParams stocks_file
 #' @param weighted Boolean. Should variation values be weighted to the
 #' portfolio (or simply compared with value since inception)?
 #' @param group Boolean. Group stocks by stocks type?
 #' @param n_days Integer. How many days back you want to see?
-#' @param keep_old Boolean. Plot tickers that were already 
 #' sold entirely?
-#' @param save Boolean. Save plot into a local file?
 #' @export
 splot_change <- function(p, s, weighted = TRUE, group = FALSE, 
                          n_days = 365, keep_old = TRUE,
@@ -629,8 +625,7 @@ splot_change <- function(p, s, weighted = TRUE, group = FALSE,
 #' 
 #' @family Investment
 #' @family Investment Plots
-#' @param p Dataframe. Result from \code{daily_portfolio()}
-#' @param save Boolean. Save plot into a local file?
+#' @inheritParams splot_summary
 #' @export
 splot_growth <- function(p, save = FALSE) {
   
@@ -679,8 +674,7 @@ splot_growth <- function(p, save = FALSE) {
 #' 
 #' @family Investment
 #' @family Investment Plots
-#' @param s Dataframe. Result from daily_stocks()
-#' @param save Boolean. Save plot into a local file?
+#' @inheritParams splot_summary
 #' @export
 splot_types <- function(s, save = FALSE) {
   
@@ -710,8 +704,8 @@ splot_types <- function(s, save = FALSE) {
 #' Use \code{splot_etf()} for visualization.
 #' 
 #' @family Investment
+#' @inheritParams stocks_hist
 #' @param etf Character Vector. Which ETFs you wish to scrap?
-#' @param quiet Boolean. Print results and progress while downloading?
 #' @export
 etf_sector <- function(etf = "VTI", quiet = FALSE) {
   ret <- data.frame()
@@ -764,9 +758,8 @@ etf_sector <- function(etf = "VTI", quiet = FALSE) {
 #' @family Investment
 #' @family Investment Plots
 #' @family Scrapper
-#' @param s Dataframe. Result from \code{daily_stocks()}.
+#' @inheritParams splot_summary
 #' @param keep_all Boolean. Keep "Not Known / Not ETF"?
-#' @param save Boolean. Save plot into a local file?
 #' @export
 splot_etf <- function(s, keep_all = FALSE, save = FALSE) {
   
@@ -821,20 +814,21 @@ splot_etf <- function(s, keep_all = FALSE, save = FALSE) {
 #' plots for further study.
 #' 
 #' @family Investment
+#' @inheritParams daily_portfolio
+#' @inheritParams stocks_hist
 #' @param data List. Containing the following dataframes: portfolio,
 #' transactions, cash. They have to follow the original xlsx format
-#' @param cash_fix Numeric. If you wish to algebraically sum a value 
-#' to your cash balance
-#' @param tax Numeric. How much [0-99] of your dividends are gone with taxes? 
 #' @param sectors Boolean. Return sectors segmentation for ETFs?
 #' @param parg Boolean. Personal argument. Used to personalize stuff, in this
 #' case, taxes changed from A to B in given date (hard-coded)
+#' @param quiet Boolean. Keep quiet? If not, print messages and status bars
 #' @export
 stocks_obj <- function(data = stocks_file(), 
                        cash_fix = 0, 
                        tax = 30, 
                        sectors = FALSE,
-                       parg = FALSE) {
+                       parg = FALSE,
+                       quiet = FALSE) {
   
   check_attr(data, check = "stocks_file")
   
@@ -848,7 +842,8 @@ stocks_obj <- function(data = stocks_file(),
     symbols = tickers$Symbol, 
     from = tickers$StartDate, 
     tax = tax,
-    parg = parg)
+    parg = parg,
+    quiet = quiet)
   
   # Objects needed for plots
   ret[["stocks"]] <- s <- daily_stocks(hist, trans, tickers)
@@ -885,6 +880,7 @@ stocks_obj <- function(data = stocks_file(),
 #' 
 #' @family Investment
 #' @family Credentials
+#' @inheritParams stocks_file
 #' @param data Character. \code{stocks_obj()} output. If NA, automatic 
 #' parameters and \code{stocks_file()} defaults will be used.
 #' @param dir Character. Directory for HTML report output. If set to NA, 
@@ -903,6 +899,7 @@ stocks_obj <- function(data = stocks_file(),
 #' }
 #' @export
 stocks_report <- function(data = NA,
+                          keep_old = TRUE,
                           dir = NA,
                           mail = FALSE, 
                           to = "laresbernardo@gmail.com",
@@ -913,7 +910,7 @@ stocks_report <- function(data = NA,
   try_require("rmarkdown")
   
   if (is.na(data)[1]) {
-    df <- stocks_file(creds = creds) 
+    df <- stocks_file(creds = creds, keep_old = keep_old) 
     data <- stocks_obj(df, sectors = sectors, parg = is.na(creds))
   }
   

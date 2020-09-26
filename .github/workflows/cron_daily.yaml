@@ -1,4 +1,4 @@
-name: Cron Reports
+name: Cron Jobs [Mon-Fri]
 on:
   schedule:
     - cron: '0 21 * * 1-6'
@@ -44,7 +44,7 @@ jobs:
           PORTFOLIO_XLXS: ${{ secrets.PORTFOLIO_XLXS }}
         run: |
           data <- lares::stocks_file(Sys.getenv("PORTFOLIO_XLXS"))
-          rep  <- lares::stocks_obj(data, quiet = TRUE)
+          rep  <- lares::stocks_obj(data)
           lares::stocks_report(rep, dir = tempdir())
         shell: Rscript {0}
       

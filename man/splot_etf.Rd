@@ -7,7 +7,7 @@
 splot_etf(s, keep_all = FALSE, save = FALSE)
 }
 \arguments{
-\item{s}{Dataframe. Result from \code{daily_stocks()}.}
+\item{s}{Dataframe. Result from \code{daily_stocks()}}
 
 \item{keep_all}{Boolean. Keep "Not Known / Not ETF"?}
 

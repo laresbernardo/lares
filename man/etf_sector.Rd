@@ -9,7 +9,7 @@ etf_sector(etf = "VTI", quiet = FALSE)
 \arguments{
 \item{etf}{Character Vector. Which ETFs you wish to scrap?}
 
-\item{quiet}{Boolean. Print results and progress while downloading?}
+\item{quiet}{Boolean. Keep quiet? If not, print messages and status bars}
 }
 \description{
 This function scraps etf.com data for sector breakdown on ETFs.

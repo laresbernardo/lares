@@ -6,6 +6,7 @@
 \usage{
 stocks_report(
   data = NA,
+  keep_old = TRUE,
   dir = NA,
   mail = FALSE,
   to = "laresbernardo@gmail.com",
@@ -17,6 +18,8 @@ stocks_report(
 \arguments{
 \item{data}{Character. \code{stocks_obj()} output. If NA, automatic 
 parameters and \code{stocks_file()} defaults will be used.}
+
+\item{keep_old}{Boolean. Include sold tickers even though not currently in portfolio?}
 
 \item{dir}{Character. Directory for HTML report output. If set to NA, 
 current working directory will be used. If mail sent, file will be erased}
