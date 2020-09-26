@@ -634,7 +634,7 @@ get_scores <- function(predictions,
 #' @family Machine Learning
 #' @family Tools
 #' @inheritParams h2o_automl
-#' @param results Object. h2o_automl output from \code{h2o_automl()}
+#' @param results \code{h2o_automl()} object.
 #' @param which_model Integer. Which model from the leaderboard you wish to use?
 #' @export
 h2o_selectmodel <- function(results, which_model = 1, quiet = FALSE, ...) {

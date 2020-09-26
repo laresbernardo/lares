@@ -1,4 +1,4 @@
-name: Cron Jobs [Mon-Fri]
+name: CronJobs
 on:
   schedule:
     - cron: '0 21 * * 1-6'
@@ -54,7 +54,9 @@ jobs:
           MAILGUN_TOKEN: ${{ secrets.MAILGUN_TOKEN }}
         run: |
           report <- paste0(tempdir(), "/stocksReport.html")
-          lares::mailSend(attachment = report, creds = list(
-            url = Sys.getenv("MAILGUN_URL"), 
-            api = Sys.getenv("MAILGUN_TOKEN")))
+          lares::mailSend(attachment = report, 
+            subject = paste("Portfolio Report:", Sys.Date()), 
+            creds = list(
+              url = Sys.getenv("MAILGUN_URL"), 
+              api = Sys.getenv("MAILGUN_TOKEN")))
         shell: Rscript {0}
