@@ -73,7 +73,7 @@ of the highest correlation variables obtained in a cross-table." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.4</span>
       </span>
     </div>
 
@@ -128,7 +128,8 @@ of the highest correlation variables obtained in a cross-table.</p>
   dummy = <span class='fl'>TRUE</span>,
   limit = <span class='fl'>10</span>,
   redundant = <span class='fl'>FALSE</span>,
-  method = <span class='st'>"pearson"</span>
+  method = <span class='st'>"pearson"</span>,
+  quiet = <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -198,6 +199,10 @@ column only has two different values, should we keep both new columns?</p></td>
     <tr>
       <th>method</th>
       <td><p>Character. Any of: c("pearson", "kendall", "spearman")</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Boolean. Keep quiet? If not, show messages</p></td>
     </tr>
     </table>
 

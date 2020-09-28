@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert Date into Year-Week (YYYY-WW) — year_week • lares</title>
+<title>Visualize K-Means Clusters Methods — clusterOptimalK • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Convert Date into Year-Week (YYYY-WW) — year_week" />
-<meta property="og:description" content="This function lets the user convert a date into YYYY-WW format" />
+<meta property="og:title" content="Visualize K-Means Clusters Methods — clusterOptimalK" />
+<meta property="og:description" content="Visualize cluster data for assorted values of k and methods such as
+WSS, Silhouette and Gap statistic. See fviz_nbclust for more." />
 
 
 
@@ -102,57 +103,75 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert Date into Year-Week (YYYY-WW)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_functions.R'><code>R/other_functions.R</code></a></small>
-    <div class="hidden name"><code>year_week.Rd</code></div>
+    <h1>Visualize K-Means Clusters Methods</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/clusters.R'><code>R/clusters.R</code></a></small>
+    <div class="hidden name"><code>clusterOptimalK.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user convert a date into YYYY-WW format</p>
+    <p>Visualize cluster data for assorted values of k and methods such as
+WSS, Silhouette and Gap statistic. See <code>fviz_nbclust</code> for more.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>year_week</span>(<span class='kw'>date</span>)</pre>
+    <pre class="usage"><span class='fu'>clusterOptimalK</span>(
+  <span class='kw'>df</span>,
+  method = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wss"</span>, <span class='st'>"silhouette"</span>, <span class='st'>"gap_stat"</span>),
+  drop_na = <span class='fl'>TRUE</span>,
+  ohse = <span class='fl'>TRUE</span>,
+  norm = <span class='fl'>TRUE</span>,
+  quiet = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>date</th>
-      <td><p>Date. Date we wish to transform</p></td>
+      <th>df</th>
+      <td><p>Dataframe</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>Character vector.</p></td>
+    </tr>
+    <tr>
+      <th>drop_na</th>
+      <td><p>Boolean. Should NA rows be removed?</p></td>
+    </tr>
+    <tr>
+      <th>ohse</th>
+      <td><p>Boolean. Do you wish to automatically run one hot
+encoding to non-numerical columns?</p></td>
+    </tr>
+    <tr>
+      <th>norm</th>
+      <td><p>Boolean. Should the data be normalized?</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Boolean. Keep quiet? If not, print messages</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters passed to <code>clusterKmeans</code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Data Wrangling: 
-<code><a href='balance_data.html'>balance_data</a>()</code>,
-<code><a href='categ_reducer.html'>categ_reducer</a>()</code>,
-<code><a href='cleanText.html'>cleanText</a>()</code>,
-<code><a href='date_cuts.html'>date_cuts</a>()</code>,
-<code><a href='date_feats.html'>date_feats</a>()</code>,
-<code><a href='dateformat.html'>dateformat</a>()</code>,
-<code><a href='formatNum.html'>formatNum</a>()</code>,
-<code><a href='formatTime.html'>formatTime</a>()</code>,
-<code><a href='holidays.html'>holidays</a>()</code>,
-<code><a href='impute.html'>impute</a>()</code>,
-<code><a href='left.html'>left</a>()</code>,
-<code><a href='normalize.html'>normalize</a>()</code>,
-<code><a href='numericalonly.html'>numericalonly</a>()</code>,
-<code><a href='ohe_commas.html'>ohe_commas</a>()</code>,
-<code><a href='ohse.html'>ohse</a>()</code>,
-<code><a href='rbind_full.html'>rbind_full</a>()</code>,
-<code><a href='removenacols.html'>removenacols</a>()</code>,
-<code><a href='removenarows.html'>removenarows</a>()</code>,
-<code><a href='replaceall.html'>replaceall</a>()</code>,
-<code><a href='right.html'>right</a>()</code>,
-<code><a href='textFeats.html'>textFeats</a>()</code>,
-<code><a href='textTokenizer.html'>textTokenizer</a>()</code>,
-<code><a href='vector2text.html'>vector2text</a>()</code>,
-<code><a href='year_month.html'>year_month</a>()</code></p></div>
+    <div class='dont-index'><p>Other Clusters: 
+<code><a href='clusterKmeans.html'>clusterKmeans</a>()</code>,
+<code><a href='clusterVisualK.html'>clusterVisualK</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>year_week</span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>())
-</div><div class='output co'>#&gt; [1] "2020-39"</div></pre>
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"iris"</span>)
+<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>iris</span>, select = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='op'>-</span><span class='kw'>Species</span>))
+
+<span class='co'># Calculate and plot</span>
+<span class='fu'>clusterOptimalK</span>(<span class='kw'>df</span>)
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
