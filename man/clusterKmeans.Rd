@@ -13,7 +13,8 @@ clusterKmeans(
   ohse = TRUE,
   norm = TRUE,
   comb = c(1, 2),
-  seed = 123
+  seed = 123,
+  quiet = TRUE
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ encoding to non-numerical columns?}
 two variables by name or column position.}
 
 \item{seed}{Numeric. Seed for reproducibility}
+
+\item{quiet}{Boolean. Keep quiet? If not, print messages}
 }
 \description{
 This function lets the user cluster a whole data.frame automatically.
@@ -44,17 +47,19 @@ As you might know, the goal of kmeans is to group data points into
 distinct non-overlapping subgroups. If needed, one hot encoding will 
 be applied to categorical values automatically with this function. 
 For consideration: Scale/standardize the data when applying kmeans.
-Also, kmeans assumes spherical shapes of clusters and doesn’t work well 
+Also, kmeans assumes spherical shapes of clusters and does not work well 
 when clusters are in different shapes such as elliptical clusters.
 }
 \examples{
 options("lares.font" = NA) # Temporal
-data(dft) # Titanic dataset
-df <- subset(dft, select = -c(Ticket, PassengerId))
+data("iris")
+df <- subset(iris, select = c(-Species))
 
 # Find optimal k
-check_k <- clusterKmeans(df)
+check_k <- clusterKmeans(df, limit = 10)
 check_k$nclusters_plot
+# You can also use our other functions:
+# clusterOptimalK() and clusterVisualK()
 
 # Run with selected k
 clusters <- clusterKmeans(df, k = 3)
@@ -73,23 +78,8 @@ clusters$PCA$plot_1_2_3
 }
 }
 \seealso{
-Other Machine Learning: 
-\code{\link{ROC}()},
-\code{\link{conf_mat}()},
-\code{\link{export_results}()},
-\code{\link{gain_lift}()},
-\code{\link{h2o_automl}()},
-\code{\link{h2o_predict_API}()},
-\code{\link{h2o_predict_MOJO}()},
-\code{\link{h2o_predict_binary}()},
-\code{\link{h2o_predict_model}()},
-\code{\link{h2o_selectmodel}()},
-\code{\link{impute}()},
-\code{\link{iter_seeds}()},
-\code{\link{lasso_vars}()},
-\code{\link{model_metrics}()},
-\code{\link{msplit}()}
+Other Clusters: 
+\code{\link{clusterOptimalK}()},
+\code{\link{clusterVisualK}()}
 }
 \concept{Clusters}
-\concept{Machine Learning}
-\concept{PCA}

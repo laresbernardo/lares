@@ -76,6 +76,7 @@ recommended <- list(
   DBI = c("dbDriver", "dbConnect", "dbSendQuery", "fetch", "dbDisconnect"),
   devtools = c("install", "install_github", "with_proxy"),
   exifr = c("read_exif"),
+  factoextra = c("fviz_nbclust"),
   forecast = c("Arima", "auto.arima", "forecast"),
   gdata = c("read.xls"),
   ggbeeswarm = c("geom_quasirandom"),

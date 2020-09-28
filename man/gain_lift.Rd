@@ -45,7 +45,6 @@ gain_lift(dfr$class2$tag, dfr$class2$scores, target = "TRUE", splits = 5)
 \seealso{
 Other Machine Learning: 
 \code{\link{ROC}()},
-\code{\link{clusterKmeans}()},
 \code{\link{conf_mat}()},
 \code{\link{export_results}()},
 \code{\link{h2o_automl}()},

@@ -21,7 +21,6 @@ Select wich model from the h2o_automl function to use
 \seealso{
 Other Machine Learning: 
 \code{\link{ROC}()},
-\code{\link{clusterKmeans}()},
 \code{\link{conf_mat}()},
 \code{\link{export_results}()},
 \code{\link{gain_lift}()},

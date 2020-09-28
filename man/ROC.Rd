@@ -38,7 +38,6 @@ lapply(roc2, head)
 }
 \seealso{
 Other Machine Learning: 
-\code{\link{clusterKmeans}()},
 \code{\link{conf_mat}()},
 \code{\link{export_results}()},
 \code{\link{gain_lift}()},

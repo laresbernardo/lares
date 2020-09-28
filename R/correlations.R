@@ -307,6 +307,7 @@ corr_var <- function(df, var,
 #' values of each column. Set to \code{NA} to ignore argument.
 #' @param redundant Boolean. Should we keep redundant columns? i.e. It the
 #' column only has two different values, should we keep both new columns?
+#' @param quiet Boolean. Keep quiet? If not, show messages
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
@@ -329,11 +330,12 @@ corr_cross <- function(df, plot = TRUE,
                        ignore = NA, contains = NA, grid = FALSE,
                        rm.na = FALSE, dummy = TRUE, 
                        limit = 10, redundant = FALSE,
-                       method = "pearson") {
+                       method = "pearson",
+                       quiet = FALSE) {
   
   check_opts(type, 1:2)
   
-  if (sum(is.na(df)) & rm.na == FALSE) 
+  if (sum(is.na(df)) & rm.na == FALSE & !quiet) 
     warning("There are NA values in your data!")
   
   cor <- corr(df, ignore = ignore, dummy = dummy, limit = limit,
@@ -378,7 +380,7 @@ corr_cross <- function(df, plot = TRUE,
     ret$group2 <- ifelse(ret$group2 == "fill", aux, ret$group2)
   }
   ret <- filter(ret, .data$group1 != .data$group2)
-  if (nrow(ret) > top & !is.na(top)) {
+  if (nrow(ret) > top & !is.na(top) & !quiet) {
     message(sprintf("Returning only the top %s. You may override with the `top` parameter", top))
     ret <- slice(ret, 1:top) 
   }

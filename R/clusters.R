@@ -1,3 +1,33 @@
+prepare_data <- function(df, drop_na = TRUE, ohse = TRUE, norm = TRUE, quiet = TRUE) {
+  
+  # There should not be NAs
+  if (sum(is.na(df)) > 0) {
+    if (drop_na) { 
+      df <- removenarows(df, all = FALSE) 
+      if (!quiet) message(
+        "Automatically removed rows with NA. To overwrite: fix NAs and set drop_na = FALSE")
+    } else {
+      stop(paste("There should be no NAs in your dataframe!",
+                 "You can manually fix it or set drop_na to TRUE to remove these rows.", sep = "\n")) 
+    }
+  }
+  
+  # Only numerical values
+  nums <- df_str(df, return = "names", quiet = TRUE)$nums
+  if (ohse & length(nums) != ncol(df)) {
+    df <- ohse(df, redundant = FALSE, dates = TRUE, limit = 8, quiet = quiet)
+  } else {
+    df <- data.frame(df) %>% select_if(is.numeric)
+  }
+  
+  # Data should be normalized
+  if (norm) df <- df %>% 
+    transmute_all(list(normalize)) %>% 
+    replace(., is.na(.), 0)
+  
+  return(df)
+}
+
 ####################################################################
 #' Automated K-Means Clustering + PCA
 #' 
@@ -6,12 +36,10 @@
 #' distinct non-overlapping subgroups. If needed, one hot encoding will 
 #' be applied to categorical values automatically with this function. 
 #' For consideration: Scale/standardize the data when applying kmeans.
-#' Also, kmeans assumes spherical shapes of clusters and doesn’t work well 
+#' Also, kmeans assumes spherical shapes of clusters and does not work well 
 #' when clusters are in different shapes such as elliptical clusters.
 #' 
-#' @family Machine Learning
 #' @family Clusters
-#' @family PCA
 #' @param df Dataframe
 #' @param k Integer. Number of clusters
 #' @param limit Integer. How many clusters should be considered?
@@ -24,14 +52,17 @@
 #' @param comb Vector. Which columns do you wish to plot? Select which
 #' two variables by name or column position.
 #' @param seed Numeric. Seed for reproducibility
+#' @param quiet Boolean. Keep quiet? If not, print messages
 #' @examples 
 #' options("lares.font" = NA) # Temporal
-#' data(dft) # Titanic dataset
-#' df <- subset(dft, select = -c(Ticket, PassengerId))
+#' data("iris")
+#' df <- subset(iris, select = c(-Species))
 #' 
 #' # Find optimal k
-#' check_k <- clusterKmeans(df)
+#' check_k <- clusterKmeans(df, limit = 10)
 #' check_k$nclusters_plot
+#' # You can also use our other functions:
+#' # clusterOptimalK() and clusterVisualK()
 #' 
 #' # Run with selected k
 #' clusters <- clusterKmeans(df, k = 3)
@@ -51,44 +82,21 @@
 #' @export
 clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE, 
                           ignore = NA, ohse = TRUE, norm = TRUE, 
-                          comb = c(1, 2), seed = 123){
+                          comb = c(1, 2), seed = 123, quiet = TRUE){
   
-  results <- list()
-  
-  # There should not be NAs
-  if (sum(is.na(df)) > 0) {
-    if (drop_na) { 
-      df <- removenarows(df, all = FALSE) 
-      message("Automatically removed rows with NA. To overwrite: fix NAs and set drop_na = FALSE")
-    } else {
-      stop(paste("There should be no NAs in your dataframe!",
-                 "You can manually fix it or set drop_na to TRUE to remove these rows.", sep = "\n")) 
-    }
-  }
-  
-  # Only numerical values
-  nums <- df_str(df, return = "names", quiet = TRUE)$nums
-  if (ohse & length(nums) != ncol(df)) {
-    df <- ohse(df, redundant = FALSE, dates = TRUE, limit = 8)
-    message("One hot encoding applied...")
-  } else {
-    df <- data.frame(df) %>% select_if(is.numeric)
-  }
-  
-  # Data should be normalized for better results
-  if (norm) df <- df %>% 
-    transmute_all(list(normalize)) %>% 
-    replace(., is.na(.), 0)
+  df <- prepare_data(df, drop_na = drop_na, ohse = ohse, norm = norm, quiet = quiet)
   
   # Ignore some columns
   if (!is.na(ignore)[1]) {
     order <- colnames(df)
     aux <- df[,colnames(df) %in% ignore]
     df <- df[,!colnames(df) %in% ignore]
-    message(paste("Ignored only for kmeans:", vector2text(ignore)))
+    if (!quiet) message(paste("Ignored only for kmeans:", v2t(ignore)))
   }
   
-  # Determine number of clusters (n)
+  results <- list()
+  
+  # Determine number of clusters (n) using WSS methodology
   wss <- sum(apply(df, 2, var))*(nrow(df) - 1)
   for (i in 2:limit) wss[i] <- sum(kmeans(df, centers = i)$withinss)
   nclusters <- data.frame(n = c(1:limit), wss = wss)
@@ -129,7 +137,8 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       mutate(n = as.integer(table(df$cluster)))
     
     # Correlations
-    results[["correlations"]] <- corr_cross(df, contains = "cluster", redundant = TRUE)
+    results[["correlations"]] <- corr_cross(
+      df, contains = "cluster", redundant = TRUE, quiet = quiet)
     
     # PCA
     PCA <- list()
@@ -181,29 +190,90 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   return(results)
 }
 
-# Testing new functions
-if (FALSE) {
-  df <- dft[1:100,]
-  top <- 5
-  clusters <- 3
+
+####################################################################
+#' Visualize K-Means Clusters for Several K
+#' 
+#' Visualize cluster data for assorted values of k.
+#' 
+#' @family Clusters
+#' @inheritParams clusterKmeans
+#' @param ks Integer vector. Which k should be tested?
+#' @param plot Boolean. Plot outcome?
+#' @param ... Additional parameters passed to \code{clusterKmeans}
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data("iris")
+#' df <- subset(iris, select = c(-Species))
+#' 
+#' # Calculate and plot
+#' result <- clusterVisualK(df)
+#' 
+#' # You can use the data generated as well
+#' lapply(result$data, function(x) head(x$cluster))
+#' @export
+clusterVisualK <- function(df, ks = 1:6, quiet = FALSE, plot = TRUE, ...) {
   
+  clus_dat <- function(df, k, n = length(ks), ...) {
+    pca <- clusterKmeans(df, k, ...)$PCA
+    x <- pca$pcadf %>% mutate(k = k)
+    explained <<- pca$pca_explained[1:2]
+    if (!quiet) statusbar(k, n)
+    return(x)
+  }
+  
+  clus_plot <- function(clus_dat) {
+    clus_dat  %>%
+      ggplot(aes(x = .data$PC1, y = .data$PC2, colour = .data$cluster)) +
+      geom_point() +
+      guides(colour = FALSE) +
+      labs(title = glued("{clus_dat$k[1]} clusters")) +
+      theme_lares(pal = 2)
+  }
+  
+  dats <- lapply(ks, function(x) clus_dat(df, x, ...))
+  plots <- lapply(dats, clus_plot)
+  
+  total <- formatNum(sum(explained), 1, pos = "%")
+  explained <- formatNum(explained, 1, pos = "%")
+  subtitle <- sprintf("Explaining %s of the variance with PCA:\nPC1 (%s), PC2 (%s)", 
+                      total, explained[1], explained[2])
+  
+  wrapped <- wrap_plots(plots) +
+    plot_annotation(title = "Kmeans Clustering across potential number of clusters",
+                    subtitle = subtitle)
+  if (plot) plot(wrapped)
+  
+  ret <- list(plot = wrapped, data = dats)
+  return(invisible(ret))
+}
+
+####################################################################
+#' Visualize K-Means Optimal Clusters Methods
+#' 
+#' Visualize cluster data for assorted values of k and methods such as
+#' WSS, Silhouette and Gap statistic. See \code{fviz_nbclust} for more.
+#' 
+#' @family Clusters
+#' @inheritParams clusterKmeans
+#' @param method Character vector. 
+#' @param ... Additional parameters passed to \code{clusterKmeans}
+#' @examples 
+#' \dontrun{
+#' data("iris")
+#' df <- subset(iris, select = c(-Species))
+#' 
+#' # Calculate and plot optimal k clusters
+#' clusterOptimalK(df)
+#' }
+#' @export
+clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
+                            drop_na = TRUE, ohse = TRUE, norm = TRUE, 
+                            quiet = TRUE, ...) {
   try_require("factoextra")
-  dfp <- ohse(df)
-  dfp <- quiet(impute(dfp))
-  lasso <- lasso_vars(dfp, Survived_TRUE)
-  which <- lasso$coef$names[1:top]
-  most_imp_cols <- select(dfp, Survived_TRUE, one_of(which))
-  
-  # Optimal number of clusters
-  #fviz_nbclust(most_imp_cols, kmeans, method = "wss")
-  optimal <- clusterKmeans(most_imp_cols)
-  optimal$nclusters_plot
-  
-  kclus <- kmeans(most_imp_cols, centers = clusters, nstart = 10)
-  fviz_cluster(kclus, data = most_imp_cols, repel = TRUE, labelsize = 15)
-  
-  #Based on the coefficient, identified the best for this dataset (close to 1 is the best)
-  hclust_output <- cluster::agnes(most_imp_cols, diss = FALSE, metric = "euclidiean", method = 'ward')
-  fviz_dend(hclust_output, cex = 0.8, k = clusters, main = "Dendrogram", repel = TRUE)
-  
+  df <- prepare_data(df, drop_na = drop_na, ohse = ohse, norm = norm, quiet = quiet)
+  plots <- lapply(method, function(x) {
+    fviz_nbclust(df, kmeans, method = x, ...) + theme_lares(pal = 2)
+  })
+  return(plots)
 }

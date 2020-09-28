@@ -39,7 +39,6 @@ Export RDS, TXT, POJO, MOJO and all results from \code{h2o_automl()}.
 \seealso{
 Other Machine Learning: 
 \code{\link{ROC}()},
-\code{\link{clusterKmeans}()},
 \code{\link{conf_mat}()},
 \code{\link{gain_lift}()},
 \code{\link{h2o_automl}()},

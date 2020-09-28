@@ -41,7 +41,6 @@ conf_mat(dfr$class3$tag, dfr$class3$score)
 \seealso{
 Other Machine Learning: 
 \code{\link{ROC}()},
-\code{\link{clusterKmeans}()},
 \code{\link{export_results}()},
 \code{\link{gain_lift}()},
 \code{\link{h2o_automl}()},

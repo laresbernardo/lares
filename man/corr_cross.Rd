@@ -19,7 +19,8 @@ corr_cross(
   dummy = TRUE,
   limit = 10,
   redundant = FALSE,
-  method = "pearson"
+  method = "pearson",
+  quiet = FALSE
 )
 }
 \arguments{
@@ -57,6 +58,8 @@ values of each column. Set to \code{NA} to ignore argument.}
 column only has two different values, should we keep both new columns?}
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
+
+\item{quiet}{Boolean. Keep quiet? If not, show messages}
 }
 \description{
 This function creates a correlation full study and returns a rank
