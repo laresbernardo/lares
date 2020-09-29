@@ -111,7 +111,7 @@
     <p>Visualize cluster data for assorted values of k.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>clusterVisualK</span>(<span class='kw'>df</span>, ks = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, quiet = <span class='fl'>FALSE</span>, plot = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>clusterVisualK</span>(<span class='kw'>df</span>, ks = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, plot = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -123,10 +123,6 @@
     <tr>
       <th>ks</th>
       <td><p>Integer vector. Which k should be tested?</p></td>
-    </tr>
-    <tr>
-      <th>quiet</th>
-      <td><p>Boolean. Keep quiet? If not, print messages</p></td>
     </tr>
     <tr>
       <th>plot</th>
@@ -151,7 +147,7 @@
 
 <span class='co'># Calculate and plot</span>
 <span class='kw'>result</span> <span class='op'>&lt;-</span> <span class='fu'>clusterVisualK</span>(<span class='kw'>df</span>)
-</div><div class='output co'>#&gt;  00:00:00 [=======                                  ] 17% | 1                                         00:00:00 [==============                           ] 33% | 2                                         00:00:00 [=====================                    ] 50% | 3                                         00:00:00 [===========================              ] 67% | 4                                         00:00:01 [==================================       ] 83% | 5                                         00:00:01 [=========================================] 100% | DONE                    </div><div class='img'><img src='clusterVisualK-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='clusterVisualK-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># You can use the data generated as well</span>
 <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>result</span><span class='op'>$</span><span class='kw'>data</span>, <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>x</span><span class='op'>$</span><span class='kw'>cluster</span>))
 </div><div class='output co'>#&gt; [[1]]

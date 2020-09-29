@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Visualize K-Means Clusters Methods — clusterOptimalK • lares</title>
+<title>Visualize K-Means Clusters for Several K Methods — clusterOptimalK • lares</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,10 @@
 
 
 
-<meta property="og:title" content="Visualize K-Means Clusters Methods — clusterOptimalK" />
+<meta property="og:title" content="Visualize K-Means Clusters for Several K Methods — clusterOptimalK" />
 <meta property="og:description" content="Visualize cluster data for assorted values of k and methods such as
-WSS, Silhouette and Gap statistic. See fviz_nbclust for more." />
+WSS, Silhouette and Gap Statistic. See factoextra::fviz_nbclust 
+for more." />
 
 
 
@@ -103,14 +104,15 @@ WSS, Silhouette and Gap statistic. See fviz_nbclust for more." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Visualize K-Means Clusters Methods</h1>
+    <h1>Visualize K-Means Clusters for Several K Methods</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/clusters.R'><code>R/clusters.R</code></a></small>
     <div class="hidden name"><code>clusterOptimalK.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Visualize cluster data for assorted values of k and methods such as
-WSS, Silhouette and Gap statistic. See <code>fviz_nbclust</code> for more.</p>
+WSS, Silhouette and Gap Statistic. See <code>factoextra::fviz_nbclust</code> 
+for more.</p>
     </div>
 
     <pre class="usage"><span class='fu'>clusterOptimalK</span>(
@@ -153,7 +155,7 @@ encoding to non-numerical columns?</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional parameters passed to <code>clusterKmeans</code></p></td>
+      <td><p>Additional parameters passed to <code>factoextra::fviz_nbclust</code></p></td>
     </tr>
     </table>
 
@@ -167,8 +169,7 @@ encoding to non-numerical columns?</p></td>
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"iris"</span>)
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>iris</span>, select = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='op'>-</span><span class='kw'>Species</span>))
-
-<span class='co'># Calculate and plot</span>
+<span class='co'># Calculate and plot optimal k clusters</span>
 <span class='fu'>clusterOptimalK</span>(<span class='kw'>df</span>)
 }
 </div></pre>
