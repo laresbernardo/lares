@@ -75,10 +75,8 @@ prepare_data <- function(df, drop_na = TRUE, ohse = TRUE, norm = TRUE, quiet = T
 #' plot(clusters$PCA$plotVarExp)
 #' plot(clusters$PCA$plot_1_2)
 #' 
-#' \dontrun{
 #' # 3D interactive plot
-#' clusters$PCA$plot_1_2_3
-#' }
+#' \dontrun{clusters$PCA$plot_1_2_3}
 #' @export
 clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE, 
                           ignore = NA, ohse = TRUE, norm = TRUE, 
@@ -153,7 +151,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
              amount = PCA$pca_explained) %>%
       mutate(aux = cumsum(.data$amount)) %>%
       ggplot(aes(x = .data$id, y = .data$aux)) +
-      geom_path() + geom_point() +
+      geom_col(alpha = 0.95) + geom_path() + geom_point() + 
       labs(title = "Principal Component Analysis",
            subtitle = "Percentage of Variation Explained by Components",
            y = "Cumulative variation explained [%]", x = "PC(i)") +
@@ -161,10 +159,16 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       scale_x_continuous(expand = c(0, 1)) +
       theme_lares2()
     
+    explained <- formatNum(PCA$pca_explained, 1, pos = "%")
+    subtitle <- sprintf("Explaining %s of the variance with PCA:\nPC1 (%s), PC2 (%s)", 
+                        formatNum(sum(PCA$pca_explained[1:2]), 1, pos = "%"), 
+                        explained[1], explained[2])
+    
     PCA$plot_1_2 <- ggplot(PCA$pcadf, aes(
       x = .data$PC1, y = .data$PC2, colour = .data$cluster)) +
       geom_point() +
-      labs(title = "Principal Component Analysis") +
+      labs(title = "Principal Component Analysis",
+           subtitle = subtitle) +
       theme_lares2(pal = 2)
     
     if (length(find.package("ggforce", quiet = TRUE)) > 0) {
@@ -173,7 +177,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
         geom_mark_ellipse(
           aes(group = .data$cluster, description = .data$cluster),
           label.fill = "black", label.colour = "white")
-    } else warning("Install `ggforce` for better visualization!")
+    } else if (!quiet) warning("Install `ggforce` for better visualization!")
     
     if (length(find.package("plotly", quiet = TRUE)) > 0) {
       try_require("plotly")
@@ -212,13 +216,12 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
 #' # You can use the data generated as well
 #' lapply(result$data, function(x) head(x$cluster))
 #' @export
-clusterVisualK <- function(df, ks = 1:6, quiet = FALSE, plot = TRUE, ...) {
+clusterVisualK <- function(df, ks = 1:6, plot = TRUE, ...) {
   
   clus_dat <- function(df, k, n = length(ks), ...) {
     pca <- clusterKmeans(df, k, ...)$PCA
     x <- pca$pcadf %>% mutate(k = k)
     explained <<- pca$pca_explained[1:2]
-    if (!quiet) statusbar(k, n)
     return(x)
   }
   
@@ -227,7 +230,7 @@ clusterVisualK <- function(df, ks = 1:6, quiet = FALSE, plot = TRUE, ...) {
       ggplot(aes(x = .data$PC1, y = .data$PC2, colour = .data$cluster)) +
       geom_point() +
       guides(colour = FALSE) +
-      labs(title = glued("{clus_dat$k[1]} clusters")) +
+      labs(subtitle = glued("{clus_dat$k[1]} clusters")) +
       theme_lares(pal = 2)
   }
   
@@ -249,20 +252,20 @@ clusterVisualK <- function(df, ks = 1:6, quiet = FALSE, plot = TRUE, ...) {
 }
 
 ####################################################################
-#' Visualize K-Means Optimal Clusters Methods
+#' Visualize K-Means Clusters for Several K Methods
 #' 
 #' Visualize cluster data for assorted values of k and methods such as
-#' WSS, Silhouette and Gap statistic. See \code{fviz_nbclust} for more.
+#' WSS, Silhouette and Gap Statistic. See \code{factoextra::fviz_nbclust} 
+#' for more.
 #' 
 #' @family Clusters
 #' @inheritParams clusterKmeans
 #' @param method Character vector. 
-#' @param ... Additional parameters passed to \code{clusterKmeans}
+#' @param ... Additional parameters passed to \code{factoextra::fviz_nbclust}
 #' @examples 
 #' \dontrun{
 #' data("iris")
 #' df <- subset(iris, select = c(-Species))
-#' 
 #' # Calculate and plot optimal k clusters
 #' clusterOptimalK(df)
 #' }

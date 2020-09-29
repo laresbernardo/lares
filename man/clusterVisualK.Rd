@@ -4,14 +4,12 @@
 \alias{clusterVisualK}
 \title{Visualize K-Means Clusters for Several K}
 \usage{
-clusterVisualK(df, ks = 1:6, quiet = FALSE, plot = TRUE, ...)
+clusterVisualK(df, ks = 1:6, plot = TRUE, ...)
 }
 \arguments{
 \item{df}{Dataframe}
 
 \item{ks}{Integer vector. Which k should be tested?}
-
-\item{quiet}{Boolean. Keep quiet? If not, print messages}
 
 \item{plot}{Boolean. Plot outcome?}
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/clusters.R
 \name{clusterOptimalK}
 \alias{clusterOptimalK}
-\title{Visualize K-Means Clusters Methods}
+\title{Visualize K-Means Clusters for Several K Methods}
 \usage{
 clusterOptimalK(
   df,
@@ -28,18 +28,18 @@ encoding to non-numerical columns?}
 
 \item{quiet}{Boolean. Keep quiet? If not, print messages}
 
-\item{...}{Additional parameters passed to \code{clusterKmeans}}
+\item{...}{Additional parameters passed to \code{factoextra::fviz_nbclust}}
 }
 \description{
 Visualize cluster data for assorted values of k and methods such as
-WSS, Silhouette and Gap statistic. See \code{fviz_nbclust} for more.
+WSS, Silhouette and Gap Statistic. See \code{factoextra::fviz_nbclust} 
+for more.
 }
 \examples{
 \dontrun{
 data("iris")
 df <- subset(iris, select = c(-Species))
-
-# Calculate and plot
+# Calculate and plot optimal k clusters
 clusterOptimalK(df)
 }
 }

@@ -72,10 +72,8 @@ plot(clusters$correlations)
 plot(clusters$PCA$plotVarExp)
 plot(clusters$PCA$plot_1_2)
 
-\dontrun{
 # 3D interactive plot
-clusters$PCA$plot_1_2_3
-}
+\dontrun{clusters$PCA$plot_1_2_3}
 }
 \seealso{
 Other Clusters: 
