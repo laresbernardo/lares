@@ -130,7 +130,7 @@ model_metrics <- function(tag, score, multis = NA,
       metrics[["confusion_matrix"]] <- conf_mat(tag, score)
       AUCs <- t(ROC(tag, score, multis)$ci)[,2]
       m <- data.frame(
-        AUC = mean(AUCs[1:length(cats)]),
+        AUC = mean(AUCs[1:length(cats)], na.rm = TRUE),
         ACC = trues / total)
       metrics[["metrics"]] <- signif(m, 5)
       nums <- c()
@@ -376,6 +376,11 @@ ROC <- function(tag, score, multis = NA) {
     warning("You should use the multis parameter to add each category's score")
   }
   
+  if (length(unique(tag)) <= 1) {
+    tag[1] <- "dummy_label"
+    warning("Only 1 unique label detected. Adding single noice observation.")
+  }
+  
   if (is.na(multis)[1]) {
     roc <- pROC::roc(tag, score, ci = TRUE, quiet = TRUE)
     coords <- data.frame(
@@ -392,6 +397,10 @@ ROC <- function(tag, score, multis = NA) {
       which <- colnames(df)[2 + i]
       res <- df[,c(which)]
       label <- ifelse(df[,1] == which, which, "other")
+      if (length(unique(label)) <= 1) {
+        label[1] <- "dummy_label"
+        warning("Only 1 unique label detected. Adding single noice observation.")
+      }
       roci <- pROC::roc(label, res, ci = TRUE, quiet = TRUE)
       rocs[[paste(cols[i + 2])]] <- roci
       iter <- data.frame(fpr = rev(roci$specificities),

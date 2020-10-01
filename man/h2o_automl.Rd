@@ -19,7 +19,7 @@ h2o_automl(
   scale = FALSE,
   seed = 0,
   nfolds = 5,
-  thresh = 5,
+  thresh = 10,
   max_models = 3,
   max_time = 10 * 60,
   start_clean = TRUE,

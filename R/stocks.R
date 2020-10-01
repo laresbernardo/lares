@@ -53,13 +53,12 @@ stocks_file <- function(file = NA,
         stop("Error: that file doesn't exist or it's not in your working directory!")
     } else {
       # FOR DROPBOX'S USE
-      file <- "Portfolio LC.xlsx"
-      db_download(file, 
+      file <- paste0(tempdir(), "/Portfolio LC.xlsx")
+      db_download("Portfolio LC.xlsx", 
                   xlsx = FALSE, # Do not import as Excel, just download
                   newname = file,
                   token_dir = creds)
       results <- processFile(file, keep_old = keep_old)
-      file.remove(file)
     } 
   }
   

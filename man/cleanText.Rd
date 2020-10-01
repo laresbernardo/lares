@@ -9,7 +9,8 @@ cleanText(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = FALSE)
 \arguments{
 \item{text}{Character Vector}
 
-\item{spaces}{Boolean. Keep spaces?}
+\item{spaces}{Boolean. Keep spaces? If character input, spaces
+will be transformed into passed argument.}
 
 \item{lower}{Boolean. Transform all to lower case?}
 
@@ -24,7 +25,7 @@ characters and no accents/symbols on letters.
 \examples{
 cleanText("Bernardo Lares 123")
 cleanText("Bèrnärdo LáreS 123", lower = FALSE)
-cleanText("Bernardo Lare$", spaces = FALSE, ascii = FALSE)
+cleanText("Bernardo Lare$", spaces = ".", ascii = FALSE)
 cleanText("\\\\@®ì÷å   \%ñS  ..-X", spaces = FALSE)
 cleanText(c("maría", "€", "núñez a."), title = TRUE)
 }

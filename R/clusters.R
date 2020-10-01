@@ -151,7 +151,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
              amount = PCA$pca_explained) %>%
       mutate(aux = cumsum(.data$amount)) %>%
       ggplot(aes(x = .data$id, y = .data$aux)) +
-      geom_col(alpha = 0.95) + geom_path() + geom_point() + 
+      geom_col(alpha = 0.9) + geom_path() + geom_point() + 
       labs(title = "Principal Component Analysis",
            subtitle = "Percentage of Variation Explained by Components",
            y = "Cumulative variation explained [%]", x = "PC(i)") +
@@ -160,7 +160,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       theme_lares2()
     
     explained <- formatNum(PCA$pca_explained, 1, pos = "%")
-    subtitle <- sprintf("Explaining %s of the variance with PCA:\nPC1 (%s), PC2 (%s)", 
+    subtitle <- sprintf("Explaining %s of the variance with 2 PCA:\nPC1 (%s), PC2 (%s)", 
                         formatNum(sum(PCA$pca_explained[1:2]), 1, pos = "%"), 
                         explained[1], explained[2])
     
@@ -239,8 +239,9 @@ clusterVisualK <- function(df, ks = 1:6, plot = TRUE, ...) {
   
   total <- formatNum(sum(explained), 1, pos = "%")
   explained <- formatNum(explained, 1, pos = "%")
-  subtitle <- sprintf("Explaining %s of the variance with PCA:\nPC1 (%s), PC2 (%s)", 
-                      total, explained[1], explained[2])
+  subtitle <- sprintf(
+    "Explaining %s of the variance with 2 PCA:\nPC1 (%s), PC2 (%s)", 
+    total, explained[1], explained[2])
   
   wrapped <- wrap_plots(plots) +
     plot_annotation(title = "Kmeans Clustering across potential number of clusters",

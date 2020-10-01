@@ -121,7 +121,7 @@ h2o_automl <- function(df, y = "tag",
                        scale = FALSE,
                        seed = 0,
                        nfolds = 5,
-                       thresh = 5,
+                       thresh = 10,
                        max_models = 3,
                        max_time = 10*60,
                        start_clean = TRUE,
@@ -192,7 +192,7 @@ h2o_automl <- function(df, y = "tag",
   nums <- df_str(df, "names", quiet = TRUE)$nums
   if (length(nums) != ncol(df) & !quiet) 
     message(paste(
-      "- NOTE: There are", ncol(df) - length(nums), "non-numerical features.",
+      "- NOTE: There are", ncol(df) - length(nums) - sum(ignore %in% colnames(df)), "non-numerical features.",
       "Consider using ohse() prior for One Hot Smart Encoding your categorical variables."))
   if (scale | center & length(nums) > 0) {
     new <- data.frame(lapply(df[nums], function(x) scale(x, center = center, scale = scale)))
@@ -206,6 +206,8 @@ h2o_automl <- function(df, y = "tag",
   cats <- unique(df$tag)
   model_type <- ifelse(length(cats) <= as.integer(thresh), "Classifier", "Regression")
   message("Model type: ", model_type)
+  # Change spaces for dots as `multis` arguments may not match
+  if (model_type == "Classifier") cats <- gsub(" ", ".", cats)
   # If y variables is named as one of the categories, prediction values will be a problem
   if (model_type == "Classifier" & y %in% cats) {
     stop(paste("Your y parameter can't be named as any of the labels used.",
@@ -227,7 +229,7 @@ h2o_automl <- function(df, y = "tag",
   if (model_type == "Regression")
     df$tag <- as.numeric(df$tag)
   # Show a summary of our tags
-  if (model_type == "Classifier" & !quiet) print(data.frame(freqs(df, .data$tag)))
+  if (model_type == "Classifier" & !quiet) print(freqs(df, .data$tag))
   if (model_type == "Regression" & !quiet) print(summary(df$tag)) 
   
   # SPLIT TRAIN AND TEST DATASETS
@@ -287,7 +289,7 @@ h2o_automl <- function(df, y = "tag",
   if (length(exclude_algos) > 0 & !quiet) 
     message(paste("Algorithms excluded:", vector2text(exclude_algos)))
   if (!quiet) 
-    message(sprintf(">>> Iterating until %s models or seconds...", max_models, max_time))
+    message(sprintf(">>> Iterating until %s models or %s seconds...", max_models, max_time))
   aml <- quiet(h2o.automl(
     x = colnames(df)[!colnames(df) %in% c("tag", ignore)],
     y = "tag",

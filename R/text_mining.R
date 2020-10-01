@@ -7,14 +7,15 @@
 #' @family Data Wrangling
 #' @family Text Mining
 #' @param text Character Vector
-#' @param spaces Boolean. Keep spaces?
+#' @param spaces Boolean. Keep spaces? If character input, spaces
+#' will be transformed into passed argument.
 #' @param lower Boolean. Transform all to lower case?
 #' @param ascii Boolean. Only ASCII characters?
 #' @param title Boolean. Transform to title format (upper case on first letters)
 #' @examples 
 #' cleanText("Bernardo Lares 123")
 #' cleanText("Bèrnärdo LáreS 123", lower = FALSE)
-#' cleanText("Bernardo Lare$", spaces = FALSE, ascii = FALSE)
+#' cleanText("Bernardo Lare$", spaces = ".", ascii = FALSE)
 #' cleanText("\\@®ì÷å   %ñS  ..-X", spaces = FALSE)
 #' cleanText(c("maría", "€", "núñez a."), title = TRUE)
 #' @export
@@ -27,7 +28,9 @@ cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = F
   } 
   if (lower) text <- tolower(text)
   if (title) text  <- stringr::str_to_title(text)
-  if (!spaces) text <- gsub(" ", "", text)
+  if (is.character(spaces)) text <- gsub(" ", spaces, text)
+  if (isFALSE(spaces)) text <- gsub(" ", "", text)
+  
   return(text)
 }
 
