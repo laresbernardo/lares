@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MPLOTS Score Full Report Plots — mplot_full • lares</title>
+<title>Accuracy for Top N Predictions on Multi-Classifiers — mplot_topcats • lares</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,9 @@
 
 
 
-<meta property="og:title" content="MPLOTS Score Full Report Plots — mplot_full" />
-<meta property="og:description" content="This function plots a whole dashboard with a model's results. It will automatically
-detect if it's a categorical or regression's model by checking how many different
-unique values the independent variable (tag) has." />
+<meta property="og:title" content="Accuracy for Top N Predictions on Multi-Classifiers — mplot_topcats" />
+<meta property="og:description" content="Calculate and plot a multi-class model's predictions accuracy
+based on top N predictions." />
 
 
 
@@ -104,30 +103,17 @@ unique values the independent variable (tag) has." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>MPLOTS Score Full Report Plots</h1>
+    <h1>Accuracy for Top N Predictions on Multi-Classifiers</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/model_plots.R'><code>R/model_plots.R</code></a></small>
-    <div class="hidden name"><code>mplot_full.Rd</code></div>
+    <div class="hidden name"><code>mplot_topcats.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function plots a whole dashboard with a model's results. It will automatically
-detect if it's a categorical or regression's model by checking how many different
-unique values the independent variable (tag) has.</p>
+    <p>Calculate and plot a multi-class model's predictions accuracy
+based on top N predictions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mplot_full</span>(
-  <span class='kw'>tag</span>,
-  <span class='kw'>score</span>,
-  multis = <span class='fl'>NA</span>,
-  splits = <span class='fl'>8</span>,
-  thresh = <span class='fl'>6</span>,
-  subtitle = <span class='fl'>NA</span>,
-  model_name = <span class='fl'>NA</span>,
-  plot = <span class='fl'>TRUE</span>,
-  save = <span class='fl'>FALSE</span>,
-  subdir = <span class='fl'>NA</span>,
-  file_name = <span class='st'>"viz_full.png"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>mplot_topcats</span>(<span class='kw'>tag</span>, <span class='kw'>score</span>, <span class='kw'>multis</span>, model_name = <span class='fl'>NA</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,38 +132,8 @@ unique values the independent variable (tag) has.</p>
 or score (only used when more than 2 categories coexist).</p></td>
     </tr>
     <tr>
-      <th>splits</th>
-      <td><p>Integer. Number of separations to plot</p></td>
-    </tr>
-    <tr>
-      <th>thresh</th>
-      <td><p>Integer. Threshold for selecting binary or regression 
-models: this number is the threshold of unique values we should 
-have in 'tag' (more than: regression; less than: classification)</p></td>
-    </tr>
-    <tr>
-      <th>subtitle</th>
-      <td><p>Character. Subtitle to show in plot</p></td>
-    </tr>
-    <tr>
       <th>model_name</th>
       <td><p>Character. Model's name</p></td>
-    </tr>
-    <tr>
-      <th>plot</th>
-      <td><p>Boolean. Plot results? If not, plot grid object returned</p></td>
-    </tr>
-    <tr>
-      <th>save</th>
-      <td><p>Boolean. Save output plot into working directory</p></td>
-    </tr>
-    <tr>
-      <th>subdir</th>
-      <td><p>Character. Sub directory on which you wish to save the plot</p></td>
-    </tr>
-    <tr>
-      <th>file_name</th>
-      <td><p>Character. File name as you wish to save the plot</p></td>
     </tr>
     </table>
 
@@ -188,61 +144,22 @@ have in 'tag' (more than: regression; less than: classification)</p></td>
 <code><a href='mplot_cuts_error.html'>mplot_cuts_error</a>()</code>,
 <code><a href='mplot_cuts.html'>mplot_cuts</a>()</code>,
 <code><a href='mplot_density.html'>mplot_density</a>()</code>,
+<code><a href='mplot_full.html'>mplot_full</a>()</code>,
 <code><a href='mplot_gain.html'>mplot_gain</a>()</code>,
 <code><a href='mplot_importance.html'>mplot_importance</a>()</code>,
 <code><a href='mplot_lineal.html'>mplot_lineal</a>()</code>,
 <code><a href='mplot_metrics.html'>mplot_metrics</a>()</code>,
 <code><a href='mplot_response.html'>mplot_response</a>()</code>,
 <code><a href='mplot_roc.html'>mplot_roc</a>()</code>,
-<code><a href='mplot_splits.html'>mplot_splits</a>()</code>,
-<code><a href='mplot_topcats.html'>mplot_topcats</a>()</code></p></div>
+<code><a href='mplot_splits.html'>mplot_splits</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>dfr</span>, <span class='kw'>head</span>)
-</div><div class='output co'>#&gt; $class2
-#&gt;     tag    scores
-#&gt; 1  TRUE 0.3155498
-#&gt; 2  TRUE 0.8747599
-#&gt; 3  TRUE 0.8952823
-#&gt; 4 FALSE 0.0436517
-#&gt; 5  TRUE 0.2196593
-#&gt; 6 FALSE 0.2816101
-#&gt; 
-#&gt; $class3
-#&gt;   tag score        n_1        n_2        n_3
-#&gt; 1 n_3   n_2 0.20343865 0.60825062 0.18831071
-#&gt; 2 n_2   n_3 0.17856154 0.07657769 0.74486071
-#&gt; 3 n_1   n_1 0.50516951 0.40168718 0.09314334
-#&gt; 4 n_3   n_2 0.30880713 0.39062151 0.30057135
-#&gt; 5 n_2   n_3 0.01956827 0.07069011 0.90974158
-#&gt; 6 n_2   n_3 0.07830017 0.15408720 0.76761264
-#&gt; 
-#&gt; $regr
-#&gt;       tag    score
-#&gt; 1 11.1333 25.93200
-#&gt; 2 30.0708 39.91900
-#&gt; 3 26.5500 50.72246
-#&gt; 4 31.2750 47.81292
-#&gt; 5 13.0000 30.12853
-#&gt; 6 26.0000 13.24153
-#&gt; </div><div class='input'>
-<span class='co'># Dasboard for Binomial Model</span>
-<span class='fu'>mplot_full</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, 
-          model_name = <span class='st'>"Titanic Survived Model"</span>)
-</div><div class='img'><img src='mplot_full-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Dasboard for Multi-Categorical Model</span>
-<span class='fu'>mplot_full</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>score</span>,
-          multis = <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span>, select = <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>tag</span>, <span class='kw'>score</span>)),
-          model_name = <span class='st'>"Titanic Class Model"</span>)
-</div><div class='output co'>#&gt; <span class='message'>Target value: n_1</span></div><div class='output co'>#&gt; <span class='message'>Target value: n_2</span></div><div class='output co'>#&gt; <span class='message'>Target value: n_3</span></div><div class='img'><img src='mplot_full-2.png' alt='' width='700' height='433' /></div><div class='input'>          
-<span class='co'># Dasboard for Regression Model</span>
-<span class='fu'>mplot_full</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>score</span>, 
-          model_name = <span class='st'>"Titanic Fare Model"</span>)
-</div><div class='img'><img src='mplot_full-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
-</div></pre>
+<span class='fu'>mplot_topcats</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>score</span>,
+              multis = <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span>, select = <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>tag</span>, <span class='kw'>score</span>)),
+              model_name = <span class='st'>"Titanic Class Model"</span>)
+</div><div class='img'><img src='mplot_topcats-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
