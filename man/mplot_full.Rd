@@ -19,14 +19,12 @@ mplot_full(
 )
 }
 \arguments{
-\item{tag}{Vector. Real known label}
+\item{tag}{Vector. Real known label.}
 
-\item{score}{Vector. Predicted value or model's result. Must be numeric
-for categorical binomial models and continuous regression models; must
-be categorical for multi-categorical models (also need multis param).}
+\item{score}{Vector. Predicted value or model's result.}
 
-\item{multis}{Data.frame. Containing columns with each category score 
-(only used when more than 2 categories coexist)}
+\item{multis}{Data.frame. Containing columns with each category probability 
+or score (only used when more than 2 categories coexist).}
 
 \item{splits}{Integer. Number of separations to plot}
 
@@ -83,6 +81,7 @@ Other ML Visualization:
 \code{\link{mplot_metrics}()},
 \code{\link{mplot_response}()},
 \code{\link{mplot_roc}()},
-\code{\link{mplot_splits}()}
+\code{\link{mplot_splits}()},
+\code{\link{mplot_topcats}()}
 }
 \concept{ML Visualization}

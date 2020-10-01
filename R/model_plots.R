@@ -124,15 +124,11 @@ mplot_density <- function(tag,
 #' This function plots Variable Importances
 #' 
 #' @family ML Visualization
+#' @inheritParams mplot_density
 #' @param var Vector. Variable or column's names
 #' @param imp Vector. Importance of said variables. Must have same length as var
 #' @param colours If possitive and negative contribution is known
-#' @param limit Integer. Limit how many variavles you wish to plot
-#' @param model_name Character. Model's name
-#' @param subtitle Character. Subtitle to show in plot
-#' @param save Boolean. Save output plot into working directory
-#' @param subdir Character. Sub directory on which you wish to save the plot
-#' @param file_name Character. File name as you wish to save the plot
+#' @param limit Integer. Limit how many variables you wish to plot
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' df <- data.frame(variable = LETTERS[1:6],
@@ -217,10 +213,10 @@ mplot_importance <- function(var,
 #' range. It also works for multi-categorical models.
 #' 
 #' @family ML Visualization
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
-#' @param multis Data.frame. Containing columns with each category score 
-#' (only used when more than 2 categories coexist)
+#' @param tag Vector. Real known label.
+#' @param score Vector. Predicted value or model's result.
+#' @param multis Data.frame. Containing columns with each category probability 
+#' or score (only used when more than 2 categories coexist).
 #' @param sample Integer. Number of samples to use for rendering plot.
 #' @param model_name Character. Model's name
 #' @param subtitle Character. Subtitle to show in plot
@@ -321,14 +317,9 @@ mplot_roc <- function(tag,
 #' This function cuts by quantiles any score or prediction.
 #' 
 #' @family ML Visualization
-#' @param score Vector. Predicted value or model's result
+#' @inheritParams mplot_roc
 #' @param splits Integer. Numer of separations to plot
-#' @param model_name Character. Model's name
-#' @param subtitle Character. Subtitle to show in plot
 #' @param table Boolean. Do you wish to return a table with results?
-#' @param save Boolean. Save output plot into working directory
-#' @param subdir Character. Sub directory on which you wish to save the plot
-#' @param file_name Character. File name as you wish to save the plot
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -394,14 +385,9 @@ mplot_cuts <- function(score,
 #' This function cuts by quantiles on absolut and percentual errors
 #' 
 #' @family ML Visualization
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
-#' @param splits Integer. Numer of separations to plot
+#' @inheritParams mplot_roc
+#' @param splits Integer. Number of separations to plot
 #' @param title Character. Title to show in plot
-#' @param model_name Character. Model's name
-#' @param save Boolean. Save output plot into working directory
-#' @param subdir Character. Sub directory on which you wish to save the plot
-#' @param file_name Character. File name as you wish to save the plot
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -509,14 +495,8 @@ mplot_cuts_error <- function(tag,
 #' compare different categorical values vs scores grouped by equal sized buckets.
 #' 
 #' @family ML Visualization
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
-#' @param splits Integer. Numer of separations to plot
-#' @param subtitle Character. Subitle to show in plot
-#' @param model_name Character. Model's name
-#' @param save Boolean. Save output plot into working directory
-#' @param subdir Character. Sub directory on which you wish to save the plot
-#' @param file_name Character. File name as you wish to save the plot
+#' @inheritParams mplot_roc
+#' @param splits Integer. Number of separations to plot
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -624,12 +604,8 @@ mplot_splits <- function(tag,
 #' the parameter `plot` is set to `TRUE`.
 #' 
 #' @family ML Visualization
+#' @inheritParams mplot_roc
 #' @param results Object. Results object from h2o_automl function
-#' @param subtitle Character. Subitle to show in plot
-#' @param model_name Character. Model's name
-#' @param save Boolean. Save output plot into working directory
-#' @param subdir Character. Sub directory on which you wish to save the plot
-#' @param file_name Character. File name as you wish to save the plot
 #' @export
 mplot_metrics <- function(results, 
                           subtitle = NA, 
@@ -705,13 +681,7 @@ mplot_metrics <- function(results,
 #' This function plots a Linear Regression Result
 #' 
 #' @family ML Visualization
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
-#' @param subtitle Character. Subitle to show in plot
-#' @param model_name Character. Model's name
-#' @param save Boolean. Save output plot into working directory
-#' @param subdir Character. Sub directory on which you wish to save the plot
-#' @param file_name Character. File name as you wish to save the plot
+#' @inheritParams mplot_roc
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -791,22 +761,12 @@ mplot_lineal <- function(tag,
 #' unique values the independent variable (tag) has.
 #' 
 #' @family ML Visualization
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result. Must be numeric
-#' for categorical binomial models and continuous regression models; must
-#' be categorical for multi-categorical models (also need multis param).
-#' @param multis Data.frame. Containing columns with each category score 
-#' (only used when more than 2 categories coexist)
+#' @inheritParams mplot_roc
 #' @param splits Integer. Number of separations to plot
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
 #' have in 'tag' (more than: regression; less than: classification)
-#' @param subtitle Character. Subtitle to show in plot
-#' @param model_name Character. Model's name
 #' @param plot Boolean. Plot results? If not, plot grid object returned
-#' @param save Boolean. Save output plot into working directory
-#' @param subdir Character. Sub directory on which you wish to save the plot
-#' @param file_name Character. File name as you wish to save the plot
 #' @examples 
 #' \donttest{
 #' options("lares.font" = NA) # Temporal
@@ -864,7 +824,7 @@ mplot_full <- function(tag,
   
   # Multi-Categorical Models
   if (length(unique(tag)) > 2 & length(unique(tag)) <= thresh) {
-    m <- model_metrics(tag, score, multis)
+    m <- model_metrics(tag, score, multis, thresh = thresh)
     p1 <- m$plots$conf_matrix + 
       labs(title = "Confusion Matrix", 
            caption = if (!is.na(model_name)) model_name)
@@ -906,16 +866,10 @@ mplot_full <- function(tag,
 #' You may use \code{conf_mat()} to get calculate values.
 #' 
 #' @family ML Visualization
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
+#' @inheritParams mplot_roc
 #' @param thresh Numeric. Value which splits the results for the 
 #' confusion matrix.
 #' @param abc Boolean. Arrange columns and rows alphabetically?
-#' @param subtitle Character. Subtitle to show in plot
-#' @param model_name Character. Model's name
-#' @param save Boolean. Save output plot into working directory
-#' @param subdir Character. Sub directory on which you wish to save the plot
-#' @param file_name Character. File name as you wish to save the plot
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -1028,10 +982,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
 #' targeting a percentage of the total number of cases.
 #' 
 #' @family ML Visualization
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
-#' @param multis Data.frame. Containing columns with each category score 
-#' (only used when more than 2 categories coexist)
+#' @inheritParams mplot_roc
 #' @param target Value. Which is your target positive value? If 
 #' set to 'auto', the target with largest mean(score) will be 
 #' selected. Change the value to overwrite. Only works for binary classes
@@ -1040,9 +991,6 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
 #' for the automatic conclussion in the plot? Set to "auto" for
 #' best value, "none" to turn off or the number of split.
 #' @param caption Character. Caption to show in plot
-#' @param save Boolean. Save output plot into working directory
-#' @param subdir Character. Sub directory on which you wish to save the plot
-#' @param file_name Character. File name as you wish to save the plot
 #' @param quiet Boolean. Do not show message for auto target?
 #' @examples 
 #' options("lares.font" = NA) # Temporal
@@ -1169,22 +1117,8 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
 #' % of target class observations in the selection?
 #' 
 #' @family ML Visualization
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
-#' @param multis Data.frame. Containing columns with each category score 
-#' (only used when more than 2 categories coexist)
-#' @param target Value. Which is your target positive value? If 
-#' set to 'auto', the target with largest mean(score) will be 
-#' selected. Change the value to overwrite. Only works for binary classes
-#' @param splits Integer. Numer of quantiles to split the data
-#' @param highlight Character or Integer. Which split should be used
-#' for the automatic conclussion in the plot? Set to "auto" for
-#' best value, "none" to turn off or the number of split.
-#' @param caption Character. Caption to show in plot
-#' @param save Boolean. Save output plot into working directory
-#' @param subdir Character. Sub directory on which you wish to save the plot
-#' @param file_name Character. File name as you wish to save the plot
-#' @param quiet Boolean. Do not show message for auto target?
+#' @inheritParams mplot_roc
+#' @inheritParams mplot_gain
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -1293,4 +1227,64 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
   if (save) p <- p + ggsave(file_name, width = 6, height = 6)
   
   return(p)
+}
+
+
+####################################################################
+#' Accuracy for Top N Predictions on Multi-Classifiers
+#' 
+#' Calculate and plot a multi-class model's predictions accuracy
+#' based on top N predictions.
+#' 
+#' @family ML Visualization
+#' @inheritParams mplot_roc
+#' @examples 
+#' options("lares.font" = NA) # Temporal
+#' data(dfr) # Results for AutoML Predictions
+#' mplot_topcats(dfr$class3$tag, dfr$class3$score,
+#'               multis = subset(dfr$class3, select = -c(tag, score)),
+#'               model_name = "Titanic Class Model")
+#' @export
+mplot_topcats <- function(tag, score, multis, model_name = NA) {
+  
+  df <- data.frame(tag, score, multis)
+  cats <- unique(tag)
+  
+  DF <- df %>%
+    mutate(label = row_number()) %>%
+    tidyr::pivot_longer(3:(ncol(.)-1)) %>%
+    group_by(.data$label) %>%
+    arrange(.data$label, desc(.data$value)) %>%
+    mutate(rank = row_number()) %>%
+    mutate(correct_top1 = .data$tag %in% .data$name[1],
+           correct_top2 = .data$tag %in% .data$name[1:2],
+           correct_top3 = .data$tag %in% .data$name[1:3],
+           correct_top4 = .data$tag %in% .data$name[1:4],
+           correct_top5 = .data$tag %in% .data$name[1:5]) %>%
+    ungroup() %>%
+    select(.data$label, .data$tag, .data$score, starts_with("correct_top")) %>% 
+    distinct()
+  
+  p <- select(DF, starts_with("correct_top")) %>% 
+    tidyr::gather() %>%
+    group_by(.data$key) %>%
+    summarize(value = sum(.data$value), .groups = "drop") %>%
+    mutate(correct = .data$value/nrow(DF)) %>%
+    mutate(key = gsub("correct_", "", .data$key)) %>%
+    head(length(cats)) %>%
+    ggplot(aes(x = .data$key, y = .data$correct, 
+               label = formatNum(100*.data$correct, 0, pos = "%"))) +
+    geom_col() + geom_label() +
+    scale_y_percent(limits = c(0,1)) +
+    labs(caption = paste(
+      "Observations:", formatNum(nrow(df), 0), "|",
+      "Unique labels:", formatNum(length(unique(DF$score)), 0)),
+      title = "Accuracy based on top categorical predictions", 
+      x = NULL, y = "Accuracy [%]") +
+    theme_lares()
+  if (!is.na(model_name))
+    p <- p + labs(subtitle = model_name)
+  
+  return(p)
+  
 }

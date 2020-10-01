@@ -23,7 +23,7 @@ mplot_importance(
 
 \item{colours}{If possitive and negative contribution is known}
 
-\item{limit}{Integer. Limit how many variavles you wish to plot}
+\item{limit}{Integer. Limit how many variables you wish to plot}
 
 \item{model_name}{Character. Model's name}
 
@@ -67,6 +67,7 @@ Other ML Visualization:
 \code{\link{mplot_metrics}()},
 \code{\link{mplot_response}()},
 \code{\link{mplot_roc}()},
-\code{\link{mplot_splits}()}
+\code{\link{mplot_splits}()},
+\code{\link{mplot_topcats}()}
 }
 \concept{ML Visualization}

@@ -16,7 +16,7 @@ mplot_metrics(
 \arguments{
 \item{results}{Object. Results object from h2o_automl function}
 
-\item{subtitle}{Character. Subitle to show in plot}
+\item{subtitle}{Character. Subtitle to show in plot}
 
 \item{model_name}{Character. Model's name}
 
@@ -43,6 +43,7 @@ Other ML Visualization:
 \code{\link{mplot_lineal}()},
 \code{\link{mplot_response}()},
 \code{\link{mplot_roc}()},
-\code{\link{mplot_splits}()}
+\code{\link{mplot_splits}()},
+\code{\link{mplot_topcats}()}
 }
 \concept{ML Visualization}

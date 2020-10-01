@@ -17,9 +17,9 @@ mplot_conf(
 )
 }
 \arguments{
-\item{tag}{Vector. Real known label}
+\item{tag}{Vector. Real known label.}
 
-\item{score}{Vector. Predicted value or model's result}
+\item{score}{Vector. Predicted value or model's result.}
 
 \item{thresh}{Numeric. Value which splits the results for the 
 confusion matrix.}
@@ -67,6 +67,7 @@ Other ML Visualization:
 \code{\link{mplot_metrics}()},
 \code{\link{mplot_response}()},
 \code{\link{mplot_roc}()},
-\code{\link{mplot_splits}()}
+\code{\link{mplot_splits}()},
+\code{\link{mplot_topcats}()}
 }
 \concept{ML Visualization}

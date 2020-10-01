@@ -16,13 +16,13 @@ mplot_splits(
 )
 }
 \arguments{
-\item{tag}{Vector. Real known label}
+\item{tag}{Vector. Real known label.}
 
-\item{score}{Vector. Predicted value or model's result}
+\item{score}{Vector. Predicted value or model's result.}
 
-\item{splits}{Integer. Numer of separations to plot}
+\item{splits}{Integer. Number of separations to plot}
 
-\item{subtitle}{Character. Subitle to show in plot}
+\item{subtitle}{Character. Subtitle to show in plot}
 
 \item{model_name}{Character. Model's name}
 
@@ -66,6 +66,7 @@ Other ML Visualization:
 \code{\link{mplot_lineal}()},
 \code{\link{mplot_metrics}()},
 \code{\link{mplot_response}()},
-\code{\link{mplot_roc}()}
+\code{\link{mplot_roc}()},
+\code{\link{mplot_topcats}()}
 }
 \concept{ML Visualization}

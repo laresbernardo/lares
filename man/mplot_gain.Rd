@@ -19,12 +19,12 @@ mplot_gain(
 )
 }
 \arguments{
-\item{tag}{Vector. Real known label}
+\item{tag}{Vector. Real known label.}
 
-\item{score}{Vector. Predicted value or model's result}
+\item{score}{Vector. Predicted value or model's result.}
 
-\item{multis}{Data.frame. Containing columns with each category score 
-(only used when more than 2 categories coexist)}
+\item{multis}{Data.frame. Containing columns with each category probability 
+or score (only used when more than 2 categories coexist).}
 
 \item{target}{Value. Which is your target positive value? If 
 set to 'auto', the target with largest mean(score) will be 
@@ -84,6 +84,7 @@ Other ML Visualization:
 \code{\link{mplot_metrics}()},
 \code{\link{mplot_response}()},
 \code{\link{mplot_roc}()},
-\code{\link{mplot_splits}()}
+\code{\link{mplot_splits}()},
+\code{\link{mplot_topcats}()}
 }
 \concept{ML Visualization}

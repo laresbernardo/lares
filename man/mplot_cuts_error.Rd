@@ -16,11 +16,11 @@ mplot_cuts_error(
 )
 }
 \arguments{
-\item{tag}{Vector. Real known label}
+\item{tag}{Vector. Real known label.}
 
-\item{score}{Vector. Predicted value or model's result}
+\item{score}{Vector. Predicted value or model's result.}
 
-\item{splits}{Integer. Numer of separations to plot}
+\item{splits}{Integer. Number of separations to plot}
 
 \item{title}{Character. Title to show in plot}
 
@@ -54,6 +54,7 @@ Other ML Visualization:
 \code{\link{mplot_metrics}()},
 \code{\link{mplot_response}()},
 \code{\link{mplot_roc}()},
-\code{\link{mplot_splits}()}
+\code{\link{mplot_splits}()},
+\code{\link{mplot_topcats}()}
 }
 \concept{ML Visualization}

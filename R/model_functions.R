@@ -429,12 +429,13 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
                         ignored = c(), quiet = FALSE, 
                         project = "ML Project", seed = 0,
                         leaderboard = list(),
-                        plots = TRUE, ...) {
+                        plots = TRUE, 
+                        ...) {
 
   # MODEL TYPE
   types <- c("Classifier", "Regression")
   check_opts(model_type, types)
-  thresh <- ifelse(model_type == types[1], 100, 0)
+  thresh <- ifelse(model_type == types[1], 10000, 0)
   
   # When using h2o_select
   if ("train_test" %in% colnames(test)) {
