@@ -124,7 +124,8 @@ characters and no accents/symbols on letters.</p>
     </tr>
     <tr>
       <th>spaces</th>
-      <td><p>Boolean. Keep spaces?</p></td>
+      <td><p>Boolean. Keep spaces? If character input, spaces
+will be transformed into passed argument.</p></td>
     </tr>
     <tr>
       <th>lower</th>
@@ -178,8 +179,8 @@ characters and no accents/symbols on letters.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bernardo Lares 123"</span>)
 </div><div class='output co'>#&gt; [1] "bernardo lares 123"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bèrnärdo LáreS 123"</span>, lower = <span class='fl'>FALSE</span>)
-</div><div class='output co'>#&gt; [1] "Bernardo LareS 123"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bernardo Lare$"</span>, spaces = <span class='fl'>FALSE</span>, ascii = <span class='fl'>FALSE</span>)
-</div><div class='output co'>#&gt; [1] "bernardolare$"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"\\@®ì÷å   %ñS  ..-X"</span>, spaces = <span class='fl'>FALSE</span>)
+</div><div class='output co'>#&gt; [1] "Bernardo LareS 123"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bernardo Lare$"</span>, spaces = <span class='st'>"."</span>, ascii = <span class='fl'>FALSE</span>)
+</div><div class='output co'>#&gt; [1] "bernardo.lare$"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"\\@®ì÷å   %ñS  ..-X"</span>, spaces = <span class='fl'>FALSE</span>)
 </div><div class='output co'>#&gt; [1] "riansx"</div><div class='input'><span class='fu'>cleanText</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"maría"</span>, <span class='st'>"€"</span>, <span class='st'>"núñez a."</span>), title = <span class='fl'>TRUE</span>)
 </div><div class='output co'>#&gt; [1] "Maria"   "Eur"     "Nunez A"</div></pre>
   </div>
