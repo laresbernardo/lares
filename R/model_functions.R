@@ -577,7 +577,8 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
       plots[["top_cats"]] <- mplot_topcats(
         tag = results$scores_test$tag,
         score = results$scores_test$score,
-        multis = multis)
+        multis = multis,
+        model_name = results$model_name)
     if (!stacked) 
       plots[["importance"]] <- mplot_importance(
         var = results$importance$variable,

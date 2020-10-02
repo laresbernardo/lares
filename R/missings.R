@@ -58,7 +58,6 @@ missingness <- function(df, plot = FALSE, full = FALSE,
     
     
     p <- is.na(df) %>% data.frame() %>% 
-      # tidyr::pivot_longer(cols = everything()) %>% # The world is not yet prepared!
       tidyr::gather() %>%
       {if (!full) 
         filter(., .data$key %in% m$variable) else .} %>%

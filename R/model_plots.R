@@ -1234,7 +1234,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
 #' Accuracy for Top N Predictions on Multi-Classifiers
 #' 
 #' Calculate and plot a multi-class model's predictions accuracy
-#' based on top N predictions.
+#' based on top N predictions and distribution of probabilities.
 #' 
 #' @family ML Visualization
 #' @inheritParams mplot_roc
@@ -1252,8 +1252,8 @@ mplot_topcats <- function(tag, score, multis, model_name = NA) {
   
   DF <- df %>%
     mutate(label = row_number()) %>%
-    tidyr::pivot_longer(3:(ncol(.)-1)) %>%
-    group_by(.data$label) %>%
+    tidyr::gather("name", "value", -.data$tag, -.data$score, -.data$label) %>%
+    group_by(.data$label) %>% 
     arrange(.data$label, desc(.data$value)) %>%
     mutate(rank = row_number(), 
            cumprob = cumsum(.data$value))
@@ -1278,12 +1278,9 @@ mplot_topcats <- function(tag, score, multis, model_name = NA) {
                label = formatNum(100*.data$correct, 0, pos = "%"))) +
     geom_col() + geom_label() +
     scale_y_percent(limits = c(0,1)) +
-    labs(caption = paste(
-      "Observations:", formatNum(nrow(df), 0), "|",
-      "Unique labels:", formatNum(length(unique(DF$score)), 0)),
-      title = "Accuracy for top predictions", 
-      x = "Top N Predicted Categories", 
-      y = "Accuracy within N Categories [%]") +
+      labs(title = "Accuracy for top N predictions", 
+         x = "Top N Predicted Categories", 
+         y = "Accuracy within Top N Categories [%]") +
     theme_lares() 
   if (!is.na(model_name))
     p1 <- p1 + labs(caption = model_name)

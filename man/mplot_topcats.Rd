@@ -18,7 +18,7 @@ or score (only used when more than 2 categories coexist).}
 }
 \description{
 Calculate and plot a multi-class model's predictions accuracy
-based on top N predictions.
+based on top N predictions and distribution of probabilities.
 }
 \examples{
 options("lares.font" = NA) # Temporal

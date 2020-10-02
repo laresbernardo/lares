@@ -428,7 +428,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
   
   labels <- aux %>% 
     mutate_all(as.character) %>% 
-    tidyr::pivot_longer(colnames(aux)[1:(ncol(aux) - 4)]) %>%
+    tidyr::gather("name", "value", 1:(ncol(aux) - 4)) %>%
     mutate(label = sprintf("%s: %s", .data$name, .data$value)) %>%
     mutate(n = as.integer(.data$n), 
            pcum = as.numeric(.data$pcum),
