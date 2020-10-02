@@ -172,6 +172,38 @@ h2o_automl <- function(df, y = "tag",
     }
   }
   
+  # MODEL TYPE
+  cats <- unique(df$tag)
+  model_type <- ifelse(length(cats) <= as.integer(thresh), "Classifier", "Regression")
+  message("Model type: ", model_type)
+  # Change spaces for dots as `multis` arguments may not match
+  if (model_type == "Classifier") cats <- gsub(" ", ".", cats)
+  # If y variables is named as one of the categories, prediction values will be a problem
+  if (model_type == "Classifier" & y %in% cats) {
+    stop(paste("Your y parameter can't be named as any of the labels used.",
+               "Please, rename", y, "into a valid column name next such as",
+               paste0(y, "_labels for example.")))
+  }
+  ignored <- ignore
+  
+  # ONE HOT SMART ENCODING
+  nums <- df_str(df, "names", quiet = TRUE)$nums
+  if (length(nums) != ncol(df) & !quiet) {
+    transformable <- ncol(df) - length(nums) - 
+      sum(ignore %in% colnames(df)) - 
+      as.integer(model_type == "Classifier")
+    message(paste(
+      "- NOTE: There are", transformable, "non-numerical features.",
+      "Consider using ohse() prior for One Hot Smart Encoding your categorical variables."))
+  }
+  if (scale | center & length(nums) > 0) {
+    new <- data.frame(lapply(df[nums], function(x) scale(x, center = center, scale = scale)))
+    colnames(new) <- nums
+    df[nums] <- new
+    msg <- ifelse(scale & center, "scaled and centered", ifelse(scale, "scaled", "centered"))
+    if (!quiet) message(paste0("All numerical features (", length(nums), ") were ", msg))
+  }
+  
   # OUTLIERS ON INDEPENDENT VARIABLE
   if (is.numeric(df$tag)) {
     thresh <- ifelse(is.numeric(no_outliers), no_outliers, 3)
@@ -187,34 +219,6 @@ h2o_automl <- function(df, y = "tag",
                "Consider using the 'no_outliers' parameter to remove them.")))
     if (no_outliers) df <- df[!is_outlier,] 
   }
-  
-  # ONE HOT SMART ENCODING
-  nums <- df_str(df, "names", quiet = TRUE)$nums
-  if (length(nums) != ncol(df) & !quiet) 
-    message(paste(
-      "- NOTE: There are", ncol(df) - length(nums) - sum(ignore %in% colnames(df)), "non-numerical features.",
-      "Consider using ohse() prior for One Hot Smart Encoding your categorical variables."))
-  if (scale | center & length(nums) > 0) {
-    new <- data.frame(lapply(df[nums], function(x) scale(x, center = center, scale = scale)))
-    colnames(new) <- nums
-    df[nums] <- new
-    msg <- ifelse(scale & center, "scaled and centered", ifelse(scale, "scaled", "centered"))
-    if (!quiet) message(paste0("All numerical features (", length(nums), ") were ", msg))
-  }
-  
-  # MODEL TYPE
-  cats <- unique(df$tag)
-  model_type <- ifelse(length(cats) <= as.integer(thresh), "Classifier", "Regression")
-  message("Model type: ", model_type)
-  # Change spaces for dots as `multis` arguments may not match
-  if (model_type == "Classifier") cats <- gsub(" ", ".", cats)
-  # If y variables is named as one of the categories, prediction values will be a problem
-  if (model_type == "Classifier" & y %in% cats) {
-    stop(paste("Your y parameter can't be named as any of the labels used.",
-               "Please, rename", y, "into a valid column name next such as",
-               paste0(y, "_labels for example.")))
-  }
-  ignored <- ignore
   
   # If target value is not an existing target value
   if (!target %in% cats & length(cats) == 2)

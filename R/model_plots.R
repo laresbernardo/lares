@@ -1286,8 +1286,8 @@ mplot_topcats <- function(tag, score, multis, model_name = NA) {
     p1 <- p1 + labs(caption = model_name)
   
   p2 <- DF %>%
-    filter(rank <= 5) %>%
-    ggplot(aes(x = as.character(rank), y = value)) + 
+    filter(.data$rank <= 5) %>%
+    ggplot(aes(x = as.character(.data$rank), y = .data$value)) + 
     #geom_jitter(alpha = 0.1) +
     geom_boxplot() + #outlier.shape = NA, alpha = 0.8
     labs(caption = paste(
