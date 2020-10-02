@@ -42,73 +42,122 @@ cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = F
 #' 
 #' @family Data Wrangling
 #' @family Text Mining
-#' @param text Character vector
-#' @param lang Character. Language in text (used for stop words)
-#' @param exclude Character vector. Which word do you wish to exclude?
+#' @param text Character vector. Sentences or texts you wish to tokenize.
+#' @param exclude Character vector. Which words do you wish to exclude?
+#' @param lang Character. Language in text (used for stop words). Example:
+#' "spanish" or "english". Set to `NA` to ignore.
+#' @param min_word_freq Integer. This will discard words that appear 
+#' less than <int> times. Defaults to 2. Set to `NA` to ignore.
+#' @param min_word_len Integer. This will discard words that have 
+#' less than <int> characters. Defaults to 5. Set to `NA` to ignore.
 #' @param keep_spaces Boolean. If you wish to keep spaces in each line
-#' to keep unique compount words, separated with spaces, set to TRUE. 
-#' For example, 'LA ALAMEDA' will be set as 'LA_ALAMEDA' and treated as
+#' to keep unique compound words, separated with spaces, set to TRUE. 
+#' For example, 'one two' will be set as 'one_two' and treated as
 #' a single word.
+#' @param lowercase,remove_numbers,remove_punct Boolean.
+#' @param remove_lettt Boolean. Repeated letters (more than 3 consecutive).
+#' @param laughs Boolean. Try to unify all laughs texts.
+#' @param utf Boolean. Transform all characters to UTF (no accents and crazy symbols)
 #' @param df Boolean. Return a dataframe with a one-hot-encoding kind of
 #' results? Each word is a column and returns if word is contained.
-#' @param min Integer. If df = TRUE, what is the minimum frequency for
-#' the word to be considered.
+#' @param h2o Boolean. Return H2OFrame?
+#' @param quiet Boolean. Keep quiet? If not, print messages
 #' @export
-textTokenizer <- function(text, lang = "english", 
-                          exclude = c(),
+textTokenizer <- function(text, 
+                          exclude = NA,
+                          lang = NA, 
+                          min_word_freq = 5,
+                          min_word_len = 2,
                           keep_spaces = FALSE,
+                          lowercase = TRUE,
+                          remove_numbers = TRUE,
+                          remove_punct = TRUE,
+                          remove_lettt = TRUE,
+                          laughs = TRUE,
+                          utf = TRUE,
                           df = FALSE,
-                          min = 2) {
+                          h2o = FALSE,
+                          quiet = FALSE) {
   
   try_require("tm")
 
   text <- as.character(text)
-  if (keep_spaces) text <- gsub(" ", "_", text) # '_' deleted later on
+  lang <- tolower(lang)
   
   # text <- as.character(c("Hooooolaa 123 4 jaja ALLÁ que bueeeno toOdO!...","seguuuimos","jajaja?"))
   
+  # When multiple words should be kept together
+  if (keep_spaces) {
+    if (!quiet) message(">>> Keeping spaced multi-words")
+    text <- gsub(" ", "_", text) # '_' deleted later on
+  } 
+  
   ## Load the data as a corpus
-  docs <- Corpus(VectorSource(text))
+  docs <- VCorpus(x = VectorSource(text), readerControl = list(reader = readPlain))
   
   # Convert the text to lower case
-  aux <- function(x) tolower(x)
-  docs <- tm_map(docs, content_transformer(aux))
+  if (lowercase) {
+    if (!quiet) message(">>> Transforming to lower case")
+    aux <- function(x) tolower(x)
+    docs <- tm_map(docs, content_transformer(aux)) 
+  }
   
   # Remove numbers
-  aux <- function(x) gsub("[0-9]", " ", x)
-  docs <- tm_map(docs, content_transformer(aux))
+  if (remove_numbers) {
+    if (!quiet) message(">>> Removing numbers")
+    aux <- function(x) gsub("[0-9]", " ", x)
+    docs <- tm_map(docs, content_transformer(aux)) 
+  }
 
   # Remove punctuations
-  aux <- function(x) gsub("[[:punct:] ]+", " ", x)
+  if (remove_punct) {
+    if (!quiet) message(">>> Removing punctuation marks")
+    aux <- function(x) gsub("[[:punct:] ]+", " ", x)
+    docs <- tm_map(docs, content_transformer(aux)) 
+  }
+  
+  # Eliminate extra white spaces
+  if (!quiet) message(">>> Removing extra spaces")
+  aux <- function(x) gsub("\\s+"," ",x)
   docs <- tm_map(docs, content_transformer(aux))
   
   # Remove crazy UTF-8 symbols over letters
-  aux <- function(x) gsub("[^[:alnum:] ]", "", iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT"))
-  docs <- tm_map(docs, content_transformer(aux))
+  if (utf) {
+    if (!quiet) message(">>> Transforming UTF8 to ASCII symbols")
+    aux <- function(x) gsub("[^[:alnum:] ]", "", iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT"))
+    docs <- tm_map(docs, content_transformer(aux)) 
+  }
   
   # Repeated letters (more than 3 times)
-  aux <- function(x) gsub("([[:alpha:]])\\1{2,}", "\\1", x)
-  docs <- tm_map(docs, content_transformer(aux))
-  
-  # Double vowels as well
-  if (lang %in% c("spanish", "english")) {
-    aux <- function(x) gsub("[aeiou]*([aeiou])\\1+", "\\1", x)
-    docs <- tm_map(docs, content_transformer(aux))
-  } 
+  if (remove_lettt) {
+    if (!quiet) message(">>> Removing repeated characters (more than 2)")
+    aux <- function(x) gsub("([[:alpha:]])\\1{2,}", "\\1", x)
+    docs <- tm_map(docs, content_transformer(aux)) 
+    # Double vowels as well in spanish
+    if (lang %in% c("spanish")) {
+      aux <- function(x) gsub("[aeiou]*([aeiou])\\1+", "\\1", x)
+      docs <- tm_map(docs, content_transformer(aux))
+    } 
+  }
   
   # Laughs replacements
-  aux <- function(x) gsub("a*ja+j[ja]*|a*ha+h[ha]*|o?l+o+l+[ol]*", "(laugh)", x)
-  docs <- tm_map(docs, content_transformer(aux))
-  
-  # Remove stopwords (common stopwords)
-  docs <- tm_map(docs, removeWords, stopwords(lang))
+  if (laughs) {
+    if (!quiet) message(">>> Standarizing laughs")
+    aux <- function(x) gsub("a*ja+j[ja]*|a*ha+h[ha]*|o?l+o+l+[ol]*", "(laugh)", x)
+    docs <- tm_map(docs, content_transformer(aux)) 
+  }
   
   # Remove your own stop words
-  docs <- tm_map(docs, removeWords, c("https","http","que", as.character(exclude)))
+  if (!is.na(exclude[1])) {
+    if (!quiet) message(">>> Removing stopwords")
+    docs <- tm_map(docs, removeWords, c("https","http","que", as.character(exclude))) 
+  }
   
-  # Eliminate extra white spaces
-  aux <- function(x) gsub("\\s+"," ",x)
-  docs <- tm_map(docs, content_transformer(aux))
+  # Remove stopwords (common stopwords)
+  if (!is.na(lang)) {
+    if (!quiet) message(">>> Removing language stopwords")
+    docs <- tm_map(docs, removeWords, stopwords(lang)) 
+  }
   
   ## Build a term-document matrix
   dtm <- TermDocumentMatrix(docs)
@@ -117,11 +166,20 @@ textTokenizer <- function(text, lang = "english",
   d <- data.frame(word = names(v), freq = v)
   rownames(d) <- NULL
   
+  if (!is.na(min_word_freq)) {
+    if (!quiet) message(">>> Removing words with frequency lower than ", min_word_freq)
+    d <- filter(d, .data$freq >= min_word_freq)
+  }
+  
+  if (!is.na(min_word_len)) {
+    if (!quiet) message(">>> Removing words with length lower than ", min_word_len)
+    d <- filter(d, nchar(.data$freq) >= min_word_len)
+  }
+  
   if (df) {
-    d <- filter(d, .data$freq >= min)
-    if (min <= 1) message(paste("Filtering frequencies with less than", min))
     texts <- cleanText(unique(text))
-    if (length(texts) != length(text)) message("Returning unique texts results...")
+    if (length(texts) != length(text)) 
+      if (!quiet) message("Returning unique texts results...")
     toksdf <- c()
     for (i in 1:nrow(d)) {
       word <- as.character(d$word[i])
@@ -130,11 +188,10 @@ textTokenizer <- function(text, lang = "english",
       colnames(toksdf)[colnames(toksdf) == "vector"] <- word
       statusbar(i, nrow(d), word)
     }
-    message(paste(nrow(d), "columns created succesfully!"))
     toksdf <- data.frame(texts = texts, toksdf)
-    return(toksdf)
+    return(as_tibble(toksdf))
   } else {
-    return(d) 
+    return(as_tibble(d))
   }
 }
 

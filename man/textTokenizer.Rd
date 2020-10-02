@@ -6,30 +6,55 @@
 \usage{
 textTokenizer(
   text,
-  lang = "english",
-  exclude = c(),
+  exclude = NA,
+  lang = NA,
+  min_word_freq = 5,
+  min_word_len = 2,
   keep_spaces = FALSE,
+  lowercase = TRUE,
+  remove_numbers = TRUE,
+  remove_punct = TRUE,
+  remove_lettt = TRUE,
+  laughs = TRUE,
+  utf = TRUE,
   df = FALSE,
-  min = 2
+  h2o = FALSE,
+  quiet = FALSE
 )
 }
 \arguments{
-\item{text}{Character vector}
+\item{text}{Character vector. Sentences or texts you wish to tokenize.}
 
-\item{lang}{Character. Language in text (used for stop words)}
+\item{exclude}{Character vector. Which words do you wish to exclude?}
 
-\item{exclude}{Character vector. Which word do you wish to exclude?}
+\item{lang}{Character. Language in text (used for stop words). Example:
+"spanish" or "english". Set to `NA` to ignore.}
+
+\item{min_word_freq}{Integer. This will discard words that appear 
+less than <int> times. Defaults to 2. Set to `NA` to ignore.}
+
+\item{min_word_len}{Integer. This will discard words that have 
+less than <int> characters. Defaults to 5. Set to `NA` to ignore.}
 
 \item{keep_spaces}{Boolean. If you wish to keep spaces in each line
-to keep unique compount words, separated with spaces, set to TRUE. 
-For example, 'LA ALAMEDA' will be set as 'LA_ALAMEDA' and treated as
+to keep unique compound words, separated with spaces, set to TRUE. 
+For example, 'one two' will be set as 'one_two' and treated as
 a single word.}
+
+\item{lowercase, remove_numbers, remove_punct}{Boolean.}
+
+\item{remove_lettt}{Boolean. Repeated letters (more than 3 consecutive).}
+
+\item{laughs}{Boolean. Try to unify all laughs texts.}
+
+\item{utf}{Boolean. Transform all characters to UTF (no accents and crazy symbols)}
 
 \item{df}{Boolean. Return a dataframe with a one-hot-encoding kind of
 results? Each word is a column and returns if word is contained.}
 
-\item{min}{Integer. If df = TRUE, what is the minimum frequency for
-the word to be considered.}
+\item{h2o}{Boolean. Return H2OFrame?}
+
+\item{quiet}{Boolean. Keep quiet? If not, print messages}
 }
 \description{
 This function transforms texts into words, calculate frequencies,

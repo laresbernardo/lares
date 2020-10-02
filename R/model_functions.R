@@ -431,7 +431,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
                         leaderboard = list(),
                         plots = TRUE, 
                         ...) {
-
+  
   # MODEL TYPE
   types <- c("Classifier", "Regression")
   check_opts(model_type, types)
@@ -573,6 +573,11 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
       subtitle = results$project,
       model_name = results$model_name,
       plot = FALSE)
+    if (!is.na(multis))
+      plots[["top_cats"]] <- mplot_topcats(
+        tag = results$scores_test$tag,
+        score = results$scores_test$score,
+        multis = multis)
     if (!stacked) 
       plots[["importance"]] <- mplot_importance(
         var = results$importance$variable,

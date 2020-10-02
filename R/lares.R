@@ -103,8 +103,9 @@ recommended <- list(
   skimr = c("skim"),
   syuzhet = c("get_sentiment_dictionary"),
   sp = c("CRS", "over", "coordinates", "proj4string", "proj4string<-", "coordinates<-", "spTransform"),
-  tm = c("content_transformer", "Corpus", "removeNumbers", "removePunctuation", "removeWords",
-         "stopwords", "stripWhitespace", "TermDocumentMatrix", "tm_map", "VectorSource"),
+  tm = c("content_transformer", "Corpus", "removeNumbers", "removePunctuation", 
+         "removeWords","readPlain","stopwords", "stripWhitespace", "TermDocumentMatrix", 
+         "tm_map", "VectorSource", "VCorpus"),
   udpipe = c("keywords_rake", "udpipe_annotate", "udpipe_download_model", "udpipe_load_model"),
   wordcloud = c("wordcloud", "textplot"))
 
