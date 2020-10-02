@@ -13,7 +13,7 @@ winsorize(x, thresh = c(0.05, 0.95), na.rm = FALSE)
 Set values within [0,1].}
 
 \item{na.rm}{Boolean. Should NAs be omitted to calculate the quantiles? 
-Note that NAs in x are preserved and left unchanged anyway.}
+Note that `NA`s in x are preserved and left unchanged anyway.}
 }
 \description{
 Winsorizing a vector means that a predefined quantum of the smallest 

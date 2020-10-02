@@ -1255,21 +1255,23 @@ mplot_topcats <- function(tag, score, multis, model_name = NA) {
     tidyr::pivot_longer(3:(ncol(.)-1)) %>%
     group_by(.data$label) %>%
     arrange(.data$label, desc(.data$value)) %>%
-    mutate(rank = row_number()) %>%
-    mutate(correct_top1 = .data$tag %in% .data$name[1],
-           correct_top2 = .data$tag %in% .data$name[1:2],
-           correct_top3 = .data$tag %in% .data$name[1:3],
-           correct_top4 = .data$tag %in% .data$name[1:4],
-           correct_top5 = .data$tag %in% .data$name[1:5]) %>%
+    mutate(rank = row_number(), 
+           cumprob = cumsum(.data$value))
+  
+  p1 <- DF %>%
+    mutate(correct_Top1 = .data$tag %in% .data$name[1],
+           correct_Top2 = .data$tag %in% .data$name[1:2],
+           correct_Top3 = .data$tag %in% .data$name[1:3],
+           correct_Top4 = .data$tag %in% .data$name[1:4],
+           correct_Top5 = .data$tag %in% .data$name[1:5]) %>%
     ungroup() %>%
     select(.data$label, .data$tag, .data$score, starts_with("correct_top")) %>% 
-    distinct()
-  
-  p <- select(DF, starts_with("correct_top")) %>% 
+    distinct() %>%
+    select(starts_with("correct_top")) %>% 
     tidyr::gather() %>%
     group_by(.data$key) %>%
-    summarize(value = sum(.data$value), .groups = "drop") %>%
-    mutate(correct = .data$value/nrow(DF)) %>%
+    summarize(total = n(), value = sum(.data$value), .groups = "drop") %>%
+    mutate(correct = .data$value/max(.data$total)) %>%
     mutate(key = gsub("correct_", "", .data$key)) %>%
     head(length(cats)) %>%
     ggplot(aes(x = .data$key, y = .data$correct, 
@@ -1279,11 +1281,28 @@ mplot_topcats <- function(tag, score, multis, model_name = NA) {
     labs(caption = paste(
       "Observations:", formatNum(nrow(df), 0), "|",
       "Unique labels:", formatNum(length(unique(DF$score)), 0)),
-      title = "Accuracy based on top categorical predictions", 
-      x = NULL, y = "Accuracy [%]") +
-    theme_lares()
+      title = "Accuracy for top predictions", 
+      x = "Top N Predicted Categories", 
+      y = "Accuracy within N Categories [%]") +
+    theme_lares() 
   if (!is.na(model_name))
-    p <- p + labs(subtitle = model_name)
+    p1 <- p1 + labs(caption = model_name)
+  
+  p2 <- DF %>%
+    filter(rank <= 5) %>%
+    ggplot(aes(x = as.character(rank), y = value)) + 
+    #geom_jitter(alpha = 0.1) +
+    geom_boxplot() + #outlier.shape = NA, alpha = 0.8
+    labs(caption = paste(
+      "Observations:", formatNum(nrow(df), 0), "|",
+      "Unique labels:", formatNum(length(unique(DF$score)), 0)),
+      title = "How certain is the model?",
+      x = "Top N Predicted Category", 
+      y = "Prediction (Certainty) [%]") +
+    scale_y_percent(limits = c(0,1)) +
+    theme_lares()
+  
+  p <- p1 + p2
   
   return(p)
   

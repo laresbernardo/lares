@@ -10,7 +10,7 @@
 #' @param thresh Numeric vector. Lower and upper quantiles thresholds.
 #' Set values within [0,1].
 #' @param na.rm Boolean. Should NAs be omitted to calculate the quantiles? 
-#' Note that NAs in x are preserved and left unchanged anyway.
+#' Note that `NA`s in x are preserved and left unchanged anyway.
 #' @export
 winsorize <- function(x, thresh = c(0.05, 0.95), na.rm = FALSE){
   if (length(thresh) != 2 | any(abs(thresh) > 1))
