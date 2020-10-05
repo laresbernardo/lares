@@ -141,6 +141,7 @@ models will be trained.</p>
   max_time = <span class='fl'>10</span> <span class='op'>*</span> <span class='fl'>60</span>,
   start_clean = <span class='fl'>TRUE</span>,
   exclude_algos = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"StackedEnsemble"</span>, <span class='st'>"DeepLearning"</span>),
+  include_algos = <span class='kw'>NULL</span>,
   plots = <span class='fl'>TRUE</span>,
   alarm = <span class='fl'>TRUE</span>,
   quiet = <span class='fl'>FALSE</span>,
@@ -221,9 +222,7 @@ resource limited.</p></td>
     </tr>
     <tr>
       <th>nfolds</th>
-      <td><p>Integer. Number of folds for k-fold cross-validation of 
-the models. If set to 0, the test data will be used as validation, and
-cross-validation amd Stacked Ensembles disableded</p></td>
+      <td><p>Number of folds for k-fold cross-validation. Defaults to 5. Use 0 to disable cross-validation; this will also disable Stacked Ensemble (thus decreasing the overall model performance).</p></td>
     </tr>
     <tr>
       <th>thresh</th>
@@ -244,9 +243,10 @@ machine's computational characteristics)</p></td>
 instance before we start to train models?</p></td>
     </tr>
     <tr>
-      <th>exclude_algos</th>
-      <td><p>Vector of character strings. Algorithms to 
-skip during the model-building phase. Set NULL to use all</p></td>
+      <th>exclude_algos, include_algos</th>
+      <td><p>Vector of character strings. Algorithms 
+to skip or include during the model-building phase. Set NULL to ignore. 
+When both are defined, only <code>include_algos</code> will be valid.</p></td>
     </tr>
     <tr>
       <th>plots</th>
@@ -254,11 +254,11 @@ skip during the model-building phase. Set NULL to use all</p></td>
     </tr>
     <tr>
       <th>alarm</th>
-      <td><p>Boolean. Ping an alarm when ready! Needs beepr installed</p></td>
+      <td><p>Boolean. Ping (sound) when done. Requires <code>beepr</code>.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>Boolean. Quiet messages, warnings, recommendations?</p></td>
+      <td><p>Boolean. Quiet all messages, warnings, recommendations?</p></td>
     </tr>
     <tr>
       <th>save</th>
