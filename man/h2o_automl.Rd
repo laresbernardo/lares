@@ -24,6 +24,7 @@ h2o_automl(
   max_time = 10 * 60,
   start_clean = TRUE,
   exclude_algos = c("StackedEnsemble", "DeepLearning"),
+  include_algos = NULL,
   plots = TRUE,
   alarm = TRUE,
   quiet = FALSE,
@@ -76,9 +77,7 @@ to center and/or scale all numerical values?}
 guarantee reproducibility if max_models is used because max_time is 
 resource limited.}
 
-\item{nfolds}{Integer. Number of folds for k-fold cross-validation of 
-the models. If set to 0, the test data will be used as validation, and
-cross-validation amd Stacked Ensembles disableded}
+\item{nfolds}{Number of folds for k-fold cross-validation. Defaults to 5. Use 0 to disable cross-validation; this will also disable Stacked Ensemble (thus decreasing the overall model performance).}
 
 \item{thresh}{Integer. Threshold for selecting binary or regression 
 models: this number is the threshold of unique values we should 
@@ -92,14 +91,15 @@ machine's computational characteristics)}
 \item{start_clean}{Boolean. Erase everything in the current h2o 
 instance before we start to train models?}
 
-\item{exclude_algos}{Vector of character strings. Algorithms to 
-skip during the model-building phase. Set NULL to use all}
+\item{exclude_algos, include_algos}{Vector of character strings. Algorithms 
+to skip or include during the model-building phase. Set NULL to ignore. 
+When both are defined, only \code{include_algos} will be valid.}
 
 \item{plots}{Boolean. Create plots objects?}
 
-\item{alarm}{Boolean. Ping an alarm when ready! Needs beepr installed}
+\item{alarm}{Boolean. Ping (sound) when done. Requires \code{beepr}.}
 
-\item{quiet}{Boolean. Quiet messages, warnings, recommendations?}
+\item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
 
 \item{save}{Boolean. Do you wish to save/export results into your 
 working directory?}

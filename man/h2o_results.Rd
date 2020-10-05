@@ -45,7 +45,7 @@ used when training)}
 
 \item{ignored}{Character vector. Columns ignored.}
 
-\item{quiet}{Boolean. Quiet messages, warnings, recommendations?}
+\item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
 
 \item{project}{Character. Your project's name}
 

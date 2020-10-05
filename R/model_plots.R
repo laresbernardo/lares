@@ -1231,7 +1231,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
 
 
 ####################################################################
-#' Accuracy for Top N Predictions on Multi-Classifiers
+#' Top Hit Ratios for Multi-Classifiers
 #' 
 #' Calculate and plot a multi-class model's predictions accuracy
 #' based on top N predictions and distribution of probabilities.
@@ -1278,9 +1278,9 @@ mplot_topcats <- function(tag, score, multis, model_name = NA) {
                label = formatNum(100*.data$correct, 0, pos = "%"))) +
     geom_col() + geom_label() +
     scale_y_percent(limits = c(0,1)) +
-      labs(title = "Accuracy for top N predictions", 
+      labs(title = "Hit Ratios (Accuracy)", 
          x = "Top N Predicted Categories", 
-         y = "Accuracy within Top N Categories [%]") +
+         y = "Hit Ratio [%]") +
     theme_lares() 
   if (!is.na(model_name))
     p1 <- p1 + labs(caption = model_name)

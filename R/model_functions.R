@@ -26,6 +26,7 @@
 #' }
 #'
 #' @family Machine Learning
+#' @inheritParams h2o::h2o.automl
 #' @param df Dataframe. Dataframe containing all your data, including 
 #' the independent variable labeled as 'tag'. If you want to define 
 #' which variable should be used instead, use the y parameter.
@@ -56,9 +57,6 @@
 #' @param seed Integer. Set a seed for reproducibility. AutoML can only 
 #' guarantee reproducibility if max_models is used because max_time is 
 #' resource limited.
-#' @param nfolds Integer. Number of folds for k-fold cross-validation of 
-#' the models. If set to 0, the test data will be used as validation, and
-#' cross-validation amd Stacked Ensembles disableded
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
 #' have in 'tag' (more than: regression; less than: classification)
@@ -68,11 +66,12 @@
 #' machine's computational characteristics)
 #' @param start_clean Boolean. Erase everything in the current h2o 
 #' instance before we start to train models?
-#' @param exclude_algos Vector of character strings. Algorithms to 
-#' skip during the model-building phase. Set NULL to use all
+#' @param exclude_algos,include_algos Vector of character strings. Algorithms 
+#' to skip or include during the model-building phase. Set NULL to ignore. 
+#' When both are defined, only \code{include_algos} will be valid.
 #' @param plots Boolean. Create plots objects?
-#' @param alarm Boolean. Ping an alarm when ready! Needs beepr installed
-#' @param quiet Boolean. Quiet messages, warnings, recommendations?
+#' @param alarm Boolean. Ping (sound) when done. Requires \code{beepr}.
+#' @param quiet Boolean. Quiet all messages, warnings, recommendations?
 #' @param save Boolean. Do you wish to save/export results into your 
 #' working directory?
 #' @param subdir Character. In which directory do you wish to save 
@@ -126,6 +125,7 @@ h2o_automl <- function(df, y = "tag",
                        max_time = 10*60,
                        start_clean = TRUE,
                        exclude_algos = c("StackedEnsemble","DeepLearning"),
+                       include_algos = NULL,
                        plots = TRUE,
                        alarm = TRUE,
                        quiet = FALSE,
@@ -147,35 +147,17 @@ h2o_automl <- function(df, y = "tag",
                "an independent varialbe using the 'y' parameter."))
   }
   
-  if (!quiet) message(sprintf("Variable to predict: %s", y))
+  if (!quiet) message(sprintf("- Variable to predict: %s", y))
   
   colnames(df)[colnames(df) == y] <- "tag"
   df <- data.frame(df) %>% 
     filter(!is.na(.data$tag)) %>%
     mutate_if(is.character, as.factor)
   
-  # MISSING VALUES
-  m <- missingness(df)
-  if (!is.null(m)) {
-    m <- mutate(m, label = paste0(.data$variable, " (", .data$missingness, "%)"))
-    if (!quiet) {
-      top10 <- m %>% ungroup() %>% slice(1:10)
-      which <- vector2text(top10$label, quotes = FALSE)
-      if (nrow(m) > 10)
-        which <- paste(which, "and", nrow(m) - 10, "other.")
-      message(paste0("- NOTE: The following variables contain missing observations: ", which,
-                     if (!impute & !quiet) ". Consider using the impute parameter."))
-    }
-    if (impute) {
-      if (!quiet) message(paste(">>> Imputing", sum(m$missing), "missing values..."))
-      df <- impute(df, seed = seed, quiet = TRUE)
-    }
-  }
-  
   # MODEL TYPE
   cats <- unique(df$tag)
   model_type <- ifelse(length(cats) <= as.integer(thresh), "Classifier", "Regression")
-  message("Model type: ", model_type)
+  message("- Model type: ", model_type)
   # Change spaces for dots as `multis` arguments may not match
   if (model_type == "Classifier") cats <- gsub(" ", ".", cats)
   # If y variables is named as one of the categories, prediction values will be a problem
@@ -185,40 +167,6 @@ h2o_automl <- function(df, y = "tag",
                paste0(y, "_labels for example.")))
   }
   ignored <- ignore
-  
-  # ONE HOT SMART ENCODING
-  nums <- df_str(df, "names", quiet = TRUE)$nums
-  if (length(nums) != ncol(df) & !quiet) {
-    transformable <- ncol(df) - length(nums) - 
-      sum(ignore %in% colnames(df)) - 
-      as.integer(model_type == "Classifier")
-    message(paste(
-      "- NOTE: There are", transformable, "non-numerical features.",
-      "Consider using ohse() prior for One Hot Smart Encoding your categorical variables."))
-  }
-  if (scale | center & length(nums) > 0) {
-    new <- data.frame(lapply(df[nums], function(x) scale(x, center = center, scale = scale)))
-    colnames(new) <- nums
-    df[nums] <- new
-    msg <- ifelse(scale & center, "scaled and centered", ifelse(scale, "scaled", "centered"))
-    if (!quiet) message(paste0("All numerical features (", length(nums), ") were ", msg))
-  }
-  
-  # OUTLIERS ON INDEPENDENT VARIABLE
-  if (is.numeric(df$tag)) {
-    thresh <- ifelse(is.numeric(no_outliers), no_outliers, 3)
-    is_outlier <- outlier_zscore(df$tag, thresh = thresh)
-    if (!quiet & !isTRUE(no_outliers))
-      message(sprintf(
-        "- NOTE: %s (%s) of %s values are considered outliers (Z-Score: >%ssd). %s",
-        formatNum(100*sum(is_outlier)/nrow(df), 1, pos = "%"),
-        formatNum(sum(is_outlier), 0), y, thresh,
-        ifelse(no_outliers, 
-               paste("Removing them from the dataset for better results.",
-                     "To keep them, set the 'no_outliers' parameter."), 
-               "Consider using the 'no_outliers' parameter to remove them.")))
-    if (no_outliers) df <- df[!is_outlier,] 
-  }
   
   # If target value is not an existing target value
   if (!target %in% cats & length(cats) == 2)
@@ -235,6 +183,58 @@ h2o_automl <- function(df, y = "tag",
   # Show a summary of our tags
   if (model_type == "Classifier" & !quiet) print(freqs(df, .data$tag))
   if (model_type == "Regression" & !quiet) print(summary(df$tag)) 
+  
+  # MISSING VALUES
+  m <- missingness(df)
+  if (!is.null(m)) {
+    m <- mutate(m, label = paste0(.data$variable, " (", .data$missingness, "%)"))
+    if (!quiet) {
+      top10 <- m %>% ungroup() %>% slice(1:10)
+      which <- vector2text(top10$label, quotes = FALSE)
+      if (nrow(m) > 10)
+        which <- paste(which, "and", nrow(m) - 10, "other.")
+      message(paste0("- The following variables contain missing observations: ", which,
+                     if (!impute & !quiet) ". Consider using the impute parameter."))
+    }
+    if (impute) {
+      if (!quiet) message(paste(">>> Imputing", sum(m$missing), "missing values..."))
+      df <- impute(df, seed = seed, quiet = TRUE)
+    }
+  }
+  
+  # ONE HOT SMART ENCODING
+  nums <- df_str(df, "names", quiet = TRUE)$nums
+  if (length(nums) != ncol(df) & !quiet) {
+    transformable <- ncol(df) - length(nums) - 
+      sum(ignore %in% colnames(df)) - 
+      as.integer(model_type == "Classifier")
+    if (transformable > 0) message(paste(
+      "- There are", transformable, "non-numerical features.",
+      "Consider using ohse() prior for One Hot Smart Encoding your categorical variables."))
+  }
+  if (scale | center & length(nums) > 0) {
+    new <- data.frame(lapply(df[nums], function(x) scale(x, center = center, scale = scale)))
+    colnames(new) <- nums
+    df[nums] <- new
+    msg <- ifelse(scale & center, "scaled and centered", ifelse(scale, "scaled", "centered"))
+    if (!quiet) message(paste0("All numerical features (", length(nums), ") were ", msg))
+  }
+  
+  # OUTLIERS ON INDEPENDENT VARIABLE
+  if (is.numeric(df$tag)) {
+    thresh <- ifelse(is.numeric(no_outliers), no_outliers, 3)
+    is_outlier <- outlier_zscore(df$tag, thresh = thresh)
+    if (!quiet & !isTRUE(no_outliers))
+      message(sprintf(
+        "- %s (%s) of %s values are considered outliers (Z-Score: >%ssd). %s",
+        formatNum(100*sum(is_outlier)/nrow(df), 1, pos = "%"),
+        formatNum(sum(is_outlier), 0), y, thresh,
+        ifelse(no_outliers, 
+               paste("Removing them from the dataset for better results.",
+                     "To keep them, set the 'no_outliers' parameter."), 
+               "Consider using the 'no_outliers' parameter to remove them.")))
+    if (no_outliers) df <- df[!is_outlier,] 
+  }
   
   # SPLIT TRAIN AND TEST DATASETS
   if (is.na(train_test)) {
@@ -255,17 +255,18 @@ h2o_automl <- function(df, y = "tag",
       } else stop("Your train_test column should have 'train' and 'test' values only!") 
     } else stop(paste("There is no column named", train_test))
   }
+  
   if (nrow(train) > 10000)
-    message("- NOTE: Consider sampling your dataset for faster results")
+    message("- Consider sampling your dataset for faster results")
   
   # BALANCE TRAINING SET
   if (model_type == "Classifier" & balance) {
     total <- nrow(train)
     min <- freqs(train, .data$tag) %>% .$n %>% min(., na.rm = TRUE)
     train <- train %>% group_by(.data$tag) %>% sample_n(min)
-    if (!quiet) message(paste0("Training set balanced: ", min, 
-                               " observations for each (",length(cats),") category; using ",
-                               round(100*nrow(train)/total, 2), "% of training data..."))
+    if (!quiet) message(paste0(
+      "- Training set balanced: ", min, " observations for each (",length(cats),
+      ") category; using ", round(100*nrow(train)/total, 2), "% of training data..."))
   }
   
   # CHECK TRAIN/TEST VALUES
@@ -276,22 +277,29 @@ h2o_automl <- function(df, y = "tag",
       warning("You are training with tags that are not in your test set.")  
   }
   
+  # IGNORED VARIABLES
+  if (length(ignore) > 0 & !quiet)
+    message(paste("- Ignored variables for training models:", vector2text(ignore)))
+  
+  # ALGORITHMS
+  if (length(exclude_algos) > 0 & length(include_algos) == 0 & !quiet ) 
+    message(paste("- Algorithms excluded:", vector2text(exclude_algos)))
+  if (length(include_algos) > 0 & !quiet ) {
+    message(paste("- Algorithms included:", vector2text(include_algos)))
+    exclude_algos <- NULL
+  }
+  
   # TRAIN MODEL
   quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
   if (start_clean) {
     quiet(h2o.removeAll()) 
   } else {
-    if (!quiet) 
-      message(paste("Previous trained models are not being erased.",
-                    "Use 'start_clean' parameter if needed."))
+    if (!quiet) message(paste(
+      "- Previous trained models are not being erased.",
+      "Use 'start_clean' parameter if needed."))
   }
-  if (length(ignore) > 0)
-    if (!quiet)
-      message(paste("Ignored variables for training models:", vector2text(ignore)))
   
   # RUN AUTOML
-  if (length(exclude_algos) > 0 & !quiet) 
-    message(paste("Algorithms excluded:", vector2text(exclude_algos)))
   if (!quiet) 
     message(sprintf(">>> Iterating until %s models or %s seconds...", max_models, max_time))
   aml <- quiet(h2o.automl(
@@ -303,6 +311,7 @@ h2o_automl <- function(df, y = "tag",
     max_runtime_secs = max_time,
     max_models = max_models,
     exclude_algos = exclude_algos,
+    include_algos = include_algos,
     nfolds = nfolds, 
     #project_name = project,
     seed = seed,
@@ -311,13 +320,15 @@ h2o_automl <- function(df, y = "tag",
     stop("NO MODELS TRAINED. Please set max_models to at least 1 and increase max_time")
   } else {
     if (!is.nan(aml@leaderboard[1,2]))
-      if (!quiet) message(paste("Succesfully generated", nrow(aml@leaderboard), "models:")) 
+      if (!quiet) {
+        message(paste("Succesfully generated", nrow(aml@leaderboard), "models:")) 
+        print(head(aml@leaderboard, 3))
+      } 
   }
-  if (!quiet) print(aml@leaderboard[,1:3])
   
   flow <- "http://localhost:54321/flow/index.html"
   if (!quiet & Sys.getenv('HOSTNAME') == "") 
-    message("Check results in H2O Flow's nice interface: ", flow)
+    message("- Check results in H2O Flow's nice interface: ", flow)
   
   # GET RESULTS AND PERFORMANCE
   results <- h2o_results(
@@ -577,7 +588,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
       subtitle = results$project,
       model_name = results$model_name,
       plot = FALSE)
-    if (!is.na(multis))
+    if (length(multis) > 1)
       plots[["top_cats"]] <- mplot_topcats(
         tag = results$scores_test$tag,
         score = results$scores_test$score,

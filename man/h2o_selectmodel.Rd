@@ -11,7 +11,7 @@ h2o_selectmodel(results, which_model = 1, quiet = FALSE, ...)
 
 \item{which_model}{Integer. Which model from the leaderboard you wish to use?}
 
-\item{quiet}{Boolean. Quiet messages, warnings, recommendations?}
+\item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
 
 \item{...}{Additional parameters on \code{h2o::h2o.automl}}
 }
