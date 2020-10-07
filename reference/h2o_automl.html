@@ -77,7 +77,7 @@ models will be trained." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.5</span>
       </span>
     </div>
 
@@ -134,9 +134,9 @@ models will be trained.</p>
   no_outliers = <span class='fl'>TRUE</span>,
   center = <span class='fl'>FALSE</span>,
   scale = <span class='fl'>FALSE</span>,
+  thresh = <span class='fl'>10</span>,
   seed = <span class='fl'>0</span>,
   nfolds = <span class='fl'>5</span>,
-  thresh = <span class='fl'>10</span>,
   max_models = <span class='fl'>3</span>,
   max_time = <span class='fl'>10</span> <span class='op'>*</span> <span class='fl'>60</span>,
   start_clean = <span class='fl'>TRUE</span>,
@@ -215,6 +215,12 @@ or numeric to set a different multiplier.</p></td>
 to center and/or scale all numerical values?</p></td>
     </tr>
     <tr>
+      <th>thresh</th>
+      <td><p>Integer. Threshold for selecting binary or regression 
+models: this number is the threshold of unique values we should 
+have in 'tag' (more than: regression; less than: classification)</p></td>
+    </tr>
+    <tr>
       <th>seed</th>
       <td><p>Integer. Set a seed for reproducibility. AutoML can only 
 guarantee reproducibility if max_models is used because max_time is 
@@ -223,12 +229,6 @@ resource limited.</p></td>
     <tr>
       <th>nfolds</th>
       <td><p>Number of folds for k-fold cross-validation. Defaults to 5. Use 0 to disable cross-validation; this will also disable Stacked Ensemble (thus decreasing the overall model performance).</p></td>
-    </tr>
-    <tr>
-      <th>thresh</th>
-      <td><p>Integer. Threshold for selecting binary or regression 
-models: this number is the threshold of unique values we should 
-have in 'tag' (more than: regression; less than: classification)</p></td>
     </tr>
     <tr>
       <th>max_models, max_time</th>
@@ -328,18 +328,15 @@ the results? Working directory as default.</p></td>
 
 <span class='co'># Classification: Binomial - 2 Classes</span>
 <span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, y = <span class='kw'>Survived</span>, max_models = <span class='fl'>1</span>, impute = <span class='fl'>FALSE</span>, target = <span class='st'>"TRUE"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>r</span>)
 
 <span class='co'># Let's see all the stuff we have inside:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>r</span>, <span class='kw'>names</span>)
 
 <span class='co'># Classification: Multi-Categorical - 3 Classes</span>
 <span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, <span class='kw'>Pclass</span>, ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Fare"</span>, <span class='st'>"Cabin"</span>), max_time = <span class='fl'>30</span>, plots = <span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>r</span>)
 
 <span class='co'># Regression: Continuous Values</span>
 <span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, y = <span class='st'>"Fare"</span>, ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Pclass"</span>), exclude_algos = <span class='kw'>NULL</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>r</span>)
 
 <span class='co'># WITH PRE-DEFINED TRAIN/TEST DATAFRAMES</span>
 <span class='kw'>splits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='msplit.html'>msplit</a></span>(<span class='kw'>dft</span>, size = <span class='fl'>0.8</span>)
@@ -347,7 +344,6 @@ the results? Working directory as default.</p></td>
 <span class='kw'>splits</span><span class='op'>$</span><span class='kw'>test</span><span class='op'>$</span><span class='kw'>split</span> <span class='op'>&lt;-</span> <span class='st'>"test"</span>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='kw'>splits</span><span class='op'>$</span><span class='kw'>train</span>, <span class='kw'>splits</span><span class='op'>$</span><span class='kw'>test</span>)
 <span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>df</span>, <span class='st'>"Survived"</span>, max_models = <span class='fl'>1</span>, train_test = <span class='st'>"split"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>r</span>)
 }
 </div></pre>
   </div>

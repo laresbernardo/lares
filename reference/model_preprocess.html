@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pipe operator — lares-exports • lares</title>
+<title>Automate Data Preprocess for Modeling — model_preprocess • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Pipe operator — lares-exports" />
-<meta property="og:description" content="Pipe operator" />
+<meta property="og:title" content="Automate Data Preprocess for Modeling — model_preprocess" />
+<meta property="og:description" content="Pre-process your data before training a model. This is the first step
+on the h2o_automl() function's pipeline." />
 
 
 
@@ -102,16 +103,119 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pipe operator</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/lares.R'><code>R/lares.R</code></a></small>
-    <div class="hidden name"><code>lares-exports.Rd</code></div>
+    <h1>Automate Data Preprocess for Modeling</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/model_preprocessing.R'><code>R/model_preprocessing.R</code></a></small>
+    <div class="hidden name"><code>model_preprocess.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Pipe operator</p>
+    <p>Pre-process your data before training a model. This is the first step
+on the <code><a href='h2o_automl.html'>h2o_automl()</a></code> function's pipeline.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>model_preprocess</span>(
+  <span class='kw'>df</span>,
+  y = <span class='st'>"tag"</span>,
+  ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
+  train_test = <span class='fl'>NA</span>,
+  split = <span class='fl'>0.7</span>,
+  weight = <span class='kw'>NULL</span>,
+  target = <span class='st'>"auto"</span>,
+  balance = <span class='fl'>FALSE</span>,
+  impute = <span class='fl'>FALSE</span>,
+  no_outliers = <span class='fl'>TRUE</span>,
+  center = <span class='fl'>FALSE</span>,
+  scale = <span class='fl'>FALSE</span>,
+  thresh = <span class='fl'>10</span>,
+  seed = <span class='fl'>0</span>,
+  quiet = <span class='fl'>FALSE</span>
+)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>df</th>
+      <td><p>Dataframe. Dataframe containing all your data, including 
+the independent variable labeled as 'tag'. If you want to define 
+which variable should be used instead, use the y parameter.</p></td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td><p>Variable or Character. Name of the independent variable.</p></td>
+    </tr>
+    <tr>
+      <th>ignore</th>
+      <td><p>Character vector. Force columns for the model to ignore</p></td>
+    </tr>
+    <tr>
+      <th>train_test</th>
+      <td><p>Character. If needed, df's column name with 'test' 
+and 'train' values to split</p></td>
+    </tr>
+    <tr>
+      <th>split</th>
+      <td><p>Numeric. Value between 0 and 1 to split as train/test 
+datasets. Value is for training set. Set value to 1 to train will all 
+available data and test with same data (cross-validation will still be 
+used when training)</p></td>
+    </tr>
+    <tr>
+      <th>weight</th>
+      <td><p>Column with observation weights. Giving some observation a
+weight of zero is equivalent to excluding it from the dataset; giving an 
+observation a relative weight of 2 is equivalent to repeating that 
+row twice. Negative weights are not allowed.</p></td>
+    </tr>
+    <tr>
+      <th>target</th>
+      <td><p>Value. Which is your target positive value? If 
+set to 'auto', the target with largest mean(score) will be 
+selected. Change the value to overwrite. Only used when binary
+categorical model.</p></td>
+    </tr>
+    <tr>
+      <th>balance</th>
+      <td><p>Boolean. Auto-balance train dataset with under-sampling?</p></td>
+    </tr>
+    <tr>
+      <th>impute</th>
+      <td><p>Boolean. Fill NA values with MICE?</p></td>
+    </tr>
+    <tr>
+      <th>no_outliers</th>
+      <td><p>Boolean/Numeric. Remove y's outliers in the dataset? 
+Will remove those values that are farther than n standard deviations from
+the independent variable's mean (Z-score). Set to `TRUE` for default (3) 
+or numeric to set a different multiplier.</p></td>
+    </tr>
+    <tr>
+      <th>center</th>
+      <td><p>Boolean. Using the base function scale, do you wish
+to center and/or scale all numerical values?</p></td>
+    </tr>
+    <tr>
+      <th>scale</th>
+      <td><p>Boolean. Using the base function scale, do you wish
+to center and/or scale all numerical values?</p></td>
+    </tr>
+    <tr>
+      <th>thresh</th>
+      <td><p>Integer. Threshold for selecting binary or regression 
+models: this number is the threshold of unique values we should 
+have in 'tag' (more than: regression; less than: classification)</p></td>
+    </tr>
+    <tr>
+      <th>seed</th>
+      <td><p>Integer. Set a seed for reproducibility. AutoML can only 
+guarantee reproducibility if max_models is used because max_time is 
+resource limited.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Boolean. Quiet all messages, warnings, recommendations?</p></td>
+    </tr>
+    </table>
 
 
   </div>

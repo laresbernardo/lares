@@ -73,7 +73,7 @@ It also lets filter files which contains a string." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.5</span>
       </span>
     </div>
 
@@ -175,24 +175,24 @@ It also lets filter files which contains a string.</p>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span>(recursive = <span class='fl'>TRUE</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span>, <span class='fl'>3</span>)
 </div><div class='output co'>#&gt;            filename size isdir mode               mtime               ctime
-#&gt; 1     autoline.html   14 FALSE  666 2020-10-05 14:03:37 2020-10-05 14:03:37
-#&gt; 2 balance_data.html    9 FALSE  666 2020-10-05 14:03:37 2020-10-05 14:03:37
-#&gt; 3    bindfiles.html    7 FALSE  666 2020-10-05 14:03:37 2020-10-05 14:03:37
+#&gt; 1     autoline.html   14 FALSE  666 2020-10-07 15:42:22 2020-10-07 15:42:22
+#&gt; 2 balance_data.html    9 FALSE  666 2020-10-07 15:42:23 2020-10-07 15:42:23
+#&gt; 3    bindfiles.html    7 FALSE  666 2020-10-07 15:42:23 2020-10-07 15:42:23
 #&gt;                 atime uid gid  uname grname
-#&gt; 1 2020-10-05 14:03:45 501  20 runner  staff
-#&gt; 2 2020-10-05 14:03:46 501  20 runner  staff
-#&gt; 3 2020-10-05 14:03:46 501  20 runner  staff</div><div class='input'>
+#&gt; 1 2020-10-07 15:42:22 501  20 runner  staff
+#&gt; 2 2020-10-07 15:42:23 501  20 runner  staff
+#&gt; 3 2020-10-07 15:42:23 501  20 runner  staff</div><div class='input'>
 <span class='co'># All files in current directory (with recursive files)</span>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span>(recursive = <span class='fl'>TRUE</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span>(<span class='kw'>df</span>, <span class='fl'>3</span>)
 </div><div class='output co'>#&gt;           filename size isdir mode               mtime               ctime
-#&gt; 312 year_week.html    7 FALSE  666 2020-10-05 14:03:37 2020-10-05 14:03:37
-#&gt; 313    yt2mp3.html    6 FALSE  666 2020-10-05 14:03:37 2020-10-05 14:03:37
-#&gt; 314   zerovar.html    8 FALSE  666 2020-10-05 14:03:37 2020-10-05 14:03:37
+#&gt; 312 year_week.html    7 FALSE  666 2020-10-07 15:42:16 2020-10-07 15:42:16
+#&gt; 313    yt2mp3.html    6 FALSE  666 2020-10-07 15:42:16 2020-10-07 15:42:16
+#&gt; 314   zerovar.html    8 FALSE  666 2020-10-07 15:42:16 2020-10-07 15:42:16
 #&gt;                   atime uid gid  uname grname
-#&gt; 312 2020-10-05 14:03:37 501  20 runner  staff
-#&gt; 313 2020-10-05 14:03:37 501  20 runner  staff
-#&gt; 314 2020-10-05 14:03:37 501  20 runner  staff</div><div class='input'>
+#&gt; 312 2020-10-07 15:42:16 501  20 runner  staff
+#&gt; 313 2020-10-07 15:42:16 501  20 runner  staff
+#&gt; 314 2020-10-07 15:42:16 501  20 runner  staff</div><div class='input'>
 <span class='co'># Check R files using regex</span>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span>(regex = <span class='st'>"\\.R$"</span>)
 </div></pre>
