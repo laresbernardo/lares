@@ -66,7 +66,7 @@ to center and/or scale all numerical values?}
 
 \item{thresh}{Integer. Threshold for selecting binary or regression 
 models: this number is the threshold of unique values we should 
-have in 'tag' (more than: regression; less than: classification)}
+have in \code{'tag'} (more than: regression; less than: classification)}
 
 \item{seed}{Integer. Set a seed for reproducibility. AutoML can only 
 guarantee reproducibility if max_models is used because max_time is 

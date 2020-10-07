@@ -7,14 +7,14 @@
 msplit(df, size = 0.7, seed = 0, print = TRUE)
 }
 \arguments{
-\item{df}{Dataframe to split}
+\item{df}{Dataframe}
 
 \item{size}{Numeric. Split rate value, between 0 and 1. If set to
 1, the train and test set will be the same.}
 
-\item{seed}{Seed for random split}
+\item{seed}{Integer. Seed for random split}
 
-\item{print}{Print summary results}
+\item{print}{Boolean. Print summary results?}
 }
 \value{
 A list with both datasets, summary, and split rate

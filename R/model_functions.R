@@ -706,11 +706,11 @@ export_results <- function(results,
 #'
 #' @family Machine Learning
 #' @family Tools
-#' @param df Dataframe to split
+#' @param df Dataframe
 #' @param size Numeric. Split rate value, between 0 and 1. If set to
 #' 1, the train and test set will be the same.
-#' @param seed Seed for random split
-#' @param print Print summary results
+#' @param seed Integer. Seed for random split
+#' @param print Boolean. Print summary results?
 #' @return A list with both datasets, summary, and split rate
 #' @examples 
 #' data(dft) # Titanic dataset
@@ -729,7 +729,7 @@ msplit <- function(df, size = 0.7, seed = 0, print = TRUE) {
     ind <- sample(seq_len(nrow(df)), size = floor(size * nrow(df)))
     train <- df[ind, ]
     test <- df[-ind, ] 
-  }
+  } else ind <- 1:nrow(df)
   
   train_size <- dim(train)
   test_size <- dim(test)
