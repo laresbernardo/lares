@@ -13,7 +13,7 @@ h2o_results(
   model_type,
   target = "auto",
   split = 0.7,
-  ignored = c(),
+  ignore = c(),
   quiet = FALSE,
   project = "ML Project",
   seed = 0,
@@ -43,7 +43,7 @@ datasets. Value is for training set. Set value to 1 to train will all
 available data and test with same data (cross-validation will still be 
 used when training)}
 
-\item{ignored}{Character vector. Columns ignored.}
+\item{ignore}{Character vector. Columns too ignore}
 
 \item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
 

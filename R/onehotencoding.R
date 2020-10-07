@@ -349,7 +349,7 @@ date_feats <- function(dates,
       if (holidays) {
         result <- result %>% 
           left_join(holidays_dates, by = "values_date") %>% 
-          mutate_at(vars(cols), funs(replace(., which(is.na(.)), FALSE)))
+          mutate_at(all_of(cols), list(~replace(., which(is.na(.)), FALSE)))
       }
       
       # Currencies data

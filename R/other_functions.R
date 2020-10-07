@@ -945,8 +945,10 @@ importxlsx <- function(file) {
 #' 
 #' @family Tools
 #' @param fx Function to quiet
+#' @param quiet Quiet outputs? If not, skip quietness
 #' @export
-quiet <- function(fx) { 
+quiet <- function(fx, quiet = TRUE) { 
+  if (!quiet) return(fx)
   sink(tempfile()) 
   on.exit(sink()) 
   invisible(force(fx)) 

@@ -54,12 +54,12 @@
 #' or numeric to set a different multiplier.
 #' @param center,scale Boolean. Using the base function scale, do you wish
 #' to center and/or scale all numerical values? 
-#' @param seed Integer. Set a seed for reproducibility. AutoML can only 
-#' guarantee reproducibility if max_models is used because max_time is 
-#' resource limited.
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
 #' have in 'tag' (more than: regression; less than: classification)
+#' @param seed Integer. Set a seed for reproducibility. AutoML can only 
+#' guarantee reproducibility if max_models is used because max_time is 
+#' resource limited.
 #' @param max_models,max_time Numeric. Max number of models and seconds 
 #' you wish for the function to iterate. Note that max_models guarantees
 #' reproducibility and max_time not (because it depends entirely on your
@@ -85,18 +85,15 @@
 #' 
 #' # Classification: Binomial - 2 Classes
 #' r <- h2o_automl(dft, y = Survived, max_models = 1, impute = FALSE, target = "TRUE")
-#' print(r)
 #' 
 #' # Let's see all the stuff we have inside:
 #' lapply(r, names)
 #' 
 #' # Classification: Multi-Categorical - 3 Classes
 #' r <- h2o_automl(dft, Pclass, ignore = c("Fare", "Cabin"), max_time = 30, plots = FALSE)
-#' print(r)
 #' 
 #' # Regression: Continuous Values
 #' r <- h2o_automl(dft, y = "Fare", ignore = c("Pclass"), exclude_algos = NULL)
-#' print(r)
 #' 
 #' # WITH PRE-DEFINED TRAIN/TEST DATAFRAMES
 #' splits <- msplit(dft, size = 0.8)
@@ -104,7 +101,6 @@
 #' splits$test$split <- "test"
 #' df <- rbind(splits$train, splits$test)
 #' r <- h2o_automl(df, "Survived", max_models = 1, train_test = "split")
-#' print(r)
 #' }
 #' @export
 h2o_automl <- function(df, y = "tag",
@@ -118,9 +114,9 @@ h2o_automl <- function(df, y = "tag",
                        no_outliers = TRUE,
                        center = FALSE,
                        scale = FALSE,
+                       thresh = 10,
                        seed = 0,
                        nfolds = 5,
-                       thresh = 10,
                        max_models = 3,
                        max_time = 10*60,
                        start_clean = TRUE,
@@ -138,144 +134,30 @@ h2o_automl <- function(df, y = "tag",
   
   if (!quiet) message(paste(Sys.time(), "| Started process..."))
   
-  # Tidyverse friendly
+  quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
+  
   y <- gsub('"', "", as_label(enquo(y)))
   
-  # INDEPENDENT VARIABLE
-  if (!y %in% colnames(df)) {
-    stop(paste("You should have a 'tag' column in your data.frame or select",
-               "an independent varialbe using the 'y' parameter."))
-  }
-  
-  if (!quiet) message(sprintf("- Variable to predict: %s", y))
-  
-  colnames(df)[colnames(df) == y] <- "tag"
-  df <- data.frame(df) %>% 
-    filter(!is.na(.data$tag)) %>%
-    mutate_if(is.character, as.factor)
-  
-  # MODEL TYPE
-  cats <- unique(df$tag)
-  model_type <- ifelse(length(cats) <= as.integer(thresh), "Classifier", "Regression")
-  message("- Model type: ", model_type)
-  # Change spaces for dots as `multis` arguments may not match
-  if (model_type == "Classifier") cats <- gsub(" ", ".", cats)
-  # If y variables is named as one of the categories, prediction values will be a problem
-  if (model_type == "Classifier" & y %in% cats) {
-    stop(paste("Your y parameter can't be named as any of the labels used.",
-               "Please, rename", y, "into a valid column name next such as",
-               paste0(y, "_labels for example.")))
-  }
-  ignored <- ignore
-  
-  # If target value is not an existing target value
-  if (!target %in% cats & length(cats) == 2)
-    if (!target %in% c(cats, "auto"))
-      stop(paste("Your target value", target, "is not valid.",
-                 "Possible other values:", vector2text(cats)))
-  # When might seem numeric but is categorical
-  if (model_type == "Classifier" & sum(grepl('^[0-9]', cats)) > 0)
-    df <- mutate(df, tag = as.factor(as.character(
-      ifelse(grepl('^[0-9]', .data$tag), paste0("n_", .data$tag), as.character(.data$tag)))))
-  # When is regression should always be numerical
-  if (model_type == "Regression")
-    df$tag <- as.numeric(df$tag)
-  # Show a summary of our tags
-  if (model_type == "Classifier" & !quiet) print(freqs(df, .data$tag))
-  if (model_type == "Regression" & !quiet) print(summary(df$tag)) 
-  
-  # MISSING VALUES
-  m <- missingness(df)
-  if (!is.null(m)) {
-    m <- mutate(m, label = paste0(.data$variable, " (", .data$missingness, "%)"))
-    if (!quiet) {
-      top10 <- m %>% ungroup() %>% slice(1:10)
-      which <- vector2text(top10$label, quotes = FALSE)
-      if (nrow(m) > 10)
-        which <- paste(which, "and", nrow(m) - 10, "other.")
-      message(paste0("- The following variables contain missing observations: ", which,
-                     if (!impute & !quiet) ". Consider using the impute parameter."))
-    }
-    if (impute) {
-      if (!quiet) message(paste(">>> Imputing", sum(m$missing), "missing values..."))
-      df <- impute(df, seed = seed, quiet = TRUE)
-    }
-  }
-  
-  # ONE HOT SMART ENCODING
-  nums <- df_str(df, "names", quiet = TRUE)$nums
-  if (length(nums) != ncol(df) & !quiet) {
-    transformable <- ncol(df) - length(nums) - 
-      sum(ignore %in% colnames(df)) - 
-      as.integer(model_type == "Classifier")
-    if (transformable > 0) message(paste(
-      "- There are", transformable, "non-numerical features.",
-      "Consider using ohse() prior for One Hot Smart Encoding your categorical variables."))
-  }
-  if (scale | center & length(nums) > 0) {
-    new <- data.frame(lapply(df[nums], function(x) scale(x, center = center, scale = scale)))
-    colnames(new) <- nums
-    df[nums] <- new
-    msg <- ifelse(scale & center, "scaled and centered", ifelse(scale, "scaled", "centered"))
-    if (!quiet) message(paste0("All numerical features (", length(nums), ") were ", msg))
-  }
-  
-  # OUTLIERS ON INDEPENDENT VARIABLE
-  if (is.numeric(df$tag)) {
-    thresh <- ifelse(is.numeric(no_outliers), no_outliers, 3)
-    is_outlier <- outlier_zscore(df$tag, thresh = thresh)
-    if (!quiet & !isTRUE(no_outliers))
-      message(sprintf(
-        "- %s (%s) of %s values are considered outliers (Z-Score: >%ssd). %s",
-        formatNum(100*sum(is_outlier)/nrow(df), 1, pos = "%"),
-        formatNum(sum(is_outlier), 0), y, thresh,
-        ifelse(no_outliers, 
-               paste("Removing them from the dataset for better results.",
-                     "To keep them, set the 'no_outliers' parameter."), 
-               "Consider using the 'no_outliers' parameter to remove them.")))
-    if (no_outliers) df <- df[!is_outlier,] 
-  }
-  
-  # SPLIT TRAIN AND TEST DATASETS
-  if (is.na(train_test)) {
-    if (!quiet) message(">>> Splitting datasets")
-    splits <- msplit(df, size = split, seed = seed, print = !quiet)
-    train <- splits$train
-    test <- splits$test
-  } else {
-    # If we already have a default split for train and test (train_test)
-    if (train_test %in% colnames(df)) {
-      colnames(df)[colnames(df) == train_test] <- "train_test"
-      if (all(unique(as.character(df$train_test)) %in% c('train', 'test'))) {
-        train <- filter(df, .data$train_test == "train")
-        test <- filter(df, .data$train_test == "test")
-        split <- nrow(train)/nrow(df)
-        ignore <- c(ignore, train_test)
-        if (!quiet) print(table(df$train_test))
-      } else stop("Your train_test column should have 'train' and 'test' values only!") 
-    } else stop(paste("There is no column named", train_test))
-  }
-  
-  if (nrow(train) > 10000)
-    message("- Consider sampling your dataset for faster results")
-  
-  # BALANCE TRAINING SET
-  if (model_type == "Classifier" & balance) {
-    total <- nrow(train)
-    min <- freqs(train, .data$tag) %>% .$n %>% min(., na.rm = TRUE)
-    train <- train %>% group_by(.data$tag) %>% sample_n(min)
-    if (!quiet) message(paste0(
-      "- Training set balanced: ", min, " observations for each (",length(cats),
-      ") category; using ", round(100*nrow(train)/total, 2), "% of training data..."))
-  }
-  
-  # CHECK TRAIN/TEST VALUES
-  if (model_type == "Classifier") {
-    if (!all(unique(df$tag) %in% unique(train$tag)))
-      stop(paste("You must train with all available tags:", vector2text(unique(df$tag))))
-    if (!all(unique(df$tag) %in% unique(test$tag)))
-      warning("You are training with tags that are not in your test set.")  
-  }
+  # PROCESS THE DATA
+  processed <- model_preprocess(
+    df, 
+    y = y,
+    train_test = train_test,
+    split = split,
+    weight = weight,
+    target = target,
+    balance = balance,
+    impute = impute,
+    no_outliers = no_outliers,
+    center = center,
+    scale = scale,
+    thresh = thresh,
+    seed = seed,
+    quiet = quiet)
+  model_type <- processed$model_type
+  train <- processed$train
+  test <- processed$test
+  df <- processed$data
   
   # IGNORED VARIABLES
   if (length(ignore) > 0 & !quiet)
@@ -289,15 +171,11 @@ h2o_automl <- function(df, y = "tag",
     exclude_algos <- NULL
   }
   
-  # TRAIN MODEL
-  quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
-  if (start_clean) {
-    quiet(h2o.removeAll()) 
-  } else {
-    if (!quiet) message(paste(
-      "- Previous trained models are not being erased.",
-      "Use 'start_clean' parameter if needed."))
-  }
+  # START FRESH?
+  if (!quiet) message(sprintf(
+    "- Previous trained models %s being erased. Use 'start_clean' to change", 
+    ifelse(start_clean, "are", "are not")))
+  if (start_clean) quiet(h2o.removeAll())
   
   # RUN AUTOML
   if (!quiet) 
@@ -305,8 +183,8 @@ h2o_automl <- function(df, y = "tag",
   aml <- quiet(h2o.automl(
     x = colnames(df)[!colnames(df) %in% c("tag", ignore)],
     y = "tag",
-    training_frame = as.h2o(train),
-    leaderboard_frame = as.h2o(test),
+    training_frame = quiet(as.h2o(train)),
+    leaderboard_frame = quiet(as.h2o(test)),
     weights_column = weight,
     max_runtime_secs = max_time,
     max_models = max_models,
@@ -315,7 +193,7 @@ h2o_automl <- function(df, y = "tag",
     nfolds = nfolds, 
     #project_name = project,
     seed = seed,
-    ...))
+    ...), quiet = quiet)
   if (nrow(aml@leaderboard) == 0) {
     stop("NO MODELS TRAINED. Please set max_models to at least 1 and increase max_time")
   } else {
@@ -333,9 +211,14 @@ h2o_automl <- function(df, y = "tag",
   # GET RESULTS AND PERFORMANCE
   results <- h2o_results(
     aml, test, train, y, which = 1,
-    model_type = model_type, target = target, split = split,
-    plots = plots, project = project, ignored = ignored,
-    seed = seed, quiet = quiet)
+    model_type = model_type, 
+    target = target, 
+    split = split,
+    plots = plots, 
+    project = project, 
+    ignore = ignore,
+    seed = seed, 
+    quiet = quiet)
   
   if (save) {
     export_results(results, subdir = subdir, thresh = thresh)
@@ -354,6 +237,7 @@ h2o_automl <- function(df, y = "tag",
   return(results)
   
 }
+
 
 ####################################################################
 #' Plot methods for lares
@@ -435,13 +319,13 @@ Seed: {x$seed}
 #' @param test,train Dataframe. Must have the same columns
 #' @param which Integer. Which model to select from leaderboard
 #' @param model_type Character. Select "Classifier" or "Regression"
-#' @param ignored Character vector. Columns ignored.
+#' @param ignore Character vector. Columns too ignore
 #' @param leaderboard H2O's Leaderboard. Passed when using 
 #' \code{h2o_selectmodel} as it contains plain model and no leader board.
 #' @export
 h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
                         model_type, target = "auto", split = 0.7,
-                        ignored = c(), quiet = FALSE, 
+                        ignore = c(), quiet = FALSE, 
                         project = "ML Project", seed = 0,
                         leaderboard = list(),
                         plots = TRUE, 
@@ -573,7 +457,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     results[["leaderboard"]] <- leaderboard
   results[["project"]] <- project
   results[["y"]] <- y
-  results[["ignored"]] <- ignored
+  results[["ignored"]] <- ignore
   results[["seed"]] <- seed
   results[["h2o"]] <- h2o.getVersion()
   
@@ -761,7 +645,7 @@ export_results <- function(results,
       if (is.na(note)[1]) results_txt$Note <- NULL
       capture.output(results_txt, file = paste0(dir, "/", name, ".txt"))
       cats <- lapply(results$categoricals, data.frame)
-      aux <- cats[names(cats)[!names(cats) %in% results$ignored]]
+      aux <- cats[names(cats)[!names(cats) %in% results$ignore]]
       capture.output(aux, file = paste0(dir, "/", name, "_cats.txt"))
       message(">>> Summary text files saved...")
     }

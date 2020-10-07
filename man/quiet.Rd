@@ -4,10 +4,12 @@
 \alias{quiet}
 \title{Quiet prints and verbose noice}
 \usage{
-quiet(fx)
+quiet(fx, quiet = TRUE)
 }
 \arguments{
 \item{fx}{Function to quiet}
+
+\item{quiet}{Quiet outputs? If not, skip quietness}
 }
 \description{
 This function silences (verbose) output prints. Thanks to Hadley Wickham

@@ -17,9 +17,9 @@ h2o_automl(
   no_outliers = TRUE,
   center = FALSE,
   scale = FALSE,
+  thresh = 10,
   seed = 0,
   nfolds = 5,
-  thresh = 10,
   max_models = 3,
   max_time = 10 * 60,
   start_clean = TRUE,
@@ -73,15 +73,15 @@ or numeric to set a different multiplier.}
 \item{center, scale}{Boolean. Using the base function scale, do you wish
 to center and/or scale all numerical values?}
 
+\item{thresh}{Integer. Threshold for selecting binary or regression 
+models: this number is the threshold of unique values we should 
+have in 'tag' (more than: regression; less than: classification)}
+
 \item{seed}{Integer. Set a seed for reproducibility. AutoML can only 
 guarantee reproducibility if max_models is used because max_time is 
 resource limited.}
 
 \item{nfolds}{Number of folds for k-fold cross-validation. Defaults to 5. Use 0 to disable cross-validation; this will also disable Stacked Ensemble (thus decreasing the overall model performance).}
-
-\item{thresh}{Integer. Threshold for selecting binary or regression 
-models: this number is the threshold of unique values we should 
-have in 'tag' (more than: regression; less than: classification)}
 
 \item{max_models, max_time}{Numeric. Max number of models and seconds 
 you wish for the function to iterate. Note that max_models guarantees
@@ -147,18 +147,15 @@ dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 
 # Classification: Binomial - 2 Classes
 r <- h2o_automl(dft, y = Survived, max_models = 1, impute = FALSE, target = "TRUE")
-print(r)
 
 # Let's see all the stuff we have inside:
 lapply(r, names)
 
 # Classification: Multi-Categorical - 3 Classes
 r <- h2o_automl(dft, Pclass, ignore = c("Fare", "Cabin"), max_time = 30, plots = FALSE)
-print(r)
 
 # Regression: Continuous Values
 r <- h2o_automl(dft, y = "Fare", ignore = c("Pclass"), exclude_algos = NULL)
-print(r)
 
 # WITH PRE-DEFINED TRAIN/TEST DATAFRAMES
 splits <- msplit(dft, size = 0.8)
@@ -166,7 +163,6 @@ splits$train$split <- "train"
 splits$test$split <- "test"
 df <- rbind(splits$train, splits$test)
 r <- h2o_automl(df, "Survived", max_models = 1, train_test = "split")
-print(r)
 }
 }
 \seealso{
