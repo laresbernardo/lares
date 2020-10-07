@@ -25,6 +25,7 @@ model_preprocess <- function(df,
                              quiet = FALSE) {
   
   # INDEPENDENT VARIABLE
+  y <- gsub('"', "", as_label(enquo(y)))
   if (!y %in% colnames(df)) {
     stop(paste("You should have a 'tag' column in your data.frame or select",
                "an independent varialbe using the 'y' parameter."))
