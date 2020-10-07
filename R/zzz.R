@@ -6,7 +6,7 @@
   # So user can set another font be default on theme_lares2()
   if (is.null(getOption("lares.font")))
     options("lares.font" = "Arial Narrow")
-  # Standard format for `formatNum`
+  # Standard format for formatNum()
   options("lares.formatNum" = 2)
   # Scrabble and other language settings
   options("lares.lang" = "es")

@@ -44,7 +44,8 @@ or by using this parameter manually}
 
 \item{legend}{Character. Legend position: top, right, bottom, left}
 
-\item{grid}{Character (\code{TRUE}, \code{FALSE}, or a combination of \code{X}, \code{x}, \code{Y}, \code{y})}
+\item{grid}{Character (\code{TRUE}, \code{FALSE}, or a combination of
+\code{X}, \code{x}, \code{Y}, \code{y}.}
 
 \item{mg}{Numeric. External margins}
 

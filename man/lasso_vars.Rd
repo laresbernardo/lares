@@ -17,7 +17,7 @@ lasso_vars(
 )
 }
 \arguments{
-\item{df}{Dataframe. Any dataframe is valid as `ohse` will be applied to
+\item{df}{Dataframe. Any dataframe is valid as \code{ohse} will be applied to
 process categorical values, and values will be standardize automatically.}
 
 \item{variable}{Variable.}
@@ -68,6 +68,7 @@ Other Machine Learning:
 \code{\link{impute}()},
 \code{\link{iter_seeds}()},
 \code{\link{model_metrics}()},
+\code{\link{model_preprocess}()},
 \code{\link{msplit}()}
 
 Other Exploratory: 

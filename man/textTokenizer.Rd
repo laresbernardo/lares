@@ -28,13 +28,13 @@ textTokenizer(
 \item{exclude}{Character vector. Which words do you wish to exclude?}
 
 \item{lang}{Character. Language in text (used for stop words). Example:
-"spanish" or "english". Set to `NA` to ignore.}
+"spanish" or "english". Set to \code{NA} to ignore.}
 
 \item{min_word_freq}{Integer. This will discard words that appear 
-less than <int> times. Defaults to 2. Set to `NA` to ignore.}
+less than <int> times. Defaults to 2. Set to \code{NA} to ignore.}
 
 \item{min_word_len}{Integer. This will discard words that have 
-less than <int> characters. Defaults to 5. Set to `NA` to ignore.}
+less than <int> characters. Defaults to 5. Set to \code{NA} to ignore.}
 
 \item{keep_spaces}{Boolean. If you wish to keep spaces in each line
 to keep unique compound words, separated with spaces, set to TRUE. 

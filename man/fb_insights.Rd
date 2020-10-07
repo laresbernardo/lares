@@ -25,7 +25,7 @@ privileges. Visit the Facebook API Graph Explorer to acquire one.}
 
 \item{which}{Character vector. This is the accounts, campaigns, adsets, 
 or ads IDs to be queried. Remember: if report_level = "account", you must 
-start the ID with `act_`.}
+start the ID with \code{act_}.}
 
 \item{start}{Character. The first full day to report, in the 
 format "YYYY-MM-DD"}
@@ -44,7 +44,7 @@ Default: each day separatly (i.e. "1").}
 \item{breakdowns}{Character Vector. One or more of breakdowns for 
 segmentation results. Set to NA for no breakdowns}
 
-\item{fields}{Character, json format. Leave `NA` for default fields.}
+\item{fields}{Character, json format. Leave \code{NA} for default fields.}
 
 \item{limit}{Integer. Query limit}
 

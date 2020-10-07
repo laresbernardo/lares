@@ -25,8 +25,8 @@ fb_rf(
 \item{token}{Character. This must be a valid access token with sufficient 
 privileges. Visit the Facebook API Graph Explorer to acquire one.}
 
-\item{ad_account}{Character. Ad Account. Remember to start with `act_`. If you 
-use the `prediction` argument, no need to provide this parameter.}
+\item{ad_account}{Character. Ad Account. Remember to start with \code{act_}. If you 
+use the \code{prediction} argument, no need to provide this parameter.}
 
 \item{prediction}{Integer. Prediction ID if you already created the prediction
 and wish to query the curve's data. As this prediction already exists, the 

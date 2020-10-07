@@ -177,7 +177,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
         geom_mark_ellipse(
           aes(group = .data$cluster, description = .data$cluster),
           label.fill = "black", label.colour = "white")
-    } else if (!quiet) warning("Install `ggforce` for better visualization!")
+    } else if (!quiet) warning("Install ggforce for better visualization!")
     
     if (length(find.package("plotly", quiet = TRUE)) > 0) {
       try_require("plotly")
@@ -185,7 +185,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
         PCA$pcadf, x = ~PC1, y = ~PC2, z = ~PC3, color = ~cluster, 
         colors = names(lares_pal()[[2]])[1:3]) %>%
         add_markers()
-    } else warning("Install `plotly` to add a 3D visualization for PC1, PC2 and PC3")
+    } else warning("Install plotly to add a 3D visualization for PC1, PC2 and PC3")
     
     PCA$pca <- pca
     results[["PCA"]] <- PCA

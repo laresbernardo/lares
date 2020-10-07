@@ -28,7 +28,7 @@ set this parameter globally.}
 \item{pre, pos}{Character. Add string before or after number}
 
 \item{abbr}{Boolean. Abbreviate using num_abbr()? You can use
-the `decimals` parameter to set abbr's `n`(-1) parameter.}
+the `decimals` parameter to set abbr's \code{n}(-1) parameter.}
 }
 \description{
 This function lets the user format numerical values nicely

@@ -8,7 +8,7 @@
 #' 
 #' @family Machine Learning
 #' @family Exploratory
-#' @param df Dataframe. Any dataframe is valid as `ohse` will be applied to
+#' @param df Dataframe. Any dataframe is valid as \code{ohse} will be applied to
 #' process categorical values, and values will be standardize automatically.
 #' @param variable Variable. 
 #' @param ignore Character vector. Variables to exclude from study.

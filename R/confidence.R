@@ -6,9 +6,9 @@
 #' want to use \code{ci_var()} to calculate all values quickly.
 #'
 #' @family Confidence
-#' @param mean Numeric. Mean: `mean(var, na.rm = TRUE)`
-#' @param ssd Numeric. Standard deviation: `sd(var, na.rm = TRUE)`
-#' @param n Integer. Amount of observations: `n()`
+#' @param mean Numeric. Mean: \code{mean(var, na.rm = TRUE)}
+#' @param ssd Numeric. Standard deviation: \code{sd(var, na.rm = TRUE)}
+#' @param n Integer. Amount of observations: \code{n()}
 #' @param conf Numeric (0-1). Confidence level.
 #' @examples 
 #' ci_lower(100, 5, 10)

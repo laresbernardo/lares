@@ -69,7 +69,7 @@ outlier_zscore <- function(x, thresh = 3, mad = FALSE) {
 #' @param group Categorical variable. Grouping variable.
 #' @param thresh Numeric vector. Z-Score threshold for n standard deviations.
 #' @param top Integer. Show only n most frequent categorical values when 
-#' using the `group` argument.
+#' using the \code{group} argument.
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset

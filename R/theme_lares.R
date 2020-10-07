@@ -17,7 +17,8 @@
 #' @param main_colour,hard_colour,soft_colour,bg_colour,panel_colour
 #' Character. Main colours for your theme
 #' @param legend Character. Legend position: top, right, bottom, left
-#' @param grid Character (`TRUE`, `FALSE`, or a combination of `X`, `x`, `Y`, `y`)
+#' @param grid Character (\code{TRUE}, \code{FALSE}, or a combination of 
+#' \code{X}, \code{x}, \code{Y}, \code{y}.
 #' @param mg Numeric. External margins
 #' @param pal Integer. 1 for fill and colour palette, 2 for only colour palette,
 #' 3 for only fill palette, 4 for personal labels-colour palette. 0 or else for nothing.

@@ -21,18 +21,18 @@
 #' 
 #' @section Methods:
 #' \describe{
-#'   \item{print}{Use `print` method to print models stats and summary}
-#'   \item{plot}{Use `plot` method to plot results using \code{mplot_full()}}
+#'   \item{print}{Use \code{print} method to print models stats and summary}
+#'   \item{plot}{Use \code{plot} method to plot results using \code{mplot_full()}}
 #' }
 #'
 #' @family Machine Learning
 #' @inheritParams h2o::h2o.automl
 #' @param df Dataframe. Dataframe containing all your data, including 
-#' the independent variable labeled as 'tag'. If you want to define 
-#' which variable should be used instead, use the y parameter.
+#' the independent variable labeled as \code{'tag'}. If you want to define 
+#' which variable should be used instead, use the \code{y} parameter.
 #' @param y Variable or Character. Name of the independent variable.
 #' @param ignore Character vector. Force columns for the model to ignore
-#' @param train_test Character. If needed, df's column name with 'test' 
+#' @param train_test Character. If needed, \code{df}'s column name with 'test' 
 #' and 'train' values to split
 #' @param split Numeric. Value between 0 and 1 to split as train/test 
 #' datasets. Value is for training set. Set value to 1 to train will all 
@@ -43,20 +43,20 @@
 #' observation a relative weight of 2 is equivalent to repeating that 
 #' row twice. Negative weights are not allowed.
 #' @param target Value. Which is your target positive value? If 
-#' set to 'auto', the target with largest mean(score) will be 
+#' set to \code{'auto'}, the target with largest \code{mean(score)} will be 
 #' selected. Change the value to overwrite. Only used when binary
 #' categorical model.
 #' @param balance Boolean. Auto-balance train dataset with under-sampling?
-#' @param impute Boolean. Fill NA values with MICE?
-#' @param no_outliers Boolean/Numeric. Remove y's outliers in the dataset? 
+#' @param impute Boolean. Fill \code{NA} values with MICE?
+#' @param no_outliers Boolean/Numeric. Remove \code{y}'s outliers from the dataset? 
 #' Will remove those values that are farther than n standard deviations from
-#' the independent variable's mean (Z-score). Set to `TRUE` for default (3) 
+#' the independent variable's mean (Z-score). Set to \code{TRUE} for default (3) 
 #' or numeric to set a different multiplier.
 #' @param center,scale Boolean. Using the base function scale, do you wish
 #' to center and/or scale all numerical values? 
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
-#' have in 'tag' (more than: regression; less than: classification)
+#' have in \code{'tag'} (more than: regression; less than: classification)
 #' @param seed Integer. Set a seed for reproducibility. AutoML can only 
 #' guarantee reproducibility if max_models is used because max_time is 
 #' resource limited.
@@ -162,10 +162,6 @@ h2o_automl <- function(df, y = "tag",
   
   # MODEL TYPE (based on inputs + thresh value)
   model_type <- processed$model_type
-  
-  # IGNORED VARIABLES
-  if (length(ignore) > 0 & !quiet)
-    message(paste("- Ignored variables for training models:", vector2text(ignore)))
   
   # ALGORITHMS
   if (length(exclude_algos) > 0 & length(include_algos) == 0 & !quiet ) 

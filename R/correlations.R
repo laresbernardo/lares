@@ -381,7 +381,7 @@ corr_cross <- function(df, plot = TRUE,
   }
   ret <- filter(ret, .data$group1 != .data$group2)
   if (nrow(ret) > top & !is.na(top) & !quiet) {
-    message(sprintf("Returning only the top %s. You may override with the `top` parameter", top))
+    message(sprintf("Returning only the top %s. You may override with the 'top' argument", top))
     ret <- slice(ret, 1:top) 
   }
   

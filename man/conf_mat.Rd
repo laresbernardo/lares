@@ -24,7 +24,7 @@ This function calculates a Confussion Matrix using crosstab for
 or the labels you wish to cross with.
 }
 \details{
-You may use \code{mplot_conf()} or set `plot` parameter to `TRUE`.
+You may use \code{mplot_conf()} or set \code{plot=TRUE}.
 }
 \examples{
 data(dfr) # Results for AutoML Predictions
@@ -53,6 +53,7 @@ Other Machine Learning:
 \code{\link{iter_seeds}()},
 \code{\link{lasso_vars}()},
 \code{\link{model_metrics}()},
+\code{\link{model_preprocess}()},
 \code{\link{msplit}()}
 
 Other Model metrics: 

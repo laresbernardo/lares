@@ -306,7 +306,7 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
 #' @param scientific Boolean. Scientific notation?
 #' @param pre,pos Character. Add string before or after number
 #' @param abbr Boolean. Abbreviate using num_abbr()? You can use
-#' the `decimals` parameter to set abbr's `n`(-1) parameter.
+#' the `decimals` parameter to set abbr's \code{n}(-1) parameter.
 #' @examples 
 #' formatNum(1.23456, decimals = 3)
 #' formatNum(1.23456, type = 1)
@@ -854,7 +854,7 @@ quants <- function(values, splits = 10, return = "summary") {
 #' 
 #' This function lets the user transform a JSON string into vector 
 #' (data.frame with 1 row). You can also pass a Python's dictionary.
-#' For any other JSON transformation, `jsonlite` is recommended.
+#' For any other JSON transformation, \code{jsonlite} is recommended.
 #' 
 #' @family Tools
 #' @param json Character. JSON string
@@ -1085,7 +1085,7 @@ bindfiles <- function(files) {
 #' the function can detect your plot's width and will dynamically
 #' set an auto width. You can adjust the relation (rel) parameter
 #' for different fonts and sizes until perfect harmony found. 
-#' Quite similar to `stringr::str_wrap()` but, if the text vector
+#' Quite similar to \code{stringr::str_wrap} but, if the text vector
 #' is a factor, the levels will be kept in order and transformed. 
 #' 
 #' @family Tools
@@ -1539,12 +1539,12 @@ move_files <- function(from, to) {
 #' Spread an existing list column into new columns on a data.frame. Note
 #' that every element on every observation must have a name for the function
 #' to do its work. Original column will be automatically suppressed but you
-#' can set the `replace` argument to avoid it.
+#' can set the \code{replace} argument to avoid it.
 #'
 #' @param df Dataframe
 #' @param col Variable name. 
-#' @param str Character. Start column names with. If set to `NA`, original
-#' name of column will be used.
+#' @param str Character. Start column names with. If set to \code{NA}, 
+#' original name of column will be used.
 #' @param replace Boolean. Replace original values (delete column)
 #' @export
 spread_list <- function(df, col, str = NA, replace = TRUE) {
@@ -1635,9 +1635,9 @@ formatText <- function(text, color = "black", size = 20, bold = FALSE) {
 ####################################################################
 #' Interpolate a string [glue wrapper]
 #' 
-#' Format and interpolate a string using a `glue` wrapper. Allows
-#' simple operations, `NULL` values as input, and interactions with
-#' internal (created within `glued`) and external (environment) objects.
+#' Format and interpolate a string using a \code{glue} wrapper. Allows
+#' simple operations, \code{NULL} values as input, and interactions with
+#' internal (created within \code{glued}) and external (environment) objects.
 #' 
 #' @inheritParams stringr::str_glue
 #' @examples 

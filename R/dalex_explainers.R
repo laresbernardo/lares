@@ -151,7 +151,7 @@ dalex_residuals <- function(explainer) {
 #' vars, which one do you need?
 #' @examples 
 #' \dontrun{
-#' # Having an "explainer" object created with `dalex_explainer`:
+#' # Having an "explainer" object created with \code{dalex_explainer}:
 #' # For numerical variables
 #' dalex_variable(explainer, vars = c("Age", "Fare"))
 #' # For categorical variables

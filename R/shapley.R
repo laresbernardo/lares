@@ -5,7 +5,7 @@
 #' method to explain individual predictions. SHAP is based on the game 
 #' theoretically optimal Shapley Values. Calculate SHAP values for
 #' h2o models in which each row is an observation and each column a feature.
-#' Use `plot` method to visualize features importance and distributions.
+#' Use \code{plot} method to visualize features importance and distributions.
 #'
 #' @family SHAP
 #' @param model \code{h2o_automl} object or \code{h2o} model.
@@ -77,7 +77,7 @@ plot.h2o_shap <- function(x, relevant = TRUE, top = 15, quiet = FALSE, ...) {
   
   if (length(features) > top) {
     if (!quiet) message(sprintf(
-      "Plotting top %s important features only. Use `top` argument to overwrite.", top))
+      "Plotting top %s important features only. Use 'top' argument to overwrite.", top))
     df <- dplyr::filter(df, .data$feature %in% features[1:top])
     subtitle <- sprintf("%s most important variables (of %s)", top, length(features))
   }

@@ -24,14 +24,14 @@ model_preprocess(
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
-the independent variable labeled as 'tag'. If you want to define 
-which variable should be used instead, use the y parameter.}
+the independent variable labeled as \code{'tag'}. If you want to define 
+which variable should be used instead, use the \code{y} parameter.}
 
-\item{y}{Variable or Character. Name of the independent variable.}
+\item{y}{Character. Column name for independent variable.}
 
 \item{ignore}{Character vector. Force columns for the model to ignore}
 
-\item{train_test}{Character. If needed, df's column name with 'test' 
+\item{train_test}{Character. If needed, \code{df}'s column name with 'test' 
 and 'train' values to split}
 
 \item{split}{Numeric. Value between 0 and 1 to split as train/test 
@@ -45,17 +45,17 @@ observation a relative weight of 2 is equivalent to repeating that
 row twice. Negative weights are not allowed.}
 
 \item{target}{Value. Which is your target positive value? If 
-set to 'auto', the target with largest mean(score) will be 
+set to \code{'auto'}, the target with largest \code{mean(score)} will be 
 selected. Change the value to overwrite. Only used when binary
 categorical model.}
 
 \item{balance}{Boolean. Auto-balance train dataset with under-sampling?}
 
-\item{impute}{Boolean. Fill NA values with MICE?}
+\item{impute}{Boolean. Fill \code{NA} values with MICE?}
 
-\item{no_outliers}{Boolean/Numeric. Remove y's outliers in the dataset? 
+\item{no_outliers}{Boolean/Numeric. Remove \code{y}'s outliers from the dataset? 
 Will remove those values that are farther than n standard deviations from
-the independent variable's mean (Z-score). Set to `TRUE` for default (3) 
+the independent variable's mean (Z-score). Set to \code{TRUE} for default (3) 
 or numeric to set a different multiplier.}
 
 \item{center}{Boolean. Using the base function scale, do you wish
@@ -75,6 +75,34 @@ resource limited.}
 \item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
 }
 \description{
-Pre-process your data before training a model. This is the first step
-on the \code{h2o_automl()} function's pipeline.
+Pre-process your data before training a model. This is the prior step
+on the \code{h2o_automl()} function's pipeline. Enabling for 
+other use cases when wanting too  use any other framework, library, 
+or custom algorithm.
 }
+\examples{
+data(dft) # Titanic dataset
+model_preprocess(dft, "Survived", balance = TRUE)
+model_preprocess(dft, "Fare", split = 0.5, scale = TRUE)
+model_preprocess(dft, "Pclass", ignore = c("Fare", "Cabin"))
+model_preprocess(dft, "Pclass", quiet = TRUE)
+}
+\seealso{
+Other Machine Learning: 
+\code{\link{ROC}()},
+\code{\link{conf_mat}()},
+\code{\link{export_results}()},
+\code{\link{gain_lift}()},
+\code{\link{h2o_automl}()},
+\code{\link{h2o_predict_API}()},
+\code{\link{h2o_predict_MOJO}()},
+\code{\link{h2o_predict_binary}()},
+\code{\link{h2o_predict_model}()},
+\code{\link{h2o_selectmodel}()},
+\code{\link{impute}()},
+\code{\link{iter_seeds}()},
+\code{\link{lasso_vars}()},
+\code{\link{model_metrics}()},
+\code{\link{msplit}()}
+}
+\concept{Machine Learning}

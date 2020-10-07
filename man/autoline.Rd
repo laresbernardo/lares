@@ -18,7 +18,7 @@ Add a break or new line without breaking words. Automatically,
 the function can detect your plot's width and will dynamically
 set an auto width. You can adjust the relation (rel) parameter
 for different fonts and sizes until perfect harmony found. 
-Quite similar to `stringr::str_wrap()` but, if the text vector
+Quite similar to \code{stringr::str_wrap} but, if the text vector
 is a factor, the levels will be kept in order and transformed.
 }
 \examples{

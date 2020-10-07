@@ -8,8 +8,8 @@ iter_seeds(df, y, tries = 10, ...)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
-the independent variable labeled as 'tag'. If you want to define 
-which variable should be used instead, use the y parameter.}
+the independent variable labeled as \code{'tag'}. If you want to define 
+which variable should be used instead, use the \code{y} parameter.}
 
 \item{y}{Variable or Character. Name of the independent variable.}
 
@@ -36,6 +36,7 @@ Other Machine Learning:
 \code{\link{impute}()},
 \code{\link{lasso_vars}()},
 \code{\link{model_metrics}()},
+\code{\link{model_preprocess}()},
 \code{\link{msplit}()}
 }
 \concept{Machine Learning}

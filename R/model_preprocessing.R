@@ -6,7 +6,15 @@
 #' other use cases when wanting too  use any other framework, library, 
 #' or custom algorithm.
 #'
+#' @family Machine Learning
 #' @inheritParams h2o_automl
+#' @param y Character. Column name for independent variable.
+#' @examples 
+#' data(dft) # Titanic dataset
+#' model_preprocess(dft, "Survived", balance = TRUE)
+#' model_preprocess(dft, "Fare", split = 0.5, scale = TRUE)
+#' model_preprocess(dft, "Pclass", ignore = c("Fare", "Cabin"))
+#' model_preprocess(dft, "Pclass", quiet = TRUE)
 #' @export
 model_preprocess <- function(df, 
                              y = "tag",
@@ -29,8 +37,7 @@ model_preprocess <- function(df,
     stop(paste("You should have a 'tag' column in your data.frame or select",
                "an independent varialbe using the 'y' parameter."))
   }
-  
-  if (!quiet) message(sprintf("- Variable to predict: %s", y))
+  if (!quiet) message(sprintf("- INDEPENDENT VARIABLE: %s", y))
   
   colnames(df)[colnames(df) == y] <- "tag"
   df <- data.frame(df) %>% 
@@ -40,8 +47,8 @@ model_preprocess <- function(df,
   # MODEL TYPE
   cats <- unique(df$tag)
   model_type <- ifelse(length(cats) <= as.integer(thresh), "Classifier", "Regression")
-  message("- Model type: ", model_type)
-  # Change spaces for dots as `multis` arguments may not match
+  quiet(message("- MODEL TYPE: ", model_type), quiet)
+  # Change spaces for dots as 'multis' arguments may not match
   if (model_type == "Classifier") cats <- gsub(" ", ".", cats)
   # If y variables is named as one of the categories, prediction values will be a problem
   if (model_type == "Classifier" & y %in% cats) {
@@ -75,31 +82,39 @@ model_preprocess <- function(df,
       which <- vector2text(top10$label, quotes = FALSE)
       if (nrow(m) > 10)
         which <- paste(which, "and", nrow(m) - 10, "other.")
-      message(paste0("- The following variables contain missing observations: ", which,
+      message(paste0("- MISSINGS: The following variables contain missing observations: ", which,
                      if (!impute & !quiet) ". Consider using the impute parameter."))
     }
     if (impute) {
       if (!quiet) message(paste(">>> Imputing", sum(m$missing), "missing values..."))
       df <- impute(df, seed = seed, quiet = TRUE)
     }
-  } else if (!quiet) message("- No missing values in your data")
+  } else quiet(message("- MISSINGS: No missing values in your data"), quiet)
+  
+  # IGNORED VARIABLES
+  if (length(ignore) > 0) {
+    ignore <- ignore[ignore %in% colnames(df)]
+    if (length(ignore) > 0 & !quiet)
+      message(paste("- SKIPPED: Ignored variables for training models:", vector2text(ignore)))
+  }
   
   # ONE HOT SMART ENCODING
   nums <- df_str(df, "names", quiet = TRUE)$nums
   if (length(nums) != ncol(df) & !quiet) {
     transformable <- ncol(df) - length(nums) - 
-      sum(ignore %in% colnames(df)) - 
-      as.integer(model_type == "Classifier")
+      length(ignore) - as.integer(model_type == "Classifier")
     if (transformable > 0) message(paste(
-      "- There are", transformable, "non-numerical features.",
+      "- CATEGORICALS: There are", transformable, "non-numerical features.",
       "Consider using ohse() prior for One Hot Smart Encoding your categorical variables."))
   }
+  
+  # ADDITIONAL TRANSFORMATIONS
   if (scale | center & length(nums) > 0) {
     new <- data.frame(lapply(df[nums], function(x) scale(x, center = center, scale = scale)))
     colnames(new) <- nums
     df[nums] <- new
     msg <- ifelse(scale & center, "scaled and centered", ifelse(scale, "scaled", "centered"))
-    if (!quiet) message(paste0("- All numerical features (", length(nums), ") were ", msg))
+    quiet(message(paste0("- TRANSFORMATIONS: All numerical features (", length(nums), ") were ", msg)), quiet)
   }
   
   # OUTLIERS ON INDEPENDENT VARIABLE
@@ -108,7 +123,7 @@ model_preprocess <- function(df,
     is_outlier <- outlier_zscore(df$tag, thresh = thresh)
     if (!quiet & !isTRUE(no_outliers))
       message(sprintf(
-        "- %s (%s) of %s values are considered outliers (Z-Score: >%ssd). %s",
+        "- OUTLIERS: %s (%s) of %s values are considered outliers (Z-Score: >%ssd). %s",
         formatNum(100*sum(is_outlier)/nrow(df), 1, pos = "%"),
         formatNum(sum(is_outlier), 0), y, thresh,
         ifelse(no_outliers, 
@@ -141,7 +156,7 @@ model_preprocess <- function(df,
   }
   
   if (nrow(train) > 10000)
-    message("- Consider sampling your dataset for faster results")
+    message("- SAMPLE: Consider sampling your dataset for faster results")
   
   # BALANCE TRAINING SET
   if (model_type == "Classifier" & balance) {
@@ -149,7 +164,7 @@ model_preprocess <- function(df,
     min <- freqs(train, .data$tag) %>% .$n %>% min(., na.rm = TRUE)
     train <- train %>% group_by(.data$tag) %>% sample_n(min)
     if (!quiet) message(paste0(
-      "- Training set balanced: ", min, " observations for each (",length(cats),
+      "- BALANCE: Training set balanced: ", min, " observations for each (",length(cats),
       ") category; using ", round(100*nrow(train)/total, 2), "% of training data"))
   }
   

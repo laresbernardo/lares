@@ -601,7 +601,7 @@ mplot_splits <- function(tag,
 #' 
 #' This function generates plots of the metrics of a predictive model.
 #' This is an auxiliary function used in \code{model_metrics()} when
-#' the parameter `plot` is set to `TRUE`.
+#' the parameter \code{plot} is set to \code{TRUE}.
 #' 
 #' @family ML Visualization
 #' @inheritParams mplot_roc

@@ -283,7 +283,7 @@ distr <- function(data, ...,
              order = ifelse(grepl("\\(|\\)", value), 
                             as.numeric(as.character(substr(gsub(",.*", "", value), 2, 100))), row))
     if (length(unique(value)) > top & !is.numeric(value)) {
-      message(paste("Filtering the", top, "most frequent values. Use `top` to overrule."))
+      message(paste("Filtering the", top, "most frequent values. Use 'top' to overrule."))
       which <- freqs(df, value) %>% slice(1:top)
       freqs <- freqs %>%
         mutate(value = ifelse(value %in% which$value, as.character(value), "OTHERS")) %>%

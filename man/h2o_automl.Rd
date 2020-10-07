@@ -36,14 +36,14 @@ h2o_automl(
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including 
-the independent variable labeled as 'tag'. If you want to define 
-which variable should be used instead, use the y parameter.}
+the independent variable labeled as \code{'tag'}. If you want to define 
+which variable should be used instead, use the \code{y} parameter.}
 
 \item{y}{Variable or Character. Name of the independent variable.}
 
 \item{ignore}{Character vector. Force columns for the model to ignore}
 
-\item{train_test}{Character. If needed, df's column name with 'test' 
+\item{train_test}{Character. If needed, \code{df}'s column name with 'test' 
 and 'train' values to split}
 
 \item{split}{Numeric. Value between 0 and 1 to split as train/test 
@@ -57,17 +57,17 @@ observation a relative weight of 2 is equivalent to repeating that
 row twice. Negative weights are not allowed.}
 
 \item{target}{Value. Which is your target positive value? If 
-set to 'auto', the target with largest mean(score) will be 
+set to \code{'auto'}, the target with largest \code{mean(score)} will be 
 selected. Change the value to overwrite. Only used when binary
 categorical model.}
 
 \item{balance}{Boolean. Auto-balance train dataset with under-sampling?}
 
-\item{impute}{Boolean. Fill NA values with MICE?}
+\item{impute}{Boolean. Fill \code{NA} values with MICE?}
 
-\item{no_outliers}{Boolean/Numeric. Remove y's outliers in the dataset? 
+\item{no_outliers}{Boolean/Numeric. Remove \code{y}'s outliers from the dataset? 
 Will remove those values that are farther than n standard deviations from
-the independent variable's mean (Z-score). Set to `TRUE` for default (3) 
+the independent variable's mean (Z-score). Set to \code{TRUE} for default (3) 
 or numeric to set a different multiplier.}
 
 \item{center, scale}{Boolean. Using the base function scale, do you wish
@@ -135,8 +135,8 @@ models will be trained.
 \section{Methods}{
 
 \describe{
-  \item{print}{Use `print` method to print models stats and summary}
-  \item{plot}{Use `plot` method to plot results using \code{mplot_full()}}
+  \item{print}{Use \code{print} method to print models stats and summary}
+  \item{plot}{Use \code{plot} method to plot results using \code{mplot_full()}}
 }
 }
 
@@ -180,6 +180,7 @@ Other Machine Learning:
 \code{\link{iter_seeds}()},
 \code{\link{lasso_vars}()},
 \code{\link{model_metrics}()},
+\code{\link{model_preprocess}()},
 \code{\link{msplit}()}
 }
 \concept{Machine Learning}

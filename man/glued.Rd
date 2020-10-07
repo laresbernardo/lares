@@ -16,9 +16,9 @@ evaluated from left to right. If \code{.x} is an environment, the expressions ar
 evaluated in that environment and \code{.envir} is ignored.}
 }
 \description{
-Format and interpolate a string using a `glue` wrapper. Allows
-simple operations, `NULL` values as input, and interactions with
-internal (created within `glued`) and external (environment) objects.
+Format and interpolate a string using a \code{glue} wrapper. Allows
+simple operations, \code{NULL} values as input, and interactions with
+internal (created within \code{glued}) and external (environment) objects.
 }
 \examples{
 name <- "Bernardo"

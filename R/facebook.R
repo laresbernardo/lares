@@ -106,7 +106,7 @@ flattener <- function(x, i = 1) {
 #' privileges. Visit the Facebook API Graph Explorer to acquire one.
 #' @param which Character vector. This is the accounts, campaigns, adsets, 
 #' or ads IDs to be queried. Remember: if report_level = "account", you must 
-#' start the ID with `act_`.
+#' start the ID with \code{act_}.
 #' @param start Character. The first full day to report, in the 
 #' format "YYYY-MM-DD"
 #' @param end Character. The last full day to report, in the 
@@ -118,7 +118,7 @@ flattener <- function(x, i = 1) {
 #' @param ad_object Character. One of: "insights" (default), "adsets", ...
 #' @param breakdowns Character Vector. One or more of breakdowns for 
 #' segmentation results. Set to NA for no breakdowns
-#' @param fields Character, json format. Leave `NA` for default fields.
+#' @param fields Character, json format. Leave \code{NA} for default fields.
 #' @param limit Integer. Query limit
 #' @param api_version Character. Facebook API version
 #' @param process Boolean. Process GET results to a more friendly format?
@@ -213,8 +213,8 @@ fb_insights <- function(token,
 #' @family API
 #' @family Facebook
 #' @inheritParams fb_insights
-#' @param ad_account Character. Ad Account. Remember to start with `act_`. If you 
-#' use the `prediction` argument, no need to provide this parameter.
+#' @param ad_account Character. Ad Account. Remember to start with \code{act_}. If you 
+#' use the \code{prediction} argument, no need to provide this parameter.
 #' @param prediction Integer. Prediction ID if you already created the prediction
 #' and wish to query the curve's data. As this prediction already exists, the 
 #' rest of arguments of this function will be ignored.

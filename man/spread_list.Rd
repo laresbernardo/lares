@@ -11,8 +11,8 @@ spread_list(df, col, str = NA, replace = TRUE)
 
 \item{col}{Variable name.}
 
-\item{str}{Character. Start column names with. If set to `NA`, original
-name of column will be used.}
+\item{str}{Character. Start column names with. If set to \code{NA}, 
+original name of column will be used.}
 
 \item{replace}{Boolean. Replace original values (delete column)}
 }
@@ -20,5 +20,5 @@ name of column will be used.}
 Spread an existing list column into new columns on a data.frame. Note
 that every element on every observation must have a name for the function
 to do its work. Original column will be automatically suppressed but you
-can set the `replace` argument to avoid it.
+can set the \code{replace} argument to avoid it.
 }

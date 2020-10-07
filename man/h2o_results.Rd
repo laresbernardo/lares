@@ -34,7 +34,7 @@ h2o_results(
 \item{model_type}{Character. Select "Classifier" or "Regression"}
 
 \item{target}{Value. Which is your target positive value? If 
-set to 'auto', the target with largest mean(score) will be 
+set to \code{'auto'}, the target with largest \code{mean(score)} will be 
 selected. Change the value to overwrite. Only used when binary
 categorical model.}
 

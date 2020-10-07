@@ -12,7 +12,7 @@ privileges. Visit the Facebook API Graph Explorer to acquire one.}
 
 \item{which}{Character vector. This is the accounts, campaigns, adsets, 
 or ads IDs to be queried. Remember: if report_level = "account", you must 
-start the ID with `act_`.}
+start the ID with \code{act_}.}
 
 \item{api_version}{Character. Facebook API version}
 

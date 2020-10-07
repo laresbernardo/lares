@@ -45,11 +45,11 @@ cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = F
 #' @param text Character vector. Sentences or texts you wish to tokenize.
 #' @param exclude Character vector. Which words do you wish to exclude?
 #' @param lang Character. Language in text (used for stop words). Example:
-#' "spanish" or "english". Set to `NA` to ignore.
+#' "spanish" or "english". Set to \code{NA} to ignore.
 #' @param min_word_freq Integer. This will discard words that appear 
-#' less than <int> times. Defaults to 2. Set to `NA` to ignore.
+#' less than <int> times. Defaults to 2. Set to \code{NA} to ignore.
 #' @param min_word_len Integer. This will discard words that have 
-#' less than <int> characters. Defaults to 5. Set to `NA` to ignore.
+#' less than <int> characters. Defaults to 5. Set to \code{NA} to ignore.
 #' @param keep_spaces Boolean. If you wish to keep spaces in each line
 #' to keep unique compound words, separated with spaces, set to TRUE. 
 #' For example, 'one two' will be set as 'one_two' and treated as

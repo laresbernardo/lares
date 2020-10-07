@@ -33,6 +33,7 @@ Other Machine Learning:
 \code{\link{iter_seeds}()},
 \code{\link{lasso_vars}()},
 \code{\link{model_metrics}()},
+\code{\link{model_preprocess}()},
 \code{\link{msplit}()}
 
 Other Tools: 

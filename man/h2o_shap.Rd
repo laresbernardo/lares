@@ -23,7 +23,7 @@ SHAP (SHapley Additive exPlanations) by Lundberg and Lee (2016) is a
 method to explain individual predictions. SHAP is based on the game 
 theoretically optimal Shapley Values. Calculate SHAP values for
 h2o models in which each row is an observation and each column a feature.
-Use `plot` method to visualize features importance and distributions.
+Use \code{plot} method to visualize features importance and distributions.
 }
 \examples{
 \dontrun{

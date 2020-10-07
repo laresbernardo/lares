@@ -10,11 +10,11 @@ ci_lower(mean, ssd, n, conf = 0.95)
 ci_upper(mean, ssd, n, conf = 0.95)
 }
 \arguments{
-\item{mean}{Numeric. Mean: `mean(var, na.rm = TRUE)`}
+\item{mean}{Numeric. Mean: \code{mean(var, na.rm = TRUE)}}
 
-\item{ssd}{Numeric. Standard deviation: `sd(var, na.rm = TRUE)`}
+\item{ssd}{Numeric. Standard deviation: \code{sd(var, na.rm = TRUE)}}
 
-\item{n}{Integer. Amount of observations: `n()`}
+\item{n}{Integer. Amount of observations: \code{n()}}
 
 \item{conf}{Numeric (0-1). Confidence level.}
 }

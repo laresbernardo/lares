@@ -2,8 +2,8 @@
 #' PostgreSQL Queries on Database (Read)
 #'
 #' This function lets the user query a PostgreSQL database. Previously
-#' was called `queryDummy()` but was replaced and deprecated for a 
-#' more general function by using the `from` parameter.
+#' was called \code{queryDummy} but was replaced and deprecated for a 
+#' more general function by using the \code{from} parameter.
 #'
 #' @family Credentials
 #' @family Database

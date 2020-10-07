@@ -204,7 +204,7 @@ model_metrics <- function(tag, score, multis = NA,
 #' 2 or more categories. You can either set the score and threshold
 #' or the labels you wish to cross with.
 #' 
-#' You may use \code{mplot_conf()} or set `plot` parameter to `TRUE`.
+#' You may use \code{mplot_conf()} or set \code{plot=TRUE}.
 #' 
 #' @family Machine Learning
 #' @family Model metrics
