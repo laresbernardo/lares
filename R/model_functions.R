@@ -154,10 +154,14 @@ h2o_automl <- function(df, y = "tag",
     thresh = thresh,
     seed = seed,
     quiet = quiet)
-  model_type <- processed$model_type
-  train <- processed$train
-  test <- processed$test
+  
+  # PROCESSED DATA: TRAIN AND TEST
   df <- processed$data
+  train <- df[processed$train_index, ]
+  test <- df[-processed$train_index, ]
+  
+  # MODEL TYPE (based on inputs + thresh value)
+  model_type <- processed$model_type
   
   # IGNORED VARIABLES
   if (length(ignore) > 0 & !quiet)
@@ -737,7 +741,11 @@ msplit <- function(df, size = 0.7, seed = 0, print = TRUE) {
   
   if (print == TRUE) print(summary) 
   
-  sets <- list(train = train, test = test, summary = summary, split_size = size)
+  sets <- list(train = train, 
+               test = test, 
+               summary = summary, 
+               split_size = size,
+               train_index = ind)
   
   return(sets)
   

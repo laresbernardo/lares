@@ -25,7 +25,6 @@ model_preprocess <- function(df,
                              quiet = FALSE) {
   
   # INDEPENDENT VARIABLE
-  y <- gsub('"', "", as_label(enquo(y)))
   if (!y %in% colnames(df)) {
     stop(paste("You should have a 'tag' column in your data.frame or select",
                "an independent varialbe using the 'y' parameter."))
@@ -125,6 +124,7 @@ model_preprocess <- function(df,
     splits <- msplit(df, size = split, seed = seed, print = !quiet)
     train <- splits$train
     test <- splits$test
+    train_index <- splits$train_index
   } else {
     # If we already have a default split for train and test (train_test)
     if (train_test %in% colnames(df)) {
@@ -134,6 +134,7 @@ model_preprocess <- function(df,
         test <- filter(df, .data$train_test == "test")
         split <- nrow(train)/nrow(df)
         ignore <- c(ignore, train_test)
+        train_index <- 1:nrow(train)
         if (!quiet) print(table(df$train_test))
       } else stop("Your train_test column should have 'train' and 'test' values only!") 
     } else stop(paste("There is no column named", train_test))
@@ -160,6 +161,8 @@ model_preprocess <- function(df,
       warning("You are training with tags that are not in your test set.")  
   }
   
-  return(invisible(list(data = df, test = test, train = train, model_type = model_type)))
+  results <- list(data = df, train_index = train_index, model_type = model_type)
+  attr(results, "type") <- "model_preprocess"
+  return(invisible(results))
   
 }
