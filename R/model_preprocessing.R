@@ -11,9 +11,13 @@
 #' @param y Character. Column name for independent variable.
 #' @examples 
 #' data(dft) # Titanic dataset
+#' 
 #' model_preprocess(dft, "Survived", balance = TRUE)
+#' 
 #' model_preprocess(dft, "Fare", split = 0.5, scale = TRUE)
+#' 
 #' model_preprocess(dft, "Pclass", ignore = c("Fare", "Cabin"))
+#' 
 #' model_preprocess(dft, "Pclass", quiet = TRUE)
 #' @export
 model_preprocess <- function(df, 

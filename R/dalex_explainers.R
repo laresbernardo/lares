@@ -51,7 +51,7 @@ dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
   if (!is.na(ignore[1]))
     df <- df[,!(colnames(df) %in% ignore)]
   
-  x_valid <- select(df, -all_of(y))
+  x_valid <- select(df, -vars(y))
   y_valid <- df[y][,1]
   
   h2o <- function(model, newdata) {

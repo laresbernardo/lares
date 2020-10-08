@@ -165,15 +165,15 @@ h2o_automl <- function(df, y = "tag",
   
   # ALGORITHMS
   if (length(exclude_algos) > 0 & length(include_algos) == 0 & !quiet ) 
-    message(paste("- Algorithms excluded:", vector2text(exclude_algos)))
+    message(paste("- ALGORITHMS: excluded", vector2text(exclude_algos)))
   if (length(include_algos) > 0 & !quiet ) {
-    message(paste("- Algorithms included:", vector2text(include_algos)))
+    message(paste("- ALGORITHMS: included", vector2text(include_algos)))
     exclude_algos <- NULL
   }
   
   # START FRESH?
   if (!quiet) message(sprintf(
-    "- Previous trained models %s being erased. Use 'start_clean' to change", 
+    "- CACHE: Previous trained models %s being erased. Use 'start_clean' to change", 
     ifelse(start_clean, "are", "are not")))
   if (start_clean) quiet(h2o.removeAll())
   
