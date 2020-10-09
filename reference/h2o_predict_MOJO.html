@@ -115,23 +115,28 @@ containing the MOJO files. Note that it works with the files
 generated when using the function export_results()</p>
     </div>
 
-    <pre class="usage"><span class='fu'>h2o_predict_MOJO</span>(<span class='kw'>df</span>, <span class='kw'>model_path</span>, batch = <span class='fl'>300</span>)</pre>
+    <pre class="usage"><span class='fu'>h2o_predict_MOJO</span>(<span class='kw'>df</span>, <span class='kw'>model_path</span>, method = <span class='st'>"mojo"</span>, batch = <span class='fl'>300</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>df</th>
-      <td><p>Dataframe. Data to insert into the model</p></td>
+      <td><p>Dataframe. Data to pass to the model.</p></td>
     </tr>
     <tr>
       <th>model_path</th>
       <td><p>Character. Relative path of directory
-where your zip model file is</p></td>
+where your zip model file is. If multiple zip files are found, first
+one found will be used.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>Character. One of "mojo" or "json".</p></td>
     </tr>
     <tr>
       <th>batch</th>
-      <td><p>Integer. Run n batches at a time</p></td>
+      <td><p>Integer. Run n batches at a time for "json" method.</p></td>
     </tr>
     </table>
 
