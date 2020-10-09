@@ -139,12 +139,13 @@ models will be trained.</p>
   nfolds = <span class='fl'>5</span>,
   max_models = <span class='fl'>3</span>,
   max_time = <span class='fl'>10</span> <span class='op'>*</span> <span class='fl'>60</span>,
-  start_clean = <span class='fl'>TRUE</span>,
+  start_clean = <span class='fl'>FALSE</span>,
   exclude_algos = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"StackedEnsemble"</span>, <span class='st'>"DeepLearning"</span>),
   include_algos = <span class='kw'>NULL</span>,
   plots = <span class='fl'>TRUE</span>,
   alarm = <span class='fl'>TRUE</span>,
   quiet = <span class='fl'>FALSE</span>,
+  print = <span class='fl'>TRUE</span>,
   save = <span class='fl'>FALSE</span>,
   subdir = <span class='fl'>NA</span>,
   project = <span class='st'>"ML Project"</span>,
@@ -240,7 +241,9 @@ machine's computational characteristics)</p></td>
     <tr>
       <th>start_clean</th>
       <td><p>Boolean. Erase everything in the current h2o 
-instance before we start to train models?</p></td>
+instance before we start to train models? You may want to keep other models
+or not. To group results into a custom common AutoML project, you may 
+use <code>project_name</code> argument.</p></td>
     </tr>
     <tr>
       <th>exclude_algos, include_algos</th>
@@ -259,6 +262,10 @@ When both are defined, only <code>include_algos</code> will be valid.</p></td>
     <tr>
       <th>quiet</th>
       <td><p>Boolean. Quiet all messages, warnings, recommendations?</p></td>
+    </tr>
+    <tr>
+      <th>print</th>
+      <td><p>Boolean. Print summary when process ends?</p></td>
     </tr>
     <tr>
       <th>save</th>
