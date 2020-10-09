@@ -4,15 +4,18 @@
 \alias{h2o_predict_MOJO}
 \title{H2O Predict using MOJO file}
 \usage{
-h2o_predict_MOJO(df, model_path, batch = 300)
+h2o_predict_MOJO(df, model_path, method = "mojo", batch = 300)
 }
 \arguments{
-\item{df}{Dataframe. Data to insert into the model}
+\item{df}{Dataframe. Data to pass to the model.}
 
 \item{model_path}{Character. Relative path of directory
-where your zip model file is}
+where your zip model file is. If multiple zip files are found, first
+one found will be used.}
 
-\item{batch}{Integer. Run n batches at a time}
+\item{method}{Character. One of "mojo" or "json".}
+
+\item{batch}{Integer. Run n batches at a time for "json" method.}
 }
 \description{
 This function lets the user predict using the h2o .zip file 
