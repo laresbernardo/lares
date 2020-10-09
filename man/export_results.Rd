@@ -14,7 +14,7 @@ export_results(
 )
 }
 \arguments{
-\item{results}{Object. h2o_automl output from \code{h2o_automl()}}
+\item{results}{\code{h2o_automl} or \code{h2o} model}
 
 \item{thresh}{Integer. Threshold for selecting binary or regression 
 models: this number is the threshold of unique values we should 

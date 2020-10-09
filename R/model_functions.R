@@ -600,7 +600,7 @@ h2o_selectmodel <- function(results, which_model = 1, quiet = FALSE, ...) {
 #' 
 #' @family Machine Learning
 #' @family Tools
-#' @param results Object. h2o_automl output from \code{h2o_automl()}
+#' @param results \code{h2o_automl} or \code{h2o} model
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
 #' have in 'tag' (more than: regression; less than: classification)
@@ -625,9 +625,12 @@ export_results <- function(results,
   
   if (save) {
     
-    check_attr(results, attr = "type", check = "h2o_automl")
     quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
-    name <- results$model_name
+    
+    pass <- !is.null(attr(results, "type"))
+    if (!pass) results <- list(model = results) 
+    stopifnot(grepl("H2O", class(results$model)))
+    name <- ifelse(pass, results$model_name, results$model@model_id)
     subdir <- paste0(ifelse(is.na(subdir), "", subdir), "/", name)
     
     # Directory to save all our results
@@ -638,7 +641,7 @@ export_results <- function(results,
     if ("dev" %in% which) which <- unique(c(which, "txt", "csv", "rds"))
     if ("production" %in% which) which <- unique(c(which, "binary", "mojo"))
     
-    if ("txt" %in% which | !is.na(note)[1]) {
+    if ("txt" %in% which | !is.na(note)[1] & pass) {
       set.seed(123)
       results_txt <- list(
         "Project" = results$project,
@@ -667,7 +670,7 @@ export_results <- function(results,
     }
     
     # Export CSV with predictions and datasets
-    if ("csv" %in% which) {
+    if ("csv" %in% which & pass) {
       write.csv(results$datasets$global, 
                 paste0(dir, "/", name, ".csv"), 
                 row.names = FALSE)
@@ -694,7 +697,7 @@ export_results <- function(results,
       message(">>> Binary file saved...")
     }
     
-    if ("plots" %in% which) {
+    if ("plots" %in% which & "plots" %in% names(results) & pass) {
       message(">>> Saving plots...")
       aux <- names(results$plots)
       for (i in 1:length(results$plots)) {
