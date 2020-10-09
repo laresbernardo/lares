@@ -64,7 +64,6 @@ This function lets the user automatically transform a dataframe with
 categorical columns into numerical by one hot encoding technic.
 }
 \examples{
-# Example with Dataset 1
 data(dft)
 dft <- dft[,c(2,3,5,9,11)]
 
@@ -75,7 +74,7 @@ ohse(dft, limit = 3, redundant = TRUE) \%>\% head(3)
 dft$no_variance1 <- 0
 dft$no_variance2 <- c("A", rep("B", nrow(dft) - 1))
 dft$no_variance3 <- as.character(rnorm(nrow(dft)))
-dft$no_variance4 <- c(rep("A", 20), rnorm(nrow(dft) - 20))
+dft$no_variance4 <- c(rep("A", 20), round(rnorm(nrow(dft) - 20), 4))
 ohse(dft, limit = 3) \%>\% head(3)
 ohse(dft, limit = 3, var = 1) \%>\% head(3)
 }

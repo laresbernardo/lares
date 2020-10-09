@@ -22,12 +22,13 @@ h2o_automl(
   nfolds = 5,
   max_models = 3,
   max_time = 10 * 60,
-  start_clean = TRUE,
+  start_clean = FALSE,
   exclude_algos = c("StackedEnsemble", "DeepLearning"),
   include_algos = NULL,
   plots = TRUE,
   alarm = TRUE,
   quiet = FALSE,
+  print = TRUE,
   save = FALSE,
   subdir = NA,
   project = "ML Project",
@@ -89,7 +90,9 @@ reproducibility and max_time not (because it depends entirely on your
 machine's computational characteristics)}
 
 \item{start_clean}{Boolean. Erase everything in the current h2o 
-instance before we start to train models?}
+instance before we start to train models? You may want to keep other models
+or not. To group results into a custom common AutoML project, you may 
+use \code{project_name} argument.}
 
 \item{exclude_algos, include_algos}{Vector of character strings. Algorithms 
 to skip or include during the model-building phase. Set NULL to ignore. 
@@ -100,6 +103,8 @@ When both are defined, only \code{include_algos} will be valid.}
 \item{alarm}{Boolean. Ping (sound) when done. Requires \code{beepr}.}
 
 \item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
+
+\item{print}{Boolean. Print summary when process ends?}
 
 \item{save}{Boolean. Do you wish to save/export results into your 
 working directory?}

@@ -25,7 +25,7 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal") {
   var <- gsub("~", "", as.character(vars))
   
   df <- as.data.frame(df)
-  
+    
   for (i in var) {
     df$temp <- as.character(df[,i])
     # Handling missingness
@@ -79,7 +79,6 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal") {
 #' @param sep Character. Separator's string
 #' @param quiet Boolean. Quiet all messages and summaries?
 #' @examples 
-#' # Example with Dataset 1
 #' data(dft)
 #' dft <- dft[,c(2,3,5,9,11)]
 #' 
@@ -90,7 +89,7 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal") {
 #' dft$no_variance1 <- 0
 #' dft$no_variance2 <- c("A", rep("B", nrow(dft) - 1))
 #' dft$no_variance3 <- as.character(rnorm(nrow(dft)))
-#' dft$no_variance4 <- c(rep("A", 20), rnorm(nrow(dft) - 20))
+#' dft$no_variance4 <- c(rep("A", 20), round(rnorm(nrow(dft) - 20), 4))
 #' ohse(dft, limit = 3) %>% head(3)
 #' ohse(dft, limit = 3, var = 1) %>% head(3)
 #' @export

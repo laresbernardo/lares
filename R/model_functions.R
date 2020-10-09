@@ -65,13 +65,16 @@
 #' reproducibility and max_time not (because it depends entirely on your
 #' machine's computational characteristics)
 #' @param start_clean Boolean. Erase everything in the current h2o 
-#' instance before we start to train models?
+#' instance before we start to train models? You may want to keep other models
+#' or not. To group results into a custom common AutoML project, you may 
+#' use \code{project_name} argument.
 #' @param exclude_algos,include_algos Vector of character strings. Algorithms 
 #' to skip or include during the model-building phase. Set NULL to ignore. 
 #' When both are defined, only \code{include_algos} will be valid.
 #' @param plots Boolean. Create plots objects?
 #' @param alarm Boolean. Ping (sound) when done. Requires \code{beepr}.
 #' @param quiet Boolean. Quiet all messages, warnings, recommendations?
+#' @param print Boolean. Print summary when process ends?
 #' @param save Boolean. Do you wish to save/export results into your 
 #' working directory?
 #' @param subdir Character. In which directory do you wish to save 
@@ -119,12 +122,13 @@ h2o_automl <- function(df, y = "tag",
                        nfolds = 5,
                        max_models = 3,
                        max_time = 10*60,
-                       start_clean = TRUE,
+                       start_clean = FALSE,
                        exclude_algos = c("StackedEnsemble","DeepLearning"),
                        include_algos = NULL,
                        plots = TRUE,
                        alarm = TRUE,
                        quiet = FALSE,
+                       print = TRUE,
                        save = FALSE,
                        subdir = NA,
                        project = "ML Project",
@@ -159,6 +163,7 @@ h2o_automl <- function(df, y = "tag",
   df <- processed$data
   train <- df[processed$train_index, ]
   test <- df[-processed$train_index, ]
+  if (nrow(test) == 0) test <- train
   
   # MODEL TYPE (based on inputs + thresh value)
   model_type <- processed$model_type
@@ -172,8 +177,9 @@ h2o_automl <- function(df, y = "tag",
   }
   
   # START FRESH?
-  if (!quiet) message(sprintf(
-    "- CACHE: Previous trained models %s being erased. Use 'start_clean' to change", 
+  if (!quiet) message(sprintf(paste(
+    "- CACHE: Previous models %s being erased.",
+    "You may use 'start_clean' [clear] or 'project_name' [join]"), 
     ifelse(start_clean, "are", "are not")))
   if (start_clean) quiet(h2o.removeAll())
   
@@ -184,7 +190,6 @@ h2o_automl <- function(df, y = "tag",
     x = colnames(df)[!colnames(df) %in% c("tag", ignore)],
     y = "tag",
     training_frame = quiet(as.h2o(train)),
-    leaderboard_frame = quiet(as.h2o(test)),
     weights_column = weight,
     max_runtime_secs = max_time,
     max_models = max_models,
@@ -194,19 +199,20 @@ h2o_automl <- function(df, y = "tag",
     #project_name = project,
     seed = seed,
     ...), quiet = quiet)
+  
   if (nrow(aml@leaderboard) == 0) {
     stop("NO MODELS TRAINED. Please set max_models to at least 1 and increase max_time")
   } else {
     if (!is.nan(aml@leaderboard[1,2]))
       if (!quiet) {
-        message(paste("Succesfully generated", nrow(aml@leaderboard), "models:")) 
-        print(head(aml@leaderboard, 3))
+        message(paste("- EUREKA: Succesfully generated", nrow(aml@leaderboard), "models")) 
+        if (print == TRUE) print(head(aml@leaderboard, 3))
       } 
   }
   
   flow <- "http://localhost:54321/flow/index.html"
   if (!quiet & Sys.getenv('HOSTNAME') == "") 
-    message("- Check results in H2O Flow's nice interface: ", flow)
+    message("- UI: Check results using H2O Flow's interface: ", flow)
   
   # GET RESULTS AND PERFORMANCE
   results <- h2o_results(
@@ -222,11 +228,11 @@ h2o_automl <- function(df, y = "tag",
   
   if (save) {
     export_results(results, subdir = subdir, thresh = thresh)
-    if (!quiet) message("Results and model files exported succesfully!")
+    if (!quiet) message("- EXPORT: Results and model files exported succesfully!")
   }
   
   if (!quiet) toc(id = "h2o_automl", msg = "Process duration:")
-  if (!quiet) print(results)
+  if (!quiet & print == TRUE) print(results)
   
   if (alarm & !quiet) {
     try_require("beepr", stop = FALSE)
@@ -259,9 +265,10 @@ plot.h2o_automl <- function(x, ...) {
 #' Print methods for lares
 #' @rdname print
 #' @param x Object
+#' @param importance Boolean. Print important variables?
 #' @param ... Additional parameters
 #' @export
-print.h2o_automl <- function(x, ...) {
+print.h2o_automl <- function(x, importance = TRUE, ...) {
   
   if (!inherits(x, 'h2o_automl'))
     stop('Object must be class h2o_automl')
@@ -272,6 +279,12 @@ print.h2o_automl <- function(x, ...) {
   data_points <- nrow(x$datasets$global)
   split <- round(100*x$split)
   
+  if (x$type == "Classifier") {
+    cats <-filter(x$datasets$global, grepl("train", .data$train_test)) %>% 
+      .[,x$y] %>% unique %>% nrow
+    x$type <- sprintf("%s (%s classes)", x$type, cats)
+  }
+  
   aux[["met"]] <- glued(
     "Test metrics: 
 {v2t({met}, sep = '\n', quotes = FALSE)}", met = paste(
@@ -279,7 +292,7 @@ print.h2o_automl <- function(x, ...) {
   names(x$metrics$metrics), "=",
   signif(x$metrics$metrics, 5)))
   
-  if ("importance" %in% names(x)) {
+  if ("importance" %in% names(x) & importance == TRUE) {
     aux[["imp"]] <- glued(
       "Most important variables:
 {v2t({imp}, sep = '\n', quotes = FALSE)}", imp = paste(
@@ -292,18 +305,17 @@ print.h2o_automl <- function(x, ...) {
     pull(.data$label)))
   }
   
-  
   print(glued("
-Main Model ({selected}/{n_models}): {x$model_name}
-Independent Variable: {x$y}
-Type: {x$type}
-Algorithm: {toupper(x$algorithm)}
-Split: {split}% training data (of {data_points} observations)
-Seed: {x$seed}
-
-{aux$met}
-
-{aux$imp}"))
+    Model ({selected}/{n_models}): {x$model_name}
+    Independent Variable: {x$y}
+    Type: {x$type}
+    Algorithm: {toupper(x$algorithm)}
+    Split: {split}% training data (of {data_points} observations)
+    Seed: {x$seed}
+    
+    {aux$met}
+    
+    {aux$imp}"))
   
 }
 
@@ -347,8 +359,12 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   # GLOBAL DATAFRAME FROM TEST AND TRAIN
   if (!all(colnames(test) == colnames(train)))
     stop("All columns from test and train datasets must be exactly the same")
-  global <- data.frame(test) %>% bind_rows(train) %>%
-    mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
+  if (split == 1) {
+    global <- train %>% mutate(train_test = "train_test")
+  } else {
+    global <- data.frame(test) %>% bind_rows(train) %>%
+      mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
+  }
   colnames(global)[colnames(global) == "tag"] <- y
   if (model_type == "Classifier")
     cats <- unique(global[,colnames(global) == y]) else cats <- "None"
@@ -433,7 +449,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   if (!stacked) results[["importance"]] <- imp
   results[["datasets"]] <- list(
     global = as_tibble(global), 
-    test = filter(global, .data$train_test == "test"))
+    test = filter(global, grepl("test", .data$train_test)))
   # results[["metrics_train"]] <- model_metrics(
   #   tag = scores_train$tag, 
   #   score = scores_train$score,
@@ -444,7 +460,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   #   type = "train")
   results[["scoring_history"]] <- as_tibble(m@model$scoring_history)
   results[["parameters"]] <- m@parameters
-  results[["categoricals"]] <- list_cats(filter(global, .data$train_test == "train"))
+  results[["categoricals"]] <- list_cats(filter(global, grepl("train", .data$train_test)))
   results[["type"]] <- model_type
   results[["split"]] <- split
   if (model_type == "Classifier") 
@@ -562,7 +578,7 @@ h2o_selectmodel <- function(results, which_model = 1, quiet = FALSE, ...) {
   output <- h2o_results(
     m, 
     test = d$test, 
-    train = d$global[d$global$train_test=="train",], 
+    train = filter(d$global, grepl("test", .data$train_test)), 
     y = results$y, 
     which = which_model, 
     model_type = results$type, 

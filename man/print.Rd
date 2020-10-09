@@ -4,10 +4,12 @@
 \alias{print.h2o_automl}
 \title{Print methods for lares}
 \usage{
-\method{print}{h2o_automl}(x, ...)
+\method{print}{h2o_automl}(x, importance = TRUE, ...)
 }
 \arguments{
 \item{x}{Object}
+
+\item{importance}{Boolean. Print important variables?}
 
 \item{...}{Additional parameters}
 }
