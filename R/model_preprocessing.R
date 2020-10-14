@@ -51,7 +51,7 @@ model_preprocess <- function(df,
   # MODEL TYPE
   cats <- unique(df$tag)
   model_type <- ifelse(length(cats) <= as.integer(thresh), "Classifier", "Regression")
-  quiet(message("- MODEL TYPE: ", model_type), quiet)
+  if (!quiet) message("- MODEL TYPE: ", model_type)
   # Change spaces for dots as 'multis' arguments may not match
   if (model_type == "Classifier") cats <- gsub(" ", ".", cats)
   # If y variables is named as one of the categories, prediction values will be a problem
@@ -93,7 +93,7 @@ model_preprocess <- function(df,
       if (!quiet) message(paste(">>> Imputing", sum(m$missing), "missing values..."))
       df <- impute(df, seed = seed, quiet = TRUE)
     }
-  } else quiet(message("- MISSINGS: No missing values in your data"), quiet)
+  } else if (!quiet) message("- MISSINGS: No missing values in your data")
   
   # IGNORED VARIABLES
   if (length(ignore) > 0) {
@@ -115,7 +115,7 @@ model_preprocess <- function(df,
     colnames(new) <- nums
     df[nums] <- new
     msg <- ifelse(scale & center, "scaled and centered", ifelse(scale, "scaled", "centered"))
-    quiet(message(paste0("- TRANSFORMATIONS: All numerical features (", length(nums), ") were ", msg)), quiet)
+    if (!quiet) message(paste0("- TRANSFORMATIONS: All numerical features (", length(nums), ") were ", msg))
   }
   
   # OUTLIERS ON INDEPENDENT VARIABLE
