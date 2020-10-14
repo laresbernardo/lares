@@ -73,7 +73,7 @@ freqs <- function(df, ..., wt = NULL,
   vars <- quos(...)
   weight <- enquo(wt)
   
-  if (is.vector) df <- data.frame(values = df)
+  if (is.vector(df)) df <- data.frame(values = df)
   df <- as.data.frame(df) 
   
   # Probably an error but might be useful for the user instead
