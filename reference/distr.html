@@ -255,37 +255,25 @@ for both, target and values)</p></td>
 
 <span class='co'># Relation for categorical/categorical values</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span>(<span class='kw'>Survived</span>, <span class='kw'>Sex</span>)
-</div><div class='img'><img src='distr-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'>
 <span class='co'># Relation for categorical/numeric values</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span>(<span class='kw'>Survived</span>, <span class='kw'>Fare</span>, plot = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>10</span>)
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 5</span><span>
-#&gt;    targets value            n     p  pcum
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> FALSE   (7.9,8.1]       87  82.1  82.1
-#&gt; </span><span style='color: #555555;'> 2</span><span> FALSE   [0,7.5]         79  85.9  85.9
-#&gt; </span><span style='color: #555555;'> 3</span><span> TRUE    (78,5.1e+02]    66  75.9  75.9
-#&gt; </span><span style='color: #555555;'> 4</span><span> FALSE   (7.5,7.9]       61  70.1  70.1
-#&gt; </span><span style='color: #555555;'> 5</span><span> FALSE   (8.1,10]        60  76.9  76.9
-#&gt; </span><span style='color: #555555;'> 6</span><span> FALSE   (27,40]         57  62.6  62.6
-#&gt; </span><span style='color: #555555;'> 7</span><span> FALSE   (14,22]         51  58.0  58.0
-#&gt; </span><span style='color: #555555;'> 8</span><span> FALSE   (10,14]         48  57.1  57.1
-#&gt; </span><span style='color: #555555;'> 9</span><span> TRUE    (40,78]         47  52.8  52.8
-#&gt; </span><span style='color: #555555;'>10</span><span> TRUE    (22,27]         46  51.7  51.7</div><div class='input'><span class='co'># Sort values </span>
+</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'><span class='co'># Sort values </span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span>(<span class='kw'>Survived</span>, <span class='kw'>Fare</span>, abc = <span class='fl'>TRUE</span>)
-</div><div class='img'><img src='distr-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Less splits/breaks</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'><span class='co'># Less splits/breaks</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span>(<span class='kw'>Survived</span>, <span class='kw'>Fare</span>, abc = <span class='fl'>TRUE</span>, breaks = <span class='fl'>5</span>)
-</div><div class='img'><img src='distr-3.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'>
 <span class='co'># Distribution of numerical only</span>
 <span class='kw'>dft</span>[<span class='kw'>dft</span><span class='op'>$</span><span class='kw'>Fare</span> <span class='op'>&lt;</span> <span class='fl'>20</span>,] <span class='op'>%&gt;%</span> <span class='fu'>distr</span>(<span class='kw'>Fare</span>)
-</div><div class='img'><img src='distr-4.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='distr-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Distribution of numerical/numerical</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span>(<span class='kw'>Fare</span>, <span class='kw'>Age</span>)
-</div><div class='img'><img src='distr-5.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='distr-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Select only one of the two default plots of distr()</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span>(<span class='kw'>Survived</span>, <span class='kw'>Age</span>, type = <span class='fl'>2</span>)
-</div><div class='img'><img src='distr-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span>(<span class='kw'>Survived</span>, <span class='kw'>Age</span>, type = <span class='fl'>3</span>)
-</div><div class='img'><img src='distr-7.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
-</div></span></pre>
+</div><div class='img'><img src='distr-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span>(<span class='kw'>Survived</span>, <span class='kw'>Age</span>, type = <span class='fl'>3</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

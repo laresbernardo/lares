@@ -243,26 +243,15 @@ save the plot</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived</span>, method = <span class='st'>"spearman"</span>, plot = <span class='fl'>FALSE</span>, top = <span class='fl'>10</span>)
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Maybe you meant one of: 'Survived_TRUE'</span></div><div class='output co'>#&gt; <span class='message'>Automatically using 'Survived_TRUE</span></div><div class='output co'>#&gt;                   variables      corr   pvalue
-#&gt; Sex_male           Sex_male -0.543351 0.000000
-#&gt; Fare                   Fare  0.323736 0.000000
-#&gt; Cabin_               Cabin_ -0.316912 0.000000
-#&gt; Pclass_1           Pclass_1  0.285904 0.000000
-#&gt; Embarked_C       Embarked_C  0.168240 0.000000
-#&gt; Parch                 Parch  0.138266 0.000035
-#&gt; Ticket_OTHER   Ticket_OTHER  0.102598 0.002167
-#&gt; Pclass_2           Pclass_2  0.093349 0.005294
-#&gt; SibSp                 SibSp  0.088879 0.007941
-#&gt; Ticket_113760 Ticket_113760  0.085083 0.011062
-#&gt; Cabin_B96 B98 Cabin_B96 B98  0.085083 0.011062</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'>
 <span class='co'># With plots, results are easier to compare:</span>
 
 <span class='co'># Correlate Survived with everything else and show only significant results</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, max_pvalue = <span class='fl'>0.01</span>)
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Not a valid input: Survived_TRUE was transformed or does not exist.</span></div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'>
 <span class='co'># Top 15 with less than 50% correlation</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, ceiling = <span class='fl'>60</span>, top = <span class='fl'>15</span>)
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Not a valid input: Survived_TRUE was transformed or does not exist.</span></div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 60% (absolute)</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

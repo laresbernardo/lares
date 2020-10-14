@@ -173,9 +173,9 @@
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='freqs.html'>freqs</a></span>(<span class='kw'>dft</span>, <span class='kw'>Pclass</span>)
-<span class='fu'>gg_bars</span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>Pclass</span>, n = <span class='kw'>df</span><span class='op'>$</span><span class='kw'>n</span>)
-</div><div class='img'><img src='gg_bars-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>gg_bars</span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>Pclass</span>, n = <span class='kw'>df</span><span class='op'>$</span><span class='kw'>n</span>, p = <span class='kw'>df</span><span class='op'>$</span><span class='kw'>p</span>, axis = <span class='st'>"Percentage of ..."</span>)
-</div><div class='img'><img src='gg_bars-2.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'><span class='fu'>gg_bars</span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>Pclass</span>, n = <span class='kw'>df</span><span class='op'>$</span><span class='kw'>n</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error in df$Pclass: object of type 'closure' is not subsettable</span></div><div class='input'><span class='fu'>gg_bars</span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>Pclass</span>, n = <span class='kw'>df</span><span class='op'>$</span><span class='kw'>n</span>, p = <span class='kw'>df</span><span class='op'>$</span><span class='kw'>p</span>, axis = <span class='st'>"Percentage of ..."</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error in df$Pclass: object of type 'closure' is not subsettable</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
