@@ -104,7 +104,7 @@ model_preprocess <- function(df,
   
   # ONE HOT SMART ENCODING NEEDED?
   if (!quiet) {
-    temp <- df[!colnames(df) %in% c("tag", ignore)]
+    temp <- df[,!colnames(df) %in% c("tag", ignore)]
     nums <- df_str(temp, "names", quiet = TRUE)$nums
     if (length(nums) != ncol(temp))
       message(paste(
