@@ -305,11 +305,14 @@ scrabble_words <- function(tiles,
   } 
 }
 
-force_words <- function(words, pattern, rev = FALSE) {
+force_words <- function(words, pattern, rev = FALSE, invert = FALSE) {
   forced <- tolower(unlist(strsplit(pattern, "")))
   forced_which <- which(forced != "_")
-  for (i in forced_which)
-    words <- words[substr(words, i, i) == forced[i]]
+  for (i in forced_which) {
+    these <- substr(words, i, i) == forced[i]
+    if (invert) these <- !these
+    words <- words[these]
+  }
   if (rev) words <- reverse(words)
   return(words)
 }

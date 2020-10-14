@@ -102,14 +102,14 @@ model_preprocess <- function(df,
       message(paste("- SKIPPED: Ignored variables for training models:", vector2text(ignore)))
   }
   
-  # ONE HOT SMART ENCODING
-  nums <- df_str(df, "names", quiet = TRUE)$nums
-  if (length(nums) != ncol(df) & !quiet) {
-    transformable <- ncol(df) - length(nums) - 
-      length(ignore) - as.integer(model_type == "Classifier")
-    if (transformable > 0) message(paste(
-      "- CATEGORICALS: There are", transformable, "non-numerical features.",
-      "Consider using ohse() prior for One Hot Smart Encoding your categorical variables."))
+  # ONE HOT SMART ENCODING NEEDED?
+  if (!quiet) {
+    temp <- df[!colnames(df) %in% c("tag", ignore)]
+    nums <- df_str(temp, "names", quiet = TRUE)$nums
+    if (length(nums) != ncol(temp))
+      message(paste(
+        "- CATEGORICALS: There are", ncol(temp) - length(nums), "non-numerical features.",
+        "Consider using ohse() or equivalent prior to encode categorical variables."))
   }
   
   # ADDITIONAL TRANSFORMATIONS

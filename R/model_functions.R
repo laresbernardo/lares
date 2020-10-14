@@ -373,7 +373,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   if (any(c("H2OFrame","H2OAutoML") %in% class(h2o_object))) {
     # Note: Best model from leaderboard is which = 1
     m <- h2o.getModel(as.vector(h2o_object@leaderboard$model_id[which]))
-    if (!quiet) message(paste("Model selected:", as.vector(m@model_id)))
+    if (!quiet) message(paste("SELECTED MODEL:", as.vector(m@model_id)))
   } else {
     m <- h2o_object
   }
@@ -382,7 +382,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   # https://docs.h2o.ai/h2o/latest-stable/h2o-docs/variable-importance.html
   if (sum(grepl("Stacked", as.vector(m@model_id))) > 0) {
     stacked <- TRUE
-    if (!quiet) message("NOTE: No importance features for Stacked Ensemble Models")
+    if (!quiet) message("- NOTE: No importance features for Stacked Ensemble Models")
   } else stacked <- FALSE
   if (!stacked) {
     imp <- data.frame(h2o.varimp(m)) %>%
@@ -390,14 +390,14 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
         rename(., "variable" = "names", "importance" = "coefficients") else .} %>%
       {if ("percentage" %in% colnames(.)) 
         rename(., "importance" = "percentage") else .}
-    noimp <- dplyr::filter(imp, .data$importance < 0.015) %>% arrange(desc(.data$importance))
+    noimp <- dplyr::filter(imp, .data$importance < 1/(nrow(imp)*4)) %>% arrange(desc(.data$importance))
     if (nrow(noimp) > 0) {
-      top10 <- noimp %>% ungroup() %>% slice(1:10)
-      which <- vector2text(top10$variable, quotes = FALSE)
-      if (nrow(noimp) > 10) 
-        which <- paste(which, "and", nrow(noimp) - 10, "other...")
+      topn <- noimp %>% ungroup() %>% slice(1:8)
+      which <- vector2text(topn$variable, quotes = FALSE)
+      if (nrow(noimp) > 8) 
+        which <- paste(which, "and", nrow(noimp) - 8, "other...")
       if (!quiet) 
-        message(paste("NOTE: The following variables were NOT important:", which))
+        message(paste("- NOTE: The following variables were the least important:", which))
     } 
   }
   
@@ -651,10 +651,10 @@ export_results <- function(results,
         "Model name" = name,
         "Train/Test" = table(results$datasets$global$train_test),
         "Metrics Glossary" = results$metrics$dictionary,
-        "Train Metrics" = results$metrics$metrics,
-        "Train Metrics by labels" = if (length(results$metrics$metrics_tags) > 1)
+        "Test Metrics" = results$metrics$metrics,
+        "Test Metrics by labels" = if (length(results$metrics$metrics_tags) > 1)
           results$metrics$metrics_tags else "NA",
-        "Train's Confusion Matrix" = if (length(results$metrics$confusion_matrix) > 1)
+        "Test's Confusion Matrix" = if (length(results$metrics$confusion_matrix) > 1)
           results$metrics$confusion_matrix else "NA",
         "Variables Importance" = results$importance,
         "H2O Global Results" = results$model,
