@@ -195,7 +195,12 @@ and sorted by mean of each variable's correlations</p></td>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='kw'>dft</span>[,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span>]
 
 <span class='fu'>corr</span>(<span class='kw'>df</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'>
+</div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2
+#&gt; Survived_TRUE      1.000000 -0.543351 -0.077221  0.285904  0.093349
+#&gt; Sex_male          -0.543351  1.000000  0.093254 -0.098013 -0.064746
+#&gt; Age               -0.077221  0.093254  1.000000  0.348941  0.006954
+#&gt; Pclass_1           0.285904 -0.098013  0.348941  1.000000 -0.288585
+#&gt; Pclass_2           0.093349 -0.064746  0.006954 -0.288585  1.000000</div><div class='input'>
 <span class='co'># Ignore specific column</span>
 <span class='fu'>corr</span>(<span class='kw'>df</span>, ignore = <span class='st'>"Pclass"</span>)
 </div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age
@@ -204,15 +209,52 @@ and sorted by mean of each variable's correlations</p></td>
 #&gt; Age               -0.077221  0.093254  1.000000</div><div class='input'>
 <span class='co'># Keep redundant combinations</span>
 <span class='fu'>corr</span>(<span class='kw'>df</span>, redundant = <span class='fl'>TRUE</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'>
+</div><div class='output co'>#&gt;                      Age Survived_FALSE Survived_TRUE  Pclass_1  Pclass_2
+#&gt; Age             1.000000       0.077221     -0.077221  0.348941  0.006954
+#&gt; Survived_FALSE  0.077221       1.000000     -1.000000 -0.285904 -0.093349
+#&gt; Survived_TRUE  -0.077221      -1.000000      1.000000  0.285904  0.093349
+#&gt; Pclass_1        0.348941      -0.285904      0.285904  1.000000 -0.288585
+#&gt; Pclass_2        0.006954      -0.093349      0.093349 -0.288585  1.000000
+#&gt; Pclass_3       -0.312271       0.322308     -0.322308 -0.626738 -0.565210
+#&gt; Sex_female     -0.093254      -0.543351      0.543351  0.098013  0.064746
+#&gt; Sex_male        0.093254       0.543351     -0.543351 -0.098013 -0.064746
+#&gt;                 Pclass_3 Sex_female  Sex_male
+#&gt; Age            -0.312271  -0.093254  0.093254
+#&gt; Survived_FALSE  0.322308  -0.543351  0.543351
+#&gt; Survived_TRUE  -0.322308   0.543351 -0.543351
+#&gt; Pclass_1       -0.626738   0.098013 -0.098013
+#&gt; Pclass_2       -0.565210   0.064746 -0.064746
+#&gt; Pclass_3        1.000000  -0.137143  0.137143
+#&gt; Sex_female     -0.137143   1.000000 -1.000000
+#&gt; Sex_male        0.137143  -1.000000  1.000000</div><div class='input'>
 <span class='co'>#' # Calculate p-values as well</span>
 <span class='fu'>corr</span>(<span class='kw'>df</span>, pvalue = <span class='fl'>TRUE</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'>
+</div><div class='output co'>#&gt; $cor
+#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2
+#&gt; Survived_TRUE      1.000000 -0.543351 -0.077221  0.285904  0.093349
+#&gt; Sex_male          -0.543351  1.000000  0.093254 -0.098013 -0.064746
+#&gt; Age               -0.077221  0.093254  1.000000  0.348941  0.006954
+#&gt; Pclass_1           0.285904 -0.098013  0.348941  1.000000 -0.288585
+#&gt; Pclass_2           0.093349 -0.064746  0.006954 -0.288585  1.000000
+#&gt; 
+#&gt; $pvalue
+#&gt;               Survived_TRUE Sex_male      Age Pclass_1 Pclass_2
+#&gt; Survived_TRUE      0.000000 0.000000 0.039125 0.000000 0.005294
+#&gt; Sex_male           0.000000 0.000000 0.012671 0.003405 0.053364
+#&gt; Age                0.039125 0.012671 0.000000 0.000000 0.852842
+#&gt; Pclass_1           0.000000 0.003405 0.000000 0.000000 0.000000
+#&gt; Pclass_2           0.005294 0.053364 0.852842 0.000000 0.000000
+#&gt; </div><div class='input'>
 <span class='co'># Test when no more than 2 non-missing values</span>
 <span class='kw'>df</span><span class='op'>$</span><span class='kw'>trash</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>NA</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>df</span>)<span class='op'>-</span><span class='fl'>1</span>))
 <span class='co'># and another method...</span>
 <span class='fu'>corr</span>(<span class='kw'>df</span>, method = <span class='st'>"spearman"</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div></pre>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Dropped columns with less than 3 non-missing values: 'trash'</span></div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2
+#&gt; Survived_TRUE      1.000000 -0.543351 -0.052565  0.285904  0.093349
+#&gt; Sex_male          -0.543351  1.000000  0.083330 -0.098013 -0.064746
+#&gt; Age               -0.052565  0.083330  1.000000  0.333881  0.031291
+#&gt; Pclass_1           0.285904 -0.098013  0.333881  1.000000 -0.288585
+#&gt; Pclass_2           0.093349 -0.064746  0.031291 -0.288585  1.000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

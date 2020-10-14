@@ -194,12 +194,29 @@ confusion matrix when binary.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># Results for Binomial Model</span>
 <span class='fu'>conf_mat</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'><span class='fu'>conf_mat</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, thresh = <span class='fl'>0.3</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'><span class='fu'>conf_mat</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, sense = <span class='st'>"&lt;="</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 3</span><span>
+#&gt;   `Real x Pred` `TRUE` `FALSE`
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> FALSE            156       9
+#&gt; </span><span style='color: #555555;'>2</span><span> TRUE              35      68</div><div class='input'><span class='fu'>conf_mat</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, thresh = <span class='fl'>0.3</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 3</span><span>
+#&gt;   `Real x Pred` `TRUE` `FALSE`
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> FALSE            138      27
+#&gt; </span><span style='color: #555555;'>2</span><span> TRUE              19      84</div><div class='input'><span class='fu'>conf_mat</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, sense = <span class='st'>"&lt;="</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 3</span><span>
+#&gt;   `Real x Pred` `FALSE` `TRUE`
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> FALSE             156      9
+#&gt; </span><span style='color: #555555;'>2</span><span> TRUE               35     68</div><div class='input'>
 <span class='co'># Results for Multi-Categorical Model</span>
 <span class='fu'>conf_mat</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>score</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div></pre>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 4</span><span>
+#&gt;   `Real x Pred`   n_3   n_1   n_2
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> n_3             120    11    18
+#&gt; </span><span style='color: #555555;'>2</span><span> n_1              12    43     8
+#&gt; </span><span style='color: #555555;'>3</span><span> n_2              26    15    15</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

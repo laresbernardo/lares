@@ -147,10 +147,33 @@
 
 <span class='co'># Calculate and plot</span>
 <span class='kw'>result</span> <span class='op'>&lt;-</span> <span class='fu'>clusterVisualK</span>(<span class='kw'>df</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'>
+</div><div class='img'><img src='clusterVisualK-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># You can use the data generated as well</span>
 <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>result</span><span class='op'>$</span><span class='kw'>data</span>, <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>x</span><span class='op'>$</span><span class='kw'>cluster</span>))
-</div><div class='output co'>#&gt; <span class='error'>Error in lapply(result$data, function(x) head(x$cluster)): object 'result' not found</span></div></pre>
+</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 1 1 1 1 1 1
+#&gt; Levels: 1
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] 1 1 1 1 1 1
+#&gt; Levels: 1 2
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] 1 1 1 1 1 1
+#&gt; Levels: 1 2 3
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] 4 4 4 4 4 4
+#&gt; Levels: 1 2 3 4
+#&gt; 
+#&gt; [[5]]
+#&gt; [1] 2 4 4 4 2 2
+#&gt; Levels: 1 2 3 4 5
+#&gt; 
+#&gt; [[6]]
+#&gt; [1] 4 1 1 1 4 2
+#&gt; Levels: 1 2 3 4 5 6
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

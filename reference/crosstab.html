@@ -188,12 +188,42 @@ be sorted alphabetically</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 <span class='fu'>crosstab</span>(<span class='kw'>dft</span>, <span class='kw'>Survived</span>, <span class='kw'>Pclass</span>, total = <span class='fl'>FALSE</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'><span class='co'># Show values in percentages</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 4</span><span>
+#&gt;   `Survived x Pclass`   `3`   `1`   `2`
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> FALSE                 372    80    97
+#&gt; </span><span style='color: #555555;'>2</span><span> TRUE                  119   136    87</div><div class='input'><span class='co'># Show values in percentages</span>
 <span class='fu'>crosstab</span>(<span class='kw'>dft</span>, <span class='kw'>Pclass</span>, <span class='kw'>Survived</span>, prow = <span class='fl'>TRUE</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'><span class='fu'>crosstab</span>(<span class='kw'>dft</span>, <span class='kw'>Pclass</span>, <span class='kw'>Survived</span>, pall = <span class='fl'>TRUE</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div><div class='input'><span class='co'># Weighted by another variable</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: `funs()` is deprecated as of dplyr 0.8.0.</span>
+#&gt; <span class='warning'>Please use a list of either functions or lambdas: </span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>  # Simple named list: </span>
+#&gt; <span class='warning'>  list(mean = mean, median = median)</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>  # Auto named with `tibble::lst()`: </span>
+#&gt; <span class='warning'>  tibble::lst(mean, median)</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>  # Using lambdas</span>
+#&gt; <span class='warning'>  list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))</span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 4</span><span>
+#&gt;   `Pclass x Survived` `FALSE` `TRUE` total
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> 3                      67.8   34.8  55.1
+#&gt; </span><span style='color: #555555;'>2</span><span> 1                      14.6   39.8  24.2
+#&gt; </span><span style='color: #555555;'>3</span><span> 2                      17.7   25.4  20.6</div><div class='input'><span class='fu'>crosstab</span>(<span class='kw'>dft</span>, <span class='kw'>Pclass</span>, <span class='kw'>Survived</span>, pall = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 4</span><span>
+#&gt;   `Pclass x Survived` `FALSE` `TRUE` total
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> 3                     41.8   13.4   55.1
+#&gt; </span><span style='color: #555555;'>2</span><span> 1                      8.98  15.3   24.2
+#&gt; </span><span style='color: #555555;'>3</span><span> 2                     10.9    9.76  20.6</div><div class='input'><span class='co'># Weighted by another variable</span>
 <span class='fu'>crosstab</span>(<span class='kw'>dft</span>, <span class='kw'>Survived</span>, <span class='kw'>Pclass</span>, wt = <span class='kw'>Fare</span>, prow = <span class='fl'>TRUE</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div></pre>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
+#&gt;   `Survived x Pclass`   `1`   `3`   `2` total
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> TRUE                 71.5  24.3  50.5  57.7
+#&gt; </span><span style='color: #555555;'>2</span><span> FALSE                28.5  75.7  49.5  42.3</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

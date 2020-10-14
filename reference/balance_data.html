@@ -174,7 +174,11 @@ more than 2 unique values, rate will represent percentage for number of rows</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>balance_data</span>(<span class='kw'>dft</span>, <span class='kw'>Survived</span>, rate = <span class='fl'>1</span>, seed = <span class='fl'>123</span>)
 </div><div class='output co'>#&gt; <span class='message'>Resampled from: 549 v 342</span></div><div class='output co'>#&gt; <span class='message'>Reducing size for label: FALSE</span></div><div class='output co'>#&gt; <span class='message'>New label distribution: 342 v 342</span></div><div class='input'><span class='fu'><a href='freqs.html'>freqs</a></span>(<span class='kw'>df</span>, <span class='kw'>Survived</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error in if (is.vector) df &lt;- data.frame(values = df): argument is not interpretable as logical</span></div></pre>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 5</span><span>
+#&gt;   Survived     n     p order  pcum
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> FALSE      342    50     1    50
+#&gt; </span><span style='color: #555555;'>2</span><span> TRUE       342    50     2   100</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
