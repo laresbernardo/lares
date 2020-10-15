@@ -840,8 +840,7 @@ mplot_full <- function(tag,
 #' 
 #' @family ML Visualization
 #' @inheritParams mplot_roc
-#' @param thresh Numeric. Value which splits the results for the 
-#' confusion matrix.
+#' @inheritParams conf_mat
 #' @param abc Boolean. Arrange columns and rows alphabetically?
 #' @param squared Boolean. Force plot to be squared?
 #' @examples 
@@ -858,12 +857,13 @@ mplot_full <- function(tag,
 #'           model_name = "Titanic Class Model")
 #' @export
 mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE, 
-                       squared = FALSE,
+                       squared = FALSE, diagonal = TRUE,
                        subtitle = NA, model_name = NA,
                        save = FALSE, subdir = NA, 
                        file_name = "viz_conf_mat.png") {
   
   df <- data.frame(tag, score)
+  if (!diagonal) df <- df %>% filter(.data$tag != .data$score)
   
   # About tags
   values <- df %>% group_by(.data$tag) %>% tally() %>% 

@@ -10,6 +10,7 @@ mplot_conf(
   thresh = 0.5,
   abc = TRUE,
   squared = FALSE,
+  diagonal = TRUE,
   subtitle = NA,
   model_name = NA,
   save = FALSE,
@@ -23,11 +24,14 @@ mplot_conf(
 \item{score}{Vector. Predicted value or model's result.}
 
 \item{thresh}{Numeric. Value which splits the results for the 
-confusion matrix.}
+confusion matrix when binary.}
 
 \item{abc}{Boolean. Arrange columns and rows alphabetically?}
 
 \item{squared}{Boolean. Force plot to be squared?}
+
+\item{diagonal}{Boolean. \code{FALSE} to convert diagonal numbers to 
+zeroes. Ideal to detect must confusing categories.}
 
 \item{subtitle}{Character. Subtitle to show in plot}
 

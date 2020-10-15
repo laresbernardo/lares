@@ -37,7 +37,6 @@ model_preprocess <- function(df,
                              seed = 0,
                              quiet = FALSE) {
   
-  
   tic(id = "model_preprocess")
   on.exit(toc(id = "model_preprocess", msg = "Pre-processed in", quiet = TRUE))
   

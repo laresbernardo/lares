@@ -212,7 +212,9 @@ model_metrics <- function(tag, score, multis = NA,
 #' @param score Vector. Predicted value or model's result
 #' @param thresh Numeric. Value which splits the results for the 
 #' confusion matrix when binary.
-#' @param sense Character. Inequation sense for threshhold: <, <=, >=, >
+#' @param sense Character. Inequation sense for threshold: <, <=, >=, >
+#' @param diagonal Boolean. \code{FALSE} to convert diagonal numbers to 
+#' zeroes. Ideal to detect must confusing categories. 
 #' @param plot Boolean. Plot result? Uses \code{mplot_conf()}
 #' @examples 
 #' data(dfr) # Results for AutoML Predictions
@@ -226,11 +228,14 @@ model_metrics <- function(tag, score, multis = NA,
 #' # Results for Multi-Categorical Model
 #' conf_mat(dfr$class3$tag, dfr$class3$score)
 #' @export
-conf_mat <- function(tag, score, thresh = 0.5, sense = ">=", plot = FALSE) {
+conf_mat <- function(tag, score, thresh = 0.5, 
+                     sense = ">=", 
+                     diagonal = TRUE,
+                     plot = FALSE) {
   
-  if (plot) 
-    return(mplot_conf(tag, score, thresh = thresh))
   df <- data.frame(tag, score)
+  if (!diagonal) df <- df %>% filter(.data$tag != .data$score)
+  if (plot) return(mplot_conf(df$tag, df$score, thresh = thresh))
   
   # About tags
   labels <- df %>% 

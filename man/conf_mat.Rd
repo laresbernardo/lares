@@ -4,7 +4,7 @@
 \alias{conf_mat}
 \title{Confussion Matrix}
 \usage{
-conf_mat(tag, score, thresh = 0.5, sense = ">=", plot = FALSE)
+conf_mat(tag, score, thresh = 0.5, sense = ">=", diagonal = TRUE, plot = FALSE)
 }
 \arguments{
 \item{tag}{Vector. Real known label}
@@ -14,7 +14,10 @@ conf_mat(tag, score, thresh = 0.5, sense = ">=", plot = FALSE)
 \item{thresh}{Numeric. Value which splits the results for the 
 confusion matrix when binary.}
 
-\item{sense}{Character. Inequation sense for threshhold: <, <=, >=, >}
+\item{sense}{Character. Inequation sense for threshold: <, <=, >=, >}
+
+\item{diagonal}{Boolean. \code{FALSE} to convert diagonal numbers to 
+zeroes. Ideal to detect must confusing categories.}
 
 \item{plot}{Boolean. Plot result? Uses \code{mplot_conf()}}
 }
