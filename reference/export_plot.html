@@ -73,7 +73,7 @@ H2O installed and update to latest stable version." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.6</span>
       </span>
     </div>
 
@@ -120,6 +120,7 @@ H2O installed and update to latest stable version.</p>
   sep = <span class='st'>".vs."</span>,
   width = <span class='fl'>8</span>,
   height = <span class='fl'>6</span>,
+  format = <span class='st'>"png"</span>,
   res = <span class='fl'>300</span>,
   dir = <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>(),
   subdir = <span class='fl'>NA</span>,
@@ -135,7 +136,8 @@ H2O installed and update to latest stable version.</p>
     </tr>
     <tr>
       <th>name</th>
-      <td><p>Character. File's name or sufix if vars is not null</p></td>
+      <td><p>Character. File's name or suffix if vars is not <code>NA</code>. No need
+to include file format on file name.</p></td>
     </tr>
     <tr>
       <th>vars</th>
@@ -148,6 +150,10 @@ H2O installed and update to latest stable version.</p>
     <tr>
       <th>width, height, res</th>
       <td><p>Numeric. Plot's width, height, and res (for grids)</p></td>
+    </tr>
+    <tr>
+      <th>format</th>
+      <td><p>Character. One of: png or jpeg.</p></td>
     </tr>
     <tr>
       <th>dir</th>

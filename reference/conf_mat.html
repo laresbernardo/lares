@@ -74,7 +74,7 @@ or the labels you wish to cross with." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.6</span>
       </span>
     </div>
 
@@ -195,15 +195,15 @@ confusion matrix when binary.</p></td>
 <span class='co'># Results for Binomial Model</span>
 <span class='fu'>conf_mat</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>)
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 3</span><span>
-#&gt;   `Real x Pred` `TRUE` `FALSE`
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> FALSE            156       9
-#&gt; </span><span style='color: #555555;'>2</span><span> TRUE              35      68</div><div class='input'><span class='fu'>conf_mat</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, thresh = <span class='fl'>0.3</span>)
+#&gt;   `Real x Pred` `FALSE` `TRUE`
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> FALSE               9    156
+#&gt; </span><span style='color: #555555;'>2</span><span> TRUE               68     35</div><div class='input'><span class='fu'>conf_mat</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, thresh = <span class='fl'>0.3</span>)
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 3</span><span>
-#&gt;   `Real x Pred` `TRUE` `FALSE`
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> FALSE            138      27
-#&gt; </span><span style='color: #555555;'>2</span><span> TRUE              19      84</div><div class='input'><span class='fu'>conf_mat</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, sense = <span class='st'>"&lt;="</span>)
+#&gt;   `Real x Pred` `FALSE` `TRUE`
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> FALSE              27    138
+#&gt; </span><span style='color: #555555;'>2</span><span> TRUE               84     19</div><div class='input'><span class='fu'>conf_mat</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, sense = <span class='st'>"&lt;="</span>)
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 3</span><span>
 #&gt;   `Real x Pred` `FALSE` `TRUE`
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>

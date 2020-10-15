@@ -75,7 +75,7 @@ or custom algorithm." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.6</span>
       </span>
     </div>
 
@@ -128,6 +128,7 @@ or custom algorithm.</p>
   balance = <span class='fl'>FALSE</span>,
   impute = <span class='fl'>FALSE</span>,
   no_outliers = <span class='fl'>TRUE</span>,
+  unique_train = <span class='fl'>TRUE</span>,
   center = <span class='fl'>FALSE</span>,
   scale = <span class='fl'>FALSE</span>,
   thresh = <span class='fl'>10</span>,
@@ -192,6 +193,10 @@ categorical model.</p></td>
 Will remove those values that are farther than n standard deviations from
 the independent variable's mean (Z-score). Set to <code>TRUE</code> for default (3) 
 or numeric to set a different multiplier.</p></td>
+    </tr>
+    <tr>
+      <th>unique_train</th>
+      <td><p>Boolean. Keep only unique row observations for training data?</p></td>
     </tr>
     <tr>
       <th>center</th>
