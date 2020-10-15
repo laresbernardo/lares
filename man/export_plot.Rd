@@ -11,6 +11,7 @@ export_plot(
   sep = ".vs.",
   width = 8,
   height = 6,
+  format = "png",
   res = 300,
   dir = getwd(),
   subdir = NA,
@@ -20,13 +21,16 @@ export_plot(
 \arguments{
 \item{p}{ggplot2 or gridExtra object. Plot to export}
 
-\item{name}{Character. File's name or sufix if vars is not null}
+\item{name}{Character. File's name or suffix if vars is not \code{NA}. No need
+to include file format on file name.}
 
 \item{vars}{Vector. Variables in plot}
 
 \item{sep}{Character. Separator for variables}
 
 \item{width, height, res}{Numeric. Plot's width, height, and res (for grids)}
+
+\item{format}{Character. One of: png or jpeg.}
 
 \item{dir}{Character. In which directory do you wish to save 
 the results? Working directory as default.}

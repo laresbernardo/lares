@@ -385,9 +385,11 @@ noPlot <- function(message = "Nothing to show here!",
 #' 
 #' @family Tools
 #' @param p ggplot2 or gridExtra object. Plot to export
-#' @param name Character. File's name or sufix if vars is not null
+#' @param name Character. File's name or suffix if vars is not \code{NA}. No need
+#' to include file format on file name.
 #' @param vars Vector. Variables in plot
 #' @param sep Character. Separator for variables
+#' @param format Character. One of: png or jpeg.
 #' @param width,height,res Numeric. Plot's width, height, and res (for grids)
 #' @param dir Character. In which directory do you wish to save 
 #' the results? Working directory as default.
@@ -402,29 +404,32 @@ noPlot <- function(message = "Nothing to show here!",
 #' @export
 export_plot <- function(p, 
                         name = "plot", vars = NA, sep = ".vs.", 
-                        width = 8, height = 6, res = 300,
+                        width = 8, height = 6, 
+                        format = "png", res = 300,
                         dir = getwd(), subdir = NA,
                         quiet = FALSE) {
   
   # File name
+  name <- sub('\\..[^\\.]*$', '', name)
+  format <- paste0(".", format)
   if (!is.na(vars)) {
-    names <- vector2text(
-      cleanText(as.character(vars), spaces = FALSE), sep = sep, quotes = FALSE)
-    file_name <- paste0(name, "_", names, ".png")  
+    names <- v2t(cleanText(as.character(vars), spaces = FALSE), sep = sep, quotes = FALSE)
+    file_name <- paste0(name, "_", names, format)  
   } else {
-    file_name <- paste0(name, ".png")  
+    file_name <- paste0(name, format)  
   }
   
   # Create directory if needed
   if (!is.na(subdir)) {
     dir <- file.path(dir, subdir)
-    if (!dir.exists(dir))
-      dir.create(dir)
+    if (!dir.exists(dir)) dir.create(dir)
     file_name <- paste(subdir, file_name, sep = "/")
   }
   
   # Export plot to file
-  png(file_name, height = height * res, width = width * res, res = res)
+  check_opts(format, c("png","jpeg"))
+  export_fx <- base::get(format)
+  export_fx(file_name, height = height * res, width = width * res, res = res)
   plot(p)
   dev.off() 
   

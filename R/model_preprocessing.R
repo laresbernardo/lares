@@ -30,11 +30,16 @@ model_preprocess <- function(df,
                              balance = FALSE,
                              impute = FALSE,
                              no_outliers = TRUE,
+                             unique_train = TRUE,
                              center = FALSE,
                              scale = FALSE,
                              thresh = 10,
                              seed = 0,
                              quiet = FALSE) {
+  
+  
+  tic(id = "model_preprocess")
+  on.exit(toc(id = "model_preprocess", msg = "Pre-processed in", quiet = TRUE))
   
   # INDEPENDENT VARIABLE
   if (!y %in% colnames(df)) {
@@ -156,8 +161,16 @@ model_preprocess <- function(df,
     } else stop(paste("There is no column named", train_test))
   }
   
-  if (nrow(train) > 10000)
-    message("- SAMPLE: Consider sampling your dataset for faster results")
+  # CHECK TRAINING DATASET
+  if (unique_train) {
+    train_rows <- nrow(train)
+    train <- distinct(train)
+    if (nrow(train) != train_rows & !quiet)
+      message(paste("- REPEATED: There were", train_rows - nrow(train), 
+                    "repeated rows which are being suppressed for the train dataset")) 
+  }
+  if (nrow(train) > 10000 & !quiet)
+    message("- SAMPLE: Consider sampling or changing the split argument for faster results")
   
   # BALANCE TRAINING SET
   if (model_type == "Classifier" & balance) {

@@ -15,6 +15,7 @@ model_preprocess(
   balance = FALSE,
   impute = FALSE,
   no_outliers = TRUE,
+  unique_train = TRUE,
   center = FALSE,
   scale = FALSE,
   thresh = 10,
@@ -57,6 +58,8 @@ categorical model.}
 Will remove those values that are farther than n standard deviations from
 the independent variable's mean (Z-score). Set to \code{TRUE} for default (3) 
 or numeric to set a different multiplier.}
+
+\item{unique_train}{Boolean. Keep only unique row observations for training data?}
 
 \item{center}{Boolean. Using the base function scale, do you wish
 to center and/or scale all numerical values?}

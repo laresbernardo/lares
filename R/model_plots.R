@@ -106,13 +106,7 @@ mplot_density <- function(tag,
     
   }
   
-  if (save) {
-    if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = TRUE)
-      file_name <- paste(subdir, file_name, sep = "/")
-    }
-    p <- p + ggsave(file_name, width = 6, height = 6)
-  }
+  if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
   
   return(p)
 }
@@ -193,13 +187,7 @@ mplot_importance <- function(var,
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   
-  if (save) {
-    if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = TRUE)
-      file_name <- paste(subdir, file_name, sep = "/")
-    }
-    p <- p + ggsave(file_name, width = 6, height = 6)
-  }
+  if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
   
   return(p)
   
@@ -294,17 +282,12 @@ mplot_roc <- function(tag,
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
   
+  if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
+  
   if (plotly) {
     try_require("plotly")
     p <- ggplotly(p)
   }
-  
-  if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = TRUE)
-    file_name <- paste(subdir, file_name, sep = "/")
-  }
-  
-  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
   
   return(p)
   
@@ -364,12 +347,7 @@ mplot_cuts <- function(score,
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
   
-  if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = TRUE)
-    file_name <- paste(subdir, file_name, sep = "/")
-  }
-  
-  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
+  if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
   
   if (table) {
     return(deciles)
@@ -584,12 +562,7 @@ mplot_splits <- function(tag,
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
   
-  if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = TRUE)
-    file_name <- paste(subdir, file_name, sep = "/")
-  }
-  
-  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
+  if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
   
   return(p)
   
@@ -746,7 +719,7 @@ mplot_lineal <- function(tag,
   
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
-  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
+  if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
   
   return(p)
   
@@ -870,6 +843,7 @@ mplot_full <- function(tag,
 #' @param thresh Numeric. Value which splits the results for the 
 #' confusion matrix.
 #' @param abc Boolean. Arrange columns and rows alphabetically?
+#' @param squared Boolean. Force plot to be squared?
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -884,6 +858,7 @@ mplot_full <- function(tag,
 #'           model_name = "Titanic Class Model")
 #' @export
 mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE, 
+                       squared = FALSE,
                        subtitle = NA, model_name = NA,
                        save = FALSE, subdir = NA, 
                        file_name = "viz_conf_mat.png") {
@@ -912,8 +887,8 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
     group_by(.data$tag) %>%
     mutate(aux = 100*.data$n/sum(.data$n)) %>%
     mutate(label = paste0(formatNum(.data$n, 0),"\n", 
-                          formatNum(.data$p, 1), "%T\n(", 
-                          formatNum(.data$aux, 1),"%)"))
+                          #formatNum(.data$p, 1), "%T\n", 
+                          "(",formatNum(.data$aux, 1),"%)"))
   trues <- sum(plot_cf$n[as.character(plot_cf$tag) == as.character(plot_cf$pred)])
   total <- sum(plot_cf$n)
   acc <- formatNum(100 * (trues / total), 2, pos = "%")
@@ -925,8 +900,9 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
     x = as.numeric(factor(.data$pred, levels = labels)), 
     fill = .data$aux, size = .data$n, label = .data$label)) +
     geom_tile() + theme_lares2() +
-    geom_text(colour = "white", lineheight = .8) + 
-    scale_size(range = c(2.8, 3.5)) + coord_equal() + 
+    scale_fill_gradient(low = "white", high = "orange") +
+    geom_text(lineheight = .8) + 
+    scale_size(range = c(2.9, 3.4)) + 
     guides(fill = FALSE, size = FALSE, colour = FALSE) +
     labs(x = "Predicted values", y = "Real values",
          title = paste("Confusion Matrix", ifelse(
@@ -958,13 +934,9 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
   
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
+  if (squared) p <- p + coord_equal()
   
-  if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = TRUE)
-    file_name <- paste(subdir, file_name, sep = "/")
-  }
-  
-  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
+  if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
   
   return(p)
   
@@ -1098,12 +1070,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
   if (!is.na(caption)) caption <- paste(text, caption, sep = "\n") else caption <- text
   p <- p + labs(caption = caption)
   
-  if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = TRUE)
-    file_name <- paste(subdir, file_name, sep = "/")
-  }
-  
-  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
+  if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
   
   return(p)
 }
@@ -1219,12 +1186,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
   if (!is.na(caption)) caption <- paste(text, caption, sep = "\n") else caption <- text
   p <- p + labs(caption = caption)
   
-  if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = TRUE)
-    file_name <- paste(subdir, file_name, sep = "/")
-  }
-  
-  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
+  if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
   
   return(p)
 }

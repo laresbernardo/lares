@@ -79,16 +79,16 @@ crosstab <- function(df, ..., wt = NULL,
   # Create totals
   ret <- ret %>% mutate(total = rowSums(select_if(., is.numeric), na.rm = TRUE))
   if (pcol | prow) 
-    ret <- ret %>% mutate_if(is.numeric, funs(round(100*./sum(., na.rm = TRUE), decimals)))
+    ret <- ret %>% mutate_if(is.numeric, list(~round(100*./sum(., na.rm = TRUE), decimals)))
   if (pall) {
     numericals <- ret[,-c(1, ncol(ret))]
     all <- sum(numericals, na.rm = TRUE)
-    ret <- ret %>% mutate_if(is.numeric, funs(round(100*./all, decimals)))
+    ret <- ret %>% mutate_if(is.numeric, list(~round(100*./all, decimals)))
   }
   ret <- arrange(ret, desc(.data$total))
   
-  if (!total) 
-    ret <- ret %>% select(-.data$total)
+  if (!total) ret <- ret %>% select(-.data$total)
+  
   return(as_tibble(ret))
   
 }

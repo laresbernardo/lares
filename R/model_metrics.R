@@ -249,10 +249,11 @@ conf_mat <- function(tag, score, thresh = 0.5, sense = ">=", plot = FALSE) {
     df <- mutate(df, pred = .data$score)
   }
   
-  # Confussion Matrix
+  # Confusion Matrix
   ret <- df %>% 
     rename("Real" = .data$tag, "Pred" = .data$pred) %>%
     crosstab(.data$Real, .data$Pred, total = FALSE)
+  ret <- ret[,c(colnames(ret)[1], as.character(unlist(ret[,1])))]
   ret[is.na(ret)] <- 0
   
   return(as_tibble(ret))

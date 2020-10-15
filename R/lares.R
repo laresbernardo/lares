@@ -20,7 +20,7 @@
 #' @importFrom jsonlite fromJSON toJSON flatten
 #' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd days
 #' minute hour second %m+% floor_date ceiling_date
-#' @importFrom magrittr %>% set_colnames
+#' @importFrom magrittr %>% set_colnames set_names
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom patchwork guide_area plot_layout plot_annotation wrap_plots

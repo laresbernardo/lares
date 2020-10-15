@@ -52,6 +52,7 @@
 #' Will remove those values that are farther than n standard deviations from
 #' the independent variable's mean (Z-score). Set to \code{TRUE} for default (3) 
 #' or numeric to set a different multiplier.
+#' @param unique_train Boolean. Keep only unique row observations for training data?
 #' @param center,scale Boolean. Using the base function scale, do you wish
 #' to center and/or scale all numerical values? 
 #' @param thresh Integer. Threshold for selecting binary or regression 
@@ -115,6 +116,7 @@ h2o_automl <- function(df, y = "tag",
                        balance = FALSE,
                        impute = FALSE,
                        no_outliers = TRUE,
+                       unique_train = TRUE,
                        center = FALSE,
                        scale = FALSE,
                        thresh = 10,
@@ -135,6 +137,7 @@ h2o_automl <- function(df, y = "tag",
                        ...) {
   
   tic(id = "h2o_automl")
+  on.exit(toc(id = "h2o_automl", msg = "Process duration:", quiet = quiet))
   
   if (!quiet) message(paste(Sys.time(), "| Started process..."))
   
@@ -153,6 +156,7 @@ h2o_automl <- function(df, y = "tag",
     balance = balance,
     impute = impute,
     no_outliers = no_outliers,
+    unique_train = unique_train,
     center = center,
     scale = scale,
     thresh = thresh,
@@ -206,7 +210,7 @@ h2o_automl <- function(df, y = "tag",
     if (!is.nan(aml@leaderboard[1,2]))
       if (!quiet) {
         message(paste("- EUREKA: Succesfully generated", nrow(aml@leaderboard), "models")) 
-        if (print == TRUE) print(head(aml@leaderboard, 3))
+        if (print) print(head(aml@leaderboard, 3))
       } 
   }
   
@@ -231,8 +235,7 @@ h2o_automl <- function(df, y = "tag",
     if (!quiet) message("- EXPORT: Results and model files exported succesfully!")
   }
   
-  if (!quiet) toc(id = "h2o_automl", msg = "Process duration:")
-  if (!quiet & print == TRUE) print(results)
+  if (!quiet & print) print(results)
   
   if (alarm & !quiet) {
     try_require("beepr", stop = FALSE)

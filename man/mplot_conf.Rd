@@ -9,6 +9,7 @@ mplot_conf(
   score,
   thresh = 0.5,
   abc = TRUE,
+  squared = FALSE,
   subtitle = NA,
   model_name = NA,
   save = FALSE,
@@ -25,6 +26,8 @@ mplot_conf(
 confusion matrix.}
 
 \item{abc}{Boolean. Arrange columns and rows alphabetically?}
+
+\item{squared}{Boolean. Force plot to be squared?}
 
 \item{subtitle}{Character. Subtitle to show in plot}
 
