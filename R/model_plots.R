@@ -898,7 +898,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
   p <- ggplot(plot_cf, aes(
     y = as.numeric(factor(.data$tag, levels = rev(labels))), 
     x = as.numeric(factor(.data$pred, levels = labels)), 
-    fill = .data$aux, size = .data$n, label = .data$label)) +
+    fill = .data$n, size = .data$aux, label = .data$label)) +
     geom_tile() + theme_lares2() +
     scale_fill_gradient(low = "white", high = "orange") +
     geom_text(lineheight = .8) + 
