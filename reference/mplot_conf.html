@@ -117,6 +117,7 @@
   thresh = <span class='fl'>0.5</span>,
   abc = <span class='fl'>TRUE</span>,
   squared = <span class='fl'>FALSE</span>,
+  diagonal = <span class='fl'>TRUE</span>,
   subtitle = <span class='fl'>NA</span>,
   model_name = <span class='fl'>NA</span>,
   save = <span class='fl'>FALSE</span>,
@@ -138,7 +139,7 @@
     <tr>
       <th>thresh</th>
       <td><p>Numeric. Value which splits the results for the 
-confusion matrix.</p></td>
+confusion matrix when binary.</p></td>
     </tr>
     <tr>
       <th>abc</th>
@@ -147,6 +148,11 @@ confusion matrix.</p></td>
     <tr>
       <th>squared</th>
       <td><p>Boolean. Force plot to be squared?</p></td>
+    </tr>
+    <tr>
+      <th>diagonal</th>
+      <td><p>Boolean. <code>FALSE</code> to convert diagonal numbers to 
+zeroes. Ideal to detect must confusing categories.</p></td>
     </tr>
     <tr>
       <th>subtitle</th>

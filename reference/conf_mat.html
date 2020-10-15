@@ -115,7 +115,7 @@ or the labels you wish to cross with." />
 or the labels you wish to cross with.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>conf_mat</span>(<span class='kw'>tag</span>, <span class='kw'>score</span>, thresh = <span class='fl'>0.5</span>, sense = <span class='st'>"&gt;="</span>, plot = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>conf_mat</span>(<span class='kw'>tag</span>, <span class='kw'>score</span>, thresh = <span class='fl'>0.5</span>, sense = <span class='st'>"&gt;="</span>, diagonal = <span class='fl'>TRUE</span>, plot = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,7 +135,12 @@ confusion matrix when binary.</p></td>
     </tr>
     <tr>
       <th>sense</th>
-      <td><p>Character. Inequation sense for threshhold: &lt;, &lt;=, &gt;=, &gt;</p></td>
+      <td><p>Character. Inequation sense for threshold: &lt;, &lt;=, &gt;=, &gt;</p></td>
+    </tr>
+    <tr>
+      <th>diagonal</th>
+      <td><p>Boolean. <code>FALSE</code> to convert diagonal numbers to 
+zeroes. Ideal to detect must confusing categories.</p></td>
     </tr>
     <tr>
       <th>plot</th>
