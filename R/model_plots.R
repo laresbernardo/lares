@@ -906,7 +906,8 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
     guides(fill = FALSE, size = FALSE, colour = FALSE) +
     labs(x = "Predicted values", y = "Real values",
          title = paste("Confusion Matrix", ifelse(
-           thresh != 0.5, paste("with Threshold =", thresh), "")),
+           thresh != 0.5, paste("with Threshold =", thresh), ""), ifelse(
+             diagonal == FALSE, paste("without diagonal values"))),
          subtitle = metrics) +
     theme_lares2() +
     theme(axis.text.x = element_text(angle = 30, hjust = 0),
@@ -1193,7 +1194,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
 
 
 ####################################################################
-#' Top Hit Ratios for Multi-Classifiers
+#' Top Hit Ratios for Multi-Classification Models
 #' 
 #' Calculate and plot a multi-class model's predictions accuracy
 #' based on top N predictions and distribution of probabilities.

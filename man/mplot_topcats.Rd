@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_plots.R
 \name{mplot_topcats}
 \alias{mplot_topcats}
-\title{Top Hit Ratios for Multi-Classifiers}
+\title{Top Hit Ratios for Multi-Classification Models}
 \usage{
 mplot_topcats(tag, score, multis, model_name = NA)
 }

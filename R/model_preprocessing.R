@@ -54,12 +54,12 @@ model_preprocess <- function(df,
   
   # MODEL TYPE
   cats <- unique(df$tag)
-  model_type <- ifelse(length(cats) <= as.integer(thresh), "Classifier", "Regression")
+  model_type <- ifelse(length(cats) <= as.integer(thresh), "Classification", "Regression")
   if (!quiet) message("- MODEL TYPE: ", model_type)
   # Change spaces for dots as 'multis' arguments may not match
-  if (model_type == "Classifier") cats <- gsub(" ", ".", cats)
+  if (model_type == "Classification") cats <- gsub(" ", ".", cats)
   # If y variables is named as one of the categories, prediction values will be a problem
-  if (model_type == "Classifier" & y %in% cats) {
+  if (model_type == "Classification" & y %in% cats) {
     stop(paste("Your y parameter can't be named as any of the labels used.",
                "Please, rename", y, "into a valid column name next such as",
                paste0(y, "_labels for example.")))
@@ -71,14 +71,14 @@ model_preprocess <- function(df,
       stop(paste("Your target value", target, "is not valid.",
                  "Possible other values:", vector2text(cats)))
   # When might seem numeric but is categorical
-  if (model_type == "Classifier" & sum(grepl('^[0-9]', cats)) > 0)
+  if (model_type == "Classification" & sum(grepl('^[0-9]', cats)) > 0)
     df <- mutate(df, tag = as.factor(as.character(
       ifelse(grepl('^[0-9]', .data$tag), paste0("n_", .data$tag), as.character(.data$tag)))))
   # When is regression should always be numerical
   if (model_type == "Regression")
     df$tag <- as.numeric(df$tag)
   # Show a summary of our tags
-  if (model_type == "Classifier" & !quiet) print(freqs(df, .data$tag))
+  if (model_type == "Classification" & !quiet) print(freqs(df, .data$tag))
   if (model_type == "Regression" & !quiet) print(summary(df$tag)) 
   
   # MISSING VALUES
@@ -169,10 +169,10 @@ model_preprocess <- function(df,
                     "repeated rows which are being suppressed for the train dataset")) 
   }
   if (nrow(train) > 10000 & !quiet)
-    message("- SAMPLE: Consider sampling or changing the split argument for faster results")
+    message("- SAMPLE: Consider sampling or reduce the 'split' argument for faster results")
   
   # BALANCE TRAINING SET
-  if (model_type == "Classifier" & balance) {
+  if (model_type == "Classification" & balance) {
     total <- nrow(train)
     min <- freqs(train, .data$tag) %>% .$n %>% min(., na.rm = TRUE)
     train <- train %>% group_by(.data$tag) %>% sample_n(min)
@@ -182,7 +182,7 @@ model_preprocess <- function(df,
   }
   
   # CHECK TRAIN/TEST VALUES
-  if (model_type == "Classifier") {
+  if (model_type == "Classification") {
     if (!all(unique(df$tag) %in% unique(train$tag)))
       stop(paste("You must train with all available tags:", vector2text(unique(df$tag))))
     if (!all(unique(df$tag) %in% unique(test$tag)))

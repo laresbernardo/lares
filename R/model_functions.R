@@ -282,7 +282,7 @@ print.h2o_automl <- function(x, importance = TRUE, ...) {
   data_points <- nrow(x$datasets$global)
   split <- round(100*x$split)
   
-  if (x$type == "Classifier") {
+  if (x$type == "Classification") {
     cats <-filter(x$datasets$global, grepl("train", .data$train_test)) %>% 
       .[,x$y] %>% unique %>% nrow
     x$type <- sprintf("%s (%s classes)", x$type, cats)
@@ -333,7 +333,7 @@ print.h2o_automl <- function(x, importance = TRUE, ...) {
 #' @param h2o_object H2O Leaderboard (H2OFrame/H2OAutoML) or Model (h2o)
 #' @param test,train Dataframe. Must have the same columns
 #' @param which Integer. Which model to select from leaderboard
-#' @param model_type Character. Select "Classifier" or "Regression"
+#' @param model_type Character. Select "Classification" or "Regression"
 #' @param ignore Character vector. Columns too ignore
 #' @param leaderboard H2O's Leaderboard. Passed when using 
 #' \code{h2o_selectmodel} as it contains plain model and no leader board.
@@ -347,7 +347,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
                         ...) {
   
   # MODEL TYPE
-  types <- c("Classifier", "Regression")
+  types <- c("Classification", "Regression")
   check_opts(model_type, types)
   thresh <- ifelse(model_type == types[1], 10000, 0)
   
@@ -369,7 +369,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
       mutate(train_test = c(rep("test", nrow(test)), rep("train", nrow(train))))
   }
   colnames(global)[colnames(global) == "tag"] <- y
-  if (model_type == "Classifier")
+  if (model_type == "Classification")
     cats <- unique(global[,colnames(global) == y]) else cats <- "None"
   
   # SELECT MODEL FROM h2o_automl()
@@ -446,7 +446,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   # cvresults <- m@model$cross_validation_metrics_summary
   # results$metrics[["cv"]] <- as_tibble(
   #   data.frame(metric = rownames(cvresults), cvresults))
-  if (model_type == "Classifier" & length(cats) == 2) 
+  if (model_type == "Classification" & length(cats) == 2) 
     results$metrics[["max_metrics"]] <- data.frame(
       m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores)
   if (!stacked) results[["importance"]] <- imp
@@ -466,7 +466,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   results[["categoricals"]] <- list_cats(filter(global, grepl("train", .data$train_test)))
   results[["type"]] <- model_type
   results[["split"]] <- split
-  if (model_type == "Classifier") 
+  if (model_type == "Classification") 
     results[["threshold"]] <- thresh
   results[["model_name"]] <- as.vector(m@model_id)
   results[["algorithm"]] <- m@algorithm
@@ -538,7 +538,7 @@ get_scores <- function(predictions,
   
   # Multis object and standard predictions output
   multis <- NA
-  if (model_type == "Classifier") {
+  if (model_type == "Classification") {
     if (length(cats) == 2) {
       scores <- select_if(scores, is.numeric) %>% .[,1]
     } else {

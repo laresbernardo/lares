@@ -31,7 +31,7 @@ h2o_results(
 
 \item{which}{Integer. Which model to select from leaderboard}
 
-\item{model_type}{Character. Select "Classifier" or "Regression"}
+\item{model_type}{Character. Select "Classification" or "Regression"}
 
 \item{target}{Value. Which is your target positive value? If 
 set to \code{'auto'}, the target with largest \code{mean(score)} will be 

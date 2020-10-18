@@ -65,17 +65,17 @@ model_metrics <- function(tag, score, multis = NA,
   
   metrics <- list()
   cats <- sort(unique(as.character(tag)))
-  model_type <- ifelse(length(cats) <= thresh, "Classifier", "Regression")    
+  model_type <- ifelse(length(cats) <= thresh, "Classification", "Regression")    
   
   # When seems numeric but is categorical
-  if (model_type == "Classifier" & sum(grepl('^[0-9]', cats)) > 0)
+  if (model_type == "Classification" & sum(grepl('^[0-9]', cats)) > 0)
     tag <- as.factor(as.character(ifelse(
       grepl('^[0-9]', tag), paste0("n_", tag), as.character(tag))))
   # When is regression should always be numerical
   if (model_type == "Regression")
     tag <- as.numeric(tag)
   
-  if (model_type == "Classifier") {
+  if (model_type == "Classification") {
     
     dic <- c("AUC: Area Under the Curve",
              "ACC: Accuracy",
