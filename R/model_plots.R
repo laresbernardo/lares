@@ -907,7 +907,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
     labs(x = "Predicted values", y = "Real values",
          title = paste("Confusion Matrix", ifelse(
            thresh != 0.5, paste("with Threshold =", thresh), ""), ifelse(
-             diagonal == FALSE, paste("without diagonal values"))),
+             diagonal == FALSE, paste("without diagonal values"), "")),
          subtitle = metrics) +
     theme_lares2() +
     theme(axis.text.x = element_text(angle = 30, hjust = 0),
