@@ -443,9 +443,11 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     target = target,
     model_name = as.vector(m@model_id),
     plots = plots)
-  # cvresults <- m@model$cross_validation_metrics_summary
-  # results$metrics[["cv"]] <- as_tibble(
-  #   data.frame(metric = rownames(cvresults), cvresults))
+  cvresults <- m@model$cross_validation_metrics_summary
+  if (!is.null(cvresults))
+    results$metrics[["cv_metrics"]] <- as_tibble(
+      data.frame(metric = rownames(cvresults), 
+                 mutate_all(cvresults, list(~as.numeric(as.character(.))))))
   if (model_type == "Classification" & length(cats) == 2) 
     results$metrics[["max_metrics"]] <- data.frame(
       m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores)
@@ -659,10 +661,13 @@ export_results <- function(results,
           results$metrics$metrics_tags else "NA",
         "Test's Confusion Matrix" = if (length(results$metrics$confusion_matrix) > 1)
           results$metrics$confusion_matrix else "NA",
+        "Predicted Variable" = results$y,
+        "Ignored Variables" = results$ignored,
         "Variables Importance" = results$importance,
         "H2O Global Results" = results$model,
         "Leaderboard" = results$leaderboard,
         "10 Scoring examples" = sample_n(results$datasets$global, 10),
+        "Seed" = results$seed,
         "H20 Version" = results$h2o)
       if (is.na(note)[1]) results_txt$Note <- NULL
       capture.output(results_txt, file = paste0(dir, "/", name, ".txt"))
