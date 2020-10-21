@@ -448,9 +448,12 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     results$metrics[["cv_metrics"]] <- as_tibble(
       data.frame(metric = rownames(cvresults), 
                  mutate_all(cvresults, list(~as.numeric(as.character(.))))))
-  if (model_type == "Classification" & length(cats) == 2) 
-    results$metrics[["max_metrics"]] <- data.frame(
+  if (model_type == "Classification") {
+    if (length(cats) == 2) results$metrics[["max_metrics"]] <- data.frame(
       m@model$cross_validation_metrics@metrics$max_criteria_and_metric_scores)
+    if (length(cats) > 2) results$metrics[["hit_ratio"]] <- data.frame(
+      m@model$cross_validation_metrics@metrics$hit_ratio_table)
+  }
   if (!stacked) results[["importance"]] <- imp
   results[["datasets"]] <- list(
     global = as_tibble(global), 
@@ -493,6 +496,8 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
       subtitle = results$project,
       model_name = results$model_name,
       plot = FALSE)
+    plots[["metrics"]] <- results$metrics$plots
+    results$metrics$plots <- NULL
     if (length(multis) > 1)
       plots[["top_cats"]] <- mplot_topcats(
         tag = results$scores_test$tag,
