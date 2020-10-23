@@ -19,7 +19,7 @@ Having a \code{h2o_shap} object, plot a dependence plot for any
 categorical or numerical feature.
 }
 \examples{
-\donttest{
+\dontrun{
 # Train a h2o_automl model
 model <- h2o_automl(dft, Survived, max_models = 1, target = TRUE,
                     ignore = c("Ticket", "Cabin", "PassengerId"),
