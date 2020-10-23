@@ -17,7 +17,7 @@
 #' @examples 
 #' \donttest{
 #' # Train a h2o_automl model
-#' model <- h2o_automl(dft, Survived, max_models = 1, 
+#' model <- h2o_automl(dft, Survived, max_models = 1, target = TRUE,
 #'                     ignore = c("Ticket", "Cabin", "PassengerId"),
 #'                     quiet = TRUE)
 #' 
@@ -39,7 +39,7 @@
 #' shap_var(SHAP_values, Pclass)
 #' 
 #' # Plot some of the variables (numerical)
-#' shap_var(SHAP_values, Age)
+#' shap_var(SHAP_values, Fare)
 #' }
 #' @export
 h2o_shap <- function(model, test = "auto", scores = "auto", y = "y",...) {

@@ -26,8 +26,9 @@ h2o models in which each row is an observation and each column a feature.
 Use \code{plot} method to visualize features importance and distributions.
 }
 \examples{
+\donttest{
 # Train a h2o_automl model
-model <- h2o_automl(dft, Survived, max_models = 1, 
+model <- h2o_automl(dft, Survived, max_models = 1, target = TRUE,
                     ignore = c("Ticket", "Cabin", "PassengerId"),
                     quiet = TRUE)
 
@@ -49,7 +50,8 @@ plot(SHAP_values)
 shap_var(SHAP_values, Pclass)
 
 # Plot some of the variables (numerical)
-shap_var(SHAP_values, Age)
+shap_var(SHAP_values, Fare)
+}
 }
 \seealso{
 Other SHAP: 
