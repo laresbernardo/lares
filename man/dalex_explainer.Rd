@@ -11,7 +11,7 @@ dalex_explainer(df, model, y = "tag", ignore = NA)
 
 \item{model}{Model object (H2O)}
 
-\item{y}{Character. Variable's column name}
+\item{y}{Character or Variable name. Variable's column name.}
 
 \item{ignore}{Character vector. Which columns should be ignored?}
 }

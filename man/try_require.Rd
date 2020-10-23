@@ -9,16 +9,17 @@ try_require(package, stop = TRUE)
 \arguments{
 \item{package}{Character. Name of the library}
 
-\item{stop}{Boolean. Stop if not installed}
+\item{stop}{Boolean. Stop if not installed. If \code{FALSE} and 
+library is not available, warning will be shown.}
 }
 \description{
 This function checks library dependencies
 }
 \examples{
-# Check if library "dummy" is installed. If not, do not break as error.
-try_require("dummy", stop = FALSE)
 # Check if library base is installed. If not, stop and show error
 try_require("base", stop = TRUE)
+# Check if library xxx is installed. If not, show warning
+try_require("xxx", stop = FALSE)
 }
 \seealso{
 Other Tools: 

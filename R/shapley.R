@@ -14,7 +14,33 @@
 #' @param scores Numeric vector. If test != "auto", you must provide predicted values
 #' @param y Character. If test != "auto", you must provide y variable's name
 #' @param ... Additional argument for \code{predict_contributions.H2OModel}
-#' @inherit shap_var examples
+#' @examples 
+#' \donttest{
+#' # Train a h2o_automl model
+#' model <- h2o_automl(dft, Survived, max_models = 1, 
+#'                     ignore = c("Ticket", "Cabin", "PassengerId"),
+#'                     quiet = TRUE)
+#' 
+#' # Calculate SHAP values
+#' SHAP_values <- h2o_shap(model)
+#' # Equivalent to:
+#' # SHAP_values <- h2o_shap(
+#' #  model = model$model,
+#' #  test = model$datasets$test,
+#' #  scores = model$scores_test$scores)
+#' 
+#' # Check SHAP results
+#' head(SHAP_values)
+#' 
+#' # Plot SHAP values (feature importances)
+#' plot(SHAP_values)
+#' 
+#' # Plot some of the variables (categorical)
+#' shap_var(SHAP_values, Pclass)
+#' 
+#' # Plot some of the variables (numerical)
+#' shap_var(SHAP_values, Age)
+#' }
 #' @export
 h2o_shap <- function(model, test = "auto", scores = "auto", y = "y",...) {
   
@@ -58,7 +84,15 @@ plot.h2o_shap <- function(x, relevant = TRUE, top = 15, quiet = FALSE, ...) {
   if (!inherits(x, 'h2o_shap'))
     stop('Pass a valid h2o_shap object to proceed!')
   
-  try_require("ggbeeswarm")
+  try_require("ggbeeswarm", stop = FALSE)
+  if ("ggbeeswarm" %in% (.packages())) {
+    fun <- function() geom_quasirandom(
+      groupOnX = FALSE, varwidth = TRUE, size = 0.9,
+      alpha = 0.5, width = 0.2)
+  } else {
+    fun <- function() geom_jitter(height = 0.2, alpha = 0.5)
+  }
+  
   scores <- attr(x, "scores")
   
   df <- x %>%
@@ -83,15 +117,14 @@ plot.h2o_shap <- function(x, relevant = TRUE, top = 15, quiet = FALSE, ...) {
   }
   
   # SHAP contribution plot
+  pal <- names(lares_pal()$palette)
   p1 <- ggplot(df, aes(
     colour = .data$score,
     x = .data$shap_value, 
     y = reorder(.data$feature, .data$shap_importance))) +
-    geom_vline(xintercept = 0, alpha = 0.5, colour = "orange") +
-    geom_quasirandom(
-      groupOnX = FALSE, varwidth = TRUE, size = 0.9, 
-      alpha = 0.5, width = 0.2) +
-    scale_colour_gradient(low = "red", high = "blue") +
+    geom_vline(xintercept = 0, alpha = 0.5, colour = "black") +
+    fun() +
+    scale_colour_gradient(low = pal[3], high = pal[1]) +
     labs(x = "SHAP values", y = NULL, 
          title = "SHAP Distribution") +
     theme_lares(legend = "none")
@@ -129,35 +162,21 @@ plot.h2o_shap <- function(x, relevant = TRUE, top = 15, quiet = FALSE, ...) {
 #' @param var Variable name
 #' @param keep_outliers Boolean. Outliers detected with z-score and 3sd
 #' may be suppress or kept in your plot. Keep them?
-#' @examples 
-#' \dontrun{
-#' # Train a model
-#' model <- h2o_automl(dft, Survived, 
-#'                     max_models = 1, 
-#'                     target = TRUE,
-#'                     ignore = c("Ticket", "Cabin", "PassengerId"))
-#' 
-#' # Calculate SHAP values
-#' SHAP_values <- h2o_shap(model)
-#' # Equivalent to:
-#' SHAP_values <- h2o_shap(
-#'   model = model$model,
-#'   test = model$datasets$test,
-#'   scores = model$scores_test$scores)
-#' plot(SHAP_values)
-#' 
-#' # Plot some of the variables (categorical and numerical)
-#' shap_var(SHAP_values, Pclass)
-#' shap_var(SHAP_values, Age)
-#' shap_var(SHAP_values, Fare)
-#' shap_var(SHAP_values, Fare, keep_outliers = TRUE)
-#' }
+#' @inherit h2o_shap examples
 #' @export
 shap_var <- function(x, var, keep_outliers = FALSE) {
   
   if (!inherits(x, 'h2o_shap'))
     stop('Pass a valid h2o_shap object to proceed!')
-  try_require("ggbeeswarm")
+  
+  try_require("ggbeeswarm", stop = FALSE)
+  if ("ggbeeswarm" %in% (.packages())) {
+    fun <- function() geom_quasirandom(
+      groupOnX = TRUE, varwidth = TRUE, size = 1, 
+      alpha = 0.6, width = 0.4)
+  } else {
+    fun <- function() geom_jitter(height = 0.2, alpha = 0.5)
+  }
   
   test <- attr(x, "test")
   scores <- attr(x, "scores")
@@ -189,15 +208,14 @@ shap_var <- function(x, var, keep_outliers = FALSE) {
     }
   }
   
+  pal <- names(lares_pal()$palette)
   p <- shap_df2 %>%
     ggplot(aes(x = .data$real_value, y = .data$shap, colour = .data$model_result)) +
     geom_hline(yintercept = 0, alpha = 0.5) +
-    geom_quasirandom(
-      groupOnX = TRUE, varwidth = TRUE, size = 1, 
-      alpha = 0.6, width = 0.4) +
+    fun() +
     geom_smooth(method = 'loess', formula = 'y ~ x', colour = "black", size = 0.6) +
     geom_smooth(method = 'lm', formula = 'y ~ x', colour = "black", size = 0.3) +
-    scale_colour_gradient(low = "red", high = "blue") +
+    scale_colour_gradient(low = pal[3], high = pal[1]) +
     labs(x = name, y = paste("SHAP values for", name), 
          colour = "Prediction",
          title = title, caption = outs_msg,

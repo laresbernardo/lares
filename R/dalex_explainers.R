@@ -6,7 +6,7 @@
 #' @family Interpretability
 #' @param df Dataframe. Must contain all columns and predictions
 #' @param model Model object (H2O)
-#' @param y Character. Variable's column name
+#' @param y Character or Variable name. Variable's column name.
 #' @param ignore Character vector. Which columns should be ignored?
 #' @examples 
 #' \dontrun{
@@ -44,6 +44,7 @@ dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
     stop("This function currently works with h2o models only!")
   
   df <- data.frame(df)
+  y <- gsub('"', "", as_label(enquo(y)))
   
   if (!y %in% colnames(df))
     stop(paste("The y value", y, "is not in your data.frame"))
@@ -51,10 +52,10 @@ dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
   if (!is.na(ignore[1]))
     df <- df[,!(colnames(df) %in% ignore)]
   
-  x_valid <- select(df, -vars(y))
+  x_valid <- select(df, -one_of(y))
   y_valid <- df[y][,1]
   
-  h2o <- function(model, newdata) {
+  h2o_predict_fx <- function(model, newdata) {
     try_require("h2o")
     h2o.no_progress()
     results <- as.data.frame(h2o.predict(model, as.h2o(newdata)))
@@ -65,7 +66,7 @@ dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
     model = model,
     data = x_valid,
     y = y_valid,
-    predict_function = h2o,
+    predict_function = h2o_predict_fx,
     label = model@model_id)
   
   return(explainer)

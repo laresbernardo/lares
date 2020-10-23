@@ -19,28 +19,30 @@ Having a \code{h2o_shap} object, plot a dependence plot for any
 categorical or numerical feature.
 }
 \examples{
-\dontrun{
-# Train a model
-model <- h2o_automl(dft, Survived, 
-                    max_models = 1, 
-                    target = TRUE,
-                    ignore = c("Ticket", "Cabin", "PassengerId"))
+# Train a h2o_automl model
+model <- h2o_automl(dft, Survived, max_models = 1, 
+                    ignore = c("Ticket", "Cabin", "PassengerId"),
+                    quiet = TRUE)
 
 # Calculate SHAP values
 SHAP_values <- h2o_shap(model)
 # Equivalent to:
-SHAP_values <- h2o_shap(
-  model = model$model,
-  test = model$datasets$test,
-  scores = model$scores_test$scores)
+# SHAP_values <- h2o_shap(
+#  model = model$model,
+#  test = model$datasets$test,
+#  scores = model$scores_test$scores)
+
+# Check SHAP results
+head(SHAP_values)
+
+# Plot SHAP values (feature importances)
 plot(SHAP_values)
 
-# Plot some of the variables (categorical and numerical)
+# Plot some of the variables (categorical)
 shap_var(SHAP_values, Pclass)
+
+# Plot some of the variables (numerical)
 shap_var(SHAP_values, Age)
-shap_var(SHAP_values, Fare)
-shap_var(SHAP_values, Fare, keep_outliers = TRUE)
-}
 }
 \seealso{
 Other SHAP: 
