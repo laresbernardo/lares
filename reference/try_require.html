@@ -122,7 +122,8 @@
     </tr>
     <tr>
       <th>stop</th>
-      <td><p>Boolean. Stop if not installed</p></td>
+      <td><p>Boolean. Stop if not installed. If <code>FALSE</code> and 
+library is not available, warning will be shown.</p></td>
     </tr>
     </table>
 
@@ -161,10 +162,10 @@
 <code><a href='zerovar.html'>zerovar</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Check if library "dummy" is installed. If not, do not break as error.</span>
-<span class='fu'>try_require</span>(<span class='st'>"dummy"</span>, stop = <span class='fl'>FALSE</span>)
-<span class='co'># Check if library base is installed. If not, stop and show error</span>
+    <pre class="examples"><div class='input'><span class='co'># Check if library base is installed. If not, stop and show error</span>
 <span class='fu'>try_require</span>(<span class='st'>"base"</span>, stop = <span class='fl'>TRUE</span>)
+<span class='co'># Check if library xxx is installed. If not, show warning</span>
+<span class='fu'>try_require</span>(<span class='st'>"xxx"</span>, stop = <span class='fl'>FALSE</span>)
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
