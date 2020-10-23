@@ -153,11 +153,12 @@ test dataset or pass a valid dataframe.</p></td>
 <code><a href='shap_var.html'>shap_var</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Train a h2o_automl model</span>
-<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='h2o_automl.html'>h2o_automl</a></span>(<span class='kw'>dft</span>, <span class='kw'>Survived</span>, max_models = <span class='fl'>1</span>, 
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># Train a h2o_automl model</span>
+<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='h2o_automl.html'>h2o_automl</a></span>(<span class='kw'>dft</span>, <span class='kw'>Survived</span>, max_models = <span class='fl'>1</span>, target = <span class='fl'>TRUE</span>,
                     ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Ticket"</span>, <span class='st'>"Cabin"</span>, <span class='st'>"PassengerId"</span>),
                     quiet = <span class='fl'>TRUE</span>)
-</div><div class='output co'>#&gt; <span class='message'>Target value: FALSE</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Target value: TRUE</span></div><div class='input'>
 <span class='co'># Calculate SHAP values</span>
 <span class='kw'>SHAP_values</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_shap</span>(<span class='kw'>model</span>)
 <span class='co'># Equivalent to:</span>
@@ -196,8 +197,9 @@ test dataset or pass a valid dataframe.</p></td>
 <span class='fu'><a href='shap_var.html'>shap_var</a></span>(<span class='kw'>SHAP_values</span>, <span class='kw'>Pclass</span>)
 </div><div class='img'><img src='h2o_shap-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Plot some of the variables (numerical)</span>
-<span class='fu'><a href='shap_var.html'>shap_var</a></span>(<span class='kw'>SHAP_values</span>, <span class='kw'>Age</span>)
-</div><div class='img'><img src='h2o_shap-3.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='shap_var.html'>shap_var</a></span>(<span class='kw'>SHAP_values</span>, <span class='kw'>Fare</span>)
+</div><div class='img'><img src='h2o_shap-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
