@@ -44,7 +44,12 @@ h2o_explainer <- function(df, model, y = "tag", ignore = NA) {
   if (!any(grepl("H2O", class(model))))
     stop("This function currently works with h2o models only!")
   
-  df <- data.frame(df)
+  df <- data.frame(df) %>% 
+    # No need to use prediction results
+    select(-c(which(colnames(.) == "train_test"):ncol(.))) %>%
+    # Exclude variables with no variance
+    select(-one_of(zerovar(.)))
+  
   y <- gsub('"', "", as_label(enquo(y)))
   
   if (!y %in% colnames(df))
