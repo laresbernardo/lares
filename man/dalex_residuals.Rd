@@ -7,15 +7,15 @@
 dalex_residuals(explainer)
 }
 \arguments{
-\item{explainer}{Object. Result from dalex_explainer function}
+\item{explainer}{Object. Result from h2o_explainer function}
 }
 \description{
 DALEX function for residuals
 }
 \seealso{
 Other Interpretability: 
-\code{\link{dalex_explainer}()},
 \code{\link{dalex_local}()},
-\code{\link{dalex_variable}()}
+\code{\link{dalex_variable}()},
+\code{\link{h2o_explainer}()}
 }
 \concept{Interpretability}

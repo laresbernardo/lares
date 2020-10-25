@@ -7,7 +7,7 @@
 dalex_variable(explainer, vars, force_class = NA)
 }
 \arguments{
-\item{explainer}{Object. Result from \code{dalex_explainer} function.}
+\item{explainer}{Object. Result from \code{h2o_explainer} function.}
 
 \item{vars}{Character vector. Which features do you wish to study?}
 
@@ -20,7 +20,7 @@ variable's responses vs independent vector.
 }
 \examples{
 \dontrun{
-# Having an "explainer" object created with \code{dalex_explainer}:
+# Having an "explainer" object created with \code{h2o_explainer}:
 # For numerical variables
 dalex_variable(explainer, vars = c("Age", "Fare"))
 # For categorical variables
@@ -29,8 +29,8 @@ dalex_variable(explainer, vars = c("Pclass","Sex"))
 }
 \seealso{
 Other Interpretability: 
-\code{\link{dalex_explainer}()},
 \code{\link{dalex_local}()},
-\code{\link{dalex_residuals}()}
+\code{\link{dalex_residuals}()},
+\code{\link{h2o_explainer}()}
 }
 \concept{Interpretability}

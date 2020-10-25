@@ -7,7 +7,7 @@
 dalex_local(explainer, observation = NA, row = 1, type = "break_down")
 }
 \arguments{
-\item{explainer}{Object. Result from dalex_explainer function}
+\item{explainer}{Object. Result from h2o_explainer function}
 
 \item{observation}{Data.frame. If you want to use an observation
 that was not in the original explainer function, add here. Else, use row}
@@ -22,8 +22,8 @@ DALEX function for local interpretations
 }
 \seealso{
 Other Interpretability: 
-\code{\link{dalex_explainer}()},
 \code{\link{dalex_residuals}()},
-\code{\link{dalex_variable}()}
+\code{\link{dalex_variable}()},
+\code{\link{h2o_explainer}()}
 }
 \concept{Interpretability}

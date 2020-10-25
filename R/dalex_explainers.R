@@ -8,6 +8,7 @@
 #' @param model Model object (H2O)
 #' @param y Character or Variable name. Variable's column name.
 #' @param ignore Character vector. Which columns should be ignored?
+#' @aliases dalex_explainer
 #' @examples 
 #' \dontrun{
 #' data(dft) # Titanic dataset
@@ -18,7 +19,7 @@
 #'                   max_models = 1)
 #' 
 #' # EXPLAINER
-#' explainer <- dalex_explainer(df = dfm$datasets$test, model = dfm$model, y = "Survived")
+#' explainer <- h2o_explainer(df = dfm$datasets$test, model = dfm$model, y = "Survived")
 #' explainer$data <- na.omit(explainer$data)
 #' 
 #' # CATEGORICAL EXAMPLE
@@ -36,7 +37,7 @@
 #' local$plot
 #' }
 #' @export
-dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
+h2o_explainer <- function(df, model, y = "tag", ignore = NA) {
   
   try_require("DALEX")
   
@@ -68,6 +69,7 @@ dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
     y = y_valid,
     predict_function = h2o_predict_fx,
     label = model@model_id)
+  explainer$model_info$package <- "h2o"
   
   return(explainer)
   
@@ -80,7 +82,7 @@ dalex_explainer <- function(df, model, y = "tag", ignore = NA) {
 #' DALEX function for local interpretations
 #' 
 #' @family Interpretability
-#' @param explainer Object. Result from dalex_explainer function
+#' @param explainer Object. Result from h2o_explainer function
 #' @param observation Data.frame. If you want to use an observation
 #' that was not in the original explainer function, add here. Else, use row
 #' @param row Dataframe. Row number from the data.frame used in explainer.
@@ -121,7 +123,7 @@ dalex_local <- function(explainer, observation = NA, row = 1, type = "break_down
 #' DALEX function for residuals
 #' 
 #' @family Interpretability
-#' @param explainer Object. Result from dalex_explainer function
+#' @param explainer Object. Result from h2o_explainer function
 #' @export
 dalex_residuals <- function(explainer) {
   
@@ -146,13 +148,13 @@ dalex_residuals <- function(explainer) {
 #' variable's responses vs independent vector.
 #' 
 #' @family Interpretability
-#' @param explainer Object. Result from \code{dalex_explainer} function.
+#' @param explainer Object. Result from \code{h2o_explainer} function.
 #' @param vars Character vector. Which features do you wish to study?
 #' @param force_class Character. If you wish to force a class on your 
 #' vars, which one do you need?
 #' @examples 
 #' \dontrun{
-#' # Having an "explainer" object created with \code{dalex_explainer}:
+#' # Having an "explainer" object created with \code{h2o_explainer}:
 #' # For numerical variables
 #' dalex_variable(explainer, vars = c("Age", "Fare"))
 #' # For categorical variables
