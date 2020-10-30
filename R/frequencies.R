@@ -96,7 +96,6 @@ freqs <- function(df, ..., wt = NULL,
   
   # Sort values alphabetically or ascending if numeric
   if (abc) {
-    message("Sorting variable(s) alphabetically")
     output <- output %>% 
       arrange(!!!vars, desc(n)) %>% 
       mutate(order = row_number())

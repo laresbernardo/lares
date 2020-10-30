@@ -35,6 +35,9 @@
 #' # OR YOU COULD MANUALLY INPUT THE OBSERVATION
 #' local <- dalex_local(explainer, observation = explainer$data[1,])
 #' local$plot
+#' 
+#' # xai2shiny's UI (needs to be installed from ModelOriented/xai2shiny)
+#' xai2shiny(explainer, run = TRUE)
 #' }
 #' @export
 h2o_explainer <- function(df, model, y = "tag", ignore = NA) {
