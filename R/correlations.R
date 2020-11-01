@@ -16,10 +16,11 @@
 #' @param pvalue Boolean. Returns a list, with correlations and statistical 
 #' significance (p-value) for each value
 #' @param dec Integer. Number of decimals to round correlations and p-values
-#' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
+#' @param dummy Boolean. Should One Hot (Smart) Encoding (\code{ohse})
+#' be applied to categorical columns? 
 #' @param top Integer. Select top N most relevant variables? Filtered 
 #' and sorted by mean of each variable's correlations
-#' @param ... Additional parameters
+#' @param ... Additional parameters to pass to \code{ohse}
 #' @examples 
 #' data(dft) # Titanic dataset
 #' df <- dft[,2:5]
@@ -134,8 +135,11 @@ corr <- function(df, method = "pearson",
 #' @family Exploratory
 #' @family Correlations
 #' @inheritParams corr
-#' @param var Variable. Name of the variable to correlate
-#' @param ignore Character vector. Which columns do you wish to exlude?
+#' @param var Variable. Name of the variable to correlate. Note that if the
+#' variable `var` is not numerical, 1. you may define which category to select 
+#' from using `var_category`; 2. You may have to add `redundant = TRUE` to 
+#' enable all categories (instead of n-1).
+#' @param ignore Character vector. Which columns do you wish to exclude?
 #' @param trim Integer. Trim words until the nth character for 
 #' categorical values (applies for both, target and values)
 #' @param clean Boolean. Use lares::cleanText for categorical values (applies 
@@ -154,7 +158,7 @@ corr <- function(df, method = "pearson",
 #' save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @param quiet Boolean. Keep quiet? If not, show messages
-#' @param ... Additional parameters
+#' @param ... Additional parameters passed to \code{corr}
 #' @examples
 #' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
@@ -198,13 +202,17 @@ corr_var <- function(df, var,
   
   # Check if main variable exists
   if (!var %in% colnames(rs$cor)) {
+    show_warning <- TRUE
     maybes <- colnames(rs$cor)[grepl(var, colnames(rs$cor))]
     if (length(maybes) > 0 & maybes[1] %in% colnames(rs$cor)) {
       if (!quiet) warning(sprintf("Maybe you meant one of: %s", vector2text(head(maybes, 10))))
       if (!quiet) message(sprintf("Automatically using '%s", maybes[1]))
       var <- maybes[1]
-    } else stop("Select a valid var value")
-  } else warning(paste("Not a valid input:", var, "was transformed or does not exist."))
+      show_warning <- FALSE
+    }
+    if (show_warning)
+      warning(paste("Not a valid input:", var, "was transformed or does not exist."))
+  } 
   
   d <- data.frame(variables = colnames(rs$cor), 
                   corr = rs$cor[, c(var)],
@@ -224,13 +232,14 @@ corr_var <- function(df, var,
   # Limit automatically when more than 30 observations
   if (is.na(top) & nrow(d) > 30) {
     top <- 30
-    message(paste("Automatically reduced results to the top", top, "variables.",
+    if (!quiet) 
+      message(paste("Automatically reduced results to the top", top, "variables.",
                   "Use the 'top' parameter to override this limit."))
   }
   
   if (ceiling < 100) {
     d <- d[abs(d$corr) < ceiling/100, ]
-    message(paste0("Removing all correlations greater than ", ceiling, "% (absolute)"))
+    if (!quiet) message(paste0("Removing all correlations greater than ", ceiling, "% (absolute)"))
   }
   
   if (!is.na(top)) d <- head(d, top + 1)
@@ -240,7 +249,7 @@ corr_var <- function(df, var,
   # Shorten up the long names of some variables
   if (trim > 0) {
     d$variables <- substr(d$variables, 1, trim)
-    message(paste("Trimmed all name values into", trim, "characters"))
+    if (!quiet) message(paste("Trimmed all name values into", trim, "characters"))
   }
   
   if (plot) {

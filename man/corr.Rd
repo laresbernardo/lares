@@ -30,7 +30,8 @@ significance (p-value) for each value}
 
 \item{ignore}{Vector or character. Which column should be ignored?}
 
-\item{dummy}{Boolean. Should One Hot Encoding be applied to categorical columns?}
+\item{dummy}{Boolean. Should One Hot (Smart) Encoding (\code{ohse})
+be applied to categorical columns?}
 
 \item{logs}{Boolean. Calculate log(x)+1 for numerical columns?}
 
@@ -40,7 +41,7 @@ values of each column. Set to \code{NA} to ignore argument.}
 \item{top}{Integer. Select top N most relevant variables? Filtered 
 and sorted by mean of each variable's correlations}
 
-\item{...}{Additional parameters}
+\item{...}{Additional parameters to pass to \code{ohse}}
 }
 \description{
 This function correlates a whole dataframe, running one hot smart 

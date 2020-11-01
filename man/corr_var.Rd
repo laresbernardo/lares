@@ -28,9 +28,12 @@ corr_var(
 \item{df}{Dataframe. It doesn't matter if it's got non-numerical
 columns: they will be filtered!}
 
-\item{var}{Variable. Name of the variable to correlate}
+\item{var}{Variable. Name of the variable to correlate. Note that if the
+variable `var` is not numerical, 1. you may define which category to select 
+from using `var_category`; 2. You may have to add `redundant = TRUE` to 
+enable all categories (instead of n-1).}
 
-\item{ignore}{Character vector. Which columns do you wish to exlude?}
+\item{ignore}{Character vector. Which columns do you wish to exclude?}
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
 
@@ -64,7 +67,7 @@ save the plot}
 
 \item{quiet}{Boolean. Keep quiet? If not, show messages}
 
-\item{...}{Additional parameters}
+\item{...}{Additional parameters passed to \code{corr}}
 }
 \description{
 This function correlates a whole dataframe with a single feature. It
@@ -75,7 +78,7 @@ only numerical values.
 options("lares.font" = NA) # Temporal
 data(dft) # Titanic dataset
 
-dft \%>\% corr_var(Survived, method = "spearman", plot = FALSE, top = 10)
+dft \%>\% corr_var(Survived, method = "spearman", plot = FALSE, top = 10, redundant = FALSE)
 
 # With plots, results are easier to compare:
 
