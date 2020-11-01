@@ -245,7 +245,7 @@ save the plot</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 
-<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived</span>, method = <span class='st'>"spearman"</span>, plot = <span class='fl'>FALSE</span>, top = <span class='fl'>10</span>, redundant = <span class='fl'>FALSE</span>)
+<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived</span>, method = <span class='st'>"spearman"</span>, plot = <span class='fl'>FALSE</span>, top = <span class='fl'>10</span>)
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Maybe you meant one of: 'Survived_TRUE'</span></div><div class='output co'>#&gt; <span class='message'>Automatically using 'Survived_TRUE</span></div><div class='output co'>#&gt;                   variables      corr   pvalue
 #&gt; Sex_male           Sex_male -0.543351 0.000000
 #&gt; Fare                   Fare  0.323736 0.000000
@@ -256,8 +256,7 @@ save the plot</p></td>
 #&gt; Ticket_OTHER   Ticket_OTHER  0.102598 0.002167
 #&gt; Pclass_2           Pclass_2  0.093349 0.005294
 #&gt; SibSp                 SibSp  0.088879 0.007941
-#&gt; Ticket_113760 Ticket_113760  0.085083 0.011062
-#&gt; Cabin_B96 B98 Cabin_B96 B98  0.085083 0.011062</div><div class='input'>
+#&gt; Ticket_113760 Ticket_113760  0.085083 0.011062</div><div class='input'>
 <span class='co'># With plots, results are easier to compare:</span>
 
 <span class='co'># Correlate Survived with everything else and show only significant results</span>
