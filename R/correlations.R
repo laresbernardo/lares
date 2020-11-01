@@ -242,9 +242,9 @@ corr_var <- function(df, var,
     if (!quiet) message(paste0("Removing all correlations greater than ", ceiling, "% (absolute)"))
   }
   
-  if (!is.na(top)) d <- head(d, top + 1)
-  
   d <- d[complete.cases(d), ]
+  
+  if (!is.na(top)) d <- head(d, top)
   
   # Shorten up the long names of some variables
   if (trim > 0) {

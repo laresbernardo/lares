@@ -78,7 +78,7 @@ only numerical values.
 options("lares.font" = NA) # Temporal
 data(dft) # Titanic dataset
 
-dft \%>\% corr_var(Survived, method = "spearman", plot = FALSE, top = 10, redundant = FALSE)
+dft \%>\% corr_var(Survived, method = "spearman", plot = FALSE, top = 10)
 
 # With plots, results are easier to compare:
 
