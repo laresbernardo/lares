@@ -145,11 +145,14 @@ columns: they will be filtered!</p></td>
     </tr>
     <tr>
       <th>var</th>
-      <td><p>Variable. Name of the variable to correlate</p></td>
+      <td><p>Variable. Name of the variable to correlate. Note that if the
+variable `var` is not numerical, 1. you may define which category to select 
+from using `var_category`; 2. You may have to add `redundant = TRUE` to 
+enable all categories (instead of n-1).</p></td>
     </tr>
     <tr>
       <th>ignore</th>
-      <td><p>Character vector. Which columns do you wish to exlude?</p></td>
+      <td><p>Character vector. Which columns do you wish to exclude?</p></td>
     </tr>
     <tr>
       <th>method</th>
@@ -211,7 +214,7 @@ save the plot</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional parameters</p></td>
+      <td><p>Additional parameters passed to <code>corr</code></p></td>
     </tr>
     </table>
 
@@ -242,7 +245,7 @@ save the plot</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
 
-<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived</span>, method = <span class='st'>"spearman"</span>, plot = <span class='fl'>FALSE</span>, top = <span class='fl'>10</span>)
+<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived</span>, method = <span class='st'>"spearman"</span>, plot = <span class='fl'>FALSE</span>, top = <span class='fl'>10</span>, redundant = <span class='fl'>FALSE</span>)
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Maybe you meant one of: 'Survived_TRUE'</span></div><div class='output co'>#&gt; <span class='message'>Automatically using 'Survived_TRUE</span></div><div class='output co'>#&gt;                   variables      corr   pvalue
 #&gt; Sex_male           Sex_male -0.543351 0.000000
 #&gt; Fare                   Fare  0.323736 0.000000
@@ -259,10 +262,10 @@ save the plot</p></td>
 
 <span class='co'># Correlate Survived with everything else and show only significant results</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, max_pvalue = <span class='fl'>0.01</span>)
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Not a valid input: Survived_TRUE was transformed or does not exist.</span></div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Top 15 with less than 50% correlation</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, ceiling = <span class='fl'>60</span>, top = <span class='fl'>15</span>)
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Not a valid input: Survived_TRUE was transformed or does not exist.</span></div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 60% (absolute)</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 60% (absolute)</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

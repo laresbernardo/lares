@@ -167,6 +167,9 @@
 <span class='co'># OR YOU COULD MANUALLY INPUT THE OBSERVATION</span>
 <span class='kw'>local</span> <span class='op'>&lt;-</span> <span class='fu'><a href='dalex_local.html'>dalex_local</a></span>(<span class='kw'>explainer</span>, observation = <span class='kw'>explainer</span><span class='op'>$</span><span class='kw'>data</span>[<span class='fl'>1</span>,])
 <span class='kw'>local</span><span class='op'>$</span><span class='kw'>plot</span>
+
+<span class='co'># xai2shiny's UI (needs to be installed from ModelOriented/xai2shiny)</span>
+<span class='fu'>xai2shiny</span>(<span class='kw'>explainer</span>, run = <span class='fl'>TRUE</span>)
 }
 </div></pre>
   </div>

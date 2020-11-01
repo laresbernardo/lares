@@ -246,7 +246,7 @@ save the plot to?</p></td>
 #&gt; </span><span style='color: #555555;'>2</span><span> TRUE       342  38.4     2 100  </div><div class='input'>
 <span class='co'># How many survived per Class?</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='kw'>Pclass</span>, <span class='kw'>Survived</span>, abc = <span class='fl'>TRUE</span>)
-</div><div class='output co'>#&gt; <span class='message'>Sorting variable(s) alphabetically</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
 #&gt;   Pclass Survived     n     p order   pcum
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> 1      FALSE       80  8.98     1   8.98
@@ -257,7 +257,7 @@ save the plot to?</p></td>
 #&gt; </span><span style='color: #555555;'>6</span><span> 3      TRUE       119 13.4      6 100   </div><div class='input'>
 <span class='co'># How many survived per Class with relative percentages?</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='kw'>Pclass</span>, <span class='kw'>Survived</span>, abc = <span class='fl'>TRUE</span>, rel = <span class='fl'>TRUE</span>)
-</div><div class='output co'>#&gt; <span class='message'>Sorting variable(s) alphabetically</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
 #&gt; </span><span style='color: #555555;'># Groups:   Pclass [3]</span><span>
 #&gt;   Pclass Survived     n     p order  pcum
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -297,7 +297,7 @@ save the plot to?</p></td>
 </div><div class='output co'>#&gt; <span class='message'>Slicing the top 20 (out of 681) values; use 'top' parameter to overrule.</span></div><div class='img'><img src='freqs-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Frequency of tickets: top 10 only and order them alphabetically</span>
 <span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs</span>(<span class='kw'>Ticket</span>, plot = <span class='fl'>TRUE</span>, top = <span class='fl'>10</span>, abc = <span class='fl'>TRUE</span>)
-</div><div class='output co'>#&gt; <span class='message'>Sorting variable(s) alphabetically</span></div><div class='output co'>#&gt; <span class='message'>Slicing the top 10 (out of 681) values; use 'top' parameter to overrule.</span></div><div class='img'><img src='freqs-6.png' alt='' width='700' height='433' /></div></span></pre>
+</div><div class='output co'>#&gt; <span class='message'>Slicing the top 10 (out of 681) values; use 'top' parameter to overrule.</span></div><div class='img'><img src='freqs-6.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
