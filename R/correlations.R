@@ -202,17 +202,16 @@ corr_var <- function(df, var,
   
   # Check if main variable exists
   if (!var %in% colnames(rs$cor)) {
-    show_warning <- TRUE
+    msg <- paste("Not a valid input:", var, "was transformed or does not exist.")
     maybes <- colnames(rs$cor)[grepl(var, colnames(rs$cor))]
     if (length(maybes) > 0 & maybes[1] %in% colnames(rs$cor)) {
       if (!quiet) warning(sprintf("Maybe you meant one of: %s", vector2text(head(maybes, 10))))
       if (!quiet) message(sprintf("Automatically using '%s", maybes[1]))
       var <- maybes[1]
-      show_warning <- FALSE
-    }
-    if (show_warning)
-      warning(paste("Not a valid input:", var, "was transformed or does not exist."))
-  } 
+      fixable <- TRUE
+    } else fixable <- FALSE
+    if (fixable) warning(msg) else stop(msg)
+  }
   
   d <- data.frame(variables = colnames(rs$cor), 
                   corr = rs$cor[, c(var)],
