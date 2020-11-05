@@ -115,7 +115,7 @@ on the rules and languages you are playing with. Check the examples
 for Spanish and English values when I played Words With Friends.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>scrabble_score</span>(<span class='kw'>words</span>, <span class='kw'>scores</span>)</pre>
+    <pre class="usage"><span class='fu'>scrabble_score</span><span class='op'>(</span><span class='va'>words</span>, <span class='va'>scores</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,20 +139,20 @@ letter of the alphabet and "scores" for each letter's score.</p></td>
 <code><a href='scrabble_words.html'>scrabble_words</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># For Spanish words</span>
-<span class='kw'>es_scores</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scrabble_points.html'>scrabble_points</a></span>(<span class='st'>"es"</span>)
+<span class='va'>es_scores</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scrabble_points.html'>scrabble_points</a></span><span class='op'>(</span><span class='st'>"es"</span><span class='op'>)</span>
   
 <span class='co'># Custom scores</span>
-<span class='kw'>cu_scores</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  tiles = <span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span>(<span class='kw'>LETTERS</span>),
-  scores = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>5</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>5</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>10</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>5</span>,<span class='fl'>4</span>,<span class='fl'>8</span>,<span class='fl'>3</span>,<span class='fl'>10</span>))
+<span class='va'>cu_scores</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  tiles <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>)</span>,
+  scores <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>5</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>5</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>10</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>5</span>,<span class='fl'>4</span>,<span class='fl'>8</span>,<span class='fl'>3</span>,<span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># Score values for each set of rules </span>
-<span class='kw'>words</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Bernardo"</span>, <span class='st'>"Whiskey"</span>, <span class='st'>"R is great"</span>)
-<span class='fu'>scrabble_score</span>(<span class='kw'>words</span>, <span class='kw'>es_scores</span>)
-<span class='fu'>scrabble_score</span>(<span class='kw'>words</span>, <span class='kw'>cu_scores</span>)
-}
+<span class='va'>words</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Bernardo"</span>, <span class='st'>"Whiskey"</span>, <span class='st'>"R is great"</span><span class='op'>)</span>
+<span class='fu'>scrabble_score</span><span class='op'>(</span><span class='va'>words</span>, <span class='va'>es_scores</span><span class='op'>)</span>
+<span class='fu'>scrabble_score</span><span class='op'>(</span><span class='va'>words</span>, <span class='va'>cu_scores</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

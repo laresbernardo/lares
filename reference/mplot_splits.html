@@ -113,16 +113,16 @@ compare different categorical values vs scores grouped by equal sized buckets." 
 compare different categorical values vs scores grouped by equal sized buckets.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mplot_splits</span>(
-  <span class='kw'>tag</span>,
-  <span class='kw'>score</span>,
-  splits = <span class='fl'>5</span>,
-  subtitle = <span class='fl'>NA</span>,
-  model_name = <span class='fl'>NA</span>,
-  save = <span class='fl'>FALSE</span>,
-  subdir = <span class='fl'>NA</span>,
-  file_name = <span class='st'>"viz_splits.png"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>mplot_splits</span><span class='op'>(</span>
+  <span class='va'>tag</span>,
+  <span class='va'>score</span>,
+  splits <span class='op'>=</span> <span class='fl'>5</span>,
+  subtitle <span class='op'>=</span> <span class='cn'>NA</span>,
+  model_name <span class='op'>=</span> <span class='cn'>NA</span>,
+  save <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  subdir <span class='op'>=</span> <span class='cn'>NA</span>,
+  file_name <span class='op'>=</span> <span class='st'>"viz_splits.png"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,9 +178,9 @@ compare different categorical values vs scores grouped by equal sized buckets.</
 <code><a href='mplot_topcats.html'>mplot_topcats</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>dfr</span>, <span class='kw'>head</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"lares.font"</span> <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span> <span class='co'># Temporal</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>)</span> <span class='co'># Results for AutoML Predictions</span>
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>dfr</span>, <span class='va'>head</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $class2
 #&gt;     tag    scores
 #&gt; 1  TRUE 0.3155498
@@ -209,17 +209,17 @@ compare different categorical values vs scores grouped by equal sized buckets.</
 #&gt; 6 26.0000 13.24153
 #&gt; </div><div class='input'>
 <span class='co'># For categorical (binary) values</span>
-<span class='fu'>mplot_splits</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>,
-             splits = <span class='fl'>4</span>,
-             model_name = <span class='st'>"Titanic Survived Model"</span>)
+<span class='fu'>mplot_splits</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>scores</span>,
+             splits <span class='op'>=</span> <span class='fl'>4</span>,
+             model_name <span class='op'>=</span> <span class='st'>"Titanic Survived Model"</span><span class='op'>)</span>
 </div><div class='img'><img src='mplot_splits-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># For categorical (+2) values</span>
-<span class='fu'>mplot_splits</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class3</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>,
-             model_name = <span class='st'>"Titanic Class Model"</span>)
+<span class='fu'>mplot_splits</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>scores</span>,
+             model_name <span class='op'>=</span> <span class='st'>"Titanic Class Model"</span><span class='op'>)</span>
 </div><div class='img'><img src='mplot_splits-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># For continuous values</span>
-<span class='fu'>mplot_splits</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>regr</span><span class='op'>$</span><span class='kw'>score</span>, splits = <span class='fl'>4</span>,
-             model_name = <span class='st'>"Titanic Fare Model"</span>)
+<span class='fu'>mplot_splits</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>regr</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>regr</span><span class='op'>$</span><span class='va'>score</span>, splits <span class='op'>=</span> <span class='fl'>4</span>,
+             model_name <span class='op'>=</span> <span class='st'>"Titanic Fare Model"</span><span class='op'>)</span>
 </div><div class='img'><img src='mplot_splits-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

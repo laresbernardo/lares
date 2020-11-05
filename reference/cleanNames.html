@@ -115,7 +115,7 @@ numbers, and ASCII letters. Capitalization preferences can be specified using
 the <code>lower</code> parameter. Inspired by <code>janitor::clean_names</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cleanNames</span>(<span class='kw'>df</span>, num = <span class='st'>"x"</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>cleanNames</span><span class='op'>(</span><span class='va'>df</span>, num <span class='op'>=</span> <span class='st'>"x"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,21 +139,21 @@ the <code>lower</code> parameter. Inspired by <code>janitor::clean_names</code>.
     <p>data.frame/tibble with new clean titles</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='kw'>dft</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>] <span class='co'># Dummy data</span>
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='kw'>df</span>) <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ID."</span>, <span class='st'>"34"</span>, <span class='st'>"Num 123"</span>, <span class='st'>"Nòn-äscì"</span>, <span class='st'>"  white   Spaces  "</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>df</span>)
+    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>dft</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span> <span class='co'># Dummy data</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ID."</span>, <span class='st'>"34"</span>, <span class='st'>"Num 123"</span>, <span class='st'>"Nòn-äscì"</span>, <span class='st'>"  white   Spaces  "</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   ID.    34 Num 123 Nòn-äscì   white   Spaces  
 #&gt; 1   1 FALSE       3     male                 22
 #&gt; 2   2  TRUE       1   female                 38
 #&gt; 3   3  TRUE       3   female                 26
 #&gt; 4   4  TRUE       1   female                 35
-#&gt; 5   5 FALSE       3     male                 35</div><div class='input'><span class='fu'>cleanNames</span>(<span class='kw'>df</span>)
+#&gt; 5   5 FALSE       3     male                 35</div><div class='input'><span class='fu'>cleanNames</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   id   x34 num_123 nonasci white_spaces
 #&gt; 1  1 FALSE       3    male           22
 #&gt; 2  2  TRUE       1  female           38
 #&gt; 3  3  TRUE       3  female           26
 #&gt; 4  4  TRUE       1  female           35
-#&gt; 5  5 FALSE       3    male           35</div><div class='input'><span class='fu'>cleanNames</span>(<span class='kw'>df</span>, lower = <span class='fl'>FALSE</span>)
+#&gt; 5  5 FALSE       3    male           35</div><div class='input'><span class='fu'>cleanNames</span><span class='op'>(</span><span class='va'>df</span>, lower <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   ID   x34 Num_123 Nonasci white_Spaces
 #&gt; 1  1 FALSE       3    male           22
 #&gt; 2  2  TRUE       1  female           38

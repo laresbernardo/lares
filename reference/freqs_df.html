@@ -113,17 +113,17 @@ frequency of each value of each column from a whole data frame." />
 frequency of each value of each column from a whole data frame.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>freqs_df</span>(
-  <span class='kw'>df</span>,
-  max = <span class='fl'>0.9</span>,
-  min = <span class='fl'>0</span>,
-  novar = <span class='fl'>TRUE</span>,
-  plot = <span class='fl'>FALSE</span>,
-  top = <span class='fl'>30</span>,
-  quiet = <span class='fl'>FALSE</span>,
-  save = <span class='fl'>FALSE</span>,
-  subdir = <span class='fl'>NA</span>
-)</pre>
+    <pre class="usage"><span class='fu'>freqs_df</span><span class='op'>(</span>
+  <span class='va'>df</span>,
+  max <span class='op'>=</span> <span class='fl'>0.9</span>,
+  min <span class='op'>=</span> <span class='fl'>0</span>,
+  novar <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  plot <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  top <span class='op'>=</span> <span class='fl'>30</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  save <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  subdir <span class='op'>=</span> <span class='cn'>NA</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,9 +208,9 @@ save the plot to?</p></td>
 <code><a href='tree_var.html'>tree_var</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
-<span class='fu'>freqs_df</span>(<span class='kw'>dft</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"lares.font"</span> <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span> <span class='co'># Temporal</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
+<span class='fu'>freqs_df</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>1 variables with more than 0.9 variance exluded: 'PassengerId'</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1,191 x 5</span><span>
 #&gt; </span><span style='color: #555555;'># Groups:   variable [10]</span><span>
 #&gt;    variable value        n     p  pcum

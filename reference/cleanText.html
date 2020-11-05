@@ -113,7 +113,7 @@ characters and no accents/symbols on letters." />
 characters and no accents/symbols on letters.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cleanText</span>(<span class='kw'>text</span>, spaces = <span class='fl'>TRUE</span>, lower = <span class='fl'>TRUE</span>, ascii = <span class='fl'>TRUE</span>, title = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>cleanText</span><span class='op'>(</span><span class='va'>text</span>, spaces <span class='op'>=</span> <span class='cn'>TRUE</span>, lower <span class='op'>=</span> <span class='cn'>TRUE</span>, ascii <span class='op'>=</span> <span class='cn'>TRUE</span>, title <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,11 +177,11 @@ will be transformed into passed argument.</p></td>
 <code><a href='topics_rake.html'>topics_rake</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bernardo Lares 123"</span>)
-</div><div class='output co'>#&gt; [1] "bernardo lares 123"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bèrnärdo LáreS 123"</span>, lower = <span class='fl'>FALSE</span>)
-</div><div class='output co'>#&gt; [1] "Bernardo LareS 123"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"Bernardo Lare$"</span>, spaces = <span class='st'>"."</span>, ascii = <span class='fl'>FALSE</span>)
-</div><div class='output co'>#&gt; [1] "bernardo.lare$"</div><div class='input'><span class='fu'>cleanText</span>(<span class='st'>"\\@®ì÷å   %ñS  ..-X"</span>, spaces = <span class='fl'>FALSE</span>)
-</div><div class='output co'>#&gt; [1] "riansx"</div><div class='input'><span class='fu'>cleanText</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"maría"</span>, <span class='st'>"€"</span>, <span class='st'>"núñez a."</span>), title = <span class='fl'>TRUE</span>)
+    <pre class="examples"><div class='input'><span class='fu'>cleanText</span><span class='op'>(</span><span class='st'>"Bernardo Lares 123"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "bernardo lares 123"</div><div class='input'><span class='fu'>cleanText</span><span class='op'>(</span><span class='st'>"Bèrnärdo LáreS 123"</span>, lower <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "Bernardo LareS 123"</div><div class='input'><span class='fu'>cleanText</span><span class='op'>(</span><span class='st'>"Bernardo Lare$"</span>, spaces <span class='op'>=</span> <span class='st'>"."</span>, ascii <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "bernardo.lare$"</div><div class='input'><span class='fu'>cleanText</span><span class='op'>(</span><span class='st'>"\\@®ì÷å   %ñS  ..-X"</span>, spaces <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "riansx"</div><div class='input'><span class='fu'>cleanText</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"maría"</span>, <span class='st'>"€"</span>, <span class='st'>"núñez a."</span><span class='op'>)</span>, title <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "Maria"   "Eur"     "Nunez A"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

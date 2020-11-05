@@ -113,24 +113,22 @@ of the highest correlation variables obtained in a cross-table." />
 of the highest correlation variables obtained in a cross-table.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>corr_cross</span>(
-  <span class='kw'>df</span>,
-  plot = <span class='fl'>TRUE</span>,
-  max_pvalue = <span class='fl'>1</span>,
-  type = <span class='fl'>1</span>,
-  max = <span class='fl'>1</span>,
-  top = <span class='fl'>25</span>,
-  local = <span class='fl'>1</span>,
-  ignore = <span class='fl'>NA</span>,
-  contains = <span class='fl'>NA</span>,
-  grid = <span class='fl'>FALSE</span>,
-  rm.na = <span class='fl'>FALSE</span>,
-  dummy = <span class='fl'>TRUE</span>,
-  limit = <span class='fl'>10</span>,
-  redundant = <span class='fl'>FALSE</span>,
-  method = <span class='st'>"pearson"</span>,
-  quiet = <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>corr_cross</span><span class='op'>(</span>
+  <span class='va'>df</span>,
+  plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  pvalue <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  max_pvalue <span class='op'>=</span> <span class='fl'>1</span>,
+  type <span class='op'>=</span> <span class='fl'>1</span>,
+  max <span class='op'>=</span> <span class='fl'>1</span>,
+  top <span class='op'>=</span> <span class='fl'>25</span>,
+  local <span class='op'>=</span> <span class='fl'>1</span>,
+  ignore <span class='op'>=</span> <span class='cn'>NA</span>,
+  contains <span class='op'>=</span> <span class='cn'>NA</span>,
+  grid <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  rm.na <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,6 +141,11 @@ columns: they will be filtered!</p></td>
     <tr>
       <th>plot</th>
       <td><p>Boolean. Show and return a plot?</p></td>
+    </tr>
+    <tr>
+      <th>pvalue</th>
+      <td><p>Boolean. Returns a list, with correlations and statistical 
+significance (p-value) for each value</p></td>
     </tr>
     <tr>
       <th>max_pvalue</th>
@@ -167,7 +170,7 @@ value to NA to use all cross-correlations</p></td>
     </tr>
     <tr>
       <th>ignore</th>
-      <td><p>Character vector. Which columns do you wish to exlude?</p></td>
+      <td><p>Vector or character. Which column should be ignored?</p></td>
     </tr>
     <tr>
       <th>contains</th>
@@ -183,26 +186,12 @@ with variables that contains certain strings (using any value if vector used).</
       <td><p>Boolean. Remove NAs?</p></td>
     </tr>
     <tr>
-      <th>dummy</th>
-      <td><p>Boolean. Should One Hot Encoding be applied to categorical columns?</p></td>
-    </tr>
-    <tr>
-      <th>limit</th>
-      <td><p>Integer. Limit one hot encoding to the n most frequent 
-values of each column. Set to <code>NA</code> to ignore argument.</p></td>
-    </tr>
-    <tr>
-      <th>redundant</th>
-      <td><p>Boolean. Should we keep redundant columns? i.e. It the
-column only has two different values, should we keep both new columns?</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>Character. Any of: c("pearson", "kendall", "spearman")</p></td>
-    </tr>
-    <tr>
       <th>quiet</th>
       <td><p>Boolean. Keep quiet? If not, show messages</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters passed to <code>corr</code></p></td>
     </tr>
     </table>
 
@@ -234,11 +223,11 @@ with Ranked Cross-Correlations</a></p>
 <code><a href='trendsRelated.html'>trendsRelated</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"lares.font"</span> <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span> <span class='co'># Temporal</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
 
 <span class='co'># Only data with no plot</span>
-<span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, plot = <span class='fl'>FALSE</span>, top = <span class='fl'>10</span>)
+<span class='fu'>corr_cross</span><span class='op'>(</span><span class='va'>dft</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span>, top <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='output co'>#&gt; <span class='message'>Returning only the top 10. You may override with the 'top' argument</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 8</span><span>
 #&gt; </span><span style='color: #555555;'># Rowwise: </span><span>
 #&gt;    key           mix               corr pvalue group1   cat1   group2 cat2      
@@ -254,13 +243,13 @@ with Ranked Cross-Correlations</a></p>
 #&gt; </span><span style='color: #555555;'> 9</span><span> SibSp         Parch            0.415      0 SibSp    SibSp  Parch  </span><span style='color: #555555;'>"</span><span>Parch</span><span style='color: #555555;'>"</span><span>   
 #&gt; </span><span style='color: #555555;'>10</span><span> Age           Pclass_1         0.349      0 Age      Age    Pclass </span><span style='color: #555555;'>"</span><span>1</span><span style='color: #555555;'>"</span><span>       </div><div class='input'>
 <span class='co'># Show only most relevant results filtered by pvalue</span>
-<span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, rm.na = <span class='fl'>TRUE</span>, max_pvalue = <span class='fl'>0.05</span>, top = <span class='fl'>15</span>)
+<span class='fu'>corr_cross</span><span class='op'>(</span><span class='va'>dft</span>, rm.na <span class='op'>=</span> <span class='cn'>TRUE</span>, max_pvalue <span class='op'>=</span> <span class='fl'>0.05</span>, top <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Returning only the top 15. You may override with the 'top' argument</span></div><div class='img'><img src='corr_cross-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Cross-Correlation max values per category</span>
-<span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, type = <span class='fl'>2</span>, top = <span class='fl'>NA</span>)
+<span class='fu'>corr_cross</span><span class='op'>(</span><span class='va'>dft</span>, type <span class='op'>=</span> <span class='fl'>2</span>, top <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='img'><img src='corr_cross-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Cross-Correlation for certain variables</span>
-<span class='fu'>corr_cross</span>(<span class='kw'>dft</span>, contains = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Survived"</span>, <span class='st'>"Fare"</span>))
+<span class='fu'>corr_cross</span><span class='op'>(</span><span class='va'>dft</span>, contains <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Survived"</span>, <span class='st'>"Fare"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: There are NA values in your data!</span></div><div class='output co'>#&gt; <span class='message'>Returning only the top 25. You may override with the 'top' argument</span></div><div class='img'><img src='corr_cross-3.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

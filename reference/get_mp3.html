@@ -117,7 +117,7 @@ high quality MP3 files. The URL can be for a single video or a whole
 playlist. It also returns metadata into an (invisible) list.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_mp3</span>(<span class='kw'>id</span>, mp3 = <span class='fl'>TRUE</span>, params = <span class='st'>""</span>, info = <span class='fl'>TRUE</span>, cover = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>get_mp3</span><span class='op'>(</span><span class='va'>id</span>, mp3 <span class='op'>=</span> <span class='cn'>TRUE</span>, params <span class='op'>=</span> <span class='st'>""</span>, info <span class='op'>=</span> <span class='cn'>TRUE</span>, cover <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,10 +165,10 @@ playlist. It also returns metadata into an (invisible) list.</p>
 <code><a href='writeGS.html'>writeGS</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
  <span class='co'># Download video from YouTube and convert to MP3</span>
- <span class='fu'>get_mp3</span>(<span class='st'>"https://www.youtube.com/watch?v=lrlKcCdVw9Q"</span>)
-}
+ <span class='fu'>get_mp3</span><span class='op'>(</span><span class='st'>"https://www.youtube.com/watch?v=lrlKcCdVw9Q"</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

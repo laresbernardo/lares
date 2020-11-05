@@ -115,9 +115,9 @@ standard deviation, sample size, and confidence level. You may
 want to use <code><a href='ci_var.html'>ci_var()</a></code> to calculate all values quickly.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ci_lower</span>(<span class='kw'>mean</span>, <span class='kw'>ssd</span>, <span class='kw'>n</span>, conf = <span class='fl'>0.95</span>)
+    <pre class="usage"><span class='fu'>ci_lower</span><span class='op'>(</span><span class='va'>mean</span>, <span class='va'>ssd</span>, <span class='va'>n</span>, conf <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
 
-<span class='fu'>ci_upper</span>(<span class='kw'>mean</span>, <span class='kw'>ssd</span>, <span class='kw'>n</span>, conf = <span class='fl'>0.95</span>)</pre>
+<span class='fu'>ci_upper</span><span class='op'>(</span><span class='va'>mean</span>, <span class='va'>ssd</span>, <span class='va'>n</span>, conf <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,8 +146,8 @@ want to use <code><a href='ci_var.html'>ci_var()</a></code> to calculate all val
 <code><a href='ci_var.html'>ci_var</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>ci_lower</span>(<span class='fl'>100</span>, <span class='fl'>5</span>, <span class='fl'>10</span>)
-</div><div class='output co'>#&gt; [1] 96.42322</div><div class='input'><span class='fu'>ci_upper</span>(<span class='fl'>100</span>, <span class='fl'>5</span>, <span class='fl'>10</span>)
+    <pre class="examples"><div class='input'><span class='fu'>ci_lower</span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>5</span>, <span class='fl'>10</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 96.42322</div><div class='input'><span class='fu'>ci_upper</span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>5</span>, <span class='fl'>10</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 103.5768</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -121,37 +121,37 @@ models will be trained and if is a continuous variable, regression
 models will be trained.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>h2o_automl</span>(
-  <span class='kw'>df</span>,
-  y = <span class='st'>"tag"</span>,
-  ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
-  train_test = <span class='fl'>NA</span>,
-  split = <span class='fl'>0.7</span>,
-  weight = <span class='kw'>NULL</span>,
-  target = <span class='st'>"auto"</span>,
-  balance = <span class='fl'>FALSE</span>,
-  impute = <span class='fl'>FALSE</span>,
-  no_outliers = <span class='fl'>TRUE</span>,
-  unique_train = <span class='fl'>TRUE</span>,
-  center = <span class='fl'>FALSE</span>,
-  scale = <span class='fl'>FALSE</span>,
-  thresh = <span class='fl'>10</span>,
-  seed = <span class='fl'>0</span>,
-  nfolds = <span class='fl'>5</span>,
-  max_models = <span class='fl'>3</span>,
-  max_time = <span class='fl'>10</span> <span class='op'>*</span> <span class='fl'>60</span>,
-  start_clean = <span class='fl'>FALSE</span>,
-  exclude_algos = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"StackedEnsemble"</span>, <span class='st'>"DeepLearning"</span>),
-  include_algos = <span class='kw'>NULL</span>,
-  plots = <span class='fl'>TRUE</span>,
-  alarm = <span class='fl'>TRUE</span>,
-  quiet = <span class='fl'>FALSE</span>,
-  print = <span class='fl'>TRUE</span>,
-  save = <span class='fl'>FALSE</span>,
-  subdir = <span class='fl'>NA</span>,
-  project = <span class='st'>"ML Project"</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>h2o_automl</span><span class='op'>(</span>
+  <span class='va'>df</span>,
+  y <span class='op'>=</span> <span class='st'>"tag"</span>,
+  ignore <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span>,
+  train_test <span class='op'>=</span> <span class='cn'>NA</span>,
+  split <span class='op'>=</span> <span class='fl'>0.7</span>,
+  weight <span class='op'>=</span> <span class='cn'>NULL</span>,
+  target <span class='op'>=</span> <span class='st'>"auto"</span>,
+  balance <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  impute <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  no_outliers <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  unique_train <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  center <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  scale <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  thresh <span class='op'>=</span> <span class='fl'>10</span>,
+  seed <span class='op'>=</span> <span class='fl'>0</span>,
+  nfolds <span class='op'>=</span> <span class='fl'>5</span>,
+  max_models <span class='op'>=</span> <span class='fl'>3</span>,
+  max_time <span class='op'>=</span> <span class='fl'>10</span> <span class='op'>*</span> <span class='fl'>60</span>,
+  start_clean <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  exclude_algos <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"StackedEnsemble"</span>, <span class='st'>"DeepLearning"</span><span class='op'>)</span>,
+  include_algos <span class='op'>=</span> <span class='cn'>NULL</span>,
+  plots <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  alarm <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  print <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  save <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  subdir <span class='op'>=</span> <span class='cn'>NA</span>,
+  project <span class='op'>=</span> <span class='st'>"ML Project"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -335,29 +335,29 @@ the results? Working directory as default.</p></td>
 <code><a href='msplit.html'>msplit</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
-<span class='kw'>dft</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>dft</span>, select = <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>Ticket</span>, <span class='kw'>PassengerId</span>, <span class='kw'>Cabin</span>))
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
+<span class='va'>dft</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dft</span>, select <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>Ticket</span>, <span class='va'>PassengerId</span>, <span class='va'>Cabin</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># Classification: Binomial - 2 Classes</span>
-<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, y = <span class='kw'>Survived</span>, max_models = <span class='fl'>1</span>, impute = <span class='fl'>FALSE</span>, target = <span class='st'>"TRUE"</span>)
+<span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span><span class='op'>(</span><span class='va'>dft</span>, y <span class='op'>=</span> <span class='va'>Survived</span>, max_models <span class='op'>=</span> <span class='fl'>1</span>, impute <span class='op'>=</span> <span class='cn'>FALSE</span>, target <span class='op'>=</span> <span class='st'>"TRUE"</span><span class='op'>)</span>
 
 <span class='co'># Let's see all the stuff we have inside:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>r</span>, <span class='kw'>names</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>r</span>, <span class='va'>names</span><span class='op'>)</span>
 
 <span class='co'># Classification: Multi-Categorical - 3 Classes</span>
-<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, <span class='kw'>Pclass</span>, ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Fare"</span>, <span class='st'>"Cabin"</span>), max_time = <span class='fl'>30</span>, plots = <span class='fl'>FALSE</span>)
+<span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Pclass</span>, ignore <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Fare"</span>, <span class='st'>"Cabin"</span><span class='op'>)</span>, max_time <span class='op'>=</span> <span class='fl'>30</span>, plots <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># Regression: Continuous Values</span>
-<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>dft</span>, y = <span class='st'>"Fare"</span>, ignore = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Pclass"</span>), exclude_algos = <span class='kw'>NULL</span>)
+<span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span><span class='op'>(</span><span class='va'>dft</span>, y <span class='op'>=</span> <span class='st'>"Fare"</span>, ignore <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Pclass"</span><span class='op'>)</span>, exclude_algos <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
 <span class='co'># WITH PRE-DEFINED TRAIN/TEST DATAFRAMES</span>
-<span class='kw'>splits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='msplit.html'>msplit</a></span>(<span class='kw'>dft</span>, size = <span class='fl'>0.8</span>)
-<span class='kw'>splits</span><span class='op'>$</span><span class='kw'>train</span><span class='op'>$</span><span class='kw'>split</span> <span class='op'>&lt;-</span> <span class='st'>"train"</span>
-<span class='kw'>splits</span><span class='op'>$</span><span class='kw'>test</span><span class='op'>$</span><span class='kw'>split</span> <span class='op'>&lt;-</span> <span class='st'>"test"</span>
-<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='kw'>splits</span><span class='op'>$</span><span class='kw'>train</span>, <span class='kw'>splits</span><span class='op'>$</span><span class='kw'>test</span>)
-<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span>(<span class='kw'>df</span>, <span class='st'>"Survived"</span>, max_models = <span class='fl'>1</span>, train_test = <span class='st'>"split"</span>)
-}
+<span class='va'>splits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='msplit.html'>msplit</a></span><span class='op'>(</span><span class='va'>dft</span>, size <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span>
+<span class='va'>splits</span><span class='op'>$</span><span class='va'>train</span><span class='op'>$</span><span class='va'>split</span> <span class='op'>&lt;-</span> <span class='st'>"train"</span>
+<span class='va'>splits</span><span class='op'>$</span><span class='va'>test</span><span class='op'>$</span><span class='va'>split</span> <span class='op'>&lt;-</span> <span class='st'>"test"</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>splits</span><span class='op'>$</span><span class='va'>train</span>, <span class='va'>splits</span><span class='op'>$</span><span class='va'>test</span><span class='op'>)</span>
+<span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_automl</span><span class='op'>(</span><span class='va'>df</span>, <span class='st'>"Survived"</span>, max_models <span class='op'>=</span> <span class='fl'>1</span>, train_test <span class='op'>=</span> <span class='st'>"split"</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

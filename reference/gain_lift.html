@@ -115,14 +115,14 @@ values for a predictive score of a specific target. You can use the
 <code><a href='mplot_gain.html'>mplot_gain()</a></code> function to create a plot.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gain_lift</span>(
-  <span class='kw'>tag</span>,
-  <span class='kw'>score</span>,
-  target = <span class='st'>"auto"</span>,
-  splits = <span class='fl'>10</span>,
-  plot = <span class='fl'>FALSE</span>,
-  quiet = <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>gain_lift</span><span class='op'>(</span>
+  <span class='va'>tag</span>,
+  <span class='va'>score</span>,
+  target <span class='op'>=</span> <span class='st'>"auto"</span>,
+  splits <span class='op'>=</span> <span class='fl'>10</span>,
+  plot <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,8 +182,8 @@ categorical model.</p></td>
 <code><a href='model_metrics.html'>model_metrics</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dfr</span>) <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>)</span> <span class='co'># Results for AutoML Predictions</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;     tag    scores
 #&gt; 1  TRUE 0.3155498
 #&gt; 2  TRUE 0.8747599
@@ -192,7 +192,7 @@ categorical model.</p></td>
 #&gt; 5  TRUE 0.2196593
 #&gt; 6 FALSE 0.2816101</div><div class='input'>
 <span class='co'># Results for Binomial Model</span>
-<span class='fu'>gain_lift</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, target = <span class='st'>"FALSE"</span>)
+<span class='fu'>gain_lift</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>scores</span>, target <span class='op'>=</span> <span class='st'>"FALSE"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Target value: FALSE</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 10</span><span>
 #&gt;    percentile value random target total  gain optimal  lift response score
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -205,7 +205,7 @@ categorical model.</p></td>
 #&gt; </span><span style='color: #555555;'> 7</span><span> 7          FALSE   69.8     14    26  92.7   100   32.9      8.48 54.0 
 #&gt; </span><span style='color: #555555;'> 8</span><span> 8          FALSE   80.2      8    28  97.6   100   21.6      4.85 19.8 
 #&gt; </span><span style='color: #555555;'> 9</span><span> 9          FALSE   90.3      2    27  98.8   100    9.40     1.21  6.66
-#&gt; </span><span style='color: #555555;'>10</span><span> 10         FALSE  100        2    26 100     100    0        1.21  1.76</div><div class='input'><span class='fu'>gain_lift</span>(<span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>tag</span>, <span class='kw'>dfr</span><span class='op'>$</span><span class='kw'>class2</span><span class='op'>$</span><span class='kw'>scores</span>, target = <span class='st'>"TRUE"</span>, splits = <span class='fl'>5</span>)
+#&gt; </span><span style='color: #555555;'>10</span><span> 10         FALSE  100        2    26 100     100    0        1.21  1.76</div><div class='input'><span class='fu'>gain_lift</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>scores</span>, target <span class='op'>=</span> <span class='st'>"TRUE"</span>, splits <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Target value: TRUE</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 10</span><span>
 #&gt;   percentile value random target total  gain optimal  lift response score
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>

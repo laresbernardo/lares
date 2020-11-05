@@ -115,15 +115,15 @@ a new fancy way. Tidyverse friendly, based on lares::freqs(),
 no limits on amount of features to evaluate.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>freqs_plot</span>(
-  <span class='kw'>df</span>,
-  <span class='kw'>...</span>,
-  top = <span class='fl'>10</span>,
-  rm.na = <span class='fl'>FALSE</span>,
-  abc = <span class='fl'>FALSE</span>,
-  title = <span class='fl'>NA</span>,
-  subtitle = <span class='fl'>NA</span>
-)</pre>
+    <pre class="usage"><span class='fu'>freqs_plot</span><span class='op'>(</span>
+  <span class='va'>df</span>,
+  <span class='va'>...</span>,
+  top <span class='op'>=</span> <span class='fl'>10</span>,
+  rm.na <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  abc <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  title <span class='op'>=</span> <span class='cn'>NA</span>,
+  subtitle <span class='op'>=</span> <span class='cn'>NA</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,11 +199,11 @@ numerical output; use na.omit() or filter() if needed)</p></td>
 <code><a href='tree_var.html'>tree_var</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"lares.font"</span> <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span> <span class='co'># Temporal</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
 
-<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'>freqs_plot</span>(<span class='kw'>dft</span>, <span class='kw'>Pclass</span>, <span class='kw'>Survived</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>data</span>)
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>freqs_plot</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Pclass</span>, <span class='va'>Survived</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>data</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 7</span><span>
 #&gt;   order     n     p  pcum name     value label          
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
@@ -212,11 +212,11 @@ numerical output; use na.omit() or filter() if needed)</p></td>
 #&gt; </span><span style='color: #555555;'>3</span><span> 5        87  9.76  91.0 Pclass   2     Pclass: 2      
 #&gt; </span><span style='color: #555555;'>4</span><span> 5        87  9.76  91.0 Survived TRUE  Survived: TRUE 
 #&gt; </span><span style='color: #555555;'>5</span><span> 4        97 10.9   81.3 Pclass   2     Pclass: 2      
-#&gt; </span><span style='color: #555555;'>6</span><span> 4        97 10.9   81.3 Survived FALSE Survived: FALSE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>df</span>)
+#&gt; </span><span style='color: #555555;'>6</span><span> 4        97 10.9   81.3 Survived FALSE Survived: FALSE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 </div><div class='img'><img src='freqs_plot-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'>freqs_plot</span>(<span class='kw'>dft</span>, <span class='kw'>Pclass</span>, <span class='kw'>Survived</span>, <span class='kw'>Sex</span>, <span class='kw'>Embarked</span>)
+<span class='fu'>freqs_plot</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Pclass</span>, <span class='va'>Survived</span>, <span class='va'>Sex</span>, <span class='va'>Embarked</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Showing 10 most frequent values. Tail of 22 other values grouped into one</span></div><div class='img'><img src='freqs_plot-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'>freqs_plot</span>(<span class='kw'>dft</span>, <span class='kw'>Pclass</span>, <span class='kw'>Survived</span>, <span class='kw'>Sex</span>, <span class='kw'>Embarked</span>, top = <span class='fl'>15</span>)
+<span class='fu'>freqs_plot</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Pclass</span>, <span class='va'>Survived</span>, <span class='va'>Sex</span>, <span class='va'>Embarked</span>, top <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Showing 15 most frequent values. Tail of 17 other values grouped into one</span></div><div class='img'><img src='freqs_plot-3.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -113,16 +113,16 @@ of a dataframe or vector with date/time variables." />
 of a dataframe or vector with date/time variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>date_feats</span>(
-  <span class='kw'>dates</span>,
-  keep_originals = <span class='fl'>FALSE</span>,
-  only = <span class='fl'>NA</span>,
-  features = <span class='fl'>TRUE</span>,
-  holidays = <span class='fl'>FALSE</span>,
-  country = <span class='st'>"Venezuela"</span>,
-  currency_pair = <span class='fl'>NA</span>,
-  quiet = <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>date_feats</span><span class='op'>(</span>
+  <span class='va'>dates</span>,
+  keep_originals <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  only <span class='op'>=</span> <span class='cn'>NA</span>,
+  features <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  holidays <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  country <span class='op'>=</span> <span class='st'>"Venezuela"</span>,
+  currency_pair <span class='op'>=</span> <span class='cn'>NA</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -202,65 +202,65 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
 <code><a href='ohse.html'>ohse</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  dates = <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>() <span class='op'>-</span> <span class='fl'>365</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), by = <span class='fl'>1</span>), <span class='fl'>50</span>),
-  times = <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span>() <span class='op'>-</span> <span class='fl'>1e7</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span>(), by = <span class='fl'>1</span>), <span class='fl'>50</span>))
+    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  dates <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>365</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>, <span class='fl'>50</span><span class='op'>)</span>,
+  times <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>1e7</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>, <span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span>
   
 <span class='co'># Input as a vector or dataframe</span>
-<span class='fu'>date_feats</span>(<span class='kw'>df</span>, keep_originals = <span class='fl'>TRUE</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>10</span>)
+<span class='fu'>date_feats</span><span class='op'>(</span><span class='va'>df</span>, keep_originals <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 2 date/time columns: 'dates', 'times'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: All formats failed to parse. No formats found.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: argument 'replacement' has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: argument 'replacement' has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt;         dates dates_year dates_month dates_day dates_week dates_weekday
-#&gt; 1  2020-04-03       2020           4         3         14           Fri
-#&gt; 2  2020-01-31       2020           1        31          5           Fri
-#&gt; 3  2020-02-01       2020           2         1          5           Sat
-#&gt; 4  2020-07-15       2020           7        15         29           Wed
-#&gt; 5  2020-05-17       2020           5        17         20           Sun
-#&gt; 6  2020-10-31       2020          10        31         44           Sat
-#&gt; 7  2020-10-15       2020          10        15         42           Thu
-#&gt; 8  2020-03-18       2020           3        18         12           Wed
-#&gt; 9  2020-10-22       2020          10        22         43           Thu
-#&gt; 10 2020-09-25       2020           9        25         39           Fri
+#&gt; 1  2020-04-06       2020           4         6         14           Mon
+#&gt; 2  2020-02-03       2020           2         3          5           Mon
+#&gt; 3  2020-02-04       2020           2         4          5           Tue
+#&gt; 4  2020-07-18       2020           7        18         29           Sat
+#&gt; 5  2020-05-20       2020           5        20         21           Wed
+#&gt; 6  2020-11-03       2020          11         3         44           Tue
+#&gt; 7  2020-10-18       2020          10        18         42           Sun
+#&gt; 8  2020-03-21       2020           3        21         12           Sat
+#&gt; 9  2020-10-25       2020          10        25         43           Sun
+#&gt; 10 2020-09-28       2020           9        28         39           Mon
 #&gt;    dates_weekend dates_year_day               times times_year times_month
-#&gt; 1          FALSE             93 2020-09-13 03:36:03       2020           9
-#&gt; 2          FALSE             30 2020-08-16 08:33:49       2020           8
-#&gt; 3           TRUE             31 2020-08-04 04:52:16       2020           8
-#&gt; 4          FALSE            196 2020-07-19 14:59:13       2020           7
-#&gt; 5           TRUE            137 2020-08-17 23:36:50       2020           8
-#&gt; 6           TRUE            304 2020-09-15 01:04:28       2020           9
-#&gt; 7          FALSE            288 2020-07-31 23:19:36       2020           7
-#&gt; 8          FALSE             77 2020-10-01 00:34:34       2020          10
-#&gt; 9          FALSE            295 2020-08-27 03:49:51       2020           8
-#&gt; 10         FALSE            268 2020-10-25 08:54:49       2020          10
+#&gt; 1          FALSE             96 2020-09-16 06:31:35       2020           9
+#&gt; 2          FALSE             33 2020-08-19 11:29:21       2020           8
+#&gt; 3          FALSE             34 2020-08-07 07:47:48       2020           8
+#&gt; 4           TRUE            199 2020-07-22 17:54:45       2020           7
+#&gt; 5          FALSE            140 2020-08-21 02:32:22       2020           8
+#&gt; 6          FALSE            307 2020-09-18 04:00:00       2020           9
+#&gt; 7           TRUE            291 2020-08-04 02:15:08       2020           8
+#&gt; 8           TRUE             80 2020-10-04 03:30:06       2020          10
+#&gt; 9           TRUE            298 2020-08-30 06:45:23       2020           8
+#&gt; 10         FALSE            271 2020-10-28 11:50:21       2020          10
 #&gt;    times_day times_week times_weekday times_weekend times_year_day times_hour
-#&gt; 1         13         37           Sun          TRUE            256          3
-#&gt; 2         16         33           Sun          TRUE            228          8
-#&gt; 3          4         31           Tue         FALSE            216          4
-#&gt; 4         19         29           Sun          TRUE            200         14
-#&gt; 5         17         33           Mon         FALSE            229         23
-#&gt; 6         15         37           Tue         FALSE            258          1
-#&gt; 7         31         31           Fri         FALSE            212         23
-#&gt; 8          1         40           Thu         FALSE            274          0
-#&gt; 9         27         35           Thu         FALSE            239          3
-#&gt; 10        25         43           Sun          TRUE            298          8
+#&gt; 1         16         38           Wed         FALSE            259          6
+#&gt; 2         19         34           Wed         FALSE            231         11
+#&gt; 3          7         32           Fri         FALSE            219          7
+#&gt; 4         22         30           Wed         FALSE            203         17
+#&gt; 5         21         34           Fri         FALSE            233          2
+#&gt; 6         18         38           Fri         FALSE            261          4
+#&gt; 7          4         31           Tue         FALSE            216          2
+#&gt; 8          4         40           Sun          TRUE            277          3
+#&gt; 9         30         35           Sun          TRUE            242          6
+#&gt; 10        28         44           Wed         FALSE            301         11
 #&gt;    times_minute times_minutes times_second
-#&gt; 1            36           216            3
-#&gt; 2            33           513           49
-#&gt; 3            52           292           16
-#&gt; 4            59           899           13
-#&gt; 5            36          1416           50
-#&gt; 6             4            64           28
-#&gt; 7            19          1399           36
-#&gt; 8            34            34           34
-#&gt; 9            49           229           51
-#&gt; 10           54           534           49</div><div class='input'>
+#&gt; 1            31           391           35
+#&gt; 2            29           689           21
+#&gt; 3            47           467           48
+#&gt; 4            54          1074           45
+#&gt; 5            32           152           22
+#&gt; 6             0           240            0
+#&gt; 7            15           135            8
+#&gt; 8            30           210            6
+#&gt; 9            45           405           23
+#&gt; 10           50           710           21</div><div class='input'>
 <span class='co'># Holidays</span>
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-  <span class='kw'>hol</span> <span class='op'>&lt;-</span> <span class='fu'>date_feats</span>(
-    <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>() <span class='op'>-</span> <span class='fl'>365</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), by = <span class='fl'>1</span>), 
-    keep_originals = <span class='fl'>TRUE</span>, 
-    holidays = <span class='fl'>TRUE</span>, 
-    country = <span class='st'>"Colombia"</span>)
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>hol</span>[<span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>hol</span><span class='op'>$</span><span class='kw'>holidayname</span>),])
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>hol</span> <span class='op'>&lt;-</span> <span class='fu'>date_feats</span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>365</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>, 
+    keep_originals <span class='op'>=</span> <span class='cn'>TRUE</span>, 
+    holidays <span class='op'>=</span> <span class='cn'>TRUE</span>, 
+    country <span class='op'>=</span> <span class='st'>"Colombia"</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>hol</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>hol</span><span class='op'>$</span><span class='va'>holidayname</span><span class='op'>)</span>,<span class='op'>]</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

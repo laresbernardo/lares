@@ -111,14 +111,14 @@
     <p>This function lets the user view a progressbar for a 'for' loop.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>statusbar</span>(
-  run = <span class='fl'>1</span>,
-  max.run = <span class='fl'>100</span>,
-  label = <span class='kw'>run</span>,
-  msg = <span class='st'>"DONE"</span>,
-  type = <span class='st'>"equal"</span>,
-  start_time = <span class='fl'>NA</span>
-)</pre>
+    <pre class="usage"><span class='fu'>statusbar</span><span class='op'>(</span>
+  run <span class='op'>=</span> <span class='fl'>1</span>,
+  max.run <span class='op'>=</span> <span class='fl'>100</span>,
+  label <span class='op'>=</span> <span class='va'>run</span>,
+  msg <span class='op'>=</span> <span class='st'>"DONE"</span>,
+  type <span class='op'>=</span> <span class='st'>"equal"</span>,
+  start_time <span class='op'>=</span> <span class='cn'>NA</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -189,10 +189,10 @@ seconds/minutes ago.</p></td>
 <code><a href='zerovar.html'>zerovar</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>for</span> (<span class='kw'>i</span> <span class='co'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>) {
-  <span class='fu'>statusbar</span>(<span class='kw'>i</span>, <span class='fl'>5</span>)
-  <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span>(<span class='fl'>0.5</span>)
-}
+    <pre class="examples"><div class='input'><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'>statusbar</span><span class='op'>(</span><span class='va'>i</span>, <span class='fl'>5</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>0.5</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt;  00:00:00 [=========                                ] 20% | 1                                         00:00:00 [=================                        ] 40% | 2                                         00:00:01 [=========================                ] 60% | 3                                         00:00:01 [=================================        ] 80% | 4                                         00:00:02 [=========================================] 100% | DONE                    </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

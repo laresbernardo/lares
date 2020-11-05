@@ -117,18 +117,18 @@ Note that it will automatically suppress columns
 with less than 3 non missing values and warn the user.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>corr</span>(
-  <span class='kw'>df</span>,
-  method = <span class='st'>"pearson"</span>,
-  pvalue = <span class='fl'>FALSE</span>,
-  dec = <span class='fl'>6</span>,
-  ignore = <span class='fl'>NA</span>,
-  dummy = <span class='fl'>TRUE</span>,
-  logs = <span class='fl'>FALSE</span>,
-  limit = <span class='fl'>10</span>,
-  top = <span class='fl'>NA</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>corr</span><span class='op'>(</span>
+  <span class='va'>df</span>,
+  method <span class='op'>=</span> <span class='st'>"pearson"</span>,
+  pvalue <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  dec <span class='op'>=</span> <span class='fl'>6</span>,
+  ignore <span class='op'>=</span> <span class='cn'>NA</span>,
+  dummy <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  logs <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  limit <span class='op'>=</span> <span class='fl'>10</span>,
+  top <span class='op'>=</span> <span class='cn'>NA</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,10 +192,10 @@ and sorted by mean of each variable's correlations</p></td>
 <code><a href='corr_var.html'>corr_var</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
-<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='kw'>dft</span>[,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span>]
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>dft</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
 
-<span class='fu'>corr</span>(<span class='kw'>df</span>)
+<span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2
 #&gt; Survived_TRUE      1.000000 -0.543351 -0.077221  0.285904  0.093349
 #&gt; Sex_male          -0.543351  1.000000  0.093254 -0.098013 -0.064746
@@ -203,13 +203,13 @@ and sorted by mean of each variable's correlations</p></td>
 #&gt; Pclass_1           0.285904 -0.098013  0.348941  1.000000 -0.288585
 #&gt; Pclass_2           0.093349 -0.064746  0.006954 -0.288585  1.000000</div><div class='input'>
 <span class='co'># Ignore specific column</span>
-<span class='fu'>corr</span>(<span class='kw'>df</span>, ignore = <span class='st'>"Pclass"</span>)
+<span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, ignore <span class='op'>=</span> <span class='st'>"Pclass"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age
 #&gt; Survived_TRUE      1.000000 -0.543351 -0.077221
 #&gt; Sex_male          -0.543351  1.000000  0.093254
 #&gt; Age               -0.077221  0.093254  1.000000</div><div class='input'>
 <span class='co'># Keep redundant combinations</span>
-<span class='fu'>corr</span>(<span class='kw'>df</span>, redundant = <span class='fl'>TRUE</span>)
+<span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, redundant <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                      Age Survived_FALSE Survived_TRUE  Pclass_1  Pclass_2
 #&gt; Age             1.000000       0.077221     -0.077221  0.348941  0.006954
 #&gt; Survived_FALSE  0.077221       1.000000     -1.000000 -0.285904 -0.093349
@@ -229,7 +229,7 @@ and sorted by mean of each variable's correlations</p></td>
 #&gt; Sex_female     -0.137143   1.000000 -1.000000
 #&gt; Sex_male        0.137143  -1.000000  1.000000</div><div class='input'>
 <span class='co'>#' # Calculate p-values as well</span>
-<span class='fu'>corr</span>(<span class='kw'>df</span>, pvalue = <span class='fl'>TRUE</span>)
+<span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, pvalue <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $cor
 #&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2
 #&gt; Survived_TRUE      1.000000 -0.543351 -0.077221  0.285904  0.093349
@@ -247,9 +247,9 @@ and sorted by mean of each variable's correlations</p></td>
 #&gt; Pclass_2           0.005294 0.053364 0.852842 0.000000 0.000000
 #&gt; </div><div class='input'>
 <span class='co'># Test when no more than 2 non-missing values</span>
-<span class='kw'>df</span><span class='op'>$</span><span class='kw'>trash</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>NA</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>df</span>)<span class='op'>-</span><span class='fl'>1</span>))
+<span class='va'>df</span><span class='op'>$</span><span class='va'>trash</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># and another method...</span>
-<span class='fu'>corr</span>(<span class='kw'>df</span>, method = <span class='st'>"spearman"</span>)
+<span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, method <span class='op'>=</span> <span class='st'>"spearman"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Dropped columns with less than 3 non-missing values: 'trash'</span></div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2
 #&gt; Survived_TRUE      1.000000 -0.543351 -0.052565  0.285904  0.093349
 #&gt; Sex_male          -0.543351  1.000000  0.083330 -0.098013 -0.064746

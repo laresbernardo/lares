@@ -115,25 +115,22 @@ automatically runs <code>ohse</code> (one-hot-smart-encoding) so no need to inpu
 only numerical values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>corr_var</span>(
-  <span class='kw'>df</span>,
-  <span class='kw'>var</span>,
-  ignore = <span class='fl'>NA</span>,
-  method = <span class='st'>"pearson"</span>,
-  trim = <span class='fl'>0</span>,
-  clean = <span class='fl'>FALSE</span>,
-  plot = <span class='fl'>TRUE</span>,
-  top = <span class='fl'>NA</span>,
-  ceiling = <span class='fl'>100</span>,
-  max_pvalue = <span class='fl'>1</span>,
-  limit = <span class='fl'>10</span>,
-  zeroes = <span class='fl'>FALSE</span>,
-  save = <span class='fl'>FALSE</span>,
-  subdir = <span class='fl'>NA</span>,
-  file_name = <span class='st'>"viz_corrvar.png"</span>,
-  quiet = <span class='fl'>FALSE</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>corr_var</span><span class='op'>(</span>
+  <span class='va'>df</span>,
+  <span class='va'>var</span>,
+  ignore <span class='op'>=</span> <span class='cn'>NA</span>,
+  trim <span class='op'>=</span> <span class='fl'>0</span>,
+  clean <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  top <span class='op'>=</span> <span class='cn'>NA</span>,
+  ceiling <span class='op'>=</span> <span class='fl'>100</span>,
+  max_pvalue <span class='op'>=</span> <span class='fl'>1</span>,
+  limit <span class='op'>=</span> <span class='fl'>10</span>,
+  zeroes <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  save <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,17 +143,13 @@ columns: they will be filtered!</p></td>
     <tr>
       <th>var</th>
       <td><p>Variable. Name of the variable to correlate. Note that if the
-variable `var` is not numerical, 1. you may define which category to select 
-from using `var_category`; 2. You may have to add `redundant = TRUE` to 
-enable all categories (instead of n-1).</p></td>
+variable <code>var</code> is not numerical, 1. you may define which category to select 
+from using `var_category`; 2. You may have to add <code>redundant = TRUE</code> to 
+enable all categories (instead of <code>n-1</code>).</p></td>
     </tr>
     <tr>
       <th>ignore</th>
       <td><p>Character vector. Which columns do you wish to exclude?</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>Character. Any of: c("pearson", "kendall", "spearman")</p></td>
     </tr>
     <tr>
       <th>trim</th>
@@ -200,15 +193,6 @@ values of each column. Set to <code>NA</code> to ignore argument.</p></td>
       <td><p>Boolean. Save output plot into working directory</p></td>
     </tr>
     <tr>
-      <th>subdir</th>
-      <td><p>Character. Sub directory on which you wish to 
-save the plot</p></td>
-    </tr>
-    <tr>
-      <th>file_name</th>
-      <td><p>Character. File name as you wish to save the plot</p></td>
-    </tr>
-    <tr>
       <th>quiet</th>
       <td><p>Boolean. Keep quiet? If not, show messages</p></td>
     </tr>
@@ -242,10 +226,10 @@ save the plot</p></td>
 <code><a href='corr.html'>corr</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"lares.font"</span> = <span class='fl'>NA</span>) <span class='co'># Temporal</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>dft</span>) <span class='co'># Titanic dataset</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"lares.font"</span> <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span> <span class='co'># Temporal</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
 
-<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived</span>, method = <span class='st'>"spearman"</span>, plot = <span class='fl'>FALSE</span>, top = <span class='fl'>10</span>)
+<span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span><span class='op'>(</span><span class='va'>Survived</span>, method <span class='op'>=</span> <span class='st'>"spearman"</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span>, top <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Maybe you meant one of: 'Survived_TRUE'</span></div><div class='output co'>#&gt; <span class='message'>Automatically using 'Survived_TRUE</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Not a valid input: Survived was transformed or does not exist.</span></div><div class='output co'>#&gt;                   variables      corr   pvalue
 #&gt; Sex_male           Sex_male -0.543351 0.000000
 #&gt; Fare                   Fare  0.323736 0.000000
@@ -260,10 +244,10 @@ save the plot</p></td>
 <span class='co'># With plots, results are easier to compare:</span>
 
 <span class='co'># Correlate Survived with everything else and show only significant results</span>
-<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, max_pvalue = <span class='fl'>0.01</span>)
+<span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span><span class='op'>(</span><span class='va'>Survived_TRUE</span>, max_pvalue <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span>
 </div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Top 15 with less than 50% correlation</span>
-<span class='kw'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span>(<span class='kw'>Survived_TRUE</span>, ceiling = <span class='fl'>60</span>, top = <span class='fl'>15</span>)
+<span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span><span class='op'>(</span><span class='va'>Survived_TRUE</span>, ceiling <span class='op'>=</span> <span class='fl'>60</span>, top <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 60% (absolute)</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

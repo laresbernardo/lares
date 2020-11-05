@@ -113,7 +113,7 @@ comma separated values" />
 comma separated values</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ohe_commas</span>(<span class='kw'>df</span>, <span class='kw'>...</span>, sep = <span class='st'>","</span>, noval = <span class='st'>"NoVal"</span>)</pre>
+    <pre class="usage"><span class='fu'>ohe_commas</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>...</span>, sep <span class='op'>=</span> <span class='st'>","</span>, noval <span class='op'>=</span> <span class='st'>"NoVal"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,10 +170,10 @@ values which will be separated as one hot encoding</p></td>
 <code><a href='ohse.html'>ohse</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(id = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>),
-                 x = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AA, D"</span>, <span class='st'>"AA,B"</span>, <span class='st'>"B,  D"</span>, <span class='st'>"A,D,B"</span>, <span class='fl'>NA</span>),
-                 z = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AA+BB+AA"</span>, <span class='st'>"AA"</span>, <span class='st'>"BB,  AA"</span>, <span class='fl'>NA</span>, <span class='st'>"BB+AA"</span>))
-<span class='fu'>ohe_commas</span>(<span class='kw'>df</span>, <span class='kw'>x</span>)
+    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>,
+                 x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AA, D"</span>, <span class='st'>"AA,B"</span>, <span class='st'>"B,  D"</span>, <span class='st'>"A,D,B"</span>, <span class='cn'>NA</span><span class='op'>)</span>,
+                 z <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AA+BB+AA"</span>, <span class='st'>"AA"</span>, <span class='st'>"BB,  AA"</span>, <span class='cn'>NA</span>, <span class='st'>"BB+AA"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>ohe_commas</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>x</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 8</span><span>
 #&gt;      id x     z        x_AA  x_D   x_B   x_A   x_NoVal
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>  
@@ -181,7 +181,7 @@ values which will be separated as one hot encoding</p></td>
 #&gt; </span><span style='color: #555555;'>2</span><span>     2 AA,B  AA       TRUE  FALSE TRUE  FALSE FALSE  
 #&gt; </span><span style='color: #555555;'>3</span><span>     3 B,  D BB,  AA  FALSE TRUE  TRUE  FALSE FALSE  
 #&gt; </span><span style='color: #555555;'>4</span><span>     4 A,D,B </span><span style='color: #BB0000;'>NA</span><span>       FALSE TRUE  TRUE  TRUE  FALSE  
-#&gt; </span><span style='color: #555555;'>5</span><span>     5 </span><span style='color: #BB0000;'>NA</span><span>    BB+AA    FALSE FALSE FALSE FALSE TRUE   </div><div class='input'><span class='fu'>ohe_commas</span>(<span class='kw'>df</span>, <span class='kw'>z</span>, sep = <span class='st'>"\\+"</span>)
+#&gt; </span><span style='color: #555555;'>5</span><span>     5 </span><span style='color: #BB0000;'>NA</span><span>    BB+AA    FALSE FALSE FALSE FALSE TRUE   </div><div class='input'><span class='fu'>ohe_commas</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>z</span>, sep <span class='op'>=</span> <span class='st'>"\\+"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 6</span><span>
 #&gt;      id x     z        z_AA  z_BB  `z_AA, AA, BB,  AA, NoVal, BB`
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>                         
@@ -189,7 +189,7 @@ values which will be separated as one hot encoding</p></td>
 #&gt; </span><span style='color: #555555;'>2</span><span>     2 AA,B  AA       TRUE  FALSE FALSE                         
 #&gt; </span><span style='color: #555555;'>3</span><span>     3 B,  D BB,  AA  FALSE FALSE FALSE                         
 #&gt; </span><span style='color: #555555;'>4</span><span>     4 A,D,B </span><span style='color: #BB0000;'>NA</span><span>       FALSE FALSE FALSE                         
-#&gt; </span><span style='color: #555555;'>5</span><span>     5 </span><span style='color: #BB0000;'>NA</span><span>    BB+AA    TRUE  TRUE  FALSE                         </div><div class='input'><span class='fu'>ohe_commas</span>(<span class='kw'>df</span>, <span class='kw'>x</span>, <span class='kw'>z</span>)
+#&gt; </span><span style='color: #555555;'>5</span><span>     5 </span><span style='color: #BB0000;'>NA</span><span>    BB+AA    TRUE  TRUE  FALSE                         </div><div class='input'><span class='fu'>ohe_commas</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>x</span>, <span class='va'>z</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 13</span><span>
 #&gt;      id x     z     x_AA  z_D   x_B   z_A   x_NoVal `x_AA+BB+AA` z_AA  x_BB 
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>
