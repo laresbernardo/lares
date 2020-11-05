@@ -74,6 +74,9 @@ corr <- function(df, method = "pearson",
     }
   }
   
+  # Drop columns with no variance
+  # d <- d[,-which(colnames(d) %in% zerovar(d))] 
+  
   # Correlations
   rs <- suppressWarnings(cor(d, use = "pairwise.complete.obs", method = method))
   rs[is.na(rs)] <- 0
@@ -104,7 +107,13 @@ corr <- function(df, method = "pearson",
       dimnames(z) <- list(colnames(x), colnames(x))
       round(z, dec)
     }
-    p <- cor.test.p(d)
+    
+    p <- tryCatch({
+      cor.test.p(d)
+    }, error = function(err) {
+      message(paste("Couldn't calculate p-values:", err))
+      message("To continue, try 'pvalue' = FALSE and/or check your data.")
+    })
     
     # n <- t(!is.na(d)) %*% (!is.na(d))
     # t <- (rs*sqrt(n - 2))/sqrt(1 - rs^2)
@@ -136,9 +145,9 @@ corr <- function(df, method = "pearson",
 #' @family Correlations
 #' @inheritParams corr
 #' @param var Variable. Name of the variable to correlate. Note that if the
-#' variable `var` is not numerical, 1. you may define which category to select 
-#' from using `var_category`; 2. You may have to add `redundant = TRUE` to 
-#' enable all categories (instead of n-1).
+#' variable \code{var} is not numerical, 1. you may define which category to select 
+#' from using `var_category`; 2. You may have to add \code{redundant = TRUE} to 
+#' enable all categories (instead of \code{n-1}).
 #' @param ignore Character vector. Which columns do you wish to exclude?
 #' @param trim Integer. Trim words until the nth character for 
 #' categorical values (applies for both, target and values)
@@ -154,9 +163,6 @@ corr <- function(df, method = "pearson",
 #' values of each column. Set to \code{NA} to ignore argument.
 #' @param zeroes Do you wish to keep zeroes in correlations too?
 #' @param save Boolean. Save output plot into working directory
-#' @param subdir Character. Sub directory on which you wish to 
-#' save the plot
-#' @param file_name Character. File name as you wish to save the plot
 #' @param quiet Boolean. Keep quiet? If not, show messages
 #' @param ... Additional parameters passed to \code{corr}
 #' @examples
@@ -175,7 +181,6 @@ corr <- function(df, method = "pearson",
 #' @export
 corr_var <- function(df, var, 
                      ignore = NA,
-                     method = "pearson", 
                      trim = 0,
                      clean = FALSE,
                      plot = TRUE,
@@ -185,8 +190,6 @@ corr_var <- function(df, var,
                      limit = 10,
                      zeroes = FALSE,
                      save = FALSE, 
-                     subdir = NA,
-                     file_name = "viz_corrvar.png",
                      quiet = FALSE,
                      ...) {
   
@@ -195,8 +198,9 @@ corr_var <- function(df, var,
   df <- select(df, -contains(paste0(var,"_log")))
   
   # Calculate correlations
-  rs <- corr(df, method = method, 
-             ignore = ignore, limit = limit,
+  rs <- corr(df,
+             ignore = ignore,
+             limit = limit,
              pvalue = TRUE,
              ...)
   
@@ -233,7 +237,7 @@ corr_var <- function(df, var,
     top <- 30
     if (!quiet) 
       message(paste("Automatically reduced results to the top", top, "variables.",
-                  "Use the 'top' parameter to override this limit."))
+                    "Use the 'top' parameter to override this limit."))
   }
   
   if (ceiling < 100) {
@@ -276,12 +280,6 @@ corr_var <- function(df, var,
       p <- p + labs(caption = paste("Correlations with p-value <", max_pvalue))
   }
   
-  if (!is.na(subdir)) {
-    dir.create(file.path(getwd(), subdir), recursive = T)
-    file_name <- paste(subdir, file_name, sep = "/")
-  }
-  
-  if (save) p <- p + ggsave(file_name, width = 6, height = 6)
   if (plot) return(p) else return(d)
 }
 
@@ -298,6 +296,7 @@ corr_var <- function(df, var,
 #' @family Correlations
 #' @family Exploratory
 #' @inheritParams corr
+#' @inheritParams corr_var
 #' @param plot Boolean. Show and return a plot?
 #' @param max_pvalue Numeric. Filter non-significant variables. Range (0, 1]
 #' @param type Integer. Plot type. 1 is for overall rank. 2 is for local rank.
@@ -305,17 +304,11 @@ corr_var <- function(df, var,
 #' @param top Integer. Return top n results only. Only valid when type = 1. Set
 #' value to NA to use all cross-correlations
 #' @param local Integer. Label top n local correlations. Only valid when type = 2
-#' @param ignore Character vector. Which columns do you wish to exlude?
 #' @param contains Character vector. Filter cross-correlations 
 #' with variables that contains certain strings (using any value if vector used).
 #' @param grid Boolean. Separate into grids?
 #' @param rm.na Boolean. Remove NAs?
-#' @param dummy Boolean. Should One Hot Encoding be applied to categorical columns? 
-#' @param limit Integer. Limit one hot encoding to the n most frequent 
-#' values of each column. Set to \code{NA} to ignore argument.
-#' @param redundant Boolean. Should we keep redundant columns? i.e. It the
-#' column only has two different values, should we keep both new columns?
-#' @param quiet Boolean. Keep quiet? If not, show messages
+#' @param ... Additional parameters passed to \code{corr}
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
@@ -333,29 +326,26 @@ corr_var <- function(df, var,
 #' corr_cross(dft, contains = c("Survived", "Fare"))
 #' @export
 corr_cross <- function(df, plot = TRUE, 
-                       max_pvalue = 1,
+                       pvalue = TRUE, max_pvalue = 1,
                        type = 1, max = 1, top = 25, local = 1,
                        ignore = NA, contains = NA, grid = FALSE,
-                       rm.na = FALSE, dummy = TRUE, 
-                       limit = 10, redundant = FALSE,
-                       method = "pearson",
-                       quiet = FALSE) {
+                       rm.na = FALSE, quiet = FALSE,
+                       ...) {
   
   check_opts(type, 1:2)
   
   if (sum(is.na(df)) & rm.na == FALSE & !quiet) 
     warning("There are NA values in your data!")
   
-  cor <- corr(df, ignore = ignore, dummy = dummy, limit = limit,
-              redundant = redundant, method = method, pvalue = TRUE)
+  cor <- corr(df, ignore = ignore, pvalue = pvalue, ...)
   
-  transf <- function(x) {
+  transf <- function(x, max = 1) {
     x <- data.frame(x)
-    ret <- gather(x) %>% 
+    ret <- gather(x) %>%
       mutate(mix = rep(colnames(x), length(x))) %>%
       mutate(p1 = rep(1:length(x), each = length(x)),
              p2 = rep(1:length(x), length(x)),
-             aux = .data$p2 - .data$p1) %>% 
+             aux = .data$p2 - .data$p1) %>%
       filter(.data$aux > 0) %>%
       mutate(rel = abs(.data$value)) %>% 
       filter(.data$rel < max) %>% 
@@ -372,8 +362,14 @@ corr_cross <- function(df, plot = TRUE,
     return(ret)
   }
   
-  ret <- transf(cor$cor)
-  aux <- transf(cor$pvalue)
+  if (is.list(cor)) {
+    ret <- transf(cor$cor, max = max)
+    aux <- transf(cor$pvalue, max = max)
+  } else {
+    ret <- aux <- transf(cor, max = max)
+    aux$corr <- 0
+  }
+  
   ret <- left_join(ret, rename(aux, pvalue = .data$corr), c("key", "mix")) %>%
     mutate(pvalue = as.numeric(ifelse(is.na(.data$pvalue), 1, .data$pvalue))) %>%
     filter(.data$pvalue <= max_pvalue)

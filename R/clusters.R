@@ -1,33 +1,3 @@
-prepare_data <- function(df, drop_na = TRUE, ohse = TRUE, norm = TRUE, quiet = TRUE) {
-  
-  # There should not be NAs
-  if (sum(is.na(df)) > 0) {
-    if (drop_na) { 
-      df <- removenarows(df, all = FALSE) 
-      if (!quiet) message(
-        "Automatically removed rows with NA. To overwrite: fix NAs and set drop_na = FALSE")
-    } else {
-      stop(paste("There should be no NAs in your dataframe!",
-                 "You can manually fix it or set drop_na to TRUE to remove these rows.", sep = "\n")) 
-    }
-  }
-  
-  # Only numerical values
-  nums <- df_str(df, return = "names", quiet = TRUE)$nums
-  if (ohse & length(nums) != ncol(df)) {
-    df <- ohse(df, redundant = FALSE, dates = TRUE, limit = 8, quiet = quiet)
-  } else {
-    df <- data.frame(df) %>% select_if(is.numeric)
-  }
-  
-  # Data should be normalized
-  if (norm) df <- df %>% 
-    transmute_all(list(normalize)) %>% 
-    replace(., is.na(.), 0)
-  
-  return(df)
-}
-
 ####################################################################
 #' Automated K-Means Clustering + PCA
 #' 
@@ -280,4 +250,34 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
     fviz_nbclust(df, kmeans, method = x, ...) + theme_lares(pal = 2)
   })
   return(plots)
+}
+
+prepare_data <- function(df, drop_na = TRUE, ohse = TRUE, norm = TRUE, quiet = TRUE) {
+  
+  # There should not be NAs
+  if (sum(is.na(df)) > 0) {
+    if (drop_na) { 
+      df <- removenarows(df, all = FALSE) 
+      if (!quiet) message(
+        "Automatically removed rows with NA. To overwrite: fix NAs and set drop_na = FALSE")
+    } else {
+      stop(paste("There should be no NAs in your dataframe!",
+                 "You can manually fix it or set drop_na to TRUE to remove these rows.", sep = "\n")) 
+    }
+  }
+  
+  # Only numerical values
+  nums <- df_str(df, return = "names", quiet = TRUE)$nums
+  if (ohse & length(nums) != ncol(df)) {
+    df <- ohse(df, redundant = FALSE, dates = TRUE, limit = 8, quiet = quiet)
+  } else {
+    df <- data.frame(df) %>% select_if(is.numeric)
+  }
+  
+  # Data should be normalized
+  if (norm) df <- df %>% 
+    transmute_all(list(normalize)) %>% 
+    replace(., is.na(.), 0)
+  
+  return(df)
 }

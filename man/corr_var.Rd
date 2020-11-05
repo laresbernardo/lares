@@ -8,7 +8,6 @@ corr_var(
   df,
   var,
   ignore = NA,
-  method = "pearson",
   trim = 0,
   clean = FALSE,
   plot = TRUE,
@@ -18,8 +17,6 @@ corr_var(
   limit = 10,
   zeroes = FALSE,
   save = FALSE,
-  subdir = NA,
-  file_name = "viz_corrvar.png",
   quiet = FALSE,
   ...
 )
@@ -29,13 +26,11 @@ corr_var(
 columns: they will be filtered!}
 
 \item{var}{Variable. Name of the variable to correlate. Note that if the
-variable `var` is not numerical, 1. you may define which category to select 
-from using `var_category`; 2. You may have to add `redundant = TRUE` to 
-enable all categories (instead of n-1).}
+variable \code{var} is not numerical, 1. you may define which category to select 
+from using `var_category`; 2. You may have to add \code{redundant = TRUE} to 
+enable all categories (instead of \code{n-1}).}
 
 \item{ignore}{Character vector. Which columns do you wish to exclude?}
-
-\item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
 
 \item{trim}{Integer. Trim words until the nth character for 
 categorical values (applies for both, target and values)}
@@ -59,11 +54,6 @@ values of each column. Set to \code{NA} to ignore argument.}
 \item{zeroes}{Do you wish to keep zeroes in correlations too?}
 
 \item{save}{Boolean. Save output plot into working directory}
-
-\item{subdir}{Character. Sub directory on which you wish to 
-save the plot}
-
-\item{file_name}{Character. File name as you wish to save the plot}
 
 \item{quiet}{Boolean. Keep quiet? If not, show messages}
 

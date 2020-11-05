@@ -7,6 +7,7 @@
 corr_cross(
   df,
   plot = TRUE,
+  pvalue = TRUE,
   max_pvalue = 1,
   type = 1,
   max = 1,
@@ -16,11 +17,8 @@ corr_cross(
   contains = NA,
   grid = FALSE,
   rm.na = FALSE,
-  dummy = TRUE,
-  limit = 10,
-  redundant = FALSE,
-  method = "pearson",
-  quiet = FALSE
+  quiet = FALSE,
+  ...
 )
 }
 \arguments{
@@ -28,6 +26,9 @@ corr_cross(
 columns: they will be filtered!}
 
 \item{plot}{Boolean. Show and return a plot?}
+
+\item{pvalue}{Boolean. Returns a list, with correlations and statistical 
+significance (p-value) for each value}
 
 \item{max_pvalue}{Numeric. Filter non-significant variables. Range (0, 1]}
 
@@ -40,7 +41,7 @@ value to NA to use all cross-correlations}
 
 \item{local}{Integer. Label top n local correlations. Only valid when type = 2}
 
-\item{ignore}{Character vector. Which columns do you wish to exlude?}
+\item{ignore}{Vector or character. Which column should be ignored?}
 
 \item{contains}{Character vector. Filter cross-correlations 
 with variables that contains certain strings (using any value if vector used).}
@@ -49,17 +50,9 @@ with variables that contains certain strings (using any value if vector used).}
 
 \item{rm.na}{Boolean. Remove NAs?}
 
-\item{dummy}{Boolean. Should One Hot Encoding be applied to categorical columns?}
-
-\item{limit}{Integer. Limit one hot encoding to the n most frequent 
-values of each column. Set to \code{NA} to ignore argument.}
-
-\item{redundant}{Boolean. Should we keep redundant columns? i.e. It the
-column only has two different values, should we keep both new columns?}
-
-\item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
-
 \item{quiet}{Boolean. Keep quiet? If not, show messages}
+
+\item{...}{Additional parameters passed to \code{corr}}
 }
 \description{
 This function creates a correlation full study and returns a rank
