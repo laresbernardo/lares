@@ -183,8 +183,11 @@ model_preprocess <- function(df,
   
   # CHECK TRAIN/TEST VALUES
   if (model_type == "Classification") {
-    if (!all(unique(df$tag) %in% unique(train$tag)))
-      stop(paste("You must train with all available tags:", vector2text(unique(df$tag))))
+    if (!all(unique(df$tag) %in% unique(train$tag))) {
+      warning(paste("You SHOULD train with all available tags:", vector2text(unique(df$tag))))
+      message("- CHECK: excluded labels in your test set that were not in your train set")
+      df <- df[df$tag %in% unique(train$tag),]
+    }
     if (!all(unique(df$tag) %in% unique(test$tag)))
       warning("You are training with tags that are not in your test set.")  
   }
