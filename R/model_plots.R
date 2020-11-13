@@ -816,15 +816,7 @@ mplot_full <- function(tag,
     
   }
   
-  if (save) {
-    if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = TRUE)
-      file_name <- paste(subdir, file_name, sep = "/")
-    }
-    png(file_name, height = 2000, width = 3200, res = 300)
-    plot(p)
-    dev.off()
-  }
+  if (save) export_plot(p, file_name, subdir = subdir, width = 15, height = 10)
   
   if (plot) plot(p) else return(p)
   
@@ -843,6 +835,8 @@ mplot_full <- function(tag,
 #' @inheritParams conf_mat
 #' @param abc Boolean. Arrange columns and rows alphabetically?
 #' @param squared Boolean. Force plot to be squared?
+#' @param top Integer. Plot only the most n frequent variables.
+#' Set to \code{NA} to plot all.
 #' @examples 
 #' options("lares.font" = NA) # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -856,21 +850,30 @@ mplot_full <- function(tag,
 #' mplot_conf(dfr$class3$tag, dfr$class3$score,
 #'           model_name = "Titanic Class Model")
 #' @export
-mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE, 
-                       squared = FALSE, diagonal = TRUE,
-                       subtitle = NA, model_name = NA,
-                       save = FALSE, subdir = NA, 
+mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
+                       squared = FALSE, diagonal = TRUE, top = 20,
+                       subtitle = NA, model_name = NULL,
+                       save = FALSE, subdir = NA,
                        file_name = "viz_conf_mat.png") {
   
   df <- data.frame(tag, score)
-  if (!diagonal) df <- df %>% filter(.data$tag != .data$score)
   
   # About tags
+  # Keep only most frequent tags?
+  if (!is.na(top))
+    if (length(unique(df$tag)) > top) {
+      tops <- freqs(df, tag) %>% pull(1) %>% head(top)
+      df <- df %>% mutate(
+        tag = ifelse(.data$tag %in% tops, as.character(.data$tag), "Others"),
+        score = ifelse(.data$score %in% tops, as.character(.data$score), "Others"))
+    }
   values <- df %>% group_by(.data$tag) %>% tally() %>% 
     {if (abc) arrange(., .data$tag) else arrange(., desc(.data$n))} %>%
     mutate(label = sprintf("%s \n(%s)", .data$tag, formatNum(.data$n, 0)))
   labels <- values$tag
-  df <- df %>% mutate(tag = factor(.data$tag, levels = labels))
+  df <- mutate(df, tag = factor(.data$tag, levels = labels))
+  
+  if (!diagonal) df <- filter(df, .data$tag != .data$score)
   
   # About scores
   if (is.numeric(df$score) & length(unique(tag)) == 2) {
@@ -899,7 +902,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
     y = as.numeric(factor(.data$tag, levels = rev(labels))), 
     x = as.numeric(factor(.data$pred, levels = labels)), 
     fill = .data$n, size = .data$aux, label = .data$label)) +
-    geom_tile() + theme_lares2() +
+    geom_tile() +
     scale_fill_gradient(low = "white", high = "orange") +
     geom_text(lineheight = .8) + 
     scale_size(range = c(2.9, 3.4)) + 
@@ -908,7 +911,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
          title = paste("Confusion Matrix", ifelse(
            thresh != 0.5, paste("with Threshold =", thresh), ""), ifelse(
              diagonal == FALSE, paste("without diagonal values"), "")),
-         subtitle = metrics) +
+         subtitle = metrics, caption = model_name) +
     theme_lares2() +
     theme(axis.text.x = element_text(angle = 30, hjust = 0),
           axis.title.x = element_text(hjust = 0.5),
@@ -920,6 +923,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
           panel.border = element_blank(), 
           panel.grid.minor = element_blank(),
           strip.background = element_blank()) +
+    theme(axis.text.x = element_text(angle = 30, hjust = 0)) +
     scale_x_continuous(breaks = 1:length(labels),
                        labels = labels,
                        position = 'bottom',
@@ -934,7 +938,6 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
                                            labels = rev(values$label)))
   
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
-  if (!is.na(model_name)) p <- p + labs(caption = model_name)
   if (squared) p <- p + coord_equal()
   
   if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)

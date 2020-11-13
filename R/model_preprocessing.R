@@ -166,7 +166,7 @@ model_preprocess <- function(df,
     train <- distinct(train)
     if (nrow(train) != train_rows & !quiet)
       message(paste("- REPEATED: There were", train_rows - nrow(train), 
-                    "repeated rows which are being suppressed for the train dataset")) 
+                    "repeated rows which are being suppressed from the train dataset")) 
   }
   if (nrow(train) > 10000 & !quiet)
     message("- SAMPLE: Consider sampling or reduce the 'split' argument for faster results")

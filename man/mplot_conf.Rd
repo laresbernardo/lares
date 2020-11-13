@@ -11,8 +11,9 @@ mplot_conf(
   abc = TRUE,
   squared = FALSE,
   diagonal = TRUE,
+  top = 20,
   subtitle = NA,
-  model_name = NA,
+  model_name = NULL,
   save = FALSE,
   subdir = NA,
   file_name = "viz_conf_mat.png"
@@ -32,6 +33,9 @@ confusion matrix when binary.}
 
 \item{diagonal}{Boolean. \code{FALSE} to convert diagonal numbers to 
 zeroes. Ideal to detect must confusing categories.}
+
+\item{top}{Integer. Plot only the most n frequent variables.
+Set to \code{NA} to plot all.}
 
 \item{subtitle}{Character. Subtitle to show in plot}
 
