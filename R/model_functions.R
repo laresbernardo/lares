@@ -259,9 +259,7 @@ plot.h2o_automl <- function(x, ...) {
     stop('Object must be class h2o_automl')
   if ("plots" %in% names(x)) {
     x$plots$dashboard 
-  } else { message(
-    "Nothing to plot: set 'plots = TRUE' when creating h2o_automl object") 
-  } 
+  } else stop("Set 'plots = TRUE' when creating h2o_automl object or use mplot_full()")
 }
 
 ####################################################################
