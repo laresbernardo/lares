@@ -234,7 +234,7 @@ conf_mat <- function(tag, score, thresh = 0.5,
                      plot = FALSE) {
   
   df <- data.frame(tag, score)
-  if (!diagonal) df <- df %>% filter(.data$tag != .data$score)
+  if (!diagonal) df <- filter(df, .data$tag != .data$score)
   if (plot) return(mplot_conf(df$tag, df$score, thresh = thresh))
   
   # About tags
@@ -258,7 +258,9 @@ conf_mat <- function(tag, score, thresh = 0.5,
   ret <- df %>% 
     rename("Real" = .data$tag, "Pred" = .data$pred) %>%
     crosstab(.data$Real, .data$Pred, total = FALSE)
-  ret <- ret[,c(colnames(ret)[1], as.character(unlist(ret[,1])))]
+  myRows <- as.character(unlist(ret[,1]))
+  myCols <- colnames(ret[,-1])
+  ret <- ret[,c("Real x Pred", myCols[order(match(myCols, myRows))])]
   ret[is.na(ret)] <- 0
   
   return(as_tibble(ret))
