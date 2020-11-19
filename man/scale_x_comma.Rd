@@ -7,6 +7,8 @@
 \alias{scale_y_percent}
 \alias{scale_x_dollar}
 \alias{scale_y_dollar}
+\alias{scale_x_abbr}
+\alias{scale_y_abbr}
 \title{Axis scales format}
 \usage{
 scale_x_comma(...)
@@ -20,11 +22,16 @@ scale_y_percent(...)
 scale_x_dollar(...)
 
 scale_y_dollar(...)
+
+scale_x_abbr(...)
+
+scale_y_abbr(...)
 }
 \arguments{
 \item{...}{Arguments passed to \code{ggplot2::continuous_scale}}
 }
 \description{
 The \code{_comma} ones set comma format for axis text, the \code{_percent} 
-ones set percent format for axis text, and \code{_dollar} for collar currency
+ones set percent format for axis text, \code{_dollar} for collar currency,
+and \code{_abbr} for abbreviated format.
 }

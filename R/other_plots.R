@@ -304,7 +304,8 @@ gg_bars <- function(names, n, p = NA,
 #' Axis scales format
 #'
 #' The \code{_comma} ones set comma format for axis text, the \code{_percent} 
-#' ones set percent format for axis text, and \code{_dollar} for collar currency 
+#' ones set percent format for axis text, \code{_dollar} for collar currency,
+#' and \code{_abbr} for abbreviated format.
 #'
 #' @param ... Arguments passed to \code{ggplot2::continuous_scale}
 #' @export
@@ -330,6 +331,13 @@ scale_x_dollar <- function(...) scale_x_continuous(..., labels = dollar)
 #' @export
 scale_y_dollar <- function(...) scale_y_continuous(..., labels = dollar)
 
+#' @rdname scale_x_comma
+#' @export
+scale_x_abbr <- function(...) scale_x_continuous(..., labels = num_abbr)
+
+#' @rdname scale_x_comma
+#' @export
+scale_y_abbr <- function(...) scale_y_continuous(..., labels = num_abbr)
 
 ####################################################################
 #' Plot Result with Nothing to Plot
