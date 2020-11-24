@@ -3,24 +3,23 @@
 [![R-CMD-check](https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg?branch=master)](https://github.com/laresbernardo/lares/actions?query=workflow%3AR-CMD-check) [![documentation](https://github.com/laresbernardo/lares/workflows/documentation/badge.svg)](https://laresbernardo.github.io/lares/reference/index.html) [![travis](https://travis-ci.com/laresbernardo/lares.svg?branch=master)](https://travis-ci.com/laresbernardo/lares)  [![saythanks](https://img.shields.io/badge/say-hi-blue.svg)](https://linkedin.com/in/laresbernardo)
 ----
 
-R library designed to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. With a wide variety of family functions such as Machine Learning, EDA, Investment, Queries, Scrappers, APIs, `lares` helps the analyst or data scientist to get quick, reproducible, and robust results, without the need of repetitive coding nor extensive programming skills. Feel free to install, use, and/or comment on any of the code and functionalities. Oh, and if you are also colourblind, be sure to check the colour palettes!
+R library built to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. With a wide variety of family functions like Machine Learning, data cleaning and procesing, EDA, Investment, NLP, Queries, Scrappers, API interactions, `lares` helps the analyst or data scientist get quick, reproducible, robust results, without the need of repetitive coding nor extensive programming skills. Feel free to install, use, and/or comment on any of the code and functionalities. And if you are also colourblind, be sure to check the the colour palettes!
 
-Don't hesitate to contact me, and please, do let me know where did you first hear from the library and which family of functions you are most interested in.
+Don't hesitate to contact me, and please when you do, let me know where did you first hear from the library and which family of functions you are most interested in.
 
 ## Installation
 
 ```{r}
-# install.packages('devtools')
-devtools::install_github("laresbernardo/lares")
+# If you don't have remotes yet, run: install.packages('remotes')
+remotes::install_github("laresbernardo/lares")
 
-# Full installation with recommended dependencies (takes some time)
-devtools::install_github("laresbernardo/lares", dependencies = TRUE)
-
-# User friendly update
-lares::updateLares()
+# Full installation with recommended dependencies (takes more time)
+remotes::install_github("laresbernardo/lares", dependencies = TRUE)
 ```
 
-**CRAN NOTE**: I currently don't have planned to submit the library to CRAN, eventhough I'm a huge fan and it passes all its quality tests. I see `lares` more of an everyday useful shareble *package* rather than a "specialized for a specific task" *library*. It has too many various kinds of functions, from NLP to querying APIs to plotting Machine Learning results to market stocks and portfolio reports. I gladly share my code with the community and encourage you to use/comment/share it, but I do think that CRAN is not aiming for this kind of libraries in their repertoire.
+**Windows users**: you MAY have to install `RTools` before running the above code. Download it [here](https://cran.r-project.org/bin/windows/Rtools/).
+
+**CRAN NOTE**: I do NOT have plans to submit the library to CRAN, eventhough I'm a huge fan and it passes all its quality tests. I see `lares` more of an everyday useful and shareble *package* rather than a "specialized for a specific task" *library*. It has too many various kinds of functions, from NLP to querying APIs, plotting Machine Learning results to market stocks and portfolio reports. I gladly share my code with ouR community and encourage you to use/comment/share it, but I do think that CRAN is not aiming for this kind of libraries in their repertoire.
 
 ## See the library in action!
 
