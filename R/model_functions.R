@@ -35,9 +35,10 @@
 #' @param train_test Character. If needed, \code{df}'s column name with 'test' 
 #' and 'train' values to split
 #' @param split Numeric. Value between 0 and 1 to split as train/test 
-#' datasets. Value is for training set. Set value to 1 to train will all 
+#' datasets. Value is for training set. Set value to 1 to train with all
 #' available data and test with same data (cross-validation will still be 
-#' used when training)
+#' used when training). If \code{train_test} is set, value will be overwritten
+#' with its real split rate.
 #' @param weight Column with observation weights. Giving some observation a
 #' weight of zero is equivalent to excluding it from the dataset; giving an 
 #' observation a relative weight of 2 is equivalent to repeating that 
@@ -360,11 +361,12 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     colnames(train)[colnames(train) == y] <- "tag"
     test <- test[,1:(which(colnames(test) == "train_test") - 1)]
     train <- train[,1:(which(colnames(train) == "train_test") - 1)]
+    split <- round(nrow(train)/(nrow(train)+nrow(test)), 2)
   }
   
   # GLOBAL DATAFRAME FROM TEST AND TRAIN
-  if (!all(colnames(test) == colnames(train)))
-    stop("All columns from test and train datasets must be exactly the same")
+  if (!all(colnames(train) %in% colnames(test)))
+    stop("All columns from train data must be present on test data as well!")
   if (split == 1) {
     global <- train %>% mutate(train_test = "train_test")
   } else {

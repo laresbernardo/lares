@@ -39,9 +39,10 @@ selected. Change the value to overwrite. Only used when binary
 categorical model.}
 
 \item{split}{Numeric. Value between 0 and 1 to split as train/test 
-datasets. Value is for training set. Set value to 1 to train will all 
+datasets. Value is for training set. Set value to 1 to train with all
 available data and test with same data (cross-validation will still be 
-used when training)}
+used when training). If \code{train_test} is set, value will be overwritten
+with its real split rate.}
 
 \item{ignore}{Character vector. Columns too ignore}
 
