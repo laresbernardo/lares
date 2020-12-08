@@ -123,14 +123,24 @@ high quality MP3 files. The URL can be for a single video or a whole
 playlist. It also returns metadata into an (invisible) list.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_mp3</span><span class='op'>(</span><span class='va'>id</span>, mp3 <span class='op'>=</span> <span class='cn'>TRUE</span>, params <span class='op'>=</span> <span class='st'>""</span>, info <span class='op'>=</span> <span class='cn'>TRUE</span>, cover <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_mp3</span><span class='op'>(</span>
+  <span class='va'>id</span>,
+  mp3 <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  params <span class='op'>=</span> <span class='st'>""</span>,
+  start_time <span class='op'>=</span> <span class='cn'>NA</span>,
+  end_time <span class='op'>=</span> <span class='cn'>NA</span>,
+  overwrite <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  info <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  cover <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>id</th>
-      <td><p>Characeter. YouTube URL or ID to search for</p></td>
+      <td><p>Character. YouTube URL or ID to search for.</p></td>
     </tr>
     <tr>
       <th>mp3</th>
@@ -138,7 +148,16 @@ playlist. It also returns metadata into an (invisible) list.</p>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>Character. Additional parameters</p></td>
+      <td><p>Character. Additional parameters.</p></td>
+    </tr>
+    <tr>
+      <th>start_time, end_time</th>
+      <td><p>Numeric. Start and end time
+to trim the audio output in seconds.</p></td>
+    </tr>
+    <tr>
+      <th>overwrite</th>
+      <td><p>Boolean. Overwrite original file?</p></td>
     </tr>
     <tr>
       <th>info</th>
@@ -147,6 +166,10 @@ playlist. It also returns metadata into an (invisible) list.</p>
     <tr>
       <th>cover</th>
       <td><p>Boolean. Google Search its squared cover?</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Boolean. Keep quiet? If not, print messages.</p></td>
     </tr>
     </table>
 
@@ -168,7 +191,9 @@ playlist. It also returns metadata into an (invisible) list.</p>
 <code><a href='stocks_hist.html'>stocks_hist</a>()</code>,
 <code><a href='stocks_quote.html'>stocks_quote</a>()</code>,
 <code><a href='trendsRelated.html'>trendsRelated</a>()</code>,
-<code><a href='writeGS.html'>writeGS</a>()</code></p></div>
+<code><a href='writeGS.html'>writeGS</a>()</code></p>
+<p>Other Audio: 
+<code><a href='trim_mp3.html'>trim_mp3</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
