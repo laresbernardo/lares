@@ -2,7 +2,7 @@
 % Please edit documentation in R/audio.R
 \name{trim_mp3}
 \alias{trim_mp3}
-\title{Trim Audio File}
+\title{Trim MP3 Audio File}
 \usage{
 trim_mp3(file, start_time = 0, end_time, overwrite = FALSE, quiet = FALSE)
 }

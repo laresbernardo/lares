@@ -80,8 +80,10 @@ stocks_file <- function(file = NA,
 #' @family Scrapper
 #' @param ticks Character Vector. Symbols/Tickers to quote in real time.
 #' @examples 
+#' \donttest{
 #' # Multiple quotes at the same time
 #' stocks_quote(c("VTI","VOO","TSLA"))
+#' }
 #' @export
 stocks_quote <- function(ticks) {
   ret <- noret <- c()
@@ -956,6 +958,9 @@ stocks_report <- function(data = NA,
              quiet = FALSE) 
     if (!keep) invisible(file.remove(paste0(getwd(), html_file)))
   }
+  
+  invisible(return(data))
+  
 }
 
 # # TESTING

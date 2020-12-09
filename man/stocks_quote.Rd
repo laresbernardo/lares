@@ -13,8 +13,10 @@ stocks_quote(ticks)
 This function lets the user download stocks historical data.
 }
 \examples{
+\donttest{
 # Multiple quotes at the same time
 stocks_quote(c("VTI","VOO","TSLA"))
+}
 }
 \seealso{
 Other Investment: 

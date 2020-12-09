@@ -96,7 +96,7 @@ get_mp3 <- function(id,
 
 
 ####################################################################
-#' Trim Audio File
+#' Trim MP3 Audio File
 #' 
 #' This function trims MP3 files given a start and/or end numeric 
 #' timestamp. Requires \code{ffmpeg} installed in your machine.
@@ -109,7 +109,8 @@ trim_mp3 <- function(file, start_time = 0, end_time, overwrite = FALSE, quiet = 
   start <- paste("-ss", start_time)
   end <- ifelse(!is.na(end_time), paste("-to", end_time), "")
   file_out <- ifelse(overwrite, file, paste0(gsub("\\.mp3.*","",file), "_trimmed.mp3"))
-  query2 <- paste("ffmpeg -hide_banner -loglevel panic -y", start, end, "-i", 
+  query2 <- paste("ffmpeg -hide_banner -loglevel panic -y", 
+                  start, end, "-i",
                   sprintf("'%s'", file), 
                   sprintf("'%s'", file_out))
   if (!quiet) message("Query: ", query2)
