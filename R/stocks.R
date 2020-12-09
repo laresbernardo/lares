@@ -959,7 +959,7 @@ stocks_report <- function(data = NA,
     if (!keep) invisible(file.remove(paste0(getwd(), html_file)))
   }
   
-  invisible(return(data))
+  return(invisible(data))
   
 }
 
