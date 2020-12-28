@@ -10,7 +10,6 @@ set.tictoc <- function(which, id) {
   return(aux)
 }
 
-
 ####################################################################
 #' Stopwatch to measure timings in R
 #' 

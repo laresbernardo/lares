@@ -152,7 +152,7 @@ model_metrics <- function(tag, score, multis = NA,
           nums <- rbind(nums, numsi) 
         }
       }
-      nums$AUC <- AUCs[seq_along(nums)]
+      nums$AUC <- AUCs[1:nrow(nums)]
       nums <- left_join(freqs(select(df, .data$tag), .data$tag), nums, "tag") %>% 
         select(.data$tag, .data$n, .data$p, .data$AUC, everything(), -.data$pcum)
       metrics[["metrics_tags"]] <- mutate_if(nums, is.numeric, list(~ signif(., 5)))
