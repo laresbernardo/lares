@@ -565,7 +565,7 @@ freqs_list <- function(df,
       stop("Please, define a valid 'var' column or make sure to have binary/logical columns.")
     duos <- rownames(duos)
     message(paste(">>> Binary columns detected:", v2t(duos)))
-    which <- unlist(lapply(df[,duos], function(x) x == 1))
+    which <- unlist(sapply(df[,duos], function(x) x == 1))
     result <- NULL
     for (i in seq_len(nrow(df[,duos]))) {
       result <- c(result, v2t(colnames(df[,duos])[which[i,]], quotes = FALSE))

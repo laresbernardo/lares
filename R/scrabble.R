@@ -157,7 +157,7 @@ grepl_letters <- function(vector, pattern, blank = "_") {
     if (run[i]) {
       for (k in seq_along(nrow(combs))) {
         aux <- NULL
-        for (j in 1:ncol(combs)) {
+        for (j in seq_along(ncol(combs))) {
           aux <- c(aux, substr(vector[i], combs[k, j], combs[k, j]))
         }
         aux <- paste0(aux, collapse = "") == gsub(blank, "", pattern)
