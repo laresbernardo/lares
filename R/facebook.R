@@ -404,7 +404,7 @@ fb_posts <- function(token,
   set_config(config(http_version = 0))
   
   fb_comments <- function(posts) {
-    comments <- c()
+    comments <- NULL
     if ("data" %in% names(posts)) posts$posts$data <- posts$data
     iters <- ifelse("comments" %in% names(posts$posts$data),
                     length(posts$posts$data$comments$data),
@@ -414,7 +414,7 @@ fb_posts <- function(token,
         all <- posts$posts$data$comments$data[[i]]
         id <- posts$posts$data$id[[i]]
       } else {
-        all <- data.frame(lapply(posts$posts$data, `[`, c('comments'))[[i]]) 
+        all <- data.frame(lapply(posts$posts$data, `[`, 'comments')[[i]])
         id <- posts$posts$data[[i]]$id  
       }
       if ("data" %in% names(posts)) posts$posts$data <- posts$data
@@ -440,7 +440,7 @@ fb_posts <- function(token,
   }  
   
   fb_reactions <- function(posts) {
-    reactions <- c()
+    reactions <- NULL
     if ("data" %in% names(posts)) posts$posts$data <- posts$data
     iters <- ifelse("reactions" %in% names(posts$posts$data),
                     length(posts$posts$data$reactions$data),
@@ -450,7 +450,7 @@ fb_posts <- function(token,
         all <- posts$posts$data$reactions$data[[i]]
         id <- posts$posts$data$id[[i]]
       } else {
-        all <- data.frame(lapply(posts$posts$data, `[`, c('reactions'))[[i]]) 
+        all <- data.frame(lapply(posts$posts$data, `[`, 'reactions')[[i]])
         id <- posts$posts$data[[i]]$id  
       }
       if (length(all) > 0) {
@@ -468,13 +468,13 @@ fb_posts <- function(token,
   }
   
   fb_shares <- function(posts) {
-    shares <- c()
+    shares <- NULL
     if ("data" %in% names(posts)) posts$posts$data <- posts$data
     if (length(posts$posts$data$shares) > 0) {
       all <- posts$posts$data$shares$count
       id <- posts$posts$data$id
     } else {
-      for (i in 1:length(posts$posts$data)) {
+      for (i in seq_along(posts$posts$data)) {
         all <- posts$posts$data[[i]]$shares$count
         id <- posts$posts$data[[i]]$id
       }
@@ -497,7 +497,7 @@ fb_posts <- function(token,
   
   limit_posts <- 100
   total_iters <- ceiling(n/limit_posts)
-  all_comments <- all_shares <- all_reactions <- all_posts <- ret <- c()
+  all_comments <- all_shares <- all_reactions <- all_posts <- ret <- NULL
   
   for (iter in 1:total_iters) {
     limit_posts <- ifelse(iter == total_iters, limit_posts - (iter*limit_posts - n), limit_posts)
@@ -581,8 +581,8 @@ fb_post <- function(token, post_id, limit = 5000) {
   
   iters <- length(post_id)
   for (i in 1:iters) {
-    if (i == 1) ret <- c()
-    if (i == 1) nodata <- c()
+    if (i == 1) ret <- NULL
+    if (i == 1) nodata <- NULL
     url <- paste0("https://graph.facebook.com/v3.0/", post_id[i],
                   "/comments?limit=",limit,"&access_token=", token)
     get <- GET(url = url)
@@ -651,12 +651,12 @@ fb_accounts <- function(token,
   
   # Starting URL
   url <- "https://graph.facebook.com/"
-  output <- c()
+  output <- NULL
   
   # Select which type of ad accounts
   type <- paste0(type, "_ad_accounts")
   
-  for (i in 1:length(type)) {
+  for (i in seq_along(type)) {
     
     message(paste("Getting", type[i]))
     URL <- paste0(url, api_version, "/", business_id, "/", type[i])

@@ -69,9 +69,9 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
     return(out)
   }
   
-  output <- c()
+  output <- NULL
   
-  for (i in 1:length(address)) {
+  for (i in seq_along(address)) {
     message(paste("Working on address", i, "of", length(address)))
     result <- getGeoDetails(address[i])
     if (length(result) > 1) {

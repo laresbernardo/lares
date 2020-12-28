@@ -4,7 +4,7 @@
 \alias{trendsRelated}
 \title{Google Trends: Related Plot}
 \usage{
-trendsRelated(gtrend, top = NA, title = NA, note = NA, exclude = c())
+trendsRelated(gtrend, top = NA, title = NA, note = NA, exclude = NULL)
 }
 \arguments{
 \item{gtrend}{List. Result from gtrends(keyword, geo, time)}

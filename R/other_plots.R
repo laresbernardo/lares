@@ -417,14 +417,16 @@ export_plot <- function(p,
                         dir = getwd(), subdir = NA,
                         quiet = FALSE) {
   
+  check_opts(format, c("png","jpeg"))
+  
   # File name
   name <- sub('\\..[^\\.]*$', '', name)
-  format <- paste0(".", format)
+  end <- paste0(".", format)
   if (!is.na(vars)) {
     names <- v2t(cleanText(as.character(vars), spaces = FALSE), sep = sep, quotes = FALSE)
-    file_name <- paste0(name, "_", names, format)  
+    file_name <- paste0(name, "_", names, end)  
   } else {
-    file_name <- paste0(name, format)  
+    file_name <- paste0(name, end)  
   }
   
   # Create directory if needed
@@ -433,13 +435,14 @@ export_plot <- function(p,
     if (!dir.exists(dir)) dir.create(dir)
     file_name <- paste(subdir, file_name, sep = "/")
   }
-  
+
   # Export plot to file
-  check_opts(format, c("png","jpeg"))
-  export_fx <- base::get(format)
-  export_fx(file_name, height = height * res, width = width * res, res = res)
-  plot(p)
-  dev.off() 
+  # if (!"patchwork" %in% class(p) & "ggplot" %in% class(p)) {
+  #   ggsave(filename = file_name, plot = p, device = format, height = height, width = width, dpi = res)
+    export_fx <- base::get(format)
+    export_fx(file_name, height = height * res, width = width * res, res = res)
+    plot(p)
+    dev.off()
   
   if (!quiet) message(paste("Plot saved as", file_name)) 
   

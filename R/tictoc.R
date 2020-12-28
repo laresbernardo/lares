@@ -12,13 +12,13 @@ set.tictoc <- function(which, id) {
 
 
 ####################################################################
-#' Stopwatch to measure R Timings
+#' Stopwatch to measure timings in R
 #' 
 #' Start a stopwatch.
 #' 
 #' @family Time
 #' @family Tools
-#' @param id Define ID if multiple tic() & toc() are being used
+#' @param id Define ID if multiple \code{tic} & \code{toc} are being used
 #' @param quiet Boolean. Quiet messages?
 #' @examples 
 #' # Basic use (global stopwatch)
@@ -49,12 +49,10 @@ tic <- function(id = 1, quiet = TRUE) {
 #' 
 #' Stop a stopwatch.
 #' 
-#' @param id Define ID if multiple tic() & toc() are being used
 #' @param msg Character. Custom message shown
 #' @param units Boolean. Do you want nice format for the time units? 
 #' If not, seconds elapsed as numerical values
 #' @param signif Integer. Significant digits
-#' @param quiet Boolean. Quiet messages?
 #' @return \code{toc} returns an (invisible) list containing the timestamps
 #' \code{tic} and \code{toc}, \code{time} in seconds and the message \code{msg}.
 #' @export

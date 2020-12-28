@@ -14,7 +14,7 @@
 #' @param note Character. Add a note to the plot if needed
 #' @param exclude Character vector. Which observations do you wish to exclude?
 #' @export
-trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = c()) {
+trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = NULL) {
   
   try_require("gtrendsR")
   start <- as.Date(min(gtrend$interest_over_time$date))

@@ -84,12 +84,12 @@
 #   
 #   options("getSymbols.warning4.0" = FALSE)
 #   options("getSymbols.yahoo.warning" = FALSE)
-#   data <- divs <- c()
+#   data <- divs <- NULL
 #   
 #   if (!any(is.na(symbols))) {
 #     from[is.na(from)] <- Sys.Date() - 365
 #     if (length(from) == length(symbols)) {
-#       for (i in 1:length(symbols)) {
+#       for (i in seq_along(symbols)) {
 #         symbol <- as.character(symbols[i])
 #         start_date <- as.character(from[i])
 #         values <- getSymbols(symbol, env = NULL, from = start_date, src = "yahoo") %>% data.frame()

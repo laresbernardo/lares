@@ -86,11 +86,11 @@ stocks_file <- function(file = NA,
 #' }
 #' @export
 stocks_quote <- function(ticks) {
-  ret <- noret <- c()
+  ret <- noret <- NULL
   qRoot <- paste0(
     "https://query1.finance.yahoo.com/v7/finance/quote?fields=symbol,",
     "longName,regularMarketPrice,regularMarketChange,regularMarketTime&formatted=false&symbols=")
-  for (i in 1:length(ticks)) {
+  for (i in seq_along(ticks)) {
     z <- fromJSON(paste(qRoot, paste(ticks[i], collapse = ","), sep = ""))
     if (length(z$quoteResponse$result) > 0) {
       cols <- c("symbol", "quoteType", "regularMarketTime", 
@@ -157,13 +157,13 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
   
   options("getSymbols.warning4.0" = FALSE)
   options("getSymbols.yahoo.warning" = FALSE)
-  data <- divs <- c()
+  data <- divs <- NULL
   
   if (!any(is.na(symbols))) {
     if (length(from) != length(symbols)) 
       from <- rep(from[1], length(symbols))
     
-    for (i in 1:length(symbols)) {
+    for (i in seq_along(symbols)) {
       # Daily quotes (except today)
       symbol <- as.character(symbols[i])
       if (as.Date(from[i]) > (Sys.Date() - 4)) from[i] <- Sys.Date() - 4
@@ -346,7 +346,7 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0) {
            .data$ROI, .data$Invested, .data$CumCost, .data$CumDividend, .data$Dividend)
   
   days <- data.frame(Date = as.Date(min(hist$Date):Sys.Date(), origin = "1970-01-01")) %>%
-    left_join(temp, c("Date")) %>%
+    left_join(temp, "Date") %>%
     tidyr::fill(.data$ROI, .data$CumInvested, .data$CumValue, 
                 .data$CumDividend, .data$CumCost, .direction = "up") %>%
     left_join(select(cash, .data$Date, .data$Cash), "Date") %>% 
@@ -710,7 +710,7 @@ splot_types <- function(s, save = FALSE) {
 #' @export
 etf_sector <- function(etf = "VTI", quiet = FALSE) {
   ret <- data.frame()
-  for (i in 1:length(etf)) {
+  for (i in seq_along(etf)) {
     info <- toupper(etf[i])
     url <- paste0("https://www.etf.com/", info)
     exists <- tryCatch({!httr::http_error(url)}, error = function(err) {FALSE})
@@ -915,7 +915,7 @@ stocks_report <- function(data = NA,
     data <- stocks_obj(df, sectors = sectors, parg = is.na(creds))
   }
   
-  check_attr(data, check = c("stocks_obj"))
+  check_attr(data, check = "stocks_obj")
   
   pandoc <- Sys.getenv("RSTUDIO_PANDOC")
   Sys.setenv(RSTUDIO_PANDOC = pandoc)

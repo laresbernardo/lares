@@ -109,7 +109,7 @@
 #' }
 #' @export
 h2o_automl <- function(df, y = "tag",
-                       ignore = c(),
+                       ignore = NULL,
                        train_test = NA,
                        split = 0.7,
                        weight = NULL,
@@ -344,7 +344,7 @@ print.h2o_automl <- function(x, importance = TRUE, ...) {
 #' @export
 h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
                         model_type, target = "auto", split = 0.7,
-                        ignore = c(), quiet = FALSE, 
+                        ignore = NULL, quiet = FALSE, 
                         project = "ML Project", seed = 0,
                         leaderboard = list(),
                         plots = TRUE, 
@@ -629,10 +629,10 @@ h2o_selectmodel <- function(results, which_model = 1, quiet = FALSE, ...) {
 #' the results?
 #' @param save Boolean. Do you wish to save/export results?
 #' @export
-export_results <- function(results, 
+export_results <- function(results,
                            thresh = 10,
                            which = c("txt","csv","rds",
-                                     "binary","mojo","plots",
+                                       "binary","mojo","plots",
                                      "dev","production"),
                            note = NA,
                            subdir = NA,
@@ -647,9 +647,10 @@ export_results <- function(results,
     stopifnot(grepl("H2O", class(results$model)))
     name <- ifelse(pass, results$model_name, results$model@model_id)
     subdir <- paste0(ifelse(is.na(subdir), "", subdir), "/", name)
+    if (substr(subdir, 1, 1) == "/") subdir <- substr(subdir, 2, nchar(subdir))
     
     # Directory to save all our results
-    dir <- file.path(paste0(getwd(), "/", subdir))
+    dir <- file.path(paste0(getwd(), subdir))
     message(paste("Export directory:", dir))
     if (!dir.exists(dir)) dir.create(dir) 
     
@@ -670,13 +671,13 @@ export_results <- function(results,
         "Test Metrics by labels" = if (length(results$metrics$metrics_tags) > 1)
           results$metrics$metrics_tags else "NA",
         "Test's Confusion Matrix" = if (length(results$metrics$confusion_matrix) > 1)
-          results$metrics$confusion_matrix else "NA",
+          results$metrics$confusion_matrix else NULL,
         "Predicted Variable" = results$y,
         "Ignored Variables" = results$ignored,
         "Variables Importance" = results$importance,
         "H2O Global Results" = results$model,
         "Leaderboard" = results$leaderboard,
-        "10 Scoring examples" = sample_n(results$datasets$global, 10),
+        "Data examples" = data.frame(sample_n(results$datasets$global, 10)),
         "Seed" = results$seed,
         "H20 Version" = results$h2o)
       if (is.na(note)[1]) results_txt$Note <- NULL
@@ -717,10 +718,22 @@ export_results <- function(results,
     
     if ("plots" %in% which & "plots" %in% names(results) & pass) {
       message(">>> Saving plots...")
-      aux <- names(results$plots)
-      for (i in 1:length(results$plots)) {
-        export_plot(results$plots[[i]], 
-                    name = aux[i],
+      # Metrics plots
+      aux <- results$plots$metrics
+      for (i in seq_along(aux)) {
+        export_plot(aux[[i]], 
+                    name = names(aux)[i],
+                    width = 8, height = 6, res = 300,
+                    dir = getwd(),
+                    subdir = paste0(subdir, "/Plots"),
+                    quiet = TRUE)
+      }
+      # Other plots
+      aux <- results$plots
+      aux$metrics <- NULL
+      for (i in seq_along(aux)) {
+        export_plot(aux[[i]], 
+                    name = names(aux)[i],
                     width = 8, height = 6, res = 300,
                     dir = getwd(),
                     subdir = paste0(subdir, "/Plots"),
@@ -843,7 +856,7 @@ h2o_predict_MOJO <- function(df, model_path, method = "mojo", batch = 300){
     df <- mutate_if(df, is.logical, as.character)
     aux <- ceiling(nrow(df)/batch)
     df$aux <- rep(1:aux, each = batch)[1:nrow(df)]
-    output <- c()
+    output <- NULL
     for (i in 1:aux) {
       dfi <- select(df[df$aux == i,], -.data$aux)
       json <- toJSON(dfi)
@@ -872,7 +885,7 @@ h2o_predict_MOJO <- function(df, model_path, method = "mojo", batch = 300){
 flatten_list <- function(x, quiet = FALSE) {
   n <- length(x)
   for (i in 1:n) {
-    if (i == 1) ret <- c()
+    if (i == 1) ret <- NULL
     values <- unlist(x[[i]])
     aux <- data.frame(t(values))
     ret <- suppressWarnings(bind_rows(ret, aux))
@@ -944,7 +957,7 @@ h2o_predict_API <- function(df, api) {
     return(content(x)$probabilityToOne)
   }
   
-  batch <- c()
+  batch <- NULL
   for (i in 1:nrow(df)) {
     x <- df[i,]
     score <- post(x, api)

@@ -180,7 +180,7 @@ textTokenizer <- function(text,
     texts <- cleanText(unique(text))
     if (length(texts) != length(text)) 
       if (!quiet) message("Returning unique texts results...")
-    toksdf <- c()
+    toksdf <- NULL
     for (i in 1:nrow(d)) {
       word <- as.character(d$word[i])
       vector <- grepl(word, texts)
@@ -239,8 +239,8 @@ textFeats <- function(text, auto = TRUE, contains = NA, prc = FALSE) {
   
   # Custom columns with contains argument
   if (!is.na(contains[1])) {
-    df <- c()
-    for (i in 1:length(contains)) {
+    df <- NULL
+    for (i in seq_along(contains)) {
       word <- as.character(contains[i])
       vector <- str_count(text, fixed(word))
       df <- cbind(df, vector)
@@ -277,7 +277,7 @@ textFeats <- function(text, auto = TRUE, contains = NA, prc = FALSE) {
 #' @param pal Character vector. Which colours do you wish to use
 #' @param print Boolean. Plot results as textcloud?
 #' @export
-textCloud <- function(text, lang = "english", exclude = c(), seed = 0, 
+textCloud <- function(text, lang = "english", exclude = NULL, seed = 0, 
                       keep_spaces = FALSE, min = 2, pal = NA, print = TRUE) {
   
   try_require("wordcloud")

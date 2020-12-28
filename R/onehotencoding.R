@@ -34,8 +34,8 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal") {
     vals <- unique(trimws(unlist(strsplit(vals, sep))))
     # aux <- sprintf("--%s--", vals)
     l <- strsplit(df$temp, sep)
-    mat <- c()
-    for (i in 1:length(vals)) {
+    mat <- NULL
+    for (i in seq_along(vals)) {
       which <- unlist(lapply(l, function(x) any(trimws(x) %in% vals[i])))
       mat <- cbind(mat, which)
     }
@@ -115,7 +115,7 @@ ohse <- function(df,
   order <- colnames(df)
   
   # Dummy variables that will be filled
-  no_need_to_convert <- converted <- converted_binary <- c()
+  no_need_to_convert <- converted <- converted_binary <- NULL
   
   # No variance columns
   no_variance <- zerovar(df)
@@ -152,7 +152,7 @@ ohse <- function(df,
                       type = unlist(lapply(lapply(df, class), `[[`, 1)))
   
   # Iterate all columns
-  for (i in 1:ncol(df)) {
+  for (i in seq_along(df)) {
     vector_type <- types[i, "type"]
     vector_name <- as.character(types$name[i])
     vector_levels <- length(unique(df[,c(vector_name)]))
@@ -274,7 +274,7 @@ date_feats <- function(dates,
                        holidays = FALSE, country = "Venezuela",
                        currency_pair = NA,
                        quiet = FALSE) {
-  results <- c()
+  results <- NULL
   date_cols <- df_str(dates, return = "names", quiet = TRUE)$time
   
   if (length(date_cols) == 0)
@@ -400,7 +400,7 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
   # Further improvement: let the user bring more than +-5 years
   
   invisible(Sys.setlocale("LC_TIME", "C"))
-  results <- c()
+  results <- NULL
   year <- year(Sys.Date())
   years <- years[years %in% ((year-5):(year+5))]
   combs <- expand.grid(years, countries) %>% dplyr::rename(year = "Var1", country = "Var2")

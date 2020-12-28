@@ -343,8 +343,8 @@ corr_cross <- function(df, plot = TRUE,
     x <- data.frame(x)
     ret <- gather(x) %>%
       mutate(mix = rep(colnames(x), length(x))) %>%
-      mutate(p1 = rep(1:length(x), each = length(x)),
-             p2 = rep(1:length(x), length(x)),
+      mutate(p1 = rep(seq_along(x), each = length(x)),
+             p2 = rep(seq_along(x), length(x)),
              aux = .data$p2 - .data$p1) %>%
       filter(.data$aux > 0) %>%
       mutate(rel = abs(.data$value)) %>% 
@@ -374,7 +374,7 @@ corr_cross <- function(df, plot = TRUE,
     mutate(pvalue = as.numeric(ifelse(is.na(.data$pvalue), 1, .data$pvalue))) %>%
     filter(.data$pvalue <= max_pvalue)
   
-  for (i in 1:ncol(df)) {
+  for (i in seq_along(df)) {
     if (i == 1) 
       ret <- mutate(ret, group1 = "fill", group2 = "fill")
     group <- colnames(df)[i]

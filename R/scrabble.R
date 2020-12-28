@@ -145,18 +145,18 @@ grepl_letters <- function(vector, pattern, blank = "_") {
     return(grepl(pattern, vector, fixed = TRUE))
   forced <- tolower(unlist(strsplit(pattern, "")))
   forced_which <- which(forced != blank)
-  combs <- res <- c()
+  combs <- res <- NULL
   for(i in 0:(max(nchar(vector))-max(forced_which)))
     combs <- rbind(combs, (forced_which + i))
   # We can skip those that do NOT have all the letters
   run <- sapply(forced[forced_which], function(x) grepl(x, vector, fixed = TRUE))
   run <- apply(run, 1, all) 
   # Let's iterate all combinations for each element
-  for (i in 1:length(vector)) {
-    temp <- c()
+  for (i in seq_along(vector)) {
+    temp <- NULL
     if (run[i]) {
       for (k in 1:nrow(combs)) {
-        aux <- c()
+        aux <- NULL
         for (j in 1:ncol(combs)) {
           aux <- c(aux, substr(vector[i], combs[k, j], combs[k, j]))
         }
@@ -284,7 +284,7 @@ scrabble_words <- function(tiles,
   words <- force_words(reverse(words), reverse(force_end), rev = TRUE)
   
   # Let's check all applicable words
-  done <- c()
+  done <- NULL
   for (word in words) {
     wi <- word
     for (letter in tiles) {

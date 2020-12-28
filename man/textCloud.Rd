@@ -7,7 +7,7 @@
 textCloud(
   text,
   lang = "english",
-  exclude = c(),
+  exclude = NULL,
   seed = 0,
   keep_spaces = FALSE,
   min = 2,

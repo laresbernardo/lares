@@ -7,7 +7,7 @@
 model_preprocess(
   df,
   y = "tag",
-  ignore = c(),
+  ignore = NULL,
   train_test = NA,
   split = 0.7,
   weight = NULL,

@@ -13,7 +13,7 @@ h2o_results(
   model_type,
   target = "auto",
   split = 0.7,
-  ignore = c(),
+  ignore = NULL,
   quiet = FALSE,
   project = "ML Project",
   seed = 0,

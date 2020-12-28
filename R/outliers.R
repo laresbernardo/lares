@@ -105,7 +105,7 @@ outlier_zscore_plot <- function(df, var, group = NULL,
            outlier_mean = mean(!!var),
            outlier_group = ifelse(grouped, !!group, "Across all observations"))
 
-  zs <- ref <- centre <- c()
+  zs <- ref <- centre <- NULL
   for (i in thresh) {
     aux <- df %>% 
       group_by(.data$outlier_group) %>%

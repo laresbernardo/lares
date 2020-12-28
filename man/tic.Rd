@@ -4,7 +4,7 @@
 \alias{tic}
 \alias{toc}
 \alias{resettictoc}
-\title{Stopwatch to measure R Timings}
+\title{Stopwatch to measure timings in R}
 \usage{
 tic(id = 1, quiet = TRUE)
 
@@ -13,7 +13,7 @@ toc(id = 1, msg = "Elapsed time:", units = TRUE, signif = 3, quiet = FALSE)
 resettictoc(which = "both")
 }
 \arguments{
-\item{id}{Define ID if multiple tic() & toc() are being used}
+\item{id}{Define ID if multiple \code{tic} & \code{toc} are being used}
 
 \item{quiet}{Boolean. Quiet messages?}
 

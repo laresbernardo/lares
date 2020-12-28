@@ -255,8 +255,8 @@ ip_country <- function(ip = myip()) {
   ip <- ip[!is.na(ip)]
   ip <- ip[grep("^172\\.|^192\\.168\\.|^10\\.", ip, invert = TRUE)]
   
-  countries <- data.frame(ip = c(), country = c())
-  for (i in 1:length(ip)) {
+  countries <- data.frame(ip = NULL, country = NULL)
+  for (i in seq_along(ip)) {
     message(paste("Searching for", ip[i]))
     url <- paste0("https://db-ip.com/", ip[i])
     scrap <- read_html(url) %>% html_nodes('.card-body tr') %>% html_text()
@@ -433,7 +433,7 @@ image_metadata <- function(files) {
   aux <- ceiling(nrow(df)/500)
   for (i in 1:aux) {
     if (i == 1) {
-      ret <- c()
+      ret <- NULL
       if (aux > 2)
         message(paste("This might take a while... Analizing", 
                       formatNum(nrow(df), decimals = 0), "files!"))
@@ -587,7 +587,7 @@ replaceall <- function(df, original, change, which = "all",
     original <- original[!is.null(original)]
   }
   if (length(original) > 0) {
-    for (i in 1:length(original)) {
+    for (i in seq_along(original)) {
       if (!quiet)
         message(paste("Transforming all", original[i], "into", change[i])) 
       df[] <- lapply(df, function(x) gsub(original[i], change[i], x))
@@ -696,7 +696,7 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
       d[is.na(d)] <- 0 
     }
     if (natransform == "mean") {
-      for (i in 1:ncol(d)) {
+      for (i in seq_along(d)) {
         if (median(d[,i], na.rm = TRUE) != 0) {
           d[is.na(d[,i]), i] <- mean(d[,i], na.rm = TRUE) 
         } else {
@@ -927,7 +927,7 @@ left <- function(string, n = 1){
 importxlsx <- function(file) {
   sheets <- getSheetNames(file)
   mylist <- list()
-  for (i in 1:length(sheets)) {
+  for (i in seq_along(sheets)) {
     sheet <- read.xlsx(file, 
                        sheet = i, 
                        skipEmptyRows = TRUE, 
@@ -1073,7 +1073,7 @@ read.file <- function(filename, current_wd = TRUE, sheet = 1, quiet = FALSE) {
 #' @export
 bindfiles <- function(files) {
   alldat <- data.frame()
-  for (i in 1:length(files)) {
+  for (i in seq_along(files)) {
     file <- files[i]
     dfi <- read.file(file, current_wd = FALSE) 
     alldat <- rbind_full(alldat, dfi)
@@ -1350,39 +1350,38 @@ num_abbr <- function(x, n = 3) {
 #' and return error/message with possible options to use.
 #'
 #' @param inputs Vector character
-#' @param options Vector character
+#' @param opts Vector character
 #' @param type Character. Options: all, any
 #' @param not Character. Options: stop, message, print, return
 #' @param quiet Boolean. Keep quiet? If not, returns TRUE or FALSE
 #' @examples 
-#' options <- c("A", "B", "C")
+#' opts <- c("A", "B", "C")
 #' # Let's check the "all" logic
-#' check_opts(inputs = c("A", "B"), options, quiet = FALSE)
-#' check_opts(inputs = c("X"), options, not = "message", quiet = FALSE)
-#' check_opts(inputs = c("A","X"), options, not = "warning")
+#' check_opts(inputs = c("A", "B"), opts, quiet = FALSE)
+#' check_opts(inputs = c("X"), opts, not = "message", quiet = FALSE)
+#' check_opts(inputs = c("A","X"), opts, not = "warning")
 #' # Now let's check the "any" logic
-#' check_opts(inputs = c("A","X"), options, type = "any")
-#' check_opts(inputs = c("X"), options, type = "any", not = "message")
-#' check_opts(inputs = c("A", NA), options, type = "any")
+#' check_opts(inputs = c("A","X"), opts, type = "any")
+#' check_opts(inputs = c("X"), opts, type = "any", not = "message")
+#' check_opts(inputs = c("A", NA), opts, type = "any")
 #' # Final trick: just ignore results
-#' check_opts(inputs = "X", options, not = "invisible")
+#' check_opts(inputs = "X", opts, not = "invisible")
 #' @export
-check_opts <- function(inputs, options, 
+check_opts <- function(inputs, opts, 
                        type = "all", not = "stop", 
                        quiet = TRUE) {
   aux <- base::get(type)
   not <- base::get(not)
-  isit <- aux(inputs %in% options)
+  isit <- aux(inputs %in% opts)
   if (!isit) {
     if (type == "all")
-      inputs <- inputs[which(!inputs %in% options)]
+      inputs <- inputs[which(!inputs %in% opts)]
     not(paste("Your input", vector2text(inputs), 
               "is not valid;", toupper(type),
               "of the inputs should match these options:", 
-              vector2text(options))) 
+              vector2text(opts))) 
   }
-  if (!quiet) 
-    return(isit)
+  if (!quiet) return(isit)
 }
 
 
@@ -1404,7 +1403,7 @@ list_cats <- function(df, ..., abc = TRUE) {
   is.categorical <- function(x) is.character(x) | is.factor(x)
   category <- which(sapply(df, is.categorical))
   ret <- list()
-  for (i in 1:length(category)) {
+  for (i in seq_along(category)) {
     which <- as.character(names(category)[i])
     df[,which] <- as.character(df[,which])
     aux <- freqs(df, cats = base::get(which), ...) %>%
@@ -1436,7 +1435,7 @@ list_cats <- function(df, ..., abc = TRUE) {
 replacefactor <- function(x, original, change) {
   if (length(original) != length(change))
     stop("You must provide same length vectors for original and change!")
-  for (i in 1:length(change)) {
+  for (i in seq_along(change)) {
     if (!is.factor(x)) {
       warning("Automatically turned non-factor variable into factor")
       x <- factor(x, levels = unique(as.character(x)))
@@ -1496,8 +1495,8 @@ files_functions <- function(filename, alphabetic = TRUE) {
 #' @export 
 move_files <- function(from, to) {
   
-  froms <- dirs <- c()
-  for (i in 1:length(from)) {
+  froms <- dirs <- NULL
+  for (i in seq_along(from)) {
     fromi <- from[i]
     if (isTRUE(file.info(fromi)$isdir)) {
       fromi <- list.files(fromi, recursive = TRUE)
@@ -1528,7 +1527,7 @@ move_files <- function(from, to) {
     stop("Every 'from' must have a respective 'to' filename")
   
   # Now move/rename all files
-  for (i in 1:length(froms)) {
+  for (i in seq_along(froms)) {
     todir <- dirname(tos[i])
     if (!isTRUE(file.info(todir)$isdir)) 
       dir.create(todir, recursive = FALSE)

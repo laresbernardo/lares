@@ -74,7 +74,6 @@ distr <- function(data, ...,
                   subdir = NA) {
   
   options(scipen = 999)
-  options(warn = -1)
   
   data <- data.frame(data)
   vars <- quos(...)

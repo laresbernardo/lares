@@ -271,10 +271,10 @@ mplot_roc <- function(tag,
     labs(title = "ROC Curve: AUC", colour = NULL) +
     guides(colour = guide_legend(ncol = 3)) +
     annotate("text", x = 0.25, y = 0.10, size = 4.2, 
-             label = paste("AUC =", round(100*ci[c(2),],2))) +
+             label = paste("AUC =", round(100*ci[2,],2))) +
     annotate("text", x = 0.25, y = 0.05, size = 2.8, 
-             label = paste0("95% CI: ", round(100*ci[c(1),],2),"-", 
-                            round(100*ci[c(3),],2))) +
+             label = paste0("95% CI: ", round(100*ci[1,],2),"-", 
+                            round(100*ci[3,],2))) +
     theme_lares2(bg_colour = "white", pal = 2, legend = "bottom")
   
   if (squared) p <- p + coord_equal()
@@ -524,7 +524,7 @@ mplot_splits <- function(tag,
       mutate(quantile_tag = paste0(quantile," (",.data$min_score,"-",.data$max_score,")"))
     df <- df %>% 
       mutate(quantile = ntile(.data$tag, splits)) %>%
-      left_join(names, by = c("quantile")) %>% 
+      left_join(names, by = "quantile") %>% 
       mutate(tag = .data$quantile_tag) %>% 
       select(-.data$quantile, -.data$n, -.data$max_score, -.data$min_score)
     
@@ -548,7 +548,7 @@ mplot_splits <- function(tag,
     arrange(desc(.data$quantile)) %>%
     mutate(p = round(100*.data$n/sum(.data$n),2),
            cum = cumsum(100*.data$n/sum(.data$n))) %>%
-    left_join(names, by = c("quantile")) %>%
+    left_join(names, by = "quantile") %>%
     ggplot(aes(x = as.character(.data$tag), y = .data$p, label = as.character(.data$p),
                fill = reorder(as.character(.data$quantile_tag), .data$quantile))) +
     geom_col(position = "stack", colour = "transparent") + 
@@ -1033,7 +1033,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
     } 
   } else {
     df <- data.frame(tag = tag, score = score, multis)
-    out <- aux <- c()
+    out <- aux <- NULL
     for (i in 1:(ncol(df) - 2)) {
       g <- gain_lift(df$tag, df[,2 + i], splits = splits, quiet = FALSE) %>% 
         mutate(label = colnames(df)[2 + i])  
@@ -1151,7 +1151,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
   } else {
     df <- data.frame(tag = tag, score = score, multis)
     for (i in 1:(ncol(df) - 2)) {
-      if (i == 1) out <- c()
+      if (i == 1) out <- NULL
       g <- gain_lift(df$tag, df[,2 + i], target, splits, quiet = quiet) %>% 
         mutate(label = colnames(df)[2 + i])  
       out <- rbind(out, g)

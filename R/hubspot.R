@@ -53,7 +53,7 @@
 #'   
 #'   hubspot_limit <- 100
 #'   n <- ifelse(limit > hubspot_limit, ceiling(limit/hubspot_limit), 1)
-#'   output <- c()
+#'   output <- NULL
 #'   
 #'   for (i in 1:n) {
 #'     
@@ -162,7 +162,7 @@
 #'   
 #'   hubspot_limit <- 250
 #'   n <- ifelse(limit > hubspot_limit, ceiling(limit/hubspot_limit), 1)
-#'   output <- c()
+#'   output <- NULL
 #'   
 #'   for (i in 1:n) {
 #'     

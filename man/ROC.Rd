@@ -20,7 +20,7 @@ range. It also works for multi-categorical models.
 }
 \section{Plot Results}{
 
-To plot results, use the \code{mplot_roc()} function.
+To plot results, use the \code{mplot_roNULL} function.
 }
 
 \examples{

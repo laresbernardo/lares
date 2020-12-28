@@ -130,12 +130,12 @@ model_metrics <- function(tag, score, multis = NA,
       metrics[["confusion_matrix"]] <- conf_mat(tag, score)
       AUCs <- t(ROC(tag, score, multis)$ci)[,2]
       m <- data.frame(
-        AUC = mean(AUCs[1:length(cats)], na.rm = TRUE),
+        AUC = mean(AUCs[seq_along(cats)], na.rm = TRUE),
         ACC = trues / total)
       metrics[["metrics"]] <- signif(m, 5)
-      nums <- c()
+      nums <- NULL
       
-      for (i in 1:length(cats)) {
+      for (i in seq_along(cats)) {
         tagi <- ifelse(tag == cats[i], 1, 0)
         predi <- as.numeric(ifelse(score == cats[i], 1, 0))
         conf_mati <- squareTable(tagi, predi)
@@ -152,7 +152,7 @@ model_metrics <- function(tag, score, multis = NA,
           nums <- rbind(nums, numsi) 
         }
       }
-      nums$AUC <- AUCs[1:nrow(nums)]
+      nums$AUC <- AUCs[seq_along(nums)]
       nums <- left_join(freqs(select(df, .data$tag), .data$tag), nums, "tag") %>% 
         select(.data$tag, .data$n, .data$p, .data$AUC, everything(), -.data$pcum)
       metrics[["metrics_tags"]] <- mutate_if(nums, is.numeric, list(~ signif(., 5)))
@@ -312,7 +312,7 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
   
   wizard <- sc %>% 
     filter(.data$tag == TRUE) %>% 
-    mutate(percentile = sc$percentile[1:length(sc$percentile[sc$tag == TRUE])]) %>%
+    mutate(percentile = sc$percentile[seq_along(sc$percentile[sc$tag == TRUE])]) %>%
     group_by(.data$percentile) %>% tally() %>% 
     ungroup() %>% mutate(p = 100 * .data$n/sum(.data$n), pcum = cumsum(.data$p)) %>% 
     select(.data$percentile, .data$pcum) %>% 
@@ -351,7 +351,7 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
 #' range. It also works for multi-categorical models.
 #' 
 #' @section Plot Results:
-#' To plot results, use the \code{mplot_roc()} function.
+#' To plot results, use the \code{mplot_roNULL} function.
 #' 
 #' @family Machine Learning
 #' @family Model metrics
@@ -399,7 +399,7 @@ ROC <- function(tag, score, multis = NA) {
   } else {
     df <- data.frame(tag = tag, score = score, multis)
     cols <- colnames(df)
-    coords <- c()
+    coords <- NULL
     rocs <- list()
     for (i in 1:(length(cols) - 2)) {
       which <- colnames(df)[2 + i]

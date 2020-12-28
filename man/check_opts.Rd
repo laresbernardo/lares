@@ -4,12 +4,12 @@
 \alias{check_opts}
 \title{Validate options within vector}
 \usage{
-check_opts(inputs, options, type = "all", not = "stop", quiet = TRUE)
+check_opts(inputs, opts, type = "all", not = "stop", quiet = TRUE)
 }
 \arguments{
 \item{inputs}{Vector character}
 
-\item{options}{Vector character}
+\item{opts}{Vector character}
 
 \item{type}{Character. Options: all, any}
 
@@ -22,15 +22,15 @@ This function validates if inputs match all/any of your options
 and return error/message with possible options to use.
 }
 \examples{
-options <- c("A", "B", "C")
+opts <- c("A", "B", "C")
 # Let's check the "all" logic
-check_opts(inputs = c("A", "B"), options, quiet = FALSE)
-check_opts(inputs = c("X"), options, not = "message", quiet = FALSE)
-check_opts(inputs = c("A","X"), options, not = "warning")
+check_opts(inputs = c("A", "B"), opts, quiet = FALSE)
+check_opts(inputs = c("X"), opts, not = "message", quiet = FALSE)
+check_opts(inputs = c("A","X"), opts, not = "warning")
 # Now let's check the "any" logic
-check_opts(inputs = c("A","X"), options, type = "any")
-check_opts(inputs = c("X"), options, type = "any", not = "message")
-check_opts(inputs = c("A", NA), options, type = "any")
+check_opts(inputs = c("A","X"), opts, type = "any")
+check_opts(inputs = c("X"), opts, type = "any", not = "message")
+check_opts(inputs = c("A", NA), opts, type = "any")
 # Final trick: just ignore results
-check_opts(inputs = "X", options, not = "invisible")
+check_opts(inputs = "X", opts, not = "invisible")
 }

@@ -76,9 +76,9 @@ freqs <- function(df, ..., wt = NULL,
   if (is.vector(df)) {
     values <- df <- data.frame(values = df)
     vars <- quos(values)
-  } 
+  }
   
-  df <- as.data.frame(df) 
+  df <- as.data.frame(df)
   
   # Probably an error but might be useful for the user instead
   # When it's a vector, frequencies; when it's a dataframe, global frequencies
@@ -316,8 +316,8 @@ freqs_df <- function(df,
   }
   
   if (length(which) > 0) {
-    for (i in 1:length(which)) {
-      if (i == 1) out <- c()
+    for (i in seq_along(which)) {
+      if (i == 1) out <- NULL
       iter <- which[i]
       counter <- table(df[iter], useNA = "ifany")
       res <- data.frame(value = names(counter), 
@@ -566,7 +566,7 @@ freqs_list <- function(df,
     duos <- rownames(duos)
     message(paste(">>> Binary columns detected:", v2t(duos)))
     which <- sapply(df[,duos], function(x) x == 1)
-    result <- c()
+    result <- NULL
     for (i in 1:nrow(df[,duos])) {
       result <- c(result, v2t(colnames(df[,duos])[which[i,]], quotes = FALSE))
     }
