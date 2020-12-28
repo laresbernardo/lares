@@ -155,8 +155,6 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
   
   # if (!haveInternet()) stop("You currently have NO internet connection!")
   
-  options("getSymbols.warning4.0" = FALSE)
-  options("getSymbols.yahoo.warning" = FALSE)
   data <- divs <- NULL
   
   if (!any(is.na(symbols))) {

@@ -57,15 +57,15 @@ fb_process <- function(response, paginate = TRUE) {
   done <- bind_rows(results)
   
   # So columns that consist in lists but only have 1 element may be used as normal vectors
-  are_lists <- sapply(done, class) == "data.frame"
+  are_lists <- unlist(lapply(done, class)) == "data.frame"
   nolists <- done[,!are_lists]
   nolists <- replace(nolists, nolists=="NULL", NA)
   total <- bind_cols(lapply(nolists, as.character))
   
   fixedlists <- bind_cols(lapply(
     apply(done[are_lists], 2, function(x) {
-      if (all(sapply(x, length) <= 1)) {
-        x[sapply(x, is.null)] <- NA
+      if (all(unlist(lapply(x, length) <= 1))) {
+        x[unlist(lapply(x, is.null))] <- NA
         unlist(x)
       }}), function(x){
         if(!is.null(x)) return(x)

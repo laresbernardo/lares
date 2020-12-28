@@ -779,7 +779,7 @@ msplit <- function(df, size = 0.7, seed = 0, print = TRUE) {
     ind <- sample(seq_len(nrow(df)), size = floor(size * nrow(df)))
     train <- df[ind, ]
     test <- df[-ind, ] 
-  } else ind <- 1:nrow(df)
+  } else ind <- seq_len(nrow(df))
   
   train_size <- dim(train)
   test_size <- dim(test)
@@ -855,7 +855,7 @@ h2o_predict_MOJO <- function(df, model_path, method = "mojo", batch = 300){
     df <- as.data.frame(df)
     df <- mutate_if(df, is.logical, as.character)
     aux <- ceiling(nrow(df)/batch)
-    df$aux <- rep(1:aux, each = batch)[1:nrow(df)]
+    df$aux <- rep(1:aux, each = batch)[seq_len(nrow(df))]
     output <- NULL
     for (i in 1:aux) {
       dfi <- select(df[df$aux == i,], -.data$aux)
@@ -958,7 +958,7 @@ h2o_predict_API <- function(df, api) {
   }
   
   batch <- NULL
-  for (i in 1:nrow(df)) {
+  for (i in seq_len(nrow(df))) {
     x <- df[i,]
     score <- post(x, api)
     batch <- rbind(batch, score)

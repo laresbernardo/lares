@@ -14,7 +14,7 @@ This function plots all columns frequencies and boxplots, for
 categorical and numerical respectively.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+
 data(dft) # Titanic dataset
 plot_df(dft)
 }

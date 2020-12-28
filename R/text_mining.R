@@ -181,7 +181,7 @@ textTokenizer <- function(text,
     if (length(texts) != length(text)) 
       if (!quiet) message("Returning unique texts results...")
     toksdf <- NULL
-    for (i in 1:nrow(d)) {
+    for (i in seq_len(nrow(d))) {
       word <- as.character(d$word[i])
       vector <- grepl(word, texts)
       toksdf <- cbind(toksdf, vector)

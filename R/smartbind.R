@@ -19,7 +19,7 @@ rbind_full <- function(..., list = NA, fill = NA, sep = ':') {
   
   data <- base::list(...)
   if (!missing(list)) data <- modifyList(list, data)
-  data <- data[!sapply(data, function(l) is.null(l) | (ncol(l) == 0) | (nrow(l) == 0))]
+  data <- data[unlist(!lapply(data, function(l) is.null(l) | (ncol(l) == 0) | (nrow(l) == 0)))]
   
   
   defaultNames <- seq.int(length(data))
@@ -131,9 +131,10 @@ rbind_full <- function(..., list = NA, fill = NA, sep = ':') {
   for (col in unique(unlist(factorColumnList))) {
     ## Ensure column classes match across blocks
     colClasses <- lapply(colClassList, function(x) x[[col]])
-    firstNotNull <- which(!sapply(colClasses, is.null))[1]
-    allSameOrNull <- all(sapply(colClasses[-firstNotNull],
-                                function(x) isTRUE(all.equal.or.null(colClasses[[firstNotNull]], x))
+    firstNotNull <- which(!lapply(colClasses, is.null))[[1]]
+    allSameOrNull <- all(unlist(
+      lapply(colClasses[-firstNotNull],
+             function(x) isTRUE(all.equal.or.null(colClasses[[firstNotNull]], x)))
     ))
     
     if (allSameOrNull) {
@@ -146,9 +147,10 @@ rbind_full <- function(..., list = NA, fill = NA, sep = ':') {
     
     ## check if factor levels are all the same
     colLevels <- lapply(factorLevelList, function(x) x[[col]])
-    firstNotNull <- which(!sapply(colLevels, is.null))[1]
-    allSameOrNull <- all(sapply(colLevels[-firstNotNull],
-                                function(x) isTRUE(all.equal.or.null(colLevels[[firstNotNull]], x))
+    firstNotNull <- which(!lapply(colLevels, is.null))[[1]]
+    allSameOrNull <- all(unlist(
+      lapply(colLevels[-firstNotNull],
+             function(x) isTRUE(all.equal.or.null(colLevels[[firstNotNull]], x)))
     ))
     
     
@@ -160,10 +162,11 @@ rbind_full <- function(..., list = NA, fill = NA, sep = ':') {
     } else {
       ## Check if longest set of levels is a superset of all others,
       ## and use that one
-      longestIndex  <- which.max( sapply(colLevels, length) )
+      longestIndex  <- which.max(unlist(lapply(colLevels, length)))
       longestLevels <- colLevels[[longestIndex]]
-      allSubset <- all(sapply(colLevels[-longestIndex],
-                              function(l) all(l %in% longestLevels)))
+      allSubset <- all(unlist(
+        lapply(colLevels[-longestIndex],
+               function(l) all(l %in% longestLevels))))
       if (allSubset) {
         if ("ordered" %in% colClass)
           retval[[col]] <- ordered(retval[[col]], levels = longestLevels )

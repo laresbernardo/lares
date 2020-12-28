@@ -182,7 +182,7 @@ ohse <- function(df,
       # ONE HOT ENCODING
       if (!colnames(vector_values) %in% c(converted_binary, no_variance)) {
         if (vector_levels >= 2 & !vector_name %in% converted_binary) {
-          options(na.action = 'na.pass')
+          options("na.action" = 'na.pass')
           reduced <- categ_reducer(
             vector_values, !!as.name(vector_name), top = limit,
             other_label = paste0(sep, other_label))
@@ -297,7 +297,7 @@ date_feats <- function(dates,
   if (holidays | !is.na(currency_pair)) {
     invisible(Sys.setlocale("LC_TIME", "C"))
     search_dates <- dates[, c(colnames(dates) %in% date_cols)]
-    search_dates[] <- sapply(search_dates, function(x) gsub(" .*", "", as.character(x)))
+    search_dates[] <- unlist(lapply(search_dates, function(x) gsub(" .*", "", as.character(x))))
     alldates <- as.Date(unlist(search_dates, use.names = FALSE))
     alldates <- alldates[!is.na(alldates)]
   }
@@ -404,7 +404,7 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
   year <- year(Sys.Date())
   years <- years[years %in% ((year-5):(year+5))]
   combs <- expand.grid(years, countries) %>% dplyr::rename(year = "Var1", country = "Var2")
-  for (i in 1:nrow(combs)) {
+  for (i in seq_len(nrow(combs))) {
     message(paste0(">>> Extracting ", combs$country[i], "'s holidays for ", combs$year[i]))
     url <- paste0("https://www.timeanddate.com/holidays/", tolower(combs$country[i]), "/", combs$year[i])
     holidays <- xml2::read_html(url)

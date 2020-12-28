@@ -14,7 +14,7 @@ This function filters categorical columns and plots the frequency
 for each value on every feature.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+
 data(dft) # Titanic dataset
 plot_cats(dft)
 }

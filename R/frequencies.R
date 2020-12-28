@@ -26,7 +26,7 @@
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
 #' @examples 
-#' options("lares.font"=NA) # Temporal
+#' options("lares.font" = NA) # Temporal
 #' data(dft) # Titanic dataset
 #' 
 #' # How many survived?
@@ -513,7 +513,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @param plot Boolean. Plot viz? Will be generated anyways in the output object
 #' @examples 
 #' \donttest{
-#' options("lares.font"=NA) # Temporal
+#' options("lares.font" = NA) # Temporal
 #' df <- dplyr::starwars
 #' head(df[,c(1,4,5,12)], 10)
 #' 
@@ -559,15 +559,15 @@ freqs_list <- function(df,
   } else {
     # If user has an already one hot encoded data.frame
     duos <- data.frame(
-      count = sapply(df, function(x) length(unique(x)))) %>% 
+      count = unlist(lapply(df, function(x) length(unique(x))))) %>% 
       filter(.data$count == 2)
     if (nrow(duos) == 0)
       stop("Please, define a valid 'var' column or make sure to have binary/logical columns.")
     duos <- rownames(duos)
     message(paste(">>> Binary columns detected:", v2t(duos)))
-    which <- sapply(df[,duos], function(x) x == 1)
+    which <- unlist(lapply(df[,duos], function(x) x == 1))
     result <- NULL
-    for (i in 1:nrow(df[,duos])) {
+    for (i in seq_len(nrow(df[,duos]))) {
       result <- c(result, v2t(colnames(df[,duos])[which[i,]], quotes = FALSE))
     }
     df$which <- result

@@ -22,6 +22,8 @@ This function lets the user calculate the percentage of NAs or
 missingness in a data.frame. It also plots the results if needed.
 }
 \examples{
+options("lares.font" = NA) # Temporal
+
 # Dummy data
 df <- data.frame(A = c(1:5), 
                  B = c(NA, NA, 1, 1, 1), 
@@ -32,7 +34,7 @@ df <- data.frame(A = c(1:5),
 missingness(df)
 
 # Visual results
-options("lares.font" = NA) # Temporal
+
 missingness(df, plot = TRUE)
 
 # Show all variables (including those with no missing values)

@@ -26,8 +26,6 @@ get_currency <- function(currency_pair,
   
   try_require("quantmod")
   
-  options("getSymbols.warning4.0" = FALSE)
-  options("getSymbols.yahoo.warning" = FALSE)
   string <- paste0(toupper(cleanText(currency_pair)), "=X")
   
   if (is.na(from) | is.na(to))

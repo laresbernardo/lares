@@ -64,8 +64,8 @@ get_credentials(dir = yml)
 # Warning message: No credentials for NA found in your YML file. 
 # Try any of the following: 'service1', 'service2', 'service3'
   
-# Get credentials for service1
-get_credentials("service1", dir = yml)
+# Get credentials for service2
+get_credentials("service2", dir = yml)
 }
 }
 \seealso{

@@ -25,6 +25,7 @@
 #' @param quiet Boolean. Keep quiet? If not, print messages
 #' @examples 
 #' options("lares.font" = NA) # Temporal
+#' print(.Options$lares.font)
 #' data("iris")
 #' df <- subset(iris, select = c(-Species))
 #' 
@@ -176,7 +177,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
 #' @param plot Boolean. Plot outcome?
 #' @param ... Additional parameters passed to \code{clusterKmeans}
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' 
 #' data("iris")
 #' df <- subset(iris, select = c(-Species))
 #' 

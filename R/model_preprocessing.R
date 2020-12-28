@@ -38,7 +38,6 @@ model_preprocess <- function(df,
                              quiet = FALSE) {
   
   tic(id = "model_preprocess")
-  on.exit(toc(id = "model_preprocess", msg = "Pre-processed in", quiet = TRUE))
   
   # INDEPENDENT VARIABLE
   if (!y %in% colnames(df)) {
@@ -154,7 +153,7 @@ model_preprocess <- function(df,
         test <- filter(df, .data$train_test == "test")
         split <- nrow(train)/nrow(df)
         ignore <- c(ignore, train_test)
-        train_index <- 1:nrow(train)
+        train_index <- seq_len(nrow(train))
         if (!quiet) print(table(df$train_test))
       } else stop("Your train_test column should have 'train' and 'test' values only!") 
     } else stop(paste("There is no column named", train_test))
@@ -197,6 +196,7 @@ model_preprocess <- function(df,
   
   results <- list(data = df, train_index = train_index, model_type = model_type)
   attr(results, "type") <- "model_preprocess"
+  toc(id = "model_preprocess", msg = "Pre-processed in", quiet = TRUE)
   return(invisible(results))
   
 }

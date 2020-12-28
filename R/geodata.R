@@ -38,7 +38,7 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
       country_pref <- data.frame(
         is_country = as.integer(as.character(lapply(
           x$results, function(x) grep(paste(",",country), x)))))
-      country_pref$row <- 1:nrow(country_pref)
+      country_pref$row <- seq_len(nrow(country_pref))
       country_pref <- country_pref[!is.na(country_pref$is_country),]
       which_list <- min(country_pref$row)
       if (nrow(country_pref) == 0) which_list <- 1

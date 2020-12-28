@@ -14,8 +14,6 @@
 #' @export
 f1_contacts <- function(limit = 1000, creds = NA) {
   
-  options(warn=-1)
-  
   hsdates <- function(date) {
     as.character(
       as.POSIXct(

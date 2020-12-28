@@ -358,7 +358,7 @@ noPlot <- function(message = "Nothing to show here!",
                    size = 4, 
                    font = getOption("lares.font")) {
   
-  p <- ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 
+  ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 
     geom_text(size = size) + theme_minimal() +
     theme(axis.line = element_blank(),
           axis.text.x = element_blank(),
@@ -373,15 +373,6 @@ noPlot <- function(message = "Nothing to show here!",
           panel.grid.minor = element_blank(),
           plot.background = element_blank(),
           plot.margin = margin(0, 0, 0, 0))
-  
-  # Check and set font
-  if (!font_exists(font)[1] & !is.na(font)) {
-    warning(paste("Font", font, "is not installed, has other name, or can't be found"))  
-    options("lares.font" = NA) # So R doesn't try again by default
-    font <- NA
-  } else p <- p + theme(text = element_text(family = font)) 
-  
-  return(p)
 }
 
 

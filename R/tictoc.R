@@ -83,9 +83,9 @@ toc <- function(id = 1, msg = "Elapsed time:", units = TRUE, signif = 3, quiet =
 
 #' ####################################################################
 #' #' Stopwatch Reset
-#' #' 
+#' #'
 #' #' Reset all tic and toc values in your environment.
-#' #' 
+#' #'
 #' #' @param which Character. Select: both, tic, toc
 #' #' @export
 #' #' @rdname tic
@@ -94,6 +94,7 @@ toc <- function(id = 1, msg = "Elapsed time:", units = TRUE, signif = 3, quiet =
 #'     options("tic" = NULL)
 #'   if ("toc" %in% which)
 #'     options("toc" = NULL)
-#'   if ("both" == which)
+#'   if ("both" == which) {
 #'     options("tic" = NULL, "toc" = NULL)
+#'   }
 #' }

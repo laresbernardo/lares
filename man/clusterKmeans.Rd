@@ -52,6 +52,7 @@ when clusters are in different shapes such as elliptical clusters.
 }
 \examples{
 options("lares.font" = NA) # Temporal
+print(.Options$lares.font)
 data("iris")
 df <- subset(iris, select = c(-Species))
 

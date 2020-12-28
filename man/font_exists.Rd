@@ -4,10 +4,12 @@
 \alias{font_exists}
 \title{Check if Font is Installed}
 \usage{
-font_exists(font = "Arial Narrow")
+font_exists(font = "Arial Narrow", quiet = FALSE)
 }
 \arguments{
 \item{font}{Character. Which font to check}
+
+\item{quiet}{Boolean. Keep quiet? If not, show message}
 }
 \description{
 This function checks if a font is installed in your machine.

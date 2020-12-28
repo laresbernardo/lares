@@ -2,7 +2,7 @@
 #' Sum Calculations and Plot
 #' 
 #' This function lets the user group, sum, calculate percentages 
-#' and cumulatives. It also plots results if needed. Tidyverse friendly.
+#' and cumulative aggregations. It also plots results if needed. Tidyverse friendly.
 #' 
 #' @family Exploratory
 #' @family Visualization

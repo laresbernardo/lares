@@ -59,7 +59,7 @@ df_str <- function(df,
     logic = colnames(df)[unlist(lapply(df, is.logical))])
   names[["time"]] <- names$cols[!colnames(df) %in% c(
     names$nums, names$char, names$factor, names$logic)]
-  names[["allnas"]] <- names$cols[sapply(df, function(x) all(is.na(x)))] 
+  names[["allnas"]] <- names$cols[unlist(lapply(df, function(x) all(is.na(x))))] 
   
   if (return == "names") 
     return(names)
@@ -157,7 +157,7 @@ plot_nums <- function(df) {
 #' @family Exploratory
 #' @param df Dataframe
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' 
 #' data(dft) # Titanic dataset
 #' plot_cats(dft)
 #' @export
@@ -182,7 +182,7 @@ plot_cats <- function(df) {
 #' @family Exploratory
 #' @param df Dataframe
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' 
 #' data(dft) # Titanic dataset
 #' plot_df(dft)
 #' @export

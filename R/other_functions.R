@@ -315,7 +315,7 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
 #' @examples 
 #' formatNum(1.23456, decimals = 3)
 #' formatNum(1.23456, type = 1)
-#' formatNum(1.23456, pre = "$", pos = "/p")
+#' formatNum(1.23456, pre = "$", pos = "/person")
 #' formatNum(123456, abbr = TRUE)
 #' formatNum(1234567890, abbr = TRUE)
 #' formatNum(1234567890, decimals = 0, abbr = TRUE)
@@ -325,11 +325,16 @@ formatNum <- function(x, decimals = 2,
                       scientific = FALSE,
                       pre = "", pos = "",
                       abbr = FALSE) {
+  
   if (!scientific) {
-    on.exit(options(scipen = 999))
-  } else x <- formatC(x, format = "e", digits = 2)
+    on.exit(options("scipen" = getOption('scipen')))
+    options("scipen" = 999)
+  } else {
+    x <- formatC(x, format = "e", digits = 2)
+  }
+  
   if (abbr) {
-    x <- num_abbr(x, n = decimals + 1) 
+    x <- num_abbr(x, n = decimals + 1)
   } else {
     if (type == 1) {
       x <- format(round(as.numeric(x), decimals), nsmall = decimals, 
@@ -359,7 +364,7 @@ formatNum <- function(x, decimals = 2,
 #' more than 2 unique values, rate will represent percentage for number of rows
 #' @param seed Numeric. Seed to replicate and obtain same values
 #' @param quiet Boolean. Keep quiet? If not, messages will be printed
-#' @examples 
+#' @examples
 #' data(dft) # Titanic dataset
 #' df <- balance_data(dft, Survived, rate = 1, seed = 123)
 #' freqs(df, Survived)
@@ -1214,11 +1219,12 @@ formatTime <- function(vector) {
 #' This function checks if a font is installed in your machine.
 #' 
 #' @param font Character. Which font to check
+#' @param quiet Boolean. Keep quiet? If not, show message
 #' @examples
 #' font_exists(font = "Arial Narrow")
 #' font_exists(font = "Weird Font")
 #' @export
-font_exists <- function(font = "Arial Narrow") {
+font_exists <- function(font = "Arial Narrow", quiet = FALSE) {
   
   tryCatch({
     
@@ -1261,7 +1267,7 @@ font_exists <- function(font = "Arial Narrow") {
     }
     check(font)
   }, error = function(err) {
-    message(paste("Font issue detected:", err))
+    if (!quiet) message(paste("Font issue detected:", err))
     options("lares.font" = NA)
     return(FALSE)
   })
@@ -1311,9 +1317,8 @@ num_abbr <- function(x, n = 3) {
   if (!n %in% 1:6) stop('Please make sure that n takes on an interger value between 1 to 6.')
   
   # To handle scientific notation inputs correctly
-  original_scipen <- getOption('scipen')
-  on.exit(options(scipen = original_scipen), add = TRUE)
-  options(scipen = 999)
+  on.exit(options("scipen" = getOption('scipen')))
+  options("scipen" = 999)
   
   # Clean up x
   negative_positions <- ifelse(x < 0, '-', '')
@@ -1401,7 +1406,7 @@ check_opts <- function(inputs, opts,
 #' @export
 list_cats <- function(df, ..., abc = TRUE) {
   is.categorical <- function(x) is.character(x) | is.factor(x)
-  category <- which(sapply(df, is.categorical))
+  category <- which(unlist(lapply(df, is.categorical)))
   ret <- list()
   for (i in seq_along(category)) {
     which <- as.character(names(category)[i])
@@ -1477,7 +1482,7 @@ files_functions <- function(filename, alphabetic = TRUE) {
   tmp <- getParseData(parse(filename, keep.source = TRUE))
   nms <- tmp$text[which(tmp$token == "SYMBOL_FUNCTION_CALL")]
   funs <- unique(if (alphabetic) {sort(nms)} else {nms})
-  src <- paste(as.vector(sapply(funs, find)))
+  src <- paste(unlist(lapply(funs, find)))
   outlist <- tapply(funs, factor(src), c)
   return(outlist)
 }
@@ -1557,7 +1562,7 @@ spread_list <- function(df, col, str = NA, replace = TRUE) {
   col <- as_label(var)
   cols <- colnames(df)
   
-  if (!"list" %in% sapply(df[,cols == col], class)) {
+  if (!"list" %in% unlist(lapply(df[,cols == col], class))) {
     warning("The variable provided is not a list variable")
     return(df)
   }

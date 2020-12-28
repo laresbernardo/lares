@@ -12,6 +12,8 @@
 #' @param subtitle Character. Subtitle to show in plot
 #' @param summary Boolean. Show numerical summary text?
 #' @examples 
+#' options("lares.font" = NA) # Temporal
+#' 
 #' # Dummy data
 #' df <- data.frame(A = c(1:5), 
 #'                  B = c(NA, NA, 1, 1, 1), 
@@ -22,7 +24,7 @@
 #' missingness(df)
 #' 
 #' # Visual results
-#' options("lares.font" = NA) # Temporal
+#' 
 #' missingness(df, plot = TRUE)
 #' 
 #' # Show all variables (including those with no missing values)

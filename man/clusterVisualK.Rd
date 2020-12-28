@@ -19,7 +19,7 @@ clusterVisualK(df, ks = 1:6, plot = TRUE, ...)
 Visualize cluster data for assorted values of k.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+
 data("iris")
 df <- subset(iris, select = c(-Species))
 

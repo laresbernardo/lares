@@ -73,7 +73,9 @@ distr <- function(data, ...,
                   save = FALSE, 
                   subdir = NA) {
   
-  options(scipen = 999)
+  # To handle scientific notation inputs correctly
+  on.exit(options("scipen" = getOption('scipen')))
+  options("scipen" = 999)
   
   data <- data.frame(data)
   vars <- quos(...)

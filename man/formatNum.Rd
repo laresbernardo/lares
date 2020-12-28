@@ -36,7 +36,7 @@ This function lets the user format numerical values nicely
 \examples{
 formatNum(1.23456, decimals = 3)
 formatNum(1.23456, type = 1)
-formatNum(1.23456, pre = "$", pos = "/p")
+formatNum(1.23456, pre = "$", pos = "/person")
 formatNum(123456, abbr = TRUE)
 formatNum(1234567890, abbr = TRUE)
 formatNum(1234567890, decimals = 0, abbr = TRUE)

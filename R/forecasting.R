@@ -76,7 +76,7 @@ forecast_arima <- function(time, values, n_future = 30,
     aic <- expand.grid(AR = arma, MA = arma, cals = 0)
     message("Iterating for best AR / MA combinations; there are ", nrow(aic), "!")
     # if (length(time) > 1000) { method <- "ML" } else { method <- "CSS" }
-    for(i in 1:nrow(aic)){
+    for(i in seq_len(nrow(aic))){
       Tmodel <- Arima(values, order = c(aic$AR[i], 1, aic$MA[i]), method = "ML")
       aic$cals[i] <- Tmodel$aic
     }

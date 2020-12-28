@@ -150,12 +150,12 @@ grepl_letters <- function(vector, pattern, blank = "_") {
     combs <- rbind(combs, (forced_which + i))
   # We can skip those that do NOT have all the letters
   run <- sapply(forced[forced_which], function(x) grepl(x, vector, fixed = TRUE))
-  run <- apply(run, 1, all) 
+  run <- apply(run, 1, all)
   # Let's iterate all combinations for each element
   for (i in seq_along(vector)) {
     temp <- NULL
     if (run[i]) {
-      for (k in 1:nrow(combs)) {
+      for (k in seq_along(nrow(combs))) {
         aux <- NULL
         for (j in 1:ncol(combs)) {
           aux <- c(aux, substr(vector[i], combs[k, j], combs[k, j]))
@@ -320,7 +320,7 @@ force_words <- function(words, pattern, rev = FALSE, invert = FALSE) {
 reverse <- function(words) {
   splits <- sapply(words, function(x) strsplit(x, ""))
   reversed <- lapply(splits, rev)
-  words <- as.vector(unlist(sapply(reversed, function(x) paste(x, collapse = ""))))
+  words <- as.vector(unlist(lapply(reversed, function(x) paste(x, collapse = ""))))
   return(words)
 }
 
