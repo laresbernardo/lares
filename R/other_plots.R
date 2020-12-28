@@ -210,7 +210,7 @@ plot_chord <- function(origin, dest,
     stop("Too many chords to plot and not enough colours :(")
   }
   
-  col <- c(pal[1:length(unique(origin))], 
+  col <- c(pal[seq_along(unique(origin))], 
            rep("darkgrey", length(unique(uniq)) - length(unique(origin))))
   
   chordDiagram(x = df, 

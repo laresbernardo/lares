@@ -43,12 +43,12 @@
 #' # Warning message: No credentials for NA found in your YML file. 
 #' # Try any of the following: 'service1', 'service2', 'service3'
 #'   
-#' # Get credentials for service1
-#' get_credentials("service1", dir = yml)
+#' # Get credentials for service2
+#' get_credentials("service2", dir = yml)
 #' }
 #' @export
-get_credentials <- function(from = NA, dir = NA, 
-                            filename = "config.yml", 
+get_credentials <- function(from = NA, dir = NA,
+                            filename = "config.yml",
                             env = "LARES_CREDS") {
   
   if (is.list(dir)) return(dir)
@@ -72,15 +72,14 @@ get_credentials <- function(from = NA, dir = NA,
   if (!file.exists(file)) {
     message(sprintf("YML file with credentials not found in %s", dir))
   } else {
-    wd <- getwd()
-    setwd(dir)
-    credentials <- config::get(from)
+    credentials <- yaml::read_yaml(file)$default
     if (is.null(credentials)) {
-      trues <- names(config::get())
+      trues <- names(credentials)
       warning(paste("No credentials for", from, "found in your YML file.",
                     "\nTry any of the following:", v2t(trues)))
+      return(invisible(NULL))
     }
-    setwd(wd)
+    if (!is.na(from)) credentials <- credentials[[from]]
     return(credentials)
   }
 }

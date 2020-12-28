@@ -4,7 +4,7 @@
 \alias{plot_survey}
 \title{Visualize Survey Results}
 \usage{
-plot_survey(answers, ignore = c(1), title = NA, subtitle = NA)
+plot_survey(answers, ignore = 1, title = NA, subtitle = NA)
 }
 \arguments{
 \item{answers}{Dataframe. Answers. Each row a different person. 

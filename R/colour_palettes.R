@@ -152,7 +152,7 @@ lares_pal <- function() {
 #' plot_palette(fill = names(pal), colour = as.vector(pal))
 #' @export
 plot_palette <- function(fill, colour = "black", id = NA) {
-  if (is.na(id[1])) id <- 1:length(fill)
+  if (is.na(id[1])) id <- seq_along(fill)
   p <- data.frame(fill = fill, colour = colour, id = id) %>%
     distinct(.keep_all = TRUE) %>%
     ggplot(aes(x = reorder(fill, -id), y = 1)) + 

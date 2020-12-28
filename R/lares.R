@@ -6,7 +6,6 @@
 #' @name lares
 #' @docType package
 #' @author Bernardo Lares (laresbernardo@@gmail.com)
-#' @importFrom config get
 #' @import dplyr
 #' @import ggplot2
 #' @importFrom graphics box hist plot points rasterImage rect grid legend
@@ -38,6 +37,7 @@
 #' type.convert flush.console read.table modifyList write.csv combn browseURL type.convert 
 #' getParseData find
 #' @importFrom xml2 read_html
+#' @importFrom yaml read_yaml
 "_PACKAGE"
 
 
@@ -70,25 +70,25 @@ NULL
 
 # Recommeded additional libraries to fully take advantage of lares library
 recommended <- list(
-  beepr = c("beep"),
+  beepr = "beep",
   circlize = c("chordDiagram", "uh"),
   DALEX = c("explain.default", "model_performance", "model_profile", "predict_parts"),
-  data.table = c("fread"),
+  data.table = "fread",
   DBI = c("dbDriver", "dbConnect", "dbSendQuery", "fetch", "dbDisconnect"),
   devtools = c("install", "install_github", "with_proxy"),
-  exifr = c("read_exif"),
-  factoextra = c("fviz_nbclust"),
+  exifr = "read_exif",
+  factoextra = "fviz_nbclust",
   forecast = c("Arima", "auto.arima", "forecast"),
-  gdata = c("read.xls"),
-  ggbeeswarm = c("geom_quasirandom"),
-  ggforce = c("geom_mark_ellipse"),
-  ggrepel = c("geom_label_repel"),
-  googleAnalyticsR = c("google_analytics"),
-  googleAuthR = c("gar_auth"),
+  gdata = "read.xls",
+  ggbeeswarm = "geom_quasirandom",
+  ggforce = "geom_mark_ellipse",
+  ggrepel = "geom_label_repel",
+  googleAnalyticsR = "google_analytics",
+  googleAuthR = "gar_auth",
   googledrive = c("drive_auth", "drive_find"),
   googlesheets4 = c("sheets_auth", "read_sheet", "gs4_create", "range_write",
                     "gs4_auth_configure", "gs4_auth", "sheet_append"),
-  methods = c("as"),
+  methods = "as",
   mice = c("mice", "complete"),
   plotly = c("ggplotly", "plot_ly", "add_markers", "add_markers"),
   prophet = c("prophet", "fit.prophet", "prophet_plot_components",
@@ -97,12 +97,12 @@ recommended <- list(
   rdrop2 = c("drop_auth", "drop_dir", "drop_download", "drop_search", "drop_upload"),
   rgdal = c("readOGR", "project"),
   rpart = c("rpart", "rpart.control"),
-  rpart.plot = c("rpart.plot"),
-  RPostgreSQL = c("PostgreSQL"),
+  rpart.plot = "rpart.plot",
+  RPostgreSQL = "PostgreSQL",
   rtweet = c("create_token", "search_tweets"),
-  rmarkdown = c("render"),
-  skimr = c("skim"),
-  syuzhet = c("get_sentiment_dictionary"),
+  rmarkdown = "render",
+  skimr = "skim",
+  syuzhet = "get_sentiment_dictionary",
   sp = c("CRS", "over", "coordinates", "proj4string", "proj4string<-", "coordinates<-", "spTransform"),
   tm = c("content_transformer", "Corpus", "removeNumbers", "removePunctuation", 
          "removeWords","readPlain","stopwords", "stripWhitespace", "TermDocumentMatrix", 

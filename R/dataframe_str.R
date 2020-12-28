@@ -93,7 +93,7 @@ df_str <- function(df,
   
   if (return == "plot") {
     p <- intro2 %>%
-      filter(!.data$metric %in% c("Memory.Usage")) %>%
+      filter(!.data$metric %in% "Memory.Usage") %>%
       mutate(x = ifelse(.data$p < 75, -0.15, 1.15)) %>%
       ggplot(aes(x = reorder(.data$metric, as.integer(.data$counter)), 
                  y = .data$p, fill = .data$type,

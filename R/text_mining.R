@@ -134,7 +134,7 @@ textTokenizer <- function(text,
     aux <- function(x) gsub("([[:alpha:]])\\1{2,}", "\\1", x)
     docs <- tm_map(docs, content_transformer(aux)) 
     # Double vowels as well in spanish
-    if (lang %in% c("spanish")) {
+    if ("spanish" %in% lang) {
       aux <- function(x) gsub("[aeiou]*([aeiou])\\1+", "\\1", x)
       docs <- tm_map(docs, content_transformer(aux))
     } 

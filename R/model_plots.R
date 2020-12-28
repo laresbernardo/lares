@@ -924,17 +924,17 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
           panel.grid.minor = element_blank(),
           strip.background = element_blank()) +
     theme(axis.text.x = element_text(angle = 30, hjust = 0)) +
-    scale_x_continuous(breaks = 1:length(labels),
+    scale_x_continuous(breaks = seq_along(labels),
                        labels = labels,
                        position = 'bottom',
                        sec.axis = sec_axis(~.,
-                                           breaks = 1:length(labels),
+                                           breaks = seq_along(labels),
                                            labels = labels)) +
-    scale_y_continuous(breaks = 1:length(labels),
+    scale_y_continuous(breaks = seq_along(labels),
                        labels = labels,
                        position = 'right',
                        sec.axis = sec_axis(~.,
-                                           breaks = 1:length(labels),
+                                           breaks = seq_along(labels),
                                            labels = rev(values$label)))
   
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)

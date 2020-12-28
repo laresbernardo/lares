@@ -419,9 +419,9 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
     }
     first <- as.numeric(as.character(substr(holidays$Date, 1, 1)))
     if (!is.na(first[1])) {
-      holidays$Date <- as.Date(holidays$Date, format = c("%d %b %Y"))
+      holidays$Date <- as.Date(holidays$Date, format = "%d %b %Y")
     } else {
-      holidays$Date <- as.Date(holidays$Date, format = c("%b %d %Y"))
+      holidays$Date <- as.Date(holidays$Date, format = "%b %d %Y")
     }
     result <- data.frame(holiday = holidays$Date,
                          holiday_name = holidays$Holiday, 

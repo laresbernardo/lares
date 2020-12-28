@@ -36,11 +36,11 @@ updateLares <- function(force = FALSE, all = FALSE, local = FALSE, fb = FALSE) {
   
   if (all) install_recommended()
   
-  if ("lares" %in% names(utils::sessionInfo()$otherPkgs)) { 
-    message("Reloading library...")
-    detach(package:lares, unload = TRUE)
-    library(lares)
-  }
+  # if ("lares" %in% names(utils::sessionInfo()$otherPkgs)) { 
+  #   message("Reloading library...")
+  #   detach(package:lares, unload = TRUE)
+  #   library(lares)
+  # }
   
   toc(id = "updateLares", msg = paste(Sys.time(), "|"))  
 

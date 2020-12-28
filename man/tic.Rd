@@ -3,14 +3,11 @@
 \name{tic}
 \alias{tic}
 \alias{toc}
-\alias{resettictoc}
 \title{Stopwatch to measure timings in R}
 \usage{
 tic(id = 1, quiet = TRUE)
 
 toc(id = 1, msg = "Elapsed time:", units = TRUE, signif = 3, quiet = FALSE)
-
-resettictoc(which = "both")
 }
 \arguments{
 \item{id}{Define ID if multiple \code{tic} & \code{toc} are being used}
@@ -23,8 +20,6 @@ resettictoc(which = "both")
 If not, seconds elapsed as numerical values}
 
 \item{signif}{Integer. Significant digits}
-
-\item{which}{Character. Select: both, tic, toc}
 }
 \value{
 \code{toc} returns an (invisible) list containing the timestamps
@@ -34,8 +29,6 @@ If not, seconds elapsed as numerical values}
 Start a stopwatch.
 
 Stop a stopwatch.
-
-Reset all tic and toc values in your environment.
 }
 \examples{
 # Basic use (global stopwatch)

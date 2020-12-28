@@ -10,7 +10,7 @@
 #' @param title Character. Title for your plot
 #' @param subtitle Character. Subtitle for your plot
 #' @export
-plot_survey <- function(answers, ignore = c(1), title = NA, subtitle = NA){
+plot_survey <- function(answers, ignore = 1, title = NA, subtitle = NA){
   if (length(ignore) > 0) {
     answers <- answers[-ignore]
   }

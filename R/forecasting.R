@@ -320,7 +320,7 @@ prophesize <- function(df, n_future = 60, country = "AR",
 #'     Sys.sleep(1)
 #'     mplot_full(
 #'       tag = df$amount,
-#'       score = predictions_tbl$amount[1:length(df$amount)],
+#'       score = predictions_tbl$amount[seq_along(df$amount)],
 #'       subtitle = project)
 #'     Sys.sleep(4)
 #'   }

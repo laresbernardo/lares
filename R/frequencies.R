@@ -416,7 +416,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
   aux <- df %>% 
     freqs(!!!vars, rm.na = rm.na) %>% 
     mutate_if(is.factor, as.character) %>%
-    mutate_at(1:length(vars), as.character) %>%
+    mutate_at(seq_along(vars), as.character) %>%
     mutate(order = ifelse(.data$order > top, "...", .data$order))
   if ("..." %in% aux$order)
     message(paste(
