@@ -74,7 +74,7 @@ Specificity." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.9</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@ Specificity." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -93,7 +93,7 @@ Specificity." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/laresbernardo/lares/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -297,37 +297,8 @@ categorical model.</p></td>
                       multis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span>, select <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>score</span><span class='op'>)</span><span class='op'>)</span>,
                       model_name <span class='op'>=</span> <span class='st'>"Titanic Class Model"</span>,
                       plots <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>met2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $dictionary
-#&gt; [1] "AUC: Area Under the Curve"                                                             
-#&gt; [2] "ACC: Accuracy"                                                                         
-#&gt; [3] "PRC: Precision = Positive Predictive Value"                                            
-#&gt; [4] "TPR: Sensitivity = Recall = Hit rate = True Positive Rate"                             
-#&gt; [5] "TNR: Specificity = Selectivity = True Negative Rate"                                   
-#&gt; [6] "Logloss (Error): Logarithmic loss [Neutral classification: 0.69315]"                   
-#&gt; [7] "Gain: When best n deciles selected, what % of the real target observations are picked?"
-#&gt; [8] "Lift: When best n deciles selected, how much better than random is?"                   
-#&gt; 
-#&gt; $confusion_matrix
-#&gt; </span><span style='color: #555555;'># A tibble: 3 x 4</span><span>
-#&gt;   `Real x Pred`   n_3   n_1   n_2
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> n_3             120    11    18
-#&gt; </span><span style='color: #555555;'>2</span><span> n_1              12    43     8
-#&gt; </span><span style='color: #555555;'>3</span><span> n_2              26    15    15
-#&gt; 
-#&gt; $metrics
-#&gt;      AUC     ACC
-#&gt; 1 0.7896 0.66418
-#&gt; 
-#&gt; $metrics_tags
-#&gt; </span><span style='color: #555555;'># A tibble: 3 x 9</span><span>
-#&gt;   tag       n     p   AUC order   ACC   PRC   TPR   TNR
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> n_3     149  55.6 0.826     1 0.75  0.759 0.805 0.681
-#&gt; </span><span style='color: #555555;'>2</span><span> n_1      63  23.5 0.867     2 0.828 0.623 0.683 0.873
-#&gt; </span><span style='color: #555555;'>3</span><span> n_2      56  20.9 0.675     3 0.75  0.366 0.268 0.877
-#&gt; </div><div class='input'>          
+</div><div class='output co'>#&gt; <span class='error'>Error in `$&lt;-.data.frame`(`*tmp*`, "AUC", value = structure(c(0.866937669376694, 0.675412735849057, 0.826462128475551, 0.789604177900434, NA), .Names = c("n_1", "n_2", "n_3", "mean", NA))): replacement has 5 rows, data has 3</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>met2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in print(met2): object 'met2' not found</span></div><div class='input'>          
 <span class='co'># Metrics for Regression Model</span>
 <span class='va'>met3</span> <span class='op'>&lt;-</span> <span class='fu'>model_metrics</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>regr</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>regr</span><span class='op'>$</span><span class='va'>score</span>,
                       model_name <span class='op'>=</span> <span class='st'>"Titanic Fare Model"</span>,

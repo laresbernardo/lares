@@ -74,7 +74,7 @@ Custom and tidyverse friendly." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.9</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@ Custom and tidyverse friendly." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -93,7 +93,7 @@ Custom and tidyverse friendly." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/laresbernardo/lares/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -261,10 +261,20 @@ for both, target and values)</p></td>
 
 <span class='co'># Relation for categorical/categorical values</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Survived</span>, <span class='va'>Sex</span><span class='op'>)</span>
-</div><div class='img'><img src='distr-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Unquoting language objects with `!!!` is deprecated as of rlang 0.4.0.</span>
+#&gt; <span class='warning'>Please use `!!` instead.</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>  # Bad:</span>
+#&gt; <span class='warning'>  dplyr::select(data, !!!enquo(x))</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>  # Good:</span>
+#&gt; <span class='warning'>  dplyr::select(data, !!enquo(x))    # Unquote single quosure</span>
+#&gt; <span class='warning'>  dplyr::select(data, !!!enquos(x))  # Splice list of quosures</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once per session.</span><span></span></div><div class='img'><img src='distr-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Relation for categorical/numeric values</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Survived</span>, <span class='va'>Fare</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 5</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 5</span><span>
 #&gt;    targets value            n     p  pcum
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> FALSE   (7.9,8.1]       87  82.1  82.1

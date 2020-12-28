@@ -73,7 +73,7 @@ of a dataframe or vector with date/time variables." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.9</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@ of a dataframe or vector with date/time variables." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -92,7 +92,7 @@ of a dataframe or vector with date/time variables." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/laresbernardo/lares/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -215,49 +215,49 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
 <span class='co'># Input as a vector or dataframe</span>
 <span class='fu'>date_feats</span><span class='op'>(</span><span class='va'>df</span>, keep_originals <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 2 date/time columns: 'dates', 'times'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: All formats failed to parse. No formats found.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: argument 'replacement' has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: argument 'replacement' has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt;         dates dates_year dates_month dates_day dates_week dates_weekday
-#&gt; 1  2020-05-10       2020           5        10         19           Sun
-#&gt; 2  2020-03-08       2020           3         8         10           Sun
-#&gt; 3  2020-03-09       2020           3         9         10           Mon
-#&gt; 4  2020-08-21       2020           8        21         34           Fri
-#&gt; 5  2020-06-23       2020           6        23         25           Tue
-#&gt; 6  2020-12-07       2020          12         7         49           Mon
-#&gt; 7  2020-11-21       2020          11        21         47           Sat
-#&gt; 8  2020-04-24       2020           4        24         17           Fri
-#&gt; 9  2020-11-28       2020          11        28         48           Sat
-#&gt; 10 2020-11-01       2020          11         1         44           Sun
+#&gt; 1  2020-05-29       2020           5        29         22           Fri
+#&gt; 2  2020-03-27       2020           3        27         13           Fri
+#&gt; 3  2020-03-28       2020           3        28         13           Sat
+#&gt; 4  2020-09-09       2020           9         9         37           Wed
+#&gt; 5  2020-07-12       2020           7        12         28           Sun
+#&gt; 6  2020-12-26       2020          12        26         52           Sat
+#&gt; 7  2020-12-10       2020          12        10         50           Thu
+#&gt; 8  2020-05-13       2020           5        13         20           Wed
+#&gt; 9  2020-12-17       2020          12        17         51           Thu
+#&gt; 10 2020-11-20       2020          11        20         47           Fri
 #&gt;    dates_weekend dates_year_day               times times_year times_month
-#&gt; 1           TRUE            130 2020-10-20 09:01:07       2020          10
-#&gt; 2           TRUE             67 2020-09-22 13:58:53       2020           9
-#&gt; 3          FALSE             68 2020-09-10 10:17:20       2020           9
-#&gt; 4          FALSE            233 2020-08-25 20:24:17       2020           8
-#&gt; 5          FALSE            174 2020-09-24 05:01:54       2020           9
-#&gt; 6          FALSE            341 2020-10-22 06:29:32       2020          10
-#&gt; 7           TRUE            325 2020-09-07 04:44:40       2020           9
-#&gt; 8          FALSE            114 2020-11-07 05:59:38       2020          11
-#&gt; 9           TRUE            332 2020-10-03 09:14:55       2020          10
-#&gt; 10          TRUE            305 2020-12-01 14:19:53       2020          12
+#&gt; 1          FALSE            149 2020-11-08 02:53:34       2020          11
+#&gt; 2          FALSE             86 2020-10-11 07:51:20       2020          10
+#&gt; 3           TRUE             87 2020-09-29 04:09:47       2020           9
+#&gt; 4          FALSE            252 2020-09-13 14:16:44       2020           9
+#&gt; 5           TRUE            193 2020-10-12 22:54:21       2020          10
+#&gt; 6           TRUE            360 2020-11-10 00:21:59       2020          11
+#&gt; 7          FALSE            344 2020-09-25 22:37:07       2020           9
+#&gt; 8          FALSE            133 2020-11-25 23:52:05       2020          11
+#&gt; 9          FALSE            351 2020-10-22 03:07:22       2020          10
+#&gt; 10         FALSE            324 2020-12-20 08:12:20       2020          12
 #&gt;    times_day times_week times_weekday times_weekend times_year_day times_hour
-#&gt; 1         20         42           Tue         FALSE            293          9
-#&gt; 2         22         38           Tue         FALSE            265         13
-#&gt; 3         10         37           Thu         FALSE            253         10
-#&gt; 4         25         34           Tue         FALSE            237         20
-#&gt; 5         24         39           Thu         FALSE            267          5
-#&gt; 6         22         43           Thu         FALSE            295          6
-#&gt; 7          7         36           Mon         FALSE            250          4
-#&gt; 8          7         45           Sat          TRUE            311          5
-#&gt; 9          3         40           Sat          TRUE            276          9
-#&gt; 10         1         48           Tue         FALSE            335         14
+#&gt; 1          8         45           Sun          TRUE            312          2
+#&gt; 2         11         41           Sun          TRUE            284          7
+#&gt; 3         29         39           Tue         FALSE            272          4
+#&gt; 4         13         37           Sun          TRUE            256         14
+#&gt; 5         12         41           Mon         FALSE            285         22
+#&gt; 6         10         45           Tue         FALSE            314          0
+#&gt; 7         25         39           Fri         FALSE            268         22
+#&gt; 8         25         48           Wed         FALSE            329         23
+#&gt; 9         22         43           Thu         FALSE            295          3
+#&gt; 10        20         51           Sun          TRUE            354          8
 #&gt;    times_minute times_minutes times_second
-#&gt; 1             1           541            7
-#&gt; 2            58           838           53
-#&gt; 3            17           617           20
-#&gt; 4            24          1224           17
-#&gt; 5             1           301           54
-#&gt; 6            29           389           32
-#&gt; 7            44           284           40
-#&gt; 8            59           359           38
-#&gt; 9            14           554           55
-#&gt; 10           19           859           53</div><div class='input'>
+#&gt; 1            53           173           34
+#&gt; 2            51           471           20
+#&gt; 3             9           249           47
+#&gt; 4            16           856           44
+#&gt; 5            54          1374           21
+#&gt; 6            21            21           59
+#&gt; 7            37          1357            7
+#&gt; 8            52          1432            5
+#&gt; 9             7           187           22
+#&gt; 10           12           492           20</div><div class='input'>
 <span class='co'># Holidays</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>hol</span> <span class='op'>&lt;-</span> <span class='fu'>date_feats</span><span class='op'>(</span>
