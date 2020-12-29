@@ -427,3 +427,64 @@ topics_rake <- function(text, file = "english-ewt-ud-2.4-190531.udpipe", lang = 
     relevant = aux$upos %in% c("NOUN", "ADJ"))
   return(topics)
 }
+
+
+####################################################################
+#' Build N-grams and keep most frequent
+#' 
+#' Build out n-grams for multiple text inputs and keep the n most frequent
+#' combinations.
+#' 
+#' @family Text Mining
+#' @inheritParams remove_stopwords
+#' @param ngram Integer vector. Number of continuous n items in text.
+#' @param top Integer. Keep n most frequent ngrams only.
+#' @param ... Additional parameters passed to \code{remove_stopwords}.
+#' @examples
+#' \dontrun{
+#' women <- read.csv("https://bit.ly/3mXJOOi")
+#' x <- women$description
+#' ngrams(x, ngram = c(2,3), top  = 3)
+#' ngrams(x, ngram = 2, top = 6, stop_words = c("a","is","of","the"))
+#' }
+#' @export
+ngrams <- function(text, ngram = c(2,3), top = 10, stop_words = NULL, ...) {
+  try_require("tidytext")
+  x_counts <- lapply(ngram, function(i) {
+    data.frame(msg = data.frame(text)[,1]) %>%
+      {if (!is.null(stop_words)[1])
+        mutate(., msg = remove_stopwords(.data$msg, stop_words, ...)) else .} %>%
+      unnest_tokens("comb", .data$msg, token = "ngrams", n = i) %>%
+      filter(!is.na(.data$comb)) %>% 
+      freqs(.data$comb) %>%
+      head(top) %>%
+      mutate(ngram = i)
+  })
+  bind_rows(x_counts)
+}
+
+####################################################################
+#' Remove stop-words and patterns from character vector
+#' 
+#' Remove all stop-words and specific patterns from a character vector
+#' 
+#' @family Text Mining
+#' @param text Character vector
+#' @param stop_words Character vector. Words to exclude from text. Example: 
+#' if you want to exlcude "a", whenever that word appears it will be excluded,
+#' but when the letter "a" appears in a word, it will remain.
+#' @param exclude Character. Pattern to exclude using regex.
+#' @param sep Character. String that separate the terms.
+#' @examples 
+#' x <- c("A brown fox jumps over a dog.", "Another brown dog.")
+#' remove_stopwords(x, stop_words = c("dog", "brown", "a"), exclude = "\\.")
+#' @export
+remove_stopwords <- function(text, stop_words, exclude = NULL, sep = " ") {
+  tok <- lapply(text, function(i) str_split(trimws(i), sep)[[1]])
+  if (!is.null(exclude)[1])
+    tok <- lapply(tok, function(i) gsub(paste(exclude, collapse = "|"), "", i))
+  if (!is.null(stop_words)[1])
+    tok <- lapply(tok, function (i) i[!tolower(i) %in% unique(c("", tolower(stop_words)))])
+  fin <- lapply(tok, function (i) paste(i, collapse = " "))
+  return(unlist(fin))
+}

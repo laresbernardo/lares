@@ -54,6 +54,8 @@ Other Data Wrangling:
 
 Other Text Mining: 
 \code{\link{cleanText}()},
+\code{\link{ngrams}()},
+\code{\link{remove_stopwords}()},
 \code{\link{replaceall}()},
 \code{\link{sentimentBreakdown}()},
 \code{\link{textCloud}()},
