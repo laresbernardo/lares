@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Wordcloud Plot — textCloud • lares</title>
+<title>Remove stop-words and patterns from character vector — remove_stopwords • lares</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Wordcloud Plot — textCloud" />
-<meta property="og:description" content="Study the distribution of a target variable vs another variable. This
-function is quite similar to the funModeling's corrplot function." />
+<meta property="og:title" content="Remove stop-words and patterns from character vector — remove_stopwords" />
+<meta property="og:description" content="Remove all stop-words and specific patterns from a character vector" />
 
 
 
@@ -109,26 +108,16 @@ function is quite similar to the funModeling's corrplot function." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Wordcloud Plot</h1>
+    <h1>Remove stop-words and patterns from character vector</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/text_mining.R'><code>R/text_mining.R</code></a></small>
-    <div class="hidden name"><code>textCloud.Rd</code></div>
+    <div class="hidden name"><code>remove_stopwords.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Study the distribution of a target variable vs another variable. This
-function is quite similar to the funModeling's corrplot function.</p>
+    <p>Remove all stop-words and specific patterns from a character vector</p>
     </div>
 
-    <pre class="usage"><span class='fu'>textCloud</span><span class='op'>(</span>
-  <span class='va'>text</span>,
-  lang <span class='op'>=</span> <span class='st'>"english"</span>,
-  exclude <span class='op'>=</span> <span class='cn'>NULL</span>,
-  seed <span class='op'>=</span> <span class='fl'>0</span>,
-  keep_spaces <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  min <span class='op'>=</span> <span class='fl'>2</span>,
-  pal <span class='op'>=</span> <span class='cn'>NA</span>,
-  print <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>remove_stopwords</span><span class='op'>(</span><span class='va'>text</span>, stop_words <span class='op'>=</span> <span class='cn'>NULL</span>, exclude <span class='op'>=</span> <span class='cn'>NULL</span>, sep <span class='op'>=</span> <span class='st'>" "</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,35 +127,18 @@ function is quite similar to the funModeling's corrplot function.</p>
       <td><p>Character vector</p></td>
     </tr>
     <tr>
-      <th>lang</th>
-      <td><p>Character. Language in text (used for stop words)</p></td>
+      <th>stop_words</th>
+      <td><p>Character vector. Words to exclude from text. Example: 
+if you want to exlcude "a", whenever that word appears it will be excluded,
+but when the letter "a" appears in a word, it will remain.</p></td>
     </tr>
     <tr>
       <th>exclude</th>
-      <td><p>Character vector. Which word do you wish to exclude?</p></td>
+      <td><p>Character. Pattern to exclude using regex.</p></td>
     </tr>
     <tr>
-      <th>seed</th>
-      <td><p>Numeric. Seed for re-producible plots</p></td>
-    </tr>
-    <tr>
-      <th>keep_spaces</th>
-      <td><p>Boolean. If you wish to keep spaces in each line
-to keep unique compount words, separated with spaces, set to TRUE. 
-For example, 'LA ALAMEDA' will be set as 'LA_ALAMEDA' and treated as
-a single word.</p></td>
-    </tr>
-    <tr>
-      <th>min</th>
-      <td><p>Integer. Words with less frequency will not be plotted</p></td>
-    </tr>
-    <tr>
-      <th>pal</th>
-      <td><p>Character vector. Which colours do you wish to use</p></td>
-    </tr>
-    <tr>
-      <th>print</th>
-      <td><p>Boolean. Plot results as textcloud?</p></td>
+      <th>sep</th>
+      <td><p>Character. String that separate the terms.</p></td>
     </tr>
     </table>
 
@@ -175,13 +147,18 @@ a single word.</p></td>
     <div class='dont-index'><p>Other Text Mining: 
 <code><a href='cleanText.html'>cleanText</a>()</code>,
 <code><a href='ngrams.html'>ngrams</a>()</code>,
-<code><a href='remove_stopwords.html'>remove_stopwords</a>()</code>,
 <code><a href='replaceall.html'>replaceall</a>()</code>,
 <code><a href='sentimentBreakdown.html'>sentimentBreakdown</a>()</code>,
+<code><a href='textCloud.html'>textCloud</a>()</code>,
 <code><a href='textFeats.html'>textFeats</a>()</code>,
 <code><a href='textTokenizer.html'>textTokenizer</a>()</code>,
 <code><a href='topics_rake.html'>topics_rake</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A brown fox jumps over a dog."</span>, <span class='st'>"Another brown dog."</span><span class='op'>)</span>
+<span class='fu'>remove_stopwords</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='co'># Nothing happens</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in remove_stopwords(x): argument "stop_words" is missing, with no default</span></div><div class='input'><span class='fu'>remove_stopwords</span><span class='op'>(</span><span class='va'>x</span>, stop_words <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"dog"</span>, <span class='st'>"brown"</span>, <span class='st'>"a"</span><span class='op'>)</span>, exclude <span class='op'>=</span> <span class='st'>"\\."</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "fox jumps over" "Another"       </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
