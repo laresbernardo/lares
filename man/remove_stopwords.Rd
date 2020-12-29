@@ -4,13 +4,13 @@
 \alias{remove_stopwords}
 \title{Remove stop-words and patterns from character vector}
 \usage{
-remove_stopwords(text, stop_words = NULL, exclude = NULL, sep = " ")
+remove_stopwords(text, stop_words, exclude = NULL, sep = " ")
 }
 \arguments{
 \item{text}{Character vector}
 
 \item{stop_words}{Character vector. Words to exclude from text. Example: 
-if you want to exlcude "a", whenever that word appears it will be excluded,
+if you want to exclude "a", whenever that word appears it will be excluded,
 but when the letter "a" appears in a word, it will remain.}
 
 \item{exclude}{Character. Pattern to exclude using regex.}
@@ -22,7 +22,6 @@ Remove all stop-words and specific patterns from a character vector
 }
 \examples{
 x <- c("A brown fox jumps over a dog.", "Another brown dog.")
-remove_stopwords(x) # Nothing happens
 remove_stopwords(x, stop_words = c("dog", "brown", "a"), exclude = "\\\\.")
 }
 \seealso{

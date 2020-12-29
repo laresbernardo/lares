@@ -471,11 +471,11 @@ ngrams <- function(text, ngram = c(2,3), top = 10, stop_words = NULL, ...) {
 #' @family Text Mining
 #' @param text Character vector
 #' @param stop_words Character vector. Words to exclude from text. Example: 
-#' if you want to exlcude "a", whenever that word appears it will be excluded,
+#' if you want to exclude "a", whenever that word appears it will be excluded,
 #' but when the letter "a" appears in a word, it will remain.
 #' @param exclude Character. Pattern to exclude using regex.
 #' @param sep Character. String that separate the terms.
-#' @examples 
+#' @examples
 #' x <- c("A brown fox jumps over a dog.", "Another brown dog.")
 #' remove_stopwords(x, stop_words = c("dog", "brown", "a"), exclude = "\\.")
 #' @export
@@ -485,6 +485,6 @@ remove_stopwords <- function(text, stop_words, exclude = NULL, sep = " ") {
     tok <- lapply(tok, function(i) gsub(paste(exclude, collapse = "|"), "", i))
   if (!is.null(stop_words)[1])
     tok <- lapply(tok, function (i) i[!tolower(i) %in% unique(c("", tolower(stop_words)))])
-  fin <- lapply(tok, function (i) paste(i, collapse = " "))
+  fin <- lapply(tok, function (i) paste(i, collapse = sep))
   return(unlist(fin))
 }

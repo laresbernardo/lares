@@ -14,7 +14,7 @@ ngrams(text, ngram = c(2, 3), top = 10, stop_words = NULL, ...)
 \item{top}{Integer. Keep n most frequent ngrams only.}
 
 \item{stop_words}{Character vector. Words to exclude from text. Example: 
-if you want to exlcude "a", whenever that word appears it will be excluded,
+if you want to exclude "a", whenever that word appears it will be excluded,
 but when the letter "a" appears in a word, it will remain.}
 
 \item{...}{Additional parameters passed to \code{remove_stopwords}.}
