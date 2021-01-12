@@ -40,7 +40,9 @@
 
 
 <meta property="og:title" content="Theme for ggplot2 (lares) — theme_lares" />
-<meta property="og:description" content="Based on hrbrthemes' theme_ipsum and customized for lares' use." />
+<meta property="og:description" content="Based on hrbrthemes' theme_ipsum and customized for lares' use.
+With this team you can custom the colour and fill palettes, global colour parameters,
+major and minor grids, legend, font and font size." />
 
 
 
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.10</span>
       </span>
     </div>
 
@@ -114,7 +116,9 @@
     </div>
 
     <div class="ref-description">
-    <p>Based on hrbrthemes' theme_ipsum and customized for lares' use.</p>
+    <p>Based on <code>hrbrthemes</code>' <code>theme_ipsum</code> and customized for <code>lares</code>' use.
+With this team you can custom the colour and fill palettes, global colour parameters,
+major and minor grids, legend, font and font size.</p>
     </div>
 
     <pre class="usage"><span class='fu'>theme_lares</span><span class='op'>(</span>
@@ -125,6 +129,7 @@
   soft_colour <span class='op'>=</span> <span class='st'>"grey30"</span>,
   bg_colour <span class='op'>=</span> <span class='st'>"white"</span>,
   panel_colour <span class='op'>=</span> <span class='st'>"transparent"</span>,
+  no_facets <span class='op'>=</span> <span class='cn'>FALSE</span>,
   legend <span class='op'>=</span> <span class='cn'>NA</span>,
   grid <span class='op'>=</span> <span class='cn'>TRUE</span>,
   mg <span class='op'>=</span> <span class='fl'>9</span>,
@@ -140,6 +145,7 @@
   soft_colour <span class='op'>=</span> <span class='st'>"grey30"</span>,
   bg_colour <span class='op'>=</span> <span class='st'>"white"</span>,
   panel_colour <span class='op'>=</span> <span class='st'>"transparent"</span>,
+  no_facets <span class='op'>=</span> <span class='cn'>FALSE</span>,
   legend <span class='op'>=</span> <span class='cn'>NA</span>,
   grid <span class='op'>=</span> <span class='cn'>TRUE</span>,
   mg <span class='op'>=</span> <span class='fl'>9</span>,
@@ -152,7 +158,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>font, size</th>
-      <td><p>Character and numeric. Base font family and base size for texts.
+      <td><p>Character and numeric. Base font family and base size for texts. 
 Arial Narrow is set by default; you may change it with options("lares.font"="Other")
 or by using this parameter manually</p></td>
     </tr>
@@ -161,13 +167,17 @@ or by using this parameter manually</p></td>
       <td><p>Character. Main colours for your theme</p></td>
     </tr>
     <tr>
+      <th>no_facets</th>
+      <td><p>Boolean. Suppress facet labels?</p></td>
+    </tr>
+    <tr>
       <th>legend</th>
       <td><p>Character. Legend position: top, right, bottom, left</p></td>
     </tr>
     <tr>
       <th>grid</th>
-      <td><p>Character (<code>TRUE</code>, <code>FALSE</code>, or a combination of
-<code>X</code>, <code>x</code>, <code>Y</code>, <code>y</code>.</p></td>
+      <td><p>Character or Boolean. Use <code>TRUE/FALSE</code> or a combination of 
+<code>X</code>, <code>x</code>, <code>Y</code>, <code>y</code> to enable/disable minor and major grids.</p></td>
     </tr>
     <tr>
       <th>mg</th>
