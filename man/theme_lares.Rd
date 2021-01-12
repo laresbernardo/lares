@@ -13,6 +13,7 @@ theme_lares(
   soft_colour = "grey30",
   bg_colour = "white",
   panel_colour = "transparent",
+  no_facets = FALSE,
   legend = NA,
   grid = TRUE,
   mg = 9,
@@ -28,6 +29,7 @@ theme_lares2(
   soft_colour = "grey30",
   bg_colour = "white",
   panel_colour = "transparent",
+  no_facets = FALSE,
   legend = NA,
   grid = TRUE,
   mg = 9,
@@ -36,16 +38,18 @@ theme_lares2(
 )
 }
 \arguments{
-\item{font, size}{Character and numeric. Base font family and base size for texts.
+\item{font, size}{Character and numeric. Base font family and base size for texts. 
 Arial Narrow is set by default; you may change it with options("lares.font"="Other")
 or by using this parameter manually}
 
 \item{main_colour, hard_colour, soft_colour, bg_colour, panel_colour}{Character. Main colours for your theme}
 
+\item{no_facets}{Boolean. Suppress facet labels?}
+
 \item{legend}{Character. Legend position: top, right, bottom, left}
 
-\item{grid}{Character (\code{TRUE}, \code{FALSE}, or a combination of
-\code{X}, \code{x}, \code{Y}, \code{y}.}
+\item{grid}{Character or Boolean. Use \code{TRUE/FALSE} or a combination of 
+\code{X}, \code{x}, \code{Y}, \code{y} to enable/disable minor and major grids.}
 
 \item{mg}{Numeric. External margins}
 
@@ -56,7 +60,9 @@ or by using this parameter manually}
 added with the custom colours palette: fill, colour, text (fct) - first letters}
 }
 \description{
-Based on hrbrthemes' theme_ipsum and customized for lares' use.
+Based on \code{hrbrthemes}' \code{theme_ipsum} and customized for \code{lares}' use.
+With this team you can custom the colour and fill palettes, global colour parameters,
+major and minor grids, legend, font and font size.
 }
 \section{Why Arial Narrow?}{
 

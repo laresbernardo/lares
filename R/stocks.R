@@ -49,7 +49,7 @@ stocks_file <- function(file = NA,
   } else {
     # FOR EVERYONE'S USE
     if (!is.na(file)) {
-      if (file.exists(file) | isURL(file)) results <- processFile(file, keep_old) else
+      if (file.exists(file) | is_url(file)) results <- processFile(file, keep_old) else
         stop("Error: that file doesn't exist or it's not in your working directory!")
     } else {
       # FOR DROPBOX'S USE

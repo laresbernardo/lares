@@ -253,7 +253,7 @@ v2t <- vector2text
 ip_country <- function(ip = myip()) {
   
   ip <- ip[!is.na(ip)]
-  ip <- ip[grep("^172\\.|^192\\.168\\.|^10\\.", ip, invert = TRUE)]
+  ip <- ip[is_ip(ip)]
   
   countries <- data.frame(ip = NULL, country = NULL)
   for (i in seq_along(ip)) {
@@ -835,10 +835,10 @@ myip <- function(){
 #' @param return Character. Return "summary" or "labels"
 #' @examples 
 #' data(dft) # Titanic dataset
-#' quants(dft$Age, splits = 5)
-#' quants(dft$Age, splits = 5, return = "labels")[1:10]
+#' quants(dft$Age, splits = 5, "summary")
+#' quants(dft$Age, splits = 5, "labels")[1:10]
 #' @export
-quants <- function(values, splits = 10, return = "summary") {
+quants <- function(values, splits = 10, return = "labels") {
   
   if (splits > length(unique(values[!is.na(values)])) - 1) 
     stop("There are not enough observations to split the data in ", splits)
@@ -846,7 +846,8 @@ quants <- function(values, splits = 10, return = "summary") {
   cuts <- quantile(values, probs = seq(0, 1, length = splits + 1), na.rm = TRUE)
   decimals <- min(nchar(values), na.rm = TRUE) + 1
   decimals <- ifelse(decimals >= 4, 4, decimals)
-  labels <- cut(values, unique(cuts), dig.lab = decimals, include.lowest = TRUE)
+  labels <- cut(values, unique(cuts), dig.lab = decimals, 
+                include.lowest = TRUE, ordered_result = TRUE)
   
   if (return == "labels") return(labels)
   if (return == "summary") {
@@ -1275,27 +1276,6 @@ font_exists <- function(font = "Arial Narrow", quiet = FALSE) {
 
 
 ####################################################################
-#' Attribute checker
-#' 
-#' This function checks if an object has a specific attribute and
-#' stops if not
-#' 
-#' @param object Object of any kind
-#' @param attr Character. Attribute to check
-#' @param check Character. Attribute value
-#' @param stop Boolean. Stop if doesn't check?
-#' @export
-check_attr <- function(object, attr = "type", check = "h2o_automl", stop = TRUE) {
-  aux <- attr(object, attr)
-  if (is.null(aux)) aux <- "Noclass"
-  if (aux != check) {
-    msg <- paste("Your object must be", attr, check)
-    if (stop) stop(msg) else message(msg)
-  }
-}
-
-
-####################################################################
 #' Abbreviate numbers
 #' 
 #' This function converts a numeric vector's values into their
@@ -1345,48 +1325,6 @@ num_abbr <- function(x, n = 3) {
   
   return(output)
   
-}
-
-
-####################################################################
-#' Validate options within vector
-#' 
-#' This function validates if inputs match all/any of your options
-#' and return error/message with possible options to use.
-#'
-#' @param inputs Vector character
-#' @param opts Vector character
-#' @param type Character. Options: all, any
-#' @param not Character. Options: stop, message, print, return
-#' @param quiet Boolean. Keep quiet? If not, returns TRUE or FALSE
-#' @examples 
-#' opts <- c("A", "B", "C")
-#' # Let's check the "all" logic
-#' check_opts(inputs = c("A", "B"), opts, quiet = FALSE)
-#' check_opts(inputs = c("X"), opts, not = "message", quiet = FALSE)
-#' check_opts(inputs = c("A","X"), opts, not = "warning")
-#' # Now let's check the "any" logic
-#' check_opts(inputs = c("A","X"), opts, type = "any")
-#' check_opts(inputs = c("X"), opts, type = "any", not = "message")
-#' check_opts(inputs = c("A", NA), opts, type = "any")
-#' # Final trick: just ignore results
-#' check_opts(inputs = "X", opts, not = "invisible")
-#' @export
-check_opts <- function(inputs, opts, 
-                       type = "all", not = "stop", 
-                       quiet = TRUE) {
-  aux <- base::get(type)
-  not <- base::get(not)
-  isit <- aux(inputs %in% opts)
-  if (!isit) {
-    if (type == "all")
-      inputs <- inputs[which(!inputs %in% opts)]
-    not(paste("Your input", vector2text(inputs), 
-              "is not valid;", toupper(type),
-              "of the inputs should match these options:", 
-              vector2text(opts))) 
-  }
-  if (!quiet) return(isit)
 }
 
 
@@ -1718,20 +1656,4 @@ cleanNames <- function(df, num = "x", ...) {
   # Keep tibble if original data.frame is tibble
   if ("tbl_df" %in% class(df)) df <- as_tibble(df)
   return(df)
-}
-
-####################################################################
-#' Regular Expression for URLs
-#'
-#' @param x Character vector
-#' @param ... Additional parameters passed to \code{grepl}
-#' @examples 
-#' isURL("test")
-#' isURL("google.com")
-#' isURL("http://google.com")
-#' isURL("test@mail.com")
-#' isURL("https://stackoverflow.com/help")
-#' @export
-isURL <- function(x, ...) {
-  grepl("(http|https)://[a-zA-Z0-9./?=_%:-]*", x, ...) 
 }

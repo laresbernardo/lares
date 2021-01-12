@@ -4,7 +4,7 @@
 \alias{quants}
 \title{Calculate cuts by quantiles}
 \usage{
-quants(values, splits = 10, return = "summary")
+quants(values, splits = 10, return = "labels")
 }
 \arguments{
 \item{values}{Vector. Values to calculate quantile cuts}
@@ -19,8 +19,8 @@ and discretize numerical values into cateogorical values.
 }
 \examples{
 data(dft) # Titanic dataset
-quants(dft$Age, splits = 5)
-quants(dft$Age, splits = 5, return = "labels")[1:10]
+quants(dft$Age, splits = 5, "summary")
+quants(dft$Age, splits = 5, "labels")[1:10]
 }
 \seealso{
 Other Calculus: 

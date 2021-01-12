@@ -1,24 +1,25 @@
 ####################################################################
 #' Theme for ggplot2 (lares)
 #' 
-#' Based on hrbrthemes' theme_ipsum and customized for lares' use.
+#' Based on \code{hrbrthemes}' \code{theme_ipsum} and customized for \code{lares}' use.
+#' With this team you can custom the colour and fill palettes, global colour parameters,
+#' major and minor grids, legend, font and font size.
 #'
-#' @md
 #' @section Why Arial Narrow?:
 #' First and foremost, Arial Narrow is generally installed by default or readily
 #' available on any modern system, so it's "free"-ish; plus, it is a condensed font
 #' with solid default kerning pairs and geometric numbers.
 #'
-#' @md
 #' @family Visualization
 #' @param font,size Character and numeric. Base font family and base size for texts. 
 #' Arial Narrow is set by default; you may change it with options("lares.font"="Other")
 #' or by using this parameter manually
 #' @param main_colour,hard_colour,soft_colour,bg_colour,panel_colour
 #' Character. Main colours for your theme
+#' @param no_facets Boolean. Suppress facet labels?
 #' @param legend Character. Legend position: top, right, bottom, left
-#' @param grid Character (\code{TRUE}, \code{FALSE}, or a combination of 
-#' \code{X}, \code{x}, \code{Y}, \code{y}.
+#' @param grid Character or Boolean. Use \code{TRUE/FALSE} or a combination of 
+#' \code{X}, \code{x}, \code{Y}, \code{y} to enable/disable minor and major grids.
 #' @param mg Numeric. External margins
 #' @param pal Integer. 1 for fill and colour palette, 2 for only colour palette,
 #' 3 for only fill palette, 4 for personal labels-colour palette. 0 or else for nothing.
@@ -32,6 +33,7 @@ theme_lares <- function(font = getOption("lares.font"),
                         soft_colour = "grey30",
                         bg_colour = "white",
                         panel_colour = "transparent",
+                        no_facets = FALSE,
                         legend = NA,
                         grid = TRUE,
                         mg = 9,
@@ -118,6 +120,8 @@ theme_lares <- function(font = getOption("lares.font"),
   ret <- ret + theme(strip.text = element_text(
     hjust = 0, size = size * 0.9, colour = soft_colour, face = "bold", family = font))
   ret <- ret + theme(panel.spacing = grid::unit(0.8, "lines"))
+  if (no_facets)
+    ret <- ret + theme(strip.background = element_blank(), strip.text = element_blank())
   
   # Plot title
   ret <- ret + theme(plot.title = element_text(
