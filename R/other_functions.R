@@ -1268,7 +1268,7 @@ font_exists <- function(font = "Arial Narrow", quiet = FALSE) {
     }
     check(font)
   }, error = function(err) {
-    if (!quiet) message(paste("Font issue detected:", err))
+    if (!quiet) message(paste("Font issue:", err))
     options("lares.font" = NA)
     return(FALSE)
   })

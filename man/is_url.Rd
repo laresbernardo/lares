@@ -25,8 +25,8 @@ are_binary(x)
 }
 \description{
 Check whether a value or vector is or is not following a set
-of rules. For example: is an URL, is an ID vector, is non-variant or 
-constant vector, is binary... Notice that \code{is_} will return 
+of rules. For example: is an URL, is an ID vector, are non-variant or 
+constant values, are binary values... Notice that \code{is_} will return 
 the result for each observation and \code{are_} for the whole vector.
 }
 \examples{

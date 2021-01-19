@@ -44,8 +44,8 @@ theme_lares <- function(font = getOption("lares.font"),
   ret <- theme_minimal(base_size = size)
   
   # Check and set font
-  if (!font_exists(font)[1] & !is.na(font)) {
-    warning(paste("Font", font, "is not installed, has other name, or can't be found"))  
+  if (!isTRUE(font_exists(font)) & !is.na(font)) {
+    warning(sprintf("Font '%s' is not installed, has other name, or can't be found", font))
     options("lares.font" = NA) # So R doesn't try again by default
     font <- NA
   } else ret <- ret + theme(text = element_text(family = font))  
