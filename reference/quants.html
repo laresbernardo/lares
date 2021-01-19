@@ -149,12 +149,12 @@ and discretize numerical values into cateogorical values.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
 <span class='fu'>quants</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>$</span><span class='va'>Age</span>, splits <span class='op'>=</span> <span class='fl'>5</span>, <span class='st'>"summary"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   percentile  cut     label
-#&gt; 1        20% 19.0   [19-19]
-#&gt; 2        40% 25.0   (19-25]
-#&gt; 3        60% 31.8 (25-31.8]
-#&gt; 4        80% 41.0 (31.8-41]
-#&gt; 5       100% 80.0   (41-80]</div><div class='input'><span class='fu'>quants</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>$</span><span class='va'>Age</span>, splits <span class='op'>=</span> <span class='fl'>5</span>, <span class='st'>"labels"</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;      percentile  cut     label
+#&gt; 20%         20% 19.0   [19-19]
+#&gt; 40%         40% 25.0   (19-25]
+#&gt; 60%         60% 31.8 (25-31.8]
+#&gt; 80%         80% 41.0 (31.8-41]
+#&gt; 100%       100% 80.0   (41-80]</div><div class='input'><span class='fu'>quants</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>$</span><span class='va'>Age</span>, splits <span class='op'>=</span> <span class='fl'>5</span>, <span class='st'>"labels"</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>
 </div><div class='output co'>#&gt;  [1] (19,25]   (32,41]   (25,32]   (32,41]   (32,41]   &lt;NA&gt;      (41,80]  
 #&gt;  [8] [0.42,19] (25,32]   [0.42,19]
 #&gt; Levels: [0.42,19] &lt; (19,25] &lt; (25,32] &lt; (32,41] &lt; (41,80]</div></pre>

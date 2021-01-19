@@ -200,19 +200,19 @@ distributions</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># Dataframe with numbers: total values, row, columns, complete rows....</span>
 <span class='fu'>df_str</span><span class='op'>(</span><span class='va'>dft</span>, <span class='st'>"numbers"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                 metric counter       p
-#&gt; 1         Total.Values    9801  100.00
-#&gt; 2           Total.Rows     891  100.00
-#&gt; 3        Total.Columns      11  100.00
-#&gt; 4      Numeric.Columns       5   45.45
-#&gt; 5    Character.Columns       1    9.09
-#&gt; 6       Factor.Columns       4   36.36
-#&gt; 7      Logical.Columns       1    9.09
-#&gt; 8    Time.Date.Columns       0    0.00
-#&gt; 9  All.Missing.Columns       0    0.00
-#&gt; 10      Missing.Values     177    1.81
-#&gt; 11       Complete.Rows     714   80.13
-#&gt; 12        Memory.Usage  103448 1055.48</div><div class='input'>
+</div><div class='output co'>#&gt;                                  metric counter       p
+#&gt; Total.Values               Total.Values    9801  100.00
+#&gt; Total.Rows                   Total.Rows     891  100.00
+#&gt; Total.Columns             Total.Columns      11  100.00
+#&gt; Numeric.Columns         Numeric.Columns       5   45.45
+#&gt; Character.Columns     Character.Columns       1    9.09
+#&gt; Factor.Columns           Factor.Columns       4   36.36
+#&gt; Logical.Columns         Logical.Columns       1    9.09
+#&gt; Time.Date.Columns     Time.Date.Columns       0    0.00
+#&gt; All.Missing.Columns All.Missing.Columns       0    0.00
+#&gt; Missing.Values           Missing.Values     177    1.81
+#&gt; Complete.Rows             Complete.Rows     714   80.13
+#&gt; Memory.Usage               Memory.Usage  103448 1055.48</div><div class='input'>
 <span class='co'># Now, some visualizations</span>
 <span class='fu'>df_str</span><span class='op'>(</span><span class='va'>dft</span>, <span class='st'>"plot"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='img'><img src='df_str-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>df_str</span><span class='op'>(</span><span class='va'>dft</span>, <span class='st'>"distr"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
