@@ -132,6 +132,7 @@ only numerical values.</p>
   ceiling <span class='op'>=</span> <span class='fl'>100</span>,
   max_pvalue <span class='op'>=</span> <span class='fl'>1</span>,
   limit <span class='op'>=</span> <span class='fl'>10</span>,
+  ranks <span class='op'>=</span> <span class='cn'>FALSE</span>,
   zeroes <span class='op'>=</span> <span class='cn'>FALSE</span>,
   save <span class='op'>=</span> <span class='cn'>FALSE</span>,
   quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -189,6 +190,10 @@ define how many</p></td>
       <th>limit</th>
       <td><p>Integer. Limit one hot encoding to the n most frequent 
 values of each column. Set to <code>NA</code> to ignore argument.</p></td>
+    </tr>
+    <tr>
+      <th>ranks</th>
+      <td><p>Boolean. Add ranking numbers?</p></td>
     </tr>
     <tr>
       <th>zeroes</th>
@@ -252,8 +257,8 @@ values of each column. Set to <code>NA</code> to ignore argument.</p></td>
 <span class='co'># Correlate Survived with everything else and show only significant results</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span><span class='op'>(</span><span class='va'>Survived_TRUE</span>, max_pvalue <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span>
 </div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Top 15 with less than 50% correlation</span>
-<span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span><span class='op'>(</span><span class='va'>Survived_TRUE</span>, ceiling <span class='op'>=</span> <span class='fl'>60</span>, top <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span>
+<span class='co'># Top 15 with less than 50% correlation and show ranks</span>
+<span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span><span class='op'>(</span><span class='va'>Survived_TRUE</span>, ceiling <span class='op'>=</span> <span class='fl'>60</span>, top <span class='op'>=</span> <span class='fl'>15</span>, ranks <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 60% (absolute)</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
