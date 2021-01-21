@@ -15,6 +15,7 @@ corr_var(
   ceiling = 100,
   max_pvalue = 1,
   limit = 10,
+  ranks = FALSE,
   zeroes = FALSE,
   save = FALSE,
   quiet = FALSE,
@@ -51,6 +52,8 @@ define how many}
 \item{limit}{Integer. Limit one hot encoding to the n most frequent 
 values of each column. Set to \code{NA} to ignore argument.}
 
+\item{ranks}{Boolean. Add ranking numbers?}
+
 \item{zeroes}{Do you wish to keep zeroes in correlations too?}
 
 \item{save}{Boolean. Save output plot into working directory}
@@ -75,8 +78,8 @@ dft \%>\% corr_var(Survived, method = "spearman", plot = FALSE, top = 10)
 # Correlate Survived with everything else and show only significant results
 dft \%>\% corr_var(Survived_TRUE, max_pvalue = 0.01)
 
-# Top 15 with less than 50\% correlation
-dft \%>\% corr_var(Survived_TRUE, ceiling = 60, top = 15)
+# Top 15 with less than 50\% correlation and show ranks
+dft \%>\% corr_var(Survived_TRUE, ceiling = 60, top = 15, ranks = TRUE)
 }
 \seealso{
 Other Exploratory: 

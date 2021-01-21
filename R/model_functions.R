@@ -188,6 +188,11 @@ h2o_automl <- function(df, y = "tag",
     ifelse(start_clean, "are", "are not")))
   if (start_clean) quiet(h2o.removeAll())
   
+  # INFORMATIVE MSG ON FLOW's UI
+  flow <- "http://localhost:54321/flow/index.html"
+  if (!quiet & Sys.getenv('HOSTNAME') == "")
+    message("- UI: You may check results using H2O Flow's interactive platform: ", flow)
+  
   # RUN AUTOML
   if (!quiet) 
     message(sprintf(">>> Iterating until %s models or %s seconds...", max_models, max_time))
@@ -214,10 +219,6 @@ h2o_automl <- function(df, y = "tag",
         if (print) print(head(aml@leaderboard, 3))
       } 
   }
-  
-  flow <- "http://localhost:54321/flow/index.html"
-  if (!quiet & Sys.getenv('HOSTNAME') == "") 
-    message("- UI: Check results using H2O Flow's interface: ", flow)
   
   # GET RESULTS AND PERFORMANCE
   results <- h2o_results(

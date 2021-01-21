@@ -161,6 +161,7 @@ corr <- function(df, method = "pearson",
 #' @param max_pvalue Numeric. Filter non-significant variables. Range (0, 1]
 #' @param limit Integer. Limit one hot encoding to the n most frequent 
 #' values of each column. Set to \code{NA} to ignore argument.
+#' @param ranks Boolean. Add ranking numbers?
 #' @param zeroes Do you wish to keep zeroes in correlations too?
 #' @param save Boolean. Save output plot into working directory
 #' @param quiet Boolean. Keep quiet? If not, show messages
@@ -176,8 +177,8 @@ corr <- function(df, method = "pearson",
 #' # Correlate Survived with everything else and show only significant results
 #' dft %>% corr_var(Survived_TRUE, max_pvalue = 0.01)
 #' 
-#' # Top 15 with less than 50% correlation
-#' dft %>% corr_var(Survived_TRUE, ceiling = 60, top = 15)
+#' # Top 15 with less than 50% correlation and show ranks
+#' dft %>% corr_var(Survived_TRUE, ceiling = 60, top = 15, ranks = TRUE)
 #' @export
 corr_var <- function(df, var, 
                      ignore = NA,
@@ -188,6 +189,7 @@ corr_var <- function(df, var,
                      ceiling = 100, 
                      max_pvalue = 1,
                      limit = 10,
+                     ranks = FALSE,
                      zeroes = FALSE,
                      save = FALSE, 
                      quiet = FALSE,
@@ -254,6 +256,10 @@ corr_var <- function(df, var,
     d$variables <- substr(d$variables, 1, trim)
     if (!quiet) message(paste("Trimmed all name values into", trim, "characters"))
   }
+  
+  # Add ranking numbers
+  if (ranks) 
+    d <- mutate(d, variables = sprintf("%s. %s", row_number(), .data$variables))
   
   if (plot) {
     p <- ungroup(d) %>% 
