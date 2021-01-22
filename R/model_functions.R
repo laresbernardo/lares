@@ -636,7 +636,7 @@ h2o_selectmodel <- function(results, which_model = 1, quiet = FALSE, ...) {
 export_results <- function(results,
                            thresh = 10,
                            which = c("txt","csv","rds",
-                                       "binary","mojo","plots",
+                                     "binary","mojo","plots",
                                      "dev","production"),
                            note = NA,
                            subdir = NA,
@@ -654,9 +654,12 @@ export_results <- function(results,
     if (substr(subdir, 1, 1) == "/") subdir <- substr(subdir, 2, nchar(subdir))
     
     # Directory to save all our results
-    dir <- file.path(paste0(getwd(), subdir))
+    dir <- file.path(paste(getwd(), subdir, sep = "/"))
     message(paste("Export directory:", dir))
-    if (!dir.exists(dir)) dir.create(dir) 
+    if (!dir.exists(dir)) {
+      message("Creating directory: ", subdir)
+      dir.create(dir, recursive = TRUE) 
+    } 
     
     if ("dev" %in% which) which <- unique(c(which, "txt", "csv", "rds"))
     if ("production" %in% which) which <- unique(c(which, "binary", "mojo"))
