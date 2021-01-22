@@ -44,7 +44,7 @@ theme_lares <- function(font = getOption("lares.font"),
   ret <- theme_minimal(base_size = size)
   
   # Check and set font
-  if (!isTRUE(font_exists(font)) & !is.na(font)) {
+  if (!isTRUE(font_exists(font))) {
     warning(sprintf("Font '%s' is not installed, has other name, or can't be found", font))
     options("lares.font" = NA) # So R doesn't try again by default
     font <- NA
@@ -199,7 +199,3 @@ theme_lares <- function(font = getOption("lares.font"),
   return(ret)
   
 }
-
-#' @rdname theme_lares
-#' @export
-theme_lares2 <- theme_lares

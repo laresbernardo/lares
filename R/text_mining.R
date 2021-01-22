@@ -368,7 +368,7 @@ sentimentBreakdown <- function(text, lang = "spanish",
       ret$summary, aes(x = reorder(.data$sentiment, .data$freq), 
                        y = .data$freq, fill = .data$sentiment)) +
       geom_col() + 
-      theme_lares2(pal = 0) + 
+      theme_lares(pal = 0) + 
       gg_fill_customs() + 
       coord_flip() + 
       guides(fill = FALSE) +

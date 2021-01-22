@@ -4,12 +4,14 @@
 \alias{h2o_predict_model}
 \title{H2O Predict using H2O Model Object}
 \usage{
-h2o_predict_model(df, model)
+h2o_predict_model(df, model, ...)
 }
 \arguments{
 \item{df}{Dataframe/Vector. Data to insert into the model}
 
 \item{model}{H2o Object. Model}
+
+\item{...}{Additional parameters passed to \code{cleanNames()}}
 }
 \description{
 This function lets the user get scores from a H2O Model Object

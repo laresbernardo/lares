@@ -91,7 +91,7 @@ plot_timeline <- function(event,
   
   p <- p + 
     geom_label(aes(x = .data$label_pos), colour = "black", size = 2, alpha = 0.7) +
-    theme_lares2(pal = 2, legend = "none")
+    theme_lares(pal = 2, legend = "none")
   
   # Export file name and folder for plot
   if (save) {
@@ -156,7 +156,7 @@ gg_pie <- function(df, var, table = FALSE, ...){
                show.legend = FALSE, size = 2.5) + 
     coord_polar("y") +
     labs(title = title, caption = caption, x = NULL, y = NULL) +
-    theme_lares2(pal = 1) + 
+    theme_lares(pal = 1) + 
     theme(legend.title = element_blank(),
           panel.grid.major.x = element_blank(),
           panel.grid.minor.x = element_blank(),
@@ -294,7 +294,7 @@ gg_bars <- function(names, n, p = NA,
          title = if (!is.na(title)) title, 
          subtitle = if (!is.na(subtitle)) subtitle, 
          caption = if (obs == TRUE) paste0("Obs.: ", formatNum(sum(n), 0))) +
-    theme_lares2(legend = "right") + gg_text_customs() +
+    theme_lares(legend = "right") + gg_text_customs() +
     scale_fill_gradient(low = "lightskyblue2", high = "navy")
   return(p)
 }

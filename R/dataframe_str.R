@@ -105,7 +105,7 @@ df_str <- function(df,
            caption = paste("Memory Usage:", formatNum(numbers$Memory.Usage/(1024*1024)),"Mb")) +
       facet_grid(type ~., scales = "free", space = "free") + 
       geom_text(aes(hjust = .data$x), size = 3) +
-      theme_lares2(pal = 1)
+      theme_lares(pal = 1)
     if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
     return(p)
   }
@@ -135,7 +135,7 @@ plot_nums <- function(df) {
       geom_boxplot(alpha = 0.8, outlier.shape = NA, width = 1) +
       facet_wrap(.data$key~., scales = "free") + 
       labs(title = "Numerical Features Boxplots", x = NULL, y = NULL) +
-      theme_lares2() +
+      theme_lares() +
       theme(axis.text.y = element_blank(), 
             axis.text.x = element_text(vjust = 2, size = 8),
             panel.spacing.y = unit(-.5, "lines"),

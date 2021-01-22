@@ -214,7 +214,7 @@ prophesize <- function(df, n_future = 60, country = "AR",
   forecast <- predict(m, future)
   forecast$y <- forecast$trend + forecast$additive_terms
 
-  p <- plot(m, forecast) + theme_lares2() +
+  p <- plot(m, forecast) + theme_lares() +
     labs(y = metric, x = "Dates", 
          title = project,
          subtitle = paste("Forecast results for the next", n_future, "days")) +
@@ -305,7 +305,7 @@ prophesize <- function(df, n_future = 60, country = "AR",
 #'     geom_point(color = palette_light()[[1]], data = df) +
 #'     # Aesthetics
 #'     scale_x_date(date_breaks = "1 month", date_labels = "%b") +
-#'     theme_lares2() +
+#'     theme_lares() +
 #'     geom_rect(data = rects, inherit.aes = FALSE,
 #'               aes(
 #'                 xmin = start, xmax = end, ymin = 0,

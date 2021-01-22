@@ -97,6 +97,7 @@ lares_pal <- function() {
   ))
   colnames(colours_list) <- c("values","fill","colour")
   
+  # Generic colour and counter-colour palette
   colours_names <- c(
     "#EBB600" = black,
     "#40A4D8" = black,
@@ -129,13 +130,11 @@ lares_pal <- function() {
     "#0072B2" = white,
     "#D55E00" = black)
   
-  pal <- list(labels = colours_list, 
-              palette = rep(colours_names, 4))
+  pal <- list(labels = colours_list, palette = rep(colours_names, 4))
+  structure(pal, class = "lares_pal")
   return(pal)
 }
 
-# plot_palette(names(colours_names), colours_names)
-# plot_palette(colours_list$fill, colours_list$colour, colours_list$values)
 
 ####################################################################
 #' Plot Palette Colours
@@ -162,7 +161,7 @@ plot_palette <- function(fill, colour = "black", id = NA) {
     scale_colour_identity() +
     coord_flip() + labs(x = NULL, y = NULL) +
     guides(fill = FALSE, colour = FALSE) +
-    theme_lares2(font = NA) + 
+    theme_lares(font = NA) + 
     theme(axis.title.x = element_blank(),
           axis.text.x = element_blank(),
           axis.ticks.x = element_blank())

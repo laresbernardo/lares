@@ -77,7 +77,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
          x = "Number of Clusters",
          y = "Within Groups Sum of Squares") +
     scale_y_continuous(labels = comma) +
-    theme_lares2()
+    theme_lares()
   results[["nclusters"]] <- nclusters
   results[["nclusters_plot"]] <- nclusters_plot
   
@@ -128,7 +128,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
            y = "Cumulative variation explained [%]", x = "PC(i)") +
       scale_y_continuous(limits = c(0, 100), expand = c(0, 1)) +
       scale_x_continuous(expand = c(0, 1)) +
-      theme_lares2()
+      theme_lares()
     
     explained <- formatNum(PCA$pca_explained, 1, pos = "%")
     subtitle <- sprintf("Explaining %s of the variance with 2 PCA:\nPC1 (%s), PC2 (%s)", 
@@ -140,7 +140,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       geom_point() +
       labs(title = "Principal Component Analysis",
            subtitle = subtitle) +
-      theme_lares2(pal = 2)
+      theme_lares(pal = 2)
     
     if (length(find.package("ggforce", quiet = TRUE)) > 0) {
       try_require("ggforce")

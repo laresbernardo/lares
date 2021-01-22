@@ -2,7 +2,7 @@
   # Session stopwatch start
   tic(id = "Rsession")
   options(
-    # So user can set another font be default on theme_lares2()
+    # So user can set another font be default on theme_lares()
     "lares.font" = if (is.null(getOption("lares.font"))) "Arial Narrow" else NULL,
     # Standard format for formatNum()
     "lares.formatNum" = 2,

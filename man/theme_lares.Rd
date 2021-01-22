@@ -2,26 +2,9 @@
 % Please edit documentation in R/theme_lares.R
 \name{theme_lares}
 \alias{theme_lares}
-\alias{theme_lares2}
 \title{Theme for ggplot2 (lares)}
 \usage{
 theme_lares(
-  font = getOption("lares.font"),
-  size = 12,
-  main_colour = "darkorange3",
-  hard_colour = "black",
-  soft_colour = "grey30",
-  bg_colour = "white",
-  panel_colour = "transparent",
-  no_facets = FALSE,
-  legend = NA,
-  grid = TRUE,
-  mg = 9,
-  pal = 0,
-  which = "fct"
-)
-
-theme_lares2(
   font = getOption("lares.font"),
   size = 12,
   main_colour = "darkorange3",

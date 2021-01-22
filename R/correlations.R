@@ -276,7 +276,7 @@ corr_var <- function(df, var,
       guides(fill = FALSE) +
       labs(title = paste("Correlations of", var, "[%]"), x = NULL, y = NULL) +
       scale_y_percent(expand = c(0, 0), position = "right") + 
-      theme_lares2(pal = 2)
+      theme_lares(pal = 2)
     
     if (!is.na(top) & top < original_n) p <- p + 
         labs(subtitle = paste(
@@ -431,7 +431,7 @@ corr_cross <- function(df, plot = TRUE,
              y = "Correlation [%]") +
         scale_fill_manual(values = c("bad" = "#E5586E", "good" = "#59B3D2")) +
         scale_y_percent(expand = c(0, 0)) + 
-        theme_lares2(legend = "top")
+        theme_lares(legend = "top")
       if ((!is.na(contains)[1] & length(contains) == 1) | grid) {
         p <- p + facet_grid(.data$facet ~ ., scales = "free", space = "free")
       }
@@ -460,7 +460,7 @@ corr_cross <- function(df, plot = TRUE,
              title = "Local Cross-Correlations") +
         scale_y_continuous(labels = function(x) formatNum(x, 0, pos = "%")) + 
         coord_flip() +
-        theme_lares2(pal = 2) 
+        theme_lares(pal = 2) 
     }
     if (max_pvalue < 1) 
       p <- p + labs(caption = paste("Correlations with p-value <", max_pvalue))

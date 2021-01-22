@@ -182,7 +182,7 @@ h2o_automl <- function(df, y = "tag",
   }
   
   # START FRESH?
-  if (!quiet) message(sprintf(paste(
+  if (!quiet & !isTRUE(start_clean)) message(sprintf(paste(
     "- CACHE: Previous models %s being erased.",
     "You may use 'start_clean' [clear] or 'project_name' [join]"), 
     ifelse(start_clean, "are", "are not")))
@@ -460,6 +460,10 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
     if (length(cats) > 2) results$metrics[["hit_ratio"]] <- data.frame(
       m@model$cross_validation_metrics@metrics$hit_ratio_table)
   }
+  # results[["parameters"]] <- m@parameters[
+  #   sapply(m@parameters, function(x) length(x) == 1)] %>% 
+  #   bind_rows() %>% tidyr::gather(key = "parameter")
+  results[["parameters"]] <- m@parameters
   if (!stacked) results[["importance"]] <- imp
   results[["datasets"]] <- list(
     global = as_tibble(global), 
@@ -473,7 +477,6 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   #   model_name = as.vector(m@model_id),
   #   type = "train")
   results[["scoring_history"]] <- as_tibble(m@model$scoring_history)
-  results[["parameters"]] <- m@parameters
   results[["categoricals"]] <- list_cats(filter(global, grepl("train", .data$train_test)))
   results[["type"]] <- model_type
   results[["split"]] <- split
@@ -979,9 +982,11 @@ h2o_predict_API <- function(df, api) {
 #' @family Tools
 #' @param df Dataframe/Vector. Data to insert into the model
 #' @param model H2o Object. Model
+#' @param ... Additional parameters passed to \code{cleanNames()}
 #' @export
-h2o_predict_model <- function(df, model){
-  as.data.frame(predict(model, as.h2o(df)))
+h2o_predict_model <- function(df, model, ...){
+  as.data.frame(predict(model, as.h2o(df))) %>%
+    cleanNames(lower = FALSE, ...)
 }
 
 

@@ -72,7 +72,7 @@ trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = NUL
     plot <- related %>% 
       ggplot(aes(x = reorder(.data$value, .data$rank), y = .data$rank, 
                  fill = .data$type, label = .data$type_label)) +
-      geom_col() + coord_flip() + theme_lares2() + 
+      geom_col() + coord_flip() + theme_lares() + 
       geom_text(hjust = -0.1, size = 2.8) +
       labs(y = "Relevance | % Increase", subtitle = ptitle, x = "", fill = "") +
       theme(legend.position = "bottom") +
@@ -131,7 +131,7 @@ trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = NUL
 trendsTime <- function(gtrend, title = NA) {
   
   try_require("gtrendsR")
-  int1 <- plot(gtrend) + theme_lares2() + 
+  int1 <- plot(gtrend) + theme_lares() + 
     labs(x = "", colour = "") + ylim(0, 100) +
     theme(legend.position = "top") +
     geom_hline(yintercept = 100, alpha = 0.5)
@@ -150,7 +150,7 @@ trendsTime <- function(gtrend, title = NA) {
     group_by(.data$keyword) %>%
     mutate(legend = paste0(.data$keyword, " (", .data$geo, ")")) %>%
     ggplot(aes(x = .data$date, y = .data$hits, fill = .data$legend)) +
-    geom_area(alpha = 0.9) + theme_lares2() + guides(fill = FALSE) +
+    geom_area(alpha = 0.9) + theme_lares() + guides(fill = FALSE) +
     labs(x = "", y = "Search hits", fill = "", subtitle = "Mixed hits scale")
   
   int3 <- gtrend$interest_over_time %>%
@@ -165,7 +165,7 @@ trendsTime <- function(gtrend, title = NA) {
          subtitle = "Normalized hit scale",
          caption = range) +
     geom_hline(yintercept = 100, alpha = 0.5) +
-    theme_lares2()
+    theme_lares()
   
   if (!is.na(title)) int1 <- int1 + labs(title = title, subtitle = "Real hits scale")
   

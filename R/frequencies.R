@@ -209,7 +209,7 @@ freqs <- function(df, ..., wt = NULL,
                            paste("Variable:", ifelse(!is.na(variable_name), variable_name, variable), note, weight_text), 
                            subtitle), caption = obs) +
     scale_fill_gradient(low = "lightskyblue2", high = "navy") +
-    theme_lares2(legend = "none", grid = "Xx") + gg_text_customs() + 
+    theme_lares(legend = "none", grid = "Xx") + gg_text_customs() + 
     scale_y_continuous(position = "right", expand = c(0, 0), labels = comma,
                        limits = c(0, 1.03 * max(output$n)))
   
@@ -356,7 +356,7 @@ freqs_df <- function(df,
       coord_flip() + labs(x = NULL, y = NULL, title = "Global Values Frequencies") +
       scale_y_percent(expand = c(0, 0)) +
       guides(fill = FALSE, colour = FALSE, alpha = FALSE) +
-      theme_lares2(pal = 1) + 
+      theme_lares(pal = 1) + 
       theme(panel.background = element_blank(),
             panel.grid.major = element_blank(), 
             panel.grid.minor = element_blank()) +
@@ -455,7 +455,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
     labs(x = NULL, y = NULL, title = title, subtitle = subtitle) + 
     scale_y_comma() +
     guides(fill = FALSE) +
-    theme_lares2() +
+    theme_lares() +
     theme(plot.margin = margin(mg, mg, 0, mg))
   
   p2 <- labels %>%
@@ -468,7 +468,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
     labs(x = NULL, y = NULL, 
          caption = paste("Total observations:", formatNum(nrow(df), 0))) + 
     guides(colour = FALSE) +
-    theme_lares2(which = "XY") +
+    theme_lares(which = "XY") +
     theme(axis.text.x = element_blank(),
           plot.margin = margin(0, mg, mg, mg))
   if (length(vars) > 1)
@@ -670,7 +670,7 @@ freqs_list <- function(df,
     ggplot(aes(x = reorder(.data$label, .data$order), 
                y = var, group = .data$label)) +
     geom_point(size = 3.5) + geom_path() +
-    theme_lares2(size = size, mg = -1, grid = "XY") +
+    theme_lares(size = size, mg = -1, grid = "XY") +
     labs(x = "Combination rank", y = NULL, caption = caption) +
     theme(axis.text.y = element_blank(),
           plot.margin = margin(0,0,0,0)) +
@@ -683,7 +683,7 @@ freqs_list <- function(df,
                y = -.data$n, fill = .data$wt)) +
     coord_flip() + geom_col() +
     labs(y = "Element Size", x = NULL) +
-    theme_lares2(size = size, mg = -1, grid = "X") +
+    theme_lares(size = size, mg = -1, grid = "X") +
     theme(plot.margin = margin(0,0,0,0)) +
     scale_y_continuous(position = "right", 
                        labels = function(x) formatNum(abs(x), 0)) +
@@ -696,7 +696,7 @@ freqs_list <- function(df,
     ggplot(aes(x = reorder(.data$var, .data$order), 
                y = .data$n, fill = .data$wt)) +
     geom_col() + #ggfittext::geom_bar_text(size = 9) +
-    theme_lares2(size = size, mg = -1, grid = "Y") + 
+    theme_lares(size = size, mg = -1, grid = "Y") + 
     scale_y_continuous(labels = function(x) formatNum(abs(x), 0)) +
     labs(x = NULL, y = "Combination Size",
          fill = if (length(wt_str) > 0) 

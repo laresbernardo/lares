@@ -56,7 +56,7 @@ mplot_density <- function(tag,
                    alpha = 0.6, adjust = 0.25, size = 0) + 
       labs(title = "Classification Model Results",
            y = "Density by tag", x = "Score", fill = NULL) + 
-      theme_lares2(pal = 1, legend = "bottom") +
+      theme_lares(pal = 1, legend = "bottom") +
       theme(legend.title = element_blank(),
             legend.key.size = unit(.2, "cm"))
     
@@ -64,14 +64,14 @@ mplot_density <- function(tag,
       geom_density(aes(x = .data$score), 
                    size = 0, alpha = 0.9, adjust = 0.25, fill = "deepskyblue") + 
       labs(x = NULL, y = "Density") + 
-      theme_lares2()
+      theme_lares()
     
     p3 <- ggplot(out, aes(x = as.numeric(.data$score), colour = as.character(.data$tag))) + 
       stat_ecdf(size = 1) +
       ylab('Cumulative') + 
       labs(x = NULL) + 
       guides(color = FALSE) + 
-      theme_lares2(pal = 2)
+      theme_lares(pal = 2)
     
     p1 <- p1 + theme(plot.margin = margin(10, 5, 5, 5))
     p2 <- p2 + theme(plot.margin = margin(0, 0, 5, 5))
@@ -99,7 +99,7 @@ mplot_density <- function(tag,
                    alpha = 0.6, adjust = 0.25) + 
       labs(y = "Density", x = "Continuous values", fill = NULL) +
       guides(colour = FALSE) +
-      theme_lares2(pal = 1, legend = "top")
+      theme_lares(pal = 1, legend = "top")
     
     if (!is.na(model_name)) p <- p + labs(caption = model_name)
     if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
@@ -175,7 +175,7 @@ mplot_importance <- function(var,
          x = NULL, y = NULL) +
     scale_y_continuous(position = "right", expand = c(0, 0), 
                        limits = c(0, 1.03 * max(output$imp))) +
-    theme_lares2()
+    theme_lares()
   
   if (length(unique(output$Type)) == 1) {
     p <- p + geom_col(fill = colours, width = 0.2, colour = "transparent") +
@@ -275,7 +275,7 @@ mplot_roc <- function(tag,
     annotate("text", x = 0.25, y = 0.05, size = 2.8, 
              label = paste0("95% CI: ", round(100*ci[1,],2),"-", 
                             round(100*ci[3,],2))) +
-    theme_lares2(bg_colour = "white", pal = 2, legend = "bottom")
+    theme_lares(bg_colour = "white", pal = 2, legend = "bottom")
   
   if (squared) p <- p + coord_equal()
   if (is.na(multis)[1]) p <- p + guides(colour = FALSE)
@@ -342,7 +342,7 @@ mplot_cuts <- function(score,
               size = 3, colour = "black", inherit.aes = TRUE, check_overlap = TRUE) +
     guides(colour = FALSE) +
     labs(title = sprintf("Score cuts (%s quantiles)", splits)) +
-    theme_lares2()
+    theme_lares()
   
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
@@ -420,7 +420,7 @@ mplot_cuts_error <- function(tag,
     scale_y_continuous(labels = comma) + 
     guides(colour = FALSE) +
     gg_text_customs() + 
-    theme_lares2(bg_colour = "white")
+    theme_lares(bg_colour = "white")
   
   # Second: percentual errors
   deciles_perabs <- quantsfx(abs(df$p_error), splits = splits, just = 0.3)
@@ -435,7 +435,7 @@ mplot_cuts_error <- function(tag,
     scale_y_continuous(labels = comma) + 
     guides(colour = FALSE) +
     gg_text_customs() + 
-    theme_lares2(bg_colour = "white")
+    theme_lares(bg_colour = "white")
   
   # Third: errors distribution
   pd_error <- ggplot(df) + 
@@ -443,7 +443,7 @@ mplot_cuts_error <- function(tag,
                  fill = "deepskyblue", alpha = 0.7) +
     labs(x = NULL, y = 'Density [%]') +
     geom_vline(xintercept = 0, alpha = 0.5, colour = "navy", linetype = "dotted") + 
-    theme_lares2(bg_colour = "white")
+    theme_lares(bg_colour = "white")
   
   if (!is.na(title)) p_abs <- p_abs + labs(title = title)
   if (!is.na(model_name)) pd_error <- pd_error + labs(caption = model_name)
@@ -557,7 +557,7 @@ mplot_splits <- function(tag,
     guides(fill = guide_legend(title = paste0("~",npersplit," p/split"))) +
     labs(title = "Split Groups") +
     scale_fill_brewer(palette = "Spectral") +
-    theme_lares2()
+    theme_lares()
   
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
@@ -606,7 +606,7 @@ mplot_metrics <- function(results,
     geom_text(aes(x = .data$trees, y = .data$test_ll, colour = "Test", 
                   label = round(.data$test_ll, 2)),
               check_overlap = TRUE, nudge_y = 0.03, size = 3) + 
-    theme_lares2(pal = 1) +
+    theme_lares(pal = 1) +
     theme(strip.text.x = element_blank(),
           strip.background = element_rect(colour = "white", fill = "white"),
           legend.position = c(0.1, 0.05))
@@ -624,7 +624,7 @@ mplot_metrics <- function(results,
     geom_text(aes(x = .data$trees, y = .data$test_auc*100, colour = "Test", 
                   label = round(.data$test_auc*100,2)),
               check_overlap = TRUE, nudge_y = 3, size = 3) +
-    theme_lares2(pal = 1)
+    theme_lares(pal = 1)
   
   if (!is.na(subtitle)) ll <- ll + labs(subtitle = subtitle)
   if (!is.na(model_name)) au <- au + labs(caption = model_name)
@@ -700,7 +700,7 @@ mplot_lineal <- function(tag,
     scale_colour_continuous(labels = comma) +
     theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
     guides(colour = guide_colorbar(barwidth = 0.9, barheight = 4.5)) +
-    theme_lares2()
+    theme_lares()
   
   # Draw reference lines for correlation
   intercept <- summary(fit)$coefficients[1]
@@ -809,7 +809,7 @@ mplot_full <- function(tag,
   if (is.numeric(tag) & is.numeric(score) & length(unique(tag)) > thresh) {
     
     p1 <- mplot_lineal(tag = tag, score = score, subtitle = subtitle, model_name = model_name) +
-      theme_lares2(bg_colour = "white")
+      theme_lares(bg_colour = "white")
     p2 <- mplot_density(tag = tag, score = score)
     p3 <- mplot_cuts_error(tag = tag, score = score, splits = splits)
     p <- ((p1 / p2) | p3) + plot_layout(widths = c(1, 1.4))
@@ -912,7 +912,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
            thresh != 0.5, paste("with Threshold =", thresh), ""), ifelse(
              diagonal == FALSE, paste("without diagonal values"), "")),
          subtitle = metrics, caption = model_name) +
-    theme_lares2() +
+    theme_lares() +
     theme(axis.text.x = element_text(angle = 30, hjust = 0),
           axis.title.x = element_text(hjust = 0.5),
           axis.text.x.bottom = element_blank(), 
@@ -1016,7 +1016,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
            linetype = NULL,
            y = "Cumulative gains [%]", 
            x = paste0("Percentiles [",splits,"]")) +
-      theme_lares2(pal = 2) + 
+      theme_lares(pal = 2) + 
       theme(legend.position = c(0.88, 0.2))
     
     if (highlight == "auto") 
@@ -1056,7 +1056,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
       geom_line(aes(y = .data$gain, colour = .data$label), size = 1) +
       geom_label(aes(y = .data$gain, label = round(.data$gain)), alpha = 0.8) +
       guides(colour = FALSE) +
-      theme_lares2(pal = 2) + 
+      theme_lares(pal = 2) + 
       labs(title = "Cumulative Gains for Multiple Labels",
            subtitle = paste("If we select the top nth percentile with highest probabilities,",
                             "\nhow much of that specific target class will be picked?"),
@@ -1122,7 +1122,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
     gains <- gains %>% mutate(cum_response_lift = 100 * .data$cum_response/rand - 100)
     
     p <- gains %>%
-      ggplot(aes(x = .data$percentile)) + theme_lares2(pal = 2) +
+      ggplot(aes(x = .data$percentile)) + theme_lares(pal = 2) +
       geom_hline(yintercept = rand, colour = "black", linetype = "dashed") +
       geom_line(aes(y = .data$cum_response, colour = "x"), size = 1.2) +
       geom_label(aes(y = .data$cum_response, label = round(.data$cum_response)), alpha = 0.9) +
@@ -1171,7 +1171,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
            y = "Cumulative response [%]", 
            x = paste0("Percentiles [", splits, "]")) + 
       theme(legend.position = c(0.88, 0.2)) +
-      theme_lares2(pal = 2) + 
+      theme_lares(pal = 2) + 
       labs(title = "Cumulative Response for Multiple Labels",
            subtitle = paste("If we select the top nth percentile with highest probabilities,",
                             "\nhow many observations belong to that specific target class?"),

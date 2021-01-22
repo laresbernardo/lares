@@ -79,7 +79,7 @@ missingness <- function(df, plot = FALSE, full = FALSE,
           scale_y_comma(NULL, expand = c(0, 0))} +
       scale_fill_grey(name = NULL, labels = c("Present", "Missing"), expand = c(0, 0)) +
       labs(title = "Missing values", x = "", subtitle = if (!is.na(subtitle)) subtitle) +
-      theme_lares2(legend = "top") +
+      theme_lares(legend = "top") +
       theme(axis.text.y  = element_text(size = 8))
     
     return(p)

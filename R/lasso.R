@@ -104,7 +104,7 @@ lasso_vars <- function(df, variable,
          title = "Most Relevant Features (Lasso Regression)",
          subtitle = paste("RSQ =", round(rsq$metrics$rsq, 4)),
          fill = "Coeff > 0") +
-    theme_lares2(legend = "top") +
+    theme_lares(legend = "top") +
     scale_y_continuous(expand = c(0, 0))
   
   toc("lasso_vars", quiet = quiet)

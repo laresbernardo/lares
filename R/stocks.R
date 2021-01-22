@@ -438,7 +438,7 @@ splot_summary <- function(p, s, save = FALSE) {
     scale_y_continuous(limits = c(NA, tops*1.12), labels = comma, expand = c(0, 0)) + 
     labs(y = NULL, x = NULL, title = "Stocks Distribution and Growth") +
     guides(fill = FALSE, colour = FALSE) + coord_flip() +
-    theme_lares2(pal = 1)
+    theme_lares(pal = 1)
   
   if (save) plot <- plot + ggsave("portf_stocks_change.png", width = 8, height = 8, dpi = 300)
   
@@ -519,7 +519,7 @@ splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save =
                            ") | Stocks Value: $", formatNum(newp$CumValue[1],0),
                            " | Portfolio: $", formatNum(newp$Portfolio[1],0)),
          caption = if (!is.na(ma)[1]) caption) +
-    theme_lares2(legend = "top")
+    theme_lares(legend = "top")
   
   if (!is.na(ma)[1]) plot <- plot + 
     geom_line(aes(y = .data$ma1), size = 0.7, 
@@ -601,7 +601,7 @@ splot_change <- function(p, s, weighted = TRUE, group = FALSE,
                      size = 2, na.rm = TRUE, alpha = 0.9, min.segment.length = 1.2) +
     geom_label_repel(data = labels, aes(label = .data$Symbol), 
                      size = 2.5, hjust = -0.2, alpha = 0.6, na.rm = TRUE) +
-    theme_lares2(pal = 2) +
+    theme_lares(pal = 2) +
   
   if (group) plot <- plot + facet_grid(.data$Type ~ ., scales = "free", switch = "both")
   if (weighted) plot <- plot + 
@@ -646,7 +646,7 @@ splot_growth <- function(p, save = FALSE) {
     annotate("text", label = caption, x = max(p$Date), 
              y = 0.09*max(p$Portfolio), 
              size = 3.3, colour = "white", hjust = 1.1) +
-    theme_lares2(pal = 1) +
+    theme_lares(pal = 1) +
     theme(legend.position = "top", legend.justification = c(0, 1))
   
   if (nrow(labels) > 0) {
@@ -689,7 +689,7 @@ splot_types <- function(s, save = FALSE) {
              width = 1, stat = "identity") +
     facet_grid(. ~ label, scales = "free") +
     scale_y_continuous(labels = comma, expand = c(0, 0)) + 
-    theme_lares2(pal = 1) +
+    theme_lares(pal = 1) +
     labs(x = NULL, y = "Total value", title = "Portfolio's Category Distribution")
   if (save) plot <- plot + ggsave("portf_distribution.png", width = 8, height = 5, dpi = 300) 
   return(plot)
@@ -796,7 +796,7 @@ splot_etf <- function(s, keep_all = FALSE, save = FALSE) {
       geom_bar(width = 1, stat = "identity") +
       coord_flip() +
       scale_y_continuous(labels = comma, expand = c(0, 0)) + 
-      theme_lares2(pal = 1) +
+      theme_lares(pal = 1) +
       labs(x = NULL, y = "Total value", fill = NULL,
            title = "Portfolio's Sector Distribution (ETFs)")
     

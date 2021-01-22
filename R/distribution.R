@@ -162,7 +162,7 @@ distr <- function(data, ...,
              title = "Density Distribution",
              subtitle = paste("Variable:", variable_name),
              caption = paste("Obs:", formatNum(nrow(df), 0))) +
-        theme_lares2()
+        theme_lares()
       if (top != 10) {
         p <- p + xlim(0, top)
       }
@@ -225,7 +225,7 @@ distr <- function(data, ...,
                subtitle = subtitle) +
           scale_x_continuous(labels = comma) +
           scale_y_continuous(labels = comma) +
-          theme_lares2()
+          theme_lares()
         return(p)  
       }
       message("You should try a 'target' variable with max 8 different values.")
@@ -316,7 +316,7 @@ distr <- function(data, ...,
         theme(legend.position = "top") + guides(colour = FALSE) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
         scale_y_comma(expand = c(0, 0)) +
-        theme_lares2(pal = 1)
+        theme_lares(pal = 1)
       # Give an angle to labels when more than...
       if (length(unique(value)) >= 7) {
         count <- count + theme(axis.text.x = element_text(angle = 30, hjust = 1))
@@ -345,7 +345,7 @@ distr <- function(data, ...,
         guides(colour = FALSE, size = FALSE) +
         scale_y_percent(expand = c(0, 0)) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
-        theme_lares2(pal = 1)
+        theme_lares(pal = 1)
       
       # Show a reference line if levels = 2; quite useful when data is unbalanced (not 50/50)
       if (length(unique(targets)) == 2 & ref) {

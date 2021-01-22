@@ -418,7 +418,7 @@
 #                           formatNum(stocks_perf$TotalPer[1],2),"% ($",
 #                           formatNum(stocks_perf$TotalUSD[1], 0),") | $",
 #                           formatNum(stocks_perf$CumPortfolio[1]), sep = "")) +
-#     theme_lares2()
+#     theme_lares()
 #   
 #   if (save) plot <- plot + ggsave("portf_daily_change.png", width = 8, height = 5, dpi = 300)
 #   
@@ -480,7 +480,7 @@
 #     scale_y_continuous(limits = c(NA, tops*1.1), labels = comma, expand = c(0, 0)) + 
 #     labs(y = '', x = '', title = "Stocks Distribution and Growth") +
 #     guides(fill = FALSE, colour = FALSE) + coord_flip() +
-#     theme_lares2(pal = 1)
+#     theme_lares(pal = 1)
 #   
 #   if (save) plot <- plot + ggsave("portf_stocks_change.png", width = 8, height = 8, dpi = 300)
 #   
@@ -527,7 +527,7 @@
 #          subtitle = 'Showing absolute delta values since first purchase', colour = '') +
 #     geom_label_repel(data = amounts, aes(x = Date, y = Hist, label = label), size = 2) +
 #     geom_label(data = labels, aes(x = Date, y = Hist, label = Symbol), size = 2.5, hjust = -0.2, alpha = 0.6) +
-#     theme_lares2(pal = 2)
+#     theme_lares(pal = 2)
 #   
 #   if (group) plot <- plot + facet_grid(Type ~ ., scales = "free", switch = "both")
 #   if (weighted) plot <- plot + labs(subtitle = "Showing real weighted portfolio delta values")
@@ -558,7 +558,7 @@
 #     geom_bar(aes(x = "", y = DailyValue, fill = Symbol), width = 1, stat = "identity") +
 #     facet_grid(. ~ label, scales = "free") +
 #     scale_y_continuous(labels = comma, expand = c(0, 0)) + 
-#     theme_lares2(pal = 1) +
+#     theme_lares(pal = 1) +
 #     labs(x = NULL, y = "Total value", title = "Portfolio's Category Distribution")
 #   if (save) p <- p + ggsave("portf_distribution.png", width = 8, height = 5, dpi = 300) 
 #   return(p)
@@ -599,7 +599,7 @@
 #     annotate("text", label = caption, x = max(portfolio$Date), 
 #              y = 0.09*max(portfolio$Portfolio), 
 #              size = 3.3, colour = "white", hjust = 1.1) +
-#     theme_lares2(pal = 1) +
+#     theme_lares(pal = 1) +
 #     theme(legend.position = "top", legend.justification = c(0, 1))
 #   
 #   if (save) plot <- plot + 

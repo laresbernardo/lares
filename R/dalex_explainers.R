@@ -115,7 +115,7 @@ dalex_local <- function(explainer, observation = NA, row = 1, type = "break_down
   breakdown <- predict_parts(explainer, new_observation = observation, type = type)
   
   p <- plot(breakdown) + 
-    theme_lares2(legend = "none") + 
+    theme_lares(legend = "none") + 
     labs(subtitle = NULL, caption = subtitle)
   
   return <- list(observation = observation, breakdown = breakdown, plot = p)
@@ -139,8 +139,8 @@ dalex_residuals <- function(explainer) {
   
   resids <- model_performance(explainer)
   
-  p1 <- plot(resids) + theme_lares2(legend = "none")
-  p2 <- plot(resids, geom = "boxplot") + theme_lares2(legend = "none")
+  p1 <- plot(resids) + theme_lares(legend = "none")
+  p2 <- plot(resids, geom = "boxplot") + theme_lares(legend = "none")
   
   p <- p1 + p2 + plot_layout(nrow = 2)
   
@@ -190,7 +190,7 @@ dalex_variable <- function(explainer, vars, force_class = NA) {
   }
   
   aux <- model_profile(explainer, variables = vars)
-  p <- plot(aux) + theme_lares2() + labs(y = "Average Prediction")
+  p <- plot(aux) + theme_lares() + labs(y = "Average Prediction")
   pdp <- list(pdp = aux, plot = p, vars = vars)
   
   toc("dalex_variable")

@@ -68,7 +68,7 @@ summer <- function(df, ...,
       x = reorder_within(.data$label, .data$value, .data$name), y = .data$value)) +
       geom_col() + coord_flip() +
       facet_wrap(. ~ .data$name, scales = "free", ncol = 1) +
-      theme_lares2(pal = 2, grid = "Xx") + scale_x_reordered() +
+      theme_lares(pal = 2, grid = "Xx") + scale_x_reordered() +
       scale_y_continuous(labels = comma) +
       labs(x = NULL, y = NULL, title = "Numerical Columns Summed")
     if (grouped) plot <- plot + 
