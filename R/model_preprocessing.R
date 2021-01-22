@@ -139,7 +139,7 @@ model_preprocess <- function(df,
   
   # SPLIT TRAIN AND TEST DATASETS
   if (is.na(train_test)) {
-    if (!quiet) message(sprintf(">>> Splitting data: train = %s & test = %s"), split, 1 - split)
+    if (!quiet) message(sprintf(">>> Splitting data: train = %s & test = %s", split, 1 - split))
     splits <- msplit(df, size = split, seed = seed, print = !quiet)
     train <- splits$train
     test <- splits$test
