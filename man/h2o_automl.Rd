@@ -124,7 +124,7 @@ the results? Working directory as default.}
 This function lets the user create a robust and fast model, using 
 H2O's AutoML function. The result is a list with the best model, 
 its parameters, datasets, performance metrics, variables 
-importances, and plots. If the input is categorical, classification
+importance, and plots. If the input is categorical, classification
 models will be trained and if is a continuous variable, regression
 models will be trained.
 }
