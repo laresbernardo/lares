@@ -362,20 +362,22 @@ formatNum <- function(x, decimals = 2,
 #' @param variable Variable. Which variable should we used to re-sample dataset?
 #' @param rate Numeric. How many X for every Y we need? Default: 1. If there are
 #' more than 2 unique values, rate will represent percentage for number of rows
+#' @param target Character. If binary, which value should be reduced? If kept in
+#' \code{"auto"}, then the most frequent value will be reduced.
 #' @param seed Numeric. Seed to replicate and obtain same values
 #' @param quiet Boolean. Keep quiet? If not, messages will be printed
 #' @examples
 #' data(dft) # Titanic dataset
-#' df <- balance_data(dft, Survived, rate = 1, seed = 123)
-#' freqs(df, Survived)
+#' df <- balance_data(dft, Survived, rate = 0.5)
+#' df <- balance_data(dft, Survived, rate = 0.5, target = "TRUE")
 #' @export
-balance_data <- function(df, variable, rate = 1, seed = 0, quiet = FALSE) {
+balance_data <- function(df, variable, rate = 1, target = "auto", seed = 0, quiet = FALSE) {
   
   set.seed(seed)
   
   variable <- gsub('\"', '', deparse(substitute(variable)))
   names(df)[names(df) == variable] <- 'tag'
-  tags <- unique(df$tag)
+  tags <- freqs(df, .data$tag) %>% pull(.data$tag) %>% as.character
   
   if (length(tags) != 2) {
     # For numerical re-sampling:
@@ -387,22 +389,23 @@ balance_data <- function(df, variable, rate = 1, seed = 0, quiet = FALSE) {
   } else {
     # For binary re-sampling:
     if (!quiet) message(paste("Resampled from:", vector2text(
-        formatNum(table(df$tag),0), sep = " v ", quotes = F)))
-    ones <- df %>% filter(.data$tag %in% as.character(tags[1]))
-    zeros <- df %>% filter(.data$tag %in% as.character(tags[2]))
-    
-    if (nrow(ones) <= nrow(zeros)) {
-      if (!quiet) message(paste("Reducing size for label:", tags[2]))
-      zeros <- sample_n(zeros, round(rate * nrow(ones)))
+        formatNum(table(df$tag), 0), sep = " v ", quotes = FALSE)))
+    if (as.character(target) == "auto") {
+      zero <- tags[1]
+      one <- tags[2]
     } else {
-      if (!quiet) message(paste("Reducing size for label:", tags[1]))
-      ones <- sample_n(ones, round(rate * nrow(zeros)))
+      check_opts(target, tags)
+      zero <- target
+      one <- tags[tags != target]
     }
+    if (!quiet) message(paste("Reducing size for label:", zero))
+    ones <- filter(df, .data$tag == one)
+    zeros <- filter(df, .data$tag == zero)
+    zeros <- sample_n(zeros, round(rate * nrow(ones)))
     balanced <- rbind(ones, zeros)
     if (!quiet) message(paste("New label distribution:", vector2text(
-      formatNum(table(balanced$tag),0), sep = " v ", quotes = F)))
+      formatNum(table(balanced$tag), 0), sep = " v ", quotes = FALSE)))
   }
-  
   balanced <- rename_at(balanced, vars("tag"), list(~paste0(variable)))
   return(balanced)
 }

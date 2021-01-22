@@ -4,7 +4,7 @@
 \alias{balance_data}
 \title{Balance Binary Data by Resampling: Under-Over Sampling}
 \usage{
-balance_data(df, variable, rate = 1, seed = 0, quiet = FALSE)
+balance_data(df, variable, rate = 1, target = "auto", seed = 0, quiet = FALSE)
 }
 \arguments{
 \item{df}{Vector or Dataframe. Contains different variables in each 
@@ -14,6 +14,9 @@ column, separated by a specific character}
 
 \item{rate}{Numeric. How many X for every Y we need? Default: 1. If there are
 more than 2 unique values, rate will represent percentage for number of rows}
+
+\item{target}{Character. If binary, which value should be reduced? If kept in
+\code{"auto"}, then the most frequent value will be reduced.}
 
 \item{seed}{Numeric. Seed to replicate and obtain same values}
 
@@ -25,8 +28,8 @@ with a given relation rate and a binary feature.
 }
 \examples{
 data(dft) # Titanic dataset
-df <- balance_data(dft, Survived, rate = 1, seed = 123)
-freqs(df, Survived)
+df <- balance_data(dft, Survived, rate = 0.5)
+df <- balance_data(dft, Survived, rate = 0.5, target = "TRUE")
 }
 \seealso{
 Other Data Wrangling: 
