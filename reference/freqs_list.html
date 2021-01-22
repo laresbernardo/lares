@@ -76,7 +76,7 @@ which may be used as an alternative to Venn diagrams." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.11</span>
       </span>
     </div>
 
@@ -273,12 +273,12 @@ Set argument to 0 to ignore. <code>limit_x</code>/<code>limit_y</code> answer to
 #&gt; [3] "The Phantom Menace"      "Revenge of the Sith"    
 #&gt; [5] "Return of the Jedi"      "A New Hope"             
 #&gt; </div><div class='input'><span class='va'>df</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs_list</span><span class='op'>(</span><span class='va'>films</span><span class='op'>)</span>
-</div><div class='img'><img src='freqs_list-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Font 'NA' is not installed, has other name, or can't be found</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Font 'NA' is not installed, has other name, or can't be found</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Font 'NA' is not installed, has other name, or can't be found</span></div><div class='img'><img src='freqs_list-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Skin colours in a comma-separated column</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>skin_color</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "fair"        "gold"        "white, blue" "white"       "light"      
 #&gt; [6] "light"      </div><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>freqs_list</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>skin_color</span>, min_elements <span class='op'>=</span> <span class='fl'>2</span>, limit <span class='op'>=</span> <span class='fl'>5</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='co'># Inside "x" we'll have:</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Font 'NA' is not installed, has other name, or can't be found</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Font 'NA' is not installed, has other name, or can't be found</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Font 'NA' is not installed, has other name, or can't be found</span></div><div class='input'><span class='co'># Inside "x" we'll have:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "plot"         "data"         "elements"     "combinations"</div><div class='input'>
 <span class='co'># Using the 'wt' argument to add a continuous value metric</span>
@@ -308,7 +308,7 @@ Set argument to 0 to ignore. <code>limit_x</code>/<code>limit_y</code> answer to
 #&gt; 5     0        0   0       0      3.01     296
 #&gt; 6     0        1   0       0      3.88     940</div><div class='input'><span class='fu'>freqs_list</span><span class='op'>(</span><span class='va'>movies</span>, wt <span class='op'>=</span> <span class='va'>AvgRating</span>, min_elements <span class='op'>=</span> <span class='fl'>2</span>, tail <span class='op'>=</span> <span class='cn'>FALSE</span>,
            title <span class='op'>=</span> <span class='st'>"Movies\nMixed Genres\nRanking"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Binary columns detected: 'Action', 'Adventure', 'Children', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Fantasy', 'Noir', 'Horror', 'Musical', 'Mystery', 'Romance', 'SciFi', 'Thriller', 'War', 'Western'</span></div><div class='img'><img src='freqs_list-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># So, please: no more Comedy+SciFi and more Drama+Horror films (based on ~50 movies)!</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Binary columns detected: 'Action', 'Adventure', 'Children', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Fantasy', 'Noir', 'Horror', 'Musical', 'Mystery', 'Romance', 'SciFi', 'Thriller', 'War', 'Western'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Font 'NA' is not installed, has other name, or can't be found</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Font 'NA' is not installed, has other name, or can't be found</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Font 'NA' is not installed, has other name, or can't be found</span></div><div class='img'><img src='freqs_list-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># So, please: no more Comedy+SciFi and more Drama+Horror films (based on ~50 movies)!</span>
 <span class='co'># }</span>
 </div></span></pre>
   </div>

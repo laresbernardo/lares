@@ -74,7 +74,7 @@ only numerical values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.11</span>
       </span>
     </div>
 
@@ -256,10 +256,10 @@ values of each column. Set to <code>NA</code> to ignore argument.</p></td>
 
 <span class='co'># Correlate Survived with everything else and show only significant results</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span><span class='op'>(</span><span class='va'>Survived_TRUE</span>, max_pvalue <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span>
-</div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Font 'NA' is not installed, has other name, or can't be found</span></div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Top 15 with less than 50% correlation and show ranks</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span><span class='op'>(</span><span class='va'>Survived_TRUE</span>, ceiling <span class='op'>=</span> <span class='fl'>60</span>, top <span class='op'>=</span> <span class='fl'>15</span>, ranks <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 60% (absolute)</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 60% (absolute)</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Font 'NA' is not installed, has other name, or can't be found</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

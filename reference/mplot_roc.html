@@ -73,7 +73,7 @@ range. It also works for multi-categorical models." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.11</span>
       </span>
     </div>
 
@@ -229,13 +229,13 @@ or score (only used when more than 2 categories coexist).</p></td>
 <span class='co'># ROC Curve for Binomial Model</span>
 <span class='fu'>mplot_roc</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>scores</span>, 
           model_name <span class='op'>=</span> <span class='st'>"Titanic Survived Model"</span><span class='op'>)</span>
-</div><div class='img'><img src='mplot_roc-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Font 'NA' is not installed, has other name, or can't be found</span></div><div class='img'><img src='mplot_roc-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># ROC Curves for Multi-Categorical Model</span>
 <span class='fu'>mplot_roc</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>score</span>,
           multis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span>, select <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>score</span><span class='op'>)</span><span class='op'>)</span>,
           squared <span class='op'>=</span> <span class='cn'>FALSE</span>,
           model_name <span class='op'>=</span> <span class='st'>"Titanic Class Model"</span><span class='op'>)</span>
-</div><div class='img'><img src='mplot_roc-2.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Font 'NA' is not installed, has other name, or can't be found</span></div><div class='img'><img src='mplot_roc-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
