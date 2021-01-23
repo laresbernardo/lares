@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Install latest version of H2O — export_plot • lares</title>
+<title>Export ggplot2, gridExtra, or any plot object into rendered file — export_plot • lares</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Install latest version of H2O — export_plot" />
-<meta property="og:description" content="This function lets the user un-install the current version of
-H2O installed and update to latest stable version." />
+<meta property="og:title" content="Export ggplot2, gridExtra, or any plot object into rendered file — export_plot" />
+<meta property="og:description" content="Export any ggplot2, gridExtra, or any plot object 
+created with R into rendered png or jpg file." />
 
 
 
@@ -109,14 +109,14 @@ H2O installed and update to latest stable version." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Install latest version of H2O</h1>
+    <h1>Export ggplot2, gridExtra, or any plot object into rendered file</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_plots.R'><code>R/other_plots.R</code></a></small>
     <div class="hidden name"><code>export_plot.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user un-install the current version of
-H2O installed and update to latest stable version.</p>
+    <p>Export any <code>ggplot2</code>, <code>gridExtra</code>, or any plot object 
+created with R into rendered <code>png</code> or <code>jpg</code> file.</p>
     </div>
 
     <pre class="usage"><span class='fu'>export_plot</span><span class='op'>(</span>
@@ -138,7 +138,7 @@ H2O installed and update to latest stable version.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>p</th>
-      <td><p>ggplot2 or gridExtra object. Plot to export</p></td>
+      <td><p>Plot object. Plot to render and export.</p></td>
     </tr>
     <tr>
       <th>name</th>
@@ -147,32 +147,28 @@ to include file format on file name.</p></td>
     </tr>
     <tr>
       <th>vars</th>
-      <td><p>Vector. Variables in plot</p></td>
+      <td><p>Vector. Variable names to identify by filename.</p></td>
     </tr>
     <tr>
       <th>sep</th>
-      <td><p>Character. Separator for variables</p></td>
+      <td><p>Character. Separator for <code>vars</code>.</p></td>
     </tr>
     <tr>
       <th>width, height, res</th>
-      <td><p>Numeric. Plot's width, height, and res (for grids)</p></td>
+      <td><p>Numeric. Plot's width, height, and res (for grids).</p></td>
     </tr>
     <tr>
       <th>format</th>
-      <td><p>Character. One of: png or jpeg.</p></td>
+      <td><p>Character. One of: <code>png</code> or <code>jpeg</code>.</p></td>
     </tr>
     <tr>
-      <th>dir</th>
-      <td><p>Character. In which directory do you wish to save 
-the results? Working directory as default.</p></td>
-    </tr>
-    <tr>
-      <th>subdir</th>
-      <td><p>Character. Into which subdirectory do you wish to save the plot to?</p></td>
+      <th>dir, subdir</th>
+      <td><p>Character. In which directory/subdirectory do you 
+wish to save the plot? Working directory as default <code>dir</code>.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>Boolean. Display succesful message with filename when saved?</p></td>
+      <td><p>Boolean. Display successful message with filename when saved?</p></td>
     </tr>
     </table>
 
@@ -201,7 +197,6 @@ the results? Working directory as default.</p></td>
 <code><a href='mailSend.html'>mailSend</a>()</code>,
 <code><a href='msplit.html'>msplit</a>()</code>,
 <code><a href='myip.html'>myip</a>()</code>,
-<code><a href='pass.html'>pass</a>()</code>,
 <code><a href='quiet.html'>quiet</a>()</code>,
 <code><a href='read.file.html'>read.file</a>()</code>,
 <code><a href='statusbar.html'>statusbar</a>()</code>,
