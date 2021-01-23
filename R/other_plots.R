@@ -377,23 +377,22 @@ noPlot <- function(message = "Nothing to show here!",
 
 
 ####################################################################
-#' Install latest version of H2O
+#' Export ggplot2, gridExtra, or any plot object into rendered file
 #' 
-#' This function lets the user un-install the current version of
-#' H2O installed and update to latest stable version.
+#' Export any \code{ggplot2}, \code{gridExtra}, or any plot object 
+#' created with R into rendered \code{png} or \code{jpg} file.
 #' 
 #' @family Tools
-#' @param p ggplot2 or gridExtra object. Plot to export
+#' @param p Plot object. Plot to render and export.
 #' @param name Character. File's name or suffix if vars is not \code{NA}. No need
 #' to include file format on file name.
-#' @param vars Vector. Variables in plot
-#' @param sep Character. Separator for variables
-#' @param format Character. One of: png or jpeg.
-#' @param width,height,res Numeric. Plot's width, height, and res (for grids)
-#' @param dir Character. In which directory do you wish to save 
-#' the results? Working directory as default.
-#' @param subdir Character. Into which subdirectory do you wish to save the plot to?
-#' @param quiet Boolean. Display succesful message with filename when saved?
+#' @param vars Vector. Variable names to identify by filename.
+#' @param sep Character. Separator for \code{vars}.
+#' @param format Character. One of: \code{png} or \code{jpeg}.
+#' @param width,height,res Numeric. Plot's width, height, and res (for grids).
+#' @param dir,subdir Character. In which directory/subdirectory do you 
+#' wish to save the plot? Working directory as default \code{dir}.
+#' @param quiet Boolean. Display successful message with filename when saved?
 #' @examples 
 #' \dontrun{
 #' p <- noPlot()

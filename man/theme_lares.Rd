@@ -67,7 +67,6 @@ Other Visualization:
 \code{\link{plot_chord}()},
 \code{\link{plot_survey}()},
 \code{\link{plot_timeline}()},
-\code{\link{summer}()},
 \code{\link{tree_var}()}
 }
 \concept{Visualization}

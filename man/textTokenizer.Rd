@@ -81,7 +81,6 @@ Other Data Wrangling:
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},
-\code{\link{right}()},
 \code{\link{textFeats}()},
 \code{\link{vector2text}()},
 \code{\link{year_month}()},

@@ -656,11 +656,7 @@ removenarows <- function(df, all = TRUE) {
 
 
 ####################################################################
-#' Filter only Numerical Values and
-#' 
-#' This function lets the user remove all rows that have some or
-#' all values as NAs. Note that as logical columns may be treated
-#' as numerical (1s and 0s), those will be kept.
+#' Select only numerical columns in a dataframe
 #' 
 #' @family Data Wrangling
 #' @param df Data.frame
@@ -796,28 +792,13 @@ dateformat <- function(dates, metric = TRUE, origin = '1900-01-01') {
 
 
 ####################################################################
-#' Pass Through a dplyr's Pipeline
+#' What's my IP?
 #' 
-#' This function lets the user print, save or do something inside a
-#' pipeline without affecting the output or pipeline.
-#' 
-#' @family Tools
-#' @param df Dataframe
-#' @param fun Function. What function do you wish to run? For example:
-#' pass(. \%>\% ncol \%>\% print)
-#' @export
-pass <- function(df, fun) { 
-  fun(df)
-  return(df) 
-}
-
-
-####################################################################
-#' What's my IP
-#' 
-#' This function lets the user find his IP quickly
+#' Reveal your current IP address.
 #' 
 #' @family Tools
+#' @examples
+#' myip()
 #' @export
 myip <- function(){
   ipify <- "https://api.ipify.org/"
@@ -888,40 +869,29 @@ json2vector <- function(json) {
 
 
 ####################################################################
-#' Right: Last n characters
+#' Left or Right N characters of a string
 #' 
-#' This function lets the user extract the last n characters of a
-#' string or vector of strings.
-#' 
-#' @family Data Wrangling
-#' @param string String or Vector
-#' @param n Integer. How many characters from right to left?
-#' @examples
-#' right("Bernardo", 3)
-#' @export
-right <- function(string, n = 1){
-  string <- as.character(string)
-  r <- substr(string, nchar(string) - n + 1, nchar(string))
-  return(r)
-}
-
-
-####################################################################
-#' Left: First n characters
-#' 
-#' This function lets the user extract the first n characters of a
-#' string or vector of strings.
+#' This functions lets the user extract the first or last n characters 
+#' of a string or vector of strings.
 #' 
 #' @family Data Wrangling
 #' @param string String or Vector
-#' @param n Integer. How many characters from left to right?
+#' @param n Integer. How many characters starting on right/left?
 #' @examples
 #' left("Bernardo", 3)
+#' right("Bernardo", 3)
 #' @export
 left <- function(string, n = 1){
   string <- as.character(string)
   l <- substr(string, 1, n)
   return(l)
+}
+#' @rdname left
+#' @export
+right <- function(string, n = 1){
+  string <- as.character(string)
+  r <- substr(string, nchar(string) - n + 1, nchar(string))
+  return(r)
 }
 
 

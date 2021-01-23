@@ -31,7 +31,6 @@ Other Visualization:
 \code{\link{noPlot}()},
 \code{\link{plot_chord}()},
 \code{\link{plot_timeline}()},
-\code{\link{summer}()},
 \code{\link{theme_lares}()},
 \code{\link{tree_var}()}
 }

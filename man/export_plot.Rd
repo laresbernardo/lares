@@ -2,7 +2,7 @@
 % Please edit documentation in R/other_plots.R
 \name{export_plot}
 \alias{export_plot}
-\title{Install latest version of H2O}
+\title{Export ggplot2, gridExtra, or any plot object into rendered file}
 \usage{
 export_plot(
   p,
@@ -19,29 +19,27 @@ export_plot(
 )
 }
 \arguments{
-\item{p}{ggplot2 or gridExtra object. Plot to export}
+\item{p}{Plot object. Plot to render and export.}
 
 \item{name}{Character. File's name or suffix if vars is not \code{NA}. No need
 to include file format on file name.}
 
-\item{vars}{Vector. Variables in plot}
+\item{vars}{Vector. Variable names to identify by filename.}
 
-\item{sep}{Character. Separator for variables}
+\item{sep}{Character. Separator for \code{vars}.}
 
-\item{width, height, res}{Numeric. Plot's width, height, and res (for grids)}
+\item{width, height, res}{Numeric. Plot's width, height, and res (for grids).}
 
-\item{format}{Character. One of: png or jpeg.}
+\item{format}{Character. One of: \code{png} or \code{jpeg}.}
 
-\item{dir}{Character. In which directory do you wish to save 
-the results? Working directory as default.}
+\item{dir, subdir}{Character. In which directory/subdirectory do you 
+wish to save the plot? Working directory as default \code{dir}.}
 
-\item{subdir}{Character. Into which subdirectory do you wish to save the plot to?}
-
-\item{quiet}{Boolean. Display succesful message with filename when saved?}
+\item{quiet}{Boolean. Display successful message with filename when saved?}
 }
 \description{
-This function lets the user un-install the current version of
-H2O installed and update to latest stable version.
+Export any \code{ggplot2}, \code{gridExtra}, or any plot object 
+created with R into rendered \code{png} or \code{jpg} file.
 }
 \examples{
 \dontrun{
@@ -74,7 +72,6 @@ Other Tools:
 \code{\link{mailSend}()},
 \code{\link{msplit}()},
 \code{\link{myip}()},
-\code{\link{pass}()},
 \code{\link{quiet}()},
 \code{\link{read.file}()},
 \code{\link{statusbar}()},

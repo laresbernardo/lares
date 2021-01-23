@@ -71,7 +71,6 @@ Other Tools:
 \code{\link{listfiles}()},
 \code{\link{mailSend}()},
 \code{\link{myip}()},
-\code{\link{pass}()},
 \code{\link{quiet}()},
 \code{\link{read.file}()},
 \code{\link{statusbar}()},

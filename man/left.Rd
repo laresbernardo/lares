@@ -2,20 +2,24 @@
 % Please edit documentation in R/other_functions.R
 \name{left}
 \alias{left}
-\title{Left: First n characters}
+\alias{right}
+\title{Left or Right N characters of a string}
 \usage{
 left(string, n = 1)
+
+right(string, n = 1)
 }
 \arguments{
 \item{string}{String or Vector}
 
-\item{n}{Integer. How many characters from left to right?}
+\item{n}{Integer. How many characters starting on right/left?}
 }
 \description{
-This function lets the user extract the first n characters of a
-string or vector of strings.
+This functions lets the user extract the first or last n characters 
+of a string or vector of strings.
 }
 \examples{
+right("Bernardo", 3)
 left("Bernardo", 3)
 }
 \seealso{
@@ -38,7 +42,6 @@ Other Data Wrangling:
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},
-\code{\link{right}()},
 \code{\link{textFeats}()},
 \code{\link{textTokenizer}()},
 \code{\link{vector2text}()},

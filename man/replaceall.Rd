@@ -67,7 +67,6 @@ Other Data Wrangling:
 \code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
-\code{\link{right}()},
 \code{\link{textFeats}()},
 \code{\link{textTokenizer}()},
 \code{\link{vector2text}()},

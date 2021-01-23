@@ -40,7 +40,6 @@ Other Tools:
 \code{\link{mailSend}()},
 \code{\link{msplit}()},
 \code{\link{myip}()},
-\code{\link{pass}()},
 \code{\link{read.file}()},
 \code{\link{statusbar}()},
 \code{\link{tic}()},

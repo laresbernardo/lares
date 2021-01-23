@@ -2,12 +2,15 @@
 % Please edit documentation in R/other_functions.R
 \name{myip}
 \alias{myip}
-\title{What's my IP}
+\title{What's my IP?}
 \usage{
 myip()
 }
 \description{
-This function lets the user find his IP quickly
+Reveal your current IP address.
+}
+\examples{
+myip()
 }
 \seealso{
 Other Tools: 
@@ -33,7 +36,6 @@ Other Tools:
 \code{\link{listfiles}()},
 \code{\link{mailSend}()},
 \code{\link{msplit}()},
-\code{\link{pass}()},
 \code{\link{quiet}()},
 \code{\link{read.file}()},
 \code{\link{statusbar}()},

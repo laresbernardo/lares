@@ -2,7 +2,7 @@
 % Please edit documentation in R/other_functions.R
 \name{numericalonly}
 \alias{numericalonly}
-\title{Filter only Numerical Values and}
+\title{Select only numerical columns in a dataframe}
 \usage{
 numericalonly(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
 }
@@ -17,9 +17,7 @@ numericalonly(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
 set to NA no calculation will run.}
 }
 \description{
-This function lets the user remove all rows that have some or
-all values as NAs. Note that as logical columns may be treated
-as numerical (1s and 0s), those will be kept.
+Select only numerical columns in a dataframe
 }
 \examples{
 data(dft) # Titanic dataset
@@ -47,7 +45,6 @@ Other Data Wrangling:
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},
-\code{\link{right}()},
 \code{\link{textFeats}()},
 \code{\link{textTokenizer}()},
 \code{\link{vector2text}()},

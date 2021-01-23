@@ -85,7 +85,6 @@ Other Exploratory:
 \code{\link{plot_cats}()},
 \code{\link{plot_df}()},
 \code{\link{plot_nums}()},
-\code{\link{summer}()},
 \code{\link{tree_var}()},
 \code{\link{trendsRelated}()}
 }
