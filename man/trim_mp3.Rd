@@ -4,10 +4,17 @@
 \alias{trim_mp3}
 \title{Trim MP3 Audio File}
 \usage{
-trim_mp3(file, start_time = 0, end_time, overwrite = FALSE, quiet = FALSE)
+trim_mp3(
+  file,
+  start_time = 0,
+  end_time = NA,
+  overwrite = FALSE,
+  ext = "mp3",
+  quiet = FALSE
+)
 }
 \arguments{
-\item{file}{Character. File name to trim}
+\item{file}{Character. File name to trim.}
 
 \item{start_time}{Numeric. Start and end time
 to trim the audio output in seconds.}
@@ -16,6 +23,8 @@ to trim the audio output in seconds.}
 to trim the audio output in seconds.}
 
 \item{overwrite}{Boolean. Overwrite original file?}
+
+\item{ext}{Character. File extension/type.}
 
 \item{quiet}{Boolean. Keep quiet? If not, print messages.}
 }

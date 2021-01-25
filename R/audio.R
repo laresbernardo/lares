@@ -25,12 +25,14 @@
 #' \dontrun{
 #'  # Download video from YouTube and convert to MP3
 #'  get_mp3("https://www.youtube.com/watch?v=lrlKcCdVw9Q")
+#'  # OR simply
+#'  get_mp3("lrlKcCdVw9Q")
 #' }
 #' @export
 get_mp3 <- function(id, 
                     mp3 = TRUE, 
                     params = "", 
-                    start_time = NA,
+                    start_time = 0,
                     end_time = NA,
                     overwrite = TRUE,
                     info = TRUE,
@@ -81,13 +83,14 @@ get_mp3 <- function(id,
   }
   
   # TRIM START AND/OR END OF AUDIO FILE
-  if (any(c(!is.na(start_time)), !is.na(end_time))) {
-    message(">>> Trimming audio file")
-    trim_mp3(sprintf("%s.mp3", infox$title), 
-             start_time, end_time, 
-             overwrite = FALSE,
+  if (any(c(start_time > 0, !is.na(end_time)))) {
+    file <- sprintf("%s.mp3", infox$title)
+    message(">>> Trimming audio file: ", file)
+    trim_mp3(file,
+             start_time = start_time,
+             end_time = end_time,
+             overwrite = overwrite,
              quiet = quiet)
-    if (overwrite) file.remove(sprintf("%s.mp3", infox$title))
   }
   
   return(invisible(infox))
@@ -103,16 +106,26 @@ get_mp3 <- function(id,
 #' 
 #' @family Audio
 #' @inheritParams get_mp3
-#' @param file Character. File name to trim
+#' @param file Character. File name to trim.
+#' @param ext Character. File extension/type.
 #' @export
-trim_mp3 <- function(file, start_time = 0, end_time, overwrite = FALSE, quiet = FALSE) {
+trim_mp3 <- function(file, start_time = 0, end_time = NA,
+                     overwrite = FALSE, ext = "mp3",
+                     quiet = FALSE) {
   start <- paste("-ss", start_time)
   end <- ifelse(!is.na(end_time), paste("-to", end_time), "")
-  file_out <- ifelse(overwrite, file, paste0(gsub("\\.mp3.*","",file), "_trimmed.mp3"))
-  query2 <- paste("ffmpeg -hide_banner -loglevel panic -y", 
-                  start, end, "-i",
-                  sprintf("'%s'", file), 
-                  sprintf("'%s'", file_out))
-  if (!quiet) message("Query: ", query2)
-  system(query2)
+  for (i in file) {
+    file <- ifelse(endsWith(i, ext), i, sprintf("%s.%s", file_name(i), ext))
+    if (!file.exists(file)) {
+      message(paste("File", file, "does not exist or can't be found."))
+      next
+    }
+    query2 <- paste("ffmpeg -hide_banner -loglevel panic -y", 
+                    start, end, "-i",
+                    sprintf("'%s'", file), 
+                    sprintf("'%s'", paste0(file_name(file), "_trimmed.mp3")))
+    if (!quiet) message("Query: ", query2)
+    system(query2)
+    if (overwrite) file.remove(gsub("_trimmed", "", file))
+  }
 }

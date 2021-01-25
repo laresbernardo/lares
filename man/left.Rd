@@ -19,8 +19,8 @@ This functions lets the user extract the first or last n characters
 of a string or vector of strings.
 }
 \examples{
-right("Bernardo", 3)
 left("Bernardo", 3)
+right(c("Bernardo", "Lares", "V"), 3)
 }
 \seealso{
 Other Data Wrangling: 

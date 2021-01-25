@@ -879,7 +879,7 @@ json2vector <- function(json) {
 #' @param n Integer. How many characters starting on right/left?
 #' @examples
 #' left("Bernardo", 3)
-#' right("Bernardo", 3)
+#' right(c("Bernardo", "Lares", "V"), 3)
 #' @export
 left <- function(string, n = 1){
   string <- as.character(string)
@@ -1404,9 +1404,9 @@ files_functions <- function(filename, alphabetic = TRUE) {
 #'
 #' Move one or more files from a directory to another using R.
 #'
-#' @param from Character. Filanames and directories. All files 
-#' will be moved recursively. 
-#' @param to Character. Filenames for each \code{from} file or 
+#' @param from Character. File names and directories. All files 
+#' will be moved recursively.
+#' @param to Character. File names for each \code{from} file or
 #' directory. If directory does not exist, it will be created.
 #' @export 
 move_files <- function(from, to) {
@@ -1445,11 +1445,26 @@ move_files <- function(from, to) {
   # Now move/rename all files
   for (i in seq_along(froms)) {
     todir <- dirname(tos[i])
-    if (!isTRUE(file.info(todir)$isdir)) 
+    if (!isTRUE(file.info(todir)$isdir))
       dir.create(todir, recursive = FALSE)
-    file.rename(from = froms[i],  to = tos[i])
+    file.rename(from = froms[i], to = basename(tos[i]))
   }
   
+}
+
+
+####################################################################
+#' Get file names without extensions
+#'
+#' @param filepath Character vector. File path(s) to get file names with
+#' no extension.
+#' @examples
+#' file_name("file.aux")
+#' file_name("temp/file.R")
+#' file_name("/temp/temp3/music.mp3")
+#' @export 
+file_name <- function(filepath) {
+  sub(pattern = "(.*)\\..*$", replacement = "\\1", basename(filepath))  
 }
 
 

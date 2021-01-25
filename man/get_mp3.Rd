@@ -8,7 +8,7 @@ get_mp3(
   id,
   mp3 = TRUE,
   params = "",
-  start_time = NA,
+  start_time = 0,
   end_time = NA,
   overwrite = TRUE,
   info = TRUE,
@@ -50,6 +50,8 @@ More info from the original developers and its code:
 \dontrun{
  # Download video from YouTube and convert to MP3
  get_mp3("https://www.youtube.com/watch?v=lrlKcCdVw9Q")
+ # OR simply
+ get_mp3("lrlKcCdVw9Q")
 }
 }
 \seealso{

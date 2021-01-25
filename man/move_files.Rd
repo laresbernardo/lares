@@ -7,10 +7,10 @@
 move_files(from, to)
 }
 \arguments{
-\item{from}{Character. Filanames and directories. All files 
+\item{from}{Character. File names and directories. All files 
 will be moved recursively.}
 
-\item{to}{Character. Filenames for each \code{from} file or 
+\item{to}{Character. File names for each \code{from} file or
 directory. If directory does not exist, it will be created.}
 }
 \description{
