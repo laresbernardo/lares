@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download MP3 from URL — get_mp3 • lares</title>
+<title>Get file names without extensions — file_name • lares</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,8 @@
 
 
 
-<meta property="og:title" content="Download MP3 from URL — get_mp3" />
-<meta property="og:description" content="This function downloads YouTube videos or Soundcloud or any other 
-platform supported by the youtube-dl library, and converts them into 
-high quality MP3 files. The URL can be for a single video or a whole 
-playlist. It also returns metadata into an (invisible) list." />
+<meta property="og:title" content="Get file names without extensions — file_name" />
+<meta property="og:description" content="Get file names without extensions" />
 
 
 
@@ -111,98 +108,33 @@ playlist. It also returns metadata into an (invisible) list." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download MP3 from URL</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/audio.R'><code>R/audio.R</code></a></small>
-    <div class="hidden name"><code>get_mp3.Rd</code></div>
+    <h1>Get file names without extensions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_functions.R'><code>R/other_functions.R</code></a></small>
+    <div class="hidden name"><code>file_name.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function downloads YouTube videos or Soundcloud or any other 
-platform supported by the youtube-dl library, and converts them into 
-high quality MP3 files. The URL can be for a single video or a whole 
-playlist. It also returns metadata into an (invisible) list.</p>
+    <p>Get file names without extensions</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_mp3</span><span class='op'>(</span>
-  <span class='va'>id</span>,
-  mp3 <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  params <span class='op'>=</span> <span class='st'>""</span>,
-  start_time <span class='op'>=</span> <span class='fl'>0</span>,
-  end_time <span class='op'>=</span> <span class='cn'>NA</span>,
-  overwrite <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  info <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  cover <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>file_name</span><span class='op'>(</span><span class='va'>filepath</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>id</th>
-      <td><p>Character. YouTube URL or ID to search for.</p></td>
-    </tr>
-    <tr>
-      <th>mp3</th>
-      <td><p>Boolean. Add mp3 optimal parameters?</p></td>
-    </tr>
-    <tr>
-      <th>params</th>
-      <td><p>Character. Additional parameters.</p></td>
-    </tr>
-    <tr>
-      <th>start_time, end_time</th>
-      <td><p>Numeric. Start and end time
-to trim the audio output in seconds.</p></td>
-    </tr>
-    <tr>
-      <th>overwrite</th>
-      <td><p>Boolean. Overwrite original file?</p></td>
-    </tr>
-    <tr>
-      <th>info</th>
-      <td><p>Boolean. Import and return metadata?</p></td>
-    </tr>
-    <tr>
-      <th>cover</th>
-      <td><p>Boolean. Google Search its squared cover?</p></td>
-    </tr>
-    <tr>
-      <th>quiet</th>
-      <td><p>Boolean. Keep quiet? If not, print messages.</p></td>
+      <th>filepath</th>
+      <td><p>Character vector. File path(s) to get file names with
+no extension.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="youtube-dl"><a class="anchor" href="#youtube-dl"></a>youtube-dl</h2>
-
-    
-
-<p>More info from the original developers and its code: 
-<a href='https://github.com/ytdl-org/youtube-dl/'>youtube-dl's Github</a></p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other Scrapper: 
-<code><a href='filesGD.html'>filesGD</a>()</code>,
-<code><a href='geoStratum.html'>geoStratum</a>()</code>,
-<code><a href='holidays.html'>holidays</a>()</code>,
-<code><a href='ip_country.html'>ip_country</a>()</code>,
-<code><a href='readGS.html'>readGS</a>()</code>,
-<code><a href='splot_etf.html'>splot_etf</a>()</code>,
-<code><a href='stocks_hist.html'>stocks_hist</a>()</code>,
-<code><a href='stocks_quote.html'>stocks_quote</a>()</code>,
-<code><a href='trendsRelated.html'>trendsRelated</a>()</code>,
-<code><a href='writeGS.html'>writeGS</a>()</code></p>
-<p>Other Audio: 
-<code><a href='trim_mp3.html'>trim_mp3</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
- <span class='co'># Download video from YouTube and convert to MP3</span>
- <span class='fu'>get_mp3</span><span class='op'>(</span><span class='st'>"https://www.youtube.com/watch?v=lrlKcCdVw9Q"</span><span class='op'>)</span>
- <span class='co'># OR simply</span>
- <span class='fu'>get_mp3</span><span class='op'>(</span><span class='st'>"lrlKcCdVw9Q"</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>file_name</span><span class='op'>(</span><span class='st'>"file.aux"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "file"</div><div class='input'><span class='fu'>file_name</span><span class='op'>(</span><span class='st'>"temp/file.R"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "file"</div><div class='input'><span class='fu'>file_name</span><span class='op'>(</span><span class='st'>"/temp/temp3/music.mp3"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "music"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
