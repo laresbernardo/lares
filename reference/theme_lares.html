@@ -132,8 +132,10 @@ major and minor grids, legend, font and font size.</p>
   no_facets <span class='op'>=</span> <span class='cn'>FALSE</span>,
   legend <span class='op'>=</span> <span class='cn'>NA</span>,
   grid <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  axis <span class='op'>=</span> <span class='cn'>TRUE</span>,
   mg <span class='op'>=</span> <span class='fl'>9</span>,
   pal <span class='op'>=</span> <span class='fl'>0</span>,
+  palette <span class='op'>=</span> <span class='cn'>NULL</span>,
   which <span class='op'>=</span> <span class='st'>"fct"</span>
 <span class='op'>)</span></pre>
 
@@ -164,13 +166,25 @@ or by using this parameter manually</p></td>
 <code>X</code>, <code>x</code>, <code>Y</code>, <code>y</code> to enable/disable minor and major grids.</p></td>
     </tr>
     <tr>
+      <th>axis</th>
+      <td><p>Character or Boolean. Use <code>TRUE/FALSE</code>, <code>x</code> or <code>Y</code>
+to enable X and/or/nr Y axis lines.</p></td>
+    </tr>
+    <tr>
       <th>mg</th>
-      <td><p>Numeric. External margins</p></td>
+      <td><p>Numeric. External margins reference.</p></td>
     </tr>
     <tr>
       <th>pal</th>
-      <td><p>Integer. 1 for fill and colour palette, 2 for only colour palette,
-3 for only fill palette, 4 for personal labels-colour palette. 0 or else for nothing.</p></td>
+      <td><p>Integer. <code>1</code> for fill and colour palette,
+<code>2</code> for only colour palette, <code>3</code> for only fill palette, <code>4</code> for 
+personal labels-colour palette. <code>0</code> for nothing.</p></td>
+    </tr>
+    <tr>
+      <th>palette</th>
+      <td><p>Character vector. Pass a vector with HEX colour
+codes to use a custom palette. If you pass a named vector, the name values will be
+used as fill and the values will be used as colour.</p></td>
     </tr>
     <tr>
       <th>which</th>
