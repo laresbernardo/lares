@@ -20,9 +20,15 @@
 #' @param legend Character. Legend position: top, right, bottom, left
 #' @param grid Character or Boolean. Use \code{TRUE/FALSE} or a combination of 
 #' \code{X}, \code{x}, \code{Y}, \code{y} to enable/disable minor and major grids.
-#' @param mg Numeric. External margins
-#' @param pal Integer. 1 for fill and colour palette, 2 for only colour palette,
-#' 3 for only fill palette, 4 for personal labels-colour palette. 0 or else for nothing.
+#' @param axis Character or Boolean. Use \code{TRUE/FALSE}, \code{x} or \code{Y}
+#' to enable X and/or/nr Y axis lines.
+#' @param mg Numeric. External margins reference.
+#' @param pal Integer. \code{1} for fill and colour palette,
+#' \code{2} for only colour palette, \code{3} for only fill palette, \code{4} for 
+#' personal labels-colour palette. \code{0} for nothing.
+#' @param palette Character vector. Pass a vector with HEX colour
+#' codes to use a custom palette. If you pass a named vector, the name values will be
+#' used as fill and the values will be used as colour.
 #' @param which Character. When pal = 3, select which colours should be
 #' added with the custom colours palette: fill, colour, text (fct) - first letters
 #' @export
@@ -36,8 +42,10 @@ theme_lares <- function(font = getOption("lares.font"),
                         no_facets = FALSE,
                         legend = NA,
                         grid = TRUE,
+                        axis = TRUE,
                         mg = 9,
                         pal = 0,
+                        palette = NULL,
                         which = "fct") {
   
   # Start from theme_minimal()
@@ -118,6 +126,17 @@ theme_lares <- function(font = getOption("lares.font"),
   ret <- ret + theme(axis.title.y.right = element_text(
     hjust = yj, size = size * 0.85, angle = -90, colour = soft_colour, family = font, face = "bold"))
   
+  # Suppress axis
+  if (axis == FALSE) ret <- ret + 
+    theme(axis.text.x = element_blank(), axis.text.y = element_blank(),
+          axis.title.x = element_blank(), axis.title.y = element_blank())
+  if (is.character(axis)) {
+    if (tolower(axis) == "x") ret <- ret + theme(
+      axis.text.y = element_blank(), axis.title.y = element_blank())
+    if (tolower(axis) == "y") ret <- ret + theme(
+      axis.text.x = element_blank(), axis.title.x = element_blank())
+  }
+  
   # facet_grid
   ret <- ret + theme(strip.text = element_text(
     hjust = 0, size = size * 0.9, colour = soft_colour, face = "bold", family = font))
@@ -175,8 +194,16 @@ theme_lares <- function(font = getOption("lares.font"),
   # if (grepl("x",tolower(percent))) ret <- ret + scale_x_percent()
   # if (grepl("y",tolower(percent))) ret <- ret + scale_y_percent()
   
+  # Colour Palette
+  if (!is.null(palette)) {
+    if (is.null(names(palette)))
+      names(palette) <- as.vector(palette)
+    colours_pal <- palette
+  } else {
+    colours_pal <- lares_pal()$palette
+  }
+  
   # Palette with fills and colour
-  colours_pal <- lares_pal()$palette
   if (pal == 1) {
     ret <- list(ret, scale_fill_manual(values = names(colours_pal))) 
     ret <- list(ret, scale_colour_manual(values = as.vector(colours_pal)))

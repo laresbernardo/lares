@@ -15,8 +15,10 @@ theme_lares(
   no_facets = FALSE,
   legend = NA,
   grid = TRUE,
+  axis = TRUE,
   mg = 9,
   pal = 0,
+  palette = NULL,
   which = "fct"
 )
 }
@@ -34,10 +36,18 @@ or by using this parameter manually}
 \item{grid}{Character or Boolean. Use \code{TRUE/FALSE} or a combination of 
 \code{X}, \code{x}, \code{Y}, \code{y} to enable/disable minor and major grids.}
 
-\item{mg}{Numeric. External margins}
+\item{axis}{Character or Boolean. Use \code{TRUE/FALSE}, \code{x} or \code{Y}
+to enable X and/or/nr Y axis lines.}
 
-\item{pal}{Integer. 1 for fill and colour palette, 2 for only colour palette,
-3 for only fill palette, 4 for personal labels-colour palette. 0 or else for nothing.}
+\item{mg}{Numeric. External margins reference.}
+
+\item{pal}{Integer. \code{1} for fill and colour palette,
+\code{2} for only colour palette, \code{3} for only fill palette, \code{4} for 
+personal labels-colour palette. \code{0} for nothing.}
+
+\item{palette}{Character vector. Pass a vector with HEX colour
+codes to use a custom palette. If you pass a named vector, the name values will be
+used as fill and the values will be used as colour.}
 
 \item{which}{Character. When pal = 3, select which colours should be
 added with the custom colours palette: fill, colour, text (fct) - first letters}
