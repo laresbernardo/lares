@@ -45,9 +45,11 @@ theme_lares <- function(font = getOption("lares.font"),
   
   # Check and set font
   if (!isTRUE(font_exists(font))) {
-    warning(sprintf("Font '%s' is not installed, has other name, or can't be found", font))
-    options("lares.font" = NA) # So R doesn't try again by default
-    font <- NA
+    if (!is.na(font)) {
+      warning(sprintf("Font '%s' is not installed, has other name, or can't be found", font))
+      font <- NA
+      options("lares.font" = NA) # So R doesn't try again by default
+    }
   } else ret <- ret + theme(text = element_text(family = font))  
   
   # Set some defaults
