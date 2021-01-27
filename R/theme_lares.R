@@ -52,7 +52,7 @@ theme_lares <- function(font = getOption("lares.font"),
   ret <- theme_minimal(base_size = size)
   
   # Check and set font
-  if (!isTRUE(font_exists(font))) {
+  if (!isTRUE(font_exists(font)) | !is.nulll(font)) {
     if (!is.na(font)) {
       warning(sprintf("Font '%s' is not installed, has other name, or can't be found", font))
       font <- NA
