@@ -631,10 +631,10 @@ replaceall <- function(df, original, change, which = "all",
 removenacols <- function(df, all = TRUE, ignore = NULL) {
   if (all) {
     not_all_nas <- colSums(is.na(df)) != nrow(df)
-    keep <- colnames(df) %in% ignored | not_all_nas
+    keep <- colnames(df) %in% ignore | not_all_nas
     df[, keep]
   } else {
-    df[, complete.cases(t(df[!colnames(df) %in% ignored]))]
+    df[, complete.cases(t(df[!colnames(df) %in% ignore]))]
   }
 }
 
