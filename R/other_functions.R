@@ -624,14 +624,15 @@ replaceall <- function(df, original, change, which = "all",
 #' 
 #' @family Data Wrangling
 #' @param df Data.frame
-#' @param all Boolean. Remove columns which contains ONLY NA values.
-#' If set to FALSE, columns which contains at least one NA will be removed
+#' @param all Boolean. Remove columns containing ONLY \code{NA} values.
+#' If set to \code{FALSE}, remove columns containing at least one \code{NA}.
+#' @param ignore Character vector. Column names to ignore validation.
 #' @export
-removenacols <- function(df, all = TRUE) {
-  if (all == TRUE) {
-    return(df[,colSums(is.na(df)) != nrow(df)]) 
+removenacols <- function(df, all = TRUE, ignore = NULL) {
+  if (all) {
+    df[,colSums(is.na(df)) != nrow(df) & !colnames(df) %in% ignore]
   } else {
-    return(df[,complete.cases(t(df))] )
+    df[,complete.cases(t(df)) & !colnames(df) %in% ignore]
   }
 }
 
