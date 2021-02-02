@@ -4,13 +4,15 @@
 \alias{removenacols}
 \title{Remove/Drop Columns in which ALL or SOME values are NAs}
 \usage{
-removenacols(df, all = TRUE)
+removenacols(df, all = TRUE, ignore = NULL)
 }
 \arguments{
 \item{df}{Data.frame}
 
-\item{all}{Boolean. Remove columns which contains ONLY NA values.
-If set to FALSE, columns which contains at least one NA will be removed}
+\item{all}{Boolean. Remove columns containing ONLY \code{NA} values.
+If set to \code{FALSE}, remove columns containing at least one \code{NA}.}
+
+\item{ignore}{Character vector. Column names to ignore validation.}
 }
 \description{
 This function lets the user remove all columns that have some or
