@@ -630,9 +630,9 @@ replaceall <- function(df, original, change, which = "all",
 #' @export
 removenacols <- function(df, all = TRUE, ignore = NULL) {
   if (all) {
-    df[,colSums(is.na(df)) != nrow(df) & !colnames(df) %in% ignore]
+    df[,any(c(colSums(is.na(df)) != nrow(df), !colnames(df) %in% ignore))]
   } else {
-    df[,complete.cases(t(df)) & !colnames(df) %in% ignore]
+    df[,any(c(complete.cases(t(df)), !colnames(df) %in% ignore))]
   }
 }
 
