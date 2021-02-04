@@ -53,7 +53,7 @@ theme_lares <- function(font = getOption("lares.font"),
   
   # Check and set font
   if (!isTRUE(font_exists(font)) | !is.null(font)) {
-    if (!is.na(font)) {
+    if (isFALSE(is.na(font))) {
       warning(sprintf("Font '%s' is not installed, has other name, or can't be found", font))
       font <- NA
       options("lares.font" = NA) # So R doesn't try again by default
