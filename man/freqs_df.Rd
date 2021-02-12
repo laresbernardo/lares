@@ -43,7 +43,7 @@ This function lets the user analize data by visualizing the
 frequency of each value of each column from a whole data frame.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 freqs_df(dft)
 }

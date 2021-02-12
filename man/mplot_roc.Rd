@@ -50,7 +50,7 @@ This function plots ROC Curves with AUC values with 95\% confidence
 range. It also works for multi-categorical models.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dfr) # Results for AutoML Predictions
 lapply(dfr[c(1,2)], head)
 

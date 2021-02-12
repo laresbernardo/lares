@@ -52,7 +52,7 @@ apply the model and select up until ntile X, what is the expected
 % of target class observations in the selection?
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dfr) # Results for AutoML Predictions
 lapply(dfr, head)
 

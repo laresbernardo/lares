@@ -26,7 +26,7 @@
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
 #' 
 #' # How many survived?
@@ -266,7 +266,7 @@ freqs <- function(df, ..., wt = NULL,
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
 #' freqs_df(dft)
 #' @export
@@ -394,7 +394,7 @@ freqs_df <- function(df,
 #' @param title Character. Overwrite plot's title with.
 #' @param subtitle Character. Overwrite plot's subtitle with.
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
 #' 
 #' df <- freqs_plot(dft, Pclass, Survived)
@@ -513,7 +513,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @param plot Boolean. Plot viz? Will be generated anyways in the output object
 #' @examples 
 #' \donttest{
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' df <- dplyr::starwars
 #' head(df[,c(1,4,5,12)], 10)
 #' 

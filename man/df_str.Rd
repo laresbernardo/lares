@@ -26,7 +26,7 @@ dataset (data.frame). It returns multiple counters for useful metrics,
 a plot, and a list of column names for each of the column metrics.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 
 # List with the names of the columns classified by class

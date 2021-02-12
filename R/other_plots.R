@@ -17,7 +17,7 @@
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' cols <- c("Role", "Place", "Type", "Start", "End")
 #' today <- as.character(Sys.Date())
 #' cv <- data.frame(rbind(
@@ -125,7 +125,7 @@ plot_timeline <- function(event,
 #' @param table Boolean. Print results as table?
 #' @param ... Further parameters passed to freqs()
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
 #' gg_pie(dft, Survived)
 #' gg_pie(dft, Pclass, table = TRUE)
@@ -242,7 +242,7 @@ plot_chord <- function(origin, dest,
 #' @param limit Integer. Limit n most frequent values only
 #' @param na.rm Boolean. Remove empty and NAs?
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
 #' df <- freqs(dft, Pclass)
 #' gg_bars(df$Pclass, n = df$n)
@@ -351,15 +351,15 @@ scale_y_abbr <- function(...) scale_y_continuous(..., labels = num_abbr)
 #' @param size Numeric. Text size.
 #' @param font Character. Font name
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' noPlot(message = "No plot to show!")
 #' @export
-noPlot <- function(message = "Nothing to show here!", 
-                   size = 4, 
-                   font = getOption("lares.font")) {
+noPlot <- function(message = "Nothing to show here!", size = 4,
+                   font = Sys.getenv("LARES_FONT")) {
   
   ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 
-    geom_text(size = size) + theme_minimal() +
+    theme_lares(font = font) + theme_minimal() +
+    geom_text(size = size) +
     theme(axis.line = element_blank(),
           axis.text.x = element_blank(),
           axis.text.y = element_blank(),

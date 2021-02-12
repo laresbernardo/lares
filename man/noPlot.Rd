@@ -7,7 +7,7 @@
 noPlot(
   message = "Nothing to show here!",
   size = 4,
-  font = getOption("lares.font")
+  font = Sys.getenv("LARES_FONT")
 )
 }
 \arguments{
@@ -23,7 +23,7 @@ customizable message. It is quite useful for Shiny renderPlot when
 using filters and no data is returned.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 noPlot(message = "No plot to show!")
 }
 \seealso{

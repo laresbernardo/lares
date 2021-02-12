@@ -1,9 +1,9 @@
 default:
   service1:
-    driver: 'PostgreSQL' 
+    driver: 'PostgreSQL'
     server: 'production-url.amazonaws.com'
     uid: 'dummyuser'
-    pwd: 'dummypass123'  
+    pwd: 'dummypass123'
     port: 5432
     database: 'laresdb'
   service2:

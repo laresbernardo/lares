@@ -37,7 +37,7 @@ a new fancy way. Tidyverse friendly, based on lares::freqs(),
 no limits on amount of features to evaluate.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 
 df <- freqs_plot(dft, Pclass, Survived)

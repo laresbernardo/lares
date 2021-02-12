@@ -51,8 +51,7 @@ Also, kmeans assumes spherical shapes of clusters and does not work well
 when clusters are in different shapes such as elliptical clusters.
 }
 \examples{
-options("lares.font" = NA) # Temporal
-print(.Options$lares.font)
+Sys.unsetenv("LARES_FONT") # Temporal
 data("iris")
 df <- subset(iris, select = c(-Species))
 

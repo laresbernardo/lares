@@ -16,7 +16,7 @@
 #' @param subtitle Character. Add subtitle to plot
 #' @param quiet Boolean. Keep quiet or show other options available?
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
 #' 
 #' # List with the names of the columns classified by class
@@ -120,7 +120,7 @@ df_str <- function(df,
 #' @family Exploratory
 #' @param df Dataframe
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
 #' plot_nums(dft)
 #' @export

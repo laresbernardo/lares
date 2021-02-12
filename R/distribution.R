@@ -30,9 +30,9 @@
 #' @param chords Boolean. Use a chords plot?
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
-#' @examples 
+#' @examples
 #' \donttest{
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
 #' 
 #' # Relation for categorical/categorical values
@@ -73,9 +73,9 @@ distr <- function(data, ...,
                   save = FALSE, 
                   subdir = NA) {
   
-  # To handle scientific notation inputs correctly
-  on.exit(options("scipen" = getOption('scipen')))
-  options("scipen" = 999)
+  # # To handle scientific notation inputs correctly
+  # on.exit(options("scipen" = getOption('scipen')))
+  # options("scipen" = 999)
   
   data <- data.frame(data)
   vars <- quos(...)

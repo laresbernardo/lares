@@ -7,8 +7,7 @@
 formatNum(
   x,
   decimals = 2,
-  type = getOption("lares.formatNum"),
-  scientific = FALSE,
+  type = Sys.getenv("LARES_NUMFORMAT"),
   pre = "",
   pos = "",
   abbr = FALSE
@@ -19,11 +18,9 @@ formatNum(
 
 \item{decimals}{Integer. Amount of decimals to display}
 
-\item{type}{Integer. 1 for International standards. 2 for 
-American Standards. Use options("lares.formatNum" = 2) to
-set this parameter globally.}
-
-\item{scientific}{Boolean. Scientific notation?}
+\item{type}{Integer. \code{1} for International standards. \code{2}
+for American Standards. Use \code{Sys.setenv("LARES_NUMFORMAT" = 2)} 
+to set this parameter globally.}
 
 \item{pre, pos}{Character. Add string before or after number}
 

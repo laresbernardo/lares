@@ -38,7 +38,7 @@ have in 'tag' (more than: regression; less than: classification)}
 This function plots discrete and continuous values results
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dfr) # Results for AutoML Predictions
 lapply(dfr[c(1,3)], head)
 

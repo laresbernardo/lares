@@ -12,7 +12,7 @@
 #' @param subtitle Character. Subtitle to show in plot
 #' @param summary Boolean. Show numerical summary text?
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' 
 #' # Dummy data
 #' df <- data.frame(A = c(1:5), 

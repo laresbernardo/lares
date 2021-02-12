@@ -71,7 +71,7 @@ outlier_zscore <- function(x, thresh = 3, mad = FALSE) {
 #' @param top Integer. Show only n most frequent categorical values when 
 #' using the \code{group} argument.
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
 #' outlier_zscore_plot(dft, Fare)
 #' p <- outlier_zscore_plot(dft, Fare, Pclass, thresh = c(3, 5))

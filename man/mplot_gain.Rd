@@ -55,7 +55,7 @@ of the overall number of cases in a given category "gained" by
 targeting a percentage of the total number of cases.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dfr) # Results for AutoML Predictions
 lapply(dfr, head)
 

@@ -44,7 +44,7 @@ This function plots groups of observartions with timelines in a
 Gantt Plot way. Only works if start and end are date format values.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 cols <- c("Role", "Place", "Type", "Start", "End")
 today <- as.character(Sys.Date())
 cv <- data.frame(rbind(

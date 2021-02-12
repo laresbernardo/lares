@@ -5,7 +5,7 @@
 \title{Theme for ggplot2 (lares)}
 \usage{
 theme_lares(
-  font = getOption("lares.font"),
+  font = Sys.getenv("LARES_FONT"),
   size = 12,
   main_colour = "darkorange3",
   hard_colour = "black",
@@ -24,8 +24,8 @@ theme_lares(
 }
 \arguments{
 \item{font, size}{Character and numeric. Base font family and base size for texts. 
-Arial Narrow is set by default; you may change it with options("lares.font"="Other")
-or by using this parameter manually}
+\code{Arial Narrow} is set by default when the library is loaded; you may change it
+with \code{Sys.getenv("LARES_FONT" = "X)} or by using this parameter manually.}
 
 \item{main_colour, hard_colour, soft_colour, bg_colour, panel_colour}{Character. Main colours for your theme}
 

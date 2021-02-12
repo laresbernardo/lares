@@ -19,7 +19,7 @@ gg_pie(df, var, table = FALSE, ...)
 This function plots discrete and continuous values results
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 gg_pie(dft, Survived)
 gg_pie(dft, Pclass, table = TRUE)

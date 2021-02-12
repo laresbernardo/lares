@@ -33,7 +33,7 @@ mplot_lineal(
 This function plots a Linear Regression Result
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dfr) # Results for AutoML Predictions
 lapply(dfr, head)
 mplot_lineal(dfr$regr$tag, dfr$regr$score, model_name = "Titanic Fare Model")

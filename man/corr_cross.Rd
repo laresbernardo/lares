@@ -63,7 +63,7 @@ DataScience+ Post: \href{https://bit.ly/2WiLsQB}{Find Insights
 with Ranked Cross-Correlations}
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 
 # Only data with no plot

@@ -194,7 +194,7 @@ normalize <- function(x) {
 #' @param quotes Boolean. Bring simple quotes for each observation.
 #' @param and Character. Add 'and' or something before last observation. 
 #' Not boolean variable so it can be used on other languages. Note that
-#' the last comma will be suppressed if \code{options("lares.formatNum")} 
+#' the last comma will be suppressed if \code{Sys.getenv("LARES_NUMFORMAT")}
 #' is set to \code{1} and you have less than 3 values.
 #' @examples
 #' vector2text(LETTERS[1:5])
@@ -224,7 +224,7 @@ vector2text <- function(vector, sep = ", ", quotes = TRUE, and = "") {
     output <- gsub("'", "", output)
   
   # Get rid of the last comma when using and?
-  if (and != "" & (getOption("lares.formatNum") == 1 | n == 2)) {
+  if (and != "" & (Sys.getenv("LARES_NUMFORMAT") == 1 | n == 2)) {
     last_comma <- tail(c(gregexpr(",", output)[[1]]), 1)
     output <- paste0(substr(output, 1, last_comma - 1),
                      substr(output, last_comma + 1, nchar(output)))
@@ -305,10 +305,9 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
 #' @family Data Wrangling
 #' @param x Numerical Vector
 #' @param decimals Integer. Amount of decimals to display
-#' @param type Integer. 1 for International standards. 2 for 
-#' American Standards. Use options("lares.formatNum" = 2) to
-#' set this parameter globally.
-#' @param scientific Boolean. Scientific notation?
+#' @param type Integer. \code{1} for International standards. \code{2}
+#' for American Standards. Use \code{Sys.setenv("LARES_NUMFORMAT" = 2)} 
+#' to set this parameter globally.
 #' @param pre,pos Character. Add string before or after number
 #' @param abbr Boolean. Abbreviate using num_abbr()? You can use
 #' the `decimals` parameter to set abbr's \code{n}(-1) parameter.
@@ -321,17 +320,9 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
 #' formatNum(1234567890, decimals = 0, abbr = TRUE)
 #' @export
 formatNum <- function(x, decimals = 2, 
-                      type = getOption("lares.formatNum"), 
-                      scientific = FALSE,
+                      type = Sys.getenv("LARES_NUMFORMAT"),
                       pre = "", pos = "",
                       abbr = FALSE) {
-  
-  if (!scientific) {
-    on.exit(options("scipen" = getOption('scipen')))
-    options("scipen" = 999)
-  } else {
-    x <- formatC(x, format = "e", digits = 2)
-  }
   
   if (abbr) {
     x <- num_abbr(x, n = decimals + 1)
@@ -1245,7 +1236,6 @@ font_exists <- function(font = "Arial Narrow", quiet = FALSE) {
     check(font)
   }, error = function(err) {
     if (!quiet) message(paste("Font issue:", err))
-    options("lares.font" = NA)
     return(FALSE)
   })
 }
@@ -1272,9 +1262,9 @@ num_abbr <- function(x, n = 3) {
   if (length(n) > 1) stop('Please make sure that n takes on a single value.')
   if (!n %in% 1:6) stop('Please make sure that n takes on an interger value between 1 to 6.')
   
-  # To handle scientific notation inputs correctly
-  on.exit(options("scipen" = getOption('scipen')))
-  options("scipen" = 999)
+  # # To handle scientific notation inputs correctly
+  # on.exit(options("scipen" = getOption('scipen')))
+  # options("scipen" = 999)
   
   # Clean up x
   negative_positions <- ifelse(x < 0, '-', '')

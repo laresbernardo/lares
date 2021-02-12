@@ -68,7 +68,7 @@ automatically runs \code{ohse} (one-hot-smart-encoding) so no need to input
 only numerical values.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 
 dft \%>\% corr_var(Survived, method = "spearman", plot = FALSE, top = 10)

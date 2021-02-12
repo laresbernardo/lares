@@ -23,7 +23,7 @@ Test several Z-score thresholds to visualize outliers. Tidyverse
 friendly.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 outlier_zscore_plot(dft, Fare)
 p <- outlier_zscore_plot(dft, Fare, Pclass, thresh = c(3, 5))

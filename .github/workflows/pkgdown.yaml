@@ -41,7 +41,7 @@ jobs:
 
       - name: Install package
         run: R CMD INSTALL .
-        
+
       - name: Who am I?
         env:
           # Set in Github repo Settings > Secrets

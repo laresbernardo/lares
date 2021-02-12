@@ -12,8 +12,8 @@ scrabble_words(
   force_str = "",
   force_n = 0,
   force_max = 0,
-  scores = getOption("lares.lang"),
-  language = getOption("lares.lang"),
+  scores = Sys.getenv("LARES_LANG"),
+  language = Sys.getenv("LARES_LANG"),
   words = NA,
   quiet = FALSE
 )
@@ -42,7 +42,7 @@ contains two columns: "tiles" with every letter of the alphabet and
 to overwrite or complement this dictionaries other words you can set to
 \code{"none"} and/or use the \code{words} parameter.
 You might also want to set this parameter globally with
-\code{options("lares.lang" = "en")} and forget about it!}
+\code{Sys.setenv("LARES_LANG" = "en")} and forget about it!}
 
 \item{words}{Character vector. Use if you wish to manually add words.}
 
@@ -56,7 +56,7 @@ place to post your tiles.
 \examples{
 \dontrun{
 # Automatic use of languages and scores
-options("lares.lang" = "es")
+Sys.setenv("LARES_LANG" = "es")
 
 scrabble_words(tiles = "holasa",
                free = 1,

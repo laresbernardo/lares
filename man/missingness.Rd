@@ -22,7 +22,7 @@ This function lets the user calculate the percentage of NAs or
 missingness in a data.frame. It also plots the results if needed.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 
 # Dummy data
 df <- data.frame(A = c(1:5), 

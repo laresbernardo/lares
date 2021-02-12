@@ -51,7 +51,6 @@ Other Tools:
 \code{\link{h2o_predict_MOJO}()},
 \code{\link{h2o_predict_model}()},
 \code{\link{h2o_selectmodel}()},
-\code{\link{h2o_update}()},
 \code{\link{haveInternet}()},
 \code{\link{image_metadata}()},
 \code{\link{importxlsx}()},

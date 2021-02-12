@@ -51,7 +51,7 @@ unique values the independent variable (tag) has.
 }
 \examples{
 \donttest{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dfr) # Results for AutoML Predictions
 lapply(dfr, head)
 

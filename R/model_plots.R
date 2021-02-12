@@ -15,7 +15,7 @@
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
 #' lapply(dfr[c(1,3)], head)
 #' 
@@ -124,7 +124,7 @@ mplot_density <- function(tag,
 #' @param colours If possitive and negative contribution is known
 #' @param limit Integer. Limit how many variables you wish to plot
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' df <- data.frame(variable = LETTERS[1:6],
 #'                  importance = c(4,6,6.7,3,4.8,6.2)/100,
 #'                  positive = c(TRUE,TRUE,FALSE,TRUE,FALSE,FALSE))
@@ -215,7 +215,7 @@ mplot_importance <- function(var,
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
 #' lapply(dfr[c(1,2)], head)
 #' 
@@ -304,7 +304,7 @@ mplot_roc <- function(tag,
 #' @param splits Integer. Numer of separations to plot
 #' @param table Boolean. Do you wish to return a table with results?
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
 #' head(dfr$class2)
 #' 
@@ -367,7 +367,7 @@ mplot_cuts <- function(score,
 #' @param splits Integer. Number of separations to plot
 #' @param title Character. Title to show in plot
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
 #' head(dfr$regr)
 #' mplot_cuts_error(dfr$regr$tag, dfr$regr$score,
@@ -476,7 +476,7 @@ mplot_cuts_error <- function(tag,
 #' @inheritParams mplot_roc
 #' @param splits Integer. Number of separations to plot
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
 #' lapply(dfr, head)
 #' 
@@ -656,7 +656,7 @@ mplot_metrics <- function(results,
 #' @family ML Visualization
 #' @inheritParams mplot_roc
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
 #' lapply(dfr, head)
 #' mplot_lineal(dfr$regr$tag, dfr$regr$score, model_name = "Titanic Fare Model")
@@ -742,7 +742,7 @@ mplot_lineal <- function(tag,
 #' @param plot Boolean. Plot results? If not, plot grid object returned
 #' @examples 
 #' \donttest{
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
 #' lapply(dfr, head)
 #' 
@@ -838,7 +838,7 @@ mplot_full <- function(tag,
 #' @param top Integer. Plot only the most n frequent variables.
 #' Set to \code{NA} to plot all.
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
 #' lapply(dfr, head)
 #' 
@@ -969,7 +969,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
 #' @param caption Character. Caption to show in plot
 #' @param quiet Boolean. Do not show message for auto target?
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
 #' lapply(dfr, head)
 #' 
@@ -1091,7 +1091,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
 #' @inheritParams mplot_roc
 #' @inheritParams mplot_gain
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
 #' lapply(dfr, head)
 #' 
@@ -1205,7 +1205,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
 #' @family ML Visualization
 #' @inheritParams mplot_roc
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
 #' mplot_topcats(dfr$class3$tag, dfr$class3$score,
 #'               multis = subset(dfr$class3, select = -c(tag, score)),

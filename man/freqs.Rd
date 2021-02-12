@@ -59,7 +59,7 @@ This function lets the user group, count, calculate percentages
 and cumulatives. It also plots results if needed. Tidyverse friendly.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 
 # How many survived?

@@ -196,13 +196,13 @@ grepl_letters <- function(vector, pattern, blank = "_") {
 #' to overwrite or complement this dictionaries other words you can set to
 #' \code{"none"} and/or use the \code{words} parameter.
 #' You might also want to set this parameter globally with
-#' \code{options("lares.lang" = "en")} and forget about it!
+#' \code{Sys.setenv("LARES_LANG" = "en")} and forget about it!
 #' @param words Character vector. Use if you wish to manually add words.
 #' @param quiet Boolean. Do not print words as they are being searched.
 #' @examples 
 #' \dontrun{
 #' # Automatic use of languages and scores
-#' options("lares.lang" = "es")
+#' Sys.setenv("LARES_LANG" = "es")
 #' 
 #' scrabble_words(tiles = "holasa",
 #'                free = 1,
@@ -235,8 +235,8 @@ scrabble_words <- function(tiles,
                            force_str = "",
                            force_n = 0, 
                            force_max = 0,
-                           scores = getOption("lares.lang"), 
-                           language = getOption("lares.lang"), 
+                           scores = Sys.getenv("LARES_LANG"),
+                           language = Sys.getenv("LARES_LANG"),
                            words = NA,
                            quiet = FALSE) {
   
@@ -343,7 +343,7 @@ addletters <- function(str, tiles) {
 # library(lares)
 # library(dplyr)
 # library(stringr)
-# options("lares.lang" = "es")
+# Sys.setenv("LARES_LANG" = "es")
 # 
 # words <- scrabble_dictionary("es")$words
 # 

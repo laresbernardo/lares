@@ -24,8 +24,7 @@
 #' @param seed Numeric. Seed for reproducibility
 #' @param quiet Boolean. Keep quiet? If not, print messages
 #' @examples 
-#' options("lares.font" = NA) # Temporal
-#' print(.Options$lares.font)
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data("iris")
 #' df <- subset(iris, select = c(-Species))
 #' 
@@ -49,8 +48,8 @@
 #' # 3D interactive plot
 #' \dontrun{clusters$PCA$plot_1_2_3}
 #' @export
-clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE, 
-                          ignore = NA, ohse = TRUE, norm = TRUE, 
+clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
+                          ignore = NA, ohse = TRUE, norm = TRUE,
                           comb = c(1, 2), seed = 123, quiet = TRUE){
   
   df <- prepare_data(df, drop_na = drop_na, ohse = ohse, norm = norm, quiet = quiet)
@@ -71,12 +70,11 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   nclusters <- data.frame(n = c(1:limit), wss = wss)
   nclusters_plot <- ggplot(nclusters, aes(x = .data$n, y = .data$wss)) + 
     geom_line() + geom_point() +
-    theme_minimal() +
     labs(title = "Total Number of Clusters",
          subtitle = "HINT: Where does the curve level?",
          x = "Number of Clusters",
          y = "Within Groups Sum of Squares") +
-    scale_y_continuous(labels = comma) +
+    scale_y_continuous(labels = scales::comma) +
     theme_lares()
   results[["nclusters"]] <- nclusters
   results[["nclusters_plot"]] <- nclusters_plot

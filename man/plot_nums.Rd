@@ -13,7 +13,7 @@ plot_nums(df)
 This function filters numerical columns and plots boxplots.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 plot_nums(dft)
 }

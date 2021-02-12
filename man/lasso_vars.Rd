@@ -44,7 +44,7 @@ standardize, center or scale your data. Tidyverse friendly.
 }
 \examples{
 \donttest{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 
 m <- lasso_vars(dft, Survived, ignore = c("Cabin"))

@@ -54,7 +54,7 @@ This function plots a confussion matrix.
 You may use \code{conf_mat()} to get calculate values.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dfr) # Results for AutoML Predictions
 lapply(dfr, head)
 

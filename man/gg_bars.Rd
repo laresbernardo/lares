@@ -33,7 +33,7 @@ gg_bars(
 This function uses a nice template for barplots.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 df <- freqs(dft, Pclass)
 gg_bars(df$Pclass, n = df$n)

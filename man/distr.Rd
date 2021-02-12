@@ -72,7 +72,7 @@ Custom and tidyverse friendly.
 }
 \examples{
 \donttest{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 
 # Relation for categorical/categorical values

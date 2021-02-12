@@ -167,7 +167,7 @@ corr <- function(df, method = "pearson",
 #' @param quiet Boolean. Keep quiet? If not, show messages
 #' @param ... Additional parameters passed to \code{corr}
 #' @examples
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
 #' 
 #' dft %>% corr_var(Survived, method = "spearman", plot = FALSE, top = 10)
@@ -316,7 +316,7 @@ corr_var <- function(df, var,
 #' @param rm.na Boolean. Remove NAs?
 #' @param ... Additional parameters passed to \code{corr}
 #' @examples 
-#' options("lares.font" = NA) # Temporal
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
 #' 
 #' # Only data with no plot

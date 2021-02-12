@@ -63,7 +63,7 @@ which may be used as an alternative to Venn diagrams.
 }
 \examples{
 \donttest{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 df <- dplyr::starwars
 head(df[,c(1,4,5,12)], 10)
 

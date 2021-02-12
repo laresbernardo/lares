@@ -37,7 +37,7 @@ This function lets us split and compare quantiles on a given prediction to
 compare different categorical values vs scores grouped by equal sized buckets.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dfr) # Results for AutoML Predictions
 lapply(dfr, head)
 

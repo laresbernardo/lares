@@ -36,7 +36,7 @@ mplot_cuts(
 This function cuts by quantiles any score or prediction.
 }
 \examples{
-options("lares.font" = NA) # Temporal
+Sys.unsetenv("LARES_FONT") # Temporal
 data(dfr) # Results for AutoML Predictions
 head(dfr$class2)
 
