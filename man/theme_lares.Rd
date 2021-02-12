@@ -53,7 +53,7 @@ used as fill and the values will be used as colour.}
 added with the custom colours palette: fill, colour, text (fct) - first letters}
 }
 \description{
-Based on \code{hrbrthemes}' \code{theme_ipsum} and customized for \code{lares}' use.
+Based on \code{hrbrthemes}' \code{theme_ipsum} and customized for \code{lares} usage.
 With this team you can custom the colour and fill palettes, global colour parameters,
 major and minor grids, legend, font and font size.
 }

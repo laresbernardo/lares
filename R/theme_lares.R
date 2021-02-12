@@ -1,9 +1,9 @@
 ####################################################################
 #' Theme for ggplot2 (lares)
 #' 
-#' Based on \code{hrbrthemes}' \code{theme_ipsum} and customized for \code{lares}' use.
+#' Based on \code{hrbrthemes}' \code{theme_ipsum} and customized for \code{lares} usage.
 #' With this team you can custom the colour and fill palettes, global colour parameters,
-#' major and minor grids, legend, font and font size.
+#' major and minor grids, legend, font and font size. 
 #'
 #' @section Why Arial Narrow?:
 #' First and foremost, Arial Narrow is generally installed by default or readily
