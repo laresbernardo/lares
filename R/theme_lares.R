@@ -13,7 +13,7 @@
 #' @family Visualization
 #' @param font,size Character and numeric. Base font family and base size for texts. 
 #' \code{Arial Narrow} is set by default when the library is loaded; you may change it
-#' with \code{Sys.getenv("LARES_FONT" = "X)} or by using this parameter manually.
+#' with \code{Sys.getenv("LARES_FONT" = "X")} or by using this parameter manually.
 #' @param main_colour,hard_colour,soft_colour,bg_colour,panel_colour
 #' Character. Main colours for your theme
 #' @param no_facets Boolean. Suppress facet labels?
