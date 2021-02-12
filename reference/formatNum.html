@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.12</span>
       </span>
     </div>
 
@@ -120,8 +120,7 @@
     <pre class="usage"><span class='fu'>formatNum</span><span class='op'>(</span>
   <span class='va'>x</span>,
   decimals <span class='op'>=</span> <span class='fl'>2</span>,
-  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"lares.formatNum"</span><span class='op'>)</span>,
-  scientific <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"LARES_NUMFORMAT"</span><span class='op'>)</span>,
   pre <span class='op'>=</span> <span class='st'>""</span>,
   pos <span class='op'>=</span> <span class='st'>""</span>,
   abbr <span class='op'>=</span> <span class='cn'>FALSE</span>
@@ -140,13 +139,9 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Integer. 1 for International standards. 2 for 
-American Standards. Use options("lares.formatNum" = 2) to
-set this parameter globally.</p></td>
-    </tr>
-    <tr>
-      <th>scientific</th>
-      <td><p>Boolean. Scientific notation?</p></td>
+      <td><p>Integer. <code>1</code> for International standards. <code>2</code>
+for American Standards. Use <code><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.setenv("LARES_NUMFORMAT" = 2)</a></code> 
+to set this parameter globally.</p></td>
     </tr>
     <tr>
       <th>pre, pos</th>

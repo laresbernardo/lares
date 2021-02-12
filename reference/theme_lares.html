@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Theme for ggplot2 (lares) — theme_lares" />
-<meta property="og:description" content="Based on hrbrthemes' theme_ipsum and customized for lares' use.
+<meta property="og:description" content="Based on hrbrthemes' theme_ipsum and customized for lares usage.
 With this team you can custom the colour and fill palettes, global colour parameters,
 major and minor grids, legend, font and font size." />
 
@@ -74,7 +74,7 @@ major and minor grids, legend, font and font size." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.12</span>
       </span>
     </div>
 
@@ -116,13 +116,13 @@ major and minor grids, legend, font and font size." />
     </div>
 
     <div class="ref-description">
-    <p>Based on <code>hrbrthemes</code>' <code>theme_ipsum</code> and customized for <code>lares</code>' use.
+    <p>Based on <code>hrbrthemes</code>' <code>theme_ipsum</code> and customized for <code>lares</code> usage.
 With this team you can custom the colour and fill palettes, global colour parameters,
 major and minor grids, legend, font and font size.</p>
     </div>
 
     <pre class="usage"><span class='fu'>theme_lares</span><span class='op'>(</span>
-  font <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"lares.font"</span><span class='op'>)</span>,
+  font <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span>,
   size <span class='op'>=</span> <span class='fl'>12</span>,
   main_colour <span class='op'>=</span> <span class='st'>"darkorange3"</span>,
   hard_colour <span class='op'>=</span> <span class='st'>"black"</span>,
@@ -145,8 +145,8 @@ major and minor grids, legend, font and font size.</p>
     <tr>
       <th>font, size</th>
       <td><p>Character and numeric. Base font family and base size for texts. 
-Arial Narrow is set by default; you may change it with options("lares.font"="Other")
-or by using this parameter manually</p></td>
+<code>Arial Narrow</code> is set by default when the library is loaded; you may change it
+with <code><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv("LARES_FONT" = "X")</a></code> or by using this parameter manually.</p></td>
     </tr>
     <tr>
       <th>main_colour, hard_colour, soft_colour, bg_colour, panel_colour</th>

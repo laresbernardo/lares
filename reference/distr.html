@@ -74,7 +74,7 @@ Custom and tidyverse friendly." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.12</span>
       </span>
     </div>
 
@@ -254,7 +254,7 @@ for both, target and values)</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"lares.font"</span> <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span> <span class='co'># Temporal</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.unsetenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span> <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
 
 <span class='co'># Relation for categorical/categorical values</span>
@@ -269,10 +269,10 @@ for both, target and values)</p></td>
 #&gt; <span class='warning'>  dplyr::select(data, !!enquo(x))    # Unquote single quosure</span>
 #&gt; <span class='warning'>  dplyr::select(data, !!!enquos(x))  # Splice list of quosures</span>
 #&gt; <span class='warning'></span>
-#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once per session.</span><span></span></div><div class='img'><img src='distr-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once per session.</span><span></span></div><div class='output co'>#&gt; <span class='warning'>Warning: Font '' is not installed, has other name, or can't be found</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Font '' is not installed, has other name, or can't be found</span></div><div class='img'><img src='distr-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Relation for categorical/numeric values</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Survived</span>, <span class='va'>Fare</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 5</span><span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Font '' is not installed, has other name, or can't be found</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Font '' is not installed, has other name, or can't be found</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 5</span><span>
 #&gt;    targets value            n     p  pcum
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;ord&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> FALSE   (7.9,8.1]       87  82.1  82.1
@@ -286,19 +286,19 @@ for both, target and values)</p></td>
 #&gt; </span><span style='color: #555555;'> 9</span><span> TRUE    (40,78]         47  52.8  52.8
 #&gt; </span><span style='color: #555555;'>10</span><span> TRUE    (22,27]         46  51.7  51.7</div><div class='input'><span class='co'># Sort values </span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Survived</span>, <span class='va'>Fare</span>, abc <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='img'><img src='distr-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Less splits/breaks</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Font '' is not installed, has other name, or can't be found</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Font '' is not installed, has other name, or can't be found</span></div><div class='img'><img src='distr-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Less splits/breaks</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Survived</span>, <span class='va'>Fare</span>, abc <span class='op'>=</span> <span class='cn'>TRUE</span>, breaks <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-</div><div class='img'><img src='distr-3.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Font '' is not installed, has other name, or can't be found</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Font '' is not installed, has other name, or can't be found</span></div><div class='img'><img src='distr-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Distribution of numerical only</span>
 <span class='va'>dft</span><span class='op'>[</span><span class='va'>dft</span><span class='op'>$</span><span class='va'>Fare</span> <span class='op'>&lt;</span> <span class='fl'>20</span>,<span class='op'>]</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Fare</span><span class='op'>)</span>
-</div><div class='img'><img src='distr-4.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Font '' is not installed, has other name, or can't be found</span></div><div class='img'><img src='distr-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Distribution of numerical/numerical</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Fare</span>, <span class='va'>Age</span><span class='op'>)</span>
-</div><div class='img'><img src='distr-5.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Font '' is not installed, has other name, or can't be found</span></div><div class='img'><img src='distr-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Select only one of the two default plots of distr()</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Survived</span>, <span class='va'>Age</span>, type <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='img'><img src='distr-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Survived</span>, <span class='va'>Age</span>, type <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='img'><img src='distr-7.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Font '' is not installed, has other name, or can't be found</span></div><div class='img'><img src='distr-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Survived</span>, <span class='va'>Age</span>, type <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Font '' is not installed, has other name, or can't be found</span></div><div class='img'><img src='distr-7.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
