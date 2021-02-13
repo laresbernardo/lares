@@ -43,7 +43,7 @@ This function lets the user view a progressbar for a 'for' loop.
 }
 \examples{
 for (i in 1:9) {
-  statusbar(i, 10, multiples = 2)
+  statusbar(i, 9, multiples = 2)
   Sys.sleep(0.3)
 }
 }

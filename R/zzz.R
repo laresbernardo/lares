@@ -9,7 +9,7 @@
       Sys.getenv("LARES_NUMFORMAT") else 2,
     # Status / Loading bar style for statusbar()
     "LARES_STATUSBAR" = if (Sys.getenv("LARES_STATUSBAR") != "")
-      Sys.getenv("LARES_STATUSBAR") else "arrow",
+      Sys.getenv("LARES_STATUSBAR") else "sword",
     # Scrabble and other language settings
     "LARES_LANG" = if (Sys.getenv("LARES_LANG") != "")
       Sys.getenv("LARES_LANG") else "es")

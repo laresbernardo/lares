@@ -46,7 +46,7 @@ statusbar <- function(run = 1, max.run = 100, label = run, msg = "DONE",
   
   if (type == "domino") syms <- list(first = "|", middle = "/", last = "_")
   if (type == "equal") syms <- list(first = " ", middle = "=", last = "=")
-  if (type == "arrow") syms <- list(first = " ", middle = ">", last = ":")
+  if (type == "sword") syms <- list(first = " ", middle = ">", last = ":")
   
   percent.step <- trunc(percent * percent.max, 5)
   part_done <- paste0(rep(syms$last, percent.step), collapse = "")
