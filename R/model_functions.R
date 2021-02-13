@@ -142,7 +142,7 @@ h2o_automl <- function(df, y = "tag",
   
   if (!quiet) message(paste(Sys.time(), "| Started process..."))
   
-  quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
+  quiet(h2o.init(nthreads = -1, port = 54321))
   
   y <- gsub('"', "", as_label(enquo(y)))
   
@@ -644,7 +644,7 @@ export_results <- function(results,
   
   if (save) {
     
-    quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
+    quiet(h2o.init(nthreads = -1, port = 54321))
     
     pass <- !is.null(attr(results, "type"))
     if (!pass) results <- list(model = results) 

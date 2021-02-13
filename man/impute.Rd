@@ -29,7 +29,6 @@ Other Data Wrangling:
 \code{\link{date_feats}()},
 \code{\link{dateformat}()},
 \code{\link{formatNum}()},
-\code{\link{formatTime}()},
 \code{\link{holidays}()},
 \code{\link{left}()},
 \code{\link{normalize}()},

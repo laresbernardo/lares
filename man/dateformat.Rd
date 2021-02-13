@@ -30,7 +30,6 @@ Other Data Wrangling:
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
 \code{\link{formatNum}()},
-\code{\link{formatTime}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
 \code{\link{left}()},

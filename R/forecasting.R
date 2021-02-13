@@ -196,7 +196,6 @@ prophesize <- function(df, n_future = 60, country = "AR",
   df <- data.frame(df[,c(1,2)])
   metric <- colnames(df)[2]
   colnames(df) <- c("ds","y")
-  df$ds <- formatTime(df$ds)
   df <- arrange(df, .data$ds)
   if (logged) df$y <- log(df$y)
   

@@ -5,24 +5,26 @@
 \alias{toc}
 \title{Stopwatch to measure timings in R}
 \usage{
-tic(id = 1, quiet = TRUE)
+tic(id = 1, start = proc.time()["elapsed"], quiet = TRUE)
 
-toc(id = 1, msg = "Elapsed time:", units = TRUE, signif = 3, quiet = FALSE)
+toc(id = 1, msg = "Elapsed time:", type = "units", signif = 3, quiet = FALSE)
 }
 \arguments{
-\item{id}{Define ID if multiple \code{tic} & \code{toc} are being used}
+\item{id}{Define ID if multiple \code{tic} & \code{toc} are being used.}
+
+\item{start}{Start time. Now is default.}
 
 \item{quiet}{Boolean. Quiet messages?}
 
 \item{msg}{Character. Custom message shown}
 
-\item{units}{Boolean. Do you want nice format for the time units? 
-If not, seconds elapsed as numerical values}
+\item{type}{Character. Output format for \code{time} list element.
+Choose any of: \code{units, clock, seconds}.}
 
 \item{signif}{Integer. Significant digits}
 }
 \value{
-\code{toc} returns an (invisible) list containing the timestamps
+\code{toc} returns an (invisible) list containing the time-stamps
 \code{tic} and \code{toc}, \code{time} in seconds and the message \code{msg}.
 }
 \description{

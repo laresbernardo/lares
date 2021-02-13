@@ -4,6 +4,7 @@
 #' This function lets the user view a progressbar for a 'for' loop. 
 #' 
 #' @family Tools
+#' @inheritParams h2o_automl
 #' @param run Iterator. for loop or an integer with the current loop number.
 #' Start with 1 preferibly
 #' @param max.run Number. Maximum number of loops
@@ -15,70 +16,54 @@
 #' when first iteration starts will be set as start time. Useful
 #' for when first iteration is showed as done but started a few 
 #' seconds/minutes ago.
+#' @param multiples Integer. Only print when multiples of N (to avoid)
+#' wasting resources on fast and lots of iterations.
 #' @examples
-#' for (i in 1:5) {
-#'   statusbar(i, 5)
-#'   Sys.sleep(0.5)
+#' for (i in 1:9) {
+#'   statusbar(i, 9, multiples = 2)
+#'   Sys.sleep(0.3)
 #' }
 #' @export
-statusbar <- function(run = 1, max.run = 100, label = run, 
-                      msg = "DONE", type = "equal",
-                      start_time = NA){
+statusbar <- function(run = 1, max.run = 100, label = run, msg = "DONE",
+                      type = Sys.getenv("LARES_STATUSBAR"),
+                      start_time = NA, multiples = 1, alarm = FALSE){
   
+  if (run == 1 & is.na(start_time)) tic("startclock")
+  if (!is.na(start_time)) tic("startclock", start = start_time)
+  
+  if (multiples > 1)
+    if (!run %% multiples == 0 & run != max.run) return()
   if (length(run) > 1 & !is.numeric(run)) 
-    stop("run must be a numerical value!")
+    stop("Parameter 'run' must be a numerical value!")
   if (length(max.run) == 0 & !is.numeric(run)) 
-    stop("max.run needs to be greater than 0!")
+    stop("Parameter 'max.run' needs to be greater than 0!")
   
   percent.max <- getOption("width") * 0.5
-  
-  # formatTimeSmart <- function(x) {
-  #   if (x < 60) {
-  #     suffix <- "s"
-  #     value <- x
-  #   } else if (x < 60 * 60) {
-  #     suffix <- "m"
-  #     value <- x / 60
-  #   } else {
-  #     suffix <- "h"
-  #     value <- x / (60 * 60)
-  #   }
-  #   return(paste0(sprintf('%.1f', value), suffix))
-  # }
-  
-  if (run == 1 & is.na(start_time))
-    options("startclock" = Sys.time())
-  if (!is.na(start_time))
-    options("startclock" = start_time)
   
   if (length(max.run) > 1) {
     percent <- which(run == max.run) / length(max.run)
   } else percent <- run / max.run
   
-  if (type == "domino") {
-    first <- "|"
-    middle <- "/"
-    last <- "_"
-  }
-  if (type == "equal") {
-    first <- " "
-    middle <- "="
-    last <- "="
-  }
+  if (type == "domino") syms <- list(first = "|", middle = "/", last = "_")
+  if (type == "equal") syms <- list(first = " ", middle = "=", last = "=")
+  if (type == "arrow") syms <- list(first = " ", middle = ">", last = ":")
   
   percent.step <- trunc(percent * percent.max, 5)
-  space <- paste(rep(" ", 20), collapse = " ")
-  progress <- paste0(
-    "[", paste0(rep(last, percent.step), collapse = ""), 
-    ifelse(percent.step != percent.max, middle, last),
-    paste0(rep(first, percent.max - percent.step), collapse = ""),"] ", 
-    round(percent * 100, 0), "% | ",
-    paste(ifelse(run != max.run, paste(label, space), paste(
-      msg,paste(rep(" ", 18), collapse = ""),"\n"))))
+  part_done <- paste0(rep(syms$last, percent.step), collapse = "")
+  part_middle <- ifelse(percent.step != percent.max, syms$middle, syms$last)
+  part_left <- paste0(rep(syms$first, percent.max - percent.step), collapse = "")
+  perc <- formatC(percent * 100, width = 3, format = "d", flag = " ")
+  space <- paste(rep(" ", 50), collapse = "")
+  parts <- paste(ifelse(run != max.run, label, msg), space, collapse = "")
   
-  now <- format(.POSIXct(difftime(
-    Sys.time(), getOption("startclock"), units = "secs"), tz = "GMT"), "%H:%M:%S")
+  now <- toc("startclock", quiet = TRUE, type = "clock")$time
+  progress <- glued(' {now} [{part_done}{part_middle}{part_left}] {perc}% | {parts}')
+  cat(progress, "\r")
   flush.console()
-  cat("\r", paste(now, progress))
-  if (run == max.run) options("startclock" = NULL)
+  
+  if (alarm) {
+    try_require("beepr", stop = FALSE)
+    try(beep())
+  }
+  
 }

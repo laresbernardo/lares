@@ -21,7 +21,7 @@
 #' @param grid Character or Boolean. Use \code{TRUE/FALSE} or a combination of 
 #' \code{X}, \code{x}, \code{Y}, \code{y} to enable/disable minor and major grids.
 #' @param axis Character or Boolean. Use \code{TRUE/FALSE}, \code{x} or \code{Y}
-#' to enable X and/or/nr Y axis lines.
+#' to enable X and/or Y axis lines.
 #' @param mg Numeric. External margins reference.
 #' @param pal Integer. \code{1} for fill and colour palette,
 #' \code{2} for only colour palette, \code{3} for only fill palette, \code{4} for 

@@ -9,8 +9,10 @@ statusbar(
   max.run = 100,
   label = run,
   msg = "DONE",
-  type = "equal",
-  start_time = NA
+  type = Sys.getenv("LARES_STATUSBAR"),
+  start_time = NA,
+  multiples = 1,
+  alarm = FALSE
 )
 }
 \arguments{
@@ -30,14 +32,19 @@ at the end of the line. The default is \code{run}.}
 when first iteration starts will be set as start time. Useful
 for when first iteration is showed as done but started a few 
 seconds/minutes ago.}
+
+\item{multiples}{Integer. Only print when multiples of N (to avoid)
+wasting resources on fast and lots of iterations.}
+
+\item{alarm}{Boolean. Ping (sound) when done. Requires \code{beepr}.}
 }
 \description{
 This function lets the user view a progressbar for a 'for' loop.
 }
 \examples{
-for (i in 1:5) {
-  statusbar(i, 5)
-  Sys.sleep(0.5)
+for (i in 1:9) {
+  statusbar(i, 10, multiples = 2)
+  Sys.sleep(0.3)
 }
 }
 \seealso{

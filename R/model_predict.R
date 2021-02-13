@@ -16,7 +16,7 @@
 #' @export
 h2o_predict_MOJO <- function(df, model_path, method = "mojo", batch = 300){
   
-  quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
+  quiet(h2o.init(nthreads = -1, port = 54321))
   
   files <- list.files(model_path)
   file <- files[endsWith(files, ".zip")][1]
@@ -92,7 +92,7 @@ flatten_list <- function(x, quiet = FALSE) {
 h2o_predict_binary <- function(df, model_path, sample = NA){
   
   message("Use of h2o_predict_MOJO instead highly recommended!")
-  quiet(h2o.init(nthreads = -1, port = 54321, min_mem_size = "8g"))
+  quiet(h2o.init(nthreads = -1, port = 54321))
   
   if (!right(model_path, 4) == ".zip") {
     binary <- paste(model_path, gsub(".*-", "", model_path), sep = "/")  

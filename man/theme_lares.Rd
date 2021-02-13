@@ -37,7 +37,7 @@ with \code{Sys.getenv("LARES_FONT" = "X")} or by using this parameter manually.}
 \code{X}, \code{x}, \code{Y}, \code{y} to enable/disable minor and major grids.}
 
 \item{axis}{Character or Boolean. Use \code{TRUE/FALSE}, \code{x} or \code{Y}
-to enable X and/or/nr Y axis lines.}
+to enable X and/or Y axis lines.}
 
 \item{mg}{Numeric. External margins reference.}
 

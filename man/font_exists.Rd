@@ -15,6 +15,7 @@ font_exists(font = "Arial Narrow", quiet = FALSE)
 This function checks if a font is installed in your machine.
 }
 \examples{
-font_exists(font = "Arial Narrow")
-font_exists(font = "Weird Font")
+font_exists(font = "Arial")
+font_exists(font = "XOXO")
+font_exists(font = "")
 }

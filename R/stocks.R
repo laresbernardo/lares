@@ -915,8 +915,8 @@ stocks_report <- function(data = NA,
   
   check_attr(data, check = "stocks_obj")
   
-  pandoc <- Sys.getenv("RSTUDIO_PANDOC")
-  Sys.setenv(RSTUDIO_PANDOC = pandoc)
+  # pandoc <- Sys.getenv("RSTUDIO_PANDOC")
+  # Sys.setenv(RSTUDIO_PANDOC = pandoc)
   if (is.na(dir)) dir <- getwd()
   
   # Can be more accurate with names but works for me!

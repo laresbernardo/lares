@@ -295,7 +295,6 @@ date_feats <- function(dates,
   }
   
   if (holidays | !is.na(currency_pair)) {
-    invisible(Sys.setlocale("LC_TIME", "C"))
     search_dates <- dates[, c(colnames(dates) %in% date_cols)]
     search_dates[] <- unlist(lapply(search_dates, function(x) gsub(" .*", "", as.character(x))))
     alldates <- as.Date(unlist(search_dates, use.names = FALSE))
@@ -322,13 +321,12 @@ date_feats <- function(dates,
       
       # Features creator
       if (features == TRUE) {
-        invisible(Sys.setlocale("LC_TIME", "C"))
         result$values_date_year <- year(values)
         result$values_date_month <- month(values)
         result$values_date_day <- day(values)
         result$values_date_week <- week(values)
         result$values_date_weekday <- weekdays(values, abbreviate = TRUE)
-        result$values_date_weekend <-  grepl("S(at|un)", result$values_date_weekday)
+        result$values_date_weekend <- format(values, "%u") %in% c(6, 7)
         result$values_date_year_day <- as.integer(difftime(
           values, floor_date(values, unit = "year"), units = "day"))
         
@@ -399,7 +397,6 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
   
   # Further improvement: let the user bring more than +-5 years
   
-  invisible(Sys.setlocale("LC_TIME", "C"))
   results <- NULL
   year <- year(Sys.Date())
   years <- years[years %in% ((year-5):(year+5))]
@@ -414,7 +411,6 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
     colnames(holidays) <- c("Date", "Holiday", "Holiday.Type")
     holidays$Date <- paste(holidays$Date, combs$year[i])
     if (sum(grepl("de", holidays$Date)) > 0) {
-      invisible(Sys.setlocale("LC_TIME", "es_ES"))
       holidays$Date <- gsub("de ","", holidays$Date)
     }
     first <- as.numeric(as.character(substr(holidays$Date, 1, 1)))

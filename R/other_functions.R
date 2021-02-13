@@ -927,9 +927,7 @@ importxlsx <- function(file) {
 #' @export
 quiet <- function(fx, quiet = TRUE) { 
   if (!quiet) return(fx)
-  sink(tempfile()) 
-  on.exit(sink()) 
-  invisible(force(fx)) 
+  invisible(capture.output(fx))
 } 
 
 
@@ -1126,62 +1124,6 @@ autoline <- function(text, top = "auto", rel = 9) {
 
 
 ####################################################################
-#' Auto Detect Time-Date Format
-#' 
-#' This function tries to detect which format is your date value and returns
-#' a valid time class or same values if non-found.
-#' 
-#' @family Data Wrangling
-#' @param vector Vector containing dates or timestamps
-#' @export
-formatTime <- function(vector) {
-  if (class(vector)[1] == "POSIXlt" | class(vector)[1] == "POSIXct" ) {
-    return(vector)
-  }
-  if (str_detect(vector[1], "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} \\+\\d{4}$")) {
-    vector <- as.POSIXct(strptime(vector, format = "%Y-%m-%d %H:%M:%S", tz = "UTC"))
-  }
-  else if (str_detect(vector[1], "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$")) {
-    vector <- as.POSIXct(strptime(vector, format = "%Y-%m-%d %H:%M:%S", tz = "UTC"))
-  }
-  else if (str_detect(vector[1], "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}$")) {
-    vector <- as.POSIXct(strptime(vector, format = "%Y-%m-%d %H:%M", tz = "UTC"))
-  }
-  else if (str_detect(vector[1], "^\\d{4}-\\d{2}-\\d{2} \\d{1}$")) {
-    vector <- as.POSIXct(strptime(vector, format = "%Y-%m-%d %H", tz = "UTC"))
-  }
-  else if (str_detect(vector[1], "^\\d{4}-\\d{2}-\\d{2} \\d{2}$")) {
-    vector <- as.POSIXct(strptime(vector, format = "%Y-%m-%d %H", tz = "UTC"))
-  }
-  else if (str_detect(vector[1], "^\\d{4}\\d{2}\\d{2} \\d{2}$")) {
-    vector <- as.POSIXct(strptime(vector, format = "%Y%m%d %H", tz = "UTC"))
-  }
-  else if (str_detect(vector[1], "^\\d{4}-\\d{2}-\\d{2}$")) {
-    vector <- as.POSIXct(strptime(vector, format = "%Y-%m-%d", tz = "UTC"))
-  }
-  else if (str_detect(vector[1], "^\\d{2}/\\d{2}/\\d{2}$")) {
-    vector <- as.POSIXct(strptime(vector, format = "%m/%d/%y", tz = "UTC"))
-  }
-  else if (str_detect(vector[1], "^\\d{2}/\\d{2}/\\d{4}$")) {
-    vector <- as.POSIXct(strptime(vector, format = "%m/%d/%Y", tz = "UTC"))
-  }
-  else if (str_detect(vector[1], "^\\d{4}\\d{2}\\d{2}$")) {
-    vector <- as.POSIXct(strptime(vector, format = "%Y%m%d", tz = "UTC"))
-  }
-  else if (str_detect(vector[1], "^\\d{4}/\\d{2}/\\d{2}/\\d{2}$")) {
-    vector <- as.POSIXct(strptime(vector, format = "%Y/%m/%d/%H", tz = "UTC"))
-  }
-  else if (str_detect(vector[1],"^\\d{4}-\\d{2}$")) {
-    vector <- as.POSIXct(strptime(paste0(vector, "-01"), format = "%Y-%m-%d", tz = "UTC"))
-  }
-  else if (str_detect(vector[1],"^\\d{4}/\\d{2}$")) {
-    vector <- as.POSIXct(strptime(paste0(vector, "/01"), format = "%Y/%m/%d", tz = "UTC"))
-  }
-  return(vector)
-}
-
-
-####################################################################
 #' Check if Font is Installed
 #' 
 #' This function checks if a font is installed in your machine.
@@ -1189,10 +1131,15 @@ formatTime <- function(vector) {
 #' @param font Character. Which font to check
 #' @param quiet Boolean. Keep quiet? If not, show message
 #' @examples
-#' font_exists(font = "Arial Narrow")
-#' font_exists(font = "Weird Font")
+#' font_exists(font = "Arial")
+#' font_exists(font = "XOXO")
+#' font_exists(font = "")
 #' @export
 font_exists <- function(font = "Arial Narrow", quiet = FALSE) {
+  
+  if (isTRUE(font == "")) return(FALSE)
+  if (isTRUE(is.na(font))) return(FALSE)
+  if (isTRUE(is.null(font))) return(FALSE)
   
   tryCatch({
     
