@@ -24,7 +24,6 @@
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom patchwork guide_area plot_layout plot_annotation wrap_plots
 #' @importFrom pROC roc ci
-#' @import rlist
 #' @importFrom rlang as_label .data
 #' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text 
 #' @importFrom scales comma percent dollar
@@ -95,6 +94,7 @@ recommended <- list(
               "add_country_holidays", "make_future_dataframe"),
   quantmod = c("getDividends", "getSymbols", "getQuote"),
   rdrop2 = c("drop_auth", "drop_dir", "drop_download", "drop_search", "drop_upload"),
+  rlist = "list.cbind",
   rgdal = c("readOGR", "project"),
   rpart = c("rpart", "rpart.control"),
   rpart.plot = "rpart.plot",

@@ -58,8 +58,8 @@ statusbar <- function(run = 1, max.run = 100, label = run, msg = "DONE",
   
   now <- toc("startclock", quiet = TRUE, type = "clock")$time
   progress <- glued(' {now} [{part_done}{part_middle}{part_left}] {perc}% | {parts}')
-  cat(progress, "\r")
   flush.console()
+  cat(progress, "\r")
   
   if (alarm) {
     try_require("beepr", stop = FALSE)

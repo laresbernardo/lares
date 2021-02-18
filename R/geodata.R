@@ -15,6 +15,8 @@
 #' @export
 geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, which = "api_01") {
   
+  try_require("rlist")
+  
   message("API Documentation: https://developers.google.com/maps/documentation/geocoding/usage-and-billing")
   c <- get_credentials(from = "google_api", dir = creds)
   message("API Geocoding user: ", as.character(c[grepl(paste0("user_",right(which, 2)), names(c))]))
@@ -47,8 +49,8 @@ geoAddress <- function(address, country = "Argentina", index = NA, creds = NA, w
     }
     
     # Address_components (varies a lot depending on results)
-    values <- data.frame(rlist::list.cbind(x$results[[which_list]]$address_components))[1,]
-    names <- unlist(do.call(rbind, rlist::list.cbind(x$results[[which_list]]$address_components)[3,])[,1])
+    values <- data.frame(list.cbind(x$results[[which_list]]$address_components))[1,]
+    names <- unlist(do.call(rbind, list.cbind(x$results[[which_list]]$address_components)[3,])[,1])
     if (length(colnames(values)) > 1) colnames(values) <- names
     
     out <- data.frame(
