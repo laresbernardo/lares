@@ -1439,6 +1439,10 @@ spread_list <- function(df, col, str = NA, replace = TRUE) {
     return(df)
   }
   
+  # Add character NAs name to those observations with no data, thus no names
+  nonames <- rowwise(df) %>% mutate(len = length(names(!!var))) %>% pull(len) == 0
+  df[which(nonames), col] <- list(list("NAs" = ""))
+  
   tryCatch({
     unlisted <- lapply(df[,cols == col], bind_rows)
     binded <- bind_rows(unlisted) %>% replace(is.na(.), 0)

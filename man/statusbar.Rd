@@ -8,7 +8,7 @@ statusbar(
   run = 1,
   max.run = 100,
   label = run,
-  msg = "DONE",
+  msg = "",
   type = Sys.getenv("LARES_STATUSBAR"),
   start_time = NA,
   multiples = 1,
@@ -24,7 +24,7 @@ Start with 1 preferibly}
 \item{label}{String. With additionaly information to be printed 
 at the end of the line. The default is \code{run}.}
 
-\item{msg}{Character. Finish message}
+\item{msg}{Character. Finish message.}
 
 \item{type}{Character. Loading type style: equal, domino}
 
