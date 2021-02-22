@@ -1,15 +1,14 @@
-# Template: https://github.com/r-lib/actions/blob/master/.github/workflows/pkgdown.yaml
 on:
   push:
-    branches: master
+    branches:
+      - master
 
-name: documentation
+name: pkgdown
 
 jobs:
-  documentation:
-    runs-on: ubuntu-16.04
+  pkgdown:
+    runs-on: macOS-latest
     env:
-      RSPM: https://packagemanager.rstudio.com/cran/__linux__/bionic/latest
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
@@ -17,6 +16,13 @@ jobs:
       - uses: r-lib/actions/setup-r@master
 
       - uses: r-lib/actions/setup-pandoc@master
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+        shell: Rscript {0}
 
       - name: Cache R packages
         uses: actions/cache@v2
@@ -27,12 +33,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pak::local_install_dev_deps(upgrade = TRUE)
-          pak::pkg_install("pkgdown")
+          remotes::install_deps(dependencies = TRUE)
+          install.packages("pkgdown", type = "binary")
         shell: Rscript {0}
 
       - name: Install package
-        run: R CMD INSTALL .s
+        run: R CMD INSTALL .
 
       - name: Who am I?
         env:
