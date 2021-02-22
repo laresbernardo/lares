@@ -60,6 +60,7 @@ statusbar <- function(run = 1, max.run = 100, label = run, msg = "",
   
   now <- toc("startclock", quiet = TRUE, type = "clock")$time
   progress <- glued('{now} [{part_done}{part_middle}{part_left}] {perc}% {parts}')
+  if (percent == 1) progress <- paste(progress, "\n")
   cat("\r", progress)
   flush.console()
   
