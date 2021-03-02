@@ -121,7 +121,7 @@
   run <span class='op'>=</span> <span class='fl'>1</span>,
   max.run <span class='op'>=</span> <span class='fl'>100</span>,
   label <span class='op'>=</span> <span class='va'>run</span>,
-  msg <span class='op'>=</span> <span class='st'>"DONE"</span>,
+  msg <span class='op'>=</span> <span class='st'>""</span>,
   type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"LARES_STATUSBAR"</span><span class='op'>)</span>,
   start_time <span class='op'>=</span> <span class='cn'>NA</span>,
   multiples <span class='op'>=</span> <span class='fl'>1</span>,
@@ -147,7 +147,7 @@ at the end of the line. The default is <code>run</code>.</p></td>
     </tr>
     <tr>
       <th>msg</th>
-      <td><p>Character. Finish message</p></td>
+      <td><p>Character. Finish message.</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -208,7 +208,7 @@ wasting resources on fast and lots of iterations.</p></td>
   <span class='fu'>statusbar</span><span class='op'>(</span><span class='va'>i</span>, <span class='fl'>9</span>, multiples <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>0.3</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt;  00:00:00 [::::::::&gt;                                ]  22% | 2                                                     00:00:01 [:::::::::::::::::&gt;                       ]  44% | 4                                                     00:00:02 [::::::::::::::::::::::::::&gt;              ]  66% | 6                                                     00:00:02 [:::::::::::::::::::::::::::::::::::&gt;     ]  88% | 8                                                     00:00:03 [:::::::::::::::::::::::::::::::::::::::::]  100% | DONE                                                    </div></pre>
+</div><div class='output co'>#&gt;  00:00:00 [::::::::&gt;                                ] 22.2% | 2                       00:00:01 [:::::::::::::::::&gt;                       ] 44.4% | 4                       00:00:02 [::::::::::::::::::::::::::&gt;              ] 66.7% | 6                       00:00:03 [:::::::::::::::::::::::::::::::::::&gt;     ] 88.9% | 8                       00:00:03 [:::::::::::::::::::::::::::::::::::::::::] 100% | 9                       </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
