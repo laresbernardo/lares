@@ -21,16 +21,15 @@
 #' @export
 cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = FALSE) {
   text <- as.character(text)
-  text <- trimws(gsub("[[:space:].]+", " ", text))
   if (ascii) {
     text <- iconv(text, from = "UTF-8", to = "ASCII//TRANSLIT")
     text <- gsub("[^[:alnum:] ]", "", text)
-  } 
+  }
   if (lower) text <- tolower(text)
   if (title) text  <- stringr::str_to_title(text)
   if (is.character(spaces)) text <- gsub(" ", spaces, text)
   if (isFALSE(spaces)) text <- gsub(" ", "", text)
-  
+  text <- trimws(gsub("[[:space:].]+", " ", text))
   return(text)
 }
 
