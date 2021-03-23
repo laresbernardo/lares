@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Build N-grams and keep most frequent — ngrams • lares</title>
+<title>Pattern Matching for Any or All Multiple Matches — grepm • lares</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,10 @@
 
 
 
-<meta property="og:title" content="Build N-grams and keep most frequent — ngrams" />
-<meta property="og:description" content="Build out n-grams for multiple text inputs and keep the n most frequent
-combinations." />
+<meta property="og:title" content="Pattern Matching for Any or All Multiple Matches — grepm" />
+<meta property="og:description" content="This function returns a boolean vector of the same length as `x`, 
+each element of which is the result of applying the `type` of matches
+to the corresponding element of `x`, using regular expressions." />
 
 
 
@@ -109,66 +110,51 @@ combinations." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Build N-grams and keep most frequent</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/text_mining.R'><code>R/text_mining.R</code></a></small>
-    <div class="hidden name"><code>ngrams.Rd</code></div>
+    <h1>Pattern Matching for Any or All Multiple Matches</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_functions.R'><code>R/other_functions.R</code></a></small>
+    <div class="hidden name"><code>grepm.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Build out n-grams for multiple text inputs and keep the n most frequent
-combinations.</p>
+    <p>This function returns a boolean vector of the same length as `x`, 
+each element of which is the result of applying the `type` of matches
+to the corresponding element of `x`, using regular expressions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ngrams</span><span class='op'>(</span><span class='va'>text</span>, ngram <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>, top <span class='op'>=</span> <span class='fl'>10</span>, stop_words <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>grepm</span><span class='op'>(</span><span class='va'>pattern</span>, <span class='va'>x</span>, type <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>text</th>
-      <td><p>Character vector</p></td>
+      <th>pattern</th>
+      <td><p>character string containing a <a href='https://rdrr.io/r/base/regex.html'>regular expression</a>
+    (or character string for <code>fixed = TRUE</code>) to be matched
+    in the given character vector.  Coerced by
+    <code><a href='https://rdrr.io/r/base/character.html'>as.character</a></code> to a character string if possible.  If a
+    character vector of length 2 or more is supplied, the first element
+    is used with a warning.  Missing values are allowed except for
+    <code>regexpr</code>, <code>gregexpr</code> and <code>regexec</code>.</p></td>
     </tr>
     <tr>
-      <th>ngram</th>
-      <td><p>Integer vector. Number of continuous n items in text.</p></td>
+      <th>x</th>
+      <td><p>a character vector where matches are sought, or an
+    object which can be coerced by <code>as.character</code> to a character
+    vector.  <a href='https://rdrr.io/r/base/LongVectors.html'>Long vectors</a> are supported.</p></td>
     </tr>
     <tr>
-      <th>top</th>
-      <td><p>Integer. Keep n most frequent ngrams only.</p></td>
-    </tr>
-    <tr>
-      <th>stop_words</th>
-      <td><p>Character vector. Words to exclude from text. Example: 
-if you want to exclude "a", whenever that word appears it will be excluded,
-but when the letter "a" appears in a word, it will remain.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional parameters passed to <code>remove_stopwords</code>.</p></td>
+      <th>type</th>
+      <td><p>Character. Type of match. Choose any of: `any`, `all`.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other Text Mining: 
-<code><a href='cleanNames.html'>cleanNames</a>()</code>,
-<code><a href='cleanText.html'>cleanText</a>()</code>,
-<code><a href='remove_stopwords.html'>remove_stopwords</a>()</code>,
-<code><a href='replaceall.html'>replaceall</a>()</code>,
-<code><a href='sentimentBreakdown.html'>sentimentBreakdown</a>()</code>,
-<code><a href='textCloud.html'>textCloud</a>()</code>,
-<code><a href='textFeats.html'>textFeats</a>()</code>,
-<code><a href='textTokenizer.html'>textTokenizer</a>()</code>,
-<code><a href='topics_rake.html'>topics_rake</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>women</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"https://bit.ly/3mXJOOi"</span><span class='op'>)</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>women</span><span class='op'>$</span><span class='va'>description</span>
-<span class='fu'>ngrams</span><span class='op'>(</span><span class='va'>x</span>, ngram <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span>, top  <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-<span class='fu'>ngrams</span><span class='op'>(</span><span class='va'>x</span>, ngram <span class='op'>=</span> <span class='fl'>2</span>, top <span class='op'>=</span> <span class='fl'>6</span>, stop_words <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>,<span class='st'>"is"</span>,<span class='st'>"of"</span>,<span class='st'>"the"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>123</span>, <span class='fl'>876</span>, <span class='fl'>1876</span><span class='op'>)</span>
+<span class='va'>patterns</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'>grepm</span><span class='op'>(</span><span class='va'>patterns</span>, <span class='va'>x</span>, type <span class='op'>=</span> <span class='st'>"any"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1]  TRUE FALSE  TRUE</div><div class='input'><span class='fu'>grepm</span><span class='op'>(</span><span class='va'>patterns</span>, <span class='va'>x</span>, type <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1]  TRUE FALSE FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
