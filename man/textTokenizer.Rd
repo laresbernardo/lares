@@ -86,6 +86,7 @@ Other Data Wrangling:
 \code{\link{year_week}()}
 
 Other Text Mining: 
+\code{\link{cleanNames}()},
 \code{\link{cleanText}()},
 \code{\link{ngrams}()},
 \code{\link{remove_stopwords}()},

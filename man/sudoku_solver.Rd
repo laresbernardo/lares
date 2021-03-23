@@ -7,10 +7,9 @@
 sudoku_solver(board, needed_cells = NULL, index = 1, quiet = FALSE)
 }
 \arguments{
-\item{board}{Matrix. 9x9 matrix.}
+\item{board}{Matrix. 9x9 matrix or vector length 81, with only digits from 0 to 9.}
 
-\item{needed_cells, index}{Auxiliary parameters used to iterate 
-and solve the input board.}
+\item{needed_cells, index}{Auxiliary parameters to auto-iterate using this same fx.}
 
 \item{quiet}{Boolean. Keep quiet? If not, plot results.}
 }
@@ -24,19 +23,6 @@ Solve a Sudoku puzzle, where empty values are represented by 0s
 into a matrix object.
 }
 \examples{
-# Valid input board
-board <- matrix(
-  c(0,0,0,0,0,6,0,0,0,
-    0,9,5,7,0,0,3,0,0,
-    4,0,0,0,9,2,0,0,5,
-    7,6,4,0,0,0,0,0,3,
-    0,0,0,0,0,0,0,0,0,
-    2,0,0,0,0,0,9,7,1,
-    5,0,0,2,1,0,0,0,9,
-    0,0,7,0,0,5,4,8,0,
-    0,0,0,8,0,0,0,0,0),
-  byrow = TRUE, ncol = 9); board
-sudoku_solver(board)
 
 # Trivial input (everything)
 trivial <- matrix(rep(0, 81), byrow = TRUE, ncol = 9); trivial

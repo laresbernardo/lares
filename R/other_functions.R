@@ -1440,7 +1440,7 @@ spread_list <- function(df, col, str = NA, replace = TRUE) {
   }
   
   # Add character NAs name to those observations with no data, thus no names
-  nonames <- rowwise(df) %>% mutate(len = length(names(!!var))) %>% pull(len) == 0
+  nonames <- rowwise(df) %>% mutate(len = length(names(!!var))) %>% pull(.data$len) == 0
   df[which(nonames), col] <- list(list("NAs" = ""))
   
   tryCatch({
@@ -1557,35 +1557,23 @@ glued <- function (..., .sep = "", .envir = parent.frame()) {
     .envir = .envir)
 }
 
+
 ####################################################################
-#' Clean title names of a data.frame/tibble object
+#' Pattern Matching for Any or All Multiple Matches
 #' 
-#' Resulting names are unique and consist only of the \code{_} character, 
-#' numbers, and ASCII letters. Capitalization preferences can be specified using 
-#' the \code{lower} parameter. Inspired by \code{janitor::clean_names}.
-#'
-#' @param df data.frame/tibble
-#' @param num Add character before only-numeric names
-#' @param ... Additional parameters passed to \code{cleanText}
-#' @return data.frame/tibble with new clean titles
+#' This function returns a boolean vector of the same length as `x`, 
+#' each element of which is the result of applying the `type` of matches
+#' to the corresponding element of `x`, using regular expressions.
+#' 
+#' @inheritParams base::grep
+#' @param type Character. Type of match. Choose any of: `any`, `all`.
 #' @examples 
-#' df <- dft[1:5,1:5] # Dummy data
-#' colnames(df) <- c("ID.", "34", "Num 123", "Nòn-äscì", "  white   Spaces  ")
-#' print(df)
-#' cleanNames(df)
-#' cleanNames(df, lower = FALSE)
+#' x = c(123, 876, 1876)
+#' patterns = c(1, 2)
+#' grepm(patterns, x, type = "any")
+#' grepm(patterns, x, type = "all")
 #' @export
-cleanNames <- function(df, num = "x", ...) {
-  # Initial cleanse
-  cols <- cleanText(colnames(df), ...)
-  # Simple spaces turned into "_"
-  cols <- trimws(gsub("[[:space:].]+", "_", cols))
-  # If only numeric, add x at the begining
-  onlynum <- !grepl('[[:alpha:]]', cols)
-  cols[onlynum] <- paste0(num, cols[onlynum])
-  # Change column names
-  df <- stats::setNames(df, cols)
-  # Keep tibble if original data.frame is tibble
-  if ("tbl_df" %in% class(df)) df <- as_tibble(df)
-  return(df)
+grepm <- function(pattern, x, type = "all") {
+  lapply(x, function(a) lapply(pattern, function(i) grepl(i, a))) %>%
+  lapply(get(type)) %>% unlist %>% suppressWarnings
 }
