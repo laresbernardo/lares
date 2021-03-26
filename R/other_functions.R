@@ -1570,12 +1570,12 @@ glued <- function (..., .sep = "", .envir = parent.frame()) {
 #' \code{any}, \code{all}
 #' @param ... Additional arguments to pass to \code{grepl}
 #' @examples 
-#' x <- c(123, 876, 18761, 000)
+#' x <- c(123, 876, 18761)
 #' patterns <- c(1, 2)
 #' grepm(patterns, x, type = "any")
 #' grepm(patterns, x, type = "all")
 #' @export
-grepm <- function(pattern, x, type = "all") {
+grepm <- function(pattern, x, type = "all", ...) {
   lapply(x, function(a) lapply(pattern, function(i) grepl(i, a, ...))) %>%
   lapply(get(type)) %>% unlist %>% suppressWarnings
 }

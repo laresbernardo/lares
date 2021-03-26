@@ -4,7 +4,7 @@
 \alias{grepm}
 \title{Pattern Matching for Any or All Multiple Matches}
 \usage{
-grepm(pattern, x, type = "all")
+grepm(pattern, x, type = "all", ...)
 }
 \arguments{
 \item{pattern}{character string containing a \link[base]{regular expression}
@@ -30,7 +30,7 @@ each element of which is the result of applying the `type` of matches
 to the corresponding element of `x`, using regular expressions.
 }
 \examples{
-x <- c(123, 876, 18761, 000)
+x <- c(123, 876, 18761)
 patterns <- c(1, 2)
 grepm(patterns, x, type = "any")
 grepm(patterns, x, type = "all")
