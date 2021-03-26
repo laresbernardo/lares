@@ -19,7 +19,10 @@ grepm(pattern, x, type = "all")
     object which can be coerced by \code{as.character} to a character
     vector.  \link[base]{Long vectors} are supported.}
 
-\item{type}{Character. Type of match. Choose any of: `any`, `all`.}
+\item{type}{Character. Type of match. Choose one of:
+\code{any}, \code{all}}
+
+\item{...}{Additional arguments to pass to \code{grepl}}
 }
 \description{
 This function returns a boolean vector of the same length as `x`, 
@@ -27,8 +30,8 @@ each element of which is the result of applying the `type` of matches
 to the corresponding element of `x`, using regular expressions.
 }
 \examples{
-x = c(123, 876, 1876)
-patterns = c(1, 2)
+x <- c(123, 876, 18761, 000)
+patterns <- c(1, 2)
 grepm(patterns, x, type = "any")
 grepm(patterns, x, type = "all")
 }
