@@ -23,7 +23,7 @@ fb_rf(
 }
 \arguments{
 \item{token}{Character. Valid access token with sufficient privileges. Visit the
-\url{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
+\href{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
 to acquire one.}
 
 \item{ad_account}{Character. Ad Account. Remember to start with \code{act_}. If you 

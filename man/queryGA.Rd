@@ -28,7 +28,7 @@ queryGA(
 \item{dimensions}{Character. Which dimensions we wish to bring}
 
 \item{met_filters, dim_filters}{A filter_clause_ga4 for filtering 
-metrics/dimensions. Check googleAnalyticsR::google_analytics()}
+metrics/dimensions. Check \code{googleAnalyticsR::google_analytics()}}
 
 \item{start}{Date. Start date for the report}
 
@@ -36,9 +36,9 @@ metrics/dimensions. Check googleAnalyticsR::google_analytics()}
 }
 \description{
 This function lets the user query Google Analytics with its API.
-More about the documentation and parameters in googleAnalyticsR's
-google_analytics or Google Analytics'
-\url{https://developers.google.com/analytics/devguides/reporting/core/dimsmets}{API}
+More about the documentation and parameters in
+\code{googleAnalyticsR::google_analytics()} or Google Analytics'
+\href{https://developers.google.com/analytics/devguides/reporting/core/dimsmets}{API}
 }
 \seealso{
 Other Credentials: 

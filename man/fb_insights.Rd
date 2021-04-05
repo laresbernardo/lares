@@ -21,7 +21,7 @@ fb_insights(
 }
 \arguments{
 \item{token}{Character. Valid access token with sufficient privileges. Visit the
-\url{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
+\href{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
 to acquire one.}
 
 \item{which}{Character vector. This is the accounts, campaigns, adsets, 
