@@ -275,7 +275,7 @@ corr_var <- function(df, var,
       scale_fill_manual(values = c("FALSE" = "#E5586E", "TRUE" = "#59B3D2")) +
       guides(fill = FALSE) +
       labs(title = paste("Correlations of", var, "[%]"), x = NULL, y = NULL) +
-      scale_y_percent(expand = c(0, 0), position = "right") + 
+      scale_y_continuous(expand = c(0, 0), position = "right") + 
       theme_lares(pal = 2)
     
     if (!is.na(top) & top < original_n) p <- p + 
@@ -422,15 +422,15 @@ corr_cross <- function(df, plot = TRUE,
                    fill = .data$sign)) +
         geom_col(colour = "transparent") +
         # geom_hline(aes(yintercept = 0), alpha = 0.5) + 
-        geom_text(aes(label = signif(100*.data$corr, 3)), 
+        geom_text(aes(label = sub('^(-)?0[.]', '\\1.', signif(.data$corr, 3))), 
                   size = 3, colour = "white", hjust = 1.1) +
         coord_flip() + guides(fill = FALSE) +
         labs(title = "Ranked Cross-Correlations", 
              subtitle = subtitle,
              x = NULL, 
-             y = "Correlation [%]") +
+             y = "(Abs) Correlation") +
         scale_fill_manual(values = c("bad" = "#E5586E", "good" = "#59B3D2")) +
-        scale_y_percent(expand = c(0, 0)) + 
+        scale_y_continuous(expand = c(0, 0), labels = function(x) sub('^(-)?0[.]', '\\1.', x)) + 
         theme_lares(legend = "top")
       if ((!is.na(contains)[1] & length(contains) == 1) | grid) {
         p <- p + facet_grid(.data$facet ~ ., scales = "free", space = "free")
@@ -455,17 +455,16 @@ corr_cross <- function(df, plot = TRUE,
         geom_text(aes(hjust = .data$hjust), size = 2.9, position = aux, colour = "black") +
         guides(colour = FALSE, alpha = FALSE, size = FALSE) +
         scale_size(range = c(0.4, 2)) +
-        labs(x = NULL, y = "Correlation [%]", 
+        labs(x = NULL, y = "Correlation",
              subtitle = subtitle,
              title = "Local Cross-Correlations") +
-        scale_y_continuous(labels = function(x) formatNum(x, 0, pos = "%")) + 
+        scale_y_continuous(labels = function(x) sub('^(-)?0[.]', '\\1.', x)) +
         coord_flip() +
-        theme_lares(pal = 2) 
+        theme_lares(pal = 2)
     }
-    if (max_pvalue < 1) 
+    if (max_pvalue < 1)
       p <- p + labs(caption = paste("Correlations with p-value <", max_pvalue))
     return(p)
   }
   return(ret)
 }
-

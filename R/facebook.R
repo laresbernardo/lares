@@ -811,3 +811,33 @@ fb_creatives <- function(token, which,
   attr(ret, "cURL") <- linkurl
   return(ret) 
 }
+
+
+####################################################################
+#' Facebook's Long Life User Token
+#' 
+#' Using a 1-hour generic user token you can generate a 60 day token. 
+#' You will need to have an App ID and App secret, and a valid token.
+#' Generate a new valid User Token with the 
+#' \href{https://developers.facebook.com/tools/explorer}{API Graph}.
+#' 
+#' More info: \href{https://developers.facebook.com/docs/facebook-login/access-tokens/refreshing/}{Long-Lived Access Tokens}
+#' 
+#' @family API
+#' @family Facebook
+#' @param token Character. User token, created with
+#' \href{https://developers.facebook.com/tools/explorer}{API Graph}.
+#' or with this same \code{fb_token()} function.
+#' @param app_id,app_secret Character. Application ID and Secret.
+#' @export
+fb_token <- function(app_id, app_secret, token) {
+  link <- paste0("https://graph.facebook.com/v6.0/oauth/access_token?",
+                 "grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s")
+  linkurl <- sprintf(link, app_id, app_secret, token)
+  ret <- content(GET(linkurl))
+  if ("access_token" %in% names(ret)) {
+    message(sprintf("Your token was created succesfully. It will expire on %s", 
+                    Sys.time() + ret$expires_in))
+    return(ret$access_token)  
+  } else return(ret)
+}
