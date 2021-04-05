@@ -16,14 +16,15 @@ fb_rf(
   frequency_cap = 8,
   prediction_mode = 1,
   curve = TRUE,
-  api_version = "v8.0",
+  api_version = "v10.0",
   process = TRUE,
   ...
 )
 }
 \arguments{
-\item{token}{Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one.}
+\item{token}{Character. Valid access token with sufficient privileges. Visit the
+\url{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
+to acquire one.}
 
 \item{ad_account}{Character. Ad Account. Remember to start with \code{act_}. If you 
 use the \code{prediction} argument, no need to provide this parameter.}
@@ -63,14 +64,14 @@ Reach and Frequency API. For more information on the API and its parameters, go 
 }
 \examples{
 \dontrun{
-token <- YOURTOKEN
-account_id <- act_ADACCOUNT
+token <- "YOURTOKEN"
+account_id <- "act_20846447"
 
 #BASIC 1: Create and return data for a new prediction
 basic1 <- fb_rf(token, account_id, destination_ids = 187071108930, countries = "AR")
 
 # BASIC 2: Fetch data for an existing prediction ID
-basic2 <- fb_rf(token, account_id, prediction = 23845375632160284)
+basic2 <- fb_rf(token, account_id, prediction = 6260368700774)
 
 # ADVANCED (Fully custom prediction)
 advanced <- fb_rf(token, account_id,

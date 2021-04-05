@@ -14,8 +14,9 @@ fb_posts(
 )
 }
 \arguments{
-\item{token}{Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one.}
+\item{token}{Character. Valid access token with sufficient privileges. Visit the
+\url{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
+to acquire one.}
 
 \item{n}{Integer. How many most recent posts do you need?}
 

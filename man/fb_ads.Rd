@@ -7,25 +7,26 @@
 fb_ads(
   token,
   which,
-  start = Sys.Date() - 31,
-  end = Sys.Date(),
+  start_date = Sys.Date() - 31,
+  end_date = Sys.Date(),
   fields = NA,
   api_version = "v8.0",
   process = TRUE
 )
 }
 \arguments{
-\item{token}{Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one.}
+\item{token}{Character. Valid access token with sufficient privileges. Visit the
+\url{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
+to acquire one.}
 
 \item{which}{Character vector. This is the accounts, campaigns, adsets, 
 or ads IDs to be queried. Remember: if report_level = "account", you must 
 start the ID with \code{act_}.}
 
-\item{start}{Character. The first full day to report, in the 
+\item{start_date}{Character. The first and last full day to report, in the 
 format "YYYY-MM-DD"}
 
-\item{end}{Character. The last full day to report, in the 
+\item{end_date}{Character. The first and last full day to report, in the 
 format "YYYY-MM-DD"}
 
 \item{fields}{Character, json format. Leave \code{NA} for default fields.}
@@ -48,7 +49,7 @@ token <- YOURTOKEN
 which <- act_ADACCOUNT
 
 # Query all ads for "which" with results in the last 10 days
-ads <- fb_accounts(YOURTOKEN, which, start = Sys.Date() - 10) 
+ads <- fb_accounts(YOURTOKEN, which, start_date = Sys.Date() - 10)
 }
 }
 \seealso{

@@ -7,8 +7,9 @@
 fb_creatives(token, which, api_version = "v8.0", process = TRUE)
 }
 \arguments{
-\item{token}{Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one.}
+\item{token}{Character. Valid access token with sufficient privileges. Visit the
+\url{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
+to acquire one.}
 
 \item{which}{Character vector. This is the accounts, campaigns, adsets, 
 or ads IDs to be queried. Remember: if report_level = "account", you must 

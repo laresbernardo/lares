@@ -57,9 +57,9 @@ fb_process <- function(response, paginate = TRUE) {
   done <- bind_rows(results)
   
   # So columns that consist in lists but only have 1 element may be used as normal vectors
-  are_lists <- unlist(lapply(done, class)) == "data.frame"
+  are_lists <- unlist(lapply(lapply(done, class), function(x) any(x %in% c("data.frame","matrix"))))
   nolists <- done[,!are_lists]
-  nolists <- replace(nolists, nolists=="NULL", NA)
+  nolists <- replace(nolists, nolists == "NULL", NA)
   total <- bind_cols(lapply(nolists, as.character))
   
   fixedlists <- bind_cols(lapply(
@@ -97,19 +97,18 @@ flattener <- function(x, i = 1) {
 #' 
 #' This returns all available FB insights per day including any given
 #' breakdown to the specified report level, and place into a data frame.
-#' For more information on Ad Insights' API, go to the 
-#' \href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}.
+#' For more information on Ad Insights' API, go to the original
+#' \href{https://developers.facebook.com/docs/marketing-api/insights}{documentaion}.
 #' 
 #' @family API
 #' @family Facebook
-#' @param token Character. This must be a valid access token with sufficient 
-#' privileges. Visit the Facebook API Graph Explorer to acquire one.
+#' @param token Character. Valid access token with sufficient privileges. Visit the
+#' \url{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
+#' to acquire one.
 #' @param which Character vector. This is the accounts, campaigns, adsets, 
 #' or ads IDs to be queried. Remember: if report_level = "account", you must 
 #' start the ID with \code{act_}.
-#' @param start Character. The first full day to report, in the 
-#' format "YYYY-MM-DD"
-#' @param end Character. The last full day to report, in the 
+#' @param start_date,end_date Character. The first and last full day to report, in the 
 #' format "YYYY-MM-DD"
 #' @param time_increment Character. Group by months ("monthly"), 
 #' everything together ("all_days") or an integer per days [1-90].
@@ -124,14 +123,14 @@ flattener <- function(x, i = 1) {
 #' @param process Boolean. Process GET results to a more friendly format?
 #' @examples 
 #' \dontrun{
-#' token <- YOURTOKEN
-#' which <- act_ADACCOUNT
+#' token <- "YOURTOKEN"
+#' which <- "act_20846447"
 #' 
 #' # Platforms' Insights: all ad-sets platforms of "which" account, 
 #' # aggregated, for the last 30 days
 #' platforms <- fb_insights(
 #'   token, which, 
-#'   start = Sys.Date() - 30, 
+#'   start_date = Sys.Date() - 30, 
 #'   time_increment = "all_days",
 #'   report_level = "adset", 
 #'   fields = c("account_name",
@@ -159,25 +158,28 @@ flattener <- function(x, i = 1) {
 #' @export
 fb_insights <- function(token,
                         which,
-                        start = Sys.Date() - 7, 
-                        end = Sys.Date(), 
+                        start_date = Sys.Date() - 7, 
+                        end_date = Sys.Date(), 
                         time_increment = "1",
                         report_level = "campaign",
                         ad_object = "insights",
                         breakdowns = NA,
                         fields = NA,
                         limit = 10000,
-                        api_version = "v8.0",
+                        api_version = "v10.0",
                         process = TRUE){
   
   set_config(config(http_version = 0))
   check_opts(report_level, c("ad","adset","campaign","account"))
   
-  if (is.na(fields[1]))
-    fields <- paste(
-      "campaign_name, campaign_id, objective, adset_id, adset_name, ad_id, ad_name,",
-      "impressions, cpm, spend, reach, clicks, unique_clicks, ctr, cpc, unique_ctr,",
-      "cost_per_unique_click")
+  if (is.na(fields[1])) fields <- c(
+      "campaign_name", "campaign_id",
+      "objective", "adset_id",
+      "adset_name", "ad_id",
+      "ad_name","impressions",
+      "spend","cpm","ctr","cpc",
+      "reach","clicks","unique_clicks",
+      "unique_ctr","cost_per_unique_click")
   
   aux <- v2t(which, quotes = FALSE)
   URL <- glued("https://graph.facebook.com/{api_version}/{aux}/{ad_object}")
@@ -187,7 +189,7 @@ fb_insights <- function(token,
     URL,
     query = list(
       access_token = token,
-      time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
+      time_range = paste0('{\"since\":\"',start_date,'\",\"until\":\"',end_date,'\"}'),
       level = report_level,
       fields = if (length(fields) > 1) 
         vector2text(fields, sep = ",", quotes = FALSE) else fields,
@@ -231,14 +233,14 @@ fb_insights <- function(token,
 #' @param ... Additional parameters passed to target specs.
 #' @examples
 #' \dontrun{
-#' token <- YOURTOKEN
-#' account_id <- act_ADACCOUNT
+#' token <- "YOURTOKEN"
+#' account_id <- "act_20846447"
 #' 
 #' #BASIC 1: Create and return data for a new prediction
 #' basic1 <- fb_rf(token, account_id, destination_ids = 187071108930, countries = "AR")
 #' 
 #' # BASIC 2: Fetch data for an existing prediction ID
-#' basic2 <- fb_rf(token, account_id, prediction = 23845375632160284)
+#' basic2 <- fb_rf(token, account_id, prediction = 6260368700774)
 #' 
 #' # ADVANCED (Fully custom prediction)
 #' advanced <- fb_rf(token, account_id,
@@ -291,7 +293,7 @@ fb_rf <- function(token,
                   frequency_cap = 8,
                   prediction_mode = 1,
                   curve = TRUE,
-                  api_version = "v8.0",
+                  api_version = "v10.0",
                   process = TRUE,
                   ...) {
   
@@ -359,13 +361,15 @@ fb_rf <- function(token,
                frequency = .data$impression/.data$reach,
                weekly_frequency = .data$frequency / (days/7),
                cpm = 1000 * .data$budget / .data$impression,
-               prediction = prediction) 
+               prediction = prediction)
+      curves <- curves %>% as.matrix() %>% data.frame() %>% 
+        as_tibble() %>% mutate_at(colnames(.)[-c(1, ncol(.))], as.numeric)
     }
     
     attr(curves, "prediction") <- prediction
     class(curves) <- c(class(curves), "fb_rf")
     return(curves) 
-  } 
+  }
   return(prediction)
 }
 
@@ -723,13 +727,13 @@ fb_accounts <- function(token,
 #' which <- act_ADACCOUNT
 #' 
 #' # Query all ads for "which" with results in the last 10 days
-#' ads <- fb_accounts(YOURTOKEN, which, start = Sys.Date() - 10) 
+#' ads <- fb_accounts(YOURTOKEN, which, start_date = Sys.Date() - 10)
 #' }
 #' @export
 fb_ads <- function(token,
                    which,
-                   start = Sys.Date() - 31, 
-                   end = Sys.Date(), 
+                   start_date = Sys.Date() - 31, 
+                   end_date = Sys.Date(), 
                    fields = NA,
                    api_version = "v8.0",
                    process = TRUE){
@@ -747,7 +751,7 @@ fb_ads <- function(token,
     glued("https://graph.facebook.com/{api_version}/{which}/ads"),
     query = list(
       access_token = token,
-      time_range = paste0('{\"since\":\"',start,'\",\"until\":\"',end,'\"}'),
+      time_range = paste0('{\"since\":\"',start_date,'\",\"until\":\"',end_date,'\"}'),
       fields = if (length(fields) > 1) 
         vector2text(fields, sep = ",", quotes = FALSE) else fields
     ),

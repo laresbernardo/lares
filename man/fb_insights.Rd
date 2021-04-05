@@ -7,30 +7,28 @@
 fb_insights(
   token,
   which,
-  start = Sys.Date() - 7,
-  end = Sys.Date(),
+  start_date = Sys.Date() - 7,
+  end_date = Sys.Date(),
   time_increment = "1",
   report_level = "campaign",
   ad_object = "insights",
   breakdowns = NA,
   fields = NA,
   limit = 10000,
-  api_version = "v8.0",
+  api_version = "v10.0",
   process = TRUE
 )
 }
 \arguments{
-\item{token}{Character. This must be a valid access token with sufficient 
-privileges. Visit the Facebook API Graph Explorer to acquire one.}
+\item{token}{Character. Valid access token with sufficient privileges. Visit the
+\url{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
+to acquire one.}
 
 \item{which}{Character vector. This is the accounts, campaigns, adsets, 
 or ads IDs to be queried. Remember: if report_level = "account", you must 
 start the ID with \code{act_}.}
 
-\item{start}{Character. The first full day to report, in the 
-format "YYYY-MM-DD"}
-
-\item{end}{Character. The last full day to report, in the 
+\item{start_date, end_date}{Character. The first and last full day to report, in the 
 format "YYYY-MM-DD"}
 
 \item{time_increment}{Character. Group by months ("monthly"), 
@@ -55,19 +53,19 @@ segmentation results. Set to NA for no breakdowns}
 \description{
 This returns all available FB insights per day including any given
 breakdown to the specified report level, and place into a data frame.
-For more information on Ad Insights' API, go to the 
-\href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}.
+For more information on Ad Insights' API, go to the original
+\href{https://developers.facebook.com/docs/marketing-api/insights}{documentaion}.
 }
 \examples{
 \dontrun{
-token <- YOURTOKEN
-which <- act_ADACCOUNT
+token <- "YOURTOKEN"
+which <- "act_20846447"
 
 # Platforms' Insights: all ad-sets platforms of "which" account, 
 # aggregated, for the last 30 days
 platforms <- fb_insights(
   token, which, 
-  start = Sys.Date() - 30, 
+  start_date = Sys.Date() - 30, 
   time_increment = "all_days",
   report_level = "adset", 
   fields = c("account_name",
