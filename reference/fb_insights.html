@@ -150,19 +150,19 @@ to acquire one.</p></td>
     <tr>
       <th>which</th>
       <td><p>Character vector. This is the accounts, campaigns, adsets, 
-or ads IDs to be queried. Remember: if report_level = "account", you must 
+or ads IDs to be queried. Remember: if <code>report_level = "account"</code>, you must 
 start the ID with <code>act_</code>.</p></td>
     </tr>
     <tr>
       <th>start_date, end_date</th>
       <td><p>Character. The first and last full day to report, in the 
-format "YYYY-MM-DD"</p></td>
+format <code>"YYYY-MM-DD"</code>.</p></td>
     </tr>
     <tr>
       <th>time_increment</th>
       <td><p>Character. Group by months ("monthly"), 
 everything together ("all_days") or an integer per days [1-90].
-Default: each day separatly (i.e. "1").</p></td>
+Default: each day separately (i.e. "1").</p></td>
     </tr>
     <tr>
       <th>report_level</th>
@@ -222,7 +222,40 @@ segmentation results. Set to NA for no breakdowns</p></td>
 <code><a href='fb_token.html'>fb_token</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>token</span> <span class='op'>&lt;-</span> <span class='st'>"YOURTOKEN"</span>
+<span class='va'>which</span> <span class='op'>&lt;-</span> <span class='st'>"act_20846447"</span>
+
+<span class='co'># Platforms' Insights: all ad-sets platforms of "which" account, </span>
+<span class='co'># aggregated, for the last 30 days</span>
+<span class='va'>platforms</span> <span class='op'>&lt;-</span> <span class='fu'>fb_insights</span><span class='op'>(</span>
+  <span class='va'>token</span>, <span class='va'>which</span>, 
+  start_date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>30</span>, 
+  time_increment <span class='op'>=</span> <span class='st'>"all_days"</span>,
+  report_level <span class='op'>=</span> <span class='st'>"adset"</span>, 
+  fields <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"account_name"</span>,
+             <span class='st'>"adset_id"</span>,
+             <span class='st'>"adset_start"</span>,
+             <span class='st'>"adset_end"</span><span class='op'>)</span>,
+  breakdowns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"publisher_platform"</span>, 
+                 <span class='st'>"platform_position"</span>, 
+                 <span class='st'>"device_platform"</span><span class='op'>)</span><span class='op'>)</span>
+            
+<span class='co'># Daily results for all campaigns of "which" account,</span>
+<span class='co'># with custom performance fields with no breakdowns.</span>
+<span class='va'>insights_adset</span> <span class='op'>&lt;-</span> <span class='fu'>fb_insights</span><span class='op'>(</span>
+  <span class='va'>token</span>, <span class='va'>which</span>, 
+  time_increment <span class='op'>=</span> <span class='st'>"1"</span>,
+  report_level <span class='op'>=</span> <span class='st'>"campaign"</span>, 
+  fields <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"adset_id"</span>,
+             <span class='st'>"reach"</span>,
+             <span class='st'>"frequency"</span>,
+             <span class='st'>"spend"</span>,
+             <span class='st'>"cpm"</span>,
+             <span class='st'>"objective"</span>,
+             <span class='st'>"optimization_goal"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
