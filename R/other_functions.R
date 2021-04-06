@@ -641,7 +641,7 @@ removenacols <- function(df, all = TRUE, ignore = NULL) {
 #' If set to FALSE, rows which contains at least one NA will be removed
 #' @export
 removenarows <- function(df, all = TRUE) {
-  if (all == TRUE) {
+  if (all) {
     return(df[rowSums(is.na(df)) != ncol(df), ]) 
   } else {
     return(df[complete.cases(df), ])

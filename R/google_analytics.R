@@ -14,13 +14,12 @@
 #' @param token_dir Character. Credential's directory (see \code{get_creds()})
 #' @param metrics Character. Which metrics we wish to bring
 #' @param dimensions Character. Which dimensions we wish to bring
-#' @param met_filters,dim_filters A filter_clause_ga4 for filtering 
-#' metrics/dimensions. Check \code{googleAnalyticsR::google_analytics()}
+#' @param met_filters,dim_filters A \code{filter_clause_ga4} for filtering
+#' metrics/dimensions. Check \code{googleAnalyticsR::google_analytics()}.
 #' @param start Date. Start date for the report
 #' @param end Date. End date for the report
 #' @export
-queryGA <- function(account = "comparamejor",
-                    creds = NA, token_dir = NA,
+queryGA <- function(account, creds = NA, token_dir = NA,
                     metrics = "sessions",
                     dimensions = "date",
                     met_filters = NULL,

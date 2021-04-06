@@ -20,14 +20,14 @@ fb_ads(
 to acquire one.}
 
 \item{which}{Character vector. This is the accounts, campaigns, adsets, 
-or ads IDs to be queried. Remember: if report_level = "account", you must 
+or ads IDs to be queried. Remember: if \code{report_level = "account"}, you must 
 start the ID with \code{act_}.}
 
 \item{start_date}{Character. The first and last full day to report, in the 
-format "YYYY-MM-DD"}
+format \code{"YYYY-MM-DD"}.}
 
 \item{end_date}{Character. The first and last full day to report, in the 
-format "YYYY-MM-DD"}
+format \code{"YYYY-MM-DD"}.}
 
 \item{fields}{Character, json format. Leave \code{NA} for default fields.}
 

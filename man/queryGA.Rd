@@ -5,7 +5,7 @@
 \title{Queries on Google Analytics}
 \usage{
 queryGA(
-  account = "comparamejor",
+  account,
   creds = NA,
   token_dir = NA,
   metrics = "sessions",
@@ -27,8 +27,8 @@ queryGA(
 
 \item{dimensions}{Character. Which dimensions we wish to bring}
 
-\item{met_filters, dim_filters}{A filter_clause_ga4 for filtering 
-metrics/dimensions. Check \code{googleAnalyticsR::google_analytics()}}
+\item{met_filters, dim_filters}{A \code{filter_clause_ga4} for filtering
+metrics/dimensions. Check \code{googleAnalyticsR::google_analytics()}.}
 
 \item{start}{Date. Start date for the report}
 

@@ -106,13 +106,13 @@ flattener <- function(x, i = 1) {
 #' \href{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
 #' to acquire one.
 #' @param which Character vector. This is the accounts, campaigns, adsets, 
-#' or ads IDs to be queried. Remember: if report_level = "account", you must 
+#' or ads IDs to be queried. Remember: if \code{report_level = "account"}, you must 
 #' start the ID with \code{act_}.
 #' @param start_date,end_date Character. The first and last full day to report, in the 
-#' format "YYYY-MM-DD"
+#' format \code{"YYYY-MM-DD"}.
 #' @param time_increment Character. Group by months ("monthly"), 
 #' everything together ("all_days") or an integer per days [1-90].
-#' Default: each day separatly (i.e. "1").
+#' Default: each day separately (i.e. "1").
 #' @param report_level Character. One of "ad", "adset", "campaign", or "account"
 #' @param ad_object Character. One of: "insights" (default), "adsets", ...
 #' @param breakdowns Character Vector. One or more of breakdowns for 
@@ -142,7 +142,7 @@ flattener <- function(x, i = 1) {
 #'                  "device_platform"))
 #'             
 #' # Daily results for all campaigns of "which" account,
-#' with custom performance fields with no breakdowns.
+#' # with custom performance fields with no breakdowns.
 #' insights_adset <- fb_insights(
 #'   token, which, 
 #'   time_increment = "1",

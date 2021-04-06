@@ -107,26 +107,9 @@ corr <- function(df, method = "pearson",
       dimnames(z) <- list(colnames(x), colnames(x))
       round(z, dec)
     }
-    
-    p <- tryCatch({
-      cor.test.p(d)
-    }, error = function(err) {
-      message(paste("Couldn't calculate p-values:", err))
-      message("To continue, try 'pvalue' = FALSE and/or check your data.")
-    })
-    
-    # n <- t(!is.na(d)) %*% (!is.na(d))
-    # t <- (rs*sqrt(n - 2))/sqrt(1 - rs^2)
-    # p <- -2 * expm1(pt(abs(t), (n - 2), log.p = TRUE))
-    # p[p > 1] <- 1
-    # lp <- upper.tri(p)
-    # pa <- p[lp]
-    # pa <- p.adjust(pa, "holm")
-    # p[upper.tri(p, diag = FALSE)] <- pa
-    # p <- round(data.frame(p), 8)
-    # row.names(p) <- colnames(rs)
-    
-    return(list(cor = cor, pvalue = p))
+    if (nrow(removenarows(df, all = FALSE)) < 3)
+      stop("There are not enough rows (>2) without missing values.")
+    return(list(cor = cor, pvalue = cor.test.p(d)))
   }
   
   return(cor)
