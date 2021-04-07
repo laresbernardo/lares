@@ -240,22 +240,22 @@ values of each column. Set to <code>NA</code> to ignore argument.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
 
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span><span class='op'>(</span><span class='va'>Survived</span>, method <span class='op'>=</span> <span class='st'>"spearman"</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span>, top <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Maybe you meant one of: 'Survived_TRUE'</span></div><div class='output co'>#&gt; <span class='message'>Automatically using 'Survived_TRUE</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Not a valid input: Survived was transformed or does not exist.</span></div><div class='output co'>#&gt;                   variables      corr   pvalue
-#&gt; Sex_male           Sex_male -0.543351 0.000000
-#&gt; Fare                   Fare  0.323736 0.000000
-#&gt; Cabin_               Cabin_ -0.316912 0.000000
-#&gt; Pclass_1           Pclass_1  0.285904 0.000000
-#&gt; Embarked_C       Embarked_C  0.168240 0.000000
-#&gt; Parch                 Parch  0.138266 0.000035
-#&gt; Ticket_OTHER   Ticket_OTHER  0.102598 0.002167
-#&gt; Pclass_2           Pclass_2  0.093349 0.005294
-#&gt; SibSp                 SibSp  0.088879 0.007941
-#&gt; Ticket_113760 Ticket_113760  0.085083 0.011062</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Maybe you meant one of: 'Survived_TRUE'</span></div><div class='output co'>#&gt; <span class='message'>Automatically using 'Survived_TRUE</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Not a valid input: Survived was transformed or does not exist.</span></div><div class='output co'>#&gt;        variables      corr pvalue
+#&gt; 3       Sex_male -0.543351      1
+#&gt; 7           Fare  0.323736      1
+#&gt; 20        Cabin_ -0.316912      1
+#&gt; 8       Pclass_1  0.285904      1
+#&gt; 31    Embarked_C  0.168240      1
+#&gt; 6          Parch  0.138266      1
+#&gt; 19  Ticket_OTHER  0.102598      1
+#&gt; 9       Pclass_2  0.093349      1
+#&gt; 5          SibSp  0.088879      1
+#&gt; 10 Ticket_113760  0.085083      1</div><div class='input'>
 <span class='co'># With plots, results are easier to compare:</span>
 
 <span class='co'># Correlate Survived with everything else and show only significant results</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span><span class='op'>(</span><span class='va'>Survived_TRUE</span>, max_pvalue <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span>
-</div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to max; returning -Inf</span></div><div class='img'><img src='corr_var-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Top 15 with less than 50% correlation and show ranks</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>corr_var</span><span class='op'>(</span><span class='va'>Survived_TRUE</span>, ceiling <span class='op'>=</span> <span class='fl'>60</span>, top <span class='op'>=</span> <span class='fl'>15</span>, ranks <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Removing all correlations greater than 60% (absolute)</span></div><div class='img'><img src='corr_var-2.png' alt='' width='700' height='433' /></div></pre>
