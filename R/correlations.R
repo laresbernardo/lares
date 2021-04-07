@@ -255,7 +255,7 @@ corr_var <- function(df, var,
       geom_text(aes(hjust = .data$hjust), size = 3, colour = "black") +
       scale_fill_manual(values = c("FALSE" = "#E5586E", "TRUE" = "#59B3D2")) +
       guides(fill = FALSE) +
-      labs(title = paste("Correlations of", var, "[%]"), x = NULL, y = NULL) +
+      labs(title = paste("Correlations of", var), x = NULL, y = NULL) +
       scale_y_continuous(expand = c(0, 0), position = "right",
                          labels = function(x) sub('^(-)?0[.]', '\\1.', x)) + 
       theme_lares(pal = 2)
@@ -307,11 +307,11 @@ corr_var <- function(df, var,
 #' # Show only most relevant results filtered by pvalue
 #' corr_cross(dft, rm.na = TRUE, max_pvalue = 0.05, top = 15)
 #' 
-#' # Cross-Correlation max values per category
-#' corr_cross(dft, type = 2, top = NA)
-#' 
 #' # Cross-Correlation for certain variables
 #' corr_cross(dft, contains = c("Survived", "Fare"))
+#' 
+#' # Cross-Correlation max values per category
+#' corr_cross(dft, type = 2, top = NA)
 #' @export
 corr_cross <- function(df, plot = TRUE, 
                        pvalue = TRUE, max_pvalue = 1,
@@ -409,10 +409,10 @@ corr_cross <- function(df, plot = TRUE,
         coord_flip() + guides(fill = FALSE) +
         labs(title = "Ranked Cross-Correlations", 
              subtitle = subtitle,
-             x = NULL, 
-             y = "(Abs) Correlation") +
+             x = NULL, y = NULL) +
         scale_fill_manual(values = c("bad" = "#E5586E", "good" = "#59B3D2")) +
-        scale_y_continuous(expand = c(0, 0), labels = function(x) sub('^(-)?0[.]', '\\1.', x)) + 
+        scale_y_continuous(expand = c(0, 0), position = "right",
+                           labels = function(x) sub('^(-)?0[.]', '\\1.', x)) + 
         theme_lares(legend = "top")
       if ((!is.na(contains)[1] & length(contains) == 1) | grid) {
         p <- p + facet_grid(.data$facet ~ ., scales = "free", space = "free")

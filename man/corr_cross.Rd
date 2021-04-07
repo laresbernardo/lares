@@ -72,11 +72,11 @@ corr_cross(dft, plot = FALSE, top = 10)
 # Show only most relevant results filtered by pvalue
 corr_cross(dft, rm.na = TRUE, max_pvalue = 0.05, top = 15)
 
-# Cross-Correlation max values per category
-corr_cross(dft, type = 2, top = NA)
-
 # Cross-Correlation for certain variables
 corr_cross(dft, contains = c("Survived", "Fare"))
+
+# Cross-Correlation max values per category
+corr_cross(dft, type = 2, top = NA)
 }
 \seealso{
 Other Correlations: 
