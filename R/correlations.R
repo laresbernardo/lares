@@ -108,7 +108,8 @@ corr <- function(df, method = "pearson",
       round(z, dec)
     }
     if (nrow(removenarows(df, all = FALSE)) < 3)
-      stop("There are not enough rows (>2) without missing values.")
+      stop(c("Can't calculate pvalues: There are not enough rows (>2) without missing observations.",
+             "\nTry adding 'pvalue = FALSE' or fixing your dataset."))
     return(list(cor = cor, pvalue = cor.test.p(d)))
   }
   
@@ -183,11 +184,8 @@ corr_var <- function(df, var,
   df <- select(df, -contains(paste0(var,"_log")))
   
   # Calculate correlations
-  rs <- corr(df,
-             ignore = ignore,
-             limit = limit,
-             pvalue = TRUE,
-             ...)
+  rs <- corr(df, ignore = ignore, limit = limit, ...)
+  if (is.data.frame(rs)) rs <- list(cor = rs, pvalue = mutate_all(rs, ~1))
   
   # Check if main variable exists
   if (!var %in% colnames(rs$cor)) {
@@ -251,14 +249,15 @@ corr_var <- function(df, var,
              hjust = ifelse(abs(.data$corr) < max(abs(.data$corr))/1.5, -0.1, 1.1)) %>%
       ggplot(aes(x = reorder(.data$variables, abs(.data$corr)), 
                  y = abs(.data$corr), fill = .data$pos, 
-                 label = signif(100*.data$corr, 3))) +
+                 label = sub('^(-)?0[.]', '\\1.', signif(.data$corr, 3)))) +
       geom_hline(yintercept = 0, alpha = 0.5) +
       geom_col(colour = "transparent") + coord_flip() + 
       geom_text(aes(hjust = .data$hjust), size = 3, colour = "black") +
       scale_fill_manual(values = c("FALSE" = "#E5586E", "TRUE" = "#59B3D2")) +
       guides(fill = FALSE) +
       labs(title = paste("Correlations of", var, "[%]"), x = NULL, y = NULL) +
-      scale_y_continuous(expand = c(0, 0), position = "right") + 
+      scale_y_continuous(expand = c(0, 0), position = "right",
+                         labels = function(x) sub('^(-)?0[.]', '\\1.', x)) + 
       theme_lares(pal = 2)
     
     if (!is.na(top) & top < original_n) p <- p + 
@@ -328,7 +327,7 @@ corr_cross <- function(df, plot = TRUE,
   
   cor <- corr(df, ignore = ignore, pvalue = pvalue, ...)
   
-  transf <- function(x, max = 1) {
+  transf <- function(x, max = 1, contains = NA, rm.na = FALSE) {
     x <- data.frame(x)
     ret <- gather(x) %>%
       mutate(mix = rep(colnames(x), length(x))) %>%
@@ -351,11 +350,11 @@ corr_cross <- function(df, plot = TRUE,
     return(ret)
   }
   
-  if (is.list(cor)) {
-    ret <- transf(cor$cor, max = max)
-    aux <- transf(cor$pvalue, max = max)
+  if (!is.data.frame(cor)) {
+    ret <- transf(cor$cor, max = max, contains = contains, rm.na = rm.na)
+    aux <- transf(cor$pvalue, max = max, contains = contains, rm.na = rm.na)
   } else {
-    ret <- aux <- transf(cor, max = max)
+    ret <- aux <- transf(cor, max = max, contains = contains, rm.na = rm.na)
     aux$corr <- 0
   }
   
