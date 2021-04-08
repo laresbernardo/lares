@@ -74,9 +74,6 @@ corr <- function(df, method = "pearson",
     }
   }
   
-  # Drop columns with no variance
-  # d <- d[,-which(colnames(d) %in% zerovar(d))] 
-  
   # Correlations
   rs <- suppressWarnings(cor(d, use = "pairwise.complete.obs", method = method))
   rs[is.na(rs)] <- 0
@@ -95,28 +92,31 @@ corr <- function(df, method = "pearson",
   }
   
   # Statistical significance (p-value)
-  if (pvalue) {
-    cor.test.p <- function(x){
-      FUN <- function(x, y) suppressWarnings(
-        cor.test(x, y, method = method, conf.level = 0.95)[["p.value"]])
-      z <- outer(
-        colnames(x), 
-        colnames(x), 
-        Vectorize(function(i,j) FUN(x[,i], x[,j]))
-      )
-      dimnames(z) <- list(colnames(x), colnames(x))
-      round(z, dec)
-    }
-    if (nrow(removenarows(df, all = FALSE)) < 3)
-      stop(c("Can't calculate pvalues: There are not enough rows (>2) without missing observations.",
-             "\nTry adding 'pvalue = FALSE' or fixing your dataset."))
-    return(list(cor = cor, pvalue = cor.test.p(d)))
-  }
+  if (pvalue) return(list(cor = cor, pvalue = cor.test.p(d, method = method)))
   
   return(cor)
   
 }
 
+# https://stackoverflow.com/questions/60512043/r-creating-a-p-value-matrix-with-missing-values
+cor.test.p <- function(mat, method = "pearson") {
+  mat <- as.matrix(mat)
+  n <- ncol(mat)
+  p.mat<- matrix(NA, n, n)
+  diag(p.mat) <- 0
+  for (i in 1:(n - 1)) {
+    for (j in (i + 1):n) {
+      error <- try(tmp <- cor.test(mat[, i], mat[, j], method = method), silent = TRUE)
+      if (class(error) == "try-error") {
+        p.mat[i, j] <- NA
+      } else {
+        p.mat[i, j] <- p.mat[j, i] <- tmp$p.value
+      }
+    }
+  }
+  colnames(p.mat) <- rownames(p.mat) <- colnames(mat)
+  return(p.mat)
+}
 
 ####################################################################
 #' Correlation between variable and dataframe
