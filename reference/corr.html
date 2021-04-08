@@ -245,12 +245,12 @@ and sorted by mean of each variable's correlations</p></td>
 #&gt; Pclass_2           0.093349 -0.064746  0.006954 -0.288585  1.000000
 #&gt; 
 #&gt; $pvalue
-#&gt;               Survived_TRUE Sex_male      Age Pclass_1 Pclass_2
-#&gt; Survived_TRUE      0.000000 0.000000 0.039125 0.000000 0.005294
-#&gt; Sex_male           0.000000 0.000000 0.012671 0.003405 0.053364
-#&gt; Age                0.039125 0.012671 0.000000 0.000000 0.852842
-#&gt; Pclass_1           0.000000 0.003405 0.000000 0.000000 0.000000
-#&gt; Pclass_2           0.005294 0.053364 0.852842 0.000000 0.000000
+#&gt;               Survived_TRUE     Sex_male          Age     Pclass_1     Pclass_2
+#&gt; Survived_TRUE  0.000000e+00 1.406066e-69 3.912465e-02 3.190582e-18 5.293655e-03
+#&gt; Sex_male       1.406066e-69 0.000000e+00 1.267130e-02 3.404901e-03 5.336354e-02
+#&gt; Age            3.912465e-02 1.267130e-02 0.000000e+00 7.158898e-22 8.528419e-01
+#&gt; Pclass_1       3.190582e-18 3.404901e-03 7.158898e-22 0.000000e+00 1.498959e-18
+#&gt; Pclass_2       5.293655e-03 5.336354e-02 8.528419e-01 1.498959e-18 0.000000e+00
 #&gt; </div><div class='input'>
 <span class='co'># Test when no more than 2 non-missing values</span>
 <span class='va'>df</span><span class='op'>$</span><span class='va'>trash</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
