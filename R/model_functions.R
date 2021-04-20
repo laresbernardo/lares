@@ -27,35 +27,35 @@
 #'
 #' @family Machine Learning
 #' @inheritParams h2o::h2o.automl
-#' @param df Dataframe. Dataframe containing all your data, including 
-#' the independent variable labeled as \code{'tag'}. If you want to define 
+#' @param df Dataframe. Dataframe containing all your data, including
+#' the independent variable labeled as \code{'tag'}. If you want to define
 #' which variable should be used instead, use the \code{y} parameter.
 #' @param y Variable or Character. Name of the independent variable.
 #' @param ignore Character vector. Force columns for the model to ignore
-#' @param train_test Character. If needed, \code{df}'s column name with 'test' 
+#' @param train_test Character. If needed, \code{df}'s column name with 'test'
 #' and 'train' values to split
-#' @param split Numeric. Value between 0 and 1 to split as train/test 
+#' @param split Numeric. Value between 0 and 1 to split as train/test
 #' datasets. Value is for training set. Set value to 1 to train with all
-#' available data and test with same data (cross-validation will still be 
+#' available data and test with same data (cross-validation will still be
 #' used when training). If \code{train_test} is set, value will be overwritten
 #' with its real split rate.
 #' @param weight Column with observation weights. Giving some observation a
-#' weight of zero is equivalent to excluding it from the dataset; giving an 
-#' observation a relative weight of 2 is equivalent to repeating that 
+#' weight of zero is equivalent to excluding it from the dataset; giving an
+#' observation a relative weight of 2 is equivalent to repeating that
 #' row twice. Negative weights are not allowed.
-#' @param target Value. Which is your target positive value? If 
-#' set to \code{'auto'}, the target with largest \code{mean(score)} will be 
+#' @param target Value. Which is your target positive value? If
+#' set to \code{'auto'}, the target with largest \code{mean(score)} will be
 #' selected. Change the value to overwrite. Only used when binary
 #' categorical model.
 #' @param balance Boolean. Auto-balance train dataset with under-sampling?
 #' @param impute Boolean. Fill \code{NA} values with MICE?
-#' @param no_outliers Boolean/Numeric. Remove \code{y}'s outliers from the dataset? 
+#' @param no_outliers Boolean/Numeric. Remove \code{y}'s outliers from the dataset?
 #' Will remove those values that are farther than n standard deviations from
-#' the independent variable's mean (Z-score). Set to \code{TRUE} for default (3) 
+#' the independent variable's mean (Z-score). Set to \code{TRUE} for default (3)
 #' or numeric to set a different multiplier.
 #' @param unique_train Boolean. Keep only unique row observations for training data?
 #' @param center,scale Boolean. Using the base function scale, do you wish
-#' to center and/or scale all numerical values? 
+#' to center and/or scale all numerical values?
 #' @param thresh Integer. Threshold for selecting binary or regression 
 #' models: this number is the threshold of unique values we should 
 #' have in \code{'tag'} (more than: regression; less than: classification)
@@ -144,6 +144,7 @@ h2o_automl <- function(df, y = "tag",
   
   quiet(h2o.init(nthreads = -1, port = 54321))
   
+  df <- as.data.frame(df)
   y <- gsub('"', "", as_label(enquo(y)))
   
   # PROCESS THE DATA
@@ -199,7 +200,7 @@ h2o_automl <- function(df, y = "tag",
   aml <- quiet(h2o.automl(
     x = colnames(df)[!colnames(df) %in% c("tag", ignore)],
     y = "tag",
-    training_frame = quiet(as.h2o(train)),
+    training_frame = quiet_h2o(as.h2o(train), quiet = quiet),
     weights_column = weight,
     max_runtime_secs = max_time,
     max_models = max_models,
@@ -249,6 +250,12 @@ h2o_automl <- function(df, y = "tag",
   
 }
 
+quiet_h2o <- function(..., quiet = TRUE) {
+  if (quiet) h2o.no_progress()
+  x <- eval(...)
+  h2o.show_progress()
+  return(x)
+}
 
 ####################################################################
 #' Plot methods for lares
@@ -412,7 +419,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   
   # GET PREDICTIONS
   if (!quiet) message(paste0(">>> Running predictions for ", y, "..."))
-  predictions <- quiet(h2o_predict_model(global, m))
+  predictions <- quiet_h2o(h2o_predict_model(global, m), quiet = quiet)
   global <- cbind(global, predictions)
   # Change dots for space
   if (sum(grepl(" ", cats)) > 0)

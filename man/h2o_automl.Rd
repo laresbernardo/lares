@@ -37,30 +37,30 @@ h2o_automl(
 )
 }
 \arguments{
-\item{df}{Dataframe. Dataframe containing all your data, including 
-the independent variable labeled as \code{'tag'}. If you want to define 
+\item{df}{Dataframe. Dataframe containing all your data, including
+the independent variable labeled as \code{'tag'}. If you want to define
 which variable should be used instead, use the \code{y} parameter.}
 
 \item{y}{Variable or Character. Name of the independent variable.}
 
 \item{ignore}{Character vector. Force columns for the model to ignore}
 
-\item{train_test}{Character. If needed, \code{df}'s column name with 'test' 
+\item{train_test}{Character. If needed, \code{df}'s column name with 'test'
 and 'train' values to split}
 
-\item{split}{Numeric. Value between 0 and 1 to split as train/test 
+\item{split}{Numeric. Value between 0 and 1 to split as train/test
 datasets. Value is for training set. Set value to 1 to train with all
-available data and test with same data (cross-validation will still be 
+available data and test with same data (cross-validation will still be
 used when training). If \code{train_test} is set, value will be overwritten
 with its real split rate.}
 
 \item{weight}{Column with observation weights. Giving some observation a
-weight of zero is equivalent to excluding it from the dataset; giving an 
-observation a relative weight of 2 is equivalent to repeating that 
+weight of zero is equivalent to excluding it from the dataset; giving an
+observation a relative weight of 2 is equivalent to repeating that
 row twice. Negative weights are not allowed.}
 
-\item{target}{Value. Which is your target positive value? If 
-set to \code{'auto'}, the target with largest \code{mean(score)} will be 
+\item{target}{Value. Which is your target positive value? If
+set to \code{'auto'}, the target with largest \code{mean(score)} will be
 selected. Change the value to overwrite. Only used when binary
 categorical model.}
 
@@ -68,9 +68,9 @@ categorical model.}
 
 \item{impute}{Boolean. Fill \code{NA} values with MICE?}
 
-\item{no_outliers}{Boolean/Numeric. Remove \code{y}'s outliers from the dataset? 
+\item{no_outliers}{Boolean/Numeric. Remove \code{y}'s outliers from the dataset?
 Will remove those values that are farther than n standard deviations from
-the independent variable's mean (Z-score). Set to \code{TRUE} for default (3) 
+the independent variable's mean (Z-score). Set to \code{TRUE} for default (3)
 or numeric to set a different multiplier.}
 
 \item{unique_train}{Boolean. Keep only unique row observations for training data?}
