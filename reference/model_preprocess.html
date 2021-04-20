@@ -75,7 +75,7 @@ or custom algorithm." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.9.14</span>
       </span>
     </div>
 
@@ -147,8 +147,8 @@ or custom algorithm.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>df</th>
-      <td><p>Dataframe. Dataframe containing all your data, including 
-the independent variable labeled as <code>'tag'</code>. If you want to define 
+      <td><p>Dataframe. Dataframe containing all your data, including
+the independent variable labeled as <code>'tag'</code>. If you want to define
 which variable should be used instead, use the <code>y</code> parameter.</p></td>
     </tr>
     <tr>
@@ -161,28 +161,28 @@ which variable should be used instead, use the <code>y</code> parameter.</p></td
     </tr>
     <tr>
       <th>train_test</th>
-      <td><p>Character. If needed, <code>df</code>'s column name with 'test' 
+      <td><p>Character. If needed, <code>df</code>'s column name with 'test'
 and 'train' values to split</p></td>
     </tr>
     <tr>
       <th>split</th>
-      <td><p>Numeric. Value between 0 and 1 to split as train/test 
+      <td><p>Numeric. Value between 0 and 1 to split as train/test
 datasets. Value is for training set. Set value to 1 to train with all
-available data and test with same data (cross-validation will still be 
+available data and test with same data (cross-validation will still be
 used when training). If <code>train_test</code> is set, value will be overwritten
 with its real split rate.</p></td>
     </tr>
     <tr>
       <th>weight</th>
       <td><p>Column with observation weights. Giving some observation a
-weight of zero is equivalent to excluding it from the dataset; giving an 
-observation a relative weight of 2 is equivalent to repeating that 
+weight of zero is equivalent to excluding it from the dataset; giving an
+observation a relative weight of 2 is equivalent to repeating that
 row twice. Negative weights are not allowed.</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>Value. Which is your target positive value? If 
-set to <code>'auto'</code>, the target with largest <code><a href='https://rdrr.io/r/base/mean.html'>mean(score)</a></code> will be 
+      <td><p>Value. Which is your target positive value? If
+set to <code>'auto'</code>, the target with largest <code><a href='https://rdrr.io/r/base/mean.html'>mean(score)</a></code> will be
 selected. Change the value to overwrite. Only used when binary
 categorical model.</p></td>
     </tr>
@@ -196,9 +196,9 @@ categorical model.</p></td>
     </tr>
     <tr>
       <th>no_outliers</th>
-      <td><p>Boolean/Numeric. Remove <code>y</code>'s outliers from the dataset? 
+      <td><p>Boolean/Numeric. Remove <code>y</code>'s outliers from the dataset?
 Will remove those values that are farther than n standard deviations from
-the independent variable's mean (Z-score). Set to <code>TRUE</code> for default (3) 
+the independent variable's mean (Z-score). Set to <code>TRUE</code> for default (3)
 or numeric to set a different multiplier.</p></td>
     </tr>
     <tr>
