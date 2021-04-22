@@ -825,13 +825,14 @@ fb_creatives <- function(token, which,
 #' 
 #' @family API
 #' @family Facebook
-#' @param token Character. User token, created with
-#' \href{https://developers.facebook.com/tools/explorer}{API Graph}.
-#' or with this same \code{fb_token()} function.
+#' @inheritParams fb_insights
 #' @param app_id,app_secret Character. Application ID and Secret.
+#' @param token Character. User token, created with
+#' \href{https://developers.facebook.com/tools/explorer}{API Graph}
+#' or with this same \code{fb_token()}'s token.
 #' @export
-fb_token <- function(app_id, app_secret, token) {
-  link <- paste0("https://graph.facebook.com/v6.0/oauth/access_token?",
+fb_token <- function(app_id, app_secret, token, api_version = "v10.0") {
+  link <- paste0("https://graph.facebook.com/", api_version, "/oauth/access_token?",
                  "grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s")
   linkurl <- sprintf(link, app_id, app_secret, token)
   ret <- content(GET(linkurl))

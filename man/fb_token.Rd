@@ -4,14 +4,16 @@
 \alias{fb_token}
 \title{Facebook's Long Life User Token}
 \usage{
-fb_token(app_id, app_secret, token)
+fb_token(app_id, app_secret, token, api_version = "v10.0")
 }
 \arguments{
 \item{app_id, app_secret}{Character. Application ID and Secret.}
 
 \item{token}{Character. User token, created with
-\href{https://developers.facebook.com/tools/explorer}{API Graph}.
-or with this same \code{fb_token()} function.}
+\href{https://developers.facebook.com/tools/explorer}{API Graph}
+or with this same \code{fb_token()}'s token.}
+
+\item{api_version}{Character. Facebook API version}
 }
 \description{
 Using a 1-hour generic user token you can generate a 60 day token. 

@@ -200,7 +200,7 @@ h2o_automl <- function(df, y = "tag",
   aml <- quiet(h2o.automl(
     x = colnames(df)[!colnames(df) %in% c("tag", ignore)],
     y = "tag",
-    training_frame = quiet_h2o(as.h2o(train), quiet = quiet),
+    training_frame = quiet_h2o(as.h2o(train), quiet = TRUE),
     weights_column = weight,
     max_runtime_secs = max_time,
     max_models = max_models,
@@ -257,22 +257,20 @@ quiet_h2o <- function(..., quiet = TRUE) {
   return(x)
 }
 
-####################################################################
-#' Plot methods for lares
-#' @rdname plot
-#' @param x Object
-#' @param ... Additional parameters
+#' @rdname h2o_automl
+#' @aliases h2o_automl
+#' @param x h2o_automl object
 #' @export
 plot.h2o_automl <- function(x, ...) {
-  if (!inherits(x, 'h2o_automl'))
+    if (!inherits(x, 'h2o_automl'))
     stop('Object must be class h2o_automl')
   if ("plots" %in% names(x)) {
     x$plots$dashboard 
   } else {
-    invisible(
-      mplot_full(tag = x$scores_test$tag,
-                 score = x$scores_test$score,
-                 multis = select(x$scores_test, -.data$tag, -.data$score)))
+    invisible(mplot_full(
+      tag = x$scores_test$tag,
+      score = x$scores_test$score,
+      multis = select(x$scores_test, -.data$tag, -.data$score)))
   } 
 }
 

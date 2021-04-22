@@ -2,6 +2,7 @@
 % Please edit documentation in R/model_functions.R
 \name{h2o_automl}
 \alias{h2o_automl}
+\alias{plot.h2o_automl}
 \title{Automated H2O's AutoML}
 \usage{
 h2o_automl(
@@ -35,6 +36,8 @@ h2o_automl(
   project = "ML Project",
   ...
 )
+
+\method{plot}{h2o_automl}(x, ...)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including
@@ -119,6 +122,8 @@ the results? Working directory as default.}
 \item{project}{Character. Your project's name}
 
 \item{...}{Additional parameters on \code{h2o::h2o.automl}}
+
+\item{x}{h2o_automl object}
 }
 \description{
 This function lets the user create a robust and fast model, using 
