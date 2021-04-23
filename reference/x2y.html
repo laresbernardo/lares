@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Ranked Predictive Power Cross-Features (x2y metric) — x2y • lares</title>
+<title>Ranked Predictive Power of Cross-Features (x2y) — x2y • lares</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,14 @@
 
 
 
-<meta property="og:title" content="Ranked Predictive Power Cross-Features (x2y metric) — x2y" />
+<meta property="og:title" content="Ranked Predictive Power of Cross-Features (x2y) — x2y" />
 <meta property="og:description" content="The porcentual reduction in error when we go from a baseline model to
-a predictive model measures the strength of the relationship between 
-features x and y. This metric, x2y, measures the ability of x to 
-predict y. Based on Rama Ramakrishnan's post: An Alternative to the
-Correlation Coefficient That Works For Numeric and Categorical Variables." />
+a predictive model measures the strength of the relationship between
+features x and y. x2y, measures the ability of x 
+to predict y. This metric is based on Rama Ramakrishnan's
+https://bit.ly/3sOVbeipost: An Alternative to the Correlation
+Coefficient That Works For Numeric and Categorical Variables and complements
+lares::corr_cross()." />
 
 
 
@@ -112,17 +114,19 @@ Correlation Coefficient That Works For Numeric and Categorical Variables." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Ranked Predictive Power Cross-Features (x2y metric)</h1>
+    <h1>Ranked Predictive Power of Cross-Features (x2y)</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/x2y.R'><code>R/x2y.R</code></a></small>
     <div class="hidden name"><code>x2y.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>The porcentual reduction in error when we go from a baseline model to
-a predictive model measures the strength of the relationship between 
-features x and y. This metric, x2y, measures the ability of x to 
-predict y. Based on Rama Ramakrishnan's post: An Alternative to the
-Correlation Coefficient That Works For Numeric and Categorical Variables.</p>
+a predictive model measures the strength of the relationship between
+features <code>x</code> and <code>y</code>. <code>x2y</code>, measures the ability of <code>x</code> 
+to predict <code>y</code>. This metric is based on Rama Ramakrishnan's
+<a href='https://bit.ly/3sOVbei'>https://bit.ly/3sOVbei</a>post: An Alternative to the Correlation
+Coefficient That Works For Numeric and Categorical Variables and complements
+<code><a href='corr_cross.html'>lares::corr_cross()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>x2y</span><span class='op'>(</span><span class='va'>df</span>, target <span class='op'>=</span> <span class='cn'>NULL</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span>, top <span class='op'>=</span> <span class='fl'>20</span>, quiet <span class='op'>=</span> <span class='st'>"auto"</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -170,7 +174,7 @@ to <code>NULL</code> to return all.</p></td>
     </tr>
     <tr>
       <th>confidence</th>
-      <td><p>Boolean. Calculate 95<!-- % confidence intervals estimated -->
+      <td><p>Boolean. Calculate `95<!-- %` confidence intervals estimated -->
 with n <code>bootstraps</code>.</p></td>
     </tr>
     <tr>
