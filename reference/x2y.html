@@ -43,10 +43,8 @@
 <meta property="og:description" content="The porcentual reduction in error when we go from a baseline model to
 a predictive model measures the strength of the relationship between
 features x and y. x2y, measures the ability of x 
-to predict y. This metric is based on Rama Ramakrishnan's
-https://bit.ly/3sOVbeipost: An Alternative to the Correlation
-Coefficient That Works For Numeric and Categorical Variables and complements
-lares::corr_cross()." />
+to predict y. To ve able to accept numerical and non-numerical features,
+we use CART (Classification and regression trees)." />
 
 
 
@@ -123,15 +121,23 @@ lares::corr_cross()." />
     <p>The porcentual reduction in error when we go from a baseline model to
 a predictive model measures the strength of the relationship between
 features <code>x</code> and <code>y</code>. <code>x2y</code>, measures the ability of <code>x</code> 
-to predict <code>y</code>. This metric is based on Rama Ramakrishnan's
-<a href='https://bit.ly/3sOVbei'>https://bit.ly/3sOVbei</a>post: An Alternative to the Correlation
-Coefficient That Works For Numeric and Categorical Variables and complements
-<code><a href='corr_cross.html'>lares::corr_cross()</a></code>.</p>
+to predict <code>y</code>. To ve able to accept numerical and non-numerical features,
+we use CART (Classification and regression trees).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>x2y</span><span class='op'>(</span><span class='va'>df</span>, target <span class='op'>=</span> <span class='cn'>NULL</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span>, top <span class='op'>=</span> <span class='fl'>20</span>, quiet <span class='op'>=</span> <span class='st'>"auto"</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>x2y</span><span class='op'>(</span>
+  <span class='va'>df</span>,
+  target <span class='op'>=</span> <span class='cn'>NULL</span>,
+  symmetric <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  plot <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  top <span class='op'>=</span> <span class='fl'>20</span>,
+  quiet <span class='op'>=</span> <span class='st'>"auto"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
-<span class='fu'>x2y_calc</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, confidence <span class='op'>=</span> <span class='cn'>FALSE</span>, bootstraps <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+<span class='fu'>x2y_metric</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, confidence <span class='op'>=</span> <span class='cn'>FALSE</span>, bootstraps <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
+
+<span class='fu'>x2y_plot</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for x2y</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -151,6 +157,13 @@ name(s) of the variable(s) you are interested in. Keep <code>NULL</code>
 to calculate for every variable (column).</p></td>
     </tr>
     <tr>
+      <th>symmetric</th>
+      <td><p>Boolean. <code>x2y</code> metric is not symmetric with respect to
+<code>x</code> and <code>y</code>. The extent to which <code>x</code> can predict <code>y</code> can
+be different from the extent to which <code>y</code> can predict <code>x</code>. Set
+<code>symmetric=TRUE</code> if you wish to average both numbers.</p></td>
+    </tr>
+    <tr>
       <th>plot</th>
       <td><p>Boolean. Return a plot? If not, only a data.frame with calculated
 results will be returned.</p></td>
@@ -166,7 +179,7 @@ to <code>NULL</code> to return all.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional parameters passed to <code>x2y_calc()</code></p></td>
+      <td><p>Additional parameters passed to <code>x2y_metric()</code></p></td>
     </tr>
     <tr>
       <th>x, y</th>
@@ -174,23 +187,75 @@ to <code>NULL</code> to return all.</p></td>
     </tr>
     <tr>
       <th>confidence</th>
-      <td><p>Boolean. Calculate `95<!-- %` confidence intervals estimated -->
-with n <code>bootstraps</code>.</p></td>
+      <td><p>Boolean. Calculate 95% confidence intervals estimated
+with N <code>bootstraps</code>.</p></td>
     </tr>
     <tr>
       <th>bootstraps</th>
       <td><p>Integer. If <code>confidence=TRUE</code>, how many bootstraps?
-The more iterations we run the more precise the <code>confidence</code>internal.</p></td>
+The more iterations we run the more precise the <code>confidence</code> internal.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This <code>x2y</code> metric is based on Rama Ramakrishnan's 
+<a href='https://bit.ly/3sOVbei'>post</a>: An Alternative to the Correlation
+Coefficient That Works For Numeric and Categorical Variables. This analysis
+complements our <code><a href='corr_cross.html'>lares::corr_cross()</a></code> output.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
 <span class='fu'>x2y</span><span class='op'>(</span><span class='va'>dft</span>, target <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Survived"</span>,<span class='st'>"Age"</span><span class='op'>)</span>, top <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-<span class='fu'>x2y</span><span class='op'>(</span><span class='va'>dft</span>, target <span class='op'>=</span> <span class='st'>"Fare"</span>, confidence <span class='op'>=</span> <span class='cn'>TRUE</span>, bootstraps <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+</div><div class='output co'>#&gt;  00:00:00 [:&gt;                                       ] 2.63% | 1                       00:00:00 [::&gt;                                      ] 5.26% | 2                       00:00:00 [:::&gt;                                     ] 7.89% | 3                       00:00:00 [::::&gt;                                    ] 10.5% | 4                       00:00:00 [:::::&gt;                                   ] 13.2% | 5                       00:00:00 [::::::&gt;                                  ] 15.8% | 6                       00:00:00 [:::::::&gt;                                 ] 18.4% | 7                       00:00:00 [::::::::&gt;                                ] 21.1% | 8                       00:00:00 [:::::::::&gt;                               ] 23.7% | 9                       00:00:00 [::::::::::&gt;                              ] 26.3% | 10                      00:00:00 [:::::::::::&gt;                             ] 28.9% | 11                      00:00:00 [::::::::::::&gt;                            ] 31.6% | 12                      00:00:00 [:::::::::::::&gt;                           ] 34.2% | 13                      00:00:00 [::::::::::::::&gt;                          ] 36.8% | 14                      00:00:00 [:::::::::::::::&gt;                         ] 39.5% | 15                      00:00:01 [::::::::::::::::&gt;                        ] 42.1% | 16                      00:00:01 [:::::::::::::::::&gt;                       ] 44.7% | 17                      00:00:01 [::::::::::::::::::&gt;                      ] 47.4% | 18                      00:00:01 [::::::::::::::::::::&gt;                    ] 50% | 19                      00:00:01 [:::::::::::::::::::::&gt;                   ] 52.6% | 20                      00:00:01 [::::::::::::::::::::::&gt;                  ] 55.3% | 21                      00:00:01 [:::::::::::::::::::::::&gt;                 ] 57.9% | 22                      00:00:01 [::::::::::::::::::::::::&gt;                ] 60.5% | 23                      00:00:01 [:::::::::::::::::::::::::&gt;               ] 63.2% | 24                      00:00:01 [::::::::::::::::::::::::::&gt;              ] 65.8% | 25                      00:00:01 [:::::::::::::::::::::::::::&gt;             ] 68.4% | 26                      00:00:01 [::::::::::::::::::::::::::::&gt;            ] 71.1% | 27                      00:00:01 [:::::::::::::::::::::::::::::&gt;           ] 73.7% | 28                      00:00:01 [::::::::::::::::::::::::::::::&gt;          ] 76.3% | 29                      00:00:01 [:::::::::::::::::::::::::::::::&gt;         ] 78.9% | 30                      00:00:01 [::::::::::::::::::::::::::::::::&gt;        ] 81.6% | 31                      00:00:01 [:::::::::::::::::::::::::::::::::&gt;       ] 84.2% | 32                      00:00:01 [::::::::::::::::::::::::::::::::::&gt;      ] 86.8% | 33                      00:00:01 [:::::::::::::::::::::::::::::::::::&gt;     ] 89.5% | 34                      00:00:01 [::::::::::::::::::::::::::::::::::::&gt;    ] 92.1% | 35                      00:00:01 [:::::::::::::::::::::::::::::::::::::&gt;   ] 94.7% | 36                      00:00:01 [::::::::::::::::::::::::::::::::::::::&gt;  ] 97.4% | 37                      00:00:01 [:::::::::::::::::::::::::::::::::::::::::] 100% | 38                      </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 x 4</span><span>
+#&gt;    x        y        obs_p   x2y
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Ticket   Survived 100    84.8
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Ticket   Age       80.1  58.4
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Sex      Survived 100    44.4
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Survived Sex      100    39.5
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Cabin    Survived 100    34.5
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Cabin    Age       80.1  20.5
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Fare     Survived 100    20.5
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Age      Parch     80.1  18.9
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Pclass   Survived 100    16.4
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Age      Pclass    80.1  14.8</div><div class='input'><span class='fu'>x2y</span><span class='op'>(</span><span class='va'>dft</span>, target <span class='op'>=</span> <span class='st'>"Fare"</span>, confidence <span class='op'>=</span> <span class='cn'>TRUE</span>, bootstraps <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 10 x 6</span><span>
+#&gt;    x      y        obs_p   x2y lower_ci upper_ci
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Ticket Fare     100   78.2    72.8      78.4 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Fare   Pclass   100   65.2    52.2      65.6 
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Cabin  Fare     100   49.1    45.0      52.3 
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Fare   Embarked 100   45.3    34.4      44.5 
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Fare   Parch    100   40.0    32.4      40.2 
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Fare   SibSp    100   35.4    16.8      40.8 
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Pclass Fare     100   32.1    29.8      36.6 
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Fare   Survived 100   20.5     5.38     21.0 
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Fare   Sex      100   13.7    -</span><span style='color: #BB0000;'>5.24</span><span>     15.2 
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Fare   Age       80.1  6.25   -</span><span style='color: #BB0000;'>0.280</span><span>     6.82</div><div class='input'><span class='fu'>x2y</span><span class='op'>(</span><span class='va'>dft</span>, target <span class='op'>=</span> <span class='st'>"Fare"</span>, symmetric <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 10 x 4</span><span>
+#&gt;    x        y           obs_p   x2y
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Fare     Pclass      100   48.7 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Fare     Ticket      100   39.1 
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Embarked Fare        100   25.8 
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Cabin    Fare        100   24.6 
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Fare     Parch       100   22.1 
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Fare     SibSp       100   20.6 
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Fare     Survived    100   12.7 
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Fare     Sex         100    8.00
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Age      Fare         80.1  4.52
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Fare     PassengerId 100    1.48</div><div class='input'>
+<span class='co'># x2y vs y2x</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>42</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span><span class='op'>)</span>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>x</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, mean <span class='op'>=</span> <span class='fl'>0</span>, sd <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span>
+
+<span class='co'># Knowing x reduces the uncertainty about the value of y a lot more than</span>
+<span class='co'># knowing y reduces the uncertainty about the value of x</span>
+<span class='fu'>x2y_plot</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
+</div><div class='img'><img src='x2y-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>x2y_plot</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>x</span><span class='op'>)</span>
+</div><div class='img'><img src='x2y-2.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
