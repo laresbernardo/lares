@@ -125,9 +125,9 @@ predict y. Based on Rama Ramakrishnan's post: An Alternative to the
 Correlation Coefficient That Works For Numeric and Categorical Variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>x2y</span><span class='op'>(</span><span class='va'>df</span>, target <span class='op'>=</span> <span class='cn'>NULL</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span>, top <span class='op'>=</span> <span class='fl'>20</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>x2y</span><span class='op'>(</span><span class='va'>df</span>, target <span class='op'>=</span> <span class='cn'>NULL</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span>, top <span class='op'>=</span> <span class='fl'>20</span>, quiet <span class='op'>=</span> <span class='st'>"auto"</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>x2y_calc</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, confidence <span class='op'>=</span> <span class='cn'>FALSE</span>, bootstraps <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span>
+<span class='fu'>x2y_calc</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, confidence <span class='op'>=</span> <span class='cn'>FALSE</span>, bootstraps <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 
 <span class='co'># S3 method for x2y</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -157,6 +157,10 @@ results will be returned.</p></td>
 to <code>NULL</code> to return all.</p></td>
     </tr>
     <tr>
+      <th>quiet</th>
+      <td><p>Boolean. Keep quiet? If not, show progress bar.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Additional parameters passed to <code>x2y_calc()</code></p></td>
     </tr>
@@ -171,7 +175,8 @@ with n <code>bootstraps</code>.</p></td>
     </tr>
     <tr>
       <th>bootstraps</th>
-      <td><p>Integer. If <code>confidence=TRUE</code>, how many bootstraps?</p></td>
+      <td><p>Integer. If <code>confidence=TRUE</code>, how many bootstraps?
+The more iterations we run the more precise the <code>confidence</code>internal.</p></td>
     </tr>
     </table>
 
