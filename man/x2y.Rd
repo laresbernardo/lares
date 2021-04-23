@@ -4,7 +4,7 @@
 \alias{x2y}
 \alias{x2y_calc}
 \alias{plot.x2y}
-\title{Ranked Predictive Power Cross-Features (x2y metric)}
+\title{Ranked Predictive Power of Cross-Features (x2y)}
 \usage{
 x2y(df, target = NULL, plot = FALSE, top = 20, quiet = "auto", ...)
 
@@ -32,7 +32,7 @@ to \code{NULL} to return all.}
 
 \item{x, y}{Vectors. Categorical or numerical vectors of same length.}
 
-\item{confidence}{Boolean. Calculate 95% confidence intervals estimated
+\item{confidence}{Boolean. Calculate `95%` confidence intervals estimated
 with n \code{bootstraps}.}
 
 \item{bootstraps}{Integer. If \code{confidence=TRUE}, how many bootstraps?
@@ -40,10 +40,12 @@ The more iterations we run the more precise the \code{confidence}internal.}
 }
 \description{
 The porcentual reduction in error when we go from a baseline model to
-a predictive model measures the strength of the relationship between 
-features x and y. This metric, x2y, measures the ability of x to 
-predict y. Based on Rama Ramakrishnan's post: An Alternative to the
-Correlation Coefficient That Works For Numeric and Categorical Variables.
+a predictive model measures the strength of the relationship between
+features \code{x} and \code{y}. \code{x2y}, measures the ability of \code{x} 
+to predict \code{y}. This metric is based on Rama Ramakrishnan's
+\url{https://bit.ly/3sOVbei}{post}: An Alternative to the Correlation
+Coefficient That Works For Numeric and Categorical Variables and complements
+\code{lares::corr_cross()}.
 }
 \examples{
 \dontrun{

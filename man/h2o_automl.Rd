@@ -3,6 +3,7 @@
 \name{h2o_automl}
 \alias{h2o_automl}
 \alias{plot.h2o_automl}
+\alias{print.h2o_automl}
 \title{Automated H2O's AutoML}
 \usage{
 h2o_automl(
@@ -38,6 +39,8 @@ h2o_automl(
 )
 
 \method{plot}{h2o_automl}(x, ...)
+
+\method{print}{h2o_automl}(x, importance = TRUE, ...)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including
@@ -124,6 +127,8 @@ the results? Working directory as default.}
 \item{...}{Additional parameters on \code{h2o::h2o.automl}}
 
 \item{x}{h2o_automl object}
+
+\item{importance}{Boolean. Print important variables?}
 }
 \description{
 This function lets the user create a robust and fast model, using 

@@ -74,7 +74,9 @@ h2o_shap <- function(model, test = "auto", scores = "auto", y = "y",...) {
 }
 
 ####################################################################
-#' @rdname plot
+#' @rdname h2o_shap
+#' @aliases h2o_shap
+#' @param x h2o_shap object
 #' @param relevant Boolean. Keep only relevant non-trivial (>0) features
 #' @param top Integer. Plot only top n values (as in importance)
 #' @param quiet Boolean. Print messages?

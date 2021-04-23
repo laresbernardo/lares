@@ -1,18 +1,20 @@
 ####################################################################
-#' Ranked Predictive Power Cross-Features (x2y metric)
+#' Ranked Predictive Power of Cross-Features (x2y)
 #' 
 #' The porcentual reduction in error when we go from a baseline model to
-#' a predictive model measures the strength of the relationship between 
-#' features x and y. This metric, x2y, measures the ability of x to 
-#' predict y. Based on Rama Ramakrishnan's post: An Alternative to the
-#' Correlation Coefficient That Works For Numeric and Categorical Variables.
+#' a predictive model measures the strength of the relationship between
+#' features \code{x} and \code{y}. \code{x2y}, measures the ability of \code{x} 
+#' to predict \code{y}. This metric is based on Rama Ramakrishnan's
+#' \url{https://bit.ly/3sOVbei}{post}: An Alternative to the Correlation
+#' Coefficient That Works For Numeric and Categorical Variables and complements
+#' \code{lares::corr_cross()}.
 #' 
 #' @param df data.frame
 #' @param target Character. If you are only interested in the \code{x2y}
 #' values between particular variable(s) in \code{df}, set
 #' name(s) of the variable(s) you are interested in. Keep \code{NULL}
 #' to calculate for every variable (column).
-#' @param confidence Boolean. Calculate 95% confidence intervals estimated
+#' @param confidence Boolean. Calculate `95%` confidence intervals estimated
 #' with n \code{bootstraps}.
 #' @param bootstraps Integer. If \code{confidence=TRUE}, how many bootstraps?
 #' The more iterations we run the more precise the \code{confidence}internal.
@@ -106,14 +108,15 @@ x2y_calc <- function(x, y, confidence = FALSE, bootstraps = 10) {
 #' @export
 plot.x2y <- function(x, ...) {
   if (!inherits(x, 'x2y')) stop('Object must be class x2y')
-  mutate(x, var = sprintf("%s > %s", .data$x, .data$y)) %>%
+  if (nrow(x) > 0)
+    mutate(x, var = sprintf("%s > %s", .data$x, .data$y)) %>%
     ggplot(aes(y = reorder(.data$var, .data$x2y), x = .data$x2y/100)) +
     geom_col(colour = "transparent") +
     geom_text(aes(label = sub('^(-)?0[.]', '\\1.', signif(.data$x2y, 3)),
-                  hjust = ifelse(.data$x2y > max(.data$x2y)/5, 1.1, -0.1)), 
+                  hjust = ifelse(.data$x2y > max(.data$x2y)/5, 1.1, -0.1)),
               size = 3) +
     scale_x_percent(expand = c(0, 0), position = "top") +
-    labs(title = "Ranked Predictive Power Cross-Features (x2y)", 
+    labs(title = "Ranked Predictive Power of Cross-Features (x2y)",
          x = NULL, y = NULL) +
     theme_lares()
 }

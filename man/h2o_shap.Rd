@@ -2,9 +2,12 @@
 % Please edit documentation in R/shapley.R
 \name{h2o_shap}
 \alias{h2o_shap}
+\alias{plot.h2o_shap}
 \title{SHAP values for H2O Models}
 \usage{
 h2o_shap(model, test = "auto", scores = "auto", y = "y", ...)
+
+\method{plot}{h2o_shap}(x, relevant = TRUE, top = 15, quiet = FALSE, ...)
 }
 \arguments{
 \item{model}{\code{h2o_automl} object or \code{h2o} model.}
@@ -17,6 +20,14 @@ test dataset or pass a valid dataframe.}
 \item{y}{Character. If test != "auto", you must provide y variable's name}
 
 \item{...}{Additional argument for \code{predict_contributions.H2OModel}}
+
+\item{x}{h2o_shap object}
+
+\item{relevant}{Boolean. Keep only relevant non-trivial (>0) features}
+
+\item{top}{Integer. Plot only top n values (as in importance)}
+
+\item{quiet}{Boolean. Print messages?}
 }
 \description{
 SHAP (SHapley Additive exPlanations) by Lundberg and Lee (2016) is a 

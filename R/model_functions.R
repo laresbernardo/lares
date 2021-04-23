@@ -274,12 +274,9 @@ plot.h2o_automl <- function(x, ...) {
   } 
 }
 
-####################################################################
-#' Print methods for lares
-#' @rdname print
-#' @param x Object
+#' @rdname h2o_automl
+#' @aliases h2o_automl
 #' @param importance Boolean. Print important variables?
-#' @param ... Additional parameters
 #' @export
 print.h2o_automl <- function(x, importance = TRUE, ...) {
   
