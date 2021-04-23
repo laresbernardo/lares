@@ -40,11 +40,13 @@
 
 
 <meta property="og:title" content="Ranked Predictive Power of Cross-Features (x2y) — x2y" />
-<meta property="og:description" content="The porcentual reduction in error when we go from a baseline model to
-a predictive model measures the strength of the relationship between
-features x and y. x2y, measures the ability of x 
-to predict y. To ve able to accept numerical and non-numerical features,
-we use CART (Classification and regression trees)." />
+<meta property="og:description" content="The relative reduction in error when we go from a baseline model
+(average for continuous and most frequent for categorical features) to
+a predictive model, can measure the strength of the relationship between
+two features. In other words, x2y measures the ability of x
+to predict y. We use CART (Classification And Regression Trees) models
+to be able to 1) compare numerical and non-numerical features, 2) detect
+non-linear relationships, and 3) because they are easy/quick to train." />
 
 
 
@@ -118,11 +120,13 @@ we use CART (Classification and regression trees)." />
     </div>
 
     <div class="ref-description">
-    <p>The porcentual reduction in error when we go from a baseline model to
-a predictive model measures the strength of the relationship between
-features <code>x</code> and <code>y</code>. <code>x2y</code>, measures the ability of <code>x</code> 
-to predict <code>y</code>. To ve able to accept numerical and non-numerical features,
-we use CART (Classification and regression trees).</p>
+    <p>The relative reduction in error when we go from a baseline model
+(average for continuous and most frequent for categorical features) to
+a predictive model, can measure the strength of the relationship between
+two features. In other words, <code>x2y</code> measures the ability of <code>x</code>
+to predict <code>y</code>. We use CART (Classification And Regression Trees) models
+to be able to 1) compare numerical and non-numerical features, 2) detect
+non-linear relationships, and 3) because they are easy/quick to train.</p>
     </div>
 
     <pre class="usage"><span class='fu'>x2y</span><span class='op'>(</span>
@@ -193,7 +197,7 @@ with N <code>bootstraps</code>.</p></td>
     <tr>
       <th>bootstraps</th>
       <td><p>Integer. If <code>confidence=TRUE</code>, how many bootstraps?
-The more iterations we run the more precise the <code>confidence</code> internal.</p></td>
+The more iterations we run the more precise the confidence internal will be.</p></td>
     </tr>
     </table>
 
