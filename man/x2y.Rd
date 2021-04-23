@@ -6,9 +6,9 @@
 \alias{plot.x2y}
 \title{Ranked Predictive Power Cross-Features (x2y metric)}
 \usage{
-x2y(df, target = NULL, plot = FALSE, top = 20, ...)
+x2y(df, target = NULL, plot = FALSE, top = 20, quiet = "auto", ...)
 
-x2y_calc(x, y, confidence = FALSE, bootstraps = 1000)
+x2y_calc(x, y, confidence = FALSE, bootstraps = 10)
 
 \method{plot}{x2y}(x, ...)
 }
@@ -26,6 +26,8 @@ results will be returned.}
 \item{top}{Integer. Show/plot only top N predictive cross-features. Set
 to \code{NULL} to return all.}
 
+\item{quiet}{Boolean. Keep quiet? If not, show progress bar.}
+
 \item{...}{Additional parameters passed to \code{x2y_calc()}}
 
 \item{x, y}{Vectors. Categorical or numerical vectors of same length.}
@@ -33,7 +35,8 @@ to \code{NULL} to return all.}
 \item{confidence}{Boolean. Calculate 95% confidence intervals estimated
 with n \code{bootstraps}.}
 
-\item{bootstraps}{Integer. If \code{confidence=TRUE}, how many bootstraps?}
+\item{bootstraps}{Integer. If \code{confidence=TRUE}, how many bootstraps?
+The more iterations we run the more precise the \code{confidence}internal.}
 }
 \description{
 The porcentual reduction in error when we go from a baseline model to

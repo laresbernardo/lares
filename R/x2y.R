@@ -12,10 +12,15 @@
 #' values between particular variable(s) in \code{df}, set
 #' name(s) of the variable(s) you are interested in. Keep \code{NULL}
 #' to calculate for every variable (column).
+#' @param confidence Boolean. Calculate 95% confidence intervals estimated
+#' with n \code{bootstraps}.
+#' @param bootstraps Integer. If \code{confidence=TRUE}, how many bootstraps?
+#' The more iterations we run the more precise the \code{confidence}internal.
 #' @param plot Boolean. Return a plot? If not, only a data.frame with calculated
 #' results will be returned.
 #' @param top Integer. Show/plot only top N predictive cross-features. Set
 #' to \code{NULL} to return all.
+#' @param quiet Boolean. Keep quiet? If not, show progress bar.
 #' @param ... Additional parameters passed to \code{x2y_calc()}
 #' @examples
 #' \dontrun{
@@ -23,7 +28,7 @@
 #' x2y(dft, "Fare", confidence = TRUE, bootstraps = 10)
 #' }
 #' @export
-x2y <- function(df, target = NULL, plot = FALSE, top = 20, ...) {
+x2y <- function(df, target = NULL, plot = FALSE, top = 20, quiet = "auto", ...) {
   
   try_require("rpart")
   pairs <- combn(ncol(df), 2)
@@ -36,14 +41,24 @@ x2y <- function(df, target = NULL, plot = FALSE, top = 20, ...) {
     pairs <- pairs[,with_cols]
   }
   
-  n <- ncol(pairs)
-  x2ys <- data.frame()
+  n <- dim(pairs)[2]
+  
+  confidence <- isTRUE(list(...)[["confidence"]])
+  bootstraps <- list(...)[["bootstraps"]]
+  bootstraps <- ifelse(confidence & !is.null(bootstraps), bootstraps, 0)
   results <- data.frame(x = names(df)[pairs[1,]], y = names(df)[pairs[2,]])
+  x2ys <- data.frame()
+  
+  # Show progress bar when quiet = "auto" and lots of data
+  if (!is.logical(quiet)) 
+    quiet <- n*nrow(df) < 1e4 & bootstraps < 50
+  
   for (i in 1:n) {
     x <- pull(df, pairs[1, i])
     y <- pull(df, pairs[2, i])
     r <- x2y_calc(x, y, ...)
-    x2ys <- bind_rows(x2ys, r)
+    x2ys <- rbind(x2ys, r)
+    if (!quiet) statusbar(i, n)
   }
   
   results <- cbind(results, x2ys) %>%
@@ -51,8 +66,7 @@ x2y <- function(df, target = NULL, plot = FALSE, top = 20, ...) {
     as_tibble()
   
   if (!is.null(top)) head(results, top)
-  if (isTRUE(list(...)[["confidence"]]))
-    attr(results, "bootstraps") <- list(...)[["bootstraps"]]
+  if (confidence) attr(results, "bootstraps") <- attr(r, "bootstraps")
   class(results) <- c("x2y", class(results))
   if (plot) return(plot(results))
   return(results)
@@ -60,11 +74,8 @@ x2y <- function(df, target = NULL, plot = FALSE, top = 20, ...) {
 
 #' @rdname x2y
 #' @param x,y Vectors. Categorical or numerical vectors of same length.
-#' @param confidence Boolean. Calculate 95% confidence intervals estimated
-#' with n \code{bootstraps}.
-#' @param bootstraps Integer. If \code{confidence=TRUE}, how many bootstraps?
 #' @export
-x2y_calc <- function(x, y, confidence = FALSE, bootstraps = 1000) {
+x2y_calc <- function(x, y, confidence = FALSE, bootstraps = 10) {
   
   results <- list()
   missing <-  is.na(x) | is.na(y)
@@ -85,6 +96,7 @@ x2y_calc <- function(x, y, confidence = FALSE, bootstraps = 1000) {
       results$upper_ci <- results$x2y - round(
         quantile(errors, probs = 0.025, na.rm = TRUE), 2)
     }
+    attr(results, "bootstraps") <- bootstraps
   }
   return(results)
 }
