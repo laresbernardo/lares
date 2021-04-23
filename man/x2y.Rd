@@ -2,13 +2,24 @@
 % Please edit documentation in R/x2y.R
 \name{x2y}
 \alias{x2y}
-\alias{x2y_calc}
+\alias{x2y_metric}
+\alias{x2y_plot}
 \alias{plot.x2y}
 \title{Ranked Predictive Power of Cross-Features (x2y)}
 \usage{
-x2y(df, target = NULL, plot = FALSE, top = 20, quiet = "auto", ...)
+x2y(
+  df,
+  target = NULL,
+  symmetric = FALSE,
+  plot = FALSE,
+  top = 20,
+  quiet = "auto",
+  ...
+)
 
-x2y_calc(x, y, confidence = FALSE, bootstraps = 10)
+x2y_metric(x, y, confidence = FALSE, bootstraps = 20)
+
+x2y_plot(x, y, ...)
 
 \method{plot}{x2y}(x, ...)
 }
@@ -20,6 +31,11 @@ values between particular variable(s) in \code{df}, set
 name(s) of the variable(s) you are interested in. Keep \code{NULL}
 to calculate for every variable (column).}
 
+\item{symmetric}{Boolean. \code{x2y} metric is not symmetric with respect to
+\code{x} and \code{y}. The extent to which \code{x} can predict \code{y} can
+be different from the extent to which \code{y} can predict \code{x}. Set
+\code{symmetric=TRUE} if you wish to average both numbers.}
+
 \item{plot}{Boolean. Return a plot? If not, only a data.frame with calculated
 results will be returned.}
 
@@ -28,28 +44,42 @@ to \code{NULL} to return all.}
 
 \item{quiet}{Boolean. Keep quiet? If not, show progress bar.}
 
-\item{...}{Additional parameters passed to \code{x2y_calc()}}
+\item{...}{Additional parameters passed to \code{x2y_metric()}}
 
 \item{x, y}{Vectors. Categorical or numerical vectors of same length.}
 
-\item{confidence}{Boolean. Calculate `95%` confidence intervals estimated
-with n \code{bootstraps}.}
+\item{confidence}{Boolean. Calculate 95\% confidence intervals estimated
+with N \code{bootstraps}.}
 
 \item{bootstraps}{Integer. If \code{confidence=TRUE}, how many bootstraps?
-The more iterations we run the more precise the \code{confidence}internal.}
+The more iterations we run the more precise the \code{confidence} internal.}
 }
 \description{
 The porcentual reduction in error when we go from a baseline model to
 a predictive model measures the strength of the relationship between
 features \code{x} and \code{y}. \code{x2y}, measures the ability of \code{x} 
-to predict \code{y}. This metric is based on Rama Ramakrishnan's
-\url{https://bit.ly/3sOVbei}{post}: An Alternative to the Correlation
-Coefficient That Works For Numeric and Categorical Variables and complements
-\code{lares::corr_cross()}.
+to predict \code{y}. To ve able to accept numerical and non-numerical features,
+we use CART (Classification and regression trees).
+}
+\details{
+This \code{x2y} metric is based on Rama Ramakrishnan's 
+\href{https://bit.ly/3sOVbei}{post}: An Alternative to the Correlation
+Coefficient That Works For Numeric and Categorical Variables. This analysis
+complements our \code{lares::corr_cross()} output.
 }
 \examples{
-\dontrun{
+data(dft) # Titanic dataset
 x2y(dft, target = c("Survived","Age"), top = 10)
 x2y(dft, target = "Fare", confidence = TRUE, bootstraps = 10)
-}
+x2y(dft, target = "Fare", symmetric = TRUE)
+
+# x2y vs y2x
+set.seed(42)
+x <- seq(-1, 1, 0.01)
+y <- sqrt(1 - x^2) + rnorm(length(x), mean = 0, sd = 0.05)
+
+# Knowing x reduces the uncertainty about the value of y a lot more than
+# knowing y reduces the uncertainty about the value of x
+x2y_plot(x, y)
+x2y_plot(y, x)
 }

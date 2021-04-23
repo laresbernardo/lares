@@ -21,6 +21,7 @@ Imports:
     patchwork,
     pROC,
     rlang,
+    rpart,
     rvest,
     scales,
     stringr,

@@ -20,7 +20,6 @@
 tree_var <- function(df, target, max = 3, min = 20, cp = 0, 
                      size = 0.7, ohse = TRUE, plot = TRUE, ...) {
   
-  try_require("rpart")
   try_require("rpart.plot")
   
   if (ohse) df <- ohse(df, limit = min)

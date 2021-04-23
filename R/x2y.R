@@ -4,35 +4,52 @@
 #' The porcentual reduction in error when we go from a baseline model to
 #' a predictive model measures the strength of the relationship between
 #' features \code{x} and \code{y}. \code{x2y}, measures the ability of \code{x} 
-#' to predict \code{y}. This metric is based on Rama Ramakrishnan's
-#' \url{https://bit.ly/3sOVbei}{post}: An Alternative to the Correlation
-#' Coefficient That Works For Numeric and Categorical Variables and complements
-#' \code{lares::corr_cross()}.
+#' to predict \code{y}. To ve able to accept numerical and non-numerical features,
+#' we use CART (Classification and regression trees).
+#' 
+#' This \code{x2y} metric is based on Rama Ramakrishnan's 
+#' \href{https://bit.ly/3sOVbei}{post}: An Alternative to the Correlation
+#' Coefficient That Works For Numeric and Categorical Variables. This analysis
+#' complements our \code{lares::corr_cross()} output.
 #' 
 #' @param df data.frame
 #' @param target Character. If you are only interested in the \code{x2y}
 #' values between particular variable(s) in \code{df}, set
 #' name(s) of the variable(s) you are interested in. Keep \code{NULL}
 #' to calculate for every variable (column).
-#' @param confidence Boolean. Calculate `95%` confidence intervals estimated
-#' with n \code{bootstraps}.
+#' @param confidence Boolean. Calculate 95\% confidence intervals estimated
+#' with N \code{bootstraps}.
 #' @param bootstraps Integer. If \code{confidence=TRUE}, how many bootstraps?
-#' The more iterations we run the more precise the \code{confidence}internal.
+#' The more iterations we run the more precise the \code{confidence} internal.
+#' @param symmetric Boolean. \code{x2y} metric is not symmetric with respect to
+#' \code{x} and \code{y}. The extent to which \code{x} can predict \code{y} can
+#' be different from the extent to which \code{y} can predict \code{x}. Set
+#' \code{symmetric=TRUE} if you wish to average both numbers.
 #' @param plot Boolean. Return a plot? If not, only a data.frame with calculated
 #' results will be returned.
 #' @param top Integer. Show/plot only top N predictive cross-features. Set
 #' to \code{NULL} to return all.
 #' @param quiet Boolean. Keep quiet? If not, show progress bar.
-#' @param ... Additional parameters passed to \code{x2y_calc()}
+#' @param ... Additional parameters passed to \code{x2y_metric()}
 #' @examples
-#' \dontrun{
+#' data(dft) # Titanic dataset
 #' x2y(dft, target = c("Survived","Age"), top = 10)
 #' x2y(dft, target = "Fare", confidence = TRUE, bootstraps = 10)
-#' }
+#' x2y(dft, target = "Fare", symmetric = TRUE)
+#' 
+#' # x2y vs y2x
+#' set.seed(42)
+#' x <- seq(-1, 1, 0.01)
+#' y <- sqrt(1 - x^2) + rnorm(length(x), mean = 0, sd = 0.05)
+#' 
+#' # Knowing x reduces the uncertainty about the value of y a lot more than
+#' # knowing y reduces the uncertainty about the value of x
+#' x2y_plot(x, y)
+#' x2y_plot(y, x)
 #' @export
-x2y <- function(df, target = NULL, plot = FALSE, top = 20, quiet = "auto", ...) {
+x2y <- function(df, target = NULL, symmetric = FALSE,
+                plot = FALSE, top = 20, quiet = "auto", ...) {
   
-  try_require("rpart")
   pairs <- combn(ncol(df), 2)
   pairs <- cbind(pairs, pairs[2:1, ])
   
@@ -58,7 +75,7 @@ x2y <- function(df, target = NULL, plot = FALSE, top = 20, quiet = "auto", ...) 
   for (i in 1:n) {
     x <- pull(df, pairs[1, i])
     y <- pull(df, pairs[2, i])
-    r <- x2y_calc(x, y, ...)
+    r <- x2y_metric(x, y, ...)
     x2ys <- rbind(x2ys, r)
     if (!quiet) statusbar(i, n)
   }
@@ -67,26 +84,36 @@ x2y <- function(df, target = NULL, plot = FALSE, top = 20, quiet = "auto", ...) 
     arrange(desc(.data$x2y), desc(.data$obs_p)) %>%
     as_tibble()
   
+  if (symmetric) results <- results %>%
+    mutate(xy = apply(results[,1:2], 1, function(x)
+      paste(sort(x), collapse = "<>"))) %>%
+    group_by(.data$xy) %>%
+    summarise_if(is.numeric, function(x) mean(x, na.rm = TRUE)) %>%
+    arrange(desc(.data$x2y), desc(.data$obs_p)) %>%
+    tidyr::separate(.data$xy, c("x","y"), sep = "<>")
+  
   if (!is.null(top)) results <- head(results, 10)
   if (confidence) attr(results, "bootstraps") <- attr(r, "bootstraps")
+  attr(results, "symmetric") <- symmetric
   class(results) <- c("x2y", class(results))
   if (plot) return(plot(results))
   return(results)
 }
 
+
 #' @rdname x2y
 #' @param x,y Vectors. Categorical or numerical vectors of same length.
 #' @export
-x2y_calc <- function(x, y, confidence = FALSE, bootstraps = 10) {
+x2y_metric <- function(x, y, confidence = FALSE, bootstraps = 20) {
   
   results <- list()
   missing <-  is.na(x) | is.na(y)
   results$obs_p <- round(100 * (1 - sum(missing) / length(x)), 2)
   x <- x[!missing]
   y <- y[!missing]
-  results$x2y <- x2y_inner(x, y)
+  results$x2y <- x2y_vals(x, y)
   
-  if (confidence == TRUE) {
+  if (confidence) {
     results$lower_ci <- NA
     results$upper_ci <- NA
     if (!is.na(results$x2y) & results$x2y > 0) {
@@ -100,7 +127,20 @@ x2y_calc <- function(x, y, confidence = FALSE, bootstraps = 10) {
     }
     attr(results, "bootstraps") <- bootstraps
   }
+  class(results) <- c("x2y_metric", class(results))
   return(results)
+}
+
+#' @rdname x2y
+#' @export
+x2y_plot <- function(x, y, ...) {
+  ggplot(data = data.frame(x, y), mapping = aes(x = x)) +
+    geom_point(aes(y = y), size = 0.5) +
+    geom_line(aes(y = x2y_preds(x, y))) +
+    scale_color_brewer(name = NULL) +
+    labs(title = "x's predictive power over y",
+         subtitle = sprintf("x2y: %s", x2y_metric(x, y)$x2y)) +
+    theme_lares()
 }
 
 #' @rdname x2y
@@ -108,17 +148,48 @@ x2y_calc <- function(x, y, confidence = FALSE, bootstraps = 10) {
 #' @export
 plot.x2y <- function(x, ...) {
   if (!inherits(x, 'x2y')) stop('Object must be class x2y')
-  if (nrow(x) > 0)
-    mutate(x, var = sprintf("%s > %s", .data$x, .data$y)) %>%
-    ggplot(aes(y = reorder(.data$var, .data$x2y), x = .data$x2y/100)) +
-    geom_col(colour = "transparent") +
-    geom_text(aes(label = sub('^(-)?0[.]', '\\1.', signif(.data$x2y, 3)),
-                  hjust = ifelse(.data$x2y > max(.data$x2y)/5, 1.1, -0.1)),
-              size = 3) +
-    scale_x_percent(expand = c(0, 0), position = "top") +
-    labs(title = "Ranked Predictive Power of Cross-Features (x2y)",
-         x = NULL, y = NULL) +
-    theme_lares()
+  if (nrow(x) > 0) {
+    x$var <- paste(x$x,ifelse(isTRUE(attr(x, "symmetric")), "><", ">>"), x$y)
+    p <- ggplot(x, aes(y = reorder(.data$var, .data$x2y), x = .data$x2y/100)) +
+      geom_col(colour = "transparent") +
+      geom_text(aes(label = sub('^(-)?0[.]', '\\1.', signif(.data$x2y, 3)),
+                    hjust = ifelse(.data$x2y > max(.data$x2y)/5, 1.1, -0.1)),
+                size = 3) +
+      scale_x_percent(expand = c(0, 0), position = "top") +
+      labs(title = "Ranked Predictive Power of Cross-Features (x2y)",
+           caption = ifelse(
+             isTRUE(attr(x, "symmetric")),
+             "Symmetric results: mean(x2y, y2x)",
+             "Non-symmetric results: x2y != y2x"),
+           x = NULL, y = NULL) +
+      theme_lares()
+    return(p)
+  }
+}
+
+x2y_preds <- function(x, y) {
+  # If no variance
+  if (length(unique(x)) == 1 | length(unique(y)) == 1)
+    return(NA)
+  if (is.numeric(y)) {
+    # If y is continuous
+    preds <- predict(rpart(y ~ x, method = "anova"), type = 'vector')
+  } else {
+    # If y is categorical
+    preds <- predict(rpart(y ~ x, method = "class"), type = 'class')
+  }
+  class(preds) <- c("x2y_preds", class(preds))
+  return(preds)
+}
+
+x2y_vals <- function(x, y) {
+  if (length(unique(x)) == 1 | length(unique(y)) == 1) return(NA)
+  preds <- x2y_preds(x, y)
+  if (is.numeric(y)) {
+    mae_reduction(preds, y)
+  } else {
+    misclass_reduction(preds, y)
+  }
 }
 
 mae_reduction <- function(y_hat, y_actual) {
@@ -141,21 +212,7 @@ misclass_reduction <- function(y_hat, y_actual) {
   round(100*result, 2)
 }
 
-x2y_inner <- function(x, y) {
-  # If no variance
-  if (length(unique(x)) == 1 | length(unique(y)) == 1) return(NA)
-  # If y is continuous
-  if (is.numeric(y)) {
-    preds <- predict(rpart(y ~ x, method = "anova"), type = 'vector')
-    mae_reduction(preds, y)
-  } else {
-    # If y is categorical
-    preds <- predict(rpart(y ~ x, method = "class"), type = 'class')
-    misclass_reduction(preds, y)
-  }
-}
-
 simple_boot <- function(x, y) {
   ids <- sample(length(x), replace = TRUE)
-  x2y_inner(x[ids], y[ids])
+  x2y_vals(x[ids], y[ids])
 }
