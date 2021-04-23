@@ -47,7 +47,7 @@ Correlation Coefficient That Works For Numeric and Categorical Variables.
 }
 \examples{
 \dontrun{
-x2y(dft, c("Survived","Age"))
-x2y(dft, "Fare", confidence = TRUE, bootstraps = 10)
+x2y(dft, target = c("Survived","Age"), top = 10)
+x2y(dft, target = "Fare", confidence = TRUE, bootstraps = 10)
 }
 }

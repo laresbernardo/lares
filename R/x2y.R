@@ -24,8 +24,8 @@
 #' @param ... Additional parameters passed to \code{x2y_calc()}
 #' @examples
 #' \dontrun{
-#' x2y(dft, c("Survived","Age"))
-#' x2y(dft, "Fare", confidence = TRUE, bootstraps = 10)
+#' x2y(dft, target = c("Survived","Age"), top = 10)
+#' x2y(dft, target = "Fare", confidence = TRUE, bootstraps = 10)
 #' }
 #' @export
 x2y <- function(df, target = NULL, plot = FALSE, top = 20, quiet = "auto", ...) {
@@ -51,7 +51,7 @@ x2y <- function(df, target = NULL, plot = FALSE, top = 20, quiet = "auto", ...) 
   
   # Show progress bar when quiet = "auto" and lots of data
   if (!is.logical(quiet)) 
-    quiet <- n*nrow(df) < 1e4 & bootstraps < 50
+    quiet <- n*nrow(df) < 2e4 & bootstraps < 50
   
   for (i in 1:n) {
     x <- pull(df, pairs[1, i])
@@ -65,7 +65,7 @@ x2y <- function(df, target = NULL, plot = FALSE, top = 20, quiet = "auto", ...) 
     arrange(desc(.data$x2y), desc(.data$obs_p)) %>%
     as_tibble()
   
-  if (!is.null(top)) head(results, top)
+  if (!is.null(top)) results <- head(results, 10)
   if (confidence) attr(results, "bootstraps") <- attr(r, "bootstraps")
   class(results) <- c("x2y", class(results))
   if (plot) return(plot(results))

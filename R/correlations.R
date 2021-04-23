@@ -243,32 +243,37 @@ corr_var <- function(df, var,
     d <- mutate(d, variables = sprintf("%s. %s", row_number(), .data$variables))
   
   if (plot) {
-    p <- ungroup(d) %>% 
-      filter(.data$variables != "pvalue") %>%
-      mutate(pos = ifelse(.data$corr > 0, TRUE, FALSE),
-             hjust = ifelse(abs(.data$corr) < max(abs(.data$corr))/1.5, -0.1, 1.1)) %>%
-      ggplot(aes(x = reorder(.data$variables, abs(.data$corr)), 
-                 y = abs(.data$corr), fill = .data$pos, 
-                 label = sub('^(-)?0[.]', '\\1.', signif(.data$corr, 3)))) +
-      geom_hline(yintercept = 0, alpha = 0.5) +
-      geom_col(colour = "transparent") + coord_flip() + 
-      geom_text(aes(hjust = .data$hjust), size = 3, colour = "black") +
-      scale_fill_manual(values = c("FALSE" = "#E5586E", "TRUE" = "#59B3D2")) +
-      guides(fill = FALSE) +
-      labs(title = paste("Correlations of", var), x = NULL, y = NULL) +
-      scale_y_continuous(expand = c(0, 0), position = "right",
-                         labels = function(x) sub('^(-)?0[.]', '\\1.', x)) + 
-      theme_lares(pal = 2)
-    
-    if (!is.na(top) & top < original_n) p <- p + 
-        labs(subtitle = paste(
-          "Top", top, "out of", original_n, "variables (original & dummy)"))
-    
-    if (max_pvalue < 1) 
-      p <- p + labs(caption = paste("Correlations with p-value <", max_pvalue))
+    if (nrow(d) == 0) {
+      warning("There are not enough observations to plot. Check your 'max_pvalue' input")
+      return(d)
+    } else {
+      p <- ungroup(d) %>% 
+        filter(.data$variables != "pvalue") %>%
+        mutate(pos = ifelse(.data$corr > 0, TRUE, FALSE),
+               hjust = ifelse(abs(.data$corr) < max(abs(.data$corr))/1.5, -0.1, 1.1)) %>%
+        ggplot(aes(x = reorder(.data$variables, abs(.data$corr)), 
+                   y = abs(.data$corr), fill = .data$pos, 
+                   label = sub('^(-)?0[.]', '\\1.', signif(.data$corr, 3)))) +
+        geom_hline(yintercept = 0, alpha = 0.5) +
+        geom_col(colour = "transparent") + coord_flip() + 
+        geom_text(aes(hjust = .data$hjust), size = 3, colour = "black") +
+        scale_fill_manual(values = c("FALSE" = "#E5586E", "TRUE" = "#59B3D2")) +
+        guides(fill = FALSE) +
+        labs(title = paste("Correlations of", var), x = NULL, y = NULL) +
+        scale_y_continuous(expand = c(0, 0), position = "right",
+                           labels = function(x) sub('^(-)?0[.]', '\\1.', x)) + 
+        theme_lares(pal = 2)
+      
+      if (!is.na(top) & top < original_n) p <- p + 
+          labs(subtitle = paste(
+            "Top", top, "out of", original_n, "variables (original & dummy)"))
+      
+      if (max_pvalue < 1) 
+        p <- p + labs(caption = paste("Correlations with p-value <", max_pvalue)) 
+      return(p)
+    }
   }
-  
-  if (plot) return(p) else return(d)
+  return(d)
 }
 
 
