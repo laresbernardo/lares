@@ -52,14 +52,16 @@ to \code{NULL} to return all.}
 with N \code{bootstraps}.}
 
 \item{bootstraps}{Integer. If \code{confidence=TRUE}, how many bootstraps?
-The more iterations we run the more precise the \code{confidence} internal.}
+The more iterations we run the more precise the confidence internal will be.}
 }
 \description{
-The porcentual reduction in error when we go from a baseline model to
-a predictive model measures the strength of the relationship between
-features \code{x} and \code{y}. \code{x2y}, measures the ability of \code{x} 
-to predict \code{y}. To ve able to accept numerical and non-numerical features,
-we use CART (Classification and regression trees).
+The relative reduction in error when we go from a baseline model
+(average for continuous and most frequent for categorical features) to
+a predictive model, can measure the strength of the relationship between
+two features. In other words, \code{x2y} measures the ability of \code{x}
+to predict \code{y}. We use CART (Classification And Regression Trees) models
+to be able to 1) compare numerical and non-numerical features, 2) detect
+non-linear relationships, and 3) because they are easy/quick to train.
 }
 \details{
 This \code{x2y} metric is based on Rama Ramakrishnan's 

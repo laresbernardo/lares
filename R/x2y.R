@@ -1,11 +1,13 @@
 ####################################################################
 #' Ranked Predictive Power of Cross-Features (x2y)
 #' 
-#' The porcentual reduction in error when we go from a baseline model to
-#' a predictive model measures the strength of the relationship between
-#' features \code{x} and \code{y}. \code{x2y}, measures the ability of \code{x} 
-#' to predict \code{y}. To ve able to accept numerical and non-numerical features,
-#' we use CART (Classification and regression trees).
+#' The relative reduction in error when we go from a baseline model
+#' (average for continuous and most frequent for categorical features) to
+#' a predictive model, can measure the strength of the relationship between
+#' two features. In other words, \code{x2y} measures the ability of \code{x}
+#' to predict \code{y}. We use CART (Classification And Regression Trees) models
+#' to be able to 1) compare numerical and non-numerical features, 2) detect
+#' non-linear relationships, and 3) because they are easy/quick to train.
 #' 
 #' This \code{x2y} metric is based on Rama Ramakrishnan's 
 #' \href{https://bit.ly/3sOVbei}{post}: An Alternative to the Correlation
@@ -20,7 +22,7 @@
 #' @param confidence Boolean. Calculate 95\% confidence intervals estimated
 #' with N \code{bootstraps}.
 #' @param bootstraps Integer. If \code{confidence=TRUE}, how many bootstraps?
-#' The more iterations we run the more precise the \code{confidence} internal.
+#' The more iterations we run the more precise the confidence internal will be.
 #' @param symmetric Boolean. \code{x2y} metric is not symmetric with respect to
 #' \code{x} and \code{y}. The extent to which \code{x} can predict \code{y} can
 #' be different from the extent to which \code{y} can predict \code{x}. Set
@@ -137,13 +139,17 @@ x2y_metric <- function(x, y, confidence = FALSE, bootstraps = 20) {
 #' @rdname x2y
 #' @export
 x2y_plot <- function(x, y, ...) {
-  ggplot(data = data.frame(x, y), mapping = aes(x = x)) +
-    geom_point(aes(y = y), size = 0.5) +
-    geom_line(aes(y = x2y_preds(x, y))) +
+  pred <- data.frame(x2y_preds(x, y)) %>% mutate(id = rownames(.))
+  pred <- data.frame(id = as.character(1:length(x))) %>% left_join(pred, "id")
+  df <- data.frame(x, y, pred = pred[,2]) %>% removenarows(all = FALSE)
+  p <- ggplot(df, aes(x = .data$x)) +
+    geom_point(aes(y = .data$y), size = 0.5) +
+    geom_line(aes(y = .data$pred)) +
     scale_color_brewer(name = NULL) +
     labs(title = "x's predictive power over y",
          subtitle = sprintf("x2y: %s", x2y_metric(x, y)$x2y)) +
     theme_lares()
+  return(p)
 }
 
 #' @rdname x2y
