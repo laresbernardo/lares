@@ -33,11 +33,14 @@
 #' @param ... Additional parameters passed to \code{x2y_metric()}
 #' @examples
 #' data(dft) # Titanic dataset
-#' x2y(dft, target = c("Survived","Age"), top = 10)
+#' x2y(dft, target = c("Survived","Age"), top = 10, quiet = TRUE)
 #' x2y(dft, target = "Fare", confidence = TRUE, bootstraps = 10)
-#' x2y(dft, target = "Fare", symmetric = TRUE)
 #' 
-#' # x2y vs y2x
+#' # Plot (symmetric) results
+#' symm <- x2y(dft, target = "Fare", symmetric = TRUE)
+#' plot(symm)
+#' 
+#' # Symmetry: x2y vs y2x
 #' set.seed(42)
 #' x <- seq(-1, 1, 0.01)
 #' y <- sqrt(1 - x^2) + rnorm(length(x), mean = 0, sd = 0.05)
@@ -70,7 +73,7 @@ x2y <- function(df, target = NULL, symmetric = FALSE,
   
   # Show progress bar when quiet = "auto" and lots of data
   if (!is.logical(quiet)) 
-    quiet <- n*nrow(df) < 2e4 & bootstraps < 50
+    quiet <- n*nrow(df) < 5e4 & bootstraps < 50
   
   for (i in 1:n) {
     x <- pull(df, pairs[1, i])

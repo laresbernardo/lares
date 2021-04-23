@@ -69,11 +69,14 @@ complements our \code{lares::corr_cross()} output.
 }
 \examples{
 data(dft) # Titanic dataset
-x2y(dft, target = c("Survived","Age"), top = 10)
+x2y(dft, target = c("Survived","Age"), top = 10, quiet = TRUE)
 x2y(dft, target = "Fare", confidence = TRUE, bootstraps = 10)
-x2y(dft, target = "Fare", symmetric = TRUE)
 
-# x2y vs y2x
+# Plot (symmetric) results
+symm <- x2y(dft, target = "Fare", symmetric = TRUE)
+plot(symm)
+
+# Symmetry: x2y vs y2x
 set.seed(42)
 x <- seq(-1, 1, 0.01)
 y <- sqrt(1 - x^2) + rnorm(length(x), mean = 0, sd = 0.05)
