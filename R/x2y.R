@@ -35,12 +35,16 @@
 #' @param ... Additional parameters passed to \code{x2y_metric()}
 #' @examples
 #' data(dft) # Titanic dataset
-#' x2y(dft, top = 10, quiet = TRUE, max_cat = 10)
+#' x2y_results <- x2y(dft, quiet = TRUE, max_cat = 10, top = NULL)
+#' head(x2y_results, 10)
+#' plot(x2y_results, type = 1)
+#' 
+#' # Confidence intervals with 10 bootstrap iterations
 #' x2y(dft, target = c("Survived","Age"), confidence = TRUE, bootstraps = 10)
 #' 
 #' # Plot (symmetric) results
 #' symm <- x2y(dft, target = "Fare", symmetric = TRUE)
-#' plot(symm)
+#' plot(symm, type = 2)
 #' 
 #' # Symmetry: x2y vs y2x
 #' set.seed(42)
@@ -156,13 +160,37 @@ x2y_plot <- function(x, y, ...) {
 }
 
 #' @rdname x2y
+#' @param type Integer. Plot type: \code{1} for tile plot,
+#' \code{2} for ranked bar plot.
 #' @aliases x2y
 #' @export
-plot.x2y <- function(x, ...) {
+plot.x2y <- function(x, type = 1, ...) {
   if (!inherits(x, 'x2y')) stop('Object must be class x2y')
+  check_opts(type, 1:2)
   if (nrow(x) > 0) {
     x$var <- paste(x$x,ifelse(isTRUE(attr(x, "symmetric")), "><", ">>"), x$y)
-    p <- ggplot(x, aes(y = reorder(.data$var, .data$x2y), x = .data$x2y/100)) +
+    x$x2y <- signif(x$x2y, 3)
+    if (type == 1) p <- x %>%
+      filter(.data$x2y > 0) %>%
+      group_by(.data$x) %>% mutate(ximp = sum(.data$x2y, na.rm = TRUE)) %>% ungroup() %>%
+      group_by(.data$y) %>% mutate(yimp = sum(.data$x2y, na.rm = TRUE)) %>% ungroup() %>%
+      ggplot(aes(x = reorder(.data$x, -.data$ximp),
+                 y = reorder(.data$y, .data$yimp),
+                 fill = .data$x2y, label = .data$x2y)) +
+      geom_tile() + geom_text(size = 3.2) +
+      scale_fill_gradient(low = "white", high = names(lares::lares_pal()[[2]])[1]) +
+      labs(title = "Cross-features Predictive Power (x2y)",
+           x = "x features", y = "y features",
+           caption = ifelse(
+             isTRUE(attr(x, "symmetric")),
+             "Symmetric results: mean(x2y, y2x)",
+             "Non-symmetric results: x2y != y2x")) +
+      theme_lares(grid = "") +
+      theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 1)) +
+      coord_equal()
+    if (type == 2) p <- x %>%
+      filter(.data$x2y > 0) %>%
+      ggplot(aes(y = reorder(.data$var, .data$x2y), x = .data$x2y/100)) +
       geom_col(colour = "transparent") +
       geom_text(aes(label = sub('^(-)?0[.]', '\\1.', signif(.data$x2y, 3)),
                     hjust = ifelse(.data$x2y > max(.data$x2y)/5, 1.1, -0.1)),
@@ -234,7 +262,7 @@ simple_boot <- function(x, y, ...) {
 }
 
 reduce_cats <- function(x, max_cat) {
-  if (length(unique(x)) > max_cat) {
+  if (!is.numeric(x) & length(unique(x)) > max_cat) {
     x <- as.character(x)
     top <- head(names(sort(table(x), decreasing = TRUE)), max_cat)
     x[!x %in% top] <- ""

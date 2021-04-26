@@ -21,7 +21,7 @@ x2y_metric(x, y, confidence = FALSE, bootstraps = 20, max_cat = 20)
 
 x2y_plot(x, y, ...)
 
-\method{plot}{x2y}(x, ...)
+\method{plot}{x2y}(x, type = 1, ...)
 }
 \arguments{
 \item{df}{data.frame}
@@ -57,6 +57,9 @@ The more iterations we run the more precise the confidence internal will be.}
 \item{max_cat}{Integer. Maximum number of unique \code{x} or \code{y} values
 when categorical. Will select then most frequent values and the rest will
 be passed as \code{""}.}
+
+\item{type}{Integer. Plot type: \code{1} for tile plot,
+\code{2} for ranked bar plot.}
 }
 \description{
 The relative reduction in error when we go from a baseline model
@@ -75,12 +78,16 @@ complements our \code{lares::corr_cross()} output.
 }
 \examples{
 data(dft) # Titanic dataset
-x2y(dft, top = 10, quiet = TRUE, max_cat = 10)
+x2y_results <- x2y(dft, quiet = TRUE, max_cat = 10, top = NULL)
+head(x2y_results, 10)
+plot(x2y_results, type = 1)
+
+# Confidence intervals with 10 bootstrap iterations
 x2y(dft, target = c("Survived","Age"), confidence = TRUE, bootstraps = 10)
 
 # Plot (symmetric) results
 symm <- x2y(dft, target = "Fare", symmetric = TRUE)
-plot(symm)
+plot(symm, type = 2)
 
 # Symmetry: x2y vs y2x
 set.seed(42)
