@@ -230,19 +230,29 @@ complements our <code><a href='corr_cross.html'>lares::corr_cross()</a></code> o
 #&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Ticket   Parch      100  18.0
 #&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Pclass   Survived   100  16.4
 #&gt; </span><span style='color: #BCBCBC;'>10</span><span> Fare     SibSp      100  14.9</div><div class='input'><span class='fu'>x2y</span><span class='op'>(</span><span class='va'>dft</span>, target <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Survived"</span>,<span class='st'>"Age"</span><span class='op'>)</span>, confidence <span class='op'>=</span> <span class='cn'>TRUE</span>, bootstraps <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 10 x 6</span><span>
-#&gt;    x        y        obs_p   x2y lower_ci upper_ci
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Sex      Survived 100   44.4    38.7      53.4 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Survived Sex      100   39.5    29.7      43.4 
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Pclass   Survived 100   16.4    13.1      22.1 
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Age      Parch     80.1  8.45    9.87     13.7 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Cabin    Survived 100    8.19    8.14     12.8 
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Pclass   Age       80.1  8.05    6.98      9.56
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> SibSp    Age       80.1  5.92    4.67      8.11
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Ticket   Survived 100    5.85    1.93     11.7 
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Embarked Survived 100    5.85    0.690    11.7 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Survived Fare     100    4.89    3.89      7.88</div><div class='input'>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 20 x 6</span><span>
+#&gt;    x        y           obs_p   x2y lower_ci upper_ci
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Sex      Survived    100   44.4    38.7      53.4 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Survived Sex         100   39.5    29.7      43.4 
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Pclass   Survived    100   16.4    13.1      22.1 
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Age      Parch        80.1  8.45    9.87     13.7 
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Cabin    Survived    100    8.19    8.14     12.8 
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Pclass   Age          80.1  8.05    6.98      9.56
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> SibSp    Age          80.1  5.92    4.67      8.11
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Ticket   Survived    100    5.85    1.93     11.7 
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Embarked Survived    100    5.85    0.690    11.7 
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Survived Fare        100    4.89    3.89      7.88
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> Survived Pclass      100    4.25    1.3       8.5 
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> Age      SibSp        80.1  4.07    3.51      6.26
+#&gt; </span><span style='color: #BCBCBC;'>13</span><span> Parch    Age          80.1  3.98    1.5       5.23
+#&gt; </span><span style='color: #BCBCBC;'>14</span><span> Ticket   Age          80.1  3.98    0.71      5.44
+#&gt; </span><span style='color: #BCBCBC;'>15</span><span> SibSp    Survived    100    3.8    -</span><span style='color: #BB0000;'>3.2</span><span>       7.6 
+#&gt; </span><span style='color: #BCBCBC;'>16</span><span> Parch    Survived    100    3.8    -</span><span style='color: #BB0000;'>0.76</span><span>      7.6 
+#&gt; </span><span style='color: #BCBCBC;'>17</span><span> Fare     Age          80.1  2.77    1.21      5.53
+#&gt; </span><span style='color: #BCBCBC;'>18</span><span> Age      Survived     80.1  2.76   -</span><span style='color: #BB0000;'>0.240</span><span>     5.52
+#&gt; </span><span style='color: #BCBCBC;'>19</span><span> Age      Fare         80.1  2.3     2.17      4.35
+#&gt; </span><span style='color: #BCBCBC;'>20</span><span> Age      PassengerId  80.1  1.44   -</span><span style='color: #BB0000;'>0.51</span><span>      1.61</div><div class='input'>
 <span class='co'># Plot (symmetric) results</span>
 <span class='va'>symm</span> <span class='op'>&lt;-</span> <span class='fu'>x2y</span><span class='op'>(</span><span class='va'>dft</span>, target <span class='op'>=</span> <span class='st'>"Fare"</span>, symmetric <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>symm</span><span class='op'>)</span>
