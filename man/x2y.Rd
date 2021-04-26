@@ -17,7 +17,7 @@ x2y(
   ...
 )
 
-x2y_metric(x, y, confidence = FALSE, bootstraps = 20)
+x2y_metric(x, y, confidence = FALSE, bootstraps = 20, max_cat = 20)
 
 x2y_plot(x, y, ...)
 
@@ -53,6 +53,10 @@ with N \code{bootstraps}.}
 
 \item{bootstraps}{Integer. If \code{confidence=TRUE}, how many bootstraps?
 The more iterations we run the more precise the confidence internal will be.}
+
+\item{max_cat}{Integer. Maximum number of unique \code{x} or \code{y} values
+when categorical. Will select then most frequent values and the rest will
+be passed as \code{""}.}
 }
 \description{
 The relative reduction in error when we go from a baseline model
@@ -71,8 +75,8 @@ complements our \code{lares::corr_cross()} output.
 }
 \examples{
 data(dft) # Titanic dataset
-x2y(dft, target = c("Survived","Age"), top = 10, quiet = TRUE)
-x2y(dft, target = "Fare", confidence = TRUE, bootstraps = 10)
+x2y(dft, top = 10, quiet = TRUE, max_cat = 10)
+x2y(dft, target = c("Survived","Age"), confidence = TRUE, bootstraps = 10)
 
 # Plot (symmetric) results
 symm <- x2y(dft, target = "Fare", symmetric = TRUE)

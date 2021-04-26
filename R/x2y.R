@@ -35,8 +35,8 @@
 #' @param ... Additional parameters passed to \code{x2y_metric()}
 #' @examples
 #' data(dft) # Titanic dataset
-#' x2y(dft, target = c("Survived","Age"), top = 10, quiet = TRUE)
-#' x2y(dft, target = "Fare", confidence = TRUE, bootstraps = 10)
+#' x2y(dft, top = 10, quiet = TRUE, max_cat = 10)
+#' x2y(dft, target = c("Survived","Age"), confidence = TRUE, bootstraps = 10)
 #' 
 #' # Plot (symmetric) results
 #' symm <- x2y(dft, target = "Fare", symmetric = TRUE)
@@ -108,15 +108,18 @@ x2y <- function(df, target = NULL, symmetric = FALSE,
 
 #' @rdname x2y
 #' @param x,y Vectors. Categorical or numerical vectors of same length.
+#' @param max_cat Integer. Maximum number of unique \code{x} or \code{y} values
+#' when categorical. Will select then most frequent values and the rest will
+#' be passed as \code{""}.
 #' @export
-x2y_metric <- function(x, y, confidence = FALSE, bootstraps = 20) {
+x2y_metric <- function(x, y, confidence = FALSE, bootstraps = 20, max_cat = 20) {
   
   results <- list()
   missing <-  is.na(x) | is.na(y)
   results$obs_p <- round(100 * (1 - sum(missing) / length(x)), 2)
   x <- x[!missing]
   y <- y[!missing]
-  results$x2y <- x2y_vals(x, y)
+  results$x2y <- x2y_vals(x, y, max_cat)
   
   if (confidence) {
     results$lower_ci <- NA
@@ -139,7 +142,7 @@ x2y_metric <- function(x, y, confidence = FALSE, bootstraps = 20) {
 #' @rdname x2y
 #' @export
 x2y_plot <- function(x, y, ...) {
-  pred <- data.frame(x2y_preds(x, y)) %>% mutate(id = rownames(.))
+  pred <- data.frame(x2y_preds(x, y, ...)) %>% mutate(id = rownames(.))
   pred <- data.frame(id = as.character(1:length(x))) %>% left_join(pred, "id")
   df <- data.frame(x, y, pred = pred[,2]) %>% removenarows(all = FALSE)
   p <- ggplot(df, aes(x = .data$x)) +
@@ -176,24 +179,28 @@ plot.x2y <- function(x, ...) {
   }
 }
 
-x2y_preds <- function(x, y) {
+x2y_preds <- function(x, y, max_cat = 10) {
   # If no variance
   if (length(unique(x)) == 1 | length(unique(y)) == 1)
     return(NA)
+  # If x is categorical
+  x <- reduce_cats(x, max_cat)
+  # If y is continuous
   if (is.numeric(y)) {
-    # If y is continuous
     preds <- predict(rpart(y ~ x, method = "anova"), type = 'vector')
   } else {
     # If y is categorical
+    y <- reduce_cats(y, max_cat)
     preds <- predict(rpart(y ~ x, method = "class"), type = 'class')
+    attr(preds, "max_cat") <- max_cat
   }
   class(preds) <- c("x2y_preds", class(preds))
   return(preds)
 }
 
-x2y_vals <- function(x, y) {
+x2y_vals <- function(x, y, ...) {
   if (length(unique(x)) == 1 | length(unique(y)) == 1) return(NA)
-  preds <- x2y_preds(x, y)
+  preds <- x2y_preds(x, y, ...)
   if (is.numeric(y)) {
     mae_reduction(preds, y)
   } else {
@@ -221,7 +228,16 @@ misclass_reduction <- function(y_hat, y_actual) {
   round(100*result, 2)
 }
 
-simple_boot <- function(x, y) {
+simple_boot <- function(x, y, ...) {
   ids <- sample(length(x), replace = TRUE)
-  x2y_vals(x[ids], y[ids])
+  x2y_vals(x[ids], y[ids], ...)
+}
+
+reduce_cats <- function(x, max_cat) {
+  if (length(unique(x)) > max_cat) {
+    x <- as.character(x)
+    top <- head(names(sort(table(x), decreasing = TRUE)), max_cat)
+    x[!x %in% top] <- ""
+  }
+  return(x)
 }
