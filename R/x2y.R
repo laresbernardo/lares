@@ -97,7 +97,7 @@ x2y <- function(df, target = NULL, symmetric = FALSE,
     arrange(desc(.data$x2y), desc(.data$obs_p)) %>%
     tidyr::separate(.data$xy, c("x","y"), sep = "<>")
   
-  if (!is.null(top)) results <- head(results, 10)
+  if (!is.null(top)) results <- head(results, top)
   if (confidence) attr(results, "bootstraps") <- attr(r, "bootstraps")
   attr(results, "symmetric") <- symmetric
   class(results) <- c("x2y", class(results))
