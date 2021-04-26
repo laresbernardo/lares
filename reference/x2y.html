@@ -139,7 +139,7 @@ non-linear relationships, and 3) because they are easy/quick to train.</p>
   <span class='va'>...</span>
 <span class='op'>)</span>
 
-<span class='fu'>x2y_metric</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, confidence <span class='op'>=</span> <span class='cn'>FALSE</span>, bootstraps <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
+<span class='fu'>x2y_metric</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, confidence <span class='op'>=</span> <span class='cn'>FALSE</span>, bootstraps <span class='op'>=</span> <span class='fl'>20</span>, max_cat <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
 
 <span class='fu'>x2y_plot</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span>
 
@@ -199,6 +199,12 @@ with N <code>bootstraps</code>.</p></td>
       <td><p>Integer. If <code>confidence=TRUE</code>, how many bootstraps?
 The more iterations we run the more precise the confidence internal will be.</p></td>
     </tr>
+    <tr>
+      <th>max_cat</th>
+      <td><p>Integer. Maximum number of unique <code>x</code> or <code>y</code> values
+when categorical. Will select then most frequent values and the rest will
+be passed as <code>""</code>.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -210,33 +216,33 @@ complements our <code><a href='corr_cross.html'>lares::corr_cross()</a></code> o
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
-<span class='fu'>x2y</span><span class='op'>(</span><span class='va'>dft</span>, target <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Survived"</span>,<span class='st'>"Age"</span><span class='op'>)</span>, top <span class='op'>=</span> <span class='fl'>10</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>x2y</span><span class='op'>(</span><span class='va'>dft</span>, top <span class='op'>=</span> <span class='fl'>10</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>, max_cat <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 x 4</span><span>
 #&gt;    x        y        obs_p   x2y
 #&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Ticket   Survived 100    84.8
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Ticket   Age       80.1  58.4
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Sex      Survived 100    44.4
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Survived Sex      100    39.5
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Cabin    Survived 100    34.5
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Cabin    Age       80.1  20.5
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Fare     Survived 100    20.5
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Age      Parch     80.1  18.9
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Pclass   Survived 100    16.4
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Age      Pclass    80.1  14.8</div><div class='input'><span class='fu'>x2y</span><span class='op'>(</span><span class='va'>dft</span>, target <span class='op'>=</span> <span class='st'>"Fare"</span>, confidence <span class='op'>=</span> <span class='cn'>TRUE</span>, bootstraps <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Sex      Survived   100  44.4
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Survived Sex        100  39.5
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Pclass   Fare       100  32.1
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Fare     Pclass     100  27.5
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Ticket   SibSp      100  25.3
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> SibSp    Parch      100  21.6
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Parch    SibSp      100  19.2
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Ticket   Parch      100  18.0
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Pclass   Survived   100  16.4
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Fare     SibSp      100  14.9</div><div class='input'><span class='fu'>x2y</span><span class='op'>(</span><span class='va'>dft</span>, target <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Survived"</span>,<span class='st'>"Age"</span><span class='op'>)</span>, confidence <span class='op'>=</span> <span class='cn'>TRUE</span>, bootstraps <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 10 x 6</span><span>
-#&gt;    x      y        obs_p   x2y lower_ci upper_ci
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Ticket Fare     100   78.2    72.8      78.4 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Fare   Pclass   100   65.2    52.2      65.6 
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Cabin  Fare     100   49.1    45.0      52.3 
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Fare   Embarked 100   45.3    34.4      44.5 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Fare   Parch    100   40.0    32.4      40.2 
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Fare   SibSp    100   35.4    16.8      40.8 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Pclass Fare     100   32.1    29.8      36.6 
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Fare   Survived 100   20.5     5.38     21.0 
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Fare   Sex      100   13.7    -</span><span style='color: #BB0000;'>5.24</span><span>     15.2 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Fare   Age       80.1  6.25   -</span><span style='color: #BB0000;'>0.280</span><span>     6.82</div><div class='input'>
+#&gt;    x        y        obs_p   x2y lower_ci upper_ci
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Sex      Survived 100   44.4    38.7      53.4 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Survived Sex      100   39.5    29.7      43.4 
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Pclass   Survived 100   16.4    13.1      22.1 
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Age      Parch     80.1  8.45    9.87     13.7 
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Cabin    Survived 100    8.19    8.14     12.8 
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Pclass   Age       80.1  8.05    6.98      9.56
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> SibSp    Age       80.1  5.92    4.67      8.11
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Ticket   Survived 100    5.85    1.93     11.7 
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Embarked Survived 100    5.85    0.690    11.7 
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Survived Fare     100    4.89    3.89      7.88</div><div class='input'>
 <span class='co'># Plot (symmetric) results</span>
 <span class='va'>symm</span> <span class='op'>&lt;-</span> <span class='fu'>x2y</span><span class='op'>(</span><span class='va'>dft</span>, target <span class='op'>=</span> <span class='st'>"Fare"</span>, symmetric <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>symm</span><span class='op'>)</span>
