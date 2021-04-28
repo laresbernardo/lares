@@ -32,6 +32,7 @@
 #' @param top Integer. Show/plot only top N predictive cross-features. Set
 #' to \code{NULL} to return all.
 #' @param quiet Boolean. Keep quiet? If not, show progress bar.
+#' @param ohse Boolean. Use \code{lares::ohse()} to pre-process the data?
 #' @param ... Additional parameters passed to \code{x2y_metric()}
 #' @examples
 #' data(dft) # Titanic dataset
@@ -57,8 +58,9 @@
 #' x2y_plot(y, x)
 #' @export
 x2y <- function(df, target = NULL, symmetric = FALSE,
-                plot = FALSE, top = 20, quiet = "auto", ...) {
+                plot = FALSE, top = 20, quiet = "auto", ohse = FALSE, ...) {
   
+  if (ohse) df <- lares::ohse(df, ...)
   pairs <- combn(ncol(df), 2)
   pairs <- cbind(pairs, pairs[2:1, ])
   
@@ -172,16 +174,16 @@ plot.x2y <- function(x, type = 1, ...) {
     x$x2y <- signif(x$x2y, 3)
     if (type == 1) p <- x %>%
       filter(.data$x2y > 0) %>%
-      group_by(.data$x) %>% mutate(ximp = sum(.data$x2y, na.rm = TRUE)) %>% ungroup() %>%
-      group_by(.data$y) %>% mutate(yimp = sum(.data$x2y, na.rm = TRUE)) %>% ungroup() %>%
+      group_by(.data$x) %>% mutate(ximp = max(.data$x2y, na.rm = TRUE)) %>% ungroup() %>%
+      group_by(.data$y) %>% mutate(yimp = max(.data$x2y, na.rm = TRUE)) %>% ungroup() %>%
       ggplot(aes(x = reorder(.data$x, -.data$ximp),
-                 y = reorder(.data$y, .data$yimp),
+                 y = reorder(.data$y, -.data$yimp),
                  fill = .data$x2y, label = .data$x2y)) +
       geom_tile() + geom_text(size = 3.2) +
       scale_fill_gradient(low = "white", high = names(lares::lares_pal()[[2]])[1]) +
       labs(title = "Cross-features Predictive Power (x2y)",
-           x = "x features", y = "y features",
-           caption = ifelse(
+           x = NULL, y = NULL,
+           subtitle = ifelse(
              isTRUE(attr(x, "symmetric")),
              "Symmetric results: mean(x2y, y2x)",
              "Non-symmetric results: x2y != y2x")) +
@@ -197,7 +199,7 @@ plot.x2y <- function(x, type = 1, ...) {
                 size = 3) +
       scale_x_percent(expand = c(0, 0), position = "top") +
       labs(title = "Ranked Predictive Power of Cross-Features (x2y)",
-           caption = ifelse(
+           subtitle = ifelse(
              isTRUE(attr(x, "symmetric")),
              "Symmetric results: mean(x2y, y2x)",
              "Non-symmetric results: x2y != y2x"),

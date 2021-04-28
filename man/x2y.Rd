@@ -14,6 +14,7 @@ x2y(
   plot = FALSE,
   top = 20,
   quiet = "auto",
+  ohse = FALSE,
   ...
 )
 
@@ -43,6 +44,8 @@ results will be returned.}
 to \code{NULL} to return all.}
 
 \item{quiet}{Boolean. Keep quiet? If not, show progress bar.}
+
+\item{ohse}{Boolean. Use \code{lares::ohse()} to pre-process the data?}
 
 \item{...}{Additional parameters passed to \code{x2y_metric()}}
 

@@ -78,6 +78,7 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal") {
 #' the filtered values with?
 #' @param sep Character. Separator's string
 #' @param quiet Boolean. Quiet all messages and summaries?
+#' @param ... Additional parameters
 #' @examples 
 #' data(dft)
 #' dft <- dft[,c(2,3,5,9,11)]
@@ -105,7 +106,8 @@ ohse <- function(df,
                  variance = 0.9, 
                  other_label = "OTHER", 
                  sep = "_", 
-                 quiet = FALSE) {
+                 quiet = FALSE,
+                 ...) {
   
   if (is.vector(df))
     df <- data.frame(var = df)
