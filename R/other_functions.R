@@ -620,6 +620,8 @@ replaceall <- function(df, original, change, which = "all",
 #' @param ignore Character vector. Column names to ignore validation.
 #' @export
 removenacols <- function(df, all = TRUE, ignore = NULL) {
+  if (is.null(df)) return(NULL)
+  if (!is.data.frame(df)) stop("df must be a valid data.frame")
   if (all) {
     not_all_nas <- colSums(is.na(df)) != nrow(df)
     keep <- colnames(df) %in% ignore | not_all_nas
@@ -641,6 +643,8 @@ removenacols <- function(df, all = TRUE, ignore = NULL) {
 #' If set to FALSE, rows which contains at least one NA will be removed
 #' @export
 removenarows <- function(df, all = TRUE) {
+  if (is.null(df)) return(NULL)
+  if (!is.data.frame(df)) stop("df must be a valid data.frame")
   if (all) {
     return(df[rowSums(is.na(df)) != ncol(df), ]) 
   } else {
