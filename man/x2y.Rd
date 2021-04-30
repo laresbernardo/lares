@@ -3,8 +3,9 @@
 \name{x2y}
 \alias{x2y}
 \alias{x2y_metric}
-\alias{x2y_plot}
+\alias{plot.x2y_preds}
 \alias{plot.x2y}
+\alias{x2y_preds}
 \title{Ranked Predictive Power of Cross-Features (x2y)}
 \usage{
 x2y(
@@ -15,14 +16,17 @@ x2y(
   top = 20,
   quiet = "auto",
   ohse = FALSE,
+  corr = FALSE,
   ...
 )
 
 x2y_metric(x, y, confidence = FALSE, bootstraps = 20, max_cat = 20)
 
-x2y_plot(x, y, ...)
+\method{plot}{x2y_preds}(x, corr = FALSE, ...)
 
 \method{plot}{x2y}(x, type = 1, ...)
+
+x2y_preds(x, y, max_cat = 10)
 }
 \arguments{
 \item{df}{data.frame}
@@ -46,6 +50,9 @@ to \code{NULL} to return all.}
 \item{quiet}{Boolean. Keep quiet? If not, show progress bar.}
 
 \item{ohse}{Boolean. Use \code{lares::ohse()} to pre-process the data?}
+
+\item{corr}{Boolean. Add correlation and pvalue data to compare with? For
+more custom studies, use \code{lares::corr_cross()} directly.}
 
 \item{...}{Additional parameters passed to \code{x2y_metric()}}
 
@@ -86,7 +93,11 @@ head(x2y_results, 10)
 plot(x2y_results, type = 1)
 
 # Confidence intervals with 10 bootstrap iterations
-x2y(dft, target = c("Survived","Age"), confidence = TRUE, bootstraps = 10)
+x2y(dft, target = c("Survived","Age"), 
+    confidence = TRUE, bootstraps = 10, top = 8)
+
+# Compare with mean absolute correlations
+x2y(dft, "Fare", corr = TRUE, top = 8)
 
 # Plot (symmetric) results
 symm <- x2y(dft, target = "Fare", symmetric = TRUE)
@@ -98,7 +109,7 @@ x <- seq(-1, 1, 0.01)
 y <- sqrt(1 - x^2) + rnorm(length(x), mean = 0, sd = 0.05)
 
 # Knowing x reduces the uncertainty about the value of y a lot more than
-# knowing y reduces the uncertainty about the value of x
-x2y_plot(x, y)
-x2y_plot(y, x)
+# knowing y reduces the uncertainty about the value of x. Note correlation.
+plot(x2y_preds(x, y), corr = TRUE)
+plot(x2y_preds(y, x), corr = TRUE)
 }

@@ -33,6 +33,8 @@
 #' to \code{NULL} to return all.
 #' @param quiet Boolean. Keep quiet? If not, show progress bar.
 #' @param ohse Boolean. Use \code{lares::ohse()} to pre-process the data?
+#' @param corr Boolean. Add correlation and pvalue data to compare with? For
+#' more custom studies, use \code{lares::corr_cross()} directly.
 #' @param ... Additional parameters passed to \code{x2y_metric()}
 #' @examples
 #' data(dft) # Titanic dataset
@@ -41,7 +43,11 @@
 #' plot(x2y_results, type = 1)
 #' 
 #' # Confidence intervals with 10 bootstrap iterations
-#' x2y(dft, target = c("Survived","Age"), confidence = TRUE, bootstraps = 10)
+#' x2y(dft, target = c("Survived","Age"), 
+#'     confidence = TRUE, bootstraps = 10, top = 8)
+#' 
+#' # Compare with mean absolute correlations
+#' x2y(dft, "Fare", corr = TRUE, top = 8)
 #' 
 #' # Plot (symmetric) results
 #' symm <- x2y(dft, target = "Fare", symmetric = TRUE)
@@ -53,12 +59,13 @@
 #' y <- sqrt(1 - x^2) + rnorm(length(x), mean = 0, sd = 0.05)
 #' 
 #' # Knowing x reduces the uncertainty about the value of y a lot more than
-#' # knowing y reduces the uncertainty about the value of x
-#' x2y_plot(x, y)
-#' x2y_plot(y, x)
+#' # knowing y reduces the uncertainty about the value of x. Note correlation.
+#' plot(x2y_preds(x, y), corr = TRUE)
+#' plot(x2y_preds(y, x), corr = TRUE)
 #' @export
 x2y <- function(df, target = NULL, symmetric = FALSE,
-                plot = FALSE, top = 20, quiet = "auto", ohse = FALSE, ...) {
+                plot = FALSE, top = 20, quiet = "auto", 
+                ohse = FALSE, corr = FALSE, ...) {
   
   if (ohse) df <- lares::ohse(df, ...)
   pairs <- combn(ncol(df), 2)
@@ -103,11 +110,30 @@ x2y <- function(df, target = NULL, symmetric = FALSE,
     arrange(desc(.data$x2y), desc(.data$obs_p)) %>%
     tidyr::separate(.data$xy, c("x","y"), sep = "<>")
   
+  if (corr) results <- x2y_addcorr(results, df)
+  
   if (!is.null(top)) results <- head(results, top)
   if (confidence) attr(results, "bootstraps") <- attr(r, "bootstraps")
   attr(results, "symmetric") <- symmetric
   class(results) <- c("x2y", class(results))
   if (plot) return(plot(results))
+  return(results)
+}
+
+x2y_addcorr <- function(x2y, df) {
+  corr_df <- corr_cross(df, plot = FALSE, quiet = TRUE) %>%
+    group_by(.data$group1, .data$group2) %>%
+    summarise(mean_abs_corr = mean(abs(.data$corr), na.rm = TRUE),
+              mean_pvalue = mean(.data$pvalue, na.rm = TRUE),
+              .groups = "drop") %>%
+    arrange(desc(abs(.data$mean_abs_corr)))
+  results <- x2y %>%
+    left_join(corr_df, by = c("x" = "group1", "y" = "group2")) %>%
+    left_join(corr_df, by = c("x" = "group2", "y" = "group1")) %>%
+    tidyr::unite("mean_abs_corr", contains("mean_abs_corr"), na.rm = TRUE, remove = TRUE) %>%
+    tidyr::unite("mean_pvalue", contains("mean_pvalue"), na.rm = TRUE, remove = TRUE) %>%
+    mutate(mean_abs_corr = as.numeric(eval(.data$mean_abs_corr)),
+           mean_pvalue = as.numeric(eval(.data$mean_pvalue)))
   return(results)
 }
 
@@ -147,17 +173,22 @@ x2y_metric <- function(x, y, confidence = FALSE, bootstraps = 20, max_cat = 20) 
 
 #' @rdname x2y
 #' @export
-x2y_plot <- function(x, y, ...) {
-  pred <- data.frame(x2y_preds(x, y, ...)) %>% mutate(id = rownames(.))
-  pred <- data.frame(id = as.character(1:length(x))) %>% left_join(pred, "id")
-  df <- data.frame(x, y, pred = pred[,2]) %>% removenarows(all = FALSE)
+plot.x2y_preds <- function(x, corr = FALSE, ...) {
+  if (!inherits(x, 'x2y_preds')) stop('Object must be class x2y_preds')
+  df <- attr(x, "xy")
+  pred <- data.frame(x2y_preds(df$x, df$y, ...)) %>% mutate(id = rownames(.))
+  pred <- data.frame(id = as.character(1:length(df$x))) %>% left_join(pred, "id")
+  df <- cbind(df, pred = pred[,2]) %>% removenarows(all = FALSE)
   p <- ggplot(df, aes(x = .data$x)) +
     geom_point(aes(y = .data$y), size = 0.5) +
     geom_line(aes(y = .data$pred)) +
     scale_color_brewer(name = NULL) +
     labs(title = "x's predictive power over y",
-         subtitle = sprintf("x2y: %s", x2y_metric(x, y)$x2y)) +
+         subtitle = sprintf("x2y: %s", x2y_metric(df$x, df$y)$x2y)) +
     theme_lares()
+  if (corr & is.numeric(df$x) & is.numeric(df$y))
+    p <- p + labs(caption = paste("Correlation:", signif(cor(df$x, df$y), 1))) +
+    geom_smooth(aes(y = .data$y), method = "lm", formula = 'y ~ x')
   return(p)
 }
 
@@ -209,6 +240,8 @@ plot.x2y <- function(x, type = 1, ...) {
   }
 }
 
+#' @rdname x2y
+#' @export
 x2y_preds <- function(x, y, max_cat = 10) {
   # If no variance
   if (length(unique(x)) == 1 | length(unique(y)) == 1)
@@ -224,6 +257,7 @@ x2y_preds <- function(x, y, max_cat = 10) {
     preds <- predict(rpart(y ~ x, method = "class"), type = 'class')
     attr(preds, "max_cat") <- max_cat
   }
+  attr(preds, "xy") <- as_tibble(data.frame(x = x, y = y))
   class(preds) <- c("x2y_preds", class(preds))
   return(preds)
 }
