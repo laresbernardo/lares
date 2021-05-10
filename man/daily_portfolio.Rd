@@ -4,7 +4,7 @@
 \alias{daily_portfolio}
 \title{Daily Portfolio Dataframe}
 \usage{
-daily_portfolio(hist, trans, cash, cash_fix = 0)
+daily_portfolio(hist, trans, cash, cash_fix = 0, window = "MAX")
 }
 \arguments{
 \item{hist}{Dataframe. Result from \code{stocks_hist()}}
@@ -15,6 +15,8 @@ daily_portfolio(hist, trans, cash, cash_fix = 0)
 
 \item{cash_fix}{Numeric. If, for some reason, you need to fix your 
 cash amount for all reports, set the amount here}
+
+\item{window}{Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"}
 }
 \description{
 This function creates a dataframe will all relevant metrics and values,

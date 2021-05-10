@@ -10,7 +10,7 @@ splot_change(
   weighted = TRUE,
   group = FALSE,
   n_days = 365,
-  keep_old = TRUE,
+  keep_old = FALSE,
   save = FALSE
 )
 }

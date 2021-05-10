@@ -11,6 +11,7 @@ stocks_hist(
   today = TRUE,
   tax = 30,
   parg = FALSE,
+  cache = TRUE,
   quiet = FALSE
 )
 }
@@ -27,6 +28,8 @@ only if to value is the same as today's date}
 
 \item{parg}{Boolean. Personal argument. Used to personalize stuff, in this
 case, taxes changed from A to B in given date (hard-coded)}
+
+\item{cache}{Boolean. Use cache? Will re-use downloaded data today.}
 
 \item{quiet}{Boolean. Keep quiet? If not, print messages and status bars}
 }

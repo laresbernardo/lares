@@ -2,7 +2,7 @@
 % Please edit documentation in R/stocks.R
 \name{stocks_quote}
 \alias{stocks_quote}
-\title{Download Stocks Historical Data}
+\title{Download Stocks Current Data}
 \usage{
 stocks_quote(ticks)
 }
@@ -10,7 +10,7 @@ stocks_quote(ticks)
 \item{ticks}{Character Vector. Symbols/Tickers to quote in real time.}
 }
 \description{
-This function lets the user download stocks historical data.
+This function lets the user download stocks live data.
 }
 \examples{
 \donttest{

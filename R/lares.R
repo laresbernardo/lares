@@ -18,7 +18,7 @@
 #' stop_for_status upload_file add_headers content http_error set_config config
 #' @importFrom jsonlite fromJSON toJSON flatten
 #' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd days
-#' minute hour second %m+% floor_date ceiling_date
+#' minute hour second %m+% %m-% floor_date ceiling_date years
 #' @importFrom magrittr %>% set_colnames set_names
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx

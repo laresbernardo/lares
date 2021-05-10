@@ -10,6 +10,7 @@ stocks_obj(
   tax = 30,
   sectors = FALSE,
   parg = FALSE,
+  window = c("1M", "YTD", "1Y", "MAX"),
   quiet = FALSE
 )
 }
@@ -26,6 +27,8 @@ cash amount for all reports, set the amount here}
 
 \item{parg}{Boolean. Personal argument. Used to personalize stuff, in this
 case, taxes changed from A to B in given date (hard-coded)}
+
+\item{window}{Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"}
 
 \item{quiet}{Boolean. Keep quiet? If not, print messages and status bars}
 }
