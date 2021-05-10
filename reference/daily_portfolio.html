@@ -73,7 +73,7 @@ for the overall portfolio, for every day since inception." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.10.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.10.2</span>
       </span>
     </div>
 
@@ -119,7 +119,7 @@ for the overall portfolio, for every day since inception." />
 for the overall portfolio, for every day since inception.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>daily_portfolio</span><span class='op'>(</span><span class='va'>hist</span>, <span class='va'>trans</span>, <span class='va'>cash</span>, cash_fix <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>daily_portfolio</span><span class='op'>(</span><span class='va'>hist</span>, <span class='va'>trans</span>, <span class='va'>cash</span>, cash_fix <span class='op'>=</span> <span class='fl'>0</span>, window <span class='op'>=</span> <span class='st'>"MAX"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,6 +140,10 @@ for the overall portfolio, for every day since inception.</p>
       <th>cash_fix</th>
       <td><p>Numeric. If, for some reason, you need to fix your 
 cash amount for all reports, set the amount here</p></td>
+    </tr>
+    <tr>
+      <th>window</th>
+      <td><p>Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"</p></td>
     </tr>
     </table>
 

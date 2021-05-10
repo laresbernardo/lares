@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.10.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.10.2</span>
       </span>
     </div>
 
@@ -124,6 +124,7 @@
   today <span class='op'>=</span> <span class='cn'>TRUE</span>,
   tax <span class='op'>=</span> <span class='fl'>30</span>,
   parg <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  cache <span class='op'>=</span> <span class='cn'>TRUE</span>,
   quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
@@ -152,6 +153,10 @@ only if to value is the same as today's date</p></td>
       <th>parg</th>
       <td><p>Boolean. Personal argument. Used to personalize stuff, in this
 case, taxes changed from A to B in given date (hard-coded)</p></td>
+    </tr>
+    <tr>
+      <th>cache</th>
+      <td><p>Boolean. Use cache? Will re-use downloaded data today.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
