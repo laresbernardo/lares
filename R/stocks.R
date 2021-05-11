@@ -756,11 +756,12 @@ etf_sector <- function(etf = "VTI", quiet = FALSE) {
     info <- toupper(etf[i])
     url <- paste0("https://etfdb.com/etf/", info)
     #exists <- tryCatch({!httr::http_error(url)}, error = function(err) {FALSE})
-    sector <- tryCatch(read_html(url), error = function(err) {
-      closeAllConnections(); gc()
-      nodata <- c(nodata, info)
-      return(NULL)
-    })
+    sector <- suppressWarnings(
+      tryCatch(read_html(url), error = function(err) {
+        closeAllConnections(); gc()
+        nodata <- c(nodata, info)
+        return(NULL)
+      }))
     if (is.null(sector)) next
     tables <- sector %>% html_table()
     sector_table <- lapply(tables, function (x){
@@ -771,14 +772,16 @@ etf_sector <- function(etf = "VTI", quiet = FALSE) {
         mutate(ETF = info) %>%
         mutate(Percentage = as.numeric(gsub("%","", .data$Percentage)))
       ret <- rbind(ret, sec)
+    } else {
+      nodata <- c(nodata, info)
     }
     if (!quiet & length(etf) > 1)
       statusbar(i, length(etf), info)
   }
   
   attr(ret, "type") <- "etf_sector"
-  if (length(nodata) > 0)
-    if (!quiet) message("Some ticks were not found as ETF: ", v2t(nodata))
+  if (length(unique(nodata)) > 0)
+    if (!quiet) message("Some ticks were not found as ETF: ", v2t(unique(nodata)))
   if (nrow(ret) == 0) {
     if (!quiet) message("No data found for given Tickers!")
     invisible(return(NULL))

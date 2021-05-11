@@ -14,11 +14,12 @@
 #' Coefficient That Works For Numeric and Categorical Variables. This analysis
 #' complements our \code{lares::corr_cross()} output.
 #' 
-#' @param df data.frame
-#' @param target Character. If you are only interested in the \code{x2y}
+#' @param df data.frame. Note that variables with no variance will be ignored.
+#' @param target Character vector. If you are only interested in the \code{x2y}
 #' values between particular variable(s) in \code{df}, set
 #' name(s) of the variable(s) you are interested in. Keep \code{NULL}
-#' to calculate for every variable (column).
+#' to calculate for every variable (column). Check \code{target_x} and
+#' \code{target_y} parameters as well.
 #' @param confidence Boolean. Calculate 95\% confidence intervals estimated
 #' with N \code{bootstraps}.
 #' @param bootstraps Integer. If \code{confidence=TRUE}, how many bootstraps?
@@ -27,6 +28,8 @@
 #' \code{x} and \code{y}. The extent to which \code{x} can predict \code{y} can
 #' be different from the extent to which \code{y} can predict \code{x}. Set
 #' \code{symmetric=TRUE} if you wish to average both numbers.
+#' @param target_x,target_y Boolean. Force target features to be part of
+#' \code{x} or \code{y}?
 #' @param plot Boolean. Return a plot? If not, only a data.frame with calculated
 #' results will be returned.
 #' @param top Integer. Show/plot only top N predictive cross-features. Set
@@ -64,9 +67,11 @@
 #' plot(x2y_preds(y, x), corr = TRUE)
 #' @export
 x2y <- function(df, target = NULL, symmetric = FALSE,
+                target_x = FALSE, target_y = FALSE,
                 plot = FALSE, top = 20, quiet = "auto", 
                 ohse = FALSE, corr = FALSE, ...) {
   
+  df <- select(df, -zerovar(df))
   if (ohse) df <- lares::ohse(df, ...)
   pairs <- combn(ncol(df), 2)
   pairs <- cbind(pairs, pairs[2:1, ])
@@ -111,6 +116,11 @@ x2y <- function(df, target = NULL, symmetric = FALSE,
     tidyr::separate(.data$xy, c("x","y"), sep = "<>")
   
   if (corr) results <- x2y_addcorr(results, df)
+  
+  if (!is.null(target)) {
+    if (target_x) results <- filter(results, .data$x %in% target)  
+    if (target_y) results <- filter(results, .data$y %in% target)
+  }
   
   if (!is.null(top)) results <- head(results, top)
   if (confidence) attr(results, "bootstraps") <- attr(r, "bootstraps")

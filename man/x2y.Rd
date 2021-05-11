@@ -12,6 +12,8 @@ x2y(
   df,
   target = NULL,
   symmetric = FALSE,
+  target_x = FALSE,
+  target_y = FALSE,
   plot = FALSE,
   top = 20,
   quiet = "auto",
@@ -29,17 +31,21 @@ x2y_metric(x, y, confidence = FALSE, bootstraps = 20, max_cat = 20)
 x2y_preds(x, y, max_cat = 10)
 }
 \arguments{
-\item{df}{data.frame}
+\item{df}{data.frame. Note that variables with no variance will be ignored.}
 
-\item{target}{Character. If you are only interested in the \code{x2y}
+\item{target}{Character vector. If you are only interested in the \code{x2y}
 values between particular variable(s) in \code{df}, set
 name(s) of the variable(s) you are interested in. Keep \code{NULL}
-to calculate for every variable (column).}
+to calculate for every variable (column). Check \code{target_x} and
+\code{target_y} parameters as well.}
 
 \item{symmetric}{Boolean. \code{x2y} metric is not symmetric with respect to
 \code{x} and \code{y}. The extent to which \code{x} can predict \code{y} can
 be different from the extent to which \code{y} can predict \code{x}. Set
 \code{symmetric=TRUE} if you wish to average both numbers.}
+
+\item{target_x, target_y}{Boolean. Force target features to be part of
+\code{x} or \code{y}?}
 
 \item{plot}{Boolean. Return a plot? If not, only a data.frame with calculated
 results will be returned.}
