@@ -133,6 +133,8 @@ non-linear relationships, and 3) because they are easy/quick to train.</p>
   <span class='va'>df</span>,
   target <span class='op'>=</span> <span class='cn'>NULL</span>,
   symmetric <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  target_x <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  target_y <span class='op'>=</span> <span class='cn'>FALSE</span>,
   plot <span class='op'>=</span> <span class='cn'>FALSE</span>,
   top <span class='op'>=</span> <span class='fl'>20</span>,
   quiet <span class='op'>=</span> <span class='st'>"auto"</span>,
@@ -156,14 +158,15 @@ non-linear relationships, and 3) because they are easy/quick to train.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>df</th>
-      <td><p>data.frame</p></td>
+      <td><p>data.frame. Note that variables with no variance will be ignored.</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>Character. If you are only interested in the <code>x2y</code>
+      <td><p>Character vector. If you are only interested in the <code>x2y</code>
 values between particular variable(s) in <code>df</code>, set
 name(s) of the variable(s) you are interested in. Keep <code>NULL</code>
-to calculate for every variable (column).</p></td>
+to calculate for every variable (column). Check <code>target_x</code> and
+<code>target_y</code> parameters as well.</p></td>
     </tr>
     <tr>
       <th>symmetric</th>
@@ -171,6 +174,11 @@ to calculate for every variable (column).</p></td>
 <code>x</code> and <code>y</code>. The extent to which <code>x</code> can predict <code>y</code> can
 be different from the extent to which <code>y</code> can predict <code>x</code>. Set
 <code>symmetric=TRUE</code> if you wish to average both numbers.</p></td>
+    </tr>
+    <tr>
+      <th>target_x, target_y</th>
+      <td><p>Boolean. Force target features to be part of
+<code>x</code> or <code>y</code>?</p></td>
     </tr>
     <tr>
       <th>plot</th>
