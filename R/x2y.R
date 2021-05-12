@@ -183,18 +183,18 @@ x2y_metric <- function(x, y, confidence = FALSE, bootstraps = 20, max_cat = 20) 
 
 #' @rdname x2y
 #' @export
-plot.x2y_preds <- function(df, corr = FALSE, ...) {
-  if (!inherits(df, 'x2y_preds')) stop('Object must be class x2y_preds')
-  p <- ggplot(df, aes(x = .data$x)) +
+plot.x2y_preds <- function(x, corr = FALSE, ...) {
+  if (!inherits(x, 'x2y_preds')) stop('Object must be class x2y_preds')
+  p <- ggplot(x, aes(x = .data$x)) +
     geom_point(aes(y = .data$y), size = 0.5) +
     geom_line(aes(y = .data$p), colour = names(lares_pal()[[2]])[2],
               size = 0.8, alpha = 0.7) +
     scale_color_brewer(name = NULL) +
     labs(title = "x's predictive power over y",
-         subtitle = sprintf("x2y: %s", x2y_metric(df$x, df$y)$x2y)) +
+         subtitle = sprintf("x2y: %s", x2y_metric(x$x, x$y)$x2y)) +
     theme_lares()
-  if (corr & is.numeric(df$x) & is.numeric(df$y))
-    p <- p + labs(caption = paste("Correlation:", signif(cor(df$x, df$y), 1))) +
+  if (corr & is.numeric(x$x) & is.numeric(x$y))
+    p <- p + labs(caption = paste("Correlation:", signif(cor(x$x, x$y), 1))) +
     geom_smooth(aes(y = .data$y), method = "lm", formula = 'y ~ x', size = 0.5)
   return(p)
 }

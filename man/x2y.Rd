@@ -24,7 +24,7 @@ x2y(
 
 x2y_metric(x, y, confidence = FALSE, bootstraps = 20, max_cat = 20)
 
-\method{plot}{x2y_preds}(df, corr = FALSE, ...)
+\method{plot}{x2y_preds}(x, corr = FALSE, ...)
 
 \method{plot}{x2y}(x, type = 1, ...)
 
