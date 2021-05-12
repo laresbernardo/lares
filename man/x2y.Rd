@@ -96,7 +96,7 @@ complements our \code{lares::corr_cross()} output.
 data(dft) # Titanic dataset
 x2y_results <- x2y(dft, quiet = TRUE, max_cat = 10, top = NULL)
 head(x2y_results, 10)
-plot(x2y_results, type = 1)
+plot(x2y_results, type = 2)
 
 # Confidence intervals with 10 bootstrap iterations
 x2y(dft, target = c("Survived","Age"), 
@@ -107,7 +107,7 @@ x2y(dft, "Fare", corr = TRUE, top = 8)
 
 # Plot (symmetric) results
 symm <- x2y(dft, target = "Fare", symmetric = TRUE)
-plot(symm, type = 2)
+plot(symm, type = 1)
 
 # Symmetry: x2y vs y2x
 set.seed(42)

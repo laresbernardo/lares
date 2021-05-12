@@ -43,7 +43,7 @@
 #' data(dft) # Titanic dataset
 #' x2y_results <- x2y(dft, quiet = TRUE, max_cat = 10, top = NULL)
 #' head(x2y_results, 10)
-#' plot(x2y_results, type = 1)
+#' plot(x2y_results, type = 2)
 #' 
 #' # Confidence intervals with 10 bootstrap iterations
 #' x2y(dft, target = c("Survived","Age"), 
@@ -54,7 +54,7 @@
 #' 
 #' # Plot (symmetric) results
 #' symm <- x2y(dft, target = "Fare", symmetric = TRUE)
-#' plot(symm, type = 2)
+#' plot(symm, type = 1)
 #' 
 #' # Symmetry: x2y vs y2x
 #' set.seed(42)
@@ -212,6 +212,21 @@ plot.x2y <- function(x, type = 1, ...) {
     x$x2y <- signif(x$x2y, 3)
     if (type == 1) p <- x %>%
       filter(.data$x2y > 0) %>%
+      ggplot(aes(y = reorder(.data$var, .data$x2y), x = .data$x2y/100)) +
+      geom_col(colour = "transparent") +
+      geom_text(aes(label = sub('^(-)?0[.]', '\\1.', signif(.data$x2y, 3)),
+                    hjust = ifelse(.data$x2y > max(.data$x2y)/5, 1.1, -0.1)),
+                size = 3) +
+      scale_x_percent(expand = c(0, 0), position = "top") +
+      labs(title = "Ranked Predictive Power of Cross-Features (x2y)",
+           subtitle = ifelse(
+             isTRUE(attr(x, "symmetric")),
+             "Symmetric results: mean(x2y, y2x)",
+             "Non-symmetric results: x2y != y2x"),
+           x = NULL, y = NULL) +
+      theme_lares()
+    if (type == 2) p <- x %>%
+      filter(.data$x2y > 0) %>%
       group_by(.data$x) %>% mutate(ximp = max(.data$x2y, na.rm = TRUE)) %>% ungroup() %>%
       group_by(.data$y) %>% mutate(yimp = max(.data$x2y, na.rm = TRUE)) %>% ungroup() %>%
       ggplot(aes(x = reorder(.data$x, -.data$ximp),
@@ -228,21 +243,6 @@ plot.x2y <- function(x, type = 1, ...) {
       theme_lares(grid = "") +
       theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 1)) +
       coord_equal()
-    if (type == 2) p <- x %>%
-      filter(.data$x2y > 0) %>%
-      ggplot(aes(y = reorder(.data$var, .data$x2y), x = .data$x2y/100)) +
-      geom_col(colour = "transparent") +
-      geom_text(aes(label = sub('^(-)?0[.]', '\\1.', signif(.data$x2y, 3)),
-                    hjust = ifelse(.data$x2y > max(.data$x2y)/5, 1.1, -0.1)),
-                size = 3) +
-      scale_x_percent(expand = c(0, 0), position = "top") +
-      labs(title = "Ranked Predictive Power of Cross-Features (x2y)",
-           subtitle = ifelse(
-             isTRUE(attr(x, "symmetric")),
-             "Symmetric results: mean(x2y, y2x)",
-             "Non-symmetric results: x2y != y2x"),
-           x = NULL, y = NULL) +
-      theme_lares()
     return(p)
   }
 }
@@ -262,9 +262,11 @@ x2y_preds <- function(x, y, max_cat = 10) {
     # If y is categorical
     y <- reduce_cats(y, max_cat)
     preds <- predict(rpart(y ~ x, method = "class"), type = 'class')
-    attr(preds, "max_cat") <- max_cat
   }
-  preds <- as_tibble(data.frame(x = x, y = y, p = preds))
+  preds <- as_tibble(data.frame(x = x, y = y)) %>%
+    removenarows(all = FALSE) %>%
+    mutate(p = preds)
+  attr(preds, "max_cat") <- max_cat
   class(preds) <- c("x2y_preds", class(preds))
   return(preds)
 }
