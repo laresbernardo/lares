@@ -257,7 +257,7 @@ complements our <code><a href='corr_cross.html'>lares::corr_cross()</a></code> o
 #&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Pclass   Fare       100  32.1
 #&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Ticket   SibSp      100  25.3
 #&gt; </span><span style='color: #BCBCBC;'> 9</span><span> SibSp    Parch      100  21.6
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Fare     Survived   100  20.5</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x2y_results</span>, type <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Fare     Survived   100  20.5</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x2y_results</span>, type <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='img'><img src='x2y-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Confidence intervals with 10 bootstrap iterations</span>
 <span class='fu'>x2y</span><span class='op'>(</span><span class='va'>dft</span>, target <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Survived"</span>,<span class='st'>"Age"</span><span class='op'>)</span>, 
@@ -288,7 +288,7 @@ complements our <code><a href='corr_cross.html'>lares::corr_cross()</a></code> o
 #&gt; </span><span style='color: #BCBCBC;'>8</span><span> Cabin  Fare       100  18.7        0.118     3.20</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span><span></div><div class='input'>
 <span class='co'># Plot (symmetric) results</span>
 <span class='va'>symm</span> <span class='op'>&lt;-</span> <span class='fu'>x2y</span><span class='op'>(</span><span class='va'>dft</span>, target <span class='op'>=</span> <span class='st'>"Fare"</span>, symmetric <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>symm</span>, type <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>symm</span>, type <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='img'><img src='x2y-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Symmetry: x2y vs y2x</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>42</span><span class='op'>)</span>
