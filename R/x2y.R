@@ -29,7 +29,7 @@
 #' be different from the extent to which \code{y} can predict \code{x}. Set
 #' \code{symmetric=TRUE} if you wish to average both numbers.
 #' @param target_x,target_y Boolean. Force target features to be part of
-#' \code{x} or \code{y}?
+#' \code{x} OR \code{y}?
 #' @param plot Boolean. Return a plot? If not, only a data.frame with calculated
 #' results will be returned.
 #' @param top Integer. Show/plot only top N predictive cross-features. Set
@@ -50,10 +50,10 @@
 #'     confidence = TRUE, bootstraps = 10, top = 8)
 #' 
 #' # Compare with mean absolute correlations
-#' x2y(dft, "Fare", corr = TRUE, top = 8)
+#' x2y(dft, "Fare", corr = TRUE, top = 6, target_x = TRUE)
 #' 
 #' # Plot (symmetric) results
-#' symm <- x2y(dft, target = "Fare", symmetric = TRUE)
+#' symm <- x2y(dft, target = "Survived", symmetric = TRUE)
 #' plot(symm, type = 1)
 #' 
 #' # Symmetry: x2y vs y2x
@@ -71,6 +71,13 @@ x2y <- function(df, target = NULL, symmetric = FALSE,
                 plot = FALSE, top = 20, quiet = "auto", 
                 ohse = FALSE, corr = FALSE, ...) {
   
+  if (target_x & target_y)
+    stop("Set to TRUE only target_x OR target_y, not both.")
+  if ((target_x || target_y) & symmetric) {
+    target_x <- target_y <- FALSE
+    warning("When symmetric, target_x NOR target_y will affect results.")
+  }
+    
   df <- select(df, -zerovar(df))
   if (ohse) df <- lares::ohse(df, ...)
   pairs <- combn(ncol(df), 2)

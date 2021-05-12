@@ -45,7 +45,7 @@ be different from the extent to which \code{y} can predict \code{x}. Set
 \code{symmetric=TRUE} if you wish to average both numbers.}
 
 \item{target_x, target_y}{Boolean. Force target features to be part of
-\code{x} or \code{y}?}
+\code{x} OR \code{y}?}
 
 \item{plot}{Boolean. Return a plot? If not, only a data.frame with calculated
 results will be returned.}
@@ -103,10 +103,10 @@ x2y(dft, target = c("Survived","Age"),
     confidence = TRUE, bootstraps = 10, top = 8)
 
 # Compare with mean absolute correlations
-x2y(dft, "Fare", corr = TRUE, top = 8)
+x2y(dft, "Fare", corr = TRUE, top = 6, target_x = TRUE)
 
 # Plot (symmetric) results
-symm <- x2y(dft, target = "Fare", symmetric = TRUE)
+symm <- x2y(dft, target = "Survived", symmetric = TRUE)
 plot(symm, type = 1)
 
 # Symmetry: x2y vs y2x
