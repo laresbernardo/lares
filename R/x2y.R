@@ -183,22 +183,19 @@ x2y_metric <- function(x, y, confidence = FALSE, bootstraps = 20, max_cat = 20) 
 
 #' @rdname x2y
 #' @export
-plot.x2y_preds <- function(x, corr = FALSE, ...) {
-  if (!inherits(x, 'x2y_preds')) stop('Object must be class x2y_preds')
-  df <- attr(x, "xy")
-  pred <- data.frame(x2y_preds(df$x, df$y, ...)) %>% mutate(id = rownames(.))
-  pred <- data.frame(id = as.character(1:length(df$x))) %>% left_join(pred, "id")
-  df <- cbind(df, pred = pred[,2]) %>% removenarows(all = FALSE)
+plot.x2y_preds <- function(df, corr = FALSE, ...) {
+  if (!inherits(df, 'x2y_preds')) stop('Object must be class x2y_preds')
   p <- ggplot(df, aes(x = .data$x)) +
     geom_point(aes(y = .data$y), size = 0.5) +
-    geom_line(aes(y = .data$pred)) +
+    geom_line(aes(y = .data$p), colour = names(lares_pal()[[2]])[2],
+              size = 0.8, alpha = 0.7) +
     scale_color_brewer(name = NULL) +
     labs(title = "x's predictive power over y",
          subtitle = sprintf("x2y: %s", x2y_metric(df$x, df$y)$x2y)) +
     theme_lares()
   if (corr & is.numeric(df$x) & is.numeric(df$y))
     p <- p + labs(caption = paste("Correlation:", signif(cor(df$x, df$y), 1))) +
-    geom_smooth(aes(y = .data$y), method = "lm", formula = 'y ~ x')
+    geom_smooth(aes(y = .data$y), method = "lm", formula = 'y ~ x', size = 0.5)
   return(p)
 }
 
@@ -267,14 +264,14 @@ x2y_preds <- function(x, y, max_cat = 10) {
     preds <- predict(rpart(y ~ x, method = "class"), type = 'class')
     attr(preds, "max_cat") <- max_cat
   }
-  attr(preds, "xy") <- as_tibble(data.frame(x = x, y = y))
+  preds <- as_tibble(data.frame(x = x, y = y, p = preds))
   class(preds) <- c("x2y_preds", class(preds))
   return(preds)
 }
 
 x2y_vals <- function(x, y, ...) {
   if (length(unique(x)) == 1 | length(unique(y)) == 1) return(NA)
-  preds <- x2y_preds(x, y, ...)
+  preds <- x2y_preds(x, y, ...)$p
   if (is.numeric(y)) {
     mae_reduction(preds, y)
   } else {
