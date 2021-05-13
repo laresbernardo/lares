@@ -4,7 +4,15 @@
 \alias{lares_pal}
 \title{Personal Colours Palette}
 \usage{
-lares_pal()
+lares_pal(return = "list")
+}
+\arguments{
+\item{return}{Character. Get only what you need. Select any of:
+"all" or "list" (list),
+"colors" or "colours" (vector),
+"pal" or "palette" (named vector),
+"simple" (named vector),
+"custom" or "personal" (data.frame)}
 }
 \description{
 This function plots a list of colours on a specific palette

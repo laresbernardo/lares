@@ -4,6 +4,12 @@
 #' This function plots a list of colours on a specific palette
 #' 
 #' @family Auxiliary
+#' @param return Character. Get only what you need. Select any of:
+#' "all" or "list" (list),
+#' "colors" or "colours" (vector),
+#' "pal" or "palette" (named vector),
+#' "simple" (named vector),
+#' "custom" or "personal" (data.frame)
 #' @examples 
 #' # Raw colours and counter-colours
 #' nice_palette <- names(lares_pal()$palette)
@@ -14,124 +20,144 @@
 #' df <- lares_pal()$labels
 #' df[sample(nrow(df), 5), ]
 #' @export
-lares_pal <- function() {
+lares_pal <- function(return = "list") {
   
-  black <- "#000000"
-  white <- "#FFFFFF"
-  red <- "#E63946"
-  green <- "#3DA4AB" 
-  pink <- "#FFCAD4"
-  blue <- "#FFCAD4Z"
-  orange <- "#F4A261"
-  grey <- "#8D99AE"
+  simple <- c(
+    orange = "#FF8303",
+    blue = "#40A4D8",
+    purple = "#5D3A9B",
+    red = "#E63946",
+    green = "#A1BD4D",
+    navy = "#03396C",
+    yellow = "#F8D962",
+    grey = "#8D99AE",
+    pink = "#FFCAD4",
+    black = "#000000",
+    white = "#F8F8F8")
   
   colours_list <- data.frame(rbind(
-    c("allianz", "#0038A8", black),
-    c("equidad", "#52CF44", black),
-    c("colpatria", "#EE0606", black),
-    c("del estado", "#F37000", black),
-    c("suramericana", "#1F6D8C", black),
-    c("mapfre", "#34000D", black),
-    c("la previsora", "#6F9A45", black),
-    c("aig", "#C71585", black),
-    c("generali", "#B21F1F", black),
-    c("solidaria", "#E69500", black),
-    c("liberty", "#4E629A", black),
-    c("bolivar", "#F0F206", black),
-    c("cia", "#8ACBE5", black),
-    c("mundial", "#8ACBE5", black),
-    c("puntored", "#FFFF00", grey),
-    c("movilred", "#FF1493", black),
-    c("moviired", "#FF1493", black),
-    c("moviaval", "#00A69C", black),
-    c("web", "#290452", white),
-    c("somosf1", "#290452", white),
-    c("f1", "#290452", white),
-    c("funnel-soat4_desktop", "#290452", white),
-    c("funnel-ujk2d_desktop", "#8ACBE5", black),
-    c("funnel-ujk2m_old_mobile", "#7AC4E1", black),
-    c("red", black, black),
-    c("m", blue, white),
-    c("f", pink, black),
-    c("male", blue, white),
-    c("female", pink, black),
-    c("hombre", blue, white),
-    c("mujer", pink, black),
-    c("true", green, white),
-    c("false", red, black),
-    c("TRUE", green, white),
-    c("FALSE", red, black),
-    c("1", green, white),
-    c("0", red, black),
-    c("-1", red, black),
-    c("X", grey, black),
-    c("good", green, white),
-    c("bad", red, black),
-    c("bueno", green, white),
-    c("malo", red, black),
-    c("spring", green, white),
-    c("summer", red, white),
-    c("fall", orange, black),
-    c("winter", blue, black),
-    c("meg1", "071D49", white),
-    c("meg2", "EBB600", black),
-    c("meg3", "F2F1F0", black),
-    c("meg4", "9A9A9A", white),
-    c("r5", "#290452", white),
-    c("olx", green, black),
-    c("virtualllantas", red, black),
-    c("eltiempo", "#E5E5E5", black),
-    c("autolab", orange, black),
-    c("aflore", blue, black),
-    c("otro", grey, black),
-    c("negative", "#FA4113", black),
-    c("fear", "#810806", white),
-    c("disgust", "#BF200E", black),
-    c("anger", "#FE9B13", black),
-    c("sadness", "#838B8B", black),
-    c("anticipation", "#FE8A71", black),
-    c("surprise", "#F7E565", black),
-    c("trust", "#40A4D8", black),
-    c("joy", "#BD116F", black),
-    c("positive", "#3DA4AB", black)
+    c("allianz", "#0038A8", simple[['black']]),
+    c("equidad", "#52CF44", simple[['black']]),
+    c("colpatria", "#EE0606", simple[['black']]),
+    c("del estado", "#F37000", simple[['black']]),
+    c("suramericana", "#1F6D8C", simple[['black']]),
+    c("mapfre", "#34000D", simple[['black']]),
+    c("la previsora", "#6F9A45", simple[['black']]),
+    c("aig", "#C71585", simple[['black']]),
+    c("generali", "#B21F1F", simple[['black']]),
+    c("solidaria", "#E69500", simple[['black']]),
+    c("liberty", "#4E629A", simple[['black']]),
+    c("bolivar", "#F0F206", simple[['black']]),
+    c("cia", "#8ACBE5", simple[['black']]),
+    c("mundial", "#8ACBE5", simple[['black']]),
+    c("puntored", "#FFFF00", simple[['grey']]),
+    c("movilred", "#FF1493", simple[['black']]),
+    c("moviired", "#FF1493", simple[['black']]),
+    c("moviaval", "#00A69C", simple[['black']]),
+    c("web", "#290452", simple[['white']]),
+    c("somosf1", "#290452", simple[['white']]),
+    c("f1", "#290452", simple[['white']]),
+    c("funnel-soat4_desktop", "#290452", simple[['white']]),
+    c("funnel-ujk2d_desktop", "#8ACBE5", simple[['black']]),
+    c("funnel-ujk2m_old_mobile", "#7AC4E1", simple[['black']]),
+    c("red", simple[['black']], simple[['black']]),
+    c("m", simple[['blue']], simple[['white']]),
+    c("f", simple[['pink']], simple[['black']]),
+    c("male", simple[['blue']], simple[['white']]),
+    c("female", simple[['pink']], simple[['black']]),
+    c("hombre", simple[['blue']], simple[['white']]),
+    c("mujer", simple[['pink']], simple[['black']]),
+    c("true", simple[['green']], simple[['white']]),
+    c("false", simple[['red']], simple[['black']]),
+    c("TRUE", simple[['green']], simple[['white']]),
+    c("FALSE", simple[['red']], simple[['black']]),
+    c("1", simple[['green']], simple[['white']]),
+    c("0", simple[['red']], simple[['black']]),
+    c("-1", simple[['red']], simple[['black']]),
+    c("X", simple[['grey']], simple[['black']]),
+    c("good", simple[['green']], simple[['white']]),
+    c("bad", simple[['red']], simple[['black']]),
+    c("bueno", simple[['green']], simple[['white']]),
+    c("malo", simple[['red']], simple[['black']]),
+    c("spring", simple[['green']], simple[['white']]),
+    c("summer", simple[['red']], simple[['white']]),
+    c("fall", simple[['orange']], simple[['black']]),
+    c("winter", simple[['blue']], simple[['black']]),
+    c("meg1", "071D49", simple[['white']]),
+    c("meg2", "EBB600", simple[['black']]),
+    c("meg3", "F2F1F0", simple[['black']]),
+    c("meg4", "9A9A9A", simple[['white']]),
+    c("r5", "#290452", simple[['white']]),
+    c("olx", simple[['green']], simple[['black']]),
+    c("virtualllantas", simple[['red']], simple[['black']]),
+    c("eltiempo", "#E5E5E5", simple[['black']]),
+    c("autolab", simple[['orange']], simple[['black']]),
+    c("aflore", simple[['blue']], simple[['black']]),
+    c("otro", simple[['grey']], simple[['black']]),
+    c("negative", "#FA4113", simple[['black']]),
+    c("fear", "#810806", simple[['white']]),
+    c("disgust", "#BF200E", simple[['black']]),
+    c("anger", "#FE9B13", simple[['black']]),
+    c("sadness", "#838B8B", simple[['black']]),
+    c("anticipation", "#FE8A71", simple[['black']]),
+    c("surprise", "#F7E565", simple[['black']]),
+    c("trust", "#40A4D8", simple[['black']]),
+    c("joy", "#BD116F", simple[['black']]),
+    c("positive", "#3DA4AB", simple[['black']]),
+    c("fb1", "#405996", simple[['white']]),
+    c("fb2", "#7184B2", simple[['black']]),
+    c("fb3", "#AFBEE3", simple[['black']])
   ))
   colnames(colours_list) <- c("values","fill","colour")
   
   # Generic colour and counter-colour palette
   colours_names <- c(
-    "#EBB600" = black,
-    "#40A4D8" = black,
-    "#5D3A9B" = white,
-    "#2A9D8F" = black,
-    "#A8DADC" = black,
-    "#D35FB7" = black,
-    "#D62828" = black,
-    "#F29595" = black,
-    "#2FFECC" = black,
-    "#7ADf90" = black,
-    "#290452" = white,
-    "#0C7BDC" = black,
-    "#817B7B" = black,
-    "#F66320" = black,
-    "#F4A261" = black,
-    "#005AB5" = white,
-    "#9A9A9A" = black,
-    "#00008B" = white,
-    "#E1BE6A" = black,
-    "#40B0A6" = black,
-    "#056E00" = white,
-    "#E40000" = black,
-    "#FE8A71" = black,
-    "#8600A1" = white,
-    "#A52A2A" = white,
-    "#000000" = white,
-    "#E69F00" = black,
-    "#009E73" = black,
-    "#0072B2" = white,
-    "#D55E00" = black)
+    "#FF8303" = simple[['black']],
+    "#40A4D8" = simple[['black']],
+    "#5D3A9B" = simple[['white']],
+    "#E63946" = simple[['black']],
+    "#2A9D8F" = simple[['black']],
+    "#D35FB7" = simple[['black']],
+    "#F8D962" = simple[['black']],
+    "#03396C" = simple[['white']],
+    "#F29595" = simple[['black']],
+    "#2FFECC" = simple[['black']],
+    "#8D99AE" = simple[['black']],
+    "#7ADf90" = simple[['black']],
+    "#290452" = simple[['white']],
+    "#0C7BDC" = simple[['black']],
+    "#817B7B" = simple[['black']],
+    "#F66320" = simple[['black']],
+    "#F4A261" = simple[['black']],
+    "#005AB5" = simple[['white']],
+    "#9A9A9A" = simple[['black']],
+    "#00008B" = simple[['white']],
+    "#E1BE6A" = simple[['black']],
+    "#40B0A6" = simple[['black']],
+    "#056E00" = simple[['white']],
+    "#E40000" = simple[['black']],
+    "#FE8A71" = simple[['black']],
+    "#8600A1" = simple[['white']],
+    "#A52A2A" = simple[['white']],
+    "#000000" = simple[['white']],
+    "#E69F00" = simple[['black']],
+    "#009E73" = simple[['black']],
+    "#0072B2" = simple[['white']],
+    "#D55E00" = simple[['black']])
   
   pal <- list(labels = colours_list, palette = rep(colours_names, 4))
+    
+  if (return %in% c("colors", "colours", "color", "colour", "raw", "col"))
+    pal <- names(colours_names)
+  if (return %in% c("pal", "palette"))
+    pal <- colours_names
+  if (return %in% c("personal", "custom", "labels"))
+    pal <- colours_list
+  if (return %in% c("simple"))
+    pal <- simple
+  
   structure(pal, class = "lares_pal")
+  attr("type", return)
   return(pal)
 }
 
@@ -142,15 +168,25 @@ lares_pal <- function() {
 #' This function plots a list of colours
 #' 
 #' @family Auxiliary
-#' @param fill Vector. List of colours for fills
-#' @param colour Vector. List of colours for colours
-#' @param id Vector. ID for each color
+#' @param fill Vector. List of colours for fills.
+#' @param colour Vector. List of colours for colours.
+#' @param id Vector. ID for each color.
+#' @param limit Integer. Show only first n values.
 #' @examples 
-#' pal <- lares_pal()$palette[1:15]
-#' head(pal)
+#' # Simply pass a vector
+#' pal <- lares_pal("simple")
+#' plot_palette(pal)
+#' # Or fill + color named vector
+#' pal <- lares_pal("pal")
 #' plot_palette(fill = names(pal), colour = as.vector(pal))
 #' @export
-plot_palette <- function(fill, colour = "black", id = NA) {
+plot_palette <- function(fill, colour = "black", id = NA, limit = 12) {
+  if (length(fill) > limit) {
+    fill <- fill[1:limit]
+    colour <- colour[1:limit]
+    colour <- colour[!is.na(colour)]
+    message(paste("Limited to", limit, "colours. Overwrite with 'limit' parameter"))
+  }
   if (is.na(id[1])) id <- seq_along(fill)
   p <- data.frame(fill = fill, colour = colour, id = id) %>%
     distinct(.keep_all = TRUE) %>%
@@ -161,10 +197,7 @@ plot_palette <- function(fill, colour = "black", id = NA) {
     scale_colour_identity() +
     coord_flip() + labs(x = NULL, y = NULL) +
     guides(fill = FALSE, colour = FALSE) +
-    theme_lares(font = NA) + 
-    theme(axis.title.x = element_blank(),
-          axis.text.x = element_blank(),
-          axis.ticks.x = element_blank())
+    theme_lares(font = NA, axis = "Y")
   return(p)
 }
 
@@ -177,11 +210,9 @@ plot_palette <- function(fill, colour = "black", id = NA) {
 #' @family Auxiliary
 #' @export
 gg_colour_customs <- function () {
-  
   colours_list <- lares_pal()$labels
   values <- as.character(t(colours_list$colour)[1,])
   names(values) <- colours_list$values
-  
   return(scale_color_manual(values = values))
 }
 
@@ -194,11 +225,9 @@ gg_colour_customs <- function () {
 #' @family Auxiliary
 #' @export
 gg_fill_customs <- function () {
-  
   colours_list <- lares_pal()$labels
   values <- as.character(t(colours_list$fill)[1,])
   names(values) <- colours_list$values
-  
   return(scale_fill_manual(values = values))
 }
 
@@ -211,10 +240,8 @@ gg_fill_customs <- function () {
 #' @family Auxiliary
 #' @export
 gg_text_customs <- function() {
-  
   colours_list <- lares_pal()$labels
   values <- as.character(t(colours_list$colour)[1,])
   names(values) <- colours_list$values
-  
   return(scale_color_manual(values = values))
 }

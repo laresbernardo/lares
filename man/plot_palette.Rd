@@ -4,21 +4,26 @@
 \alias{plot_palette}
 \title{Plot Palette Colours}
 \usage{
-plot_palette(fill, colour = "black", id = NA)
+plot_palette(fill, colour = "black", id = NA, limit = 12)
 }
 \arguments{
-\item{fill}{Vector. List of colours for fills}
+\item{fill}{Vector. List of colours for fills.}
 
-\item{colour}{Vector. List of colours for colours}
+\item{colour}{Vector. List of colours for colours.}
 
-\item{id}{Vector. ID for each color}
+\item{id}{Vector. ID for each color.}
+
+\item{limit}{Integer. Show only first n values.}
 }
 \description{
 This function plots a list of colours
 }
 \examples{
-pal <- lares_pal()$palette[1:15]
-head(pal)
+# Simply pass a vector
+pal <- lares_pal("simple")
+plot_palette(pal)
+# Or fill + color named vector
+pal <- lares_pal("pal")[1:6]
 plot_palette(fill = names(pal), colour = as.vector(pal))
 }
 \seealso{
