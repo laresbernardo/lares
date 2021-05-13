@@ -127,10 +127,11 @@ major and minor grids, legend, font and font size.</p>
   main_colour <span class='op'>=</span> <span class='st'>"darkorange3"</span>,
   hard_colour <span class='op'>=</span> <span class='st'>"black"</span>,
   soft_colour <span class='op'>=</span> <span class='st'>"grey30"</span>,
-  bg_colour <span class='op'>=</span> <span class='st'>"white"</span>,
+  plot_colour <span class='op'>=</span> <span class='st'>"transparent"</span>,
   panel_colour <span class='op'>=</span> <span class='st'>"transparent"</span>,
+  background <span class='op'>=</span> <span class='st'>"transparent"</span>,
   no_facets <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  legend <span class='op'>=</span> <span class='cn'>NULL</span>,
   grid <span class='op'>=</span> <span class='cn'>TRUE</span>,
   axis <span class='op'>=</span> <span class='cn'>TRUE</span>,
   mg <span class='op'>=</span> <span class='fl'>9</span>,
@@ -149,8 +150,13 @@ major and minor grids, legend, font and font size.</p>
 with <code><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv("LARES_FONT" = "X")</a></code> or by using this parameter manually.</p></td>
     </tr>
     <tr>
-      <th>main_colour, hard_colour, soft_colour, bg_colour, panel_colour</th>
+      <th>main_colour, hard_colour, soft_colour, plot_colour, panel_colour</th>
       <td><p>Character. Main colours for your theme</p></td>
+    </tr>
+    <tr>
+      <th>background</th>
+      <td><p>Character. Main colour for your background. Overwrites
+<code>plot_colour</code> and <code>panel_colour</code></p></td>
     </tr>
     <tr>
       <th>no_facets</th>
