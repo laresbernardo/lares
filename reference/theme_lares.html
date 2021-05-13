@@ -134,6 +134,7 @@ major and minor grids, legend, font and font size.</p>
   legend <span class='op'>=</span> <span class='cn'>NULL</span>,
   grid <span class='op'>=</span> <span class='cn'>TRUE</span>,
   axis <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  clean <span class='op'>=</span> <span class='cn'>FALSE</span>,
   mg <span class='op'>=</span> <span class='fl'>9</span>,
   pal <span class='op'>=</span> <span class='fl'>0</span>,
   palette <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -175,6 +176,10 @@ with <code><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv("LARES_FO
       <th>axis</th>
       <td><p>Character or Boolean. Use <code>TRUE/FALSE</code>, <code>x</code> or <code>Y</code>
 to enable X and/or Y axis lines.</p></td>
+    </tr>
+    <tr>
+      <th>clean</th>
+      <td><p>Boolean. Suppress grids and axis? Overwrites both parameters.</p></td>
     </tr>
     <tr>
       <th>mg</th>
