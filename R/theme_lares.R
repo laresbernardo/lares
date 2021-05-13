@@ -15,25 +15,27 @@
 #' \code{Arial Narrow} is set by default when the library is loaded; you may change it
 #' with \code{Sys.getenv("LARES_FONT" = "X")} or by using this parameter manually.
 #' @param main_colour,hard_colour,soft_colour,plot_colour,panel_colour
-#' Character. Main colours for your theme
+#' Character. Main colours for your theme.
 #' @param background Character. Main colour for your background. Overwrites
-#' \code{plot_colour} and \code{panel_colour}
+#' \code{plot_colour} and \code{panel_colour}.
 #' @param no_facets Boolean. Suppress facet labels?
-#' @param legend Character. Legend position: top, right, bottom, left
-#' @param grid Character or Boolean. Use \code{TRUE/FALSE} or a combination of 
+#' @param legend Character. Legend position: \code{"top"}, \code{"right"},
+#' \code{"bottom"}, or \code{"left"} You can also set to \code{FALSE} or
+#' \code{"none"} to suppress legend.
+#' @param grid Character or Boolean. Use \code{TRUE/FALSE} or a combination of
 #' \code{X}, \code{x}, \code{Y}, \code{y} to enable/disable minor and major grids.
 #' @param axis Character or Boolean. Use \code{TRUE/FALSE}, \code{x} or \code{Y}
 #' to enable X and/or Y axis lines.
 #' @param clean Boolean. Suppress grids and axis? Overwrites both parameters.
 #' @param mg Numeric. External margins reference.
 #' @param pal Integer. \code{1} for fill and colour palette,
-#' \code{2} for only colour palette, \code{3} for only fill palette, \code{4} for 
+#' \code{2} for only colour palette, \code{3} for only fill palette, \code{4} for
 #' personal labels-colour palette. \code{0} for nothing.
 #' @param palette Character vector. Pass a vector with HEX colour
 #' codes to use a custom palette. If you pass a named vector, the name values will be
 #' used as fill and the values will be used as colour.
-#' @param which Character. When pal = 3, select which colours should be
-#' added with the custom colours palette: fill, colour, text (fct) - first letters
+#' @param which Character. When \code{pal = 3}, select which colours should be
+#' added with the custom colours palette: fill, colour, text (fct) - first letters.
 #' @export
 theme_lares <- function(font = Sys.getenv("LARES_FONT"),
                         size = 12,
@@ -59,6 +61,7 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   # Overwrite parameters with quick setting parameters
   if (clean) axis <- grid <- FALSE
   if (background != "transparent") panel_colour <- plot_colour <- background
+  if (isFALSE(legend)) legend <- "none"
   
   # Check and set font
   if (!isTRUE(font_exists(font))) {

@@ -29,16 +29,18 @@ theme_lares(
 \code{Arial Narrow} is set by default when the library is loaded; you may change it
 with \code{Sys.getenv("LARES_FONT" = "X")} or by using this parameter manually.}
 
-\item{main_colour, hard_colour, soft_colour, plot_colour, panel_colour}{Character. Main colours for your theme}
+\item{main_colour, hard_colour, soft_colour, plot_colour, panel_colour}{Character. Main colours for your theme.}
 
 \item{background}{Character. Main colour for your background. Overwrites
-\code{plot_colour} and \code{panel_colour}}
+\code{plot_colour} and \code{panel_colour}.}
 
 \item{no_facets}{Boolean. Suppress facet labels?}
 
-\item{legend}{Character. Legend position: top, right, bottom, left}
+\item{legend}{Character. Legend position: \code{"top"}, \code{"right"},
+\code{"bottom"}, or \code{"left"} You can also set to \code{FALSE} or
+\code{"none"} to suppress legend.}
 
-\item{grid}{Character or Boolean. Use \code{TRUE/FALSE} or a combination of 
+\item{grid}{Character or Boolean. Use \code{TRUE/FALSE} or a combination of
 \code{X}, \code{x}, \code{Y}, \code{y} to enable/disable minor and major grids.}
 
 \item{axis}{Character or Boolean. Use \code{TRUE/FALSE}, \code{x} or \code{Y}
@@ -49,15 +51,15 @@ to enable X and/or Y axis lines.}
 \item{mg}{Numeric. External margins reference.}
 
 \item{pal}{Integer. \code{1} for fill and colour palette,
-\code{2} for only colour palette, \code{3} for only fill palette, \code{4} for 
+\code{2} for only colour palette, \code{3} for only fill palette, \code{4} for
 personal labels-colour palette. \code{0} for nothing.}
 
 \item{palette}{Character vector. Pass a vector with HEX colour
 codes to use a custom palette. If you pass a named vector, the name values will be
 used as fill and the values will be used as colour.}
 
-\item{which}{Character. When pal = 3, select which colours should be
-added with the custom colours palette: fill, colour, text (fct) - first letters}
+\item{which}{Character. When \code{pal = 3}, select which colours should be
+added with the custom colours palette: fill, colour, text (fct) - first letters.}
 }
 \description{
 Based on \code{hrbrthemes}' \code{theme_ipsum} and customized for \code{lares} usage.
