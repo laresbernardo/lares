@@ -14,8 +14,10 @@
 #' @param font,size Character and numeric. Base font family and base size for texts. 
 #' \code{Arial Narrow} is set by default when the library is loaded; you may change it
 #' with \code{Sys.getenv("LARES_FONT" = "X")} or by using this parameter manually.
-#' @param main_colour,hard_colour,soft_colour,bg_colour,panel_colour
+#' @param main_colour,hard_colour,soft_colour,plot_colour,panel_colour
 #' Character. Main colours for your theme
+#' @param background Character. Main colour for your background. Overwrites
+#' \code{plot_colour} and \code{panel_colour}
 #' @param no_facets Boolean. Suppress facet labels?
 #' @param legend Character. Legend position: top, right, bottom, left
 #' @param grid Character or Boolean. Use \code{TRUE/FALSE} or a combination of 
@@ -33,14 +35,15 @@
 #' added with the custom colours palette: fill, colour, text (fct) - first letters
 #' @export
 theme_lares <- function(font = Sys.getenv("LARES_FONT"),
-                        size = 12, 
-                        main_colour = "darkorange3", 
+                        size = 12,
+                        main_colour = "darkorange3",
                         hard_colour = "black",
                         soft_colour = "grey30",
-                        bg_colour = "white",
+                        plot_colour = "transparent",
                         panel_colour = "transparent",
+                        background = "transparent",
                         no_facets = FALSE,
-                        legend = NA,
+                        legend = NULL,
                         grid = TRUE,
                         axis = TRUE,
                         mg = 9,
@@ -82,7 +85,7 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   # assign("scale_fill_discrete", function(..., values = names(colours_pal)) scale_fill_manual(..., values = values), envir = envir)
   # assign("scale_colour_continuous", function(..., low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir = envir)
   # assign("scale_fill_continuous", function(...,low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir = envir)
-  # assign("ggsave", function(..., bg = bg_colour) ggsave(..., bg = bg), envir = envir)
+  # assign("ggsave", function(..., bg = plot_colour) ggsave(..., bg = bg), envir = envir)
   
   if (inherits(grid, "character") | grid == TRUE) {
     grid_col <- "#CCCCCC"
@@ -99,9 +102,17 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
     ret <- ret + theme(panel.grid = element_blank())
   }
   
-  aux <- ifelse(legend == "top", "right", "left")
+  # Legend
+  aux <- ifelse("top" %in% legend, "right", "left")
   xj <- switch(tolower(substr(aux, 1, 1)), b = 0, l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
   yj <- switch(tolower(substr(aux, 2, 2)), b = 0, l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
+  if (!is.null(legend))
+    ret <- ret + theme(legend.title = element_text(
+      color = soft_colour, size = size * 0.9, face = "bold"),
+      legend.position = legend,
+      legend.justification = c(ifelse(legend %in% c("top","bottom"), 0, .5),
+                               ifelse(legend == "top", 0, .5)),
+      legend.margin = margin(-3,0,-4,0))
   
   # Axis lines
   ret <- ret + theme(axis.line = element_blank())
@@ -147,9 +158,9 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   
   # Plot title
   ret <- ret + theme(plot.title = element_text(
-    size = size * 1.25, margin = margin(b = size * 0.3), #hjust = 0, 
+    size = size * 1.25, margin = margin(b = size * 0.3),
     family = font, face = "bold", color = "black"))
-  # Align plot title to the very left edge (more space) [>=3.3.0]
+  # Align plot title to the very left edge (more space) [ggplot2 >= 3.3.0]
   ggc <- stringr::str_split(as.character(packageVersion("ggplot2")), "\\.")[[1]]
   if (ggc[1] >= 3 & ggc[2] >= 3)
     ret <- ret + theme(plot.title.position = "plot")
@@ -163,22 +174,12 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   ret <- ret + theme(plot.caption = element_text(
     hjust = 1, size = size * 0.85, margin = margin(t = size * 0.9), 
     family = font, color = soft_colour))
-  
-  # Legend 
-  if (!is.na(legend))
-    ret <- ret + theme(legend.title = element_text(
-      color = soft_colour, size = size * 0.9, face = "bold"),
-      legend.position = legend,
-      legend.justification = c(ifelse(legend %in% c("top","bottom"), 0, .5),
-                               ifelse(legend == "top", 0, .5)),
-      legend.margin = margin(-3,0,-4,0))
-  # guides(colour = guide_legend(override.aes = list(size = 4)),
-  #        fill = guide_legend(override.aes = list(size = 4)))
-  
+
   # Background
+  if (background != "transparent") panel_colour <- plot_colour <- background
   ret <- ret + theme(
     panel.background = element_rect(fill = panel_colour, colour = NA),
-    plot.background = element_rect(fill = bg_colour, colour = NA))
+    plot.background = element_rect(fill = plot_colour, colour = NA))
   
   # External margins
   ret <- ret + theme(plot.margin = margin(mg, mg, mg, mg))

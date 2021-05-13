@@ -275,7 +275,7 @@ mplot_roc <- function(tag,
     annotate("text", x = 0.25, y = 0.05, size = 2.8, 
              label = paste0("95% CI: ", round(100*ci[1,],2),"-", 
                             round(100*ci[3,],2))) +
-    theme_lares(bg_colour = "white", pal = 2, legend = "bottom")
+    theme_lares(plot_colour = "white", pal = 2, legend = "bottom")
   
   if (squared) p <- p + coord_equal()
   if (is.na(multis)[1]) p <- p + guides(colour = FALSE)
@@ -420,7 +420,7 @@ mplot_cuts_error <- function(tag,
     scale_y_continuous(labels = comma) + 
     guides(colour = FALSE) +
     gg_text_customs() + 
-    theme_lares(bg_colour = "white")
+    theme_lares(plot_colour = "white")
   
   # Second: percentual errors
   deciles_perabs <- quantsfx(abs(df$p_error), splits = splits, just = 0.3)
@@ -435,7 +435,7 @@ mplot_cuts_error <- function(tag,
     scale_y_continuous(labels = comma) + 
     guides(colour = FALSE) +
     gg_text_customs() + 
-    theme_lares(bg_colour = "white")
+    theme_lares(plot_colour = "white")
   
   # Third: errors distribution
   pd_error <- ggplot(df) + 
@@ -443,7 +443,7 @@ mplot_cuts_error <- function(tag,
                  fill = "deepskyblue", alpha = 0.7) +
     labs(x = NULL, y = 'Density [%]') +
     geom_vline(xintercept = 0, alpha = 0.5, colour = "navy", linetype = "dotted") + 
-    theme_lares(bg_colour = "white")
+    theme_lares(plot_colour = "white")
   
   if (!is.na(title)) p_abs <- p_abs + labs(title = title)
   if (!is.na(model_name)) pd_error <- pd_error + labs(caption = model_name)
@@ -809,7 +809,7 @@ mplot_full <- function(tag,
   if (is.numeric(tag) & is.numeric(score) & length(unique(tag)) > thresh) {
     
     p1 <- mplot_lineal(tag = tag, score = score, subtitle = subtitle, model_name = model_name) +
-      theme_lares(bg_colour = "white")
+      theme_lares(plot_colour = "white")
     p2 <- mplot_density(tag = tag, score = score)
     p3 <- mplot_cuts_error(tag = tag, score = score, splits = splits)
     p <- ((p1 / p2) | p3) + plot_layout(widths = c(1, 1.4))

@@ -10,10 +10,11 @@ theme_lares(
   main_colour = "darkorange3",
   hard_colour = "black",
   soft_colour = "grey30",
-  bg_colour = "white",
+  plot_colour = "transparent",
   panel_colour = "transparent",
+  background = "transparent",
   no_facets = FALSE,
-  legend = NA,
+  legend = NULL,
   grid = TRUE,
   axis = TRUE,
   mg = 9,
@@ -27,7 +28,10 @@ theme_lares(
 \code{Arial Narrow} is set by default when the library is loaded; you may change it
 with \code{Sys.getenv("LARES_FONT" = "X")} or by using this parameter manually.}
 
-\item{main_colour, hard_colour, soft_colour, bg_colour, panel_colour}{Character. Main colours for your theme}
+\item{main_colour, hard_colour, soft_colour, plot_colour, panel_colour}{Character. Main colours for your theme}
+
+\item{background}{Character. Main colour for your background. Overwrites
+\code{plot_colour} and \code{panel_colour}}
 
 \item{no_facets}{Boolean. Suppress facet labels?}
 
