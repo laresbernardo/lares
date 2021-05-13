@@ -1,4 +1,4 @@
-####################################################################
+ ####################################################################
 #' Theme for ggplot2 (lares)
 #' 
 #' Based on \code{hrbrthemes}' \code{theme_ipsum} and customized for \code{lares} usage.
@@ -24,6 +24,7 @@
 #' \code{X}, \code{x}, \code{Y}, \code{y} to enable/disable minor and major grids.
 #' @param axis Character or Boolean. Use \code{TRUE/FALSE}, \code{x} or \code{Y}
 #' to enable X and/or Y axis lines.
+#' @param clean Boolean. Suppress grids and axis? Overwrites both parameters.
 #' @param mg Numeric. External margins reference.
 #' @param pal Integer. \code{1} for fill and colour palette,
 #' \code{2} for only colour palette, \code{3} for only fill palette, \code{4} for 
@@ -46,6 +47,7 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
                         legend = NULL,
                         grid = TRUE,
                         axis = TRUE,
+                        clean = FALSE,
                         mg = 9,
                         pal = 0,
                         palette = NULL,
@@ -53,6 +55,10 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   
   # Start from theme_minimal()
   ret <- theme_minimal(base_size = size)
+  
+  # Overwrite parameters with quick setting parameters
+  if (clean) axis <- grid <- FALSE
+  if (background != "transparent") panel_colour <- plot_colour <- background
   
   # Check and set font
   if (!isTRUE(font_exists(font))) {
@@ -176,7 +182,6 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
     family = font, color = soft_colour))
 
   # Background
-  if (background != "transparent") panel_colour <- plot_colour <- background
   ret <- ret + theme(
     panel.background = element_rect(fill = panel_colour, colour = NA),
     plot.background = element_rect(fill = plot_colour, colour = NA))

@@ -17,6 +17,7 @@ theme_lares(
   legend = NULL,
   grid = TRUE,
   axis = TRUE,
+  clean = FALSE,
   mg = 9,
   pal = 0,
   palette = NULL,
@@ -42,6 +43,8 @@ with \code{Sys.getenv("LARES_FONT" = "X")} or by using this parameter manually.}
 
 \item{axis}{Character or Boolean. Use \code{TRUE/FALSE}, \code{x} or \code{Y}
 to enable X and/or Y axis lines.}
+
+\item{clean}{Boolean. Suppress grids and axis? Overwrites both parameters.}
 
 \item{mg}{Numeric. External margins reference.}
 
