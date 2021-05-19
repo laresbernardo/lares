@@ -23,7 +23,7 @@ This function plots a list of colours
 pal <- lares_pal("simple")
 plot_palette(pal)
 # Or fill + color named vector
-pal <- lares_pal("pal")[1:6]
+pal <- lares_pal("pal")
 plot_palette(fill = names(pal), colour = as.vector(pal))
 }
 \seealso{
