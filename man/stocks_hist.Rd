@@ -29,9 +29,9 @@ only if to value is the same as today's date}
 \item{parg}{Boolean. Personal argument. Used to personalize stuff, in this
 case, taxes changed from A to B in given date (hard-coded)}
 
-\item{cache}{Boolean. Use cache? Will re-use downloaded data today.}
+\item{cache}{Boolean. Use daily cache if available?}
 
-\item{quiet}{Boolean. Keep quiet? If not, print messages and status bars}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed}
 }
 \description{
 This function lets the user download stocks historical data

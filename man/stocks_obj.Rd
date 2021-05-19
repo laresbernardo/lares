@@ -11,6 +11,7 @@ stocks_obj(
   sectors = FALSE,
   parg = FALSE,
   window = c("1M", "YTD", "1Y", "MAX"),
+  cache = TRUE,
   quiet = FALSE
 )
 }
@@ -30,7 +31,9 @@ case, taxes changed from A to B in given date (hard-coded)}
 
 \item{window}{Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"}
 
-\item{quiet}{Boolean. Keep quiet? If not, print messages and status bars}
+\item{cache}{Boolean. Use daily cache if available?}
+
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed}
 }
 \description{
 This function lets the user create his portfolio's calculations and

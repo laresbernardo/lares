@@ -4,12 +4,14 @@
 \alias{splot_etf}
 \title{Portfolio's Sector Distribution (ETFs)}
 \usage{
-splot_etf(s, keep_all = FALSE, save = FALSE)
+splot_etf(s, keep_all = FALSE, cache = TRUE, save = FALSE)
 }
 \arguments{
 \item{s}{Dataframe. Result from \code{daily_stocks()}}
 
 \item{keep_all}{Boolean. Keep "Not Known / Not ETF"?}
+
+\item{cache}{Boolean. Use daily cache if available?}
 
 \item{save}{Boolean. Save plot into a local file?}
 }

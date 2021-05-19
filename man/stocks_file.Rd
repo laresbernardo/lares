@@ -9,7 +9,9 @@ stocks_file(
   creds = NA,
   auto = TRUE,
   sheets = c("Portafolio", "Fondos", "Transacciones"),
-  keep_old = TRUE
+  keep_old = TRUE,
+  cache = TRUE,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -25,6 +27,10 @@ can leave all other parameters as \code{NA} and use it every time.}
 Cash, and Transactions information}
 
 \item{keep_old}{Boolean. Include sold tickers even though not currently in portfolio?}
+
+\item{cache}{Boolean. Use daily cache if available?}
+
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed}
 }
 \description{
 This function lets the user download his personal Excel with his 

@@ -47,7 +47,7 @@ db_download <- function(filename,
     invisible(file.remove(newname))
     return(results)
   } else {
-    message("File downloaded succesfully")
+    message("> File downloaded succesfully!")
     return(invisible(NULL))
   }
 }

@@ -14,6 +14,8 @@
 #' @param sheets Character Vector. Names of each sheet containing Portfolio summary,
 #' Cash, and Transactions information
 #' @param keep_old Boolean. Include sold tickers even though not currently in portfolio?
+#' @param cache Boolean. Use daily cache if available?
+#' @param quiet Boolean. Keep quiet? If not, informative messages will be printed
 #' @examples 
 #' \dontrun{
 #' # Load lares dummy portfolio XLSX
@@ -23,11 +25,19 @@
 #'                   keep_old = FALSE)
 #' }
 #' @export
-stocks_file <- function(file = NA, 
-                        creds = NA, 
-                        auto = TRUE, 
+stocks_file <- function(file = NA,
+                        creds = NA,
+                        auto = TRUE,
                         sheets = c("Portafolio","Fondos","Transacciones"),
-                        keep_old = TRUE) {
+                        keep_old = TRUE,
+                        cache = TRUE,
+                        quiet = FALSE) {
+  
+  cache_file <- c(as.character(Sys.Date()), "stocks_file")
+  if (cache_exists(cache_file) & cache) {
+    results <- cache_read(cache_file, quiet = quiet)
+    return(results)
+  }
   
   processFile <- function(file, keep_old = TRUE) {
     port <- read.xlsx(file, sheet = sheets[1], skipEmptyRows = TRUE, detectDates = TRUE)
@@ -43,7 +53,7 @@ stocks_file <- function(file = NA,
   # FOR PERSONAL USE
   local <- Sys.info()
   if (auto & Sys.getenv("LARES_PORTFOLIO") != "") {
-    message("Using BL's local file...")
+    if (!quiet) message("Using BL's local file...")
     local <- Sys.getenv("LARES_PORTFOLIO")
     results <- processFile(local, keep_old) 
   } else {
@@ -66,8 +76,7 @@ stocks_file <- function(file = NA,
   attr(results$transactions, "type") <- "stocks_file_transactions"
   attr(results$cash, "type") <- "stocks_file_cash"
   attr(results, "type") <- "stocks_file"
-  
-  message("File imported succesfully!")
+  cache_write(results, cache_file, quiet = TRUE)
   return(results)   
 }
 
@@ -121,6 +130,7 @@ stocks_quote <- function(ticks) {
 #' 
 #' @family Investment
 #' @family Scrapper
+#' @inheritParams stocks_file
 #' @param symbols Character Vector. List of symbols to download historical data
 #' @param from,to Date. Dates for range. If not set, 1 year will be downloaded.
 #' Do use more than 4 days or will be over-written.
@@ -129,8 +139,6 @@ stocks_quote <- function(ticks) {
 #' @param tax Numeric. How much [0-99] of your dividends are gone with taxes? 
 #' @param parg Boolean. Personal argument. Used to personalize stuff, in this
 #' case, taxes changed from A to B in given date (hard-coded)
-#' @param cache Boolean. Use cache? Will re-use downloaded data today.
-#' @param quiet Boolean. Keep quiet? If not, print messages and status bars
 #' @examples 
 #' \dontrun{
 #' df <- stocks_hist(symbols = c("VTI", "FB"), from = Sys.Date() - 7)
@@ -144,8 +152,8 @@ stocks_quote <- function(ticks) {
 # 6  2020-05-13     FB 207.94
 #' }
 #' @export
-stocks_hist <- function(symbols = c("VTI", "TSLA"), 
-                        from = Sys.Date() - 365, 
+stocks_hist <- function(symbols = c("VTI", "TSLA"),
+                        from = Sys.Date() - 365,
                         to = Sys.Date(),
                         today = TRUE,
                         tax = 30, 
@@ -153,95 +161,91 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
                         cache = TRUE,
                         quiet = FALSE) {
   
-  try_require("quantmod")
-  cache_file <- sprintf("%s/stocks_hist-cache-%s-%s.RDS",
-                        tempdir(), Sys.Date(), v2t(symbols, "+"))
+  cache_file <- c(as.character(Sys.Date()), "stocks_hist",
+                  symbols, sum(as.integer(c(from, to))))
+  if (cache_exists(cache_file) & cache) {
+    results <- cache_read(cache_file, quiet = quiet)
+    return(results)
+  }
   
-  if (cache & file.exists(cache_file)) {
-    results <- readRDS(cache_file)
-    if (!quiet) message(paste("Cache data for", Sys.Date(), "loaded"))
-  } else {
-    data <- divs <- NULL
+  try_require("quantmod")
+  data <- divs <- NULL
+  
+  if (!any(is.na(symbols))) {
+    if (length(from) != length(symbols)) 
+      from <- rep(from[1], length(symbols))
     
-    if (!any(is.na(symbols))) {
-      if (length(from) != length(symbols)) 
-        from <- rep(from[1], length(symbols))
+    for (i in seq_along(symbols)) {
+      # Daily quotes (except today)
+      symbol <- as.character(symbols[i])
+      if (as.Date(from[i]) > (Sys.Date() - 4)) from[i] <- Sys.Date() - 4
+      start_date <- as.character(from[i])
+      values <- suppressWarnings(data.frame(getSymbols(
+        symbol, env = NULL, from = start_date, to = to, src = "yahoo")))
+      values <- cbind(row.names(values), as.character(symbol), values)
+      colnames(values) <- c("Date","Symbol","Open","High","Low","Close","Volume","Adjusted")
+      values <- mutate(values, Adjusted = rowMeans(select(values, .data$High, .data$Close), na.rm = TRUE))
+      row.names(values) <- NULL
+      # if (as.Date(from[i]) > (Sys.Date() - 4))
+      #   values <- head(values, 1)
       
-      for (i in seq_along(symbols)) {
-        # Daily quotes (except today)
-        symbol <- as.character(symbols[i])
-        if (as.Date(from[i]) > (Sys.Date() - 4)) from[i] <- Sys.Date() - 4
-        start_date <- as.character(from[i])
-        values <- suppressWarnings(data.frame(getSymbols(
-          symbol, env = NULL, from = start_date, to = to, src = "yahoo")))
-        values <- cbind(row.names(values), as.character(symbol), values)
-        colnames(values) <- c("Date","Symbol","Open","High","Low","Close","Volume","Adjusted")
-        values <- mutate(values, Adjusted = rowMeans(select(values, .data$High, .data$Close), na.rm = TRUE))
-        row.names(values) <- NULL
-        # if (as.Date(from[i]) > (Sys.Date() - 4))
-        #   values <- head(values, 1)
-        
-        # Add right now's data
-        if (today & to == Sys.Date()) {
-          now <- stocks_quote(symbol)
-          # Append to historical data / replace most recent
-          if (length(now) > 0) {
-            now <- data.frame(Date = as.character(as.Date(now$QuoteTime)), 
-                              Symbol = symbol,
-                              Open = now$Value, High = now$Value, 
-                              Low = now$Value, Close = now$Value,
-                              Volume = NA, Adjusted = now$Value)
-            values <- filter(values, as.Date(.data$Date) != as.Date(now$Date))
-            values <- rbind(values, now)
-          }
-        }
-        # Append to other symbols' data
-        data <- rbind(data, values)
-        
-        # Dividends 
-        d <- suppressWarnings(getDividends(
-          as.character(symbol), from = start_date, split.adjust = FALSE))
-        if (nrow(d) > 0) {
-          div <-  data.frame(Symbol = rep(symbol, nrow(d)),
-                             Date = ymd(row.names(data.frame(d))),
-                             Div = as.vector(d),
-                             DivReal = as.vector(d)*(100 - tax)/100)
-          divs <- rbind(divs, div)
-          if (parg == TRUE)
-            divs <- mutate(divs, DivReal = ifelse(
-              .data$Date < as.Date('2020-03-03'), 
-              as.vector(d) * 0.30, 
-              as.vector(d) * 0.15))
-        }
-        
-        if (!quiet & length(symbols) > 1) {
-          info <- paste(symbol, "since", start_date, "   ")
-          statusbar(i, length(symbols), info)  
+      # Add right now's data
+      if (today & to == Sys.Date()) {
+        now <- stocks_quote(symbol)
+        # Append to historical data / replace most recent
+        if (length(now) > 0) {
+          now <- data.frame(Date = as.character(as.Date(now$QuoteTime)), 
+                            Symbol = symbol,
+                            Open = now$Value, High = now$Value, 
+                            Low = now$Value, Close = now$Value,
+                            Volume = NA, Adjusted = now$Value)
+          values <- filter(values, as.Date(.data$Date) != as.Date(now$Date))
+          values <- rbind(values, now)
         }
       }
-    } else {
-      message("You need to define which stocks to bring. Use the 'symbols=' parameter.") 
+      # Append to other symbols' data
+      data <- rbind(data, values)
+      
+      # Dividends 
+      d <- suppressWarnings(getDividends(
+        as.character(symbol), from = start_date, split.adjust = FALSE))
+      if (nrow(d) > 0) {
+        div <-  data.frame(Symbol = rep(symbol, nrow(d)),
+                           Date = ymd(row.names(data.frame(d))),
+                           Div = as.vector(d),
+                           DivReal = as.vector(d)*(100 - tax)/100)
+        divs <- rbind(divs, div)
+        if (parg == TRUE)
+          divs <- mutate(divs, DivReal = ifelse(
+            .data$Date < as.Date('2020-03-03'), 
+            as.vector(d) * 0.30, 
+            as.vector(d) * 0.15))
+      }
+      
+      if (!quiet & length(symbols) > 1) {
+        info <- paste(symbol, "since", start_date, "   ")
+        statusbar(i, length(symbols), info)  
+      }
     }
-    
-    results <- data %>% 
-      select(.data$Date, .data$Symbol, .data$Adjusted) %>% 
-      rename(Value = .data$Adjusted) %>%
-      filter(.data$Value > 0) %>%
-      mutate(Date = as.Date(.data$Date), 
-             Symbol = as.character(.data$Symbol))
-    if (length(divs) > 0)
-      results <- results %>% 
-      left_join(mutate(divs, Symbol = as.character(.data$Symbol)), by = c("Date", "Symbol"))
-    results <- results %>% 
-      replace(is.na(.), 0) %>% 
-      arrange(desc(.data$Date))
-    
-    attr(results, "type") <- "stocks_hist"
-    if (cache & !quiet) {
-      message(paste("Cache data for", Sys.Date(), "saved"))
-      saveRDS(results, file = cache_file)
-    }
+  } else {
+    message("You need to define which stocks to bring. Use the 'symbols=' parameter.") 
   }
+  
+  results <- data %>% 
+    select(.data$Date, .data$Symbol, .data$Adjusted) %>% 
+    rename(Value = .data$Adjusted) %>%
+    filter(.data$Value > 0) %>%
+    mutate(Date = as.Date(.data$Date), 
+           Symbol = as.character(.data$Symbol))
+  if (length(divs) > 0)
+    results <- results %>% 
+    left_join(mutate(divs, Symbol = as.character(.data$Symbol)), by = c("Date", "Symbol"))
+  results <- results %>% 
+    replace(is.na(.), 0) %>% 
+    arrange(desc(.data$Date))
+  
+  attr(results, "type") <- "stocks_hist"
+  cache_write(results, cache_file, quiet = TRUE)
   return(results)
 }
 
@@ -422,7 +426,7 @@ splot_summary <- function(p, s, save = FALSE) {
              paste0(.data$Symbol, " (", 
                     formatNum(100*.data$CumValue/sum(.data$CumValue)), "%)"),
              levels = paste0(.data$Symbol, " (", formatNum(100*.data$CumValue/sum(.data$CumValue)), "%)")),
-           DifUSD = .data$CumValue - .data$CumInvested + .data$Invested,
+           DifUSD = .data$CumValue - .data$CumInvested,
            DifPer = 100 * .data$DifUSD / .data$CumInvested) %>%
     ggplot(aes(x = reorder(.data$Symbol, .data$CumInvested))) + 
     geom_hline(yintercept = 0, colour = "black") +
@@ -498,7 +502,7 @@ splot_change <- function(p, s, weighted = TRUE,
     arrange(.data$Date) %>%
     group_by(.data$Symbol) %>%
     mutate(first_date = .data$Date == min(.data$Date),
-           minus = cumsum(ifelse(.data$first_date & .data$Date != min(s$Date), 0, .data$Invested))) %>%
+           minus = cumsum(ifelse(.data$first_date & .data$Date <= min(s$Date), 0, .data$Invested))) %>%
     mutate(CumValue = .data$CumValue - .data$CumValue[.data$first_date]) %>%
     {if (weighted)
       mutate(., Hist = 100 * (.data$CumValue-.data$minus)/.data$CumInvested)
@@ -745,23 +749,30 @@ splot_types <- function(s, save = FALSE) {
 #' @inheritParams stocks_hist
 #' @param etf Character Vector. Which ETFs you wish to scrap?
 #' @export
-etf_sector <- function(etf = "VTI", quiet = FALSE) {
+etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
   
   if (attr(etf, "type") == "daily_stocks")
     etf <- as.character(unique(etf$Symbol[etf$Date == max(etf$Date)]))
   
+  cache_file <- c(as.character(Sys.Date()), "etf_sector", etf)
+  if (cache_exists(cache_file) & cache) {
+    results <- cache_read(cache_file, quiet = quiet)
+    return(results)
+  }
+  
+  if (!quiet) message(">>> Downloading sectors for each ETF...")
   ret <- data.frame()
   nodata <- c()
   for (i in seq_along(etf)) {
     info <- toupper(etf[i])
     url <- paste0("https://etfdb.com/etf/", info)
     #exists <- tryCatch({!httr::http_error(url)}, error = function(err) {FALSE})
-    sector <- suppressWarnings(
-      tryCatch(read_html(url), error = function(err) {
+    sector <- tryCatch(
+      suppressWarnings(read_html(url)), error = function(err) {
         closeAllConnections(); gc()
         nodata <- c(nodata, info)
         return(NULL)
-      }))
+      })
     if (is.null(sector)) next
     tables <- sector %>% html_table()
     sector_table <- lapply(tables, function (x){
@@ -786,6 +797,7 @@ etf_sector <- function(etf = "VTI", quiet = FALSE) {
     if (!quiet) message("No data found for given Tickers!")
     invisible(return(NULL))
   } else {
+    cache_write(ret, cache_file, quiet = TRUE)
     return(ret) 
   }
 }
@@ -801,16 +813,21 @@ etf_sector <- function(etf = "VTI", quiet = FALSE) {
 #' @family Investment Plots
 #' @family Scrapper
 #' @inheritParams splot_summary
+#' @inheritParams stocks_file
 #' @param keep_all Boolean. Keep "Not Known / Not ETF"?
 #' @export
-splot_etf <- function(s, keep_all = FALSE, save = FALSE) {
+splot_etf <- function(s, keep_all = FALSE, cache = TRUE, save = FALSE) {
   
   check_attr(s, check = "daily_stocks")
   
   if (!"Date" %in% colnames(s)) s$Date <- Sys.Date()
   
-  message(">>> Downloading sectors for each ETF...")
-  etfs <- etf_sector(s)
+  cache_file <- c(as.character(Sys.Date()), "splot_etf", s)
+  if (cache_exists(cache_file) & cache) {
+    etfs <- cache_read(cache_file, quiet = quiet)
+  } else {
+    etfs <- etf_sector(s)  
+  }
   
   if (nrow(etfs) > 0) {
     df <- etfs %>% 
@@ -856,6 +873,7 @@ splot_etf <- function(s, keep_all = FALSE, save = FALSE) {
 #' plots for further study.
 #' 
 #' @family Investment
+#' @inheritParams stocks_file
 #' @inheritParams daily_portfolio
 #' @inheritParams stocks_hist
 #' @inheritParams daily_stocks
@@ -864,7 +882,6 @@ splot_etf <- function(s, keep_all = FALSE, save = FALSE) {
 #' @param sectors Boolean. Return sectors segmentation for ETFs?
 #' @param parg Boolean. Personal argument. Used to personalize stuff, in this
 #' case, taxes changed from A to B in given date (hard-coded)
-#' @param quiet Boolean. Keep quiet? If not, print messages and status bars
 #' @export
 stocks_obj <- function(data = stocks_file(),
                        cash_fix = 0,
@@ -872,6 +889,7 @@ stocks_obj <- function(data = stocks_file(),
                        sectors = FALSE,
                        parg = FALSE,
                        window = c("1M","YTD","1Y","MAX"),
+                       cache = TRUE,
                        quiet = FALSE) {
   
   check_attr(data, check = "stocks_file")
@@ -888,10 +906,10 @@ stocks_obj <- function(data = stocks_file(),
     from = tickers$StartDate, 
     tax = tax,
     parg = parg,
+    cache = cache,
     quiet = quiet)
   
   ws <- length(window)
-  message(glued(">>> Running calculations and plots for {ws} window{ifelse(ws>1,'s','')}..."))
   ret[["stocks"]] <- s <- daily_stocks(hist, trans, tickers, window = "MAX")
   ret[["portfolio"]] <- p <- daily_portfolio(hist, trans, cash, cash_fix = cash_fix, window = "MAX")
   
@@ -899,10 +917,11 @@ stocks_obj <- function(data = stocks_file(),
   ret[["plots_fixed"]] <- list(
     "Positions" = splot_summary(p, s),
     "Types of Stocks" = splot_types(s),
-    "ETFs by Industry" = if (sectors) splot_etf(s) else NULL
+    "ETFs by Industry" = if (sectors) splot_etf(s, cache = cache) else NULL
   )
   
   # Relative plots (using time windows)
+  message(glued(">>> Running calculations and plots for {ws} window{ifelse(ws>1,'s','')}..."))
   plots_relative <- lapply(window, function(x) {
     
     # Filter the data given the window

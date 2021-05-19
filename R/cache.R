@@ -30,6 +30,8 @@ cache_write <- function(data,
     cache_dir <- tempdir()
   base <- v2t(base, quotes = FALSE, sep = ".")
   file <- sprintf("%s/%s.RDS", cache_dir, base)
+  if (nchar(file) >= 252)
+    stop("Your file name can't contain more than 250 characters.")
   if (dir.exists(cache_dir)) {
     if (cache_exists(filename = file) & ask) {
       message("> Cache found: ", base)
