@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sentiment Breakdown on Text — sentimentBreakdown • lares</title>
+<title>Cache Write and Read — cache_write • lares</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,9 @@
 
 
 
-<meta property="og:title" content="Sentiment Breakdown on Text — sentimentBreakdown" />
-<meta property="og:description" content="This function searches for relevant words in a given text and adds 
-sentiments labels (joy, anticipation, surprise, positive, trust, 
-anger, sadness, fear, negative, disgust) for each of them, using NRC. 
-Then, makes a summary for all words and plot results." />
+<meta property="og:title" content="Cache Write and Read — cache_write" />
+<meta property="og:description" content="This function lets the user save and load a cache of any R object to
+improve timings and UX." />
 
 
 
@@ -111,77 +109,83 @@ Then, makes a summary for all words and plot results." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Sentiment Breakdown on Text</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/text_mining.R'><code>R/text_mining.R</code></a></small>
-    <div class="hidden name"><code>sentimentBreakdown.Rd</code></div>
+    <h1>Cache Write and Read</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/cache.R'><code>R/cache.R</code></a></small>
+    <div class="hidden name"><code>cache_write.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function searches for relevant words in a given text and adds 
-sentiments labels (joy, anticipation, surprise, positive, trust, 
-anger, sadness, fear, negative, disgust) for each of them, using NRC. 
-Then, makes a summary for all words and plot results.</p>
+    <p>This function lets the user save and load a cache of any R object to
+improve timings and UX.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sentimentBreakdown</span><span class='op'>(</span>
-  <span class='va'>text</span>,
-  lang <span class='op'>=</span> <span class='st'>"spanish"</span>,
-  exclude <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"maduro"</span>, <span class='st'>"que"</span><span class='op'>)</span>,
-  append_file <span class='op'>=</span> <span class='cn'>NA</span>,
-  append_words <span class='op'>=</span> <span class='cn'>NA</span>,
-  plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  subtitle <span class='op'>=</span> <span class='cn'>NA</span>
+    <pre class="usage"><span class='fu'>cache_write</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  base <span class='op'>=</span> <span class='st'>"temp"</span>,
+  cache_dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"LARES_CACHE_DIR"</span><span class='op'>)</span>,
+  ask <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
+
+<span class='fu'>cache_read</span><span class='op'>(</span>
+  <span class='va'>base</span>,
+  cache_dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"LARES_CACHE_DIR"</span><span class='op'>)</span>,
+  ask <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
+
+<span class='fu'>cache_exists</span><span class='op'>(</span>
+  base <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cache_dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"LARES_CACHE_DIR"</span><span class='op'>)</span>,
+  filename <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>text</th>
-      <td><p>Character vector</p></td>
+      <th>data</th>
+      <td><p>Object</p></td>
     </tr>
     <tr>
-      <th>lang</th>
-      <td><p>Character. Language in text (used for stop words)</p></td>
+      <th>base</th>
+      <td><p>Character vector. Unique name for your cache file. You can pass
+a character vector with multiple elements that will be concatenated.</p></td>
     </tr>
     <tr>
-      <th>exclude</th>
-      <td><p>Character vector. Which word do you wish to exclude?</p></td>
+      <th>cache_dir</th>
+      <td><p>Character. Where do you want to save you cache files?
+By default they'll be stored on <code><a href='https://rdrr.io/r/base/tempfile.html'>tempdir()</a></code> but you can change it
+using this parameter or setting a global option called <code>"LARES_CACHE_DIR"</code>.</p></td>
     </tr>
     <tr>
-      <th>append_file</th>
-      <td><p>Character. Add a dictionary to append. This file 
-must contain at least two columns, first with words and second with
-the sentiment (consider sentiments on description).</p></td>
+      <th>ask</th>
+      <td><p>Boolean. If cache exists, when reading: (interactive) ask the user 
+if the cache should be used to proceed or ignored; when writing, (interactive)
+ask the user if the cache should be overwritten.</p></td>
     </tr>
     <tr>
-      <th>append_words</th>
-      <td><p>Dataframe. Same as append_file but appending
-data frame with word and sentiment directly</p></td>
+      <th>quiet</th>
+      <td><p>Boolean. Keep quiet? If not, message will be shown.</p></td>
     </tr>
     <tr>
-      <th>plot</th>
-      <td><p>Boolean. Plot results summary?</p></td>
-    </tr>
-    <tr>
-      <th>subtitle</th>
-      <td><p>Character. Add subtitle to the plot</p></td>
+      <th>filename</th>
+      <td><p>Character. File name to check existence.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Text Mining: 
-<code><a href='cleanNames.html'>cleanNames</a>()</code>,
-<code><a href='cleanText.html'>cleanText</a>()</code>,
-<code><a href='ngrams.html'>ngrams</a>()</code>,
-<code><a href='remove_stopwords.html'>remove_stopwords</a>()</code>,
-<code><a href='replaceall.html'>replaceall</a>()</code>,
-<code><a href='textCloud.html'>textCloud</a>()</code>,
-<code><a href='textFeats.html'>textFeats</a>()</code>,
-<code><a href='textTokenizer.html'>textTokenizer</a>()</code>,
-<code><a href='topics_rake.html'>topics_rake</a>()</code></p></div>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span>, b <span class='op'>=</span> <span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>base</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>, <span class='st'>"A"</span>,<span class='st'>"B"</span>,<span class='st'>"C"</span><span class='op'>)</span>
+<span class='fu'>cache_write</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>base</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt; Cache saved succesfully: 2021-05-19.A.B.C</span></div><div class='input'><span class='fu'>cache_read</span><span class='op'>(</span><span class='va'>base</span>, ask <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt; Cache loaded succesfully: 2021-05-19.A.B.C</span></div><div class='output co'>#&gt; $a
+#&gt; [1] 1
+#&gt; 
+#&gt; $b
+#&gt; [1] 2 3 4
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
