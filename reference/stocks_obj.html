@@ -126,6 +126,7 @@ plots for further study.</p>
   sectors <span class='op'>=</span> <span class='cn'>FALSE</span>,
   parg <span class='op'>=</span> <span class='cn'>FALSE</span>,
   window <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"1M"</span>, <span class='st'>"YTD"</span>, <span class='st'>"1Y"</span>, <span class='st'>"MAX"</span><span class='op'>)</span>,
+  cache <span class='op'>=</span> <span class='cn'>TRUE</span>,
   quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
@@ -160,8 +161,12 @@ case, taxes changed from A to B in given date (hard-coded)</p></td>
       <td><p>Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"</p></td>
     </tr>
     <tr>
+      <th>cache</th>
+      <td><p>Boolean. Use daily cache if available?</p></td>
+    </tr>
+    <tr>
       <th>quiet</th>
-      <td><p>Boolean. Keep quiet? If not, print messages and status bars</p></td>
+      <td><p>Boolean. Keep quiet? If not, informative messages will be printed</p></td>
     </tr>
     </table>
 
