@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Top Hit Ratios for Multi-Classification Models — mplot_topcats • lares</title>
+<title>Generative Art: Sphere XmodY — rtistry_sphere • lares</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Top Hit Ratios for Multi-Classification Models — mplot_topcats" />
-<meta property="og:description" content="Calculate and plot a multi-class model's predictions accuracy
-based on top N predictions and distribution of probabilities." />
+<meta property="og:title" content="Generative Art: Sphere XmodY — rtistry_sphere" />
+<meta property="og:description" content="Generative Art: Sphere XmodY" />
 
 
 
@@ -109,63 +108,34 @@ based on top N predictions and distribution of probabilities." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Top Hit Ratios for Multi-Classification Models</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/model_plots.R'><code>R/model_plots.R</code></a></small>
-    <div class="hidden name"><code>mplot_topcats.Rd</code></div>
+    <h1>Generative Art: Sphere XmodY</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/rtistry.R'><code>R/rtistry.R</code></a></small>
+    <div class="hidden name"><code>rtistry_sphere.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculate and plot a multi-class model's predictions accuracy
-based on top N predictions and distribution of probabilities.</p>
+    <p>Generative Art: Sphere XmodY</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mplot_topcats</span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>score</span>, <span class='va'>multis</span>, model_name <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>rtistry_sphere</span><span class='op'>(</span>eye <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, pal <span class='op'>=</span> <span class='st'>"auto"</span>, var <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>tag</th>
-      <td><p>Vector. Real known label.</p></td>
-    </tr>
-    <tr>
-      <th>score</th>
-      <td><p>Vector. Predicted value or model's result.</p></td>
-    </tr>
-    <tr>
-      <th>multis</th>
-      <td><p>Data.frame. Containing columns with each category probability 
-or score (only used when more than 2 categories coexist).</p></td>
-    </tr>
-    <tr>
-      <th>model_name</th>
-      <td><p>Character. Model's name</p></td>
+      <th>eye, pal, var</th>
+      <td><p>Parameters to change aesthetics and calculations</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other ML Visualization: 
-<code><a href='mplot_conf.html'>mplot_conf</a>()</code>,
-<code><a href='mplot_cuts_error.html'>mplot_cuts_error</a>()</code>,
-<code><a href='mplot_cuts.html'>mplot_cuts</a>()</code>,
-<code><a href='mplot_density.html'>mplot_density</a>()</code>,
-<code><a href='mplot_full.html'>mplot_full</a>()</code>,
-<code><a href='mplot_gain.html'>mplot_gain</a>()</code>,
-<code><a href='mplot_importance.html'>mplot_importance</a>()</code>,
-<code><a href='mplot_lineal.html'>mplot_lineal</a>()</code>,
-<code><a href='mplot_metrics.html'>mplot_metrics</a>()</code>,
-<code><a href='mplot_response.html'>mplot_response</a>()</code>,
-<code><a href='mplot_roc.html'>mplot_roc</a>()</code>,
-<code><a href='mplot_splits.html'>mplot_splits</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.unsetenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span> <span class='co'># Temporal</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>)</span> <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'>mplot_topcats</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>score</span>,
-              multis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span>, select <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>score</span><span class='op'>)</span><span class='op'>)</span>,
-              model_name <span class='op'>=</span> <span class='st'>"Titanic Class Model"</span><span class='op'>)</span>
-</div><div class='img'><img src='mplot_topcats-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>rtistry_sphere</span><span class='op'>(</span>eye <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='op'>-</span><span class='fl'>10000</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>rtistry_sphere</span><span class='op'>(</span>pal <span class='op'>=</span> <span class='fu'><a href='lares_pal.html'>lares_pal</a></span><span class='op'>(</span><span class='st'>"col"</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>
+<span class='fu'>rtistry_sphere</span><span class='op'>(</span>eye <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>100000</span><span class='op'>)</span>, var <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
