@@ -1429,14 +1429,14 @@ file_name <- function(filepath) {
 #' df <- dplyr::starwars
 #' # Un-named list columns
 #' spread_list(df, films, replace = FALSE) %>%
-#'   select(name, starts_with("films")) %>%
+#'   dplyr::select(name, dplyr::starts_with("films")) %>%
 #'   head(8)
 #' # Named (and un-nammed) list columns
-#' df <- tibble(id = 1:3, platform = list(
+#' df <- dplyr::tibble(id = 1:3, platform = list(
 #'   list("fb" = 1, "ig" = 2), 
 #'   list("fb" = 3), 
 #'   list()))
-#' spread_list(df, platform)
+#' spread_list(df, platform, str = "ptf_")
 #' @export
 spread_list <- function(df, col, str = NULL, replace = TRUE) {
   
