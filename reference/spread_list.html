@@ -152,7 +152,7 @@ original name of column will be used.</p></td>
     <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/starwars.html'>starwars</a></span>
 <span class='co'># Un-named list columns</span>
 <span class='fu'>spread_list</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>films</span>, replace <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>name</span>, <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>"films"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>name</span>, <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"films"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 8 x 9</span><span>
 #&gt;   name        films   `films_A New Hop… `films_Attack of th… `films_Return of t…
@@ -168,26 +168,17 @@ original name of column will be used.</p></td>
 #&gt; </span><span style='color: #949494;'># … with 4 more variables: films_Revenge of the Sith &lt;lgl&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   films_The Empire Strikes Back &lt;lgl&gt;, films_The Force Awakens &lt;lgl&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   films_The Phantom Menace &lt;lgl&gt;</span><span></div><div class='input'><span class='co'># Named (and un-nammed) list columns</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='op'>(</span>id <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, platform <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, platform <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
   <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"fb"</span> <span class='op'>=</span> <span class='fl'>1</span>, <span class='st'>"ig"</span> <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>, 
   <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"fb"</span> <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>, 
   <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in tibble(id = 1:3, platform = list(list(fb = 1, ig = 2), list(fb = 3),     list())): could not find function "tibble"</span></div><div class='input'><span class='fu'>spread_list</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>platform</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: The variable provided is not a list variable</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 87 x 14</span><span>
-#&gt;    name    height  mass hair_color  skin_color eye_color birth_year sex   gender
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Luke S…    172    77 blond       fair       blue            19   male  mascu…
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> C-3PO      167    75 </span><span style='color: #BB0000;'>NA</span><span>          gold       yellow         112   none  mascu…
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> R2-D2       96    32 </span><span style='color: #BB0000;'>NA</span><span>          white, bl… red             33   none  mascu…
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Darth …    202   136 none        white      yellow          41.9 male  mascu…
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Leia O…    150    49 brown       light      brown           19   fema… femin…
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Owen L…    178   120 brown, grey light      blue            52   male  mascu…
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Beru W…    165    75 brown       light      blue            47   fema… femin…
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> R5-D4       97    32 </span><span style='color: #BB0000;'>NA</span><span>          white, red red             </span><span style='color: #BB0000;'>NA</span><span>   none  mascu…
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Biggs …    183    84 black       light      brown           24   male  mascu…
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Obi-Wa…    182    77 auburn, wh… fair       blue-gray       57   male  mascu…
-#&gt; </span><span style='color: #949494;'># … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</span><span></div></span></pre>
+<span class='fu'>spread_list</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>platform</span>, str <span class='op'>=</span> <span class='st'>"ptf_"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 3</span><span>
+#&gt;      id ptf_fb ptf_ig
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     1      1      2
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     2      3      0
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     3     </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
