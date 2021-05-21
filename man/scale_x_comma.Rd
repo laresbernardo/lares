@@ -9,6 +9,8 @@
 \alias{scale_y_dollar}
 \alias{scale_x_abbr}
 \alias{scale_y_abbr}
+\alias{scale_x_formatNum}
+\alias{scale_y_formatNum}
 \title{Axis scales format}
 \usage{
 scale_x_comma(...)
@@ -26,12 +28,28 @@ scale_y_dollar(...)
 scale_x_abbr(...)
 
 scale_y_abbr(...)
+
+scale_x_formatNum(...)
+
+scale_y_formatNum(...)
 }
 \arguments{
-\item{...}{Arguments passed to \code{ggplot2::continuous_scale}}
+\item{...}{Arguments passed to \code{ggplot2::continuous_scale} or
+\code{lares::formatNum}.depending on the function.}
 }
 \description{
 The \code{_comma} ones set comma format for axis text, the \code{_percent} 
 ones set percent format for axis text, \code{_dollar} for collar currency,
 and \code{_abbr} for abbreviated format.
+}
+\examples{
+library(ggplot2)
+df <- ggplot2::txhousing \%>\% removenarows(all = FALSE)
+ggplot(df, aes(x = sales, y = volume)) + geom_point() +
+  scale_x_dollar() + scale_y_abbr()
+ggplot(df, aes(x = listings, y = log(inventory))) + geom_point() +
+  scale_x_comma() + scale_y_percent()
+ggplot(df, aes(x = median, y = inventory)) + geom_point() +
+  scale_x_formatNum(pre = "@", abbr = TRUE) +
+  scale_y_formatNum(decimals = 0, pos = " X")
 }

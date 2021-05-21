@@ -307,7 +307,18 @@ gg_bars <- function(names, n, p = NA,
 #' ones set percent format for axis text, \code{_dollar} for collar currency,
 #' and \code{_abbr} for abbreviated format.
 #'
-#' @param ... Arguments passed to \code{ggplot2::continuous_scale}
+#' @param ... Arguments passed to \code{ggplot2::continuous_scale} or
+#' \code{lares::formatNum}.depending on the function.
+#' @examples 
+#' library(ggplot2)
+#' df <- ggplot2::txhousing %>% removenarows(all = FALSE)
+#' ggplot(df, aes(x = sales, y = volume)) + geom_point() +
+#'   scale_x_dollar() + scale_y_abbr()
+#' ggplot(df, aes(x = listings, y = log(inventory))) + geom_point() +
+#'   scale_x_comma() + scale_y_percent()
+#' ggplot(df, aes(x = median, y = inventory)) + geom_point() +
+#'   scale_x_formatNum(pre = "@", abbr = TRUE) +
+#'   scale_y_formatNum(decimals = 0, pos = " X")
 #' @export
 scale_x_comma <- function(...) scale_x_continuous(..., labels = comma)
 
@@ -338,6 +349,16 @@ scale_x_abbr <- function(...) scale_x_continuous(..., labels = num_abbr)
 #' @rdname scale_x_comma
 #' @export
 scale_y_abbr <- function(...) scale_y_continuous(..., labels = num_abbr)
+
+#' @rdname scale_x_comma
+#' @export
+scale_x_formatNum <- function(...)
+  scale_x_continuous(labels = function(x) formatNum(x, ...))
+
+#' @rdname scale_x_comma
+#' @export
+scale_y_formatNum <- function(...)
+  scale_y_continuous(labels = function(x) formatNum(x, ...))
 
 ####################################################################
 #' Plot Result with Nothing to Plot

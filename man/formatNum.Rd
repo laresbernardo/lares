@@ -10,7 +10,8 @@ formatNum(
   type = Sys.getenv("LARES_NUMFORMAT"),
   pre = "",
   pos = "",
-  abbr = FALSE
+  abbr = FALSE,
+  ...
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ to set this parameter globally.}
 
 \item{abbr}{Boolean. Abbreviate using num_abbr()? You can use
 the `decimals` parameter to set abbr's \code{n}(-1) parameter.}
+
+\item{...}{Additional lazy eval parameters}
 }
 \description{
 This function lets the user format numerical values nicely

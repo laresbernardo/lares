@@ -311,6 +311,7 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
 #' @param pre,pos Character. Add string before or after number
 #' @param abbr Boolean. Abbreviate using num_abbr()? You can use
 #' the `decimals` parameter to set abbr's \code{n}(-1) parameter.
+#' @param ... Additional lazy eval parameters
 #' @examples 
 #' formatNum(1.23456, decimals = 3)
 #' formatNum(1.23456, type = 1)
@@ -322,7 +323,8 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
 formatNum <- function(x, decimals = 2, 
                       type = Sys.getenv("LARES_NUMFORMAT"),
                       pre = "", pos = "",
-                      abbr = FALSE) {
+                      abbr = FALSE,
+                      ...) {
   
   if (abbr) {
     x <- num_abbr(x, n = decimals + 1)
