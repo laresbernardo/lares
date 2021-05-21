@@ -1422,11 +1422,23 @@ file_name <- function(filepath) {
 #'
 #' @param df Dataframe
 #' @param col Variable name. 
-#' @param str Character. Start column names with. If set to \code{NA}, 
+#' @param str Character. Start column names with. If set to \code{NULL},
 #' original name of column will be used.
 #' @param replace Boolean. Replace original values (delete column)
+#' @examples 
+#' df <- dplyr::starwars
+#' # Un-named list columns
+#' spread_list(df, films, replace = FALSE) %>%
+#'   select(name, starts_with("films")) %>%
+#'   head(8)
+#' # Named (and un-nammed) list columns
+#' df <- tibble(id = 1:3, platform = list(
+#'   list("fb" = 1, "ig" = 2), 
+#'   list("fb" = 3), 
+#'   list()))
+#' spread_list(df, platform)
 #' @export
-spread_list <- function(df, col, str = NA, replace = TRUE) {
+spread_list <- function(df, col, str = NULL, replace = TRUE) {
   
   var <- enquo(col)
   col <- as_label(var)
@@ -1443,25 +1455,38 @@ spread_list <- function(df, col, str = NA, replace = TRUE) {
     return(df)
   }
   
+  # Automatic naming based on original
+  if (is.null(str)) str <- sprintf("%s_", col)
+  
   # Add character NAs name to those observations with no data, thus no names
   nonames <- rowwise(df) %>% mutate(len = length(names(!!var))) %>% pull(.data$len) == 0
-  df[which(nonames), col] <- list(list("NAs" = ""))
+  # Non-named list columns
+  if (sum(nonames) == nrow(df)) {
+    binded <- select(df, !!var) %>%
+      mutate(temp_cross_id = 1:nrow(df)) %>%
+      tidyr::unnest_longer(!!var) %>% 
+      mutate(key = TRUE) %>%
+      tidyr::spread(key = !!var, value = .data$key) %>%
+      replace(is.na(.), FALSE)
+  } else {
+    # Named list columns
+    binded <- lapply(df[!nonames,cols == col], bind_rows) %>% bind_rows %>%
+      mutate(temp_cross_id = which(!nonames))
+    if (is.numeric(binded[[1]])) binded <- binded %>% replace(is.na(.), 0)  
+  }
   
-  tryCatch({
-    unlisted <- lapply(df[,cols == col], bind_rows)
-    binded <- bind_rows(unlisted) %>% replace(is.na(.), 0)
-    if (is.na(str)) str <- paste0(col, "_")
-    colnames(binded) <- paste0(str, colnames(binded))
-    done <- df %>% bind_cols(binded)
-    pos <- which(cols == col)
-    ncols <- length(cols)
-    done <- done[, c(1:pos, (ncols+1):(ncols+ncol(binded)), (pos + 1):ncols)]
-    if (replace) done <- done[, -pos]
-    return(as_tibble(done))
-  }, error = function(err) {
-    warning(err)
-    return(df)
-  })
+  if (is.na(str)) str <- paste0(col, "_")
+  ids <- which(colnames(binded) == "temp_cross_id")
+  colnames(binded)[-ids] <- paste0(str, colnames(binded))[-ids]
+  done <- df %>%
+    mutate(temp_cross_id = 1:nrow(df)) %>%
+    left_join(binded, "temp_cross_id") %>%
+    select(-.data$temp_cross_id)
+  
+  original <- which(cols == col)
+  done <- done %>% select(1:original, starts_with(str), (original+1):ncol(done))
+  if (replace) done <- done[, -original]
+  return(as_tibble(done))
 }
 
 ####################################################################

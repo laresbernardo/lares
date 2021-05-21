@@ -1001,14 +1001,15 @@ stocks_report <- function(data = NA,
                           to = "laresbernardo@gmail.com",
                           sectors = FALSE,
                           keep = FALSE,
-                          creds = NA) {
+                          creds = NA,
+                          cache = TRUE) {
   
   try_require("rmarkdown")
   tic("stocks_report")
   
   if (is.na(data)[1]) {
-    df <- stocks_file(creds = creds, keep_old = keep_old) 
-    data <- stocks_obj(df, sectors = sectors, parg = is.na(creds))
+    df <- stocks_file(creds = creds, keep_old = keep_old, cache = cache)
+    data <- stocks_obj(df, sectors = sectors, parg = is.na(creds), cache = cache)
   }
   
   check_attr(data, check = "stocks_obj")

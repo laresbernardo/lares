@@ -104,6 +104,7 @@ recommended <- list(
   skimr = "skim",
   syuzhet = "get_sentiment_dictionary",
   sp = c("CRS", "over", "coordinates", "proj4string", "proj4string<-", "coordinates<-", "spTransform"),
+  threed = c("mesh3dobj", "transform_by", "invert_matrix", "perspective_projection", "look_at_matrix"),
   tidytext = "unnest_tokens",
   tm = c("content_transformer", "Corpus", "removeNumbers", "removePunctuation", 
          "removeWords","readPlain","stopwords", "stripWhitespace", "TermDocumentMatrix", 

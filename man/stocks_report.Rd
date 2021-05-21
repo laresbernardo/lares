@@ -12,7 +12,8 @@ stocks_report(
   to = "laresbernardo@gmail.com",
   sectors = FALSE,
   keep = FALSE,
-  creds = NA
+  creds = NA,
+  cache = TRUE
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ If not, an HTML file will be created in dir}
 
 \item{creds}{Character. Credential's user (see \code{get_creds()}) for 
 sending mail and Dropbox interaction}
+
+\item{cache}{Boolean. Use daily cache if available?}
 }
 \description{
 This function lets the user create his portfolio's full report with 

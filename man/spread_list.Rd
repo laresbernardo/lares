@@ -4,14 +4,14 @@
 \alias{spread_list}
 \title{Spread list column into new columns}
 \usage{
-spread_list(df, col, str = NA, replace = TRUE)
+spread_list(df, col, str = NULL, replace = TRUE)
 }
 \arguments{
 \item{df}{Dataframe}
 
 \item{col}{Variable name.}
 
-\item{str}{Character. Start column names with. If set to \code{NA}, 
+\item{str}{Character. Start column names with. If set to \code{NULL},
 original name of column will be used.}
 
 \item{replace}{Boolean. Replace original values (delete column)}
@@ -21,4 +21,17 @@ Spread an existing list column into new columns on a data.frame. Note
 that every element on every observation must have a name for the function
 to do its work. Original column will be automatically suppressed but you
 can set the \code{replace} argument to avoid it.
+}
+\examples{
+df <- dplyr::starwars
+# Un-named list columns
+spread_list(df, films, replace = FALSE) \%>\%
+  select(name, starts_with("films")) \%>\%
+  head(8)
+# Named (and un-nammed) list columns
+df <- tibble(id = 1:3, platform = list(
+  list("fb" = 1, "ig" = 2), 
+  list("fb" = 3), 
+  list()))
+spread_list(df, platform)
 }
