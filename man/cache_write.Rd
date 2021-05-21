@@ -4,7 +4,7 @@
 \alias{cache_write}
 \alias{cache_read}
 \alias{cache_exists}
-\title{Cache Write and Read}
+\title{Cache Save and Load (Write and Read)}
 \usage{
 cache_write(
   data,

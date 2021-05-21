@@ -4,7 +4,7 @@
 \alias{quants}
 \title{Calculate cuts by quantiles}
 \usage{
-quants(values, splits = 10, return = "labels")
+quants(values, splits = 10, return = "labels", n = 2)
 }
 \arguments{
 \item{values}{Vector. Values to calculate quantile cuts}
@@ -12,6 +12,9 @@ quants(values, splits = 10, return = "labels")
 \item{splits}{Integer. How many cuts should split the values?}
 
 \item{return}{Character. Return "summary" or "labels"}
+
+\item{n}{Integer. Determines the number of digits used in
+formatting the break numbers.}
 }
 \description{
 This function lets the user quickly calculate cuts for quantiles

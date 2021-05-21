@@ -1,5 +1,5 @@
 ####################################################################
-#' Cache Write and Read
+#' Cache Save and Load (Write and Read)
 #' 
 #' This function lets the user save and load a cache of any R object to
 #' improve timings and UX.

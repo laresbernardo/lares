@@ -815,27 +815,26 @@ myip <- function(){
 #' @param values Vector. Values to calculate quantile cuts
 #' @param splits Integer. How many cuts should split the values?
 #' @param return Character. Return "summary" or "labels"
+#' @param n Integer. Determines the number of digits used in
+#' formatting the break numbers.
 #' @examples 
 #' data(dft) # Titanic dataset
 #' quants(dft$Age, splits = 5, "summary")
 #' quants(dft$Age, splits = 5, "labels")[1:10]
 #' @export
-quants <- function(values, splits = 10, return = "labels") {
+quants <- function(values, splits = 10, return = "labels", n = 2) {
   
   if (splits > length(unique(values[!is.na(values)])) - 1) 
     stop("There are not enough observations to split the data in ", splits)
   
   cuts <- quantile(values, probs = seq(0, 1, length = splits + 1), na.rm = TRUE)
-  decimals <- min(nchar(values), na.rm = TRUE) + 1
-  decimals <- ifelse(decimals >= 4, 4, decimals)
-  labels <- cut(values, unique(cuts), dig.lab = decimals, 
-                include.lowest = TRUE, ordered_result = TRUE)
+  labels <- cut(values, unique(cuts), dig.lab = n, include.lowest = TRUE, ordered_result = TRUE)
   
   if (return == "labels") return(labels)
   if (return == "summary") {
     output <- data.frame(percentile = names(cuts)[-1], cut = cuts[-1]) %>%
-      mutate(label = paste0("(", signif(lag(.data$cut),4), "-", signif(.data$cut,4),"]"),
-             label = gsub("\\(NA", paste0("[", signif(min(.data$cut), 4)), .data$label),
+      mutate(label = paste0("(", signif(lag(.data$cut), n), "-", signif(.data$cut, n),"]"),
+             label = gsub("\\(NA", paste0("[", signif(min(.data$cut), n)), .data$label),
              label = factor(.data$label, levels = unique(.data$label), ordered = TRUE))
     return(output) 
   }
