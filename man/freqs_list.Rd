@@ -69,7 +69,7 @@ head(df[,c(1,4,5,12)], 10)
 
 # Characters per movies combinations in a list column
 head(df$films, 2)
-df \%>\% freqs_list(films)
+freqs_list(df, films)
 
 # Skin colours in a comma-separated column
 head(df$skin_color)

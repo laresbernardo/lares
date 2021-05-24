@@ -266,9 +266,11 @@ freqs <- function(df, ..., wt = NULL,
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
 #' @examples 
-#' Sys.unsetenv("LARES_FONT") # Temporal
+#' \dontrun{
 #' data(dft) # Titanic dataset
 #' freqs_df(dft)
+#' freqs_df(dft, plot = TRUE)
+#' }
 #' @export
 freqs_df <- function(df, 
                      max = 0.9, min = 0.0, novar = TRUE,
@@ -519,7 +521,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' 
 #' # Characters per movies combinations in a list column
 #' head(df$films, 2)
-#' df %>% freqs_list(films)
+#' freqs_list(df, films)
 #' 
 #' # Skin colours in a comma-separated column
 #' head(df$skin_color)
@@ -614,6 +616,7 @@ freqs_list <- function(df,
     mutate(p = 100*.data$n/sum(.data$n), order = row_number()) %>%
     data.frame() %>%
     ohe_commas(var) %>%
+    as_tibble(.name_repair = "unique") %>%
     # Remove combinations with less than "min_elements" elements
     mutate(combs = rowSums(.[unlist(lapply(., is.logical))], na.rm = TRUE)) %>%
     filter(.data$combs >= min_elements) %>% select(-.data$combs)

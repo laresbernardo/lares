@@ -27,7 +27,7 @@
 #' 
 #' # Now, some visualizations
 #' df_str(dft, "plot", quiet = TRUE)
-#' df_str(dft, "distr", quiet = TRUE)
+#' #df_str(dft, "distr", quiet = TRUE)
 #' @export
 df_str <- function(df, 
                    return = "plot", 

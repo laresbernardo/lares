@@ -37,7 +37,7 @@ df_str(dft, "numbers", quiet = TRUE)
 
 # Now, some visualizations
 df_str(dft, "plot", quiet = TRUE)
-df_str(dft, "distr", quiet = TRUE)
+#df_str(dft, "distr", quiet = TRUE)
 }
 \seealso{
 Other Exploratory: 
