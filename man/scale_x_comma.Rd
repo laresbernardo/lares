@@ -29,27 +29,60 @@ scale_x_abbr(...)
 
 scale_y_abbr(...)
 
-scale_x_formatNum(...)
+scale_x_formatNum(
+  ...,
+  decimals = 2,
+  type = Sys.getenv("LARES_NUMFORMAT"),
+  pre = "",
+  pos = "",
+  abbr = FALSE
+)
 
-scale_y_formatNum(...)
+scale_y_formatNum(
+  ...,
+  decimals = 2,
+  type = Sys.getenv("LARES_NUMFORMAT"),
+  pre = "",
+  pos = "",
+  abbr = FALSE
+)
 }
 \arguments{
 \item{...}{Arguments passed to \code{ggplot2::continuous_scale} or
-\code{lares::formatNum}.depending on the function.}
+\code{lares::formatNum} depending on the function.}
+
+\item{decimals}{Integer. Amount of decimals to display}
+
+\item{type}{Integer. \code{1} for International standards. \code{2}
+for American Standards. Use \code{Sys.setenv("LARES_NUMFORMAT" = 2)} 
+to set this parameter globally.}
+
+\item{pre}{Character. Add string before or after number}
+
+\item{pos}{Character. Add string before or after number}
+
+\item{abbr}{Boolean. Abbreviate using num_abbr()? You can use
+the `decimals` parameter to set abbr's \code{n}(-1) parameter.}
 }
 \description{
 The \code{_comma} ones set comma format for axis text, the \code{_percent} 
 ones set percent format for axis text, \code{_dollar} for collar currency,
-and \code{_abbr} for abbreviated format.
+and \code{_abbr} for abbreviated format. Lastly, use \code{_formatNum} to
+further customize your numerical scales with \code{lares::formatNum}.
 }
 \examples{
 library(ggplot2)
 df <- ggplot2::txhousing \%>\% removenarows(all = FALSE)
+
 ggplot(df, aes(x = sales, y = volume)) + geom_point() +
   scale_x_dollar() + scale_y_abbr()
+  
+# Use any argument from scale_x/y_continuous
 ggplot(df, aes(x = listings, y = log(inventory))) + geom_point() +
-  scale_x_comma() + scale_y_percent()
+  scale_x_comma() + scale_y_percent(limits = c(0, 3))
+  
+# Use any argument from scale_x/y_continuous AND formatNum
 ggplot(df, aes(x = median, y = inventory)) + geom_point() +
-  scale_x_formatNum(pre = "@", abbr = TRUE) +
-  scale_y_formatNum(decimals = 0, pos = " X")
+  scale_x_formatNum(n.breaks = 3, pre = "@", abbr = TRUE) +
+  scale_y_formatNum(position = "right", decimals = 0, pos = " X")
 }

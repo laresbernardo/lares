@@ -1307,22 +1307,19 @@ replacefactor <- function(x, original, change) {
 }
 
 ####################################################################
-#' List all functions used in an R script file by package
+#' List all functions used in R script files by package
 #'
 #' Parses all functions called by an R script and then lists
 #' them by package. Wrapper for 'getParseData'. May be of great
 #' use for those developing a package to help see what 
 #' namespace 'importsFrom' calls will be required.
 #' 
-#' @param filename Character. Path to an R file containing R code.
-#' @param alphabetic Boolean. List functions alphabetically.
-#' If FALSE, will list in order of appearance.
-#' @return Returns a list. Parses all functions called by an R script 
-#' and then lists them by package. Those from the script itself are listed
-#' under '.GlobalEnv' and any functions that may originate
-#' from multiple packages have all possibilities listed. Those listed under
-#' 'character(0)' are those for which a package could not be found- may be
-#' functions within functions, or from packages that aren't loaded.
+#' @param filename Character. Path to an R file (or directory)
+#' containing R code files.
+#' @param abc Boolean. List functions alphabetically.
+#' If FALSE, will list in order of frequency.
+#' @param quiet Boolean. Keep quiet? If not, print messages and
+#' \code{statusbar}.
 #' @examples
 #' \dontrun{
 #' # Choose an R script file with functions
@@ -1330,17 +1327,28 @@ replacefactor <- function(x, original, change) {
 #' files_functions(rfile)
 #' }
 #' @export 
-files_functions <- function(filename, alphabetic = TRUE) {
-  if (!file.exists(filename)) 
-    stop("Couldn't find file ", filename)
-  if (!right(toupper(filename), 1) == "R")
-    warning("Expecting *.R file, will try to proceed")
-  tmp <- getParseData(parse(filename, keep.source = TRUE))
-  nms <- tmp$text[which(tmp$token == "SYMBOL_FUNCTION_CALL")]
-  funs <- unique(if (alphabetic) {sort(nms)} else {nms})
-  src <- paste(unlist(lapply(funs, find)))
-  outlist <- tapply(funs, factor(src), c)
-  return(outlist)
+files_functions <- function(filename, abc = TRUE, quiet = FALSE) {
+  if (dir.exists(filename)) {
+    if (!quiet) message("Importing R files from directory")
+    filename <- sprintf("%s/%s", filename, listfiles(filename, regex = "\\.R")$filename)
+  }
+  results <- data.frame()
+  for (i in seq_along(filename)) {
+    if (!file.exists(filename[i]))
+      stop("Couldn't find file ", filename[i])
+    tmp <- getParseData(parse(filename[i], keep.source = TRUE))
+    funs <- tmp$text[which(tmp$token == "SYMBOL_FUNCTION_CALL")] %>%
+      freqs(abc = abc) %>% rename(fun = 1)
+    pkgs <- lapply(funs$fun, find)
+    pkgs[unlist(lapply(pkgs, function(x) length(x)==0))] <- NA
+    pkgs <- lapply(pkgs, function(x) v2t(x, quotes = FALSE))
+    funs$package <- gsub("package:", "", unlist(pkgs))
+    funs$file <- filename[i]
+    results <- rbind(results, funs)
+    if (length(filename) > 1 & !quiet)
+      statusbar(i, length(filename), filename[i])
+  }
+  return(results)
 }
 
 

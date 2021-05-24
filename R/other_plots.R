@@ -305,20 +305,26 @@ gg_bars <- function(names, n, p = NA,
 #'
 #' The \code{_comma} ones set comma format for axis text, the \code{_percent} 
 #' ones set percent format for axis text, \code{_dollar} for collar currency,
-#' and \code{_abbr} for abbreviated format.
+#' and \code{_abbr} for abbreviated format. Lastly, use \code{_formatNum} to
+#' further customize your numerical scales with \code{lares::formatNum}.
 #'
 #' @param ... Arguments passed to \code{ggplot2::continuous_scale} or
-#' \code{lares::formatNum}.depending on the function.
+#' \code{lares::formatNum} depending on the function.
 #' @examples 
 #' library(ggplot2)
 #' df <- ggplot2::txhousing %>% removenarows(all = FALSE)
+#' 
 #' ggplot(df, aes(x = sales, y = volume)) + geom_point() +
 #'   scale_x_dollar() + scale_y_abbr()
+#'   
+#' # Use any argument from scale_x/y_continuous
 #' ggplot(df, aes(x = listings, y = log(inventory))) + geom_point() +
-#'   scale_x_comma() + scale_y_percent()
+#'   scale_x_comma() + scale_y_percent(limits = c(0, 3))
+#'   
+#' # Use any argument from scale_x/y_continuous AND formatNum
 #' ggplot(df, aes(x = median, y = inventory)) + geom_point() +
-#'   scale_x_formatNum(pre = "@", abbr = TRUE) +
-#'   scale_y_formatNum(decimals = 0, pos = " X")
+#'   scale_x_formatNum(n.breaks = 3, pre = "@", abbr = TRUE) +
+#'   scale_y_formatNum(position = "right", decimals = 0, pos = " X")
 #' @export
 scale_x_comma <- function(...) scale_x_continuous(..., labels = comma)
 
@@ -351,14 +357,25 @@ scale_x_abbr <- function(...) scale_x_continuous(..., labels = num_abbr)
 scale_y_abbr <- function(...) scale_y_continuous(..., labels = num_abbr)
 
 #' @rdname scale_x_comma
+#' @inheritParams formatNum
 #' @export
-scale_x_formatNum <- function(...)
-  scale_x_continuous(labels = function(x) formatNum(x, ...))
+scale_x_formatNum <- function(..., decimals = 2,
+                              type = Sys.getenv("LARES_NUMFORMAT"),
+                              pre = "", pos = "", abbr = FALSE) {
+  scale_x_continuous(..., labels = function(x)
+    formatNum(x, decimals, type, pre, pos, abbr))
+}
 
 #' @rdname scale_x_comma
+#' @inheritParams formatNum
 #' @export
-scale_y_formatNum <- function(...)
-  scale_y_continuous(labels = function(x) formatNum(x, ...))
+scale_y_formatNum <- function(..., decimals = 2,
+                              type = Sys.getenv("LARES_NUMFORMAT"),
+                              pre = "", pos = "", abbr = FALSE) {
+  scale_y_continuous(..., labels = function(x)
+    formatNum(x, decimals, type, pre, pos, abbr))
+}
+
 
 ####################################################################
 #' Plot Result with Nothing to Plot

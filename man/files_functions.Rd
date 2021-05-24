@@ -2,23 +2,19 @@
 % Please edit documentation in R/other_functions.R
 \name{files_functions}
 \alias{files_functions}
-\title{List all functions used in an R script file by package}
+\title{List all functions used in R script files by package}
 \usage{
-files_functions(filename, alphabetic = TRUE)
+files_functions(filename, abc = TRUE, quiet = FALSE)
 }
 \arguments{
-\item{filename}{Character. Path to an R file containing R code.}
+\item{filename}{Character. Path to an R file (or directory)
+containing R code files.}
 
-\item{alphabetic}{Boolean. List functions alphabetically.
-If FALSE, will list in order of appearance.}
-}
-\value{
-Returns a list. Parses all functions called by an R script 
-and then lists them by package. Those from the script itself are listed
-under '.GlobalEnv' and any functions that may originate
-from multiple packages have all possibilities listed. Those listed under
-'character(0)' are those for which a package could not be found- may be
-functions within functions, or from packages that aren't loaded.
+\item{abc}{Boolean. List functions alphabetically.
+If FALSE, will list in order of frequency.}
+
+\item{quiet}{Boolean. Keep quiet? If not, print messages and
+\code{statusbar}.}
 }
 \description{
 Parses all functions called by an R script and then lists
