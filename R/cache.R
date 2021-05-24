@@ -28,7 +28,7 @@ cache_write <- function(data,
                         quiet = FALSE) {
   if (is.null(getOption("LARES_CACHE_DIR")))
     cache_dir <- tempdir()
-  base <- v2t(base, quotes = FALSE, sep = ".")
+  base <- paste(base, collapse = ".")
   file <- sprintf("%s/%s.RDS", cache_dir, base)
   if (nchar(file) >= 252)
     stop("Your file name can't contain more than 250 characters.")
@@ -83,7 +83,7 @@ cache_exists <- function(base = NULL,
   if (is.null(getOption("LARES_CACHE_DIR")))
     cache_dir <- tempdir()
   if (is.null(filename)) {
-    base <- v2t(base, quotes = FALSE, sep = ".")
+    base <- paste(base, collapse = ".")
     filename <- sprintf("%s/%s.RDS", cache_dir, base) 
   }
   exists <- file.exists(filename)
