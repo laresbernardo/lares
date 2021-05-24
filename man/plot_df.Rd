@@ -13,11 +13,6 @@ plot_df(df)
 This function plots all columns frequencies and boxplots, for 
 categorical and numerical respectively.
 }
-\examples{
-
-data(dft) # Titanic dataset
-plot_df(dft)
-}
 \seealso{
 Other Exploratory: 
 \code{\link{corr_cross}()},

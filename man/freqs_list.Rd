@@ -62,8 +62,7 @@ This is similar to the \href{http://vcg.github.io/upset/}{UpSet Plots}
 which may be used as an alternative to Venn diagrams.
 }
 \examples{
-\donttest{
-Sys.unsetenv("LARES_FONT") # Temporal
+\dontrun{
 df <- dplyr::starwars
 head(df[,c(1,4,5,12)], 10)
 

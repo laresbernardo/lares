@@ -513,9 +513,8 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
 #' @param title Character. Added to the plot.
 #' @param plot Boolean. Plot viz? Will be generated anyways in the output object
-#' @examples 
-#' \donttest{
-#' Sys.unsetenv("LARES_FONT") # Temporal
+#' @examples
+#' \dontrun{
 #' df <- dplyr::starwars
 #' head(df[,c(1,4,5,12)], 10)
 #' 

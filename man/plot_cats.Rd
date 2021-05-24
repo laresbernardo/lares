@@ -13,11 +13,6 @@ plot_cats(df)
 This function filters categorical columns and plots the frequency
 for each value on every feature.
 }
-\examples{
-
-data(dft) # Titanic dataset
-plot_cats(dft)
-}
 \seealso{
 Other Exploratory: 
 \code{\link{corr_cross}()},

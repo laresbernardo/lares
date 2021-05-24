@@ -156,10 +156,6 @@ plot_nums <- function(df) {
 #' 
 #' @family Exploratory
 #' @param df Dataframe
-#' @examples 
-#' 
-#' data(dft) # Titanic dataset
-#' plot_cats(dft)
 #' @export
 plot_cats <- function(df) {
   plot <- df %>% select_if(Negate(is.numeric)) 
@@ -181,10 +177,6 @@ plot_cats <- function(df) {
 #' 
 #' @family Exploratory
 #' @param df Dataframe
-#' @examples 
-#' 
-#' data(dft) # Titanic dataset
-#' plot_df(dft)
 #' @export
 plot_df <- function(df) {
   
