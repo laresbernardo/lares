@@ -42,7 +42,8 @@
 <meta property="og:title" content="Axis scales format — scale_x_comma" />
 <meta property="og:description" content="The _comma ones set comma format for axis text, the _percent 
 ones set percent format for axis text, _dollar for collar currency,
-and _abbr for abbreviated format." />
+and _abbr for abbreviated format. Lastly, use _formatNum to
+further customize your numerical scales with lares::formatNum." />
 
 
 
@@ -118,7 +119,8 @@ and _abbr for abbreviated format." />
     <div class="ref-description">
     <p>The <code>_comma</code> ones set comma format for axis text, the <code>_percent</code> 
 ones set percent format for axis text, <code>_dollar</code> for collar currency,
-and <code>_abbr</code> for abbreviated format.</p>
+and <code>_abbr</code> for abbreviated format. Lastly, use <code>_formatNum</code> to
+further customize your numerical scales with <code><a href='formatNum.html'>lares::formatNum</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>scale_x_comma</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
@@ -137,9 +139,23 @@ and <code>_abbr</code> for abbreviated format.</p>
 
 <span class='fu'>scale_y_abbr</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>scale_x_formatNum</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>scale_x_formatNum</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  decimals <span class='op'>=</span> <span class='fl'>2</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"LARES_NUMFORMAT"</span><span class='op'>)</span>,
+  pre <span class='op'>=</span> <span class='st'>""</span>,
+  pos <span class='op'>=</span> <span class='st'>""</span>,
+  abbr <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
 
-<span class='fu'>scale_y_formatNum</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>scale_y_formatNum</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  decimals <span class='op'>=</span> <span class='fl'>2</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"LARES_NUMFORMAT"</span><span class='op'>)</span>,
+  pre <span class='op'>=</span> <span class='st'>""</span>,
+  pos <span class='op'>=</span> <span class='st'>""</span>,
+  abbr <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,7 +163,30 @@ and <code>_abbr</code> for abbreviated format.</p>
     <tr>
       <th>...</th>
       <td><p>Arguments passed to <code><a href='https://ggplot2.tidyverse.org/reference/continuous_scale.html'>ggplot2::continuous_scale</a></code> or
-<code><a href='formatNum.html'>lares::formatNum</a></code>.depending on the function.</p></td>
+<code><a href='formatNum.html'>lares::formatNum</a></code> depending on the function.</p></td>
+    </tr>
+    <tr>
+      <th>decimals</th>
+      <td><p>Integer. Amount of decimals to display</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>Integer. <code>1</code> for International standards. <code>2</code>
+for American Standards. Use <code><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.setenv("LARES_NUMFORMAT" = 2)</a></code> 
+to set this parameter globally.</p></td>
+    </tr>
+    <tr>
+      <th>pre</th>
+      <td><p>Character. Add string before or after number</p></td>
+    </tr>
+    <tr>
+      <th>pos</th>
+      <td><p>Character. Add string before or after number</p></td>
+    </tr>
+    <tr>
+      <th>abbr</th>
+      <td><p>Boolean. Abbreviate using num_abbr()? You can use
+the `decimals` parameter to set abbr's <code>n</code>(-1) parameter.</p></td>
     </tr>
     </table>
 
@@ -155,13 +194,18 @@ and <code>_abbr</code> for abbreviated format.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='va'><a href='https://ggplot2.tidyverse.org/reference/txhousing.html'>txhousing</a></span> <span class='op'>%&gt;%</span> <span class='fu'><a href='removenarows.html'>removenarows</a></span><span class='op'>(</span>all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>sales</span>, y <span class='op'>=</span> <span class='va'>volume</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>scale_x_dollar</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>scale_y_abbr</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='scale_x_comma-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>listings</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>inventory</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_x_comma</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>scale_y_percent</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='scale_x_comma-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>median</span>, y <span class='op'>=</span> <span class='va'>inventory</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_x_formatNum</span><span class='op'>(</span>pre <span class='op'>=</span> <span class='st'>"@"</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_y_formatNum</span><span class='op'>(</span>decimals <span class='op'>=</span> <span class='fl'>0</span>, pos <span class='op'>=</span> <span class='st'>" X"</span><span class='op'>)</span>
+</div><div class='img'><img src='scale_x_comma-1.png' alt='' width='700' height='433' /></div><div class='input'>  
+<span class='co'># Use any argument from scale_x/y_continuous</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>listings</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>inventory</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>scale_x_comma</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>scale_y_percent</span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 204 rows containing missing values (geom_point).</span></div><div class='img'><img src='scale_x_comma-2.png' alt='' width='700' height='433' /></div><div class='input'>  
+<span class='co'># Use any argument from scale_x/y_continuous AND formatNum</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>median</span>, y <span class='op'>=</span> <span class='va'>inventory</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>scale_x_formatNum</span><span class='op'>(</span>n.breaks <span class='op'>=</span> <span class='fl'>3</span>, pre <span class='op'>=</span> <span class='st'>"@"</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>scale_y_formatNum</span><span class='op'>(</span>position <span class='op'>=</span> <span class='st'>"right"</span>, decimals <span class='op'>=</span> <span class='fl'>0</span>, pos <span class='op'>=</span> <span class='st'>" X"</span><span class='op'>)</span>
 </div><div class='img'><img src='scale_x_comma-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

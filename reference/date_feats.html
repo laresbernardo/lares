@@ -213,49 +213,49 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
 <span class='co'># Input as a vector or dataframe</span>
 <span class='fu'>date_feats</span><span class='op'>(</span><span class='va'>df</span>, keep_originals <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 2 date/time columns: 'dates', 'times'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: All formats failed to parse. No formats found.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: argument 'replacement' has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: argument 'replacement' has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt;         dates dates_year dates_month dates_day dates_week dates_weekday
-#&gt; 1  2020-10-20       2020          10        20         42           Tue
-#&gt; 2  2020-08-18       2020           8        18         33           Tue
-#&gt; 3  2020-08-19       2020           8        19         34           Wed
-#&gt; 4  2021-01-31       2021           1        31          5           Sun
-#&gt; 5  2020-12-03       2020          12         3         49           Thu
-#&gt; 6  2021-05-19       2021           5        19         20           Wed
-#&gt; 7  2021-05-03       2021           5         3         18           Mon
-#&gt; 8  2020-10-04       2020          10         4         40           Sun
-#&gt; 9  2021-05-10       2021           5        10         19           Mon
-#&gt; 10 2021-04-13       2021           4        13         15           Tue
+#&gt; 1  2020-10-23       2020          10        23         43           Fri
+#&gt; 2  2020-08-21       2020           8        21         34           Fri
+#&gt; 3  2020-08-22       2020           8        22         34           Sat
+#&gt; 4  2021-02-03       2021           2         3          5           Wed
+#&gt; 5  2020-12-06       2020          12         6         49           Sun
+#&gt; 6  2021-05-22       2021           5        22         21           Sat
+#&gt; 7  2021-05-06       2021           5         6         18           Thu
+#&gt; 8  2020-10-07       2020          10         7         41           Wed
+#&gt; 9  2021-05-13       2021           5        13         19           Thu
+#&gt; 10 2021-04-16       2021           4        16         16           Fri
 #&gt;    dates_weekend dates_year_day               times times_year times_month
-#&gt; 1          FALSE            293 2021-04-01 05:33:00       2021           4
-#&gt; 2          FALSE            230 2021-03-04 10:30:46       2021           3
-#&gt; 3          FALSE            231 2021-02-20 06:49:13       2021           2
-#&gt; 4           TRUE             30 2021-02-04 16:56:10       2021           2
-#&gt; 5          FALSE            337 2021-03-06 01:33:47       2021           3
-#&gt; 6          FALSE            138 2021-04-03 03:01:25       2021           4
-#&gt; 7          FALSE            122 2021-02-17 01:16:33       2021           2
-#&gt; 8           TRUE            277 2021-04-19 02:31:31       2021           4
-#&gt; 9          FALSE            129 2021-03-15 05:46:48       2021           3
-#&gt; 10         FALSE            102 2021-05-13 10:51:46       2021           5
+#&gt; 1          FALSE            296 2021-04-04 04:44:50       2021           4
+#&gt; 2          FALSE            233 2021-03-07 09:42:36       2021           3
+#&gt; 3           TRUE            234 2021-02-23 06:01:03       2021           2
+#&gt; 4          FALSE             33 2021-02-07 16:08:00       2021           2
+#&gt; 5           TRUE            340 2021-03-09 00:45:37       2021           3
+#&gt; 6           TRUE            141 2021-04-06 02:13:15       2021           4
+#&gt; 7          FALSE            125 2021-02-20 00:28:23       2021           2
+#&gt; 8          FALSE            280 2021-04-22 01:43:21       2021           4
+#&gt; 9          FALSE            132 2021-03-18 04:58:38       2021           3
+#&gt; 10         FALSE            105 2021-05-16 10:03:36       2021           5
 #&gt;    times_day times_week times_weekday times_weekend times_year_day times_hour
-#&gt; 1          1         13           Thu         FALSE             90          5
-#&gt; 2          4          9           Thu         FALSE             62         10
-#&gt; 3         20          8           Sat          TRUE             50          6
-#&gt; 4          4          5           Thu         FALSE             34         16
-#&gt; 5          6         10           Sat          TRUE             64          1
-#&gt; 6          3         14           Sat          TRUE             92          3
-#&gt; 7         17          7           Wed         FALSE             47          1
-#&gt; 8         19         16           Mon         FALSE            108          2
-#&gt; 9         15         11           Mon         FALSE             73          5
-#&gt; 10        13         19           Thu         FALSE            132         10
+#&gt; 1          4         14           Sun          TRUE             93          4
+#&gt; 2          7         10           Sun          TRUE             65          9
+#&gt; 3         23          8           Tue         FALSE             53          6
+#&gt; 4          7          6           Sun          TRUE             37         16
+#&gt; 5          9         10           Tue         FALSE             67          0
+#&gt; 6          6         14           Tue         FALSE             95          2
+#&gt; 7         20          8           Sat          TRUE             50          0
+#&gt; 8         22         16           Thu         FALSE            111          1
+#&gt; 9         18         11           Thu         FALSE             76          4
+#&gt; 10        16         20           Sun          TRUE            135         10
 #&gt;    times_minute times_minutes times_second
-#&gt; 1            33           333            0
-#&gt; 2            30           630           46
-#&gt; 3            49           409           13
-#&gt; 4            56          1016           10
-#&gt; 5            33            93           47
-#&gt; 6             1           181           25
-#&gt; 7            16            76           33
-#&gt; 8            31           151           31
-#&gt; 9            46           346           48
-#&gt; 10           51           651           46</div><div class='input'>
+#&gt; 1            44           284           50
+#&gt; 2            42           582           36
+#&gt; 3             1           361            3
+#&gt; 4             8           968            0
+#&gt; 5            45            45           37
+#&gt; 6            13           133           15
+#&gt; 7            28            28           23
+#&gt; 8            43           103           21
+#&gt; 9            58           298           38
+#&gt; 10            3           603           36</div><div class='input'>
 <span class='co'># Holidays</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>hol</span> <span class='op'>&lt;-</span> <span class='fu'>date_feats</span><span class='op'>(</span>

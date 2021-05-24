@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List all functions used in an R script file by package — files_functions • lares</title>
+<title>List all functions used in R script files by package — files_functions • lares</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="List all functions used in an R script file by package — files_functions" />
+<meta property="og:title" content="List all functions used in R script files by package — files_functions" />
 <meta property="og:description" content="Parses all functions called by an R script and then lists
 them by package. Wrapper for 'getParseData'. May be of great
 use for those developing a package to help see what 
@@ -111,7 +111,7 @@ namespace 'importsFrom' calls will be required." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>List all functions used in an R script file by package</h1>
+    <h1>List all functions used in R script files by package</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_functions.R'><code>R/other_functions.R</code></a></small>
     <div class="hidden name"><code>files_functions.Rd</code></div>
     </div>
@@ -123,30 +123,28 @@ use for those developing a package to help see what
 namespace 'importsFrom' calls will be required.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>files_functions</span><span class='op'>(</span><span class='va'>filename</span>, alphabetic <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>files_functions</span><span class='op'>(</span><span class='va'>filename</span>, abc <span class='op'>=</span> <span class='cn'>TRUE</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>filename</th>
-      <td><p>Character. Path to an R file containing R code.</p></td>
+      <td><p>Character. Path to an R file (or directory)
+containing R code files.</p></td>
     </tr>
     <tr>
-      <th>alphabetic</th>
+      <th>abc</th>
       <td><p>Boolean. List functions alphabetically.
-If FALSE, will list in order of appearance.</p></td>
+If FALSE, will list in order of frequency.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Boolean. Keep quiet? If not, print messages and
+<code>statusbar</code>.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Returns a list. Parses all functions called by an R script 
-and then lists them by package. Those from the script itself are listed
-under '.GlobalEnv' and any functions that may originate
-from multiple packages have all possibilities listed. Those listed under
-'character(0)' are those for which a package could not be found- may be
-functions within functions, or from packages that aren't loaded.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>

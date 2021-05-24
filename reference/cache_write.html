@@ -179,8 +179,8 @@ ask the user if the cache should be overwritten.</p></td>
     <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span>, b <span class='op'>=</span> <span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
 <span class='va'>base</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>, <span class='st'>"A"</span>,<span class='st'>"B"</span>,<span class='st'>"C"</span><span class='op'>)</span>
 <span class='fu'>cache_write</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>base</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt; Cache saved succesfully: 2021-05-21.A.B.C</span></div><div class='input'><span class='fu'>cache_read</span><span class='op'>(</span><span class='va'>base</span>, ask <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt; Cache loaded succesfully: 2021-05-21.A.B.C</span></div><div class='output co'>#&gt; $a
+</div><div class='output co'>#&gt; <span class='message'>&gt; Cache saved succesfully: 2021-05-24.A.B.C</span></div><div class='input'><span class='fu'>cache_read</span><span class='op'>(</span><span class='va'>base</span>, ask <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt; Cache loaded succesfully: 2021-05-24.A.B.C</span></div><div class='output co'>#&gt; $a
 #&gt; [1] 1
 #&gt; 
 #&gt; $b
