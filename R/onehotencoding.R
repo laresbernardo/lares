@@ -11,21 +11,22 @@
 #' @param ... Variables. Which variables to split into new columns?
 #' @param sep Character. Which regular expression separates the elements?
 #' @param noval Character. No value text
+#' @param remove Boolean. Remove original variables?
 #' @examples 
 #' df <- data.frame(id = c(1:5),
 #'                  x = c("AA, D", "AA,B", "B,  D", "A,D,B", NA),
 #'                  z = c("AA+BB+AA", "AA", "BB,  AA", NA, "BB+AA"))
-#' ohe_commas(df, x)
+#' ohe_commas(df, x, remove = TRUE)
 #' ohe_commas(df, z, sep = "\\+")
 #' ohe_commas(df, x, z)
 #' @export
-ohe_commas <- function(df, ..., sep = ",", noval = "NoVal") {
+ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
   
   vars <- quos(...)
   var <- gsub("~", "", as.character(vars))
   
   df <- as.data.frame(df)
-    
+  
   for (i in var) {
     df$temp <- as.character(df[,i])
     # Handling missingness
@@ -43,7 +44,8 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal") {
     df$temp <- NULL
     df <- cbind(df, mat)
   }
-  return(as_tibble(df))
+  if (remove) df <- df[, !colnames(df) %in% var]
+  return(as_tibble(df, .name_repair = "minimal"))
 }
 
 ####################################################################

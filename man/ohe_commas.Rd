@@ -4,7 +4,7 @@
 \alias{ohe_commas}
 \title{One Hot Encoding for a Vector with Comma Separated Values}
 \usage{
-ohe_commas(df, ..., sep = ",", noval = "NoVal")
+ohe_commas(df, ..., sep = ",", noval = "NoVal", remove = FALSE)
 }
 \arguments{
 \item{df}{Dataframe. May contain one or more columns with comma separated
@@ -15,6 +15,8 @@ values which will be separated as one hot encoding}
 \item{sep}{Character. Which regular expression separates the elements?}
 
 \item{noval}{Character. No value text}
+
+\item{remove}{Boolean. Remove original variables?}
 }
 \description{
 This function lets the user do one hot encoding on a variable with 
@@ -24,7 +26,7 @@ comma separated values
 df <- data.frame(id = c(1:5),
                  x = c("AA, D", "AA,B", "B,  D", "A,D,B", NA),
                  z = c("AA+BB+AA", "AA", "BB,  AA", NA, "BB+AA"))
-ohe_commas(df, x)
+ohe_commas(df, x, remove = TRUE)
 ohe_commas(df, z, sep = "\\\\+")
 ohe_commas(df, x, z)
 }
