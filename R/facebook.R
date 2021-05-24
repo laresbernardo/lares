@@ -631,7 +631,7 @@ fb_post <- function(token, post_id, limit = 5000) {
 #' 
 #' This returns all ad accounts for a FB Business Account FB.
 #' For more information on Ad Insights' API, go to the 
-#' \href{https://developers.facebook.com/docs/marketing-api/reference/ad-account/insights/}{original documentaion}
+#' \href{https://developers.facebook.com/docs/marketing-api/insights/}{original documentaion}
 #' 
 #' @family API
 #' @family Facebook
