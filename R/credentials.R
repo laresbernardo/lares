@@ -16,8 +16,9 @@
 #' @section YML file format:
 #' A YML file is a text file, with \code{.yml} file format. You may start from 
 #' the dummy YML file shared which shows the structure you must follow to set your 
-#' credentials file. Check it out \href{https://bit.ly/2ZhJMse}{here} or find it
-#' locally using \code{system.file("docs", "config.yml", package = "lares")}.
+#' credentials file. Check it out
+#' \href{https://raw.githubusercontent.com/laresbernardo/lares/master/inst/docs/config.yml}{here}
+#' or find it locally using \code{system.file("docs", "config.yml", package = "lares")}.
 #' 
 #' @family Tools
 #' @family Credentials

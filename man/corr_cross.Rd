@@ -59,8 +59,9 @@ This function creates a correlation full study and returns a rank
 of the highest correlation variables obtained in a cross-table.
 }
 \details{
-DataScience+ Post: \href{https://bit.ly/2WiLsQB}{Find Insights 
-with Ranked Cross-Correlations}
+DataScience+ Post:
+\href{https://datascienceplus.com/find-insights-with-ranked-cross-correlations/}{Find
+Insights with Ranked Cross-Correlations}
 }
 \examples{
 Sys.unsetenv("LARES_FONT") # Temporal

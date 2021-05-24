@@ -98,7 +98,7 @@ flattener <- function(x, i = 1) {
 #' This returns all available FB insights per day including any given
 #' breakdown to the specified report level, and place into a data frame.
 #' For more information on Ad Insights' API, go to the original
-#' \href{https://developers.facebook.com/docs/marketing-api/insights}{documentaion}.
+#' \href{https://developers.facebook.com/docs/marketing-api/insights/}{documentaion}.
 #' 
 #' @family API
 #' @family Facebook

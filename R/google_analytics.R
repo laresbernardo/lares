@@ -4,7 +4,7 @@
 #' This function lets the user query Google Analytics with its API.
 #' More about the documentation and parameters in
 #' \code{googleAnalyticsR::google_analytics()} or Google Analytics'
-#' \href{https://developers.google.com/analytics/devguides/reporting/core/dimsmets}{API}
+#' \href{https://ga-dev-tools.appspot.com/dimensions-metrics-explorer/}{API}
 #' 
 #' @family Credentials
 #' @family Google

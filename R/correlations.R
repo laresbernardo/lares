@@ -283,8 +283,9 @@ corr_var <- function(df, var,
 #' This function creates a correlation full study and returns a rank
 #' of the highest correlation variables obtained in a cross-table.
 #' 
-#' DataScience+ Post: \href{https://bit.ly/2WiLsQB}{Find Insights 
-#' with Ranked Cross-Correlations}
+#' DataScience+ Post:
+#' \href{https://datascienceplus.com/find-insights-with-ranked-cross-correlations/}{Find
+#' Insights with Ranked Cross-Correlations}
 #'
 #' @family Correlations
 #' @family Exploratory

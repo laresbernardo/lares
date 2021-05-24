@@ -414,7 +414,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   
   # GET PREDICTIONS
   if (!quiet) message(paste0(">>> Running predictions for ", y, "..."))
-  predictions <- quiet_h2o(h2o_predict_model(global, m), quiet = quiet)
+  predictions <- quiet_h2o(h2o_predict_model(global, m), quiet = TRUE)
   global <- cbind(global, predictions)
   # Change dots for space
   if (sum(grepl(" ", cats)) > 0)
