@@ -11,12 +11,7 @@
 #' @export
 get_tweets <- function(q, n = 10000, creds = NA) {
 
-  # require(rtweet)
-  
-  if (!"rtweet" %in% (.packages())){
-    stop("The following library should be loaded. Please run: library(rtweet)")
-  }
-
+  try_require("rtweet")
   c <- get_credentials(from = "twitter", dir = creds)
 
   token <- create_token(

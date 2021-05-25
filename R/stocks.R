@@ -1069,9 +1069,10 @@ stocks_report <- function(data = NA,
     try_require("knitr")
     html_body <- paste0(
       "<p>Stocks Summary:</p>",
-      kable(summary_df1, align = "lrcrrrr", row.names = TRUE, digits = c(0, 2, 0, 2, 0, 0, 1)),
+      kable(summary_df1, align = "lrcrrrr", row.names = TRUE,
+            digits = c(0, 2, 0, 2, 0, 0, 1), format = "html"),
       "<p>Portfolio Status:</p>",
-      kable(summary_df2, align = "lr", row.names = FALSE))
+      kable(summary_df2, align = "lr", row.names = FALSE, format = "html"))
     
     message(">>> Sending email...")
     mailSend(to = to,

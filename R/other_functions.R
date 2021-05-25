@@ -1081,10 +1081,9 @@ bindfiles <- function(files) {
 #' @param top Integer. How many characters aprox should be on each line?
 #' @param rel Numeric. Relation of pixels and characters per line
 #' @examples 
-#' autoline("This is a long text that may not fit into a single line")
-#' autoline("This is a long text that may not fit into a single line", top = 10)
+#' cat(autoline("This is a long text that may not fit into a single line", 8))
 #' 
-#' text <- factor(c("First value", "Second value", "First value"), 
+#' text <- factor(c("First value", "Second value", "First value"),
 #'                levels = c("First value", "Second value"))
 #' autoline(text, 1)
 #' 
@@ -1105,25 +1104,6 @@ autoline <- function(text, top = "auto", rel = 9) {
   } 
   
   ret <- stringr::str_wrap(text, top)
-  
-  # ret <- lapply(text, function(x) {
-  #   # Add new lines for long texts
-  #   iters <- ceiling(nchar(x)/top)
-  #   if (iters > 1) {
-  #     for (i in 1:iters) {
-  #       if (i == 1) texti <- x
-  #       if (i == 1) n <- 0
-  #       texti <- gsub(".*\\n", "", x)
-  #       pos <- as.vector(gregexpr(' ', texti)[[1]])
-  #       sp <- pos[pos > top][1]
-  #       if (is.na(sp)) break
-  #       n <- n + sp + ifelse(i > 1, 1, 0)
-  #       x <- gsub(paste0('^(.{', n, '})(.*)$'), '\\1\n\\2', x)
-  #     } 
-  #   } else x
-  #   return(x)
-  # })
-  # ret <- unlist(ret)
   
   if (is_factor) {
     aux <- data.frame(ret, text) %>% 
