@@ -7,9 +7,11 @@
 formatNum(
   x,
   decimals = 2,
+  signif = NULL,
   type = Sys.getenv("LARES_NUMFORMAT"),
   pre = "",
   pos = "",
+  sign = FALSE,
   abbr = FALSE,
   ...
 )
@@ -17,18 +19,23 @@ formatNum(
 \arguments{
 \item{x}{Numerical Vector}
 
-\item{decimals}{Integer. Amount of decimals to display}
+\item{decimals}{Integer. Amount of decimals to display.}
+
+\item{signif}{Integer. Rounds the values in its first argument to
+the specified number of significant digits.}
 
 \item{type}{Integer. \code{1} for International standards. \code{2}
 for American Standards. Use \code{Sys.setenv("LARES_NUMFORMAT" = 2)} 
 to set this parameter globally.}
 
-\item{pre, pos}{Character. Add string before or after number}
+\item{pre, pos}{Character. Add string before or after number.}
+
+\item{sign}{Boolean. Add \code{+} sign to positive values.}
 
 \item{abbr}{Boolean. Abbreviate using num_abbr()? You can use
 the `decimals` parameter to set abbr's \code{n}(-1) parameter.}
 
-\item{...}{Additional lazy eval parameters}
+\item{...}{Additional lazy eval parameters.}
 }
 \description{
 This function lets the user format numerical values nicely
@@ -38,8 +45,9 @@ formatNum(1.23456, decimals = 3)
 formatNum(1.23456, type = 1)
 formatNum(1.23456, pre = "$", pos = "/person")
 formatNum(123456, abbr = TRUE)
-formatNum(1234567890, abbr = TRUE)
+formatNum(1234567890, abbr = TRUE, signif = 2)
 formatNum(1234567890, decimals = 0, abbr = TRUE)
+formatNum(c(-3:3), sign = TRUE)
 }
 \seealso{
 Other Data Wrangling: 

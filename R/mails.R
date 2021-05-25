@@ -37,20 +37,20 @@ mailSend <- function(from = "RMail <laresbernardo@gmail.com>",
   the_body <- list(from = from, to = to, subject = subject)
   
   if (grepl("mailgun", url)) the_body[["o:tag"]] <- "R-email"
-  if (!is.na(cc)) the_body[["cc"]] <- cc
-  if (!is.na(bcc)) the_body[["bcc"]] <- bcc
-  if (!is.na(text)) the_body[["text"]] <- text
-  if (!is.na(html)) the_body[["html"]] <- html
+  if (!is.na(cc[1])) the_body[["cc"]] <- cc
+  if (!is.na(bcc[1])) the_body[["bcc"]] <- bcc
+  if (!is.na(text[1])) the_body[["text"]] <- text
+  if (!is.na(html[1])) the_body[["html"]] <- html
   
   if (sum(!is.na(attachment)) > 0) {
     if ("ggplot" %in% class(attachment)) {
       as <- "png"
-      file <- paste0(getwd(),"/attch.", as)
+      file <- paste0(tempdir(), "/attch.", as)
       attachment + ggsave(file)
     }
     if ("data.frame" %in% class(attachment)) {
       as <- "csv"
-      file <- paste0(getwd(),"/attch.", as)
+      file <- paste0(tempdir(), "/attch.", as)
       write.csv(attachment, file, row.names = FALSE)
     }
     if ("character" %in% class(attachment)) {

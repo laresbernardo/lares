@@ -304,28 +304,36 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
 #' 
 #' @family Data Wrangling
 #' @param x Numerical Vector
-#' @param decimals Integer. Amount of decimals to display
+#' @param decimals Integer. Amount of decimals to display.
+#' @param signif Integer. Rounds the values in its first argument to
+#' the specified number of significant digits.
 #' @param type Integer. \code{1} for International standards. \code{2}
 #' for American Standards. Use \code{Sys.setenv("LARES_NUMFORMAT" = 2)} 
 #' to set this parameter globally.
-#' @param pre,pos Character. Add string before or after number
+#' @param pre,pos Character. Add string before or after number.
+#' @param sign Boolean. Add \code{+} sign to positive values.
 #' @param abbr Boolean. Abbreviate using num_abbr()? You can use
 #' the `decimals` parameter to set abbr's \code{n}(-1) parameter.
-#' @param ... Additional lazy eval parameters
+#' @param ... Additional lazy eval parameters.
 #' @examples 
 #' formatNum(1.23456, decimals = 3)
 #' formatNum(1.23456, type = 1)
 #' formatNum(1.23456, pre = "$", pos = "/person")
 #' formatNum(123456, abbr = TRUE)
-#' formatNum(1234567890, abbr = TRUE)
+#' formatNum(1234567890, abbr = TRUE, signif = 2)
 #' formatNum(1234567890, decimals = 0, abbr = TRUE)
+#' formatNum(c(-3:3), sign = TRUE)
 #' @export
-formatNum <- function(x, decimals = 2, 
+formatNum <- function(x, decimals = 2, signif = NULL,
                       type = Sys.getenv("LARES_NUMFORMAT"),
-                      pre = "", pos = "",
+                      pre = "", pos = "", sign = FALSE,
                       abbr = FALSE,
                       ...) {
   
+  if (sign)
+    signs <- ifelse(x > 0, "+", "")
+  if (!is.null(signif))
+    x <- base::signif(x, signif)
   if (abbr) {
     x <- num_abbr(x, n = decimals + 1)
   } else {
@@ -338,6 +346,7 @@ formatNum <- function(x, decimals = 2,
     }
     x <- trimws(x)
   }
+  if (sign) x <- paste0(signs, x)
   ret <- paste0(pre, x, pos)
   return(ret)
 }

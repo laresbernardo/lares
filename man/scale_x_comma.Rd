@@ -51,15 +51,15 @@ scale_y_formatNum(
 \item{...}{Arguments passed to \code{ggplot2::continuous_scale} or
 \code{lares::formatNum} depending on the function.}
 
-\item{decimals}{Integer. Amount of decimals to display}
+\item{decimals}{Integer. Amount of decimals to display.}
 
 \item{type}{Integer. \code{1} for International standards. \code{2}
 for American Standards. Use \code{Sys.setenv("LARES_NUMFORMAT" = 2)} 
 to set this parameter globally.}
 
-\item{pre}{Character. Add string before or after number}
+\item{pre}{Character. Add string before or after number.}
 
-\item{pos}{Character. Add string before or after number}
+\item{pos}{Character. Add string before or after number.}
 
 \item{abbr}{Boolean. Abbreviate using num_abbr()? You can use
 the `decimals` parameter to set abbr's \code{n}(-1) parameter.}

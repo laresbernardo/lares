@@ -422,9 +422,9 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   
   # For performance metrics
   scores_test <- get_scores(
-    predictions, test, 
-    model_type = model_type, 
-    target = target, 
+    predictions, test,
+    model_type = model_type,
+    target = target,
     cats = cats)
   multis <- scores_test$multis
   scores <- scores_test$scores
