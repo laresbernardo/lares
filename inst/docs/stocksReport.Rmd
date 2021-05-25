@@ -3,6 +3,8 @@ title: "Portfolio Performance Report"
 output: html_document
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 params:
+  summary_df1: NA
+  summary_df2: NA
   plots_fixed: NA
   plots_relative: NA
 ---
@@ -19,7 +21,6 @@ body { font-size: 16px;}
 # Some global stuff
 suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(ggplot2))
-suppressPackageStartupMessages(library(grid))
 suppressPackageStartupMessages(library(knitr))
 #params <- readRDS("params.RDS")
 ```
@@ -44,6 +45,19 @@ for (p in seq_along(plot_names)){
       ggplot2:::plot.ggplot(params$plots_relative[[i]][[p]])
       cat('\n', '<br>', '\n\n')
   }
+  cat('\n', '<br>', '\n\n')
+}
+```
+
+## Tabulated data {.tabset}
+
+```{r, results = 'asis', fig.width = 8, fig.height = 5, echo = FALSE}
+tables <- list(
+  "Stocks Summary" = kable(params$summary_df1, align = "lrcrrrr", row.names = TRUE, digits = c(0, 2, 0, 2, 0, 0, 1), format.args = list(big.mark = ",")),
+  "Portfolio Summary" = kable(params$summary_df2, align = "lcc", row.names = FALSE))
+for (i in seq_along(tables)){
+  cat("###", names(tables)[i], '<br>', '\n')
+  print(tables[[i]])
   cat('\n', '<br>', '\n\n')
 }
 ```

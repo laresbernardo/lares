@@ -921,7 +921,7 @@ stocks_obj <- function(data = stocks_file(),
   )
   
   # Relative plots (using time windows)
-  message(glued(">>> Running calculations and plots for {ws} window{ifelse(ws>1,'s','')}..."))
+  message(glued(">>> Running calculations and plots for {ws} time window{ifelse(ws>1,'s','')}..."))
   plots_relative <- lapply(window, function(x) {
     
     # Filter the data given the window
@@ -1018,8 +1018,35 @@ stocks_report <- function(data = NA,
   # Sys.setenv(RSTUDIO_PANDOC = pandoc)
   if (is.na(dir)) dir <- getwd()
   
+  # Summary as tables
+  summary_df1 <- data$stocks %>%
+    filter(.data$Date == max(.data$Date), .data$CumQuant > 0) %>%
+    mutate(Change = sprintf(
+      "%s (%s)", 
+      formatNum(100*.data$DifUSD/.data$CumValue, 2, pos = "%", sign = TRUE),
+      formatNum(.data$DifUSD/.data$CumQuant, 2, sign = TRUE))) %>%
+    arrange(desc(abs(.data$DifUSD/.data$CumQuant))) %>%
+    select(.data$Symbol, .data$Value, .data$Change, .data$DifUSD,
+           .data$CumQuant, .data$CumValue, .data$wt) %>%
+    rename("Abs.Change" = .data$DifUSD, "Quant" = .data$CumQuant,
+           "Total Value" = .data$CumValue, "Weight [%]" = .data$wt)
+  summary_df2 <- data$portfolio %>%
+    filter(.data$Date == max(.data$Date)) %>%
+    mutate(DifP = round(100*.data$DifUSD/.data$CumValue, 2)) %>%
+    mutate_if(is.numeric, function(x) formatNum(x, 2, signif = 6)) %>%
+    mutate_all(as.character) %>% 
+    select(.data$Date, one_of(sort(colnames(.)))) %>%
+    tidyr::gather() %>%
+    rename("Metric" = .data$key, "Value" = .data$value) %>%
+    mutate("Window" = c("Today", "Today", "Total", "Total", "Total",
+                        "Total", "Total", "Today", "Today", "Today",
+                        "Today", "Total", "Total")) %>%
+    arrange(.data$Window)
+  
   # Can be more accurate with names but works for me!
   params <- list(
+    summary_df1 = summary_df1,
+    summary_df2 = summary_df2,
     plots_fixed = data[["plots_fixed"]],
     plots_relative = data[["plots_relative"]])
   #saveRDS(params, "inst/docs/params.RDS")
@@ -1035,28 +1062,16 @@ stocks_report <- function(data = NA,
   message("HTML report created succesfully!")
   
   if (mail) {
-    # Summaries for the body
-    summary_df1 <- data$stocks %>%
-      filter(.data$Date == max(.data$Date), .data$CumQuant > 0) %>%
-      select(.data$Symbol, .data$Value, .data$CumQuant, .data$CumValue, .data$DifUSD) %>%
-      mutate(DifUSD = round(.data$DifUSD, 2),
-             DifP = round(100*.data$DifUSD/.data$CumValue, 2)) %>%
-      arrange(desc(abs(.data$DifP)))
-    summary_df2 <- data$portfolio %>%
-      filter(.data$Date == max(.data$Date)) %>%
-      mutate(DifP = round(100*.data$DifUSD/.data$CumValue, 2)) %>%
-      mutate_if(is.numeric, function(x) formatNum(x, 2, signif = 6, sign = TRUE)) %>%
-      mutate_all(as.character) %>% tidyr::gather()
     subject <- sprintf(
       "Report: %s | %s (%s)", max(data$portfolio$Date),
       paste0(summary_df2$value[summary_df2$key == "DifUSD"]),
       paste0(summary_df2$value[summary_df2$key == "DifP"], "%"))
-    try_require("htmlTable")
+    try_require("knitr")
     html_body <- paste0(
       "<p>Stocks Summary:</p>",
-      htmlTable(addHtmlTableStyle(summary_df1, align = "llrcrrrr")),
+      kable(summary_df1, align = "lrcrrrr", row.names = TRUE, digits = c(0, 2, 0, 2, 0, 0, 1)),
       "<p>Portfolio Status:</p>",
-      htmlTable(addHtmlTableStyle(summary_df2, align = "lr"), rnames = FALSE))
+      kable(summary_df2, align = "lr", row.names = FALSE))
     
     message(">>> Sending email...")
     mailSend(to = to,
