@@ -1035,18 +1035,36 @@ stocks_report <- function(data = NA,
   message("HTML report created succesfully!")
   
   if (mail) {
-    # Set token for mail and dropbox credentials
-    creds <- case_when(
-      is.na(creds) ~ "~/Dropbox (Personal)/Documentos/Docs/Data",
-      creds %in% c("matrix","server") ~ "~/creds",
-      TRUE ~ as.character(creds))
+    # Summaries for the body
+    summary_df1 <- data$stocks %>%
+      filter(.data$Date == max(.data$Date), .data$CumQuant > 0) %>%
+      select(.data$Symbol, .data$Value, .data$CumQuant, .data$CumValue, .data$DifUSD) %>%
+      mutate(DifUSD = round(.data$DifUSD, 2),
+             DifP = round(100*.data$DifUSD/.data$CumValue, 2)) %>%
+      arrange(desc(abs(.data$DifP)))
+    summary_df2 <- data$portfolio %>%
+      filter(.data$Date == max(.data$Date)) %>%
+      mutate(DifP = round(100*.data$DifUSD/.data$CumValue, 2)) %>%
+      mutate_if(is.numeric, function(x) formatNum(x, 2, signif = 6, sign = TRUE)) %>%
+      mutate_all(as.character) %>% tidyr::gather()
+    subject <- sprintf(
+      "Report: %s | %s (%s)", max(data$portfolio$Date),
+      paste0(summary_df2$value[summary_df2$key == "DifUSD"]),
+      paste0(summary_df2$value[summary_df2$key == "DifP"], "%"))
+    try_require("htmlTable")
+    html_body <- paste0(
+      "<p>Stocks Summary:</p>",
+      htmlTable(addHtmlTableStyle(summary_df1, align = "llrcrrrr")),
+      "<p>Portfolio Status:</p>",
+      htmlTable(addHtmlTableStyle(summary_df2, align = "rlr"), rnames = FALSE))
     
     message(">>> Sending email...")
-    mailSend(to = to, text = " \n", 
-             subject = paste("Portfolio:", max(data$portfolio$Date)),
-             attachment = paste0(getwd(), html_file),
+    mailSend(to = to,
+             subject = subject,
+             html = html_body,
+             attachment = html_file, 
              creds = creds,
-             quiet = FALSE) 
+             quiet = FALSE)
     if (!keep) invisible(file.remove(paste0(getwd(), html_file)))
   }
   

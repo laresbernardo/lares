@@ -79,6 +79,7 @@ recommended <- list(
   exifr = "read_exif",
   factoextra = "fviz_nbclust",
   forecast = c("Arima", "auto.arima", "forecast"),
+  htmlTable = c("addHtmlTableStyle", "htmlTable"),
   gdata = "read.xls",
   ggbeeswarm = "geom_quasirandom",
   ggforce = "geom_mark_ellipse",
