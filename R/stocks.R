@@ -1056,7 +1056,7 @@ stocks_report <- function(data = NA,
       "<p>Stocks Summary:</p>",
       htmlTable(addHtmlTableStyle(summary_df1, align = "llrcrrrr")),
       "<p>Portfolio Status:</p>",
-      htmlTable(addHtmlTableStyle(summary_df2, align = "rlr"), rnames = FALSE))
+      htmlTable(addHtmlTableStyle(summary_df2, align = "lr"), rnames = FALSE))
     
     message(">>> Sending email...")
     mailSend(to = to,
@@ -1065,7 +1065,7 @@ stocks_report <- function(data = NA,
              attachment = html_file, 
              creds = creds,
              quiet = FALSE)
-    if (!keep) invisible(file.remove(paste0(getwd(), html_file)))
+    if (!keep) invisible(file.remove(html_file))
   }
   
   toc("stocks_report")
