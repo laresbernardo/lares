@@ -120,9 +120,11 @@
     <pre class="usage"><span class='fu'>formatNum</span><span class='op'>(</span>
   <span class='va'>x</span>,
   decimals <span class='op'>=</span> <span class='fl'>2</span>,
+  signif <span class='op'>=</span> <span class='cn'>NULL</span>,
   type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"LARES_NUMFORMAT"</span><span class='op'>)</span>,
   pre <span class='op'>=</span> <span class='st'>""</span>,
   pos <span class='op'>=</span> <span class='st'>""</span>,
+  sign <span class='op'>=</span> <span class='cn'>FALSE</span>,
   abbr <span class='op'>=</span> <span class='cn'>FALSE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -136,7 +138,12 @@
     </tr>
     <tr>
       <th>decimals</th>
-      <td><p>Integer. Amount of decimals to display</p></td>
+      <td><p>Integer. Amount of decimals to display.</p></td>
+    </tr>
+    <tr>
+      <th>signif</th>
+      <td><p>Integer. Rounds the values in its first argument to
+the specified number of significant digits.</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -146,7 +153,11 @@ to set this parameter globally.</p></td>
     </tr>
     <tr>
       <th>pre, pos</th>
-      <td><p>Character. Add string before or after number</p></td>
+      <td><p>Character. Add string before or after number.</p></td>
+    </tr>
+    <tr>
+      <th>sign</th>
+      <td><p>Boolean. Add <code><a href='https://rdrr.io/r/base/Arithmetic.html'>+</a></code> sign to positive values.</p></td>
     </tr>
     <tr>
       <th>abbr</th>
@@ -155,7 +166,7 @@ the `decimals` parameter to set abbr's <code>n</code>(-1) parameter.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional lazy eval parameters</p></td>
+      <td><p>Additional lazy eval parameters.</p></td>
     </tr>
     </table>
 
@@ -190,9 +201,10 @@ the `decimals` parameter to set abbr's <code>n</code>(-1) parameter.</p></td>
 </div><div class='output co'>#&gt; [1] "1.235"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1.23456</span>, type <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "1,23"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1.23456</span>, pre <span class='op'>=</span> <span class='st'>"$"</span>, pos <span class='op'>=</span> <span class='st'>"/person"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "$1.23/person"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>123456</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "123K"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1234567890</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "1.23B"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1234567890</span>, decimals <span class='op'>=</span> <span class='fl'>0</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "1B"</div></pre>
+</div><div class='output co'>#&gt; [1] "123K"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1234567890</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span>, signif <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "1.2B"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1234567890</span>, decimals <span class='op'>=</span> <span class='fl'>0</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "1B"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>, sign <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "-3.00" "-2.00" "-1.00" "0.00"  "+1.00" "+2.00" "+3.00"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

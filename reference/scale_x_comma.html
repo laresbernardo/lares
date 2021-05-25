@@ -167,7 +167,7 @@ further customize your numerical scales with <code><a href='formatNum.html'>lare
     </tr>
     <tr>
       <th>decimals</th>
-      <td><p>Integer. Amount of decimals to display</p></td>
+      <td><p>Integer. Amount of decimals to display.</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -177,11 +177,11 @@ to set this parameter globally.</p></td>
     </tr>
     <tr>
       <th>pre</th>
-      <td><p>Character. Add string before or after number</p></td>
+      <td><p>Character. Add string before or after number.</p></td>
     </tr>
     <tr>
       <th>pos</th>
-      <td><p>Character. Add string before or after number</p></td>
+      <td><p>Character. Add string before or after number.</p></td>
     </tr>
     <tr>
       <th>abbr</th>
@@ -206,7 +206,7 @@ the `decimals` parameter to set abbr's <code>n</code>(-1) parameter.</p></td>
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>median</span>, y <span class='op'>=</span> <span class='va'>inventory</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>scale_x_formatNum</span><span class='op'>(</span>n.breaks <span class='op'>=</span> <span class='fl'>3</span>, pre <span class='op'>=</span> <span class='st'>"@"</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>scale_y_formatNum</span><span class='op'>(</span>position <span class='op'>=</span> <span class='st'>"right"</span>, decimals <span class='op'>=</span> <span class='fl'>0</span>, pos <span class='op'>=</span> <span class='st'>" X"</span><span class='op'>)</span>
-</div><div class='img'><img src='scale_x_comma-3.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='output co'>#&gt; <span class='error'>Error in base::signif(x, signif): non-numeric argument to mathematical function</span></div><div class='img'><img src='scale_x_comma-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

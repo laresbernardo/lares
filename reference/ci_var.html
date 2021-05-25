@@ -152,22 +152,22 @@ using another variable. Tidyverse friendly.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
 <span class='fu'>ci_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Fare</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 5</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 5</span>
 #&gt;   Fare_mean Fare_sd     n lower_ci upper_ci
-#&gt;       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>      32.2    49.7   891     28.9     35.5</div><div class='input'><span class='fu'>ci_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Fare</span>, <span class='va'>Pclass</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 6</span><span>
+#&gt;       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>      32.2    49.7   891     28.9     35.5</div><div class='input'><span class='fu'>ci_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Fare</span>, <span class='va'>Pclass</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 6</span>
 #&gt;   Pclass Fare_mean Fare_sd     n lower_ci upper_ci
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 1           84.2    78.4   216     73.6     94.7
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2           20.7    13.4   184     18.7     22.6
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 3           13.7    11.8   491     12.6     14.7</div><div class='input'><span class='fu'>ci_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Fare</span>, <span class='va'>Pclass</span>, conf <span class='op'>=</span> <span class='fl'>0.99</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 6</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> 1           84.2    78.4   216     73.6     94.7
+#&gt; <span style='color: #BCBCBC;'>2</span> 2           20.7    13.4   184     18.7     22.6
+#&gt; <span style='color: #BCBCBC;'>3</span> 3           13.7    11.8   491     12.6     14.7</div><div class='input'><span class='fu'>ci_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Fare</span>, <span class='va'>Pclass</span>, conf <span class='op'>=</span> <span class='fl'>0.99</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 6</span>
 #&gt;   Pclass Fare_mean Fare_sd     n lower_ci upper_ci
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 1           84.2    78.4   216     70.3     98.0
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2           20.7    13.4   184     18.1     23.2
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 3           13.7    11.8   491     12.3     15.1</div></span></pre>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> 1           84.2    78.4   216     70.3     98.0
+#&gt; <span style='color: #BCBCBC;'>2</span> 2           20.7    13.4   184     18.1     23.2
+#&gt; <span style='color: #BCBCBC;'>3</span> 3           13.7    11.8   491     12.3     15.1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
