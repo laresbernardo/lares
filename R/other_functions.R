@@ -330,10 +330,8 @@ formatNum <- function(x, decimals = 2, signif = NULL,
                       abbr = FALSE,
                       ...) {
   
-  if (sign)
-    signs <- ifelse(x > 0, "+", "")
-  if (!is.null(signif))
-    x <- base::signif(x, signif)
+  if (sign) signs <- ifelse(x > 0, "+", "")
+  if (!is.null(signif)) x <- base::signif(x, signif)
   if (abbr) {
     x <- num_abbr(x, n = decimals + 1)
   } else {

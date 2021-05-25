@@ -359,21 +359,22 @@ scale_y_abbr <- function(...) scale_y_continuous(..., labels = num_abbr)
 #' @rdname scale_x_comma
 #' @inheritParams formatNum
 #' @export
-scale_x_formatNum <- function(..., decimals = 2,
+scale_x_formatNum <- function(..., decimals = 2, signif = NULL,
                               type = Sys.getenv("LARES_NUMFORMAT"),
-                              pre = "", pos = "", abbr = FALSE) {
+                              pre = "", pos = "", sign = FALSE, abbr = FALSE) {
   scale_x_continuous(..., labels = function(x)
-    formatNum(x, decimals, type, pre, pos, abbr))
+    formatNum(x, decimals = decimals, signif = signif, type = type,
+              pre = pre, pos = pos, sign = sign, abbr = abbr))
 }
 
 #' @rdname scale_x_comma
-#' @inheritParams formatNum
 #' @export
-scale_y_formatNum <- function(..., decimals = 2,
+scale_y_formatNum <- function(..., decimals = 2, signif = NULL,
                               type = Sys.getenv("LARES_NUMFORMAT"),
-                              pre = "", pos = "", abbr = FALSE) {
+                              pre = "", pos = "", sign = FALSE, abbr = FALSE) {
   scale_y_continuous(..., labels = function(x)
-    formatNum(x, decimals, type, pre, pos, abbr))
+    formatNum(x, decimals = decimals, signif = signif, type = type,
+              pre = pre, pos = pos, sign = sign, abbr = abbr))
 }
 
 
