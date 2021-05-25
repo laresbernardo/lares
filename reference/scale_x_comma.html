@@ -142,18 +142,22 @@ further customize your numerical scales with <code><a href='formatNum.html'>lare
 <span class='fu'>scale_x_formatNum</span><span class='op'>(</span>
   <span class='va'>...</span>,
   decimals <span class='op'>=</span> <span class='fl'>2</span>,
+  signif <span class='op'>=</span> <span class='cn'>NULL</span>,
   type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"LARES_NUMFORMAT"</span><span class='op'>)</span>,
   pre <span class='op'>=</span> <span class='st'>""</span>,
   pos <span class='op'>=</span> <span class='st'>""</span>,
+  sign <span class='op'>=</span> <span class='cn'>FALSE</span>,
   abbr <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span>
 
 <span class='fu'>scale_y_formatNum</span><span class='op'>(</span>
   <span class='va'>...</span>,
   decimals <span class='op'>=</span> <span class='fl'>2</span>,
+  signif <span class='op'>=</span> <span class='cn'>NULL</span>,
   type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"LARES_NUMFORMAT"</span><span class='op'>)</span>,
   pre <span class='op'>=</span> <span class='st'>""</span>,
   pos <span class='op'>=</span> <span class='st'>""</span>,
+  sign <span class='op'>=</span> <span class='cn'>FALSE</span>,
   abbr <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
@@ -170,6 +174,11 @@ further customize your numerical scales with <code><a href='formatNum.html'>lare
       <td><p>Integer. Amount of decimals to display.</p></td>
     </tr>
     <tr>
+      <th>signif</th>
+      <td><p>Integer. Rounds the values in its first argument to
+the specified number of significant digits.</p></td>
+    </tr>
+    <tr>
       <th>type</th>
       <td><p>Integer. <code>1</code> for International standards. <code>2</code>
 for American Standards. Use <code><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.setenv("LARES_NUMFORMAT" = 2)</a></code> 
@@ -182,6 +191,10 @@ to set this parameter globally.</p></td>
     <tr>
       <th>pos</th>
       <td><p>Character. Add string before or after number.</p></td>
+    </tr>
+    <tr>
+      <th>sign</th>
+      <td><p>Boolean. Add <code><a href='https://rdrr.io/r/base/Arithmetic.html'>+</a></code> sign to positive values.</p></td>
     </tr>
     <tr>
       <th>abbr</th>
@@ -206,7 +219,7 @@ the `decimals` parameter to set abbr's <code>n</code>(-1) parameter.</p></td>
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>median</span>, y <span class='op'>=</span> <span class='va'>inventory</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>scale_x_formatNum</span><span class='op'>(</span>n.breaks <span class='op'>=</span> <span class='fl'>3</span>, pre <span class='op'>=</span> <span class='st'>"@"</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>scale_y_formatNum</span><span class='op'>(</span>position <span class='op'>=</span> <span class='st'>"right"</span>, decimals <span class='op'>=</span> <span class='fl'>0</span>, pos <span class='op'>=</span> <span class='st'>" X"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in base::signif(x, signif): non-numeric argument to mathematical function</span></div><div class='img'><img src='scale_x_comma-3.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='img'><img src='scale_x_comma-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
