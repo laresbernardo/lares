@@ -1064,8 +1064,8 @@ stocks_report <- function(data = NA,
   if (mail) {
     subject <- sprintf(
       "Report: %s | %s (%s)", max(data$portfolio$Date),
-      paste0(summary_df2$value[summary_df2$key == "DifUSD"]),
-      paste0(summary_df2$value[summary_df2$key == "DifP"], "%"))
+      paste0(summary_df2$Value[summary_df2$Metric == "DifUSD"]),
+      paste0(summary_df2$Value[summary_df2$Metric == "DifP"], "%"))
     try_require("knitr")
     html_body <- paste0(
       "<p>Stocks Summary:</p>",
