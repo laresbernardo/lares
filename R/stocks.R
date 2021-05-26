@@ -1024,7 +1024,7 @@ stocks_report <- function(data = NA,
     mutate(Change = sprintf(
       "%s (%s)", 
       formatNum(100*.data$DifUSD/.data$CumValue, 2, pos = "%", sign = TRUE),
-      formatNum(.data$DifUSD/.data$CumQuant, 2, sign = TRUE, pos = "$"))) %>%
+      formatNum(.data$DifUSD/.data$CumQuant, 2, sign = TRUE))) %>%
     arrange(desc(abs(.data$DifUSD/.data$CumValue))) %>%
     select(.data$Symbol, .data$Value, .data$Change, .data$DifUSD,
            .data$CumQuant, .data$CumValue, .data$wt) %>%
