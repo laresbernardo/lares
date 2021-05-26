@@ -35,9 +35,12 @@ If not, an HTML file will be created in dir}
 \item{keep}{Boolean. Keep HTML file when sended by email?}
 
 \item{creds}{Character. Credential's user (see \code{get_creds()}) for 
-sending mail and Dropbox interaction}
+sending mail and Dropbox interaction.}
 
 \item{cache}{Boolean. Use daily cache if available?}
+}
+\value{
+Invisible list. Aggregated results and plots.
 }
 \description{
 This function lets the user create his portfolio's full report with 
@@ -68,8 +71,6 @@ Other Investment:
 Other Credentials: 
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
-\code{\link{f1_contacts}()},
-\code{\link{geoAddress}()},
 \code{\link{get_credentials}()},
 \code{\link{get_tweets}()},
 \code{\link{mailSend}()},

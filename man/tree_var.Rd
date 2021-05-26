@@ -32,9 +32,13 @@ exist in a node in order for a split to be attempted}
 
 \item{ohse}{Boolean. Auto generate One Hot Smart Encoding?}
 
-\item{plot}{Boolean. Return a plot? If not, rpart object}
+\item{plot}{Boolean. Return a plot? If not, \code{rpart} object}
 
 \item{...}{rpart.plot custom parameters}
+}
+\value{
+When \code{plot=TRUE} returns plot; when \code{plot=FALSE}
+returns \code{rpart} fitted model.
 }
 \description{
 Fit and plot a rpart model for exploratory purposes using rpart

@@ -7,7 +7,7 @@
 file_name(filepath)
 }
 \arguments{
-\item{filepath}{Character vector. File path(s) to get file names with
+\item{filepath}{Character vector. File path(s) to get file names with.
 no extension.}
 }
 \description{

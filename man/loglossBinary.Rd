@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_metrics.R
 \name{loglossBinary}
 \alias{loglossBinary}
-\title{Loggarithmic Loss Function for Binary Models}
+\title{Logarithmic Loss Function for Binary Models}
 \usage{
 loglossBinary(tag, score, eps = 0.001)
 }

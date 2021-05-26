@@ -46,6 +46,9 @@ best value, "none" to turn off or the number of split.}
 
 \item{quiet}{Boolean. Do not show message for auto target?}
 }
+\value{
+Plot with cumulative response and performance results by cuts.
+}
 \description{
 The response gains plot helps us answer the question: When we 
 apply the model and select up until ntile X, what is the expected 

@@ -7,11 +7,14 @@
 bindfiles(files)
 }
 \arguments{
-\item{files}{Character vector. Filenames.}
+\item{files}{Character vector. Files names.}
+}
+\value{
+data.frame with data joined from all \code{files} passed.
 }
 \description{
 This function imports and binds multiple files into a single 
-data.frame. Files must be inserted with absolute roots filenames.
+data.frame. Files must be inserted with absolute roots files names.
 }
 \seealso{
 Other Tools: 

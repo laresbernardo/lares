@@ -45,6 +45,9 @@ or score (only used when more than 2 categories coexist).}
 
 \item{file_name}{Character. File name as you wish to save the plot}
 }
+\value{
+Plot with ROC curve and AUC performance results.
+}
 \description{
 This function plots ROC Curves with AUC values with 95\% confidence 
 range. It also works for multi-categorical models.

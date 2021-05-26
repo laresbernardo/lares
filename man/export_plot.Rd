@@ -37,6 +37,9 @@ wish to save the plot? Working directory as default \code{dir}.}
 
 \item{quiet}{Boolean. Display successful message with filename when saved?}
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 Export any \code{ggplot2}, \code{gridExtra}, or any plot object 
 created with R into rendered \code{png} or \code{jpg} file.

@@ -9,15 +9,18 @@ topics_rake(text, file = "english-ewt-ud-2.4-190531.udpipe", lang = "english")
 \arguments{
 \item{text}{Character vector}
 
-\item{file}{Character. Name of udpipe model previously downloaded
+\item{file}{Character. Name of \code{udpipe} model previously downloaded
 for a specific language}
 
 \item{lang}{Character. If file does not exist, this language will be
-downloaded from udpipe's models}
+downloaded from \code{udpipe}'s models.}
+}
+\value{
+data.frame with topics for each \code{text} input.
 }
 \description{
 RAKE is a basic algorithm which tries to identify keywords in text. 
-Based on udpipe library, model models, and keywords_rake function.
+Based on \code{udpipe} library, model models, and keywords_rake function.
 }
 \seealso{
 Other Text Mining: 

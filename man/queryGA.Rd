@@ -34,6 +34,9 @@ metrics/dimensions. Check \code{googleAnalyticsR::google_analytics()}.}
 
 \item{end}{Date. End date for the report}
 }
+\value{
+data.frame with the API GET request tabulated results.
+}
 \description{
 This function lets the user query Google Analytics with its API.
 More about the documentation and parameters in
@@ -44,8 +47,6 @@ More about the documentation and parameters in
 Other Credentials: 
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
-\code{\link{f1_contacts}()},
-\code{\link{geoAddress}()},
 \code{\link{get_credentials}()},
 \code{\link{get_tweets}()},
 \code{\link{mailSend}()},
@@ -56,7 +57,6 @@ Other Credentials:
 
 Other Google: 
 \code{\link{filesGD}()},
-\code{\link{geoAddress}()},
 \code{\link{readGS}()},
 \code{\link{trendsRelated}()},
 \code{\link{trendsTime}()},

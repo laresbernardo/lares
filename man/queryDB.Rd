@@ -4,7 +4,7 @@
 \alias{queryDB}
 \title{PostgreSQL Queries on Database (Read)}
 \usage{
-queryDB(query, from = "dummy", creds = NA)
+queryDB(query, from, creds = NA)
 }
 \arguments{
 \item{query}{Character. SQL Query}
@@ -12,6 +12,9 @@ queryDB(query, from = "dummy", creds = NA)
 \item{from}{Character. Credential's user (see \code{get_creds()})}
 
 \item{creds}{Character. Credential's directory (see \code{get_creds()})}
+}
+\value{
+data.frame. Result of fetching the \code{query} data.
 }
 \description{
 This function lets the user query a PostgreSQL database. Previously
@@ -22,8 +25,6 @@ more general function by using the \code{from} parameter.
 Other Credentials: 
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
-\code{\link{f1_contacts}()},
-\code{\link{geoAddress}()},
 \code{\link{get_credentials}()},
 \code{\link{get_tweets}()},
 \code{\link{mailSend}()},

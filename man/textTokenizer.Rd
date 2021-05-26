@@ -52,9 +52,12 @@ a single word.}
 \item{df}{Boolean. Return a dataframe with a one-hot-encoding kind of
 results? Each word is a column and returns if word is contained.}
 
-\item{h2o}{Boolean. Return H2OFrame?}
+\item{h2o}{Boolean. Return \code{H2OFrame}?}
 
 \item{quiet}{Boolean. Keep quiet? If not, print messages}
+}
+\value{
+data.frame. Tokenized words with counters.
 }
 \description{
 This function transforms texts into words, calculate frequencies,
@@ -67,7 +70,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -76,7 +78,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

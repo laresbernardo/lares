@@ -11,8 +11,9 @@ conf_mat(tag, score, thresh = 0.5, sense = ">=", diagonal = TRUE, plot = FALSE)
 
 \item{score}{Vector. Predicted value or model's result}
 
-\item{thresh}{Numeric. Value which splits the results for the 
-confusion matrix when binary.}
+\item{thresh}{Integer. Threshold for selecting binary or regression 
+models: this number is the threshold of unique values we should 
+have in 'tag' (more than: regression; less than: classification)}
 
 \item{sense}{Character. Inequation sense for threshold: <, <=, >=, >}
 
@@ -20,6 +21,10 @@ confusion matrix when binary.}
 zeroes. Ideal to detect must confusing categories.}
 
 \item{plot}{Boolean. Plot result? Uses \code{mplot_conf()}}
+}
+\value{
+data.frame. Result of counting \code{tag} and \code{score}'s tag
+given a \code{thresh}old, similar to \code{base::table()}.
 }
 \description{
 This function calculates a Confussion Matrix using crosstab for

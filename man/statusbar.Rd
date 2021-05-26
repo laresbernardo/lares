@@ -38,6 +38,9 @@ wasting resources on fast and lots of iterations.}
 
 \item{alarm}{Boolean. Ping (sound) when done. Requires \code{beepr}.}
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 This function lets the user view a progressbar for a 'for' loop.
 }

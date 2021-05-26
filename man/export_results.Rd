@@ -10,7 +10,8 @@ export_results(
   which = c("txt", "csv", "rds", "binary", "mojo", "plots", "dev", "production"),
   note = NA,
   subdir = NA,
-  save = TRUE
+  save = TRUE,
+  seed = 0
 )
 }
 \arguments{
@@ -32,6 +33,11 @@ models are trained and saved to remember which one is which one}
 the results?}
 
 \item{save}{Boolean. Do you wish to save/export results?}
+
+\item{seed}{Numeric. For reproducible results and random splits.}
+}
+\value{
+No return value, called for side effects.
 }
 \description{
 Export RDS, TXT, POJO, MOJO and all results from \code{h2o_automl()}.

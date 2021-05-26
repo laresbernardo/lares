@@ -13,7 +13,10 @@ gg_pie(df, var, table = FALSE, ...)
 
 \item{table}{Boolean. Print results as table?}
 
-\item{...}{Further parameters passed to freqs()}
+\item{...}{Further parameters passed to \code{freqs()}}
+}
+\value{
+ggplot2 object
 }
 \description{
 This function plots discrete and continuous values results

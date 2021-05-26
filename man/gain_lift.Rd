@@ -29,6 +29,9 @@ categorical model.}
 
 \item{quiet}{Boolean. Do not show message for auto target?}
 }
+\value{
+data.frame when \code{plot=FALSE} or plot when \code{plot=TRUE}.
+}
 \description{
 This function calculates cumulative gain, lift, and response 
 values for a predictive score of a specific target. You can use the 

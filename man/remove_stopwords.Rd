@@ -17,6 +17,9 @@ but when the letter "a" appears in a word, it will remain.}
 
 \item{sep}{Character. String that separate the terms.}
 }
+\value{
+Character vector with removed texts.
+}
 \description{
 Remove all stop-words and specific patterns from a character vector
 }

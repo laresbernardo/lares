@@ -15,6 +15,9 @@ creds if correctly used.}
 \item{creds}{Character. Credential's dir (see \code{get_creds()}). Set
 hook URL into the "slack" list in your YML file. Will use first value.}
 }
+\value{
+Invisible POST response
+}
 \description{
 This function send a Slack message using its Webhooks.
 }
@@ -47,8 +50,6 @@ Other API:
 Other Credentials: 
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
-\code{\link{f1_contacts}()},
-\code{\link{geoAddress}()},
 \code{\link{get_credentials}()},
 \code{\link{get_tweets}()},
 \code{\link{mailSend}()},

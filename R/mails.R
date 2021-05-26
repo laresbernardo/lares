@@ -15,6 +15,7 @@
 #' @param creds Character. Credential's user (see \code{get_creds()}).
 #' Must contain: url (POST address), api (api key)
 #' @param quiet Boolean. Keep quite or display messages?
+#' @return No return value, called for side effects.
 #' @export
 mailSend <- function(from = "RMail <laresbernardo@gmail.com>",
                      to = "laresbernardo@gmail.com",

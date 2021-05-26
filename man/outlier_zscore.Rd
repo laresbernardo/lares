@@ -13,6 +13,10 @@ outlier_zscore(x, thresh = 3, mad = FALSE)
 
 \item{mad}{Boolean. Use median absolute deviation instead?}
 }
+\value{
+data.frame. Each row is an \code{x} observation with its 
+respective std/mean or mad/med calculations depending on \code{mad} input.
+}
 \description{
 Z-score, also called a standard score, of an observation is a 
 distance from the population center measured in number of normalization 

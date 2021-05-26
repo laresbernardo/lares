@@ -12,6 +12,9 @@ date_cuts(date = Sys.Date(), type = "Q")
 \item{type}{Character. Any of the following: B (2 months),
 Q (3 months), T (4 months), H (6 months)}
 }
+\value{
+Vector with date cut for each \code{date}
+}
 \description{
 This function returns categorical values for any date(s) using year
 cuts such as bimonths, quarters, terms, and halves.
@@ -26,7 +29,6 @@ Other Data Wrangling:
 \code{\link{categ_reducer}()},
 \code{\link{cleanText}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -35,7 +37,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

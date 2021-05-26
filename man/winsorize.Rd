@@ -12,8 +12,11 @@ winsorize(x, thresh = c(0.05, 0.95), na.rm = FALSE)
 \item{thresh}{Numeric vector. Lower and upper quantiles thresholds.
 Set values within [0,1].}
 
-\item{na.rm}{Boolean. Should NAs be omitted to calculate the quantiles? 
-Note that `NA`s in x are preserved and left unchanged anyway.}
+\item{na.rm}{Boolean. Should \code{NA} be omitted to calculate the quantiles? 
+Note that \code{NA} in \code{x} are preserved and left unchanged anyway.}
+}
+\value{
+Numeric vector transformed.
 }
 \description{
 Winsorizing a vector means that a predefined quantum of the smallest 

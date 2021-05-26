@@ -15,7 +15,8 @@
 #' Cash, and Transactions information
 #' @param keep_old Boolean. Include sold tickers even though not currently in portfolio?
 #' @param cache Boolean. Use daily cache if available?
-#' @param quiet Boolean. Keep quiet? If not, informative messages will be printed
+#' @param quiet Boolean. Keep quiet? If not, informative messages will be printed.
+#' @return List with portfolio, transactions, and cash data.frames.
 #' @examples 
 #' \dontrun{
 #' # Load lares dummy portfolio XLSX
@@ -88,6 +89,8 @@ stocks_file <- function(file = NA,
 #' @family Investment
 #' @family Scrapper
 #' @param ticks Character Vector. Symbols/Tickers to quote in real time.
+#' @return data.frame with Symbol, Type of stock, Quote time, current value,
+#' Daily Change, Market, and Symbol Name.
 #' @examples 
 #' \donttest{
 #' # Multiple quotes at the same time
@@ -139,17 +142,10 @@ stocks_quote <- function(ticks) {
 #' @param tax Numeric. How much [0-99] of your dividends are gone with taxes? 
 #' @param parg Boolean. Personal argument. Used to personalize stuff, in this
 #' case, taxes changed from A to B in given date (hard-coded)
+#' @return data.frame for each Date and Symbol closing quote value.
 #' @examples 
-#' \dontrun{
-#' df <- stocks_hist(symbols = c("VTI", "FB"), from = Sys.Date() - 7)
-#' head(df)
-#          Date Symbol  Value
-# 1  2020-05-15    VTI 143.83
-# 2  2020-05-15     FB 210.88
-# 3  2020-05-14    VTI 143.03
-# 4  2020-05-14     FB 206.87
-# 5  2020-05-13    VTI 142.88
-# 6  2020-05-13     FB 207.94
+#' \donttest{
+#' stocks_hist(symbols = c("VTI", "FB"), from = Sys.Date() - 7, quiet = TRUE)
 #' }
 #' @export
 stocks_hist <- function(symbols = c("VTI", "TSLA"),
@@ -244,6 +240,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
     replace(is.na(.), 0) %>% 
     arrange(desc(.data$Date))
   
+  results <- as_tibble(results)
   attr(results, "type") <- "stocks_hist"
   cache_write(results, cache_file, quiet = TRUE)
   return(results)
@@ -261,6 +258,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
 #' @param trans Dataframe. Result from \code{stocks_file()$transactions}
 #' @param tickers Dataframe. Result from \code{stocks_file()$portfolio}
 #' @param window Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"
+#' @return data.frame. Processed at date and symbol level.
 #' @export
 daily_stocks <- function(hist, trans, tickers = NA, window = "MAX") {
   
@@ -332,6 +330,7 @@ daily_stocks <- function(hist, trans, tickers = NA, window = "MAX") {
 #' @param cash Dataframe. Result from \code{stocks_file()$cash}
 #' @param cash_fix Numeric. If, for some reason, you need to fix your 
 #' cash amount for all reports, set the amount here
+#' @return data.frame. Processed at date and portfolio level.
 #' @export
 daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
   
@@ -399,6 +398,7 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
 #' @param p Dataframe. Result from \code{daily_portfolio()}
 #' @param s Dataframe. Result from \code{daily_stocks()}
 #' @param save Boolean. Save plot into a local file?
+#' @return ggplot object
 #' @export
 splot_summary <- function(p, s, save = FALSE) {
   
@@ -480,6 +480,7 @@ splot_summary <- function(p, s, save = FALSE) {
 #' @param group Boolean. Group stocks by stocks type?
 #' @param n_days Integer. How many days back you want to see?
 #' sold entirely?
+#' @return ggplot object
 #' @export
 splot_change <- function(p, s, weighted = TRUE,
                          group = FALSE,
@@ -559,6 +560,7 @@ splot_change <- function(p, s, weighted = TRUE,
 #' @family Investment
 #' @family Investment Plots
 #' @inheritParams splot_summary
+#' @return ggplot object
 #' @export
 splot_growth <- function(p, save = FALSE) {
   
@@ -632,6 +634,7 @@ splot_growth <- function(p, save = FALSE) {
 #' will be calculated locally for n_days parameter
 #' @param ma Numeric Vector. Select 2 values for moving averages. 
 #' Set to NA to turn this metric off
+#' @return ggplot object
 #' @export
 splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save = FALSE) {
   
@@ -717,6 +720,7 @@ splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save =
 #' @family Investment
 #' @family Investment Plots
 #' @inheritParams splot_summary
+#' @return ggplot object
 #' @export
 splot_types <- function(s, save = FALSE) {
   
@@ -748,10 +752,15 @@ splot_types <- function(s, save = FALSE) {
 #' @family Investment
 #' @inheritParams stocks_hist
 #' @param etf Character Vector. Which ETFs you wish to scrap?
+#' @return data.frame with ETF break.down data by sector
+#' @examples
+#' \donttest{
+#' etf_sector(etf = "VTI")
+#' }
 #' @export
 etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
   
-  if (attr(etf, "type") == "daily_stocks")
+  if ("daily_stocks" %in% attr(etf, "type"))
     etf <- as.character(unique(etf$Symbol[etf$Date == max(etf$Date)]))
   
   cache_file <- c(as.character(Sys.Date()), "etf_sector", etf)
@@ -815,6 +824,7 @@ etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
 #' @inheritParams splot_summary
 #' @inheritParams stocks_file
 #' @param keep_all Boolean. Keep "Not Known / Not ETF"?
+#' @return ggplot2 object
 #' @export
 splot_etf <- function(s, keep_all = FALSE, cache = TRUE, save = FALSE) {
   
@@ -882,6 +892,7 @@ splot_etf <- function(s, keep_all = FALSE, cache = TRUE, save = FALSE) {
 #' @param sectors Boolean. Return sectors segmentation for ETFs?
 #' @param parg Boolean. Personal argument. Used to personalize stuff, in this
 #' case, taxes changed from A to B in given date (hard-coded)
+#' @return List. Aggregated results and plots.
 #' @export
 stocks_obj <- function(data = stocks_file(),
                        cash_fix = 0,
@@ -987,7 +998,8 @@ filter_window <- function(df, window) {
 #' @param sectors Boolean. Return sectors segmentation for ETFs?
 #' @param keep Boolean. Keep HTML file when sended by email?
 #' @param creds Character. Credential's user (see \code{get_creds()}) for 
-#' sending mail and Dropbox interaction
+#' sending mail and Dropbox interaction.
+#' @return Invisible list. Aggregated results and plots.
 #' @examples
 #' \dontrun{
 #' list <- stocks_obj()

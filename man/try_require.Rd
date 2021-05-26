@@ -12,6 +12,9 @@ try_require(package, stop = TRUE)
 \item{stop}{Boolean. Stop if not installed. If \code{FALSE} and 
 library is not available, warning will be shown.}
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 This function checks library dependencies
 }

@@ -9,7 +9,10 @@ quiet(fx, quiet = TRUE)
 \arguments{
 \item{fx}{Function to quiet}
 
-\item{quiet}{Quiet outputs? If not, skip quietness}
+\item{quiet}{Quiet outputs? If not, skip quietness.}
+}
+\value{
+Same as \code{fx} but with no messages or prints.
 }
 \description{
 This function silences (verbose) output prints. Thanks to Hadley Wickham

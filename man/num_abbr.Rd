@@ -13,7 +13,7 @@ num_abbr(x, n = 3)
 significant figures to show. Range 1 to 6.}
 }
 \value{
-A vector of character values that contain converted values
+Vector of character values that contain converted values
 }
 \description{
 This function converts a numeric vector's values into their

@@ -15,6 +15,10 @@ listfiles(folder = getwd(), recursive = TRUE, regex = NA, images = FALSE)
 
 \item{images}{Boolean. Bring only image files?}
 }
+\value{
+data.frame with relevant data for each file on
+\code{folder} directory.
+}
 \description{
 This function lets the user list all files on a given directory.
 It also lets filter files which contains a string.

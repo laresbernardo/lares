@@ -48,35 +48,29 @@ You might also want to set this parameter globally with
 
 \item{quiet}{Boolean. Do not print words as they are being searched.}
 }
+\value{
+data.frame with matching words found, sorted by higher points.
+}
 \description{
 Find highest score words given a set of letters, rules, and 
 language to win at Scrabble! You just have to find the best 
 place to post your tiles.
 }
 \examples{
-\dontrun{
+\donttest{
 # Automatic use of languages and scores
 Sys.setenv("LARES_LANG" = "es")
 
-scrabble_words(tiles = "holasa",
-               free = 1,
-               force_start = "",
-               force_end = "",
+grepl_letters(es_words$words, "_o_a")
+
+scrabble_words(tiles = "hola",
+               free = 2,
+               force_start = "h",
+               #force_end = "",
                force_str = "_o_a",
-               force_n = 6,
+               force_n = 5,
                force_max = 0,
-               quiet = FALSE)
-               
-# Custom scores table and manual language input 
-cu_scores <- data.frame(
-  tiles = c(tolower(LETTERS)[1:14],"_",tolower(LETTERS)[15:length(LETTERS)]),
-  scores = c(1,1,1,1,1,1,1,1,1,1,1,1,3,1,8,1,3,5,1,1,1,2,4,10,10,5,10))
-  
-scrabble_words(tiles = "holase",
-               language = "es",
-               scores = cu_scores,
-               free = 1,
-               force_start = "_o_a")
+               quiet = TRUE)
 
 # Words considered for a language (you can custom it too!)
 es_words <- scrabble_dictionary("es")

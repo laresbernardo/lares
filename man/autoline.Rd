@@ -9,9 +9,12 @@ autoline(text, top = "auto", rel = 9)
 \arguments{
 \item{text}{Character or factor vector.}
 
-\item{top}{Integer. How many characters aprox should be on each line?}
+\item{top}{Integer. How many characters aprox. should be on each line?}
 
 \item{rel}{Numeric. Relation of pixels and characters per line}
+}
+\value{
+Character. String (vector) including some \code{\\n} within.
 }
 \description{
 Add a break or new line without breaking words. Automatically,

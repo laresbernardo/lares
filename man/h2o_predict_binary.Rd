@@ -13,6 +13,9 @@ h2o_predict_binary(df, model_path, sample = NA)
 
 \item{sample}{Integer. How many rows should the function predict?}
 }
+\value{
+vector with predicted results.
+}
 \description{
 This function lets the user predict using the h2o binary file.
 Note that it works with the files generated when using the 

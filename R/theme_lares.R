@@ -36,6 +36,18 @@
 #' used as fill and the values will be used as colour.
 #' @param which Character. When \code{pal = 3}, select which colours should be
 #' added with the custom colours palette: fill, colour, text (fct) - first letters.
+#' @return Themed ggplot2 object
+#' @examples 
+#' \donttest{
+#' data(dft)
+#' library(ggplot2)
+#' p <- ggplot(dft, aes(x = Pclass, y = sum(Fare), fill = Pclass)) + geom_col()
+#' p + theme_lares()
+#' p + theme_lares(pal = 1)
+#' p + theme_lares(background = "#999999", mg = 25)
+#' p + theme_lares(legend = "top", grid = "Yy")
+#' p + theme_lares(clean = TRUE)
+#' }
 #' @export
 theme_lares <- function(font = Sys.getenv("LARES_FONT"),
                         size = 12,
@@ -85,17 +97,7 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   update_geom_defaults("col", list(fill = main_colour, alpha = 0.95))
   update_geom_defaults("boxplot", list(fill = main_colour, alpha = 0.9))
   #update_geom_defaults("text_repel", list(family = font))
-  
-  ## USING ASSIGN - IMPROVE:
-  # envir <- as.environment(1)
-  # assign("scale_x_continuous", function(..., labels = comma) scale_x_continuous(..., labels = labels), envir = envir)
-  # assign("scale_y_continuous", function(..., labels = comma) scale_y_continuous(..., labels = labels), envir = envir)
-  # assign("scale_colour_discrete", function(..., values = as.vector(colours_pal)) scale_colour_manual(..., values = values), envir = envir)
-  # assign("scale_fill_discrete", function(..., values = names(colours_pal)) scale_fill_manual(..., values = values), envir = envir)
-  # assign("scale_colour_continuous", function(..., low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir = envir)
-  # assign("scale_fill_continuous", function(...,low = names(colours_pal)[2], high = names(colours_pal)[1], na.value = soft_colour) scale_colour_gradient(..., low = low, high = high, na.value = na.value), envir = envir)
-  # assign("ggsave", function(..., bg = plot_colour) ggsave(..., bg = bg), envir = envir)
-  
+
   if (inherits(grid, "character") | grid == TRUE) {
     grid_col <- "#CCCCCC"
     ret <- ret + theme(panel.grid = element_line(color = grid_col, size = 0.2))
@@ -191,18 +193,6 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   
   # External margins
   ret <- ret + theme(plot.margin = margin(mg, mg, mg, mg))
-  
-  # Axis scales
-  # p <- ggplot(dft, aes(x=Survived, y=Age)) + geom_density()
-  # which <- data.frame(p$labels)
-  # list <- vector2text(unlist(which), sep = "|", quotes = FALSE)
-  # df <- p$data %>% select(matches(list))
-  # classes <- data.frame(lapply(df, class))
-  
-  # if (grepl("x",tolower(comma))) ret <- ret + scale_x_comma()
-  # if (grepl("y",tolower(comma))) ret <- ret + scale_y_comma()
-  # if (grepl("x",tolower(percent))) ret <- ret + scale_x_percent()
-  # if (grepl("y",tolower(percent))) ret <- ret + scale_y_percent()
   
   # Colour Palette
   if (!is.null(palette)) {

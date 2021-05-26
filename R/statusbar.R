@@ -18,6 +18,7 @@
 #' seconds/minutes ago.
 #' @param multiples Integer. Only print when multiples of N (to avoid)
 #' wasting resources on fast and lots of iterations.
+#' @return No return value, called for side effects.
 #' @examples
 #' for (i in 1:9) {
 #'   statusbar(i, 9, multiples = 2)

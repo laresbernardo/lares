@@ -13,6 +13,9 @@ will be moved recursively.}
 \item{to}{Character. File names for each \code{from} file or
 directory. If directory does not exist, it will be created.}
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 Move one or more files from a directory to another using R.
 }

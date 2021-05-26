@@ -49,10 +49,15 @@ categorical model.}
 
 \item{subtitle}{Character. Subtitle for plots}
 }
+\value{
+List. Multiple performance metrics that vary depending on
+the type of model (classification or regression). If \code{plot=TRUE},
+multiple plots are also returned.
+}
 \description{
 This function lets the user get a confusion matrix and accuracy, and 
 for for binary classification models: AUC, Precision, Sensitivity, and
-Specificity.
+Specificity, given the expected (tags) values and predicted values (scores).
 }
 \examples{
 data(dfr) # Results for AutoML Predictions
@@ -104,7 +109,6 @@ Other Model metrics:
 
 Other Calculus: 
 \code{\link{corr}()},
-\code{\link{deg2num}()},
 \code{\link{dist2d}()},
 \code{\link{quants}()}
 }

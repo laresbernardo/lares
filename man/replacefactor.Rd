@@ -13,15 +13,19 @@ replacefactor(x, original, change)
 
 \item{change}{String or Vector. Values you wish to replace the originals with}
 }
+\value{
+Factor vector with transformed levels.
+}
 \description{
 This function lets the user replace levels on a factor vector.
 }
 \examples{
-\dontrun{
- data(dft)
- # Replace a single value
- dft <- mutate(dft, Pclass = replacefactor(Pclass, original = "1", change = "First"))
- # Replace multiple values
- dft <- mutate(dft, Pclass = replacefactor(Pclass, c("2","3"), c("Second", "Third")))
-}
+library(dplyr)
+data(dft)
+# Replace a single value
+dft <- mutate(dft, Pclass = replacefactor(Pclass, original = "1", change = "First"))
+levels(dft$Pclass)
+# Replace multiple values
+dft <- mutate(dft, Pclass = replacefactor(Pclass, c("2","3"), c("Second", "Third")))
+levels(dft$Pclass)
 }

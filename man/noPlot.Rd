@@ -17,6 +17,9 @@ noPlot(
 
 \item{font}{Character. Font name}
 }
+\value{
+Empty ggplot2 object (with a \code{message} if set).
+}
 \description{
 This function lets the user print a plot without plot, with a 
 customizable message. It is quite useful for Shiny renderPlot when

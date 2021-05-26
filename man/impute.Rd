@@ -7,15 +7,18 @@
 impute(df, m = 5, iters = 5, seed = 0, quiet = FALSE)
 }
 \arguments{
-\item{df}{Dataframe. Dataframe to transform}
+\item{df}{Dataframe. Dataframe to transform.}
 
-\item{m}{Integer. Number of multiple imputations}
+\item{m}{Integer. Number of multiple imputations.}
 
-\item{iters}{Integer. Number of iterations}
+\item{iters}{Integer. Number of iterations.}
 
-\item{seed}{Integer. Set a seed for reproducibility}
+\item{seed}{Integer. Set a seed for reproducibility.}
 
-\item{quiet}{Boolean. Keep quiet? (or print replacements)}
+\item{quiet}{Boolean. Keep quiet? (or print replacements).}
+}
+\value{
+data.frame with imputed values.
 }
 \description{
 This function uses the MICE methodology to impute missing values.
@@ -27,7 +30,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{left}()},
@@ -35,7 +37,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

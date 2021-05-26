@@ -14,6 +14,9 @@ measure the distance}
 
 \item{b}{Vector. Coordinates of 2st point over the line}
 }
+\value{
+Numeric value result
+}
 \description{
 This function lets the user calculate the mathematical linear distance 
 Between a specific point and a line (given geometrical 3 points)
@@ -26,7 +29,6 @@ dist2d(x = c(5, 2), a = c(0, 0), b = c(1, 0))
 \seealso{
 Other Calculus: 
 \code{\link{corr}()},
-\code{\link{deg2num}()},
 \code{\link{model_metrics}()},
 \code{\link{quants}()}
 }

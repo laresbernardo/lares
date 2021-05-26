@@ -9,14 +9,15 @@ scrabble_points(language)
 \arguments{
 \item{language}{Character. Any of "en","es".}
 }
+\value{
+data.frame with tiles and scores for each letter.
+}
 \description{
 Dataframe for every letter and points given a language.
 }
 \examples{
 scrabble_points("es")
-
 scrabble_points("en")
-
 # Not yet available
 scrabble_points("fr")
 }

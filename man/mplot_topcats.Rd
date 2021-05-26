@@ -16,6 +16,9 @@ or score (only used when more than 2 categories coexist).}
 
 \item{model_name}{Character. Model's name}
 }
+\value{
+Plot with performance results over most frequent categories.
+}
 \description{
 Calculate and plot a multi-class model's predictions accuracy
 based on top N predictions and distribution of probabilities.

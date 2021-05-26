@@ -126,7 +126,6 @@ df_str <- function(df,
 #' plot_nums(dft)
 #' @export
 plot_nums <- function(df) {
-  set.seed(0)
   which <- df %>% select_if(is.numeric)
   if (length(which) > 0) {
     p <- gather(which) %>%

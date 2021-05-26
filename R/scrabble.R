@@ -10,8 +10,9 @@
 #' @param language Character. Any of "en","es","de","fr". Set to "none"
 #' if you wish to skip this step (and use \code{words} parameter in 
 #' \code{scrabble_words} instead).
-#' @examples 
-#' \dontrun{
+#' @return data.frame with words and language columns.
+#' @examples
+#' \donttest{
 #' # For Spanish words
 #' dictionary <- scrabble_dictionary("es")
 #' }
@@ -52,12 +53,12 @@ scrabble_dictionary <- function(language) {
 #' @param words Character vector. Words to score
 #' @param scores Dataframe. Must contain two columns: "tiles" with every
 #' letter of the alphabet and "scores" for each letter's score.
+#' @return data.frame with word, scores, and length values for each \code{word}.
 #' @examples 
-#' \dontrun{
-#' # For Spanish words
+#' \donttest{
+#' # For Spanish words (default)
 #' es_scores <- scrabble_points("es")
-#'   
-#' # Custom scores
+#' # Custom scores for each letter
 #' cu_scores <- data.frame(
 #'   tiles = tolower(LETTERS),
 #'   scores = c(1,1,1,1,1,1,1,5,1,1,5,2,4,2,1,4,10,1,1,1,2,5,4,8,3,10))
@@ -91,11 +92,10 @@ scrabble_score <- function(words, scores) {
 #' 
 #' @family Scrabble
 #' @param language Character. Any of "en","es".
+#' @return data.frame with tiles and scores for each letter.
 #' @examples 
 #' scrabble_points("es")
-#' 
 #' scrabble_points("en")
-#' 
 #' # Not yet available
 #' scrabble_points("fr")
 #' @export
@@ -127,46 +127,49 @@ scrabble_points <- function(language) {
 #' each letter. Used as an auxiliary function for the Scrabble family
 #' of functions.
 #'
-#' @param vector Character vector
+#' @param x Character vector
 #' @param pattern Character. Character string containing a 
 #' semi-regular expression which uses the following logic:
 #' "a_b" means any character that contains "a" followed by 
 #' something followed by "b", anywhere in the string.
 #' @param blank Character. String to use between letters.
+#' @return Boolean check for each value on \code{x}.
 #' @examples 
-#' x <- c("aaaa", "bbbb", "abab", "aabb", "a", "ab")
+#' x <- c("aaaa", "bbbb", "baba", "aabb", "a", "ab")
 #' grepl_letters(x, "ab")
 #' grepl_letters(x, "_ab")
 #' grepl_letters(x, "a_a")
 #' grepl_letters(x, "c")
 #' @export 
-grepl_letters <- function(vector, pattern, blank = "_") {
+grepl_letters <- function(x, pattern, blank = "_") {
+  
+  # When no black tile, use simple grepl function
   if (!grepl(blank, pattern))
-    return(grepl(pattern, vector, fixed = TRUE))
-  forced <- tolower(unlist(strsplit(pattern, "")))
-  forced_which <- which(forced != blank)
-  combs <- res <- NULL
-  for(i in 0:(max(nchar(vector))-max(forced_which)))
-    combs <- rbind(combs, (forced_which + i))
-  # We can skip those that do NOT have all the letters
-  run <- sapply(forced[forced_which], function(x) grepl(x, vector, fixed = TRUE))
-  run <- apply(run, 1, all)
-  # Let's iterate all combinations for each element
-  for (i in seq_along(vector)) {
-    temp <- NULL
-    if (run[i]) {
-      for (k in seq_along(nrow(combs))) {
-        aux <- NULL
-        for (j in seq_along(ncol(combs))) {
-          aux <- c(aux, substr(vector[i], combs[k, j], combs[k, j]))
-        }
-        aux <- paste0(aux, collapse = "") == gsub(blank, "", pattern)
-        temp <- any(c(temp, aux))
-      } 
-    } else temp <- FALSE
-    res <- c(res, temp)
-  }
-  return(res)
+    return(grepl(pattern, x, fixed = TRUE))
+  
+  tiles_order <- strsplit(tolower(pattern), "")[[1]]
+  ntiles <- length(tiles_order)
+  
+  words_tiles <- lapply(tolower(x), function(x) strsplit(x, "")[[1]])
+  
+  lapply(words_tiles, function (x) {
+    nchars <- length(x)
+    # When less tiles than strings characters, skip
+    if (ntiles > nchars) return(FALSE)
+    possible_possitions <- nchars - ntiles + 1
+    combs <- data.frame(x = x)
+    for (i in 1:possible_possitions) {
+      vec <- rep(NA, nrow(combs))
+      vec[i:(i+ntiles-1)] <- tiles_order
+      combs[,1+i] <- vec
+    }
+    combs <- replaceall(combs, "_", NA)
+    for (i in 2:ncol(combs)) {
+      temp <- select(combs, 1, i) %>%removenarows(all = FALSE)
+      if (all(temp[1] == temp[2])) return(TRUE)
+    }
+    return(FALSE)
+  }) %>% unlist()
 }
 
 
@@ -199,41 +202,33 @@ grepl_letters <- function(vector, pattern, blank = "_") {
 #' \code{Sys.setenv("LARES_LANG" = "en")} and forget about it!
 #' @param words Character vector. Use if you wish to manually add words.
 #' @param quiet Boolean. Do not print words as they are being searched.
+#' @return data.frame with matching words found, sorted by higher points.
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' # Automatic use of languages and scores
 #' Sys.setenv("LARES_LANG" = "es")
 #' 
-#' scrabble_words(tiles = "holasa",
-#'                free = 1,
-#'                force_start = "",
-#'                force_end = "",
+#' grepl_letters(es_words$words, "_o_a")
+#' 
+#' scrabble_words(tiles = "hola",
+#'                free = 2,
+#'                force_start = "h",
+#'                #force_end = "",
 #'                force_str = "_o_a",
-#'                force_n = 6,
+#'                force_n = 5,
 #'                force_max = 0,
-#'                quiet = FALSE)
-#'                
-#' # Custom scores table and manual language input 
-#' cu_scores <- data.frame(
-#'   tiles = c(tolower(LETTERS)[1:14],"_",tolower(LETTERS)[15:length(LETTERS)]),
-#'   scores = c(1,1,1,1,1,1,1,1,1,1,1,1,3,1,8,1,3,5,1,1,1,2,4,10,10,5,10))
-#'   
-#' scrabble_words(tiles = "holase",
-#'                language = "es",
-#'                scores = cu_scores,
-#'                free = 1,
-#'                force_start = "_o_a")
+#'                quiet = TRUE)
 #' 
 #' # Words considered for a language (you can custom it too!)
 #' es_words <- scrabble_dictionary("es")
 #' }
 #' @export
-scrabble_words <- function(tiles, 
-                           free = 0, 
-                           force_start = "", 
-                           force_end = "", 
+scrabble_words <- function(tiles,
+                           free = 0,
+                           force_start = "",
+                           force_end = "",
                            force_str = "",
-                           force_n = 0, 
+                           force_n = 0,
                            force_max = 0,
                            scores = Sys.getenv("LARES_LANG"),
                            language = Sys.getenv("LARES_LANG"),
@@ -254,10 +249,8 @@ scrabble_words <- function(tiles,
   
   # Split letters
   tiles <- tolower(unlist(strsplit(tiles, "")))
-  ntiles <- as.integer(length(tiles))
   # Add free letters/tiles
-  if (free > 0) ntiles <- ntiles + free
-  
+  if (free > 0) tiles <- c(tiles, rep("_", free))
   # Add logical tiles when using force_ arguments
   tiles <- addletters(force_start, tiles)
   tiles <- addletters(force_end, tiles)
@@ -269,36 +262,21 @@ scrabble_words <- function(tiles,
   if (force_n > 0) words <- words[nchar(words) == force_n]
   if (force_max > 0) words <- words[nchar(words) <= force_max]
   
-  # Force strings that must be contained
-  if (force_str[1] != "") {
-    for (str in force_str) {
-      tiles <- addletters(str, tiles)
-      words <- words[grepl_letters(words, pattern = tolower(str), blank = "_")] 
-    }
-  }
-  
-  # Words can't have different letters than inputs
-  words <- words[grepl(v2t(tiles, sep = "|", quotes = FALSE), words, fixed = TRUE)]
+  # Words can't have different letters than inputs (unless there are free tiles)
+  if (free == 0) words <- words[grepl(v2t(tiles, sep = "|", quotes = FALSE), words)]
   # Force start/end strings
   words <- force_words(words, force_start)
   words <- force_words(reverse(words), reverse(force_end), rev = TRUE)
   
-  # Let's check all applicable words
-  done <- NULL
-  for (word in words) {
-    wi <- word
-    for (letter in tiles) {
-      have <- str_detect(wi, letter)
-      if (have) wi <- str_remove(wi, letter) 
+  # Force strings that must be contained
+  if (force_str[1] != "") {
+    for (str in force_str) {
+      words <- words[grepl_letters(words, pattern = tolower(str), blank = "_")] 
     }
-    if (nchar(wi) == free) {
-      new <- scrabble_score(word, scores)
-      if (!quiet) print(new)
-      done <- rbind(done, new)
-    }
-  } 
-  if (length(done) > 0) {
-    done <- arrange(done, desc(scores))
+  }
+  
+  if (length(word) > 0) {
+    done <- scrabble_score(words, scores)
     return(as_tibble(done))
   } else {
     message("No words found with set criteria!")

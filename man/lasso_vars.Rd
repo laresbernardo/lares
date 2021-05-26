@@ -36,6 +36,10 @@ process categorical values, and values will be standardize automatically.}
 
 \item{...}{ohse parameters.}
 }
+\value{
+List. Contains lasso model coefficients, performance metrics, the
+actual model fitted and a plot.
+}
 \description{
 Use Lasso regression to identify the most relevant variables that 
 can predict/identify another variable. You might want to compare 

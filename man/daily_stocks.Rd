@@ -15,6 +15,9 @@ daily_stocks(hist, trans, tickers = NA, window = "MAX")
 
 \item{window}{Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"}
 }
+\value{
+data.frame. Processed at date and symbol level.
+}
 \description{
 This function creates a dataframe will all relevant metrics and values,
 for each ticker or symbol, for every day since inception.

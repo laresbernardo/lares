@@ -14,6 +14,9 @@ shap_var(x, var, keep_outliers = FALSE)
 \item{keep_outliers}{Boolean. Outliers detected with z-score and 3sd
 may be suppress or kept in your plot. Keep them?}
 }
+\value{
+ggplot2 objct with shap values plotted
+}
 \description{
 Having a \code{h2o_shap} object, plot a dependence plot for any
 categorical or numerical feature.

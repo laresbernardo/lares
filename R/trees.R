@@ -14,8 +14,10 @@
 #' @param cp Numeric. Complexity parameter
 #' @param size Numeric. Textsize of plot
 #' @param ohse Boolean. Auto generate One Hot Smart Encoding?
-#' @param plot Boolean. Return a plot? If not, rpart object
+#' @param plot Boolean. Return a plot? If not, \code{rpart} object
 #' @param ... rpart.plot custom parameters
+#' @return When \code{plot=TRUE} returns plot; when \code{plot=FALSE}
+#' returns \code{rpart} fitted model.
 #' @export
 tree_var <- function(df, target, max = 3, min = 20, cp = 0, 
                      size = 0.7, ohse = TRUE, plot = TRUE, ...) {

@@ -12,6 +12,8 @@
 #' @param sep Character. Which regular expression separates the elements?
 #' @param noval Character. No value text
 #' @param remove Boolean. Remove original variables?
+#' @return data.frame on which all features are numerical by nature or
+#' transformed with one hot encoding.
 #' @examples 
 #' df <- data.frame(id = c(1:5),
 #'                  x = c("AA, D", "AA,B", "B,  D", "A,D,B", NA),
@@ -81,6 +83,8 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
 #' @param sep Character. Separator's string
 #' @param quiet Boolean. Quiet all messages and summaries?
 #' @param ... Additional parameters
+#' @return data.frame on which all features are numerical by nature or
+#' transformed with one hot encoding.
 #' @examples 
 #' data(dft)
 #' dft <- dft[,c(2,3,5,9,11)]
@@ -254,6 +258,7 @@ ohse <- function(df,
 #' @param currency_pair Character. Which currency exchange do you
 #' wish to get the history from? i.e, USD/COP, EUR/USD...
 #' @param quiet Boolean. Quiet all messages?
+#' @return data.frame with additional features calculated out of time or date vectors.
 #' @examples 
 #' df <- data.frame(
 #'   dates = sample(seq(Sys.Date() - 365, Sys.Date(), by = 1), 50),
@@ -391,6 +396,7 @@ date_feats <- function(dates,
 #' holiday dates?
 #' @param countries Character or vector. For which country(ies) should the 
 #' holidays be imported?
+#' @return data.frame with holidays data for given \code{countries} and \code{years}.
 #' @examples 
 #' \dontrun{
 #' holidays(countries = "Argentina") 

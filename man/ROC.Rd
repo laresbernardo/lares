@@ -14,6 +14,9 @@ ROC(tag, score, multis = NA)
 \item{multis}{Data.frame. Containing columns with each category score 
 (only used when more than 2 categories coexist)}
 }
+\value{
+List with ROC's results, area under the curve (AUC) and their CI.
+}
 \description{
 This function calculates ROC Curves and AUC values with 95\% confidence 
 range. It also works for multi-categorical models.

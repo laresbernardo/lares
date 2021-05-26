@@ -21,7 +21,7 @@ mplot_importance(
 
 \item{imp}{Vector. Importance of said variables. Must have same length as var}
 
-\item{colours}{If possitive and negative contribution is known}
+\item{colours}{If positive and negative contribution is known}
 
 \item{limit}{Integer. Limit how many variables you wish to plot}
 
@@ -34,6 +34,9 @@ mplot_importance(
 \item{subdir}{Character. Sub directory on which you wish to save the plot}
 
 \item{file_name}{Character. File name as you wish to save the plot}
+}
+\value{
+Plot with ranked importance variables results.
 }
 \description{
 This function plots Variable Importances

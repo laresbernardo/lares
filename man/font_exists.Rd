@@ -11,6 +11,9 @@ font_exists(font = "Arial Narrow", quiet = FALSE)
 
 \item{quiet}{Boolean. Keep quiet? If not, show message}
 }
+\value{
+Boolean result of the existing fonts check.
+}
 \description{
 This function checks if a font is installed in your machine.
 }

@@ -35,6 +35,9 @@ Must contain: url (POST address), api (api key)}
 
 \item{quiet}{Boolean. Keep quite or display messages?}
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 This function lets the user send Emails with Attachments using MailGun's
 API service.
@@ -73,8 +76,6 @@ Other Tools:
 Other Credentials: 
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
-\code{\link{f1_contacts}()},
-\code{\link{geoAddress}()},
 \code{\link{get_credentials}()},
 \code{\link{get_tweets}()},
 \code{\link{queryDB}()},

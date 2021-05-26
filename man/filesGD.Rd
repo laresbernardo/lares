@@ -22,12 +22,14 @@ which one you wish to use by email and/or api_key.}
 accounts in your machine, you may non-interactively select
 which one you wish to use by email and/or api_key.}
 }
+\value{
+Vector with found file names based on \code{title} on Google Drive.
+}
 \description{
 Authenticate and find Google Drive files and IDs by name.
 }
 \seealso{
 Other Scrapper: 
-\code{\link{geoStratum}()},
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
@@ -39,7 +41,6 @@ Other Scrapper:
 \code{\link{writeGS}()}
 
 Other Google: 
-\code{\link{geoAddress}()},
 \code{\link{queryGA}()},
 \code{\link{readGS}()},
 \code{\link{trendsRelated}()},

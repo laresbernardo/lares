@@ -15,6 +15,9 @@ updateLares(force = FALSE, all = FALSE, local = FALSE, fb = FALSE)
 
 \item{fb}{Boolean. From FB instance? Personal use}
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 This function lets the user update from repository or local source.
 }

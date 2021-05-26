@@ -16,6 +16,7 @@
 #' @param interactive Boolean. Run with plotly?
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
+#' @return ggplot2 object
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' cols <- c("Role", "Place", "Type", "Start", "End")
@@ -123,7 +124,8 @@ plot_timeline <- function(event,
 #' @param df Dataframe
 #' @param var Variable to group, count and plot
 #' @param table Boolean. Print results as table?
-#' @param ... Further parameters passed to freqs()
+#' @param ... Further parameters passed to \code{freqs()}
+#' @return ggplot2 object
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
@@ -175,11 +177,12 @@ gg_pie <- function(df, var, table = FALSE, ...){
 #' 
 #' @family Visualization
 #' @param origin,dest Vectors. Origin and destination vectors
-#' @param weight Vector. Weight for each chor
+#' @param weight Vector. Weight for each chord.
 #' @param mg Numeric. Margin adjust for plot in case of need
 #' @param title Character. Title for the plot
 #' @param subtitle Character. Subtitle for the plot
 #' @param pal Vector. Colour pallete. Order matters.
+#' @return chordDiagram object
 #' @examples 
 #' \dontrun{
 #' df <- data.frame(from = c(1, 1, 2, 3, 4, 1, 6), to = c(4, 4, 4, 2, 2, NA, NA))
@@ -241,6 +244,7 @@ plot_chord <- function(origin, dest,
 #' @param obs Boolean. Show observations counter?
 #' @param limit Integer. Limit n most frequent values only
 #' @param na.rm Boolean. Remove empty and NAs?
+#' @return ggplot2 object
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
@@ -310,6 +314,7 @@ gg_bars <- function(names, n, p = NA,
 #'
 #' @param ... Arguments passed to \code{ggplot2::continuous_scale} or
 #' \code{lares::formatNum} depending on the function.
+#' @return Reformatted scales on ggplot2 object
 #' @examples 
 #' library(ggplot2)
 #' df <- ggplot2::txhousing %>% removenarows(all = FALSE)
@@ -389,6 +394,7 @@ scale_y_formatNum <- function(..., decimals = 2, signif = NULL,
 #' @param message Character. What message do you wish to show?
 #' @param size Numeric. Text size.
 #' @param font Character. Font name
+#' @return Empty ggplot2 object (with a \code{message} if set).
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' noPlot(message = "No plot to show!")
@@ -432,6 +438,7 @@ noPlot <- function(message = "Nothing to show here!", size = 4,
 #' @param dir,subdir Character. In which directory/subdirectory do you 
 #' wish to save the plot? Working directory as default \code{dir}.
 #' @param quiet Boolean. Display successful message with filename when saved?
+#' @return No return value, called for side effects.
 #' @examples 
 #' \dontrun{
 #' p <- noPlot()

@@ -61,6 +61,10 @@ resource limited.}
 
 \item{...}{Additional parameters on \code{h2o::h2o.automl}}
 }
+\value{
+List. Trained model, predicted scores and datasets used, performance
+metrics, parameters, importance data.frame, seed, and plots when \code{plots=TRUE}.
+}
 \description{
 This is an auxiliary function to calculate predictions and results
 when using the \code{h2o_automl()} function.

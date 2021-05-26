@@ -31,15 +31,17 @@ case, taxes changed from A to B in given date (hard-coded)}
 
 \item{cache}{Boolean. Use daily cache if available?}
 
-\item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed.}
+}
+\value{
+data.frame for each Date and Symbol closing quote value.
 }
 \description{
 This function lets the user download stocks historical data
 }
 \examples{
-\dontrun{
-df <- stocks_hist(symbols = c("VTI", "FB"), from = Sys.Date() - 7)
-head(df)
+\donttest{
+stocks_hist(symbols = c("VTI", "FB"), from = Sys.Date() - 7, quiet = TRUE)
 }
 }
 \seealso{
@@ -60,7 +62,6 @@ Other Investment:
 
 Other Scrapper: 
 \code{\link{filesGD}()},
-\code{\link{geoStratum}()},
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},

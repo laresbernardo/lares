@@ -45,6 +45,9 @@ the filtered values with?}
 
 \item{...}{Additional parameters}
 }
+\value{
+data.frame \code{df} on which \code{var} has been transformed
+}
 \description{
 This function lets the user reduce categorical values in a vector. 
 It is tidyverse friendly for use on pipelines
@@ -61,7 +64,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -70,7 +72,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

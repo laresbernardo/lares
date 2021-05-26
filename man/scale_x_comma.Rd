@@ -73,6 +73,9 @@ to set this parameter globally.}
 \item{abbr}{Boolean. Abbreviate using num_abbr()? You can use
 the `decimals` parameter to set abbr's \code{n}(-1) parameter.}
 }
+\value{
+Reformatted scales on ggplot2 object
+}
 \description{
 The \code{_comma} ones set comma format for axis text, the \code{_percent} 
 ones set percent format for axis text, \code{_dollar} for collar currency,

@@ -15,6 +15,9 @@ splot_etf(s, keep_all = FALSE, cache = TRUE, save = FALSE)
 
 \item{save}{Boolean. Save plot into a local file?}
 }
+\value{
+ggplot2 object
+}
 \description{
 This function lets the user plot his portfolio's distribution, 
 specifically ETF's sectors
@@ -44,7 +47,6 @@ Other Investment Plots:
 
 Other Scrapper: 
 \code{\link{filesGD}()},
-\code{\link{geoStratum}()},
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},

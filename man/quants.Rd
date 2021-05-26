@@ -16,9 +16,16 @@ quants(values, splits = 10, return = "labels", n = 2)
 \item{n}{Integer. Determines the number of digits used in
 formatting the break numbers.}
 }
+\value{
+Factor vector or data.frame. Depending on \code{return} input:
+\itemize{
+  \item \code{labels} a factor ordered vector with each observation's quantile
+  \item \code{summary} a data.frame with information on each quantile cut
+}
+}
 \description{
 This function lets the user quickly calculate cuts for quantiles
-and discretize numerical values into cateogorical values.
+and discretize numerical values into categorical values.
 }
 \examples{
 data(dft) # Titanic dataset
@@ -28,7 +35,6 @@ quants(dft$Age, splits = 5, "labels")[1:10]
 \seealso{
 Other Calculus: 
 \code{\link{corr}()},
-\code{\link{deg2num}()},
 \code{\link{dist2d}()},
 \code{\link{model_metrics}()}
 }

@@ -12,17 +12,19 @@ scrabble_score(words, scores)
 \item{scores}{Dataframe. Must contain two columns: "tiles" with every
 letter of the alphabet and "scores" for each letter's score.}
 }
+\value{
+data.frame with word, scores, and length values for each \code{word}.
+}
 \description{
 Get score for any word or list of words. You may set manually depending
 on the rules and languages you are playing with. Check the examples
 for Spanish and English values when I played Words With Friends.
 }
 \examples{
-\dontrun{
-# For Spanish words
+\donttest{
+# For Spanish words (default)
 es_scores <- scrabble_points("es")
-  
-# Custom scores
+# Custom scores for each letter
 cu_scores <- data.frame(
   tiles = tolower(LETTERS),
   scores = c(1,1,1,1,1,1,1,5,1,1,5,2,4,2,1,4,10,1,1,1,2,5,4,8,3,10))

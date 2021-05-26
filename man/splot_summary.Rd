@@ -13,6 +13,9 @@ splot_summary(p, s, save = FALSE)
 
 \item{save}{Boolean. Save plot into a local file?}
 }
+\value{
+ggplot object
+}
 \description{
 This function plots a summary for the whole portfolio, showing
 how much have you invested, how much has each ticker changed, etc.

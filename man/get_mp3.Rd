@@ -60,7 +60,6 @@ More info from the original developers and its code:
 \seealso{
 Other Scrapper: 
 \code{\link{filesGD}()},
-\code{\link{geoStratum}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
 \code{\link{readGS}()},

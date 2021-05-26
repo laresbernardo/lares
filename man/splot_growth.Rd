@@ -11,6 +11,9 @@ splot_growth(p, save = FALSE)
 
 \item{save}{Boolean. Save plot into a local file?}
 }
+\value{
+ggplot object
+}
 \description{
 This function plots your portfolio's growth, in cash and investment,
 since inception.

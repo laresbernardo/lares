@@ -14,6 +14,7 @@
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @return Plot with distribution and performance results.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -121,8 +122,9 @@ mplot_density <- function(tag,
 #' @inheritParams mplot_density
 #' @param var Vector. Variable or column's names
 #' @param imp Vector. Importance of said variables. Must have same length as var
-#' @param colours If possitive and negative contribution is known
+#' @param colours If positive and negative contribution is known
 #' @param limit Integer. Limit how many variables you wish to plot
+#' @return Plot with ranked importance variables results.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' df <- data.frame(variable = LETTERS[1:6],
@@ -214,6 +216,7 @@ mplot_importance <- function(var,
 #' @param save Boolean. Save output plot into working directory
 #' @param subdir Character. Sub directory on which you wish to save the plot
 #' @param file_name Character. File name as you wish to save the plot
+#' @return Plot with ROC curve and AUC performance results.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -303,6 +306,7 @@ mplot_roc <- function(tag,
 #' @inheritParams mplot_roc
 #' @param splits Integer. Numer of separations to plot
 #' @param table Boolean. Do you wish to return a table with results?
+#' @return Plot with performance results by cuts.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -358,14 +362,15 @@ mplot_cuts <- function(score,
 
 
 ####################################################################
-#' Cuts by quantiles on absolut and percentual errors plot
+#' Cuts by quantiles on absolute and percentual errors plot
 #' 
-#' This function cuts by quantiles on absolut and percentual errors
+#' This function cuts by quantiles on absolute and percentual errors
 #' 
 #' @family ML Visualization
 #' @inheritParams mplot_roc
 #' @param splits Integer. Number of separations to plot
 #' @param title Character. Title to show in plot
+#' @return Plot with error results by cuts.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -475,6 +480,7 @@ mplot_cuts_error <- function(tag,
 #' @family ML Visualization
 #' @inheritParams mplot_roc
 #' @param splits Integer. Number of separations to plot
+#' @return Plot with distribution and performance results by splits.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -579,6 +585,7 @@ mplot_splits <- function(tag,
 #' @family ML Visualization
 #' @inheritParams mplot_roc
 #' @param results Object. Results object from h2o_automl function
+#' @return Plot with \code{results} performance.
 #' @export
 mplot_metrics <- function(results, 
                           subtitle = NA, 
@@ -655,6 +662,7 @@ mplot_metrics <- function(results,
 #' 
 #' @family ML Visualization
 #' @inheritParams mplot_roc
+#' @return Plot with linear distribution and performance results.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -740,6 +748,8 @@ mplot_lineal <- function(tag,
 #' models: this number is the threshold of unique values we should 
 #' have in 'tag' (more than: regression; less than: classification)
 #' @param plot Boolean. Plot results? If not, plot grid object returned
+#' @return Multiple plots gathered into one, showing \code{tag} vs
+#' \code{score} performance results.
 #' @examples 
 #' \donttest{
 #' Sys.unsetenv("LARES_FONT") # Temporal
@@ -837,6 +847,7 @@ mplot_full <- function(tag,
 #' @param squared Boolean. Force plot to be squared?
 #' @param top Integer. Plot only the most n frequent variables.
 #' Set to \code{NA} to plot all.
+#' @return Plot with confusion matrix results.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -968,6 +979,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
 #' best value, "none" to turn off or the number of split.
 #' @param caption Character. Caption to show in plot
 #' @param quiet Boolean. Do not show message for auto target?
+#' @return Plot with gain and performance results by cuts.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -1090,6 +1102,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
 #' @family ML Visualization
 #' @inheritParams mplot_roc
 #' @inheritParams mplot_gain
+#' @return Plot with cumulative response and performance results by cuts.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -1204,6 +1217,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
 #' 
 #' @family ML Visualization
 #' @inheritParams mplot_roc
+#' @return Plot with performance results over most frequent categories.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dfr) # Results for AutoML Predictions
@@ -1266,7 +1280,6 @@ mplot_topcats <- function(tag, score, multis, model_name = NA) {
     theme_lares()
   
   p <- p1 + p2
-  
   return(p)
   
 }

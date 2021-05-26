@@ -14,6 +14,7 @@
 #' @param scores Numeric vector. If test != "auto", you must provide predicted values
 #' @param y Character. If test != "auto", you must provide y variable's name
 #' @param ... Additional argument for \code{predict_contributions.H2OModel}
+#' @return H2OFrame with shap values for every observation and feature.
 #' @examples 
 #' \dontrun{
 #' # Train a h2o_automl model
@@ -63,8 +64,8 @@ h2o_shap <- function(model, test = "auto", scores = "auto", y = "y",...) {
   } else auto <- FALSE
   
   # Calculate SHAP values
-  test <- quiet(as.h2o(test))
-  shap <- quiet(predict_contributions.H2OModel(model, test, ...))
+  test <- quiet_h2o(as.h2o(test))
+  shap <- quiet_h2o(predict_contributions.H2OModel(model, test, ...))
   
   class(shap) <- c(class(shap), "h2o_shap")
   attr(shap, "test") <- as_tibble(test)
@@ -164,6 +165,7 @@ plot.h2o_shap <- function(x, relevant = TRUE, top = 15, quiet = FALSE, ...) {
 #' @param var Variable name
 #' @param keep_outliers Boolean. Outliers detected with z-score and 3sd
 #' may be suppress or kept in your plot. Keep them?
+#' @return ggplot2 objct with shap values plotted
 #' @inherit h2o_shap examples
 #' @export
 shap_var <- function(x, var, keep_outliers = FALSE) {

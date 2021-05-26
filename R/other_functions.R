@@ -7,6 +7,7 @@
 #' @param package Character. Name of the library
 #' @param stop Boolean. Stop if not installed. If \code{FALSE} and 
 #' library is not available, warning will be shown.
+#' @return No return value, called for side effects.
 #' @examples 
 #' # Check if library base is installed. If not, stop and show error
 #' try_require("base", stop = TRUE)
@@ -32,12 +33,28 @@ try_require <- function(package, stop = TRUE) {
 #' This function lets the user convert a date into YYYY-MM format
 #' 
 #' @family Data Wrangling
-#' @param date Date. Date we wish to transform 
+#' @param date Date vector. Date to transform format.
+#' @return Vector with dates reformatted
 #' @examples 
 #' year_month(Sys.Date())
 #' @export
 year_month <- function(date) {
   paste(year(date), str_pad(lubridate::month(date), 2, pad = "0"), sep = "-")
+}
+
+####################################################################
+#' Convert Date into Year-Week (YYYY-WW)
+#' 
+#' This function lets the user convert a date into YYYY-WW format
+#' 
+#' @family Data Wrangling
+#' @param date Date. Date we wish to transform
+#' @return Vector with dates reformatted
+#' @examples 
+#' year_week(Sys.Date())
+#' @export
+year_week <- function(date) {
+  paste(year(date), str_pad(lubridate::week(date), 2, pad = "0"), sep = "-")
 }
 
 
@@ -51,6 +68,7 @@ year_month <- function(date) {
 #' @param date Date. Date we wish to transform 
 #' @param type Character. Any of the following: B (2 months),
 #' Q (3 months), T (4 months), H (6 months)
+#' @return Vector with date cut for each \code{date}
 #' @examples 
 #' date_cuts(Sys.Date(), type = "Q")
 #' date_cuts(Sys.Date(), type = "H")
@@ -69,21 +87,6 @@ date_cuts <- function(date = Sys.Date(), type = "Q") {
       paste0(toupper(type), i), .data$cut))
   }
   return(df$cut)
-}
-
-
-####################################################################
-#' Convert Date into Year-Week (YYYY-WW)
-#' 
-#' This function lets the user convert a date into YYYY-WW format
-#' 
-#' @family Data Wrangling
-#' @param date Date. Date we wish to transform
-#' @examples 
-#' year_week(Sys.Date())
-#' @export
-year_week <- function(date) {
-  paste(year(date), str_pad(lubridate::week(date), 2, pad = "0"), sep = "-")
 }
 
 
@@ -108,6 +111,7 @@ year_week <- function(date) {
 #' @param other_label Character. With which text do you wish to replace 
 #' the filtered values with?
 #' @param ... Additional parameters
+#' @return data.frame \code{df} on which \code{var} has been transformed
 #' @examples 
 #' data(dft) # Titanic dataset
 #' categ_reducer(dft, Embarked, top = 2) %>% freqs(Embarked)
@@ -169,6 +173,7 @@ categ_reducer <- function(df, var,
 #' @family Data Wrangling
 #' @param x Numeric Vector. Numbers to be transformed into 
 #' normalized vector
+#' @return Vector with normalized \code{x} values
 #' @examples 
 #' x <- c(0, 1, 4, 7.5, 10)
 #' normalize(x)
@@ -196,6 +201,7 @@ normalize <- function(x) {
 #' Not boolean variable so it can be used on other languages. Note that
 #' the last comma will be suppressed if \code{Sys.getenv("LARES_NUMFORMAT")}
 #' is set to \code{1} and you have less than 3 values.
+#' @return Vector pasting \code{vector} values into a single string
 #' @examples
 #' vector2text(LETTERS[1:5])
 #' vector2text(c(1:5), quotes = FALSE)
@@ -244,6 +250,7 @@ v2t <- vector2text
 #' @family Tools
 #' @family Scrapper
 #' @param ip Vector. Vector with all IP's we wish to search
+#' @return Boolean vector, same length as \code{ip}
 #' @examples 
 #' \dontrun{
 #' ip_country(ip = myip())
@@ -279,7 +286,8 @@ ip_country <- function(ip = myip()) {
 #' measure the distance
 #' @param a Vector. Coordinates of 1st point over the line
 #' @param b Vector. Coordinates of 2st point over the line
-#' @examples 
+#' @return Numeric value result
+#' @examples
 #' dist2d(x = c(5, 2))
 #' dist2d(x = c(5, 2), a = c(0, 0), b = c(0, 1))
 #' dist2d(x = c(5, 2), a = c(0, 0), b = c(1, 0))
@@ -315,6 +323,7 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
 #' @param abbr Boolean. Abbreviate using num_abbr()? You can use
 #' the `decimals` parameter to set abbr's \code{n}(-1) parameter.
 #' @param ... Additional lazy eval parameters.
+#' @return Character. String vector with reformatted continuous numbers
 #' @examples 
 #' formatNum(1.23456, decimals = 3)
 #' formatNum(1.23456, type = 1)
@@ -366,6 +375,8 @@ formatNum <- function(x, decimals = 2, signif = NULL,
 #' \code{"auto"}, then the most frequent value will be reduced.
 #' @param seed Numeric. Seed to replicate and obtain same values
 #' @param quiet Boolean. Keep quiet? If not, messages will be printed
+#' @return data.frame. Reduced sampled data.frame following the \code{rate} of
+#' appearance of a specific variable.
 #' @examples
 #' data(dft) # Titanic dataset
 #' df <- balance_data(dft, Survived, rate = 0.5)
@@ -373,8 +384,7 @@ formatNum <- function(x, decimals = 2, signif = NULL,
 #' @export
 balance_data <- function(df, variable, rate = 1, target = "auto", seed = 0, quiet = FALSE) {
   
-  set.seed(seed)
-  
+  on.exit(set.seed(seed))
   variable <- gsub('\"', '', deparse(substitute(variable)))
   names(df)[names(df) == variable] <- 'tag'
   tags <- freqs(df, .data$tag) %>% pull(.data$tag) %>% as.character
@@ -418,6 +428,7 @@ balance_data <- function(df, variable, rate = 1, target = "auto", seed = 0, quie
 #' 
 #' @family Tools
 #' @param files Character vector. Files or directory which contains files.
+#' @return data.frame with meta-data for each image file.
 #' @export
 image_metadata <- function(files) {
   
@@ -486,6 +497,8 @@ image_metadata <- function(files) {
 #' @param recursive Boolean. Should the listing recurse into directories?
 #' @param regex Character. String to use for filtering files
 #' @param images Boolean. Bring only image files?
+#' @return data.frame with relevant data for each file on
+#' \code{folder} directory.
 #' @examples 
 #' # All files in current directory (without recursive files)
 #' df <- listfiles(recursive = TRUE)
@@ -543,6 +556,7 @@ listfiles <- function(folder = getwd(),
 #' @param fixclass Boolean. Try to detect logical classes after transformations (or 
 #' leave as default classes as character)?
 #' @param quiet Boolean. Keep quiet? (or print replacements)
+#' @return data.frame with replaced values based on inputs.
 #' @examples 
 #' df <- data.frame(one = c(1:4, NA), 
 #'                  two = LETTERS[1:5], 
@@ -627,6 +641,7 @@ replaceall <- function(df, original, change, which = "all",
 #' @param all Boolean. Remove columns containing ONLY \code{NA} values.
 #' If set to \code{FALSE}, remove columns containing at least one \code{NA}.
 #' @param ignore Character vector. Column names to ignore validation.
+#' @return data.frame with removed columns.
 #' @export
 removenacols <- function(df, all = TRUE, ignore = NULL) {
   if (is.null(df)) return(NULL)
@@ -650,6 +665,7 @@ removenacols <- function(df, all = TRUE, ignore = NULL) {
 #' @param df Data.frame
 #' @param all Boolean. Remove rows which contains ONLY NA values.
 #' If set to FALSE, rows which contains at least one NA will be removed
+#' @return data.frame with removed rows.
 #' @export
 removenarows <- function(df, all = TRUE) {
   if (is.null(df)) return(NULL)
@@ -671,6 +687,7 @@ removenarows <- function(df, all = TRUE) {
 #' @param logs Boolean. Calculate log(x)+1 for numerical columns?
 #' @param natransform String. "mean" or 0 to impute NA values. If
 #' set to NA no calculation will run.
+#' @return data.frame with all numerical columns selected.
 #' @examples 
 #' data(dft) # Titanic dataset
 #' str(dft)
@@ -721,91 +738,16 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
 
 
 ####################################################################
-#' Transform any date input into Date
-#' 
-#' This function lets the user transform any date input format into
-#' a conventional R date format. The following formats are some of 
-#' the permitted: 10-05-2019, 2019-10-05 5/22/2015, 9:45:03 AM, 
-#' 42348.44, 9/2/18 23:16, 10-05-19
-#' 
-#' @family Data Wrangling
-#' @param dates Vector. Dates in any of the permitted formats
-#' @param metric Boolean. Metric or Imperial inputs. The main 
-#' difference is that Metric follows the DD/MM/YYYY pattern, and 
-#' Imperial follows the MM/DD/YYYY pattern.
-#' @param origin Date. When importing from Excel, integers usually
-#' have 1900-01-01 as origin. In R, origin is 1970-01-01.
-#' @export
-dateformat <- function(dates, metric = TRUE, origin = '1900-01-01') {
-  
-  # Check if all values are NA
-  if (length(dates) == sum(is.na(dates))) {
-    message("No dates where transformed becase all values are NA")
-    return(dates)
-  }
-  
-  # Delete hours
-  dates <- gsub(" .*", "", as.character(dates))
-  dates <- gsub("\\..*", "", as.character(dates))
-  
-  # Is it in integer format?
-  x <- dates[!is.na(dates)][1]
-  int <- as.integer(as.character(x))
-  
-  # When date is not an integer:
-  if (is.na(int)) {
-    
-    year <- ifelse(nchar(x) == 10, "Y", "y")
-    sym <- ifelse(grepl("/", x),"/","-")
-    pattern <- str_locate_all(x, "/")[[1]][,1]
-    
-    if (sum(pattern == c(3,6)) == 2) {
-      return(as.Date(dates, format = paste0("%m",sym,"%d",sym,"%",year)))
-    } else {
-      return(as.Date(dates, format = paste0("%",year,sym,"%m",sym,"%d")))
-    }
-  }
-  
-  # When date is an integer:
-  if (int %in% 30000:60000) {
-    dates <- as.Date(as.integer(as.character(dates)), origin = origin)
-  } else {
-    comps <- unlist(strsplit(x, "/|-|\\."))
-    lasts <- as.integer(comps[3])
-    firsts <- as.integer(comps[1])
-    firstlast <- nchar(paste0(firsts, lasts))
-    if (metric == FALSE) {
-      # Does dates end in year?
-      if (nchar(lasts) == 4 | firstlast <= 4) {
-        dates <- lubridate::mdy(dates)
-      }
-      # Does dates start in year?
-      if (nchar(firsts) == 4) {
-        dates <- lubridate::ydm(dates)
-      }
-    } else {
-      # Does dates end in year?
-      if (nchar(lasts) == 4 | firstlast <= 4) {
-        dates <- lubridate::dmy(dates)
-      }
-      # Does dates start in year?
-      if (nchar(firsts) == 4) {
-        dates <- lubridate::ymd(dates)
-      }
-    }
-  }
-  return(dates)
-}
-
-
-####################################################################
 #' What's my IP?
 #' 
 #' Reveal your current IP address.
 #' 
 #' @family Tools
+#' @return Character. Result of your IP address based on ipify.org
 #' @examples
+#' \donttest{
 #' myip()
+#' }
 #' @export
 myip <- function(){
   ipify <- "https://api.ipify.org/"
@@ -818,7 +760,7 @@ myip <- function(){
 #' Calculate cuts by quantiles
 #' 
 #' This function lets the user quickly calculate cuts for quantiles
-#' and discretize numerical values into cateogorical values.
+#' and discretize numerical values into categorical values.
 #' 
 #' @family Calculus
 #' @param values Vector. Values to calculate quantile cuts
@@ -826,6 +768,11 @@ myip <- function(){
 #' @param return Character. Return "summary" or "labels"
 #' @param n Integer. Determines the number of digits used in
 #' formatting the break numbers.
+#' @return Factor vector or data.frame. Depending on \code{return} input:
+#' \itemize{
+#'   \item \code{labels} a factor ordered vector with each observation's quantile
+#'   \item \code{summary} a data.frame with information on each quantile cut
+#' }
 #' @examples 
 #' data(dft) # Titanic dataset
 #' quants(dft$Age, splits = 5, "summary")
@@ -858,7 +805,8 @@ quants <- function(values, splits = 10, return = "labels", n = 2) {
 #' For any other JSON transformation, \code{jsonlite} is recommended.
 #' 
 #' @family Tools
-#' @param json Character. JSON string
+#' @param json Character. JSON string.
+#' @return List, data.frame, or vector. Depends on the \code{json} string.
 #' @examples 
 #' json2vector('{"id": 1, "nodata": null, "gender": "M"}')
 #' @export
@@ -881,8 +829,9 @@ json2vector <- function(json) {
 #' of a string or vector of strings.
 #' 
 #' @family Data Wrangling
-#' @param string String or Vector
+#' @param string String or Vector.
 #' @param n Integer. How many characters starting on right/left?
+#' @return Character. Trimmed strings.
 #' @examples
 #' left("Bernardo", 3)
 #' right(c("Bernardo", "Lares", "V"), 3)
@@ -892,6 +841,7 @@ left <- function(string, n = 1){
   l <- substr(string, 1, n)
   return(l)
 }
+
 #' @rdname left
 #' @export
 right <- function(string, n = 1){
@@ -907,7 +857,9 @@ right <- function(string, n = 1){
 #' This function lets the user import an Excel file's tabs into a list
 #' 
 #' @family Tools
-#' @param file String. Excel's name
+#' @param file String. Local Excel file name
+#' @return List or data.frame. If single tab is found, a data.frame; if
+#' multiple tabs are found on file, a list of data.frames.
 #' @export
 importxlsx <- function(file) {
   sheets <- getSheetNames(file)
@@ -935,7 +887,8 @@ importxlsx <- function(file) {
 #' 
 #' @family Tools
 #' @param fx Function to quiet
-#' @param quiet Quiet outputs? If not, skip quietness
+#' @param quiet Quiet outputs? If not, skip quietness.
+#' @return Same as \code{fx} but with no messages or prints.
 #' @export
 quiet <- function(fx, quiet = TRUE) { 
   if (!quiet) return(fx)
@@ -952,6 +905,7 @@ quiet <- function(fx, quiet = TRUE) {
 #' @family Tools
 #' @param thresh Numeric. How many seconds to consider a slow connection?  
 #' @param url Character. URL to test the readLines 1 command
+#' @return Boolean. Result of checking if device has internet connection.
 #' @export
 haveInternet <- function(thresh = 3, url = "http://www.google.com") {
   start <- Sys.time()
@@ -967,11 +921,12 @@ haveInternet <- function(thresh = 3, url = "http://www.google.com") {
 ####################################################################
 #' Zero Variance Columns
 #' 
-#' This function quickly detectes which columns have the same value
-#' for each observation
+#' This function detects which columns have the same value (whichever)
+#' for each column.
 #' 
 #' @family Tools
 #' @param df Dataframe
+#' @return Character vector with column names on which its values have no variance.
 #' @examples 
 #' df <- data.frame(a = c(1, NA, 3), b = rep(NA, 3), c = rep(5, 3))
 #' print(df)
@@ -989,12 +944,13 @@ zerovar <- function(df) {
 #' This function lets the user import csv, xlsx, xls, sav files.
 #' 
 #' @family Tools
-#' @param filename Character
+#' @param filename Character. File name to import.
 #' @param current_wd Boolean. Use current working directory before
 #' the file's name? Use this param to NOT get absolute root directory.
 #' @param sheet Character. Name or index of the sheet to read data 
-#' from if file is xlsx or xls
+#' from if file is xlsx or xls.
 #' @param quiet Boolean. Quiet summary message?
+#' @return List or data.frame, depending on \code{filename}'s data.
 #' @export
 read.file <- function(filename, current_wd = TRUE, sheet = 1, quiet = FALSE) {
   
@@ -1049,17 +1005,18 @@ read.file <- function(filename, current_wd = TRUE, sheet = 1, quiet = FALSE) {
 #' Bind Files into Dataframe
 #' 
 #' This function imports and binds multiple files into a single 
-#' data.frame. Files must be inserted with absolute roots filenames. 
+#' data.frame. Files must be inserted with absolute roots files names. 
 #' 
 #' @family Tools
-#' @param files Character vector. Filenames.
+#' @param files Character vector. Files names.
+#' @return data.frame with data joined from all \code{files} passed.
 #' @export
 bindfiles <- function(files) {
   alldat <- data.frame()
   for (i in seq_along(files)) {
     file <- files[i]
     dfi <- read.file(file, current_wd = FALSE) 
-    alldat <- rbind_full(alldat, dfi)
+    alldat <- bind_rows(alldat, dfi)
     statusbar(i, length(files))
   }
   return(data.frame(alldat))
@@ -1078,8 +1035,9 @@ bindfiles <- function(files) {
 #' 
 #' @family Tools
 #' @param text Character or factor vector.
-#' @param top Integer. How many characters aprox should be on each line?
+#' @param top Integer. How many characters aprox. should be on each line?
 #' @param rel Numeric. Relation of pixels and characters per line
+#' @return Character. String (vector) including some \code{\\n} within.
 #' @examples 
 #' cat(autoline("This is a long text that may not fit into a single line", 8))
 #' 
@@ -1122,6 +1080,7 @@ autoline <- function(text, top = "auto", rel = 9) {
 #' 
 #' @param font Character. Which font to check
 #' @param quiet Boolean. Keep quiet? If not, show message
+#' @return Boolean result of the existing fonts check.
 #' @examples
 #' font_exists(font = "Arial")
 #' font_exists(font = "XOXO")
@@ -1189,7 +1148,7 @@ font_exists <- function(font = "Arial Narrow", quiet = FALSE) {
 #' @param x Numeric vector
 #' @param n Integer. Single numeric value, specifying number of 
 #' significant figures to show. Range 1 to 6.
-#' @return A vector of character values that contain converted values
+#' @return Vector of character values that contain converted values
 #' @examples
 #' num_abbr(rnorm(10) * 1e6)
 #' num_abbr(rnorm(10) * 1e6, n = 1)
@@ -1241,6 +1200,8 @@ num_abbr <- function(x, n = 3) {
 #' @param df data.frame
 #' @param ... Variables to segment counters
 #' @param abc Boolean. Sort alphabetically?
+#' @return List. Length same as number of categorical columns, each with a 
+#' frequency data.frame using \code{freqs()}.
 #' @examples 
 #' data(dft) # Titanic dataset
 #' df <- dft[,1:5]
@@ -1271,14 +1232,16 @@ list_cats <- function(df, ..., abc = TRUE) {
 #' @param x Factor (or Character) Vector
 #' @param original String or Vector. Original text you wish to replace
 #' @param change String or Vector. Values you wish to replace the originals with
+#' @return Factor vector with transformed levels.
 #' @examples
-#' \dontrun{
-#'  data(dft)
-#'  # Replace a single value
-#'  dft <- mutate(dft, Pclass = replacefactor(Pclass, original = "1", change = "First"))
-#'  # Replace multiple values
-#'  dft <- mutate(dft, Pclass = replacefactor(Pclass, c("2","3"), c("Second", "Third")))
-#' }
+#' library(dplyr)
+#' data(dft)
+#' # Replace a single value
+#' dft <- mutate(dft, Pclass = replacefactor(Pclass, original = "1", change = "First"))
+#' levels(dft$Pclass)
+#' # Replace multiple values
+#' dft <- mutate(dft, Pclass = replacefactor(Pclass, c("2","3"), c("Second", "Third")))
+#' levels(dft$Pclass)
 #' @export
 replacefactor <- function(x, original, change) {
   if (length(original) != length(change))
@@ -1307,6 +1270,8 @@ replacefactor <- function(x, original, change) {
 #' If FALSE, will list in order of frequency.
 #' @param quiet Boolean. Keep quiet? If not, print messages and
 #' \code{statusbar}.
+#' @return data.frame. Each row is a function and columns stating
+#' number of appearances, percentage, packages, and files searched.
 #' @examples
 #' \dontrun{
 #' # Choose an R script file with functions
@@ -1348,6 +1313,7 @@ files_functions <- function(filename, abc = TRUE, quiet = FALSE) {
 #' will be moved recursively.
 #' @param to Character. File names for each \code{from} file or
 #' directory. If directory does not exist, it will be created.
+#' @return No return value, called for side effects.
 #' @export 
 move_files <- function(from, to) {
   
@@ -1396,7 +1362,7 @@ move_files <- function(from, to) {
 ####################################################################
 #' Get file names without extensions
 #'
-#' @param filepath Character vector. File path(s) to get file names with
+#' @param filepath Character vector. File path(s) to get file names with.
 #' no extension.
 #' @examples
 #' file_name("file.aux")
@@ -1406,6 +1372,18 @@ move_files <- function(from, to) {
 file_name <- function(filepath) {
   sub(pattern = "(.*)\\..*$", replacement = "\\1", basename(filepath))  
 }
+
+
+####################################################################
+#' Get file extensions without file names
+#'
+#' @param filepath Character vector. File path(s) to get file extensions or types.
+#' @examples
+#' file_type("file.aux")
+#' file_type("temp/file.R")
+#' file_type("/temp/temp3/music.mp3")
+#' @export 
+file_type <- function(filepath) tolower(gsub(".*\\.", "", filepath))
 
 
 ####################################################################
@@ -1421,6 +1399,7 @@ file_name <- function(filepath) {
 #' @param str Character. Start column names with. If set to \code{NULL},
 #' original name of column will be used.
 #' @param replace Boolean. Replace original values (delete column)
+#' @return data.frame. Result of un-nesting named or un-named list columns.
 #' @examples 
 #' df <- dplyr::starwars
 #' # Un-named list columns
@@ -1485,27 +1464,15 @@ spread_list <- function(df, col, str = NULL, replace = TRUE) {
   return(as_tibble(done))
 }
 
-####################################################################
-#' Quote object's name (deparse + substitute)
-#'
-#' @param x (Unquoted) Object
-#' @param env Environment where object lives
-#' @return Character
-#' @export
-quo_val <- function(x, env = parent.frame()) {
-  x <- deparse(substitute(x, env))
-  x <- gsub("\\.data", "", x)
-  x <- gsub(".*\\$", "", x)
-  return(x)
-}
 
 ####################################################################
 #' Format a string text as markdown/HTML
 #' 
-#' @param text Character
-#' @param color Character
-#' @param size Numeric
-#' @param bold Boolean
+#' @param text Character. Strings to format.
+#' @param color Character. Hex colour code.
+#' @param size Numeric. Text size.
+#' @param bold Boolean. Should the text be bold?
+#' @return String with format characters included.
 #' @examples 
 #' \dontrun{
 #' col1 <- "grey"
@@ -1544,6 +1511,7 @@ formatText <- function(text, color = "black", size = 20, bold = FALSE) {
 #' internal (created within \code{glued}) and external (environment) objects.
 #' 
 #' @inheritParams stringr::str_glue
+#' @return Same as input.
 #' @examples 
 #' name <- "Bernardo"
 #' age <- 29
@@ -1594,6 +1562,7 @@ glued <- function (..., .sep = "", .envir = parent.frame()) {
 #' @param type Character. Type of match. Choose one of:
 #' \code{any}, \code{all}
 #' @param ... Additional arguments to pass to \code{grepl}
+#' @return Boolean of same length as \code{x}
 #' @examples 
 #' x <- c(123, 876, 18761)
 #' patterns <- c(1, 2)

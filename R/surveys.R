@@ -8,7 +8,8 @@
 #' Each column a different answer.
 #' @param ignore Numeric Vector. Which columns are NOT answers?
 #' @param title Character. Title for your plot
-#' @param subtitle Character. Subtitle for your plot
+#' @param subtitle Character. Subtitle for your plot.
+#' @return ggplot2 object
 #' @export
 plot_survey <- function(answers, ignore = 1, title = NA, subtitle = NA){
   if (length(ignore) > 0) {

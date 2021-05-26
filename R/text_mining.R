@@ -12,6 +12,7 @@
 #' @param lower Boolean. Transform all to lower case?
 #' @param ascii Boolean. Only ASCII characters?
 #' @param title Boolean. Transform to title format (upper case on first letters)
+#' @return Character vector with transformed strings.
 #' @examples 
 #' cleanText("Bernardo Lares 123")
 #' cleanText("Bèrnärdo LáreS 123", lower = FALSE)
@@ -45,7 +46,7 @@ cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = F
 #' @param df data.frame/tibble
 #' @param num Add character before only-numeric names
 #' @param ... Additional parameters passed to \code{cleanText}
-#' @return data.frame/tibble with new clean titles
+#' @return Character vector with transformed strings.
 #' @examples 
 #' df <- dft[1:5,1:5] # Dummy data
 #' colnames(df) <- c("ID.", "34", "Num 123", "Nòn-äscì", "  white   Spaces  ")
@@ -94,8 +95,9 @@ cleanNames <- function(df, num = "x", ...) {
 #' @param utf Boolean. Transform all characters to UTF (no accents and crazy symbols)
 #' @param df Boolean. Return a dataframe with a one-hot-encoding kind of
 #' results? Each word is a column and returns if word is contained.
-#' @param h2o Boolean. Return H2OFrame?
+#' @param h2o Boolean. Return \code{H2OFrame}?
 #' @param quiet Boolean. Keep quiet? If not, print messages
+#' @return data.frame. Tokenized words with counters.
 #' @export
 textTokenizer <- function(text, 
                           exclude = NA,
@@ -242,6 +244,7 @@ textTokenizer <- function(text,
 #' @param contains Character vector. Which columns do you wish to add
 #' with a contains (counter) string validator?
 #' @param prc Boolean. Also add percentage of each column compared with length?
+#' @return data.frame with additional features based on \code{text}.
 #' @examples 
 #' textFeats("Bernardo Lares")
 #' textFeats("Bernardo Lares 123!", prc = TRUE)
@@ -310,12 +313,13 @@ textFeats <- function(text, auto = TRUE, contains = NA, prc = FALSE) {
 #' @param min Integer. Words with less frequency will not be plotted
 #' @param pal Character vector. Which colours do you wish to use
 #' @param print Boolean. Plot results as textcloud?
+#' @return wordcloud plot object
 #' @export
 textCloud <- function(text, lang = "english", exclude = NULL, seed = 0, 
                       keep_spaces = FALSE, min = 2, pal = NA, print = TRUE) {
   
   try_require("wordcloud")
-  set.seed(seed)
+  on.exit(set.seed(seed))
   
   d <- textTokenizer(text, lang, exclude, keep_spaces)
   if (print) message(paste0(capture.output(head(d, 10)), collapse = "\n")) 
@@ -350,6 +354,7 @@ textCloud <- function(text, lang = "english", exclude = NULL, seed = 0,
 #' data frame with word and sentiment directly
 #' @param plot Boolean. Plot results summary?
 #' @param subtitle Character. Add subtitle to the plot
+#' @return List. Contains data.frame with words and sentiments, summary and plot.
 #' @export
 sentimentBreakdown <- function(text, lang = "spanish", 
                                exclude = c("maduro","que"),
@@ -432,14 +437,15 @@ sentimentBreakdown <- function(text, lang = "spanish",
 #' Keyword/Topic identification using RAKE
 #' 
 #' RAKE is a basic algorithm which tries to identify keywords in text. 
-#' Based on udpipe library, model models, and keywords_rake function.
+#' Based on \code{udpipe} library, model models, and keywords_rake function.
 #' 
 #' @family Text Mining
 #' @param text Character vector
-#' @param file Character. Name of udpipe model previously downloaded
+#' @param file Character. Name of \code{udpipe} model previously downloaded
 #' for a specific language
 #' @param lang Character. If file does not exist, this language will be
-#' downloaded from udpipe's models
+#' downloaded from \code{udpipe}'s models.
+#' @return data.frame with topics for each \code{text} input.
 #' @export
 topics_rake <- function(text, file = "english-ewt-ud-2.4-190531.udpipe", lang = "english") {
   try_require("udpipe") 
@@ -474,6 +480,7 @@ topics_rake <- function(text, file = "english-ewt-ud-2.4-190531.udpipe", lang = 
 #' @param ngram Integer vector. Number of continuous n items in text.
 #' @param top Integer. Keep n most frequent ngrams only.
 #' @param ... Additional parameters passed to \code{remove_stopwords}.
+#' @return data.frame with ngrams and counters, sorted by frequency.
 #' @examples
 #' \dontrun{
 #' women <- read.csv("https://bit.ly/3mXJOOi")
@@ -497,6 +504,7 @@ ngrams <- function(text, ngram = c(2,3), top = 10, stop_words = NULL, ...) {
   bind_rows(x_counts)
 }
 
+
 ####################################################################
 #' Remove stop-words and patterns from character vector
 #' 
@@ -509,6 +517,7 @@ ngrams <- function(text, ngram = c(2,3), top = 10, stop_words = NULL, ...) {
 #' but when the letter "a" appears in a word, it will remain.
 #' @param exclude Character. Pattern to exclude using regex.
 #' @param sep Character. String that separate the terms.
+#' @return Character vector with removed texts.
 #' @examples
 #' x <- c("A brown fox jumps over a dog.", "Another brown dog.")
 #' remove_stopwords(x, stop_words = c("dog", "brown", "a"), exclude = "\\.")

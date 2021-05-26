@@ -14,7 +14,7 @@ cleanNames(df, num = "x", ...)
 \item{...}{Additional parameters passed to \code{cleanText}}
 }
 \value{
-data.frame/tibble with new clean titles
+Character vector with transformed strings.
 }
 \description{
 Resulting names are unique and consist only of the \code{_} character, 

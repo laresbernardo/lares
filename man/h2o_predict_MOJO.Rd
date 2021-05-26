@@ -17,6 +17,9 @@ first one found will be used.}
 
 \item{batch}{Integer. Run n batches at a time for "json" method.}
 }
+\value{
+data.frame with predicted results.
+}
 \description{
 This function lets the user predict using the h2o .zip file 
 containing the MOJO files. Note that it works with the files 

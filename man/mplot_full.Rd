@@ -44,6 +44,10 @@ have in 'tag' (more than: regression; less than: classification)}
 
 \item{file_name}{Character. File name as you wish to save the plot}
 }
+\value{
+Multiple plots gathered into one, showing \code{tag} vs
+\code{score} performance results.
+}
 \description{
 This function plots a whole dashboard with a model's results. It will automatically
 detect if it's a categorical or regression's model by checking how many different

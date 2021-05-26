@@ -39,6 +39,9 @@ to keep a specific order}
 
 \item{subdir}{Character. Into which subdirectory do you wish to save the plot to?}
 }
+\value{
+ggplot2 object
+}
 \description{
 This function plots groups of observartions with timelines in a 
 Gantt Plot way. Only works if start and end are date format values.

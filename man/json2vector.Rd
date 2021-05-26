@@ -7,7 +7,10 @@
 json2vector(json)
 }
 \arguments{
-\item{json}{Character. JSON string}
+\item{json}{Character. JSON string.}
+}
+\value{
+List, data.frame, or vector. Depends on the \code{json} string.
 }
 \description{
 This function lets the user transform a JSON string into vector 

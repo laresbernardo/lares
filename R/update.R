@@ -8,6 +8,7 @@
 #' @param all Boolean. Install other recommended libraries? Kinda Docker install!
 #' @param local Boolean. Install package with local files? (or Github repo)
 #' @param fb Boolean. From FB instance? Personal use
+#' @return No return value, called for side effects.
 #' @export
 updateLares <- function(force = FALSE, all = FALSE, local = FALSE, fb = FALSE) {
   

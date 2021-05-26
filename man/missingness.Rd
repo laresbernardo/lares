@@ -17,6 +17,10 @@ missingness(df, plot = FALSE, full = FALSE, subtitle = NA, summary = TRUE)
 
 \item{summary}{Boolean. Show numerical summary text?}
 }
+\value{
+data.frame with each variable, number of missing values and percentage.
+If \code{plot=TRUE}, a plot with the same information reflected.
+}
 \description{
 This function lets the user calculate the percentage of NAs or
 missingness in a data.frame. It also plots the results if needed.

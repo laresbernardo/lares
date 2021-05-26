@@ -24,6 +24,9 @@ grepm(pattern, x, type = "all", ...)
 
 \item{...}{Additional arguments to pass to \code{grepl}}
 }
+\value{
+Boolean of same length as \code{x}
+}
 \description{
 This function returns a boolean vector of the same length as `x`, 
 each element of which is the result of applying the `type` of matches

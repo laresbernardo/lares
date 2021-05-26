@@ -7,7 +7,11 @@
 importxlsx(file)
 }
 \arguments{
-\item{file}{String. Excel's name}
+\item{file}{String. Local Excel file name}
+}
+\value{
+List or data.frame. If single tab is found, a data.frame; if
+multiple tabs are found on file, a list of data.frames.
 }
 \description{
 This function lets the user import an Excel file's tabs into a list

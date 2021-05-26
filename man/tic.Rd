@@ -24,6 +24,9 @@ Choose any of: \code{units, clock, seconds}.}
 \item{signif}{Integer. Significant digits}
 }
 \value{
+Invisible list. Contains tic (start time), toc (stop time),
+elapsed time and message printed.
+
 \code{toc} returns an (invisible) list containing the time-stamps
 \code{tic} and \code{toc}, \code{time} in seconds and the message \code{msg}.
 }

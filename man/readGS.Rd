@@ -37,6 +37,10 @@ which one you wish to use by email and/or api_key.}
 
 \item{...}{Further read_sheet parameters}
 }
+\value{
+data.frame with the results of your Google Sheets file based on its
+\code{title}, specificially the \code{sheet} and \code{range} requested.
+}
 \description{
 Read data from Google Sheets knowing the file's title. You may read
 a single value from a cell or a data.frame from a cell range.
@@ -44,7 +48,6 @@ a single value from a cell or a data.frame from a cell range.
 \seealso{
 Other Scrapper: 
 \code{\link{filesGD}()},
-\code{\link{geoStratum}()},
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
@@ -56,7 +59,6 @@ Other Scrapper:
 
 Other Google: 
 \code{\link{filesGD}()},
-\code{\link{geoAddress}()},
 \code{\link{queryGA}()},
 \code{\link{trendsRelated}()},
 \code{\link{trendsTime}()},

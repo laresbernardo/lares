@@ -78,6 +78,11 @@ resource limited.}
 
 \item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
 }
+\value{
+List. Contains original data.frame \code{df}, an index
+to identify which observations with be part of the train dataset
+\code{train_index}, and which model type should be \code{model_type}.
+}
 \description{
 Pre-process your data before training a model. This is the prior step
 on the \code{h2o_automl()} function's pipeline. Enabling for 

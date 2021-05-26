@@ -13,6 +13,7 @@
 #' first one found will be used.
 #' @param method Character. One of "mojo" or "json".
 #' @param batch Integer. Run n batches at a time for "json" method.
+#' @return data.frame with predicted results.
 #' @export
 h2o_predict_MOJO <- function(df, model_path, method = "mojo", batch = 300){
   
@@ -88,6 +89,7 @@ flatten_list <- function(x, quiet = FALSE) {
 #' @param df Dataframe. Data to insert into the model.
 #' @param model_path Character. Relative model path directory or zip file.
 #' @param sample Integer. How many rows should the function predict?
+#' @return vector with predicted results.
 #' @export
 h2o_predict_binary <- function(df, model_path, sample = NA){
   
@@ -120,6 +122,7 @@ h2o_predict_binary <- function(df, model_path, sample = NA){
 #' @param df Dataframe/Vector. Data to insert into the model.
 #' @param model h2o model Object
 #' @param ... Additional parameters passed to \code{cleanNames()}.
+#' @return data.frame with predicted results.
 #' @export
 h2o_predict_model <- function(df, model, ...){
   as.data.frame(predict(model, as.h2o(df))) %>%
@@ -137,6 +140,7 @@ h2o_predict_model <- function(df, model, ...){
 #' @param df Dataframe/Vector. Data to insert into the model.
 #' @param api Character. API URL.
 #' @param exclude Character. Name of the variables to exclude.
+#' @return vector with predicted results.
 #' @export
 h2o_predict_API <- function(df, api, exclude = "tag") {
   

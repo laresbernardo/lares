@@ -114,7 +114,7 @@ symm <- x2y(dft, target = "Survived", symmetric = TRUE)
 plot(symm, type = 1)
 
 # Symmetry: x2y vs y2x
-set.seed(42)
+on.exit(set.seed(42))
 x <- seq(-1, 1, 0.01)
 y <- sqrt(1 - x^2) + rnorm(length(x), mean = 0, sd = 0.05)
 

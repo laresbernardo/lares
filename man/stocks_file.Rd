@@ -30,7 +30,10 @@ Cash, and Transactions information}
 
 \item{cache}{Boolean. Use daily cache if available?}
 
-\item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed.}
+}
+\value{
+List with portfolio, transactions, and cash data.frames.
 }
 \description{
 This function lets the user download his personal Excel with his 
@@ -64,8 +67,6 @@ Other Investment:
 Other Credentials: 
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
-\code{\link{f1_contacts}()},
-\code{\link{geoAddress}()},
 \code{\link{get_credentials}()},
 \code{\link{get_tweets}()},
 \code{\link{mailSend}()},

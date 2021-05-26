@@ -16,6 +16,9 @@ numericalonly(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
 \item{natransform}{String. "mean" or 0 to impute NA values. If
 set to NA no calculation will run.}
 }
+\value{
+data.frame with all numerical columns selected.
+}
 \description{
 Select only numerical columns in a dataframe
 }
@@ -32,7 +35,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -40,7 +42,6 @@ Other Data Wrangling:
 \code{\link{normalize}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

@@ -7,7 +7,10 @@
 li_profile(token = NA)
 }
 \arguments{
-\item{token}{Object. OAuth Authentication: li_auth()'s output}
+\item{token}{Object. OAuth Authentication: li_auth()'s output.}
+}
+\value{
+List. Results of your own profile data given the \code{token}.
 }
 \description{
 This function brings a list with your personal LinkedIn data

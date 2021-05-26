@@ -7,9 +7,12 @@
 trendsTime(gtrend, title = NA)
 }
 \arguments{
-\item{gtrend}{List. Result from gtrends(keyword, geo, time)}
+\item{gtrend}{List. Result from \code{gtrendsR::gtrends(keyword, geo, time)}}
 
-\item{title}{Character. Custom title for the plot}
+\item{title}{Character. Custom title for the plot.}
+}
+\value{
+plot for Google Trend's results input \code{gtrend}
 }
 \description{
 This function creates a plot with google trend's data on timelines
@@ -21,7 +24,6 @@ Other Google Trends:
 
 Other Google: 
 \code{\link{filesGD}()},
-\code{\link{geoAddress}()},
 \code{\link{queryGA}()},
 \code{\link{readGS}()},
 \code{\link{trendsRelated}()},

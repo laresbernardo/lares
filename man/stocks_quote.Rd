@@ -9,6 +9,10 @@ stocks_quote(ticks)
 \arguments{
 \item{ticks}{Character Vector. Symbols/Tickers to quote in real time.}
 }
+\value{
+data.frame with Symbol, Type of stock, Quote time, current value,
+Daily Change, Market, and Symbol Name.
+}
 \description{
 This function lets the user download stocks live data.
 }
@@ -36,7 +40,6 @@ Other Investment:
 
 Other Scrapper: 
 \code{\link{filesGD}()},
-\code{\link{geoStratum}()},
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},

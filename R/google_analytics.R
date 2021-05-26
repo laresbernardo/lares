@@ -18,6 +18,7 @@
 #' metrics/dimensions. Check \code{googleAnalyticsR::google_analytics()}.
 #' @param start Date. Start date for the report
 #' @param end Date. End date for the report
+#' @return data.frame with the API GET request tabulated results.
 #' @export
 queryGA <- function(account, creds = NA, token_dir = NA,
                     metrics = "sessions",

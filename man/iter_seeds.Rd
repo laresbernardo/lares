@@ -17,6 +17,9 @@ which variable should be used instead, use the \code{y} parameter.}
 
 \item{...}{Additional arguments passed to \code{h2o_automl}}
 }
+\value{
+data.frame with performance results by seed tried on every row.
+}
 \description{
 This functions lets the user iterate and search for best seed. Note that if
 the results change a lot, you are having a high variance in your data.

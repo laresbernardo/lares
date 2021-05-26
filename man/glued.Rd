@@ -15,6 +15,9 @@ glued(..., .sep = "", .envir = parent.frame())
 evaluated from left to right. If \code{.x} is an environment, the expressions are
 evaluated in that environment and \code{.envir} is ignored.}
 }
+\value{
+Same as input.
+}
 \description{
 Format and interpolate a string using a \code{glue} wrapper. Allows
 simple operations, \code{NULL} values as input, and interactions with

@@ -15,6 +15,9 @@ h2o_selectmodel(results, which_model = 1, quiet = FALSE, ...)
 
 \item{...}{Additional parameters on \code{h2o::h2o.automl}}
 }
+\value{
+H2O processed model
+}
 \description{
 Select wich model from the h2o_automl function to use
 }

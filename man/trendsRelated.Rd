@@ -7,18 +7,21 @@
 trendsRelated(gtrend, top = NA, title = NA, note = NA, exclude = NULL)
 }
 \arguments{
-\item{gtrend}{List. Result from gtrends(keyword, geo, time)}
+\item{gtrend}{List. Result from \code{gtrendsR::gtrends(keyword, geo, time)}}
 
-\item{top}{Integer. Filter top n results only}
+\item{top}{Integer. Filter top n results only.}
 
-\item{title}{Character. Custom title for the plot}
+\item{title}{Character. Custom title for the plot.}
 
-\item{note}{Character. Add a note to the plot if needed}
+\item{note}{Character. Add a note to the plot if needed.}
 
 \item{exclude}{Character vector. Which observations do you wish to exclude?}
 }
+\value{
+plot for Google Trend's results input \code{gtrend}.
+}
 \description{
-This function creates a plot with google trend's related topics 
+This function creates a plot with Google Trend's related topics 
 and queries, and let the user compare different keywords.
 }
 \seealso{
@@ -41,7 +44,6 @@ Other Exploratory:
 
 Other Scrapper: 
 \code{\link{filesGD}()},
-\code{\link{geoStratum}()},
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
@@ -56,7 +58,6 @@ Other Google Trends:
 
 Other Google: 
 \code{\link{filesGD}()},
-\code{\link{geoAddress}()},
 \code{\link{queryGA}()},
 \code{\link{readGS}()},
 \code{\link{trendsTime}()},

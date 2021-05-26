@@ -9,8 +9,9 @@
 #' @param x Numeric vector. Distribution to be winsorized.
 #' @param thresh Numeric vector. Lower and upper quantiles thresholds.
 #' Set values within [0,1].
-#' @param na.rm Boolean. Should NAs be omitted to calculate the quantiles? 
-#' Note that `NA`s in x are preserved and left unchanged anyway.
+#' @param na.rm Boolean. Should \code{NA} be omitted to calculate the quantiles? 
+#' Note that \code{NA} in \code{x} are preserved and left unchanged anyway.
+#' @return Numeric vector transformed.
 #' @export
 winsorize <- function(x, thresh = c(0.05, 0.95), na.rm = FALSE){
   if (length(thresh) != 2 | any(abs(thresh) > 1))
@@ -39,6 +40,8 @@ winsorize <- function(x, thresh = c(0.05, 0.95), na.rm = FALSE){
 #' @param x Numeric. Distribution
 #' @param thresh Numeric. Z-Score threshold for n standard deviations.
 #' @param mad Boolean. Use median absolute deviation instead?
+#' @return data.frame. Each row is an \code{x} observation with its 
+#' respective std/mean or mad/med calculations depending on \code{mad} input.
 #' @export
 outlier_zscore <- function(x, thresh = 3, mad = FALSE) {
   if (mad == FALSE) {
@@ -70,6 +73,7 @@ outlier_zscore <- function(x, thresh = 3, mad = FALSE) {
 #' @param thresh Numeric vector. Z-Score threshold for n standard deviations.
 #' @param top Integer. Show only n most frequent categorical values when 
 #' using the \code{group} argument.
+#' @return ggplot2 object
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
@@ -155,7 +159,8 @@ outlier_zscore_plot <- function(df, var, group = NULL,
 #'
 #' @family Outliers
 #' @param x Numeric. Distribution
-#' @param k Positive Numeric. K-multiplier
+#' @param k Positive Numeric. K-multiplier.
+#' @return Boolean vector detecting outliers.
 #' @export
 outlier_turkey <- function(x, k = 1.5) {
   quar <- quantile(x, probs = c(0.25, 0.75), na.rm = TRUE)

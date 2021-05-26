@@ -26,6 +26,9 @@ mplot_metrics(
 
 \item{file_name}{Character. File name as you wish to save the plot}
 }
+\value{
+Plot with \code{results} performance.
+}
 \description{
 This function generates plots of the metrics of a predictive model.
 This is an auxiliary function used in \code{model_metrics()} when

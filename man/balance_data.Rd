@@ -22,6 +22,10 @@ more than 2 unique values, rate will represent percentage for number of rows}
 
 \item{quiet}{Boolean. Keep quiet? If not, messages will be printed}
 }
+\value{
+data.frame. Reduced sampled data.frame following the \code{rate} of
+appearance of a specific variable.
+}
 \description{
 This function lets the user balance a given data.frame by resampling
 with a given relation rate and a binary feature.
@@ -37,7 +41,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -46,7 +49,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

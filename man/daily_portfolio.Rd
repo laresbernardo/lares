@@ -18,6 +18,9 @@ cash amount for all reports, set the amount here}
 
 \item{window}{Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"}
 }
+\value{
+data.frame. Processed at date and portfolio level.
+}
 \description{
 This function creates a dataframe will all relevant metrics and values,
 for the overall portfolio, for every day since inception.

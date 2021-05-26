@@ -9,13 +9,21 @@ etf_sector(etf = "VTI", quiet = FALSE, cache = TRUE)
 \arguments{
 \item{etf}{Character Vector. Which ETFs you wish to scrap?}
 
-\item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed.}
 
 \item{cache}{Boolean. Use daily cache if available?}
+}
+\value{
+data.frame with ETF break.down data by sector
 }
 \description{
 This function scraps etf.com data for sector breakdown on ETFs.
 Use \code{splot_etf()} for visualization.
+}
+\examples{
+\donttest{
+etf_sector(etf = "VTI")
+}
 }
 \seealso{
 Other Investment: 

@@ -6,9 +6,10 @@
 #'
 #' @family API
 #' @family LinkedIn
-#' @param app_name Character. Your App's given name
-#' @param client_id Character. Your App's client ID
-#' @param client_secret Character. Your App's client secret
+#' @param app_name Character. Your App's given name.
+#' @param client_id Character. Your App's client ID.
+#' @param client_secret Character. Your App's client secret.
+#' @return Character. String with token requested.
 #' @export
 li_auth <- function(app_name = NA, client_id = NA, client_secret = NA){
   
@@ -36,7 +37,8 @@ li_auth <- function(app_name = NA, client_id = NA, client_secret = NA){
 #'
 #' @family API
 #' @family LinkedIn
-#' @param token Object. OAuth Authentication: li_auth()'s output
+#' @param token Object. OAuth Authentication: li_auth()'s output.
+#' @return List. Results of your own profile data given the \code{token}.
 #' @export
 li_profile <- function(token = NA) {
   

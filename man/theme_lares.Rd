@@ -61,6 +61,9 @@ used as fill and the values will be used as colour.}
 \item{which}{Character. When \code{pal = 3}, select which colours should be
 added with the custom colours palette: fill, colour, text (fct) - first letters.}
 }
+\value{
+Themed ggplot2 object
+}
 \description{
 Based on \code{hrbrthemes}' \code{theme_ipsum} and customized for \code{lares} usage.
 With this team you can custom the colour and fill palettes, global colour parameters,
@@ -73,6 +76,18 @@ available on any modern system, so it's "free"-ish; plus, it is a condensed font
 with solid default kerning pairs and geometric numbers.
 }
 
+\examples{
+\donttest{
+data(dft)
+library(ggplot2)
+p <- ggplot(dft, aes(x = Pclass, y = sum(Fare), fill = Pclass)) + geom_col()
+p + theme_lares()
+p + theme_lares(pal = 1)
+p + theme_lares(background = "#999999", mg = 25)
+p + theme_lares(legend = "top", grid = "Yy")
+p + theme_lares(clean = TRUE)
+}
+}
 \seealso{
 Other Visualization: 
 \code{\link{distr}()},

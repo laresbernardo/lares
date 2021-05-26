@@ -14,7 +14,10 @@ Each column a different answer.}
 
 \item{title}{Character. Title for your plot}
 
-\item{subtitle}{Character. Subtitle for your plot}
+\item{subtitle}{Character. Subtitle for your plot.}
+}
+\value{
+ggplot2 object
 }
 \description{
 This function lets the user plot a survey's result.

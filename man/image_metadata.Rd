@@ -9,6 +9,9 @@ image_metadata(files)
 \arguments{
 \item{files}{Character vector. Files or directory which contains files.}
 }
+\value{
+data.frame with meta-data for each image file.
+}
 \description{
 This function lets the user get meta data from image files or directory.
 }

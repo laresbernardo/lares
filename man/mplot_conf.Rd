@@ -24,8 +24,9 @@ mplot_conf(
 
 \item{score}{Vector. Predicted value or model's result.}
 
-\item{thresh}{Numeric. Value which splits the results for the 
-confusion matrix when binary.}
+\item{thresh}{Integer. Threshold for selecting binary or regression 
+models: this number is the threshold of unique values we should 
+have in 'tag' (more than: regression; less than: classification)}
 
 \item{abc}{Boolean. Arrange columns and rows alphabetically?}
 
@@ -46,6 +47,9 @@ Set to \code{NA} to plot all.}
 \item{subdir}{Character. Sub directory on which you wish to save the plot}
 
 \item{file_name}{Character. File name as you wish to save the plot}
+}
+\value{
+Plot with confusion matrix results.
 }
 \description{
 This function plots a confussion matrix.

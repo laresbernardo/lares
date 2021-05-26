@@ -6,11 +6,16 @@
 \usage{
 myip()
 }
+\value{
+Character. Result of your IP address based on ipify.org
+}
 \description{
 Reveal your current IP address.
 }
 \examples{
+\donttest{
 myip()
+}
 }
 \seealso{
 Other Tools: 

@@ -18,6 +18,8 @@
 #' @param quiet Boolean. Keep quiet? Else, show messages
 #' @param seed Numeric.
 #' @param ... ohse parameters.
+#' @return List. Contains lasso model coefficients, performance metrics, the
+#' actual model fitted and a plot.
 #' @examples 
 #' \donttest{
 #' Sys.unsetenv("LARES_FONT") # Temporal
@@ -40,7 +42,7 @@ lasso_vars <- function(df, variable,
   tic("lasso_vars")
   quiet(h2o.init(nthreads = -1, port = 54321))
   h2o.no_progress()
-  set.seed(seed)
+  on.exit(set.seed(seed))
   var <- enquo(variable)
   df <- select(df, !!var, everything())
   

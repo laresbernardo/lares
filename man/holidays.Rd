@@ -13,6 +13,9 @@ holidays be imported?}
 \item{years}{Character or vector. For which year(s) do you wish to import
 holiday dates?}
 }
+\value{
+data.frame with holidays data for given \code{countries} and \code{years}.
+}
 \description{
 This function lets the user automatically scrap holiday dates from
 any country and year within +- 5 years. Thanks to timeanddate.com!
@@ -30,7 +33,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{impute}()},
 \code{\link{left}()},
@@ -38,7 +40,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},
@@ -54,7 +55,6 @@ Other Feature Engineering:
 
 Other Scrapper: 
 \code{\link{filesGD}()},
-\code{\link{geoStratum}()},
 \code{\link{get_mp3}()},
 \code{\link{ip_country}()},
 \code{\link{readGS}()},

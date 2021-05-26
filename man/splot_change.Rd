@@ -31,6 +31,9 @@ sold entirely?}
 
 \item{save}{Boolean. Save plot into a local file?}
 }
+\value{
+ggplot object
+}
 \description{
 This function plots each stock's change through history, since
 inception, with weighted attributions or absolute values.

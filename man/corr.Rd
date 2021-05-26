@@ -76,7 +76,6 @@ corr(df, method = "spearman")
 }
 \seealso{
 Other Calculus: 
-\code{\link{deg2num}()},
 \code{\link{dist2d}()},
 \code{\link{model_metrics}()},
 \code{\link{quants}()}

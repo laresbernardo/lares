@@ -9,6 +9,9 @@
 #' @family Machine Learning
 #' @inheritParams h2o_automl
 #' @param y Character. Column name for independent variable.
+#' @return List. Contains original data.frame \code{df}, an index
+#' to identify which observations with be part of the train dataset
+#' \code{train_index}, and which model type should be \code{model_type}.
 #' @examples 
 #' data(dft) # Titanic dataset
 #' 

@@ -32,6 +32,9 @@ mplot_splits(
 
 \item{file_name}{Character. File name as you wish to save the plot}
 }
+\value{
+Plot with distribution and performance results by splits.
+}
 \description{
 This function lets us split and compare quantiles on a given prediction to
 compare different categorical values vs scores grouped by equal sized buckets.

@@ -9,6 +9,9 @@ rtistry_sphere(eye = c(100, 0, 0), pal = "auto", var = 3)
 \arguments{
 \item{eye, pal, var}{Parameters to change aesthetics and calculations}
 }
+\value{
+ggplot object
+}
 \description{
 Generative Art: Sphere XmodY
 }

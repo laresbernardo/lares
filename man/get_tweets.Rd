@@ -13,6 +13,9 @@ get_tweets(q, n = 10000, creds = NA)
 
 \item{creds}{Character. Credential's user (see \code{get_creds()})}
 }
+\value{
+data.frame with API response results.
+}
 \description{
 This function downloads tweets with personal credentials
 }
@@ -20,8 +23,6 @@ This function downloads tweets with personal credentials
 Other Credentials: 
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
-\code{\link{f1_contacts}()},
-\code{\link{geoAddress}()},
 \code{\link{get_credentials}()},
 \code{\link{mailSend}()},
 \code{\link{queryDB}()},

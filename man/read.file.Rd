@@ -7,15 +7,18 @@
 read.file(filename, current_wd = TRUE, sheet = 1, quiet = FALSE)
 }
 \arguments{
-\item{filename}{Character}
+\item{filename}{Character. File name to import.}
 
 \item{current_wd}{Boolean. Use current working directory before
 the file's name? Use this param to NOT get absolute root directory.}
 
 \item{sheet}{Character. Name or index of the sheet to read data 
-from if file is xlsx or xls}
+from if file is xlsx or xls.}
 
 \item{quiet}{Boolean. Quiet summary message?}
+}
+\value{
+List or data.frame, depending on \code{filename}'s data.
 }
 \description{
 This function lets the user import csv, xlsx, xls, sav files.

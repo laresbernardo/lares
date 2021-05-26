@@ -13,6 +13,10 @@ list_cats(df, ..., abc = TRUE)
 
 \item{abc}{Boolean. Sort alphabetically?}
 }
+\value{
+List. Length same as number of categorical columns, each with a 
+frequency data.frame using \code{freqs()}.
+}
 \description{
 Make a list with all categorical values and
 }

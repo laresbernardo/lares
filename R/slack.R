@@ -14,7 +14,8 @@
 #' creds if correctly used.
 #' @param creds Character. Credential's dir (see \code{get_creds()}). Set
 #' hook URL into the "slack" list in your YML file. Will use first value.
-#' @examples 
+#' @return Invisible POST response
+#' @examples
 #' \dontrun{
 #' slackSend(text = "This is a message", title = "TEST", pretext = Sys.info()["user"])
 #' }

@@ -10,6 +10,9 @@ normalize(x)
 \item{x}{Numeric Vector. Numbers to be transformed into 
 normalized vector}
 }
+\value{
+Vector with normalized \code{x} values
+}
 \description{
 This function lets the user normalize numerical values into 
 the 0 to 1 range
@@ -25,7 +28,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -33,7 +35,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

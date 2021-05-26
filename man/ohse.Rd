@@ -62,6 +62,10 @@ the filtered values with?}
 
 \item{...}{Additional parameters}
 }
+\value{
+data.frame on which all features are numerical by nature or
+transformed with one hot encoding.
+}
 \description{
 This function lets the user automatically transform a dataframe with
 categorical columns into numerical by one hot encoding technic.
@@ -88,7 +92,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -96,7 +99,6 @@ Other Data Wrangling:
 \code{\link{normalize}()},
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

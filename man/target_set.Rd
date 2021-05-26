@@ -18,6 +18,10 @@ categorical model.}
 
 \item{quiet}{Boolean. Do not show message for auto target?}
 }
+\value{
+List. Contains original data.frame \code{df} and
+\code{which} with the target variable.
+}
 \description{
 This function detects or forces the target value when predicting
 a categorical binary model. This is an auxiliary function.

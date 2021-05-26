@@ -23,6 +23,8 @@ set.tictoc <- function(which = c("TIC", "TOC"), id = 1,
 #' @param id Define ID if multiple \code{tic} & \code{toc} are being used.
 #' @param start Start time. Now is default.
 #' @param quiet Boolean. Quiet messages?
+#' @return Invisible list. Contains tic (start time), toc (stop time),
+#' elapsed time and message printed.
 #' @examples 
 #' # Basic use (global stopwatch)
 #' tic()

@@ -3,7 +3,7 @@
 #' 
 #' This function lets the user get a confusion matrix and accuracy, and 
 #' for for binary classification models: AUC, Precision, Sensitivity, and
-#' Specificity.
+#' Specificity, given the expected (tags) values and predicted values (scores).
 #' 
 #' @family Machine Learning
 #' @family Model metrics
@@ -27,6 +27,9 @@
 #' @param model_name Character. Model's name
 #' @param plots Boolean. Include plots?
 #' @param subtitle Character. Subtitle for plots
+#' @return List. Multiple performance metrics that vary depending on
+#' the type of model (classification or regression). If \code{plot=TRUE},
+#' multiple plots are also returned.
 #' @examples 
 #' data(dfr) # Results for AutoML Predictions
 #' lapply(dfr, head)
@@ -208,14 +211,13 @@ model_metrics <- function(tag, score, multis = NA,
 #' 
 #' @family Machine Learning
 #' @family Model metrics
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
-#' @param thresh Numeric. Value which splits the results for the 
-#' confusion matrix when binary.
+#' @inheritParams model_metrics
 #' @param sense Character. Inequation sense for threshold: <, <=, >=, >
 #' @param diagonal Boolean. \code{FALSE} to convert diagonal numbers to 
 #' zeroes. Ideal to detect must confusing categories. 
 #' @param plot Boolean. Plot result? Uses \code{mplot_conf()}
+#' @return data.frame. Result of counting \code{tag} and \code{score}'s tag
+#' given a \code{thresh}old, similar to \code{base::table()}.
 #' @examples 
 #' data(dfr) # Results for AutoML Predictions
 #' lapply(dfr[c(1,2)], head)
@@ -276,8 +278,7 @@ conf_mat <- function(tag, score, thresh = 0.5,
 #' 
 #' @family Machine Learning
 #' @family Model metrics
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
+#' @inheritParams model_metrics
 #' @param target Value. Which is your target positive value? If 
 #' set to 'auto', the target with largest mean(score) will be 
 #' selected. Change the value to overwrite. Only used when binary
@@ -285,6 +286,7 @@ conf_mat <- function(tag, score, thresh = 0.5,
 #' @param splits Integer. Numer of percentiles to split the data
 #' @param plot Boolean. Plot results? Uses \code{mplot_gain()}
 #' @param quiet Boolean. Do not show message for auto target?
+#' @return data.frame when \code{plot=FALSE} or plot when \code{plot=TRUE}.
 #' @examples 
 #' data(dfr) # Results for AutoML Predictions
 #' head(dfr$class2)
@@ -355,10 +357,8 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
 #' 
 #' @family Machine Learning
 #' @family Model metrics
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
-#' @param multis Data.frame. Containing columns with each category score 
-#' (only used when more than 2 categories coexist)
+#' @inheritParams model_metrics
+#' @return List with ROC's results, area under the curve (AUC) and their CI.
 #' @examples 
 #' data(dfr) # Results for AutoML Predictions
 #' lapply(dfr[c(1,2)], head)
@@ -435,8 +435,9 @@ ROC <- function(tag, score, multis = NA) {
 #' simultaneously.
 #' 
 #' @family Model metrics
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
+#' @inheritParams model_metrics
+#' @return data.frame or numeric values results for multiple error
+#' metrics on continuous numerical vectors inputs.
 #' @examples 
 #' data(dfr) # Results for AutoML Predictions
 #' head(dfr$regr)
@@ -459,8 +460,6 @@ errors <- function(tag, score){
 #' 
 #' This function lets the user calculate Root Mean Squared Error
 #' 
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
 #' @export
 #' @rdname errors
 rmse <- function(tag, score){
@@ -474,8 +473,6 @@ rmse <- function(tag, score){
 #' 
 #' This function lets the user calculate Mean Absolute Error
 #' 
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
 #' @export
 #' @rdname errors
 mae <- function(tag, score){
@@ -488,9 +485,7 @@ mae <- function(tag, score){
 #' Mean Squared Error (MSE)
 #' 
 #' This function lets the user calculate Mean Squared Error
-#' 
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
+#'
 #' @export
 #' @rdname errors
 mse <- function(tag, score){ 
@@ -504,8 +499,6 @@ mse <- function(tag, score){
 #' 
 #' This function lets the user calculate Mean Squared Error
 #' 
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
 #' @export
 #' @rdname errors
 mape <- function(tag, score){ 
@@ -521,8 +514,6 @@ mape <- function(tag, score){
 #' 
 #' This function lets the user calculate R Squared
 #' 
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
 #' @export
 #' @rdname errors
 rsq <- function(tag, score){ 
@@ -535,8 +526,6 @@ rsq <- function(tag, score){
 #' 
 #' This function lets the user calculate Adjusted R Squared
 #' 
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
 #' @export
 #' @rdname errors
 rsqa <- function(tag, score){ 
@@ -546,15 +535,14 @@ rsqa <- function(tag, score){
 
 
 ####################################################################
-#' Loggarithmic Loss Function for Binary Models
+#' Logarithmic Loss Function for Binary Models
 #'
 #' This function calculates log loss/cross-entropy loss for binary 
 #' models. NOTE: when result is 0.69315, the classification is neutral; 
 #' it assigns equal probability to both classes.
 #'
 #' @family Model metrics
-#' @param tag Vector. Real known label
-#' @param score Vector. Predicted value or model's result
+#' @inheritParams model_metrics
 #' @param eps Numeric. Epsilon value
 #' @export
 loglossBinary <- function(tag, score, eps = 0.001) {

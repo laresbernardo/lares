@@ -32,6 +32,9 @@ mplot_cuts(
 
 \item{file_name}{Character. File name as you wish to save the plot}
 }
+\value{
+Plot with performance results by cuts.
+}
 \description{
 This function cuts by quantiles any score or prediction.
 }

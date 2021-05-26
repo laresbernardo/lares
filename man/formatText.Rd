@@ -7,13 +7,16 @@
 formatText(text, color = "black", size = 20, bold = FALSE)
 }
 \arguments{
-\item{text}{Character}
+\item{text}{Character. Strings to format.}
 
-\item{color}{Character}
+\item{color}{Character. Hex colour code.}
 
-\item{size}{Numeric}
+\item{size}{Numeric. Text size.}
 
-\item{bold}{Boolean}
+\item{bold}{Boolean. Should the text be bold?}
+}
+\value{
+String with format characters included.
 }
 \description{
 Format a string text as markdown/HTML

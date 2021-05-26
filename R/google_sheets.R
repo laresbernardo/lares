@@ -17,6 +17,8 @@
 #' which one you wish to use by email and/or api_key.
 #' @param server Boolean. Force interacting auth process?
 #' @param ... Further read_sheet parameters
+#' @return data.frame with the results of your Google Sheets file based on its
+#' \code{title}, specificially the \code{sheet} and \code{range} requested.
 #' @aliases readGS4
 #' @export
 readGS <- function(title, sheet = "Hoja 1", range = NULL, drop_nas = TRUE,
@@ -45,6 +47,7 @@ readGS <- function(title, sheet = "Hoja 1", range = NULL, drop_nas = TRUE,
 #' @param data Object (value, vector, dataframe, list)
 #' @param reformat Boolean. Reformat the affected cells?
 #' @param append Boolean.
+#' @return No return value, called for side effects.
 #' @aliases writeGS4
 #' @export
 writeGS <- function(data, title, sheet = "Hoja 1", range = 'A1', 
@@ -88,6 +91,7 @@ writeGS <- function(data, title, sheet = "Hoja 1", range = 'A1',
 #' @family Scrapper
 #' @family Google
 #' @inheritParams readGS
+#' @return Vector with found file names based on \code{title} on Google Drive.
 #' @export
 filesGD <- function(title, server = FALSE, json = NULL, api_key = NULL, email = NULL) {
   
@@ -117,9 +121,7 @@ filesGD <- function(title, server = FALSE, json = NULL, api_key = NULL, email = 
                       verbose = FALSE)
   
   nfiles <- nrow(files)
-  if (nfiles != 1)
-    message(glued("{nfiles} files found with pattern: {title}"))
-  
+  if (nfiles != 1) message(glued("{nfiles} files found with pattern: {title}"))
   return(files)
   
 }

@@ -130,6 +130,10 @@ the results? Working directory as default.}
 
 \item{importance}{Boolean. Print important variables?}
 }
+\value{
+List. Trained model, predicted scores and datasets used, performance
+metrics, parameters, importance data.frame, seed, and plots when \code{plots=TRUE}.
+}
 \description{
 This function lets the user create a robust and fast model, using 
 H2O's AutoML function. The result is a list with the best model, 
@@ -160,7 +164,7 @@ models will be trained.
 }
 
 \examples{
-\dontrun{
+\donttest{
 data(dft) # Titanic dataset
 dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 

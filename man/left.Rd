@@ -10,9 +10,12 @@ left(string, n = 1)
 right(string, n = 1)
 }
 \arguments{
-\item{string}{String or Vector}
+\item{string}{String or Vector.}
 
 \item{n}{Integer. How many characters starting on right/left?}
+}
+\value{
+Character. Trimmed strings.
 }
 \description{
 This functions lets the user extract the first or last n characters 
@@ -29,7 +32,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -37,7 +39,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

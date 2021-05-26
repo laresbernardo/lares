@@ -37,6 +37,9 @@ wish to get the history from? i.e, USD/COP, EUR/USD...}
 
 \item{quiet}{Boolean. Quiet all messages?}
 }
+\value{
+data.frame with additional features calculated out of time or date vectors.
+}
 \description{
 This function lets the user automatically create new columns out
 of a dataframe or vector with date/time variables.
@@ -65,7 +68,6 @@ Other Data Wrangling:
 \code{\link{categ_reducer}()},
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -74,7 +76,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

@@ -47,6 +47,9 @@ which one you wish to use by email and/or api_key.}
 
 \item{...}{Further read_sheet parameters}
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 Write data into Google Sheets knowing the file's title. You may write
 a single value into a cell or a data.frame into a cell range.
@@ -54,7 +57,6 @@ a single value into a cell or a data.frame into a cell range.
 \seealso{
 Other Scrapper: 
 \code{\link{filesGD}()},
-\code{\link{geoStratum}()},
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{ip_country}()},
@@ -66,7 +68,6 @@ Other Scrapper:
 
 Other Google: 
 \code{\link{filesGD}()},
-\code{\link{geoAddress}()},
 \code{\link{queryGA}()},
 \code{\link{readGS}()},
 \code{\link{trendsRelated}()},

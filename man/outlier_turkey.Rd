@@ -9,7 +9,10 @@ outlier_turkey(x, k = 1.5)
 \arguments{
 \item{x}{Numeric. Distribution}
 
-\item{k}{Positive Numeric. K-multiplier}
+\item{k}{Positive Numeric. K-multiplier.}
+}
+\value{
+Boolean vector detecting outliers.
 }
 \description{
 Tukey’s fences is a technique used in box plots. The non-outlier 

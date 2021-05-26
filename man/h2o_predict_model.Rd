@@ -13,6 +13,9 @@ h2o_predict_model(df, model, ...)
 
 \item{...}{Additional parameters passed to \code{cleanNames()}.}
 }
+\value{
+data.frame with predicted results.
+}
 \description{
 This function lets the user get scores from a H2O Model Object.
 }

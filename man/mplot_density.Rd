@@ -34,6 +34,9 @@ have in 'tag' (more than: regression; less than: classification)}
 
 \item{file_name}{Character. File name as you wish to save the plot}
 }
+\value{
+Plot with distribution and performance results.
+}
 \description{
 This function plots discrete and continuous values results
 }

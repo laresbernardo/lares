@@ -7,11 +7,14 @@
 li_auth(app_name = NA, client_id = NA, client_secret = NA)
 }
 \arguments{
-\item{app_name}{Character. Your App's given name}
+\item{app_name}{Character. Your App's given name.}
 
-\item{client_id}{Character. Your App's client ID}
+\item{client_id}{Character. Your App's client ID.}
 
-\item{client_secret}{Character. Your App's client secret}
+\item{client_secret}{Character. Your App's client secret.}
+}
+\value{
+Character. String with token requested.
 }
 \description{
 This function authenticates and creates a token for LinkedIn's 

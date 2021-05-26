@@ -18,6 +18,9 @@ will be transformed into passed argument.}
 
 \item{title}{Boolean. Transform to title format (upper case on first letters)}
 }
+\value{
+Character vector with transformed strings.
+}
 \description{
 This function lets the user clean text into getting only alphanumeric 
 characters and no accents/symbols on letters.
@@ -35,7 +38,6 @@ Other Data Wrangling:
 \code{\link{categ_reducer}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -44,7 +46,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

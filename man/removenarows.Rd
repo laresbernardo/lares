@@ -12,6 +12,9 @@ removenarows(df, all = TRUE)
 \item{all}{Boolean. Remove rows which contains ONLY NA values.
 If set to FALSE, rows which contains at least one NA will be removed}
 }
+\value{
+data.frame with removed rows.
+}
 \description{
 This function lets the user remove all rows that have some or
 all values as NAs
@@ -23,7 +26,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -32,7 +34,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{replaceall}()},
 \code{\link{textFeats}()},

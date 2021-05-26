@@ -13,6 +13,9 @@ h2o_predict_API(df, api, exclude = "tag")
 
 \item{exclude}{Character. Name of the variables to exclude.}
 }
+\value{
+vector with predicted results.
+}
 \description{
 This function lets the user get the score from an API service
 }

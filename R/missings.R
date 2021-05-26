@@ -11,6 +11,8 @@
 #' @param full Boolean. Return all variables (or only with missings)?
 #' @param subtitle Character. Subtitle to show in plot
 #' @param summary Boolean. Show numerical summary text?
+#' @return data.frame with each variable, number of missing values and percentage.
+#' If \code{plot=TRUE}, a plot with the same information reflected.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' 
@@ -96,15 +98,16 @@ missingness <- function(df, plot = FALSE, full = FALSE,
 #' @family Data Wrangling
 #' @family Machine Learning
 #' @family Missing Values
-#' @param df Dataframe. Dataframe to transform
-#' @param m Integer. Number of multiple imputations
-#' @param iters Integer. Number of iterations
-#' @param seed Integer. Set a seed for reproducibility
-#' @param quiet Boolean. Keep quiet? (or print replacements)
+#' @param df Dataframe. Dataframe to transform.
+#' @param m Integer. Number of multiple imputations.
+#' @param iters Integer. Number of iterations.
+#' @param seed Integer. Set a seed for reproducibility.
+#' @param quiet Boolean. Keep quiet? (or print replacements).
+#' @return data.frame with imputed values.
 #' @export
 impute <- function(df, m = 5, iters = 5, seed = 0, quiet = FALSE){
   try_require("mice")
-  set.seed(seed)
+  on.exit(set.seed(seed))
   aux <- mice(df, seed = seed, m = m, maxit = iters, printFlag = !quiet)
   ret <- complete(aux)
   return(ret)

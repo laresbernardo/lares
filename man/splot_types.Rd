@@ -11,6 +11,9 @@ splot_types(s, save = FALSE)
 
 \item{save}{Boolean. Save plot into a local file?}
 }
+\value{
+ggplot object
+}
 \description{
 This function lets the user plot types or categories of tickers.
 }

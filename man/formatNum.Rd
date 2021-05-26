@@ -37,6 +37,9 @@ the `decimals` parameter to set abbr's \code{n}(-1) parameter.}
 
 \item{...}{Additional lazy eval parameters.}
 }
+\value{
+Character. String vector with reformatted continuous numbers
+}
 \description{
 This function lets the user format numerical values nicely
 }
@@ -56,7 +59,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
 \code{\link{left}()},
@@ -64,7 +66,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

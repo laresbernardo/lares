@@ -64,8 +64,6 @@ Other Tools:
 
 Other Credentials: 
 \code{\link{db_download}()},
-\code{\link{f1_contacts}()},
-\code{\link{geoAddress}()},
 \code{\link{get_credentials}()},
 \code{\link{get_tweets}()},
 \code{\link{mailSend}()},

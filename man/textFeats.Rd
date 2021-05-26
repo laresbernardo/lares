@@ -16,6 +16,9 @@ with a contains (counter) string validator?}
 
 \item{prc}{Boolean. Also add percentage of each column compared with length?}
 }
+\value{
+data.frame with additional features based on \code{text}.
+}
 \description{
 This function creates a data.frame with features based on a text vector
 }
@@ -32,7 +35,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -41,7 +43,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

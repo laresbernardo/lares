@@ -83,8 +83,10 @@
 #' the results? Working directory as default.
 #' @param project Character. Your project's name
 #' @param ... Additional parameters on \code{h2o::h2o.automl}
+#' @return List. Trained model, predicted scores and datasets used, performance
+#' metrics, parameters, importance data.frame, seed, and plots when \code{plots=TRUE}.
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' data(dft) # Titanic dataset
 #' dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 #' 
@@ -344,6 +346,8 @@ print.h2o_automl <- function(x, importance = TRUE, ...) {
 #' @param ignore Character vector. Columns too ignore
 #' @param leaderboard H2O's Leaderboard. Passed when using 
 #' \code{h2o_selectmodel} as it contains plain model and no leader board.
+#' @return List. Trained model, predicted scores and datasets used, performance
+#' metrics, parameters, importance data.frame, seed, and plots when \code{plots=TRUE}.
 #' @export
 h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
                         model_type, target = "auto", split = 0.7,
@@ -581,6 +585,7 @@ get_scores <- function(predictions,
 #' @inheritParams h2o_automl
 #' @param results \code{h2o_automl()} object.
 #' @param which_model Integer. Which model from the leaderboard you wish to use?
+#' @return H2O processed model
 #' @export
 h2o_selectmodel <- function(results, which_model = 1, quiet = FALSE, ...) {
   
@@ -634,6 +639,8 @@ h2o_selectmodel <- function(results, which_model = 1, quiet = FALSE, ...) {
 #' @param subdir Character. In which directory do you wish to save 
 #' the results?
 #' @param save Boolean. Do you wish to save/export results?
+#' @param seed Numeric. For reproducible results and random splits.
+#' @return No return value, called for side effects.
 #' @export
 export_results <- function(results,
                            thresh = 10,
@@ -642,7 +649,8 @@ export_results <- function(results,
                                      "dev","production"),
                            note = NA,
                            subdir = NA,
-                           save = TRUE) {
+                           save = TRUE,
+                           seed = 0) {
   
   if (save) {
     
@@ -667,7 +675,7 @@ export_results <- function(results,
     if ("production" %in% which) which <- unique(c(which, "binary", "mojo"))
     
     if ("txt" %in% which | !is.na(note)[1] & pass) {
-      set.seed(123)
+      on.exit(set.seed(seed))
       results_txt <- list(
         "Project" = results$project,
         "Note" = note,
@@ -768,7 +776,7 @@ export_results <- function(results,
 #' 1, the train and test set will be the same.
 #' @param seed Integer. Seed for random split
 #' @param print Boolean. Print summary results?
-#' @return A list with both datasets, summary, and split rate
+#' @return List with both datasets, summary, and split rate.
 #' @examples 
 #' data(dft) # Titanic dataset
 #' splits <- msplit(dft, size = 0.7, seed = 123)
@@ -778,7 +786,7 @@ msplit <- function(df, size = 0.7, seed = 0, print = TRUE) {
   
   if (size <= 0 | size > 1) stop("Set size parameter to a value >0 and <=1") 
   
-  set.seed(seed)
+  on.exit(set.seed(seed))
   df <- data.frame(df)
   if (size == 1) train <- test <- df
   
@@ -818,6 +826,8 @@ msplit <- function(df, size = 0.7, seed = 0, print = TRUE) {
 #' selected. Change the value to overwrite. Only used when binary
 #' categorical model.
 #' @param quiet Boolean. Do not show message for auto target?
+#' @return List. Contains original data.frame \code{df} and
+#' \code{which} with the target variable.
 #' @export
 target_set <- function(tag, score, target = "auto", quiet = FALSE) {
   
@@ -853,6 +863,7 @@ target_set <- function(tag, score, target = "auto", quiet = FALSE) {
 #' @inheritParams h2o_automl
 #' @param tries Integer. Number of iterations
 #' @param ... Additional arguments passed to \code{h2o_automl}
+#' @return data.frame with performance results by seed tried on every row.
 #' @export
 iter_seeds <- function(df, y, tries = 10, ...) {
   seeds <- data.frame()

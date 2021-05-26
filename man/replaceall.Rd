@@ -20,6 +20,9 @@ leave as default classes as character)?}
 
 \item{quiet}{Boolean. Keep quiet? (or print replacements)}
 }
+\value{
+data.frame with replaced values based on inputs.
+}
 \description{
 This function lets the user replace all specific values in a 
 vector or data.frame into another value. If replacing more than
@@ -54,7 +57,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -63,7 +65,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{textFeats}()},

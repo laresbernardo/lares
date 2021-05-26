@@ -4,10 +4,10 @@
 \alias{grepl_letters}
 \title{Pattern Matching for Letters considering Blanks}
 \usage{
-grepl_letters(vector, pattern, blank = "_")
+grepl_letters(x, pattern, blank = "_")
 }
 \arguments{
-\item{vector}{Character vector}
+\item{x}{Character vector}
 
 \item{pattern}{Character. Character string containing a 
 semi-regular expression which uses the following logic:
@@ -16,6 +16,9 @@ something followed by "b", anywhere in the string.}
 
 \item{blank}{Character. String to use between letters.}
 }
+\value{
+Boolean check for each value on \code{x}.
+}
 \description{
 Match pattern of letters considering blanks within each element of a 
 character vector, allowing counted characters between and around 
@@ -23,7 +26,7 @@ each letter. Used as an auxiliary function for the Scrabble family
 of functions.
 }
 \examples{
-x <- c("aaaa", "bbbb", "abab", "aabb", "a", "ab")
+x <- c("aaaa", "bbbb", "baba", "aabb", "a", "ab")
 grepl_letters(x, "ab")
 grepl_letters(x, "_ab")
 grepl_letters(x, "a_a")

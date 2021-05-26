@@ -102,7 +102,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     results[["nclusters_plot"]] <- nclusters_plot
     
     # K-Means Cluster Analysis
-    set.seed(seed)
+    on.exit(set.seed(seed))
     fit <- kmeans(df, k)
     results[["fit"]] <- fit
     # Append cluster assignment

@@ -17,7 +17,7 @@ msplit(df, size = 0.7, seed = 0, print = TRUE)
 \item{print}{Boolean. Print summary results?}
 }
 \value{
-A list with both datasets, summary, and split rate
+List with both datasets, summary, and split rate.
 }
 \description{
 This function splits automatically a dataframe into train and 

@@ -16,6 +16,9 @@ original name of column will be used.}
 
 \item{replace}{Boolean. Replace original values (delete column)}
 }
+\value{
+data.frame. Result of un-nesting named or un-named list columns.
+}
 \description{
 Spread an existing list column into new columns on a data.frame. Note
 that every element on every observation must have a name for the function

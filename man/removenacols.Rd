@@ -14,6 +14,9 @@ If set to \code{FALSE}, remove columns containing at least one \code{NA}.}
 
 \item{ignore}{Character vector. Column names to ignore validation.}
 }
+\value{
+data.frame with removed columns.
+}
 \description{
 This function lets the user remove all columns that have some or
 all values as NAs
@@ -25,7 +28,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -34,7 +36,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},
 \code{\link{textFeats}()},

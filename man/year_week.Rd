@@ -9,6 +9,9 @@ year_week(date)
 \arguments{
 \item{date}{Date. Date we wish to transform}
 }
+\value{
+Vector with dates reformatted
+}
 \description{
 This function lets the user convert a date into YYYY-WW format
 }
@@ -22,7 +25,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -31,7 +33,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

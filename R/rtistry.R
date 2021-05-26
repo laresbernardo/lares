@@ -3,6 +3,7 @@
 #' 
 #' @family rtistry
 #' @param eye,pal,var Parameters to change aesthetics and calculations
+#' @return ggplot object
 #' @examples
 #' \dontrun{
 #' rtistry_sphere(eye = c(0, -10000, 1))

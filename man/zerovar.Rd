@@ -9,9 +9,12 @@ zerovar(df)
 \arguments{
 \item{df}{Dataframe}
 }
+\value{
+Character vector with column names on which its values have no variance.
+}
 \description{
-This function quickly detectes which columns have the same value
-for each observation
+This function detects which columns have the same value (whichever)
+for each column.
 }
 \examples{
 df <- data.frame(a = c(1, NA, 3), b = rep(NA, 3), c = rep(5, 3))

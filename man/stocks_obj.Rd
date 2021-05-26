@@ -33,7 +33,10 @@ case, taxes changed from A to B in given date (hard-coded)}
 
 \item{cache}{Boolean. Use daily cache if available?}
 
-\item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed.}
+}
+\value{
+List. Aggregated results and plots.
 }
 \description{
 This function lets the user create his portfolio's calculations and

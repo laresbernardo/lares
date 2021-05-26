@@ -29,6 +29,9 @@ test dataset or pass a valid dataframe.}
 
 \item{quiet}{Boolean. Print messages?}
 }
+\value{
+H2OFrame with shap values for every observation and feature.
+}
 \description{
 SHAP (SHapley Additive exPlanations) by Lundberg and Lee (2016) is a 
 method to explain individual predictions. SHAP is based on the game 

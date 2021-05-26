@@ -29,6 +29,9 @@ gg_bars(
 
 \item{na.rm}{Boolean. Remove empty and NAs?}
 }
+\value{
+ggplot2 object
+}
 \description{
 This function uses a nice template for barplots.
 }

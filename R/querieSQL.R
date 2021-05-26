@@ -10,8 +10,9 @@
 #' @param query Character. SQL Query
 #' @param from Character. Credential's user (see \code{get_creds()})
 #' @param creds Character. Credential's directory (see \code{get_creds()})
+#' @return data.frame. Result of fetching the \code{query} data.
 #' @export
-queryDB = function(query, from = "dummy", creds = NA) {
+queryDB <- function(query, from, creds = NA) {
 
   try_require("RPostgreSQL")
   tic(id = "queryDummy")
@@ -26,7 +27,5 @@ queryDB = function(query, from = "dummy", creds = NA) {
   dbDisconnect(con)
 
   toc(id = "queryDummy", msg = "Query duration:")
-
   return(q)
-
 }

@@ -19,6 +19,9 @@ Set to NA to turn this metric off}
 
 \item{save}{Boolean. Save plot into a local file?}
 }
+\value{
+ggplot object
+}
 \description{
 This function plots a portfolio's historical ROI since inception
 or since last n days, with 2 moving average lines.

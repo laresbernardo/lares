@@ -32,6 +32,9 @@ data frame with word and sentiment directly}
 
 \item{subtitle}{Character. Add subtitle to the plot}
 }
+\value{
+List. Contains data.frame with words and sentiments, summary and plot.
+}
 \description{
 This function searches for relevant words in a given text and adds 
 sentiments labels (joy, anticipation, surprise, positive, trust, 

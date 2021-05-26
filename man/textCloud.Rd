@@ -35,6 +35,9 @@ a single word.}
 
 \item{print}{Boolean. Plot results as textcloud?}
 }
+\value{
+wordcloud plot object
+}
 \description{
 Study the distribution of a target variable vs another variable. This
 function is quite similar to the funModeling's corrplot function.

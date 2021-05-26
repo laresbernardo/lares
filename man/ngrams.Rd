@@ -19,6 +19,9 @@ but when the letter "a" appears in a word, it will remain.}
 
 \item{...}{Additional parameters passed to \code{remove_stopwords}.}
 }
+\value{
+data.frame with ngrams and counters, sorted by frequency.
+}
 \description{
 Build out n-grams for multiple text inputs and keep the n most frequent
 combinations.

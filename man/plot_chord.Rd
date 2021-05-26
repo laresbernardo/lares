@@ -17,7 +17,7 @@ plot_chord(
 \arguments{
 \item{origin, dest}{Vectors. Origin and destination vectors}
 
-\item{weight}{Vector. Weight for each chor}
+\item{weight}{Vector. Weight for each chord.}
 
 \item{mg}{Numeric. Margin adjust for plot in case of need}
 
@@ -26,6 +26,9 @@ plot_chord(
 \item{subtitle}{Character. Subtitle for the plot}
 
 \item{pal}{Vector. Colour pallete. Order matters.}
+}
+\value{
+chordDiagram object
 }
 \description{
 This function plots discrete and continuous values results

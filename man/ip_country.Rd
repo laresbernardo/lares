@@ -9,6 +9,9 @@ ip_country(ip = myip())
 \arguments{
 \item{ip}{Vector. Vector with all IP's we wish to search}
 }
+\value{
+Boolean vector, same length as \code{ip}
+}
 \description{
 This function lets the user find a country from a given IP Address
 }
@@ -51,7 +54,6 @@ Other Tools:
 
 Other Scrapper: 
 \code{\link{filesGD}()},
-\code{\link{geoStratum}()},
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
 \code{\link{readGS}()},

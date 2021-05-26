@@ -29,6 +29,9 @@ mplot_lineal(
 
 \item{file_name}{Character. File name as you wish to save the plot}
 }
+\value{
+Plot with linear distribution and performance results.
+}
 \description{
 This function plots a Linear Regression Result
 }

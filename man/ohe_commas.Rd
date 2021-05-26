@@ -18,6 +18,10 @@ values which will be separated as one hot encoding}
 
 \item{remove}{Boolean. Remove original variables?}
 }
+\value{
+data.frame on which all features are numerical by nature or
+transformed with one hot encoding.
+}
 \description{
 This function lets the user do one hot encoding on a variable with 
 comma separated values
@@ -37,7 +41,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -45,7 +48,6 @@ Other Data Wrangling:
 \code{\link{normalize}()},
 \code{\link{numericalonly}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

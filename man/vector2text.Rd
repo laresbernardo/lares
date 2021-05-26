@@ -21,6 +21,9 @@ Not boolean variable so it can be used on other languages. Note that
 the last comma will be suppressed if \code{Sys.getenv("LARES_NUMFORMAT")}
 is set to \code{1} and you have less than 3 values.}
 }
+\value{
+Vector pasting \code{vector} values into a single string
+}
 \description{
 Convert a vector into a comma separated text
 }
@@ -39,7 +42,6 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{dateformat}()},
 \code{\link{formatNum}()},
 \code{\link{holidays}()},
 \code{\link{impute}()},
@@ -48,7 +50,6 @@ Other Data Wrangling:
 \code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
-\code{\link{rbind_full}()},
 \code{\link{removenacols}()},
 \code{\link{removenarows}()},
 \code{\link{replaceall}()},

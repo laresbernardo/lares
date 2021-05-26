@@ -16,6 +16,10 @@ If FALSE, will list in order of frequency.}
 \item{quiet}{Boolean. Keep quiet? If not, print messages and
 \code{statusbar}.}
 }
+\value{
+data.frame. Each row is a function and columns stating
+number of appearances, percentage, packages, and files searched.
+}
 \description{
 Parses all functions called by an R script and then lists
 them by package. Wrapper for 'getParseData'. May be of great
