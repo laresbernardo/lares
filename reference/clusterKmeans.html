@@ -186,9 +186,22 @@ two variables by name or column position.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>Boolean. Keep quiet? If not, print messages</p></td>
+      <td><p>Boolean. Keep quiet? If not, print messages.</p></td>
     </tr>
     </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>List. If no <code>k</code> is provided, contains <code>nclusters</code> and 
+<code>nclusters_plot</code> to determine optimal <code>k</code> given their WSS (Within
+Groups Sum of Squares). If <code>k</code> is provided, additionally we get:</p><ul>
+<li><p><code>df</code> data.frame with original <code>df</code> plus <code>cluster</code> column</p></li>
+<li><p><code>clusters</code> integer which is the same as <code>k</code></p></li>
+<li><p><code>fit</code> kmeans object used to fit clusters</p></li>
+<li><p><code>means</code> data.frame with means and counts for each cluster</p></li>
+<li><p><code>correlations</code> plot with correlations grouped by clusters</p></li>
+<li><p><code>PCA</code> list with PCA results</p></li>
+</ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

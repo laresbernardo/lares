@@ -133,6 +133,15 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Depending on the <code>return</code> input, we get a:</p><ul>
+<li><p><code>vector</code> with <code>palette</code> results vector</p></li>
+<li><p><code>vector</code> with <code>palette</code> results vector's names</p></li>
+<li><p><code>list</code> with <code>palette</code> results vector, <code>labels</code>
+  results data.frame, and <code>simple</code> results named vector</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Auxiliary: 
@@ -142,8 +151,15 @@
 <code><a href='plot_palette.html'>plot_palette</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Raw colours and counter-colours</span>
-<span class='va'>nice_palette</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='fu'>lares_pal</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>palette</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'># Simple colour-named palette</span>
+<span class='fu'>lares_pal</span><span class='op'>(</span><span class='st'>"simple"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    orange      blue    purple       red     green      navy    yellow      grey 
+#&gt; "#FF8303" "#40A4D8" "#5D3A9B" "#E63946" "#A1BD4D" "#03396C" "#F8D962" "#8D99AE" 
+#&gt;      pink     black     white 
+#&gt; "#FFCAD4" "#000000" "#F8F8F8" </div><div class='input'>
+<span class='co'># Raw colours and counter-colours</span>
+<span class='co'># OR simply: lares_pal("palette")</span>
+<span class='va'>nice_palette</span> <span class='op'>&lt;-</span> <span class='fu'>lares_pal</span><span class='op'>(</span><span class='st'>"colours"</span><span class='op'>)</span>
 <span class='va'>nice_palette_ctr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span><span class='op'>(</span><span class='fu'>lares_pal</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>palette</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>nice_palette</span>, <span class='va'>nice_palette_ctr</span><span class='op'>)</span>, <span class='va'>head</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [[1]]
@@ -153,7 +169,7 @@
 #&gt; [1] "#000000" "#000000" "#F8F8F8" "#000000" "#000000" "#000000"
 #&gt; </div><div class='input'>
 <span class='co'># Personal colours by name</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>lares_pal</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>labels</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>lares_pal</span><span class='op'>(</span><span class='st'>"custom"</span><span class='op'>)</span>
 <span class='va'>df</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>, <span class='fl'>5</span><span class='op'>)</span>, <span class='op'>]</span>
 </div><div class='output co'>#&gt;          values    fill  colour
 #&gt; 58         otro #8D99AE #000000

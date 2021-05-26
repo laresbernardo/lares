@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Download Historical Currency Exchange Rate — get_currency" />
 <meta property="og:description" content="This function lets the user download historical currency exchange
-rate between two currencies" />
+rate between two currencies." />
 
 
 
@@ -116,7 +116,7 @@ rate between two currencies" />
 
     <div class="ref-description">
     <p>This function lets the user download historical currency exchange
-rate between two currencies</p>
+rate between two currencies.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_currency</span><span class='op'>(</span>
@@ -149,11 +149,15 @@ previous values?</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>data.frame. Result of fetching online data for <code>currency_pair</code>
+grouped by date.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># For today (or any one single date)</span>
-<span class='fu'>get_currency</span><span class='op'>(</span><span class='st'>"USD/ARS"</span>, from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>get_currency</span><span class='op'>(</span><span class='st'>"USD/COP"</span>, from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># For multiple dates</span>
 <span class='fu'>get_currency</span><span class='op'>(</span><span class='st'>"EUR/USD"</span>, from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>7</span>, fill <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='op'>}</span>
