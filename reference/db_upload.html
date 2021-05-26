@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Upload Dropbox File — db_upload • lares</title>
+<title>Upload Local Files to Dropbox — db_upload • lares</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Upload Dropbox File — db_upload" />
-<meta property="og:description" content="This function lets the user download a file from Dropbox, specifying
-its name and using a previously created token." />
+<meta property="og:title" content="Upload Local Files to Dropbox — db_upload" />
+<meta property="og:description" content="This function lets the user upload a local file to Dropbox,
+using a previously created token or with interactive window." />
 
 
 
@@ -73,7 +73,7 @@ its name and using a previously created token." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.10.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.10.6</span>
       </span>
     </div>
 
@@ -109,14 +109,14 @@ its name and using a previously created token." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Upload Dropbox File</h1>
+    <h1>Upload Local Files to Dropbox</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/dropbox.R'><code>R/dropbox.R</code></a></small>
     <div class="hidden name"><code>db_upload.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user download a file from Dropbox, specifying
-its name and using a previously created token.</p>
+    <p>This function lets the user upload a local file to Dropbox,
+using a previously created token or with interactive window.</p>
     </div>
 
     <pre class="usage"><span class='fu'>db_upload</span><span class='op'>(</span>
@@ -132,11 +132,11 @@ its name and using a previously created token.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>filename</th>
-      <td><p>String. File's name</p></td>
+      <td><p>String. Local file's name to upload.</p></td>
     </tr>
     <tr>
       <th>dir</th>
-      <td><p>String. Directory you wish to upload the file to</p></td>
+      <td><p>String. Directory you wish to upload the file to.</p></td>
     </tr>
     <tr>
       <th>delete_file</th>
@@ -144,7 +144,8 @@ its name and using a previously created token.</p>
     </tr>
     <tr>
       <th>token_dir</th>
-      <td><p>Character. Credential's local directory</p></td>
+      <td><p>Character. RDS with token local directory. You may set to
+NA if you already set your credentials (see <code><a href='get_credentials.html'>get_creds()</a></code>)</p></td>
     </tr>
     <tr>
       <th>token_name</th>
@@ -183,6 +184,18 @@ its name and using a previously created token.</p>
 <code><a href='try_require.html'>try_require</a>()</code>,
 <code><a href='updateLares.html'>updateLares</a>()</code>,
 <code><a href='zerovar.html'>zerovar</a>()</code></p>
+<p>Other Credentials: 
+<code><a href='db_download.html'>db_download</a>()</code>,
+<code><a href='f1_contacts.html'>f1_contacts</a>()</code>,
+<code><a href='geoAddress.html'>geoAddress</a>()</code>,
+<code><a href='get_credentials.html'>get_credentials</a>()</code>,
+<code><a href='get_tweets.html'>get_tweets</a>()</code>,
+<code><a href='mailSend.html'>mailSend</a>()</code>,
+<code><a href='queryDB.html'>queryDB</a>()</code>,
+<code><a href='queryGA.html'>queryGA</a>()</code>,
+<code><a href='slackSend.html'>slackSend</a>()</code>,
+<code><a href='stocks_file.html'>stocks_file</a>()</code>,
+<code><a href='stocks_report.html'>stocks_report</a>()</code></p>
 <p>Other Dropbox: 
 <code><a href='db_download.html'>db_download</a>()</code></p></div>
 
