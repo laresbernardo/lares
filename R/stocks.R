@@ -232,8 +232,8 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
   }
   
   results <- data %>% 
-    select(.data$Date, .data$Symbol, .data$Adjusted) %>% 
-    rename(Value = .data$Adjusted) %>%
+    select(.data$Date, .data$Symbol, .data$Close) %>% 
+    rename(Value = .data$Close) %>%
     filter(.data$Value > 0) %>%
     mutate(Date = as.Date(.data$Date), 
            Symbol = as.character(.data$Symbol))
@@ -1024,8 +1024,8 @@ stocks_report <- function(data = NA,
     mutate(Change = sprintf(
       "%s (%s)", 
       formatNum(100*.data$DifUSD/.data$CumValue, 2, pos = "%", sign = TRUE),
-      formatNum(.data$DifUSD/.data$CumQuant, 2, sign = TRUE))) %>%
-    arrange(desc(abs(.data$DifUSD/.data$CumQuant))) %>%
+      formatNum(.data$DifUSD/.data$CumQuant, 2, sign = TRUE, pos = "$"))) %>%
+    arrange(desc(abs(.data$DifUSD/.data$CumValue))) %>%
     select(.data$Symbol, .data$Value, .data$Change, .data$DifUSD,
            .data$CumQuant, .data$CumValue, .data$wt) %>%
     rename("Abs.Change" = .data$DifUSD, "Quant" = .data$CumQuant,
