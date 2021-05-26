@@ -15,7 +15,7 @@
 #' @param ask Boolean. If cache exists, when reading: (interactive) ask the user 
 #' if the cache should be used to proceed or ignored; when writing, (interactive)
 #' ask the user if the cache should be overwritten.
-#' @return No return value, called for side effects.
+#' @return \code{cache_write}. No return value, called for side effects.
 #' @examples
 #' x = list(a = 1, b = 2:4)
 #' base <- c(as.character(Sys.Date()), "A","B","C")
@@ -30,6 +30,7 @@ cache_write <- function(data,
   if (is.null(getOption("LARES_CACHE_DIR")))
     cache_dir <- tempdir()
   base <- paste(base, collapse = ".")
+  base <- paste0("lares_cache_", base)
   file <- sprintf("%s/%s.RDS", cache_dir, base)
   if (nchar(file) >= 252)
     stop("Your file name can't contain more than 250 characters.")
@@ -51,12 +52,14 @@ cache_write <- function(data,
 }
 
 #' @rdname cache_write
-#' @return R object. Data from cache file or NULL if no cache found.
+#' @return \code{cache_read}. R object. Data from cache file or NULL if no cache found.
 #' @export
 cache_read <- function(base,
                        cache_dir = getOption("LARES_CACHE_DIR"),
                        ask = FALSE,
                        quiet = FALSE) {
+  base <- paste(base, collapse = ".")
+  base <- paste0("lares_cache_", base)
   exists <- cache_exists(base, cache_dir)
   if (exists) {
     file <- attr(exists, "filename")
@@ -78,7 +81,7 @@ cache_read <- function(base,
 
 #' @rdname cache_write
 #' @param filename Character. File name to check existence.
-#' @return Boolean. Result of \code{base} existence.
+#' @return \code{cache_exists}. Boolean. Result of \code{base} existence.
 #' @export
 cache_exists <- function(base = NULL,
                          cache_dir = getOption("LARES_CACHE_DIR"),
@@ -94,4 +97,15 @@ cache_exists <- function(base = NULL,
   attr(exists, "base") <- base
   attr(exists, "cache_dir") <- cache_dir
   return(exists)
+}
+
+#' @rdname cache_write
+#' @return \code{cache_clear}. Invisible vector containing cache file names removed.
+#' @export
+cache_clear <- function(cache_dir = getOption("LARES_CACHE_DIR")) {
+  files <- list.files(cache_dir)
+  caches <- files[grepl("lares_cache", files)]
+  invisible(file.remove(sprintf("%s/%s", cache_dir, caches)))
+  message(paste("Removed", length(caches), "cache files succesfully!"))
+  return(invisible(caches))
 }

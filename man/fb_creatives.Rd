@@ -19,6 +19,10 @@ start the ID with \code{act_}.}
 
 \item{process}{Boolean. Process GET results to a more friendly format?}
 }
+\value{
+data.frame with un-nested processed results if \code{process=TRUE} or
+raw API results as list when \code{process=FALSE}.
+}
 \description{
 For more information: \href{https://developers.facebook.com/docs/marketing-api/reference/ad-creative/}{Ad Creative}
 }

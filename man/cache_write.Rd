@@ -4,6 +4,7 @@
 \alias{cache_write}
 \alias{cache_read}
 \alias{cache_exists}
+\alias{cache_clear}
 \title{Cache Save and Load (Write and Read)}
 \usage{
 cache_write(
@@ -26,6 +27,8 @@ cache_exists(
   cache_dir = getOption("LARES_CACHE_DIR"),
   filename = NULL
 )
+
+cache_clear(cache_dir = getOption("LARES_CACHE_DIR"))
 }
 \arguments{
 \item{data}{Object}
@@ -46,11 +49,13 @@ ask the user if the cache should be overwritten.}
 \item{filename}{Character. File name to check existence.}
 }
 \value{
-No return value, called for side effects.
+\code{cache_write}. No return value, called for side effects.
 
-R object. Data from cache file or NULL if no cache found.
+\code{cache_read}. R object. Data from cache file or NULL if no cache found.
 
-Boolean. Result of \code{base} existence.
+\code{cache_exists}. Boolean. Result of \code{base} existence.
+
+\code{cache_clear}. Invisible vector containing cache file names removed.
 }
 \description{
 This function lets the user save and load a cache of any R object to

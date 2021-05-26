@@ -17,13 +17,16 @@ fb_accounts(
 \href{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
 to acquire one.}
 
-\item{business_id}{Character. Business ID}
+\item{business_id}{Character. Business ID.}
 
-\item{type}{Character vector. Values: owned, client}
+\item{type}{Character vector. Values: owned, client.}
 
 \item{limit}{Integer. Query limit}
 
 \item{api_version}{Character. Facebook API version}
+}
+\value{
+data.frame with un-nested processed results fetched with API.
 }
 \description{
 This returns all ad accounts for a FB Business Account FB.

@@ -40,6 +40,8 @@
 #' @param plot Boolean. If you wish to plot your results
 #' @param plot_days Integer. How many days back you wish to plot?
 #' @param project Character. Name of your forecast project
+#' @return List. Containing the trained model, forecast accuracy results,
+#' data.frame for forecast (test) and train, and if \code{plot=TRUE}, a plot.
 #' @export
 forecast_arima <- function(time, values, n_future = 30, 
                            ARMA = 8, ARMA_min = 5,
@@ -172,14 +174,15 @@ forecast_arima <- function(time, values, n_future = 30,
 #' Official documentation: \url{https://github.com/facebook/prophet}
 #' 
 #' @family Forecast
-#' @param df Data frame. Must contain date/time column and values column
+#' @param df Data frame. Must contain date/time column and values column.
 #' @param n_future Integer. How many steps do you wish to forecast?
-#' @param country Character. Country code for holidays
+#' @param country Character. Country code for holidays.
 #' @param trend.param Numeric. Flexibility of trend component. Default is 0.05, 
 #' and as this value becomes larger, the trend component will be more flexible.
 #' @param logged Boolean. Convert values into logs?
-#' @param pout Numeric. Get rid of pout \% of outliers
+#' @param pout Numeric. Get rid of pout \% of outliers.
 #' @param project Character. Name of your forecast project for plot title
+#' @return List. Containing the forecast results, the prophet model, and a plot.
 #' @export
 prophesize <- function(df, n_future = 60, country = "AR", 
                        trend.param = 0.05, logged = FALSE, pout = 0.03, 

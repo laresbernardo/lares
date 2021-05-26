@@ -33,8 +33,9 @@ to trim the audio output in seconds.}
 \item{cover}{Boolean. Google Search its squared cover?}
 
 \item{quiet}{Boolean. Keep quiet? If not, print messages.}
-
-\item{return}{(Invisible) list with id's meta-data.}
+}
+\value{
+(Invisible) list with id's meta-data.
 }
 \description{
 This function downloads YouTube videos or Soundcloud or any other 

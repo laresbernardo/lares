@@ -9,6 +9,7 @@
 #' @param response GET's output object, class response
 #' @param paginate Boolean. Run through all paginations? If not,
 #' only the first one will be processed.
+#' @return data.frame with un-nested processed results or NULL if no results found.
 #' @export
 fb_process <- function(response, paginate = TRUE) {
   
@@ -121,6 +122,8 @@ flattener <- function(x, i = 1) {
 #' @param limit Integer. Query limit
 #' @param api_version Character. Facebook API version
 #' @param process Boolean. Process GET results to a more friendly format?
+#' @return data.frame with un-nested processed results if \code{process=TRUE} or
+#' raw API results as list when \code{process=FALSE}.
 #' @examples 
 #' \dontrun{
 #' token <- "YOURTOKEN"
@@ -231,6 +234,8 @@ fb_insights <- function(token,
 #' "2" is for predicting Budget given a specific Reach.
 #' @param curve Boolean. Return curve data? If not, only prediction will be created.
 #' @param ... Additional parameters passed to target specs.
+#' @return data.frame with un-nested processed results if \code{process=TRUE} or
+#' raw API results as list when \code{process=FALSE}.
 #' @examples
 #' \dontrun{
 #' token <- "YOURTOKEN"
@@ -385,6 +390,7 @@ fb_rf <- function(token,
 #' @param n Integer. How many most recent posts do you need?
 #' @param limits Integer. For each post, hoy many results do you need?
 #' @param comments,shares,reactions Boolean. Include in your query?
+#' @return data.frame with un-nested processed results fetched with API.
 #' @examples 
 #' \dontrun{
 #' token <- YOURTOKEN
@@ -570,6 +576,7 @@ fb_posts <- function(token,
 #' @family Facebook
 #' @inheritParams fb_insights
 #' @param post_id Character vector. Post id(s)
+#' @return data.frame with un-nested processed results fetched with API.
 #' @examples 
 #' \dontrun{
 #' token <- YOURTOKEN
@@ -637,8 +644,9 @@ fb_post <- function(token, post_id, limit = 5000) {
 #' @family Facebook
 #' @inheritParams fb_insights
 #' @inheritParams fb_process
-#' @param business_id Character. Business ID
-#' @param type Character vector. Values: owned, client
+#' @param business_id Character. Business ID.
+#' @param type Character vector. Values: owned, client.
+#' @return data.frame with un-nested processed results fetched with API.
 #' @examples 
 #' \dontrun{
 #' # Query all accounts (owned and with permissions) of a Business ID
@@ -721,6 +729,8 @@ fb_accounts <- function(token,
 #' @family Facebook
 #' @inheritParams fb_insights
 #' @inheritParams fb_process
+#' @return data.frame with un-nested processed results if \code{process=TRUE} or
+#' raw API results as list when \code{process=FALSE}.
 #' @examples
 #' \dontrun{
 #' token <- YOURTOKEN
@@ -779,6 +789,8 @@ fb_ads <- function(token,
 #' @family Facebook
 #' @inheritParams fb_process
 #' @inheritParams fb_insights
+#' @return data.frame with un-nested processed results if \code{process=TRUE} or
+#' raw API results as list when \code{process=FALSE}.
 #' @examples 
 #' \dontrun{
 #' token <- YOURTOKEN
@@ -830,6 +842,7 @@ fb_creatives <- function(token, which,
 #' @param token Character. User token, created with
 #' \href{https://developers.facebook.com/tools/explorer}{API Graph}
 #' or with this same \code{fb_token()}'s token.
+#' @return Character. String with token requested.
 #' @export
 fb_token <- function(app_id, app_secret, token, api_version = "v10.0") {
   link <- paste0("https://graph.facebook.com/", api_version, "/oauth/access_token?",

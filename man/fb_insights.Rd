@@ -50,6 +50,10 @@ segmentation results. Set to NA for no breakdowns}
 
 \item{process}{Boolean. Process GET results to a more friendly format?}
 }
+\value{
+data.frame with un-nested processed results if \code{process=TRUE} or
+raw API results as list when \code{process=FALSE}.
+}
 \description{
 This returns all available FB insights per day including any given
 breakdown to the specified report level, and place into a data frame.

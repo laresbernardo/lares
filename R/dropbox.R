@@ -19,8 +19,10 @@
 #' for each tab and not as a file if needed. Will delete downloaded file.
 #' @param token_dir Character. RDS with token local directory. You may set to
 #' NA if you already set your credentials (see \code{get_creds()})
-#' @param token_name Character. RDS file name with your token's data
-#' @param quiet Boolean. Keep quiet? If not, show informative messages
+#' @param token_name Character. RDS file name with your token's data.
+#' @param quiet Boolean. Keep quiet? If not, show informative messages.
+#' @return If \code{query} returns a .xlsx file and \code{xlsx=TRUE}, will
+#' return a data.frame. Else, \code{local_path} string.
 #' @examples
 #' \dontrun{
 #' # Download a specific file
@@ -73,7 +75,7 @@ db_download <- function(query,
     if (!quiet) message("> File imported succesfully as an object!")
     return(results)
   } else {
-    return(invisible(NULL))
+    return(invisible(local_path))
   }
 }
 
@@ -90,6 +92,7 @@ db_download <- function(query,
 #' @param filename String. Local file's name to upload.
 #' @param dir String. Directory you wish to upload the file to.
 #' @param delete_file Boolean. Delete local file after uploading?
+#' @return \code{TRUE} when successfully uploads file.
 #' @export
 db_upload <- function(filename, dir, delete_file = FALSE,
                       token_dir = NA,

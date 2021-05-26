@@ -15,6 +15,9 @@ to acquire one.}
 
 \item{limit}{Integer. Query limit}
 }
+\value{
+data.frame with un-nested processed results fetched with API.
+}
 \description{
 Connect to an API Graph's token and get posts comments given the
 post(s) id.

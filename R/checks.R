@@ -73,7 +73,7 @@ check_attr <- function(object, attr, check, stop = TRUE) {
 #'
 #' @param x Vector
 #' @param ... Additional parameters
-#' @return Boolean. Result of checking if \code{x} is a valid URL string.
+#' @return \code{is_url}. Boolean. Result of checking if \code{x} is a valid URL string.
 #' @examples 
 #' is_url(c("google.com","http://google.com"))
 #' 
@@ -92,7 +92,7 @@ is_url <- function(x, ...) {
 }
 
 #' @rdname is_url
-#' @return Boolean. Result of checking if \code{x} is a valid IP string.
+#' @return \code{is_ip}. Boolean. Result of checking if \code{x} is a valid IP string.
 #' @export
 is_ip <- function(x, ...) {
   regex <- paste0("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.)",
@@ -101,21 +101,21 @@ is_ip <- function(x, ...) {
 }
 
 #' @rdname is_url
-#' @return Boolean. Result of checking if \code{x} is a potential ID vector
+#' @return \code{are_id}. Boolean. Result of checking if \code{x} is a potential ID vector
 #' @export
 are_id = function(x) {
   return(is.character(x) & length(unique(x)) == length(x))
 }
 
 #' @rdname is_url
-#' @return Boolean. Result of checking if \code{x} is a constant vector
+#' @return \code{are_constant}. Boolean. Result of checking if \code{x} is a constant vector
 #' @export
 are_constant = function(x) {
   return(length(unique(x)) == 1)
 }
 
 #' @rdname is_url
-#' @return Boolean. Result of checking if \code{x} is a binary vector
+#' @return \code{are_binary}. Boolean. Result of checking if \code{x} is a binary vector
 #' @export
 are_binary = function(x) {
   return(length(unique(x)) == 2)

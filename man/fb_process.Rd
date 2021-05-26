@@ -12,6 +12,9 @@ fb_process(response, paginate = TRUE)
 \item{paginate}{Boolean. Run through all paginations? If not,
 only the first one will be processed.}
 }
+\value{
+data.frame with un-nested processed results or NULL if no results found.
+}
 \description{
 Process and paginate raw results from Facebook's API, result of 
 querying the API with \code{httr::GET}.

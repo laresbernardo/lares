@@ -35,6 +35,10 @@ format \code{"YYYY-MM-DD"}.}
 
 \item{process}{Boolean. Process GET results to a more friendly format?}
 }
+\value{
+data.frame with un-nested processed results if \code{process=TRUE} or
+raw API results as list when \code{process=FALSE}.
+}
 \description{
 This returns all available FB ads for any account, campaign, or ad set id.
 For more information on Ad' API, go to the 

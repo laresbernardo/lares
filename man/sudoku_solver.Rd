@@ -23,6 +23,7 @@ Solve a Sudoku puzzle, where empty values are represented by 0s
 into a matrix object.
 }
 \examples{
+\donttest{
 
 # Trivial input (everything)
 trivial <- matrix(rep(0, 81), byrow = TRUE, ncol = 9); trivial
@@ -31,4 +32,5 @@ sudoku_solver(trivial)
 # Wrong / Impossible to solve input
 imp <- matrix(c(rep(1, 72), rep(0, 9)), byrow = TRUE, ncol = 9); imp
 sudoku_solver(imp)
+}
 }

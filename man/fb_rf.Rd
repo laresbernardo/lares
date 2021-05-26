@@ -57,6 +57,10 @@ rest of arguments of this function will be ignored.}
 
 \item{...}{Additional parameters passed to target specs.}
 }
+\value{
+data.frame with un-nested processed results if \code{process=TRUE} or
+raw API results as list when \code{process=FALSE}.
+}
 \description{
 Create or query reach and frequency predictions using Facebook's 
 Reach and Frequency API. For more information on the API and its parameters, go to the 

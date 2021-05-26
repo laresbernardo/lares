@@ -13,16 +13,16 @@
 #' @param type Integer. 1 for both plots, 2 for counter plot only, 3 por 
 #' percentages plot only.
 #' @param ref Boolean. Show a reference line if levels = 2? Quite useful 
-#' when data is unbalanced (not 50/50) because a reference line is drawn
-#' @param note Character. Caption for the plot
-#' @param top Integer. Filter and plot the most n frequent for categorical values
-#' @param breaks Integer. Number of splits for numerical values
-#' @param na.rm Boolean. Ignore NAs if needed
+#' when data is unbalanced (not 50/50) because a reference line is drawn.
+#' @param note Character. Caption for the plot.
+#' @param top Integer. Filter and plot the most n frequent for categorical values.
+#' @param breaks Integer. Number of splits for numerical values.
+#' @param na.rm Boolean. Ignore \code{NA}s if needed.
 #' @param force Character. Force class on the values data. Choose between 'none',
 #' 'character', 'numeric', 'date'
-#' @param trim Integer. Trim labels until the nth character for categorical values 
+#' @param trim Integer. Trim labels until the nth character for categorical values
 #' (applies for both, target and values)
-#' @param clean Boolean. Use lares::cleanText for categorical values (applies 
+#' @param clean Boolean. Use \code{cleanText()} for categorical values (applies
 #' for both, target and values)
 #' @param abc Boolean. Do you wish to sort by alphabetical order?
 #' @param custom_colours Boolean. Use custom colours function?
@@ -30,6 +30,10 @@
 #' @param chords Boolean. Use a chords plot?
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to save the plot to?
+#' @return Plot when \code{plot=TRUE} with two plots in one: counter distribution 
+#' grouped by cuts, and proportions distribution grouped by same cuts. data.frame when
+#' \code{plot=FALSE} with counting, percentages, and cumulative percentages results.
+#' When \code{type} argument is used, single plots will be returned.
 #' @examples
 #' \donttest{
 #' Sys.unsetenv("LARES_FONT") # Temporal
@@ -78,7 +82,7 @@ distr <- function(data, ...,
   # options("scipen" = 999)
   
   data <- data.frame(data)
-  vars <- quos(...)
+  vars <- enquos(...)
   
   # Validate if we can continue with given data:
   if (length(vars) > 2) {
@@ -275,29 +279,32 @@ distr <- function(data, ...,
                        ". Obs: ", formatNum(nrow(df), 0))
     
     freqs <- df %>% 
-      group_by(targets, value) %>%
-      count() %>% ungroup() %>% arrange(desc(n)) %>%
-      group_by(value) %>%
-      mutate(p = round(100*n/sum(n),2), 
-             pcum = cumsum(p)) %>% ungroup() %>%
+      group_by(.data$targets, .data$value) %>%
+      count() %>% ungroup() %>% arrange(desc(.data$n)) %>%
+      group_by(.data$value) %>%
+      mutate(p = round(100*.data$n/sum(.data$n),2), 
+             pcum = cumsum(.data$p)) %>% ungroup() %>%
+      filter(!is.na(.data$value)) %>%
       mutate(row = row_number(),
-             order = ifelse(grepl("\\(|\\)", value), 
-                            as.numeric(as.character(substr(gsub(",.*", "", value), 2, 100))), row))
-    if (length(unique(value)) > top & !is.numeric(value)) {
+             order = suppressWarnings(ifelse(
+               grepl("\\(|\\)", .data$value), 
+               as.numeric(as.character(substr(gsub(",.*", "", .data$value), 2, 100))),
+               .data$row)))
+    if (length(unique(value)) > top & !is.numeric(.data$value)) {
       message(paste("Filtering the", top, "most frequent values. Use 'top' to overrule."))
-      which <- freqs(df, value) %>% slice(1:top)
+      which <- freqs(df, .data$value) %>% slice(1:top)
       freqs <- freqs %>%
-        mutate(value = ifelse(value %in% which$value, as.character(value), "OTHERS")) %>%
-        group_by(value, targets) %>% select(-row, -order) %>%
-        summarise(n = sum(n)) %>%
-        mutate(p = round(100*n/sum(n),2)) %>%
-        ungroup() %>% arrange(desc(n)) %>%
+        mutate(value = ifelse(.data$value %in% which$value, as.character(.data$value), "OTHERS")) %>%
+        group_by(.data$value, .data$targets) %>% select(-.data$row, -.data$order) %>%
+        summarise(n = sum(.data$n)) %>%
+        mutate(p = round(100*n/sum(.data$n),2)) %>%
+        ungroup() %>% arrange(desc(.data$n)) %>%
         mutate(row = row_number(), 
                order = row_number())
     }
     
     # Sort values alphabetically or ascending if numeric
-    if (abc) freqs <- mutate(freqs, order = rank(value))
+    if (abc) freqs <- mutate(freqs, order = rank(.data$value))
     
     # Counter plot
     if (type %in% c(1,2)) {

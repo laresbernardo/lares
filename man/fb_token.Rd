@@ -15,6 +15,9 @@ or with this same \code{fb_token()}'s token.}
 
 \item{api_version}{Character. Facebook API version}
 }
+\value{
+Character. String with token requested.
+}
 \description{
 Using a 1-hour generic user token you can generate a 60 day token. 
 You will need to have an App ID and App secret, and a valid token.

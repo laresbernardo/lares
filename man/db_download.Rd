@@ -30,9 +30,13 @@ for each tab and not as a file if needed. Will delete downloaded file.}
 \item{token_dir}{Character. RDS with token local directory. You may set to
 NA if you already set your credentials (see \code{get_creds()})}
 
-\item{token_name}{Character. RDS file name with your token's data}
+\item{token_name}{Character. RDS file name with your token's data.}
 
-\item{quiet}{Boolean. Keep quiet? If not, show informative messages}
+\item{quiet}{Boolean. Keep quiet? If not, show informative messages.}
+}
+\value{
+If \code{query} returns a .xlsx file and \code{xlsx=TRUE}, will
+return a data.frame. Else, \code{local_path} string.
 }
 \description{
 This function lets the user download a file from Dropbox, specifying

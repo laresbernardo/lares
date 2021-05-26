@@ -34,23 +34,23 @@ variable) to group by}
 percentages plot only.}
 
 \item{ref}{Boolean. Show a reference line if levels = 2? Quite useful 
-when data is unbalanced (not 50/50) because a reference line is drawn}
+when data is unbalanced (not 50/50) because a reference line is drawn.}
 
-\item{note}{Character. Caption for the plot}
+\item{note}{Character. Caption for the plot.}
 
-\item{top}{Integer. Filter and plot the most n frequent for categorical values}
+\item{top}{Integer. Filter and plot the most n frequent for categorical values.}
 
-\item{breaks}{Integer. Number of splits for numerical values}
+\item{breaks}{Integer. Number of splits for numerical values.}
 
-\item{na.rm}{Boolean. Ignore NAs if needed}
+\item{na.rm}{Boolean. Ignore \code{NA}s if needed.}
 
 \item{force}{Character. Force class on the values data. Choose between 'none',
 'character', 'numeric', 'date'}
 
-\item{trim}{Integer. Trim labels until the nth character for categorical values 
+\item{trim}{Integer. Trim labels until the nth character for categorical values
 (applies for both, target and values)}
 
-\item{clean}{Boolean. Use lares::cleanText for categorical values (applies 
+\item{clean}{Boolean. Use \code{cleanText()} for categorical values (applies
 for both, target and values)}
 
 \item{abc}{Boolean. Do you wish to sort by alphabetical order?}
@@ -64,6 +64,12 @@ for both, target and values)}
 \item{save}{Boolean. Save the output plot in our working directory}
 
 \item{subdir}{Character. Into which subdirectory do you wish to save the plot to?}
+}
+\value{
+Plot when \code{plot=TRUE} with two plots in one: counter distribution 
+grouped by cuts, and proportions distribution grouped by same cuts. data.frame when
+\code{plot=FALSE} with counting, percentages, and cumulative percentages results.
+When \code{type} argument is used, single plots will be returned.
 }
 \description{
 Compare the distribution of a target variable vs another variable. This 

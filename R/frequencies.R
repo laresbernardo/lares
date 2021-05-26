@@ -25,6 +25,8 @@
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
+#' @return Plot when \code{plot=TRUE} and data.frame with grouped frequency results
+#' when \code{plot=FALSE}.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
@@ -265,6 +267,8 @@ freqs <- function(df, ..., wt = NULL,
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to 
 #' save the plot to?
+#' @return Plot when \code{plot=TRUE} and data.frame with grouped frequency results
+#' when \code{plot=FALSE}.
 #' @examples 
 #' \dontrun{
 #' data(dft) # Titanic dataset
@@ -377,24 +381,17 @@ freqs_df <- function(df,
 
 
 ####################################################################
-#' Combinated Frequencies Plot for Categoral Features
+#' Combinated Frequencies Plot for Categorical Features
 #' 
 #' Plot frequencies of multiple categories within a data.frame in 
-#' a new fancy way. Tidyverse friendly, based on lares::freqs(),
+#' a new fancy way. Tidyverse friendly, based on \code{lares::freqs()},
 #' no limits on amount of features to evaluate.
 #' 
 #' @family Frequency
 #' @family Exploratory
 #' @family Visualization
-#' @param df Data.frame
-#' @param ... Variables. Variables you wish to process. Order matters.
-#' If no variables are passed, the whole data.frame will be considered
-#' @param top Integer. Filter and plot the most n frequent for  values.
-#' @param rm.na Boolean. Remove NA values in the plot? (not filtered for 
-#' numerical output; use na.omit() or filter() if needed)
-#' @param abc Boolean. Do you wish to sort by alphabetical order?
-#' @param title Character. Overwrite plot's title with.
-#' @param subtitle Character. Overwrite plot's subtitle with.
+#' @inheritParams freqs
+#' @return Plot. Result of the frequency of combined variables.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
@@ -495,7 +492,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @family Frequency
 #' @family Exploratory
 #' @family Visualization
-#' @param df Data.frame
+#' @inheritParams freqs
 #' @param var Variable. Variables you wish to process. 
 #' @param wt Variable, numeric. Select a numeric column to use 
 #' in the colour scale, used as sum, mean... of those values for each
@@ -510,11 +507,10 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @param tail Boolean. Show tail grouped into "..." on the plots?
 #' @param size Numeric. Text base size
 #' @param unique Boolean. a,b = b,a?
-#' @param abc Boolean. Do you wish to sort by alphabetical order?
-#' @param title Character. Added to the plot.
 #' @param plot Boolean. Plot viz? Will be generated anyways in the output object
+#' @return List. data.frame with the data results, elements and combinations.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' df <- dplyr::starwars
 #' head(df[,c(1,4,5,12)], 10)
 #' 

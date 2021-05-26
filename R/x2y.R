@@ -39,7 +39,9 @@
 #' @param corr Boolean. Add correlation and pvalue data to compare with? For
 #' more custom studies, use \code{lares::corr_cross()} directly.
 #' @param ... Additional parameters passed to \code{x2y_metric()}
+#' @return Depending on \code{plot} input, a plot or a data.frame with x2y results.
 #' @examples
+#' \donttest{
 #' data(dft) # Titanic dataset
 #' x2y_results <- x2y(dft, quiet = TRUE, max_cat = 10, top = NULL)
 #' head(x2y_results, 10)
@@ -65,6 +67,7 @@
 #' # knowing y reduces the uncertainty about the value of x. Note correlation.
 #' plot(x2y_preds(x, y), corr = TRUE)
 #' plot(x2y_preds(y, x), corr = TRUE)
+#' }
 #' @export
 x2y <- function(df, target = NULL, symmetric = FALSE,
                 target_x = FALSE, target_y = FALSE,

@@ -15,20 +15,23 @@ prophesize(
 )
 }
 \arguments{
-\item{df}{Data frame. Must contain date/time column and values column}
+\item{df}{Data frame. Must contain date/time column and values column.}
 
 \item{n_future}{Integer. How many steps do you wish to forecast?}
 
-\item{country}{Character. Country code for holidays}
+\item{country}{Character. Country code for holidays.}
 
 \item{trend.param}{Numeric. Flexibility of trend component. Default is 0.05, 
 and as this value becomes larger, the trend component will be more flexible.}
 
 \item{logged}{Boolean. Convert values into logs?}
 
-\item{pout}{Numeric. Get rid of pout \% of outliers}
+\item{pout}{Numeric. Get rid of pout \% of outliers.}
 
 \item{project}{Character. Name of your forecast project for plot title}
+}
+\value{
+List. Containing the forecast results, the prophet model, and a plot.
 }
 \description{
 Prophet is Facebook's procedure for forecasting time series data 

@@ -50,6 +50,10 @@ which weekdays have no data and forcast without these days.}
 
 \item{project}{Character. Name of your forecast project}
 }
+\value{
+List. Containing the trained model, forecast accuracy results,
+data.frame for forecast (test) and train, and if \code{plot=TRUE}, a plot.
+}
 \description{
 This function automates the ARIMA iterations and modeling for 
 time forecasting. For the moment, units can only be days.

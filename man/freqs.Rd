@@ -54,6 +54,10 @@ categorical values. Set to NA to return all values}
 \item{subdir}{Character. Into which subdirectory do you wish to 
 save the plot to?}
 }
+\value{
+Plot when \code{plot=TRUE} and data.frame with grouped frequency results
+when \code{plot=FALSE}.
+}
 \description{
 This function lets the user group, count, calculate percentages 
 and cumulatives. It also plots results if needed. Tidyverse friendly.

@@ -77,6 +77,9 @@ be passed as \code{""}.}
 \item{type}{Integer. Plot type: \code{1} for tile plot,
 \code{2} for ranked bar plot.}
 }
+\value{
+Depending on \code{plot} input, a plot or a data.frame with x2y results.
+}
 \description{
 The relative reduction in error when we go from a baseline model
 (average for continuous and most frequent for categorical features) to
@@ -93,6 +96,7 @@ Coefficient That Works For Numeric and Categorical Variables. This analysis
 complements our \code{lares::corr_cross()} output.
 }
 \examples{
+\donttest{
 data(dft) # Titanic dataset
 x2y_results <- x2y(dft, quiet = TRUE, max_cat = 10, top = NULL)
 head(x2y_results, 10)
@@ -118,4 +122,5 @@ y <- sqrt(1 - x^2) + rnorm(length(x), mean = 0, sd = 0.05)
 # knowing y reduces the uncertainty about the value of x. Note correlation.
 plot(x2y_preds(x, y), corr = TRUE)
 plot(x2y_preds(y, x), corr = TRUE)
+}
 }

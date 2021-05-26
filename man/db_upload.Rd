@@ -22,7 +22,10 @@ db_upload(
 \item{token_dir}{Character. RDS with token local directory. You may set to
 NA if you already set your credentials (see \code{get_creds()})}
 
-\item{token_name}{Character. RDS file name with your token's data}
+\item{token_name}{Character. RDS file name with your token's data.}
+}
+\value{
+\code{TRUE} when successfully uploads file.
 }
 \description{
 This function lets the user upload a local file to Dropbox,

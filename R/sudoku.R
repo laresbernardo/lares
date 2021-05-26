@@ -7,7 +7,11 @@
 #' @param board Matrix. 9x9 matrix or vector length 81, with only digits from 0 to 9.
 #' @param needed_cells,index Auxiliary parameters to auto-iterate using this same fx.
 #' @param quiet Boolean. Keep quiet? If not, plot results.
+#' @return Logical output answering of the input board can be solved. The
+#' actual solved solution will be created as an object named \code{solved}
+#' in your \code{.GlobalEnv}.
 #' @examples 
+#' \donttest{
 # board <- c(0,0,0,0,0,6,000,
 #            0,9,5,7,0,0,3,0,0,
 #            4,0,0,0,9,2,0,0,5,
@@ -26,9 +30,7 @@
 #' # Wrong / Impossible to solve input
 #' imp <- matrix(c(rep(1, 72), rep(0, 9)), byrow = TRUE, ncol = 9); imp
 #' sudoku_solver(imp)
-#' @return Logical output answering of the input board can be solved. The
-#' actual solved solution will be created as an object named \code{solved}
-#' in your \code{.GlobalEnv}.
+#' }
 #' @export
 sudoku_solver <- function(board, needed_cells = NULL, index = 1, quiet = FALSE) {
   # 0. Conveert vector to matrix

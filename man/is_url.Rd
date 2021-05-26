@@ -24,15 +24,15 @@ are_binary(x)
 \item{...}{Additional parameters}
 }
 \value{
-Boolean. Result of checking if \code{x} is a valid URL string.
+\code{is_url}. Boolean. Result of checking if \code{x} is a valid URL string.
 
-Boolean. Result of checking if \code{x} is a valid IP string.
+\code{is_ip}. Boolean. Result of checking if \code{x} is a valid IP string.
 
-Boolean. Result of checking if \code{x} is a potential ID vector
+\code{are_id}. Boolean. Result of checking if \code{x} is a potential ID vector
 
-Boolean. Result of checking if \code{x} is a constant vector
+\code{are_constant}. Boolean. Result of checking if \code{x} is a constant vector
 
-Boolean. Result of checking if \code{x} is a binary vector
+\code{are_binary}. Boolean. Result of checking if \code{x} is a binary vector
 }
 \description{
 Check whether a value or vector is or is not following a set

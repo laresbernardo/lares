@@ -50,9 +50,12 @@ Set argument to 0 to ignore. \code{limit_x}/\code{limit_y} answer to
 
 \item{abc}{Boolean. Do you wish to sort by alphabetical order?}
 
-\item{title}{Character. Added to the plot.}
+\item{title}{Character. Overwrite plot's title with.}
 
 \item{plot}{Boolean. Plot viz? Will be generated anyways in the output object}
+}
+\value{
+List. data.frame with the data results, elements and combinations.
 }
 \description{
 Visualize frequency of elements on a list, list vector, or vector with
@@ -62,7 +65,7 @@ This is similar to the \href{http://vcg.github.io/upset/}{UpSet Plots}
 which may be used as an alternative to Venn diagrams.
 }
 \examples{
-\dontrun{
+\donttest{
 df <- dplyr::starwars
 head(df[,c(1,4,5,12)], 10)
 

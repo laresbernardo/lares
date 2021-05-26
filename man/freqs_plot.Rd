@@ -2,7 +2,7 @@
 % Please edit documentation in R/frequencies.R
 \name{freqs_plot}
 \alias{freqs_plot}
-\title{Combinated Frequencies Plot for Categoral Features}
+\title{Combinated Frequencies Plot for Categorical Features}
 \usage{
 freqs_plot(
   df,
@@ -20,7 +20,8 @@ freqs_plot(
 \item{...}{Variables. Variables you wish to process. Order matters.
 If no variables are passed, the whole data.frame will be considered}
 
-\item{top}{Integer. Filter and plot the most n frequent for  values.}
+\item{top}{Integer. Filter and plot the most n frequent for 
+categorical values. Set to NA to return all values}
 
 \item{rm.na}{Boolean. Remove NA values in the plot? (not filtered for 
 numerical output; use na.omit() or filter() if needed)}
@@ -31,9 +32,12 @@ numerical output; use na.omit() or filter() if needed)}
 
 \item{subtitle}{Character. Overwrite plot's subtitle with.}
 }
+\value{
+Plot. Result of the frequency of combined variables.
+}
 \description{
 Plot frequencies of multiple categories within a data.frame in 
-a new fancy way. Tidyverse friendly, based on lares::freqs(),
+a new fancy way. Tidyverse friendly, based on \code{lares::freqs()},
 no limits on amount of features to evaluate.
 }
 \examples{
