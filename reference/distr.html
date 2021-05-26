@@ -161,23 +161,23 @@ percentages plot only.</p></td>
     <tr>
       <th>ref</th>
       <td><p>Boolean. Show a reference line if levels = 2? Quite useful 
-when data is unbalanced (not 50/50) because a reference line is drawn</p></td>
+when data is unbalanced (not 50/50) because a reference line is drawn.</p></td>
     </tr>
     <tr>
       <th>note</th>
-      <td><p>Character. Caption for the plot</p></td>
+      <td><p>Character. Caption for the plot.</p></td>
     </tr>
     <tr>
       <th>top</th>
-      <td><p>Integer. Filter and plot the most n frequent for categorical values</p></td>
+      <td><p>Integer. Filter and plot the most n frequent for categorical values.</p></td>
     </tr>
     <tr>
       <th>breaks</th>
-      <td><p>Integer. Number of splits for numerical values</p></td>
+      <td><p>Integer. Number of splits for numerical values.</p></td>
     </tr>
     <tr>
       <th>na.rm</th>
-      <td><p>Boolean. Ignore NAs if needed</p></td>
+      <td><p>Boolean. Ignore <code>NA</code>s if needed.</p></td>
     </tr>
     <tr>
       <th>force</th>
@@ -186,12 +186,12 @@ when data is unbalanced (not 50/50) because a reference line is drawn</p></td>
     </tr>
     <tr>
       <th>trim</th>
-      <td><p>Integer. Trim labels until the nth character for categorical values 
+      <td><p>Integer. Trim labels until the nth character for categorical values
 (applies for both, target and values)</p></td>
     </tr>
     <tr>
       <th>clean</th>
-      <td><p>Boolean. Use lares::cleanText for categorical values (applies 
+      <td><p>Boolean. Use <code><a href='cleanText.html'>cleanText()</a></code> for categorical values (applies
 for both, target and values)</p></td>
     </tr>
     <tr>
@@ -220,6 +220,12 @@ for both, target and values)</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Plot when <code>plot=TRUE</code> with two plots in one: counter distribution 
+grouped by cuts, and proportions distribution grouped by same cuts. data.frame when
+<code>plot=FALSE</code> with counting, percentages, and cumulative percentages results.
+When <code>type</code> argument is used, single plots will be returned.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Exploratory: 

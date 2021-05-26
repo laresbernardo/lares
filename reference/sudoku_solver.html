@@ -145,7 +145,8 @@ actual solved solution will be created as an object named <code>solved</code>
 in your <code>.GlobalEnv</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+
 <span class='co'># Trivial input (everything)</span>
 <span class='va'>trivial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>81</span><span class='op'>)</span>, byrow <span class='op'>=</span> <span class='cn'>TRUE</span>, ncol <span class='op'>=</span> <span class='fl'>9</span><span class='op'>)</span>; <span class='va'>trivial</span>
 </div><div class='output co'>#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
@@ -180,7 +181,8 @@ in your <code>.GlobalEnv</code>.</p>
 #&gt;  [7,]    1    1    1    1    1    1    1    1    1
 #&gt;  [8,]    1    1    1    1    1    1    1    1    1
 #&gt;  [9,]    0    0    0    0    0    0    0    0    0</div><div class='input'><span class='fu'>sudoku_solver</span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] FALSE</div></pre>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

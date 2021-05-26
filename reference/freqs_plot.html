@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Combinated Frequencies Plot for Categoral Features — freqs_plot • lares</title>
+<title>Combinated Frequencies Plot for Categorical Features — freqs_plot • lares</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Combinated Frequencies Plot for Categoral Features — freqs_plot" />
+<meta property="og:title" content="Combinated Frequencies Plot for Categorical Features — freqs_plot" />
 <meta property="og:description" content="Plot frequencies of multiple categories within a data.frame in 
 a new fancy way. Tidyverse friendly, based on lares::freqs(),
 no limits on amount of features to evaluate." />
@@ -110,14 +110,14 @@ no limits on amount of features to evaluate." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Combinated Frequencies Plot for Categoral Features</h1>
+    <h1>Combinated Frequencies Plot for Categorical Features</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/frequencies.R'><code>R/frequencies.R</code></a></small>
     <div class="hidden name"><code>freqs_plot.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Plot frequencies of multiple categories within a data.frame in 
-a new fancy way. Tidyverse friendly, based on lares::freqs(),
+a new fancy way. Tidyverse friendly, based on <code><a href='freqs.html'>lares::freqs()</a></code>,
 no limits on amount of features to evaluate.</p>
     </div>
 
@@ -145,7 +145,8 @@ If no variables are passed, the whole data.frame will be considered</p></td>
     </tr>
     <tr>
       <th>top</th>
-      <td><p>Integer. Filter and plot the most n frequent for  values.</p></td>
+      <td><p>Integer. Filter and plot the most n frequent for 
+categorical values. Set to NA to return all values</p></td>
     </tr>
     <tr>
       <th>rm.na</th>
@@ -166,6 +167,9 @@ numerical output; use na.omit() or filter() if needed)</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Plot. Result of the frequency of combined variables.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Frequency: 

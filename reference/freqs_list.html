@@ -197,7 +197,7 @@ Set argument to 0 to ignore. <code>limit_x</code>/<code>limit_y</code> answer to
     </tr>
     <tr>
       <th>title</th>
-      <td><p>Character. Added to the plot.</p></td>
+      <td><p>Character. Overwrite plot's title with.</p></td>
     </tr>
     <tr>
       <th>plot</th>
@@ -205,6 +205,9 @@ Set argument to 0 to ignore. <code>limit_x</code>/<code>limit_y</code> answer to
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>List. data.frame with the data results, elements and combinations.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Frequency: 
@@ -242,29 +245,71 @@ Set argument to 0 to ignore. <code>limit_x</code>/<code>limit_y</code> answer to
 <code><a href='tree_var.html'>tree_var</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/starwars.html'>starwars</a></span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>12</span><span class='op'>)</span><span class='op'>]</span>, <span class='fl'>10</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 x 4</span>
+#&gt;    name               hair_color    skin_color  films    
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>   
+#&gt; <span style='color: #BCBCBC;'> 1</span> Luke Skywalker     blond         fair        <span style='color: #949494;'>&lt;chr [5]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span> C-3PO              <span style='color: #BB0000;'>NA</span>            gold        <span style='color: #949494;'>&lt;chr [6]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span> R2-D2              <span style='color: #BB0000;'>NA</span>            white, blue <span style='color: #949494;'>&lt;chr [7]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span> Darth Vader        none          white       <span style='color: #949494;'>&lt;chr [4]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span> Leia Organa        brown         light       <span style='color: #949494;'>&lt;chr [5]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> Owen Lars          brown, grey   light       <span style='color: #949494;'>&lt;chr [3]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span> Beru Whitesun lars brown         light       <span style='color: #949494;'>&lt;chr [3]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> R5-D4              <span style='color: #BB0000;'>NA</span>            white, red  <span style='color: #949494;'>&lt;chr [1]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> Biggs Darklighter  black         light       <span style='color: #949494;'>&lt;chr [1]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>10</span> Obi-Wan Kenobi     auburn, white fair        <span style='color: #949494;'>&lt;chr [6]&gt;</span></div><div class='input'>
 <span class='co'># Characters per movies combinations in a list column</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>films</span>, <span class='fl'>2</span><span class='op'>)</span>
-<span class='fu'>freqs_list</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>films</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "The Empire Strikes Back" "Revenge of the Sith"    
+#&gt; [3] "Return of the Jedi"      "A New Hope"             
+#&gt; [5] "The Force Awakens"      
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] "The Empire Strikes Back" "Attack of the Clones"   
+#&gt; [3] "The Phantom Menace"      "Revenge of the Sith"    
+#&gt; [5] "Return of the Jedi"      "A New Hope"             
+#&gt; </div><div class='input'><span class='fu'>freqs_list</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>films</span><span class='op'>)</span>
+</div><div class='img'><img src='freqs_list-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Skin colours in a comma-separated column</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>skin_color</span><span class='op'>)</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>freqs_list</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>skin_color</span>, min_elements <span class='op'>=</span> <span class='fl'>2</span>, limit <span class='op'>=</span> <span class='fl'>5</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "fair"        "gold"        "white, blue" "white"       "light"      
+#&gt; [6] "light"      </div><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>freqs_list</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>skin_color</span>, min_elements <span class='op'>=</span> <span class='fl'>2</span>, limit <span class='op'>=</span> <span class='fl'>5</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='co'># Inside "x" we'll have:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; [1] "plot"         "data"         "elements"     "combinations"</div><div class='input'>
 <span class='co'># Using the 'wt' argument to add a continuous value metric</span>
 <span class='co'># into an already one-hot encoded columns dataset (and hide tail)</span>
 <span class='va'>csv</span> <span class='op'>&lt;-</span> <span class='st'>"https://raw.githubusercontent.com/hms-dbmi/UpSetR/master/inst/extdata/movies.csv"</span>
 <span class='va'>movies</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='va'>csv</span>, sep <span class='op'>=</span> <span class='st'>";"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>movies</span><span class='op'>)</span>
-<span class='fu'>freqs_list</span><span class='op'>(</span><span class='va'>movies</span>, wt <span class='op'>=</span> <span class='va'>AvgRating</span>, min_elements <span class='op'>=</span> <span class='fl'>2</span>, tail <span class='op'>=</span> <span class='cn'>FALSE</span>,
+</div><div class='output co'>#&gt;                                 Name ReleaseDate Action Adventure Children
+#&gt; 1                   Toy Story (1995)        1995      0         0        1
+#&gt; 2                     Jumanji (1995)        1995      0         1        1
+#&gt; 3            Grumpier Old Men (1995)        1995      0         0        0
+#&gt; 4           Waiting to Exhale (1995)        1995      0         0        0
+#&gt; 5 Father of the Bride Part II (1995)        1995      0         0        0
+#&gt; 6                        Heat (1995)        1995      1         0        0
+#&gt;   Comedy Crime Documentary Drama Fantasy Noir Horror Musical Mystery Romance
+#&gt; 1      1     0           0     0       0    0      0       0       0       0
+#&gt; 2      0     0           0     0       1    0      0       0       0       0
+#&gt; 3      1     0           0     0       0    0      0       0       0       1
+#&gt; 4      1     0           0     1       0    0      0       0       0       0
+#&gt; 5      1     0           0     0       0    0      0       0       0       0
+#&gt; 6      0     1           0     0       0    0      0       0       0       0
+#&gt;   SciFi Thriller War Western AvgRating Watches
+#&gt; 1     0        0   0       0      4.15    2077
+#&gt; 2     0        0   0       0      3.20     701
+#&gt; 3     0        0   0       0      3.02     478
+#&gt; 4     0        0   0       0      2.73     170
+#&gt; 5     0        0   0       0      3.01     296
+#&gt; 6     0        1   0       0      3.88     940</div><div class='input'><span class='fu'>freqs_list</span><span class='op'>(</span><span class='va'>movies</span>, wt <span class='op'>=</span> <span class='va'>AvgRating</span>, min_elements <span class='op'>=</span> <span class='fl'>2</span>, tail <span class='op'>=</span> <span class='cn'>FALSE</span>,
            title <span class='op'>=</span> <span class='st'>"Movies\nMixed Genres\nRanking"</span><span class='op'>)</span>
-<span class='co'># So, please: no more Comedy+SciFi and more Drama+Horror films (based on ~50 movies)!</span>
-<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Binary columns detected: 'Action', 'Adventure', 'Children', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Fantasy', 'Noir', 'Horror', 'Musical', 'Mystery', 'Romance', 'SciFi', 'Thriller', 'War', 'Western'</span></div><div class='img'><img src='freqs_list-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># So, please: no more Comedy+SciFi and more Drama+Horror films (based on ~50 movies)!</span>
+<span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
