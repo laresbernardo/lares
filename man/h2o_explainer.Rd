@@ -16,6 +16,10 @@ h2o_explainer(df, model, y = "tag", ignore = NA)
 
 \item{ignore}{Character vector. Which columns should be ignored?}
 }
+\value{
+List; explainer. Containing the model, data, y, predict_function,
+y_hat, residuals, class, label, model_info, residual_function, and weights.
+}
 \description{
 DALEX function to create an explainer object
 }

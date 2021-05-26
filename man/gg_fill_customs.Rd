@@ -6,6 +6,9 @@
 \usage{
 gg_fill_customs()
 }
+\value{
+Same as \code{scale_fill_manual} but with custom palette.
+}
 \description{
 This function lets the user use pre-defined default colours
 }

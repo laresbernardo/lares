@@ -23,6 +23,9 @@ An object of class \code{"data.frame"}
 \usage{
 data(dft)
 }
+\value{
+data.frame
+}
 \description{
 Data generated from a Titanic dataset.
 }

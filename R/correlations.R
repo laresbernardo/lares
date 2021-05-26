@@ -21,6 +21,9 @@
 #' @param top Integer. Select top N most relevant variables? Filtered 
 #' and sorted by mean of each variable's correlations
 #' @param ... Additional parameters to pass to \code{ohse}
+#' @return data.frame. Squared dimensions (nxn) to match every
+#' correlation between every \code{df} data.frame column/variable. Notice
+#' that when using \code{ohse()} you may get more dimensions.
 #' @examples 
 #' data(dft) # Titanic dataset
 #' df <- dft[,2:5]
@@ -150,11 +153,13 @@ cor.test.p <- function(mat, method = "pearson") {
 #' @param save Boolean. Save output plot into working directory
 #' @param quiet Boolean. Keep quiet? If not, show messages
 #' @param ... Additional parameters passed to \code{corr}
+#' @return data.frame. With variables, correlation and p-value results
+#' for each feature, arranged by descending absolute correlation value.
 #' @examples
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
 #' 
-#' dft %>% corr_var(Survived, method = "spearman", plot = FALSE, top = 10)
+#' corr_var(dft, Survived, method = "spearman", plot = FALSE, top = 10)
 #' 
 #' # With plots, results are easier to compare:
 #' 
@@ -303,6 +308,9 @@ corr_var <- function(df, var,
 #' @param grid Boolean. Separate into grids?
 #' @param rm.na Boolean. Remove NAs?
 #' @param ... Additional parameters passed to \code{corr}
+#' @return Depending on input \code{plot}, we get correlation and p-value results for
+#' every combination of features, arranged by descending absolute correlation value, 
+#' with a data.frame \code{plot = FALSE} or plot \code{plot = TRUE}.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset

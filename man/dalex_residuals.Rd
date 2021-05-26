@@ -9,6 +9,9 @@ dalex_residuals(explainer)
 \arguments{
 \item{explainer}{Object. Result from h2o_explainer function}
 }
+\value{
+Plot. Based of \code{explainer} residual results.
+}
 \description{
 DALEX function for residuals
 }

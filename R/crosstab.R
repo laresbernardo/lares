@@ -15,6 +15,8 @@
 #' @param total Boolean. Return total values column?
 #' @param order Boolean. Sort columns and rows by frequencies? Else, will
 #' be sorted alphabetically
+#' @return data.frame. Result of crossing the variables provided in \code{...} and
+#' counting how many observations (rows) fall into each criteria.
 #' @examples 
 #' data(dft) # Titanic dataset
 #' crosstab(dft, Survived, Pclass, total = FALSE)

@@ -62,6 +62,10 @@ values of each column. Set to \code{NA} to ignore argument.}
 
 \item{...}{Additional parameters passed to \code{corr}}
 }
+\value{
+data.frame. With variables, correlation and p-value results
+for each feature, arranged by descending absolute correlation value.
+}
 \description{
 This function correlates a whole dataframe with a single feature. It
 automatically runs \code{ohse} (one-hot-smart-encoding) so no need to input
@@ -71,7 +75,7 @@ only numerical values.
 Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 
-dft \%>\% corr_var(Survived, method = "spearman", plot = FALSE, top = 10)
+corr_var(dft, Survived, method = "spearman", plot = FALSE, top = 10)
 
 # With plots, results are easier to compare:
 

@@ -23,6 +23,17 @@ are_binary(x)
 
 \item{...}{Additional parameters}
 }
+\value{
+Boolean. Result of checking if \code{x} is a valid URL string.
+
+Boolean. Result of checking if \code{x} is a valid IP string.
+
+Boolean. Result of checking if \code{x} is a potential ID vector
+
+Boolean. Result of checking if \code{x} is a constant vector
+
+Boolean. Result of checking if \code{x} is a binary vector
+}
 \description{
 Check whether a value or vector is or is not following a set
 of rules. For example: is an URL, is an ID vector, are non-variant or 

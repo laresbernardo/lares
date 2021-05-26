@@ -14,6 +14,9 @@ dalex_variable(explainer, vars, force_class = NA)
 \item{force_class}{Character. If you wish to force a class on your 
 vars, which one do you need?}
 }
+\value{
+List. Containing PDP results, plot and \code{vars} input.
+}
 \description{
 DALEX function for creating Partial Dependency Plots and study
 variable's responses vs independent vector.

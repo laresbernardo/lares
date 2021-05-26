@@ -15,19 +15,19 @@
 #' distributions
 #' @param subtitle Character. Add subtitle to plot
 #' @param quiet Boolean. Keep quiet or show other options available?
+#' @return Depending on \code{return} input and based on your \code{df} structure:
+#' \itemize{
+#'   \item \code{list} with the names of the columns classified by class
+#'   \item \code{data.frame} with numbers: total values, row, columns,
+#'   complete rows
+#'   \item \code{plot} with visualizations
+#' }
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
-#' 
-#' # List with the names of the columns classified by class
 #' df_str(dft, "names")
-#' 
-#' # Dataframe with numbers: total values, row, columns, complete rows....
 #' df_str(dft, "numbers", quiet = TRUE)
-#' 
-#' # Now, some visualizations
 #' df_str(dft, "plot", quiet = TRUE)
-#' #df_str(dft, "distr", quiet = TRUE)
 #' @export
 df_str <- function(df, 
                    return = "plot", 
@@ -119,6 +119,7 @@ df_str <- function(df,
 #' 
 #' @family Exploratory
 #' @param df Dataframe
+#' @return Plot. Result of \code{df} numerical features.
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
@@ -156,6 +157,7 @@ plot_nums <- function(df) {
 #' 
 #' @family Exploratory
 #' @param df Dataframe
+#' @return Plot. Result of \code{df} categorical features.
 #' @export
 plot_cats <- function(df) {
   plot <- df %>% select_if(Negate(is.numeric)) 
@@ -177,6 +179,7 @@ plot_cats <- function(df) {
 #' 
 #' @family Exploratory
 #' @param df Dataframe
+#' @return Plot. Result of \code{df} categorical and numerical features.
 #' @export
 plot_df <- function(df) {
   

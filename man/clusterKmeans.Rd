@@ -39,7 +39,20 @@ two variables by name or column position.}
 
 \item{seed}{Numeric. Seed for reproducibility}
 
-\item{quiet}{Boolean. Keep quiet? If not, print messages}
+\item{quiet}{Boolean. Keep quiet? If not, print messages.}
+}
+\value{
+List. If no \code{k} is provided, contains \code{nclusters} and 
+\code{nclusters_plot} to determine optimal \code{k} given their WSS (Within
+Groups Sum of Squares). If \code{k} is provided, additionally we get:
+\itemize{
+  \item \code{df} data.frame with original \code{df} plus \code{cluster} column
+  \item \code{clusters} integer which is the same as \code{k}
+  \item \code{fit} kmeans object used to fit clusters
+  \item \code{means} data.frame with means and counts for each cluster
+  \item \code{correlations} plot with correlations grouped by clusters
+  \item \code{PCA} list with PCA results
+}
 }
 \description{
 This function lets the user cluster a whole data.frame automatically.

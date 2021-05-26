@@ -22,7 +22,18 @@
 #' @param comb Vector. Which columns do you wish to plot? Select which
 #' two variables by name or column position.
 #' @param seed Numeric. Seed for reproducibility
-#' @param quiet Boolean. Keep quiet? If not, print messages
+#' @param quiet Boolean. Keep quiet? If not, print messages.
+#' @return List. If no \code{k} is provided, contains \code{nclusters} and 
+#' \code{nclusters_plot} to determine optimal \code{k} given their WSS (Within
+#' Groups Sum of Squares). If \code{k} is provided, additionally we get:
+#' \itemize{
+#'   \item \code{df} data.frame with original \code{df} plus \code{cluster} column
+#'   \item \code{clusters} integer which is the same as \code{k}
+#'   \item \code{fit} kmeans object used to fit clusters
+#'   \item \code{means} data.frame with means and counts for each cluster
+#'   \item \code{correlations} plot with correlations grouped by clusters
+#'   \item \code{PCA} list with PCA results
+#' }
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data("iris")
@@ -172,10 +183,11 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
 #' @family Clusters
 #' @inheritParams clusterKmeans
 #' @param ks Integer vector. Which k should be tested?
-#' @param plot Boolean. Plot outcome?
 #' @param ... Additional parameters passed to \code{clusterKmeans}
-#' @examples 
-#' 
+#' @return List. Plot and data.frame results of clustering \code{df}
+#' data.frame into \code{ks} integer clusters.
+#' @examples
+#' Sys.unsetenv("LARES_FONT") # Temporal
 #' data("iris")
 #' df <- subset(iris, select = c(-Species))
 #' 
@@ -185,7 +197,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
 #' # You can use the data generated as well
 #' lapply(result$data, function(x) head(x$cluster))
 #' @export
-clusterVisualK <- function(df, ks = 1:6, plot = TRUE, ...) {
+clusterVisualK <- function(df, ks = 1:6, ...) {
   
   clus_dat <- function(df, k, n = length(ks), ...) {
     pca <- clusterKmeans(df, k, ...)$PCA
@@ -215,7 +227,6 @@ clusterVisualK <- function(df, ks = 1:6, plot = TRUE, ...) {
   wrapped <- wrap_plots(plots) +
     plot_annotation(title = "Kmeans Clustering across potential number of clusters",
                     subtitle = subtitle)
-  if (plot) plot(wrapped)
   
   ret <- list(plot = wrapped, data = dats)
   return(invisible(ret))
@@ -232,6 +243,8 @@ clusterVisualK <- function(df, ks = 1:6, plot = TRUE, ...) {
 #' @inheritParams clusterKmeans
 #' @param method Character vector. 
 #' @param ... Additional parameters passed to \code{factoextra::fviz_nbclust}
+#' @return Plot. Optimal number of clusters of \code{df} data.frame given a
+#' selected \code{method}.
 #' @examples 
 #' \dontrun{
 #' data("iris")

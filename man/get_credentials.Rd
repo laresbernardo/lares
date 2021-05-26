@@ -27,7 +27,11 @@ If \code{dir} is a list, it'll return \code{dir} (manual credentials input).}
 \item{filename}{Character. YML filename with your credentials.}
 
 \item{env}{Character. Environment variable name. No need to set differently
-for any function that uses this library. Only for external use}
+for any function that uses this library. Only for external use.}
+}
+\value{
+List. Result of reading your credential's YML file, filtered by your
+\code{from} input if provided.
 }
 \description{
 Load credentials from a local YML file. You can set your \code{.Renviron}

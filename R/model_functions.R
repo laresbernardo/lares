@@ -656,7 +656,7 @@ export_results <- function(results,
     if (substr(subdir, 1, 1) == "/") subdir <- substr(subdir, 2, nchar(subdir))
     
     # Directory to save all our results
-    dir <- file.path(paste(getwd(), subdir, sep = "/"))
+    dir <- file.path(subdir)
     message(paste("Export directory:", dir))
     if (!dir.exists(dir)) {
       message("Creating directory: ", subdir)
@@ -733,7 +733,6 @@ export_results <- function(results,
         export_plot(aux[[i]], 
                     name = names(aux)[i],
                     width = 8, height = 6, res = 300,
-                    dir = getwd(),
                     subdir = paste0(subdir, "/Plots"),
                     quiet = TRUE)
       }
@@ -744,7 +743,6 @@ export_results <- function(results,
         export_plot(aux[[i]], 
                     name = names(aux)[i],
                     width = 8, height = 6, res = 300,
-                    dir = getwd(),
                     subdir = paste0(subdir, "/Plots"),
                     quiet = TRUE)
       }

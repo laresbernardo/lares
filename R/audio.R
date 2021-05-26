@@ -21,6 +21,7 @@
 #' @param info Boolean. Import and return metadata?
 #' @param cover Boolean. Google Search its squared cover?
 #' @param quiet Boolean. Keep quiet? If not, print messages.
+#' @param return (Invisible) list with id's meta-data.
 #' @examples 
 #' \dontrun{
 #'  # Download video from YouTube and convert to MP3

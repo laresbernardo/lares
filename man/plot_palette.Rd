@@ -15,6 +15,10 @@ plot_palette(fill, colour = "black", id = NA, limit = 12)
 
 \item{limit}{Integer. Show only first n values.}
 }
+\value{
+Plot with \code{fill} colours and \code{colour} counter-colours
+if provided.
+}
 \description{
 This function plots a list of colours
 }

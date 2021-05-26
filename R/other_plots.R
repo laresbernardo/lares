@@ -97,7 +97,7 @@ plot_timeline <- function(event,
   if (save) {
     file_name <- "cv_timeline.png"
     if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = T)
+      #dir.create(file.path(getwd(), subdir), recursive = T)
       file_name <- paste(subdir, file_name, sep = "/")
     }
     p <- p + ggsave(file_name, width = 8, height = 6)

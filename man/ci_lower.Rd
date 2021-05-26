@@ -18,6 +18,9 @@ ci_upper(mean, ssd, n, conf = 0.95)
 
 \item{conf}{Numeric (0-1). Confidence level.}
 }
+\value{
+Vector with confidence limit value.
+}
 \description{
 Calculate lower and upper confidence intervals given a mean,
 standard deviation, sample size, and confidence level. You may

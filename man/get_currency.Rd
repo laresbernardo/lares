@@ -22,14 +22,18 @@ wish to get the history from? i.e, USD/COP, EUR/USD...}
 \item{fill}{Boolean. Fill weekends and non-quoted dates with 
 previous values?}
 }
+\value{
+data.frame. Result of fetching online data for \code{currency_pair}
+grouped by date.
+}
 \description{
 This function lets the user download historical currency exchange
-rate between two currencies
+rate between two currencies.
 }
 \examples{
 \dontrun{
 # For today (or any one single date)
-get_currency("USD/ARS", from = Sys.Date())
+get_currency("USD/COP", from = Sys.Date())
 # For multiple dates
 get_currency("EUR/USD", from = Sys.Date() - 7, fill = TRUE)
 }

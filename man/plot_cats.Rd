@@ -9,6 +9,9 @@ plot_cats(df)
 \arguments{
 \item{df}{Dataframe}
 }
+\value{
+Plot. Result of \code{df} categorical features.
+}
 \description{
 This function filters categorical columns and plots the frequency
 for each value on every feature.

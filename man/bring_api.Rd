@@ -7,9 +7,12 @@
 bring_api(url, status = TRUE)
 }
 \arguments{
-\item{url}{Character. API's URL}
+\item{url}{Character. API's URL to GET.}
 
 \item{status}{Boolean. Display status message?}
+}
+\value{
+data.frame of \code{url} GET results or NULL if no results returned by API.
 }
 \description{
 This function lets the user bring API data as JSON format and transform it 

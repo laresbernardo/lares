@@ -45,6 +45,13 @@ ask the user if the cache should be overwritten.}
 
 \item{filename}{Character. File name to check existence.}
 }
+\value{
+No return value, called for side effects.
+
+R object. Data from cache file or NULL if no cache found.
+
+Boolean. Result of \code{base} existence.
+}
 \description{
 This function lets the user save and load a cache of any R object to
 improve timings and UX.

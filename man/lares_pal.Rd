@@ -14,17 +14,30 @@ lares_pal(return = "list")
 "simple" (named vector),
 "custom" or "personal" (data.frame)}
 }
+\value{
+Depending on the \code{return} input, we get a:
+\itemize{
+  \item \code{vector} with \code{palette} results vector
+  \item \code{vector} with \code{palette} results vector's names
+  \item \code{list} with \code{palette} results vector, \code{labels}
+  results data.frame, and \code{simple} results named vector
+}
+}
 \description{
 This function plots a list of colours on a specific palette
 }
 \examples{
+# Simple colour-named palette
+lares_pal("simple")
+
 # Raw colours and counter-colours
-nice_palette <- names(lares_pal()$palette)
+# OR simply: lares_pal("palette")
+nice_palette <- lares_pal("colours")
 nice_palette_ctr <- as.vector(lares_pal()$palette)
 lapply(list(nice_palette, nice_palette_ctr), head)
 
 # Personal colours by name
-df <- lares_pal()$labels
+df <- lares_pal("custom")
 df[sample(nrow(df), 5), ]
 }
 \seealso{

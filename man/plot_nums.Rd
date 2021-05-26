@@ -9,6 +9,9 @@ plot_nums(df)
 \arguments{
 \item{df}{Dataframe}
 }
+\value{
+Plot. Result of \code{df} numerical features.
+}
 \description{
 This function filters numerical columns and plots boxplots.
 }

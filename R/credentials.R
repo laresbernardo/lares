@@ -31,7 +31,9 @@
 #' If \code{dir} is a list, it'll return \code{dir} (manual credentials input).
 #' @param filename Character. YML filename with your credentials.
 #' @param env Character. Environment variable name. No need to set differently
-#' for any function that uses this library. Only for external use
+#' for any function that uses this library. Only for external use.
+#' @return List. Result of reading your credential's YML file, filtered by your
+#' \code{from} input if provided.
 #' @examples 
 #' \dontrun{
 #' # Load dummy config.yml file from the library
@@ -84,6 +86,7 @@ get_credentials <- function(from = NA, dir = NA,
     return(credentials)
   }
 }
+
 #' @rdname get_credentials
 #' @export
 get_creds <- get_credentials

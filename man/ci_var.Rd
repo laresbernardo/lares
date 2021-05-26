@@ -15,6 +15,9 @@ ci_var(df, var, group_var = NULL, conf = 0.95)
 
 \item{conf}{Numeric. Confidence level (0-1).}
 }
+\value{
+data.frame mean, standard deviation, counter, upper and lower CIs.
+}
 \description{
 Calculate confidence intervals for a continuous numerical column on
 a dataframe, given a confidence level. You may also group results 

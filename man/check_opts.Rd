@@ -17,6 +17,11 @@ check_opts(inputs, opts, type = "all", not = "stop", quiet = TRUE)
 
 \item{quiet}{Boolean. Keep quiet? If not, returns TRUE or FALSE}
 }
+\value{
+Boolean. Result of \code{inputs} in \code{opts} (options).
+Depending on \code{type} and/or \code{stop} arguments,
+errors or messages will be shown.
+}
 \description{
 This function validates if inputs match all/any of your options
 and return error/message with possible options to use.

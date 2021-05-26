@@ -2,7 +2,7 @@
 #' Download Historical Currency Exchange Rate
 #' 
 #' This function lets the user download historical currency exchange
-#' rate between two currencies
+#' rate between two currencies.
 #' 
 #' @family Currency
 #' @param currency_pair Character. Which currency exchange do you
@@ -11,10 +11,12 @@
 #' @param to Date. To date
 #' @param fill Boolean. Fill weekends and non-quoted dates with 
 #' previous values?
+#' @return data.frame. Result of fetching online data for \code{currency_pair}
+#' grouped by date.
 #' @examples 
 #' \dontrun{
 #' # For today (or any one single date)
-#' get_currency("USD/ARS", from = Sys.Date())
+#' get_currency("USD/COP", from = Sys.Date())
 #' # For multiple dates
 #' get_currency("EUR/USD", from = Sys.Date() - 7, fill = TRUE)
 #' }

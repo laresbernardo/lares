@@ -10,6 +10,7 @@
 #' @param ssd Numeric. Standard deviation: \code{sd(var, na.rm = TRUE)}
 #' @param n Integer. Amount of observations: \code{n()}
 #' @param conf Numeric (0-1). Confidence level.
+#' @return Vector with confidence limit value.
 #' @examples 
 #' ci_lower(100, 5, 10)
 #' ci_upper(100, 5, 10)
@@ -41,6 +42,7 @@ ci_upper <- function(mean, ssd, n, conf = 0.95){
 #' @param var Variable name. Must be a numerical column.
 #' @param group_var Variable name. Group results by another variable.
 #' @param conf Numeric. Confidence level (0-1).
+#' @return data.frame mean, standard deviation, counter, upper and lower CIs.
 #' @examples 
 #' data(dft) # Titanic dataset
 #' ci_var(dft, Fare)

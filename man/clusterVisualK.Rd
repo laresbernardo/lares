@@ -4,22 +4,24 @@
 \alias{clusterVisualK}
 \title{Visualize K-Means Clusters for Several K}
 \usage{
-clusterVisualK(df, ks = 1:6, plot = TRUE, ...)
+clusterVisualK(df, ks = 1:6, ...)
 }
 \arguments{
 \item{df}{Dataframe}
 
 \item{ks}{Integer vector. Which k should be tested?}
 
-\item{plot}{Boolean. Plot outcome?}
-
 \item{...}{Additional parameters passed to \code{clusterKmeans}}
+}
+\value{
+List. Plot and data.frame results of clustering \code{df}
+data.frame into \code{ks} integer clusters.
 }
 \description{
 Visualize cluster data for assorted values of k.
 }
 \examples{
-
+Sys.unsetenv("LARES_FONT") # Temporal
 data("iris")
 df <- subset(iris, select = c(-Species))
 

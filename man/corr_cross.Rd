@@ -54,6 +54,11 @@ with variables that contains certain strings (using any value if vector used).}
 
 \item{...}{Additional parameters passed to \code{corr}}
 }
+\value{
+Depending on input \code{plot}, we get correlation and p-value results for
+every combination of features, arranged by descending absolute correlation value, 
+with a data.frame \code{plot = FALSE} or plot \code{plot = TRUE}.
+}
 \description{
 This function creates a correlation full study and returns a rank
 of the highest correlation variables obtained in a cross-table.

@@ -15,6 +15,7 @@
 #' @param ask Boolean. If cache exists, when reading: (interactive) ask the user 
 #' if the cache should be used to proceed or ignored; when writing, (interactive)
 #' ask the user if the cache should be overwritten.
+#' @return No return value, called for side effects.
 #' @examples
 #' x = list(a = 1, b = 2:4)
 #' base <- c(as.character(Sys.Date()), "A","B","C")
@@ -50,6 +51,7 @@ cache_write <- function(data,
 }
 
 #' @rdname cache_write
+#' @return R object. Data from cache file or NULL if no cache found.
 #' @export
 cache_read <- function(base,
                        cache_dir = getOption("LARES_CACHE_DIR"),
@@ -76,6 +78,7 @@ cache_read <- function(base,
 
 #' @rdname cache_write
 #' @param filename Character. File name to check existence.
+#' @return Boolean. Result of \code{base} existence.
 #' @export
 cache_exists <- function(base = NULL,
                          cache_dir = getOption("LARES_CACHE_DIR"),

@@ -17,6 +17,9 @@ that was not in the original explainer function, add here. Else, use row}
 \item{type}{Character. The type of variable attributions. 
 Either shap, oscillations, break_down or break_down_interactions.}
 }
+\value{
+List. Containing observation, breakdown results, and breakdown plot.
+}
 \description{
 DALEX function for local interpretations
 }

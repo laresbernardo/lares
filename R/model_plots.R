@@ -81,7 +81,7 @@ mplot_density <- function(tag,
     if (!is.na(model_name)) p1 <- p1 + labs(caption = model_name)
     
     if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = TRUE)
+      #dir.create(file.path(getwd(), subdir), recursive = TRUE)
       file_name <- paste(subdir, file_name, sep = "/")
     }
     
@@ -453,7 +453,7 @@ mplot_cuts_error <- function(tag,
   
   if (save) {
     if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = TRUE)
+      #dir.create(file.path(getwd(), subdir), recursive = TRUE)
       file_name <- paste(subdir, file_name, sep = "/")
     }
     png(file_name, height = 1800, width = 1800, res = 300)
@@ -634,7 +634,7 @@ mplot_metrics <- function(results,
   if (save) {
     
     if (!is.na(subdir)) {
-      dir.create(file.path(getwd(), subdir), recursive = TRUE)
+      #dir.create(file.path(getwd(), subdir), recursive = TRUE)
       file_name <- paste(subdir, file_name, sep = "/")
     }
     

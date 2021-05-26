@@ -26,9 +26,13 @@ encoding to non-numerical columns?}
 
 \item{norm}{Boolean. Should the data be normalized?}
 
-\item{quiet}{Boolean. Keep quiet? If not, print messages}
+\item{quiet}{Boolean. Keep quiet? If not, print messages.}
 
 \item{...}{Additional parameters passed to \code{factoextra::fviz_nbclust}}
+}
+\value{
+Plot. Optimal number of clusters of \code{df} data.frame given a
+selected \code{method}.
 }
 \description{
 Visualize cluster data for assorted values of k and methods such as

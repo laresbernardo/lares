@@ -36,6 +36,10 @@ or the whole table, respectively.}
 \item{order}{Boolean. Sort columns and rows by frequencies? Else, will
 be sorted alphabetically}
 }
+\value{
+data.frame. Result of crossing the variables provided in \code{...} and
+counting how many observations (rows) fall into each criteria.
+}
 \description{
 A cross-tabulation function with output similar to STATA, tidy
 friendly, with weighting possibility.

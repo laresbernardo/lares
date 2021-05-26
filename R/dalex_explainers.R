@@ -8,6 +8,8 @@
 #' @param model Model object (H2O)
 #' @param y Character or Variable name. Variable's column name.
 #' @param ignore Character vector. Which columns should be ignored?
+#' @return List; explainer. Containing the model, data, y, predict_function,
+#' y_hat, residuals, class, label, model_info, residual_function, and weights.
 #' @aliases dalex_explainer
 #' @examples 
 #' \dontrun{
@@ -96,6 +98,7 @@ h2o_explainer <- function(df, model, y = "tag", ignore = NA) {
 #' @param row Dataframe. Row number from the data.frame used in explainer.
 #' @param type Character. The type of variable attributions. 
 #' Either shap, oscillations, break_down or break_down_interactions.
+#' @return List. Containing observation, breakdown results, and breakdown plot.
 #' @export
 dalex_local <- function(explainer, observation = NA, row = 1, type = "break_down") {
   
@@ -132,6 +135,7 @@ dalex_local <- function(explainer, observation = NA, row = 1, type = "break_down
 #' 
 #' @family Interpretability
 #' @param explainer Object. Result from h2o_explainer function
+#' @return Plot. Based of \code{explainer} residual results.
 #' @export
 dalex_residuals <- function(explainer) {
   
@@ -160,6 +164,7 @@ dalex_residuals <- function(explainer) {
 #' @param vars Character vector. Which features do you wish to study?
 #' @param force_class Character. If you wish to force a class on your 
 #' vars, which one do you need?
+#' @return List. Containing PDP results, plot and \code{vars} input.
 #' @examples 
 #' \dontrun{
 #' # Having an "explainer" object created with \code{h2o_explainer}:

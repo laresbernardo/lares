@@ -4,7 +4,7 @@
 \alias{check_attr}
 \title{Attribute checker}
 \usage{
-check_attr(object, attr = "type", check = "h2o_automl", stop = TRUE)
+check_attr(object, attr, check, stop = TRUE)
 }
 \arguments{
 \item{object}{Object of any kind}
@@ -14,6 +14,9 @@ check_attr(object, attr = "type", check = "h2o_automl", stop = TRUE)
 \item{check}{Character. Attribute value}
 
 \item{stop}{Boolean. Stop if doesn't check?}
+}
+\value{
+No return value, called for side effects.
 }
 \description{
 This function checks if an object has a specific attribute and

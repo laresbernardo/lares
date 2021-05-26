@@ -10,14 +10,25 @@
 #' "pal" or "palette" (named vector),
 #' "simple" (named vector),
 #' "custom" or "personal" (data.frame)
+#' @return Depending on the \code{return} input, we get a:
+#' \itemize{
+#'   \item \code{vector} with \code{palette} results vector
+#'   \item \code{vector} with \code{palette} results vector's names
+#'   \item \code{list} with \code{palette} results vector, \code{labels}
+#'   results data.frame, and \code{simple} results named vector
+#' }
 #' @examples 
+#' # Simple colour-named palette
+#' lares_pal("simple")
+#' 
 #' # Raw colours and counter-colours
-#' nice_palette <- names(lares_pal()$palette)
+#' # OR simply: lares_pal("palette")
+#' nice_palette <- lares_pal("colours")
 #' nice_palette_ctr <- as.vector(lares_pal()$palette)
 #' lapply(list(nice_palette, nice_palette_ctr), head)
 #' 
 #' # Personal colours by name
-#' df <- lares_pal()$labels
+#' df <- lares_pal("custom")
 #' df[sample(nrow(df), 5), ]
 #' @export
 lares_pal <- function(return = "list") {
@@ -145,7 +156,9 @@ lares_pal <- function(return = "list") {
     "#0072B2" = simple[['white']],
     "#D55E00" = simple[['black']])
   
-  pal <- list(labels = colours_list, palette = rep(colours_names, 4))
+  pal <- list(labels = colours_list,
+              palette = rep(colours_names, 4),
+              simple = simple)
     
   if (return %in% c("colors", "colours", "color", "colour", "raw", "col"))
     pal <- names(colours_names)
@@ -172,6 +185,8 @@ lares_pal <- function(return = "list") {
 #' @param colour Vector. List of colours for colours.
 #' @param id Vector. ID for each color.
 #' @param limit Integer. Show only first n values.
+#' @return Plot with \code{fill} colours and \code{colour} counter-colours
+#' if provided.
 #' @examples 
 #' # Simply pass a vector
 #' pal <- lares_pal("simple")
@@ -208,6 +223,7 @@ plot_palette <- function(fill, colour = "black", id = NA, limit = 12) {
 #' This function lets the user use pre-defined default colours
 #' 
 #' @family Auxiliary
+#' @return Same as \code{scale_color_manual} but with custom palette.
 #' @export
 gg_colour_customs <- function () {
   colours_list <- lares_pal()$labels
@@ -223,6 +239,7 @@ gg_colour_customs <- function () {
 #' This function lets the user use pre-defined default colours
 #' 
 #' @family Auxiliary
+#' @return Same as \code{scale_fill_manual} but with custom palette.
 #' @export
 gg_fill_customs <- function () {
   colours_list <- lares_pal()$labels
@@ -238,6 +255,7 @@ gg_fill_customs <- function () {
 #' This function lets the user use pre-defined default colours
 #' 
 #' @family Auxiliary
+#' @return Same as \code{scale_color_manual} but with custom palette.
 #' @export
 gg_text_customs <- function() {
   colours_list <- lares_pal()$labels

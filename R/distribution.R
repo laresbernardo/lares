@@ -370,7 +370,7 @@ distr <- function(data, ...,
         cleanText(variable_name), 
         case_when(type == 2 ~ "_c", type == 3 ~ "_p", TRUE ~ ""),".png")
       if (!is.na(subdir)) {
-        dir.create(file.path(getwd(), subdir), recursive = TRUE)
+        #dir.create(file.path(getwd(), subdir), recursive = TRUE)
         file_name <- paste(subdir, file_name, sep = "/")
       }
     }

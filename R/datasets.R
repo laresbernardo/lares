@@ -6,6 +6,7 @@
 #' @family Dataset
 #' @docType data
 #' @usage data(dft)
+#' @return data.frame
 #' @format An object of class \code{"data.frame"}
 #' \describe{
 #'   \item{PassengerId}{Unique ID for each passenger (1-891)}
@@ -44,6 +45,7 @@
 #' @family Dataset
 #' @docType data
 #' @usage data(dfr)
+#' @return List
 #' @format An object of class \code{"list"} with 3 \code{"data.frame"}
 #' \describe{
 #'   \item{class2}{Predictions for a Binomial Classification Model}

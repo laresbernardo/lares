@@ -20,6 +20,15 @@ distributions}
 
 \item{quiet}{Boolean. Keep quiet or show other options available?}
 }
+\value{
+Depending on \code{return} input and based on your \code{df} structure:
+\itemize{
+  \item \code{list} with the names of the columns classified by class
+  \item \code{data.frame} with numbers: total values, row, columns,
+  complete rows
+  \item \code{plot} with visualizations
+}
+}
 \description{
 This function lets the user to check quickly the structure of a
 dataset (data.frame). It returns multiple counters for useful metrics,
@@ -28,16 +37,9 @@ a plot, and a list of column names for each of the column metrics.
 \examples{
 Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
-
-# List with the names of the columns classified by class
 df_str(dft, "names")
-
-# Dataframe with numbers: total values, row, columns, complete rows....
 df_str(dft, "numbers", quiet = TRUE)
-
-# Now, some visualizations
 df_str(dft, "plot", quiet = TRUE)
-#df_str(dft, "distr", quiet = TRUE)
 }
 \seealso{
 Other Exploratory: 

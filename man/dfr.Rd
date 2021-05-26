@@ -15,6 +15,9 @@ An object of class \code{"list"} with 3 \code{"data.frame"}
 \usage{
 data(dfr)
 }
+\value{
+List
+}
 \description{
 List with categorical (2 and 3 classes) and continuous predictions, 
 generated with \code{h2o_automl()} and the \code{dft}. Note that

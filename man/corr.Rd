@@ -43,6 +43,11 @@ and sorted by mean of each variable's correlations}
 
 \item{...}{Additional parameters to pass to \code{ohse}}
 }
+\value{
+data.frame. Squared dimensions (nxn) to match every
+correlation between every \code{df} data.frame column/variable. Notice
+that when using \code{ohse()} you may get more dimensions.
+}
 \description{
 This function correlates a whole dataframe, running one hot smart 
 encoding (\code{ohse}) to transform non-numerical features. 

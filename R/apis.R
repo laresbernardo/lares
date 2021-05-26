@@ -6,8 +6,9 @@
 #' 
 #' @family Tools
 #' @family API
-#' @param url Character. API's URL
+#' @param url Character. API's URL to GET.
 #' @param status Boolean. Display status message?
+#' @return data.frame of \code{url} GET results or NULL if no results returned by API.
 #' @export
 bring_api <- function(url, status = TRUE) {
   
@@ -26,5 +27,5 @@ bring_api <- function(url, status = TRUE) {
     colnames(import) <- gsub("\\.", "_", colnames(import))
     import <- suppressMessages(type.convert(import, numerals = "no.loss", as.is = TRUE))
     return(import)
-  } else invisible(return())
+  } else invisible(return(NULL))
 }
