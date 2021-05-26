@@ -22,10 +22,9 @@ Quite similar to \code{stringr::str_wrap} but, if the text vector
 is a factor, the levels will be kept in order and transformed.
 }
 \examples{
-autoline("This is a long text that may not fit into a single line")
-autoline("This is a long text that may not fit into a single line", top = 10)
+cat(autoline("This is a long text that may not fit into a single line", 8))
 
-text <- factor(c("First value", "Second value", "First value"), 
+text <- factor(c("First value", "Second value", "First value"),
                levels = c("First value", "Second value"))
 autoline(text, 1)
 

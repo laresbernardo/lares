@@ -72,6 +72,7 @@ Other Tools:
 
 Other Credentials: 
 \code{\link{db_download}()},
+\code{\link{db_upload}()},
 \code{\link{f1_contacts}()},
 \code{\link{geoAddress}()},
 \code{\link{get_credentials}()},

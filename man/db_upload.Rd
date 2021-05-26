@@ -2,7 +2,7 @@
 % Please edit documentation in R/dropbox.R
 \name{db_upload}
 \alias{db_upload}
-\title{Upload Dropbox File}
+\title{Upload Local Files to Dropbox}
 \usage{
 db_upload(
   filename,
@@ -13,19 +13,20 @@ db_upload(
 )
 }
 \arguments{
-\item{filename}{String. File's name}
+\item{filename}{String. Local file's name to upload.}
 
-\item{dir}{String. Directory you wish to upload the file to}
+\item{dir}{String. Directory you wish to upload the file to.}
 
 \item{delete_file}{Boolean. Delete local file after uploading?}
 
-\item{token_dir}{Character. Credential's local directory}
+\item{token_dir}{Character. RDS with token local directory. You may set to
+NA if you already set your credentials (see \code{get_creds()})}
 
 \item{token_name}{Character. RDS file name with your token's data}
 }
 \description{
-This function lets the user download a file from Dropbox, specifying
-its name and using a previously created token.
+This function lets the user upload a local file to Dropbox,
+using a previously created token or with interactive window.
 }
 \seealso{
 Other Tools: 
@@ -58,8 +59,22 @@ Other Tools:
 \code{\link{updateLares}()},
 \code{\link{zerovar}()}
 
+Other Credentials: 
+\code{\link{db_download}()},
+\code{\link{f1_contacts}()},
+\code{\link{geoAddress}()},
+\code{\link{get_credentials}()},
+\code{\link{get_tweets}()},
+\code{\link{mailSend}()},
+\code{\link{queryDB}()},
+\code{\link{queryGA}()},
+\code{\link{slackSend}()},
+\code{\link{stocks_file}()},
+\code{\link{stocks_report}()}
+
 Other Dropbox: 
 \code{\link{db_download}()}
 }
+\concept{Credentials}
 \concept{Dropbox}
 \concept{Tools}

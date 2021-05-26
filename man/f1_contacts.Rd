@@ -21,6 +21,7 @@ value for each parameter (column).
 \seealso{
 Other Credentials: 
 \code{\link{db_download}()},
+\code{\link{db_upload}()},
 \code{\link{geoAddress}()},
 \code{\link{get_credentials}()},
 \code{\link{get_tweets}()},

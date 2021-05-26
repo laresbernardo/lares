@@ -2,32 +2,49 @@
 % Please edit documentation in R/dropbox.R
 \name{db_download}
 \alias{db_download}
-\title{Download Dropbox File by File's Name}
+\title{Download/Import Dropbox File by File's Name}
 \usage{
 db_download(
-  filename,
+  query,
+  local_path = NULL,
   xlsx = TRUE,
-  newname = "temp.xlsx",
   token_dir = NA,
-  token_name = "token_pers.rds"
+  token_name = "token_pers.rds",
+  quiet = FALSE
 )
 }
 \arguments{
-\item{filename}{String. File's name}
+\item{query}{Search string. This string is split (on spaces) into
+individual words. Files will be used if they contain
+all words in the search string.}
+
+\item{local_path}{Character. Path to save file to. If \code{NULL}
+(the default), saves file to working directory with same name.
+If not, but a valid folder, file will be saved in this folder with
+same basename as path. If not \code{NULL} and not a folder,
+file will be saved to this path exactly.}
 
 \item{xlsx}{Boolean. Is it an Excel file? Can be returned as a list
-for each tab and not as a file if needed}
-
-\item{newname}{Character. Name for new file}
+for each tab and not as a file if needed. Will delete downloaded file.}
 
 \item{token_dir}{Character. RDS with token local directory. You may set to
 NA if you already set your credentials (see \code{get_creds()})}
 
 \item{token_name}{Character. RDS file name with your token's data}
+
+\item{quiet}{Boolean. Keep quiet? If not, show informative messages}
 }
 \description{
 This function lets the user download a file from Dropbox, specifying
-its name and using a previously created token.
+its name, using a previously created token or with interactive window.
+}
+\examples{
+\dontrun{
+# Download a specific file
+db_download("stocksReport.Rmd", local_path = "~/Desktop/generic.Rmd")
+# Import an Excel file from Dropbox into a data.frame
+df <- db_download("Portfolio LC.xlsx", xlsx = FALSE)
+}
 }
 \seealso{
 Other Tools: 
@@ -61,6 +78,7 @@ Other Tools:
 \code{\link{zerovar}()}
 
 Other Credentials: 
+\code{\link{db_upload}()},
 \code{\link{f1_contacts}()},
 \code{\link{geoAddress}()},
 \code{\link{get_credentials}()},

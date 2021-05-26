@@ -55,7 +55,7 @@ stocks_file <- function(file = NA,
   if (auto & Sys.getenv("LARES_PORTFOLIO") != "") {
     if (!quiet) message("Using BL's local file...")
     local <- Sys.getenv("LARES_PORTFOLIO")
-    results <- processFile(local, keep_old) 
+    results <- processFile(local, keep_old)
   } else {
     # FOR EVERYONE'S USE
     if (!is.na(file)) {
@@ -64,12 +64,12 @@ stocks_file <- function(file = NA,
     } else {
       # FOR DROPBOX'S USE
       file <- paste0(tempdir(), "/Portfolio LC.xlsx")
-      db_download("Portfolio LC.xlsx", 
+      db_download(query = "Portfolio LC.xlsx", 
+                  local_path = file,
                   xlsx = FALSE, # Do not import as Excel, just download
-                  newname = file,
                   token_dir = creds)
       results <- processFile(file, keep_old = keep_old)
-    } 
+    }
   }
   
   attr(results$portfolio, "type") <- "stocks_file_portfolio"
