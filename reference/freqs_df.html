@@ -216,11 +216,25 @@ when <code>plot=FALSE</code>.</p>
 <code><a href='tree_var.html'>tree_var</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
 <span class='fu'>freqs_df</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span>
-<span class='fu'>freqs_df</span><span class='op'>(</span><span class='va'>dft</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot xtfrm data frames</span></div><div class='output co'>#&gt; <span class='message'>1 variables with more than 0.9 variance exluded: 'PassengerId'</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1,191 x 5</span>
+#&gt; <span style='color: #949494;'># Groups:   variable [10]</span>
+#&gt;    variable value        n     p  pcum
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> Cabin    <span style='color: #949494;'>""</span>         687  77.1  77.1
+#&gt; <span style='color: #BCBCBC;'> 2</span> Parch    <span style='color: #949494;'>"</span>0<span style='color: #949494;'>"</span>        678  76.1  76.1
+#&gt; <span style='color: #BCBCBC;'> 3</span> Embarked <span style='color: #949494;'>"</span>S<span style='color: #949494;'>"</span>        644  72.3  72.3
+#&gt; <span style='color: #BCBCBC;'> 4</span> SibSp    <span style='color: #949494;'>"</span>0<span style='color: #949494;'>"</span>        608  68.2  68.2
+#&gt; <span style='color: #BCBCBC;'> 5</span> Sex      <span style='color: #949494;'>"</span>male<span style='color: #949494;'>"</span>     577  64.8  64.8
+#&gt; <span style='color: #BCBCBC;'> 6</span> Survived <span style='color: #949494;'>"</span>FALSE<span style='color: #949494;'>"</span>    549  61.6  61.6
+#&gt; <span style='color: #BCBCBC;'> 7</span> Pclass   <span style='color: #949494;'>"</span>3<span style='color: #949494;'>"</span>        491  55.1  55.1
+#&gt; <span style='color: #BCBCBC;'> 8</span> Survived <span style='color: #949494;'>"</span>TRUE<span style='color: #949494;'>"</span>     342  38.4 100  
+#&gt; <span style='color: #BCBCBC;'> 9</span> Sex      <span style='color: #949494;'>"</span>female<span style='color: #949494;'>"</span>   314  35.2 100  
+#&gt; <span style='color: #BCBCBC;'>10</span> Pclass   <span style='color: #949494;'>"</span>1<span style='color: #949494;'>"</span>        216  24.2  79.4
+#&gt; <span style='color: #949494;'># … with 1,181 more rows</span></div><div class='input'><span class='fu'>freqs_df</span><span class='op'>(</span><span class='va'>dft</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot xtfrm data frames</span></div><div class='output co'>#&gt; <span class='message'>1 variables with more than 0.9 variance exluded: 'PassengerId'</span></div><div class='img'><img src='freqs_df-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

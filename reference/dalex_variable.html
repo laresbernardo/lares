@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="DALEX Partial Dependency Plots (PDP) — dalex_variable" />
-<meta property="og:description" content="DALEX function for creating Partial Dependency Plots and study
-variable's responses vs independent vector." />
+<meta property="og:description" content="DALEX auxiliary function for creating Partial Dependency Plots and
+study variable's responses vs independent vector." />
 
 
 
@@ -115,8 +115,8 @@ variable's responses vs independent vector." />
     </div>
 
     <div class="ref-description">
-    <p>DALEX function for creating Partial Dependency Plots and study
-variable's responses vs independent vector.</p>
+    <p>DALEX auxiliary function for creating Partial Dependency Plots and
+study variable's responses vs independent vector.</p>
     </div>
 
     <pre class="usage"><span class='fu'>dalex_variable</span><span class='op'>(</span><span class='va'>explainer</span>, <span class='va'>vars</span>, force_class <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre>
@@ -150,7 +150,8 @@ vars, which one do you need?</p></td>
 <code><a href='h2o_explainer.html'>h2o_explainer</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+    <pre class="examples"><div class='input'><span class='co'># You must have \code{DALEX} library to use this auxiliary function:</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Having an "explainer" object created with \code{h2o_explainer}:</span>
 <span class='co'># For numerical variables</span>
 <span class='fu'>dalex_variable</span><span class='op'>(</span><span class='va'>explainer</span>, vars <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Age"</span>, <span class='st'>"Fare"</span><span class='op'>)</span><span class='op'>)</span>

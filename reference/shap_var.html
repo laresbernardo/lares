@@ -148,12 +148,12 @@ may be suppress or kept in your plot. Keep them?</p></td>
 <code><a href='h2o_shap.html'>h2o_shap</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># Train a h2o_automl model</span>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='h2o_automl.html'>h2o_automl</a></span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Survived</span>, max_models <span class='op'>=</span> <span class='fl'>1</span>, target <span class='op'>=</span> <span class='cn'>TRUE</span>,
                     ignore <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Ticket"</span>, <span class='st'>"Cabin"</span>, <span class='st'>"PassengerId"</span><span class='op'>)</span>,
                     quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</div><div class='output co'>#&gt; <span class='message'>Target value: TRUE</span></div><div class='input'>
 <span class='co'># Calculate SHAP values</span>
 <span class='va'>SHAP_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='h2o_shap.html'>h2o_shap</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 <span class='co'># Equivalent to:</span>
@@ -164,8 +164,30 @@ may be suppress or kept in your plot. Keep them?</p></td>
 
 <span class='co'># Check SHAP results</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>SHAP_values</span><span class='op'>)</span>
-
-<span class='co'># Plot SHAP values (feature importances)</span>
+</div><div class='output co'>#&gt;   Embarked.  Embarked.C Embarked.Q  Embarked.S Embarked.missing(NA)   Pclass.1
+#&gt; 1         0 -0.08374244          0  0.03704862                    0 -0.1711508
+#&gt; 2         0  0.24667242          0  0.08512114                    0 -0.2609911
+#&gt; 3         0 -0.06764929          0 -0.04369200                    0  0.6880375
+#&gt; 4         0 -0.09540343          0 -0.07565676                    0 -0.2751508
+#&gt; 5         0  0.20894507          0  0.18138103                    0 -0.1446183
+#&gt; 6         0 -0.13432354          0 -0.01077519                    0 -0.2933404
+#&gt;      Pclass.2   Pclass.3 Pclass.missing(NA) Sex.female   Sex.male
+#&gt; 1 -0.12365140 -0.2116218                  0 -0.8004984 -0.2046820
+#&gt; 2  0.43403959  0.3921137                  0  1.3796868  0.4372064
+#&gt; 3 -0.03333040  0.4352387                  0  1.7077609  0.6711848
+#&gt; 4 -0.14012104 -0.5015697                  0  1.4525059  0.3728108
+#&gt; 5 -0.08761095 -0.3058314                  0  1.4785577  0.5023771
+#&gt; 6  0.20727664  0.3371496                  0 -0.9443169 -0.1525176
+#&gt;   Sex.missing(NA)         Age      SibSp       Parch       Fare   BiasTerm
+#&gt; 1               0  0.10703400 0.03008852 -0.04445532 -0.1122510 -0.5544208
+#&gt; 2               0  0.15334396 0.01802009 -0.00323644  0.3280579 -0.5544208
+#&gt; 3               0 -0.96233398 0.01622745  0.09054694  0.6818806 -0.5544208
+#&gt; 4               0  0.29412436 0.16871874  0.01267175  0.3348548 -0.5544208
+#&gt; 5               0 -0.04966021 0.02171060  0.05654531 -0.4308090 -0.5544208
+#&gt; 6               0 -0.15258318 0.05731664 -0.07630640 -0.2363376 -0.5544208</div><div class='input'>
+<span class='co'># You must have \code{ggbeeswarm} library to use this auxiliary function:</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># Plot SHAP values (feature importance)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>SHAP_values</span><span class='op'>)</span>
 
 <span class='co'># Plot some of the variables (categorical)</span>
@@ -174,6 +196,7 @@ may be suppress or kept in your plot. Keep them?</p></td>
 <span class='co'># Plot some of the variables (numerical)</span>
 <span class='fu'>shap_var</span><span class='op'>(</span><span class='va'>SHAP_values</span>, <span class='va'>Fare</span><span class='op'>)</span>
 <span class='op'>}</span>
+<span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
