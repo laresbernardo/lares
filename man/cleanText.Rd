@@ -30,7 +30,7 @@ cleanText("Bernardo Lares 123")
 cleanText("Bèrnärdo LáreS 123", lower = FALSE)
 cleanText("Bernardo Lare$", spaces = ".", ascii = FALSE)
 cleanText("\\\\@®ì÷å   \%ñS  ..-X", spaces = FALSE)
-cleanText(c("maría", "€", "núñez a."), title = TRUE)
+cleanText(c("maría", "€", "núñez_a."), title = TRUE)
 }
 \seealso{
 Other Data Wrangling: 

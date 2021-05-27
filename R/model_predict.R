@@ -57,8 +57,7 @@ h2o_predict_MOJO <- function(df, model_path, method = "mojo", batch = 300){
       output <- cbind(output[,c(1,2)], aux)
     }  
   }
-  output <- output %>% as_tibble() %>% cleanNames(lower = FALSE)
-  return(output)
+  return(as_tibble(output))
 }
 
 flatten_list <- function(x, quiet = FALSE) {
@@ -121,12 +120,10 @@ h2o_predict_binary <- function(df, model_path, sample = NA){
 #' @family Tools
 #' @param df Dataframe/Vector. Data to insert into the model.
 #' @param model h2o model Object
-#' @param ... Additional parameters passed to \code{cleanNames()}.
 #' @return data.frame with predicted results.
 #' @export
-h2o_predict_model <- function(df, model, ...){
-  as.data.frame(predict(model, as.h2o(df))) %>%
-    cleanNames(lower = FALSE, ...)
+h2o_predict_model <- function(df, model){
+  as.data.frame(predict(model, as.h2o(df)))
 }
 
 

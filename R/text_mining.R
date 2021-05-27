@@ -18,7 +18,7 @@
 #' cleanText("Bèrnärdo LáreS 123", lower = FALSE)
 #' cleanText("Bernardo Lare$", spaces = ".", ascii = FALSE)
 #' cleanText("\\@®ì÷å   %ñS  ..-X", spaces = FALSE)
-#' cleanText(c("maría", "€", "núñez a."), title = TRUE)
+#' cleanText(c("maría", "€", "núñez_a."), title = TRUE)
 #' @export
 cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = FALSE) {
   text <- as.character(text)
@@ -48,8 +48,8 @@ cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = F
 #' @param ... Additional parameters passed to \code{cleanText}
 #' @return Character vector with transformed strings.
 #' @examples 
-#' df <- dft[1:5,1:5] # Dummy data
-#' colnames(df) <- c("ID.", "34", "Num 123", "Nòn-äscì", "  white   Spaces  ")
+#' df <- dft[1:5,1:6] # Dummy data
+#' colnames(df) <- c("ID.", "34", "x_2", "Num 123", "Nòn-äscì", "  white   Spaces  ")
 #' print(df)
 #' cleanNames(df)
 #' cleanNames(df, lower = FALSE)

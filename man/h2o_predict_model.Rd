@@ -4,14 +4,12 @@
 \alias{h2o_predict_model}
 \title{H2O Predict using H2O Model Object}
 \usage{
-h2o_predict_model(df, model, ...)
+h2o_predict_model(df, model)
 }
 \arguments{
 \item{df}{Dataframe/Vector. Data to insert into the model.}
 
 \item{model}{h2o model Object}
-
-\item{...}{Additional parameters passed to \code{cleanNames()}.}
 }
 \value{
 data.frame with predicted results.
