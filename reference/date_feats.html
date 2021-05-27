@@ -172,6 +172,9 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>data.frame with additional features calculated out of time or date vectors.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Data Wrangling: 
@@ -179,7 +182,6 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
 <code><a href='categ_reducer.html'>categ_reducer</a>()</code>,
 <code><a href='cleanText.html'>cleanText</a>()</code>,
 <code><a href='date_cuts.html'>date_cuts</a>()</code>,
-<code><a href='dateformat.html'>dateformat</a>()</code>,
 <code><a href='formatNum.html'>formatNum</a>()</code>,
 <code><a href='holidays.html'>holidays</a>()</code>,
 <code><a href='impute.html'>impute</a>()</code>,
@@ -188,7 +190,6 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
 <code><a href='numericalonly.html'>numericalonly</a>()</code>,
 <code><a href='ohe_commas.html'>ohe_commas</a>()</code>,
 <code><a href='ohse.html'>ohse</a>()</code>,
-<code><a href='rbind_full.html'>rbind_full</a>()</code>,
 <code><a href='removenacols.html'>removenacols</a>()</code>,
 <code><a href='removenarows.html'>removenarows</a>()</code>,
 <code><a href='replaceall.html'>replaceall</a>()</code>,
@@ -213,49 +214,49 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
 <span class='co'># Input as a vector or dataframe</span>
 <span class='fu'>date_feats</span><span class='op'>(</span><span class='va'>df</span>, keep_originals <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 2 date/time columns: 'dates', 'times'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: All formats failed to parse. No formats found.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: argument 'replacement' has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: argument 'replacement' has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt;         dates dates_year dates_month dates_day dates_week dates_weekday
-#&gt; 1  2020-10-25       2020          10        25         43           Sun
-#&gt; 2  2020-08-23       2020           8        23         34           Sun
-#&gt; 3  2020-08-24       2020           8        24         34           Mon
-#&gt; 4  2021-02-05       2021           2         5          6           Fri
-#&gt; 5  2020-12-08       2020          12         8         49           Tue
-#&gt; 6  2021-05-24       2021           5        24         21           Mon
-#&gt; 7  2021-05-08       2021           5         8         19           Sat
-#&gt; 8  2020-10-09       2020          10         9         41           Fri
-#&gt; 9  2021-05-15       2021           5        15         20           Sat
-#&gt; 10 2021-04-18       2021           4        18         16           Sun
+#&gt; 1  2020-11-20       2020          11        20         47           Fri
+#&gt; 2  2020-06-08       2020           6         8         23           Mon
+#&gt; 3  2020-12-06       2020          12         6         49           Sun
+#&gt; 4  2021-03-27       2021           3        27         13           Sat
+#&gt; 5  2020-09-20       2020           9        20         38           Sun
+#&gt; 6  2021-03-20       2021           3        20         12           Sat
+#&gt; 7  2021-01-09       2021           1         9          2           Sat
+#&gt; 8  2021-01-24       2021           1        24          4           Sun
+#&gt; 9  2021-05-25       2021           5        25         21           Tue
+#&gt; 10 2020-10-25       2020          10        25         43           Sun
 #&gt;    dates_weekend dates_year_day               times times_year times_month
-#&gt; 1           TRUE            298 2021-04-06 04:20:53       2021           4
-#&gt; 2           TRUE            235 2021-03-09 09:18:39       2021           3
-#&gt; 3          FALSE            236 2021-02-25 05:37:06       2021           2
-#&gt; 4          FALSE             35 2021-02-09 15:44:03       2021           2
-#&gt; 5          FALSE            342 2021-03-11 00:21:40       2021           3
-#&gt; 6          FALSE            143 2021-04-08 01:49:18       2021           4
-#&gt; 7           TRUE            127 2021-02-22 00:04:26       2021           2
-#&gt; 8          FALSE            282 2021-04-24 01:19:24       2021           4
-#&gt; 9           TRUE            134 2021-03-20 04:34:41       2021           3
-#&gt; 10          TRUE            107 2021-05-18 09:39:39       2021           5
+#&gt; 1          FALSE            324 2021-03-17 11:24:15       2021           3
+#&gt; 2          FALSE            159 2021-02-11 17:16:36       2021           2
+#&gt; 3           TRUE            340 2021-04-12 07:21:42       2021           4
+#&gt; 4           TRUE             85 2021-04-06 01:28:54       2021           4
+#&gt; 5           TRUE            263 2021-03-01 18:12:47       2021           3
+#&gt; 6           TRUE             78 2021-04-30 11:59:46       2021           4
+#&gt; 7           TRUE              8 2021-02-02 16:13:01       2021           2
+#&gt; 8           TRUE             23 2021-03-23 21:47:34       2021           3
+#&gt; 9          FALSE            144 2021-05-07 05:15:31       2021           5
+#&gt; 10          TRUE            298 2021-05-26 19:19:16       2021           5
 #&gt;    times_day times_week times_weekday times_weekend times_year_day times_hour
-#&gt; 1          6         14           Tue         FALSE             95          4
-#&gt; 2          9         10           Tue         FALSE             67          9
-#&gt; 3         25          8           Thu         FALSE             55          5
-#&gt; 4          9          6           Tue         FALSE             39         15
-#&gt; 5         11         10           Thu         FALSE             69          0
-#&gt; 6          8         14           Thu         FALSE             97          1
-#&gt; 7         22          8           Mon         FALSE             52          0
-#&gt; 8         24         17           Sat          TRUE            113          1
-#&gt; 9         20         12           Sat          TRUE             78          4
-#&gt; 10        18         20           Tue         FALSE            137          9
+#&gt; 1         17         11           Wed         FALSE             75         11
+#&gt; 2         11          6           Thu         FALSE             41         17
+#&gt; 3         12         15           Mon         FALSE            101          7
+#&gt; 4          6         14           Tue         FALSE             95          1
+#&gt; 5          1          9           Mon         FALSE             59         18
+#&gt; 6         30         18           Fri         FALSE            119         11
+#&gt; 7          2          5           Tue         FALSE             32         16
+#&gt; 8         23         12           Tue         FALSE             81         21
+#&gt; 9          7         19           Fri         FALSE            126          5
+#&gt; 10        26         21           Wed         FALSE            145         19
 #&gt;    times_minute times_minutes times_second
-#&gt; 1            20           260           53
-#&gt; 2            18           558           39
-#&gt; 3            37           337            6
-#&gt; 4            44           944            3
-#&gt; 5            21            21           40
-#&gt; 6            49           109           18
-#&gt; 7             4             4           26
-#&gt; 8            19            79           24
-#&gt; 9            34           274           41
-#&gt; 10           39           579           39</div><div class='input'>
+#&gt; 1            24           684           15
+#&gt; 2            16          1036           36
+#&gt; 3            21           441           42
+#&gt; 4            28            88           54
+#&gt; 5            12          1092           47
+#&gt; 6            59           719           46
+#&gt; 7            13           973            1
+#&gt; 8            47          1307           34
+#&gt; 9            15           315           31
+#&gt; 10           19          1159           16</div><div class='input'>
 <span class='co'># Holidays</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>hol</span> <span class='op'>&lt;-</span> <span class='fu'>date_feats</span><span class='op'>(</span>

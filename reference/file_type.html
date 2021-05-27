@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>H2O Predict using Binary file — h2o_predict_binary • lares</title>
+<title>Get file extensions without file names — file_type • lares</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,8 @@
 
 
 
-<meta property="og:title" content="H2O Predict using Binary file — h2o_predict_binary" />
-<meta property="og:description" content="This function lets the user predict using the h2o binary file.
-Note that it works with the files generated when using the 
-function export_results(). Recommendation: use the 
-h2o_predict_MOJO() function when possible - it let's you change
-h2o's version without problem." />
+<meta property="og:title" content="Get file extensions without file names — file_type" />
+<meta property="og:description" content="Get file extensions without file names" />
 
 
 
@@ -112,89 +108,32 @@ h2o's version without problem." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>H2O Predict using Binary file</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/model_predict.R'><code>R/model_predict.R</code></a></small>
-    <div class="hidden name"><code>h2o_predict_binary.Rd</code></div>
+    <h1>Get file extensions without file names</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/other_functions.R'><code>R/other_functions.R</code></a></small>
+    <div class="hidden name"><code>file_type.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user predict using the h2o binary file.
-Note that it works with the files generated when using the 
-function export_results(). Recommendation: use the 
-h2o_predict_MOJO() function when possible - it let's you change
-h2o's version without problem.</p>
+    <p>Get file extensions without file names</p>
     </div>
 
-    <pre class="usage"><span class='fu'>h2o_predict_binary</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>model_path</span>, sample <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>file_type</span><span class='op'>(</span><span class='va'>filepath</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>df</th>
-      <td><p>Dataframe. Data to insert into the model.</p></td>
-    </tr>
-    <tr>
-      <th>model_path</th>
-      <td><p>Character. Relative model path directory or zip file.</p></td>
-    </tr>
-    <tr>
-      <th>sample</th>
-      <td><p>Integer. How many rows should the function predict?</p></td>
+      <th>filepath</th>
+      <td><p>Character vector. File path(s) to get file extensions or types.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>vector with predicted results.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other Machine Learning: 
-<code><a href='ROC.html'>ROC</a>()</code>,
-<code><a href='conf_mat.html'>conf_mat</a>()</code>,
-<code><a href='export_results.html'>export_results</a>()</code>,
-<code><a href='gain_lift.html'>gain_lift</a>()</code>,
-<code><a href='h2o_automl.html'>h2o_automl</a>()</code>,
-<code><a href='h2o_predict_API.html'>h2o_predict_API</a>()</code>,
-<code><a href='h2o_predict_MOJO.html'>h2o_predict_MOJO</a>()</code>,
-<code><a href='h2o_predict_model.html'>h2o_predict_model</a>()</code>,
-<code><a href='h2o_selectmodel.html'>h2o_selectmodel</a>()</code>,
-<code><a href='impute.html'>impute</a>()</code>,
-<code><a href='iter_seeds.html'>iter_seeds</a>()</code>,
-<code><a href='lasso_vars.html'>lasso_vars</a>()</code>,
-<code><a href='model_metrics.html'>model_metrics</a>()</code>,
-<code><a href='model_preprocess.html'>model_preprocess</a>()</code>,
-<code><a href='msplit.html'>msplit</a>()</code></p>
-<p>Other Tools: 
-<code><a href='autoline.html'>autoline</a>()</code>,
-<code><a href='bindfiles.html'>bindfiles</a>()</code>,
-<code><a href='bring_api.html'>bring_api</a>()</code>,
-<code><a href='db_download.html'>db_download</a>()</code>,
-<code><a href='db_upload.html'>db_upload</a>()</code>,
-<code><a href='export_plot.html'>export_plot</a>()</code>,
-<code><a href='export_results.html'>export_results</a>()</code>,
-<code><a href='get_credentials.html'>get_credentials</a>()</code>,
-<code><a href='h2o_predict_API.html'>h2o_predict_API</a>()</code>,
-<code><a href='h2o_predict_MOJO.html'>h2o_predict_MOJO</a>()</code>,
-<code><a href='h2o_predict_model.html'>h2o_predict_model</a>()</code>,
-<code><a href='h2o_selectmodel.html'>h2o_selectmodel</a>()</code>,
-<code><a href='haveInternet.html'>haveInternet</a>()</code>,
-<code><a href='image_metadata.html'>image_metadata</a>()</code>,
-<code><a href='importxlsx.html'>importxlsx</a>()</code>,
-<code><a href='ip_country.html'>ip_country</a>()</code>,
-<code><a href='json2vector.html'>json2vector</a>()</code>,
-<code><a href='listfiles.html'>listfiles</a>()</code>,
-<code><a href='mailSend.html'>mailSend</a>()</code>,
-<code><a href='msplit.html'>msplit</a>()</code>,
-<code><a href='myip.html'>myip</a>()</code>,
-<code><a href='quiet.html'>quiet</a>()</code>,
-<code><a href='read.file.html'>read.file</a>()</code>,
-<code><a href='statusbar.html'>statusbar</a>()</code>,
-<code><a href='tic.html'>tic</a>()</code>,
-<code><a href='try_require.html'>try_require</a>()</code>,
-<code><a href='updateLares.html'>updateLares</a>()</code>,
-<code><a href='zerovar.html'>zerovar</a>()</code></p></div>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>file_type</span><span class='op'>(</span><span class='st'>"file.aux"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "aux"</div><div class='input'><span class='fu'>file_type</span><span class='op'>(</span><span class='st'>"temp/file.R"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "r"</div><div class='input'><span class='fu'>file_type</span><span class='op'>(</span><span class='st'>"/temp/temp3/music.mp3"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "mp3"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

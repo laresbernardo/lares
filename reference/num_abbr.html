@@ -137,14 +137,14 @@ significant figures to show. Range 1 to 6.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of character values that contain converted values</p>
+    <p>Vector of character values that contain converted values</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>num_abbr</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>1e6</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "834K"   "107K"   "211K"   "28.4K"  "1.3M"   "-1.47M" "-1.62M" "192K"  
-#&gt;  [9] "1.74M"  "78.8K" </div><div class='input'><span class='fu'>num_abbr</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>1e6</span>, n <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "-500K"  "-2M"    "1M"     "500K"   "100K"   "800K"   "-800K"  "200K"  
-#&gt;  [9] "-1000K" "1M"    </div></pre>
+</div><div class='output co'>#&gt;  [1] "-560K"  "-230K"  "1.56M"  "70.5K"  "129K"   "1.72M"  "461K"   "-1.27M"
+#&gt;  [9] "-687K"  "-446K" </div><div class='input'><span class='fu'>num_abbr</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>1e6</span>, n <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "1M"    "400K"  "400K"  "100K"  "-600K" "2M"    "500K"  "-2M"   "700K" 
+#&gt; [10] "-500K"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

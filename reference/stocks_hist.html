@@ -160,10 +160,13 @@ case, taxes changed from A to B in given date (hard-coded)</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>Boolean. Keep quiet? If not, informative messages will be printed</p></td>
+      <td><p>Boolean. Keep quiet? If not, informative messages will be printed.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>data.frame for each Date and Symbol closing quote value.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Investment: 
@@ -182,7 +185,6 @@ case, taxes changed from A to B in given date (hard-coded)</p></td>
 <code><a href='stocks_report.html'>stocks_report</a>()</code></p>
 <p>Other Scrapper: 
 <code><a href='filesGD.html'>filesGD</a>()</code>,
-<code><a href='geoStratum.html'>geoStratum</a>()</code>,
 <code><a href='get_mp3.html'>get_mp3</a>()</code>,
 <code><a href='holidays.html'>holidays</a>()</code>,
 <code><a href='ip_country.html'>ip_country</a>()</code>,
@@ -193,10 +195,23 @@ case, taxes changed from A to B in given date (hard-coded)</p></td>
 <code><a href='writeGS.html'>writeGS</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>stocks_hist</span><span class='op'>(</span>symbols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"VTI"</span>, <span class='st'>"FB"</span><span class='op'>)</span>, from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>7</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-<span class='op'>}</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='fu'>stocks_hist</span><span class='op'>(</span>symbols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"VTI"</span>, <span class='st'>"FB"</span><span class='op'>)</span>, from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>7</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 12 x 3</span>
+#&gt;    Date       Symbol Value
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> 2021-05-26 VTI     217.
+#&gt; <span style='color: #BCBCBC;'> 2</span> 2021-05-26 FB      328.
+#&gt; <span style='color: #BCBCBC;'> 3</span> 2021-05-25 VTI     217.
+#&gt; <span style='color: #BCBCBC;'> 4</span> 2021-05-25 FB      328.
+#&gt; <span style='color: #BCBCBC;'> 5</span> 2021-05-24 VTI     217.
+#&gt; <span style='color: #BCBCBC;'> 6</span> 2021-05-24 FB      325.
+#&gt; <span style='color: #BCBCBC;'> 7</span> 2021-05-21 VTI     215.
+#&gt; <span style='color: #BCBCBC;'> 8</span> 2021-05-21 FB      316.
+#&gt; <span style='color: #BCBCBC;'> 9</span> 2021-05-20 VTI     215.
+#&gt; <span style='color: #BCBCBC;'>10</span> 2021-05-20 FB      319.
+#&gt; <span style='color: #BCBCBC;'>11</span> 2021-05-19 VTI     213.
+#&gt; <span style='color: #BCBCBC;'>12</span> 2021-05-19 FB      314.</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

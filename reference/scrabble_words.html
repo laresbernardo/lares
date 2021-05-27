@@ -185,6 +185,9 @@ You might also want to set this parameter globally with
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>data.frame with matching words found, sorted by higher points.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Scrabble: 
@@ -193,33 +196,41 @@ You might also want to set this parameter globally with
 <code><a href='scrabble_score.html'>scrabble_score</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># Automatic use of languages and scores</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.setenv</a></span><span class='op'>(</span><span class='st'>"LARES_LANG"</span> <span class='op'>=</span> <span class='st'>"es"</span><span class='op'>)</span>
 
-<span class='fu'>scrabble_words</span><span class='op'>(</span>tiles <span class='op'>=</span> <span class='st'>"holasa"</span>,
-               free <span class='op'>=</span> <span class='fl'>1</span>,
-               force_start <span class='op'>=</span> <span class='st'>""</span>,
-               force_end <span class='op'>=</span> <span class='st'>""</span>,
+<span class='fu'><a href='grepl_letters.html'>grepl_letters</a></span><span class='op'>(</span><span class='va'>es_words</span><span class='op'>$</span><span class='va'>words</span>, <span class='st'>"_o_a"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in tolower(x): object 'es_words' not found</span></div><div class='input'>
+<span class='fu'>scrabble_words</span><span class='op'>(</span>tiles <span class='op'>=</span> <span class='st'>"hola"</span>,
+               free <span class='op'>=</span> <span class='fl'>2</span>,
+               force_start <span class='op'>=</span> <span class='st'>"h"</span>,
+               <span class='co'>#force_end = "",</span>
                force_str <span class='op'>=</span> <span class='st'>"_o_a"</span>,
-               force_n <span class='op'>=</span> <span class='fl'>6</span>,
+               force_n <span class='op'>=</span> <span class='fl'>5</span>,
                force_max <span class='op'>=</span> <span class='fl'>0</span>,
-               quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-               
-<span class='co'># Custom scores table and manual language input </span>
-<span class='va'>cu_scores</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
-  tiles <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>14</span><span class='op'>]</span>,<span class='st'>"_"</span>,<span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>15</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>,
-  scores <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>8</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>10</span>,<span class='fl'>10</span>,<span class='fl'>5</span>,<span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
-  
-<span class='fu'>scrabble_words</span><span class='op'>(</span>tiles <span class='op'>=</span> <span class='st'>"holase"</span>,
-               language <span class='op'>=</span> <span class='st'>"es"</span>,
-               scores <span class='op'>=</span> <span class='va'>cu_scores</span>,
-               free <span class='op'>=</span> <span class='fl'>1</span>,
-               force_start <span class='op'>=</span> <span class='st'>"_o_a"</span><span class='op'>)</span>
-
+               quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Auto-loaded points for 'es'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Loaded 636,598 'es' words</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 15 x 3</span>
+#&gt;    word  scores length
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> hozad     18      5
+#&gt; <span style='color: #BCBCBC;'> 2</span> hozan     17      5
+#&gt; <span style='color: #BCBCBC;'> 3</span> hozar     17      5
+#&gt; <span style='color: #BCBCBC;'> 4</span> hozas     17      5
+#&gt; <span style='color: #BCBCBC;'> 5</span> hojas     15      5
+#&gt; <span style='color: #BCBCBC;'> 6</span> hoyad     13      5
+#&gt; <span style='color: #BCBCBC;'> 7</span> hoyan     12      5
+#&gt; <span style='color: #BCBCBC;'> 8</span> hoyar     12      5
+#&gt; <span style='color: #BCBCBC;'> 9</span> hoyas     12      5
+#&gt; <span style='color: #BCBCBC;'>10</span> hogar     10      5
+#&gt; <span style='color: #BCBCBC;'>11</span> hopan     10      5
+#&gt; <span style='color: #BCBCBC;'>12</span> hopar     10      5
+#&gt; <span style='color: #BCBCBC;'>13</span> hopas     10      5
+#&gt; <span style='color: #BCBCBC;'>14</span> holan      8      5
+#&gt; <span style='color: #BCBCBC;'>15</span> horas      8      5</div><div class='input'>
 <span class='co'># Words considered for a language (you can custom it too!)</span>
 <span class='va'>es_words</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scrabble_dictionary.html'>scrabble_dictionary</a></span><span class='op'>(</span><span class='st'>"es"</span><span class='op'>)</span>
-<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Loaded 636,598 'es' words</span></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -233,6 +233,11 @@ resource limited.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>List. Contains original data.frame <code>df</code>, an index
+to identify which observations with be part of the train dataset
+<code>train_index</code>, and which model type should be <code>model_type</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Machine Learning: 
@@ -261,7 +266,7 @@ resource limited.</p></td>
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> FALSE   549  61.6     1  61.6
 #&gt; <span style='color: #BCBCBC;'>2</span> TRUE    342  38.4     2 100  </div><div class='output co'>#&gt; <span class='message'>- MISSINGS: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span></div><div class='output co'>#&gt; <span class='message'>- CATEGORICALS: There are 5 non-numerical features. Consider using ohse() or equivalent prior to encode categorical variables.</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Splitting data: train = 0.7 &amp; test = 0.3</span></div><div class='output co'>#&gt; train_size  test_size 
-#&gt;        623        268 </div><div class='output co'>#&gt; <span class='message'>- BALANCE: Training set balanced: 239 observations for each (2) category; using 76.73% of training data</span></div><div class='input'>
+#&gt;        623        268 </div><div class='output co'>#&gt; <span class='message'>- BALANCE: Training set balanced: 242 observations for each (2) category; using 77.69% of training data</span></div><div class='input'>
 <span class='fu'>model_preprocess</span><span class='op'>(</span><span class='va'>dft</span>, <span class='st'>"Fare"</span>, split <span class='op'>=</span> <span class='fl'>0.5</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>- INDEPENDENT VARIABLE: Fare</span></div><div class='output co'>#&gt; <span class='message'>- MODEL TYPE: Regression</span></div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #&gt;    0.00    7.91   14.45   32.20   31.00  512.33 </div><div class='output co'>#&gt; <span class='message'>- MISSINGS: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span></div><div class='output co'>#&gt; <span class='message'>- CATEGORICALS: There are 6 non-numerical features. Consider using ohse() or equivalent prior to encode categorical variables.</span></div><div class='output co'>#&gt; <span class='message'>- TRANSFORMATIONS: All numerical features (4) were scaled</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Splitting data: train = 0.5 &amp; test = 0.5</span></div><div class='output co'>#&gt; train_size  test_size 

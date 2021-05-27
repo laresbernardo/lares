@@ -136,8 +136,9 @@ or the labels you wish to cross with.</p>
     </tr>
     <tr>
       <th>thresh</th>
-      <td><p>Numeric. Value which splits the results for the 
-confusion matrix when binary.</p></td>
+      <td><p>Integer. Threshold for selecting binary or regression 
+models: this number is the threshold of unique values we should 
+have in 'tag' (more than: regression; less than: classification)</p></td>
     </tr>
     <tr>
       <th>sense</th>
@@ -154,6 +155,10 @@ zeroes. Ideal to detect must confusing categories.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>data.frame. Result of counting <code>tag</code> and <code>score</code>'s tag
+given a <code>thresh</code>old, similar to <code><a href='https://rdrr.io/r/base/table.html'>base::table()</a></code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>You may use <code><a href='mplot_conf.html'>mplot_conf()</a></code> or set <code>plot=TRUE</code>.</p>

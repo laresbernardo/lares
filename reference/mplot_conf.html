@@ -145,8 +145,9 @@
     </tr>
     <tr>
       <th>thresh</th>
-      <td><p>Numeric. Value which splits the results for the 
-confusion matrix when binary.</p></td>
+      <td><p>Integer. Threshold for selecting binary or regression 
+models: this number is the threshold of unique values we should 
+have in 'tag' (more than: regression; less than: classification)</p></td>
     </tr>
     <tr>
       <th>abc</th>
@@ -188,6 +189,9 @@ Set to <code>NA</code> to plot all.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Plot with confusion matrix results.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>You may use <code><a href='conf_mat.html'>conf_mat()</a></code> to get calculate values.</p>

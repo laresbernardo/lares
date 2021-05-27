@@ -116,7 +116,7 @@ Based on udpipe library, model models, and keywords_rake function." />
 
     <div class="ref-description">
     <p>RAKE is a basic algorithm which tries to identify keywords in text. 
-Based on udpipe library, model models, and keywords_rake function.</p>
+Based on <code>udpipe</code> library, model models, and keywords_rake function.</p>
     </div>
 
     <pre class="usage"><span class='fu'>topics_rake</span><span class='op'>(</span><span class='va'>text</span>, file <span class='op'>=</span> <span class='st'>"english-ewt-ud-2.4-190531.udpipe"</span>, lang <span class='op'>=</span> <span class='st'>"english"</span><span class='op'>)</span></pre>
@@ -130,16 +130,19 @@ Based on udpipe library, model models, and keywords_rake function.</p>
     </tr>
     <tr>
       <th>file</th>
-      <td><p>Character. Name of udpipe model previously downloaded
+      <td><p>Character. Name of <code>udpipe</code> model previously downloaded
 for a specific language</p></td>
     </tr>
     <tr>
       <th>lang</th>
       <td><p>Character. If file does not exist, this language will be
-downloaded from udpipe's models</p></td>
+downloaded from <code>udpipe</code>'s models.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>data.frame with topics for each <code>text</code> input.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Text Mining: 

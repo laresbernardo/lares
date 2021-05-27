@@ -42,7 +42,7 @@
 <meta property="og:title" content="Model Metrics and Performance — model_metrics" />
 <meta property="og:description" content="This function lets the user get a confusion matrix and accuracy, and 
 for for binary classification models: AUC, Precision, Sensitivity, and
-Specificity." />
+Specificity, given the expected (tags) values and predicted values (scores)." />
 
 
 
@@ -118,7 +118,7 @@ Specificity." />
     <div class="ref-description">
     <p>This function lets the user get a confusion matrix and accuracy, and 
 for for binary classification models: AUC, Precision, Sensitivity, and
-Specificity.</p>
+Specificity, given the expected (tags) values and predicted values (scores).</p>
     </div>
 
     <pre class="usage"><span class='fu'>model_metrics</span><span class='op'>(</span>
@@ -192,6 +192,11 @@ categorical model.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>List. Multiple performance metrics that vary depending on
+the type of model (classification or regression). If <code>plot=TRUE</code>,
+multiple plots are also returned.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Machine Learning: 
@@ -218,7 +223,6 @@ categorical model.</p></td>
 <code><a href='loglossBinary.html'>loglossBinary</a>()</code></p>
 <p>Other Calculus: 
 <code><a href='corr.html'>corr</a>()</code>,
-<code><a href='deg2num.html'>deg2num</a>()</code>,
 <code><a href='dist2d.html'>dist2d</a>()</code>,
 <code><a href='quants.html'>quants</a>()</code></p></div>
 

@@ -123,7 +123,8 @@
   which <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"txt"</span>, <span class='st'>"csv"</span>, <span class='st'>"rds"</span>, <span class='st'>"binary"</span>, <span class='st'>"mojo"</span>, <span class='st'>"plots"</span>, <span class='st'>"dev"</span>, <span class='st'>"production"</span><span class='op'>)</span>,
   note <span class='op'>=</span> <span class='cn'>NA</span>,
   subdir <span class='op'>=</span> <span class='cn'>NA</span>,
-  save <span class='op'>=</span> <span class='cn'>TRUE</span>
+  save <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  seed <span class='op'>=</span> <span class='fl'>0</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -160,8 +161,15 @@ the results?</p></td>
       <th>save</th>
       <td><p>Boolean. Do you wish to save/export results?</p></td>
     </tr>
+    <tr>
+      <th>seed</th>
+      <td><p>Numeric. For reproducible results and random splits.</p></td>
+    </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>No return value, called for side effects.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Machine Learning: 
