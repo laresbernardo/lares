@@ -21,9 +21,11 @@ List; explainer. Containing the model, data, y, predict_function,
 y_hat, residuals, class, label, model_info, residual_function, and weights.
 }
 \description{
-DALEX function to create an explainer object
+DALEX helper function to create an \code{explainer} object using
+a \code{h2o} trained model.
 }
 \examples{
+# You must have \code{DALEX} library to use this auxiliary function:
 \dontrun{
 data(dft) # Titanic dataset
 

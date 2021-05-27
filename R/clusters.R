@@ -56,6 +56,7 @@
 #' plot(clusters$PCA$plotVarExp)
 #' plot(clusters$PCA$plot_1_2)
 #' 
+#' # You must have \code{ggforce} library to use this auxiliary function:
 #' # 3D interactive plot
 #' \dontrun{clusters$PCA$plot_1_2_3}
 #' @export
@@ -245,7 +246,8 @@ clusterVisualK <- function(df, ks = 1:6, ...) {
 #' @param ... Additional parameters passed to \code{factoextra::fviz_nbclust}
 #' @return Plot. Optimal number of clusters of \code{df} data.frame given a
 #' selected \code{method}.
-#' @examples 
+#' @examples
+#' # You must have \code{factoextra} library to use this auxiliary function:
 #' \dontrun{
 #' data("iris")
 #' df <- subset(iris, select = c(-Species))

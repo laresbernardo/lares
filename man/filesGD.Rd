@@ -32,7 +32,7 @@ Authenticate and find Google Drive files and IDs by name.
 Other Scrapper: 
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
-\code{\link{ip_country}()},
+\code{\link{ip_data}()},
 \code{\link{readGS}()},
 \code{\link{splot_etf}()},
 \code{\link{stocks_hist}()},

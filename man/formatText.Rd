@@ -19,25 +19,30 @@ formatText(text, color = "black", size = 20, bold = FALSE)
 String with format characters included.
 }
 \description{
-Format a string text as markdown/HTML
+Format any character string to HTML or markdown format. We 
+recommend using this format with the \code{ggtext::geom_richtext}
+function to format text in \code{ggplot2} objects.
 }
 \examples{
+formatText("Text test", color = "#000000")
+formatText(c(123, 456), color = "orange", size = 120, bold = TRUE)
+
+# If you want to use it with \code{ggtext}:
 \dontrun{
 col1 <- "grey"
 col2 <- "orange"
 pt <- data.frame(
   label = paste0(
-    format_text(123, color = col2, size = 120, bold = TRUE), "<br/>",
-    format_text("of children had a", col1),"<br/>",
-    format_text("traditional stay-at-home mom", color = col2, bold = TRUE), "<br/>",
-    format_text(paste0("in 2012, compared to ", 321," in 1970"), color = col1)))
+    formatText(123, color = col2, size = 120, bold = TRUE), "<br/>",
+    formatText("of children had a", col1),"<br/>",
+    formatText("traditional stay-at-home mom", color = col2, bold = TRUE), "<br/>",
+    formatText(paste0("in 2012, compared to ", 321," in 1970"), color = col1)))
   ggplot(pt, aes(x = 0, y = 0))  +
   ggtext::geom_richtext(
     aes(label = label), 
     hjust = 0, 
     label.color = NA, 
     lineheight = 1.5) +
-  xlim(0, 0.01) +
-  theme_void()
+  xlim(0, 0.01) + theme_void()
 }
 }

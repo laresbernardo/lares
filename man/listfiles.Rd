@@ -53,7 +53,7 @@ Other Tools:
 \code{\link{haveInternet}()},
 \code{\link{image_metadata}()},
 \code{\link{importxlsx}()},
-\code{\link{ip_country}()},
+\code{\link{ip_data}()},
 \code{\link{json2vector}()},
 \code{\link{mailSend}()},
 \code{\link{msplit}()},

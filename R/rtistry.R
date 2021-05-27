@@ -4,12 +4,6 @@
 #' @family rtistry
 #' @param eye,pal,var Parameters to change aesthetics and calculations
 #' @return ggplot object
-#' @examples
-#' \dontrun{
-#' rtistry_sphere(eye = c(0, -10000, 1))
-#' rtistry_sphere(pal = lares_pal("col")[c(1,3)])
-#' rtistry_sphere(eye = c(0, 0, 100000), var = 2)
-#' }
 #' @export
 rtistry_sphere <- function(eye = c(100, 0, 0),
                            pal = "auto",

@@ -9,6 +9,12 @@ noPlot(
   size = 4,
   font = Sys.getenv("LARES_FONT")
 )
+
+noPlot(
+  message = "Nothing to show here!",
+  size = 4,
+  font = Sys.getenv("LARES_FONT")
+)
 }
 \arguments{
 \item{message}{Character. What message do you wish to show?}
@@ -19,8 +25,14 @@ noPlot(
 }
 \value{
 Empty ggplot2 object (with a \code{message} if set).
+
+Empty ggplot2 object (with a \code{message} if set).
 }
 \description{
+This function lets the user print a plot without plot, with a 
+customizable message. It is quite useful for Shiny renderPlot when
+using filters and no data is returned.
+
 This function lets the user print a plot without plot, with a 
 customizable message. It is quite useful for Shiny renderPlot when
 using filters and no data is returned.
@@ -28,8 +40,24 @@ using filters and no data is returned.
 \examples{
 Sys.unsetenv("LARES_FONT") # Temporal
 noPlot(message = "No plot to show!")
+Sys.unsetenv("LARES_FONT") # Temporal
+noPlot(message = "No plot to show!")
 }
 \seealso{
+Other Visualization: 
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs_list}()},
+\code{\link{freqs_plot}()},
+\code{\link{freqs}()},
+\code{\link{gg_bars}()},
+\code{\link{gg_pie}()},
+\code{\link{plot_chord}()},
+\code{\link{plot_survey}()},
+\code{\link{plot_timeline}()},
+\code{\link{theme_lares}()},
+\code{\link{tree_var}()}
+
 Other Visualization: 
 \code{\link{distr}()},
 \code{\link{freqs_df}()},

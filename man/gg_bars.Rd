@@ -15,6 +15,18 @@ gg_bars(
   limit = 15,
   na.rm = FALSE
 )
+
+gg_bars(
+  names,
+  n,
+  p = NA,
+  title = NA,
+  subtitle = NA,
+  axis = "Counter",
+  obs = TRUE,
+  limit = 15,
+  na.rm = FALSE
+)
 }
 \arguments{
 \item{names}{Character Vector. Bar names}
@@ -31,8 +43,12 @@ gg_bars(
 }
 \value{
 ggplot2 object
+
+ggplot2 object
 }
 \description{
+This function uses a nice template for barplots.
+
 This function uses a nice template for barplots.
 }
 \examples{
@@ -41,8 +57,27 @@ data(dft) # Titanic dataset
 df <- freqs(dft, Pclass)
 gg_bars(df$Pclass, n = df$n)
 gg_bars(df$Pclass, n = df$n, p = df$p, axis = "Percentage of ...")
+Sys.unsetenv("LARES_FONT") # Temporal
+data(dft) # Titanic dataset
+df <- freqs(dft, Pclass)
+gg_bars(df$Pclass, n = df$n)
+gg_bars(df$Pclass, n = df$n, p = df$p, axis = "Percentage of ...")
 }
 \seealso{
+Other Visualization: 
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs_list}()},
+\code{\link{freqs_plot}()},
+\code{\link{freqs}()},
+\code{\link{gg_pie}()},
+\code{\link{noPlot}()},
+\code{\link{plot_chord}()},
+\code{\link{plot_survey}()},
+\code{\link{plot_timeline}()},
+\code{\link{theme_lares}()},
+\code{\link{tree_var}()}
+
 Other Visualization: 
 \code{\link{distr}()},
 \code{\link{freqs_df}()},

@@ -18,10 +18,11 @@ vars, which one do you need?}
 List. Containing PDP results, plot and \code{vars} input.
 }
 \description{
-DALEX function for creating Partial Dependency Plots and study
-variable's responses vs independent vector.
+DALEX auxiliary function for creating Partial Dependency Plots and
+study variable's responses vs independent vector.
 }
 \examples{
+# You must have \code{DALEX} library to use this auxiliary function:
 \dontrun{
 # Having an "explainer" object created with \code{h2o_explainer}:
 # For numerical variables

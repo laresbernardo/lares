@@ -50,6 +50,44 @@ scale_y_formatNum(
   sign = FALSE,
   abbr = FALSE
 )
+
+scale_x_comma(...)
+
+scale_y_comma(...)
+
+scale_x_percent(...)
+
+scale_y_percent(...)
+
+scale_x_dollar(...)
+
+scale_y_dollar(...)
+
+scale_x_abbr(...)
+
+scale_y_abbr(...)
+
+scale_x_formatNum(
+  ...,
+  decimals = 2,
+  signif = NULL,
+  type = Sys.getenv("LARES_NUMFORMAT"),
+  pre = "",
+  pos = "",
+  sign = FALSE,
+  abbr = FALSE
+)
+
+scale_y_formatNum(
+  ...,
+  decimals = 2,
+  signif = NULL,
+  type = Sys.getenv("LARES_NUMFORMAT"),
+  pre = "",
+  pos = "",
+  sign = FALSE,
+  abbr = FALSE
+)
 }
 \arguments{
 \item{...}{Arguments passed to \code{ggplot2::continuous_scale} or
@@ -75,14 +113,35 @@ the `decimals` parameter to set abbr's \code{n}(-1) parameter.}
 }
 \value{
 Reformatted scales on ggplot2 object
+
+Reformatted scales on ggplot2 object
 }
 \description{
 The \code{_comma} ones set comma format for axis text, the \code{_percent} 
 ones set percent format for axis text, \code{_dollar} for collar currency,
 and \code{_abbr} for abbreviated format. Lastly, use \code{_formatNum} to
 further customize your numerical scales with \code{lares::formatNum}.
+
+The \code{_comma} ones set comma format for axis text, the \code{_percent} 
+ones set percent format for axis text, \code{_dollar} for collar currency,
+and \code{_abbr} for abbreviated format. Lastly, use \code{_formatNum} to
+further customize your numerical scales with \code{lares::formatNum}.
 }
 \examples{
+library(ggplot2)
+df <- ggplot2::txhousing \%>\% removenarows(all = FALSE)
+
+ggplot(df, aes(x = sales, y = volume)) + geom_point() +
+  scale_x_dollar() + scale_y_abbr()
+  
+# Use any argument from scale_x/y_continuous
+ggplot(df, aes(x = listings, y = log(inventory))) + geom_point() +
+  scale_x_comma() + scale_y_percent(limits = c(0, 3))
+  
+# Use any argument from scale_x/y_continuous AND formatNum
+ggplot(df, aes(x = median, y = inventory)) + geom_point() +
+  scale_x_formatNum(n.breaks = 3, pre = "@", abbr = TRUE) +
+  scale_y_formatNum(position = "right", decimals = 0, pos = " X")
 library(ggplot2)
 df <- ggplot2::txhousing \%>\% removenarows(all = FALSE)
 

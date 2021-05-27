@@ -52,8 +52,8 @@ df <- data.frame(
 # Input as a vector or dataframe
 date_feats(df, keep_originals = TRUE) \%>\% head(10)
 
-# Holidays
-\dontrun{
+# Holidays given a date range and country
+\donttest{
   hol <- date_feats(
     seq(Sys.Date() - 365, Sys.Date(), by = 1), 
     keep_originals = TRUE, 

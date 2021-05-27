@@ -1,7 +1,8 @@
 ####################################################################
 #' DALEX Explainer for H2O
 #' 
-#' DALEX function to create an explainer object
+#' DALEX helper function to create an \code{explainer} object using
+#' a \code{h2o} trained model.
 #' 
 #' @family Interpretability
 #' @param df Dataframe. Must contain all columns and predictions
@@ -11,7 +12,8 @@
 #' @return List; explainer. Containing the model, data, y, predict_function,
 #' y_hat, residuals, class, label, model_info, residual_function, and weights.
 #' @aliases dalex_explainer
-#' @examples 
+#' @examples
+#' # You must have \code{DALEX} library to use this auxiliary function:
 #' \dontrun{
 #' data(dft) # Titanic dataset
 #' 
@@ -156,8 +158,8 @@ dalex_residuals <- function(explainer) {
 ####################################################################
 #' DALEX Partial Dependency Plots (PDP)
 #' 
-#' DALEX function for creating Partial Dependency Plots and study
-#' variable's responses vs independent vector.
+#' DALEX auxiliary function for creating Partial Dependency Plots and
+#' study variable's responses vs independent vector.
 #' 
 #' @family Interpretability
 #' @param explainer Object. Result from \code{h2o_explainer} function.
@@ -165,7 +167,8 @@ dalex_residuals <- function(explainer) {
 #' @param force_class Character. If you wish to force a class on your 
 #' vars, which one do you need?
 #' @return List. Containing PDP results, plot and \code{vars} input.
-#' @examples 
+#' @examples
+#' # You must have \code{DALEX} library to use this auxiliary function:
 #' \dontrun{
 #' # Having an "explainer" object created with \code{h2o_explainer}:
 #' # For numerical variables

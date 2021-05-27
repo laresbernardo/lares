@@ -50,6 +50,7 @@ More info from the original developers and its code:
 }
 
 \examples{
+# You must have \code{youtube-dl} installed in your OS:
 \dontrun{
  # Download video from YouTube and convert to MP3
  get_mp3("https://www.youtube.com/watch?v=lrlKcCdVw9Q")
@@ -61,7 +62,7 @@ More info from the original developers and its code:
 Other Scrapper: 
 \code{\link{filesGD}()},
 \code{\link{holidays}()},
-\code{\link{ip_country}()},
+\code{\link{ip_data}()},
 \code{\link{readGS}()},
 \code{\link{splot_etf}()},
 \code{\link{stocks_hist}()},

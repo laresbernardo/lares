@@ -243,35 +243,43 @@ vector2text <- function(vector, sep = ", ", quotes = TRUE, and = "") {
 v2t <- vector2text
 
 ####################################################################
-#' Find country from a given IP
+#' Scrap data based on IP address
 #' 
-#' This function lets the user find a country from a given IP Address
+#' This function lets the user scrap https://db-ip.com/ given 
+#' IP address(es) to get their associated address type, ASN, ISP,
+#' organization, country, state or region, county, city, ZIP postal code,
+#' weather station, coordinates, Timezone, local time, languages, and currency.
 #' 
 #' @family Tools
 #' @family Scrapper
-#' @param ip Vector. Vector with all IP's we wish to search
-#' @return Boolean vector, same length as \code{ip}
+#' @param ip Vector. Vector with all IP's we wish to search.
+#' @param quiet Boolean. Do not show the loading \code{statusbar}?
+#' @return data.frame. Each row is an unique \code{ip} address,
+#' and columns will bee created for all the additional information found.
 #' @examples 
-#' \dontrun{
-#' ip_country(ip = myip())
-#' ip_country(ip = "163.114.132.0")
+#' \donttest{
+#' ip_data("163.114.132.0")
+#' ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
 #' }
 #' @export
-ip_country <- function(ip = myip()) {
-  
+ip_data <- function(ip = myip(), quiet = FALSE) {
   ip <- ip[!is.na(ip)]
   ip <- ip[is_ip(ip)]
-  
-  countries <- data.frame(ip = NULL, country = NULL)
+  ip <- unique(ip)
+  output <- data.frame()
   for (i in seq_along(ip)) {
-    message(paste("Searching for", ip[i]))
     url <- paste0("https://db-ip.com/", ip[i])
-    scrap <- read_html(url) %>% html_nodes('.card-body tr') %>% html_text()
-    country <- gsub("Country", "", trimws(scrap[grepl("Country", scrap)]))
-    result <- cbind(ip = ip[i], country = country)
-    countries <- rbind(countries, result)
+    scrap <- read_html(url) %>% html_table()
+    clean <- bind_rows(scrap[[1]], scrap[[3]])
+    row <- data.frame(t(clean[,2]))
+    colnames(row) <- clean$X1
+    row <- data.frame(id = ip[i], row)
+    output <- bind_rows(output, row)
+    if (length(ip) > 1 & !quiet) statusbar(i, length(ip), ip[i])
   } 
-  return(countries)
+  output <- cleanNames(output)
+  row.names(output) <- NULL
+  return(output)
 }
 
 
@@ -1468,29 +1476,36 @@ spread_list <- function(df, col, str = NULL, replace = TRUE) {
 ####################################################################
 #' Format a string text as markdown/HTML
 #' 
+#' Format any character string to HTML or markdown format. We 
+#' recommend using this format with the \code{ggtext::geom_richtext}
+#' function to format text in \code{ggplot2} objects.
+#' 
 #' @param text Character. Strings to format.
 #' @param color Character. Hex colour code.
 #' @param size Numeric. Text size.
 #' @param bold Boolean. Should the text be bold?
 #' @return String with format characters included.
 #' @examples 
+#' formatText("Text test", color = "#000000")
+#' formatText(c(123, 456), color = "orange", size = 120, bold = TRUE)
+#' 
+#' # If you want to use it with \code{ggtext}:
 #' \dontrun{
 #' col1 <- "grey"
 #' col2 <- "orange"
 #' pt <- data.frame(
 #'   label = paste0(
-#'     format_text(123, color = col2, size = 120, bold = TRUE), "<br/>",
-#'     format_text("of children had a", col1),"<br/>",
-#'     format_text("traditional stay-at-home mom", color = col2, bold = TRUE), "<br/>",
-#'     format_text(paste0("in 2012, compared to ", 321," in 1970"), color = col1)))
+#'     formatText(123, color = col2, size = 120, bold = TRUE), "<br/>",
+#'     formatText("of children had a", col1),"<br/>",
+#'     formatText("traditional stay-at-home mom", color = col2, bold = TRUE), "<br/>",
+#'     formatText(paste0("in 2012, compared to ", 321," in 1970"), color = col1)))
 #'   ggplot(pt, aes(x = 0, y = 0))  +
 #'   ggtext::geom_richtext(
 #'     aes(label = label), 
 #'     hjust = 0, 
 #'     label.color = NA, 
 #'     lineheight = 1.5) +
-#'   xlim(0, 0.01) +
-#'   theme_void()
+#'   xlim(0, 0.01) + theme_void()
 #' }
 #' @export
 formatText <- function(text, color = "black", size = 20, bold = FALSE) {

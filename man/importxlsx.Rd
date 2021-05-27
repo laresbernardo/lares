@@ -33,7 +33,7 @@ Other Tools:
 \code{\link{h2o_selectmodel}()},
 \code{\link{haveInternet}()},
 \code{\link{image_metadata}()},
-\code{\link{ip_country}()},
+\code{\link{ip_data}()},
 \code{\link{json2vector}()},
 \code{\link{listfiles}()},
 \code{\link{mailSend}()},

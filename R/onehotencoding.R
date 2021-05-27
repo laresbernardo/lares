@@ -267,8 +267,8 @@ ohse <- function(df,
 #' # Input as a vector or dataframe
 #' date_feats(df, keep_originals = TRUE) %>% head(10)
 #' 
-#' # Holidays
-#' \dontrun{
+#' # Holidays given a date range and country
+#' \donttest{
 #'   hol <- date_feats(
 #'     seq(Sys.Date() - 365, Sys.Date(), by = 1), 
 #'     keep_originals = TRUE, 
@@ -398,7 +398,7 @@ date_feats <- function(dates,
 #' holidays be imported?
 #' @return data.frame with holidays data for given \code{countries} and \code{years}.
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' holidays(countries = "Argentina") 
 #' holidays(countries = c("Argentina", "Venezuela"), years = c(2019, 2020))
 #' }
@@ -439,7 +439,7 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
              season = grepl("Season", holidays$Holiday.Type),
              hother = !grepl("National|Federal|Observance|Season", holidays$Holiday.Type)) %>%
       if (length(unique(countries)) > 1) { mutate(., country = combs$country[i]) } else .
-    results <- rbind(results, result)
+    results <- bind_rows(results, result)
   } 
   results <- results %>% 
     filter(!is.na(.data$holiday)) %>% 

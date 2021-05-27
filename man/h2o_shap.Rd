@@ -40,7 +40,7 @@ h2o models in which each row is an observation and each column a feature.
 Use \code{plot} method to visualize features importance and distributions.
 }
 \examples{
-\dontrun{
+\donttest{
 # Train a h2o_automl model
 model <- h2o_automl(dft, Survived, max_models = 1, target = TRUE,
                     ignore = c("Ticket", "Cabin", "PassengerId"),
@@ -57,7 +57,9 @@ SHAP_values <- h2o_shap(model)
 # Check SHAP results
 head(SHAP_values)
 
-# Plot SHAP values (feature importances)
+# You must have \code{ggbeeswarm} library to use this auxiliary function:
+\dontrun{
+# Plot SHAP values (feature importance)
 plot(SHAP_values)
 
 # Plot some of the variables (categorical)
@@ -65,6 +67,7 @@ shap_var(SHAP_values, Pclass)
 
 # Plot some of the variables (numerical)
 shap_var(SHAP_values, Fare)
+}
 }
 }
 \seealso{

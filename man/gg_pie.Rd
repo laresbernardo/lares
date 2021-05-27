@@ -5,6 +5,8 @@
 \title{Density plot for discrete and continuous values}
 \usage{
 gg_pie(df, var, table = FALSE, ...)
+
+gg_pie(df, var, table = FALSE, ...)
 }
 \arguments{
 \item{df}{Dataframe}
@@ -17,8 +19,12 @@ gg_pie(df, var, table = FALSE, ...)
 }
 \value{
 ggplot2 object
+
+ggplot2 object
 }
 \description{
+This function plots discrete and continuous values results
+
 This function plots discrete and continuous values results
 }
 \examples{
@@ -27,8 +33,27 @@ data(dft) # Titanic dataset
 gg_pie(dft, Survived)
 gg_pie(dft, Pclass, table = TRUE)
 gg_pie(dft, SibSp, table = TRUE, abc = TRUE)
+Sys.unsetenv("LARES_FONT") # Temporal
+data(dft) # Titanic dataset
+gg_pie(dft, Survived)
+gg_pie(dft, Pclass, table = TRUE)
+gg_pie(dft, SibSp, table = TRUE, abc = TRUE)
 }
 \seealso{
+Other Visualization: 
+\code{\link{distr}()},
+\code{\link{freqs_df}()},
+\code{\link{freqs_list}()},
+\code{\link{freqs_plot}()},
+\code{\link{freqs}()},
+\code{\link{gg_bars}()},
+\code{\link{noPlot}()},
+\code{\link{plot_chord}()},
+\code{\link{plot_survey}()},
+\code{\link{plot_timeline}()},
+\code{\link{theme_lares}()},
+\code{\link{tree_var}()}
+
 Other Visualization: 
 \code{\link{distr}()},
 \code{\link{freqs_df}()},

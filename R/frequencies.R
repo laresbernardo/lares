@@ -270,7 +270,7 @@ freqs <- function(df, ..., wt = NULL,
 #' @return Plot when \code{plot=TRUE} and data.frame with grouped frequency results
 #' when \code{plot=FALSE}.
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' data(dft) # Titanic dataset
 #' freqs_df(dft)
 #' freqs_df(dft, plot = TRUE)

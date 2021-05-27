@@ -38,7 +38,7 @@ Other Tools:
 \code{\link{haveInternet}()},
 \code{\link{image_metadata}()},
 \code{\link{importxlsx}()},
-\code{\link{ip_country}()},
+\code{\link{ip_data}()},
 \code{\link{listfiles}()},
 \code{\link{mailSend}()},
 \code{\link{msplit}()},

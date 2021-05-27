@@ -49,7 +49,7 @@ Other Scrapper:
 \code{\link{filesGD}()},
 \code{\link{get_mp3}()},
 \code{\link{holidays}()},
-\code{\link{ip_country}()},
+\code{\link{ip_data}()},
 \code{\link{readGS}()},
 \code{\link{stocks_hist}()},
 \code{\link{stocks_quote}()},

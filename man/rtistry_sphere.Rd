@@ -15,11 +15,4 @@ ggplot object
 \description{
 Generative Art: Sphere XmodY
 }
-\examples{
-\dontrun{
-rtistry_sphere(eye = c(0, -10000, 1))
-rtistry_sphere(pal = lares_pal("col")[c(1,3)])
-rtistry_sphere(eye = c(0, 0, 100000), var = 2)
-}
-}
 \concept{rtistry}

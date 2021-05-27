@@ -14,7 +14,7 @@
 #' @return data.frame. Result of fetching online data for \code{currency_pair}
 #' grouped by date.
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' # For today (or any one single date)
 #' get_currency("USD/COP", from = Sys.Date())
 #' # For multiple dates
