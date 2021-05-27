@@ -60,9 +60,6 @@ place to post your tiles.
 \donttest{
 # Automatic use of languages and scores
 Sys.setenv("LARES_LANG" = "es")
-
-grepl_letters(es_words$words, "_o_a")
-
 scrabble_words(tiles = "hola",
                free = 2,
                force_start = "h",

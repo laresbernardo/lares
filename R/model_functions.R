@@ -100,7 +100,8 @@
 #' r <- h2o_automl(dft, Pclass, ignore = c("Fare", "Cabin"), max_time = 30, plots = FALSE)
 #' 
 #' # Regression: Continuous Values
-#' r <- h2o_automl(dft, y = "Fare", ignore = c("Pclass"), exclude_algos = NULL)
+#' r <- h2o_automl(dft, y = "Fare", ignore = c("Pclass"), exclude_algos = NULL, quiet = TRUE)
+#' print(r)
 #' 
 #' # WITH PRE-DEFINED TRAIN/TEST DATAFRAMES
 #' splits <- msplit(dft, size = 0.8)
@@ -199,7 +200,7 @@ h2o_automl <- function(df, y = "tag",
   # RUN AUTOML
   if (!quiet) 
     message(sprintf(">>> Iterating until %s models or %s seconds...", max_models, max_time))
-  aml <- quiet(h2o.automl(
+  aml <- quiet_h2o(h2o.automl(
     x = colnames(df)[!colnames(df) %in% c("tag", ignore)],
     y = "tag",
     training_frame = quiet_h2o(as.h2o(train), quiet = TRUE),
