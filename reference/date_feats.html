@@ -214,49 +214,49 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
 <span class='co'># Input as a vector or dataframe</span>
 <span class='fu'>date_feats</span><span class='op'>(</span><span class='va'>df</span>, keep_originals <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 2 date/time columns: 'dates', 'times'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: All formats failed to parse. No formats found.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: argument 'replacement' has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: argument 'replacement' has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt;         dates dates_year dates_month dates_day dates_week dates_weekday
-#&gt; 1  2020-11-21       2020          11        21         47           Sat
-#&gt; 2  2020-06-09       2020           6         9         23           Tue
-#&gt; 3  2020-12-07       2020          12         7         49           Mon
-#&gt; 4  2021-03-28       2021           3        28         13           Sun
-#&gt; 5  2020-09-21       2020           9        21         38           Mon
-#&gt; 6  2021-03-21       2021           3        21         12           Sun
-#&gt; 7  2021-01-10       2021           1        10          2           Sun
-#&gt; 8  2021-01-25       2021           1        25          4           Mon
-#&gt; 9  2021-05-26       2021           5        26         21           Wed
-#&gt; 10 2020-10-26       2020          10        26         43           Mon
+#&gt; 1  2020-11-22       2020          11        22         47           Sun
+#&gt; 2  2020-06-10       2020           6        10         24           Wed
+#&gt; 3  2020-12-08       2020          12         8         49           Tue
+#&gt; 4  2021-03-29       2021           3        29         13           Mon
+#&gt; 5  2020-09-22       2020           9        22         38           Tue
+#&gt; 6  2021-03-22       2021           3        22         12           Mon
+#&gt; 7  2021-01-11       2021           1        11          2           Mon
+#&gt; 8  2021-01-26       2021           1        26          4           Tue
+#&gt; 9  2021-05-27       2021           5        27         21           Thu
+#&gt; 10 2020-10-27       2020          10        27         43           Tue
 #&gt;    dates_weekend dates_year_day               times times_year times_month
-#&gt; 1           TRUE            325 2021-03-18 04:23:50       2021           3
-#&gt; 2          FALSE            160 2021-02-12 10:16:11       2021           2
-#&gt; 3          FALSE            341 2021-04-13 00:21:17       2021           4
-#&gt; 4           TRUE             86 2021-04-06 18:28:29       2021           4
-#&gt; 5          FALSE            264 2021-03-02 11:12:22       2021           3
-#&gt; 6           TRUE             79 2021-05-01 04:59:21       2021           5
-#&gt; 7           TRUE              9 2021-02-03 09:12:36       2021           2
-#&gt; 8          FALSE             24 2021-03-24 14:47:09       2021           3
-#&gt; 9          FALSE            145 2021-05-07 22:15:06       2021           5
-#&gt; 10         FALSE            299 2021-05-27 12:18:51       2021           5
+#&gt; 1           TRUE            326 2021-03-19 08:23:55       2021           3
+#&gt; 2          FALSE            161 2021-02-13 14:16:16       2021           2
+#&gt; 3          FALSE            342 2021-04-14 04:21:22       2021           4
+#&gt; 4          FALSE             87 2021-04-07 22:28:34       2021           4
+#&gt; 5          FALSE            265 2021-03-03 15:12:27       2021           3
+#&gt; 6          FALSE             80 2021-05-02 08:59:26       2021           5
+#&gt; 7          FALSE             10 2021-02-04 13:12:41       2021           2
+#&gt; 8          FALSE             25 2021-03-25 18:47:14       2021           3
+#&gt; 9          FALSE            146 2021-05-09 02:15:11       2021           5
+#&gt; 10         FALSE            300 2021-05-28 16:18:56       2021           5
 #&gt;    times_day times_week times_weekday times_weekend times_year_day times_hour
-#&gt; 1         18         11           Thu         FALSE             76          4
-#&gt; 2         12          7           Fri         FALSE             42         10
-#&gt; 3         13         15           Tue         FALSE            102          0
-#&gt; 4          6         14           Tue         FALSE             95         18
-#&gt; 5          2          9           Tue         FALSE             60         11
-#&gt; 6          1         18           Sat          TRUE            120          4
-#&gt; 7          3          5           Wed         FALSE             33          9
-#&gt; 8         24         12           Wed         FALSE             82         14
-#&gt; 9          7         19           Fri         FALSE            126         22
-#&gt; 10        27         21           Thu         FALSE            146         12
+#&gt; 1         19         12           Fri         FALSE             77          8
+#&gt; 2         13          7           Sat          TRUE             43         14
+#&gt; 3         14         15           Wed         FALSE            103          4
+#&gt; 4          7         14           Wed         FALSE             96         22
+#&gt; 5          3          9           Wed         FALSE             61         15
+#&gt; 6          2         18           Sun          TRUE            121          8
+#&gt; 7          4          5           Thu         FALSE             34         13
+#&gt; 8         25         12           Thu         FALSE             83         18
+#&gt; 9          9         19           Sun          TRUE            128          2
+#&gt; 10        28         22           Fri         FALSE            147         16
 #&gt;    times_minute times_minutes times_second
-#&gt; 1            23           263           50
-#&gt; 2            16           616           11
-#&gt; 3            21            21           17
-#&gt; 4            28          1108           29
-#&gt; 5            12           672           22
-#&gt; 6            59           299           21
-#&gt; 7            12           552           36
-#&gt; 8            47           887            9
-#&gt; 9            15          1335            6
-#&gt; 10           18           738           51</div><div class='input'>
+#&gt; 1            23           503           55
+#&gt; 2            16           856           16
+#&gt; 3            21           261           22
+#&gt; 4            28          1348           34
+#&gt; 5            12           912           27
+#&gt; 6            59           539           26
+#&gt; 7            12           792           41
+#&gt; 8            47          1127           14
+#&gt; 9            15           135           11
+#&gt; 10           18           978           56</div><div class='input'>
 <span class='co'># Holidays given a date range and country</span>
 <span class='co'># \donttest{</span>
   <span class='va'>hol</span> <span class='op'>&lt;-</span> <span class='fu'>date_feats</span><span class='op'>(</span>
@@ -266,33 +266,33 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
     country <span class='op'>=</span> <span class='st'>"Colombia"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 1 date/time columns: 'df'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Extracting Colombia's holidays for 2020</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Extracting Colombia's holidays for 2021</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: All formats failed to parse. No formats found.</span></div><div class='input'>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>hol</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>hol</span><span class='op'>$</span><span class='va'>holidayname</span><span class='op'>)</span>,<span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    year month day week weekday weekend year_day
-#&gt; 16 2020     6  11   24     Thu   FALSE      162
-#&gt; 20 2020     6  15   24     Mon   FALSE      166
-#&gt; 25 2020     6  20   25     Sat    TRUE      171
-#&gt; 26 2020     6  21   25     Sun    TRUE      172
-#&gt; 27 2020     6  22   25     Mon   FALSE      173
-#&gt; 34 2020     6  29   26     Mon   FALSE      180
+#&gt; 15 2020     6  11   24     Thu   FALSE      162
+#&gt; 19 2020     6  15   24     Mon   FALSE      166
+#&gt; 24 2020     6  20   25     Sat    TRUE      171
+#&gt; 25 2020     6  21   25     Sun    TRUE      172
+#&gt; 26 2020     6  22   25     Mon   FALSE      173
+#&gt; 33 2020     6  29   26     Mon   FALSE      180
 #&gt;                            holidayname      holidaytype holiday_national
-#&gt; 16                      Corpus Christi       Observance            FALSE
-#&gt; 20                      Corpus Christi National holiday             TRUE
-#&gt; 25                       June Solstice           Season            FALSE
-#&gt; 26                        Father's Day       Observance            FALSE
-#&gt; 27                        Sacred Heart National holiday             TRUE
-#&gt; 34 Feast of Saint Peter and Saint Paul National holiday             TRUE
+#&gt; 15                      Corpus Christi       Observance            FALSE
+#&gt; 19                      Corpus Christi National holiday             TRUE
+#&gt; 24                       June Solstice           Season            FALSE
+#&gt; 25                        Father's Day       Observance            FALSE
+#&gt; 26                        Sacred Heart National holiday             TRUE
+#&gt; 33 Feast of Saint Peter and Saint Paul National holiday             TRUE
 #&gt;    holiday_observance holiday_bank holiday_nonwork holiday_season
-#&gt; 16               TRUE        FALSE           FALSE          FALSE
-#&gt; 20              FALSE        FALSE           FALSE          FALSE
-#&gt; 25              FALSE        FALSE           FALSE           TRUE
-#&gt; 26               TRUE        FALSE           FALSE          FALSE
-#&gt; 27              FALSE        FALSE           FALSE          FALSE
-#&gt; 34              FALSE        FALSE           FALSE          FALSE
+#&gt; 15               TRUE        FALSE           FALSE          FALSE
+#&gt; 19              FALSE        FALSE           FALSE          FALSE
+#&gt; 24              FALSE        FALSE           FALSE           TRUE
+#&gt; 25               TRUE        FALSE           FALSE          FALSE
+#&gt; 26              FALSE        FALSE           FALSE          FALSE
+#&gt; 33              FALSE        FALSE           FALSE          FALSE
 #&gt;    holiday_hother
-#&gt; 16          FALSE
-#&gt; 20          FALSE
+#&gt; 15          FALSE
+#&gt; 19          FALSE
+#&gt; 24          FALSE
 #&gt; 25          FALSE
 #&gt; 26          FALSE
-#&gt; 27          FALSE
-#&gt; 34          FALSE</div><div class='input'><span class='co'># }</span>
+#&gt; 33          FALSE</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
