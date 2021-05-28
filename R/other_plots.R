@@ -184,7 +184,7 @@ gg_pie <- function(df, var, table = FALSE, ...){
 #' @param pal Vector. Colour pallete. Order matters.
 #' @return chordDiagram object
 #' @examples 
-#' # You must have \code{circlize} library to use this auxiliary function:
+#' # You must have "circlize" library to use this auxiliary function:
 #' \dontrun{
 #' df <- data.frame(from = c(1, 1, 2, 3, 4, 1, 6), to = c(4, 4, 4, 2, 2, NA, NA))
 #' plot_chord(df$from, df$to)
@@ -669,7 +669,7 @@ gg_pie <- function(df, var, table = FALSE, ...){
 #' @param pal Vector. Colour pallete. Order matters.
 #' @return chordDiagram object
 #' @examples 
-#' # You must have \code{circlize} library to use this auxiliary function:
+#' # You must have "circlize" library to use this auxiliary function:
 #' \dontrun{
 #' df <- data.frame(from = c(1, 1, 2, 3, 4, 1, 6), to = c(4, 4, 4, 2, 2, NA, NA))
 #' plot_chord(df$from, df$to)

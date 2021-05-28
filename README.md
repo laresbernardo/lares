@@ -27,7 +27,7 @@ remotes::install_github("laresbernardo/lares", dependencies = TRUE)
 
 - DataScience+: [Visualizations for Regression Models Results](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models)
 
-- DataScience+: [AutoML and DALEX for Dataset Understanding](https://datascienceplus.com/understanding-titanic-dataset-with-h2os-automl-dalex-and-lares-library)
+- DataScience+: [AutoML and DALEX for Dataset Understanding](https://datascienceplus.com/understanding-titanic-dataset-with-h2os-automl-dalex-and-lares-library/)
 
 - DataScience+: [Find Insights with Ranked Cross-Correlations](https://datascienceplus.com/find-insights-with-ranked-cross-correlations/)
 

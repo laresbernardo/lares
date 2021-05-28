@@ -13,7 +13,7 @@
 #' y_hat, residuals, class, label, model_info, residual_function, and weights.
 #' @aliases dalex_explainer
 #' @examples
-#' # You must have \code{DALEX} library to use this auxiliary function:
+#' # You must have "DALEX" library to use this auxiliary function:
 #' \dontrun{
 #' data(dft) # Titanic dataset
 #' 
@@ -168,7 +168,7 @@ dalex_residuals <- function(explainer) {
 #' vars, which one do you need?
 #' @return List. Containing PDP results, plot and \code{vars} input.
 #' @examples
-#' # You must have \code{DALEX} library to use this auxiliary function:
+#' # You must have "DALEX" library to use this auxiliary function:
 #' \dontrun{
 #' # Having an "explainer" object created with \code{h2o_explainer}:
 #' # For numerical variables

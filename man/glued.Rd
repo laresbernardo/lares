@@ -16,7 +16,7 @@ evaluated from left to right. If \code{.x} is an environment, the expressions ar
 evaluated in that environment and \code{.envir} is ignored.}
 }
 \value{
-Same as input.
+Same as input but transformed (glued).
 }
 \description{
 Format and interpolate a string using a \code{glue} wrapper. Allows

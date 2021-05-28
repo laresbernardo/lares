@@ -482,7 +482,7 @@ topics_rake <- function(text, file = "english-ewt-ud-2.4-190531.udpipe", lang = 
 #' @param ... Additional parameters passed to \code{remove_stopwords}.
 #' @return data.frame with ngrams and counters, sorted by frequency.
 #' @examples
-#' # You must have \code{tidytext} library to use this auxiliary function: 
+#' # You must have "tidytext" library to use this auxiliary function: 
 #' \dontrun{
 #' women <- read.csv("https://bit.ly/3mXJOOi")
 #' x <- women$description

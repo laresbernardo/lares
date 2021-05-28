@@ -57,7 +57,7 @@ SHAP_values <- h2o_shap(model)
 # Check SHAP results
 head(SHAP_values)
 
-# You must have \code{ggbeeswarm} library to use this auxiliary function:
+# You must have "ggbeeswarm" library to use this auxiliary function:
 \dontrun{
 # Plot SHAP values (feature importance)
 plot(SHAP_values)

@@ -25,7 +25,7 @@ DALEX helper function to create an \code{explainer} object using
 a \code{h2o} trained model.
 }
 \examples{
-# You must have \code{DALEX} library to use this auxiliary function:
+# You must have "DALEX" library to use this auxiliary function:
 \dontrun{
 data(dft) # Titanic dataset
 

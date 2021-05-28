@@ -50,7 +50,7 @@ More info from the original developers and its code:
 }
 
 \examples{
-# You must have \code{youtube-dl} installed in your OS:
+# You must have "youtube-dl" installed in your OS:
 \dontrun{
  # Download video from YouTube and convert to MP3
  get_mp3("https://www.youtube.com/watch?v=lrlKcCdVw9Q")

@@ -85,7 +85,7 @@ plot(clusters$correlations)
 plot(clusters$PCA$plotVarExp)
 plot(clusters$PCA$plot_1_2)
 
-# You must have \code{ggforce} library to use this auxiliary function:
+# You must have "ggforce" library to use this auxiliary function:
 # 3D interactive plot
 \dontrun{clusters$PCA$plot_1_2_3}
 }

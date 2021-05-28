@@ -1526,7 +1526,7 @@ formatText <- function(text, color = "black", size = 20, bold = FALSE) {
 #' internal (created within \code{glued}) and external (environment) objects.
 #' 
 #' @inheritParams stringr::str_glue
-#' @return Same as input.
+#' @return Same as input but transformed (glued).
 #' @examples 
 #' name <- "Bernardo"
 #' age <- 29

@@ -27,7 +27,7 @@ Build out n-grams for multiple text inputs and keep the n most frequent
 combinations.
 }
 \examples{
-# You must have \code{tidytext} library to use this auxiliary function: 
+# You must have "tidytext" library to use this auxiliary function: 
 \dontrun{
 women <- read.csv("https://bit.ly/3mXJOOi")
 x <- women$description

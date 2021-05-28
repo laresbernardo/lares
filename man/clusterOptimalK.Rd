@@ -40,7 +40,7 @@ WSS, Silhouette and Gap Statistic. See \code{factoextra::fviz_nbclust}
 for more.
 }
 \examples{
-# You must have \code{factoextra} library to use this auxiliary function:
+# You must have "factoextra" library to use this auxiliary function:
 \dontrun{
 data("iris")
 df <- subset(iris, select = c(-Species))
