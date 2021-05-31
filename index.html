@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.10.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">5.0.0</span>
       </span>
     </div>
 
@@ -76,24 +76,22 @@
 <div id="r-package-for-analytics-and-machine-learning" class="section level3">
 <h3 class="hasAnchor">
 <a href="#r-package-for-analytics-and-machine-learning" class="anchor"></a>R Package for Analytics and Machine Learning</h3>
-</div>
-<div id="r-cmd-check-documentation-codefactor-saythanks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#r-cmd-check-documentation-codefactor-saythanks" class="anchor"></a><a href="https://github.com/laresbernardo/lares/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg?branch=master" alt="R-CMD-check"></a> <a href="https://laresbernardo.github.io/lares/reference/index.html"><img src="https://github.com/laresbernardo/lares/workflows/documentation/badge.svg" alt="documentation"></a> <a href="https://www.codefactor.io/repository/github/laresbernardo/lares"><img src="https://www.codefactor.io/repository/github/laresbernardo/lares/badge" alt="CodeFactor"></a> <a href="https://www.linkedin.com/in/laresbernardo"><img src="https://img.shields.io/badge/say-hi-blue.svg" alt="saythanks"></a>
-</h2>
+<p><a href="https://cran.r-project.org/package=lares"><img src="https://www.r-pkg.org/badges/version/lares" alt="CRAN"></a> <a href="https://CRAN.R-project.org/package=lares">https://www.r-pkg.org/badges/version/lares</a> <a href="https://github.com/laresbernardo/lares/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg?branch=master" alt="R-CMD-check"></a> <a href="https://laresbernardo.github.io/lares/reference/index.html"><img src="https://github.com/laresbernardo/lares/workflows/documentation/badge.svg" alt="documentation"></a> <a href="https://www.codefactor.io/repository/github/laresbernardo/lares"><img src="https://www.codefactor.io/repository/github/laresbernardo/lares/badge" alt="CodeFactor"></a> <a href="https://www.linkedin.com/in/laresbernardo"><img src="https://img.shields.io/badge/say-hi-blue.svg" alt="saythanks"></a> —-</p>
 <p>R library built to automate, improve, and speed everyday <strong>Analysis and Machine Learning</strong> tasks. With a wide variety of family functions like Machine Learning, data cleaning and procesing, EDA, Investment, NLP, Queries, Scrappers, API interactions, <code>lares</code> helps the analyst or data scientist get quick, reproducible, robust results, without the need of repetitive coding nor extensive programming skills. Feel free to install, use, and/or comment on any of the code and functionalities. And if you are also colourblind, be sure to check the the colour palettes!</p>
 <p>Don’t hesitate to contact me, and please when you do, let me know where did you first hear from the library and which family of functions you are most interested in.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<pre class="{r}"><code><a href="https://remotes.r-lib.org/reference/install_github.html"># If you don't have remotes yet, run: install.packages('remotes')
-remotes::install_github("laresbernardo/lares")
+<pre class="{r}"><code><a href="https://rdrr.io/r/utils/install.packages.html">## CRAN VERSION
+install.packages("lares")
 
+## DEV VERSION
+# If you don't have remotes yet, run: install.packages('remotes')
+remotes::install_github("laresbernardo/lares")
 # Full installation with recommended dependencies (takes more time)
 remotes::install_github("laresbernardo/lares", dependencies = TRUE)</a></code></pre>
-<p><strong>Windows users</strong>: you MAY have to install <code>RTools</code> before running the above code. Download it <a href="https://cran.r-project.org/bin/windows/Rtools/">here</a>.</p>
-<p><strong>CRAN NOTE</strong>: I do NOT have plans to submit the library to CRAN, eventhough I’m a huge fan and it passes all its quality tests. I see <code>lares</code> more of an everyday useful and shareble <em>package</em> rather than a “specialized for a specific task” <em>library</em>. It has too many various kinds of functions, from NLP to querying APIs, plotting Machine Learning results to market stocks and portfolio reports. I gladly share my code with ouR community and encourage you to use/comment/share it, but I do think that CRAN is not aiming for this kind of libraries in their repertoire.</p>
+<p><strong>Windows users</strong>: you MAY have to install <code>RTools</code> before installing the dev version. Download it <a href="https://cran.r-project.org/bin/windows/Rtools/">here</a>.</p>
 </div>
 <div id="see-the-library-in-action" class="section level2">
 <h2 class="hasAnchor">
@@ -117,7 +115,7 @@ remotes::install_github("laresbernardo/lares", dependencies = TRUE)</a></code></
 <div id="insights-while-understanding" class="section level3">
 <h3 class="hasAnchor">
 <a href="#insights-while-understanding" class="anchor"></a>Insights While Understanding</h3>
-<p>To get insights and value out of your dataset, first you need to understand its structure, types of data, empty values, interactions between variables… <code><a href="reference/corr_cross.html">corr_cross()</a></code> and <code><a href="reference/freqs.html">freqs()</a></code> are here to give you just that! They show a wide persepective of your dataset content, correlations, and frequencies. Additionally, with the <code><a href="reference/missingness.html">missingness()</a></code> function to detect all missing values and <code><a href="reference/df_str.html">df_str()</a></code> to break down you data frame’s structure, you will be ready to squeeze valuable insights out of your data. <img src="reference/figures/titanic_df.png?raw=true" alt="Cross-Correlations and Frequencies (lares)"></p>
+<p>To get insights and value out of your dataset, first you need to understand its structure, types of data, empty values, interactions between variables… <code><a href="reference/corr_cross.html">corr_cross()</a></code> and <code><a href="reference/freqs.html">freqs()</a></code> are here to give you just that! They show a wide perspective of your dataset content, correlations, and frequencies. Additionally, with the <code><a href="reference/missingness.html">missingness()</a></code> function to detect all missing values and <code><a href="reference/df_str.html">df_str()</a></code> to break down you data frame’s structure, you will be ready to squeeze valuable insights out of your data. If you’d like to go deeper, try the <code><a href="reference/x2y.html">x2y()</a></code>, <code><a href="reference/lasso_vars.html">lasso_vars()</a></code> and <code><a href="reference/tree_var.html">tree_var()</a></code> to use Machine Learning to detect patterns, predictive powers, and variables importance. <img src="reference/figures/titanic_df.png?raw=true" alt="Cross-Correlations and Frequencies (lares)"></p>
 </div>
 <div id="kings-of-data-mining" class="section level3">
 <h3 class="hasAnchor">
@@ -133,7 +131,7 @@ remotes::install_github("laresbernardo/lares", dependencies = TRUE)</a></code></
 <div id="getting-further-help" class="section level3">
 <h3 class="hasAnchor">
 <a href="#getting-further-help" class="anchor"></a>Getting further help</h3>
-<p>If you need help with any of the functions when using RStudio, use the <code><a href="https://rdrr.io/r/utils/Question.html">?</a></code> function (i.e. <code>?lares::function</code>) and the <strong>Help</strong> tab will display a short explanation on each function and its parameters. You might also be interested in the <a href="https://laresbernardo.github.io/lares/reference/index.html">Online Official Documentation</a> to check all functions and parameters.</p>
+<p>If you need help with any of the functions when using RStudio, use the <code><a href="https://rdrr.io/r/utils/Question.html">?</a></code> function (i.e. <code>?lares::function</code>) and the <strong>Help</strong> tab will display a short explanation on each function and its parameters. You might also be interested in the <a href="https://laresbernardo.github.io/lares/reference/index.html">online documentation</a> to check all functions and parameters.</p>
 <p>If you encounter a bug, please share with me a reproducible example on <a href="https://github.com/laresbernardo/lares/issues">Github issues</a> and I’ll take care of it. For inquiries, and other matters, you can <a href="https://www.linkedin.com/in/laresbernardo/">LinkedIn me</a> anytime!</p>
 </div>
 </div>
@@ -144,6 +142,8 @@ remotes::install_github("laresbernardo/lares", dependencies = TRUE)</a></code></
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=lares">https://​cloud.r-project.org/​package=lares</a>
+</li>
 <li>Browse source code at <br><a href="https://github.com/laresbernardo/lares/">https://​github.com/​laresbernardo/​lares/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/laresbernardo/lares/issues">https://​github.com/​laresbernardo/​lares/​issues</a>
