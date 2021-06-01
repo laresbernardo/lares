@@ -56,6 +56,12 @@ check_opts <- function(inputs, opts,
 #' @export
 check_attr <- function(object, attr = "type", check = NULL, stop = TRUE) {
   if (is.null(check)) stop("You must set a valid check input")
+  if (is.null(attr)) {
+    attrs <- attributes(object)
+    nattrs <- length(attrs)
+    if (nattrs > 0) stop("Your objct has no attributes to be checked")
+    else stop("Your attr input should be any of: ", v2t(attrs))
+  }
   aux <- attr(object, attr)
   if (is.null(aux)) aux <- "Noclass"
   if (aux != check) {
