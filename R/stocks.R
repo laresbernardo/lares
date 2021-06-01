@@ -994,9 +994,12 @@ filter_window <- function(df, window) {
 #' current working directory will be used. If mail sent, file will be erased
 #' @param mail Boolean. Do you want to send an email with the report attached? 
 #' If not, an HTML file will be created in dir
+#' @param attachment Boolean. Create and add report as attachment if
+#' \code{mail=TRUE}? If not, no report will be rendered and only tabulated
+#' summaries will be included on email's body.
 #' @param to Character. Email to send the report to
 #' @param sectors Boolean. Return sectors segmentation for ETFs?
-#' @param keep Boolean. Keep HTML file when sended by email?
+#' @param keep Boolean. Keep HTML file when sent by email?
 #' @param creds Character. Credential's user (see \code{get_creds()}) for 
 #' sending mail and Dropbox interaction.
 #' @return Invisible list. Aggregated results and plots.
@@ -1009,7 +1012,8 @@ filter_window <- function(df, window) {
 stocks_report <- function(data = NA,
                           keep_old = TRUE,
                           dir = NA,
-                          mail = FALSE, 
+                          mail = FALSE,
+                          attachment = TRUE,
                           to = "laresbernardo@gmail.com",
                           sectors = FALSE,
                           keep = FALSE,
@@ -1031,7 +1035,7 @@ stocks_report <- function(data = NA,
   if (is.na(dir)) dir <- getwd()
   
   # Summary as tables
-  summary_df1 <- data$stocks %>%
+  data$summary_df1 <- data$stocks %>%
     filter(.data$Date == max(.data$Date), .data$CumQuant > 0) %>%
     mutate(Change = sprintf(
       "%s (%s)", 
@@ -1042,7 +1046,7 @@ stocks_report <- function(data = NA,
            .data$CumQuant, .data$CumValue, .data$wt) %>%
     rename("Abs.Change" = .data$DifUSD, "Quant" = .data$CumQuant,
            "Total Value" = .data$CumValue, "Weight [%]" = .data$wt)
-  summary_df2 <- data$portfolio %>%
+  data$summary_df2 <- data$portfolio %>%
     filter(.data$Date == max(.data$Date)) %>%
     mutate(DifP = round(100*.data$DifUSD/.data$CumValue, 2)) %>%
     mutate_if(is.numeric, function(x) formatNum(x, 2, signif = 6)) %>%
@@ -1057,40 +1061,41 @@ stocks_report <- function(data = NA,
   
   # Can be more accurate with names but works for me!
   params <- list(
-    summary_df1 = summary_df1,
-    summary_df2 = summary_df2,
+    summary_df1 = data$summary_df1,
+    summary_df2 = data$summary_df2,
     plots_fixed = data[["plots_fixed"]],
     plots_relative = data[["plots_relative"]])
-  #saveRDS(params, "inst/docs/params.RDS")
   
-  message(">>> Rendering HTML report...")
-  html_file <- "stocksReport.html"
-  render(system.file("docs", "stocksReport.Rmd", package = "lares"), 
-         output_file = html_file,
-         output_dir = dir,
-         params = params,
-         envir = new.env(parent = globalenv()),
-         quiet = TRUE)  
-  message("HTML report created succesfully!")
+  if (attachment) {
+    message(">>> Rendering HTML report...")
+    html_file <- "stocksReport.html"
+    render(system.file("docs", "stocksReport.Rmd", package = "lares"), 
+           output_file = html_file,
+           output_dir = dir,
+           params = params,
+           envir = new.env(parent = globalenv()),
+           quiet = TRUE)  
+    message("HTML report created succesfully!") 
+  }
   
   if (mail) {
+    try_require("knitr")
     subject <- sprintf(
       "Report: %s | %s (%s)", max(data$portfolio$Date),
-      paste0(summary_df2$Value[summary_df2$Metric == "DifUSD"]),
-      paste0(summary_df2$Value[summary_df2$Metric == "DifP"], "%"))
-    try_require("knitr")
+      paste0(data$summary_df2$Value[data$summary_df2$Metric == "DifUSD"]),
+      paste0(data$summary_df2$Value[data$summary_df2$Metric == "DifP"], "%"))
     html_body <- paste0(
       "<p>Stocks Summary:</p>",
-      kable(summary_df1, align = "lrcrrrr", row.names = TRUE,
+      kable(data$summary_df1, align = "lrcrrrr", row.names = TRUE,
             digits = c(0, 2, 0, 2, 0, 0, 1), format = "html"),
       "<p>Portfolio Status:</p>",
-      kable(summary_df2, align = "lr", row.names = FALSE, format = "html"))
+      kable(data$summary_df2, align = "lr", row.names = FALSE, format = "html"))
     
     message(">>> Sending email...")
     mailSend(to = to,
              subject = subject,
              html = html_body,
-             attachment = html_file, 
+             attachment = if (attachment) html_file else NULL,
              creds = creds,
              quiet = FALSE)
     if (!keep) invisible(file.remove(html_file))

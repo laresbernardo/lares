@@ -9,6 +9,7 @@ stocks_report(
   keep_old = TRUE,
   dir = NA,
   mail = FALSE,
+  attachment = TRUE,
   to = "laresbernardo@gmail.com",
   sectors = FALSE,
   keep = FALSE,
@@ -28,11 +29,15 @@ current working directory will be used. If mail sent, file will be erased}
 \item{mail}{Boolean. Do you want to send an email with the report attached? 
 If not, an HTML file will be created in dir}
 
+\item{attachment}{Boolean. Create and add report as attachment if
+\code{mail=TRUE}? If not, no report will be rendered and only tabulated
+summaries will be included on email's body.}
+
 \item{to}{Character. Email to send the report to}
 
 \item{sectors}{Boolean. Return sectors segmentation for ETFs?}
 
-\item{keep}{Boolean. Keep HTML file when sended by email?}
+\item{keep}{Boolean. Keep HTML file when sent by email?}
 
 \item{creds}{Character. Credential's user (see \code{get_creds()}) for 
 sending mail and Dropbox interaction.}

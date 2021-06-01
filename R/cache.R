@@ -30,7 +30,8 @@ cache_write <- function(data,
   if (is.null(getOption("LARES_CACHE_DIR")))
     cache_dir <- tempdir()
   base <- paste(base, collapse = ".")
-  base <- paste0("lares_cache_", base)
+  if (left(base, 12) != "lares_cache_")
+    base <- paste0("lares_cache_", base)
   file <- sprintf("%s/%s.RDS", cache_dir, base)
   if (nchar(file) >= 252)
     stop("Your file name can't contain more than 250 characters.")
@@ -59,7 +60,8 @@ cache_read <- function(base,
                        ask = FALSE,
                        quiet = FALSE) {
   base <- paste(base, collapse = ".")
-  base <- paste0("lares_cache_", base)
+  if (left(base, 12) != "lares_cache_")
+    base <- paste0("lares_cache_", base)
   exists <- cache_exists(base, cache_dir)
   if (exists) {
     file <- attr(exists, "filename")
@@ -102,10 +104,15 @@ cache_exists <- function(base = NULL,
 #' @rdname cache_write
 #' @return \code{cache_clear}. Invisible vector containing cache file names removed.
 #' @export
-cache_clear <- function(cache_dir = getOption("LARES_CACHE_DIR")) {
+cache_clear <- function(cache_dir = getOption("LARES_CACHE_DIR"), quiet = FALSE) {
+  if (is.null(cache_dir)) cache_dir <- tempdir()
   files <- list.files(cache_dir)
-  caches <- files[grepl("lares_cache", files)]
+  caches <- startsWith(files, "lares_cache_")
   invisible(file.remove(sprintf("%s/%s", cache_dir, caches)))
-  message(paste("Removed", length(caches), "cache files succesfully!"))
+  if (!quiet) {
+    if (length(caches) > 0) {
+      message(paste("Removed", length(caches), "cache files succesfully!"))
+    } else message("No cache files available to be removed.") 
+  }
   return(invisible(caches))
 }

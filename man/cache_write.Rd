@@ -28,7 +28,7 @@ cache_exists(
   filename = NULL
 )
 
-cache_clear(cache_dir = getOption("LARES_CACHE_DIR"))
+cache_clear(cache_dir = getOption("LARES_CACHE_DIR"), quiet = FALSE)
 }
 \arguments{
 \item{data}{Object}

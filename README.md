@@ -45,6 +45,7 @@ remotes::install_github("laresbernardo/lares", dependencies = TRUE)
 
 ### Insights While Understanding
 To get insights and value out of your dataset, first you need to understand its structure, types of data, empty values, interactions between variables... `corr_cross()` and `freqs()` are here to give you just that! They show a wide perspective of your dataset content, correlations, and frequencies. Additionally, with the `missingness()` function to detect all missing values and `df_str()` to break down you data frame's structure, you will be ready to squeeze valuable insights out of your data. If you'd like to go deeper, try the `x2y()`, `lasso_vars()` and `tree_var()` to use Machine Learning to detect patterns, predictive powers, and variables importance.
+
 ![Cross-Correlations and Frequencies (lares)](man/figures/titanic_df.png?raw=true)
 
 ### Kings of Data Mining

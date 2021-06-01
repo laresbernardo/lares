@@ -7,23 +7,23 @@
 mailSend(
   from = "RMail <laresbernardo@gmail.com>",
   to = "laresbernardo@gmail.com",
-  cc = NA,
-  bcc = NA,
+  cc = NULL,
+  bcc = NULL,
   subject = "Mail from R",
   text = " \\n",
-  html = NA,
-  attachment = NA,
+  html = NULL,
+  attachment = NULL,
   service = "mailgun",
-  creds = NA,
+  creds = NULL,
   quiet = FALSE
 )
 }
 \arguments{
 \item{from, to, cc, bcc}{Character. Emails}
 
-\item{subject}{Character. Subject for the email}
+\item{subject}{Character. Subject for the email.}
 
-\item{text, html}{Character. Text or HTML to send in the body}
+\item{text, html}{Character. Text or HTML to send in the body.}
 
 \item{attachment}{Character, plot or data.frame. Will send the file, 
 plot as PNG or data.frame as CSV, respectively.}
@@ -31,7 +31,7 @@ plot as PNG or data.frame as CSV, respectively.}
 \item{service}{Character. Service platform to search on \code{creds}.}
 
 \item{creds}{Character. Credential's user (see \code{get_creds()}).
-Must contain: url (POST address), api (api key)}
+Must contain: url (POST address), api (API key).}
 
 \item{quiet}{Boolean. Keep quite or display messages?}
 }
@@ -41,6 +41,16 @@ No return value, called for side effects.
 \description{
 This function lets the user send Emails with Attachments using MailGun's
 API service.
+}
+\examples{
+\dontrun{
+myPlot <- noPlot("My plot")
+mailSend(from = "BLV <myuser@mail.com>",
+         to = "youruser@mail.com",
+         cc = "myuser@mail.com",
+         subject = paste("Daily report:", Sys.Date()),
+         attachment = myPlot)
+}
 }
 \seealso{
 Other Tools: 
