@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Update the library — updateLares • lares</title>
+<title>Update the library (dev or CRAN version) — updateLares • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Update the library — updateLares" />
-<meta property="og:description" content="This function lets the user update from repository or local source." />
+<meta property="og:title" content="Update the library (dev or CRAN version) — updateLares" />
+<meta property="og:description" content="This auxiliary function lets the user update lares to latest
+CRAN or developer version." />
 
 
 
@@ -108,23 +109,28 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Update the library</h1>
+    <h1>Update the library (dev or CRAN version)</h1>
     <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/update.R'><code>R/update.R</code></a></small>
     <div class="hidden name"><code>updateLares.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user update from repository or local source.</p>
+    <p>This auxiliary function lets the user update <code>lares</code> to latest
+CRAN or developer version.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>updateLares</span><span class='op'>(</span>force <span class='op'>=</span> <span class='cn'>FALSE</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span>, local <span class='op'>=</span> <span class='cn'>FALSE</span>, fb <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>updateLares</span><span class='op'>(</span>force <span class='op'>=</span> <span class='cn'>FALSE</span>, dev <span class='op'>=</span> <span class='cn'>TRUE</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span>, local <span class='op'>=</span> <span class='cn'>FALSE</span>, fb <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>force</th>
-      <td><p>Boolean. Force install</p></td>
+      <td><p>Boolean. Force install.</p></td>
+    </tr>
+    <tr>
+      <th>dev</th>
+      <td><p>Boolean. Developer version (Github)? If not, CRAN version.</p></td>
     </tr>
     <tr>
       <th>all</th>
@@ -132,11 +138,11 @@
     </tr>
     <tr>
       <th>local</th>
-      <td><p>Boolean. Install package with local files? (or Github repo)</p></td>
+      <td><p>Boolean. Install package with local files? (or Github repo).</p></td>
     </tr>
     <tr>
       <th>fb</th>
-      <td><p>Boolean. From FB instance? Personal use</p></td>
+      <td><p>Boolean. From FB instance? Personal internal use.</p></td>
     </tr>
     </table>
 
