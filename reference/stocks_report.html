@@ -124,6 +124,7 @@ plots and send it to an email with the HTML report attached</p>
   keep_old <span class='op'>=</span> <span class='cn'>TRUE</span>,
   dir <span class='op'>=</span> <span class='cn'>NA</span>,
   mail <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  attachment <span class='op'>=</span> <span class='cn'>TRUE</span>,
   to <span class='op'>=</span> <span class='st'>"laresbernardo@gmail.com"</span>,
   sectors <span class='op'>=</span> <span class='cn'>FALSE</span>,
   keep <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -154,6 +155,12 @@ current working directory will be used. If mail sent, file will be erased</p></t
 If not, an HTML file will be created in dir</p></td>
     </tr>
     <tr>
+      <th>attachment</th>
+      <td><p>Boolean. Create and add report as attachment if
+<code>mail=TRUE</code>? If not, no report will be rendered and only tabulated
+summaries will be included on email's body.</p></td>
+    </tr>
+    <tr>
       <th>to</th>
       <td><p>Character. Email to send the report to</p></td>
     </tr>
@@ -163,7 +170,7 @@ If not, an HTML file will be created in dir</p></td>
     </tr>
     <tr>
       <th>keep</th>
-      <td><p>Boolean. Keep HTML file when sended by email?</p></td>
+      <td><p>Boolean. Keep HTML file when sent by email?</p></td>
     </tr>
     <tr>
       <th>creds</th>
