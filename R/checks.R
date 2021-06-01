@@ -54,7 +54,8 @@ check_opts <- function(inputs, opts,
 #' @param stop Boolean. Stop if doesn't check?
 #' @return No return value, called for side effects.
 #' @export
-check_attr <- function(object, attr, check, stop = TRUE) {
+check_attr <- function(object, attr = "type", check = NULL, stop = TRUE) {
+  if (is.null(check)) stop("You must set a valid check input")
   aux <- attr(object, attr)
   if (is.null(aux)) aux <- "Noclass"
   if (aux != check) {

@@ -4,7 +4,7 @@
 \alias{check_attr}
 \title{Attribute checker}
 \usage{
-check_attr(object, attr, check, stop = TRUE)
+check_attr(object, attr = "type", check = NULL, stop = TRUE)
 }
 \arguments{
 \item{object}{Object of any kind}
