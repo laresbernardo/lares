@@ -2,24 +2,27 @@
 % Please edit documentation in R/update.R
 \name{updateLares}
 \alias{updateLares}
-\title{Update the library}
+\title{Update the library (dev or CRAN version)}
 \usage{
-updateLares(force = FALSE, all = FALSE, local = FALSE, fb = FALSE)
+updateLares(force = FALSE, dev = TRUE, all = FALSE, local = FALSE, fb = FALSE)
 }
 \arguments{
-\item{force}{Boolean. Force install}
+\item{force}{Boolean. Force install.}
+
+\item{dev}{Boolean. Developer version (Github)? If not, CRAN version.}
 
 \item{all}{Boolean. Install other recommended libraries? Kinda Docker install!}
 
-\item{local}{Boolean. Install package with local files? (or Github repo)}
+\item{local}{Boolean. Install package with local files? (or Github repo).}
 
-\item{fb}{Boolean. From FB instance? Personal use}
+\item{fb}{Boolean. From FB instance? Personal internal use.}
 }
 \value{
 No return value, called for side effects.
 }
 \description{
-This function lets the user update from repository or local source.
+This auxiliary function lets the user update \code{lares} to latest
+CRAN or developer version.
 }
 \seealso{
 Other Tools: 
