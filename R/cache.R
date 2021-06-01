@@ -7,7 +7,7 @@
 #' @family Cache
 #' @param data Object
 #' @param base Character vector. Unique name for your cache file. You can pass
-#' a character vector with multiple elements that will be concatenated. 
+#' a character vector with multiple elements that will be concatenated.
 #' @param cache_dir Character. Where do you want to save you cache files?
 #' By default they'll be stored on \code{tempdir()} but you can change it
 #' using this parameter or setting a global option called \code{"LARES_CACHE_DIR"}.
@@ -18,9 +18,12 @@
 #' @return \code{cache_write}. No return value, called for side effects.
 #' @examples
 #' x = list(a = 1, b = 2:4)
-#' base <- c(as.character(Sys.Date()), "A","B","C")
+#' base <- c(as.character(Sys.Date()), "A","B")
 #' cache_write(x, base)
 #' cache_read(base, ask = FALSE)
+#' cache_exists("lares_cache_2021-06-01.A.B.C")
+#' cache_clear()
+#' cache_exists()
 #' @export
 cache_write <- function(data,
                         base = "temp",
@@ -30,13 +33,13 @@ cache_write <- function(data,
   if (is.null(getOption("LARES_CACHE_DIR")))
     cache_dir <- tempdir()
   base <- paste(base, collapse = ".")
-  if (left(base, 12) != "lares_cache_")
-    base <- paste0("lares_cache_", base)
+  if (left(base, 12) != "lares_cache_") base <- paste0("lares_cache_", base)
+  if (right(base, 4) == ".RDS") base <- gsub("\\.RDS", "", base)
   file <- sprintf("%s/%s.RDS", cache_dir, base)
   if (nchar(file) >= 252)
     stop("Your file name can't contain more than 250 characters.")
   if (dir.exists(cache_dir)) {
-    if (cache_exists(filename = file) & ask) {
+    if (cache_exists(file) & ask) {
       message("> Cache found: ", base)
       answer <- readline("Press ENTER to rewrite cache or type [i] to ignore: ")
     } else answer <- "use"
@@ -60,8 +63,8 @@ cache_read <- function(base,
                        ask = FALSE,
                        quiet = FALSE) {
   base <- paste(base, collapse = ".")
-  if (left(base, 12) != "lares_cache_")
-    base <- paste0("lares_cache_", base)
+  if (left(base, 12) != "lares_cache_") base <- paste0("lares_cache_", base)
+  if (right(base, 4) == ".RDS") base <- gsub("\\.RDS", "", base)
   exists <- cache_exists(base, cache_dir)
   if (exists) {
     file <- attr(exists, "filename")
@@ -82,19 +85,22 @@ cache_read <- function(base,
 }
 
 #' @rdname cache_write
-#' @param filename Character. File name to check existence.
 #' @return \code{cache_exists}. Boolean. Result of \code{base} existence.
 #' @export
-cache_exists <- function(base = NULL,
-                         cache_dir = getOption("LARES_CACHE_DIR"),
-                         filename = NULL) {
+cache_exists <- function(base = NULL, cache_dir = getOption("LARES_CACHE_DIR")) {
   if (is.null(getOption("LARES_CACHE_DIR")))
     cache_dir <- tempdir()
-  if (is.null(filename)) {
+  if (!is.null(base)) {
     base <- paste(base, collapse = ".")
+    if (left(base, 12) != "lares_cache_") base <- paste0("lares_cache_", base)
+    if (right(base, 4) == ".RDS") base <- gsub("\\.RDS", "", base)
     filename <- sprintf("%s/%s.RDS", cache_dir, base) 
+  } else {
+    files_dir <- list.files(cache_dir)
+    base <- files_dir[startsWith(files_dir, "lares_cache_")] 
+    filename <- sprintf("%s/%s", cache_dir, base) 
   }
-  exists <- file.exists(filename)
+  exists <- any(file.exists(filename))
   attr(exists, "filename") <- filename
   attr(exists, "base") <- base
   attr(exists, "cache_dir") <- cache_dir
@@ -107,8 +113,9 @@ cache_exists <- function(base = NULL,
 cache_clear <- function(cache_dir = getOption("LARES_CACHE_DIR"), quiet = FALSE) {
   if (is.null(cache_dir)) cache_dir <- tempdir()
   files <- list.files(cache_dir)
-  caches <- startsWith(files, "lares_cache_")
-  invisible(file.remove(sprintf("%s/%s", cache_dir, caches)))
+  caches <- files[startsWith(files, "lares_cache_")]
+  if (length(caches) > 0)
+    invisible(file.remove(sprintf("%s/%s", cache_dir, caches)))
   if (!quiet) {
     if (length(caches) > 0) {
       message(paste("Removed", length(caches), "cache files succesfully!"))
