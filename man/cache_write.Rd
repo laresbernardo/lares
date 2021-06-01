@@ -62,6 +62,5 @@ cache_write(x, base)
 cache_read(base, ask = FALSE)
 cache_exists("lares_cache_2021-06-01.A.B.C")
 cache_clear()
-cache_exists()
 }
 \concept{Cache}

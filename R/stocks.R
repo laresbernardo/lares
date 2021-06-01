@@ -1098,7 +1098,7 @@ stocks_report <- function(data = NA,
              attachment = if (attachment) html_file else NULL,
              creds = creds,
              quiet = FALSE)
-    if (!keep) invisible(file.remove(html_file))
+    if (!keep & attachment) invisible(file.remove(html_file))
   }
   
   toc("stocks_report")
