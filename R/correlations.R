@@ -79,7 +79,7 @@ corr <- function(df, method = "pearson",
   
   # Avoid sd = 0 warning:
   # In cor(x, y) : the standard deviation is zeroIn cor(x, y) : the standard deviation is zero
-  d <- Filter(function(x) sd(x) != 0, d)
+  d <- Filter(function(x) sd(x, na.rm = TRUE) != 0, d)
   
   # Correlations
   rs <- cor(d, use = "pairwise.complete.obs", method = method)
