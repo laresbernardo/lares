@@ -77,8 +77,12 @@ corr <- function(df, method = "pearson",
     }
   }
   
+  # Avoid sd = 0 warning:
+  # In cor(x, y) : the standard deviation is zeroIn cor(x, y) : the standard deviation is zero
+  d <- Filter(function(x) sd(x) != 0, d)
+  
   # Correlations
-  rs <- suppressWarnings(cor(d, use = "pairwise.complete.obs", method = method))
+  rs <- cor(d, use = "pairwise.complete.obs", method = method)
   rs[is.na(rs)] <- 0
   cor <- round(data.frame(rs), dec)
   colnames(cor) <- row.names(cor) <- colnames(d)
@@ -386,7 +390,7 @@ corr_cross <- function(df, plot = TRUE,
     ret$group2 <- ifelse(ret$group2 == "fill", aux, ret$group2)
   }
   ret <- filter(ret, .data$group1 != .data$group2)
-  if (nrow(ret) > top & !is.na(top) & !quiet) {
+  if (nrow(ret) > top & !is.na(top) & !quiet & type != 2) {
     message(sprintf("Returning only the top %s. You may override with the 'top' argument", top))
     ret <- slice(ret, 1:top) 
   }
@@ -444,9 +448,9 @@ corr_cross <- function(df, plot = TRUE,
                size = abs(.data$corr),
                alpha = ifelse(row_number() <= local, 2, .data$size),
                label = ifelse(row_number() <= local, paste(.data$key, "+", .data$mix), "")) %>%
-        ggplot(aes(x = .data$group, y = .data$corr, 
+        ggplot(aes(x = .data$group, y = .data$corr,
                    label = .data$label, colour = .data$group)) + 
-        geom_jitter(aes(alpha = .data$alpha, size = .data$size), position = aux) + 
+        geom_jitter(position = aux, alpha = 0.4) +
         geom_hline(yintercept = 0, alpha = 0.3) +
         geom_text(aes(hjust = .data$hjust), size = 2.9, position = aux, colour = "black") +
         guides(colour = FALSE, alpha = FALSE, size = FALSE) +
