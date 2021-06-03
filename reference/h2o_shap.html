@@ -186,7 +186,7 @@ test dataset or pass a valid dataframe.</p></td>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='h2o_automl.html'>h2o_automl</a></span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Survived</span>, max_models <span class='op'>=</span> <span class='fl'>1</span>, target <span class='op'>=</span> <span class='cn'>TRUE</span>,
                     ignore <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Ticket"</span>, <span class='st'>"Cabin"</span>, <span class='st'>"PassengerId"</span><span class='op'>)</span>,
                     quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</div><div class='output co'>#&gt; <span class='message'>Target value: TRUE</span></div><div class='input'>
+</div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |=                                                                     |   2%  |                                                                              |======================================================================| 100%</div><div class='output co'>#&gt; <span class='message'>Target value: TRUE</span></div><div class='input'>
 <span class='co'># Calculate SHAP values</span>
 <span class='va'>SHAP_values</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_shap</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 <span class='co'># Equivalent to:</span>
@@ -197,27 +197,27 @@ test dataset or pass a valid dataframe.</p></td>
 
 <span class='co'># Check SHAP results</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>SHAP_values</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   Embarked.   Embarked.C Embarked.Q  Embarked.S Embarked.missing(NA)   Pclass.1
-#&gt; 1         0 -0.016172949          0 -0.29193878                    0 -0.1366402
-#&gt; 2         0  0.030671917          0  0.10123164                    0 -0.1683410
-#&gt; 3         0 -0.002312915          0 -0.21820031                    0  0.3799084
-#&gt; 4         0 -0.048526943          0 -0.10208388                    0 -0.2419950
-#&gt; 5         0 -0.014931759          0 -0.10021029                    0 -0.2011766
-#&gt; 6         0 -0.042441979          0 -0.05190469                    0 -0.3541477
-#&gt;      Pclass.2   Pclass.3 Pclass.missing(NA) Sex.female    Sex.male
-#&gt; 1 -0.09373002 -0.5836065                  0  0.9762868  0.14309540
-#&gt; 2  0.34105134  0.7329425                  0  1.6378776  0.38800800
-#&gt; 3 -0.08315454  0.9170670                  0  1.6738037  0.19151062
-#&gt; 4 -0.03337902 -0.2984058                  0 -0.5595701 -0.06690116
-#&gt; 5  0.18938544  0.2233415                  0 -0.9172428 -0.18587068
-#&gt; 6  0.15069361  0.2544931                  0 -1.1708840 -0.19691926
-#&gt;   Sex.missing(NA)         Age       SibSp       Parch        Fare   BiasTerm
-#&gt; 1               0  0.04011337  0.10019200 -0.26746514 -0.09150444 -0.5529287
-#&gt; 2               0 -0.08630542 -0.28145978  0.09000881 -0.28903997 -0.5529287
-#&gt; 3               0 -0.63032365  0.09090502  0.15772459  0.22187108 -0.5529287
-#&gt; 4               0 -0.52631372 -0.07494080 -0.29360130 -0.28823370 -0.5529287
-#&gt; 5               0  0.03926394  0.04930381 -0.06246427  0.26587784 -0.5529287
-#&gt; 6               0  0.45617509  0.13890523  0.10938925  0.32308114 -0.5529287</div><div class='input'>
+</div><div class='output co'>#&gt;   Embarked.  Embarked.C Embarked.Q   Embarked.S Embarked.missing(NA)   Pclass.1
+#&gt; 1         0 -0.05530247          0 -0.035581030                    0 -0.2287639
+#&gt; 2         0 -0.03068244          0 -0.010314350                    0 -0.1587483
+#&gt; 3         0 -0.13633844          0  0.026685137                    0  0.7636478
+#&gt; 4         0 -0.03283966          0  0.016314643                    0  0.4874140
+#&gt; 5         0 -0.07666671          0  0.005994347                    0 -0.4262857
+#&gt; 6         0 -0.02599229          0 -0.084991127                    0 -0.1053218
+#&gt;        Pclass.2   Pclass.3 Pclass.missing(NA) Sex.female   Sex.male
+#&gt; 1 -0.0050426964 -0.2769478                  0 -0.9511619 -0.1611636
+#&gt; 2  0.0258070771 -0.4649046                  0  1.2933185  0.2462016
+#&gt; 3  0.0012661265  0.4013066                  0 -1.0264657 -0.1615536
+#&gt; 4  0.0021173665  1.0072992                  0  1.4018096  0.2104646
+#&gt; 5  0.0001855362 -0.4481048                  0 -0.6985516 -0.1674521
+#&gt; 6 -0.0323342346 -0.5798523                  0  1.0795808  0.2462016
+#&gt;   Sex.missing(NA)         Age        SibSp       Parch       Fare   BiasTerm
+#&gt; 1               0 -0.02497342  0.128217041 -0.01870664 -0.1480599 -0.4433134
+#&gt; 2               0  0.43302289  0.089824460  0.04853285  0.4466617 -0.4433134
+#&gt; 3               0 -0.50359637  0.017472336  0.01841862 -0.3663319 -0.4433134
+#&gt; 4               0 -0.43995026  0.009906637 -0.01100446  0.1782873 -0.4433134
+#&gt; 5               0 -0.60449278 -0.013412653  0.02637400 -0.4928165 -0.4433134
+#&gt; 6               0  0.56229323  0.022458008  0.04335463  0.3468689 -0.4433134</div><div class='input'>
 <span class='co'># You must have "ggbeeswarm" library to use this auxiliary function:</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Plot SHAP values (feature importance)</span>
