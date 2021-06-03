@@ -11,6 +11,7 @@ corr(
   dec = 6,
   ignore = NA,
   dummy = TRUE,
+  redundant = NULL,
   logs = FALSE,
   limit = 10,
   top = NA,
@@ -30,8 +31,12 @@ significance (p-value) for each value}
 
 \item{ignore}{Vector or character. Which column should be ignored?}
 
-\item{dummy}{Boolean. Should One Hot (Smart) Encoding (\code{ohse})
+\item{dummy}{Boolean. Should One Hot (Smart) Encoding (\code{ohse()})
 be applied to categorical columns?}
+
+\item{redundant}{Boolean. Should we keep redundant columns? i.e. If the
+column only has two different values, should we keep both new columns?
+Is set to \code{NULL}, only binary variables will dump redundant columns.}
 
 \item{logs}{Boolean. Calculate log(x)+1 for numerical columns?}
 
@@ -41,10 +46,10 @@ values of each column. Set to \code{NA} to ignore argument.}
 \item{top}{Integer. Select top N most relevant variables? Filtered 
 and sorted by mean of each variable's correlations}
 
-\item{...}{Additional parameters to pass to \code{ohse}}
+\item{...}{Additional parameters to pass to \code{ohse()}}
 }
 \value{
-data.frame. Squared dimensions (nxn) to match every
+data.frame. Squared dimensions (N x N) to match every
 correlation between every \code{df} data.frame column/variable. Notice
 that when using \code{ohse()} you may get more dimensions.
 }
@@ -63,11 +68,8 @@ corr(df)
 # Ignore specific column
 corr(df, ignore = "Pclass")
 
-# Keep redundant combinations
-corr(df, redundant = TRUE)
-
-#' # Calculate p-values as well
-corr(df, pvalue = TRUE)
+# Calculate p-values as well
+corr(df, pvalue = TRUE, limit = 1)
 
 # Test when no more than 2 non-missing values
 df$trash <- c(1, rep(NA, nrow(df)-1))

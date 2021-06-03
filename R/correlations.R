@@ -16,15 +16,15 @@
 #' @param pvalue Boolean. Returns a list, with correlations and statistical 
 #' significance (p-value) for each value
 #' @param dec Integer. Number of decimals to round correlations and p-values
-#' @param dummy Boolean. Should One Hot (Smart) Encoding (\code{ohse})
-#' be applied to categorical columns? 
+#' @param dummy Boolean. Should One Hot (Smart) Encoding (\code{ohse()})
+#' be applied to categorical columns?
 #' @param top Integer. Select top N most relevant variables? Filtered 
 #' and sorted by mean of each variable's correlations
-#' @param ... Additional parameters to pass to \code{ohse}
-#' @return data.frame. Squared dimensions (nxn) to match every
+#' @param ... Additional parameters to pass to \code{ohse()}
+#' @return data.frame. Squared dimensions (N x N) to match every
 #' correlation between every \code{df} data.frame column/variable. Notice
 #' that when using \code{ohse()} you may get more dimensions.
-#' @examples 
+#' @examples
 #' data(dft) # Titanic dataset
 #' df <- dft[,2:5]
 #' 
@@ -33,11 +33,8 @@
 #' # Ignore specific column
 #' corr(df, ignore = "Pclass")
 #' 
-#' # Keep redundant combinations
-#' corr(df, redundant = TRUE)
-#' 
-#' #' # Calculate p-values as well
-#' corr(df, pvalue = TRUE)
+#' # Calculate p-values as well
+#' corr(df, pvalue = TRUE, limit = 1)
 #' 
 #' # Test when no more than 2 non-missing values
 #' df$trash <- c(1, rep(NA, nrow(df)-1))
@@ -47,10 +44,11 @@
 corr <- function(df, method = "pearson", 
                  pvalue = FALSE,
                  dec = 6,
-                 ignore = NA, 
-                 dummy = TRUE, 
+                 ignore = NA,
+                 dummy = TRUE,
+                 redundant = NULL,
                  logs = FALSE,
-                 limit = 10, 
+                 limit = 10,
                  top = NA,
                  ...) {
   
@@ -59,7 +57,7 @@ corr <- function(df, method = "pearson",
   
   # One hot encoding for categorical features
   if (dummy) 
-    df <- ohse(df, quiet = TRUE, limit = limit, ...)
+    df <- ohse(df, quiet = TRUE, limit = limit, redundant = redundant, ...)
   
   # Select only numerical features and create log+1 for each one
   d <- numericalonly(df, logs = logs)
@@ -82,7 +80,7 @@ corr <- function(df, method = "pearson",
   d <- Filter(function(x) sd(x, na.rm = TRUE) != 0, d)
   
   # Correlations
-  rs <- cor(d, use = "pairwise.complete.obs", method = method)
+  rs <- suppressWarnings(cor(d, use = "pairwise.complete.obs", method = method))
   rs[is.na(rs)] <- 0
   cor <- round(data.frame(rs), dec)
   colnames(cor) <- row.names(cor) <- colnames(d)

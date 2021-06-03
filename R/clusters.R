@@ -116,8 +116,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       mutate(n = as.integer(table(df$cluster)))
     
     # Correlations
-    results[["correlations"]] <- corr_cross(
-      df, contains = "cluster", redundant = TRUE, quiet = quiet)
+    results[["correlations"]] <- corr_cross(df, contains = "cluster", quiet = quiet)
     
     # PCA
     PCA <- list()
@@ -266,12 +265,12 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
   return(plots)
 }
 
-prepare_data <- function(df, drop_na = TRUE, ohse = TRUE, norm = TRUE, quiet = TRUE) {
+prepare_data <- function(df, drop_na = TRUE, ohse = TRUE, norm = TRUE, ...) {
   
   # There should not be NAs
   if (sum(is.na(df)) > 0) {
     if (drop_na) { 
-      df <- removenarows(df, all = FALSE) 
+      df <- removenarows(df, all = FALSE)
       if (!quiet) message(
         "Automatically removed rows with NA. To overwrite: fix NAs and set drop_na = FALSE")
     } else {
@@ -282,8 +281,8 @@ prepare_data <- function(df, drop_na = TRUE, ohse = TRUE, norm = TRUE, quiet = T
   
   # Only numerical values
   nums <- df_str(df, return = "names", quiet = TRUE)$nums
-  if (ohse & length(nums) != ncol(df)) {
-    df <- ohse(df, redundant = FALSE, dates = TRUE, limit = 8, quiet = quiet)
+  if (isTRUE(ohse) & length(nums) != ncol(df)) {
+    df <- ohse(df, dates = TRUE, limit = 8, ...)
   } else {
     df <- data.frame(df) %>% select_if(is.numeric)
   }

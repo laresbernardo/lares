@@ -60,8 +60,9 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
 #' @family Feature Engineering
 #' @family One Hot Encoding
 #' @param df Dataframe
-#' @param redundant Boolean. Should we keep redundat columns? i.e. If the
+#' @param redundant Boolean. Should we keep redundant columns? i.e. If the
 #' column only has two different values, should we keep both new columns?
+#' Is set to \code{NULL}, only binary variables will dump redundant columns.
 #' @param drops Boolean. Drop automatically some useless features?
 #' @param ignore Vector or character. Which column should be ignored?
 #' @param dates Boolean. Do you want the function to create more features
@@ -90,7 +91,7 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
 #' dft <- dft[,c(2,3,5,9,11)]
 #' 
 #' ohse(dft, limit = 3) %>% head(3)
-#' ohse(dft, limit = 3, redundant = TRUE) %>% head(3)
+#' ohse(dft, limit = 3, redundant = NULL) %>% head(3)
 #' 
 #' # Getting rid of columns with no (or too much) variance
 #' dft$no_variance1 <- 0
@@ -100,18 +101,18 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
 #' ohse(dft, limit = 3) %>% head(3)
 #' ohse(dft, limit = 3, var = 1) %>% head(3)
 #' @export
-ohse <- function(df, 
-                 redundant = FALSE, 
+ohse <- function(df,
+                 redundant = FALSE,
                  drops = TRUE,
                  ignore = NA,
                  dates = FALSE, 
                  holidays = FALSE, country = "Colombia",
-                 currency_pair = NA, 
-                 trim = 0, 
-                 limit = 10, 
-                 variance = 0.9, 
-                 other_label = "OTHER", 
-                 sep = "_", 
+                 currency_pair = NA,
+                 trim = 0,
+                 limit = 10,
+                 variance = 0.9,
+                 other_label = "OTHER",
+                 sep = "_",
                  quiet = FALSE,
                  ...) {
   
@@ -180,7 +181,7 @@ ohse <- function(df,
       vector_values[,1] <- paste0(sep, vector_values[,1])
       
       # Columns with 2 possible values
-      if (vector_levels == 2 & redundant == FALSE) {
+      if (vector_levels == 2 & !isTRUE(redundant)) {
         which <- as.character(levels(as.factor(df[,c(vector_name)]))[2])
         df[,c(vector_name)] <- as.integer(as.factor(df[,c(vector_name)])) - 1
         converted_binary <- rbind(converted_binary, vector_name)
@@ -196,7 +197,7 @@ ohse <- function(df,
             other_label = paste0(sep, other_label))
           dummy_matx <- data.frame(model.matrix(~ . -1, reduced))
           colnames(dummy_matx) <- paste0(vector_name, sort(unique(reduced[,1]))) 
-          if (!redundant) dummy_matx <- dummy_matx[, 1:(ncol(dummy_matx) - 1)]
+          if (isFALSE(redundant)) dummy_matx <- dummy_matx[, 1:(ncol(dummy_matx) - 1)]
           df <- cbind(df, dummy_matx)
           converted <- rbind(converted, vector_name)
         }

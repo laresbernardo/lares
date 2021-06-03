@@ -25,8 +25,9 @@ ohse(
 \arguments{
 \item{df}{Dataframe}
 
-\item{redundant}{Boolean. Should we keep redundat columns? i.e. If the
-column only has two different values, should we keep both new columns?}
+\item{redundant}{Boolean. Should we keep redundant columns? i.e. If the
+column only has two different values, should we keep both new columns?
+Is set to \code{NULL}, only binary variables will dump redundant columns.}
 
 \item{drops}{Boolean. Drop automatically some useless features?}
 
@@ -75,7 +76,7 @@ data(dft)
 dft <- dft[,c(2,3,5,9,11)]
 
 ohse(dft, limit = 3) \%>\% head(3)
-ohse(dft, limit = 3, redundant = TRUE) \%>\% head(3)
+ohse(dft, limit = 3, redundant = NULL) \%>\% head(3)
 
 # Getting rid of columns with no (or too much) variance
 dft$no_variance1 <- 0
