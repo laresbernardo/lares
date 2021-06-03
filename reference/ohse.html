@@ -73,7 +73,7 @@ categorical columns into numerical by one hot encoding technic." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">5.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">5.0.1</span>
       </span>
     </div>
 
@@ -146,8 +146,9 @@ categorical columns into numerical by one hot encoding technic.</p>
     </tr>
     <tr>
       <th>redundant</th>
-      <td><p>Boolean. Should we keep redundat columns? i.e. If the
-column only has two different values, should we keep both new columns?</p></td>
+      <td><p>Boolean. Should we keep redundant columns? i.e. If the
+column only has two different values, should we keep both new columns?
+Is set to <code>NULL</code>, only binary variables will dump redundant columns.</p></td>
     </tr>
     <tr>
       <th>drops</th>
@@ -257,15 +258,14 @@ transformed with one hot encoding.</p>
 #&gt; <span style='color: #BCBCBC;'>1</span>             0    22  7.25        0        0          0              0
 #&gt; <span style='color: #BCBCBC;'>2</span>             1    38 71.3         1        0          1              0
 #&gt; <span style='color: #BCBCBC;'>3</span>             1    26  7.92        0        0          0              0
-#&gt; <span style='color: #949494;'># … with 1 more variable: Embarked_Q &lt;dbl&gt;</span></div><div class='input'><span class='fu'>ohse</span><span class='op'>(</span><span class='va'>dft</span>, limit <span class='op'>=</span> <span class='fl'>3</span>, redundant <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 3 variables: 'Survived', 'Pclass', 'Embarked'</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 11</span>
-#&gt;     Age  Fare Survived_FALSE Survived_TRUE Pclass_1 Pclass_2 Pclass_3 Embarked_C
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span>    22  7.25              1             0        0        0        1          0
-#&gt; <span style='color: #BCBCBC;'>2</span>    38 71.3               0             1        1        0        0          1
-#&gt; <span style='color: #BCBCBC;'>3</span>    26  7.92              0             1        0        0        1          0
-#&gt; <span style='color: #949494;'># … with 3 more variables: Embarked_OTHER &lt;dbl&gt;, Embarked_Q &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   Embarked_S &lt;dbl&gt;</span></div><div class='input'>
+#&gt; <span style='color: #949494;'># … with 1 more variable: Embarked_Q &lt;dbl&gt;</span></div><div class='input'><span class='fu'>ohse</span><span class='op'>(</span><span class='va'>dft</span>, limit <span class='op'>=</span> <span class='fl'>3</span>, redundant <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 3 variables: 'Pclass', 'Embarked', 'Survived'</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 10</span>
+#&gt;   Survived_TRUE   Age  Fare Pclass_1 Pclass_2 Pclass_3 Embarked_C Embarked_OTHER
+#&gt;           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>             0    22  7.25        0        0        1          0              0
+#&gt; <span style='color: #BCBCBC;'>2</span>             1    38 71.3         1        0        0          1              0
+#&gt; <span style='color: #BCBCBC;'>3</span>             1    26  7.92        0        0        1          0              0
+#&gt; <span style='color: #949494;'># … with 2 more variables: Embarked_Q &lt;dbl&gt;, Embarked_S &lt;dbl&gt;</span></div><div class='input'>
 <span class='co'># Getting rid of columns with no (or too much) variance</span>
 <span class='va'>dft</span><span class='op'>$</span><span class='va'>no_variance1</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
 <span class='va'>dft</span><span class='op'>$</span><span class='va'>no_variance2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"B"</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>

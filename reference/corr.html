@@ -75,7 +75,7 @@ with less than 3 non missing values and warn the user." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">5.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">5.0.1</span>
       </span>
     </div>
 
@@ -130,6 +130,7 @@ with less than 3 non missing values and warn the user.</p>
   dec <span class='op'>=</span> <span class='fl'>6</span>,
   ignore <span class='op'>=</span> <span class='cn'>NA</span>,
   dummy <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  redundant <span class='op'>=</span> <span class='cn'>NULL</span>,
   logs <span class='op'>=</span> <span class='cn'>FALSE</span>,
   limit <span class='op'>=</span> <span class='fl'>10</span>,
   top <span class='op'>=</span> <span class='cn'>NA</span>,
@@ -163,8 +164,14 @@ significance (p-value) for each value</p></td>
     </tr>
     <tr>
       <th>dummy</th>
-      <td><p>Boolean. Should One Hot (Smart) Encoding (<code>ohse</code>)
+      <td><p>Boolean. Should One Hot (Smart) Encoding (<code><a href='ohse.html'>ohse()</a></code>)
 be applied to categorical columns?</p></td>
+    </tr>
+    <tr>
+      <th>redundant</th>
+      <td><p>Boolean. Should we keep redundant columns? i.e. If the
+column only has two different values, should we keep both new columns?
+Is set to <code>NULL</code>, only binary variables will dump redundant columns.</p></td>
     </tr>
     <tr>
       <th>logs</th>
@@ -182,13 +189,13 @@ and sorted by mean of each variable's correlations</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional parameters to pass to <code>ohse</code></p></td>
+      <td><p>Additional parameters to pass to <code><a href='ohse.html'>ohse()</a></code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>data.frame. Squared dimensions (nxn) to match every
+    <p>data.frame. Squared dimensions (N x N) to match every
 correlation between every <code>df</code> data.frame column/variable. Notice
 that when using <code><a href='ohse.html'>ohse()</a></code> you may get more dimensions.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -206,66 +213,48 @@ that when using <code><a href='ohse.html'>ohse()</a></code> you may get more dim
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>dft</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
 
 <span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2
-#&gt; Survived_TRUE      1.000000 -0.543351 -0.077221  0.285904  0.093349
-#&gt; Sex_male          -0.543351  1.000000  0.093254 -0.098013 -0.064746
-#&gt; Age               -0.077221  0.093254  1.000000  0.348941  0.006954
-#&gt; Pclass_1           0.285904 -0.098013  0.348941  1.000000 -0.288585
-#&gt; Pclass_2           0.093349 -0.064746  0.006954 -0.288585  1.000000</div><div class='input'>
+</div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2  Pclass_3
+#&gt; Survived_TRUE      1.000000 -0.543351 -0.077221  0.285904  0.093349 -0.322308
+#&gt; Sex_male          -0.543351  1.000000  0.093254 -0.098013 -0.064746  0.137143
+#&gt; Age               -0.077221  0.093254  1.000000  0.348941  0.006954 -0.312271
+#&gt; Pclass_1           0.285904 -0.098013  0.348941  1.000000 -0.288585 -0.626738
+#&gt; Pclass_2           0.093349 -0.064746  0.006954 -0.288585  1.000000 -0.565210
+#&gt; Pclass_3          -0.322308  0.137143 -0.312271 -0.626738 -0.565210  1.000000</div><div class='input'>
 <span class='co'># Ignore specific column</span>
 <span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, ignore <span class='op'>=</span> <span class='st'>"Pclass"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age
 #&gt; Survived_TRUE      1.000000 -0.543351 -0.077221
 #&gt; Sex_male          -0.543351  1.000000  0.093254
 #&gt; Age               -0.077221  0.093254  1.000000</div><div class='input'>
-<span class='co'># Keep redundant combinations</span>
-<span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, redundant <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                      Age Survived_FALSE Survived_TRUE  Pclass_1  Pclass_2
-#&gt; Age             1.000000       0.077221     -0.077221  0.348941  0.006954
-#&gt; Survived_FALSE  0.077221       1.000000     -1.000000 -0.285904 -0.093349
-#&gt; Survived_TRUE  -0.077221      -1.000000      1.000000  0.285904  0.093349
-#&gt; Pclass_1        0.348941      -0.285904      0.285904  1.000000 -0.288585
-#&gt; Pclass_2        0.006954      -0.093349      0.093349 -0.288585  1.000000
-#&gt; Pclass_3       -0.312271       0.322308     -0.322308 -0.626738 -0.565210
-#&gt; Sex_female     -0.093254      -0.543351      0.543351  0.098013  0.064746
-#&gt; Sex_male        0.093254       0.543351     -0.543351 -0.098013 -0.064746
-#&gt;                 Pclass_3 Sex_female  Sex_male
-#&gt; Age            -0.312271  -0.093254  0.093254
-#&gt; Survived_FALSE  0.322308  -0.543351  0.543351
-#&gt; Survived_TRUE  -0.322308   0.543351 -0.543351
-#&gt; Pclass_1       -0.626738   0.098013 -0.098013
-#&gt; Pclass_2       -0.565210   0.064746 -0.064746
-#&gt; Pclass_3        1.000000  -0.137143  0.137143
-#&gt; Sex_female     -0.137143   1.000000 -1.000000
-#&gt; Sex_male        0.137143  -1.000000  1.000000</div><div class='input'>
-<span class='co'>#' # Calculate p-values as well</span>
-<span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, pvalue <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='co'># Calculate p-values as well</span>
+<span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, pvalue <span class='op'>=</span> <span class='cn'>TRUE</span>, limit <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $cor
-#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2
-#&gt; Survived_TRUE      1.000000 -0.543351 -0.077221  0.285904  0.093349
-#&gt; Sex_male          -0.543351  1.000000  0.093254 -0.098013 -0.064746
-#&gt; Age               -0.077221  0.093254  1.000000  0.348941  0.006954
-#&gt; Pclass_1           0.285904 -0.098013  0.348941  1.000000 -0.288585
-#&gt; Pclass_2           0.093349 -0.064746  0.006954 -0.288585  1.000000
+#&gt;               Survived_TRUE  Sex_male       Age  Pclass_3 Pclass_OTHER
+#&gt; Survived_TRUE      1.000000 -0.543351 -0.077221 -0.322308     0.322308
+#&gt; Sex_male          -0.543351  1.000000  0.093254  0.137143    -0.137143
+#&gt; Age               -0.077221  0.093254  1.000000 -0.312271     0.312271
+#&gt; Pclass_3          -0.322308  0.137143 -0.312271  1.000000    -1.000000
+#&gt; Pclass_OTHER       0.322308 -0.137143  0.312271 -1.000000     1.000000
 #&gt; 
 #&gt; $pvalue
-#&gt;               Survived_TRUE     Sex_male          Age     Pclass_1     Pclass_2
-#&gt; Survived_TRUE  0.000000e+00 1.406066e-69 3.912465e-02 3.190582e-18 5.293655e-03
-#&gt; Sex_male       1.406066e-69 0.000000e+00 1.267130e-02 3.404901e-03 5.336354e-02
-#&gt; Age            3.912465e-02 1.267130e-02 0.000000e+00 7.158898e-22 8.528419e-01
-#&gt; Pclass_1       3.190582e-18 3.404901e-03 7.158898e-22 0.000000e+00 1.498959e-18
-#&gt; Pclass_2       5.293655e-03 5.336354e-02 8.528419e-01 1.498959e-18 0.000000e+00
+#&gt;               Survived_TRUE     Sex_male          Age     Pclass_3 Pclass_OTHER
+#&gt; Survived_TRUE  0.000000e+00 1.406066e-69 3.912465e-02 5.510281e-23 5.510281e-23
+#&gt; Sex_male       1.406066e-69 0.000000e+00 1.267130e-02 4.002500e-05 4.002500e-05
+#&gt; Age            3.912465e-02 1.267130e-02 0.000000e+00 1.295594e-17 1.295594e-17
+#&gt; Pclass_3       5.510281e-23 4.002500e-05 1.295594e-17 0.000000e+00 0.000000e+00
+#&gt; Pclass_OTHER   5.510281e-23 4.002500e-05 1.295594e-17 0.000000e+00 0.000000e+00
 #&gt; </div><div class='input'>
 <span class='co'># Test when no more than 2 non-missing values</span>
 <span class='va'>df</span><span class='op'>$</span><span class='va'>trash</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># and another method...</span>
 <span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, method <span class='op'>=</span> <span class='st'>"spearman"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Dropped columns with less than 3 non-missing values: 'trash'</span></div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2
-#&gt; Survived_TRUE      1.000000 -0.543351 -0.052565  0.285904  0.093349
-#&gt; Sex_male          -0.543351  1.000000  0.083330 -0.098013 -0.064746
-#&gt; Age               -0.052565  0.083330  1.000000  0.333881  0.031291
-#&gt; Pclass_1           0.285904 -0.098013  0.333881  1.000000 -0.288585
-#&gt; Pclass_2           0.093349 -0.064746  0.031291 -0.288585  1.000000</div></pre>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Dropped columns with less than 3 non-missing values: 'trash'</span></div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2  Pclass_3
+#&gt; Survived_TRUE      1.000000 -0.543351 -0.052565  0.285904  0.093349 -0.322308
+#&gt; Sex_male          -0.543351  1.000000  0.083330 -0.098013 -0.064746  0.137143
+#&gt; Age               -0.052565  0.083330  1.000000  0.333881  0.031291 -0.319907
+#&gt; Pclass_1           0.285904 -0.098013  0.333881  1.000000 -0.288585 -0.626738
+#&gt; Pclass_2           0.093349 -0.064746  0.031291 -0.288585  1.000000 -0.565210
+#&gt; Pclass_3          -0.322308  0.137143 -0.319907 -0.626738 -0.565210  1.000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
