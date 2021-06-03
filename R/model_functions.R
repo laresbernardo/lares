@@ -86,7 +86,7 @@
 #' @return List. Trained model, predicted scores and datasets used, performance
 #' metrics, parameters, importance data.frame, seed, and plots when \code{plots=TRUE}.
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' data(dft) # Titanic dataset
 #' dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 #' 
