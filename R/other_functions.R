@@ -759,7 +759,7 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
 #' @export
 myip <- function(){
   ipify <- "https://api.ipify.org/"
-  ip <- xml2::read_html(ipify) %>% html_text()
+  ip <- read_html(ipify) %>% html_text()
   return(ip)
 }
 

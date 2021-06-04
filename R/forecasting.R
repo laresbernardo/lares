@@ -238,7 +238,7 @@ prophesize <- function(df, n_future = 60, country = "AR",
 #' #' @param values Numeric. Vector with numerical values
 #' #' @param n_future Integer. How many steps do you wish to forecast?
 #' #' @param use_last Boolean. Use last observation?
-#' #' @param automl Boolean. Use lares::h2o_automl()
+#' #' @param automl Boolean. Use \code{h2o_automl()}
 #' #' @param plot_forecast Boolean. If you wish to plot your results
 #' #' @param plot_model Boolean. If you wish to plot your model's results
 #' #' @param project Character. Name of your forecast project for plot title

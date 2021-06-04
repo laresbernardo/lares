@@ -16,7 +16,7 @@
 #' @param ... Additional argument for \code{predict_contributions.H2OModel}
 #' @return H2OFrame with shap values for every observation and feature.
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' # Train a h2o_automl model
 #' model <- h2o_automl(dft, Survived, max_models = 1, target = TRUE,
 #'                     ignore = c("Ticket", "Cabin", "PassengerId"),

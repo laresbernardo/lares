@@ -26,7 +26,6 @@ Imports:
     scales,
     stringr,
     tidyr,
-    xml2,
     yaml
 Suggests:
     beepr,
@@ -37,15 +36,11 @@ Suggests:
     ggrepel,
     googleAuthR,
     googlesheets4,
-    mice,
     quantmod,
     plotly,
     rdrop2,
-    rlist,
     rmarkdown,
     rtweet,
-    skimr,
-    sp,
     tm,
     wordcloud
 URL: https://github.com/laresbernardo/lares

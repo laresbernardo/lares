@@ -21,7 +21,7 @@ bring_api <- function(url, status = TRUE) {
   if (length(json[[1]]) > 0) {
     import <- data.frame(json)
     import <- flatten(import)
-    import <- data.frame(list.cbind(lapply(import, unlist(as.character))))
+    import <- data.frame(bind_rows(lapply(import, unlist(as.character))))
     import[import == "list()"] <- NA
     import[import == "integer(0)"] <- 0
     colnames(import) <- gsub("\\.", "_", colnames(import))

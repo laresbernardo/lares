@@ -10,33 +10,32 @@
 #' @import ggplot2
 #' @importFrom graphics box hist plot points rasterImage rect grid legend
 #' @importFrom grDevices graphics.off dev.off png dev.size
-#' @importFrom h2o as.h2o h2o.automl h2o.accuracy h2o.getModel h2o.performance h2o.init 
-#' h2o.removeAll h2o.download_mojo h2o.download_pojo h2o.loadModel h2o.no_progress h2o.predict 
-#' h2o.predict_json h2o.saveModel h2o.varimp h2o.getVersion h2o.glm 
+#' @importFrom h2o as.h2o h2o.automl h2o.accuracy h2o.getModel h2o.performance h2o.init
+#' h2o.removeAll h2o.download_mojo h2o.download_pojo h2o.loadModel h2o.no_progress h2o.predict
+#' h2o.predict_json h2o.saveModel h2o.varimp h2o.getVersion h2o.glm
 #' predict_contributions.H2OModel h2o.import_mojo h2o.no_progress h2o.show_progress
-#' @importFrom httr GET POST oauth_endpoint oauth_app oauth1.0_token authenticate 
+#' @importFrom httr GET POST oauth_endpoint oauth_app oauth1.0_token authenticate
 #' stop_for_status upload_file add_headers content http_error set_config config
 #' @importFrom jsonlite fromJSON toJSON flatten
 #' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd days
 #' minute hour second %m+% %m-% floor_date ceiling_date years
 #' @importFrom magrittr %>% set_colnames set_names
-#' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet 
+#' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom patchwork guide_area plot_layout plot_annotation wrap_plots
 #' @importFrom pROC roc ci
 #' @importFrom rlang as_label .data
 #' @importFrom rpart rpart rpart.control
-#' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text 
+#' @importFrom rvest read_html html_node html_nodes html_attrs html_attr html_table html_text 
 #' @importFrom scales comma percent dollar
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
 #' reorder start kmeans var xtabs as.formula prcomp p.adjust pt model.matrix qt cor.test
-#' @import stringr 
+#' @import stringr
 #' @importFrom tidyr gather spread
-#' @importFrom utils head tail packageVersion URLencode capture.output data download.file 
-#' globalVariables installed.packages write.table install.packages remove.packages object.size 
-#' type.convert flush.console read.table modifyList write.csv combn browseURL type.convert 
+#' @importFrom utils head tail packageVersion URLencode capture.output data download.file
+#' globalVariables installed.packages write.table install.packages remove.packages object.size
+#' type.convert flush.console read.table modifyList write.csv combn browseURL type.convert
 #' getParseData find
-#' @importFrom xml2 read_html
 #' @importFrom yaml read_yaml
 "_PACKAGE"
 
@@ -68,7 +67,7 @@ NULL
 #' @rdname lares-exports
 NULL
 
-# Recommeded additional libraries to fully take advantage of lares library
+# Recommended additional libraries to fully take advantage of lares library
 recommended <- list(
   beepr = "beep",
   circlize = c("chordDiagram", "uh"),
@@ -96,7 +95,6 @@ recommended <- list(
               "add_country_holidays", "make_future_dataframe"),
   quantmod = c("getDividends", "getSymbols", "getQuote"),
   rdrop2 = c("drop_auth", "drop_dir", "drop_download", "drop_search", "drop_upload"),
-  rlist = "list.cbind",
   rgdal = c("readOGR", "project"),
   rpart.plot = "rpart.plot",
   RPostgreSQL = "PostgreSQL",
@@ -104,7 +102,7 @@ recommended <- list(
   rmarkdown = "render",
   skimr = "skim",
   syuzhet = "get_sentiment_dictionary",
-  sp = c("CRS", "over", "coordinates", "proj4string", "proj4string<-", "coordinates<-", "spTransform"),
+  # sp = c("CRS", "over", "coordinates", "proj4string", "proj4string<-", "coordinates<-", "spTransform"),
   threed = c("mesh3dobj", "transform_by", "invert_matrix", "perspective_projection", "look_at_matrix"),
   tidytext = "unnest_tokens",
   tm = c("content_transformer", "Corpus", "removeNumbers", "removePunctuation", 
