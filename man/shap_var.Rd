@@ -40,7 +40,6 @@ SHAP_values <- h2o_shap(model)
 head(SHAP_values)
 
 # You must have "ggbeeswarm" library to use this auxiliary function:
-\dontrun{
 # Plot SHAP values (feature importance)
 plot(SHAP_values)
 
@@ -49,7 +48,6 @@ shap_var(SHAP_values, Pclass)
 
 # Plot some of the variables (numerical)
 shap_var(SHAP_values, Fare)
-}
 }
 }
 \seealso{
