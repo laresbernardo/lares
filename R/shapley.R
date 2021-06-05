@@ -34,7 +34,6 @@
 #' head(SHAP_values)
 #' 
 #' # You must have "ggbeeswarm" library to use this auxiliary function:
-#' \dontrun{
 #' # Plot SHAP values (feature importance)
 #' plot(SHAP_values)
 #' 
@@ -43,7 +42,6 @@
 #' 
 #' # Plot some of the variables (numerical)
 #' shap_var(SHAP_values, Fare)
-#' }
 #' }
 #' @export
 h2o_shap <- function(model, test = "auto", scores = "auto", y = "y",...) {

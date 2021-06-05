@@ -1368,10 +1368,10 @@ move_files <- function(from, to) {
 
 
 ####################################################################
-#' Get file names without extensions
+#' Extract file raw name and type from file names
 #'
-#' @param filepath Character vector. File path(s) to get file names with.
-#' no extension.
+#' @param filepath Character vector. File path(s) to get file raw names
+#' without extension nor path OR extension without path nor raw name.
 #' @examples
 #' file_name("file.aux")
 #' file_name("temp/file.R")
@@ -1385,7 +1385,7 @@ file_name <- function(filepath) {
 ####################################################################
 #' Get file extensions without file names
 #'
-#' @param filepath Character vector. File path(s) to get file extensions or types.
+#' @rdname file_name
 #' @examples
 #' file_type("file.aux")
 #' file_type("temp/file.R")

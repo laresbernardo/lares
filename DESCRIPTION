@@ -9,6 +9,8 @@ Description: R library for better/faster analytics, visualization, data mining, 
     tasks. With a wide variety of family functions, like Machine Learning, Data Wrangling, 
     Exploratory, and Scrapper, it helps the analyst or data scientist to get quick and robust 
     results, without the need of repetitive coding or extensive programming skills.
+Depends:
+    R (>= 3.5)
 Imports: 
     dplyr,
     ggplot2,
@@ -22,7 +24,7 @@ Imports:
     pROC,
     rlang,
     rpart,
-    rvest,
+    rvest (>= 1.0.0),
     scales,
     stringr,
     tidyr,
