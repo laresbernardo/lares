@@ -181,7 +181,34 @@ test dataset or pass a valid dataframe.</p></td>
 <code><a href='shap_var.html'>shap_var</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># Train a h2o_automl model</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='h2o_automl.html'>h2o_automl</a></span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Survived</span>, max_models <span class='op'>=</span> <span class='fl'>1</span>, target <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                    ignore <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Ticket"</span>, <span class='st'>"Cabin"</span>, <span class='st'>"PassengerId"</span><span class='op'>)</span>,
+                    quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='co'># Calculate SHAP values</span>
+<span class='va'>SHAP_values</span> <span class='op'>&lt;-</span> <span class='fu'>h2o_shap</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+<span class='co'># Equivalent to:</span>
+<span class='co'># SHAP_values &lt;- h2o_shap(</span>
+<span class='co'>#  model = model$model,</span>
+<span class='co'>#  test = model$datasets$test,</span>
+<span class='co'>#  scores = model$scores_test$scores)</span>
+
+<span class='co'># Check SHAP results</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>SHAP_values</span><span class='op'>)</span>
+
+<span class='co'># You must have "ggbeeswarm" library to use this auxiliary function:</span>
+<span class='co'># Plot SHAP values (feature importance)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>SHAP_values</span><span class='op'>)</span>
+
+<span class='co'># Plot some of the variables (categorical)</span>
+<span class='fu'><a href='shap_var.html'>shap_var</a></span><span class='op'>(</span><span class='va'>SHAP_values</span>, <span class='va'>Pclass</span><span class='op'>)</span>
+
+<span class='co'># Plot some of the variables (numerical)</span>
+<span class='fu'><a href='shap_var.html'>shap_var</a></span><span class='op'>(</span><span class='va'>SHAP_values</span>, <span class='va'>Fare</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
