@@ -3,7 +3,7 @@
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/lares)](https://cran.r-project.org/package=lares) [![R-CMD-check](https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg?branch=master)](https://github.com/laresbernardo/lares/actions?query=workflow%3AR-CMD-check) [![documentation](https://github.com/laresbernardo/lares/workflows/documentation/badge.svg)](https://laresbernardo.github.io/lares/reference/index.html) [![CodeFactor](https://www.codefactor.io/repository/github/laresbernardo/lares/badge)](https://www.codefactor.io/repository/github/laresbernardo/lares) [![saythanks](https://img.shields.io/badge/say-hi-blue.svg)](https://www.linkedin.com/in/laresbernardo)
 ----
 
-R library built to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. With a wide variety of family functions like Machine Learning, data cleaning and procesing, EDA, Investment, NLP, Queries, Scrappers, API interactions, `lares` helps the analyst or data scientist get quick, reproducible, robust results, without the need of repetitive coding nor extensive programming skills. Feel free to install, use, and/or comment on any of the code and functionalities. And if you are also colourblind, be sure to check the the colour palettes!
+R package built to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. With a wide variety of family functions like Machine Learning, data cleaning and procesing, EDA, Investment, NLP, Queries, Scrappers, API interactions, `lares` helps the analyst or data scientist get quick, reproducible, robust results, without the need of repetitive coding nor extensive programming skills. Feel free to install, use, and/or comment on any of the code and functionalities. And if you are also colourblind, be sure to check the colour palettes!
 
 Don't hesitate to contact me, and please when you do, let me know where did you first hear from the library and which family of functions you are most interested in.
 
@@ -26,13 +26,13 @@ remotes::install_github("laresbernardo/lares", dependencies = TRUE)
 
 - DataScience+: [Visualizations for Classification Models Results](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/)
 
-- DataScience+: [Visualizations for Regression Models Results](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models)
+- DataScience+: [Visualizations for Regression Models Results](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/)
 
 - DataScience+: [AutoML and DALEX for Dataset Understanding](https://datascienceplus.com/understanding-titanic-dataset-with-h2os-automl-dalex-and-lares-library/)
 
 - DataScience+: [Find Insights with Ranked Cross-Correlations](https://datascienceplus.com/find-insights-with-ranked-cross-correlations/)
 
-- DataScience+: [Portfolio's Performance and Reporting](https://datascienceplus.com/visualize-your-portfolios-performance-and-generate-a-nice-report-with-r)
+- DataScience+: [Portfolio's Performance and Reporting](https://datascienceplus.com/visualize-your-portfolios-performance-and-generate-a-nice-report-with-r/)
 
 - DataScience+: [Manage Credentials Safely in R](https://datascienceplus.com/how-to-manage-credentials-and-secrets-safely-in-r/)
 
@@ -61,4 +61,4 @@ You can check all active functions and documentations [here](https://laresbernar
 
 If you need help with any of the functions when using RStudio, use the `?` function (i.e. `?lares::function`) and the **Help** tab will display a short explanation on each function and its parameters. You might also be interested in the [online documentation](https://laresbernardo.github.io/lares/reference/index.html) to check all functions and parameters.
 
-If you encounter a bug, please share with me a reproducible example on [Github issues](https://github.com/laresbernardo/lares/issues) and I'll take care of it. For inquiries, and other matters, you can [LinkedIn me](https://www.linkedin.com/in/laresbernardo/) anytime!
+If you encounter a bug, please share with me a reproducible example on [Github issues](https://github.com/laresbernardo/lares/issues) and I'll take care of it. For inquiries, and other matters, you can contact me on LinkedIn anytime!
