@@ -75,7 +75,7 @@ standardize, center or scale your data. Tidyverse friendly." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">5.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">5.0.2</span>
       </span>
     </div>
 
@@ -217,15 +217,31 @@ actual model fitted and a plot.</p>
 <code><a href='trendsRelated.html'>trendsRelated</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+    <pre class="examples"><div class='input'> <span class='co'># CRAN</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.unsetenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span> <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
 
 <span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'>lasso_vars</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Survived</span>, ignore <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Cabin"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>$</span><span class='va'>coef</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>$</span><span class='va'>metrics</span><span class='op'>)</span>
-<span class='va'>m</span><span class='op'>$</span><span class='va'>plot</span>
-<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Omitting transformations for 'Cabin', 'Survived'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 4 variables: 'Pclass', 'Ticket', 'Embarked', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Searching for optimal lambda with CV...</span></div><div class='output co'>#&gt; <span class='message'>Found best lambda: 0.017784</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Fetching most relevant variables...</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots for Survived...</span></div><div class='output co'>#&gt; <span class='message'>- Plotting only the 20 most relevant features...</span></div><div class='output co'>#&gt; <span class='message'>Elapsed time: 4.7s</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>$</span><span class='va'>coef</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 22 x 3</span>
+#&gt;    names         coefficients standardized_coefficients
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>                     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> Sex_male         -<span style='color: #BB0000;'>0.482</span>                     -<span style='color: #BB0000;'>0.230</span>  
+#&gt; <span style='color: #BCBCBC;'> 2</span> Pclass_1          0.272                      0.116  
+#&gt; <span style='color: #BCBCBC;'> 3</span> Ticket_1601       0.577                      0.051<span style='text-decoration: underline;'>0</span> 
+#&gt; <span style='color: #BCBCBC;'> 4</span> Age              -<span style='color: #BB0000;'>0.003</span><span style='color: #BB0000; text-decoration: underline;'>30</span>                   -<span style='color: #BB0000;'>0.047</span><span style='color: #BB0000; text-decoration: underline;'>9</span> 
+#&gt; <span style='color: #BCBCBC;'> 5</span> Pclass_2          0.118                      0.047<span style='text-decoration: underline;'>6</span> 
+#&gt; <span style='color: #BCBCBC;'> 6</span> Ticket_OTHER      0.191                      0.046<span style='text-decoration: underline;'>7</span> 
+#&gt; <span style='color: #BCBCBC;'> 7</span> Ticket_113760     0.261                      0.017<span style='text-decoration: underline;'>5</span> 
+#&gt; <span style='color: #BCBCBC;'> 8</span> Embarked_C        0.032<span style='text-decoration: underline;'>8</span>                     0.012<span style='text-decoration: underline;'>8</span> 
+#&gt; <span style='color: #BCBCBC;'> 9</span> Ticket_347082    -<span style='color: #BB0000;'>0.125</span>                     -<span style='color: #BB0000;'>0.011</span><span style='color: #BB0000; text-decoration: underline;'>0</span> 
+#&gt; <span style='color: #BCBCBC;'>10</span> Fare              0.000<span style='text-decoration: underline;'>102</span>                   0.005<span style='text-decoration: underline;'>07</span>
+#&gt; <span style='color: #949494;'># … with 12 more rows</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>$</span><span class='va'>metrics</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 7</span>
+#&gt;    rmse   mae  mape   mse   rsq  rsqa bestlambda
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> 0.373 0.300  1.42 0.139 0.419 0.418     0.017<span style='text-decoration: underline;'>8</span></div><div class='input'><span class='va'>m</span><span class='op'>$</span><span class='va'>plot</span>
+</div><div class='img'><img src='lasso_vars-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
