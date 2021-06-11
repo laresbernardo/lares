@@ -47,7 +47,7 @@ with corr_var() results to compliment the analysis No need to
 standardize, center or scale your data. Tidyverse friendly.
 }
 \examples{
-\dontrun{
+\donttest{ # CRAN
 Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 

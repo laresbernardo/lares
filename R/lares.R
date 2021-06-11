@@ -26,7 +26,7 @@
 #' @importFrom pROC roc ci
 #' @importFrom rlang as_label .data
 #' @importFrom rpart rpart rpart.control
-#' @importFrom rvest read_html html_node html_nodes html_attrs html_attr html_table html_text 
+#' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text 
 #' @importFrom scales comma percent dollar
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
 #' reorder start kmeans var xtabs as.formula prcomp p.adjust pt model.matrix qt cor.test
@@ -37,6 +37,7 @@
 #' type.convert flush.console read.table modifyList write.csv combn browseURL type.convert
 #' getParseData find
 #' @importFrom yaml read_yaml
+#' @importFrom xml2 read_html
 "_PACKAGE"
 
 

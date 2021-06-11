@@ -164,7 +164,7 @@ models will be trained.
 }
 
 \examples{
-\dontrun{
+\donttest{ # CRAN
 data(dft) # Titanic dataset
 dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 

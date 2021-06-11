@@ -23,7 +23,7 @@
 cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = FALSE) {
   text <- as.character(text)
   if (ascii) {
-    text <- iconv(text, from = "UTF-8", to = "ASCII//TRANSLIT")
+    text <- iconv(text, from = "UTF-8", to = "ASCII//TRANSLIT", sub = "")
     text <- gsub("[^[:alnum:] ]", "", text)
   }
   if (lower) text <- tolower(text)

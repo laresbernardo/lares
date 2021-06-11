@@ -1038,25 +1038,25 @@ stocks_report <- function(data = NA,
   data$summary_df1 <- data$stocks %>%
     filter(.data$Date == max(.data$Date), .data$CumQuant > 0) %>%
     mutate(Change = sprintf(
-      "%s (%s)", 
+      "%s (%s)",
       formatNum(100*.data$DifUSD/.data$CumValue, 2, pos = "%", sign = TRUE),
       formatNum(.data$DifUSD/.data$CumQuant, 2, sign = TRUE))) %>%
     arrange(desc(abs(.data$DifUSD/.data$CumValue))) %>%
-    select(.data$Symbol, .data$Value, .data$Change, .data$DifUSD,
-           .data$CumQuant, .data$CumValue, .data$wt) %>%
+    select(.data$Symbol, .data$Value, .data$Change, .data$CumQuant,
+           .data$DifUSD, .data$CumValue, .data$wt, .data$CumROI) %>%
     rename("Abs.Change" = .data$DifUSD, "Quant" = .data$CumQuant,
-           "Total Value" = .data$CumValue, "Weight [%]" = .data$wt)
+           "Total Value" = .data$CumValue, "Weight [%]" = .data$wt,
+           "Hist.ROI [%]" = .data$CumROI)
   data$summary_df2 <- data$portfolio %>%
     filter(.data$Date == max(.data$Date)) %>%
     mutate(DifP = round(100*.data$DifUSD/.data$CumValue, 2)) %>%
     mutate_if(is.numeric, function(x) formatNum(x, 2, signif = 6)) %>%
-    mutate_all(as.character) %>% 
+    mutate_all(as.character) %>%
     select(.data$Date, one_of(sort(colnames(.)))) %>%
     tidyr::gather() %>%
     rename("Metric" = .data$key, "Value" = .data$value) %>%
-    mutate("Window" = c("Today", "Today", "Total", "Total", "Total",
-                        "Total", "Total", "Today", "Today", "Today",
-                        "Today", "Total", "Total")) %>%
+    mutate("Window" = c(rep("Today", 2), rep("Total", 5),
+                        rep("Today", 4), rep("Total", 2))) %>%
     arrange(.data$Window)
   
   # Can be more accurate with names but works for me!
@@ -1126,3 +1126,4 @@ stocks_report <- function(data = NA,
 # p <- q$portfolio
 # s <- q$stocks
 # stocks_report(q, dir = "~/Desktop")
+
