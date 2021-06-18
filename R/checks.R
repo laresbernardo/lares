@@ -4,11 +4,13 @@
 #' This function validates if inputs match all/any of your options
 #' and return error/message with possible options to use.
 #'
-#' @param inputs Vector character
-#' @param opts Vector character
-#' @param type Character. Options: all, any
-#' @param not Character. Options: stop, message, print, return
-#' @param quiet Boolean. Keep quiet? If not, returns TRUE or FALSE
+#' @param inputs Vector character. Check options.
+#' @param opts Vector character. Valid options.
+#' @param input_name Character. Custom your message and change "input"
+#' for any other string. For example: "column names".
+#' @param type Character. Options: "all", "any."
+#' @param not Character. Options: "stop", "message", "print", "return".
+#' @param quiet Boolean. Keep quiet? If not, returns logical value.
 #' @return Boolean. Result of \code{inputs} in \code{opts} (options).
 #' Depending on \code{type} and/or \code{stop} arguments,
 #' errors or messages will be shown.
@@ -17,7 +19,7 @@
 #' # Let's check the "all" logic
 #' check_opts(inputs = c("A", "B"), opts, quiet = FALSE)
 #' check_opts(inputs = c("X"), opts, not = "message", quiet = FALSE)
-#' check_opts(inputs = c("A","X"), opts, not = "warning")
+#' check_opts(inputs = c("A","X"), opts, input_name = "value", not = "warning")
 #' # Now let's check the "any" logic
 #' check_opts(inputs = c("A","X"), opts, type = "any")
 #' check_opts(inputs = c("X"), opts, type = "any", not = "message")
@@ -26,6 +28,7 @@
 #' check_opts(inputs = "X", opts, not = "invisible")
 #' @export
 check_opts <- function(inputs, opts, 
+                       input_name = "input",
                        type = "all", not = "stop", 
                        quiet = TRUE) {
   aux <- base::get(type)
@@ -34,10 +37,10 @@ check_opts <- function(inputs, opts,
   if (!isit) {
     if (type == "all")
       inputs <- inputs[which(!inputs %in% opts)]
-    not(paste("Your input", vector2text(inputs), 
-              "is not valid;", toupper(type),
-              "of the inputs should match these options:", 
-              vector2text(opts))) 
+    not(paste("Your", input_name, vector2text(inputs),
+              ifelse(length(inputs) > 1, "are", "is"),
+              "NOT valid; should match", toupper(type),
+              "of these options:\n ", vector2text(opts)))
   }
   if (!quiet) return(isit)
 }

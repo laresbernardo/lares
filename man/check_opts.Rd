@@ -4,18 +4,28 @@
 \alias{check_opts}
 \title{Validate options within vector}
 \usage{
-check_opts(inputs, opts, type = "all", not = "stop", quiet = TRUE)
+check_opts(
+  inputs,
+  opts,
+  input_name = "input",
+  type = "all",
+  not = "stop",
+  quiet = TRUE
+)
 }
 \arguments{
-\item{inputs}{Vector character}
+\item{inputs}{Vector character. Check options.}
 
-\item{opts}{Vector character}
+\item{opts}{Vector character. Valid options.}
 
-\item{type}{Character. Options: all, any}
+\item{input_name}{Character. Custom your message and change "input"
+for any other string. For example: "column names".}
 
-\item{not}{Character. Options: stop, message, print, return}
+\item{type}{Character. Options: "all", "any."}
 
-\item{quiet}{Boolean. Keep quiet? If not, returns TRUE or FALSE}
+\item{not}{Character. Options: "stop", "message", "print", "return".}
+
+\item{quiet}{Boolean. Keep quiet? If not, returns logical value.}
 }
 \value{
 Boolean. Result of \code{inputs} in \code{opts} (options).
@@ -31,7 +41,7 @@ opts <- c("A", "B", "C")
 # Let's check the "all" logic
 check_opts(inputs = c("A", "B"), opts, quiet = FALSE)
 check_opts(inputs = c("X"), opts, not = "message", quiet = FALSE)
-check_opts(inputs = c("A","X"), opts, not = "warning")
+check_opts(inputs = c("A","X"), opts, input_name = "value", not = "warning")
 # Now let's check the "any" logic
 check_opts(inputs = c("A","X"), opts, type = "any")
 check_opts(inputs = c("X"), opts, type = "any", not = "message")
