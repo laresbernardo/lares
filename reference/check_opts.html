@@ -119,30 +119,42 @@ and return error/message with possible options to use." />
 and return error/message with possible options to use.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>check_opts</span><span class='op'>(</span><span class='va'>inputs</span>, <span class='va'>opts</span>, type <span class='op'>=</span> <span class='st'>"all"</span>, not <span class='op'>=</span> <span class='st'>"stop"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>check_opts</span><span class='op'>(</span>
+  <span class='va'>inputs</span>,
+  <span class='va'>opts</span>,
+  input_name <span class='op'>=</span> <span class='st'>"input"</span>,
+  type <span class='op'>=</span> <span class='st'>"all"</span>,
+  not <span class='op'>=</span> <span class='st'>"stop"</span>,
+  quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>inputs</th>
-      <td><p>Vector character</p></td>
+      <td><p>Vector character. Check options.</p></td>
     </tr>
     <tr>
       <th>opts</th>
-      <td><p>Vector character</p></td>
+      <td><p>Vector character. Valid options.</p></td>
+    </tr>
+    <tr>
+      <th>input_name</th>
+      <td><p>Character. Custom your message and change "input"
+for any other string. For example: "column names".</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Character. Options: all, any</p></td>
+      <td><p>Character. Options: "all", "any."</p></td>
     </tr>
     <tr>
       <th>not</th>
-      <td><p>Character. Options: stop, message, print, return</p></td>
+      <td><p>Character. Options: "stop", "message", "print", "return".</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>Boolean. Keep quiet? If not, returns TRUE or FALSE</p></td>
+      <td><p>Boolean. Keep quiet? If not, returns logical value.</p></td>
     </tr>
     </table>
 
@@ -157,11 +169,14 @@ errors or messages will be shown.</p>
 <span class='co'># Let's check the "all" logic</span>
 <span class='fu'>check_opts</span><span class='op'>(</span>inputs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span><span class='op'>)</span>, <span class='va'>opts</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>check_opts</span><span class='op'>(</span>inputs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"X"</span><span class='op'>)</span>, <span class='va'>opts</span>, not <span class='op'>=</span> <span class='st'>"message"</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Your input 'X' is not valid; ALL of the inputs should match these options: 'A', 'B', 'C'</span></div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>check_opts</span><span class='op'>(</span>inputs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>,<span class='st'>"X"</span><span class='op'>)</span>, <span class='va'>opts</span>, not <span class='op'>=</span> <span class='st'>"warning"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Your input 'X' is not valid; ALL of the inputs should match these options: 'A', 'B', 'C'</span></div><div class='input'><span class='co'># Now let's check the "any" logic</span>
+</div><div class='output co'>#&gt; <span class='message'>Your input 'X' is NOT valid; should match ALL of these options:</span>
+#&gt; <span class='message'>  'A', 'B', 'C'</span></div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>check_opts</span><span class='op'>(</span>inputs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>,<span class='st'>"X"</span><span class='op'>)</span>, <span class='va'>opts</span>, input_name <span class='op'>=</span> <span class='st'>"value"</span>, not <span class='op'>=</span> <span class='st'>"warning"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Your value 'X' is NOT valid; should match ALL of these options:</span>
+#&gt; <span class='warning'>  'A', 'B', 'C'</span></div><div class='input'><span class='co'># Now let's check the "any" logic</span>
 <span class='fu'>check_opts</span><span class='op'>(</span>inputs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>,<span class='st'>"X"</span><span class='op'>)</span>, <span class='va'>opts</span>, type <span class='op'>=</span> <span class='st'>"any"</span><span class='op'>)</span>
 <span class='fu'>check_opts</span><span class='op'>(</span>inputs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"X"</span><span class='op'>)</span>, <span class='va'>opts</span>, type <span class='op'>=</span> <span class='st'>"any"</span>, not <span class='op'>=</span> <span class='st'>"message"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Your input 'X' is not valid; ANY of the inputs should match these options: 'A', 'B', 'C'</span></div><div class='input'><span class='fu'>check_opts</span><span class='op'>(</span>inputs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='cn'>NA</span><span class='op'>)</span>, <span class='va'>opts</span>, type <span class='op'>=</span> <span class='st'>"any"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Your input 'X' is NOT valid; should match ANY of these options:</span>
+#&gt; <span class='message'>  'A', 'B', 'C'</span></div><div class='input'><span class='fu'>check_opts</span><span class='op'>(</span>inputs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='cn'>NA</span><span class='op'>)</span>, <span class='va'>opts</span>, type <span class='op'>=</span> <span class='st'>"any"</span><span class='op'>)</span>
 <span class='co'># Final trick: just ignore results</span>
 <span class='fu'>check_opts</span><span class='op'>(</span>inputs <span class='op'>=</span> <span class='st'>"X"</span>, <span class='va'>opts</span>, not <span class='op'>=</span> <span class='st'>"invisible"</span><span class='op'>)</span>
 </div></pre>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Palette Colours — plot_palette • lares</title>
+<title>Download and plot daily downloads of CRAN packages — cran_logs • lares</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Plot Palette Colours — plot_palette" />
-<meta property="og:description" content="This function plots a list of colours" />
+<meta property="og:title" content="Download and plot daily downloads of CRAN packages — cran_logs" />
+<meta property="og:description" content="Download daily downloads stats from CRAN for any package, and plot.
+It can also be used as an auxiliary function to plot
+(cranlogs::cran_downloads) results." />
 
 
 
@@ -108,58 +110,65 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Palette Colours</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/colour_palettes.R'><code>R/colour_palettes.R</code></a></small>
-    <div class="hidden name"><code>plot_palette.Rd</code></div>
+    <h1>Download and plot daily downloads of CRAN packages</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/lares.R'><code>R/lares.R</code></a></small>
+    <div class="hidden name"><code>cran_logs.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function plots a list of colours</p>
+    <p>Download daily downloads stats from CRAN for any package, and plot.
+It can also be used as an auxiliary function to plot
+(<code>cranlogs::cran_downloads</code>) results.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_palette</span><span class='op'>(</span><span class='va'>fill</span>, colour <span class='op'>=</span> <span class='st'>"black"</span>, id <span class='op'>=</span> <span class='cn'>NA</span>, limit <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>cran_logs</span><span class='op'>(</span>
+  input <span class='op'>=</span> <span class='st'>"lares"</span>,
+  from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>31</span>,
+  to <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>1</span>,
+  plot <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>fill</th>
-      <td><p>Vector. List of colours for fills.</p></td>
+      <th>input</th>
+      <td><p>Character vector with package names or data.frame product of
+<code>cranlogs::cran_downloads</code>.</p></td>
     </tr>
     <tr>
-      <th>colour</th>
-      <td><p>Vector. List of colours for colours.</p></td>
+      <th>from, to</th>
+      <td><p>Dates. Range of dates to fetch downloads metrics.</p></td>
     </tr>
     <tr>
-      <th>id</th>
-      <td><p>Vector. ID for each color.</p></td>
-    </tr>
-    <tr>
-      <th>limit</th>
-      <td><p>Integer. Show only first n values.</p></td>
+      <th>plot</th>
+      <td><p>Boolean. Create a plot?</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Plot with <code>fill</code> colours and <code>colour</code> counter-colours
-if provided.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other Auxiliary: 
-<code><a href='gg_colour_customs.html'>gg_colour_customs</a>()</code>,
-<code><a href='gg_fill_customs.html'>gg_fill_customs</a>()</code>,
-<code><a href='gg_text_customs.html'>gg_text_customs</a>()</code>,
-<code><a href='lares_pal.html'>lares_pal</a>()</code></p></div>
+    <p>List with data.frame and plot if <code>plot=TRUE</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Simply pass a vector</span>
-<span class='va'>pal</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lares_pal.html'>lares_pal</a></span><span class='op'>(</span><span class='st'>"simple"</span><span class='op'>)</span>
-<span class='fu'>plot_palette</span><span class='op'>(</span><span class='va'>pal</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span></div><div class='img'><img src='plot_palette-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Or fill + color named vector</span>
-<span class='va'>pal</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lares_pal.html'>lares_pal</a></span><span class='op'>(</span><span class='st'>"pal"</span><span class='op'>)</span>
-<span class='fu'>plot_palette</span><span class='op'>(</span>fill <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>pal</span><span class='op'>)</span>, colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span><span class='op'>(</span><span class='va'>pal</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Limited to 12 colours. Overwrite with 'limit' parameter</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span></div><div class='img'><img src='plot_palette-2.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>cran_logs</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lares"</span>, <span class='st'>"dplyr"</span><span class='op'>)</span>, from <span class='op'>=</span> <span class='st'>"2021-05-31"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $df
+#&gt; <span style='color: #949494;'># A tibble: 36 x 3</span>
+#&gt;    date       count package
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  
+#&gt; <span style='color: #BCBCBC;'> 1</span> 2021-05-31    49 lares  
+#&gt; <span style='color: #BCBCBC;'> 2</span> 2021-06-01    69 lares  
+#&gt; <span style='color: #BCBCBC;'> 3</span> 2021-06-02    42 lares  
+#&gt; <span style='color: #BCBCBC;'> 4</span> 2021-06-03   152 lares  
+#&gt; <span style='color: #BCBCBC;'> 5</span> 2021-06-04   158 lares  
+#&gt; <span style='color: #BCBCBC;'> 6</span> 2021-06-05    49 lares  
+#&gt; <span style='color: #BCBCBC;'> 7</span> 2021-06-06    50 lares  
+#&gt; <span style='color: #BCBCBC;'> 8</span> 2021-06-07   158 lares  
+#&gt; <span style='color: #BCBCBC;'> 9</span> 2021-06-08   137 lares  
+#&gt; <span style='color: #BCBCBC;'>10</span> 2021-06-09   161 lares  
+#&gt; <span style='color: #949494;'># … with 26 more rows</span>
+#&gt; 
+#&gt; $plot</div><div class='img'><img src='cran_logs-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
