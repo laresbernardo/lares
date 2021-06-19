@@ -28,8 +28,7 @@ Imports:
     scales,
     stringr,
     tidyr,
-    yaml,
-    xml2
+    yaml
 Suggests:
     beepr,
     DALEX,

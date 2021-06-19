@@ -777,7 +777,7 @@ etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
     url <- paste0("https://etfdb.com/etf/", info)
     #exists <- tryCatch({!httr::http_error(url)}, error = function(err) {FALSE})
     sector <- tryCatch(
-      suppressWarnings(read_html(url)), error = function(err) {
+      suppressWarnings(content(GET(url))), error = function(err) {
         closeAllConnections(); gc()
         nodata <- c(nodata, info)
         return(NULL)

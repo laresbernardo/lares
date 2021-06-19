@@ -269,7 +269,7 @@ ip_data <- function(ip = myip(), quiet = FALSE) {
   output <- data.frame()
   for (i in seq_along(ip)) {
     url <- paste0("https://db-ip.com/", ip[i])
-    scrap <- read_html(url) %>% html_table()
+    scrap <- content(GET(url)) %>% html_table()
     clean <- bind_rows(scrap[[1]], scrap[[3]])
     row <- data.frame(t(clean[,2]))
     colnames(row) <- clean$X1
@@ -759,7 +759,7 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
 #' @export
 myip <- function(){
   ipify <- "https://api.ipify.org/"
-  ip <- read_html(ipify) %>% html_text()
+  ip <- content(GET(ipify), encoding = "UTF-8")
   return(ip)
 }
 

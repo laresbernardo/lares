@@ -415,8 +415,8 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
   for (i in seq_len(nrow(combs))) {
     message(paste0(">>> Extracting ", combs$country[i], "'s holidays for ", combs$year[i]))
     url <- paste0("https://www.timeanddate.com/holidays/", tolower(combs$country[i]), "/", combs$year[i])
-    holidays <- read_html(url)
-    holidays <- holidays %>% html_nodes(".table") %>% html_table(fill = TRUE) %>% 
+    holidays <- content(GET(url))
+    holidays <- holidays %>% html_nodes(".table") %>% html_table(fill = TRUE) %>%
       data.frame(.) %>% filter(!is.na(.data$Date))
     holidays <- holidays[,-2]
     colnames(holidays) <- c("Date", "Holiday", "Holiday.Type")
