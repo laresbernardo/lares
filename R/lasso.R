@@ -3,8 +3,9 @@
 #' 
 #' Use Lasso regression to identify the most relevant variables that 
 #' can predict/identify another variable. You might want to compare 
-#' with corr_var() results to compliment the analysis No need to
-#' standardize, center or scale your data. Tidyverse friendly.
+#' with \code{corr_var()} and/or \code{x2y()} results to compliment
+#' the analysis No need to standardize, center or scale your data.
+#' Tidyverse friendly.
 #' 
 #' @family Machine Learning
 #' @family Exploratory
