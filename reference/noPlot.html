@@ -154,6 +154,10 @@ using filters and no data is returned.</p>
       <th>font</th>
       <td><p>Character. Font name</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters passed to <code><a href='theme_lares.html'>theme_lares()</a></code>.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -192,7 +196,8 @@ using filters and no data is returned.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.unsetenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span> <span class='co'># Temporal</span>
 <span class='fu'>noPlot</span><span class='op'>(</span>message <span class='op'>=</span> <span class='st'>"No plot to show!"</span><span class='op'>)</span>
-</div><div class='img'><img src='noPlot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.unsetenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span> <span class='co'># Temporal</span>
+</div><div class='img'><img src='noPlot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>noPlot</span><span class='op'>(</span>background <span class='op'>=</span> <span class='st'>"#FF5500"</span>, size <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in noPlot(background = "#FF5500", size = 7): unused argument (background = "#FF5500")</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.unsetenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span> <span class='co'># Temporal</span>
 <span class='fu'>noPlot</span><span class='op'>(</span>message <span class='op'>=</span> <span class='st'>"No plot to show!"</span><span class='op'>)</span>
 </div><div class='img'><img src='noPlot-2.png' alt='' width='700' height='433' /></div></pre>
   </div>

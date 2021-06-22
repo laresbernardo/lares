@@ -138,7 +138,8 @@
     </tr>
     <tr>
       <th>decimals</th>
-      <td><p>Integer. Amount of decimals to display.</p></td>
+      <td><p>Integer. Amount of decimals to display. If set to
+<code>NULL</code>, then <code><a href='https://rdrr.io/r/base/options.html'>getOption("digits")</a></code> will be used.</p></td>
     </tr>
     <tr>
       <th>signif</th>
@@ -205,7 +206,7 @@ the `decimals` parameter to set abbr's <code>n</code>(-1) parameter.</p></td>
 </div><div class='output co'>#&gt; [1] "123K"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1234567890</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span>, signif <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "1.2B"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1234567890</span>, decimals <span class='op'>=</span> <span class='fl'>0</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "1B"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>, sign <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "-3.00" "-2.00" "-1.00" "0.00"  "+1.00" "+2.00" "+3.00"</div></pre>
+</div><div class='output co'>#&gt; [1] "-3" "-2" "-1" "0"  "+1" "+2" "+3"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -290,22 +290,22 @@ when <code>plot=FALSE</code>.</p>
 
 <span class='co'>#' # How many survived and see plot?</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs</span><span class='op'>(</span><span class='va'>Survived</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span></div><div class='img'><img src='freqs-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='freqs-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># How many survived per class?</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs</span><span class='op'>(</span><span class='va'>Survived</span>, <span class='va'>Pclass</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span></div><div class='img'><img src='freqs-2.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='freqs-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Per class, how many survived?</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs</span><span class='op'>(</span><span class='va'>Pclass</span>, <span class='va'>Survived</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span></div><div class='img'><img src='freqs-3.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='freqs-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Per sex and class, how many survived?</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs</span><span class='op'>(</span><span class='va'>Sex</span>, <span class='va'>Pclass</span>, <span class='va'>Survived</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span></div><div class='img'><img src='freqs-4.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='freqs-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Frequency of tickets + Survived</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs</span><span class='op'>(</span><span class='va'>Survived</span>, <span class='va'>Ticket</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Slicing the top 20 (out of 681) values; use 'top' parameter to overrule.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span></div><div class='img'><img src='freqs-5.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Slicing the top 20 (out of 681) values; use 'top' parameter to overrule.</span></div><div class='img'><img src='freqs-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Frequency of tickets: top 10 only and order them alphabetically</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs</span><span class='op'>(</span><span class='va'>Ticket</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span>, top <span class='op'>=</span> <span class='fl'>10</span>, abc <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Slicing the top 10 (out of 681) values; use 'top' parameter to overrule.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span></div><div class='img'><img src='freqs-6.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='output co'>#&gt; <span class='message'>Slicing the top 10 (out of 681) values; use 'top' parameter to overrule.</span></div><div class='img'><img src='freqs-6.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

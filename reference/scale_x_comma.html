@@ -43,11 +43,11 @@
 <meta property="og:description" content="The _comma ones set comma format for axis text, the _percent 
 ones set percent format for axis text, _dollar for collar currency,
 and _abbr for abbreviated format. Lastly, use _formatNum to
-further customize your numerical scales with lares::formatNum.
+further customize your numerical scales with formatNum.
 The _comma ones set comma format for axis text, the _percent 
 ones set percent format for axis text, _dollar for collar currency,
 and _abbr for abbreviated format. Lastly, use _formatNum to
-further customize your numerical scales with lares::formatNum." />
+further customize your numerical scales with formatNum." />
 
 
 
@@ -124,11 +124,11 @@ further customize your numerical scales with lares::formatNum." />
     <p>The <code>_comma</code> ones set comma format for axis text, the <code>_percent</code> 
 ones set percent format for axis text, <code>_dollar</code> for collar currency,
 and <code>_abbr</code> for abbreviated format. Lastly, use <code>_formatNum</code> to
-further customize your numerical scales with <code><a href='formatNum.html'>lares::formatNum</a></code>.</p>
+further customize your numerical scales with <code>formatNum</code>.</p>
 <p>The <code>_comma</code> ones set comma format for axis text, the <code>_percent</code> 
 ones set percent format for axis text, <code>_dollar</code> for collar currency,
 and <code>_abbr</code> for abbreviated format. Lastly, use <code>_formatNum</code> to
-further customize your numerical scales with <code><a href='formatNum.html'>lares::formatNum</a></code>.</p>
+further customize your numerical scales with <code>formatNum</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>scale_x_comma</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
@@ -213,11 +213,12 @@ further customize your numerical scales with <code><a href='formatNum.html'>lare
     <tr>
       <th>...</th>
       <td><p>Arguments passed to <code><a href='https://ggplot2.tidyverse.org/reference/continuous_scale.html'>ggplot2::continuous_scale</a></code> or
-<code><a href='formatNum.html'>lares::formatNum</a></code> depending on the function.</p></td>
+<code>formatNum</code> depending on the function.</p></td>
     </tr>
     <tr>
       <th>decimals</th>
-      <td><p>Integer. Amount of decimals to display.</p></td>
+      <td><p>Integer. Amount of decimals to display. If set to
+<code>NULL</code>, then <code><a href='https://rdrr.io/r/base/options.html'>getOption("digits")</a></code> will be used.</p></td>
     </tr>
     <tr>
       <th>signif</th>
