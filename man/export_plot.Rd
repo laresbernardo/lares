@@ -45,11 +45,9 @@ Export any \code{ggplot2}, \code{gridExtra}, or any plot object
 created with R into rendered \code{png} or \code{jpg} file.
 }
 \examples{
-\donttest{
 p <- noPlot()
 export_plot(p, name = "noplot", width = 10, height = 8, res = 300, dir = tempdir())
 export_plot(p, name = "noplot2", subdir = "newplots", dir = tempdir())
-}
 }
 \seealso{
 Other Tools: 

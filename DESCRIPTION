@@ -11,7 +11,7 @@ Description: Auxiliary package for better/faster analytics, visualization, data 
     results, without the need of repetitive coding or extensive programming skills.
 Depends:
     R (>= 3.5)
-Imports: 
+Imports:
     dplyr,
     ggplot2,
     h2o,

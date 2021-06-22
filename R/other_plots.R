@@ -127,11 +127,9 @@ noPlot <- function(message = "Nothing to show here!",
 #' @param quiet Boolean. Display successful message with filename when saved?
 #' @return No return value, called for side effects.
 #' @examples
-#' \donttest{
 #' p <- noPlot()
 #' export_plot(p, name = "noplot", width = 10, height = 8, res = 300, dir = tempdir())
 #' export_plot(p, name = "noplot2", subdir = "newplots", dir = tempdir())
-#' }
 #' @export
 export_plot <- function(p, 
                         name = "plot", vars = NA, sep = ".vs.", 
@@ -156,12 +154,9 @@ export_plot <- function(p,
   if (!is.na(subdir)) {
     dir <- file.path(dir, subdir)
     if (!dir.exists(dir)) dir.create(dir)
-    file_name <- paste(subdir, file_name, sep = "/")
   }
   
-  # Export plot to file
-  # if (!"patchwork" %in% class(p) & "ggplot" %in% class(p)) {
-  #   ggsave(filename = file_name, plot = p, device = format, height = height, width = width, dpi = res)
+  file_name <- paste(dir, file_name, sep = "/")
   export_fx <- base::get(format)
   export_fx(file_name, height = height * res, width = width * res, res = res)
   plot(p)
