@@ -40,10 +40,7 @@
 
 
 <meta property="og:title" content="Plot Result with Nothing to Plot — noPlot" />
-<meta property="og:description" content="This function lets the user print a plot without plot, with a 
-customizable message. It is quite useful for Shiny renderPlot when
-using filters and no data is returned.
-This function lets the user print a plot without plot, with a 
+<meta property="og:description" content="This function lets the user print a plot without plot, with a
 customizable message. It is quite useful for Shiny renderPlot when
 using filters and no data is returned." />
 
@@ -119,25 +116,12 @@ using filters and no data is returned." />
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user print a plot without plot, with a 
-customizable message. It is quite useful for Shiny renderPlot when
-using filters and no data is returned.</p>
-<p>This function lets the user print a plot without plot, with a 
+    <p>This function lets the user print a plot without plot, with a
 customizable message. It is quite useful for Shiny renderPlot when
 using filters and no data is returned.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>noPlot</span><span class='op'>(</span>
-  message <span class='op'>=</span> <span class='st'>"Nothing to show here!"</span>,
-  size <span class='op'>=</span> <span class='fl'>4</span>,
-  font <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='fu'>noPlot</span><span class='op'>(</span>
-  message <span class='op'>=</span> <span class='st'>"Nothing to show here!"</span>,
-  size <span class='op'>=</span> <span class='fl'>4</span>,
-  font <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>noPlot</span><span class='op'>(</span>message <span class='op'>=</span> <span class='st'>"Nothing to show here!"</span>, size <span class='op'>=</span> <span class='fl'>4.5</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,11 +132,7 @@ using filters and no data is returned.</p>
     </tr>
     <tr>
       <th>size</th>
-      <td><p>Numeric. Text size.</p></td>
-    </tr>
-    <tr>
-      <th>font</th>
-      <td><p>Character. Font name</p></td>
+      <td><p>Numeric. Font size for <code>message</code> input.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -163,23 +143,9 @@ using filters and no data is returned.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Empty ggplot2 object (with a <code>message</code> if set).</p>
-<p>Empty ggplot2 object (with a <code>message</code> if set).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Visualization: 
-<code><a href='distr.html'>distr</a>()</code>,
-<code><a href='freqs_df.html'>freqs_df</a>()</code>,
-<code><a href='freqs_list.html'>freqs_list</a>()</code>,
-<code><a href='freqs_plot.html'>freqs_plot</a>()</code>,
-<code><a href='freqs.html'>freqs</a>()</code>,
-<code><a href='gg_bars.html'>gg_bars</a>()</code>,
-<code><a href='gg_pie.html'>gg_pie</a>()</code>,
-<code><a href='plot_chord.html'>plot_chord</a>()</code>,
-<code><a href='plot_survey.html'>plot_survey</a>()</code>,
-<code><a href='plot_timeline.html'>plot_timeline</a>()</code>,
-<code><a href='theme_lares.html'>theme_lares</a>()</code>,
-<code><a href='tree_var.html'>tree_var</a>()</code></p>
-<p>Other Visualization: 
 <code><a href='distr.html'>distr</a>()</code>,
 <code><a href='freqs_df.html'>freqs_df</a>()</code>,
 <code><a href='freqs_list.html'>freqs_list</a>()</code>,
@@ -197,8 +163,6 @@ using filters and no data is returned.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.unsetenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span> <span class='co'># Temporal</span>
 <span class='fu'>noPlot</span><span class='op'>(</span>message <span class='op'>=</span> <span class='st'>"No plot to show!"</span><span class='op'>)</span>
 </div><div class='img'><img src='noPlot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>noPlot</span><span class='op'>(</span>background <span class='op'>=</span> <span class='st'>"#FF5500"</span>, size <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in noPlot(background = "#FF5500", size = 7): unused argument (background = "#FF5500")</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.unsetenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span> <span class='co'># Temporal</span>
-<span class='fu'>noPlot</span><span class='op'>(</span>message <span class='op'>=</span> <span class='st'>"No plot to show!"</span><span class='op'>)</span>
 </div><div class='img'><img src='noPlot-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

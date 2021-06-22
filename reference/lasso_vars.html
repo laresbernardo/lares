@@ -165,7 +165,7 @@ process categorical values, and values will be standardize automatically.</p></t
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>Boolean. Keep quiet? Else, show messages</p></td>
+      <td><p>Boolean. Keep quiet? Else, show messages.</p></td>
     </tr>
     <tr>
       <th>seed</th>
@@ -173,7 +173,7 @@ process categorical values, and values will be standardize automatically.</p></t
     </tr>
     <tr>
       <th>...</th>
-      <td><p>ohse parameters.</p></td>
+      <td><p>Additional parameters passed to <code><a href='ohse.html'>ohse()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -222,7 +222,7 @@ actual model fitted and a plot.</p>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
 
 <span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'>lasso_vars</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Survived</span>, ignore <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Cabin"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Omitting transformations for 'Cabin', 'Survived'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 4 variables: 'Pclass', 'Ticket', 'Embarked', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Searching for optimal lambda with CV...</span></div><div class='output co'>#&gt; <span class='message'>Found best lambda: 0.017784</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Fetching most relevant variables...</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots for Survived...</span></div><div class='output co'>#&gt; <span class='message'>- Plotting only the 20 most relevant features...</span></div><div class='output co'>#&gt; <span class='message'>Elapsed time: 4.86s</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>$</span><span class='va'>coef</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Omitting transformations for 'Cabin', 'Survived'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 4 variables: 'Pclass', 'Ticket', 'Embarked', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Searching for optimal lambda with CV...</span></div><div class='output co'>#&gt; <span class='message'>Found best lambda: 0.017784</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Fetching most relevant variables...</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots for Survived...</span></div><div class='output co'>#&gt; <span class='message'>- Plotting only the 20 most relevant features...</span></div><div class='output co'>#&gt; <span class='message'>Elapsed time: 3.67s</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>$</span><span class='va'>coef</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 22 x 3</span>
 #&gt;    names         coefficients standardized_coefficients
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>                     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
@@ -240,7 +240,7 @@ actual model fitted and a plot.</p>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 7</span>
 #&gt;    rmse   mae  mape   mse   rsq  rsqa bestlambda
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> 0.373 0.300  1.42 0.139 0.419 0.418     0.017<span style='text-decoration: underline;'>8</span></div><div class='input'><span class='va'>m</span><span class='op'>$</span><span class='va'>plot</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> 0.373 0.300  1.42 0.139 0.419 0.418     0.017<span style='text-decoration: underline;'>8</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>$</span><span class='va'>plot</span><span class='op'>)</span>
 </div><div class='img'><img src='lasso_vars-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
