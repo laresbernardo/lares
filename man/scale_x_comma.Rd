@@ -91,7 +91,7 @@ scale_y_formatNum(
 }
 \arguments{
 \item{...}{Arguments passed to \code{ggplot2::continuous_scale} or
-\code{lares::formatNum} depending on the function.}
+\code{formatNum} depending on the function.}
 
 \item{decimals}{Integer. Amount of decimals to display. If set to
 \code{NULL}, then \code{getOption("digits")} will be used.}
@@ -121,12 +121,12 @@ Reformatted scales on ggplot2 object
 The \code{_comma} ones set comma format for axis text, the \code{_percent} 
 ones set percent format for axis text, \code{_dollar} for collar currency,
 and \code{_abbr} for abbreviated format. Lastly, use \code{_formatNum} to
-further customize your numerical scales with \code{lares::formatNum}.
+further customize your numerical scales with \code{formatNum}.
 
 The \code{_comma} ones set comma format for axis text, the \code{_percent} 
 ones set percent format for axis text, \code{_dollar} for collar currency,
 and \code{_abbr} for abbreviated format. Lastly, use \code{_formatNum} to
-further customize your numerical scales with \code{lares::formatNum}.
+further customize your numerical scales with \code{formatNum}.
 }
 \examples{
 library(ggplot2)

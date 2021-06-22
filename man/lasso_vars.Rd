@@ -20,7 +20,7 @@ lasso_vars(
 \item{df}{Dataframe. Any dataframe is valid as \code{ohse} will be applied to
 process categorical values, and values will be standardize automatically.}
 
-\item{variable}{Variable.}
+\item{variable}{Variable. Independent variable.}
 
 \item{ignore}{Character vector. Variables to exclude from study.}
 

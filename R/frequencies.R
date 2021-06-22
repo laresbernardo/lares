@@ -357,9 +357,9 @@ freqs_df <- function(df,
     p <- ggplot(out, aes(x = .data$col, y = .data$count, fill = .data$col, 
                          label = .data$label, colour = .data$col)) + 
       geom_col(aes(alpha = .data$alpha), position = "fill", 
-               colour = "transparent", width = 0.95, size = 0.1) + 
+               colour = "80000000", width = 0.95, size = 0.1) +
       geom_text(position = position_fill(vjust = .5), size = 3) +
-      coord_flip() + labs(x = NULL, y = NULL, title = "Global Values Frequencies") +
+      coord_flip() + labs(x = NULL, y = NULL, title = "Overall Values Frequencies") +
       scale_y_percent(expand = c(0, 0)) +
       guides(fill = "none", colour = "none", alpha = "none") +
       theme_lares(pal = 1) + 

@@ -22,6 +22,8 @@ noPlot(
 \item{size}{Numeric. Text size.}
 
 \item{font}{Character. Font name}
+
+\item{...}{Additional parameters passed to \code{theme_lares()}.}
 }
 \value{
 Empty ggplot2 object (with a \code{message} if set).
@@ -40,6 +42,7 @@ using filters and no data is returned.
 \examples{
 Sys.unsetenv("LARES_FONT") # Temporal
 noPlot(message = "No plot to show!")
+noPlot(background = "#FF5500", size = 7)
 Sys.unsetenv("LARES_FONT") # Temporal
 noPlot(message = "No plot to show!")
 }

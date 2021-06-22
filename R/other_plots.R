@@ -311,10 +311,10 @@ gg_bars <- function(names, n, p = NA,
 #' The \code{_comma} ones set comma format for axis text, the \code{_percent} 
 #' ones set percent format for axis text, \code{_dollar} for collar currency,
 #' and \code{_abbr} for abbreviated format. Lastly, use \code{_formatNum} to
-#' further customize your numerical scales with \code{lares::formatNum}.
+#' further customize your numerical scales with \code{formatNum}.
 #'
 #' @param ... Arguments passed to \code{ggplot2::continuous_scale} or
-#' \code{lares::formatNum} depending on the function.
+#' \code{formatNum} depending on the function.
 #' @return Reformatted scales on ggplot2 object
 #' @examples 
 #' library(ggplot2)
@@ -333,32 +333,32 @@ gg_bars <- function(names, n, p = NA,
 #'   scale_y_formatNum(position = "right", decimals = 0, pos = " X")
 #' @export
 scale_x_comma <- function(...) scale_x_continuous(..., labels = function(x)
-  lares::formatNum(x, decimals = NULL, signif = 3))
+  formatNum(x, decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
 scale_y_comma <- function(...) scale_y_continuous(..., labels = function(x)
-  lares::formatNum(x, decimals = NULL, signif = 3))
+  formatNum(x, decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
 scale_x_percent <- function(...) scale_x_continuous(..., labels = function(x)
-  lares::formatNum(x, pos = "%", decimals = NULL, signif = 3))
+  formatNum(x*100, pos = "%", decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
 scale_y_percent <- function(...) scale_y_continuous(..., labels = function(x)
-  lares::formatNum(x, pos = "%", decimals = NULL, signif = 3))
+  formatNum(x*100, pos = "%", decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
 scale_x_dollar <- function(...) scale_x_continuous(..., labels = function(x)
-  lares::formatNum(x, pre = "$", decimals = NULL, signif = 3))
+  formatNum(x, pre = "$", decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
 scale_y_dollar <- function(...) scale_y_continuous(..., labels = function(x)
-  lares::formatNum(x, pre = "$", decimals = NULL, signif = 3))
+  formatNum(x, pre = "$", decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
@@ -399,32 +399,19 @@ scale_y_formatNum <- function(..., decimals = 2, signif = NULL,
 #' 
 #' @family Visualization
 #' @param message Character. What message do you wish to show?
-#' @param size Numeric. Text size.
-#' @param font Character. Font name
+#' @param size Numeric. Font size for \code(message) input.
+#' @param ... Additional parameters passed to \code{theme_lares()}.
 #' @return Empty ggplot2 object (with a \code{message} if set).
 #' @examples 
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' noPlot(message = "No plot to show!")
+#' noPlot(background = "#FF5500", size = 7)
 #' @export
-noPlot <- function(message = "Nothing to show here!", size = 4,
-                   font = Sys.getenv("LARES_FONT")) {
-  
+noPlot <- function(message = "Nothing to show here!",
+                   size = 4.5, ...) {
   ggplot(data.frame(), aes(x = 0, y = 0, label = message)) + 
-    theme_lares(font = font) + theme_minimal() +
-    geom_text(size = size) +
-    theme(axis.line = element_blank(),
-          axis.text.x = element_blank(),
-          axis.text.y = element_blank(),
-          axis.ticks = element_blank(),
-          axis.title.x = element_blank(),
-          axis.title.y = element_blank(),
-          legend.position = "none",
-          panel.background = element_blank(),
-          panel.border = element_blank(),
-          panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(),
-          plot.background = element_blank(),
-          plot.margin = margin(0, 0, 0, 0))
+    theme_lares(clean = TRUE, ...) +
+    geom_text(size = size)
 }
 
 
@@ -802,10 +789,10 @@ gg_bars <- function(names, n, p = NA,
 #' The \code{_comma} ones set comma format for axis text, the \code{_percent} 
 #' ones set percent format for axis text, \code{_dollar} for collar currency,
 #' and \code{_abbr} for abbreviated format. Lastly, use \code{_formatNum} to
-#' further customize your numerical scales with \code{lares::formatNum}.
+#' further customize your numerical scales with \code{formatNum}.
 #'
 #' @param ... Arguments passed to \code{ggplot2::continuous_scale} or
-#' \code{lares::formatNum} depending on the function.
+#' \code{formatNum} depending on the function.
 #' @return Reformatted scales on ggplot2 object
 #' @examples 
 #' library(ggplot2)

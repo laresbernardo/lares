@@ -10,7 +10,7 @@
 #' @family Exploratory
 #' @param df Dataframe. Any dataframe is valid as \code{ohse} will be applied to
 #' process categorical values, and values will be standardize automatically.
-#' @param variable Variable. 
+#' @param variable Variable. Independent variable.
 #' @param ignore Character vector. Variables to exclude from study.
 #' @param nlambdas Integer. Number of lambdas to be used in a search.
 #' @param nfolds Integer. Number of folds for K-fold cross-validation (>= 2).
@@ -87,15 +87,15 @@ lasso_vars <- function(df, variable,
       .data$names == "Intercept", 0, .data$standardized_coefficients)))
   
   if (!quiet) message(">>> Generating plots for ", as_label(var), "...")
-  red <- "#E63946"
-  green <- "#3DA4AB" 
   if (nrow(t_lasso_model_coeff) > top & !quiet)
     message(paste("- Plotting only the", top, "most relevant features..."))
+  good <- lares_pal("labels") %>% filter(values == "good") %>% pull("fill")
+  bad <- lares_pal("labels") %>% filter(values == "bad") %>% pull("fill")
   p <- t_lasso_model_coeff %>% head(top) %>%
     filter(.data$names != "Intercept") %>%
     mutate(abs = abs(.data$standardized_coefficients),
            prc = .data$abs/sum(.data$abs),
-           coef = ifelse(.data$coefficients > 0, green, red)) %>%
+           coef = ifelse(.data$coefficients > 0, good, bad)) %>%
     filter(.data$prc > 0) %>%
     ggplot(aes(x = reorder(.data$names, .data$prc),
                y = abs(.data$standardized_coefficients),
@@ -106,8 +106,8 @@ lasso_vars <- function(df, variable,
          title = "Most Relevant Features (Lasso Regression)",
          subtitle = paste("RSQ =", round(rsq$metrics$rsq, 4)),
          fill = "Coeff > 0") +
-    theme_lares(legend = "top") +
-    scale_y_continuous(expand = c(0, 0))
+    theme_lares(legend = "top", pal = 2) +
+    scale_y_percent(expand = c(0, 0), position = "right")
   
   toc("lasso_vars", quiet = quiet)
   

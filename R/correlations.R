@@ -409,26 +409,28 @@ corr_cross <- function(df, plot = TRUE,
       mutate(facet = gsub(vector2text(contains, sep = "|", quotes = FALSE), "", .data$mix)) %>%
       mutate(facet = gsub("_", "", .data$facet))
     
+    good <- lares_pal("labels") %>% filter(values == "good") %>% pull("fill")
+    bad <- lares_pal("labels") %>% filter(values == "bad") %>% pull("fill")
+    
     if (type == 1) {
       p <- ret %>%
         head(top) %>%
         mutate(label = paste(.data$key, "+", .data$mix), 
                abs = abs(.data$corr),
-               sign = ifelse(.data$corr < 0, "bad", "good")) %>%
+               sign = ifelse(.data$corr < 0, bad, good)) %>%
         ggplot(aes(x = reorder(.data$label, .data$abs), 
                    y = .data$abs, 
                    fill = .data$sign)) +
         geom_col(colour = "transparent") +
-        # geom_hline(aes(yintercept = 0), alpha = 0.5) + 
         geom_text(aes(label = sub('^(-)?0[.]', '\\1.', signif(.data$corr, 3))), 
                   size = 3, colour = "white", hjust = 1.1) +
         coord_flip() + guides(fill = "none") +
-        labs(title = "Ranked Cross-Correlations", 
+        labs(title = "Ranked Cross-Correlations",
              subtitle = subtitle,
              x = NULL, y = NULL) +
-        scale_fill_manual(values = c("bad" = "#E5586E", "good" = "#59B3D2")) +
+        scale_fill_identity() +
         scale_y_continuous(expand = c(0, 0), position = "right",
-                           labels = function(x) sub('^(-)?0[.]', '\\1.', x)) + 
+                           labels = function(x) sub('^(-)?0[.]', '\\1.', x)) +
         theme_lares(legend = "top")
       if ((!is.na(contains)[1] & length(contains) == 1) | grid) {
         p <- p + facet_grid(.data$facet ~ ., scales = "free", space = "free")
