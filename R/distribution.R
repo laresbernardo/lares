@@ -227,8 +227,8 @@ distr <- function(data, ...,
           labs(title = "2D Density Distribution",
                x = targets_name, y = variable_name,
                subtitle = subtitle) +
-          scale_x_continuous(labels = comma) +
-          scale_y_continuous(labels = comma) +
+          scale_x_comma() +
+          scale_y_comma() +
           theme_lares()
         return(p)  
       }
@@ -320,7 +320,7 @@ distr <- function(data, ...,
                   position = position_dodge(0.9), 
                   size = 3, vjust = vadj, hjust = hadj) +
         labs(x = NULL, y = "Counter [#]", fill = targets_name, caption = note) + 
-        theme(legend.position = "top") + guides(colour = FALSE) +
+        theme(legend.position = "top") + guides(colour = "none") +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
         scale_y_comma(expand = c(0, 0)) +
         theme_lares(pal = 1)
@@ -349,7 +349,7 @@ distr <- function(data, ...,
         coord_flip() +
         labs(x = "Proportions [%]", y = NULL, fill = targets_name, caption = note) +
         theme(legend.position = "top") + 
-        guides(colour = FALSE, size = FALSE) +
+        guides(colour = "none", size = "none") +
         scale_y_percent(expand = c(0, 0)) +
         theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
         theme_lares(pal = 1)
@@ -387,7 +387,7 @@ distr <- function(data, ...,
       count <- count + labs(title = "Distribution and Proportions", 
                             subtitle = subtitle, caption = "") +
         theme(plot.margin = margin(10, 15, -15, 15))
-      prop <- prop + guides(fill = FALSE) + labs(caption = note) +
+      prop <- prop + guides(fill = "none") + labs(caption = note) +
         theme(plot.margin = margin(-5, 15, -15, 15))
       p <- (count / prop) + plot_layout(ncol = 1, nrow = 2)
       if (save) p <- p + ggsave(file_name, width = 10, height = 7)

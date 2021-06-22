@@ -410,7 +410,7 @@ sentimentBreakdown <- function(text, lang = "spanish",
       theme_lares(pal = 0) + 
       gg_fill_customs() + 
       coord_flip() + 
-      guides(fill = FALSE) +
+      guides(fill = "none") +
       labs(x = NULL, y = "Intensity", title = "Sentiment Breakdown")
     if (!is.na(subtitle)) p <- p + labs(subtitle = autoline(subtitle))
     ret[["plot"]] <- p

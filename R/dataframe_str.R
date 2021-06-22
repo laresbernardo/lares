@@ -99,7 +99,7 @@ df_str <- function(df,
                  y = .data$p, fill = .data$type,
                  label = formatNum(.data$counter, 0))) + 
       geom_col() + coord_flip() + ylim(0, 100) +
-      theme_minimal() + guides(fill = FALSE) +
+      theme_minimal() + guides(fill = "none") +
       labs(title = "Dataset overall structure", 
            x = "", y = "% of total", fill = "", 
            caption = paste("Memory Usage:", formatNum(numbers$Memory.Usage/(1024*1024)),"Mb")) +
@@ -194,7 +194,7 @@ plot_df <- function(df) {
   
   mis <- missingness(df, plot = TRUE, summary = FALSE) 
   if (length(mis) != 0) plots[["miss"]] <- mis + 
-    theme(plot.title = element_text(size = 12)) + guides(fill = FALSE)
+    theme(plot.title = element_text(size = 12)) + guides(fill = "none")
   
   if (length(plots) == 3) heights <- c(4/12, 1/2, 3/12) 
   if (length(plots) == 2) heights <- c(0.5, 0.5) 

@@ -453,9 +453,9 @@ splot_summary <- function(p, s, save = FALSE) {
               size = 2, hjust = 0, vjust = 1.5) +
     annotate("label", x = length(unique(today$CumQuant)) * 0.25, y = tops * 0.6, 
              label = vector2text(summary,"\n", quotes = F), size = 3.5, hjust = 0, alpha = 0.55) +
-    scale_y_continuous(limits = c(NA, tops*1.12), labels = comma, expand = c(0, 0)) + 
+    scale_y_comma(limits = c(NA, tops*1.12), expand = c(0, 0)) +
     labs(y = NULL, x = NULL, title = "Stocks Distribution and Growth") +
-    guides(fill = FALSE, colour = FALSE) + coord_flip() +
+    guides(fill = "none", colour = "none") + coord_flip() +
     theme_lares(pal = 1)
   
   if (save) plot <- plot + ggsave("portf_stocks_change.png", width = 8, height = 8, dpi = 300)
@@ -528,7 +528,7 @@ splot_change <- function(p, s, weighted = TRUE,
     geom_line(alpha = 0.9, size = 0.5, na.rm = TRUE) +
     geom_point(aes(size = abs(.data$Invested), colour = .data$BuySell), na.rm = TRUE) +
     scale_y_comma(position = "right") +
-    scale_size(range = c(0, 3.2)) + guides(size = FALSE, colour = FALSE) +
+    scale_size(range = c(0, 3.2)) + guides(size = "none", colour = "none") +
     xlim(min(d$Date), max(d$Date) + round(days*0.06)) +
     labs(title = glued(
       "Stocks Daily Change [{x}]", x = ifelse(weighted, "%", "$")), 
@@ -592,8 +592,8 @@ splot_growth <- function(p, save = FALSE) {
   plot <- ggplot(aux, aes(x = .data$Date, y = .data$Amount)) +
     geom_area(aes(y = .data$Amount, fill = .data$Type), position = "stack", alpha = 0.7) +
     labs(title = "Daily Total Portfolio Value", y = NULL, x = NULL, fill = "") +
-    scale_y_continuous(position = "right", labels = scales::dollar,
-                       breaks = round(seq(0, max(newp$Portfolio), length.out = 14))) +
+    scale_y_dollar(position = "right",
+                   breaks = round(seq(0, max(newp$Portfolio), length.out = 14))) +
     xlim(min(aux$Date - round(days*0.03)), max(aux$Date) + round(days*0.03)) +
     annotate("text", label = caption, x = max(newp$Date),
              y = 0.09 * max(newp$Portfolio),
@@ -735,7 +735,7 @@ splot_types <- function(s, save = FALSE) {
     geom_bar(aes(x = "", y = .data$CumValue, fill = .data$Symbol), 
              width = 1, stat = "identity") +
     facet_grid(. ~ label, scales = "free") +
-    scale_y_continuous(labels = comma, expand = c(0, 0)) + 
+    scale_y_comma(expand = c(0, 0)) +
     theme_lares(pal = 1) +
     labs(x = NULL, y = "Total value", title = "Portfolio's Category Distribution")
   if (save) plot <- plot + ggsave("portf_distribution.png", width = 8, height = 5, dpi = 300) 
@@ -865,7 +865,7 @@ splot_etf <- function(s, keep_all = FALSE, cache = TRUE, save = FALSE) {
       y = .data$Value, fill = .data$ETF)) +
       geom_bar(width = 1, stat = "identity") +
       coord_flip() +
-      scale_y_continuous(labels = scales::dollar, expand = c(0, 0)) + 
+      scale_y_dollar(expand = c(0, 0)) +
       theme_lares(pal = 1) +
       labs(x = NULL, y = "Total value [$]", fill = NULL,
            title = "Portfolio's Sector Distribution (ETFs)")
@@ -1114,7 +1114,6 @@ stocks_report <- function(data = NA,
 # library(jsonlite)
 # library(lubridate)
 # library(rvest)
-# library(scales)
 # library(httr)
 # library(rdrop2)
 # data <- stocks_file()

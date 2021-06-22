@@ -87,7 +87,7 @@ plot_timeline <- function(event,
   if (!is.na(cvlong$type)[1] | length(unique(cvlong$type)) > 1) {
     p <- p + geom_line(aes(colour = .data$type), size = 7) +
       facet_grid(.data$type ~ ., scales = "free", space = "free") +
-      guides(colour = FALSE)
+      guides(colour = "none")
   }
   
   p <- p + 
@@ -294,7 +294,7 @@ gg_bars <- function(names, n, p = NA,
                        y = .data$count, label = .data$labels, fill = .data$p)) +
     geom_col(alpha = 0.9, width = 0.8) +
     geom_text(aes(hjust = .data$label_hjust, colour = .data$label_colours), size = 3) + 
-    coord_flip() + guides(colour = FALSE, fill = FALSE) +
+    coord_flip() + guides(colour = "none", fill = "none") +
     labs(x = NULL, y = axis, 
          title = if (!is.na(title)) title, 
          subtitle = if (!is.na(subtitle)) subtitle, 
@@ -332,27 +332,33 @@ gg_bars <- function(names, n, p = NA,
 #'   scale_x_formatNum(n.breaks = 3, pre = "@", abbr = TRUE) +
 #'   scale_y_formatNum(position = "right", decimals = 0, pos = " X")
 #' @export
-scale_x_comma <- function(...) scale_x_continuous(..., labels = comma)
+scale_x_comma <- function(...) scale_x_continuous(..., labels = function(x)
+  lares::formatNum(x, decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
-scale_y_comma <- function(...) scale_y_continuous(..., labels = comma)
+scale_y_comma <- function(...) scale_y_continuous(..., labels = function(x)
+  lares::formatNum(x, decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
-scale_x_percent <- function(...) scale_x_continuous(..., labels = percent)
+scale_x_percent <- function(...) scale_x_continuous(..., labels = function(x)
+  lares::formatNum(x, pos = "%", decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
-scale_y_percent <- function(...) scale_y_continuous(..., labels = percent)
+scale_y_percent <- function(...) scale_y_continuous(..., labels = function(x)
+  lares::formatNum(x, pos = "%", decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
-scale_x_dollar <- function(...) scale_x_continuous(..., labels = dollar)
+scale_x_dollar <- function(...) scale_x_continuous(..., labels = function(x)
+  lares::formatNum(x, pre = "$", decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
-scale_y_dollar <- function(...) scale_y_continuous(..., labels = dollar)
+scale_y_dollar <- function(...) scale_y_continuous(..., labels = function(x)
+  lares::formatNum(x, pre = "$", decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
@@ -572,7 +578,7 @@ plot_timeline <- function(event,
   if (!is.na(cvlong$type)[1] | length(unique(cvlong$type)) > 1) {
     p <- p + geom_line(aes(colour = .data$type), size = 7) +
       facet_grid(.data$type ~ ., scales = "free", space = "free") +
-      guides(colour = FALSE)
+      guides(colour = "none")
   }
   
   p <- p + 
@@ -779,7 +785,7 @@ gg_bars <- function(names, n, p = NA,
                        y = .data$count, label = .data$labels, fill = .data$p)) +
     geom_col(alpha = 0.9, width = 0.8) +
     geom_text(aes(hjust = .data$label_hjust, colour = .data$label_colours), size = 3) + 
-    coord_flip() + guides(colour = FALSE, fill = FALSE) +
+    coord_flip() + guides(colour = "none", fill = "none") +
     labs(x = NULL, y = axis, 
          title = if (!is.na(title)) title, 
          subtitle = if (!is.na(subtitle)) subtitle, 
@@ -817,27 +823,33 @@ gg_bars <- function(names, n, p = NA,
 #'   scale_x_formatNum(n.breaks = 3, pre = "@", abbr = TRUE) +
 #'   scale_y_formatNum(position = "right", decimals = 0, pos = " X")
 #' @export
-scale_x_comma <- function(...) scale_x_continuous(..., labels = comma)
+scale_x_comma <- function(...) scale_x_continuous(..., labels = function(x)
+  formatNum(x, decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
-scale_y_comma <- function(...) scale_y_continuous(..., labels = comma)
+scale_y_comma <- function(...) scale_y_continuous(..., labels = function(x)
+  formatNum(x, decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
-scale_x_percent <- function(...) scale_x_continuous(..., labels = percent)
+scale_x_percent <- function(...) scale_x_continuous(..., labels = function(x)
+  formatNum(x, pos = "%", decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
-scale_y_percent <- function(...) scale_y_continuous(..., labels = percent)
+scale_y_percent <- function(...) scale_y_continuous(..., labels = function(x)
+  formatNum(x, pos = "%", decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
-scale_x_dollar <- function(...) scale_x_continuous(..., labels = dollar)
+scale_x_dollar <- function(...) scale_x_continuous(..., labels = function(x)
+  formatNum(x, pre = "$", decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export
-scale_y_dollar <- function(...) scale_y_continuous(..., labels = dollar)
+scale_y_dollar <- function(...) scale_y_continuous(..., labels = function(x)
+  formatNum(x, pre = "$", decimals = NULL, signif = 3))
 
 #' @rdname scale_x_comma
 #' @export

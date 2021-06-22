@@ -76,10 +76,9 @@ trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = NUL
       geom_text(hjust = -0.1, size = 2.8) +
       labs(y = "Relevance | % Increase", subtitle = ptitle, x = "", fill = "") +
       theme(legend.position = "bottom") +
-      scale_y_continuous(labels = comma, 
-                         limits = c(0,110),
-                         minor_breaks = seq(0, 100, 10), 
-                         breaks = seq(0, 100, 20))
+      scale_y_comma(limits = c(0,110),
+                    minor_breaks = seq(0, 100, 10), 
+                    breaks = seq(0, 100, 20))
     if (more2 > 1) plot <- plot + facet_grid(.data$keyword ~ ., scales = "free")
     return(plot)
   }
@@ -107,7 +106,7 @@ trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = NUL
   }
   
   if (t & q) {
-    rq1 <- rq1 + guides(fill = FALSE) + labs(caption = "")
+    rq1 <- rq1 + guides(fill = "none") + labs(caption = NULL)
     rq2 <- rq2 + labs(title = range) +
       theme(plot.title = element_text(size = 9))
     p <- rq1 + rq2 + plot_layout(nrow = 1, ncol = 2)
@@ -150,7 +149,7 @@ trendsTime <- function(gtrend, title = NA) {
     group_by(.data$keyword) %>%
     mutate(legend = paste0(.data$keyword, " (", .data$geo, ")")) %>%
     ggplot(aes(x = .data$date, y = .data$hits, fill = .data$legend)) +
-    geom_area(alpha = 0.9) + theme_lares() + guides(fill = FALSE) +
+    geom_area(alpha = 0.9) + theme_lares() + guides(fill = "none") +
     labs(x = "", y = "Search hits", fill = "", subtitle = "Mixed hits scale")
   
   int3 <- gtrend$interest_over_time %>%
@@ -160,7 +159,7 @@ trendsTime <- function(gtrend, title = NA) {
     mutate(hits = 100*.data$hits/max(.data$hits)) %>%
     mutate(legend = paste0(.data$keyword, " (", .data$geo, ")")) %>%
     ggplot(aes(x = .data$date, y = .data$hits, colour = .data$legend)) +
-    geom_line() + theme_minimal() + guides(colour = FALSE) +
+    geom_line() + theme_minimal() + guides(colour = "none") +
     labs(x = "", y = "Search hits", 
          subtitle = "Normalized hit scale",
          caption = range) +

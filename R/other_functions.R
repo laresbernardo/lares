@@ -320,7 +320,8 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
 #' 
 #' @family Data Wrangling
 #' @param x Numerical Vector
-#' @param decimals Integer. Amount of decimals to display.
+#' @param decimals Integer. Amount of decimals to display. If set to
+#' \code{NULL}, then \code{getOption("digits")} will be used.
 #' @param signif Integer. Rounds the values in its first argument to
 #' the specified number of significant digits.
 #' @param type Integer. \code{1} for International standards. \code{2}
@@ -347,20 +348,29 @@ formatNum <- function(x, decimals = 2, signif = NULL,
                       abbr = FALSE,
                       ...) {
   
+  # Auxiliary function to save signs
   if (sign) signs <- ifelse(x > 0, "+", "")
+  
+  # Decimals: Round numbers
+  if (is.null(decimals)) decimals <- getOption("digits")
+  x <- base::round(x, digits = decimals)
+  
+  # Significant digits
   if (!is.null(signif)) x <- base::signif(x, signif)
+  
   if (abbr) {
     x <- num_abbr(x, n = decimals + 1)
   } else {
+    if (is.null(decimals)) decimals <- 0L
     if (type == 1) {
-      x <- format(round(as.numeric(x), decimals), nsmall = decimals, 
-                  big.mark = ".", decimal.mark = ",")
+      x <- format(as.numeric(x), big.mark = ".", decimal.mark = ",")
     } else {
-      x <- format(round(as.numeric(x), decimals), nsmall = decimals, 
-                  big.mark = ",", decimal.mark = ".") 
+      x <- format(as.numeric(x), big.mark = ",", decimal.mark = ".")
     }
     x <- trimws(x)
   }
+  
+  if (pre == "$") x <- gsub("\\$-", "-$", x)
   if (sign) x <- paste0(signs, x)
   ret <- paste0(pre, x, pos)
   return(ret)

@@ -19,7 +19,8 @@ formatNum(
 \arguments{
 \item{x}{Numerical Vector}
 
-\item{decimals}{Integer. Amount of decimals to display.}
+\item{decimals}{Integer. Amount of decimals to display. If set to
+\code{NULL}, then \code{getOption("digits")} will be used.}
 
 \item{signif}{Integer. Rounds the values in its first argument to
 the specified number of significant digits.}

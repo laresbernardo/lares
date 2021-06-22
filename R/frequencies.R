@@ -204,16 +204,16 @@ freqs <- function(df, ..., wt = NULL,
   # Plot base
   p <- p + geom_col(alpha = 0.95, width = 0.8, colour = "transparent") +
     geom_text(aes(hjust = .data$label_hjust, colour = .data$label_colours), size = 2.8) + 
-    coord_flip() + guides(colour = FALSE) +
+    coord_flip() + guides(colour = "none") +
     labs(x = NULL, y = NULL, fill = NULL,
          title = ifelse(is.na(title), paste("Frequencies and Percentages"), title),
          subtitle = ifelse(is.na(subtitle), 
-                           paste("Variable:", ifelse(!is.na(variable_name), variable_name, variable), note, weight_text), 
+                           paste("Variable:", ifelse(!is.na(variable_name), variable_name, variable),
+                                 note, weight_text),
                            subtitle), caption = obs) +
     scale_fill_gradient(low = "lightskyblue2", high = "navy") +
-    theme_lares(legend = "none", grid = "Xx") + gg_text_customs() + 
-    scale_y_continuous(position = "right", expand = c(0, 0), labels = comma,
-                       limits = c(0, 1.03 * max(output$n)))
+    theme_lares(legend = "none", grid = "Xx") + gg_text_customs() +
+    scale_y_comma(position = "right", expand = c(0, 0), limits = c(0, 1.03 * max(output$n)))
   
   # When two features
   if (type == 2) { 
@@ -361,7 +361,7 @@ freqs_df <- function(df,
       geom_text(position = position_fill(vjust = .5), size = 3) +
       coord_flip() + labs(x = NULL, y = NULL, title = "Global Values Frequencies") +
       scale_y_percent(expand = c(0, 0)) +
-      guides(fill = FALSE, colour = FALSE, alpha = FALSE) +
+      guides(fill = "none", colour = "none", alpha = "none") +
       theme_lares(pal = 1) + 
       theme(panel.background = element_blank(),
             panel.grid.major = element_blank(), 
@@ -453,7 +453,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
     scale_fill_manual(values = c("black", "grey55")) +
     labs(x = NULL, y = NULL, title = title, subtitle = subtitle) + 
     scale_y_comma() +
-    guides(fill = FALSE) +
+    guides(fill = "none") +
     theme_lares() +
     theme(plot.margin = margin(mg, mg, 0, mg))
   
@@ -466,7 +466,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
     geom_point(size = 4) +
     labs(x = NULL, y = NULL, 
          caption = paste("Total observations:", formatNum(nrow(df), 0))) + 
-    guides(colour = FALSE) +
+    guides(colour = "none") +
     theme_lares(which = "XY") +
     theme(axis.text.x = element_blank(),
           plot.margin = margin(0, mg, mg, mg))
@@ -685,7 +685,7 @@ freqs_list <- function(df,
     theme(plot.margin = margin(0,0,0,0)) +
     scale_y_continuous(position = "right", 
                        labels = function(x) formatNum(abs(x), 0)) +
-    guides(fill = FALSE)
+    guides(fill = "none")
   
   # Bar plot: combinations
   p3 <- vals %>%
@@ -702,7 +702,7 @@ freqs_list <- function(df,
     theme(axis.text.x  = element_blank(),
           plot.margin = margin(0,0,0,0)) +
     scale_fill_continuous(guide = guide_colourbar(direction = "horizontal"))
-  if (length(wt_str) == 0) p3 <- p3 + guides(fill = FALSE)
+  if (length(wt_str) == 0) p3 <- p3 + guides(fill = "none")
   
   # Join all plots
   layout <- "

@@ -1,4 +1,4 @@
-#' Analytics, Visualization & Machine Learning Tasks Library
+#' Analytics, Data Mining & Machine Learning Sidekick
 #'
 #' R library for better/faster analytics, visualization, data mining, and machine learning tasks.
 #'
@@ -26,8 +26,7 @@
 #' @importFrom pROC roc ci
 #' @importFrom rlang as_label .data
 #' @importFrom rpart rpart rpart.control
-#' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text 
-#' @importFrom scales comma percent dollar
+#' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
 #' reorder start kmeans var xtabs as.formula prcomp p.adjust pt model.matrix qt cor.test
 #' @import stringr

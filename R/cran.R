@@ -32,15 +32,15 @@ cran_logs <- function(input = "lares",
   }
   
   check_opts(colnames(input), c("date","count","package"), input_name = "column names")
-  input <- cran.df %>%
-    group_by(.data$package) %>%
-    mutate(cum = cumsum(.data$count))
-  package <- unique(cran.df$package)
+  cran.df <- arrange(cran.df, desc(.data$date))
   
-  if (nrow(input) >= length(package) * 2 & plot == TRUE) {
-    input <- input %>%
+  package <- unique(cran.df$package)
+  if (nrow(cran.df) >= length(package) * 2 & plot == TRUE) {
+    input <- cran.df %>%
+      arrange(.data$date) %>%
       group_by(.data$package) %>%
-      mutate(package = sprintf("%s\n(%s)", .data$package, formatNum(max(.data$cum), abbr = TRUE)),
+      mutate(cum = cumsum(.data$count),
+             package = sprintf("%s\n(%s)", .data$package, formatNum(max(.data$cum), abbr = TRUE)),
              MN = mean(.data$count, na.rm = TRUE))
     dMean <- input %>%
       group_by(.data$package) %>%

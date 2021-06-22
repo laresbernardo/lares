@@ -211,7 +211,7 @@ plot_palette <- function(fill, colour = "black", id = NA, limit = 12) {
     scale_fill_identity() +
     scale_colour_identity() +
     coord_flip() + labs(x = NULL, y = NULL) +
-    guides(fill = FALSE, colour = FALSE) +
+    guides(fill = "none", colour = "none") +
     theme_lares(font = NA, axis = "Y")
   return(p)
 }

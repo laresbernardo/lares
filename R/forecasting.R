@@ -174,7 +174,8 @@ forecast_arima <- function(time, values, n_future = 30,
 #' Official documentation: \url{https://github.com/facebook/prophet}
 #' 
 #' @family Forecast
-#' @param df Data frame. Must contain date/time column and values column.
+#' @param df Data frame. Must contain date/time column and values column,
+#' in that order.
 #' @param n_future Integer. How many steps do you wish to forecast?
 #' @param country Character. Country code for holidays.
 #' @param trend.param Numeric. Flexibility of trend component. Default is 0.05, 
@@ -189,12 +190,6 @@ prophesize <- function(df, n_future = 60, country = "AR",
                        project = "Prophet Forecast") {
   
   try_require("prophet")
-
-  # Currently prophet doesn't pass Travis CI 
-  if (length(find.package("prophet", quiet = TRUE)) > 0) {
-    if (!"prophet" %in% loadedNamespaces())
-      stop("Load library(prophet) before using prophesize()")
-  } else stop("Run install.packages('prophet') to use prophesize()")
   
   df <- data.frame(df[,c(1,2)])
   metric <- colnames(df)[2]
@@ -220,11 +215,14 @@ prophesize <- function(df, n_future = 60, country = "AR",
     labs(y = metric, x = "Dates", 
          title = project,
          subtitle = paste("Forecast results for the next", n_future, "days")) +
-    scale_y_continuous(labels = comma)
+    scale_y_comma()
   
-  # plot2 = prophet_plot_components(m, forecast)
+  plots2 <- prophet_plot_components(m, forecast)
+  plots2 <- lapply(plots2, function(x) x + theme_lares())
+  plot2 <- wrap_plots(plots2) +
+    plot_annotation(title = "Forecast components", theme = theme_lares())
   
-  return(list(result = forecast, model = m, plot = p))
+  return(list(result = forecast, model = m, plot = p, components = plot2))
 }
 
 #' ####################################################################

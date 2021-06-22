@@ -265,7 +265,7 @@ corr_var <- function(df, var,
         geom_col(colour = "transparent") + coord_flip() + 
         geom_text(aes(hjust = .data$hjust), size = 3, colour = "black") +
         scale_fill_manual(values = c("FALSE" = "#E5586E", "TRUE" = "#59B3D2")) +
-        guides(fill = FALSE) +
+        guides(fill = "none") +
         labs(title = paste("Correlations of", var), x = NULL, y = NULL) +
         scale_y_continuous(expand = c(0, 0), position = "right",
                            labels = function(x) sub('^(-)?0[.]', '\\1.', x)) + 
@@ -422,7 +422,7 @@ corr_cross <- function(df, plot = TRUE,
         # geom_hline(aes(yintercept = 0), alpha = 0.5) + 
         geom_text(aes(label = sub('^(-)?0[.]', '\\1.', signif(.data$corr, 3))), 
                   size = 3, colour = "white", hjust = 1.1) +
-        coord_flip() + guides(fill = FALSE) +
+        coord_flip() + guides(fill = "none") +
         labs(title = "Ranked Cross-Correlations", 
              subtitle = subtitle,
              x = NULL, y = NULL) +
@@ -451,7 +451,7 @@ corr_cross <- function(df, plot = TRUE,
         geom_jitter(position = aux, alpha = 0.4) +
         geom_hline(yintercept = 0, alpha = 0.3) +
         geom_text(aes(hjust = .data$hjust), size = 2.9, position = aux, colour = "black") +
-        guides(colour = FALSE, alpha = FALSE, size = FALSE) +
+        guides(colour = "none", alpha = "none", size = "none") +
         scale_size(range = c(0.4, 2)) +
         labs(x = NULL, y = "Correlation",
              subtitle = subtitle,

@@ -15,7 +15,8 @@ prophesize(
 )
 }
 \arguments{
-\item{df}{Data frame. Must contain date/time column and values column.}
+\item{df}{Data frame. Must contain date/time column and values column,
+in that order.}
 
 \item{n_future}{Integer. How many steps do you wish to forecast?}
 

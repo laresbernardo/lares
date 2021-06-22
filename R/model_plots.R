@@ -71,7 +71,7 @@ mplot_density <- function(tag,
       stat_ecdf(size = 1) +
       ylab('Cumulative') + 
       labs(x = NULL) + 
-      guides(color = FALSE) + 
+      guides(colour = "none") +
       theme_lares(pal = 2)
     
     p1 <- p1 + theme(plot.margin = margin(10, 5, 5, 5))
@@ -99,7 +99,7 @@ mplot_density <- function(tag,
       geom_density(aes(x = .data$values, fill = as.character(.data$type)), 
                    alpha = 0.6, adjust = 0.25) + 
       labs(y = "Density", x = "Continuous values", fill = NULL) +
-      guides(colour = FALSE) +
+      guides(colour = "none") +
       theme_lares(pal = 1, legend = "top")
     
     if (!is.na(model_name)) p <- p + labs(caption = model_name)
@@ -181,8 +181,8 @@ mplot_importance <- function(var,
   
   if (length(unique(output$Type)) == 1) {
     p <- p + geom_col(fill = colours, width = 0.2, colour = "transparent") +
-      geom_point(colour = colours, size = 6) + 
-      guides(fill = FALSE, colour = FALSE) + 
+      geom_point(colour = colours, size = 6) +
+      guides(fill = "none", colour = "none") +
       geom_text(hjust = 0.5, size = 2, inherit.aes = TRUE, colour = "white")
   }
   
@@ -281,7 +281,7 @@ mplot_roc <- function(tag,
     theme_lares(plot_colour = "white", pal = 2, legend = "bottom")
   
   if (squared) p <- p + coord_equal()
-  if (is.na(multis)[1]) p <- p + guides(colour = FALSE)
+  if (is.na(multis)[1]) p <- p + guides(colour = "none")
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
   
@@ -344,7 +344,7 @@ mplot_cuts <- function(score,
     geom_text(aes(label = round(100 * .data$cuts, 1),
                   vjust = ifelse(.data$cuts*100 < 50, -0.3, 1.3)), 
               size = 3, colour = "black", inherit.aes = TRUE, check_overlap = TRUE) +
-    guides(colour = FALSE) +
+    guides(colour = "none") +
     labs(title = sprintf("Score cuts (%s quantiles)", splits)) +
     theme_lares()
   
@@ -422,8 +422,8 @@ mplot_cuts_error <- function(tag,
     geom_text(aes(vjust = .data$gg_pos, colour = .data$colour), 
               size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute error")) +
-    scale_y_continuous(labels = comma) + 
-    guides(colour = FALSE) +
+    scale_y_comma() + 
+    guides(colour = "none") +
     gg_text_customs() + 
     theme_lares(plot_colour = "white")
   
@@ -437,8 +437,8 @@ mplot_cuts_error <- function(tag,
     geom_text(aes(vjust = .data$gg_pos, colour = .data$colour), 
               size = 2.7, inherit.aes = TRUE, check_overlap = TRUE) +
     labs(subtitle = paste("Cuts and distribution by absolute percentage error")) +
-    scale_y_continuous(labels = comma) + 
-    guides(colour = FALSE) +
+    scale_y_comma() + 
+    guides(colour = "none") +
     gg_text_customs() + 
     theme_lares(plot_colour = "white")
   
@@ -624,7 +624,7 @@ mplot_metrics <- function(results,
     labs(title = "Area Under the Curve vs Number of Trees",
          colour = "Dataset", x = "# of trees", y = "AUC") +
     scale_colour_brewer(palette = "Set1") + 
-    guides(colour = FALSE) +
+    guides(colour = "none") +
     geom_text(aes(x = .data$trees, y = .data$train_auc*100, colour = "Train", 
                   label = round(.data$train_auc*100, 2)),
               check_overlap = TRUE, nudge_y = 3, size = 3) +
@@ -703,9 +703,9 @@ mplot_lineal <- function(tag,
          x = "Real value", y = "Predicted value",
          colour = "Deviation") +
     annotate("text", x = Inf, y = -Inf, hjust = 1, vjust = -0.05, label = labels, size = 2.8) +
-    scale_x_continuous(labels = comma) +
-    scale_y_continuous(labels = comma) +
-    scale_colour_continuous(labels = comma) +
+    scale_x_comma() +
+    scale_y_comma() +
+    scale_colour_continuous(labels = function(x) formatNum(x, decimals = NULL, signif = 3)) +
     theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
     guides(colour = guide_colorbar(barwidth = 0.9, barheight = 4.5)) +
     theme_lares()
@@ -917,7 +917,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
     scale_fill_gradient(low = "white", high = "orange") +
     geom_text(lineheight = .8) + 
     scale_size(range = c(2.9, 3.4)) + 
-    guides(fill = FALSE, size = FALSE, colour = FALSE) +
+    guides(fill = "none", size = "none", colour = "none") +
     labs(x = "Predicted values", y = "Real values",
          title = paste("Confusion Matrix", ifelse(
            thresh != 0.5, paste("with Threshold =", thresh), ""), ifelse(
@@ -1022,7 +1022,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
         geom_label(aes(y = .data$gain, 
                        label = ifelse(.data$gain == 100, NA, round(.data$gain))), 
                    alpha = 0.9)) +
-      scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour = FALSE) +
+      scale_y_continuous(breaks = seq(0, 100, 10)) + guides(colour = "none") +
       scale_x_continuous(minor_breaks = NULL, breaks = seq(0, splits, 1)) +
       labs(title = paste("Cumulative Gains for", gains$value[1]), 
            linetype = NULL,
@@ -1067,7 +1067,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
       # Model line
       geom_line(aes(y = .data$gain, colour = .data$label), size = 1) +
       geom_label(aes(y = .data$gain, label = round(.data$gain)), alpha = 0.8) +
-      guides(colour = FALSE) +
+      guides(colour = "none") +
       theme_lares(pal = 2) + 
       labs(title = "Cumulative Gains for Multiple Labels",
            subtitle = paste("If we select the top nth percentile with highest probabilities,",
@@ -1149,7 +1149,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
            y = "Cumulative response [%]", 
            x = paste0("Percentiles [",splits,"]")) +
       theme(legend.position = c(0.88, 0.2)) +
-      guides(colour = FALSE)
+      guides(colour = "none")
     
     if (highlight == "auto") 
       highlight <- gains %>% arrange(desc(.data$lift)) %>% slice(1) %>% .$percentile
@@ -1192,7 +1192,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
            y = "Cumulative Response [%]",
            linetype = "Reference", colour = "Label") +
       facet_grid(.data$label~.) + 
-      guides(colour = FALSE) +
+      guides(colour = "none") +
       scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 20))
   }
   

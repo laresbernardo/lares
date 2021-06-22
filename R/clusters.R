@@ -86,7 +86,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
          subtitle = "HINT: Where does the curve level?",
          x = "Number of Clusters",
          y = "Within Groups Sum of Squares") +
-    scale_y_continuous(labels = scales::comma) +
+    scale_y_comma() +
     theme_lares()
   results[["nclusters"]] <- nclusters
   results[["nclusters_plot"]] <- nclusters_plot
@@ -210,7 +210,7 @@ clusterVisualK <- function(df, ks = 1:6, ...) {
     clus_dat  %>%
       ggplot(aes(x = .data$PC1, y = .data$PC2, colour = .data$cluster)) +
       geom_point() +
-      guides(colour = FALSE) +
+      guides(colour = "none") +
       labs(subtitle = glued("{clus_dat$k[1]} clusters")) +
       theme_lares(pal = 2)
   }

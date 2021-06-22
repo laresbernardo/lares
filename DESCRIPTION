@@ -25,7 +25,6 @@ Imports:
     rlang,
     rpart,
     rvest,
-    scales,
     stringr,
     tidyr,
     yaml
