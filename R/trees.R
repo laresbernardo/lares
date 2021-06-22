@@ -15,7 +15,7 @@
 #' @param size Numeric. Textsize of plot
 #' @param ohse Boolean. Auto generate One Hot Smart Encoding?
 #' @param plot Boolean. Return a plot? If not, \code{rpart} object
-#' @param ... rpart.plot custom parameters
+#' @param ... Additional parameters passed to \code{rpart.plot()}.
 #' @return When \code{plot=TRUE} returns plot; when \code{plot=FALSE}
 #' returns \code{rpart} fitted model.
 #' @export
@@ -38,8 +38,8 @@ tree_var <- function(df, target, max = 3, min = 20, cp = 0,
   
   formula_txt <- as.formula(paste(target_txt, "~ ."))
   
-  mod <- rpart(formula_txt, data = df, 
-               control = rpart.control(maxdepth = max, minsplit = min, cp = cp))
+  mod <- invisible(rpart(formula_txt, data = df, 
+               control = rpart.control(maxdepth = max, minsplit = min, cp = cp)))
   
   if (plot) {
     if (nrow(mod$frame) > 1) {
@@ -52,6 +52,6 @@ tree_var <- function(df, target, max = 3, min = 20, cp = 0,
     }
     return(plot)
   } else {
-    return(mod)
+    return(invisible(mod))
   }
 }

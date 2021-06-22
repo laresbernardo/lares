@@ -17,20 +17,6 @@ export_plot(
   subdir = NA,
   quiet = FALSE
 )
-
-export_plot(
-  p,
-  name = "plot",
-  vars = NA,
-  sep = ".vs.",
-  width = 8,
-  height = 6,
-  format = "png",
-  res = 300,
-  dir = getwd(),
-  subdir = NA,
-  quiet = FALSE
-)
 }
 \arguments{
 \item{p}{Plot object. Plot to render and export.}
@@ -53,13 +39,8 @@ wish to save the plot? Working directory as default \code{dir}.}
 }
 \value{
 No return value, called for side effects.
-
-No return value, called for side effects.
 }
 \description{
-Export any \code{ggplot2}, \code{gridExtra}, or any plot object 
-created with R into rendered \code{png} or \code{jpg} file.
-
 Export any \code{ggplot2}, \code{gridExtra}, or any plot object 
 created with R into rendered \code{png} or \code{jpg} file.
 }
@@ -69,43 +50,8 @@ p <- noPlot()
 export_plot(p, name = "noplot", width = 10, height = 8, res = 300, dir = tempdir())
 export_plot(p, name = "noplot2", subdir = "newplots", dir = tempdir())
 }
-\donttest{
-p <- noPlot()
-export_plot(p, name = "noplot", width = 10, height = 8, res = 300, dir = tempdir())
-export_plot(p, name = "noplot2", subdir = "newplots", dir = tempdir())
-}
 }
 \seealso{
-Other Tools: 
-\code{\link{autoline}()},
-\code{\link{bindfiles}()},
-\code{\link{bring_api}()},
-\code{\link{db_download}()},
-\code{\link{db_upload}()},
-\code{\link{export_results}()},
-\code{\link{get_credentials}()},
-\code{\link{h2o_predict_API}()},
-\code{\link{h2o_predict_MOJO}()},
-\code{\link{h2o_predict_binary}()},
-\code{\link{h2o_predict_model}()},
-\code{\link{h2o_selectmodel}()},
-\code{\link{haveInternet}()},
-\code{\link{image_metadata}()},
-\code{\link{importxlsx}()},
-\code{\link{ip_data}()},
-\code{\link{json2vector}()},
-\code{\link{listfiles}()},
-\code{\link{mailSend}()},
-\code{\link{msplit}()},
-\code{\link{myip}()},
-\code{\link{quiet}()},
-\code{\link{read.file}()},
-\code{\link{statusbar}()},
-\code{\link{tic}()},
-\code{\link{try_require}()},
-\code{\link{updateLares}()},
-\code{\link{zerovar}()}
-
 Other Tools: 
 \code{\link{autoline}()},
 \code{\link{bindfiles}()},

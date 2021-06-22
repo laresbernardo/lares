@@ -21,7 +21,7 @@ are_binary(x)
 \arguments{
 \item{x}{Vector}
 
-\item{...}{Additional parameters}
+\item{...}{Additional parameters passed to \code{grepl()}}
 }
 \value{
 \code{is_url}. Boolean. Result of checking if \code{x} is a valid URL string.

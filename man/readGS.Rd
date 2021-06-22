@@ -35,7 +35,7 @@ which one you wish to use by email and/or api_key.}
 
 \item{server}{Boolean. Force interacting auth process?}
 
-\item{...}{Further read_sheet parameters}
+\item{...}{Additional parameters passed to \code{read_sheet()}.}
 }
 \value{
 data.frame with the results of your Google Sheets file based on its

@@ -34,7 +34,7 @@ exist in a node in order for a split to be attempted}
 
 \item{plot}{Boolean. Return a plot? If not, \code{rpart} object}
 
-\item{...}{rpart.plot custom parameters}
+\item{...}{Additional parameters passed to \code{rpart.plot()}.}
 }
 \value{
 When \code{plot=TRUE} returns plot; when \code{plot=FALSE}

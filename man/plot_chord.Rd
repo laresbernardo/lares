@@ -13,16 +13,6 @@ plot_chord(
   subtitle = "",
   pal = NA
 )
-
-plot_chord(
-  origin,
-  dest,
-  weight = 1,
-  mg = 3,
-  title = "Chord Diagram",
-  subtitle = "",
-  pal = NA
-)
 }
 \arguments{
 \item{origin, dest}{Vectors. Origin and destination vectors}
@@ -39,12 +29,8 @@ plot_chord(
 }
 \value{
 chordDiagram object
-
-chordDiagram object
 }
 \description{
-This auxiliary function plots discrete and continuous values results
-
 This auxiliary function plots discrete and continuous values results
 }
 \examples{
@@ -53,27 +39,8 @@ This auxiliary function plots discrete and continuous values results
 df <- data.frame(from = c(1, 1, 2, 3, 4, 1, 6), to = c(4, 4, 4, 2, 2, NA, NA))
 plot_chord(df$from, df$to)
 }
-# You must have "circlize" library to use this auxiliary function:
-\dontrun{
-df <- data.frame(from = c(1, 1, 2, 3, 4, 1, 6), to = c(4, 4, 4, 2, 2, NA, NA))
-plot_chord(df$from, df$to)
-}
 }
 \seealso{
-Other Visualization: 
-\code{\link{distr}()},
-\code{\link{freqs_df}()},
-\code{\link{freqs_list}()},
-\code{\link{freqs_plot}()},
-\code{\link{freqs}()},
-\code{\link{gg_bars}()},
-\code{\link{gg_pie}()},
-\code{\link{noPlot}()},
-\code{\link{plot_survey}()},
-\code{\link{plot_timeline}()},
-\code{\link{theme_lares}()},
-\code{\link{tree_var}()}
-
 Other Visualization: 
 \code{\link{distr}()},
 \code{\link{freqs_df}()},

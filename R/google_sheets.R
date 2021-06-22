@@ -16,7 +16,7 @@
 #' accounts in your machine, you may non-interactively select
 #' which one you wish to use by email and/or api_key.
 #' @param server Boolean. Force interacting auth process?
-#' @param ... Further read_sheet parameters
+#' @param ... Additional parameters passed to \code{read_sheet()}.
 #' @return data.frame with the results of your Google Sheets file based on its
 #' \code{title}, specificially the \code{sheet} and \code{range} requested.
 #' @aliases readGS4

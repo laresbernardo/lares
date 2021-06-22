@@ -82,7 +82,7 @@ check_attr <- function(object, attr = "type", check = NULL, stop = TRUE) {
 #' the result for each observation and \code{are_} for the whole vector.
 #'
 #' @param x Vector
-#' @param ... Additional parameters
+#' @param ... Additional parameters passed to \code{grepl()}
 #' @return \code{is_url}. Boolean. Result of checking if \code{x} is a valid URL string.
 #' @examples 
 #' is_url(c("google.com","http://google.com"))

@@ -409,8 +409,8 @@ corr_cross <- function(df, plot = TRUE,
       mutate(facet = gsub(vector2text(contains, sep = "|", quotes = FALSE), "", .data$mix)) %>%
       mutate(facet = gsub("_", "", .data$facet))
     
-    good <- lares_pal("labels") %>% filter(values == "good") %>% pull("fill")
-    bad <- lares_pal("labels") %>% filter(values == "bad") %>% pull("fill")
+    good <- lares_pal("labels") %>% filter(.data$values == "good") %>% pull("fill")
+    bad <- lares_pal("labels") %>% filter(.data$values == "bad") %>% pull("fill")
     
     if (type == 1) {
       p <- ret %>%

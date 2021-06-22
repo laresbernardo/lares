@@ -30,11 +30,11 @@ process categorical values, and values will be standardize automatically.}
 
 \item{top}{Integer. Plot top n results only.}
 
-\item{quiet}{Boolean. Keep quiet? Else, show messages}
+\item{quiet}{Boolean. Keep quiet? Else, show messages.}
 
 \item{seed}{Numeric.}
 
-\item{...}{ohse parameters.}
+\item{...}{Additional parameters passed to \code{ohse()}.}
 }
 \value{
 List. Contains lasso model coefficients, performance metrics, the
@@ -54,7 +54,7 @@ data(dft) # Titanic dataset
 m <- lasso_vars(dft, Survived, ignore = c("Cabin"))
 print(m$coef)
 print(m$metrics)
-m$plot
+plot(m$plot)
 }
 }
 \seealso{

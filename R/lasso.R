@@ -15,9 +15,9 @@
 #' @param nlambdas Integer. Number of lambdas to be used in a search.
 #' @param nfolds Integer. Number of folds for K-fold cross-validation (>= 2).
 #' @param top Integer. Plot top n results only.
-#' @param quiet Boolean. Keep quiet? Else, show messages
+#' @param quiet Boolean. Keep quiet? Else, show messages.
 #' @param seed Numeric.
-#' @param ... ohse parameters.
+#' @param ... Additional parameters passed to \code{ohse()}.
 #' @return List. Contains lasso model coefficients, performance metrics, the
 #' actual model fitted and a plot.
 #' @examples 
@@ -28,7 +28,7 @@
 #' m <- lasso_vars(dft, Survived, ignore = c("Cabin"))
 #' print(m$coef)
 #' print(m$metrics)
-#' m$plot
+#' plot(m$plot)
 #' }
 #' @export
 lasso_vars <- function(df, variable, 
@@ -51,7 +51,7 @@ lasso_vars <- function(df, variable,
   } else {
     ignore <- as_label(var)
   }
-    
+  
   # Run one-hot-smart-encoding
   temp <- data.frame(as.vector(df[,1]), ohse(df, ignore = ignore, quiet = quiet, ...))
   colnames(temp)[1] <- "main"
@@ -89,8 +89,8 @@ lasso_vars <- function(df, variable,
   if (!quiet) message(">>> Generating plots for ", as_label(var), "...")
   if (nrow(t_lasso_model_coeff) > top & !quiet)
     message(paste("- Plotting only the", top, "most relevant features..."))
-  good <- lares_pal("labels") %>% filter(values == "good") %>% pull("fill")
-  bad <- lares_pal("labels") %>% filter(values == "bad") %>% pull("fill")
+  good <- lares_pal("labels") %>% filter(.data$values == "good") %>% pull("fill")
+  bad <- lares_pal("labels") %>% filter(.data$values == "bad") %>% pull("fill")
   p <- t_lasso_model_coeff %>% head(top) %>%
     filter(.data$names != "Intercept") %>%
     mutate(abs = abs(.data$standardized_coefficients),
@@ -111,8 +111,9 @@ lasso_vars <- function(df, variable,
   
   toc("lasso_vars", quiet = quiet)
   
-  return(list(coef = as_tibble(t_lasso_model_coeff), 
-              metrics = as_tibble(rsq$metrics),
-              model = t_lasso_model_val,
-              plot = p))
+  return(invisible(
+    list(coef = as_tibble(t_lasso_model_coeff), 
+         metrics = as_tibble(rsq$metrics),
+         model = t_lasso_model_val,
+         plot = p)))
 }
