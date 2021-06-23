@@ -25,6 +25,8 @@ remotes::install_github("laresbernardo/lares", dependencies = TRUE)
 
 ## See the library in action!
 
+- Article: [Introduction to AutoML using lares](https://laresbernardo.github.io/lares/articles/h2o_automl.html)
+
 - DataScience+: [Visualizations for Classification Models Results](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/)
 
 - DataScience+: [Visualizations for Regression Models Results](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/)
@@ -39,12 +41,11 @@ remotes::install_github("laresbernardo/lares", dependencies = TRUE)
 
 - DataScience+: [Using cache to avoid re-processing in R](https://datascienceplus.com/using-cache-to-avoid-re-processing-improve-ux-and-quicken-results-in-r/)
 
-
 - DataScience+: [Plot Timelines with Gantt Charts](https://datascienceplus.com/visualize-your-cvs-timeline-with-r-gantt-style/)
 
 - RPubs: [freqs(), distr(), and corr_var() Examples](http://rpubs.com/laresbernardo/freqs-distr-corr)
 
-### AutoML Simplified Map from [`h2o_automl()`](https://laresbernardo.github.io/lares/reference/h2o_automl.html)
+### AutoML Simplified Map [`h2o_automl()`](https://laresbernardo.github.io/lares/reference/h2o_automl.html)
 ![AutoML Map (lares)](man/figures/automl_map.png?raw=true)
 
 ### Insights While Understanding

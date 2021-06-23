@@ -10,7 +10,8 @@
 #' 
 #' @section List of algorithms:
 #' \describe{
-#'   \item{DRF}{Distributed Random Forest, including Random Forest (RF) and Extremely-Randomized Trees (XRT)}
+#'   \item{DRF}{Distributed Random Forest, including Random Forest (RF)
+#'   and Extremely-Randomized Trees (XRT)}
 #'   \item{GLM}{Generalized Linear Model}
 #'   \item{XGBoost}{eXtreme Grading Boosting}
 #'   \item{GBM}{Gradient Boosting Machine}
@@ -24,6 +25,10 @@
 #'   \item{print}{Use \code{print} method to print models stats and summary}
 #'   \item{plot}{Use \code{plot} method to plot results using \code{mplot_full()}}
 #' }
+#' 
+#' @section Article:
+#' Read more about the \code{h2o_automl()} function and its pipeline
+#' [here](https://laresbernardo.github.io/lares/articles/h2o_automl.html).
 #'
 #' @family Machine Learning
 #' @inheritParams h2o::h2o.automl

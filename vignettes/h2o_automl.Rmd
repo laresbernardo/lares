@@ -14,9 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The `lares` package has multiple families of functions to help the analyst or data scientist achieve quality robust analysis without the need of much coding. One of the most complex but valuable functions we have is `h2o_automl`, which semi-automatically runs the whole pipeline of a Machine Learning model given a dataset and some customizable parameters. 
-
-Let's have a look at three specific examples: **classification models (binary and multiple categories) and a regression model**. Also, let's see how we can export our models and put them to work on any environment.
+The `lares` package has multiple families of functions to help the analyst or data scientist achieve quality robust analysis without the need of much coding. One of the most complex but valuable functions we have is `h2o_automl`, which semi-automatically runs the whole pipeline of a Machine Learning model given a dataset and some customizable parameters. **AutoML** enables you to train high-quality models specific to your needs and accelerate the research and development process.
 
 **HELP**: Before getting to the code, I recommend checking `h2o_automl`'s full documentation [here](https://laresbernardo.github.io/lares/reference/h2o_automl.html) or within your R session by running `?lares::h2o_automl`. In it you'll find a brief description of all the parameters you can set into the function to get exactly what you need and control how it behaves.
 
@@ -42,9 +40,9 @@ In short, this are some of the things that happen on its backend:
 
 8. A list with all the inputs, leaderboard results, best selected model, performance metrics, and plots. You can either (play) see the results on console or export them using the `export_results()` function.
 
-### (Install and) load the library
+## Load the library
 
-Now, let's load the library, the data, and dig in:
+Now, let's (install and) load the library, the data, and dig in:
 ```{r load, eval=TRUE}
 # install.packages("lares")
 library(lares)
@@ -56,7 +54,11 @@ df <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 
 **NOTE**: I'll randomly set some parameters on each example to give visibility on some of the arguments you can set to your models. Be sure to also check all the print, warnings, and messages shown throughout the process as they may have relevant information regarding your inputs and the backend operations.
 
-## Classification: Categorical (Binary = 2 classes)
+## Modeling examples
+
+Let's have a look at three specific examples: **classification models (binary and multiple categories) and a regression model**. Also, let's see how we can export our models and put them to work on any environment.
+
+### Classification: Binary
 
 Stating with a binary TRUE/FALSE model to predict `Survived`:
 
@@ -90,7 +92,7 @@ head(r$importance)
 r$plots$importance
 ```
 
-## Classification: Multi-Categorical (3 classes)
+### Classification: Multi-Categorical
 
 Followed by a multi-categorical (+2 labels) model to predict `Pclass`:
 
@@ -104,7 +106,7 @@ Let's take a look at the plots generated into a single dashboard:
 plot(r)
 ```
 
-## Regression (numerical continuous values)
+### Regression
 
 And, a regression model with continuous values to predict `Fare`:
 
