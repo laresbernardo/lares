@@ -130,14 +130,15 @@ rpart and rpart.plot libraries." />
     <pre class="usage"><span class='fu'>tree_var</span><span class='op'>(</span>
   <span class='va'>df</span>,
   <span class='va'>y</span>,
+  type <span class='op'>=</span> <span class='fl'>2</span>,
   max <span class='op'>=</span> <span class='fl'>3</span>,
-  min <span class='op'>=</span> <span class='fl'>15</span>,
+  min <span class='op'>=</span> <span class='fl'>20</span>,
   cp <span class='op'>=</span> <span class='fl'>0</span>,
   ohse <span class='op'>=</span> <span class='cn'>TRUE</span>,
   plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  explain <span class='op'>=</span> <span class='cn'>TRUE</span>,
   title <span class='op'>=</span> <span class='cn'>NA</span>,
   subtitle <span class='op'>=</span> <span class='cn'>NULL</span>,
-  caption <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -153,6 +154,22 @@ rpart and rpart.plot libraries." />
       <td><p>Variable or Character. Name of the independent variable.</p></td>
     </tr>
     <tr>
+      <th>type</th>
+      <td><p>Type of plot. Possible values:</p>
+<p><b>0</b> Draw a split label at each split
+              and a node label at each leaf.</p>
+<p><b>1</b> Label all nodes, not just leaves.
+              Similar to <code>text.rpart</code>'s <code>all=TRUE</code>.</p>
+<p><b>2</b> Default.
+              Like <code>1</code> but draw the split labels below the node labels.
+              Similar to the plots in the CART book.</p>
+<p><b>3</b> Draw separate split labels for the left and right directions.</p>
+<p><b>4</b> Like <code>3</code> but label all nodes, not just leaves.
+              Similar to <code>text.rpart</code>'s <code>fancy=TRUE</code>.
+              See also <code>clip.right.labs</code>.<br /></p>
+<p><b>5</b> Show the split variable name in the interior nodes.<br /></p></td>
+    </tr>
+    <tr>
       <th>max</th>
       <td><p>Integer. Maximal depth of the tree.</p></td>
     </tr>
@@ -163,7 +180,15 @@ exist in a node in order for a split to be attempted.</p></td>
     </tr>
     <tr>
       <th>cp</th>
-      <td><p>Numeric. Complexity parameter.</p></td>
+      <td><p>complexity parameter.  Any split that does not decrease the overall
+    lack of fit by a factor of <code>cp</code> is not attempted.  For instance,
+    with <code>anova</code> splitting, this means that the overall R-squared must
+    increase by <code>cp</code> at each step. The main role of this parameter
+    is to save computing time by pruning off splits that are obviously
+    not worthwhile. Essentially,the user informs the program that any
+    split which does not improve the fit by <code>cp</code> will likely be
+    pruned off by cross-validation, and that hence the program need
+    not pursue it.</p></td>
     </tr>
     <tr>
       <th>ohse</th>
@@ -174,13 +199,14 @@ exist in a node in order for a split to be attempted.</p></td>
       <td><p>Boolean. Return a plot? If not, <code>rpart</code> object.</p></td>
     </tr>
     <tr>
+      <th>explain</th>
+      <td><p>Boolean. Include a brief explanation on the bottom
+part of the plot.</p></td>
+    </tr>
+    <tr>
       <th>title, subtitle</th>
       <td><p>Character. Title and subtitle to include in plot.
 Set to <code>NULL</code> to ignore.</p></td>
-    </tr>
-    <tr>
-      <th>caption</th>
-      <td><p>Boolean. Add interpretation text below plot?</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -190,8 +216,19 @@ Set to <code>NULL</code> to ignore.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>List with plot (function), model, performance metrics, and
-interpret auxiliary text.</p>
+    <p>(Invisible) list type 'tree_var' with plot (function), model,
+predictions, performance metrics, and interpret auxiliary text.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This differs from the <code>tree</code> function in S mainly in its handling
+  of surrogate variables.  In most details it follows Breiman
+  <em>et. al</em> (1984) quite closely.  <span style="R">R</span> package <span class="pkg">tree</span> provides a
+  re-implementation of <code>tree</code>.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Breiman L., Friedman J. H., Olshen R. A., and Stone, C. J. (1984)
+  <em>Classification and Regression Trees.</em>
+  Wadsworth.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Exploratory: 
@@ -223,32 +260,38 @@ interpret auxiliary text.</p>
 <code><a href='plot_survey.html'>plot_survey</a>()</code>,
 <code><a href='plot_timeline.html'>plot_timeline</a>()</code>,
 <code><a href='theme_lares.html'>theme_lares</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Stephen Milborrow, borrowing heavily from the <code>rpart</code>
+  package by Terry M. Therneau and Beth Atkinson,
+  and the R port of that package by Brian Ripley.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span>
+<span class='co'># Regression Tree</span>
 <span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Fare</span>, subtitle <span class='op'>=</span> <span class='st'>"Titanic dataset"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 6 variables: 'Pclass', 'Ticket', 'Cabin', 'Embarked', 'Survived', 'Sex'</span></div><div class='input'><span class='va'>tree</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span> <span class='co'># tree plot</span>
-</div><div class='img'><img src='tree_var-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>tree</span><span class='op'>$</span><span class='va'>model</span> <span class='co'># rpart model</span>
+</div><div class='img'><img src='tree_var-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>tree</span><span class='op'>$</span><span class='va'>model</span> <span class='co'># rpart model object</span>
 </div><div class='output co'>#&gt; n= 891 
 #&gt; 
 #&gt; node), split, n, deviance, yval
 #&gt;       * denotes terminal node
 #&gt; 
-#&gt;  1) root 891 2.197799e+06  32.20421  
-#&gt;    2) Pclass_1&lt; 0.5 675 1.074532e+05  15.58005  
-#&gt;      4) Ticket_OTHER&gt;=0.5 614 4.010357e+04  12.91264  
-#&gt;        8) SibSp&lt; 0.5 458 1.175046e+04  10.18239 *
-#&gt;        9) SibSp&gt;=0.5 156 1.491585e+04  20.92834 *
-#&gt;      5) Ticket_OTHER&lt; 0.5 61 1.900761e+04  42.42916  
-#&gt;       10) Parch&gt;=0.5 49 1.148073e+04  37.24915 *
-#&gt;       11) Parch&lt; 0.5 12 8.433332e+02  63.58088 *
-#&gt;    3) Pclass_1&gt;=0.5 216 1.320849e+06  84.15469  
-#&gt;      6) Parch&lt; 0.5 163 7.412910e+05  68.63998  
-#&gt;       12) Sex_male&gt;=0.5 99 3.463003e+05  51.40333 *
-#&gt;       13) Sex_male&lt; 0.5 64 3.200791e+05  95.30293 *
-#&gt;      7) Parch&gt;=0.5 53 4.196563e+05 131.86970  
-#&gt;       14) SibSp&lt; 1.5 48 3.250859e+05 118.23640 *
-#&gt;       15) SibSp&gt;=1.5 5 4.687500e-01 262.75000 *</div><div class='input'><span class='va'>tree</span><span class='op'>$</span><span class='va'>performance</span> <span class='co'># metrics</span>
+#&gt;  1) root 891 2197799.00  32.20421  
+#&gt;    2) Pclass_1&lt; 0.5 675  107453.20  15.58005  
+#&gt;      4) Ticket_OTHER&gt;=0.5 602   36951.84  12.77241  
+#&gt;        8) SibSp&lt; 0.5 454   11332.08  10.27211 *
+#&gt;        9) SibSp&gt;=0.5 148   14075.24  20.44226 *
+#&gt;      5) Ticket_OTHER&lt; 0.5 73   26621.89  38.73350  
+#&gt;       10) SibSp&lt; 6.5 66   19269.25  35.46508 *
+#&gt;       11) SibSp&gt;=6.5 7       0.00  69.55000 *
+#&gt;    3) Pclass_1&gt;=0.5 216 1320849.00  84.15469  
+#&gt;      6) Ticket_OTHER&gt;=0.5 193 1067421.00  74.74652  
+#&gt;       12) Parch&lt; 0.5 154  626392.20  63.35249 *
+#&gt;       13) Parch&gt;=0.5 39  342089.30 119.73840 *
+#&gt;      7) Ticket_OTHER&lt; 0.5 23   92995.43 163.10140  
+#&gt;       14) PassengerId&gt;=469 12   32097.01 144.27710 *
+#&gt;       15) PassengerId&lt; 469 11   52007.28 183.63710 *</div><div class='input'><span class='va'>tree</span><span class='op'>$</span><span class='va'>performance</span> <span class='co'># metrics</span>
 </div><div class='output co'>#&gt; $dictionary
 #&gt; [1] "RMSE: Root Mean Squared Error"       
 #&gt; [2] "MAE: Mean Average Error"             
@@ -259,9 +302,12 @@ interpret auxiliary text.</p>
 #&gt; 
 #&gt; $metrics
 #&gt;       rmse      mae       mape      mse    rsq   rsqa
-#&gt; 1 34.00759 13.37434 0.03033307 1156.516 0.5311 0.5306
-#&gt; </div><div class='input'><span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Survived_TRUE</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 6 variables: 'Pclass', 'Ticket', 'Cabin', 'Embarked', 'Survived', 'Sex'</span></div><div class='img'><img src='tree_var-2.png' alt='' width='700' height='433' /></div></pre>
+#&gt; 1 35.09267 14.68424 0.03144996 1231.495 0.5007 0.5002
+#&gt; </div><div class='input'><span class='co'># Binary Tree</span>
+<span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Survived_TRUE</span>, explain <span class='op'>=</span> <span class='cn'>FALSE</span>, cex <span class='op'>=</span> <span class='fl'>1.2</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 6 variables: 'Pclass', 'Ticket', 'Cabin', 'Embarked', 'Survived', 'Sex'</span></div><div class='img'><img src='tree_var-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Multiclass tree</span>
+<span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Pclass"</span>,<span class='st'>"Fare"</span>,<span class='st'>"Age"</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>Pclass</span>, ohse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='tree_var-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
