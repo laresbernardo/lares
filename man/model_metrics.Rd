@@ -10,11 +10,13 @@ model_metrics(
   multis = NA,
   abc = TRUE,
   thresh = 10,
+  auto_n = TRUE,
   thresh_cm = 0.5,
   target = "auto",
   type = "test",
   model_name = NA,
   plots = TRUE,
+  quiet = FALSE,
   subtitle = NA
 )
 }
@@ -31,21 +33,26 @@ when categorical values?}
 
 \item{thresh}{Integer. Threshold for selecting binary or regression 
 models: this number is the threshold of unique values we should 
-have in 'tag' (more than: regression; less than: classification)}
+have in \code{'tag'} (more than: regression; less than: classification)}
+
+\item{auto_n}{Add \code{n_} before digits when it's categorical and
+not numerical, even though seems numerical?}
 
 \item{thresh_cm}{Numeric. Value to splits the results for the 
 confusion matrix. Range of values: (0-1)}
 
-\item{target}{Value. Which is your target positive value? If 
-set to 'auto', the target with largest mean(score) will be 
+\item{target}{Value. Which is your target positive value? If
+set to \code{'auto'}, the target with largest \code{mean(score)} will be
 selected. Change the value to overwrite. Only used when binary
 categorical model.}
 
 \item{type}{Character. One of: "train", "test".}
 
-\item{model_name}{Character. Model's name}
+\item{model_name}{Character. Model's name for reference.}
 
-\item{plots}{Boolean. Include plots?}
+\item{plots}{Boolean. Create plots objects?}
+
+\item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
 
 \item{subtitle}{Character. Subtitle for plots}
 }

@@ -23,11 +23,11 @@ set to 'auto', the target with largest mean(score) will be
 selected. Change the value to overwrite. Only used when binary
 categorical model.}
 
-\item{splits}{Integer. Numer of percentiles to split the data}
+\item{splits}{Integer. Number of percentiles to split the data}
 
 \item{plot}{Boolean. Plot results? Uses \code{mplot_gain()}}
 
-\item{quiet}{Boolean. Do not show message for auto target?}
+\item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
 }
 \value{
 data.frame when \code{plot=FALSE} or plot when \code{plot=TRUE}.

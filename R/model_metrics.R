@@ -8,24 +8,19 @@
 #' @family Machine Learning
 #' @family Model metrics
 #' @family Calculus
+#' @inheritParams h2o_automl
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param multis Data.frame. Containing columns with each category score 
 #' (only used when more than 2 categories coexist)
 #' @param abc Boolean. Arrange columns and rows alphabetically 
 #' when categorical values?
-#' @param thresh Integer. Threshold for selecting binary or regression 
-#' models: this number is the threshold of unique values we should 
-#' have in 'tag' (more than: regression; less than: classification)
+#' @param auto_n Add \code{n_} before digits when it's categorical and
+#' not numerical, even though seems numerical?
 #' @param thresh_cm Numeric. Value to splits the results for the 
 #' confusion matrix. Range of values: (0-1)
-#' @param target Value. Which is your target positive value? If 
-#' set to 'auto', the target with largest mean(score) will be 
-#' selected. Change the value to overwrite. Only used when binary
-#' categorical model.
 #' @param type Character. One of: "train", "test".
-#' @param model_name Character. Model's name
-#' @param plots Boolean. Include plots?
+#' @param model_name Character. Model's name for reference.
 #' @param subtitle Character. Subtitle for plots
 #' @return List. Multiple performance metrics that vary depending on
 #' the type of model (classification or regression). If \code{plot=TRUE},
@@ -56,22 +51,24 @@
 model_metrics <- function(tag, score, multis = NA, 
                           abc = TRUE,
                           thresh = 10, 
+                          auto_n = TRUE,
                           thresh_cm = 0.5, 
                           target = "auto",
                           type = "test",
                           model_name = NA,
-                          plots = TRUE, 
+                          plots = TRUE,
+                          quiet = FALSE,
                           subtitle = NA){
   
   if (length(tag) != length(score))
-    stop("tag and score have different lengths!")
+    stop(sprintf("tag (%s) and score (%s) have different lengths", length(tag), length(score)))
   
   metrics <- list()
   cats <- sort(unique(as.character(tag)))
   model_type <- ifelse(length(cats) <= thresh, "Classification", "Regression")    
   
   # When seems numeric but is categorical
-  if (model_type == "Classification" & sum(grepl('^[0-9]', cats)) > 0)
+  if (model_type == "Classification" & sum(grepl('^[0-9]', cats)) > 0 & auto_n)
     tag <- as.factor(as.character(ifelse(
       grepl('^[0-9]', tag), paste0("n_", tag), as.character(tag))))
   # When is regression should always be numerical
@@ -114,7 +111,7 @@ model_metrics <- function(tag, score, multis = NA,
         PRC = conf[2,2] / (conf[2,2] + conf[1,2]),
         TPR = conf[2,2] / (conf[2,2] + conf[2,1]),
         TNR = conf[1,1] / (conf[1,1] + conf[1,2]))
-      metrics[["gain_lift"]] <- gain_lift(tag, score, target = target, quiet = FALSE)
+      metrics[["gain_lift"]] <- gain_lift(tag, score, target = target, quiet = quiet)
       metrics[["metrics"]] <- signif(nums, 5)
     } else {
       
@@ -283,9 +280,8 @@ conf_mat <- function(tag, score, thresh = 0.5,
 #' set to 'auto', the target with largest mean(score) will be 
 #' selected. Change the value to overwrite. Only used when binary
 #' categorical model.
-#' @param splits Integer. Numer of percentiles to split the data
+#' @param splits Integer. Number of percentiles to split the data
 #' @param plot Boolean. Plot results? Uses \code{mplot_gain()}
-#' @param quiet Boolean. Do not show message for auto target?
 #' @return data.frame when \code{plot=FALSE} or plot when \code{plot=TRUE}.
 #' @examples 
 #' data(dfr) # Results for AutoML Predictions

@@ -26,7 +26,7 @@ mplot_conf(
 
 \item{thresh}{Integer. Threshold for selecting binary or regression 
 models: this number is the threshold of unique values we should 
-have in 'tag' (more than: regression; less than: classification)}
+have in \code{'tag'} (more than: regression; less than: classification)}
 
 \item{abc}{Boolean. Arrange columns and rows alphabetically?}
 

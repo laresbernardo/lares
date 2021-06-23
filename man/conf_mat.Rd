@@ -13,7 +13,7 @@ conf_mat(tag, score, thresh = 0.5, sense = ">=", diagonal = TRUE, plot = FALSE)
 
 \item{thresh}{Integer. Threshold for selecting binary or regression 
 models: this number is the threshold of unique values we should 
-have in 'tag' (more than: regression; less than: classification)}
+have in \code{'tag'} (more than: regression; less than: classification)}
 
 \item{sense}{Character. Inequation sense for threshold: <, <=, >=, >}
 

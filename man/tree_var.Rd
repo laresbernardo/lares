@@ -6,43 +6,55 @@
 \usage{
 tree_var(
   df,
-  target,
+  y,
   max = 3,
-  min = 20,
+  min = 15,
   cp = 0,
-  size = 0.7,
   ohse = TRUE,
   plot = TRUE,
+  title = NA,
+  subtitle = NULL,
   ...
 )
 }
 \arguments{
 \item{df}{Data frame}
 
-\item{target}{Variable}
+\item{y}{Variable or Character. Name of the independent variable.}
 
-\item{max}{Integer. Maximal depth of the tree}
+\item{max}{Integer. Maximal depth of the tree.}
 
 \item{min}{Integer. The minimum number of observations that must 
-exist in a node in order for a split to be attempted}
+exist in a node in order for a split to be attempted.}
 
-\item{cp}{Numeric. Complexity parameter}
-
-\item{size}{Numeric. Textsize of plot}
+\item{cp}{Numeric. Complexity parameter.}
 
 \item{ohse}{Boolean. Auto generate One Hot Smart Encoding?}
 
-\item{plot}{Boolean. Return a plot? If not, \code{rpart} object}
+\item{plot}{Boolean. Return a plot? If not, \code{rpart} object.}
 
-\item{...}{Additional parameters passed to \code{rpart.plot()}.}
+\item{title, subtitle}{Character. Title and subtitle to include in plot.
+Set to \code{NULL} to ignore.}
+
+\item{...}{Additional parameters passed to \code{model_metrics()}.}
 }
 \value{
 When \code{plot=TRUE} returns plot; when \code{plot=FALSE}
 returns \code{rpart} fitted model.
 }
 \description{
-Fit and plot a rpart model for exploratory purposes using rpart
-and rpart.plot libraries. Idea from explore library.
+Fit and plot a \code{rpart} model for exploratory purposes using
+\code{rpart} and \code{rpart.plot} libraries.
+}
+\examples{
+\dontrun{
+data(dft)
+tree <- tree_var(dft, Fare, subtitle = "Titanic dataset")
+tree$plot() # tree plot
+tree$tree # model
+tree$performance # metrics
+tree_var(dft, Survived_TRUE)$plot()
+}
 }
 \seealso{
 Other Exploratory: 
