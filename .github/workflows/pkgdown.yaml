@@ -52,5 +52,6 @@ jobs:
       - name: Build and deploy pkgdown site
         run: pkgdown::deploy_to_branch(
           lazy = TRUE,
-          devel = TRUE)
+          devel = TRUE,
+          new_process = FALSE)
         shell: Rscript {0}
