@@ -97,7 +97,7 @@ tree$plot() # tree plot
 tree$model # rpart model object
 tree$performance # metrics
 # Binary Tree
-tree_var(dft, Survived_TRUE, explain = FALSE, cex = 1.2)$plot()
+tree_var(dft, Survived_TRUE, explain = FALSE, cex = 0.8)$plot()
 # Multiclass tree
 tree_var(dft[,c("Pclass","Fare","Age")], Pclass, ohse = FALSE)$plot()
 }

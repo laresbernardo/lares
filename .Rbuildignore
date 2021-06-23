@@ -9,3 +9,5 @@
 ^\.github$
 ^\._pkgdown.yml
 ^\.DS_Store
+^doc$
+^Meta$

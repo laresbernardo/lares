@@ -31,7 +31,7 @@
 #' tree$model # rpart model object
 #' tree$performance # metrics
 #' # Binary Tree
-#' tree_var(dft, Survived_TRUE, explain = FALSE, cex = 1.2)$plot()
+#' tree_var(dft, Survived_TRUE, explain = FALSE, cex = 0.8)$plot()
 #' # Multiclass tree
 #' tree_var(dft[,c("Pclass","Fare","Age")], Pclass, ohse = FALSE)$plot()
 #' @export
@@ -77,7 +77,7 @@ tree_var <- function(df, y, type = 2, max = 3, min = 20, cp = 0,
   
   if (plot) {
     if (nrow(mod$frame) > 1) {
-      bottom_mg <- ifelse(explain, 4, 1)
+      bottom_mg <- ifelse(explain, 3.5, 1)
       plot_tree <- function(tree, title, subtitle, explain = TRUE) {
         font <- font_global(Sys.getenv("LARES_FONT"), when_not = NULL)
         rpart.plot(tree, type = type, roundint = FALSE, family = font,

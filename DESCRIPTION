@@ -38,6 +38,7 @@ Suggests:
     ggrepel,
     googleAuthR,
     googlesheets4,
+    knitr,
     quantmod,
     plotly,
     rdrop2,
@@ -47,6 +48,7 @@ Suggests:
     wordcloud
 URL: https://github.com/laresbernardo/lares
 BugReports: https://github.com/laresbernardo/lares/issues
+VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 License: AGPL-3
 Encoding: UTF-8
