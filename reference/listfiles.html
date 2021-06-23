@@ -96,6 +96,18 @@ It also lets filter files which contains a string." />
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/h2o_automl.html">Introduction to AutoML using `lares`</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -191,24 +203,24 @@ It also lets filter files which contains a string.</p>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span><span class='op'>(</span>recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fl'>3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;            filename size isdir mode               mtime               ctime
-#&gt; 1     autoline.html   15 FALSE  666 2021-06-23 16:29:24 2021-06-23 16:29:24
-#&gt; 2 balance_data.html   10 FALSE  666 2021-06-23 16:29:24 2021-06-23 16:29:24
-#&gt; 3    bindfiles.html    8 FALSE  666 2021-06-23 16:29:24 2021-06-23 16:29:24
+#&gt; 1     autoline.html   16 FALSE  666 2021-06-23 20:34:13 2021-06-23 20:34:13
+#&gt; 2 balance_data.html   10 FALSE  666 2021-06-23 20:34:13 2021-06-23 20:34:13
+#&gt; 3    bindfiles.html    8 FALSE  666 2021-06-23 20:34:13 2021-06-23 20:34:13
 #&gt;                 atime uid gid  uname grname
-#&gt; 1 2021-06-23 16:29:49 501  20 runner  staff
-#&gt; 2 2021-06-23 16:29:49 501  20 runner  staff
-#&gt; 3 2021-06-23 16:29:49 501  20 runner  staff</div><div class='input'>
+#&gt; 1 2021-06-23 20:34:13 501  20 runner  staff
+#&gt; 2 2021-06-23 20:34:13 501  20 runner  staff
+#&gt; 3 2021-06-23 20:34:13 501  20 runner  staff</div><div class='input'>
 <span class='co'># All files in current directory (with recursive files)</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span><span class='op'>(</span>recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fl'>3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;           filename size isdir mode               mtime               ctime
-#&gt; 363 year_week.html    8 FALSE  666 2021-06-23 16:29:24 2021-06-23 16:29:24
-#&gt; 364    yt2mp3.html    6 FALSE  666 2021-06-23 16:29:24 2021-06-23 16:29:24
-#&gt; 365   zerovar.html    9 FALSE  666 2021-06-23 16:29:24 2021-06-23 16:29:24
+#&gt; 363 year_week.html    8 FALSE  666 2021-06-23 20:33:47 2021-06-23 20:33:47
+#&gt; 364    yt2mp3.html    6 FALSE  666 2021-06-23 20:33:47 2021-06-23 20:33:47
+#&gt; 365   zerovar.html    9 FALSE  666 2021-06-23 20:33:47 2021-06-23 20:33:47
 #&gt;                   atime uid gid  uname grname
-#&gt; 363 2021-06-23 16:29:24 501  20 runner  staff
-#&gt; 364 2021-06-23 16:29:24 501  20 runner  staff
-#&gt; 365 2021-06-23 16:29:24 501  20 runner  staff</div><div class='input'>
+#&gt; 363 2021-06-23 20:33:47 501  20 runner  staff
+#&gt; 364 2021-06-23 20:33:47 501  20 runner  staff
+#&gt; 365 2021-06-23 20:33:47 501  20 runner  staff</div><div class='input'>
 <span class='co'># Check R files using regex</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span><span class='op'>(</span>regex <span class='op'>=</span> <span class='st'>"\\.R$"</span><span class='op'>)</span>
 </div></pre>
