@@ -24,6 +24,7 @@ Imports:
     pROC,
     rlang,
     rpart,
+    rpart.plot,
     rvest,
     stringr,
     tidyr,

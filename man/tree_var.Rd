@@ -14,6 +14,7 @@ tree_var(
   plot = TRUE,
   title = NA,
   subtitle = NULL,
+  caption = TRUE,
   ...
 )
 }
@@ -36,25 +37,25 @@ exist in a node in order for a split to be attempted.}
 \item{title, subtitle}{Character. Title and subtitle to include in plot.
 Set to \code{NULL} to ignore.}
 
-\item{...}{Additional parameters passed to \code{model_metrics()}.}
+\item{caption}{Boolean. Add interpretation text below plot?}
+
+\item{...}{Additional parameters passed to \code{rpart.plot()}.}
 }
 \value{
-When \code{plot=TRUE} returns plot; when \code{plot=FALSE}
-returns \code{rpart} fitted model.
+List with plot (function), model, performance metrics, and
+interpret auxiliary text.
 }
 \description{
 Fit and plot a \code{rpart} model for exploratory purposes using
 \code{rpart} and \code{rpart.plot} libraries.
 }
 \examples{
-\dontrun{
 data(dft)
 tree <- tree_var(dft, Fare, subtitle = "Titanic dataset")
 tree$plot() # tree plot
-tree$tree # model
+tree$model # rpart model
 tree$performance # metrics
 tree_var(dft, Survived_TRUE)$plot()
-}
 }
 \seealso{
 Other Exploratory: 

@@ -16,22 +16,21 @@
 #' @param plot Boolean. Return a plot? If not, \code{rpart} object.
 #' @param title,subtitle Character. Title and subtitle to include in plot.
 #' Set to \code{NULL} to ignore.
-#' @param ... Additional parameters passed to \code{model_metrics()}.
-#' @return When \code{plot=TRUE} returns plot; when \code{plot=FALSE}
-#' returns \code{rpart} fitted model.
+#' @param caption Boolean. Add interpretation text below plot?
+#' @param ... Additional parameters passed to \code{rpart.plot()}.
+#' @return List with plot (function), model, performance metrics, and
+#' interpret auxiliary text.
 #' @examples 
-#' \dontrun{
 #' data(dft)
 #' tree <- tree_var(dft, Fare, subtitle = "Titanic dataset")
 #' tree$plot() # tree plot
-#' tree$tree # model
+#' tree$model # rpart model
 #' tree$performance # metrics
 #' tree_var(dft, Survived_TRUE)$plot()
-#' }
 #' @export
 tree_var <- function(df, y, max = 3, min = 15, cp = 0, 
                      ohse = TRUE, plot = TRUE,
-                     title = NA, subtitle = NULL, ...) {
+                     title = NA, subtitle = NULL, caption = TRUE, ...) {
   
   if (ohse) df <- ohse(df, limit = min)
   
@@ -53,8 +52,7 @@ tree_var <- function(df, y, max = 3, min = 15, cp = 0,
   aux <- df[!is.na(df[,target_txt]),]
   p <- unlist(predict(mod, aux))
   real <- unlist(aux[,target_txt])
-  performance <- model_metrics(real, p, auto_n = FALSE, plots = FALSE,
-                               quiet = TRUE, ...)
+  performance <- model_metrics(real, p, auto_n = FALSE, plots = FALSE, quiet = TRUE)
   
   interpret <- sprintf(paste(
     "Recursive partitioning and regression tree",
@@ -64,16 +62,16 @@ tree_var <- function(df, y, max = 3, min = 15, cp = 0,
     collapse = ""), min, max, cp)
   
   if (plot) {
-    try_require("rpart.plot")
     if (nrow(mod$frame) > 1) {
-      plot_tree <- function(tree, title = title, subtitle = subtitle, caption = interpret) {
-        rpart.plot(tree, type = 5, roundint = FALSE)
+      plot_tree <- function(tree, title = title, subtitle = subtitle, caption = caption) {
+        rpart.plot(tree, type = 5, roundint = FALSE, ...)
         if (is.na(title)) mtext(side = 3, line = 3, at = -0.05, adj = 0, cex = 1.1,
               paste("Decision Tree for", target_txt))
         mtext(side = 3, line = 2, at = -0.05, adj = 0, cex = 0.9, subtitle)
-        mtext(side = 1, line = 3, at = -0.05, adj = 0, cex = 0.6, caption)
+        if (caption) mtext(side = 1, line = 3, at = -0.05, adj = 0, cex = 0.6,
+                           autoline(interpret, rel = 4.5))
       }
-      tree.plot <- function() plot_tree(mod, title, subtitle, autoline(interpret, rel = 4.5))
+      tree.plot <- function() plot_tree(mod, title, subtitle, caption)
     } else { 
       plots <- noPlot("Can't grow decision tree")
     }
@@ -81,7 +79,7 @@ tree_var <- function(df, y, max = 3, min = 15, cp = 0,
   
   return(invisible(list(
     plot = tree.plot,
-    tree = mod,
+    model = mod,
     performance = performance,
     interpret = interpret)))
   
@@ -90,5 +88,5 @@ tree_var <- function(df, y, max = 3, min = 15, cp = 0,
 # data(dft)
 # tree <- tree_var(dft, Survived_TRUE)
 # tree$plot() # tree plot
-# tree$tree # model
+# tree$model # model
 # tree$performance # metrics
