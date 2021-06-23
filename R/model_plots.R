@@ -1047,7 +1047,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
     df <- data.frame(tag = tag, score = score, multis)
     out <- aux <- NULL
     for (i in 1:(ncol(df) - 2)) {
-      g <- gain_lift(df$tag, df[,2 + i], splits = splits, quiet = FALSE) %>% 
+      g <- gain_lift(df$tag, df[,2 + i], splits = splits, quiet = quiet) %>% 
         mutate(label = colnames(df)[2 + i])  
       x <- data.frame(x = as.factor(c(0, g$percentile)),
                       y = c(0, g$optimal), 

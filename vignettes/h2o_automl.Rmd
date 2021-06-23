@@ -30,7 +30,7 @@ In short, this are some of the things that happen on its backend:
 
 3. The dataframe will be split in two: test and train datasets. The proportion of this split can be control with the `split` argument. This can be replicated with the `msplit()` function.
 
-4. You could also `center` and `scale` your numerical values before you continue, use the `no_outliers` to exclude some outliers, and/or `impute` missing values with `MICE`. If it's a classification model, the function can balance (under-sample) your training data. You can control this behavior with the `balance` argument. Until here, you can replicate with the `prepare_data()` function.
+4. You could also `center` and `scale` your numerical values before you continue, use the `no_outliers` to exclude some outliers, and/or `impute` missing values with `MICE`. If it's a classification model, the function can balance (under-sample) your training data. You can control this behavior with the `balance` argument. Until here, you can replicate the whole process with the `model_preprocess()` function.
 
 5. Runs `h2o::h2o.automl(...)` to train multiple models and generate a leaderboard with the top (`max_models` or `max_time`) models trained, sorted by their performance. You can also customize some additional arguments such as `nfolds` for k-fold cross-validations, `exclude_algos` and `include_algos` to exclude or include some algorithms, and any other additional argument you wish to pass to the mother function.
 
@@ -60,7 +60,7 @@ Let's have a look at three specific examples: **classification models (binary an
 
 ### Classification: Binary
 
-Stating with a binary TRUE/FALSE model to predict `Survived`:
+Let's begin with a binary (TRUE/FALSE) model to predict if each passenger `Survived`:
 
 ```{r class_2, results="show"}
 r <- h2o_automl(df, y = Survived, max_models = 1, impute = FALSE, target = "TRUE")
@@ -72,7 +72,7 @@ Let's take a look at the plots generated into a single dashboard:
 plot(r)
 ```
 
-We also have several calculations for our model's performance that may come useful such as a confusion matrix, gain and lift by percentile, area under the curve (AUC), accuracy (ACC), recall or true positive rate (TPR), cross-validation metrics, and exact thresholds to maximize each metric:
+We also have several calculations for our model's performance that may come useful such as a confusion matrix, gain and lift by percentile, area under the curve (AUC), accuracy (ACC), recall or true positive rate (TPR), cross-validation metrics, exact thresholds to maximize each metric, and others:
 
 ```{r results="show"}
 r$metrics
@@ -84,7 +84,7 @@ The same goes for the plots generated for these metrics. We have the gains and r
 r$plots$metrics
 ```
 
-For all models, regardless of their type, you can also check the importance of each variable:
+For all models, regardless of their type (classification or regression), you can check the importance of each variable as well:
 
 ```{r results="show"}
 head(r$importance)
@@ -94,7 +94,7 @@ r$plots$importance
 
 ### Classification: Multi-Categorical
 
-Followed by a multi-categorical (+2 labels) model to predict `Pclass`:
+Now, let's run a multi-categorical (+2 labels) model to predict `Pclass` of each passenger:
 
 ```{r class_3, results="show"}
 r <- h2o_automl(df, Pclass, ignore = c("Fare", "Cabin"), max_time = 30, plots = FALSE)
@@ -108,7 +108,7 @@ plot(r)
 
 ### Regression
 
-And, a regression model with continuous values to predict `Fare`:
+Finally, a regression model with continuous values to predict `Fare` payed by passenger:
 
 ```{r regression, results="show"}
 r <- h2o_automl(df, y = "Fare", ignore = "Pclass", exclude_algos = NULL, quiet = TRUE)

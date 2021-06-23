@@ -138,12 +138,12 @@ metrics, parameters, importance data.frame, seed, and plots when \code{plots=TRU
 This function lets the user create a robust and fast model, using 
 H2O's AutoML function. The result is a list with the best model, 
 its parameters, datasets, performance metrics, variables 
-importance, and plots. If the input is categorical, classification
-models will be trained and if is a continuous variable, regression
-models will be trained.
+importance, and plots. Read more about the \code{h2o_automl()} pipeline
+\href{https://laresbernardo.github.io/lares/articles/h2o_automl.html}{here}.
 }
 \section{List of algorithms}{
 
+\href{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}{-> Read more here}
 \describe{
   \item{DRF}{Distributed Random Forest, including Random Forest (RF)
   and Extremely-Randomized Trees (XRT)}
@@ -153,7 +153,6 @@ models will be trained.
   \item{DeepLearning}{Fully-connected multi-layer artificial neural network}
   \item{StackedEnsemble}{Stacked Ensemble}
 }
-\href{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}{Read more here}.
 }
 
 \section{Methods}{
@@ -162,12 +161,6 @@ models will be trained.
   \item{print}{Use \code{print} method to print models stats and summary}
   \item{plot}{Use \code{plot} method to plot results using \code{mplot_full()}}
 }
-}
-
-\section{Article}{
-
-Read more about the \code{h2o_automl()} function and its pipeline
-[here](https://laresbernardo.github.io/lares/articles/h2o_automl.html).
 }
 
 \examples{
