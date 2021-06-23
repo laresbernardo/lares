@@ -47,8 +47,8 @@
 
 
 <meta property="og:title" content="Recursive Partitioning and Regression Trees — tree_var" />
-<meta property="og:description" content="Fit and plot a rpart model for exploratory purposes using rpart
-and rpart.plot libraries. Idea from explore library." />
+<meta property="og:description" content="Fit and plot a rpart model for exploratory purposes using
+rpart and rpart.plot libraries." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -123,19 +123,20 @@ and rpart.plot libraries. Idea from explore library." />
     </div>
 
     <div class="ref-description">
-    <p>Fit and plot a rpart model for exploratory purposes using rpart
-and rpart.plot libraries. Idea from explore library.</p>
+    <p>Fit and plot a <code>rpart</code> model for exploratory purposes using
+<code>rpart</code> and <code>rpart.plot</code> libraries.</p>
     </div>
 
     <pre class="usage"><span class='fu'>tree_var</span><span class='op'>(</span>
   <span class='va'>df</span>,
-  <span class='va'>target</span>,
+  <span class='va'>y</span>,
   max <span class='op'>=</span> <span class='fl'>3</span>,
-  min <span class='op'>=</span> <span class='fl'>20</span>,
+  min <span class='op'>=</span> <span class='fl'>15</span>,
   cp <span class='op'>=</span> <span class='fl'>0</span>,
-  size <span class='op'>=</span> <span class='fl'>0.7</span>,
   ohse <span class='op'>=</span> <span class='cn'>TRUE</span>,
   plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  title <span class='op'>=</span> <span class='cn'>NA</span>,
+  subtitle <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -147,25 +148,21 @@ and rpart.plot libraries. Idea from explore library.</p>
       <td><p>Data frame</p></td>
     </tr>
     <tr>
-      <th>target</th>
-      <td><p>Variable</p></td>
+      <th>y</th>
+      <td><p>Variable or Character. Name of the independent variable.</p></td>
     </tr>
     <tr>
       <th>max</th>
-      <td><p>Integer. Maximal depth of the tree</p></td>
+      <td><p>Integer. Maximal depth of the tree.</p></td>
     </tr>
     <tr>
       <th>min</th>
       <td><p>Integer. The minimum number of observations that must 
-exist in a node in order for a split to be attempted</p></td>
+exist in a node in order for a split to be attempted.</p></td>
     </tr>
     <tr>
       <th>cp</th>
-      <td><p>Numeric. Complexity parameter</p></td>
-    </tr>
-    <tr>
-      <th>size</th>
-      <td><p>Numeric. Textsize of plot</p></td>
+      <td><p>Numeric. Complexity parameter.</p></td>
     </tr>
     <tr>
       <th>ohse</th>
@@ -173,11 +170,16 @@ exist in a node in order for a split to be attempted</p></td>
     </tr>
     <tr>
       <th>plot</th>
-      <td><p>Boolean. Return a plot? If not, <code>rpart</code> object</p></td>
+      <td><p>Boolean. Return a plot? If not, <code>rpart</code> object.</p></td>
+    </tr>
+    <tr>
+      <th>title, subtitle</th>
+      <td><p>Character. Title and subtitle to include in plot.
+Set to <code>NULL</code> to ignore.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional parameters passed to <code>rpart.plot()</code>.</p></td>
+      <td><p>Additional parameters passed to <code><a href='model_metrics.html'>model_metrics()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -217,6 +219,16 @@ returns <code>rpart</code> fitted model.</p>
 <code><a href='plot_timeline.html'>plot_timeline</a>()</code>,
 <code><a href='theme_lares.html'>theme_lares</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span>
+<span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Fare</span>, subtitle <span class='op'>=</span> <span class='st'>"Titanic dataset"</span><span class='op'>)</span>
+<span class='va'>tree</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span> <span class='co'># tree plot</span>
+<span class='va'>tree</span><span class='op'>$</span><span class='va'>tree</span> <span class='co'># model</span>
+<span class='va'>tree</span><span class='op'>$</span><span class='va'>performance</span> <span class='co'># metrics</span>
+<span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Survived_TRUE</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

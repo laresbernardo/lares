@@ -135,11 +135,13 @@ Specificity, given the expected (tags) values and predicted values (scores).</p>
   multis <span class='op'>=</span> <span class='cn'>NA</span>,
   abc <span class='op'>=</span> <span class='cn'>TRUE</span>,
   thresh <span class='op'>=</span> <span class='fl'>10</span>,
+  auto_n <span class='op'>=</span> <span class='cn'>TRUE</span>,
   thresh_cm <span class='op'>=</span> <span class='fl'>0.5</span>,
   target <span class='op'>=</span> <span class='st'>"auto"</span>,
   type <span class='op'>=</span> <span class='st'>"test"</span>,
   model_name <span class='op'>=</span> <span class='cn'>NA</span>,
   plots <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
   subtitle <span class='op'>=</span> <span class='cn'>NA</span>
 <span class='op'>)</span></pre>
 
@@ -168,7 +170,12 @@ when categorical values?</p></td>
       <th>thresh</th>
       <td><p>Integer. Threshold for selecting binary or regression 
 models: this number is the threshold of unique values we should 
-have in 'tag' (more than: regression; less than: classification)</p></td>
+have in <code>'tag'</code> (more than: regression; less than: classification)</p></td>
+    </tr>
+    <tr>
+      <th>auto_n</th>
+      <td><p>Add <code>n_</code> before digits when it's categorical and
+not numerical, even though seems numerical?</p></td>
     </tr>
     <tr>
       <th>thresh_cm</th>
@@ -177,8 +184,8 @@ confusion matrix. Range of values: (0-1)</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>Value. Which is your target positive value? If 
-set to 'auto', the target with largest mean(score) will be 
+      <td><p>Value. Which is your target positive value? If
+set to <code>'auto'</code>, the target with largest <code><a href='https://rdrr.io/r/base/mean.html'>mean(score)</a></code> will be
 selected. Change the value to overwrite. Only used when binary
 categorical model.</p></td>
     </tr>
@@ -188,11 +195,15 @@ categorical model.</p></td>
     </tr>
     <tr>
       <th>model_name</th>
-      <td><p>Character. Model's name</p></td>
+      <td><p>Character. Model's name for reference.</p></td>
     </tr>
     <tr>
       <th>plots</th>
-      <td><p>Boolean. Include plots?</p></td>
+      <td><p>Boolean. Create plots objects?</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Boolean. Quiet all messages, warnings, recommendations?</p></td>
     </tr>
     <tr>
       <th>subtitle</th>
