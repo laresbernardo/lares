@@ -7,14 +7,15 @@
 tree_var(
   df,
   y,
+  type = 2,
   max = 3,
-  min = 15,
+  min = 20,
   cp = 0,
   ohse = TRUE,
   plot = TRUE,
+  explain = TRUE,
   title = NA,
   subtitle = NULL,
-  caption = TRUE,
   ...
 )
 }
@@ -23,39 +24,87 @@ tree_var(
 
 \item{y}{Variable or Character. Name of the independent variable.}
 
+\item{type}{
+    Type of plot. Possible values:
+
+     \bold{0} Draw a split label at each split
+              and a node label at each leaf.
+
+     \bold{1} Label all nodes, not just leaves.
+              Similar to \code{text.rpart}'s \code{all=TRUE}.
+
+     \bold{2} Default.
+              Like \code{1} but draw the split labels below the node labels.
+              Similar to the plots in the CART book.
+
+     \bold{3} Draw separate split labels for the left and right directions.
+
+     \bold{4} Like \code{3} but label all nodes, not just leaves.
+              Similar to \code{text.rpart}'s \code{fancy=TRUE}.
+              See also \code{clip.right.labs}.\cr
+
+     \bold{5} Show the split variable name in the interior nodes.\cr
+  }
+
 \item{max}{Integer. Maximal depth of the tree.}
 
 \item{min}{Integer. The minimum number of observations that must 
 exist in a node in order for a split to be attempted.}
 
-\item{cp}{Numeric. Complexity parameter.}
+\item{cp}{
+    complexity parameter.  Any split that does not decrease the overall
+    lack of fit by a factor of \code{cp} is not attempted.  For instance,
+    with \code{anova} splitting, this means that the overall R-squared must
+    increase by \code{cp} at each step. The main role of this parameter
+    is to save computing time by pruning off splits that are obviously
+    not worthwhile. Essentially,the user informs the program that any
+    split which does not improve the fit by \code{cp} will likely be
+    pruned off by cross-validation, and that hence the program need
+    not pursue it.
+  }
 
 \item{ohse}{Boolean. Auto generate One Hot Smart Encoding?}
 
 \item{plot}{Boolean. Return a plot? If not, \code{rpart} object.}
 
+\item{explain}{Boolean. Include a brief explanation on the bottom
+part of the plot.}
+
 \item{title, subtitle}{Character. Title and subtitle to include in plot.
 Set to \code{NULL} to ignore.}
-
-\item{caption}{Boolean. Add interpretation text below plot?}
 
 \item{...}{Additional parameters passed to \code{rpart.plot()}.}
 }
 \value{
-List with plot (function), model, performance metrics, and
-interpret auxiliary text.
+(Invisible) list type 'tree_var' with plot (function), model,
+predictions, performance metrics, and interpret auxiliary text.
 }
 \description{
 Fit and plot a \code{rpart} model for exploratory purposes using
 \code{rpart} and \code{rpart.plot} libraries.
 }
+\details{
+This differs from the \code{tree} function in S mainly in its handling
+  of surrogate variables.  In most details it follows Breiman
+  \emph{et. al} (1984) quite closely.  \R package \pkg{tree} provides a
+  re-implementation of \code{tree}.
+}
 \examples{
 data(dft)
+# Regression Tree
 tree <- tree_var(dft, Fare, subtitle = "Titanic dataset")
 tree$plot() # tree plot
-tree$model # rpart model
+tree$model # rpart model object
 tree$performance # metrics
-tree_var(dft, Survived_TRUE)$plot()
+# Binary Tree
+tree_var(dft, Survived_TRUE, explain = FALSE, cex = 1.2)$plot()
+# Multiclass tree
+tree_var(dft[,c("Pclass","Fare","Age")], Pclass, ohse = FALSE)$plot()
+}
+\references{
+Breiman L., Friedman J. H., Olshen R. A., and Stone, C. J. (1984)
+  \emph{Classification and Regression Trees.}
+  Wadsworth.
 }
 \seealso{
 Other Exploratory: 
@@ -88,6 +137,11 @@ Other Visualization:
 \code{\link{plot_survey}()},
 \code{\link{plot_timeline}()},
 \code{\link{theme_lares}()}
+}
+\author{
+Stephen Milborrow, borrowing heavily from the \code{\link{rpart}}
+  package by Terry M. Therneau and Beth Atkinson,
+  and the R port of that package by Brian Ripley.
 }
 \concept{Exploratory}
 \concept{Visualization}

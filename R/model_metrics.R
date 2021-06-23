@@ -104,7 +104,9 @@ model_metrics <- function(tag, score, multis = NA,
     # For Binaries
     if (length(cats) == 2) {
       metrics[["confusion_matrix"]] <- conf
-      ROC <- pROC::roc(tag, as.numeric(score), ci = TRUE, quiet = TRUE)
+      tag <- factor(tag)
+      score <- as.numeric(score)
+      ROC <- pROC::roc(tag, score, ci = TRUE, quiet = TRUE)
       nums <- data.frame(
         AUC = ROC$auc,
         ACC = trues / total,
@@ -375,9 +377,9 @@ ROC <- function(tag, score, multis = NA) {
     stop(message(paste("Currently, tag has",length(tag),"rows and score has",length(score))))
   }
   
-  if (!is.numeric(score) & is.na(multis)[1]) {
+  if (!is.numeric(score) & length(multis) == 1) {
     score <- as.numeric(score) 
-    warning("You should use the multis parameter to add each category's score")
+    warning("You should use the 'multis' parameter to add each category's score")
   }
   
   if (length(unique(tag)) <= 1) {
@@ -385,7 +387,9 @@ ROC <- function(tag, score, multis = NA) {
     warning("Only 1 unique label detected. Adding single noice observation.")
   }
   
-  if (is.na(multis)[1]) {
+  if (length(multis) == 1) {
+    tag <- factor(tag)
+    score <- as.numeric(score)
     roc <- pROC::roc(tag, score, ci = TRUE, quiet = TRUE)
     coords <- data.frame(
       fpr = rev(roc$specificities),
@@ -393,17 +397,17 @@ ROC <- function(tag, score, multis = NA) {
       mutate(label = "2cats")
     ci <- data.frame(roc$ci, row.names = c("min","AUC","max"))
   } else {
-    df <- data.frame(tag = tag, score = score, multis)
+    df <- bind_cols(tag = tag, score = score, multis)
     cols <- colnames(df)
     coords <- NULL
     rocs <- list()
     for (i in 1:(length(cols) - 2)) {
       which <- colnames(df)[2 + i]
-      res <- df[,c(which)]
-      label <- ifelse(df[,1] == which, which, "other")
+      res <- unlist(df[,c(which)])
+      label <- factor(unlist(ifelse(df[,1] == which, which, "other_label")))
       if (length(unique(label)) <= 1) {
         label[1] <- "dummy_label"
-        warning("Only 1 unique label detected. Adding single noice observation.")
+        warning("Only 1 unique label detected for ", which, ". Adding single noice observation.")
       }
       roci <- pROC::roc(label, res, ci = TRUE, quiet = TRUE)
       rocs[[paste(cols[i + 2])]] <- roci

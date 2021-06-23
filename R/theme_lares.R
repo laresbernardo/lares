@@ -76,14 +76,8 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   if (isFALSE(legend)) legend <- "none"
   
   # Check and set font
-  if (!isTRUE(font_exists(font))) {
-    if (isFALSE(is.na(font))) {
-      if (isTRUE(font != ''))
-        warning(sprintf("Font '%s' is not installed, has other name, or can't be found", font))
-      Sys.unsetenv("LARES_FONT") # So R doesn't try again by default
-      font <- NA
-    }
-  } else ret <- ret + theme(text = element_text(family = font))  
+  font <- font_global(font, quiet = FALSE)
+  ret <- ret + theme(text = element_text(family = font))
   
   # Set some defaults
   update_geom_defaults("text", list(colour = hard_colour, family = font))
@@ -227,4 +221,16 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   
   return(ret)
   
+}
+
+font_global <- function(font, quiet = TRUE, when_not = NA) {
+  if (!isTRUE(font_exists(font))) {
+    if (isFALSE(is.na(font))) {
+      if (isTRUE(font != '') & !quiet)
+        warning(sprintf("Font '%s' is not installed, has other name, or can't be found", font))
+      Sys.unsetenv("LARES_FONT") # So R doesn't try again by default
+      font <- when_not
+    }
+  }
+  return(font)
 }

@@ -265,7 +265,7 @@ quiet_h2o <- function(..., quiet = TRUE) {
 #' @param x h2o_automl object
 #' @export
 plot.h2o_automl <- function(x, ...) {
-    if (!inherits(x, 'h2o_automl'))
+  if (!inherits(x, 'h2o_automl'))
     stop('Object must be class h2o_automl')
   if ("plots" %in% names(x)) {
     x$plots$dashboard 
