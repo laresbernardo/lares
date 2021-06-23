@@ -25,7 +25,7 @@ remotes::install_github("laresbernardo/lares", dependencies = TRUE)
 
 ## See the library in action!
 
-- Article: [Introduction to AutoML using lares](https://laresbernardo.github.io/lares/articles/h2o_automl.html)
+- Vignette: [Introduction to AutoML using `lares`](https://laresbernardo.github.io/lares/articles/h2o_automl.html)
 
 - DataScience+: [Visualizations for Classification Models Results](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/)
 
