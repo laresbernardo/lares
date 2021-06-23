@@ -86,7 +86,7 @@ tree_var <- function(df, y, type = 2, max = 3, min = 20, cp = 0,
                                 paste("Decision Tree for", target_txt), family = font)
         mtext(side = 3, line = 1.6, at = -0.05, adj = 0, cex = 0.9, subtitle, family = font)
         if (explain) mtext(side = 1, line = 3, at = -0.05, adj = 0, cex = 0.6,
-                           famili = font, autoline(interpret, rel = 4.4))
+                           family = font, autoline(interpret, rel = 4.4))
       }
       tree.plot <- function() plot_tree(mod, title, subtitle, explain)
     } else { 
