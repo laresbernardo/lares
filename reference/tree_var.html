@@ -137,6 +137,7 @@ rpart and rpart.plot libraries." />
   plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
   title <span class='op'>=</span> <span class='cn'>NA</span>,
   subtitle <span class='op'>=</span> <span class='cn'>NULL</span>,
+  caption <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -178,15 +179,19 @@ exist in a node in order for a split to be attempted.</p></td>
 Set to <code>NULL</code> to ignore.</p></td>
     </tr>
     <tr>
+      <th>caption</th>
+      <td><p>Boolean. Add interpretation text below plot?</p></td>
+    </tr>
+    <tr>
       <th>...</th>
-      <td><p>Additional parameters passed to <code><a href='model_metrics.html'>model_metrics()</a></code>.</p></td>
+      <td><p>Additional parameters passed to <code>rpart.plot()</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>When <code>plot=TRUE</code> returns plot; when <code>plot=FALSE</code>
-returns <code>rpart</code> fitted model.</p>
+    <p>List with plot (function), model, performance metrics, and
+interpret auxiliary text.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Exploratory: 
@@ -220,15 +225,43 @@ returns <code>rpart</code> fitted model.</p>
 <code><a href='theme_lares.html'>theme_lares</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span>
 <span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Fare</span>, subtitle <span class='op'>=</span> <span class='st'>"Titanic dataset"</span><span class='op'>)</span>
-<span class='va'>tree</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span> <span class='co'># tree plot</span>
-<span class='va'>tree</span><span class='op'>$</span><span class='va'>tree</span> <span class='co'># model</span>
-<span class='va'>tree</span><span class='op'>$</span><span class='va'>performance</span> <span class='co'># metrics</span>
-<span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Survived_TRUE</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 6 variables: 'Pclass', 'Ticket', 'Cabin', 'Embarked', 'Survived', 'Sex'</span></div><div class='input'><span class='va'>tree</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span> <span class='co'># tree plot</span>
+</div><div class='img'><img src='tree_var-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>tree</span><span class='op'>$</span><span class='va'>model</span> <span class='co'># rpart model</span>
+</div><div class='output co'>#&gt; n= 891 
+#&gt; 
+#&gt; node), split, n, deviance, yval
+#&gt;       * denotes terminal node
+#&gt; 
+#&gt;  1) root 891 2.197799e+06  32.20421  
+#&gt;    2) Pclass_1&lt; 0.5 675 1.074532e+05  15.58005  
+#&gt;      4) Ticket_OTHER&gt;=0.5 614 4.010357e+04  12.91264  
+#&gt;        8) SibSp&lt; 0.5 458 1.175046e+04  10.18239 *
+#&gt;        9) SibSp&gt;=0.5 156 1.491585e+04  20.92834 *
+#&gt;      5) Ticket_OTHER&lt; 0.5 61 1.900761e+04  42.42916  
+#&gt;       10) Parch&gt;=0.5 49 1.148073e+04  37.24915 *
+#&gt;       11) Parch&lt; 0.5 12 8.433332e+02  63.58088 *
+#&gt;    3) Pclass_1&gt;=0.5 216 1.320849e+06  84.15469  
+#&gt;      6) Parch&lt; 0.5 163 7.412910e+05  68.63998  
+#&gt;       12) Sex_male&gt;=0.5 99 3.463003e+05  51.40333 *
+#&gt;       13) Sex_male&lt; 0.5 64 3.200791e+05  95.30293 *
+#&gt;      7) Parch&gt;=0.5 53 4.196563e+05 131.86970  
+#&gt;       14) SibSp&lt; 1.5 48 3.250859e+05 118.23640 *
+#&gt;       15) SibSp&gt;=1.5 5 4.687500e-01 262.75000 *</div><div class='input'><span class='va'>tree</span><span class='op'>$</span><span class='va'>performance</span> <span class='co'># metrics</span>
+</div><div class='output co'>#&gt; $dictionary
+#&gt; [1] "RMSE: Root Mean Squared Error"       
+#&gt; [2] "MAE: Mean Average Error"             
+#&gt; [3] "MAPE: Mean Absolute Percentage Error"
+#&gt; [4] "MSE: Mean Squared Error"             
+#&gt; [5] "RSQ: R Squared"                      
+#&gt; [6] "RSQA: Adjusted R Squared"            
+#&gt; 
+#&gt; $metrics
+#&gt;       rmse      mae       mape      mse    rsq   rsqa
+#&gt; 1 34.00759 13.37434 0.03033307 1156.516 0.5311 0.5306
+#&gt; </div><div class='input'><span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Survived_TRUE</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 6 variables: 'Pclass', 'Ticket', 'Cabin', 'Embarked', 'Survived', 'Sex'</span></div><div class='img'><img src='tree_var-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

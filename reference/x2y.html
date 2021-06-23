@@ -277,14 +277,14 @@ complements our <code><a href='corr_cross.html'>lares::corr_cross()</a></code> o
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 8 x 6</span>
 #&gt;   x        y        obs_p   x2y lower_ci upper_ci
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> Sex      Survived 100   44.4     39.0      50.3
-#&gt; <span style='color: #BCBCBC;'>2</span> Survived Sex      100   39.5     34.4      46.1
-#&gt; <span style='color: #BCBCBC;'>3</span> Fare     Survived 100   20.5      6.42     22.4
-#&gt; <span style='color: #BCBCBC;'>4</span> Age      Parch     80.1 18.9     10.3      19.8
-#&gt; <span style='color: #BCBCBC;'>5</span> Pclass   Survived 100   16.4     10.8      25.0
-#&gt; <span style='color: #BCBCBC;'>6</span> Age      Pclass    80.1 14.8      7.11     15.2
-#&gt; <span style='color: #BCBCBC;'>7</span> Age      SibSp     80.1 10.6      2.72     12.0
-#&gt; <span style='color: #BCBCBC;'>8</span> Cabin    Survived 100    8.19     8.08     11.8</div><div class='input'>
+#&gt; <span style='color: #BCBCBC;'>1</span> Sex      Survived 100   44.4     39.0      47.6
+#&gt; <span style='color: #BCBCBC;'>2</span> Survived Sex      100   39.5     31.9      45.2
+#&gt; <span style='color: #BCBCBC;'>3</span> Fare     Survived 100   20.5      3.86     18.9
+#&gt; <span style='color: #BCBCBC;'>4</span> Age      Parch     80.1 18.9     13.4      19.7
+#&gt; <span style='color: #BCBCBC;'>5</span> Pclass   Survived 100   16.4     10.1      20  
+#&gt; <span style='color: #BCBCBC;'>6</span> Age      Pclass    80.1 14.8      6.37     18.0
+#&gt; <span style='color: #BCBCBC;'>7</span> Age      SibSp     80.1 10.6      4.94     11.5
+#&gt; <span style='color: #BCBCBC;'>8</span> Cabin    Survived 100    8.19     7.24     11.8</div><div class='input'>
 <span class='co'># Compare with mean absolute correlations</span>
 <span class='fu'>x2y</span><span class='op'>(</span><span class='va'>dft</span>, <span class='st'>"Fare"</span>, corr <span class='op'>=</span> <span class='cn'>TRUE</span>, top <span class='op'>=</span> <span class='fl'>6</span>, target_x <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: the standard deviation is zero</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 6</span>
