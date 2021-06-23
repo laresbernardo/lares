@@ -50,5 +50,5 @@ jobs:
           git config --global user.name "$PERSONAL_NAME"
 
       - name: Build and deploy pkgdown site
-        run: pkgdown::deploy_to_branch(lazy = TRUE)
+        run: pkgdown::deploy_to_branch(devel = TRUE)
         shell: Rscript {0}
