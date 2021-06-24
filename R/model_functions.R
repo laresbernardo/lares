@@ -200,10 +200,11 @@ h2o_automl <- function(df, y = "tag",
   # RUN AUTOML
   if (!quiet) 
     message(sprintf(">>> Iterating until %s models or %s seconds...", max_models, max_time))
+  training <- quiet_h2o(as.h2o(train), quiet = TRUE)
   aml <- quiet_h2o(h2o.automl(
     x = colnames(df)[!colnames(df) %in% c("tag", ignore)],
     y = "tag",
-    training_frame = quiet_h2o(as.h2o(train), quiet = TRUE),
+    training_frame = training,
     weights_column = weight,
     max_runtime_secs = max_time,
     max_models = max_models,
