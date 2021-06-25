@@ -51,6 +51,7 @@ jobs:
 
       - name: Build and deploy pkgdown site
         run: pkgdown::deploy_to_branch(
+          clean = TRUE,
           new_process = FALSE,
           override = list(
             template = list(

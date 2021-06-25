@@ -255,7 +255,7 @@ h2o_automl <- function(df, y = "tag",
 }
 
 quiet_h2o <- function(..., quiet = TRUE) {
-  if (quiet) h2o.no_progress()
+  if (quiet) on.exit(h2o.no_progress())
   x <- eval(...)
   h2o.show_progress()
   return(x)
