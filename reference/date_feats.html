@@ -49,7 +49,7 @@
 <meta property="og:title" content="One Hot Encoding for Date/Time Variables (Dummy Variables) — date_feats" />
 <meta property="og:description" content="This function lets the user automatically create new columns out
 of a dataframe or vector with date/time variables." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png" />
 
 
 
@@ -63,6 +63,16 @@ of a dataframe or vector with date/time variables." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-166493168-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-166493168-2');
+</script>
 
 
   </head>
@@ -245,38 +255,38 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
 #&gt; 9  2021-06-24       2021           6        24         25           Thu
 #&gt; 10 2020-11-24       2020          11        24         47           Tue
 #&gt;    dates_weekend dates_year_day               times times_year times_month
-#&gt; 1           TRUE            354 2021-04-16 02:11:36       2021           4
-#&gt; 2          FALSE            189 2021-03-13 08:03:57       2021           3
-#&gt; 3          FALSE              4 2021-05-11 22:09:03       2021           5
-#&gt; 4          FALSE            115 2021-05-05 16:16:15       2021           5
-#&gt; 5          FALSE            293 2021-03-31 09:00:08       2021           3
-#&gt; 6          FALSE            108 2021-05-30 02:47:07       2021           5
-#&gt; 7          FALSE             38 2021-03-04 07:00:22       2021           3
-#&gt; 8          FALSE             53 2021-04-22 12:34:55       2021           4
-#&gt; 9          FALSE            174 2021-06-05 20:02:52       2021           6
-#&gt; 10         FALSE            328 2021-06-25 10:06:37       2021           6
+#&gt; 1           TRUE            354 2021-04-16 03:34:21       2021           4
+#&gt; 2          FALSE            189 2021-03-13 09:26:42       2021           3
+#&gt; 3          FALSE              4 2021-05-11 23:31:48       2021           5
+#&gt; 4          FALSE            115 2021-05-05 17:39:00       2021           5
+#&gt; 5          FALSE            293 2021-03-31 10:22:53       2021           3
+#&gt; 6          FALSE            108 2021-05-30 04:09:52       2021           5
+#&gt; 7          FALSE             38 2021-03-04 08:23:07       2021           3
+#&gt; 8          FALSE             53 2021-04-22 13:57:40       2021           4
+#&gt; 9          FALSE            174 2021-06-05 21:25:37       2021           6
+#&gt; 10         FALSE            328 2021-06-25 11:29:22       2021           6
 #&gt;    times_day times_week times_weekday times_weekend times_year_day times_hour
-#&gt; 1         16         16           Fri         FALSE            105          2
-#&gt; 2         13         11           Sat          TRUE             71          8
-#&gt; 3         11         19           Tue         FALSE            130         22
-#&gt; 4          5         18           Wed         FALSE            124         16
-#&gt; 5         31         13           Wed         FALSE             89          9
-#&gt; 6         30         22           Sun          TRUE            149          2
-#&gt; 7          4          9           Thu         FALSE             62          7
-#&gt; 8         22         16           Thu         FALSE            111         12
-#&gt; 9          5         23           Sat          TRUE            155         20
-#&gt; 10        25         26           Fri         FALSE            175         10
+#&gt; 1         16         16           Fri         FALSE            105          3
+#&gt; 2         13         11           Sat          TRUE             71          9
+#&gt; 3         11         19           Tue         FALSE            130         23
+#&gt; 4          5         18           Wed         FALSE            124         17
+#&gt; 5         31         13           Wed         FALSE             89         10
+#&gt; 6         30         22           Sun          TRUE            149          4
+#&gt; 7          4          9           Thu         FALSE             62          8
+#&gt; 8         22         16           Thu         FALSE            111         13
+#&gt; 9          5         23           Sat          TRUE            155         21
+#&gt; 10        25         26           Fri         FALSE            175         11
 #&gt;    times_minute times_minutes times_second
-#&gt; 1            11           131           36
-#&gt; 2             3           483           57
-#&gt; 3             9          1329            3
-#&gt; 4            16           976           15
-#&gt; 5             0           540            8
-#&gt; 6            47           167            7
-#&gt; 7             0           420           22
-#&gt; 8            34           754           55
-#&gt; 9             2          1202           52
-#&gt; 10            6           606           37</div><div class='input'>
+#&gt; 1            34           214           21
+#&gt; 2            26           566           42
+#&gt; 3            31          1411           48
+#&gt; 4            39          1059            0
+#&gt; 5            22           622           53
+#&gt; 6             9           249           52
+#&gt; 7            23           503            7
+#&gt; 8            57           837           40
+#&gt; 9            25          1285           37
+#&gt; 10           29           689           22</div><div class='input'>
 <span class='co'># Holidays given a date range and country</span>
 <span class='co'># \donttest{</span>
   <span class='va'>hol</span> <span class='op'>&lt;-</span> <span class='fu'>date_feats</span><span class='op'>(</span>

@@ -48,7 +48,7 @@
 
 <meta property="og:title" content="Download Stocks Current Data — stocks_quote" />
 <meta property="og:description" content="This function lets the user download stocks live data." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png" />
 
 
 
@@ -62,6 +62,16 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-166493168-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-166493168-2');
+</script>
 
 
   </head>
@@ -184,9 +194,9 @@ Daily Change, Market, and Symbol Name.</p>
 <span class='co'># Multiple quotes at the same time</span>
 <span class='fu'>stocks_quote</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"VTI"</span>,<span class='st'>"VOO"</span>,<span class='st'>"TSLA"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   Symbol   Type           QuoteTime   Value DailyChange    Market
-#&gt; 1    VTI    ETF 2021-06-25 14:47:29 222.199   0.4790039 us_market
-#&gt; 2    VOO    ETF 2021-06-25 14:47:12 393.030   0.9800110 us_market
-#&gt; 3   TSLA EQUITY 2021-06-25 14:47:34 686.870   7.0499880 us_market
+#&gt; 1    VTI    ETF 2021-06-25 16:10:01 222.330   0.6100006 us_market
+#&gt; 2    VOO    ETF 2021-06-25 16:10:01 393.240   1.1900024 us_market
+#&gt; 3   TSLA EQUITY 2021-06-25 16:10:04 678.496  -1.3240356 us_market
 #&gt;                                          SymbolName
 #&gt; 1 Vanguard Total Stock Market Index Fund ETF Shares
 #&gt; 2                              Vanguard S&amp;P 500 ETF
