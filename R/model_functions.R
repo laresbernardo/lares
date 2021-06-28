@@ -200,8 +200,8 @@ h2o_automl <- function(df, y = "tag",
   # RUN AUTOML
   if (!quiet) 
     message(sprintf(">>> Iterating until %s models or %s seconds...", max_models, max_time))
-  training <- quiet_h2o(as.h2o(train), quiet = TRUE)
-  aml <- quiet_h2o(h2o.automl(
+  training <- .quiet_h2o(as.h2o(train), quiet = TRUE)
+  aml <- .quiet_h2o(h2o.automl(
     x = colnames(df)[!colnames(df) %in% c("tag", ignore)],
     y = "tag",
     training_frame = training,
@@ -252,13 +252,6 @@ h2o_automl <- function(df, y = "tag",
   attr(results, "type") <- "h2o_automl"
   return(results)
   
-}
-
-quiet_h2o <- function(..., quiet = TRUE) {
-  if (quiet) on.exit(h2o.no_progress())
-  x <- eval(...)
-  h2o.show_progress()
-  return(x)
 }
 
 #' @rdname h2o_automl
@@ -420,14 +413,14 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   
   # GET PREDICTIONS
   if (!quiet) message(paste0(">>> Running predictions for ", y, "..."))
-  predictions <- quiet_h2o(h2o_predict_model(global, m), quiet = TRUE)
+  predictions <- .quiet_h2o(h2o_predict_model(global, m), quiet = TRUE)
   global <- cbind(global, predictions)
   # Change dots for space
   if (sum(grepl(" ", cats)) > 0)
     colnames(global) <- str_replace_all(colnames(global), "\\.", " ")
   
   # For performance metrics
-  scores_test <- get_scores(
+  scores_test <- .get_scores(
     predictions, test,
     model_type = model_type,
     target = target,
@@ -436,7 +429,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   scores <- scores_test$scores
   
   # # Used for train metrics
-  # scores_train <- get_scores(
+  # scores_train <- .get_scores(
   #   predictions, train, 
   #   model_type = model_type, 
   #   target = target, cats = cats)
@@ -538,7 +531,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   
 }
 
-get_scores <- function(predictions, 
+.get_scores <- function(predictions, 
                        traintest, 
                        model_type,
                        target = "auto", 
@@ -876,4 +869,11 @@ iter_seeds <- function(df, y, tries = 10, ...) {
     statusbar(i, tries, seeds[1,1])
   }
   return(seeds)
+}
+
+.quiet_h2o <- function(..., quiet = TRUE) {
+  if (quiet) on.exit(h2o.no_progress())
+  x <- eval(...)
+  h2o.show_progress()
+  return(x)
 }

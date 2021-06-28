@@ -249,8 +249,8 @@ scrabble_words <- function(tiles,
   # Add free letters/tiles
   if (free > 0) tiles <- c(tiles, rep("_", free))
   # Add logical tiles when using force_ arguments
-  tiles <- addletters(force_start, tiles)
-  tiles <- addletters(force_end, tiles)
+  tiles <- .add_letters(force_start, tiles)
+  tiles <- .add_letters(force_end, tiles)
   ntiles <- as.integer(length(tiles))
   
   # Words can't have more letters than inputs
@@ -262,8 +262,8 @@ scrabble_words <- function(tiles,
   # Words can't have different letters than inputs (unless there are free tiles)
   if (free == 0) words <- words[grepl(v2t(tiles, sep = "|", quotes = FALSE), words)]
   # Force start/end strings
-  words <- force_words(words, force_start)
-  words <- force_words(reverse(words), reverse(force_end), rev = TRUE)
+  words <- .force_words(words, force_start)
+  words <- .force_words(.reverse(words), .reverse(force_end), rev = TRUE)
   
   # Force strings that must be contained
   if (force_str[1] != "") {
@@ -280,7 +280,7 @@ scrabble_words <- function(tiles,
   } 
 }
 
-force_words <- function(words, pattern, rev = FALSE, invert = FALSE) {
+.force_words <- function(words, pattern, rev = FALSE, invert = FALSE) {
   forced <- tolower(unlist(strsplit(pattern, "")))
   forced_which <- which(forced != "_")
   for (i in forced_which) {
@@ -288,18 +288,18 @@ force_words <- function(words, pattern, rev = FALSE, invert = FALSE) {
     if (invert) these <- !these
     words <- words[these]
   }
-  if (rev) words <- reverse(words)
+  if (rev) words <- .reverse(words)
   return(words)
 }
 
-reverse <- function(words) {
+.reverse <- function(words) {
   splits <- sapply(words, function(x) strsplit(x, ""))
   reversed <- lapply(splits, rev)
   words <- as.vector(unlist(lapply(reversed, function(x) paste(x, collapse = ""))))
   return(words)
 }
 
-addletters <- function(str, tiles) {
+.add_letters <- function(str, tiles) {
   if (str != "") {
     str_tiles <- tolower(unlist(strsplit(str, "")))
     which <- !str_tiles %in% c(tiles, "_")

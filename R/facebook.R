@@ -35,23 +35,23 @@ fb_process <- function(response, paginate = TRUE) {
   
   # First pagination
   results <- list(); i <- 1
-  results[[i]] <- flattener(import[[1]])
+  results[[i]] <- .flattener(import[[1]])
   
   # Following iterations
   if (exists("paging", import) & paginate) {
     if (exists("next", import$paging)) {
       i <- i + 1
       out <- fromJSON(import$paging$`next`)
-      results[[i]] <- flattener(out$data, i)
+      results[[i]] <- .flattener(out$data, i)
       # Re-run first iteration as everything MUST match to bind
       if (i == 2) {
         out <- fromJSON(out$paging$`previous`)
-        results[[1]] <- flattener(out$data, i) 
+        results[[1]] <- .flattener(out$data, i) 
       }
       while (exists("next", out$paging)) {
         i <- i + 1
         out <- fromJSON(out$paging$`next`)
-        results[[i]] <- flattener(out$data, i)
+        results[[i]] <- .flattener(out$data, i)
       }
     }
   }
@@ -83,13 +83,6 @@ fb_process <- function(response, paginate = TRUE) {
     mutate_at(vars(contains("name")), list(as.character)) %>%
     as_tibble()
   return(ret)
-}
-
-flattener <- function(x, i = 1) {
-  bind_rows(x) %>%
-    mutate(get_id = paste(i, row_number(), sep = "-")) %>%
-    select(.data$get_id, everything()) %>%
-    data.frame
 }
 
 
@@ -854,4 +847,12 @@ fb_token <- function(app_id, app_secret, token, api_version = "v10.0") {
                     Sys.time() + ret$expires_in))
     return(ret$access_token)  
   } else return(ret)
+}
+
+
+.flattener <- function(x, i = 1) {
+  bind_rows(x) %>%
+    mutate(get_id = paste(i, row_number(), sep = "-")) %>%
+    select(.data$get_id, everything()) %>%
+    data.frame
 }

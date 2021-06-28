@@ -52,7 +52,7 @@ sudoku_solver <- function(board, needed_cells = NULL, index = 1, quiet = FALSE) 
     col <- needed_cells[index, 2]
   }
   for (num in 1:9) {
-    if (!sudoku_valid_input(board, num, row, col)) next
+    if (!.sudoku_valid_input(board, num, row, col)) next
     board2 <- board
     board2[row, col] <- num
     # Return TRUE if valid and solvable
@@ -62,7 +62,7 @@ sudoku_solver <- function(board, needed_cells = NULL, index = 1, quiet = FALSE) 
   return(FALSE)
 }
 
-sudoku_valid_input <- function(board, i, row, col) {
+.sudoku_valid_input <- function(board, i, row, col) {
   # 1. Check if any cell in the same row has value = i
   if (any(board[row, ] == i)) return(FALSE)
   # 2. Check if any cell in the same column has value = i

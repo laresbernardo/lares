@@ -308,7 +308,7 @@ daily_stocks <- function(hist, trans, tickers = NA, window = "MAX") {
   levs <- unique(daily$Symbol[daily$Date == max(daily$Date)])
   daily <- daily %>%
     mutate(Symbol = factor(.data$Symbol, levels = levs)) %>%
-    filter_window(window) %>%
+    .filter_window(window) %>%
     group_by(.data$Date) %>%
     mutate(wt = signif(100 * .data$CumInvested/sum(.data$CumInvested), 4)) %>%
     ungroup()
@@ -353,10 +353,10 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
     select(.data$Date, .data$CumInvested, .data$CumValue, 
            .data$ROI, .data$Invested, .data$CumCost, .data$CumDividend, .data$Dividend)
   
-  days <- data.frame(Date = as.Date(min(hist$Date):Sys.Date(), origin = "1970-01-01")) %>%
+  days <- tibble(Date = as.Date(min(hist$Date):Sys.Date(), origin = "1970-01-01")) %>%
     left_join(temp, "Date") %>%
     tidyr::fill(.data$ROI, .data$CumInvested, .data$CumValue, 
-                .data$CumDividend, .data$CumCost, .direction = "up") %>%
+                .data$CumDividend, .data$CumCost, .direction = "down") %>%
     left_join(select(cash, .data$Date, .data$Cash), "Date") %>% 
     replace(is.na(.), 0) %>%
     arrange(.data$Date) %>%
@@ -377,7 +377,7 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
     arrange(desc(.data$Date)) %>% 
     ungroup() %>%
     mutate(Portfolio = .data$CumCash + .data$CumValue) %>%
-    filter_window(window) %>%
+    .filter_window(window) %>%
     ungroup()
   
   attr(ret, "type") <- "daily_portfolio"
@@ -955,30 +955,6 @@ stocks_obj <- function(data = stocks_file(),
 }
 #x <- stocks_obj(window = c("1M","1Y","YTD"))
 
-filter_window <- function(df, window) {
-  
-  new_df <- df %>% 
-    arrange(desc(.data$Date)) %>%
-    {if (window == "1W") filter(., .data$Date >= Sys.Date() - 7) else .} %>%
-    {if (window == "1M") filter(., .data$Date >= Sys.Date() %m-% months(1)) else .} %>%
-    {if (window == "6M") filter(., .data$Date >= Sys.Date() %m-% months(6)) else .} %>%
-    {if (window == "1Y") filter(., .data$Date >= Sys.Date() %m-% years(1)) else .} %>%
-    {if (window == "YTD") filter(., .data$Date >= floor_date(Sys.Date(), "year")) else .} %>%
-    {if (window == "5Y") filter(., .data$Date >= Sys.Date() %m-% years(5)) else .}
-  
-  if ("ROI" %in% colnames(df) & window == "MAX") { # Dataframe: portfolio
-    # Add a last row (first date) with no data
-    new_df <- rbind(new_df, df %>% arrange(.data$Date) %>% slice(1) %>% ungroup() %>% mutate_if(
-                        is.numeric, function(x) 0) %>% mutate(Date = .data$Date - 1))
-  }
-  if (!"ROI" %in% colnames(df) & window == "MAX") { # Dataframe: stocks
-    new_df <- rbind(new_df, df %>% arrange(.data$Date) %>% 
-                      group_by(.data$Symbol) %>% slice(1) %>% ungroup() %>% mutate_if(
-                        is.numeric, function(x) 0) %>% mutate(Date = .data$Date - 1))
-  }
-  return(new_df)
-}
-
 ####################################################################
 #' Portfolio's Full Report and Email
 #' 
@@ -1106,6 +1082,30 @@ stocks_report <- function(data = NA,
   
 }
 
+.filter_window <- function(df, window) {
+  
+  new_df <- df %>% 
+    arrange(desc(.data$Date)) %>%
+    {if (window == "1W") filter(., .data$Date >= Sys.Date() - 7) else .} %>%
+    {if (window == "1M") filter(., .data$Date >= Sys.Date() %m-% months(1)) else .} %>%
+    {if (window == "6M") filter(., .data$Date >= Sys.Date() %m-% months(6)) else .} %>%
+    {if (window == "1Y") filter(., .data$Date >= Sys.Date() %m-% years(1)) else .} %>%
+    {if (window == "YTD") filter(., .data$Date >= floor_date(Sys.Date(), "year")) else .} %>%
+    {if (window == "5Y") filter(., .data$Date >= Sys.Date() %m-% years(5)) else .}
+  
+  if ("ROI" %in% colnames(df) & window == "MAX") { # Dataframe: portfolio
+    # Add a last row (first date) with no data
+    new_df <- rbind(new_df, df %>% arrange(.data$Date) %>% slice(1) %>% ungroup() %>% mutate_if(
+      is.numeric, function(x) 0) %>% mutate(Date = .data$Date - 1))
+  }
+  if (!"ROI" %in% colnames(df) & window == "MAX") { # Dataframe: stocks
+    new_df <- rbind(new_df, df %>% arrange(.data$Date) %>% 
+                      group_by(.data$Symbol) %>% slice(1) %>% ungroup() %>% mutate_if(
+                        is.numeric, function(x) 0) %>% mutate(Date = .data$Date - 1))
+  }
+  return(new_df)
+}
+
 # # TESTING
 # library(lares)
 # library(tidyverse)
@@ -1125,4 +1125,3 @@ stocks_report <- function(data = NA,
 # p <- q$portfolio
 # s <- q$stocks
 # stocks_report(q, dir = "~/Desktop")
-

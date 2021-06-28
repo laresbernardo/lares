@@ -96,7 +96,7 @@ model_metrics <- function(tag, score, multis = NA,
       new <- score
     }
     
-    conf <- squareTable(tag, new)
+    conf <- .square_table(tag, new)
     total <- sum(conf)
     trues <- sum(diag(conf))
     falses <- total - trues
@@ -140,7 +140,7 @@ model_metrics <- function(tag, score, multis = NA,
       for (i in seq_along(cats)) {
         tagi <- ifelse(tag == cats[i], 1, 0)
         predi <- as.numeric(ifelse(score == cats[i], 1, 0))
-        conf_mati <- squareTable(tagi, predi)
+        conf_mati <- .square_table(tagi, predi)
         if (nrow(data.frame(conf_mati)) == 4) {
           total <- sum(conf_mati)
           trues <- sum(diag(conf_mati))
@@ -566,7 +566,7 @@ loglossBinary <- function(tag, score, eps = 0.001) {
   
 }
 
-squareTable <- function(x, y) {
+.square_table <- function(x, y) {
   x <- factor(x)
   y <- factor(y)
   commonLevels <- sort(unique(c(levels(x), levels(y))))

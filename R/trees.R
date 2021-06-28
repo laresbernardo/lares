@@ -79,7 +79,7 @@ tree_var <- function(df, y, type = 2, max = 3, min = 20, cp = 0,
     if (nrow(mod$frame) > 1) {
       bottom_mg <- ifelse(explain, 3.5, 1)
       plot_tree <- function(tree, title, subtitle, explain = TRUE) {
-        font <- font_global(Sys.getenv("LARES_FONT"), when_not = NULL)
+        font <- .font_global(Sys.getenv("LARES_FONT"), when_not = NULL)
         rpart.plot(tree, type = type, roundint = FALSE, family = font,
                    mar = c(bottom_mg, 1, 2.5, 1), fallen.leaves = FALSE, ...)
         if (is.na(title)) mtext(side = 3, line = 2.5, at = -0.05, adj = 0, cex = 1.1,

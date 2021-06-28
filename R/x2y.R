@@ -125,7 +125,7 @@ x2y <- function(df, target = NULL, symmetric = FALSE,
     arrange(desc(.data$x2y), desc(.data$obs_p)) %>%
     tidyr::separate(.data$xy, c("x","y"), sep = "<>")
   
-  if (corr) results <- x2y_addcorr(results, df)
+  if (corr) results <- .x2y_addcorr(results, df)
   
   if (!is.null(target)) {
     if (target_x) results <- filter(results, .data$x %in% target)  
@@ -140,7 +140,7 @@ x2y <- function(df, target = NULL, symmetric = FALSE,
   return(results)
 }
 
-x2y_addcorr <- function(x2y, df) {
+.x2y_addcorr <- function(x2y, df) {
   corr_df <- corr_cross(df, plot = FALSE, quiet = TRUE) %>%
     group_by(.data$group1, .data$group2) %>%
     summarise(mean_abs_corr = mean(abs(.data$corr), na.rm = TRUE),
@@ -171,14 +171,14 @@ x2y_metric <- function(x, y, confidence = FALSE, bootstraps = 20, max_cat = 20) 
   results$obs_p <- round(100 * (1 - sum(missing) / length(x)), 2)
   x <- x[!missing]
   y <- y[!missing]
-  results$x2y <- x2y_vals(x, y, max_cat)
+  results$x2y <- .x2y_vals(x, y, max_cat)
   
   if (confidence) {
     results$lower_ci <- NA
     results$upper_ci <- NA
     if (!is.na(results$x2y) & results$x2y > 0) {
       n <- length(x)
-      draws <- replicate(bootstraps, simple_boot(x, y))
+      draws <- replicate(bootstraps, .simple_boot(x, y))
       errors <- draws - results$x2y
       results$lower_ci <- results$x2y - round(
         quantile(errors, probs = 0.975, na.rm = TRUE), 2)
@@ -264,13 +264,13 @@ x2y_preds <- function(x, y, max_cat = 10) {
   if (length(unique(x)) == 1 | length(unique(y)) == 1)
     return(NA)
   # If x is categorical
-  x <- reduce_cats(x, max_cat)
+  x <- .reduce_cats(x, max_cat)
   # If y is continuous
   if (is.numeric(y)) {
     preds <- predict(rpart(y ~ x, method = "anova"), type = 'vector')
   } else {
     # If y is categorical
-    y <- reduce_cats(y, max_cat)
+    y <- .reduce_cats(y, max_cat)
     preds <- predict(rpart(y ~ x, method = "class"), type = 'class')
   }
   preds <- as_tibble(data.frame(x = x, y = y)) %>%
@@ -281,17 +281,17 @@ x2y_preds <- function(x, y, max_cat = 10) {
   return(preds)
 }
 
-x2y_vals <- function(x, y, ...) {
+.x2y_vals <- function(x, y, ...) {
   if (length(unique(x)) == 1 | length(unique(y)) == 1) return(NA)
   preds <- x2y_preds(x, y, ...)$p
   if (is.numeric(y)) {
-    mae_reduction(preds, y)
+    .mae_reduction(preds, y)
   } else {
-    misclass_reduction(preds, y)
+    .misclass_reduction(preds, y)
   }
 }
 
-mae_reduction <- function(y_hat, y_actual) {
+.mae_reduction <- function(y_hat, y_actual) {
   model_error <- mean(abs(y_hat - y_actual))
   baseline <- mean(y_actual, na.rm = TRUE)
   baseline_error <-  mean(abs(baseline - y_actual))
@@ -300,7 +300,7 @@ mae_reduction <- function(y_hat, y_actual) {
   round(100*result, 2)
 }
 
-misclass_reduction <- function(y_hat, y_actual) {
+.misclass_reduction <- function(y_hat, y_actual) {
   tab <- table(y_hat, y_actual)
   model_error <- 1 - sum(diag(tab))/sum(tab)
   majority_class <- names(which.max(table(y_actual)))
@@ -311,12 +311,12 @@ misclass_reduction <- function(y_hat, y_actual) {
   round(100*result, 2)
 }
 
-simple_boot <- function(x, y, ...) {
+.simple_boot <- function(x, y, ...) {
   ids <- sample(length(x), replace = TRUE)
-  x2y_vals(x[ids], y[ids], ...)
+  .x2y_vals(x[ids], y[ids], ...)
 }
 
-reduce_cats <- function(x, max_cat) {
+.reduce_cats <- function(x, max_cat) {
   if (!is.numeric(x) & length(unique(x)) > max_cat) {
     x <- as.character(x)
     top <- head(names(sort(table(x), decreasing = TRUE)), max_cat)

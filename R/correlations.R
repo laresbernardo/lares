@@ -97,31 +97,12 @@ corr <- function(df, method = "pearson",
   }
   
   # Statistical significance (p-value)
-  if (pvalue) return(list(cor = cor, pvalue = cor.test.p(d, method = method)))
+  if (pvalue) return(list(cor = cor, pvalue = .cor_test_p(d, method = method)))
   
   return(cor)
   
 }
 
-# https://stackoverflow.com/questions/60512043/r-creating-a-p-value-matrix-with-missing-values
-cor.test.p <- function(mat, method = "pearson") {
-  mat <- as.matrix(mat)
-  n <- ncol(mat)
-  p.mat<- matrix(NA, n, n)
-  diag(p.mat) <- 0
-  for (i in 1:(n - 1)) {
-    for (j in (i + 1):n) {
-      error <- try(tmp <- cor.test(mat[, i], mat[, j], method = method), silent = TRUE)
-      if (class(error) == "try-error") {
-        p.mat[i, j] <- NA
-      } else {
-        p.mat[i, j] <- p.mat[j, i] <- tmp$p.value
-      }
-    }
-  }
-  colnames(p.mat) <- rownames(p.mat) <- colnames(mat)
-  return(p.mat)
-}
 
 ####################################################################
 #' Correlation between variable and dataframe
@@ -467,4 +448,25 @@ corr_cross <- function(df, plot = TRUE,
     return(p)
   }
   return(ret)
+}
+
+
+# https://stackoverflow.com/questions/60512043/r-creating-a-p-value-matrix-with-missing-values
+.cor_test_p <- function(mat, method = "pearson") {
+  mat <- as.matrix(mat)
+  n <- ncol(mat)
+  p.mat<- matrix(NA, n, n)
+  diag(p.mat) <- 0
+  for (i in 1:(n - 1)) {
+    for (j in (i + 1):n) {
+      error <- try(tmp <- cor.test(mat[, i], mat[, j], method = method), silent = TRUE)
+      if (class(error) == "try-error") {
+        p.mat[i, j] <- NA
+      } else {
+        p.mat[i, j] <- p.mat[j, i] <- tmp$p.value
+      }
+    }
+  }
+  colnames(p.mat) <- rownames(p.mat) <- colnames(mat)
+  return(p.mat)
 }

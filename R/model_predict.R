@@ -52,25 +52,12 @@ h2o_predict_MOJO <- function(df, model_path, method = "mojo", batch = 300){
       if (aux > 1) statusbar(i, aux, i * batch)
     }
     if ("classProbabilities" %in% names(output)) {
-      aux <- flatten_list(output$classProbabilities, quiet = TRUE)
+      aux <- .flatten_list(output$classProbabilities, quiet = TRUE)
       colnames(aux) <- output$responseDomainValues[[1]]
       output <- cbind(output[,c(1,2)], aux)
     }  
   }
   return(as_tibble(output))
-}
-
-flatten_list <- function(x, quiet = FALSE) {
-  n <- length(x)
-  for (i in 1:n) {
-    if (i == 1) ret <- NULL
-    values <- unlist(x[[i]])
-    aux <- data.frame(t(values))
-    ret <- suppressWarnings(bind_rows(ret, aux))
-    if (n > 500 & !quiet) statusbar(i, n, i)
-    if (i == n) ret <- as_tibble(ret)
-  }  
-  return(ret)
 }
 
 
@@ -160,4 +147,18 @@ h2o_predict_API <- function(df, api, exclude = "tag") {
   
   return(as.vector(batch))
   
+}
+
+
+.flatten_list <- function(x, quiet = FALSE) {
+  n <- length(x)
+  for (i in 1:n) {
+    if (i == 1) ret <- NULL
+    values <- unlist(x[[i]])
+    aux <- data.frame(t(values))
+    ret <- suppressWarnings(bind_rows(ret, aux))
+    if (n > 500 & !quiet) statusbar(i, n, i)
+    if (i == n) ret <- as_tibble(ret)
+  }  
+  return(ret)
 }

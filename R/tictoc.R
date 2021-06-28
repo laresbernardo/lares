@@ -1,19 +1,4 @@
 ####################################################################
-# Auxiliary function for tic() and toc()
-####################################################################
-set.tictoc <- function(which = c("TIC", "TOC"), id = 1, 
-                       start = proc.time()["elapsed"]) {
-  aux <- getOption("LARES_TICTOC")
-  if (is.null(aux)) aux <- list()
-  id <- as.character(id)
-  if (which[1] == "TIC") temp <- data.frame(TIC = start, TOC = NA)
-  if (which[1] == "TOC") temp <- data.frame(TIC = aux[[id]]$TIC, TOC = start)
-  aux[[id]] <- temp
-  options("LARES_TICTOC" = aux)
-  return(aux[id])
-}
-
-####################################################################
 #' Stopwatch to measure timings in R
 #' 
 #' Start a stopwatch.
@@ -41,7 +26,7 @@ set.tictoc <- function(which = c("TIC", "TOC"), id = 1,
 #' @export
 #' @rdname tic
 tic <- function(id = 1, start = proc.time()["elapsed"], quiet = TRUE) { 
-  tic <- set.tictoc("TIC", id, start = start)
+  tic <- .set.tictoc("TIC", id, start = start)
   if (!quiet) message(sprintf("Tic `id = %s` start time: %s", id, Sys.time()))
   invisible(tic)
 }
@@ -68,7 +53,7 @@ toc <- function(id = 1, msg = "Elapsed time:", type = "units", signif = 3, quiet
   if (!id %in% names(current))
     stop(sprintf("You need to tic(id = '%s') before you toc(id = '%s')", id, id))
   
-  toc <- set.tictoc("TOC", id)
+  toc <- .set.tictoc("TOC", id)
   tic <- getOption("LARES_TICTOC")[[id]][["TIC"]]
   toc <- getOption("LARES_TICTOC")[[id]][["TOC"]]
   time <- as.numeric(toc - tic)
@@ -92,4 +77,16 @@ toc <- function(id = 1, msg = "Elapsed time:", type = "units", signif = 3, quiet
   if (!quiet) message(msg)
   res <- list(tic = tic, toc = toc, time = out, msg = msg)
   invisible(res)
+}
+
+.set.tictoc <- function(which = c("TIC", "TOC"), id = 1, 
+                        start = proc.time()["elapsed"]) {
+  aux <- getOption("LARES_TICTOC")
+  if (is.null(aux)) aux <- list()
+  id <- as.character(id)
+  if (which[1] == "TIC") temp <- data.frame(TIC = start, TOC = NA)
+  if (which[1] == "TOC") temp <- data.frame(TIC = aux[[id]]$TIC, TOC = start)
+  aux[[id]] <- temp
+  options("LARES_TICTOC" = aux)
+  return(aux[id])
 }
