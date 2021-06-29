@@ -256,38 +256,38 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
 #&gt; 9  2021-06-28       2021           6        28         26           Mon
 #&gt; 10 2020-11-28       2020          11        28         48           Sat
 #&gt;    dates_weekend dates_year_day               times times_year times_month
-#&gt; 1          FALSE            358 2021-04-19 11:57:39       2021           4
-#&gt; 2           TRUE            193 2021-03-16 17:50:00       2021           3
-#&gt; 3           TRUE              8 2021-05-15 07:55:06       2021           5
-#&gt; 4          FALSE            119 2021-05-09 02:02:18       2021           5
-#&gt; 5           TRUE            297 2021-04-03 18:46:11       2021           4
-#&gt; 6          FALSE            112 2021-06-02 12:33:10       2021           6
-#&gt; 7          FALSE             42 2021-03-07 16:46:25       2021           3
-#&gt; 8           TRUE             57 2021-04-25 22:20:58       2021           4
-#&gt; 9          FALSE            178 2021-06-09 05:48:55       2021           6
-#&gt; 10          TRUE            332 2021-06-28 19:52:40       2021           6
+#&gt; 1          FALSE            358 2021-04-19 12:46:18       2021           4
+#&gt; 2           TRUE            193 2021-03-16 18:38:39       2021           3
+#&gt; 3           TRUE              8 2021-05-15 08:43:45       2021           5
+#&gt; 4          FALSE            119 2021-05-09 02:50:57       2021           5
+#&gt; 5           TRUE            297 2021-04-03 19:34:50       2021           4
+#&gt; 6          FALSE            112 2021-06-02 13:21:49       2021           6
+#&gt; 7          FALSE             42 2021-03-07 17:35:04       2021           3
+#&gt; 8           TRUE             57 2021-04-25 23:09:37       2021           4
+#&gt; 9          FALSE            178 2021-06-09 06:37:34       2021           6
+#&gt; 10          TRUE            332 2021-06-28 20:41:19       2021           6
 #&gt;    times_day times_week times_weekday times_weekend times_year_day times_hour
-#&gt; 1         19         16           Mon         FALSE            108         11
-#&gt; 2         16         11           Tue         FALSE             74         17
-#&gt; 3         15         20           Sat          TRUE            134          7
+#&gt; 1         19         16           Mon         FALSE            108         12
+#&gt; 2         16         11           Tue         FALSE             74         18
+#&gt; 3         15         20           Sat          TRUE            134          8
 #&gt; 4          9         19           Sun          TRUE            128          2
-#&gt; 5          3         14           Sat          TRUE             92         18
-#&gt; 6          2         22           Wed         FALSE            152         12
-#&gt; 7          7         10           Sun          TRUE             65         16
-#&gt; 8         25         17           Sun          TRUE            114         22
-#&gt; 9          9         23           Wed         FALSE            159          5
-#&gt; 10        28         26           Mon         FALSE            178         19
+#&gt; 5          3         14           Sat          TRUE             92         19
+#&gt; 6          2         22           Wed         FALSE            152         13
+#&gt; 7          7         10           Sun          TRUE             65         17
+#&gt; 8         25         17           Sun          TRUE            114         23
+#&gt; 9          9         23           Wed         FALSE            159          6
+#&gt; 10        28         26           Mon         FALSE            178         20
 #&gt;    times_minute times_minutes times_second
-#&gt; 1            57           717           39
-#&gt; 2            50          1070            0
-#&gt; 3            55           475            6
-#&gt; 4             2           122           18
-#&gt; 5            46          1126           11
-#&gt; 6            33           753           10
-#&gt; 7            46          1006           25
-#&gt; 8            20          1340           58
-#&gt; 9            48           348           55
-#&gt; 10           52          1192           40</div><div class='input'>
+#&gt; 1            46           766           18
+#&gt; 2            38          1118           39
+#&gt; 3            43           523           45
+#&gt; 4            50           170           57
+#&gt; 5            34          1174           50
+#&gt; 6            21           801           49
+#&gt; 7            35          1055            4
+#&gt; 8             9          1389           37
+#&gt; 9            37           397           34
+#&gt; 10           41          1241           19</div><div class='input'>
 <span class='co'># Holidays given a date range and country</span>
 <span class='co'># \donttest{</span>
 <span class='va'>hol</span> <span class='op'>&lt;-</span> <span class='fu'>date_feats</span><span class='op'>(</span>
@@ -296,8 +296,35 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
   holidays <span class='op'>=</span> <span class='cn'>TRUE</span>,
   country <span class='op'>=</span> <span class='st'>"Colombia"</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 1 date/time columns: 'df'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Extracting Colombia's holidays for 2020</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='error'>Error in if (.) length(unique(countries)) &gt; 1 else {    mutate(., country = combs$country[i])}: argument is not interpretable as logical</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>hol</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>hol</span><span class='op'>$</span><span class='va'>holidayname</span><span class='op'>)</span>, <span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in head(hol[!is.na(hol$holidayname), ]): object 'hol' not found</span></div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 1 date/time columns: 'df'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Extracting Colombia's holidays for 2020</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Extracting Colombia's holidays for 2021</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: All formats failed to parse. No formats found.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>hol</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>hol</span><span class='op'>$</span><span class='va'>holidayname</span><span class='op'>)</span>, <span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    year month day week weekday weekend year_day
+#&gt; 1  2020     6  29   26     Mon   FALSE      180
+#&gt; 22 2020     7  20   29     Mon   FALSE      201
+#&gt; 40 2020     8   7   32     Fri   FALSE      219
+#&gt; 48 2020     8  15   33     Sat    TRUE      227
+#&gt; 50 2020     8  17   33     Mon   FALSE      229
+#&gt; 83 2020     9  19   38     Sat    TRUE      262
+#&gt;                            holidayname      holidaytype holiday_national
+#&gt; 1  Feast of Saint Peter and Saint Paul National holiday             TRUE
+#&gt; 22                    Independence Day National holiday             TRUE
+#&gt; 40                Battle of Boyacá Day National holiday             TRUE
+#&gt; 48                  Assumption of Mary National holiday             TRUE
+#&gt; 50      Day off for Assumption of Mary National holiday             TRUE
+#&gt; 83                     Valentine's Day       Observance            FALSE
+#&gt;    holiday_observance holiday_bank holiday_nonwork holiday_season
+#&gt; 1               FALSE        FALSE           FALSE          FALSE
+#&gt; 22              FALSE        FALSE           FALSE          FALSE
+#&gt; 40              FALSE        FALSE           FALSE          FALSE
+#&gt; 48              FALSE        FALSE           FALSE          FALSE
+#&gt; 50              FALSE        FALSE           FALSE          FALSE
+#&gt; 83               TRUE        FALSE           FALSE          FALSE
+#&gt;    holiday_hother
+#&gt; 1           FALSE
+#&gt; 22          FALSE
+#&gt; 40          FALSE
+#&gt; 48          FALSE
+#&gt; 50          FALSE
+#&gt; 83          FALSE</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
