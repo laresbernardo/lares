@@ -24,7 +24,7 @@ mplot_roc(
 
 \item{score}{Vector. Predicted value or model's result.}
 
-\item{multis}{Data.frame. Containing columns with each category probability 
+\item{multis}{Data.frame. Containing columns with each category probability
 or score (only used when more than 2 categories coexist).}
 
 \item{sample}{Integer. Number of samples to use for rendering plot.}
@@ -49,23 +49,25 @@ or score (only used when more than 2 categories coexist).}
 Plot with ROC curve and AUC performance results.
 }
 \description{
-This function plots ROC Curves with AUC values with 95\% confidence 
+This function plots ROC Curves with AUC values with 95\% confidence
 range. It also works for multi-categorical models.
 }
 \examples{
 Sys.unsetenv("LARES_FONT") # Temporal
 data(dfr) # Results for AutoML Predictions
-lapply(dfr[c(1,2)], head)
+lapply(dfr[c(1, 2)], head)
 
 # ROC Curve for Binomial Model
-mplot_roc(dfr$class2$tag, dfr$class2$scores, 
-          model_name = "Titanic Survived Model")
+mplot_roc(dfr$class2$tag, dfr$class2$scores,
+  model_name = "Titanic Survived Model"
+)
 
 # ROC Curves for Multi-Categorical Model
 mplot_roc(dfr$class3$tag, dfr$class3$score,
-          multis = subset(dfr$class3, select = -c(tag, score)),
-          squared = FALSE,
-          model_name = "Titanic Class Model")
+  multis = subset(dfr$class3, select = -c(tag, score)),
+  squared = FALSE,
+  model_name = "Titanic Class Model"
+)
 }
 \seealso{
 Other ML Visualization: 

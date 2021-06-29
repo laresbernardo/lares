@@ -24,14 +24,14 @@ fb_insights(
 \href{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
 to acquire one.}
 
-\item{which}{Character vector. This is the accounts, campaigns, adsets, 
-or ads IDs to be queried. Remember: if \code{report_level = "account"}, you must 
+\item{which}{Character vector. This is the accounts, campaigns, adsets,
+or ads IDs to be queried. Remember: if \code{report_level = "account"}, you must
 start the ID with \code{act_}.}
 
-\item{start_date, end_date}{Character. The first and last full day to report, in the 
+\item{start_date, end_date}{Character. The first and last full day to report, in the
 format \code{"YYYY-MM-DD"}.}
 
-\item{time_increment}{Character. Group by months ("monthly"), 
+\item{time_increment}{Character. Group by months ("monthly"),
 everything together ("all_days") or an integer per days [1-90].
 Default: each day separately (i.e. "1").}
 
@@ -39,7 +39,7 @@ Default: each day separately (i.e. "1").}
 
 \item{ad_object}{Character. One of: "insights" (default), "adsets", ...}
 
-\item{breakdowns}{Character Vector. One or more of breakdowns for 
+\item{breakdowns}{Character Vector. One or more of breakdowns for
 segmentation results. Set to NA for no breakdowns}
 
 \item{fields}{Character, json format. Leave \code{NA} for default fields.}
@@ -65,34 +65,42 @@ For more information on Ad Insights' API, go to the original
 token <- "YOURTOKEN"
 which <- "act_20846447"
 
-# Platforms' Insights: all ad-sets platforms of "which" account, 
+# Platforms' Insights: all ad-sets platforms of "which" account,
 # aggregated, for the last 30 days
 platforms <- fb_insights(
-  token, which, 
-  start_date = Sys.Date() - 30, 
+  token, which,
+  start_date = Sys.Date() - 30,
   time_increment = "all_days",
-  report_level = "adset", 
-  fields = c("account_name",
-             "adset_id",
-             "adset_start",
-             "adset_end"),
-  breakdowns = c("publisher_platform", 
-                 "platform_position", 
-                 "device_platform"))
-            
+  report_level = "adset",
+  fields = c(
+    "account_name",
+    "adset_id",
+    "adset_start",
+    "adset_end"
+  ),
+  breakdowns = c(
+    "publisher_platform",
+    "platform_position",
+    "device_platform"
+  )
+)
+
 # Daily results for all campaigns of "which" account,
 # with custom performance fields with no breakdowns.
 insights_adset <- fb_insights(
-  token, which, 
+  token, which,
   time_increment = "1",
-  report_level = "campaign", 
-  fields = c("adset_id",
-             "reach",
-             "frequency",
-             "spend",
-             "cpm",
-             "objective",
-             "optimization_goal"))
+  report_level = "campaign",
+  fields = c(
+    "adset_id",
+    "reach",
+    "frequency",
+    "spend",
+    "cpm",
+    "objective",
+    "optimization_goal"
+  )
+)
 }
 }
 \seealso{

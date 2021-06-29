@@ -20,10 +20,10 @@ freqs_plot(
 \item{...}{Variables. Variables you wish to process. Order matters.
 If no variables are passed, the whole data.frame will be considered}
 
-\item{top}{Integer. Filter and plot the most n frequent for 
+\item{top}{Integer. Filter and plot the most n frequent for
 categorical values. Set to NA to return all values}
 
-\item{rm.na}{Boolean. Remove NA values in the plot? (not filtered for 
+\item{rm.na}{Boolean. Remove NA values in the plot? (not filtered for
 numerical output; use na.omit() or filter() if needed)}
 
 \item{abc}{Boolean. Do you wish to sort by alphabetical order?}
@@ -36,7 +36,7 @@ numerical output; use na.omit() or filter() if needed)}
 Plot. Result of the frequency of combined variables.
 }
 \description{
-Plot frequencies of multiple categories within a data.frame in 
+Plot frequencies of multiple categories within a data.frame in
 a new fancy way. Tidyverse friendly, based on \code{lares::freqs()},
 no limits on amount of features to evaluate.
 }

@@ -33,8 +33,9 @@ spread_list(df, films, replace = FALSE) \%>\%
   head(8)
 # Named (and un-nammed) list columns
 df <- dplyr::tibble(id = 1:3, platform = list(
-  list("fb" = 1, "ig" = 2), 
-  list("fb" = 3), 
-  list()))
+  list("fb" = 1, "ig" = 2),
+  list("fb" = 3),
+  list()
+))
 spread_list(df, platform, str = "ptf_")
 }

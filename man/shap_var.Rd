@@ -24,9 +24,11 @@ categorical or numerical feature.
 \examples{
 \dontrun{
 # Train a h2o_automl model
-model <- h2o_automl(dft, Survived, max_models = 1, target = TRUE,
-                    ignore = c("Ticket", "Cabin", "PassengerId"),
-                    quiet = TRUE)
+model <- h2o_automl(dft, Survived,
+  max_models = 1, target = TRUE,
+  ignore = c("Ticket", "Cabin", "PassengerId"),
+  quiet = TRUE
+)
 
 # Calculate SHAP values
 SHAP_values <- h2o_shap(model)

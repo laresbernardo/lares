@@ -30,9 +30,11 @@ a \code{h2o} trained model.
 data(dft) # Titanic dataset
 
 # TRAIN A SIMPLE MODEL
-dfm <- h2o_automl(dft, y = "Survived",
-                  ignore = c("Ticket", "PassengerId", "Cabin"),
-                  max_models = 1)
+dfm <- h2o_automl(dft,
+  y = "Survived",
+  ignore = c("Ticket", "PassengerId", "Cabin"),
+  max_models = 1
+)
 
 # EXPLAINER
 explainer <- h2o_explainer(df = dfm$datasets$test, model = dfm$model, y = "Survived")
@@ -49,7 +51,7 @@ num$plot
 # LOCAL EXAMPLE
 local <- dalex_local(explainer, row = 1)
 # OR YOU COULD MANUALLY INPUT THE OBSERVATION
-local <- dalex_local(explainer, observation = explainer$data[1,])
+local <- dalex_local(explainer, observation = explainer$data[1, ])
 local$plot
 
 # xai2shiny's UI (needs to be installed from ModelOriented/xai2shiny)

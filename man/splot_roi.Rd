@@ -14,7 +14,7 @@ splot_roi(p, n_days = 365, historical = TRUE, ma = c(12, 50), save = FALSE)
 \item{historical}{Boolean. Historical ROI metric? If not, ROI
 will be calculated locally for n_days parameter}
 
-\item{ma}{Numeric Vector. Select 2 values for moving averages. 
+\item{ma}{Numeric Vector. Select 2 values for moving averages.
 Set to NA to turn this metric off}
 
 \item{save}{Boolean. Save plot into a local file?}

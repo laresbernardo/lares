@@ -19,7 +19,7 @@ splot_etf(s, keep_all = FALSE, cache = TRUE, save = FALSE)
 ggplot2 object
 }
 \description{
-This function lets the user plot his portfolio's distribution, 
+This function lets the user plot his portfolio's distribution,
 specifically ETF's sectors
 }
 \seealso{

@@ -20,9 +20,9 @@ msplit(df, size = 0.7, seed = 0, print = TRUE)
 List with both datasets, summary, and split rate.
 }
 \description{
-This function splits automatically a dataframe into train and 
-test datasets. You can define a seed to get the same results 
-every time, but has a default value. You can prevent it from 
+This function splits automatically a dataframe into train and
+test datasets. You can define a seed to get the same results
+every time, but has a default value. You can prevent it from
 printing the split counter result.
 }
 \examples{

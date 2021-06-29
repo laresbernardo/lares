@@ -1,19 +1,19 @@
 ####################################################################
 #' Download Historical Currency Exchange Rate
-#' 
+#'
 #' This function lets the user download historical currency exchange
 #' rate between two currencies.
-#' 
+#'
 #' @family Currency
 #' @param currency_pair Character. Which currency exchange do you
 #' wish to get the history from? i.e, USD/COP, EUR/USD...
 #' @param from Date. From date
 #' @param to Date. To date
-#' @param fill Boolean. Fill weekends and non-quoted dates with 
+#' @param fill Boolean. Fill weekends and non-quoted dates with
 #' previous values?
 #' @return data.frame. Result of fetching online data for \code{currency_pair}
 #' grouped by date.
-#' @examples 
+#' @examples
 #' \donttest{
 #' # For today (or any one single date)
 #' get_currency("USD/COP", from = Sys.Date())
@@ -21,52 +21,53 @@
 #' get_currency("EUR/USD", from = Sys.Date() - 7, fill = TRUE)
 #' }
 #' @export
-get_currency <- function(currency_pair, 
-                         from = Sys.Date() - 99, 
-                         to = Sys.Date(), 
+get_currency <- function(currency_pair,
+                         from = Sys.Date() - 99,
+                         to = Sys.Date(),
                          fill = FALSE) {
-  
   try_require("quantmod")
-  
+
   string <- paste0(toupper(cleanText(currency_pair)), "=X")
-  
-  if (is.na(from) | is.na(to))
+
+  if (is.na(from) | is.na(to)) {
     stop("You must insert a valid date")
-  
+  }
+
   from <- as.Date(from)
   to <- as.Date(to)
-  
+
   if (from == to) to <- from + 1
   if (to > Sys.Date()) to <- Sys.Date()
-  
+
   if (Sys.Date() == from) {
     x <- suppressWarnings(getQuote(string, auto.assign = FALSE))
     rownames(x) <- Sys.Date()
-    x[,1] <- NULL
+    x[, 1] <- NULL
   } else {
     x <- data.frame(suppressWarnings(getSymbols(
-      string, 
+      string,
       env = NULL,
       from = from, to = to,
-      src = "yahoo")))
-    if (substr(rownames(x),1,1)[1] == "X") {
-      x <- x[1,]
+      src = "yahoo"
+    )))
+    if (substr(rownames(x), 1, 1)[1] == "X") {
+      x <- x[1, ]
       rownames(x) <- Sys.Date()
     }
   }
-  
-  rate <- data.frame(date = as.Date(rownames(x)), rate = x[,1])
-  
+
+  rate <- data.frame(date = as.Date(rownames(x)), rate = x[, 1])
+
   if (fill) {
     rate <- data.frame(date = as.character(
-      as.Date(as.Date(from):Sys.Date(), origin = "1970-01-01"))) %>%
+      as.Date(as.Date(from):Sys.Date(), origin = "1970-01-01")
+    )) %>%
       left_join(rate %>% mutate(date = as.character(date)), "date") %>%
       tidyr::fill(rate, .direction = "down") %>%
       tidyr::fill(rate, .direction = "up") %>%
       mutate(date = as.Date(date)) %>%
       filter(date >= as.Date(from))
   }
-  
+
   return(rate)
-  
 }

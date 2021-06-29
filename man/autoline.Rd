@@ -20,7 +20,7 @@ Character. String (vector) including some \code{\\n} within.
 Add a break or new line without breaking words. Automatically,
 the function can detect your plot's width and will dynamically
 set an auto width. You can adjust the relation (rel) parameter
-for different fonts and sizes until perfect harmony found. 
+for different fonts and sizes until perfect harmony found.
 Quite similar to \code{stringr::str_wrap} but, if the text vector
 is a factor, the levels will be kept in order and transformed.
 }
@@ -28,7 +28,8 @@ is a factor, the levels will be kept in order and transformed.
 cat(autoline("This is a long text that may not fit into a single line", 8))
 
 text <- factor(c("First value", "Second value", "First value"),
-               levels = c("First value", "Second value"))
+  levels = c("First value", "Second value")
+)
 autoline(text, 1)
 
 path <- file.path(R.home("doc"), "THANKS")

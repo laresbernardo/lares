@@ -13,7 +13,7 @@ bindfiles(files)
 data.frame with data joined from all \code{files} passed.
 }
 \description{
-This function imports and binds multiple files into a single 
+This function imports and binds multiple files into a single
 data.frame. Files must be inserted with absolute roots files names.
 }
 \seealso{

@@ -12,15 +12,15 @@ winsorize(x, thresh = c(0.05, 0.95), na.rm = FALSE)
 \item{thresh}{Numeric vector. Lower and upper quantiles thresholds.
 Set values within [0,1].}
 
-\item{na.rm}{Boolean. Should \code{NA} be omitted to calculate the quantiles? 
+\item{na.rm}{Boolean. Should \code{NA} be omitted to calculate the quantiles?
 Note that \code{NA} in \code{x} are preserved and left unchanged anyway.}
 }
 \value{
 Numeric vector transformed.
 }
 \description{
-Winsorizing a vector means that a predefined quantum of the smallest 
-and/or the largest values are replaced by less extreme values. 
+Winsorizing a vector means that a predefined quantum of the smallest
+and/or the largest values are replaced by less extreme values.
 Thereby the substitute values are the most extreme retained values.
 }
 \seealso{

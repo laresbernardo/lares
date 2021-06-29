@@ -28,7 +28,7 @@ to acquire one.}
 data.frame with un-nested processed results fetched with API.
 }
 \description{
-Connect to an API Graph's token of a given page and get posts, 
+Connect to an API Graph's token of a given page and get posts,
 comments, shares, and reactions of n posts (with no limits).
 }
 \examples{

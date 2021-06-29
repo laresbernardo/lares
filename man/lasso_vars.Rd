@@ -41,14 +41,15 @@ List. Contains lasso model coefficients, performance metrics, the
 actual model fitted and a plot.
 }
 \description{
-Use Lasso regression to identify the most relevant variables that 
-can predict/identify another variable. You might want to compare 
+Use Lasso regression to identify the most relevant variables that
+can predict/identify another variable. You might want to compare
 with \code{corr_var()} and/or \code{x2y()} results to compliment
 the analysis No need to standardize, center or scale your data.
 Tidyverse friendly.
 }
 \examples{
-\donttest{ # CRAN
+\donttest{
+# CRAN
 Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 

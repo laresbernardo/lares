@@ -13,7 +13,7 @@ ngrams(text, ngram = c(2, 3), top = 10, stop_words = NULL, ...)
 
 \item{top}{Integer. Keep n most frequent ngrams only.}
 
-\item{stop_words}{Character vector. Words to exclude from text. Example: 
+\item{stop_words}{Character vector. Words to exclude from text. Example:
 if you want to exclude "a", whenever that word appears it will be excluded,
 but when the letter "a" appears in a word, it will remain.}
 
@@ -27,12 +27,12 @@ Build out n-grams for multiple text inputs and keep the n most frequent
 combinations.
 }
 \examples{
-# You must have "tidytext" library to use this auxiliary function: 
+# You must have "tidytext" library to use this auxiliary function:
 \dontrun{
 women <- read.csv("https://bit.ly/3mXJOOi")
 x <- women$description
-ngrams(x, ngram = c(2,3), top  = 3)
-ngrams(x, ngram = 2, top = 6, stop_words = c("a","is","of","the"))
+ngrams(x, ngram = c(2, 3), top = 3)
+ngrams(x, ngram = 2, top = 6, stop_words = c("a", "is", "of", "the"))
 }
 }
 \seealso{

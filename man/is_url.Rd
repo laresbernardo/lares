@@ -36,20 +36,20 @@ are_binary(x)
 }
 \description{
 Check whether a value or vector is or is not following a set
-of rules. For example: is an URL, is an ID vector, are non-variant or 
-constant values, are binary values... Notice that \code{is_} will return 
+of rules. For example: is an URL, is an ID vector, are non-variant or
+constant values, are binary values... Notice that \code{is_} will return
 the result for each observation and \code{are_} for the whole vector.
 }
 \examples{
-is_url(c("google.com","http://google.com"))
+is_url(c("google.com", "http://google.com"))
 
-is_ip(c("163.114.132.0","7.114.132", "0.0.0.0", "1.1.1.1."))
+is_ip(c("163.114.132.0", "7.114.132", "0.0.0.0", "1.1.1.1."))
 
 are_id(1:10)
 are_id(LETTERS[1:10])
 
-are_constant(rep(1,10))
+are_constant(rep(1, 10))
 are_constant(1:10)
 
-are_binary(c("A","B","A"))
+are_binary(c("A", "B", "A"))
 }

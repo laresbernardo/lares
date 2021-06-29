@@ -41,9 +41,9 @@ opts <- c("A", "B", "C")
 # Let's check the "all" logic
 check_opts(inputs = c("A", "B"), opts, quiet = FALSE)
 check_opts(inputs = c("X"), opts, not = "message", quiet = FALSE)
-check_opts(inputs = c("A","X"), opts, input_name = "value", not = "warning")
+check_opts(inputs = c("A", "X"), opts, input_name = "value", not = "warning")
 # Now let's check the "any" logic
-check_opts(inputs = c("A","X"), opts, type = "any")
+check_opts(inputs = c("A", "X"), opts, type = "any")
 check_opts(inputs = c("X"), opts, type = "any", not = "message")
 check_opts(inputs = c("A", NA), opts, type = "any")
 # Final trick: just ignore results

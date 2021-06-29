@@ -9,9 +9,9 @@ grepl_letters(x, pattern, blank = "_")
 \arguments{
 \item{x}{Character vector}
 
-\item{pattern}{Character. Character string containing a 
+\item{pattern}{Character. Character string containing a
 semi-regular expression which uses the following logic:
-"a_b" means any character that contains "a" followed by 
+"a_b" means any character that contains "a" followed by
 something followed by "b", anywhere in the string.}
 
 \item{blank}{Character. String to use between letters.}
@@ -20,8 +20,8 @@ something followed by "b", anywhere in the string.}
 Boolean check for each value on \code{x}.
 }
 \description{
-Match pattern of letters considering blanks within each element of a 
-character vector, allowing counted characters between and around 
+Match pattern of letters considering blanks within each element of a
+character vector, allowing counted characters between and around
 each letter. Used as an auxiliary function for the Scrabble family
 of functions.
 }

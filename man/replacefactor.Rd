@@ -26,6 +26,6 @@ data(dft)
 dft <- mutate(dft, Pclass = replacefactor(Pclass, original = "1", change = "First"))
 levels(dft$Pclass)
 # Replace multiple values
-dft <- mutate(dft, Pclass = replacefactor(Pclass, c("2","3"), c("Second", "Third")))
+dft <- mutate(dft, Pclass = replacefactor(Pclass, c("2", "3"), c("Second", "Third")))
 levels(dft$Pclass)
 }

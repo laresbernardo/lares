@@ -27,7 +27,7 @@ categ_reducer(
 
 \item{pmin}{Numerical. Percentage of minimum times a value is repeated}
 
-\item{pcummax}{Numerical. Top cumulative percentage of most 
+\item{pcummax}{Numerical. Top cumulative percentage of most
 repeated values}
 
 \item{top}{Integer. Keep the n most frequently repeated values}
@@ -37,10 +37,10 @@ repeated values}
 \item{cor_var}{Character. If pvalue_max < 1, you must define which
 column name will be compared with (numerical or binary).}
 
-\item{limit}{Integer. Limit one hot encoding to the n most frequent 
+\item{limit}{Integer. Limit one hot encoding to the n most frequent
 values of each column. Set to \code{NA} to ignore argument.}
 
-\item{other_label}{Character. With which text do you wish to replace 
+\item{other_label}{Character. With which text do you wish to replace
 the filtered values with?}
 
 \item{...}{Additional parameters}
@@ -49,7 +49,7 @@ the filtered values with?}
 data.frame \code{df} on which \code{var} has been transformed
 }
 \description{
-This function lets the user reduce categorical values in a vector. 
+This function lets the user reduce categorical values in a vector.
 It is tidyverse friendly for use on pipelines
 }
 \examples{

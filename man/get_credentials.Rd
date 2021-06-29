@@ -20,7 +20,7 @@ If you don't know these names, set \code{from = NA}
 and a warning will display all possible values, depending on your YML file.}
 
 \item{dir}{Character. Credentials directory where your YML file is.
-If used frequently, set your directory by using the \code{.Renviron} file. 
+If used frequently, set your directory by using the \code{.Renviron} file.
 To do so, leave \code{dir} as \code{NA} and follow the steps.
 If \code{dir} is a list, it'll return \code{dir} (manual credentials input).}
 
@@ -35,8 +35,8 @@ List. Result of reading your credential's YML file, filtered by your
 }
 \description{
 Load credentials from a local YML file. You can set your \code{.Renviron}
-and the \code{LARES_CREDS} parameter to remember (forever) the directory 
-of your credentials' file. To use it later, you may leave \code{dir = NA}. 
+and the \code{LARES_CREDS} parameter to remember (forever) the directory
+of your credentials' file. To use it later, you may leave \code{dir = NA}.
 You may also use this function for external (non-\code{lares}) code/use.
 }
 \section{Set the default directory}{
@@ -50,8 +50,8 @@ reset your session for this setup to start working properly.
 
 \section{YML file format}{
 
-A YML file is a text file, with \code{.yml} file format. You may start from 
-the dummy YML file shared which shows the structure you must follow to set your 
+A YML file is a text file, with \code{.yml} file format. You may start from
+the dummy YML file shared which shows the structure you must follow to set your
 credentials file. Check it out
 \href{https://raw.githubusercontent.com/laresbernardo/lares/master/inst/docs/config.yml}{here}
 or find it locally using \code{system.file("docs", "config.yml", package = "lares")}.
@@ -66,9 +66,9 @@ yml <- dirname(system.file("docs", "config.yml", package = "lares"))
 
 # Let's see which credentials we have in our file
 get_credentials(dir = yml)
-# Warning message: No credentials for NA found in your YML file. 
+# Warning message: No credentials for NA found in your YML file.
 # Try any of the following: 'service1', 'service2', 'service3'
-  
+
 # Get credentials for service2
 get_credentials("service2", dir = yml)
 }

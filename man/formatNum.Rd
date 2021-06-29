@@ -26,7 +26,7 @@ formatNum(
 the specified number of significant digits.}
 
 \item{type}{Integer. \code{1} for International standards. \code{2}
-for American Standards. Use \code{Sys.setenv("LARES_NUMFORMAT" = 2)} 
+for American Standards. Use \code{Sys.setenv("LARES_NUMFORMAT" = 2)}
 to set this parameter globally.}
 
 \item{pre, pos}{Character. Add string before or after number.}

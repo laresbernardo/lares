@@ -37,21 +37,21 @@ If no variables are passed, the whole data.frame will be considered}
 
 \item{plot}{Boolean. Do you want to see a plot? Three variables tops.}
 
-\item{rm.na}{Boolean. Remove NA values in the plot? (not filtered for 
+\item{rm.na}{Boolean. Remove NA values in the plot? (not filtered for
 numerical output; use na.omit() or filter() if needed)}
 
 \item{title}{Character. Overwrite plot's title with.}
 
 \item{subtitle}{Character. Overwrite plot's subtitle with.}
 
-\item{top}{Integer. Filter and plot the most n frequent for 
+\item{top}{Integer. Filter and plot the most n frequent for
 categorical values. Set to NA to return all values}
 
 \item{abc}{Boolean. Do you wish to sort by alphabetical order?}
 
 \item{save}{Boolean. Save the output plot in our working directory}
 
-\item{subdir}{Character. Into which subdirectory do you wish to 
+\item{subdir}{Character. Into which subdirectory do you wish to
 save the plot to?}
 }
 \value{
@@ -59,7 +59,7 @@ Plot when \code{plot=TRUE} and data.frame with grouped frequency results
 when \code{plot=FALSE}.
 }
 \description{
-This function lets the user group, count, calculate percentages 
+This function lets the user group, count, calculate percentages
 and cumulatives. It also plots results if needed. Tidyverse friendly.
 }
 \examples{
@@ -76,7 +76,7 @@ dft \%>\% freqs(Pclass, Survived, abc = TRUE)
 dft \%>\% freqs(Pclass, Survived, abc = TRUE, rel = TRUE)
 
 # Using a weighted feature
-dft \%>\% freqs(Pclass, Survived, wt = Fare/100)
+dft \%>\% freqs(Pclass, Survived, wt = Fare / 100)
 
 # Let's check the results with plots:
 

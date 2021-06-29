@@ -18,15 +18,15 @@ stocks_report(
 )
 }
 \arguments{
-\item{data}{Character. \code{stocks_obj()} output. If NA, automatic 
+\item{data}{Character. \code{stocks_obj()} output. If NA, automatic
 parameters and \code{stocks_file()} defaults will be used.}
 
 \item{keep_old}{Boolean. Include sold tickers even though not currently in portfolio?}
 
-\item{dir}{Character. Directory for HTML report output. If set to NA, 
+\item{dir}{Character. Directory for HTML report output. If set to NA,
 current working directory will be used. If mail sent, file will be erased}
 
-\item{mail}{Boolean. Do you want to send an email with the report attached? 
+\item{mail}{Boolean. Do you want to send an email with the report attached?
 If not, an HTML file will be created in dir}
 
 \item{attachment}{Boolean. Create and add report as attachment if
@@ -39,7 +39,7 @@ summaries will be included on email's body.}
 
 \item{keep}{Boolean. Keep HTML file when sent by email?}
 
-\item{creds}{Character. Credential's user (see \code{get_creds()}) for 
+\item{creds}{Character. Credential's user (see \code{get_creds()}) for
 sending mail and Dropbox interaction.}
 
 \item{cache}{Boolean. Use daily cache if available?}
@@ -48,7 +48,7 @@ sending mail and Dropbox interaction.}
 Invisible list. Aggregated results and plots.
 }
 \description{
-This function lets the user create his portfolio's full report with 
+This function lets the user create his portfolio's full report with
 plots and send it to an email with the HTML report attached
 }
 \examples{

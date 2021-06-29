@@ -17,12 +17,12 @@ cleanNames(df, num = "x", ...)
 Character vector with transformed strings.
 }
 \description{
-Resulting names are unique and consist only of the \code{_} character, 
-numbers, and ASCII letters. Capitalization preferences can be specified using 
+Resulting names are unique and consist only of the \code{_} character,
+numbers, and ASCII letters. Capitalization preferences can be specified using
 the \code{lower} parameter. Inspired by \code{janitor::clean_names}.
 }
 \examples{
-df <- dft[1:5,1:6] # Dummy data
+df <- dft[1:5, 1:6] # Dummy data
 colnames(df) <- c("ID.", "34", "x_2", "Num 123", "Nòn-äscì", "  white   Spaces  ")
 print(df)
 cleanNames(df)

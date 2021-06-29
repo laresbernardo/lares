@@ -30,7 +30,7 @@ data.frame with un-nested processed results fetched with API.
 }
 \description{
 This returns all ad accounts for a FB Business Account FB.
-For more information on Ad Insights' API, go to the 
+For more information on Ad Insights' API, go to the
 \href{https://developers.facebook.com/docs/marketing-api/insights/}{original documentaion}
 }
 \examples{

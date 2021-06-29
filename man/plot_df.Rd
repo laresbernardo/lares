@@ -13,7 +13,7 @@ plot_df(df)
 Plot. Result of \code{df} categorical and numerical features.
 }
 \description{
-This function plots all columns frequencies and boxplots, for 
+This function plots all columns frequencies and boxplots, for
 categorical and numerical respectively.
 }
 \seealso{

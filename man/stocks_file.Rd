@@ -36,16 +36,18 @@ Cash, and Transactions information}
 List with portfolio, transactions, and cash data.frames.
 }
 \description{
-This function lets the user download his personal Excel with his 
+This function lets the user download his personal Excel with his
 Portfolio's data, locally or from Dropbox.
 }
 \examples{
 \dontrun{
 # Load lares dummy portfolio XLSX
 file <- system.file("inst/docs", "dummyPortfolio.xlsx", package = "lares")
-df <- stocks_file(file = file, 
-                  sheets = c("Portafolio","Fondos","Transacciones"), 
-                  keep_old = FALSE)
+df <- stocks_file(
+  file = file,
+  sheets = c("Portafolio", "Fondos", "Transacciones"),
+  keep_old = FALSE
+)
 }
 }
 \seealso{

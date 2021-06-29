@@ -24,13 +24,25 @@ into a matrix object.
 }
 \examples{
 \donttest{
+# board <- c(0,0,0,0,0,6,000,
+#            0,9,5,7,0,0,3,0,0,
+#            4,0,0,0,9,2,0,0,5,
+#            7,6,4,0,0,0,0,0,3,
+#            0,0,0,0,0,0,0,0,0,
+#            2,0,0,0,0,0,9,7,1,
+#            5,0,0,2,1,0,0,0,9,
+#            0,0,7,0,0,5,4,8,0,
+#            0,0,0,8,0,0,0,0,0)
+# sudoku_solver(board)
 
 # Trivial input (everything)
-trivial <- matrix(rep(0, 81), byrow = TRUE, ncol = 9); trivial
+trivial <- matrix(rep(0, 81), byrow = TRUE, ncol = 9)
+trivial
 sudoku_solver(trivial)
 
 # Wrong / Impossible to solve input
-imp <- matrix(c(rep(1, 72), rep(0, 9)), byrow = TRUE, ncol = 9); imp
+imp <- matrix(c(rep(1, 72), rep(0, 9)), byrow = TRUE, ncol = 9)
+imp
 sudoku_solver(imp)
 }
 }

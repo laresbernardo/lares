@@ -13,15 +13,14 @@
 #' @return No return value, called for side effects.
 #' @export
 updateLares <- function(force = FALSE, dev = TRUE, all = FALSE, local = FALSE, fb = FALSE) {
-  
   try_require("devtools")
-  
+
   tic(id = "updateLares")
   message(paste(Sys.time(), "| Started update..."))
-  
+
   # Auxiliary proxy fx when on devservers
   auxfx <- if (fb) with_proxy else function(x) x
-  
+
   if (local) {
     install("~/Dropbox (Personal)/Documentos/R/Github/lares")
   } else {
@@ -29,11 +28,10 @@ updateLares <- function(force = FALSE, dev = TRUE, all = FALSE, local = FALSE, f
       auxfx(install.packages("lares"))
     } else {
       auxfx(install_github("laresbernardo/lares", force = force))
-    } 
+    }
   }
-  
-  if (all) auxfx(install_recommended())
-  
-  toc(id = "updateLares", msg = paste(Sys.time(), "|"))  
 
+  if (all) auxfx(install_recommended())
+
+  toc(id = "updateLares", msg = paste(Sys.time(), "|"))
 }

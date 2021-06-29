@@ -16,7 +16,7 @@ only the first one will be processed.}
 data.frame with un-nested processed results or NULL if no results found.
 }
 \description{
-Process and paginate raw results from Facebook's API, result of 
+Process and paginate raw results from Facebook's API, result of
 querying the API with \code{httr::GET}.
 }
 \seealso{

@@ -20,7 +20,7 @@ data.frame mean, standard deviation, counter, upper and lower CIs.
 }
 \description{
 Calculate confidence intervals for a continuous numerical column on
-a dataframe, given a confidence level. You may also group results 
+a dataframe, given a confidence level. You may also group results
 using another variable. Tidyverse friendly.
 }
 \examples{

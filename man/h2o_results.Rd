@@ -50,11 +50,11 @@ with its real split rate.}
 
 \item{project}{Character. Your project's name}
 
-\item{seed}{Integer. Set a seed for reproducibility. AutoML can only 
-guarantee reproducibility if max_models is used because max_time is 
+\item{seed}{Integer. Set a seed for reproducibility. AutoML can only
+guarantee reproducibility if max_models is used because max_time is
 resource limited.}
 
-\item{leaderboard}{H2O's Leaderboard. Passed when using 
+\item{leaderboard}{H2O's Leaderboard. Passed when using
 \code{h2o_selectmodel} as it contains plain model and no leader board.}
 
 \item{plots}{Boolean. Create plots objects?}

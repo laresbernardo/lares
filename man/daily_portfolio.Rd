@@ -13,7 +13,7 @@ daily_portfolio(hist, trans, cash, cash_fix = 0, window = "MAX")
 
 \item{cash}{Dataframe. Result from \code{stocks_file()$cash}}
 
-\item{cash_fix}{Numeric. If, for some reason, you need to fix your 
+\item{cash_fix}{Numeric. If, for some reason, you need to fix your
 cash amount for all reports, set the amount here}
 
 \item{window}{Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"}

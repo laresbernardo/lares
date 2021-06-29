@@ -11,14 +11,14 @@ ROC(tag, score, multis = NA)
 
 \item{score}{Vector. Predicted value or model's result}
 
-\item{multis}{Data.frame. Containing columns with each category score 
+\item{multis}{Data.frame. Containing columns with each category score
 (only used when more than 2 categories coexist)}
 }
 \value{
 List with ROC's results, area under the curve (AUC) and their CI.
 }
 \description{
-This function calculates ROC Curves and AUC values with 95\% confidence 
+This function calculates ROC Curves and AUC values with 95\% confidence
 range. It also works for multi-categorical models.
 }
 \section{Plot Results}{
@@ -28,7 +28,7 @@ To plot results, use the \code{mplot_roNULL} function.
 
 \examples{
 data(dfr) # Results for AutoML Predictions
-lapply(dfr[c(1,2)], head)
+lapply(dfr[c(1, 2)], head)
 
 # ROC Data for Binomial Model
 roc1 <- ROC(dfr$class2$tag, dfr$class2$scores)
@@ -36,7 +36,8 @@ lapply(roc1, head)
 
 # ROC Data for Multi-Categorical Model
 roc2 <- ROC(dfr$class3$tag, dfr$class3$score,
-            multis = subset(dfr$class3, select = -c(tag, score)))
+  multis = subset(dfr$class3, select = -c(tag, score))
+)
 lapply(roc2, head)
 }
 \seealso{

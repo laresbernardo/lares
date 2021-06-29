@@ -18,8 +18,8 @@ vector with predicted results.
 }
 \description{
 This function lets the user predict using the h2o binary file.
-Note that it works with the files generated when using the 
-function export_results(). Recommendation: use the 
+Note that it works with the files generated when using the
+function export_results(). Recommendation: use the
 h2o_predict_MOJO() function when possible - it let's you change
 h2o's version without problem.
 }

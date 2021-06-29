@@ -14,7 +14,7 @@ that was not in the original explainer function, add here. Else, use row}
 
 \item{row}{Dataframe. Row number from the data.frame used in explainer.}
 
-\item{type}{Character. The type of variable attributions. 
+\item{type}{Character. The type of variable attributions.
 Either shap, oscillations, break_down or break_down_interactions.}
 }
 \value{

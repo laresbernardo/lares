@@ -23,13 +23,13 @@ mplot_full(
 
 \item{score}{Vector. Predicted value or model's result.}
 
-\item{multis}{Data.frame. Containing columns with each category probability 
+\item{multis}{Data.frame. Containing columns with each category probability
 or score (only used when more than 2 categories coexist).}
 
 \item{splits}{Integer. Number of separations to plot}
 
-\item{thresh}{Integer. Threshold for selecting binary or regression 
-models: this number is the threshold of unique values we should 
+\item{thresh}{Integer. Threshold for selecting binary or regression
+models: this number is the threshold of unique values we should
 have in 'tag' (more than: regression; less than: classification)}
 
 \item{subtitle}{Character. Subtitle to show in plot}
@@ -60,17 +60,20 @@ data(dfr) # Results for AutoML Predictions
 lapply(dfr, head)
 
 # Dasboard for Binomial Model
-mplot_full(dfr$class2$tag, dfr$class2$scores, 
-          model_name = "Titanic Survived Model")
+mplot_full(dfr$class2$tag, dfr$class2$scores,
+  model_name = "Titanic Survived Model"
+)
 
 # Dasboard for Multi-Categorical Model
 mplot_full(dfr$class3$tag, dfr$class3$score,
-          multis = subset(dfr$class3, select = -c(tag, score)),
-          model_name = "Titanic Class Model")
-          
+  multis = subset(dfr$class3, select = -c(tag, score)),
+  model_name = "Titanic Class Model"
+)
+
 # Dasboard for Regression Model
-mplot_full(dfr$regr$tag, dfr$regr$score, 
-          model_name = "Titanic Fare Model")
+mplot_full(dfr$regr$tag, dfr$regr$score,
+  model_name = "Titanic Fare Model"
+)
 }
 }
 \seealso{

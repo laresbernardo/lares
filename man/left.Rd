@@ -18,7 +18,7 @@ right(string, n = 1)
 Character. Trimmed strings.
 }
 \description{
-This functions lets the user extract the first or last n characters 
+This functions lets the user extract the first or last n characters
 of a string or vector of strings.
 }
 \examples{

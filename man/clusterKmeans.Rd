@@ -42,7 +42,7 @@ two variables by name or column position.}
 \item{quiet}{Boolean. Keep quiet? If not, print messages.}
 }
 \value{
-List. If no \code{k} is provided, contains \code{nclusters} and 
+List. If no \code{k} is provided, contains \code{nclusters} and
 \code{nclusters_plot} to determine optimal \code{k} given their WSS (Within
 Groups Sum of Squares). If \code{k} is provided, additionally we get:
 \itemize{
@@ -56,11 +56,11 @@ Groups Sum of Squares). If \code{k} is provided, additionally we get:
 }
 \description{
 This function lets the user cluster a whole data.frame automatically.
-As you might know, the goal of kmeans is to group data points into 
-distinct non-overlapping subgroups. If needed, one hot encoding will 
-be applied to categorical values automatically with this function. 
+As you might know, the goal of kmeans is to group data points into
+distinct non-overlapping subgroups. If needed, one hot encoding will
+be applied to categorical values automatically with this function.
 For consideration: Scale/standardize the data when applying kmeans.
-Also, kmeans assumes spherical shapes of clusters and does not work well 
+Also, kmeans assumes spherical shapes of clusters and does not work well
 when clusters are in different shapes such as elliptical clusters.
 }
 \examples{
@@ -87,7 +87,9 @@ plot(clusters$PCA$plot_1_2)
 
 # You must have "ggforce" library to use this auxiliary function:
 # 3D interactive plot
-\dontrun{clusters$PCA$plot_1_2_3}
+\dontrun{
+clusters$PCA$plot_1_2_3
+}
 }
 \seealso{
 Other Clusters: 

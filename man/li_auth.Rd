@@ -17,7 +17,7 @@ li_auth(app_name = NA, client_id = NA, client_secret = NA)
 Character. String with token requested.
 }
 \description{
-This function authenticates and creates a token for LinkedIn's 
+This function authenticates and creates a token for LinkedIn's
 API REST
 }
 \seealso{

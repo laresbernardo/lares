@@ -17,8 +17,8 @@ export_results(
 \arguments{
 \item{results}{\code{h2o_automl} or \code{h2o} model}
 
-\item{thresh}{Integer. Threshold for selecting binary or regression 
-models: this number is the threshold of unique values we should 
+\item{thresh}{Integer. Threshold for selecting binary or regression
+models: this number is the threshold of unique values we should
 have in 'tag' (more than: regression; less than: classification)}
 
 \item{which}{Character vector. Select which file format to export:
@@ -26,10 +26,10 @@ Possible values: txt, csv, rds, binary, mojo, plots. You might also
 use dev (txt, csv, rds) or production (binary, mojo) or simply don't use
 parameter to export everything}
 
-\item{note}{Character. Add a note to the txt file. Useful when lots of 
+\item{note}{Character. Add a note to the txt file. Useful when lots of
 models are trained and saved to remember which one is which one}
 
-\item{subdir}{Character. In which directory do you wish to save 
+\item{subdir}{Character. In which directory do you wish to save
 the results?}
 
 \item{save}{Boolean. Do you wish to save/export results?}

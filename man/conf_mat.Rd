@@ -11,13 +11,13 @@ conf_mat(tag, score, thresh = 0.5, sense = ">=", diagonal = TRUE, plot = FALSE)
 
 \item{score}{Vector. Predicted value or model's result}
 
-\item{thresh}{Integer. Threshold for selecting binary or regression 
-models: this number is the threshold of unique values we should 
+\item{thresh}{Integer. Threshold for selecting binary or regression
+models: this number is the threshold of unique values we should
 have in \code{'tag'} (more than: regression; less than: classification)}
 
 \item{sense}{Character. Inequation sense for threshold: <, <=, >=, >}
 
-\item{diagonal}{Boolean. \code{FALSE} to convert diagonal numbers to 
+\item{diagonal}{Boolean. \code{FALSE} to convert diagonal numbers to
 zeroes. Ideal to detect must confusing categories.}
 
 \item{plot}{Boolean. Plot result? Uses \code{mplot_conf()}}
@@ -36,7 +36,7 @@ You may use \code{mplot_conf()} or set \code{plot=TRUE}.
 }
 \examples{
 data(dfr) # Results for AutoML Predictions
-lapply(dfr[c(1,2)], head)
+lapply(dfr[c(1, 2)], head)
 
 # Results for Binomial Model
 conf_mat(dfr$class2$tag, dfr$class2$scores)

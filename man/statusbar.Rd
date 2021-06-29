@@ -21,7 +21,7 @@ Start with 1 preferibly}
 
 \item{max.run}{Number. Maximum number of loops}
 
-\item{label}{String. With additionaly information to be printed 
+\item{label}{String. With additionaly information to be printed
 at the end of the line. The default is \code{run}.}
 
 \item{msg}{Character. Finish message.}
@@ -30,7 +30,7 @@ at the end of the line. The default is \code{run}.}
 
 \item{start_time}{POSIXct. Start time to consider. If NA, then
 when first iteration starts will be set as start time. Useful
-for when first iteration is showed as done but started a few 
+for when first iteration is showed as done but started a few
 seconds/minutes ago.}
 
 \item{multiples}{Integer. Only print when multiples of N (to avoid)

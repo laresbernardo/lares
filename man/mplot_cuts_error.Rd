@@ -43,7 +43,8 @@ Sys.unsetenv("LARES_FONT") # Temporal
 data(dfr) # Results for AutoML Predictions
 head(dfr$regr)
 mplot_cuts_error(dfr$regr$tag, dfr$regr$score,
-                 model_name = "Titanic Fare Model")
+  model_name = "Titanic Fare Model"
+)
 }
 \seealso{
 Other ML Visualization: 

@@ -23,7 +23,7 @@ number of appearances, percentage, packages, and files searched.
 \description{
 Parses all functions called by an R script and then lists
 them by package. Wrapper for 'getParseData'. May be of great
-use for those developing a package to help see what 
+use for those developing a package to help see what
 namespace 'importsFrom' calls will be required.
 }
 \examples{

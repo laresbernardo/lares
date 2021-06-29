@@ -8,15 +8,15 @@ scrabble_dictionary(language)
 }
 \arguments{
 \item{language}{Character. Any of "en","es","de","fr". Set to "none"
-if you wish to skip this step (and use \code{words} parameter in 
+if you wish to skip this step (and use \code{words} parameter in
 \code{scrabble_words} instead).}
 }
 \value{
 data.frame with words and language columns.
 }
 \description{
-Download words from 4 different languages: English, Spanish, 
-German, and French. Words will be save into the \code{temp} directory. 
+Download words from 4 different languages: English, Spanish,
+German, and French. Words will be save into the \code{temp} directory.
 This is an auxiliary function. You may want to use \code{scrabble_words}
 directly if you are searching for the highest score words!
 }

@@ -46,15 +46,15 @@ wish to get the history from? i.e, USD/COP, EUR/USD...}
 
 \item{trim}{Integer. Trim names until the nth character}
 
-\item{limit}{Integer. Limit one hot encoding to the n most frequent 
+\item{limit}{Integer. Limit one hot encoding to the n most frequent
 values of each column. Set to \code{NA} to ignore argument.}
 
-\item{variance}{Numeric. Drop columns with more than n variance. 
+\item{variance}{Numeric. Drop columns with more than n variance.
 Range: 0-1. For example: if a variable contains 91 unique different
-values out of 100 observations, this column will be suppressed if 
+values out of 100 observations, this column will be suppressed if
 value is set to 0.9}
 
-\item{other_label}{Character. With which text do you wish to replace 
+\item{other_label}{Character. With which text do you wish to replace
 the filtered values with?}
 
 \item{sep}{Character. Separator's string}
@@ -73,7 +73,7 @@ categorical columns into numerical by one hot encoding technic.
 }
 \examples{
 data(dft)
-dft <- dft[,c(2,3,5,9,11)]
+dft <- dft[, c(2, 3, 5, 9, 11)]
 
 ohse(dft, limit = 3) \%>\% head(3)
 ohse(dft, limit = 3, redundant = NULL) \%>\% head(3)

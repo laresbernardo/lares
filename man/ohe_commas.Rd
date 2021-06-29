@@ -23,13 +23,15 @@ data.frame on which all features are numerical by nature or
 transformed with one hot encoding.
 }
 \description{
-This function lets the user do one hot encoding on a variable with 
+This function lets the user do one hot encoding on a variable with
 comma separated values
 }
 \examples{
-df <- data.frame(id = c(1:5),
-                 x = c("AA, D", "AA,B", "B,  D", "A,D,B", NA),
-                 z = c("AA+BB+AA", "AA", "BB,  AA", NA, "BB+AA"))
+df <- data.frame(
+  id = c(1:5),
+  x = c("AA, D", "AA,B", "B,  D", "A,D,B", NA),
+  z = c("AA+BB+AA", "AA", "BB,  AA", NA, "BB+AA")
+)
 ohe_commas(df, x, remove = TRUE)
 ohe_commas(df, z, sep = "\\\\+")
 ohe_commas(df, x, z)

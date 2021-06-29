@@ -29,7 +29,7 @@ to trim the audio output in seconds.}
 \item{quiet}{Boolean. Keep quiet? If not, print messages.}
 }
 \description{
-This function trims MP3 files given a start and/or end numeric 
+This function trims MP3 files given a start and/or end numeric
 timestamp. Requires \code{ffmpeg} installed in your machine.
 }
 \seealso{

@@ -9,7 +9,7 @@ remove_stopwords(text, stop_words, exclude = NULL, sep = " ")
 \arguments{
 \item{text}{Character vector}
 
-\item{stop_words}{Character vector. Words to exclude from text. Example: 
+\item{stop_words}{Character vector. Words to exclude from text. Example:
 if you want to exclude "a", whenever that word appears it will be excluded,
 but when the letter "a" appears in a word, it will remain.}
 

@@ -12,7 +12,7 @@ read.file(filename, current_wd = TRUE, sheet = 1, quiet = FALSE)
 \item{current_wd}{Boolean. Use current working directory before
 the file's name? Use this param to NOT get absolute root directory.}
 
-\item{sheet}{Character. Name or index of the sheet to read data 
+\item{sheet}{Character. Name or index of the sheet to read data
 from if file is xlsx or xls.}
 
 \item{quiet}{Boolean. Quiet summary message?}

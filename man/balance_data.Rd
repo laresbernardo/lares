@@ -7,7 +7,7 @@
 balance_data(df, variable, rate = 1, target = "auto", seed = 0, quiet = FALSE)
 }
 \arguments{
-\item{df}{Vector or Dataframe. Contains different variables in each 
+\item{df}{Vector or Dataframe. Contains different variables in each
 column, separated by a specific character}
 
 \item{variable}{Variable. Which variable should we used to re-sample dataset?}

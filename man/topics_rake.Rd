@@ -19,7 +19,7 @@ downloaded from \code{udpipe}'s models.}
 data.frame with topics for each \code{text} input.
 }
 \description{
-RAKE is a basic algorithm which tries to identify keywords in text. 
+RAKE is a basic algorithm which tries to identify keywords in text.
 Based on \code{udpipe} library, model models, and keywords_rake function.
 }
 \seealso{

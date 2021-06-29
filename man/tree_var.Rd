@@ -48,7 +48,7 @@ tree_var(
 
 \item{max}{Integer. Maximal depth of the tree.}
 
-\item{min}{Integer. The minimum number of observations that must 
+\item{min}{Integer. The minimum number of observations that must
 exist in a node in order for a split to be attempted.}
 
 \item{cp}{
@@ -99,7 +99,7 @@ tree$performance # metrics
 # Binary Tree
 tree_var(dft, Survived_TRUE, explain = FALSE, cex = 0.8)$plot()
 # Multiclass tree
-tree_var(dft[,c("Pclass","Fare","Age")], Pclass, ohse = FALSE)$plot()
+tree_var(dft[, c("Pclass", "Fare", "Age")], Pclass, ohse = FALSE)$plot()
 }
 \references{
 Breiman L., Friedman J. H., Olshen R. A., and Stone, C. J. (1984)

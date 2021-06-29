@@ -14,8 +14,8 @@ loglossBinary(tag, score, eps = 0.001)
 \item{eps}{Numeric. Epsilon value}
 }
 \description{
-This function calculates log loss/cross-entropy loss for binary 
-models. NOTE: when result is 0.69315, the classification is neutral; 
+This function calculates log loss/cross-entropy loss for binary
+models. NOTE: when result is 0.69315, the classification is neutral;
 it assigns equal probability to both classes.
 }
 \seealso{

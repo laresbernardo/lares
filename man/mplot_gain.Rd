@@ -23,11 +23,11 @@ mplot_gain(
 
 \item{score}{Vector. Predicted value or model's result.}
 
-\item{multis}{Data.frame. Containing columns with each category probability 
+\item{multis}{Data.frame. Containing columns with each category probability
 or score (only used when more than 2 categories coexist).}
 
-\item{target}{Value. Which is your target positive value? If 
-set to 'auto', the target with largest mean(score) will be 
+\item{target}{Value. Which is your target positive value? If
+set to 'auto', the target with largest mean(score) will be
 selected. Change the value to overwrite. Only works for binary classes}
 
 \item{splits}{Integer. Numer of quantiles to split the data}
@@ -50,11 +50,11 @@ best value, "none" to turn off or the number of split.}
 Plot with gain and performance results by cuts.
 }
 \description{
-The cumulative gains plot, often named ‘gains plot’, helps us 
-answer the question: When we apply the model and select the best 
-X deciles, what % of the actual target class observations can we 
-expect to target? The cumulative gains chart shows the percentage 
-of the overall number of cases in a given category "gained" by 
+The cumulative gains plot, often named ‘gains plot’, helps us
+answer the question: When we apply the model and select the best
+X deciles, what % of the actual target class observations can we
+expect to target? The cumulative gains chart shows the percentage
+of the overall number of cases in a given category "gained" by
 targeting a percentage of the total number of cases.
 }
 \examples{
@@ -64,16 +64,19 @@ lapply(dfr, head)
 
 # Plot for Binomial Model
 mplot_gain(dfr$class2$tag, dfr$class2$scores,
-           caption = "Titanic Survived Model",
-           target = "FALSE")
+  caption = "Titanic Survived Model",
+  target = "FALSE"
+)
 mplot_gain(dfr$class2$tag, dfr$class2$scores,
-           caption = "Titanic Survived Model",
-           target = "TRUE")
+  caption = "Titanic Survived Model",
+  target = "TRUE"
+)
 
 # Plot for Multi-Categorical Model
 mplot_gain(dfr$class3$tag, dfr$class3$score,
-          multis = subset(dfr$class3, select = -c(tag, score)),
-          caption = "Titanic Class Model")
+  multis = subset(dfr$class3, select = -c(tag, score)),
+  caption = "Titanic Class Model"
+)
 }
 \seealso{
 Other ML Visualization: 

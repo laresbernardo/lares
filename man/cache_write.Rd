@@ -38,7 +38,7 @@ quickly detect these cache files.}
 By default they'll be stored on \code{tempdir()} but you can change it
 using this parameter or setting a global option called \code{"LARES_CACHE_DIR"}.}
 
-\item{ask}{Boolean. If cache exists, when reading: (interactive) ask the user 
+\item{ask}{Boolean. If cache exists, when reading: (interactive) ask the user
 if the cache should be used to proceed or ignored; when writing, (interactive)
 ask the user if the cache should be overwritten. Note that you can only ask for
 one cache file at a time because vectors are concatenated.}
@@ -59,8 +59,8 @@ This function lets the user save and load a cache of any R object to
 improve timings and UX.
 }
 \examples{
-x = list(a = 1, b = 2:4)
-base <- c(as.character(Sys.Date()), "A","B")
+x <- list(a = 1, b = 2:4)
+base <- c(as.character(Sys.Date()), "A", "B")
 cache_write(x, base)
 cache_read(base, ask = FALSE)
 cache_exists("lares_cache_2021-06-01.A.B.C")

@@ -24,7 +24,7 @@ columns: they will be filtered!}
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
 
-\item{pvalue}{Boolean. Returns a list, with correlations and statistical 
+\item{pvalue}{Boolean. Returns a list, with correlations and statistical
 significance (p-value) for each value}
 
 \item{dec}{Integer. Number of decimals to round correlations and p-values}
@@ -40,10 +40,10 @@ Is set to \code{NULL}, only binary variables will dump redundant columns.}
 
 \item{logs}{Boolean. Calculate log(x)+1 for numerical columns?}
 
-\item{limit}{Integer. Limit one hot encoding to the n most frequent 
+\item{limit}{Integer. Limit one hot encoding to the n most frequent
 values of each column. Set to \code{NA} to ignore argument.}
 
-\item{top}{Integer. Select top N most relevant variables? Filtered 
+\item{top}{Integer. Select top N most relevant variables? Filtered
 and sorted by mean of each variable's correlations}
 
 \item{...}{Additional parameters to pass to \code{ohse()}}
@@ -54,14 +54,14 @@ correlation between every \code{df} data.frame column/variable. Notice
 that when using \code{ohse()} you may get more dimensions.
 }
 \description{
-This function correlates a whole dataframe, running one hot smart 
-encoding (\code{ohse}) to transform non-numerical features. 
-Note that it will automatically suppress columns 
+This function correlates a whole dataframe, running one hot smart
+encoding (\code{ohse}) to transform non-numerical features.
+Note that it will automatically suppress columns
 with less than 3 non missing values and warn the user.
 }
 \examples{
 data(dft) # Titanic dataset
-df <- dft[,2:5]
+df <- dft[, 2:5]
 
 corr(df)
 
@@ -72,7 +72,7 @@ corr(df, ignore = "Pclass")
 corr(df, pvalue = TRUE, limit = 1)
 
 # Test when no more than 2 non-missing values
-df$trash <- c(1, rep(NA, nrow(df)-1))
+df$trash <- c(1, rep(NA, nrow(df) - 1))
 # and another method...
 corr(df, method = "spearman")
 }

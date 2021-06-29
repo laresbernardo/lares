@@ -14,15 +14,15 @@ outlier_zscore(x, thresh = 3, mad = FALSE)
 \item{mad}{Boolean. Use median absolute deviation instead?}
 }
 \value{
-data.frame. Each row is an \code{x} observation with its 
+data.frame. Each row is an \code{x} observation with its
 respective std/mean or mad/med calculations depending on \code{mad} input.
 }
 \description{
-Z-score, also called a standard score, of an observation is a 
-distance from the population center measured in number of normalization 
-units. The default choice for center is sample mean and for 
-normalization unit is standard deviation. Values are considered 
-outliers based on z-score if its absolute value of 
+Z-score, also called a standard score, of an observation is a
+distance from the population center measured in number of normalization
+units. The default choice for center is sample mean and for
+normalization unit is standard deviation. Values are considered
+outliers based on z-score if its absolute value of
 default z-score is higher then the threshold (popular choice is 3).
 }
 \seealso{

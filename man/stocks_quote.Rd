@@ -19,7 +19,7 @@ This function lets the user download stocks live data.
 \examples{
 \donttest{
 # Multiple quotes at the same time
-stocks_quote(c("VTI","VOO","TSLA"))
+stocks_quote(c("VTI", "VOO", "TSLA"))
 }
 }
 \seealso{

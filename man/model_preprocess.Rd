@@ -68,12 +68,12 @@ to center and/or scale all numerical values?}
 \item{scale}{Boolean. Using the base function scale, do you wish
 to center and/or scale all numerical values?}
 
-\item{thresh}{Integer. Threshold for selecting binary or regression 
-models: this number is the threshold of unique values we should 
+\item{thresh}{Integer. Threshold for selecting binary or regression
+models: this number is the threshold of unique values we should
 have in \code{'tag'} (more than: regression; less than: classification)}
 
-\item{seed}{Integer. Set a seed for reproducibility. AutoML can only 
-guarantee reproducibility if max_models is used because max_time is 
+\item{seed}{Integer. Set a seed for reproducibility. AutoML can only
+guarantee reproducibility if max_models is used because max_time is
 resource limited.}
 
 \item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
@@ -85,8 +85,8 @@ to identify which observations with be part of the train dataset
 }
 \description{
 Pre-process your data before training a model. This is the prior step
-on the \code{h2o_automl()} function's pipeline. Enabling for 
-other use cases when wanting too  use any other framework, library, 
+on the \code{h2o_automl()} function's pipeline. Enabling for
+other use cases when wanting too  use any other framework, library,
 or custom algorithm.
 }
 \examples{

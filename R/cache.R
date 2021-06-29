@@ -1,9 +1,9 @@
 ####################################################################
 #' Cache Save and Load (Write and Read)
-#' 
+#'
 #' This function lets the user save and load a cache of any R object to
 #' improve timings and UX.
-#' 
+#'
 #' @family Cache
 #' @param data Object
 #' @param base Character vector. Unique name for your cache file. You can pass
@@ -14,14 +14,14 @@
 #' By default they'll be stored on \code{tempdir()} but you can change it
 #' using this parameter or setting a global option called \code{"LARES_CACHE_DIR"}.
 #' @param quiet Boolean. Keep quiet? If not, message will be shown.
-#' @param ask Boolean. If cache exists, when reading: (interactive) ask the user 
+#' @param ask Boolean. If cache exists, when reading: (interactive) ask the user
 #' if the cache should be used to proceed or ignored; when writing, (interactive)
 #' ask the user if the cache should be overwritten. Note that you can only ask for
 #' one cache file at a time because vectors are concatenated.
 #' @return \code{cache_write}. No return value, called for side effects.
 #' @examples
-#' x = list(a = 1, b = 2:4)
-#' base <- c(as.character(Sys.Date()), "A","B")
+#' x <- list(a = 1, b = 2:4)
+#' base <- c(as.character(Sys.Date()), "A", "B")
 #' cache_write(x, base)
 #' cache_read(base, ask = FALSE)
 #' cache_exists("lares_cache_2021-06-01.A.B.C")
@@ -32,20 +32,24 @@ cache_write <- function(data,
                         cache_dir = getOption("LARES_CACHE_DIR"),
                         ask = FALSE,
                         quiet = FALSE) {
-  if (is.null(getOption("LARES_CACHE_DIR")))
+  if (is.null(getOption("LARES_CACHE_DIR"))) {
     cache_dir <- tempdir()
+  }
   base <- paste(base, collapse = ".")
   if (left(base, 12) != "lares_cache_") base <- paste0("lares_cache_", base)
   if (right(base, 4) == ".RDS") base <- gsub("\\.RDS", "", base)
   file <- sprintf("%s/%s.RDS", cache_dir, base)
-  if (nchar(file) >= 252)
+  if (nchar(file) >= 252) {
     stop("Your file name can't contain more than 250 characters.")
+  }
   if (dir.exists(cache_dir)) {
     if (cache_exists(file) & ask) {
       message("> Cache found: ", base)
       answer <- readline("Press ENTER to rewrite cache or type [i] to ignore: ")
-    } else answer <- "use"
-    if (answer != "i")  {
+    } else {
+      answer <- "use"
+    }
+    if (answer != "i") {
       saveRDS(data, file = file)
       if (!quiet) message("> Cache saved succesfully: ", base)
     } else {
@@ -74,8 +78,10 @@ cache_read <- function(base,
     if (ask == TRUE) {
       message("> Cache found: ", base)
       answer <- readline("Press ENTER to use cache or type [i] to ignore: ")
-    } else answer <- "use"
-    if (answer != "i")  {
+    } else {
+      answer <- "use"
+    }
+    if (answer != "i") {
       data <- readRDS(file)
       if (!quiet) message("> Cache loaded succesfully: ", base)
       return(data)
@@ -90,17 +96,18 @@ cache_read <- function(base,
 #' @return \code{cache_exists}. Boolean. Result of \code{base} existence.
 #' @export
 cache_exists <- function(base = NULL, cache_dir = getOption("LARES_CACHE_DIR")) {
-  if (is.null(getOption("LARES_CACHE_DIR")))
+  if (is.null(getOption("LARES_CACHE_DIR"))) {
     cache_dir <- tempdir()
+  }
   if (!is.null(base)) {
     base <- paste(base, collapse = ".")
     if (left(base, 12) != "lares_cache_") base <- paste0("lares_cache_", base)
     if (right(base, 4) == ".RDS") base <- gsub("\\.RDS", "", base)
-    filename <- sprintf("%s/%s.RDS", cache_dir, base) 
+    filename <- sprintf("%s/%s.RDS", cache_dir, base)
   } else {
     files_dir <- list.files(cache_dir)
-    base <- files_dir[startsWith(files_dir, "lares_cache_")] 
-    filename <- sprintf("%s/%s", cache_dir, base) 
+    base <- files_dir[startsWith(files_dir, "lares_cache_")]
+    filename <- sprintf("%s/%s", cache_dir, base)
   }
   exists <- any(file.exists(filename))
   attr(exists, "filename") <- filename
@@ -116,12 +123,15 @@ cache_clear <- function(cache_dir = getOption("LARES_CACHE_DIR"), quiet = FALSE)
   if (is.null(cache_dir)) cache_dir <- tempdir()
   files <- list.files(cache_dir)
   caches <- files[startsWith(files, "lares_cache_")]
-  if (length(caches) > 0)
+  if (length(caches) > 0) {
     invisible(file.remove(sprintf("%s/%s", cache_dir, caches)))
+  }
   if (!quiet) {
     if (length(caches) > 0) {
       message(paste("Removed", length(caches), "cache files succesfully!"))
-    } else message("No cache files available to be removed.") 
+    } else {
+      message("No cache files available to be removed.")
+    }
   }
   return(invisible(caches))
 }

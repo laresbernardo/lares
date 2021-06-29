@@ -33,8 +33,8 @@ test dataset or pass a valid dataframe.}
 H2OFrame with shap values for every observation and feature.
 }
 \description{
-SHAP (SHapley Additive exPlanations) by Lundberg and Lee (2016) is a 
-method to explain individual predictions. SHAP is based on the game 
+SHAP (SHapley Additive exPlanations) by Lundberg and Lee (2016) is a
+method to explain individual predictions. SHAP is based on the game
 theoretically optimal Shapley Values. Calculate SHAP values for
 h2o models in which each row is an observation and each column a feature.
 Use \code{plot} method to visualize features importance and distributions.
@@ -42,9 +42,11 @@ Use \code{plot} method to visualize features importance and distributions.
 \examples{
 \dontrun{
 # Train a h2o_automl model
-model <- h2o_automl(dft, Survived, max_models = 1, target = TRUE,
-                    ignore = c("Ticket", "Cabin", "PassengerId"),
-                    quiet = TRUE)
+model <- h2o_automl(dft, Survived,
+  max_models = 1, target = TRUE,
+  ignore = c("Ticket", "Cabin", "PassengerId"),
+  quiet = TRUE
+)
 
 # Calculate SHAP values
 SHAP_values <- h2o_shap(model)

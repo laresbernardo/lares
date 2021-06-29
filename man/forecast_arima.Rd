@@ -27,19 +27,19 @@ forecast_arima(
 
 \item{ARMA}{Integer. How many days should the model look back for ARMA?
 Between 5 and 10 days recommmended. If set to 0 then it will forecast
-until the end of max date's month; if set to -1, until the end of 
+until the end of max date's month; if set to -1, until the end of
 max date's following month}
 
 \item{ARMA_min}{Integer. How many days should the model look back for ARMA?
 Between 5 and 10 days recommmended. If set to 0 then it will forecast
-until the end of max date's month; if set to -1, until the end of 
+until the end of max date's month; if set to -1, until the end of
 max date's following month}
 
 \item{AR}{Integer. Force AR value if known}
 
 \item{MA}{Integer. Force MA value if known}
 
-\item{wd_excluded}{Character vector. Which weekdays are excluded in 
+\item{wd_excluded}{Character vector. Which weekdays are excluded in
 your training set. If there are, please define know which ones. Example:
 c('Sunday','Thursday'). If set to 'auto' then it will detect automatically
 which weekdays have no data and forcast without these days.}
@@ -55,23 +55,23 @@ List. Containing the trained model, forecast accuracy results,
 data.frame for forecast (test) and train, and if \code{plot=TRUE}, a plot.
 }
 \description{
-This function automates the ARIMA iterations and modeling for 
+This function automates the ARIMA iterations and modeling for
 time forecasting. For the moment, units can only be days.
 }
 \details{
-The ARIMA method is appropriate only for a time series that is 
-stationary (i.e., its mean, variance, and autocorrelation should 
-be approximately constant through time) and it is recommended 
+The ARIMA method is appropriate only for a time series that is
+stationary (i.e., its mean, variance, and autocorrelation should
+be approximately constant through time) and it is recommended
 that there are at least 50 observations in the input data.
 
- The model consists of two parts, an autoregressive (AR) part 
- and a moving average (MA) part. The AR part involves regressing 
- the variable on its own lagged (i.e., past) values. The MA part 
- involves modeling the error term as a linear combination of error 
+ The model consists of two parts, an autoregressive (AR) part
+ and a moving average (MA) part. The AR part involves regressing
+ the variable on its own lagged (i.e., past) values. The MA part
+ involves modeling the error term as a linear combination of error
  terms occurring contemporaneously and at various times in the past.
 
-One thing to keep in mind when we think about ARIMA models is 
-given by the great power to capture very complex patters of 
+One thing to keep in mind when we think about ARIMA models is
+given by the great power to capture very complex patters of
 temporal correlation (Cochrane, 1997: 25)
 }
 \seealso{

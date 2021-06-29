@@ -34,7 +34,7 @@ data.frame or numeric values results for multiple error
 metrics on continuous numerical vectors inputs.
 }
 \description{
-This function lets the user calculate all errors and R squared 
+This function lets the user calculate all errors and R squared
 simultaneously.
 
 This function lets the user calculate Root Mean Squared Error

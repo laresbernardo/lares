@@ -1,12 +1,12 @@
 ####################################################################
 #' Send Slack Message (Webhook)
-#' 
+#'
 #' This function send a Slack message using its Webhooks.
-#' 
-#' For more help, you can follow the 
+#'
+#' For more help, you can follow the
 #' \href{https://api.slack.com/messaging/webhooks#posting_with_webhooks}{Sending messages using Incoming Webhooks}
 #' original documentarion.
-#' 
+#'
 #' @family API
 #' @family Credentials
 #' @param text,title,pretext Character. Content on you Slack message.
@@ -20,26 +20,27 @@
 #' slackSend(text = "This is a message", title = "TEST", pretext = Sys.info()["user"])
 #' }
 #' @export
-slackSend <- function(text, title = "", pretext = "", 
-                      hook = NA, 
+slackSend <- function(text, title = "", pretext = "",
+                      hook = NA,
                       creds = NA) {
-  
-  if (is.na(text))
+  if (is.na(text)) {
     stop("You must write something for message to be sent!")
-  
+  }
+
   if (is.na(hook)) {
     c <- get_credentials(from = "slack", dir = creds)
     hook <- c[[1]]
-  } 
-  
+  }
+
   aux <- paste(
     '{"attachments": [{',
     '"title": "', title, '",',
     '"pretext": "', text, '",',
-    '"text": "', pretext, '", 
+    '"text": "', pretext, '",
     "color": "#ee0000"',
-    '}]}',
-    sep = '')
-  
+    "}]}",
+    sep = ""
+  )
+
   invisible(POST(hook, body = aux))
 }

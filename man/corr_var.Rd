@@ -27,29 +27,29 @@ corr_var(
 columns: they will be filtered!}
 
 \item{var}{Variable. Name of the variable to correlate. Note that if the
-variable \code{var} is not numerical, 1. you may define which category to select 
-from using `var_category`; 2. You may have to add \code{redundant = TRUE} to 
+variable \code{var} is not numerical, 1. you may define which category to select
+from using `var_category`; 2. You may have to add \code{redundant = TRUE} to
 enable all categories (instead of \code{n-1}).}
 
 \item{ignore}{Character vector. Which columns do you wish to exclude?}
 
-\item{trim}{Integer. Trim words until the nth character for 
+\item{trim}{Integer. Trim words until the nth character for
 categorical values (applies for both, target and values)}
 
-\item{clean}{Boolean. Use lares::cleanText for categorical values (applies 
+\item{clean}{Boolean. Use lares::cleanText for categorical values (applies
 for both, target and values)}
 
 \item{plot}{Boolean. Do you wish to plot the result? If set to TRUE, the
 function will return only the plot and not the result's data}
 
-\item{top}{Integer. If you want to plot the top correlations, 
+\item{top}{Integer. If you want to plot the top correlations,
 define how many}
 
 \item{ceiling}{Numeric. Remove all correlations above... Range: (0-100]}
 
 \item{max_pvalue}{Numeric. Filter non-significant variables. Range (0, 1]}
 
-\item{limit}{Integer. Limit one hot encoding to the n most frequent 
+\item{limit}{Integer. Limit one hot encoding to the n most frequent
 values of each column. Set to \code{NA} to ignore argument.}
 
 \item{ranks}{Boolean. Add ranking numbers?}

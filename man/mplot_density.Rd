@@ -20,8 +20,8 @@ mplot_density(
 
 \item{score}{Vector. Predicted value or model's result}
 
-\item{thresh}{Integer. Threshold for selecting binary or regression 
-models: this number is the threshold of unique values we should 
+\item{thresh}{Integer. Threshold for selecting binary or regression
+models: this number is the threshold of unique values we should
 have in 'tag' (more than: regression; less than: classification)}
 
 \item{model_name}{Character. Model's name}
@@ -43,7 +43,7 @@ This function plots discrete and continuous values results
 \examples{
 Sys.unsetenv("LARES_FONT") # Temporal
 data(dfr) # Results for AutoML Predictions
-lapply(dfr[c(1,3)], head)
+lapply(dfr[c(1, 3)], head)
 
 # Plot for binomial results
 mplot_density(dfr$class2$tag, dfr$class2$scores, subtitle = "Titanic Survived Model")

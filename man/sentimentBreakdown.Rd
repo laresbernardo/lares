@@ -21,7 +21,7 @@ sentimentBreakdown(
 
 \item{exclude}{Character vector. Which word do you wish to exclude?}
 
-\item{append_file}{Character. Add a dictionary to append. This file 
+\item{append_file}{Character. Add a dictionary to append. This file
 must contain at least two columns, first with words and second with
 the sentiment (consider sentiments on description).}
 
@@ -36,9 +36,9 @@ data frame with word and sentiment directly}
 List. Contains data.frame with words and sentiments, summary and plot.
 }
 \description{
-This function searches for relevant words in a given text and adds 
-sentiments labels (joy, anticipation, surprise, positive, trust, 
-anger, sadness, fear, negative, disgust) for each of them, using NRC. 
+This function searches for relevant words in a given text and adds
+sentiments labels (joy, anticipation, surprise, positive, trust,
+anger, sadness, fear, negative, disgust) for each of them, using NRC.
 Then, makes a summary for all words and plot results.
 }
 \seealso{

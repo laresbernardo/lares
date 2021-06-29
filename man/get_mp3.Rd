@@ -38,24 +38,24 @@ to trim the audio output in seconds.}
 (Invisible) list with id's meta-data.
 }
 \description{
-This function downloads YouTube videos or Soundcloud or any other 
-platform supported by the youtube-dl library, and converts them into 
-high quality MP3 files. The URL can be for a single video or a whole 
+This function downloads YouTube videos or Soundcloud or any other
+platform supported by the youtube-dl library, and converts them into
+high quality MP3 files. The URL can be for a single video or a whole
 playlist. It also returns metadata into an (invisible) list.
 }
 \section{youtube-dl}{
 
-More info from the original developers and its code: 
+More info from the original developers and its code:
 \href{https://github.com/ytdl-org/youtube-dl/}{youtube-dl's Github}
 }
 
 \examples{
 # You must have "youtube-dl" installed in your OS:
 \dontrun{
- # Download video from YouTube and convert to MP3
- get_mp3("https://www.youtube.com/watch?v=lrlKcCdVw9Q")
- # OR simply
- get_mp3("lrlKcCdVw9Q")
+# Download video from YouTube and convert to MP3
+get_mp3("https://www.youtube.com/watch?v=lrlKcCdVw9Q")
+# OR simply
+get_mp3("lrlKcCdVw9Q")
 }
 }
 \seealso{

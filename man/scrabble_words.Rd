@@ -32,12 +32,12 @@ will automatically be included.}
 If the string contains tiles that were not specified in \code{tiles}, they
 will automatically be included.}
 
-\item{force_n, force_max}{Integer. Force words to be n or max n characters 
+\item{force_n, force_max}{Integer. Force words to be n or max n characters
 long. Leave 0 to ignore parameter.}
 
-\item{scores, language}{Character. Any of "en","es","de","fr". 
-If scores is not any of those languages, must be a data.frame that 
-contains two columns: "tiles" with every letter of the alphabet and 
+\item{scores, language}{Character. Any of "en","es","de","fr".
+If scores is not any of those languages, must be a data.frame that
+contains two columns: "tiles" with every letter of the alphabet and
 "scores" for each letter's score. If you wish
 to overwrite or complement this dictionaries other words you can set to
 \code{"none"} and/or use the \code{words} parameter.
@@ -52,22 +52,24 @@ You might also want to set this parameter globally with
 data.frame with matching words found, sorted by higher points.
 }
 \description{
-Find highest score words given a set of letters, rules, and 
-language to win at Scrabble! You just have to find the best 
+Find highest score words given a set of letters, rules, and
+language to win at Scrabble! You just have to find the best
 place to post your tiles.
 }
 \examples{
 \donttest{
 # Automatic use of languages and scores
 Sys.setenv("LARES_LANG" = "es")
-scrabble_words(tiles = "hola",
-               free = 2,
-               force_start = "h",
-               #force_end = "",
-               force_str = "_o_a",
-               force_n = 5,
-               force_max = 0,
-               quiet = TRUE)
+scrabble_words(
+  tiles = "hola",
+  free = 2,
+  force_start = "h",
+  # force_end = "",
+  force_str = "_o_a",
+  force_n = 5,
+  force_max = 0,
+  quiet = TRUE
+)
 
 # Words considered for a language (you can custom it too!)
 es_words <- scrabble_dictionary("es")

@@ -36,7 +36,7 @@ selected \code{method}.
 }
 \description{
 Visualize cluster data for assorted values of k and methods such as
-WSS, Silhouette and Gap Statistic. See \code{factoextra::fviz_nbclust} 
+WSS, Silhouette and Gap Statistic. See \code{factoextra::fviz_nbclust}
 for more.
 }
 \examples{

@@ -15,7 +15,7 @@ replaceall(df, original, change, which = "all", fixclass = TRUE, quiet = TRUE)
 
 \item{which}{Character vector. Name of columns to use. Leave "all" for everything}
 
-\item{fixclass}{Boolean. Try to detect logical classes after transformations (or 
+\item{fixclass}{Boolean. Try to detect logical classes after transformations (or
 leave as default classes as character)?}
 
 \item{quiet}{Boolean. Keep quiet? (or print replacements)}
@@ -24,16 +24,18 @@ leave as default classes as character)?}
 data.frame with replaced values based on inputs.
 }
 \description{
-This function lets the user replace all specific values in a 
+This function lets the user replace all specific values in a
 vector or data.frame into another value. If replacing more than
 one value, order matters so they will be replaced in the same
 order that you pass them to the function. Factors will be refactored.
 }
 \examples{
-df <- data.frame(one = c(1:4, NA), 
-                 two = LETTERS[1:5], 
-                 three = rep("A", 5), 
-                 four = c(NA, "Aaa", 123, "B", "C"))
+df <- data.frame(
+  one = c(1:4, NA),
+  two = LETTERS[1:5],
+  three = rep("A", 5),
+  four = c(NA, "Aaa", 123, "B", "C")
+)
 print(df)
 
 replaceall(df, "A", NA)

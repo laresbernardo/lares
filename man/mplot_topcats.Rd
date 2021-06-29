@@ -11,7 +11,7 @@ mplot_topcats(tag, score, multis, model_name = NA)
 
 \item{score}{Vector. Predicted value or model's result.}
 
-\item{multis}{Data.frame. Containing columns with each category probability 
+\item{multis}{Data.frame. Containing columns with each category probability
 or score (only used when more than 2 categories coexist).}
 
 \item{model_name}{Character. Model's name}
@@ -27,8 +27,9 @@ based on top N predictions and distribution of probabilities.
 Sys.unsetenv("LARES_FONT") # Temporal
 data(dfr) # Results for AutoML Predictions
 mplot_topcats(dfr$class3$tag, dfr$class3$score,
-              multis = subset(dfr$class3, select = -c(tag, score)),
-              model_name = "Titanic Class Model")
+  multis = subset(dfr$class3, select = -c(tag, score)),
+  model_name = "Titanic Class Model"
+)
 }
 \seealso{
 Other ML Visualization: 

@@ -16,7 +16,7 @@ data.frame. Each row is an unique \code{ip} address,
 and columns will bee created for all the additional information found.
 }
 \description{
-This function lets the user scrap https://db-ip.com/ given 
+This function lets the user scrap https://db-ip.com/ given
 IP address(es) to get their associated address type, ASN, ISP,
 organization, country, state or region, county, city, ZIP postal code,
 weather station, coordinates, Timezone, local time, languages, and currency.

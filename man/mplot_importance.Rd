@@ -43,20 +43,26 @@ This function plots Variable Importances
 }
 \examples{
 Sys.unsetenv("LARES_FONT") # Temporal
-df <- data.frame(variable = LETTERS[1:6],
-                 importance = c(4,6,6.7,3,4.8,6.2)/100,
-                 positive = c(TRUE,TRUE,FALSE,TRUE,FALSE,FALSE))
+df <- data.frame(
+  variable = LETTERS[1:6],
+  importance = c(4, 6, 6.7, 3, 4.8, 6.2) / 100,
+  positive = c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE)
+)
 head(df)
 
-mplot_importance(var = df$variable,
-                 imp = df$importance,
-                 model_name = "Random values model")
+mplot_importance(
+  var = df$variable,
+  imp = df$importance,
+  model_name = "Random values model"
+)
 
 # Add a colour for categories
-mplot_importance(var = df$variable,
-                 imp = df$importance,
-                 colours = df$positive,
-                 limit = 4)
+mplot_importance(
+  var = df$variable,
+  imp = df$importance,
+  colours = df$positive,
+  limit = 4
+)
 }
 \seealso{
 Other ML Visualization: 

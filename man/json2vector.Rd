@@ -13,7 +13,7 @@ json2vector(json)
 List, data.frame, or vector. Depends on the \code{json} string.
 }
 \description{
-This function lets the user transform a JSON string into vector 
+This function lets the user transform a JSON string into vector
 (data.frame with 1 row). You can also pass a Python's dictionary.
 For any other JSON transformation, \code{jsonlite} is recommended.
 }

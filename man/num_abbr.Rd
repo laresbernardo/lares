@@ -9,7 +9,7 @@ num_abbr(x, n = 3)
 \arguments{
 \item{x}{Numeric vector}
 
-\item{n}{Integer. Single numeric value, specifying number of 
+\item{n}{Integer. Single numeric value, specifying number of
 significant figures to show. Range 1 to 6.}
 }
 \value{

@@ -21,7 +21,7 @@ trendsRelated(gtrend, top = NA, title = NA, note = NA, exclude = NULL)
 plot for Google Trend's results input \code{gtrend}.
 }
 \description{
-This function creates a plot with Google Trend's related topics 
+This function creates a plot with Google Trend's related topics
 and queries, and let the user compare different keywords.
 }
 \seealso{

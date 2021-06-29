@@ -10,7 +10,7 @@ h2o_predict_MOJO(df, model_path, method = "mojo", batch = 300)
 \item{df}{Dataframe. Data to pass to the model.}
 
 \item{model_path}{Character. Relative path of directory
-where your zip model file is. If multiple zip files are found, 
+where your zip model file is. If multiple zip files are found,
 first one found will be used.}
 
 \item{method}{Character. One of "mojo" or "json".}
@@ -21,8 +21,8 @@ first one found will be used.}
 data.frame with predicted results.
 }
 \description{
-This function lets the user predict using the h2o .zip file 
-containing the MOJO files. Note that it works with the files 
+This function lets the user predict using the h2o .zip file
+containing the MOJO files. Note that it works with the files
 generated when using the function export_results()
 }
 \seealso{

@@ -7,7 +7,7 @@
 dist2d(x, a = c(0, 0), b = c(1, 1))
 }
 \arguments{
-\item{x}{Vector. Coordinates of the point from which we want to 
+\item{x}{Vector. Coordinates of the point from which we want to
 measure the distance}
 
 \item{a}{Vector. Coordinates of 1st point over the line}
@@ -18,7 +18,7 @@ measure the distance}
 Numeric value result
 }
 \description{
-This function lets the user calculate the mathematical linear distance 
+This function lets the user calculate the mathematical linear distance
 Between a specific point and a line (given geometrical 3 points)
 }
 \examples{

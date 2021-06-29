@@ -19,7 +19,7 @@ data(dfr)
 List
 }
 \description{
-List with categorical (2 and 3 classes) and continuous predictions, 
+List with categorical (2 and 3 classes) and continuous predictions,
 generated with \code{h2o_automl()} and the \code{dft}. Note that
 the models per se won't work to predict.
 }

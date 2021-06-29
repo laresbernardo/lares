@@ -22,7 +22,7 @@ will be transformed into passed argument.}
 Character vector with transformed strings.
 }
 \description{
-This function lets the user clean text into getting only alphanumeric 
+This function lets the user clean text into getting only alphanumeric
 characters and no accents/symbols on letters.
 }
 \examples{

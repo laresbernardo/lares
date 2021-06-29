@@ -29,10 +29,12 @@ missingness in a data.frame. It also plots the results if needed.
 Sys.unsetenv("LARES_FONT") # Temporal
 
 # Dummy data
-df <- data.frame(A = c(1:5), 
-                 B = c(NA, NA, 1, 1, 1), 
-                 C = rep(NA, 5), 
-                 D = c(NA, LETTERS[1:4]))
+df <- data.frame(
+  A = c(1:5),
+  B = c(NA, NA, 1, 1, 1),
+  C = rep(NA, 5),
+  D = c(NA, LETTERS[1:4])
+)
 
 # Missing values summary
 missingness(df)

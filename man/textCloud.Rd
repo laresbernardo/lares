@@ -25,7 +25,7 @@ textCloud(
 \item{seed}{Numeric. Seed for re-producible plots}
 
 \item{keep_spaces}{Boolean. If you wish to keep spaces in each line
-to keep unique compount words, separated with spaces, set to TRUE. 
+to keep unique compount words, separated with spaces, set to TRUE.
 For example, 'LA ALAMEDA' will be set as 'LA_ALAMEDA' and treated as
 a single word.}
 

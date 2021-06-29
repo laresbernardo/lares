@@ -22,7 +22,7 @@ Invisible POST response
 This function send a Slack message using its Webhooks.
 }
 \details{
-For more help, you can follow the 
+For more help, you can follow the
 \href{https://api.slack.com/messaging/webhooks#posting_with_webhooks}{Sending messages using Incoming Webhooks}
 original documentarion.
 }

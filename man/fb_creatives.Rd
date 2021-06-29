@@ -11,8 +11,8 @@ fb_creatives(token, which, api_version = "v8.0", process = TRUE)
 \href{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
 to acquire one.}
 
-\item{which}{Character vector. This is the accounts, campaigns, adsets, 
-or ads IDs to be queried. Remember: if \code{report_level = "account"}, you must 
+\item{which}{Character vector. This is the accounts, campaigns, adsets,
+or ads IDs to be queried. Remember: if \code{report_level = "account"}, you must
 start the ID with \code{act_}.}
 
 \item{api_version}{Character. Facebook API version}

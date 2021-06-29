@@ -15,7 +15,7 @@ outlier_zscore_plot(df, var, group = NULL, thresh = c(2, 3, 5), top = 5)
 
 \item{thresh}{Numeric vector. Z-Score threshold for n standard deviations.}
 
-\item{top}{Integer. Show only n most frequent categorical values when 
+\item{top}{Integer. Show only n most frequent categorical values when
 using the \code{group} argument.}
 }
 \value{

@@ -11,7 +11,7 @@ dalex_variable(explainer, vars, force_class = NA)
 
 \item{vars}{Character vector. Which features do you wish to study?}
 
-\item{force_class}{Character. If you wish to force a class on your 
+\item{force_class}{Character. If you wish to force a class on your
 vars, which one do you need?}
 }
 \value{
@@ -28,7 +28,7 @@ study variable's responses vs independent vector.
 # For numerical variables
 dalex_variable(explainer, vars = c("Age", "Fare"))
 # For categorical variables
-dalex_variable(explainer, vars = c("Pclass","Sex"))
+dalex_variable(explainer, vars = c("Pclass", "Sex"))
 }
 }
 \seealso{

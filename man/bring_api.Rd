@@ -12,11 +12,12 @@ bring_api(url, status = TRUE)
 \item{status}{Boolean. Display status message?}
 }
 \value{
-data.frame of \code{url} GET results or NULL if no results returned by API.
+data.frame of \code{url} \code{GET} results or
+\code{NULL} if no results returned by API.
 }
 \description{
-This function lets the user bring API data as JSON format and transform it 
-into data.frame. Designed initially for Hubspot but may work on other API
+This function lets the user bring API data as JSON format and
+transform it into data.frame.
 }
 \seealso{
 Other Tools: 

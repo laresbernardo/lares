@@ -27,7 +27,7 @@ freqs_list(
 
 \item{var}{Variable. Variables you wish to process.}
 
-\item{wt}{Variable, numeric. Select a numeric column to use 
+\item{wt}{Variable, numeric. Select a numeric column to use
 in the colour scale, used as sum, mean... of those values for each
 of the combinations.}
 
@@ -37,9 +37,9 @@ of the combinations.}
 
 \item{min_elements}{Integer. Exclude combinations with less than n elements}
 
-\item{limit, limit_x, limit_y}{Integer. Show top n combinations (x) and/or 
-elements (y). The rest will be grouped into a single element. 
-Set argument to 0 to ignore. \code{limit_x}/\code{limit_y} answer to 
+\item{limit, limit_x, limit_y}{Integer. Show top n combinations (x) and/or
+elements (y). The rest will be grouped into a single element.
+Set argument to 0 to ignore. \code{limit_x}/\code{limit_y} answer to
 \code{limit}'s argument.}
 
 \item{tail}{Boolean. Show tail grouped into "..." on the plots?}
@@ -59,7 +59,7 @@ List. data.frame with the data results, elements and combinations.
 }
 \description{
 Visualize frequency of elements on a list, list vector, or vector with
-comma separated values. Detect which combinations and elements are 
+comma separated values. Detect which combinations and elements are
 the most frequent and how much they represent of your total observations.
 This is similar to the \href{http://vcg.github.io/upset/}{UpSet Plots}
 which may be used as an alternative to Venn diagrams.
@@ -67,7 +67,7 @@ which may be used as an alternative to Venn diagrams.
 \examples{
 \donttest{
 df <- dplyr::starwars
-head(df[,c(1,4,5,12)], 10)
+head(df[, c(1, 4, 5, 12)], 10)
 
 # Characters per movies combinations in a list column
 head(df$films, 2)
@@ -84,8 +84,10 @@ names(x)
 csv <- "https://raw.githubusercontent.com/hms-dbmi/UpSetR/master/inst/extdata/movies.csv"
 movies <- read.csv(csv, sep = ";")
 head(movies)
-freqs_list(movies, wt = AvgRating, min_elements = 2, tail = FALSE,
-           title = "Movies\nMixed Genres\nRanking")
+freqs_list(movies,
+  wt = AvgRating, min_elements = 2, tail = FALSE,
+  title = "Movies\nMixed Genres\nRanking"
+)
 # So, please: no more Comedy+SciFi and more Drama+Horror films (based on ~50 movies)!
 }
 }

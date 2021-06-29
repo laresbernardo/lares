@@ -27,13 +27,13 @@ distr(
 \arguments{
 \item{data}{Dataframe}
 
-\item{...}{Variables. Main (target variable) and secondary (values 
+\item{...}{Variables. Main (target variable) and secondary (values
 variable) to group by}
 
-\item{type}{Integer. 1 for both plots, 2 for counter plot only, 3 por 
+\item{type}{Integer. 1 for both plots, 2 for counter plot only, 3 por
 percentages plot only.}
 
-\item{ref}{Boolean. Show a reference line if levels = 2? Quite useful 
+\item{ref}{Boolean. Show a reference line if levels = 2? Quite useful
 when data is unbalanced (not 50/50) because a reference line is drawn.}
 
 \item{note}{Character. Caption for the plot.}
@@ -66,13 +66,13 @@ for both, target and values)}
 \item{subdir}{Character. Into which subdirectory do you wish to save the plot to?}
 }
 \value{
-Plot when \code{plot=TRUE} with two plots in one: counter distribution 
+Plot when \code{plot=TRUE} with two plots in one: counter distribution
 grouped by cuts, and proportions distribution grouped by same cuts. data.frame when
 \code{plot=FALSE} with counting, percentages, and cumulative percentages results.
 When \code{type} argument is used, single plots will be returned.
 }
 \description{
-Compare the distribution of a target variable vs another variable. This 
+Compare the distribution of a target variable vs another variable. This
 function automatically splits into quantiles for numerical variables.
 Custom and tidyverse friendly.
 }
@@ -85,14 +85,16 @@ data(dft) # Titanic dataset
 dft \%>\% distr(Survived, Sex)
 
 # Relation for categorical/numeric values
-dft \%>\% distr(Survived, Fare, plot = FALSE) \%>\% head(10)
-# Sort values 
+dft \%>\%
+  distr(Survived, Fare, plot = FALSE) \%>\%
+  head(10)
+# Sort values
 dft \%>\% distr(Survived, Fare, abc = TRUE)
 # Less splits/breaks
 dft \%>\% distr(Survived, Fare, abc = TRUE, breaks = 5)
 
 # Distribution of numerical only
-dft[dft$Fare < 20,] \%>\% distr(Fare)
+dft[dft$Fare < 20, ] \%>\% distr(Fare)
 
 # Distribution of numerical/numerical
 dft \%>\% distr(Fare, Age)

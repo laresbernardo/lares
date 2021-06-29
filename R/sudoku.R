@@ -3,46 +3,50 @@
 #'
 #' Solve a Sudoku puzzle, where empty values are represented by 0s
 #' into a matrix object.
-#' 
+#'
 #' @param board Matrix. 9x9 matrix or vector length 81, with only digits from 0 to 9.
 #' @param needed_cells,index Auxiliary parameters to auto-iterate using this same fx.
 #' @param quiet Boolean. Keep quiet? If not, plot results.
 #' @return Logical output answering of the input board can be solved. The
 #' actual solved solution will be created as an object named \code{solved}
 #' in your \code{.GlobalEnv}.
-#' @examples 
+#' @examples
 #' \donttest{
-# board <- c(0,0,0,0,0,6,000,
-#            0,9,5,7,0,0,3,0,0,
-#            4,0,0,0,9,2,0,0,5,
-#            7,6,4,0,0,0,0,0,3,
-#            0,0,0,0,0,0,0,0,0,
-#            2,0,0,0,0,0,9,7,1,
-#            5,0,0,2,1,0,0,0,9,
-#            0,0,7,0,0,5,4,8,0,
-#            0,0,0,8,0,0,0,0,0)
-# sudoku_solver(board)
-#' 
+#' # board <- c(0,0,0,0,0,6,000,
+#' #            0,9,5,7,0,0,3,0,0,
+#' #            4,0,0,0,9,2,0,0,5,
+#' #            7,6,4,0,0,0,0,0,3,
+#' #            0,0,0,0,0,0,0,0,0,
+#' #            2,0,0,0,0,0,9,7,1,
+#' #            5,0,0,2,1,0,0,0,9,
+#' #            0,0,7,0,0,5,4,8,0,
+#' #            0,0,0,8,0,0,0,0,0)
+#' # sudoku_solver(board)
+#'
 #' # Trivial input (everything)
-#' trivial <- matrix(rep(0, 81), byrow = TRUE, ncol = 9); trivial
+#' trivial <- matrix(rep(0, 81), byrow = TRUE, ncol = 9)
+#' trivial
 #' sudoku_solver(trivial)
-#' 
+#'
 #' # Wrong / Impossible to solve input
-#' imp <- matrix(c(rep(1, 72), rep(0, 9)), byrow = TRUE, ncol = 9); imp
+#' imp <- matrix(c(rep(1, 72), rep(0, 9)), byrow = TRUE, ncol = 9)
+#' imp
 #' sudoku_solver(imp)
 #' }
 #' @export
 sudoku_solver <- function(board, needed_cells = NULL, index = 1, quiet = FALSE) {
   # 0. Conveert vector to matrix
   if (is.vector(board)) {
-    ints_split <- as.integer(unlist(str_split(board, pattern = "", n = 9*9)))
+    ints_split <- as.integer(unlist(str_split(board, pattern = "", n = 9 * 9)))
     board <- matrix(ints_split, byrow = TRUE, ncol = 9)
   }
-  if (!all(dim(board) == 9))
+  if (!all(dim(board) == 9)) {
     stop("Check your input's dimensions. 9x9 digits needed.")
+  }
   # 1. Check needed cells
-  if (is.null(needed_cells)) 
+  if (is.null(needed_cells)) {
     needed_cells <- which(board == 0, arr.ind = TRUE)
+  }
   # 2. Auto-Iterate
   if (index > nrow(needed_cells)) {
     if (!quiet) print(board)
@@ -56,7 +60,9 @@ sudoku_solver <- function(board, needed_cells = NULL, index = 1, quiet = FALSE) 
     board2 <- board
     board2[row, col] <- num
     # Return TRUE if valid and solvable
-    if (sudoku_solver(board2, needed_cells, index + 1)) return(TRUE)
+    if (sudoku_solver(board2, needed_cells, index + 1)) {
+      return(TRUE)
+    }
   }
   # Return FALSE if not valid and not solvable
   return(FALSE)
@@ -64,14 +70,20 @@ sudoku_solver <- function(board, needed_cells = NULL, index = 1, quiet = FALSE) 
 
 .sudoku_valid_input <- function(board, i, row, col) {
   # 1. Check if any cell in the same row has value = i
-  if (any(board[row, ] == i)) return(FALSE)
+  if (any(board[row, ] == i)) {
+    return(FALSE)
+  }
   # 2. Check if any cell in the same column has value = i
-  if (any(board[, col] == i)) return(FALSE)
+  if (any(board[, col] == i)) {
+    return(FALSE)
+  }
   # 3. Check boxes
   box_x <- floor((row - 1) / 3) + 1
   box_y <- floor((col - 1) / 3) + 1
   box <- board[(3 * box_x - 2):(3 * box_x), (3 * box_y - 2):(3 * box_y)]
-  if (any(box == i)) return(FALSE)
+  if (any(box == i)) {
+    return(FALSE)
+  }
   # If everything passes, then valid digit
   return(TRUE)
 }

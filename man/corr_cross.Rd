@@ -27,7 +27,7 @@ columns: they will be filtered!}
 
 \item{plot}{Boolean. Show and return a plot?}
 
-\item{pvalue}{Boolean. Returns a list, with correlations and statistical 
+\item{pvalue}{Boolean. Returns a list, with correlations and statistical
 significance (p-value) for each value}
 
 \item{max_pvalue}{Numeric. Filter non-significant variables. Range (0, 1]}
@@ -43,7 +43,7 @@ value to NA to use all cross-correlations}
 
 \item{ignore}{Vector or character. Which column should be ignored?}
 
-\item{contains}{Character vector. Filter cross-correlations 
+\item{contains}{Character vector. Filter cross-correlations
 with variables that contains certain strings (using any value if vector used).}
 
 \item{grid}{Boolean. Separate into grids?}
@@ -56,7 +56,7 @@ with variables that contains certain strings (using any value if vector used).}
 }
 \value{
 Depending on input \code{plot}, we get correlation and p-value results for
-every combination of features, arranged by descending absolute correlation value, 
+every combination of features, arranged by descending absolute correlation value,
 with a data.frame \code{plot = FALSE} or plot \code{plot = TRUE}.
 }
 \description{

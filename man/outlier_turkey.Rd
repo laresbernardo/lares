@@ -15,10 +15,10 @@ outlier_turkey(x, k = 1.5)
 Boolean vector detecting outliers.
 }
 \description{
-Tukey’s fences is a technique used in box plots. The non-outlier 
-range is defined with \code{[Q1-k(Q3-Q1), Q3+k(Q3-Q1)]}, where Q1 and Q3 
-are the lower and upper quartiles respectively, k - some non-negative 
-constant (popular choice is 1.5). A value is an outlier based 
+Tukey’s fences is a technique used in box plots. The non-outlier
+range is defined with \code{[Q1-k(Q3-Q1), Q3+k(Q3-Q1)]}, where Q1 and Q3
+are the lower and upper quartiles respectively, k - some non-negative
+constant (popular choice is 1.5). A value is an outlier based
 on Tukey’s fences when its value does not lie in non-outlier range.
 }
 \seealso{

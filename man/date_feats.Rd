@@ -16,7 +16,7 @@ date_feats(
 )
 }
 \arguments{
-\item{dates}{Vector or dataframe. Non-date/time columns will be 
+\item{dates}{Vector or dataframe. Non-date/time columns will be
 automatically ignored/extracted.}
 
 \item{keep_originals}{Boolean. Should the original date/time columns be
@@ -47,19 +47,21 @@ of a dataframe or vector with date/time variables.
 \examples{
 df <- data.frame(
   dates = sample(seq(Sys.Date() - 365, Sys.Date(), by = 1), 50),
-  times = sample(seq(Sys.time() - 1e7, Sys.time(), by = 1), 50))
-  
+  times = sample(seq(Sys.time() - 1e7, Sys.time(), by = 1), 50)
+)
+
 # Input as a vector or dataframe
 date_feats(df, keep_originals = TRUE) \%>\% head(10)
 
 # Holidays given a date range and country
 \donttest{
-  hol <- date_feats(
-    seq(Sys.Date() - 365, Sys.Date(), by = 1), 
-    keep_originals = TRUE, 
-    holidays = TRUE, 
-    country = "Colombia")
-  head(hol[!is.na(hol$holidayname),])
+hol <- date_feats(
+  seq(Sys.Date() - 365, Sys.Date(), by = 1),
+  keep_originals = TRUE,
+  holidays = TRUE,
+  country = "Colombia"
+)
+head(hol[!is.na(hol$holidayname), ])
 }
 }
 \seealso{

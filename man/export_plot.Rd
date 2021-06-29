@@ -32,7 +32,7 @@ to include file format on file name.}
 
 \item{format}{Character. One of: \code{png} or \code{jpeg}.}
 
-\item{dir, subdir}{Character. In which directory/subdirectory do you 
+\item{dir, subdir}{Character. In which directory/subdirectory do you
 wish to save the plot? Working directory as default \code{dir}.}
 
 \item{quiet}{Boolean. Display successful message with filename when saved?}
@@ -41,7 +41,7 @@ wish to save the plot? Working directory as default \code{dir}.}
 No return value, called for side effects.
 }
 \description{
-Export any \code{ggplot2}, \code{gridExtra}, or any plot object 
+Export any \code{ggplot2}, \code{gridExtra}, or any plot object
 created with R into rendered \code{png} or \code{jpg} file.
 }
 \examples{

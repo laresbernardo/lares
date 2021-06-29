@@ -26,14 +26,14 @@ fb_rf(
 \href{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
 to acquire one.}
 
-\item{ad_account}{Character. Ad Account. Remember to start with \code{act_}. If you 
+\item{ad_account}{Character. Ad Account. Remember to start with \code{act_}. If you
 use the \code{prediction} argument, no need to provide this parameter.}
 
 \item{prediction}{Integer. Prediction ID if you already created the prediction
-and wish to query the curve's data. As this prediction already exists, the 
+and wish to query the curve's data. As this prediction already exists, the
 rest of arguments of this function will be ignored.}
 
-\item{objective}{Character. Any of: "BRAND_AWARENESS", "LINK_CLICKS", "POST_ENGAGEMENT", 
+\item{objective}{Character. Any of: "BRAND_AWARENESS", "LINK_CLICKS", "POST_ENGAGEMENT",
 "MOBILE_APP_INSTALLS", "CONVERSIONS", "REACH", or "VIDEO_VIEWS".}
 
 \item{days}{Integer. Amount of days for your campaign's predictions.}
@@ -46,7 +46,7 @@ rest of arguments of this function will be ignored.}
 
 \item{frequency_cap}{Integer. Frequency cap over all the campaign duration.}
 
-\item{prediction_mode}{Integer. "1" for predicting Reach by providing budget, 
+\item{prediction_mode}{Integer. "1" for predicting Reach by providing budget,
 "2" is for predicting Budget given a specific Reach.}
 
 \item{curve}{Boolean. Return curve data? If not, only prediction will be created.}
@@ -62,8 +62,8 @@ data.frame with un-nested processed results if \code{process=TRUE} or
 raw API results as list when \code{process=FALSE}.
 }
 \description{
-Create or query reach and frequency predictions using Facebook's 
-Reach and Frequency API. For more information on the API and its parameters, go to the 
+Create or query reach and frequency predictions using Facebook's
+Reach and Frequency API. For more information on the API and its parameters, go to the
 \href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}.
 }
 \examples{
@@ -71,7 +71,7 @@ Reach and Frequency API. For more information on the API and its parameters, go 
 token <- "YOURTOKEN"
 account_id <- "act_20846447"
 
-#BASIC 1: Create and return data for a new prediction
+# BASIC 1: Create and return data for a new prediction
 basic1 <- fb_rf(token, account_id, destination_ids = 187071108930, countries = "AR")
 
 # BASIC 2: Fetch data for an existing prediction ID
@@ -79,42 +79,48 @@ basic2 <- fb_rf(token, account_id, prediction = 6260368700774)
 
 # ADVANCED (Fully custom prediction)
 advanced <- fb_rf(token, account_id,
-                  objective = 'REACH',
-                  days = 28,
-                  budget = 2000000,
-                  destination_ids = c(187071108930, 1142958119078556),
-                  age_min = 15,
-                  age_max = 65,
-                  genders = 2,
-                  countries = "MX",
-                  publisher_platforms = c(
-                    'facebook',
-                    'instagram',
-                    #'audience_network',
-                    'messenger'),
-                  #interests_ids = NA,
-                  facebook_positions = c(
-                    'feed',
-                    #'instant_article',
-                    'marketplace',
-                    'video_feeds',
-                    'story',
-                    'search',
-                    'instream_video'),
-                  instagram_positions = c(
-                    'stream',
-                    'story',
-                    'explore'),
-                  # audience_network_positions = c(
-                  #  'classic',
-                  #  'instream_video')
-                  messenger_positions = c(
-                    'messenger_home',
-                    'sponsored_messages',
-                    'story'),
-                  device_platforms = c(
-                    'mobile',
-                    'desktop'))
+  objective = "REACH",
+  days = 28,
+  budget = 2000000,
+  destination_ids = c(187071108930, 1142958119078556),
+  age_min = 15,
+  age_max = 65,
+  genders = 2,
+  countries = "MX",
+  publisher_platforms = c(
+    "facebook",
+    "instagram",
+    #' audience_network',
+    "messenger"
+  ),
+  # interests_ids = NA,
+  facebook_positions = c(
+    "feed",
+    #' instant_article',
+    "marketplace",
+    "video_feeds",
+    "story",
+    "search",
+    "instream_video"
+  ),
+  instagram_positions = c(
+    "stream",
+    "story",
+    "explore"
+  ),
+  # audience_network_positions = c(
+  #  'classic',
+  #  'instream_video')
+  messenger_positions = c(
+    "messenger_home",
+    "sponsored_messages",
+    "story"
+  ),
+  device_platforms = c(
+    "mobile",
+    "desktop"
+  )
+)
 }
 }
 \seealso{

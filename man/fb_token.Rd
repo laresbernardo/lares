@@ -19,9 +19,9 @@ or with this same \code{fb_token()}'s token.}
 Character. String with token requested.
 }
 \description{
-Using a 1-hour generic user token you can generate a 60 day token. 
+Using a 1-hour generic user token you can generate a 60 day token.
 You will need to have an App ID and App secret, and a valid token.
-Generate a new valid User Token with the 
+Generate a new valid User Token with the
 \href{https://developers.facebook.com/tools/explorer}{API Graph}.
 }
 \details{

@@ -25,7 +25,7 @@ mailSend(
 
 \item{text, html}{Character. Text or HTML to send in the body.}
 
-\item{attachment}{Character, plot or data.frame. Will send the file, 
+\item{attachment}{Character, plot or data.frame. Will send the file,
 plot as PNG or data.frame as CSV, respectively.}
 
 \item{service}{Character. Service platform to search on \code{creds}.}
@@ -45,11 +45,13 @@ API service.
 \examples{
 \dontrun{
 myPlot <- noPlot("My plot")
-mailSend(from = "BLV <myuser@mail.com>",
-         to = "youruser@mail.com",
-         cc = "myuser@mail.com",
-         subject = paste("Daily report:", Sys.Date()),
-         attachment = myPlot)
+mailSend(
+  from = "BLV <myuser@mail.com>",
+  to = "youruser@mail.com",
+  cc = "myuser@mail.com",
+  subject = paste("Daily report:", Sys.Date()),
+  attachment = myPlot
+)
 }
 }
 \seealso{

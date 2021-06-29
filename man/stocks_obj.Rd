@@ -19,7 +19,7 @@ stocks_obj(
 \item{data}{List. Containing the following dataframes: portfolio,
 transactions, cash. They have to follow the original xlsx format}
 
-\item{cash_fix}{Numeric. If, for some reason, you need to fix your 
+\item{cash_fix}{Numeric. If, for some reason, you need to fix your
 cash amount for all reports, set the amount here}
 
 \item{tax}{Numeric. How much [0-99] of your dividends are gone with taxes?}

@@ -25,7 +25,7 @@ theme_lares(
 )
 }
 \arguments{
-\item{font, size}{Character and numeric. Base font family and base size for texts. 
+\item{font, size}{Character and numeric. Base font family and base size for texts.
 \code{Arial Narrow} is set by default when the library is loaded; you may change it
 with \code{Sys.getenv("LARES_FONT" = "X")} or by using this parameter manually.}
 
@@ -80,7 +80,8 @@ with solid default kerning pairs and geometric numbers.
 \donttest{
 data(dft)
 library(ggplot2)
-p <- ggplot(dft, aes(x = Pclass, y = sum(Fare), fill = Pclass)) + geom_col()
+p <- ggplot(dft, aes(x = Pclass, y = sum(Fare), fill = Pclass)) +
+  geom_col()
 p + theme_lares()
 p + theme_lares(pal = 1)
 p + theme_lares(background = "#999999", mg = 25)

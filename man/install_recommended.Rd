@@ -10,8 +10,8 @@ install_recommended(progress = TRUE)
 \item{progress}{Boolean. Show status bar?}
 }
 \description{
-All needed libraries to use (most) lares are already a dependency. 
-There are some functions that many people won't event know exist 
-that will require other additional libraries. Also, this may be 
+All needed libraries to use (most) lares are already a dependency.
+There are some functions that many people won't event know exist
+that will require other additional libraries. Also, this may be
 used as a Docker way of installing useful libraries on an new instance.
 }

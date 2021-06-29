@@ -7,7 +7,7 @@
 plot_survey(answers, ignore = 1, title = NA, subtitle = NA)
 }
 \arguments{
-\item{answers}{Dataframe. Answers. Each row a different person. 
+\item{answers}{Dataframe. Answers. Each row a different person.
 Each column a different answer.}
 
 \item{ignore}{Numeric Vector. Which columns are NOT answers?}

@@ -7,14 +7,14 @@
 normalize(x)
 }
 \arguments{
-\item{x}{Numeric Vector. Numbers to be transformed into 
+\item{x}{Numeric Vector. Numbers to be transformed into
 normalized vector}
 }
 \value{
 Vector with normalized \code{x} values
 }
 \description{
-This function lets the user normalize numerical values into 
+This function lets the user normalize numerical values into
 the 0 to 1 range
 }
 \examples{

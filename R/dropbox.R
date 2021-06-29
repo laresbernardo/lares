@@ -1,9 +1,9 @@
 ####################################################################
 #' Download/Import Dropbox File by File's Name
-#' 
+#'
 #' This function lets the user download a file from Dropbox, specifying
 #' its name, using a previously created token or with interactive window.
-#' 
+#'
 #' @family Tools
 #' @family Credentials
 #' @family Dropbox
@@ -31,46 +31,51 @@
 #' df <- db_download("Portfolio LC.xlsx", xlsx = FALSE)
 #' }
 #' @export
-db_download <- function(query, 
+db_download <- function(query,
                         local_path = NULL,
                         xlsx = TRUE,
                         token_dir = NA,
                         token_name = "token_pers.rds",
-                        quiet = FALSE){
-  
+                        quiet = FALSE) {
   try_require("rdrop2")
-  
+
   if (is.na(token_dir)) {
     load(paste0(Sys.getenv("LARES_CREDS"), "/", token_name))
   } else {
-    token_file <- paste0(token_dir,"/", token_name)
+    token_file <- paste0(token_dir, "/", token_name)
     if (file.exists(token_dir)) {
       load(token_file)
     } else {
-      token <- drop_auth() 
+      token <- drop_auth()
     }
   }
-  
+
   x <- drop_search(query, dtoken = token)
-  if (length(x$matches) == 0)
+  if (length(x$matches) == 0) {
     stop("There were no files found in your Dropbox with: ", query)
-  if (length(x$matches) > 1 & !quiet) {
-    warning("There were multiple files found in your Dropbox with: ", query, 
-            "\nUsing: ", x$matches[[1]]$metadata$name)
   }
-  
-  if (is.null(local_path))
+  if (length(x$matches) > 1 & !quiet) {
+    warning(
+      "There were multiple files found in your Dropbox with: ", query,
+      "\nUsing: ", x$matches[[1]]$metadata$name
+    )
+  }
+
+  if (is.null(local_path)) {
     local_path <- x$matches[[1]]$metadata$name
-  
+  }
+
   invisible(
-    drop_download(x$matches[[1]]$metadata$path_lower, 
-                  local_path = local_path,
-                  overwrite = TRUE, 
-                  dtoken = token))
+    drop_download(x$matches[[1]]$metadata$path_lower,
+      local_path = local_path,
+      overwrite = TRUE,
+      dtoken = token
+    )
+  )
   if (!quiet) message(paste("> File", x$matches[[1]]$metadata$name, "downloaded succesfully!"))
-  
+
   if (xlsx & right(local_path, 5) == ".xlsx") {
-    results <- importxlsx(local_path) 
+    results <- importxlsx(local_path)
     invisible(file.remove(local_path))
     if (!quiet) message("> File imported succesfully as an object!")
     return(results)
@@ -81,10 +86,10 @@ db_download <- function(query,
 
 ####################################################################
 #' Upload Local Files to Dropbox
-#' 
+#'
 #' This function lets the user upload a local file to Dropbox,
 #' using a previously created token or with interactive window.
-#' 
+#'
 #' @family Tools
 #' @family Credentials
 #' @family Dropbox
@@ -96,24 +101,22 @@ db_download <- function(query,
 #' @export
 db_upload <- function(filename, dir, delete_file = FALSE,
                       token_dir = NA,
-                      token_name = "token_pers.rds"){
-  
+                      token_name = "token_pers.rds") {
   try_require("rdrop2")
-  
+
   if (is.na(token_dir)) {
     load(paste0(Sys.getenv("LARES_CREDS"), "/", token_name))
   } else {
-    token_file <- paste0(token_dir,"/", token_name)
+    token_file <- paste0(token_dir, "/", token_name)
     if (file.exists(token_dir)) {
       load(token_file)
     } else {
-      token <- drop_auth() 
+      token <- drop_auth()
     }
   }
-  
+
   invisible(drop_upload(filename, path = dir, dtoken = token))
-  
+
   if (delete_file) file.remove(filename)
   return(invisible(TRUE))
-  
 }

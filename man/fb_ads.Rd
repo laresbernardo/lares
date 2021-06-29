@@ -19,14 +19,14 @@ fb_ads(
 \href{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
 to acquire one.}
 
-\item{which}{Character vector. This is the accounts, campaigns, adsets, 
-or ads IDs to be queried. Remember: if \code{report_level = "account"}, you must 
+\item{which}{Character vector. This is the accounts, campaigns, adsets,
+or ads IDs to be queried. Remember: if \code{report_level = "account"}, you must
 start the ID with \code{act_}.}
 
-\item{start_date}{Character. The first and last full day to report, in the 
+\item{start_date}{Character. The first and last full day to report, in the
 format \code{"YYYY-MM-DD"}.}
 
-\item{end_date}{Character. The first and last full day to report, in the 
+\item{end_date}{Character. The first and last full day to report, in the
 format \code{"YYYY-MM-DD"}.}
 
 \item{fields}{Character, json format. Leave \code{NA} for default fields.}
@@ -41,7 +41,7 @@ raw API results as list when \code{process=FALSE}.
 }
 \description{
 This returns all available FB ads for any account, campaign, or ad set id.
-For more information on Ad' API, go to the 
+For more information on Ad' API, go to the
 \href{https://developers.facebook.com/docs/marketing-api/reference/adgroup}{original documentaion}
 }
 \details{

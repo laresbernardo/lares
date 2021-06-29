@@ -19,7 +19,7 @@ wish to get the history from? i.e, USD/COP, EUR/USD...}
 
 \item{to}{Date. To date}
 
-\item{fill}{Boolean. Fill weekends and non-quoted dates with 
+\item{fill}{Boolean. Fill weekends and non-quoted dates with
 previous values?}
 }
 \value{

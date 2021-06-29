@@ -40,8 +40,9 @@ glued(
   "Her name is {name}, ",
   "and her age next year will be {age + 1}.",
   name = "Maru",
-  age = 6)
-  
+  age = 6
+)
+
 # And run operations with memories (beware!)
 glued("My name, {name}, has {n <- nchar(name); n} characters.
        If we multiply by ten, we'll have {10 * n} characters!")

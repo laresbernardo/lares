@@ -24,15 +24,15 @@ mplot_conf(
 
 \item{score}{Vector. Predicted value or model's result.}
 
-\item{thresh}{Integer. Threshold for selecting binary or regression 
-models: this number is the threshold of unique values we should 
+\item{thresh}{Integer. Threshold for selecting binary or regression
+models: this number is the threshold of unique values we should
 have in \code{'tag'} (more than: regression; less than: classification)}
 
 \item{abc}{Boolean. Arrange columns and rows alphabetically?}
 
 \item{squared}{Boolean. Force plot to be squared?}
 
-\item{diagonal}{Boolean. \code{FALSE} to convert diagonal numbers to 
+\item{diagonal}{Boolean. \code{FALSE} to convert diagonal numbers to
 zeroes. Ideal to detect must confusing categories.}
 
 \item{top}{Integer. Plot only the most n frequent variables.
@@ -64,11 +64,13 @@ lapply(dfr, head)
 
 # Plot for Binomial Model
 mplot_conf(dfr$class2$tag, dfr$class2$scores,
-          model_name = "Titanic Survived Model")
+  model_name = "Titanic Survived Model"
+)
 
 # Plot for Multi-Categorical Model
 mplot_conf(dfr$class3$tag, dfr$class3$score,
-          model_name = "Titanic Class Model")
+  model_name = "Titanic Class Model"
+)
 }
 \seealso{
 Other ML Visualization: 

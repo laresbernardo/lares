@@ -25,20 +25,20 @@ model_metrics(
 
 \item{score}{Vector. Predicted value or model's result}
 
-\item{multis}{Data.frame. Containing columns with each category score 
+\item{multis}{Data.frame. Containing columns with each category score
 (only used when more than 2 categories coexist)}
 
-\item{abc}{Boolean. Arrange columns and rows alphabetically 
+\item{abc}{Boolean. Arrange columns and rows alphabetically
 when categorical values?}
 
-\item{thresh}{Integer. Threshold for selecting binary or regression 
-models: this number is the threshold of unique values we should 
+\item{thresh}{Integer. Threshold for selecting binary or regression
+models: this number is the threshold of unique values we should
 have in \code{'tag'} (more than: regression; less than: classification)}
 
 \item{auto_n}{Add \code{n_} before digits when it's categorical and
 not numerical, even though seems numerical?}
 
-\item{thresh_cm}{Numeric. Value to splits the results for the 
+\item{thresh_cm}{Numeric. Value to splits the results for the
 confusion matrix. Range of values: (0-1)}
 
 \item{target}{Value. Which is your target positive value? If
@@ -62,7 +62,7 @@ the type of model (classification or regression). If \code{plot=TRUE},
 multiple plots are also returned.
 }
 \description{
-This function lets the user get a confusion matrix and accuracy, and 
+This function lets the user get a confusion matrix and accuracy, and
 for for binary classification models: AUC, Precision, Sensitivity, and
 Specificity, given the expected (tags) values and predicted values (scores).
 }
@@ -72,21 +72,24 @@ lapply(dfr, head)
 
 # Metrics for Binomial Model
 met1 <- model_metrics(dfr$class2$tag, dfr$class2$scores,
-                      model_name = "Titanic Survived Model",
-                      plots = FALSE)
+  model_name = "Titanic Survived Model",
+  plots = FALSE
+)
 print(met1)
 
 # Metrics for Multi-Categorical Model
 met2 <- model_metrics(dfr$class3$tag, dfr$class3$score,
-                      multis = subset(dfr$class3, select = -c(tag, score)),
-                      model_name = "Titanic Class Model",
-                      plots = FALSE)
+  multis = subset(dfr$class3, select = -c(tag, score)),
+  model_name = "Titanic Class Model",
+  plots = FALSE
+)
 print(met2)
-          
+
 # Metrics for Regression Model
 met3 <- model_metrics(dfr$regr$tag, dfr$regr$score,
-                      model_name = "Titanic Fare Model",
-                      plots = FALSE)
+  model_name = "Titanic Fare Model",
+  plots = FALSE
+)
 print(met3)
 }
 \seealso{

@@ -28,7 +28,7 @@
 #' @importFrom rpart rpart rpart.control
 #' @importFrom rpart.plot rpart.rules rpart.plot
 #' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text
-#' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict 
+#' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict
 #' reorder start kmeans var xtabs as.formula prcomp p.adjust pt model.matrix qt cor.test
 #' @import stringr
 #' @importFrom tidyr gather spread
@@ -42,19 +42,20 @@
 
 ####################################################################
 #' Install/Update Additional Recommended Libraries
-#' 
-#' All needed libraries to use (most) lares are already a dependency. 
-#' There are some functions that many people won't event know exist 
-#' that will require other additional libraries. Also, this may be 
+#'
+#' All needed libraries to use (most) lares are already a dependency.
+#' There are some functions that many people won't event know exist
+#' that will require other additional libraries. Also, this may be
 #' used as a Docker way of installing useful libraries on an new instance.
-#' 
+#'
 #' @param progress Boolean. Show status bar?
 #' @export
 install_recommended <- function(progress = TRUE) {
   for (lib in names(recommended)) {
     invisible(install.packages(lib, quiet = TRUE, verbose = FALSE))
-    if (progress)
+    if (progress) {
       statusbar(which(lib == names(recommended)), length(recommended), lib, msg = "")
+    }
   }
 }
 
@@ -85,14 +86,18 @@ recommended <- list(
   googleAnalyticsR = "google_analytics",
   googleAuthR = "gar_auth",
   googledrive = c("drive_auth", "drive_find"),
-  googlesheets4 = c("sheets_auth", "read_sheet", "gs4_create", "range_write",
-                    "gs4_auth_configure", "gs4_auth", "sheet_append"),
+  googlesheets4 = c(
+    "sheets_auth", "read_sheet", "gs4_create", "range_write",
+    "gs4_auth_configure", "gs4_auth", "sheet_append"
+  ),
   knitr = c("kable", "knit"),
   methods = "as",
   mice = c("mice", "complete"),
   plotly = c("ggplotly", "plot_ly", "add_markers", "add_markers"),
-  prophet = c("prophet", "fit.prophet", "prophet_plot_components",
-              "add_country_holidays", "make_future_dataframe"),
+  prophet = c(
+    "prophet", "fit.prophet", "prophet_plot_components",
+    "add_country_holidays", "make_future_dataframe"
+  ),
   quantmod = c("getDividends", "getSymbols", "getQuote"),
   rdrop2 = c("drop_auth", "drop_dir", "drop_download", "drop_search", "drop_upload"),
   rgdal = c("readOGR", "project"),
@@ -104,14 +109,18 @@ recommended <- list(
   # sp = c("CRS", "over", "coordinates", "proj4string", "proj4string<-", "coordinates<-", "spTransform"),
   threed = c("mesh3dobj", "transform_by", "invert_matrix", "perspective_projection", "look_at_matrix"),
   tidytext = "unnest_tokens",
-  tm = c("content_transformer", "Corpus", "removeNumbers", "removePunctuation", 
-         "removeWords","readPlain","stopwords", "stripWhitespace", "TermDocumentMatrix", 
-         "tm_map", "VectorSource", "VCorpus"),
+  tm = c(
+    "content_transformer", "Corpus", "removeNumbers", "removePunctuation",
+    "removeWords", "readPlain", "stopwords", "stripWhitespace", "TermDocumentMatrix",
+    "tm_map", "VectorSource", "VCorpus"
+  ),
   udpipe = c("keywords_rake", "udpipe_annotate", "udpipe_download_model", "udpipe_load_model"),
-  wordcloud = c("wordcloud", "textplot"))
+  wordcloud = c("wordcloud", "textplot")
+)
 
 # For read.file function... will be deprecated!
 temp <- c("read.dta13", "read.spss")
 
-if (getRversion() >= "2.15.1")
+if (getRversion() >= "2.15.1") {
   globalVariables(c(as.vector(unlist(recommended)), temp, "."))
+}

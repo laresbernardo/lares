@@ -15,7 +15,7 @@ haveInternet(thresh = 3, url = "http://www.google.com")
 Boolean. Result of checking if device has internet connection.
 }
 \description{
-This function checks if your R session currently have Wifi or 
+This function checks if your R session currently have Wifi or
 Internet connection.
 }
 \seealso{

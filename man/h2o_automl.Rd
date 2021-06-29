@@ -84,28 +84,28 @@ or numeric to set a different multiplier.}
 \item{center, scale}{Boolean. Using the base function scale, do you wish
 to center and/or scale all numerical values?}
 
-\item{thresh}{Integer. Threshold for selecting binary or regression 
-models: this number is the threshold of unique values we should 
+\item{thresh}{Integer. Threshold for selecting binary or regression
+models: this number is the threshold of unique values we should
 have in \code{'tag'} (more than: regression; less than: classification)}
 
-\item{seed}{Integer. Set a seed for reproducibility. AutoML can only 
-guarantee reproducibility if max_models is used because max_time is 
+\item{seed}{Integer. Set a seed for reproducibility. AutoML can only
+guarantee reproducibility if max_models is used because max_time is
 resource limited.}
 
 \item{nfolds}{Number of folds for k-fold cross-validation. Defaults to 5. Use 0 to disable cross-validation; this will also disable Stacked Ensemble (thus decreasing the overall model performance).}
 
-\item{max_models, max_time}{Numeric. Max number of models and seconds 
+\item{max_models, max_time}{Numeric. Max number of models and seconds
 you wish for the function to iterate. Note that max_models guarantees
 reproducibility and max_time not (because it depends entirely on your
 machine's computational characteristics)}
 
-\item{start_clean}{Boolean. Erase everything in the current h2o 
+\item{start_clean}{Boolean. Erase everything in the current h2o
 instance before we start to train models? You may want to keep other models
-or not. To group results into a custom common AutoML project, you may 
+or not. To group results into a custom common AutoML project, you may
 use \code{project_name} argument.}
 
-\item{exclude_algos, include_algos}{Vector of character strings. Algorithms 
-to skip or include during the model-building phase. Set NULL to ignore. 
+\item{exclude_algos, include_algos}{Vector of character strings. Algorithms
+to skip or include during the model-building phase. Set NULL to ignore.
 When both are defined, only \code{include_algos} will be valid.}
 
 \item{plots}{Boolean. Create plots objects?}
@@ -116,10 +116,10 @@ When both are defined, only \code{include_algos} will be valid.}
 
 \item{print}{Boolean. Print summary when process ends?}
 
-\item{save}{Boolean. Do you wish to save/export results into your 
+\item{save}{Boolean. Do you wish to save/export results into your
 working directory?}
 
-\item{subdir}{Character. In which directory do you wish to save 
+\item{subdir}{Character. In which directory do you wish to save
 the results? Working directory as default.}
 
 \item{project}{Character. Your project's name}
@@ -135,9 +135,9 @@ List. Trained model, predicted scores and datasets used, performance
 metrics, parameters, importance data.frame, seed, and plots when \code{plots=TRUE}.
 }
 \description{
-This function lets the user create a robust and fast model, using 
-H2O's AutoML function. The result is a list with the best model, 
-its parameters, datasets, performance metrics, variables 
+This function lets the user create a robust and fast model, using
+H2O's AutoML function. The result is a list with the best model,
+its parameters, datasets, performance metrics, variables
 importance, and plots. Read more about the \code{h2o_automl()} pipeline
 \href{https://laresbernardo.github.io/lares/articles/h2o_automl.html}{here}.
 }
@@ -164,7 +164,8 @@ importance, and plots. Read more about the \code{h2o_automl()} pipeline
 }
 
 \examples{
-\donttest{ # CRAN
+\donttest{
+# CRAN
 data(dft) # Titanic dataset
 dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 

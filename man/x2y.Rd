@@ -90,7 +90,7 @@ to be able to 1) compare numerical and non-numerical features, 2) detect
 non-linear relationships, and 3) because they are easy/quick to train.
 }
 \details{
-This \code{x2y} metric is based on Rama Ramakrishnan's 
+This \code{x2y} metric is based on Rama Ramakrishnan's
 \href{https://bit.ly/3sOVbei}{post}: An Alternative to the Correlation
 Coefficient That Works For Numeric and Categorical Variables. This analysis
 complements our \code{lares::corr_cross()} output.
@@ -103,8 +103,10 @@ head(x2y_results, 10)
 plot(x2y_results, type = 2)
 
 # Confidence intervals with 10 bootstrap iterations
-x2y(dft, target = c("Survived","Age"), 
-    confidence = TRUE, bootstraps = 10, top = 8)
+x2y(dft,
+  target = c("Survived", "Age"),
+  confidence = TRUE, bootstraps = 10, top = 8
+)
 
 # Compare with mean absolute correlations
 x2y(dft, "Fare", corr = TRUE, top = 6, target_x = TRUE)

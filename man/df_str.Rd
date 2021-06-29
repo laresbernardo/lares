@@ -10,9 +10,9 @@ df_str(df, return = "plot", subtitle = NA, quiet = FALSE)
 \item{df}{Dataframe}
 
 \item{return}{Character. Return "skimr" for skim report, "numbers" for
-stats and numbers, "names" for a list with the column names of each of 
+stats and numbers, "names" for a list with the column names of each of
 the class types, "plot" for a nice plot with "numbers" output, "distr"
-for an overall summary plot showing categorical, numeric, and missing 
+for an overall summary plot showing categorical, numeric, and missing
 values by using \code{plot_df}
 distributions}
 

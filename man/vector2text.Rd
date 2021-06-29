@@ -16,7 +16,7 @@ v2t(vector, sep = ", ", quotes = TRUE, and = "")
 
 \item{quotes}{Boolean. Bring simple quotes for each observation.}
 
-\item{and}{Character. Add 'and' or something before last observation. 
+\item{and}{Character. Add 'and' or something before last observation.
 Not boolean variable so it can be used on other languages. Note that
 the last comma will be suppressed if \code{Sys.getenv("LARES_NUMFORMAT")}
 is set to \code{1} and you have less than 3 values.}

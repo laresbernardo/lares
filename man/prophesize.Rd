@@ -22,7 +22,7 @@ in that order.}
 
 \item{country}{Character. Country code for holidays.}
 
-\item{trend.param}{Numeric. Flexibility of trend component. Default is 0.05, 
+\item{trend.param}{Numeric. Flexibility of trend component. Default is 0.05,
 and as this value becomes larger, the trend component will be more flexible.}
 
 \item{logged}{Boolean. Convert values into logs?}
@@ -35,11 +35,11 @@ and as this value becomes larger, the trend component will be more flexible.}
 List. Containing the forecast results, the prophet model, and a plot.
 }
 \description{
-Prophet is Facebook's procedure for forecasting time series data 
-based on an additive model where non-linear trends are fit with 
-yearly, weekly, and daily seasonality, plus holiday effects. It 
-works best with time series that have strong seasonal effects and 
-several seasons of historical data. Prophet is robust to missing 
+Prophet is Facebook's procedure for forecasting time series data
+based on an additive model where non-linear trends are fit with
+yearly, weekly, and daily seasonality, plus holiday effects. It
+works best with time series that have strong seasonal effects and
+several seasons of historical data. Prophet is robust to missing
 data and shifts in the trend, and typically handles outliers well.
 }
 \details{
