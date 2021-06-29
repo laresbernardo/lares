@@ -47,8 +47,8 @@
 
 
 <meta property="og:title" content="Most Relevant Features Using Lasso Regression — lasso_vars" />
-<meta property="og:description" content="Use Lasso regression to identify the most relevant variables that 
-can predict/identify another variable. You might want to compare 
+<meta property="og:description" content="Use Lasso regression to identify the most relevant variables that
+can predict/identify another variable. You might want to compare
 with corr_var() and/or x2y() results to compliment
 the analysis No need to standardize, center or scale your data.
 Tidyverse friendly." />
@@ -148,8 +148,8 @@ Tidyverse friendly." />
     </div>
 
     <div class="ref-description">
-    <p>Use Lasso regression to identify the most relevant variables that 
-can predict/identify another variable. You might want to compare 
+    <p>Use Lasso regression to identify the most relevant variables that
+can predict/identify another variable. You might want to compare
 with <code><a href='corr_var.html'>corr_var()</a></code> and/or <code><a href='x2y.html'>x2y()</a></code> results to compliment
 the analysis No need to standardize, center or scale your data.
 Tidyverse friendly.</p>
@@ -249,12 +249,13 @@ actual model fitted and a plot.</p>
 <code><a href='trendsRelated.html'>trendsRelated</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> <span class='co'># CRAN</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># CRAN</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.unsetenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span> <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
 
 <span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'>lasso_vars</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Survived</span>, ignore <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Cabin"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Omitting transformations for 'Cabin', 'Survived'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 4 variables: 'Pclass', 'Ticket', 'Embarked', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Searching for optimal lambda with CV...</span></div><div class='output co'>#&gt; <span class='message'>Found best lambda: 0.017784</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Fetching most relevant variables...</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots for Survived...</span></div><div class='output co'>#&gt; <span class='message'>- Plotting only the 20 most relevant features...</span></div><div class='output co'>#&gt; <span class='message'>Elapsed time: 3.85s</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>$</span><span class='va'>coef</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Omitting transformations for 'Cabin', 'Survived'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 4 variables: 'Pclass', 'Ticket', 'Embarked', 'Sex'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Searching for optimal lambda with CV...</span></div><div class='output co'>#&gt; <span class='message'>Found best lambda: 0.017784</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Fetching most relevant variables...</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Generating plots for Survived...</span></div><div class='output co'>#&gt; <span class='message'>- Plotting only the 20 most relevant features...</span></div><div class='output co'>#&gt; <span class='message'>Elapsed time: 3.62s</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>$</span><span class='va'>coef</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 22 x 3</span>
 #&gt;    names         coefficients standardized_coefficients
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>                     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
@@ -273,7 +274,7 @@ actual model fitted and a plot.</p>
 #&gt;    rmse   mae  mape   mse   rsq  rsqa bestlambda
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> 0.373 0.300  1.42 0.139 0.419 0.418     0.017<span style='text-decoration: underline;'>8</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>$</span><span class='va'>plot</span><span class='op'>)</span>
-</div><div class='img'><img src='lasso_vars-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='lasso_vars-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

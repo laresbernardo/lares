@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Frequencies Calculations and Plot — freqs" />
-<meta property="og:description" content="This function lets the user group, count, calculate percentages 
+<meta property="og:description" content="This function lets the user group, count, calculate percentages
 and cumulatives. It also plots results if needed. Tidyverse friendly." />
 <meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png" />
 
@@ -145,7 +145,7 @@ and cumulatives. It also plots results if needed. Tidyverse friendly." />
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user group, count, calculate percentages 
+    <p>This function lets the user group, count, calculate percentages
 and cumulatives. It also plots results if needed. Tidyverse friendly.</p>
     </div>
 
@@ -200,7 +200,7 @@ If no variables are passed, the whole data.frame will be considered</p></td>
     </tr>
     <tr>
       <th>rm.na</th>
-      <td><p>Boolean. Remove NA values in the plot? (not filtered for 
+      <td><p>Boolean. Remove NA values in the plot? (not filtered for
 numerical output; use na.omit() or filter() if needed)</p></td>
     </tr>
     <tr>
@@ -213,7 +213,7 @@ numerical output; use na.omit() or filter() if needed)</p></td>
     </tr>
     <tr>
       <th>top</th>
-      <td><p>Integer. Filter and plot the most n frequent for 
+      <td><p>Integer. Filter and plot the most n frequent for
 categorical values. Set to NA to return all values</p></td>
     </tr>
     <tr>
@@ -226,7 +226,7 @@ categorical values. Set to NA to return all values</p></td>
     </tr>
     <tr>
       <th>subdir</th>
-      <td><p>Character. Into which subdirectory do you wish to 
+      <td><p>Character. Into which subdirectory do you wish to
 save the plot to?</p></td>
     </tr>
     </table>
@@ -306,7 +306,7 @@ when <code>plot=FALSE</code>.</p>
 #&gt; <span style='color: #BCBCBC;'>5</span> 3      FALSE      372  75.8     1  75.8
 #&gt; <span style='color: #BCBCBC;'>6</span> 3      TRUE       119  24.2     2 100  </div><div class='input'>
 <span class='co'># Using a weighted feature</span>
-<span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs</span><span class='op'>(</span><span class='va'>Pclass</span>, <span class='va'>Survived</span>, wt <span class='op'>=</span> <span class='va'>Fare</span><span class='op'>/</span><span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>freqs</span><span class='op'>(</span><span class='va'>Pclass</span>, <span class='va'>Survived</span>, wt <span class='op'>=</span> <span class='va'>Fare</span> <span class='op'>/</span> <span class='fl'>100</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 6</span>
 #&gt;   Pclass Survived     n     p order  pcum
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>

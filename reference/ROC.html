@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="AUC and ROC Curves Data — ROC" />
-<meta property="og:description" content="This function calculates ROC Curves and AUC values with 95% confidence 
+<meta property="og:description" content="This function calculates ROC Curves and AUC values with 95% confidence
 range. It also works for multi-categorical models." />
 <meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png" />
 
@@ -145,7 +145,7 @@ range. It also works for multi-categorical models." />
     </div>
 
     <div class="ref-description">
-    <p>This function calculates ROC Curves and AUC values with 95% confidence 
+    <p>This function calculates ROC Curves and AUC values with 95% confidence
 range. It also works for multi-categorical models.</p>
     </div>
 
@@ -164,7 +164,7 @@ range. It also works for multi-categorical models.</p>
     </tr>
     <tr>
       <th>multis</th>
-      <td><p>Data.frame. Containing columns with each category score 
+      <td><p>Data.frame. Containing columns with each category score
 (only used when more than 2 categories coexist)</p></td>
     </tr>
     </table>
@@ -204,7 +204,7 @@ range. It also works for multi-categorical models.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>)</span> <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>head</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>head</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $class2
 #&gt;     tag    scores
 #&gt; 1  TRUE 0.3155498
@@ -243,7 +243,8 @@ range. It also works for multi-categorical models.</p>
 #&gt; </div><div class='input'>
 <span class='co'># ROC Data for Multi-Categorical Model</span>
 <span class='va'>roc2</span> <span class='op'>&lt;-</span> <span class='fu'>ROC</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>score</span>,
-            multis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span>, select <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>score</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+  multis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span>, select <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>score</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>roc2</span>, <span class='va'>head</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $ci
 #&gt;           n_1       n_2       n_3      mean

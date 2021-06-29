@@ -176,9 +176,20 @@ in your <code>.GlobalEnv</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># board &lt;- c(0,0,0,0,0,6,000,</span>
+<span class='co'>#            0,9,5,7,0,0,3,0,0,</span>
+<span class='co'>#            4,0,0,0,9,2,0,0,5,</span>
+<span class='co'>#            7,6,4,0,0,0,0,0,3,</span>
+<span class='co'>#            0,0,0,0,0,0,0,0,0,</span>
+<span class='co'>#            2,0,0,0,0,0,9,7,1,</span>
+<span class='co'>#            5,0,0,2,1,0,0,0,9,</span>
+<span class='co'>#            0,0,7,0,0,5,4,8,0,</span>
+<span class='co'>#            0,0,0,8,0,0,0,0,0)</span>
+<span class='co'># sudoku_solver(board)</span>
 
 <span class='co'># Trivial input (everything)</span>
-<span class='va'>trivial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>81</span><span class='op'>)</span>, byrow <span class='op'>=</span> <span class='cn'>TRUE</span>, ncol <span class='op'>=</span> <span class='fl'>9</span><span class='op'>)</span>; <span class='va'>trivial</span>
+<span class='va'>trivial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>81</span><span class='op'>)</span>, byrow <span class='op'>=</span> <span class='cn'>TRUE</span>, ncol <span class='op'>=</span> <span class='fl'>9</span><span class='op'>)</span>
+<span class='va'>trivial</span>
 </div><div class='output co'>#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
 #&gt;  [1,]    0    0    0    0    0    0    0    0    0
 #&gt;  [2,]    0    0    0    0    0    0    0    0    0
@@ -200,7 +211,8 @@ in your <code>.GlobalEnv</code>.</p>
 #&gt;  [8,]    8    2    5    9    1    6    7    3    4
 #&gt;  [9,]    9    3    6    7    4    5    8    1    2</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># Wrong / Impossible to solve input</span>
-<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>72</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>9</span><span class='op'>)</span><span class='op'>)</span>, byrow <span class='op'>=</span> <span class='cn'>TRUE</span>, ncol <span class='op'>=</span> <span class='fl'>9</span><span class='op'>)</span>; <span class='va'>imp</span>
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>72</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>9</span><span class='op'>)</span><span class='op'>)</span>, byrow <span class='op'>=</span> <span class='cn'>TRUE</span>, ncol <span class='op'>=</span> <span class='fl'>9</span><span class='op'>)</span>
+<span class='va'>imp</span>
 </div><div class='output co'>#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
 #&gt;  [1,]    1    1    1    1    1    1    1    1    1
 #&gt;  [2,]    1    1    1    1    1    1    1    1    1

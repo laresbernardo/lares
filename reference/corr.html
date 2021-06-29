@@ -47,9 +47,9 @@
 
 
 <meta property="og:title" content="Correlation table — corr" />
-<meta property="og:description" content="This function correlates a whole dataframe, running one hot smart 
-encoding (ohse) to transform non-numerical features. 
-Note that it will automatically suppress columns 
+<meta property="og:description" content="This function correlates a whole dataframe, running one hot smart
+encoding (ohse) to transform non-numerical features.
+Note that it will automatically suppress columns
 with less than 3 non missing values and warn the user." />
 <meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png" />
 
@@ -147,9 +147,9 @@ with less than 3 non missing values and warn the user." />
     </div>
 
     <div class="ref-description">
-    <p>This function correlates a whole dataframe, running one hot smart 
-encoding (<code>ohse</code>) to transform non-numerical features. 
-Note that it will automatically suppress columns 
+    <p>This function correlates a whole dataframe, running one hot smart
+encoding (<code>ohse</code>) to transform non-numerical features.
+Note that it will automatically suppress columns
 with less than 3 non missing values and warn the user.</p>
     </div>
 
@@ -181,7 +181,7 @@ columns: they will be filtered!</p></td>
     </tr>
     <tr>
       <th>pvalue</th>
-      <td><p>Boolean. Returns a list, with correlations and statistical 
+      <td><p>Boolean. Returns a list, with correlations and statistical
 significance (p-value) for each value</p></td>
     </tr>
     <tr>
@@ -209,12 +209,12 @@ Is set to <code>NULL</code>, only binary variables will dump redundant columns.<
     </tr>
     <tr>
       <th>limit</th>
-      <td><p>Integer. Limit one hot encoding to the n most frequent 
+      <td><p>Integer. Limit one hot encoding to the n most frequent
 values of each column. Set to <code>NA</code> to ignore argument.</p></td>
     </tr>
     <tr>
       <th>top</th>
-      <td><p>Integer. Select top N most relevant variables? Filtered 
+      <td><p>Integer. Select top N most relevant variables? Filtered
 and sorted by mean of each variable's correlations</p></td>
     </tr>
     <tr>
@@ -240,7 +240,7 @@ that when using <code><a href='ohse.html'>ohse()</a></code> you may get more dim
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>dft</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>dft</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
 
 <span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2  Pclass_3
@@ -275,7 +275,7 @@ that when using <code><a href='ohse.html'>ohse()</a></code> you may get more dim
 #&gt; Pclass_OTHER   5.510281e-23 4.002500e-05 1.295594e-17 0.000000e+00 0.000000e+00
 #&gt; </div><div class='input'>
 <span class='co'># Test when no more than 2 non-missing values</span>
-<span class='va'>df</span><span class='op'>$</span><span class='va'>trash</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>df</span><span class='op'>$</span><span class='va'>trash</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># and another method...</span>
 <span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, method <span class='op'>=</span> <span class='st'>"spearman"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Dropped columns with less than 3 non-missing values: 'trash'</span></div><div class='output co'>#&gt;               Survived_TRUE  Sex_male       Age  Pclass_1  Pclass_2  Pclass_3

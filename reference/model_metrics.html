@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Model Metrics and Performance — model_metrics" />
-<meta property="og:description" content="This function lets the user get a confusion matrix and accuracy, and 
+<meta property="og:description" content="This function lets the user get a confusion matrix and accuracy, and
 for for binary classification models: AUC, Precision, Sensitivity, and
 Specificity, given the expected (tags) values and predicted values (scores)." />
 <meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png" />
@@ -146,7 +146,7 @@ Specificity, given the expected (tags) values and predicted values (scores)." />
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user get a confusion matrix and accuracy, and 
+    <p>This function lets the user get a confusion matrix and accuracy, and
 for for binary classification models: AUC, Precision, Sensitivity, and
 Specificity, given the expected (tags) values and predicted values (scores).</p>
     </div>
@@ -180,18 +180,18 @@ Specificity, given the expected (tags) values and predicted values (scores).</p>
     </tr>
     <tr>
       <th>multis</th>
-      <td><p>Data.frame. Containing columns with each category score 
+      <td><p>Data.frame. Containing columns with each category score
 (only used when more than 2 categories coexist)</p></td>
     </tr>
     <tr>
       <th>abc</th>
-      <td><p>Boolean. Arrange columns and rows alphabetically 
+      <td><p>Boolean. Arrange columns and rows alphabetically
 when categorical values?</p></td>
     </tr>
     <tr>
       <th>thresh</th>
-      <td><p>Integer. Threshold for selecting binary or regression 
-models: this number is the threshold of unique values we should 
+      <td><p>Integer. Threshold for selecting binary or regression
+models: this number is the threshold of unique values we should
 have in <code>'tag'</code> (more than: regression; less than: classification)</p></td>
     </tr>
     <tr>
@@ -201,7 +201,7 @@ not numerical, even though seems numerical?</p></td>
     </tr>
     <tr>
       <th>thresh_cm</th>
-      <td><p>Numeric. Value to splits the results for the 
+      <td><p>Numeric. Value to splits the results for the
 confusion matrix. Range of values: (0-1)</p></td>
     </tr>
     <tr>
@@ -299,8 +299,9 @@ multiple plots are also returned.</p>
 #&gt; </div><div class='input'>
 <span class='co'># Metrics for Binomial Model</span>
 <span class='va'>met1</span> <span class='op'>&lt;-</span> <span class='fu'>model_metrics</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>scores</span>,
-                      model_name <span class='op'>=</span> <span class='st'>"Titanic Survived Model"</span>,
-                      plots <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+  model_name <span class='op'>=</span> <span class='st'>"Titanic Survived Model"</span>,
+  plots <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Target value: TRUE</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>met1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $dictionary
 #&gt; [1] "AUC: Area Under the Curve"                                                             
@@ -339,9 +340,10 @@ multiple plots are also returned.</p>
 #&gt; </div><div class='input'>
 <span class='co'># Metrics for Multi-Categorical Model</span>
 <span class='va'>met2</span> <span class='op'>&lt;-</span> <span class='fu'>model_metrics</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>score</span>,
-                      multis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span>, select <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>score</span><span class='op'>)</span><span class='op'>)</span>,
-                      model_name <span class='op'>=</span> <span class='st'>"Titanic Class Model"</span>,
-                      plots <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+  multis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span>, select <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>score</span><span class='op'>)</span><span class='op'>)</span>,
+  model_name <span class='op'>=</span> <span class='st'>"Titanic Class Model"</span>,
+  plots <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>met2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $dictionary
 #&gt; [1] "AUC: Area Under the Curve"                                                             
@@ -372,11 +374,12 @@ multiple plots are also returned.</p>
 #&gt; <span style='color: #BCBCBC;'>1</span> n_3     149  55.6 0.826     1 0.75  0.759 0.805 0.681
 #&gt; <span style='color: #BCBCBC;'>2</span> n_1      63  23.5 0.867     2 0.828 0.623 0.683 0.873
 #&gt; <span style='color: #BCBCBC;'>3</span> n_2      56  20.9 0.675     3 0.75  0.366 0.268 0.877
-#&gt; </div><div class='input'>          
+#&gt; </div><div class='input'>
 <span class='co'># Metrics for Regression Model</span>
 <span class='va'>met3</span> <span class='op'>&lt;-</span> <span class='fu'>model_metrics</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>regr</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>regr</span><span class='op'>$</span><span class='va'>score</span>,
-                      model_name <span class='op'>=</span> <span class='st'>"Titanic Fare Model"</span>,
-                      plots <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+  model_name <span class='op'>=</span> <span class='st'>"Titanic Fare Model"</span>,
+  plots <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>met3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $dictionary
 #&gt; [1] "RMSE: Root Mean Squared Error"       

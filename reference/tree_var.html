@@ -197,7 +197,7 @@ rpart and rpart.plot libraries." />
     </tr>
     <tr>
       <th>min</th>
-      <td><p>Integer. The minimum number of observations that must 
+      <td><p>Integer. The minimum number of observations that must
 exist in a node in order for a split to be attempted.</p></td>
     </tr>
     <tr>
@@ -328,7 +328,7 @@ predictions, performance metrics, and interpret auxiliary text.</p>
 #&gt; </div><div class='input'><span class='co'># Binary Tree</span>
 <span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Survived_TRUE</span>, explain <span class='op'>=</span> <span class='cn'>FALSE</span>, cex <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 6 variables: 'Pclass', 'Ticket', 'Cabin', 'Embarked', 'Survived', 'Sex'</span></div><div class='img'><img src='tree_var-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Multiclass tree</span>
-<span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Pclass"</span>,<span class='st'>"Fare"</span>,<span class='st'>"Age"</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>Pclass</span>, ohse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Pclass"</span>, <span class='st'>"Fare"</span>, <span class='st'>"Age"</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>Pclass</span>, ohse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='tree_var-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

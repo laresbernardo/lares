@@ -48,11 +48,11 @@
 
 <meta property="og:title" content="Automated K-Means Clustering + PCA — clusterKmeans" />
 <meta property="og:description" content="This function lets the user cluster a whole data.frame automatically.
-As you might know, the goal of kmeans is to group data points into 
-distinct non-overlapping subgroups. If needed, one hot encoding will 
-be applied to categorical values automatically with this function. 
+As you might know, the goal of kmeans is to group data points into
+distinct non-overlapping subgroups. If needed, one hot encoding will
+be applied to categorical values automatically with this function.
 For consideration: Scale/standardize the data when applying kmeans.
-Also, kmeans assumes spherical shapes of clusters and does not work well 
+Also, kmeans assumes spherical shapes of clusters and does not work well
 when clusters are in different shapes such as elliptical clusters." />
 <meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png" />
 
@@ -151,11 +151,11 @@ when clusters are in different shapes such as elliptical clusters." />
 
     <div class="ref-description">
     <p>This function lets the user cluster a whole data.frame automatically.
-As you might know, the goal of kmeans is to group data points into 
-distinct non-overlapping subgroups. If needed, one hot encoding will 
-be applied to categorical values automatically with this function. 
+As you might know, the goal of kmeans is to group data points into
+distinct non-overlapping subgroups. If needed, one hot encoding will
+be applied to categorical values automatically with this function.
 For consideration: Scale/standardize the data when applying kmeans.
-Also, kmeans assumes spherical shapes of clusters and does not work well 
+Also, kmeans assumes spherical shapes of clusters and does not work well
 when clusters are in different shapes such as elliptical clusters.</p>
     </div>
 
@@ -222,7 +222,7 @@ two variables by name or column position.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>List. If no <code>k</code> is provided, contains <code>nclusters</code> and 
+    <p>List. If no <code>k</code> is provided, contains <code>nclusters</code> and
 <code>nclusters_plot</code> to determine optimal <code>k</code> given their WSS (Within
 Groups Sum of Squares). If <code>k</code> is provided, additionally we get:</p><ul>
 <li><p><code>df</code> data.frame with original <code>df</code> plus <code>cluster</code> column</p></li>
@@ -264,7 +264,9 @@ Groups Sum of Squares). If <code>k</code> is provided, additionally we get:</p><
 </div><div class='img'><img src='clusterKmeans-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># You must have "ggforce" library to use this auxiliary function:</span>
 <span class='co'># 3D interactive plot</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='va'>clusters</span><span class='op'>$</span><span class='va'>PCA</span><span class='op'>$</span><span class='va'>plot_1_2_3</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>clusters</span><span class='op'>$</span><span class='va'>PCA</span><span class='op'>$</span><span class='va'>plot_1_2_3</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

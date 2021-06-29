@@ -50,7 +50,7 @@
 <meta property="og:description" content="Add a break or new line without breaking words. Automatically,
 the function can detect your plot's width and will dynamically
 set an auto width. You can adjust the relation (rel) parameter
-for different fonts and sizes until perfect harmony found. 
+for different fonts and sizes until perfect harmony found.
 Quite similar to stringr::str_wrap but, if the text vector
 is a factor, the levels will be kept in order and transformed." />
 <meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png" />
@@ -152,7 +152,7 @@ is a factor, the levels will be kept in order and transformed." />
     <p>Add a break or new line without breaking words. Automatically,
 the function can detect your plot's width and will dynamically
 set an auto width. You can adjust the relation (rel) parameter
-for different fonts and sizes until perfect harmony found. 
+for different fonts and sizes until perfect harmony found.
 Quite similar to <code><a href='https://stringr.tidyverse.org/reference/str_wrap.html'>stringr::str_wrap</a></code> but, if the text vector
 is a factor, the levels will be kept in order and transformed.</p>
     </div>
@@ -222,7 +222,8 @@ is a factor, the levels will be kept in order and transformed.</p>
 #&gt; single
 #&gt; line</div><div class='input'>
 <span class='va'>text</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"First value"</span>, <span class='st'>"Second value"</span>, <span class='st'>"First value"</span><span class='op'>)</span>,
-               levels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"First value"</span>, <span class='st'>"Second value"</span><span class='op'>)</span><span class='op'>)</span>
+  levels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"First value"</span>, <span class='st'>"Second value"</span><span class='op'>)</span>
+<span class='op'>)</span>
 <span class='fu'>autoline</span><span class='op'>(</span><span class='va'>text</span>, <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] First\nvalue  Second\nvalue First\nvalue 
 #&gt; Levels: First\nvalue Second\nvalue</div><div class='input'>

@@ -47,8 +47,8 @@
 
 
 <meta property="og:title" content="Facebook Reach and Frequency API — fb_rf" />
-<meta property="og:description" content="Create or query reach and frequency predictions using Facebook's 
-Reach and Frequency API. For more information on the API and its parameters, go to the 
+<meta property="og:description" content="Create or query reach and frequency predictions using Facebook's
+Reach and Frequency API. For more information on the API and its parameters, go to the
 original documentaion." />
 <meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png" />
 
@@ -146,8 +146,8 @@ original documentaion." />
     </div>
 
     <div class="ref-description">
-    <p>Create or query reach and frequency predictions using Facebook's 
-Reach and Frequency API. For more information on the API and its parameters, go to the 
+    <p>Create or query reach and frequency predictions using Facebook's
+Reach and Frequency API. For more information on the API and its parameters, go to the
 <a href='https://developers.facebook.com/docs/marketing-api/insights'>original documentaion</a>.</p>
     </div>
 
@@ -179,18 +179,18 @@ to acquire one.</p></td>
     </tr>
     <tr>
       <th>ad_account</th>
-      <td><p>Character. Ad Account. Remember to start with <code>act_</code>. If you 
+      <td><p>Character. Ad Account. Remember to start with <code>act_</code>. If you
 use the <code>prediction</code> argument, no need to provide this parameter.</p></td>
     </tr>
     <tr>
       <th>prediction</th>
       <td><p>Integer. Prediction ID if you already created the prediction
-and wish to query the curve's data. As this prediction already exists, the 
+and wish to query the curve's data. As this prediction already exists, the
 rest of arguments of this function will be ignored.</p></td>
     </tr>
     <tr>
       <th>objective</th>
-      <td><p>Character. Any of: "BRAND_AWARENESS", "LINK_CLICKS", "POST_ENGAGEMENT", 
+      <td><p>Character. Any of: "BRAND_AWARENESS", "LINK_CLICKS", "POST_ENGAGEMENT",
 "MOBILE_APP_INSTALLS", "CONVERSIONS", "REACH", or "VIDEO_VIEWS".</p></td>
     </tr>
     <tr>
@@ -215,7 +215,7 @@ rest of arguments of this function will be ignored.</p></td>
     </tr>
     <tr>
       <th>prediction_mode</th>
-      <td><p>Integer. "1" for predicting Reach by providing budget, 
+      <td><p>Integer. "1" for predicting Reach by providing budget,
 "2" is for predicting Budget given a specific Reach.</p></td>
     </tr>
     <tr>
@@ -271,7 +271,7 @@ raw API results as list when <code>process=FALSE</code>.</p>
 <span class='va'>token</span> <span class='op'>&lt;-</span> <span class='st'>"YOURTOKEN"</span>
 <span class='va'>account_id</span> <span class='op'>&lt;-</span> <span class='st'>"act_20846447"</span>
 
-<span class='co'>#BASIC 1: Create and return data for a new prediction</span>
+<span class='co'># BASIC 1: Create and return data for a new prediction</span>
 <span class='va'>basic1</span> <span class='op'>&lt;-</span> <span class='fu'>fb_rf</span><span class='op'>(</span><span class='va'>token</span>, <span class='va'>account_id</span>, destination_ids <span class='op'>=</span> <span class='fl'>187071108930</span>, countries <span class='op'>=</span> <span class='st'>"AR"</span><span class='op'>)</span>
 
 <span class='co'># BASIC 2: Fetch data for an existing prediction ID</span>
@@ -279,42 +279,48 @@ raw API results as list when <code>process=FALSE</code>.</p>
 
 <span class='co'># ADVANCED (Fully custom prediction)</span>
 <span class='va'>advanced</span> <span class='op'>&lt;-</span> <span class='fu'>fb_rf</span><span class='op'>(</span><span class='va'>token</span>, <span class='va'>account_id</span>,
-                  objective <span class='op'>=</span> <span class='st'>'REACH'</span>,
-                  days <span class='op'>=</span> <span class='fl'>28</span>,
-                  budget <span class='op'>=</span> <span class='fl'>2000000</span>,
-                  destination_ids <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>187071108930</span>, <span class='fl'>1142958119078556</span><span class='op'>)</span>,
-                  age_min <span class='op'>=</span> <span class='fl'>15</span>,
-                  age_max <span class='op'>=</span> <span class='fl'>65</span>,
-                  genders <span class='op'>=</span> <span class='fl'>2</span>,
-                  countries <span class='op'>=</span> <span class='st'>"MX"</span>,
-                  publisher_platforms <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-                    <span class='st'>'facebook'</span>,
-                    <span class='st'>'instagram'</span>,
-                    <span class='co'>#'audience_network',</span>
-                    <span class='st'>'messenger'</span><span class='op'>)</span>,
-                  <span class='co'>#interests_ids = NA,</span>
-                  facebook_positions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-                    <span class='st'>'feed'</span>,
-                    <span class='co'>#'instant_article',</span>
-                    <span class='st'>'marketplace'</span>,
-                    <span class='st'>'video_feeds'</span>,
-                    <span class='st'>'story'</span>,
-                    <span class='st'>'search'</span>,
-                    <span class='st'>'instream_video'</span><span class='op'>)</span>,
-                  instagram_positions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-                    <span class='st'>'stream'</span>,
-                    <span class='st'>'story'</span>,
-                    <span class='st'>'explore'</span><span class='op'>)</span>,
-                  <span class='co'># audience_network_positions = c(</span>
-                  <span class='co'>#  'classic',</span>
-                  <span class='co'>#  'instream_video')</span>
-                  messenger_positions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-                    <span class='st'>'messenger_home'</span>,
-                    <span class='st'>'sponsored_messages'</span>,
-                    <span class='st'>'story'</span><span class='op'>)</span>,
-                  device_platforms <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-                    <span class='st'>'mobile'</span>,
-                    <span class='st'>'desktop'</span><span class='op'>)</span><span class='op'>)</span>
+  objective <span class='op'>=</span> <span class='st'>"REACH"</span>,
+  days <span class='op'>=</span> <span class='fl'>28</span>,
+  budget <span class='op'>=</span> <span class='fl'>2000000</span>,
+  destination_ids <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>187071108930</span>, <span class='fl'>1142958119078556</span><span class='op'>)</span>,
+  age_min <span class='op'>=</span> <span class='fl'>15</span>,
+  age_max <span class='op'>=</span> <span class='fl'>65</span>,
+  genders <span class='op'>=</span> <span class='fl'>2</span>,
+  countries <span class='op'>=</span> <span class='st'>"MX"</span>,
+  publisher_platforms <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    <span class='st'>"facebook"</span>,
+    <span class='st'>"instagram"</span>,
+    <span class='co'>#' audience_network',</span>
+    <span class='st'>"messenger"</span>
+  <span class='op'>)</span>,
+  <span class='co'># interests_ids = NA,</span>
+  facebook_positions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    <span class='st'>"feed"</span>,
+    <span class='co'>#' instant_article',</span>
+    <span class='st'>"marketplace"</span>,
+    <span class='st'>"video_feeds"</span>,
+    <span class='st'>"story"</span>,
+    <span class='st'>"search"</span>,
+    <span class='st'>"instream_video"</span>
+  <span class='op'>)</span>,
+  instagram_positions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    <span class='st'>"stream"</span>,
+    <span class='st'>"story"</span>,
+    <span class='st'>"explore"</span>
+  <span class='op'>)</span>,
+  <span class='co'># audience_network_positions = c(</span>
+  <span class='co'>#  'classic',</span>
+  <span class='co'>#  'instream_video')</span>
+  messenger_positions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    <span class='st'>"messenger_home"</span>,
+    <span class='st'>"sponsored_messages"</span>,
+    <span class='st'>"story"</span>
+  <span class='op'>)</span>,
+  device_platforms <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    <span class='st'>"mobile"</span>,
+    <span class='st'>"desktop"</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>

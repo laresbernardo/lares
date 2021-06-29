@@ -47,11 +47,11 @@
 
 
 <meta property="og:title" content="Cumulative Gain Plot — mplot_gain" />
-<meta property="og:description" content="The cumulative gains plot, often named ‘gains plot’, helps us 
-answer the question: When we apply the model and select the best 
+<meta property="og:description" content="The cumulative gains plot, often named ‘gains plot’, helps us
+answer the question: When we apply the model and select the best
 X deciles, what 
-expect to target? The cumulative gains chart shows the percentage 
-of the overall number of cases in a given category &quot;gained&quot; by 
+expect to target? The cumulative gains chart shows the percentage
+of the overall number of cases in a given category &quot;gained&quot; by
 targeting a percentage of the total number of cases." />
 <meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png" />
 
@@ -149,11 +149,11 @@ targeting a percentage of the total number of cases." />
     </div>
 
     <div class="ref-description">
-    <p>The cumulative gains plot, often named ‘gains plot’, helps us 
-answer the question: When we apply the model and select the best 
-X deciles, what <!-- % of the actual target class observations can we  -->
-expect to target? The cumulative gains chart shows the percentage 
-of the overall number of cases in a given category "gained" by 
+    <p>The cumulative gains plot, often named ‘gains plot’, helps us
+answer the question: When we apply the model and select the best
+X deciles, what <!-- % of the actual target class observations can we -->
+expect to target? The cumulative gains chart shows the percentage
+of the overall number of cases in a given category "gained" by
 targeting a percentage of the total number of cases.</p>
     </div>
 
@@ -184,13 +184,13 @@ targeting a percentage of the total number of cases.</p>
     </tr>
     <tr>
       <th>multis</th>
-      <td><p>Data.frame. Containing columns with each category probability 
+      <td><p>Data.frame. Containing columns with each category probability
 or score (only used when more than 2 categories coexist).</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>Value. Which is your target positive value? If 
-set to 'auto', the target with largest mean(score) will be 
+      <td><p>Value. Which is your target positive value? If
+set to 'auto', the target with largest mean(score) will be
 selected. Change the value to overwrite. Only works for binary classes</p></td>
     </tr>
     <tr>
@@ -277,16 +277,19 @@ best value, "none" to turn off or the number of split.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># Plot for Binomial Model</span>
 <span class='fu'>mplot_gain</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>scores</span>,
-           caption <span class='op'>=</span> <span class='st'>"Titanic Survived Model"</span>,
-           target <span class='op'>=</span> <span class='st'>"FALSE"</span><span class='op'>)</span>
+  caption <span class='op'>=</span> <span class='st'>"Titanic Survived Model"</span>,
+  target <span class='op'>=</span> <span class='st'>"FALSE"</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Target value: FALSE</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 1 rows containing missing values (geom_label).</span></div><div class='img'><img src='mplot_gain-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>mplot_gain</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>scores</span>,
-           caption <span class='op'>=</span> <span class='st'>"Titanic Survived Model"</span>,
-           target <span class='op'>=</span> <span class='st'>"TRUE"</span><span class='op'>)</span>
+  caption <span class='op'>=</span> <span class='st'>"Titanic Survived Model"</span>,
+  target <span class='op'>=</span> <span class='st'>"TRUE"</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Target value: TRUE</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing missing values (geom_label).</span></div><div class='img'><img src='mplot_gain-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Plot for Multi-Categorical Model</span>
 <span class='fu'>mplot_gain</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>score</span>,
-          multis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span>, select <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>score</span><span class='op'>)</span><span class='op'>)</span>,
-          caption <span class='op'>=</span> <span class='st'>"Titanic Class Model"</span><span class='op'>)</span>
+  multis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span>, select <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>score</span><span class='op'>)</span><span class='op'>)</span>,
+  caption <span class='op'>=</span> <span class='st'>"Titanic Class Model"</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Target value: n_1</span></div><div class='output co'>#&gt; <span class='message'>Target value: n_2</span></div><div class='output co'>#&gt; <span class='message'>Target value: n_3</span></div><div class='img'><img src='mplot_gain-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

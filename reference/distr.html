@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Compare Variables with their Distributions — distr" />
-<meta property="og:description" content="Compare the distribution of a target variable vs another variable. This 
+<meta property="og:description" content="Compare the distribution of a target variable vs another variable. This
 function automatically splits into quantiles for numerical variables.
 Custom and tidyverse friendly." />
 <meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png" />
@@ -146,7 +146,7 @@ Custom and tidyverse friendly." />
     </div>
 
     <div class="ref-description">
-    <p>Compare the distribution of a target variable vs another variable. This 
+    <p>Compare the distribution of a target variable vs another variable. This
 function automatically splits into quantiles for numerical variables.
 Custom and tidyverse friendly.</p>
     </div>
@@ -180,17 +180,17 @@ Custom and tidyverse friendly.</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Variables. Main (target variable) and secondary (values 
+      <td><p>Variables. Main (target variable) and secondary (values
 variable) to group by</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Integer. 1 for both plots, 2 for counter plot only, 3 por 
+      <td><p>Integer. 1 for both plots, 2 for counter plot only, 3 por
 percentages plot only.</p></td>
     </tr>
     <tr>
       <th>ref</th>
-      <td><p>Boolean. Show a reference line if levels = 2? Quite useful 
+      <td><p>Boolean. Show a reference line if levels = 2? Quite useful
 when data is unbalanced (not 50/50) because a reference line is drawn.</p></td>
     </tr>
     <tr>
@@ -252,7 +252,7 @@ for both, target and values)</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Plot when <code>plot=TRUE</code> with two plots in one: counter distribution 
+    <p>Plot when <code>plot=TRUE</code> with two plots in one: counter distribution
 grouped by cuts, and proportions distribution grouped by same cuts. data.frame when
 <code>plot=FALSE</code> with counting, percentages, and cumulative percentages results.
 When <code>type</code> argument is used, single plots will be returned.</p>
@@ -307,7 +307,9 @@ When <code>type</code> argument is used, single plots will be returned.</p>
 #&gt; <span class='warning'></span>
 #&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once per session.</span></span></div><div class='img'><img src='distr-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Relation for categorical/numeric values</span>
-<span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Survived</span>, <span class='va'>Fare</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>dft</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Survived</span>, <span class='va'>Fare</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 x 5</span>
 #&gt;    targets value            n     p  pcum
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;ord&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
@@ -320,13 +322,13 @@ When <code>type</code> argument is used, single plots will be returned.</p>
 #&gt; <span style='color: #BCBCBC;'> 7</span> FALSE   (14,22]         51  58.0  58.0
 #&gt; <span style='color: #BCBCBC;'> 8</span> FALSE   (10,14]         48  57.1  57.1
 #&gt; <span style='color: #BCBCBC;'> 9</span> TRUE    (40,78]         47  52.8  52.8
-#&gt; <span style='color: #BCBCBC;'>10</span> TRUE    (22,27]         46  51.7  51.7</div><div class='input'><span class='co'># Sort values </span>
+#&gt; <span style='color: #BCBCBC;'>10</span> TRUE    (22,27]         46  51.7  51.7</div><div class='input'><span class='co'># Sort values</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Survived</span>, <span class='va'>Fare</span>, abc <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='img'><img src='distr-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Less splits/breaks</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Survived</span>, <span class='va'>Fare</span>, abc <span class='op'>=</span> <span class='cn'>TRUE</span>, breaks <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 </div><div class='img'><img src='distr-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Distribution of numerical only</span>
-<span class='va'>dft</span><span class='op'>[</span><span class='va'>dft</span><span class='op'>$</span><span class='va'>Fare</span> <span class='op'>&lt;</span> <span class='fl'>20</span>,<span class='op'>]</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Fare</span><span class='op'>)</span>
+<span class='va'>dft</span><span class='op'>[</span><span class='va'>dft</span><span class='op'>$</span><span class='va'>Fare</span> <span class='op'>&lt;</span> <span class='fl'>20</span>, <span class='op'>]</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Fare</span><span class='op'>)</span>
 </div><div class='img'><img src='distr-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Distribution of numerical/numerical</span>
 <span class='va'>dft</span> <span class='op'>%&gt;%</span> <span class='fu'>distr</span><span class='op'>(</span><span class='va'>Fare</span>, <span class='va'>Age</span><span class='op'>)</span>

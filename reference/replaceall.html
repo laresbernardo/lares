@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Replace Values With — replaceall" />
-<meta property="og:description" content="This function lets the user replace all specific values in a 
+<meta property="og:description" content="This function lets the user replace all specific values in a
 vector or data.frame into another value. If replacing more than
 one value, order matters so they will be replaced in the same
 order that you pass them to the function. Factors will be refactored." />
@@ -147,7 +147,7 @@ order that you pass them to the function. Factors will be refactored." />
     </div>
 
     <div class="ref-description">
-    <p>This function lets the user replace all specific values in a 
+    <p>This function lets the user replace all specific values in a
 vector or data.frame into another value. If replacing more than
 one value, order matters so they will be replaced in the same
 order that you pass them to the function. Factors will be refactored.</p>
@@ -176,7 +176,7 @@ order that you pass them to the function. Factors will be refactored.</p>
     </tr>
     <tr>
       <th>fixclass</th>
-      <td><p>Boolean. Try to detect logical classes after transformations (or 
+      <td><p>Boolean. Try to detect logical classes after transformations (or
 leave as default classes as character)?</p></td>
     </tr>
     <tr>
@@ -223,10 +223,12 @@ leave as default classes as character)?</p></td>
 <code><a href='topics_rake.html'>topics_rake</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>one <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, <span class='cn'>NA</span><span class='op'>)</span>, 
-                 two <span class='op'>=</span> <span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>, 
-                 three <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='fl'>5</span><span class='op'>)</span>, 
-                 four <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='st'>"Aaa"</span>, <span class='fl'>123</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  one <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, <span class='cn'>NA</span><span class='op'>)</span>,
+  two <span class='op'>=</span> <span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>,
+  three <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='fl'>5</span><span class='op'>)</span>,
+  four <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='st'>"Aaa"</span>, <span class='fl'>123</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span>
+<span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   one two three four
 #&gt; 1   1   A     A &lt;NA&gt;

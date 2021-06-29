@@ -166,8 +166,8 @@ or the labels you wish to cross with.</p>
     </tr>
     <tr>
       <th>thresh</th>
-      <td><p>Integer. Threshold for selecting binary or regression 
-models: this number is the threshold of unique values we should 
+      <td><p>Integer. Threshold for selecting binary or regression
+models: this number is the threshold of unique values we should
 have in <code>'tag'</code> (more than: regression; less than: classification)</p></td>
     </tr>
     <tr>
@@ -176,7 +176,7 @@ have in <code>'tag'</code> (more than: regression; less than: classification)</p
     </tr>
     <tr>
       <th>diagonal</th>
-      <td><p>Boolean. <code>FALSE</code> to convert diagonal numbers to 
+      <td><p>Boolean. <code>FALSE</code> to convert diagonal numbers to
 zeroes. Ideal to detect must confusing categories.</p></td>
     </tr>
     <tr>
@@ -219,7 +219,7 @@ given a <code>thresh</code>old, similar to <code><a href='https://rdrr.io/r/base
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>)</span> <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>head</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>head</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $class2
 #&gt;     tag    scores
 #&gt; 1  TRUE 0.3155498

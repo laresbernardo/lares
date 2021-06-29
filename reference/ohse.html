@@ -213,19 +213,19 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
     </tr>
     <tr>
       <th>limit</th>
-      <td><p>Integer. Limit one hot encoding to the n most frequent 
+      <td><p>Integer. Limit one hot encoding to the n most frequent
 values of each column. Set to <code>NA</code> to ignore argument.</p></td>
     </tr>
     <tr>
       <th>variance</th>
-      <td><p>Numeric. Drop columns with more than n variance. 
+      <td><p>Numeric. Drop columns with more than n variance.
 Range: 0-1. For example: if a variable contains 91 unique different
-values out of 100 observations, this column will be suppressed if 
+values out of 100 observations, this column will be suppressed if
 value is set to 0.9</p></td>
     </tr>
     <tr>
       <th>other_label</th>
-      <td><p>Character. With which text do you wish to replace 
+      <td><p>Character. With which text do you wish to replace
 the filtered values with?</p></td>
     </tr>
     <tr>
@@ -279,7 +279,7 @@ transformed with one hot encoding.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span>
-<span class='va'>dft</span> <span class='op'>&lt;-</span> <span class='va'>dft</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>9</span>,<span class='fl'>11</span><span class='op'>)</span><span class='op'>]</span>
+<span class='va'>dft</span> <span class='op'>&lt;-</span> <span class='va'>dft</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>5</span>, <span class='fl'>9</span>, <span class='fl'>11</span><span class='op'>)</span><span class='op'>]</span>
 
 <span class='fu'>ohse</span><span class='op'>(</span><span class='va'>dft</span>, limit <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 3 variables: 'Pclass', 'Embarked', 'Survived'</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 8</span>
