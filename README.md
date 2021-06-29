@@ -10,7 +10,7 @@ Don't hesitate to contact me, and please when you do, let me know where did you 
 
 ## Installation
 
-```{r}
+```r
 ## CRAN VERSION
 install.packages("lares")
 
