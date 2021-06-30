@@ -1612,6 +1612,8 @@ formatText <- function(text, color = "black", size = 20, bold = FALSE) {
 #' internal (created within \code{glued}) and external (environment) objects.
 #'
 #' @inheritParams stringr::str_glue
+#' @param empty_lines Character. Set to \code{"keep"} to keep or
+#' \code{"drop"} to drop empty lines.
 #' @return Same as input but transformed (glued).
 #' @examples
 #' name <- "Bernardo"
@@ -1640,18 +1642,23 @@ formatText <- function(text, color = "black", size = 20, bold = FALSE) {
 #' # If you pass a vector, the operation will be repeated for each element
 #' glued("Here's the value #{1:3}")
 #' @export
-glued <- function(..., .sep = "", .envir = parent.frame()) {
+glued <- function(..., .sep = "", empty_lines = "keep", .envir = parent.frame()) {
   null_transformer <- function(text, envir) {
     out <- eval(parse(text = text, keep.source = FALSE), envir)
     if (is.null(out)) out <- ""
-    out
+    return(out)
   }
-  stringr::str_glue(
+  output <- stringr::str_glue(
     ...,
     .sep = .sep,
     .transformer = null_transformer,
     .envir = .envir
   )
+  if (empty_lines == "drop") {
+    lines <- stringr::str_split(output, "\n")[[1]]
+    output <- glued(paste(lines[trimws(lines) != ""], collapse = "\n")) 
+  }
+  return(output)
 }
 
 
