@@ -112,15 +112,14 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## CRAN VERSION</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"lares"</span><span class="op">)</span>
+<pre class="{r}"><code><a href="https://rdrr.io/r/utils/install.packages.html">## CRAN VERSION
+install.packages("lares")
 
-<span class="co">## DEV VERSION</span>
-<span class="co"># If you don't have remotes yet, run: install.packages('remotes')</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"laresbernardo/lares"</span><span class="op">)</span>
-<span class="co"># Full installation with recommended dependencies (takes more time)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"laresbernardo/lares"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+## DEV VERSION
+# If you don't have remotes yet, run: install.packages('remotes')
+remotes::install_github("laresbernardo/lares")
+# Full installation with recommended dependencies (takes more time)
+remotes::install_github("laresbernardo/lares", dependencies = TRUE)</a></code></pre>
 <p><strong>Windows users</strong>: you MAY have to install <code>RTools</code> before installing the dev version. Download it <a href="https://cran.r-project.org/bin/windows/Rtools/">here</a>.</p>
 </div>
 <div id="see-the-library-in-action" class="section level2">
