@@ -390,8 +390,10 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
     group_by(.data$Date) %>%
     summarise_if(is.numeric, list(~ sum(., na.rm = TRUE))) %>%
     arrange(.data$Date) %>%
-    mutate(ROI = 100 * (.data$CumValue / .data$CumInvested - 1),
-           DifUSD = .data$CumValue - .data$Invested - lag(.data$CumValue)) %>%
+    mutate(
+      ROI = 100 * (.data$CumValue / .data$CumInvested - 1),
+      DifUSD = .data$CumValue - .data$Invested - lag(.data$CumValue)
+    ) %>%
     select(
       .data$Date, .data$CumInvested, .data$CumValue, .data$DifUSD,
       .data$ROI, .data$Invested, .data$CumCost, .data$CumDividend, .data$Dividend
@@ -535,8 +537,10 @@ splot_summary <- function(p, s, save = FALSE) {
     coord_flip() +
     theme_lares(pal = 1)
 
-  if (save) plot <- plot +
-    ggsave("portf_stocks_change.png", width = 8, height = 8, dpi = 300)
+  if (save) {
+    plot <- plot +
+      ggsave("portf_stocks_change.png", width = 8, height = 8, dpi = 300)
+  }
 
   return(plot)
 }
@@ -644,8 +648,10 @@ splot_change <- function(p, s, weighted = TRUE,
       labs(caption = glued("Last {n_days} days"))
   }
 
-  if (save) plot <- plot +
-    ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300)
+  if (save) {
+    plot <- plot +
+      ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300)
+  }
 
   return(plot)
 }
@@ -884,8 +890,10 @@ splot_types <- function(s, save = FALSE) {
     scale_y_comma(expand = c(0, 0)) +
     theme_lares(pal = 1) +
     labs(x = NULL, y = "Total value", title = "Portfolio's Category Distribution")
-  if (save) plot <- plot +
-    ggsave("portf_distribution.png", width = 8, height = 5, dpi = 300)
+  if (save) {
+    plot <- plot +
+      ggsave("portf_distribution.png", width = 8, height = 5, dpi = 300)
+  }
   return(plot)
 }
 
@@ -1031,8 +1039,10 @@ splot_etf <- function(s, keep_all = FALSE, cache = TRUE, save = FALSE) {
         title = "Portfolio's Sector Distribution (ETFs)"
       )
 
-    if (save) plot <- plot +
-      ggsave("portf_distribution_etfs.png", width = 8, height = 5, dpi = 300)
+    if (save) {
+      plot <- plot +
+        ggsave("portf_distribution_etfs.png", width = 8, height = 5, dpi = 300)
+    }
     return(plot)
   } else {
     return(noPlot("No data here!"))

@@ -1,7 +1,10 @@
-url: https://laresbernardo.github.io/lares
+url: https://laresbernardo.github.io/lares/
 
 template:
   bootswatch: united
   params:
     ganalytics: UA-166493168-2
     noindex: false
+    docsearch:
+      api_key: 8f10af11a453848d52a117d320840d76
+      index_name: lares

@@ -27,7 +27,15 @@ data(dft)
 data.frame
 }
 \description{
-Data generated from a Titanic dataset.
+The sinking of the Titanic is one of the most infamous shipwrecks in history.
+On April 15, 1912, during her maiden voyage, the widely considered "unsinkable"
+RMS Titanic sank after colliding with an iceberg. Unfortunately, there weren’t
+enough lifeboats for everyone onboard, resulting in the death of 1502 out of
+2224 passengers and crew. While there was some element of luck involved in
+surviving, it seems some groups of people were more likely to survive than others.
+This dataset contains the details of a subset of the passengers on board
+(891 to be exact) taken from Kaggle's Titanic
+\href{https://www.kaggle.com/c/titanic/overview}{Train.csv}.
 }
 \examples{
 data(dft)

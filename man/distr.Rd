@@ -28,9 +28,9 @@ distr(
 \item{data}{Dataframe}
 
 \item{...}{Variables. Main (target variable) and secondary (values
-variable) to group by}
+variable) to group by (if needed).}
 
-\item{type}{Integer. 1 for both plots, 2 for counter plot only, 3 por
+\item{type}{Integer. 1 for both plots, 2 for counter plot only, 3 for
 percentages plot only.}
 
 \item{ref}{Boolean. Show a reference line if levels = 2? Quite useful
@@ -77,7 +77,6 @@ function automatically splits into quantiles for numerical variables.
 Custom and tidyverse friendly.
 }
 \examples{
-\donttest{
 Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 
@@ -102,7 +101,6 @@ dft \%>\% distr(Fare, Age)
 # Select only one of the two default plots of distr()
 dft \%>\% distr(Survived, Age, type = 2)
 dft \%>\% distr(Survived, Age, type = 3)
-}
 }
 \seealso{
 Other Exploratory: 

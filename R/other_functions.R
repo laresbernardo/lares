@@ -1656,7 +1656,7 @@ glued <- function(..., .sep = "", empty_lines = "keep", .envir = parent.frame())
   )
   if (empty_lines == "drop") {
     lines <- stringr::str_split(output, "\n")[[1]]
-    output <- glued(paste(lines[trimws(lines) != ""], collapse = "\n")) 
+    output <- glued(paste(lines[trimws(lines) != ""], collapse = "\n"))
   }
   return(output)
 }
