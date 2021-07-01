@@ -44,10 +44,24 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 
 <meta property="og:title" content="Dataset: Titanic Sub-dataset por Examples — dft" />
-<meta property="og:description" content="Data generated from a Titanic dataset." />
+<meta property="og:description" content="The sinking of the Titanic is one of the most infamous shipwrecks in history.
+On April 15, 1912, during her maiden voyage, the widely considered &quot;unsinkable&quot;
+RMS Titanic sank after colliding with an iceberg. Unfortunately, there weren’t
+enough lifeboats for everyone onboard, resulting in the death of 1502 out of
+2224 passengers and crew. While there was some element of luck involved in
+surviving, it seems some groups of people were more likely to survive than others.
+This dataset contains the details of a subset of the passengers on board
+(891 to be exact) taken from Kaggle's Titanic
+Train.csv." />
 <meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png" />
 
 
@@ -127,6 +141,12 @@
 </li>
       </ul>
       
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -144,7 +164,15 @@
     </div>
 
     <div class="ref-description">
-    <p>Data generated from a Titanic dataset.</p>
+    <p>The sinking of the Titanic is one of the most infamous shipwrecks in history.
+On April 15, 1912, during her maiden voyage, the widely considered "unsinkable"
+RMS Titanic sank after colliding with an iceberg. Unfortunately, there weren’t
+enough lifeboats for everyone onboard, resulting in the death of 1502 out of
+2224 passengers and crew. While there was some element of luck involved in
+surviving, it seems some groups of people were more likely to survive than others.
+This dataset contains the details of a subset of the passengers on board
+(891 to be exact) taken from Kaggle's Titanic
+<a href='https://www.kaggle.com/c/titanic/overview'>Train.csv</a>.</p>
     </div>
 
     <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span></pre>
@@ -214,6 +242,23 @@
    </div>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '8f10af11a453848d52a117d320840d76',
+    indexName: 'lares',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
 
   </body>
