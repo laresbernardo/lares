@@ -164,7 +164,7 @@ categorical columns into numerical by one hot encoding technic.</p>
     <pre class="usage"><span class='fu'>ohse</span><span class='op'>(</span>
   <span class='va'>df</span>,
   redundant <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  drops <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  drop <span class='op'>=</span> <span class='cn'>TRUE</span>,
   ignore <span class='op'>=</span> <span class='cn'>NA</span>,
   dates <span class='op'>=</span> <span class='cn'>FALSE</span>,
   holidays <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -193,7 +193,7 @@ column only has two different values, should we keep both new columns?
 Is set to <code>NULL</code>, only binary variables will dump redundant columns.</p></td>
     </tr>
     <tr>
-      <th>drops</th>
+      <th>drop</th>
       <td><p>Boolean. Drop automatically some useless features?</p></td>
     </tr>
     <tr>
@@ -356,7 +356,7 @@ transformed with one hot encoding.</p>
   docsearch({
     
     
-    apiKey: '8f10af11a453848d52a117d320840d76',
+    apiKey: '450df2517b72ae878fd4539ca2060332',
     indexName: 'lares',
     inputSelector: 'input#search-input.form-control',
     transformData: function(hits) {

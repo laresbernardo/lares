@@ -163,7 +163,7 @@ of a dataframe or vector with date/time variables.</p>
 
     <pre class="usage"><span class='fu'>date_feats</span><span class='op'>(</span>
   <span class='va'>dates</span>,
-  keep_originals <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  drop <span class='op'>=</span> <span class='cn'>FALSE</span>,
   only <span class='op'>=</span> <span class='cn'>NA</span>,
   features <span class='op'>=</span> <span class='cn'>TRUE</span>,
   holidays <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -181,7 +181,7 @@ of a dataframe or vector with date/time variables.</p>
 automatically ignored/extracted.</p></td>
     </tr>
     <tr>
-      <th>keep_originals</th>
+      <th>drop</th>
       <td><p>Boolean. Should the original date/time columns be
 kept in the results? Only valid when input is a dataframe.</p></td>
     </tr>
@@ -255,81 +255,46 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
 <span class='op'>)</span>
 
 <span class='co'># Input as a vector or dataframe</span>
-<span class='fu'>date_feats</span><span class='op'>(</span><span class='va'>df</span>, keep_originals <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 2 date/time columns: 'dates', 'times'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: All formats failed to parse. No formats found.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: argument 'replacement' has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: argument 'replacement' has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt;         dates dates_year dates_month dates_day dates_week dates_weekday
-#&gt; 1  2020-12-26       2020          12        26         52           Sat
-#&gt; 2  2020-07-14       2020           7        14         28           Tue
-#&gt; 3  2021-01-11       2021           1        11          2           Mon
-#&gt; 4  2021-05-02       2021           5         2         18           Sun
-#&gt; 5  2020-10-26       2020          10        26         43           Mon
-#&gt; 6  2021-04-25       2021           4        25         17           Sun
-#&gt; 7  2021-02-14       2021           2        14          7           Sun
-#&gt; 8  2021-03-01       2021           3         1          9           Mon
-#&gt; 9  2021-06-30       2021           6        30         26           Wed
-#&gt; 10 2020-11-30       2020          11        30         48           Mon
-#&gt;    dates_weekend dates_year_day               times times_year times_month
-#&gt; 1           TRUE            360 2021-04-21 12:47:20       2021           4
-#&gt; 2          FALSE            195 2021-03-18 18:39:41       2021           3
-#&gt; 3          FALSE             10 2021-05-17 08:44:47       2021           5
-#&gt; 4           TRUE            121 2021-05-11 02:51:59       2021           5
-#&gt; 5          FALSE            299 2021-04-05 19:35:52       2021           4
-#&gt; 6           TRUE            114 2021-06-04 13:22:51       2021           6
-#&gt; 7           TRUE             44 2021-03-09 17:36:06       2021           3
-#&gt; 8          FALSE             59 2021-04-27 23:10:39       2021           4
-#&gt; 9          FALSE            180 2021-06-11 06:38:36       2021           6
-#&gt; 10         FALSE            334 2021-06-30 20:42:21       2021           6
-#&gt;    times_day times_week times_weekday times_weekend times_year_day times_hour
-#&gt; 1         21         16           Wed         FALSE            110         12
-#&gt; 2         18         11           Thu         FALSE             76         18
-#&gt; 3         17         20           Mon         FALSE            136          8
-#&gt; 4         11         19           Tue         FALSE            130          2
-#&gt; 5          5         14           Mon         FALSE             94         19
-#&gt; 6          4         23           Fri         FALSE            154         13
-#&gt; 7          9         10           Tue         FALSE             67         17
-#&gt; 8         27         17           Tue         FALSE            116         23
-#&gt; 9         11         24           Fri         FALSE            161          6
-#&gt; 10        30         26           Wed         FALSE            180         20
-#&gt;    times_minute times_minutes times_second
-#&gt; 1            47           767           20
-#&gt; 2            39          1119           41
-#&gt; 3            44           524           47
-#&gt; 4            51           171           59
-#&gt; 5            35          1175           52
-#&gt; 6            22           802           51
-#&gt; 7            36          1056            6
-#&gt; 8            10          1390           39
-#&gt; 9            38           398           36
-#&gt; 10           42          1242           21</div><div class='input'>
+<span class='fu'>date_feats</span><span class='op'>(</span><span class='va'>df</span>, drop <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 2 date/time columns: 'dates', 'times'</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 x 22</span>
+#&gt;    dates_year dates_month dates_day dates_week dates_weekday dates_weekend
+#&gt;         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>        
+#&gt; <span style='color: #BCBCBC;'> 1</span>       <span style='text-decoration: underline;'>2</span>021           1         1          1 Fri           FALSE        
+#&gt; <span style='color: #BCBCBC;'> 2</span>       <span style='text-decoration: underline;'>2</span>020           7        20         29 Mon           FALSE        
+#&gt; <span style='color: #BCBCBC;'> 3</span>       <span style='text-decoration: underline;'>2</span>021           1        17          3 Sun           TRUE         
+#&gt; <span style='color: #BCBCBC;'> 4</span>       <span style='text-decoration: underline;'>2</span>021           5         8         19 Sat           TRUE         
+#&gt; <span style='color: #BCBCBC;'> 5</span>       <span style='text-decoration: underline;'>2</span>020          11         1         44 Sun           TRUE         
+#&gt; <span style='color: #BCBCBC;'> 6</span>       <span style='text-decoration: underline;'>2</span>021           5         1         18 Sat           TRUE         
+#&gt; <span style='color: #BCBCBC;'> 7</span>       <span style='text-decoration: underline;'>2</span>021           2        20          8 Sat           TRUE         
+#&gt; <span style='color: #BCBCBC;'> 8</span>       <span style='text-decoration: underline;'>2</span>021           3         7         10 Sun           TRUE         
+#&gt; <span style='color: #BCBCBC;'> 9</span>       <span style='text-decoration: underline;'>2</span>021           7         6         27 Tue           FALSE        
+#&gt; <span style='color: #BCBCBC;'>10</span>       <span style='text-decoration: underline;'>2</span>020          12         6         49 Sun           TRUE         
+#&gt; <span style='color: #949494;'># … with 16 more variables: dates_year_day &lt;int&gt;, dates_hour &lt;int&gt;,</span>
+#&gt; <span style='color: #949494;'>#   dates_minute &lt;int&gt;, dates_minutes &lt;int&gt;, dates_second &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   times_year &lt;dbl&gt;, times_month &lt;dbl&gt;, times_day &lt;int&gt;, times_week &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   times_weekday &lt;chr&gt;, times_weekend &lt;lgl&gt;, times_year_day &lt;int&gt;,</span>
+#&gt; <span style='color: #949494;'>#   times_hour &lt;int&gt;, times_minute &lt;int&gt;, times_minutes &lt;int&gt;,</span>
+#&gt; <span style='color: #949494;'>#   times_second &lt;dbl&gt;</span></div><div class='input'>
 <span class='co'># Holidays given a date range and country</span>
 <span class='co'># \donttest{</span>
 <span class='va'>hol</span> <span class='op'>&lt;-</span> <span class='fu'>date_feats</span><span class='op'>(</span>
   <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>365</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>,
-  keep_originals <span class='op'>=</span> <span class='cn'>TRUE</span>,
   holidays <span class='op'>=</span> <span class='cn'>TRUE</span>,
   country <span class='op'>=</span> <span class='st'>"Colombia"</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 1 date/time columns: 'df'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Extracting Colombia's holidays for 2020</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Extracting Colombia's holidays for 2021</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: All formats failed to parse. No formats found.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>hol</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>hol</span><span class='op'>$</span><span class='va'>holidayname</span><span class='op'>)</span>, <span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    year month day week weekday weekend year_day                    holidayname
-#&gt; 20 2020     7  20   29     Mon   FALSE      201               Independence Day
-#&gt; 38 2020     8   7   32     Fri   FALSE      219           Battle of Boyacá Day
-#&gt; 46 2020     8  15   33     Sat    TRUE      227             Assumption of Mary
-#&gt; 48 2020     8  17   33     Mon   FALSE      229 Day off for Assumption of Mary
-#&gt; 81 2020     9  19   38     Sat    TRUE      262                Valentine's Day
-#&gt; 84 2020     9  22   38     Tue   FALSE      265              September Equinox
-#&gt;         holidaytype holiday_national holiday_observance holiday_bank
-#&gt; 20 National holiday             TRUE              FALSE        FALSE
-#&gt; 38 National holiday             TRUE              FALSE        FALSE
-#&gt; 46 National holiday             TRUE              FALSE        FALSE
-#&gt; 48 National holiday             TRUE              FALSE        FALSE
-#&gt; 81       Observance            FALSE               TRUE        FALSE
-#&gt; 84           Season            FALSE              FALSE        FALSE
-#&gt;    holiday_nonwork holiday_season holiday_hother
-#&gt; 20           FALSE          FALSE          FALSE
-#&gt; 38           FALSE          FALSE          FALSE
-#&gt; 46           FALSE          FALSE          FALSE
-#&gt; 48           FALSE          FALSE          FALSE
-#&gt; 81           FALSE          FALSE          FALSE
-#&gt; 84           FALSE           TRUE          FALSE</div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Processing 1 date/time columns: 'df'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Extracting Colombia's holidays for 2020</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Extracting Colombia's holidays for 2021</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>hol</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>hol</span><span class='op'>$</span><span class='va'>holidayname</span><span class='op'>)</span>, <span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 19</span>
+#&gt;    year month   day  week weekday weekend year_day  hour minute minutes second
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>  <span style='text-decoration: underline;'>2</span>020     7    20    29 Mon     FALSE        201     0      0       0      0
+#&gt; <span style='color: #BCBCBC;'>2</span>  <span style='text-decoration: underline;'>2</span>020     8     7    32 Fri     FALSE        219     0      0       0      0
+#&gt; <span style='color: #BCBCBC;'>3</span>  <span style='text-decoration: underline;'>2</span>020     8    15    33 Sat     TRUE         227     0      0       0      0
+#&gt; <span style='color: #BCBCBC;'>4</span>  <span style='text-decoration: underline;'>2</span>020     8    17    33 Mon     FALSE        229     0      0       0      0
+#&gt; <span style='color: #BCBCBC;'>5</span>  <span style='text-decoration: underline;'>2</span>020     9    19    38 Sat     TRUE         262     0      0       0      0
+#&gt; <span style='color: #BCBCBC;'>6</span>  <span style='text-decoration: underline;'>2</span>020     9    22    38 Tue     FALSE        265     0      0       0      0
+#&gt; <span style='color: #949494;'># … with 8 more variables: holidayname &lt;chr&gt;, holidaytype &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   holiday_national &lt;lgl&gt;, holiday_observance &lt;lgl&gt;, holiday_bank &lt;lgl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   holiday_nonwork &lt;lgl&gt;, holiday_season &lt;lgl&gt;, holiday_hother &lt;lgl&gt;</span></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -358,7 +323,7 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
   docsearch({
     
     
-    apiKey: '8f10af11a453848d52a117d320840d76',
+    apiKey: '450df2517b72ae878fd4539ca2060332',
     indexName: 'lares',
     inputSelector: 'input#search-input.form-control',
     transformData: function(hits) {
