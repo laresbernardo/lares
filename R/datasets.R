@@ -1,5 +1,5 @@
 ####################################################################
-#' Dataset: Titanic Sub-dataset por Examples
+#' Titanic Dataset
 #'
 #' The sinking of the Titanic is one of the most infamous shipwrecks in history.
 #' On April 15, 1912, during her maiden voyage, the widely considered "unsinkable"
@@ -44,7 +44,7 @@
 
 
 ####################################################################
-#' Dataset: Results for AutoML Predictions
+#' Results for AutoML Predictions
 #'
 #' List with categorical (2 and 3 classes) and continuous predictions,
 #' generated with \code{h2o_automl()} and the \code{dft}. Note that

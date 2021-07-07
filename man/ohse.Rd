@@ -7,7 +7,7 @@
 ohse(
   df,
   redundant = FALSE,
-  drops = TRUE,
+  drop = TRUE,
   ignore = NA,
   dates = FALSE,
   holidays = FALSE,
@@ -29,7 +29,7 @@ ohse(
 column only has two different values, should we keep both new columns?
 Is set to \code{NULL}, only binary variables will dump redundant columns.}
 
-\item{drops}{Boolean. Drop automatically some useless features?}
+\item{drop}{Boolean. Drop automatically some useless features?}
 
 \item{ignore}{Vector or character. Which column should be ignored?}
 

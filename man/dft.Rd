@@ -3,7 +3,7 @@
 \docType{data}
 \name{dft}
 \alias{dft}
-\title{Dataset: Titanic Sub-dataset por Examples}
+\title{Titanic Dataset}
 \format{
 An object of class \code{"data.frame"}
 \describe{

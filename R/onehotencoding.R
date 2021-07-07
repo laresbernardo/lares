@@ -1,57 +1,4 @@
 ####################################################################
-#' One Hot Encoding for a Vector with Comma Separated Values
-#'
-#' This function lets the user do one hot encoding on a variable with
-#' comma separated values
-#'
-#' @family Data Wrangling
-#' @family One Hot Encoding
-#' @param df Dataframe. May contain one or more columns with comma separated
-#' values which will be separated as one hot encoding
-#' @param ... Variables. Which variables to split into new columns?
-#' @param sep Character. Which regular expression separates the elements?
-#' @param noval Character. No value text
-#' @param remove Boolean. Remove original variables?
-#' @return data.frame on which all features are numerical by nature or
-#' transformed with one hot encoding.
-#' @examples
-#' df <- data.frame(
-#'   id = c(1:5),
-#'   x = c("AA, D", "AA,B", "B,  D", "A,D,B", NA),
-#'   z = c("AA+BB+AA", "AA", "BB,  AA", NA, "BB+AA")
-#' )
-#' ohe_commas(df, x, remove = TRUE)
-#' ohe_commas(df, z, sep = "\\+")
-#' ohe_commas(df, x, z)
-#' @export
-ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
-  vars <- quos(...)
-  var <- gsub("~", "", as.character(vars))
-
-  df <- as.data.frame(df)
-
-  for (i in var) {
-    df$temp <- as.character(df[, i])
-    # Handling missingness
-    df$temp[as.character(df$temp) == "" | is.na(df$temp)] <- noval
-    vals <- v2t(as.character(df$temp), quotes = FALSE)
-    vals <- unique(trimws(unlist(strsplit(vals, sep))))
-    # aux <- sprintf("--%s--", vals)
-    l <- strsplit(df$temp, sep)
-    mat <- NULL
-    for (i in seq_along(vals)) {
-      which <- unlist(lapply(l, function(x) any(trimws(x) %in% vals[i])))
-      mat <- cbind(mat, which)
-    }
-    colnames(mat) <- gsub('"', "", paste(var, vals, sep = "_"))
-    df$temp <- NULL
-    df <- cbind(df, mat)
-  }
-  if (remove) df <- df[, !colnames(df) %in% var]
-  return(as_tibble(df, .name_repair = "minimal"))
-}
-
-####################################################################
 #' One Hot Smart Encoding (Dummy Variables)
 #'
 #' This function lets the user automatically transform a dataframe with
@@ -64,7 +11,7 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
 #' @param redundant Boolean. Should we keep redundant columns? i.e. If the
 #' column only has two different values, should we keep both new columns?
 #' Is set to \code{NULL}, only binary variables will dump redundant columns.
-#' @param drops Boolean. Drop automatically some useless features?
+#' @param drop Boolean. Drop automatically some useless features?
 #' @param ignore Vector or character. Which column should be ignored?
 #' @param dates Boolean. Do you want the function to create more features
 #' out of the date/time columns?
@@ -104,7 +51,7 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
 #' @export
 ohse <- function(df,
                  redundant = FALSE,
-                 drops = TRUE,
+                 drop = TRUE,
                  ignore = NA,
                  dates = FALSE,
                  holidays = FALSE, country = "Colombia",
@@ -129,7 +76,7 @@ ohse <- function(df,
 
   # No variance columns
   no_variance <- zerovar(df)
-  if (drops) {
+  if (drop) {
     df <- df[, !colnames(df) %in% no_variance]
   }
 
@@ -138,7 +85,7 @@ ohse <- function(df,
     times <- df_str(df, return = "names", quiet = TRUE)$time
     if (length(times) <= 1) {
       df_dates <- date_feats(df,
-        keep_originals = TRUE,
+        drop = FALSE,
         features = dates,
         holidays = holidays,
         country = country,
@@ -225,7 +172,7 @@ ohse <- function(df,
         "variables:", vector2text(total_converted)
       ))
     }
-    if (length(no_variance) > 0 & drops) {
+    if (length(no_variance) > 0 & drop) {
       message(paste0(
         ">>> Automatically dropped ", length(no_variance),
         " columns with 0% or >=", round(variance * 100),
@@ -235,7 +182,7 @@ ohse <- function(df,
   }
 
   # Return only useful columns
-  if (drops) {
+  if (drop) {
     df <- df[, c(!colnames(df) %in% c(converted, no_variance))]
   }
 
@@ -250,6 +197,60 @@ ohse <- function(df,
 
 
 ####################################################################
+#' One Hot Encoding for a Vector with Comma Separated Values
+#'
+#' This function lets the user do one hot encoding on a variable with
+#' comma separated values
+#'
+#' @family Data Wrangling
+#' @family One Hot Encoding
+#' @param df Dataframe. May contain one or more columns with comma separated
+#' values which will be separated as one hot encoding
+#' @param ... Variables. Which variables to split into new columns?
+#' @param sep Character. Which regular expression separates the elements?
+#' @param noval Character. No value text
+#' @param remove Boolean. Remove original variables?
+#' @return data.frame on which all features are numerical by nature or
+#' transformed with one hot encoding.
+#' @examples
+#' df <- data.frame(
+#'   id = c(1:5),
+#'   x = c("AA, D", "AA,B", "B,  D", "A,D,B", NA),
+#'   z = c("AA+BB+AA", "AA", "BB,  AA", NA, "BB+AA")
+#' )
+#' ohe_commas(df, x, remove = TRUE)
+#' ohe_commas(df, z, sep = "\\+")
+#' ohe_commas(df, x, z)
+#' @export
+ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
+  vars <- quos(...)
+  var <- gsub("~", "", as.character(vars))
+  
+  df <- as.data.frame(df)
+  
+  for (i in var) {
+    df$temp <- as.character(df[, i])
+    # Handling missingness
+    df$temp[as.character(df$temp) == "" | is.na(df$temp)] <- noval
+    vals <- v2t(as.character(df$temp), quotes = FALSE)
+    vals <- unique(trimws(unlist(strsplit(vals, sep))))
+    # aux <- sprintf("--%s--", vals)
+    l <- strsplit(df$temp, sep)
+    mat <- NULL
+    for (i in seq_along(vals)) {
+      which <- unlist(lapply(l, function(x) any(trimws(x) %in% vals[i])))
+      mat <- cbind(mat, which)
+    }
+    colnames(mat) <- gsub('"', "", paste(var, vals, sep = "_"))
+    df$temp <- NULL
+    df <- cbind(df, mat)
+  }
+  if (remove) df <- df[, !colnames(df) %in% var]
+  return(as_tibble(df, .name_repair = "minimal"))
+}
+
+
+####################################################################
 #' One Hot Encoding for Date/Time Variables (Dummy Variables)
 #'
 #' This function lets the user automatically create new columns out
@@ -260,7 +261,7 @@ ohse <- function(df,
 #' @family One Hot Encoding
 #' @param dates Vector or dataframe. Non-date/time columns will be
 #' automatically ignored/extracted.
-#' @param keep_originals Boolean. Should the original date/time columns be
+#' @param drop Boolean. Should the original date/time columns be
 #' kept in the results? Only valid when input is a dataframe.
 #' @param only Character or vector. Which columns do you wish to process? If
 #' non are explicitly defined, all will be processed
@@ -279,13 +280,12 @@ ohse <- function(df,
 #' )
 #'
 #' # Input as a vector or dataframe
-#' date_feats(df, keep_originals = TRUE) %>% head(10)
+#' date_feats(df, drop = TRUE) %>% head(10)
 #'
 #' # Holidays given a date range and country
 #' \donttest{
 #' hol <- date_feats(
 #'   seq(Sys.Date() - 365, Sys.Date(), by = 1),
-#'   keep_originals = TRUE,
 #'   holidays = TRUE,
 #'   country = "Colombia"
 #' )
@@ -293,9 +293,11 @@ ohse <- function(df,
 #' }
 #' @export
 date_feats <- function(dates,
-                       keep_originals = FALSE, only = NA,
+                       drop = FALSE,
+                       only = NA,
                        features = TRUE,
-                       holidays = FALSE, country = "Venezuela",
+                       holidays = FALSE,
+                       country = "Venezuela",
                        currency_pair = NA,
                        quiet = FALSE) {
   results <- NULL
@@ -360,8 +362,7 @@ date_feats <- function(dates,
           units = "day"
         ))
 
-        if (!is.na(ymd_hms(values[1]))) {
-          values <- ymd_hms(values)
+        if ("POSIXlt" %in% class(values)) {
           result$values_date_hour <- hour(values)
           result$values_date_minute <- minute(values)
           result$values_date_minutes <- as.integer(difftime(
@@ -369,8 +370,6 @@ date_feats <- function(dates,
             units = "mins"
           ))
           result$values_date_second <- second(values)
-          # result$values_date_seconds <- as.integer(difftime(
-          #   values, floor_date(values, unit="day"), units="secs"))
         }
       }
 
@@ -389,19 +388,17 @@ date_feats <- function(dates,
         result <- result %>% left_join(currency, by = "values_date")
       }
 
-      col_name <- ifelse(date_cols == "values_date", "", paste0(col_name, "_"))
+      col_name <- ifelse(col_name == "values_date", "", paste0(col_name, "_"))
       colnames(result)[-1] <- gsub("values_date_", col_name, colnames(result)[-1])
       results <- results %>%
         bind_cols(result) %>%
         select(-contains("values_date"))
     }
   }
-
-  if (!keep_originals) {
-    results <- results[, c(!colnames(results) %in% date_cols)]
+  if (drop) {
+    results <- results[, !colnames(results) %in% date_cols]
   }
-
-  return(results)
+  return(as_tibble(results))
 }
 
 

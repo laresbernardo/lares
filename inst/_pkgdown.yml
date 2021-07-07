@@ -6,5 +6,5 @@ template:
     ganalytics: UA-166493168-2
     noindex: false
     docsearch:
-      api_key: 8f10af11a453848d52a117d320840d76
+      api_key: 450df2517b72ae878fd4539ca2060332
       index_name: lares

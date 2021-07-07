@@ -3,7 +3,7 @@
 \docType{data}
 \name{dfr}
 \alias{dfr}
-\title{Dataset: Results for AutoML Predictions}
+\title{Results for AutoML Predictions}
 \format{
 An object of class \code{"list"} with 3 \code{"data.frame"}
 \describe{
