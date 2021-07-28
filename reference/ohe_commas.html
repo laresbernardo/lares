@@ -228,7 +228,7 @@ transformed with one hot encoding.</p>
   z <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AA+BB+AA"</span>, <span class='st'>"AA"</span>, <span class='st'>"BB,  AA"</span>, <span class='cn'>NA</span>, <span class='st'>"BB+AA"</span><span class='op'>)</span>
 <span class='op'>)</span>
 <span class='fu'>ohe_commas</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>x</span>, remove <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 7</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 × 7</span>
 #&gt;      id z        x_AA  x_D   x_B   x_A   x_NoVal
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>  
 #&gt; <span style='color: #BCBCBC;'>1</span>     1 AA+BB+AA TRUE  TRUE  FALSE FALSE FALSE  
@@ -236,7 +236,7 @@ transformed with one hot encoding.</p>
 #&gt; <span style='color: #BCBCBC;'>3</span>     3 BB,  AA  FALSE TRUE  TRUE  FALSE FALSE  
 #&gt; <span style='color: #BCBCBC;'>4</span>     4 <span style='color: #BB0000;'>NA</span>       FALSE TRUE  TRUE  TRUE  FALSE  
 #&gt; <span style='color: #BCBCBC;'>5</span>     5 BB+AA    FALSE FALSE FALSE FALSE TRUE   </div><div class='input'><span class='fu'>ohe_commas</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>z</span>, sep <span class='op'>=</span> <span class='st'>"\\+"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 6</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 × 6</span>
 #&gt;      id x     z        z_AA  z_BB  `z_AA, AA, BB,  AA, NoVal, BB`
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>                         
 #&gt; <span style='color: #BCBCBC;'>1</span>     1 AA, D AA+BB+AA TRUE  TRUE  FALSE                         
@@ -244,7 +244,7 @@ transformed with one hot encoding.</p>
 #&gt; <span style='color: #BCBCBC;'>3</span>     3 B,  D BB,  AA  FALSE FALSE FALSE                         
 #&gt; <span style='color: #BCBCBC;'>4</span>     4 A,D,B <span style='color: #BB0000;'>NA</span>       FALSE FALSE FALSE                         
 #&gt; <span style='color: #BCBCBC;'>5</span>     5 <span style='color: #BB0000;'>NA</span>    BB+AA    TRUE  TRUE  FALSE                         </div><div class='input'><span class='fu'>ohe_commas</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>x</span>, <span class='va'>z</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 13</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 × 13</span>
 #&gt;      id x     z        x_AA  z_D   x_B   z_A   x_NoVal `x_AA+BB+AA` z_AA  x_BB 
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span>     1 AA, D AA+BB+AA TRUE  TRUE  FALSE FALSE FALSE   TRUE         FALSE FALSE

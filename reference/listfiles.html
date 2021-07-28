@@ -225,24 +225,24 @@ It also lets filter files which contains a string.</p>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span><span class='op'>(</span>recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fl'>3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;            filename size isdir mode               mtime               ctime
-#&gt; 1     autoline.html   17 FALSE  666 2021-07-07 18:47:26 2021-07-07 18:47:26
-#&gt; 2 balance_data.html   12 FALSE  666 2021-07-07 18:47:27 2021-07-07 18:47:27
-#&gt; 3    bindfiles.html   10 FALSE  666 2021-07-07 18:47:27 2021-07-07 18:47:27
+#&gt; 1     autoline.html   17 FALSE  666 2021-07-28 15:16:15 2021-07-28 15:16:15
+#&gt; 2 balance_data.html   12 FALSE  666 2021-07-28 15:16:15 2021-07-28 15:16:15
+#&gt; 3    bindfiles.html   10 FALSE  666 2021-07-28 15:16:15 2021-07-28 15:16:15
 #&gt;                 atime uid gid  uname grname
-#&gt; 1 2021-07-07 18:47:26 501  20 runner  staff
-#&gt; 2 2021-07-07 18:47:27 501  20 runner  staff
-#&gt; 3 2021-07-07 18:47:27 501  20 runner  staff</div><div class='input'>
+#&gt; 1 2021-07-28 15:16:39 501  20 runner  staff
+#&gt; 2 2021-07-28 15:16:40 501  20 runner  staff
+#&gt; 3 2021-07-28 15:16:40 501  20 runner  staff</div><div class='input'>
 <span class='co'># All files in current directory (with recursive files)</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span><span class='op'>(</span>recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fl'>3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;            filename size isdir mode               mtime               ctime
-#&gt; 287 year_month.html    9 FALSE  666 2021-07-07 18:47:01 2021-07-07 18:47:01
-#&gt; 288  year_week.html    9 FALSE  666 2021-07-07 18:47:01 2021-07-07 18:47:01
-#&gt; 289    zerovar.html   11 FALSE  666 2021-07-07 18:47:01 2021-07-07 18:47:01
+#&gt; 287 year_month.html    9 FALSE  666 2021-07-28 15:16:15 2021-07-28 15:16:15
+#&gt; 288  year_week.html    9 FALSE  666 2021-07-28 15:16:15 2021-07-28 15:16:15
+#&gt; 289    zerovar.html   11 FALSE  666 2021-07-28 15:16:15 2021-07-28 15:16:15
 #&gt;                   atime uid gid  uname grname
-#&gt; 287 2021-07-07 18:47:01 501  20 runner  staff
-#&gt; 288 2021-07-07 18:47:01 501  20 runner  staff
-#&gt; 289 2021-07-07 18:47:01 501  20 runner  staff</div><div class='input'>
+#&gt; 287 2021-07-28 15:16:15 501  20 runner  staff
+#&gt; 288 2021-07-28 15:16:15 501  20 runner  staff
+#&gt; 289 2021-07-28 15:16:15 501  20 runner  staff</div><div class='input'>
 <span class='co'># Check R files using regex</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span><span class='op'>(</span>regex <span class='op'>=</span> <span class='st'>"\\.R$"</span><span class='op'>)</span>
 </div></pre>
