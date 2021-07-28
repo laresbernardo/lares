@@ -423,7 +423,7 @@ date_feats <- function(dates,
 #' holidays(countries = c("Argentina", "Venezuela"), years = c(2019, 2020))
 #' }
 #' @export
-holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
+holidays <- function(countries = "Venezuela", years = year(Sys.Date())) {
 
   # Further improvement: let the user bring more than +-5 years
 
@@ -446,7 +446,8 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
     if (sum(grepl("de", holidays$Date)) > 0) {
       holidays$Date <- gsub("de ", "", holidays$Date)
     }
-    first <- as.numeric(as.character(substr(holidays$Date, 1, 1)))
+    holidays <- holidays[-1, ]
+    first <- suppressWarnings(as.numeric(as.character(substr(holidays$Date, 1, 1))))
     if (!is.na(first[1])) {
       holidays$Date <- as.Date(holidays$Date, format = "%d %b %Y")
     } else {
@@ -470,6 +471,7 @@ holidays <- function(countries = "Colombia", years = year(Sys.Date())) {
           mutate(., country = combs$country[i])
         } else .
       }
+    result$county <- combs$country[i]
     results <- bind_rows(results, result)
   }
   results <- results %>%

@@ -670,7 +670,6 @@ splot_change <- function(p, s, weighted = TRUE,
 #' @export
 splot_growth <- function(p, save = FALSE) {
   check_attr(p, check = "daily_portfolio")
-
   newp <- p %>%
     ungroup() %>%
     mutate(
@@ -678,7 +677,6 @@ splot_growth <- function(p, save = FALSE) {
       CumCash = .data$CumCash - tail(.data$CumCash, 1),
       Portfolio = .data$Portfolio - tail(.data$Portfolio, 1)
     )
-
   caption <- paste0(
     "Portfolio: $", formatNum(newp$Portfolio[1], 0), " (",
     as.integer(range(p$Date)[2] - range(p$Date)[1]), " days)",
@@ -691,59 +689,57 @@ splot_growth <- function(p, save = FALSE) {
   ) %>%
     left_join(select(newp, .data$Date, .data$Cash) %>%
       filter(.data$Cash != 0) %>%
-      mutate(Type = "Cash"),
-    by = c("Date", "Type")
-    ) %>%
+      mutate(Type = "Cash"), by = c("Date", "Type")) %>%
     group_by(.data$Type) %>%
     mutate(Amount = .data$Amount - tail(.data$Amount, 1)) %>%
     ungroup() %>%
     group_by(.data$Date) %>%
     mutate(Portfolio = sum(.data$Amount))
   days <- nrow(aux) / 2
-  points <- aux[!is.na(aux$Cash), ] %>%
-    as_tibble() %>%
-    mutate(hjust = rep(c(1.2, -0.4), length.out = nrow(.)))
 
   plot <- ggplot(aux, aes(x = .data$Date, y = .data$Amount)) +
     geom_area(aes(y = .data$Amount, fill = .data$Type), position = "stack", alpha = 0.7) +
     labs(title = "Daily Total Portfolio Value", y = NULL, x = NULL, fill = "") +
     scale_y_dollar(
       position = "right",
-      breaks = round(seq(0, max(newp$Portfolio), length.out = 14))
+      breaks = round(seq(min(aux$Amount), max(aux$Amount), length.out = 14))
     ) +
     xlim(min(aux$Date - round(days * 0.03)), max(aux$Date) + round(days * 0.03)) +
     annotate("text",
       label = caption, x = max(newp$Date),
-      y = 0.09 * max(newp$Portfolio),
+      y = 0.09 * max(aux$Amount),
       size = 3.3, colour = "black", hjust = 1.1
     ) +
     geom_vline(xintercept = max(newp$Date), alpha = 0.5) +
     theme_lares(pal = 1) +
     theme(legend.position = "top", legend.justification = c(0, 1)) +
-    geom_point(data = points, aes(x = .data$Date, y = .data$Portfolio)) +
-    geom_text(
-      data = points,
-      aes(
-        x = .data$Date, y = .data$Portfolio, hjust = .data$hjust,
-        label = formatNum(.data$Cash, 2, abbr = TRUE)
-      ),
-      size = 2.7, angle = 90
-    ) +
     geom_hline(yintercept = 0, size = 0.3, color = "black") +
     geom_hline(
-      yintercept = newp$Portfolio[1], alpha = 0.9,
+      yintercept = aux$Amount[1], alpha = 0.9,
       colour = names(lares::lares_pal()$palette[3])
     ) +
     geom_hline(
-      yintercept = max(newp$Portfolio), size = 0.2,
+      yintercept = max(aux$Amount), size = 0.2,
       linetype = "dashed", colour = "#3DA4AB"
     )
-
+  
+  points <- aux[!is.na(aux$Cash) & aux$Cash != 0, ]
+  if (nrow(points) > 0) {
+    plot <- plot +
+      geom_point(data = points, aes(x = .data$Date, y = .data$Portfolio)) +
+      geom_text(
+        data = points,
+        aes(
+          x = .data$Date, y = .data$Portfolio, hjust = -0.6,
+          label = formatNum(.data$Cash, 2, abbr = TRUE)
+        ),
+        size = 2.7, angle = 90
+      )
+  }
   if (save) {
     plot <- plot +
       ggsave("portf_total_hist.png", width = 8, height = 5, dpi = 300)
   }
-
   return(plot)
 }
 

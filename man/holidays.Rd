@@ -4,7 +4,7 @@
 \alias{holidays}
 \title{Holidays in your Country}
 \usage{
-holidays(countries = "Colombia", years = year(Sys.Date()))
+holidays(countries = "Venezuela", years = year(Sys.Date()))
 }
 \arguments{
 \item{countries}{Character or vector. For which country(ies) should the
