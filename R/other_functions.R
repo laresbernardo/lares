@@ -200,6 +200,7 @@ normalize <- function(x) {
 #' @param vector Vector. Vector with more than 1 observation.
 #' @param sep Character. String text wished to insert between values.
 #' @param quotes Boolean. Bring simple quotes for each observation.
+#' @param force_single Boolean. Force single quotes by replacing \code{\"}.
 #' @param and Character. Add 'and' or something before last observation.
 #' Not boolean variable so it can be used on other languages. Note that
 #' the last comma will be suppressed if \code{Sys.getenv("LARES_NUMFORMAT")}
@@ -210,10 +211,11 @@ normalize <- function(x) {
 #' vector2text(c(1:5), quotes = FALSE)
 #' vector2text(c(1:5), quotes = FALSE, sep = "-")
 #' vector2text(c(1:5), and = "and also")
+#' vector2text(c("Text", "R's"), force_single = TRUE)
 #' # Shorter function with same purpose
 #' v2t(LETTERS[1:5])
 #' @export
-vector2text <- function(vector, sep = ", ", quotes = TRUE, and = "") {
+vector2text <- function(vector, sep = ", ", quotes = TRUE, force_single = FALSE, and = "") {
 
   # Add "and" or something before the last value
   n <- length(vector)
@@ -240,6 +242,11 @@ vector2text <- function(vector, sep = ", ", quotes = TRUE, and = "") {
       substr(output, 1, last_comma - 1),
       substr(output, last_comma + 1, nchar(output))
     )
+  }
+  
+  if (force_single) {
+    output <- gsub('"', "'", output)
+    output <- gsub('\"', "'", output)
   }
 
   return(output)

@@ -5,9 +5,9 @@
 \alias{v2t}
 \title{Convert a vector into a comma separated text}
 \usage{
-vector2text(vector, sep = ", ", quotes = TRUE, and = "")
+vector2text(vector, sep = ", ", quotes = TRUE, force_single = FALSE, and = "")
 
-v2t(vector, sep = ", ", quotes = TRUE, and = "")
+v2t(vector, sep = ", ", quotes = TRUE, force_single = FALSE, and = "")
 }
 \arguments{
 \item{vector}{Vector. Vector with more than 1 observation.}
@@ -15,6 +15,8 @@ v2t(vector, sep = ", ", quotes = TRUE, and = "")
 \item{sep}{Character. String text wished to insert between values.}
 
 \item{quotes}{Boolean. Bring simple quotes for each observation.}
+
+\item{force_single}{Boolean. Force single quotes by replacing \code{\"}.}
 
 \item{and}{Character. Add 'and' or something before last observation.
 Not boolean variable so it can be used on other languages. Note that
@@ -32,6 +34,7 @@ vector2text(LETTERS[1:5])
 vector2text(c(1:5), quotes = FALSE)
 vector2text(c(1:5), quotes = FALSE, sep = "-")
 vector2text(c(1:5), and = "and also")
+vector2text(c("Text", "R's"), force_single = TRUE)
 # Shorter function with same purpose
 v2t(LETTERS[1:5])
 }
