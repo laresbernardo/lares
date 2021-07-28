@@ -159,9 +159,9 @@
     <p>Convert a vector into a comma separated text</p>
     </div>
 
-    <pre class="usage"><span class='fu'>vector2text</span><span class='op'>(</span><span class='va'>vector</span>, sep <span class='op'>=</span> <span class='st'>", "</span>, quotes <span class='op'>=</span> <span class='cn'>TRUE</span>, and <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>vector2text</span><span class='op'>(</span><span class='va'>vector</span>, sep <span class='op'>=</span> <span class='st'>", "</span>, quotes <span class='op'>=</span> <span class='cn'>TRUE</span>, force_single <span class='op'>=</span> <span class='cn'>FALSE</span>, and <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span>
 
-<span class='fu'>v2t</span><span class='op'>(</span><span class='va'>vector</span>, sep <span class='op'>=</span> <span class='st'>", "</span>, quotes <span class='op'>=</span> <span class='cn'>TRUE</span>, and <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span></pre>
+<span class='fu'>v2t</span><span class='op'>(</span><span class='va'>vector</span>, sep <span class='op'>=</span> <span class='st'>", "</span>, quotes <span class='op'>=</span> <span class='cn'>TRUE</span>, force_single <span class='op'>=</span> <span class='cn'>FALSE</span>, and <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,6 +177,10 @@
     <tr>
       <th>quotes</th>
       <td><p>Boolean. Bring simple quotes for each observation.</p></td>
+    </tr>
+    <tr>
+      <th>force_single</th>
+      <td><p>Boolean. Force single quotes by replacing <code>\"</code>.</p></td>
     </tr>
     <tr>
       <th>and</th>
@@ -219,7 +223,8 @@ is set to <code>1</code> and you have less than 3 values.</p></td>
 </div><div class='output co'>#&gt; [1] "'A', 'B', 'C', 'D', 'E'"</div><div class='input'><span class='fu'>vector2text</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>, quotes <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "1, 2, 3, 4, 5"</div><div class='input'><span class='fu'>vector2text</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>, quotes <span class='op'>=</span> <span class='cn'>FALSE</span>, sep <span class='op'>=</span> <span class='st'>"-"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "1-2-3-4-5"</div><div class='input'><span class='fu'>vector2text</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>, and <span class='op'>=</span> <span class='st'>"and also"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "1, 2, 3, 4, and also 5"</div><div class='input'><span class='co'># Shorter function with same purpose</span>
+</div><div class='output co'>#&gt; [1] "1, 2, 3, 4, and also 5"</div><div class='input'><span class='fu'>vector2text</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Text"</span>, <span class='st'>"R's"</span><span class='op'>)</span>, force_single <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "'Text', 'R's'"</div><div class='input'><span class='co'># Shorter function with same purpose</span>
 <span class='fu'>v2t</span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "'A', 'B', 'C', 'D', 'E'"</div></pre>
   </div>
