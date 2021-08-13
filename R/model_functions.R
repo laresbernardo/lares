@@ -8,7 +8,7 @@
 #' \href{https://laresbernardo.github.io/lares/articles/h2o_automl.html}{here}.
 #'
 #' @section List of algorithms:
-#' \href{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}{-> Read more here}
+#' \href{https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}{-> Read more here}
 #' \describe{
 #'   \item{DRF}{Distributed Random Forest, including Random Forest (RF)
 #'   and Extremely-Randomized Trees (XRT)}
