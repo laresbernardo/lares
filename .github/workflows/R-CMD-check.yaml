@@ -28,6 +28,7 @@ jobs:
       _R_CHECK_FORCE_SUGGESTS_: false
       _R_CHECK_dontrun_EXAMPLES_: false
       RSPM: ${{ matrix.config.rspm }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2

@@ -84,7 +84,6 @@ dft$no_variance2 <- c("A", rep("B", nrow(dft) - 1))
 dft$no_variance3 <- as.character(rnorm(nrow(dft)))
 dft$no_variance4 <- c(rep("A", 20), round(rnorm(nrow(dft) - 20), 4))
 ohse(dft, limit = 3) \%>\% head(3)
-ohse(dft, limit = 3, var = 1) \%>\% head(3)
 }
 \seealso{
 Other Data Wrangling: 
