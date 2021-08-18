@@ -320,15 +320,7 @@ transformed with one hot encoding.</p>
 #&gt; <span style='color: #BCBCBC;'>1</span>             0    22  7.25              0        0        0          0
 #&gt; <span style='color: #BCBCBC;'>2</span>             1    38 71.3               1        1        0          1
 #&gt; <span style='color: #BCBCBC;'>3</span>             1    26  7.92              1        0        0          0
-#&gt; <span style='color: #949494;'># … with 2 more variables: Embarked_OTHER &lt;dbl&gt;, Embarked_Q &lt;dbl&gt;</span></div><div class='input'><span class='fu'>ohse</span><span class='op'>(</span><span class='va'>dft</span>, limit <span class='op'>=</span> <span class='fl'>3</span>, var <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 5 variables: 'Pclass', 'Embarked', 'no_variance4', 'Survived', 'no_variance2'</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Automatically dropped 2 columns with 0% or &gt;=100% variance: 'no_variance1', 'no_variance3'</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 × 12</span>
-#&gt;   Survived_TRUE   Age  Fare no_variance2_B Pclass_1 Pclass_2 Embarked_C
-#&gt;           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span>             0    22  7.25              0        0        0          0
-#&gt; <span style='color: #BCBCBC;'>2</span>             1    38 71.3               1        1        0          1
-#&gt; <span style='color: #BCBCBC;'>3</span>             1    26  7.92              1        0        0          0
-#&gt; <span style='color: #949494;'># … with 5 more variables: Embarked_OTHER &lt;dbl&gt;, Embarked_Q &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   no_variance4_-0.36 &lt;dbl&gt;, no_variance4_-0.4698 &lt;dbl&gt;, no_variance4_A &lt;dbl&gt;</span></div></pre>
+#&gt; <span style='color: #949494;'># … with 2 more variables: Embarked_OTHER &lt;dbl&gt;, Embarked_Q &lt;dbl&gt;</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
