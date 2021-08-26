@@ -72,6 +72,9 @@ Sys.unsetenv("LARES_FONT") # Temporal
 data("iris")
 df <- subset(iris, select = c(-Species))
 
+# If dataset has +5 columns, feel free to reduce dimenstionalities
+# with reduce_pca() or reduce_tsne() first
+
 # Find optimal k
 check_k <- clusterKmeans(df, limit = 10)
 check_k$nclusters_plot

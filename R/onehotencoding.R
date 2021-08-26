@@ -99,10 +99,12 @@ ohse <- function(df,
   }
 
   # Leave some columns out of the logic
-  if (!is.na(ignore)[1]) {
+  if (isTRUE(!is.na(ignore)[1]) | !is.null(ignore)) {
     if (!quiet) message(">>> Omitting transformations for ", vector2text(ignore))
     ignored <- df %>% select(one_of(ignore))
     df <- df %>% select(-one_of(ignore))
+  } else {
+    ignored <- NULL
   }
 
   # Name and type of variables
@@ -185,11 +187,8 @@ ohse <- function(df,
     df <- df[, c(!colnames(df) %in% c(converted, no_variance))]
   }
 
-  # Bind ignored untouched columns
-  order <- order[order %in% colnames(df)]
-  if (!is.na(ignore)[1]) {
-    df <- df %>% select(one_of(order), everything())
-  }
+  # Bind ignored untouched columns and order
+  df <- bind_cols(df, ignored) %>% select(one_of(order), everything())
 
   return(as_tibble(df))
 }

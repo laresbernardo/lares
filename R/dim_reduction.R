@@ -20,25 +20,26 @@
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data("iris")
 #' df <- subset(iris, select = c(-Species))
-#' reduce_pca(df)
+#' df$id <- 1:nrow(df)
+#' reduce_pca(df, n = 3, ignore = "id")
 #' @export
 reduce_pca <- function(df, n = NULL, ignore = NULL,
                        comb = c(1, 2), quiet = FALSE,
                        plot = TRUE, ...) {
-  ignored <- df[, colnames(df) %in% ignore]
-  dfn <- .reduce_prepare(df, ignore = ignore, ...)
-  df <- ohse(dfn, ...)
+  
+  df <- .reduce_prepare(df, ignore = ignore, ...)
+
   if (sum(is.na(df)) > 0) {
     if (!quiet) message("Replacing NA values with column's means...")
     df <- mutate_all(df, ~ ifelse(is.na(.x), mean(.x, na.rm = TRUE), .x))
   }
 
   PCA <- list()
-  pca <- prcomp(df, center = TRUE, scale. = TRUE, ...)
+  pca <- prcomp(df[, !colnames(df) %in% ignore], center = TRUE, scale. = TRUE, ...)
   PCA$pca_explained <- round(100 * pca$sdev^2 / sum(pca$sdev^2), 4)
   PCA$pcadf <- data.frame(pca$x)[, PCA$pca_explained > 0.1]
   if (!is.null(n)) PCA$pcadf <- PCA$pcadf[, 1:n]
-  PCA$pcadf <- as_tibble(cbind(ignored, PCA$pcadf))
+  PCA$pcadf <- as_tibble(cbind(select(df, any_of(ignore)), PCA$pcadf))
 
   if (plot) {
 
@@ -103,23 +104,23 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
 #' \dontrun{
 #' data("iris")
 #' df <- subset(iris, select = c(-Species))
-#' reduce_tsne(df)
+#' df$id <- 1:nrow(df)
+#' reduce_tsne(df, ignore = "id")
 #' }
 reduce_tsne <- function(df, n = 2, ignore = NULL,
                         quiet = FALSE,
                         plot = TRUE, ...) {
   try_require("Rtsne")
-  ignored <- df[, colnames(df) %in% ignore]
-  df <- .reduce_prepare(df, ignore = ignore, ...)
-  df <- distinct(df)
+  
+  df <- .reduce_prepare(df, ignore = ignore)
 
   tSNE <- list()
 
-  tSNE$tsne <- Rtsne(df, dims = n, verbose = FALSE, ...)
+  tSNE$tsne <- Rtsne(df[, !colnames(df) %in% ignore], dims = n, verbose = FALSE, ...)
 
   tSNE$tsne$df <- as_tibble(
     data.frame(
-      ignored,
+      select(df, any_of(ignore)),
       tSNE$tsne$Y,
       cost = tSNE$tsne$costs
     )
@@ -143,11 +144,12 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
 }
 
 .reduce_prepare <- function(df, ignore = NULL, quiet = FALSE, ...) {
-  df <- df[, !colnames(df) %in% c(zerovar(df), ignore)]
-  df <- ohse(df, quiet = quiet, ...)
+  df <- df[, !colnames(df) %in% c(zerovar(df))]
+  df <- ohse(df, quiet = quiet, ignore = ignore, ...)
+  df <- distinct_at(df, vars(-ignore), .keep_all = TRUE)
   if (sum(is.na(df)) > 0) {
     if (!quiet) message("Replacing NA values with column's means...")
-    df <- mutate_all(df, ~ ifelse(is.na(.x), mean(.x, na.rm = TRUE), .x))
+    df <- mutate_all(df, ~ ifelse(is.na(.x) & is.numeric, mean(.x, na.rm = TRUE), .x))
   }
   return(df)
 }
