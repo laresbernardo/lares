@@ -12,6 +12,7 @@ clusterKmeans(
   ignore = NA,
   ohse = TRUE,
   norm = TRUE,
+  dim_red = "PCA",
   comb = c(1, 2),
   seed = 123,
   quiet = FALSE
@@ -26,13 +27,15 @@ clusterKmeans(
 
 \item{drop_na}{Boolean. Should NA rows be removed?}
 
-\item{ignore}{Character vector. Which columns should be excluded
-when calculating kmeans?}
+\item{ignore}{Character vector. Names of columns to ignore.}
 
 \item{ohse}{Boolean. Do you wish to automatically run one hot
 encoding to non-numerical columns?}
 
 \item{norm}{Boolean. Should the data be normalized?}
+
+\item{dim_red}{Character. Select dimentionality reduction technique.
+Any of: \code{c("PCA", "tSNE")}.}
 
 \item{comb}{Vector. Which columns do you wish to plot? Select which
 two variables by name or column position.}
@@ -51,7 +54,8 @@ Groups Sum of Squares). If \code{k} is provided, additionally we get:
   \item \code{fit} kmeans object used to fit clusters
   \item \code{means} data.frame with means and counts for each cluster
   \item \code{correlations} plot with correlations grouped by clusters
-  \item \code{PCA} list with PCA results
+  \item \code{PCA} list with PCA results (when \code{dim_red="PCA"})
+  \item \code{tSNE} list with t-SNE results (when \code{dim_red="tSNE"})
 }
 }
 \description{
@@ -81,13 +85,13 @@ names(clusters)
 # Cross-Correlations for each cluster
 plot(clusters$correlations)
 
-# PCA Results
+# PCA Results (when dim_red="PCA")
 plot(clusters$PCA$plotVarExp)
 plot(clusters$PCA$plot_1_2)
 
+\dontrun{
 # You must have "ggforce" library to use this auxiliary function:
 # 3D interactive plot
-\dontrun{
 clusters$PCA$plot_1_2_3
 }
 }
