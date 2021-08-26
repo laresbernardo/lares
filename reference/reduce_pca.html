@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Visualize K-Means Clusters for Several K — clusterVisualK • lares</title>
+<title>Reduce Dimensionality with PCA — reduce_pca • lares</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,8 +52,15 @@
 
 
 
-<meta property="og:title" content="Visualize K-Means Clusters for Several K — clusterVisualK" />
-<meta property="og:description" content="Visualize cluster data for assorted values of k." />
+<meta property="og:title" content="Reduce Dimensionality with PCA — reduce_pca" />
+<meta property="og:description" content="Principal component analysis or (PCA) is a method we can use to
+reduce high-dimensional data to a low-dimensional space. In other words,
+we cannot accurately visualize high-dimensional datasets because
+we cannot visualize anything above 3 features. The main purpose behind
+PCA is to transform datasets with more than 3 features (high-dimensional)
+into typically a 2/3 column dataset. Despite the reduction into a
+lower-dimensional space we still can retain most of the variance or
+information from our original dataset." />
 <meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png" />
 
 
@@ -150,16 +157,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Visualize K-Means Clusters for Several K</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/clusters.R'><code>R/clusters.R</code></a></small>
-    <div class="hidden name"><code>clusterVisualK.Rd</code></div>
+    <h1>Reduce Dimensionality with PCA</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/dim_reduction.R'><code>R/dim_reduction.R</code></a></small>
+    <div class="hidden name"><code>reduce_pca.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Visualize cluster data for assorted values of k.</p>
+    <p>Principal component analysis or (PCA) is a method we can use to
+reduce high-dimensional data to a low-dimensional space. In other words,
+we cannot accurately visualize high-dimensional datasets because
+we cannot visualize anything above 3 features. The main purpose behind
+PCA is to transform datasets with more than 3 features (high-dimensional)
+into typically a 2/3 column dataset. Despite the reduction into a
+lower-dimensional space we still can retain most of the variance or
+information from our original dataset.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>clusterVisualK</span><span class='op'>(</span><span class='va'>df</span>, ks <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>reduce_pca</span><span class='op'>(</span>
+  <span class='va'>df</span>,
+  n <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ignore <span class='op'>=</span> <span class='cn'>NULL</span>,
+  comb <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,59 +191,66 @@
       <td><p>Dataframe</p></td>
     </tr>
     <tr>
-      <th>ks</th>
-      <td><p>Integer vector. Which k should be tested?</p></td>
+      <th>n</th>
+      <td><p>Integer. Number of dimensions to reduce to.</p></td>
+    </tr>
+    <tr>
+      <th>ignore</th>
+      <td><p>Character vector. Names of columns to ignore.</p></td>
+    </tr>
+    <tr>
+      <th>comb</th>
+      <td><p>Vector. Which columns do you wish to plot? Select which
+two variables by name or column position.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Boolean. Keep quiet? If not, print messages.</p></td>
+    </tr>
+    <tr>
+      <th>plot</th>
+      <td><p>Boolean. Create plots?</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional parameters passed to <code>clusterKmeans</code></p></td>
+      <td><p>Additional parameters passed to <code><a href='https://rdrr.io/r/stats/prcomp.html'>stats::prcomp</a></code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>List. Plot and data.frame results of clustering <code>df</code>
-data.frame into <code>ks</code> integer clusters.</p>
+    <p>List with reduced dataframe and possible plots.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Clusters: 
-<code><a href='clusterKmeans.html'>clusterKmeans</a>()</code>,
-<code><a href='clusterOptimalK.html'>clusterOptimalK</a>()</code></p></div>
+    <div class='dont-index'><p>Other Dimensionality: 
+<code><a href='reduce_tsne.html'>reduce_tsne</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.unsetenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span> <span class='co'># Temporal</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"iris"</span><span class='op'>)</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># Calculate and plot</span>
-<span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'>clusterVisualK</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Dimentionality reduction techinque: PCA</span></div><div class='output co'>#&gt; <span class='message'>Dimentionality reduction techinque: PCA</span></div><div class='output co'>#&gt; <span class='message'>Dimentionality reduction techinque: PCA</span></div><div class='output co'>#&gt; <span class='message'>Dimentionality reduction techinque: PCA</span></div><div class='output co'>#&gt; <span class='message'>Dimentionality reduction techinque: PCA</span></div><div class='output co'>#&gt; <span class='message'>Dimentionality reduction techinque: PCA</span></div><div class='input'>
-<span class='co'># You can use the data generated as well</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>result</span><span class='op'>$</span><span class='va'>data</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>cluster</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 1 1 1 1 1 1
-#&gt; Levels: 1
+<span class='fu'>reduce_pca</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $pca_explained
+#&gt; [1] 72.9624 22.8508  3.6689  0.5179
 #&gt; 
-#&gt; [[2]]
-#&gt; [1] 2 2 2 2 2 2
-#&gt; Levels: 1 2
+#&gt; $pcadf
+#&gt; <span style='color: #949494;'># A tibble: 150 × 4</span>
+#&gt;      PC1     PC2     PC3      PC4
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> -<span style='color: #BB0000;'>2.26</span> -<span style='color: #BB0000;'>0.478</span>   0.127   0.024<span style='text-decoration: underline;'>1</span> 
+#&gt; <span style='color: #BCBCBC;'> 2</span> -<span style='color: #BB0000;'>2.07</span>  0.672   0.234   0.103  
+#&gt; <span style='color: #BCBCBC;'> 3</span> -<span style='color: #BB0000;'>2.36</span>  0.341  -<span style='color: #BB0000;'>0.044</span><span style='color: #BB0000; text-decoration: underline;'>1</span>  0.028<span style='text-decoration: underline;'>3</span> 
+#&gt; <span style='color: #BCBCBC;'> 4</span> -<span style='color: #BB0000;'>2.29</span>  0.595  -<span style='color: #BB0000;'>0.091</span><span style='color: #BB0000; text-decoration: underline;'>0</span> -<span style='color: #BB0000;'>0.065</span><span style='color: #BB0000; text-decoration: underline;'>7</span> 
+#&gt; <span style='color: #BCBCBC;'> 5</span> -<span style='color: #BB0000;'>2.38</span> -<span style='color: #BB0000;'>0.645</span>  -<span style='color: #BB0000;'>0.015</span><span style='color: #BB0000; text-decoration: underline;'>7</span> -<span style='color: #BB0000;'>0.035</span><span style='color: #BB0000; text-decoration: underline;'>8</span> 
+#&gt; <span style='color: #BCBCBC;'> 6</span> -<span style='color: #BB0000;'>2.07</span> -<span style='color: #BB0000;'>1.48</span>   -<span style='color: #BB0000;'>0.026</span><span style='color: #BB0000; text-decoration: underline;'>9</span>  0.006<span style='text-decoration: underline;'>59</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span> -<span style='color: #BB0000;'>2.44</span> -<span style='color: #BB0000;'>0.047</span><span style='color: #BB0000; text-decoration: underline;'>5</span> -<span style='color: #BB0000;'>0.334</span>  -<span style='color: #BB0000;'>0.036</span><span style='color: #BB0000; text-decoration: underline;'>7</span> 
+#&gt; <span style='color: #BCBCBC;'> 8</span> -<span style='color: #BB0000;'>2.23</span> -<span style='color: #BB0000;'>0.222</span>   0.088<span style='text-decoration: underline;'>4</span> -<span style='color: #BB0000;'>0.024</span><span style='color: #BB0000; text-decoration: underline;'>5</span> 
+#&gt; <span style='color: #BCBCBC;'> 9</span> -<span style='color: #BB0000;'>2.33</span>  1.11   -<span style='color: #BB0000;'>0.145</span>  -<span style='color: #BB0000;'>0.026</span><span style='color: #BB0000; text-decoration: underline;'>8</span> 
+#&gt; <span style='color: #BCBCBC;'>10</span> -<span style='color: #BB0000;'>2.18</span>  0.467   0.253  -<span style='color: #BB0000;'>0.039</span><span style='color: #BB0000; text-decoration: underline;'>8</span> 
+#&gt; <span style='color: #949494;'># … with 140 more rows</span>
 #&gt; 
-#&gt; [[3]]
-#&gt; [1] 2 3 3 3 2 2
-#&gt; Levels: 1 2 3
-#&gt; 
-#&gt; [[4]]
-#&gt; [1] 2 3 3 3 2 2
-#&gt; Levels: 1 2 3 4
-#&gt; 
-#&gt; [[5]]
-#&gt; [1] 2 3 3 3 2 2
-#&gt; Levels: 1 2 3 4 5
-#&gt; 
-#&gt; [[6]]
-#&gt; [1] 6 3 3 3 6 2
-#&gt; Levels: 1 2 3 4 5 6
-#&gt; </div></pre>
+#&gt; $plot_explained</div><div class='img'><img src='reduce_pca-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; $plot_2D</div><div class='img'><img src='reduce_pca-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -179,6 +179,7 @@ when clusters are in different shapes such as elliptical clusters.</p>
   ignore <span class='op'>=</span> <span class='cn'>NA</span>,
   ohse <span class='op'>=</span> <span class='cn'>TRUE</span>,
   norm <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  dim_red <span class='op'>=</span> <span class='st'>"PCA"</span>,
   comb <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>,
   seed <span class='op'>=</span> <span class='fl'>123</span>,
   quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
@@ -205,8 +206,7 @@ when clusters are in different shapes such as elliptical clusters.</p>
     </tr>
     <tr>
       <th>ignore</th>
-      <td><p>Character vector. Which columns should be excluded
-when calculating kmeans?</p></td>
+      <td><p>Character vector. Names of columns to ignore.</p></td>
     </tr>
     <tr>
       <th>ohse</th>
@@ -216,6 +216,11 @@ encoding to non-numerical columns?</p></td>
     <tr>
       <th>norm</th>
       <td><p>Boolean. Should the data be normalized?</p></td>
+    </tr>
+    <tr>
+      <th>dim_red</th>
+      <td><p>Character. Select dimentionality reduction technique.
+Any of: <code><a href='https://rdrr.io/r/base/c.html'>c("PCA", "tSNE")</a></code>.</p></td>
     </tr>
     <tr>
       <th>comb</th>
@@ -242,7 +247,8 @@ Groups Sum of Squares). If <code>k</code> is provided, additionally we get:</p><
 <li><p><code>fit</code> kmeans object used to fit clusters</p></li>
 <li><p><code>means</code> data.frame with means and counts for each cluster</p></li>
 <li><p><code>correlations</code> plot with correlations grouped by clusters</p></li>
-<li><p><code>PCA</code> list with PCA results</p></li>
+<li><p><code>PCA</code> list with PCA results (when <code>dim_red="PCA"</code>)</p></li>
+<li><p><code>tSNE</code> list with t-SNE results (when <code>dim_red="tSNE"</code>)</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -264,19 +270,19 @@ Groups Sum of Squares). If <code>k</code> is provided, additionally we get:</p><
 
 <span class='co'># Run with selected k</span>
 <span class='va'>clusters</span> <span class='op'>&lt;-</span> <span class='fu'>clusterKmeans</span><span class='op'>(</span><span class='va'>df</span>, k <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>clusters</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Dimentionality reduction techinque: PCA</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>clusters</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "nclusters"      "nclusters_plot" "df"             "clusters"      
 #&gt; [5] "fit"            "means"          "correlations"   "PCA"           </div><div class='input'>
 <span class='co'># Cross-Correlations for each cluster</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>clusters</span><span class='op'>$</span><span class='va'>correlations</span><span class='op'>)</span>
 </div><div class='img'><img src='clusterKmeans-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># PCA Results</span>
+<span class='co'># PCA Results (when dim_red="PCA")</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>clusters</span><span class='op'>$</span><span class='va'>PCA</span><span class='op'>$</span><span class='va'>plotVarExp</span><span class='op'>)</span>
 </div><div class='img'><img src='clusterKmeans-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>clusters</span><span class='op'>$</span><span class='va'>PCA</span><span class='op'>$</span><span class='va'>plot_1_2</span><span class='op'>)</span>
 </div><div class='img'><img src='clusterKmeans-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># You must have "ggforce" library to use this auxiliary function:</span>
 <span class='co'># 3D interactive plot</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='va'>clusters</span><span class='op'>$</span><span class='va'>PCA</span><span class='op'>$</span><span class='va'>plot_1_2_3</span>
 <span class='op'>}</span>
 </div></pre>
