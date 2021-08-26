@@ -33,7 +33,8 @@ based on the distance between points instead of trying to maximize variance.
 \dontrun{
 data("iris")
 df <- subset(iris, select = c(-Species))
-reduce_tsne(df)
+df$id <- 1:nrow(df)
+reduce_tsne(df, ignore = "id")
 }
 }
 \seealso{

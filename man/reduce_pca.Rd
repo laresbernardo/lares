@@ -47,7 +47,8 @@ information from our original dataset.
 Sys.unsetenv("LARES_FONT") # Temporal
 data("iris")
 df <- subset(iris, select = c(-Species))
-reduce_pca(df)
+df$id <- 1:nrow(df)
+reduce_pca(df, n = 3, ignore = "id")
 }
 \seealso{
 Other Dimensionality: 

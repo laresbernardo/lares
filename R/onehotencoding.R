@@ -73,6 +73,15 @@ ohse <- function(df,
   # Dummy variables that will be filled
   no_need_to_convert <- converted <- converted_binary <- NULL
 
+  # Leave some columns out of the logic
+  if (isTRUE(!is.na(ignore)[1]) | !is.null(ignore)) {
+    if (!quiet) message(">>> Omitting transformations for ", vector2text(ignore))
+    ignored <- df %>% select(one_of(ignore))
+    df <- df %>% select(-one_of(ignore))
+  } else {
+    ignored <- NULL
+  }
+
   # No variance columns
   no_variance <- zerovar(df)
   if (drop) {
@@ -96,15 +105,6 @@ ohse <- function(df,
         df <- left_join(df, df_dates, by = as.character(times[1])) %>% distinct()
       }
     }
-  }
-
-  # Leave some columns out of the logic
-  if (isTRUE(!is.na(ignore)[1]) | !is.null(ignore)) {
-    if (!quiet) message(">>> Omitting transformations for ", vector2text(ignore))
-    ignored <- df %>% select(one_of(ignore))
-    df <- df %>% select(-one_of(ignore))
-  } else {
-    ignored <- NULL
   }
 
   # Name and type of variables
@@ -188,6 +188,7 @@ ohse <- function(df,
   }
 
   # Bind ignored untouched columns and order
+  order <- order[order %in% colnames(df)]
   df <- bind_cols(df, ignored) %>% select(one_of(order), everything())
 
   return(as_tibble(df))
@@ -223,9 +224,9 @@ ohse <- function(df,
 ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
   vars <- quos(...)
   var <- gsub("~", "", as.character(vars))
-  
+
   df <- as.data.frame(df)
-  
+
   for (i in var) {
     df$temp <- as.character(df[, i])
     # Handling missingness
@@ -467,7 +468,9 @@ holidays <- function(countries = "Venezuela", years = year(Sys.Date())) {
       {
         if (length(unique(countries)) > 1) {
           mutate(., country = combs$country[i])
-        } else .
+        } else {
+          .
+        }
       }
     result$county <- combs$country[i]
     results <- bind_rows(results, result)

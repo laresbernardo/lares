@@ -26,7 +26,6 @@
 reduce_pca <- function(df, n = NULL, ignore = NULL,
                        comb = c(1, 2), quiet = FALSE,
                        plot = TRUE, ...) {
-  
   df <- .reduce_prepare(df, ignore = ignore, ...)
 
   if (sum(is.na(df)) > 0) {
@@ -38,18 +37,19 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
   pca <- prcomp(df[, !colnames(df) %in% ignore], center = TRUE, scale. = TRUE, ...)
   PCA$pca_explained <- round(100 * pca$sdev^2 / sum(pca$sdev^2), 4)
   PCA$pcadf <- data.frame(pca$x)[, PCA$pca_explained > 0.1]
+  PCA$pcadf <- as_tibble(cbind(select(df, one_of(ignore)), PCA$pcadf))
   if (!is.null(n)) PCA$pcadf <- PCA$pcadf[, 1:n]
-  PCA$pcadf <- as_tibble(cbind(select(df, any_of(ignore)), PCA$pcadf))
 
   if (plot) {
 
     # How much variance is explained by n PCA features?
-    PCA$plot_explained <- data.frame(id = seq_along(PCA$pca_explained)) %>%
+    pca_explained <- PCA$pca_explained
+    PCA$plot_explained <- data.frame(id = seq_along(pca_explained)) %>%
       mutate(
         PC = factor(paste0("PC", .data$id),
-          levels = paste0("PC", seq_along(PCA$pca_explained))
+          levels = paste0("PC", seq_along(pca_explained))
         ),
-        amount = PCA$pca_explained
+        amount = pca_explained
       ) %>%
       mutate(aux = cumsum(.data$amount)) %>%
       ggplot(aes(x = .data$id, y = .data$aux)) +
@@ -61,13 +61,12 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
         subtitle = "Percentage of Variation Explained by Components",
         y = "Cumulative variation explained [%]", x = "PC(i)"
       ) +
-      scale_x_continuous(expand = c(0, 1)) +
       theme_lares()
 
     # Two most relevant PCAs xy plot
     temp <- PCA$pcadf[, comb]
     colnames(temp) <- c("PC1", "PC2")
-    explained <- formatNum(PCA$pca_explained, 1, pos = "%")
+    explained <- formatNum(pca_explained, 1, pos = "%")
     PCA$plot_2D <- ggplot(PCA$pcadf, aes(x = .data$PC1, y = .data$PC2)) +
       geom_point() +
       labs(
@@ -76,7 +75,7 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
         y = sprintf("PCA Dimension %s", comb[2]),
         caption = sprintf(
           "Explaining %s of the variance with 2 PCA:\nPC%s (%s), PC%s (%s)",
-          formatNum(sum(PCA$pca_explained[1:2]), 1, pos = "%"),
+          formatNum(sum(pca_explained[1:2]), 1, pos = "%"),
           comb[1], explained[comb[1]], comb[2], explained[comb[2]]
         )
       ) +
@@ -111,8 +110,8 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
                         quiet = FALSE,
                         plot = TRUE, ...) {
   try_require("Rtsne")
-  
-  df <- .reduce_prepare(df, ignore = ignore)
+
+  df <- .reduce_prepare(df, ignore = ignore, ...)
 
   tSNE <- list()
 
@@ -120,7 +119,7 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
 
   tSNE$tsne$df <- as_tibble(
     data.frame(
-      select(df, any_of(ignore)),
+      select(df, one_of(ignore)),
       tSNE$tsne$Y,
       cost = tSNE$tsne$costs
     )
@@ -146,10 +145,11 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
 .reduce_prepare <- function(df, ignore = NULL, quiet = FALSE, ...) {
   df <- df[, !colnames(df) %in% c(zerovar(df))]
   df <- ohse(df, quiet = quiet, ignore = ignore, ...)
-  df <- distinct_at(df, vars(-ignore), .keep_all = TRUE)
+  temp <- colnames(df)[!colnames(df) %in% ignore]
+  df <- distinct_at(df, all_of(temp), .keep_all = TRUE)
   if (sum(is.na(df)) > 0) {
-    if (!quiet) message("Replacing NA values with column's means...")
-    df <- mutate_all(df, ~ ifelse(is.na(.x) & is.numeric, mean(.x, na.rm = TRUE), .x))
+    if (!quiet) message(">>> Replacing NA values with column's means...")
+    df <- mutate_all(df, ~ ifelse(is.na(.x), mean(.x, na.rm = TRUE), .x))
   }
   return(df)
 }

@@ -76,12 +76,12 @@ distr <- function(data, ...,
                   chords = FALSE,
                   save = FALSE,
                   subdir = NA) {
-  
+
   # # To handle scientific notation inputs correctly
   # on.exit(options("scipen" = 999))
 
   data <- data.frame(data)
-  
+
   vars <- enquos(...)
   var1 <- vars[[1]]
   if (length(vars) > 1) {
@@ -89,7 +89,7 @@ distr <- function(data, ...,
   } else {
     var2 <- NULL
   }
-  
+
   # When we only have one variable, use freqs()
   if (length(vars) == 1) {
     value <- select(data, !!var1)
@@ -98,10 +98,10 @@ distr <- function(data, ...,
     value <- .force_class(value, force)
     value <- .fxtrim(value, trim)
     value <- .fxclean(value, clean)
-    
+
     df <- data.frame(value = value, dummy = 0)
     df <- .fxna_rm(df, na.rm)
-    
+
     is.Date <- function(x) inherits(x, "Date")
     is.POSIXct <- function(x) inherits(x, "POSIXct")
     is.POSIXlt <- function(x) inherits(x, "POSIXlt")
@@ -152,7 +152,7 @@ distr <- function(data, ...,
       stop(msg)
     }
   }
-  
+
   targets <- select(data, !!var1)
   targets_name <- colnames(targets)
   targets <- targets[, 1]
@@ -163,7 +163,7 @@ distr <- function(data, ...,
   value <- .force_class(value, force)
   value <- .fxtrim(value, trim)
   value <- .fxclean(value, clean)
-  
+
   if (length(targets) != length(value)) {
     message("The targets and value vectors should be the same length.")
     stop(message(paste(
@@ -171,7 +171,7 @@ distr <- function(data, ...,
       "rows and value has", length(value)
     )))
   }
-  
+
   # For num-num distributions or too many unique target variables
   if (length(unique(targets)) >= 8) {
     if (is.numeric(targets) & is.numeric(value)) {
@@ -198,7 +198,7 @@ distr <- function(data, ...,
     message("Automatically trying a chords plot...")
     chords <- TRUE
   }
-  
+
   # Chords plot
   if (chords) {
     df <- data.frame(value = value, targets = targets)
@@ -216,12 +216,12 @@ distr <- function(data, ...,
       mg = 13, title = title, subtitle = subtitle
     ))
   }
-  
+
   # Only n numeric values, really numeric?
   if (is.numeric(value) & length(unique(value)) <= 8) {
     value <- .force_class(value, class = "char")
   }
-  
+
   # Turn numeric variables into quantiles
   if (is.numeric(value)) {
     breaks <- ifelse(top != 10, top, breaks)
@@ -235,17 +235,17 @@ distr <- function(data, ...,
     }
     top <- top + 1
   }
-  
+
   # Finally, we have our data.frame
   df <- data.frame(targets = targets, value = value)
   df <- .fxna_rm(df, na.rm)
-  
+
   # Captions for plots
   subtitle <- paste0(
     "Variables: ", targets_name, " vs. ", variable_name,
     ". Obs: ", formatNum(nrow(df), 0)
   )
-  
+
   freqs <- df %>%
     group_by(.data$targets, .data$value) %>%
     count() %>%
@@ -282,10 +282,10 @@ distr <- function(data, ...,
         order = row_number()
       )
   }
-  
+
   # Sort values alphabetically or ascending if numeric
   if (abc) freqs <- mutate(freqs, order = rank(.data$value))
-  
+
   # Counter plot
   if (type %in% c(1, 2)) {
     vadj <- ifelse(type == 1, -0.15, 0.5)
@@ -318,7 +318,7 @@ distr <- function(data, ...,
         suppressWarnings(gg_fill_customs())
     }
   }
-  
+
   # Proportions (%) plot
   if (type %in% c(1, 3)) {
     prop <- freqs %>%
@@ -332,7 +332,7 @@ distr <- function(data, ...,
       )) +
       geom_col(position = "fill", colour = "transparent") +
       geom_text(aes(size = .data$size, colour = as.character(.data$targets)),
-                position = position_stack(vjust = 0.5)
+        position = position_stack(vjust = 0.5)
       ) +
       scale_size(range = c(2.2, 3)) +
       coord_flip() +
@@ -342,7 +342,7 @@ distr <- function(data, ...,
       scale_y_percent(expand = c(0, 0)) +
       theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
       theme_lares(pal = 1)
-    
+
     # Show a reference line if levels = 2; quite useful when data is unbalanced (not 50/50)
     if (length(unique(targets)) == 2 & ref) {
       distr <- df %>%
@@ -355,7 +355,7 @@ distr <- function(data, ...,
           linetype = "dotted", alpha = 0.8
         ) +
         geom_label(aes(0, h / 100, label = h, vjust = -0.05),
-                   size = 2.5, fill = "white", alpha = 0.8
+          size = 2.5, fill = "white", alpha = 0.8
         )
     }
     # Custom colours if wanted...
@@ -364,7 +364,7 @@ distr <- function(data, ...,
         suppressMessages(gg_fill_customs())
     }
   }
-  
+
   # Export file name and folder
   if (save) {
     file_name <- paste0(
@@ -378,7 +378,7 @@ distr <- function(data, ...,
       file_name <- paste(subdir, file_name, sep = "/")
     }
   }
-  
+
   # Plot the results and save if needed
   if (type == 1) {
     count <- count + labs(
@@ -402,7 +402,7 @@ distr <- function(data, ...,
     if (save) prop <- prop + ggsave(file_name, width = 8, height = 6)
     p <- prop
   }
-  
+
   if (!plot) {
     return(select(freqs, -.data$order, -.data$row))
   } else {
@@ -469,10 +469,10 @@ distr <- function(data, ...,
 
 # Unquoting language objects with `!!!` is deprecated as of rlang 0.4.0.
 # Please use `!!` instead.
-# 
+#
 # # Bad:
 # dplyr::select(data, !!!enquo(x))
-# 
+#
 # # Good:
 # dplyr::select(data, !!enquo(x))    # Unquote single quosure
 # dplyr::select(data, !!!enquos(x))  # Splice list of quosures

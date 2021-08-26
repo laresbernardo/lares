@@ -243,7 +243,7 @@ vector2text <- function(vector, sep = ", ", quotes = TRUE, force_single = FALSE,
       substr(output, last_comma + 1, nchar(output))
     )
   }
-  
+
   if (force_single) {
     output <- gsub('"', "'", output)
     output <- gsub('\"', "'", output)

@@ -91,7 +91,6 @@ plot(clusters$correlations)
 # PCA Results (when dim_red="PCA")
 plot(clusters$PCA$plotVarExp)
 plot(clusters$PCA$plot_1_2)
-
 \dontrun{
 # You must have "ggforce" library to use this auxiliary function:
 # 3D interactive plot

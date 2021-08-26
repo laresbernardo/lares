@@ -722,7 +722,7 @@ splot_growth <- function(p, save = FALSE) {
       yintercept = max(aux$Amount), size = 0.2,
       linetype = "dashed", colour = "#3DA4AB"
     )
-  
+
   points <- aux[!is.na(aux$Cash) & aux$Cash != 0, ]
   if (nrow(points) > 0) {
     plot <- plot +
