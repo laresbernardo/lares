@@ -53,5 +53,12 @@ reduce_pca(df, n = 3, ignore = "id")
 \seealso{
 Other Dimensionality: 
 \code{\link{reduce_tsne}()}
+
+Other Clusters: 
+\code{\link{clusterKmeans}()},
+\code{\link{clusterOptimalK}()},
+\code{\link{clusterVisualK}()},
+\code{\link{reduce_tsne}()}
 }
+\concept{Clusters}
 \concept{Dimensionality}

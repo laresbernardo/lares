@@ -2,7 +2,7 @@
 % Please edit documentation in R/clusters.R
 \name{clusterKmeans}
 \alias{clusterKmeans}
-\title{Automated K-Means Clustering + PCA}
+\title{Automated K-Means Clustering + PCA/t-SNE}
 \usage{
 clusterKmeans(
   df,
@@ -15,7 +15,8 @@ clusterKmeans(
   dim_red = "PCA",
   comb = c(1, 2),
   seed = 123,
-  quiet = FALSE
+  quiet = FALSE,
+  ...
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ two variables by name or column position.}
 \item{seed}{Numeric. Seed for reproducibility}
 
 \item{quiet}{Boolean. Keep quiet? If not, print messages.}
+
+\item{...}{Additional parameters to pass sub-functions.}
 }
 \value{
 List. If no \code{k} is provided, contains \code{nclusters} and
@@ -90,12 +93,14 @@ names(clusters)
 plot(clusters$correlations)
 
 # PCA Results (when dim_red = "PCA")
-plot(clusters$PCA$plot_2D)
 plot(clusters$PCA$plot_explained)
+plot(clusters$PCA$plot_2D)
 }
 \seealso{
 Other Clusters: 
 \code{\link{clusterOptimalK}()},
-\code{\link{clusterVisualK}()}
+\code{\link{clusterVisualK}()},
+\code{\link{reduce_pca}()},
+\code{\link{reduce_tsne}()}
 }
 \concept{Clusters}

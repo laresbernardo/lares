@@ -51,6 +51,8 @@ clusterOptimalK(df)
 \seealso{
 Other Clusters: 
 \code{\link{clusterKmeans}()},
-\code{\link{clusterVisualK}()}
+\code{\link{clusterVisualK}()},
+\code{\link{reduce_pca}()},
+\code{\link{reduce_tsne}()}
 }
 \concept{Clusters}

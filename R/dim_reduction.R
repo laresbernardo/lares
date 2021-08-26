@@ -11,6 +11,7 @@
 #' information from our original dataset.
 #'
 #' @family Dimensionality
+#' @family Clusters
 #' @inheritParams clusterKmeans
 #' @param n Integer. Number of dimensions to reduce to.
 #' @param plot Boolean. Create plots?
@@ -96,6 +97,7 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
 #' based on the distance between points instead of trying to maximize variance.
 #'
 #' @family Dimensionality
+#' @family Clusters
 #' @inheritParams reduce_pca
 #' @param ... Additional parameters passed to \code{Rtsne::Rtsne}
 #' @return List with reduced dataframe and possible plots.

@@ -1,5 +1,5 @@
 ####################################################################
-#' Automated K-Means Clustering + PCA
+#' Automated K-Means Clustering + PCA/t-SNE
 #'
 #' This function lets the user cluster a whole data.frame automatically.
 #' As you might know, the goal of kmeans is to group data points into
@@ -24,6 +24,7 @@
 #' two variables by name or column position.
 #' @param seed Numeric. Seed for reproducibility
 #' @param quiet Boolean. Keep quiet? If not, print messages.
+#' @param ... Additional parameters to pass sub-functions.
 #' @return List. If no \code{k} is provided, contains \code{nclusters} and
 #' \code{nclusters_plot} to determine optimal \code{k} given their WSS (Within
 #' Groups Sum of Squares). If \code{k} is provided, additionally we get:
@@ -59,13 +60,14 @@
 #' plot(clusters$correlations)
 #'
 #' # PCA Results (when dim_red = "PCA")
-#' plot(clusters$PCA$plot_2D)
 #' plot(clusters$PCA$plot_explained)
+#' plot(clusters$PCA$plot_2D)
 #' @export
 clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
                           ignore = NA, ohse = TRUE, norm = TRUE,
                           dim_red = "PCA",
-                          comb = c(1, 2), seed = 123, quiet = FALSE) {
+                          comb = c(1, 2), seed = 123,
+                          quiet = FALSE, ...) {
   on.exit(set.seed(seed))
   check_opts(dim_red, c("PCA", "tSNE", "all"))
   if ("all" %in% dim_red) dim_red <- c("PCA", "tSNE")
@@ -130,7 +132,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     # Dim reduction: PCA
     if ("PCA" %in% dim_red) {
       if (!quiet) message("Dimensionality reduction techinque: PCA")
-      PCA <- reduce_pca(df, ignore = ignore, comb = comb, quiet = quiet)
+      PCA <- reduce_pca(df, ignore = ignore, comb = comb, quiet = quiet, ...)
       PCA$plot_2D <- PCA$plot_2D +
         geom_point(aes(colour = df$cluster)) +
         labs(colour = "Cluster", title = "Clusters with Principal Component Analysis")
@@ -162,7 +164,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     # Dim reduction: t-SNE
     if ("tSNE" %in% dim_red) {
       if (!quiet) message("Dimensionality reduction techinque: t-SNE")
-      tsne <- reduce_tsne(df, ignore = ignore, quiet = quiet)
+      tsne <- reduce_tsne(df, ignore = ignore, quiet = quiet, ...)
       tsne$plot <- tsne$plot +
         geom_point(aes(colour = df$cluster)) +
         labs(colour = "Cluster", title = "Clusters with t-SNE")

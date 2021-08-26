@@ -40,5 +40,12 @@ reduce_tsne(df, ignore = "id", max_iter = 800, perplexity = 20)
 \seealso{
 Other Dimensionality: 
 \code{\link{reduce_pca}()}
+
+Other Clusters: 
+\code{\link{clusterKmeans}()},
+\code{\link{clusterOptimalK}()},
+\code{\link{clusterVisualK}()},
+\code{\link{reduce_pca}()}
 }
+\concept{Clusters}
 \concept{Dimensionality}

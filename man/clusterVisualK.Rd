@@ -34,6 +34,8 @@ lapply(result$data, function(x) head(x$cluster))
 \seealso{
 Other Clusters: 
 \code{\link{clusterKmeans}()},
-\code{\link{clusterOptimalK}()}
+\code{\link{clusterOptimalK}()},
+\code{\link{reduce_pca}()},
+\code{\link{reduce_tsne}()}
 }
 \concept{Clusters}
