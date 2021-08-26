@@ -18,8 +18,8 @@
 #' @param ohse Boolean. Do you wish to automatically run one hot
 #' encoding to non-numerical columns?
 #' @param norm Boolean. Should the data be normalized?
-#' @param dim_red Character. Select dimentionality reduction technique.
-#' Any of: \code{c("PCA", "tSNE")}.
+#' @param dim_red Character. Select dimensionality reduction technique.
+#' Pass any of: \code{c("PCA", "tSNE", "all")}.
 #' @param comb Vector. Which columns do you wish to plot? Select which
 #' two variables by name or column position.
 #' @param seed Numeric. Seed for reproducibility
@@ -40,6 +40,7 @@
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data("iris")
 #' df <- subset(iris, select = c(-Species))
+#' print(head(df))
 #'
 #' # If dataset has +5 columns, feel free to reduce dimenstionalities
 #' # with reduce_pca() or reduce_tsne() first
@@ -57,23 +58,19 @@
 #' # Cross-Correlations for each cluster
 #' plot(clusters$correlations)
 #'
-#' # PCA Results (when dim_red="PCA")
-#' plot(clusters$PCA$plotVarExp)
-#' plot(clusters$PCA$plot_1_2)
-#' \dontrun{
-#' # You must have "ggforce" library to use this auxiliary function:
-#' # 3D interactive plot
-#' clusters$PCA$plot_1_2_3
-#' }
+#' # PCA Results (when dim_red = "PCA")
+#' plot(clusters$PCA$plot_2D)
+#' plot(clusters$PCA$plot_explained)
 #' @export
 clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
                           ignore = NA, ohse = TRUE, norm = TRUE,
                           dim_red = "PCA",
                           comb = c(1, 2), seed = 123, quiet = FALSE) {
   on.exit(set.seed(seed))
-  check_opts(dim_red, c("PCA", "tSNE"))
+  check_opts(dim_red, c("PCA", "tSNE", "all"))
+  if ("all" %in% dim_red) dim_red <- c("PCA", "tSNE")
   df <- .prepare_data(df, drop_na = drop_na, ohse = ohse, norm = norm, quiet = quiet)
-
+  
   # Ignore some columns
   if (!is.na(ignore)[1]) {
     order <- colnames(df)
@@ -81,9 +78,9 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     df <- df[, !colnames(df) %in% ignore]
     if (!quiet) message(paste("Ignored only for kmeans:", v2t(ignore)))
   }
-
+  
   results <- list()
-
+  
   # Determine number of clusters (n) using WSS methodology
   wss <- sum(apply(df, 2, var)) * (nrow(df) - 1)
   for (i in 2:limit) wss[i] <- sum(kmeans(df, centers = i)$withinss)
@@ -101,19 +98,20 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     theme_lares()
   results[["nclusters"]] <- nclusters
   results[["nclusters_plot"]] <- nclusters_plot
-
+  
   # If n is already selected
   if (!is.na(k)) {
-    if (!is.na(ignore)[1]) {
+    if (isTRUE(!is.na(ignore)[1]) | is.null(ignore)) {
       df <- cbind(df, aux) %>% select(one_of(order), everything())
     }
     results[["df"]] <- df
+    yintercept <- nclusters$wss[nclusters$n == k]
     nclusters_plot <- nclusters_plot +
-      geom_hline(aes(yintercept = nclusters$wss[nclusters$n == k]), colour = "red") +
+      geom_hline(aes(yintercept = yintercept), colour = "red") +
       labs(subtitle = paste("Number of clusters selected:", k))
     results[["clusters"]] <- k
     results[["nclusters_plot"]] <- nclusters_plot
-
+    
     # K-Means Cluster Analysis
     fit <- kmeans(df, k)
     results[["fit"]] <- fit
@@ -125,109 +123,53 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       group_by(.data$cluster) %>%
       summarise_all(list(mean)) %>%
       mutate(n = as.integer(table(df$cluster)))
-
+    
     # Correlations
     results[["correlations"]] <- corr_cross(df, contains = "cluster", quiet = TRUE)
-
+    
     # Dim reduction: PCA
-    if (dim_red == "PCA") {
-      if (!quiet) message("Dimentionality reduction techinque: PCA")
-      PCA <- list()
-      df <- df[, !colnames(df) %in% c(zerovar(df), "cluster")]
-      pca <- prcomp(df, center = TRUE, scale. = TRUE)
-      PCA$pcadf <- data.frame(pca$x, cluster = results$df$cluster)
-      PCA$pca_explained <- round(100 * pca$sdev^2 / sum(pca$sdev^2), 4)
-      PCA$pcadf <- PCA$pcadf[, c(PCA$pca_explained > 0.1, TRUE)]
-      PCA$plotVarExp <- data.frame(id = seq_along(PCA$pca_explained)) %>%
-        mutate(
-          PC = factor(paste0("PC", .data$id),
-            levels = paste0("PC", seq_along(PCA$pca_explained))
-          ),
-          amount = PCA$pca_explained
-        ) %>%
-        mutate(aux = cumsum(.data$amount)) %>%
-        ggplot(aes(x = .data$id, y = .data$aux)) +
-        geom_col(alpha = 0.9) +
-        geom_path() +
-        geom_point() +
-        labs(
-          title = "Principal Component Analysis",
-          subtitle = "Percentage of Variation Explained by Components",
-          y = "Cumulative variation explained [%]", x = "PC(i)"
-        ) +
-        scale_y_continuous(limits = c(0, 100), expand = c(0, 1)) +
-        scale_x_continuous(expand = c(0, 1)) +
-        theme_lares()
-
-      explained <- formatNum(PCA$pca_explained, 1, pos = "%")
-      subtitle <- sprintf(
-        "Explaining %s of the variance with 2 PCA:\nPC1 (%s), PC2 (%s)",
-        formatNum(sum(PCA$pca_explained[1:2]), 1, pos = "%"),
-        explained[1], explained[2]
-      )
-
-      PCA$plot_1_2 <- ggplot(PCA$pcadf, aes(
-        x = .data$PC1, y = .data$PC2, colour = .data$cluster
-      )) +
-        geom_point() +
-        labs(
-          title = "Principal Component Analysis",
-          subtitle = subtitle
-        ) +
-        theme_lares(pal = 2)
-
-      if (length(find.package("ggforce", quiet = TRUE)) > 0) {
-        try_require("ggforce")
-        PCA$plot_1_2 <- PCA$plot_1_2 +
-          geom_mark_ellipse(
-            aes(group = .data$cluster, description = .data$cluster),
-            label.fill = "black", label.colour = "white"
-          )
-      } else if (!quiet) warning("Install ggforce for better visualization!")
-
-      if (length(find.package("plotly", quiet = TRUE)) > 0) {
-        try_require("plotly")
-        PCA$plot_1_2_3 <- plot_ly(
-          PCA$pcadf,
-          x = ~PC1, y = ~PC2, z = ~PC3, color = ~cluster,
-          colors = names(lares_pal()[[2]])[1:3]
-        ) %>%
-          add_markers()
-      } else {
-        warning("Install plotly to add a 3D visualization for PC1, PC2 and PC3")
-      }
-
-      PCA$pca <- pca
+    if ("PCA" %in% dim_red) {
+      if (!quiet) message("Dimensionality reduction techinque: PCA")
+      PCA <- reduce_pca(df, ignore = ignore, comb = comb, quiet = quiet)
+      PCA$plot_2D <- PCA$plot_2D +
+        geom_point(aes(colour = df$cluster)) +
+        labs(colour = "Cluster", title = "Clusters with Principal Component Analysis")
+      
+      # if (length(find.package("ggforce", quiet = TRUE)) > 0) {
+      #   try_require("ggforce")
+      #   PCA$plot_1_2 <- PCA$plot_1_2 +
+      #     geom_mark_ellipse(
+      #       aes(group = .data$cluster, description = .data$cluster),
+      #       label.fill = "black", label.colour = "white"
+      #     )
+      # } else if (!quiet) warning("Install ggforce for better visualization!")
+      # 
+      # if (length(find.package("plotly", quiet = TRUE)) > 0) {
+      #   try_require("plotly")
+      #   PCA$plot_1_2_3 <- plot_ly(
+      #     PCA$pcadf,
+      #     x = ~PC1, y = ~PC2, z = ~PC3, color = ~cluster,
+      #     colors = names(lares_pal()[[2]])[1:3]
+      #   ) %>%
+      #     add_markers()
+      # } else {
+      #   warning("Install plotly to add a 3D visualization for PC1, PC2 and PC3")
+      # }
+      
       results[["PCA"]] <- PCA
     }
-
+    
     # Dim reduction: t-SNE
-    if (dim_red == "tSNE") {
-      if (!quiet) message("Dimentionality reduction techinque: t-SNE")
-      try_require("Rtsne")
-      results[["tsne"]] <- Rtsne(
-        df[, !colnames(df) %in% c(zerovar(df), "cluster")],
-        dims = 2, verbose = FALSE
-      )
-      results$tsne$df <- as_tibble(
-        cbind(results$tsne$Y,
-          cluster = df$cluster,
-          cost = results$tsne$costs
-        )
-      )
-      results$tsne$Y <- results$tsne$costs <- results$tsne$N <- NULL
-      results$tsne$plot <- results$tsne$df %>%
-        ggplot(aes(.data$V1, .data$V2)) +
-        geom_point(aes(colour = as.character(.data$cluster))) +
-        labs(
-          title = "Dim reduction with t-SNE",
-          colour = "Cluster",
-          x = "t-SNE Dimension 1", y = "t-SNE Dimension 2"
-        ) +
-        theme_lares(pal = 2)
+    if ("tSNE" %in% dim_red) {
+      if (!quiet) message("Dimensionality reduction techinque: t-SNE")
+      tsne <- reduce_tsne(df, ignore = ignore, quiet = quiet)
+      tsne$plot <- tsne$plot +
+        geom_point(aes(colour = df$cluster)) +
+        labs(colour = "Cluster", title = "Clusters with t-SNE")
+      results[["tSNE"]] <- tsne
     }
   }
-
+  
   return(results)
 }
 
@@ -326,6 +268,8 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
 
 .prepare_data <- function(df, drop_na = TRUE, ohse = TRUE, norm = TRUE, quiet = FALSE, ...) {
 
+  df <- distinct(df)
+  
   # There should not be NAs
   df <- removenacols(df, all = TRUE)
   if (sum(is.na(df)) > 0) {

@@ -34,8 +34,8 @@ encoding to non-numerical columns?}
 
 \item{norm}{Boolean. Should the data be normalized?}
 
-\item{dim_red}{Character. Select dimentionality reduction technique.
-Any of: \code{c("PCA", "tSNE")}.}
+\item{dim_red}{Character. Select dimensionality reduction technique.
+Pass any of: \code{c("PCA", "tSNE", "all")}.}
 
 \item{comb}{Vector. Which columns do you wish to plot? Select which
 two variables by name or column position.}
@@ -71,6 +71,7 @@ when clusters are in different shapes such as elliptical clusters.
 Sys.unsetenv("LARES_FONT") # Temporal
 data("iris")
 df <- subset(iris, select = c(-Species))
+print(head(df))
 
 # If dataset has +5 columns, feel free to reduce dimenstionalities
 # with reduce_pca() or reduce_tsne() first
@@ -88,14 +89,9 @@ names(clusters)
 # Cross-Correlations for each cluster
 plot(clusters$correlations)
 
-# PCA Results (when dim_red="PCA")
-plot(clusters$PCA$plotVarExp)
-plot(clusters$PCA$plot_1_2)
-\dontrun{
-# You must have "ggforce" library to use this auxiliary function:
-# 3D interactive plot
-clusters$PCA$plot_1_2_3
-}
+# PCA Results (when dim_red = "PCA")
+plot(clusters$PCA$plot_2D)
+plot(clusters$PCA$plot_explained)
 }
 \seealso{
 Other Clusters: 

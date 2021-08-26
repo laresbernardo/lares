@@ -104,7 +104,7 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
 #' data("iris")
 #' df <- subset(iris, select = c(-Species))
 #' df$id <- 1:nrow(df)
-#' reduce_tsne(df, ignore = "id")
+#' reduce_tsne(df, ignore = "id", max_iter = 800, perplexity = 20)
 #' }
 reduce_tsne <- function(df, n = 2, ignore = NULL,
                         quiet = FALSE,
@@ -139,7 +139,7 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
       theme_lares(pal = 2)
   }
 
-  return(tSNE)
+  return(tSNE$tsne)
 }
 
 .reduce_prepare <- function(df, ignore = NULL, quiet = FALSE, ...) {

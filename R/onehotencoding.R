@@ -74,7 +74,7 @@ ohse <- function(df,
   no_need_to_convert <- converted <- converted_binary <- NULL
 
   # Leave some columns out of the logic
-  if (isTRUE(!is.na(ignore)[1]) | !is.null(ignore)) {
+  if (isTRUE(!is.na(ignore)[1]) & !is.null(ignore)) {
     if (!quiet) message(">>> Omitting transformations for ", vector2text(ignore))
     ignored <- df %>% select(one_of(ignore))
     df <- df %>% select(-one_of(ignore))
