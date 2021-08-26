@@ -64,7 +64,7 @@
 #' @export
 clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
                           ignore = NA, ohse = TRUE, norm = TRUE,
-                          comb = c(1, 2), seed = 123, quiet = TRUE) {
+                          comb = c(1, 2), seed = 123, quiet = FALSE) {
   df <- .prepare_data(df, drop_na = drop_na, ohse = ohse, norm = norm, quiet = quiet)
 
   # Ignore some columns
@@ -121,7 +121,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       mutate(n = as.integer(table(df$cluster)))
 
     # Correlations
-    results[["correlations"]] <- corr_cross(df, contains = "cluster", quiet = quiet)
+    results[["correlations"]] <- corr_cross(df, contains = "cluster", quiet = TRUE)
 
     # PCA
     PCA <- list()
@@ -289,9 +289,10 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
   return(plots)
 }
 
-.prepare_data <- function(df, drop_na = TRUE, ohse = TRUE, norm = TRUE, ...) {
+.prepare_data <- function(df, drop_na = TRUE, ohse = TRUE, norm = TRUE, quiet = FALSE, ...) {
 
   # There should not be NAs
+  df <- removenacols(df, all = TRUE)
   if (sum(is.na(df)) > 0) {
     if (drop_na) {
       df <- removenarows(df, all = FALSE)
@@ -305,6 +306,9 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
         "You can manually fix it or set drop_na to TRUE to remove these rows.",
         sep = "\n"
       ))
+    }
+    if (nrow(df) == 0) {
+      stop("There are no observations without NA values. Please, check your dataset")
     }
   }
 

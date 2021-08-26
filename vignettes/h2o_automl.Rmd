@@ -20,7 +20,7 @@ The `lares` package has multiple families of functions to help the analyst or da
 
 ## Pipeline
 
-In short, this are some of the things that happen on its backend:
+In short, these are some of the things that happen on its backend:
 
 ![Mapping `h2o_automl`](https://raw.githubusercontent.com/laresbernardo/lares/master/man/figures/automl_map.png){width=100%}
 

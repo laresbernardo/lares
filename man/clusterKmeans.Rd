@@ -14,7 +14,7 @@ clusterKmeans(
   norm = TRUE,
   comb = c(1, 2),
   seed = 123,
-  quiet = TRUE
+  quiet = FALSE
 )
 }
 \arguments{
