@@ -34,8 +34,6 @@ Suggests:
     DALEX,
     DBI,
     forecast,
-    ggforce,
-    ggrepel,
     googleAuthR,
     googlesheets4,
     knitr,

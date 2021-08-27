@@ -569,8 +569,6 @@ splot_change <- function(p, s, weighted = TRUE,
                          keep_old = FALSE,
                          save = FALSE) {
 
-  # try_require("ggrepel")
-
   check_attr(p, check = "daily_portfolio")
   check_attr(s, check = "daily_stocks")
 

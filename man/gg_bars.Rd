@@ -49,7 +49,6 @@ Other Visualization:
 \code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
 \code{\link{freqs}()},
-\code{\link{gg_pie}()},
 \code{\link{noPlot}()},
 \code{\link{plot_chord}()},
 \code{\link{plot_survey}()},

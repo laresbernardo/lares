@@ -319,68 +319,6 @@ plot_timeline <- function(event,
 
 
 ####################################################################
-#' Density plot for discrete and continuous values
-#'
-#' This function plots discrete and continuous values results
-#'
-#' @family Visualization
-#' @param df Dataframe
-#' @param var Variable to group, count and plot
-#' @param table Boolean. Print results as table?
-#' @param ... Further parameters passed to \code{freqs()}
-#' @return ggplot2 object
-#' @examples
-#' Sys.unsetenv("LARES_FONT") # Temporal
-#' data(dft) # Titanic dataset
-#' gg_pie(dft, Survived)
-#' gg_pie(dft, Pclass, table = TRUE)
-#' gg_pie(dft, SibSp, table = TRUE, abc = TRUE)
-#' @export
-gg_pie <- function(df, var, table = FALSE, ...) {
-  variable <- enquo(var)
-
-  title <- paste("Pie chart for", as.character(variable)[2])
-  caption <- paste("Obs:", formatNum(nrow(df), 0))
-
-  n <- df %>% freqs(!!!variable, ...)
-
-  if (nrow(n) > 6) {
-    geom_label <- function(...) {
-      ggrepel::geom_label_repel(...)
-    }
-  }
-
-  if (table) {
-    print(n)
-  }
-
-  p <- ggplot(n, aes(
-    x = "", y = reorder(.data$p, -.data$order),
-    fill = as.character(!!!variable),
-    label = .data$p
-  )) +
-    geom_col() +
-    geom_label(
-      position = position_stack(vjust = 0.4),
-      show.legend = FALSE, size = 2.5
-    ) +
-    coord_polar("y") +
-    labs(title = title, caption = caption, x = NULL, y = NULL) +
-    theme_lares(pal = 1) +
-    theme(
-      legend.title = element_blank(),
-      panel.grid.major.x = element_blank(),
-      panel.grid.minor.x = element_blank(),
-      axis.text.x = element_blank(),
-      axis.ticks.x = element_blank(),
-      axis.title.x = element_blank(),
-      legend.position = "bottom"
-    )
-  return(p)
-}
-
-
-####################################################################
 #' Chords Plot
 #'
 #' This auxiliary function plots discrete and continuous values results
