@@ -27,6 +27,7 @@
 reduce_pca <- function(df, n = NULL, ignore = NULL,
                        comb = c(1, 2), quiet = FALSE,
                        plot = TRUE, ...) {
+  if (is.na(ignore)[1]) ignore <- NULL
   df <- .reduce_prepare(df, ignore = ignore, ...)
 
   if (sum(is.na(df)) > 0) {
@@ -71,7 +72,7 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
     PCA$plot_2D <- ggplot(PCA$pcadf, aes(x = .data$PC1, y = .data$PC2)) +
       geom_point() +
       labs(
-        title = "Dimentions reduction with PCA",
+        title = "Dimensions reduction with PCA",
         x = sprintf("PCA Dimension %s", comb[1]),
         y = sprintf("PCA Dimension %s", comb[2]),
         caption = sprintf(
@@ -134,7 +135,7 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
       ggplot(aes(.data$X1, .data$X2)) +
       geom_point() +
       labs(
-        title = "Dimentions reduction with t-SNE",
+        title = "Dimensions reduction with t-SNE",
         colour = "Cluster",
         x = "t-SNE Dimension 1", y = "t-SNE Dimension 2"
       ) +

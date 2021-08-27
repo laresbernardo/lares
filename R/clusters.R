@@ -72,7 +72,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   check_opts(dim_red, c("PCA", "tSNE", "all", "none"))
   if ("all" %in% dim_red) dim_red <- c("PCA", "tSNE")
   df <- .prepare_data(df, drop_na = drop_na, ohse = ohse, norm = norm, quiet = quiet)
-  
+
   # Ignore some columns
   if (!is.na(ignore)[1]) {
     order <- colnames(df)
@@ -80,9 +80,9 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     df <- df[, !colnames(df) %in% ignore]
     if (!quiet) message(paste("Ignored only for kmeans:", v2t(ignore)))
   }
-  
+
   results <- list()
-  
+
   # Determine number of clusters (n) using WSS methodology
   wss <- sum(apply(df, 2, var)) * (nrow(df) - 1)
   for (i in 2:limit) wss[i] <- sum(kmeans(df, centers = i)$withinss)
@@ -100,7 +100,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     theme_lares()
   results[["nclusters"]] <- nclusters
   results[["nclusters_plot"]] <- nclusters_plot
-  
+
   # If n is already selected
   if (!is.na(k)) {
     if (isTRUE(!is.na(ignore)[1]) | is.null(ignore)) {
@@ -113,7 +113,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       labs(subtitle = paste("Number of clusters selected:", k))
     results[["clusters"]] <- k
     results[["nclusters_plot"]] <- nclusters_plot
-    
+
     # K-Means Cluster Analysis
     fit <- kmeans(df, k)
     results[["fit"]] <- fit
@@ -125,10 +125,10 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       group_by(.data$cluster) %>%
       summarise_all(list(mean)) %>%
       mutate(n = as.integer(table(df$cluster)))
-    
+
     # Correlations
     results[["correlations"]] <- corr_cross(df, contains = "cluster", quiet = TRUE)
-    
+
     # Dim reduction: PCA
     if ("PCA" %in% dim_red) {
       if (!quiet) message("Dimensionality reduction techinque: PCA")
@@ -136,7 +136,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       PCA$plot_2D <- PCA$plot_2D +
         geom_point(aes(colour = df$cluster)) +
         labs(colour = "Cluster", title = "Clusters with Principal Component Analysis")
-      
+
       # if (length(find.package("ggforce", quiet = TRUE)) > 0) {
       #   try_require("ggforce")
       #   PCA$plot_1_2 <- PCA$plot_1_2 +
@@ -145,7 +145,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       #       label.fill = "black", label.colour = "white"
       #     )
       # } else if (!quiet) warning("Install ggforce for better visualization!")
-      # 
+      #
       # if (length(find.package("plotly", quiet = TRUE)) > 0) {
       #   try_require("plotly")
       #   PCA$plot_1_2_3 <- plot_ly(
@@ -157,10 +157,10 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       # } else {
       #   warning("Install plotly to add a 3D visualization for PC1, PC2 and PC3")
       # }
-      
+
       results[["PCA"]] <- PCA
     }
-    
+
     # Dim reduction: t-SNE
     if ("tSNE" %in% dim_red) {
       if (!quiet) message("Dimensionality reduction techinque: t-SNE")
@@ -171,7 +171,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
       results[["tSNE"]] <- tsne
     }
   }
-  
+
   return(results)
 }
 
@@ -269,9 +269,8 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
 }
 
 .prepare_data <- function(df, drop_na = TRUE, ohse = TRUE, norm = TRUE, quiet = FALSE, ...) {
-
   df <- distinct(df)
-  
+
   # There should not be NAs
   df <- removenacols(df, all = TRUE)
   if (sum(is.na(df)) > 0) {

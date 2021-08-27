@@ -568,7 +568,6 @@ splot_change <- function(p, s, weighted = TRUE,
                          n_days = 365,
                          keep_old = FALSE,
                          save = FALSE) {
-
   check_attr(p, check = "daily_portfolio")
   check_attr(s, check = "daily_stocks")
 
