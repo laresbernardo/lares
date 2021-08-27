@@ -19,7 +19,7 @@
 #' encoding to non-numerical columns?
 #' @param norm Boolean. Should the data be normalized?
 #' @param dim_red Character. Select dimensionality reduction technique.
-#' Pass any of: \code{c("PCA", "tSNE", "all")}.
+#' Pass any of: \code{c("PCA", "tSNE", "all", "none")}.
 #' @param comb Vector. Which columns do you wish to plot? Select which
 #' two variables by name or column position.
 #' @param seed Numeric. Seed for reproducibility
@@ -69,7 +69,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
                           comb = c(1, 2), seed = 123,
                           quiet = FALSE, ...) {
   on.exit(set.seed(seed))
-  check_opts(dim_red, c("PCA", "tSNE", "all"))
+  check_opts(dim_red, c("PCA", "tSNE", "all", "none"))
   if ("all" %in% dim_red) dim_red <- c("PCA", "tSNE")
   df <- .prepare_data(df, drop_na = drop_na, ohse = ohse, norm = norm, quiet = quiet)
   

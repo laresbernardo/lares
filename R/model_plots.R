@@ -1125,29 +1125,18 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
   if (is.na(multis)[1]) {
     gains <- gain_lift(tag, score, target, splits, quiet = quiet)
     aux <- data.frame(x = c(0, gains$percentile), y = c(0, gains$optimal))
-    p <- gains %>%
-      mutate(percentile = as.numeric(.data$percentile)) %>%
-      ggplot(aes(x = .data$percentile)) +
-      # Random line
-      # geom_line(aes(y = random, linetype = "Random"), colour = "black", alpha = 0.6) +
-      # Optimal line
-      # geom_line(aes(y = optimal, linetype = "Optimal"), colour = "black", alpha = 0.6) +
+    df <- mutate(gains, percentile = as.numeric(.data$percentile))
+    p <- ggplot(df, aes(x = .data$percentile)) +
       # Range area
       geom_polygon(data = aux, aes(.data$x, .data$y), alpha = 0.1) +
       # Model line
-      geom_line(aes(y = .data$gain),
-        colour = "darkorange", size = 1.2
-      ) +
-      suppressWarnings(
-        geom_label(aes(
-          y = .data$gain,
-          label = ifelse(.data$gain == 100, NA, round(.data$gain))
-        ),
-        alpha = 0.9
-        )
-      ) +
-      scale_y_continuous(breaks = seq(0, 100, 10)) +
+      geom_line(aes(y = .data$gain), colour = "darkorange", size = 1.2) +
+      geom_label(data = df[df$gain != 100, ], aes(
+        y = .data$gain,
+        label = round(.data$gain)
+      ), alpha = 0.9) +
       guides(colour = "none") +
+      scale_y_continuous(breaks = seq(0, 100, 10)) +
       scale_x_continuous(minor_breaks = NULL, breaks = seq(0, splits, 1)) +
       labs(
         title = paste("Cumulative Gains for", gains$value[1]),

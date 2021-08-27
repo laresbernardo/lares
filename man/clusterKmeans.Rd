@@ -36,7 +36,7 @@ encoding to non-numerical columns?}
 \item{norm}{Boolean. Should the data be normalized?}
 
 \item{dim_red}{Character. Select dimensionality reduction technique.
-Pass any of: \code{c("PCA", "tSNE", "all")}.}
+Pass any of: \code{c("PCA", "tSNE", "all", "none")}.}
 
 \item{comb}{Vector. Which columns do you wish to plot? Select which
 two variables by name or column position.}
