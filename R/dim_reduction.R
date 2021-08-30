@@ -28,7 +28,7 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
                        comb = c(1, 2), quiet = FALSE,
                        plot = TRUE, ...) {
   if (is.na(ignore)[1]) ignore <- NULL
-  df <- .reduce_prepare(df, ignore = ignore, ...)
+  df <- .prepare_reduce(df, ignore = ignore, ...)
 
   if (sum(is.na(df)) > 0) {
     if (!quiet) message("Replacing NA values with column's means...")
@@ -36,10 +36,10 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
   }
 
   PCA <- list()
-  pca <- prcomp(df[, !colnames(df) %in% ignore], center = TRUE, scale. = TRUE, ...)
+  pca <- prcomp(df[, !colnames(df) %in% ignore], ...)
   PCA$pca_explained <- round(100 * pca$sdev^2 / sum(pca$sdev^2), 4)
   PCA$pcadf <- data.frame(pca$x)[, PCA$pca_explained > 0.1]
-  PCA$pcadf <- as_tibble(cbind(select(df, one_of(ignore)), PCA$pcadf))
+  PCA$pcadf <- as_tibble(cbind(select(as.data.frame(df), one_of(ignore)), PCA$pcadf))
   if (!is.null(n)) PCA$pcadf <- PCA$pcadf[, 1:n]
 
   if (plot) {
@@ -114,7 +114,7 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
                         plot = TRUE, ...) {
   try_require("Rtsne")
 
-  df <- .reduce_prepare(df, ignore = ignore, ...)
+  df <- .prepare_reduce(df, ignore = ignore, ...)
 
   tSNE <- list()
 
@@ -145,7 +145,7 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
   return(tSNE$tsne)
 }
 
-.reduce_prepare <- function(df, ignore = NULL, quiet = FALSE, ...) {
+.prepare_reduce <- function(df, ignore = NULL, quiet = FALSE, norm = TRUE, ...) {
   df <- df[, !colnames(df) %in% c(zerovar(df))]
   df <- ohse(df, quiet = quiet, ignore = ignore, ...)
   temp <- colnames(df)[!colnames(df) %in% ignore]
@@ -153,6 +153,11 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
   if (sum(is.na(df)) > 0) {
     if (!quiet) message(">>> Replacing NA values with column's means...")
     df <- mutate_all(df, ~ ifelse(is.na(.x), mean(.x, na.rm = TRUE), .x))
+  }
+  if (norm) {
+    df <- df %>%
+      transmute_all(list(normalize)) %>%
+      replace(., is.na(.), 0)
   }
   return(df)
 }

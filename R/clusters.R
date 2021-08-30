@@ -71,7 +71,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   on.exit(set.seed(seed))
   check_opts(dim_red, c("PCA", "tSNE", "all", "none"))
   if ("all" %in% dim_red) dim_red <- c("PCA", "tSNE")
-  df <- .prepare_data(df, drop_na = drop_na, ohse = ohse, norm = norm, quiet = quiet)
+  df <- .prepare_cluster(df, drop_na = drop_na, ohse = ohse, norm = norm, quiet = quiet)
 
   # Ignore some columns
   if (!is.na(ignore)[1]) {
@@ -261,14 +261,14 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
                             drop_na = TRUE, ohse = TRUE, norm = TRUE,
                             quiet = TRUE, ...) {
   try_require("factoextra")
-  df <- .prepare_data(df, drop_na = drop_na, ohse = ohse, norm = norm, quiet = quiet)
+  df <- .prepare_cluster(df, drop_na = drop_na, ohse = ohse, norm = norm, quiet = quiet)
   plots <- lapply(method, function(x) {
     fviz_nbclust(df, kmeans, method = x, ...) + theme_lares(pal = 2)
   })
   return(plots)
 }
 
-.prepare_data <- function(df, drop_na = TRUE, ohse = TRUE, norm = TRUE, quiet = FALSE, ...) {
+.prepare_cluster <- function(df, drop_na = TRUE, ohse = TRUE, norm = TRUE, quiet = FALSE, ...) {
   df <- distinct(df)
 
   # There should not be NAs
