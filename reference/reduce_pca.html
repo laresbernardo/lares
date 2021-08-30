@@ -237,22 +237,22 @@ two variables by name or column position.</p></td>
 <span class='va'>df</span><span class='op'>$</span><span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 <span class='fu'>reduce_pca</span><span class='op'>(</span><span class='va'>df</span>, n <span class='op'>=</span> <span class='fl'>3</span>, ignore <span class='op'>=</span> <span class='st'>"id"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Omitting transformations for 'id'</span></div><div class='output co'>#&gt; $pca_explained
-#&gt; [1] 72.9910 22.8582  3.6311  0.5197
+#&gt; [1] 84.1715 11.7378  3.4503  0.6404
 #&gt; 
 #&gt; $pcadf
 #&gt; <span style='color: #949494;'># A tibble: 149 × 3</span>
-#&gt;       id   PC1     PC2
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span>     1 -<span style='color: #BB0000;'>2.25</span> -<span style='color: #BB0000;'>0.478</span> 
-#&gt; <span style='color: #BCBCBC;'> 2</span>     2 -<span style='color: #BB0000;'>2.06</span>  0.672 
-#&gt; <span style='color: #BCBCBC;'> 3</span>     3 -<span style='color: #BB0000;'>2.35</span>  0.339 
-#&gt; <span style='color: #BCBCBC;'> 4</span>     4 -<span style='color: #BB0000;'>2.28</span>  0.593 
-#&gt; <span style='color: #BCBCBC;'> 5</span>     5 -<span style='color: #BB0000;'>2.37</span> -<span style='color: #BB0000;'>0.645</span> 
-#&gt; <span style='color: #BCBCBC;'> 6</span>     6 -<span style='color: #BB0000;'>2.06</span> -<span style='color: #BB0000;'>1.48</span>  
-#&gt; <span style='color: #BCBCBC;'> 7</span>     7 -<span style='color: #BB0000;'>2.42</span> -<span style='color: #BB0000;'>0.050</span><span style='color: #BB0000; text-decoration: underline;'>0</span>
-#&gt; <span style='color: #BCBCBC;'> 8</span>     8 -<span style='color: #BB0000;'>2.21</span> -<span style='color: #BB0000;'>0.222</span> 
-#&gt; <span style='color: #BCBCBC;'> 9</span>     9 -<span style='color: #BB0000;'>2.32</span>  1.11  
-#&gt; <span style='color: #BCBCBC;'>10</span>    10 -<span style='color: #BB0000;'>2.17</span>  0.468 
+#&gt;         id    PC1     PC2
+#&gt;      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> 0       -<span style='color: #BB0000;'>0.628</span> -<span style='color: #BB0000;'>0.108</span> 
+#&gt; <span style='color: #BCBCBC;'> 2</span> 0.006<span style='text-decoration: underline;'>71</span> -<span style='color: #BB0000;'>0.621</span>  0.104 
+#&gt; <span style='color: #BCBCBC;'> 3</span> 0.013<span style='text-decoration: underline;'>4</span>  -<span style='color: #BB0000;'>0.667</span>  0.051<span style='text-decoration: underline;'>1</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span> 0.020<span style='text-decoration: underline;'>1</span>  -<span style='color: #BB0000;'>0.652</span>  0.103 
+#&gt; <span style='color: #BCBCBC;'> 5</span> 0.026<span style='text-decoration: underline;'>8</span>  -<span style='color: #BB0000;'>0.646</span> -<span style='color: #BB0000;'>0.134</span> 
+#&gt; <span style='color: #BCBCBC;'> 6</span> 0.033<span style='text-decoration: underline;'>6</span>  -<span style='color: #BB0000;'>0.532</span> -<span style='color: #BB0000;'>0.290</span> 
+#&gt; <span style='color: #BCBCBC;'> 7</span> 0.040<span style='text-decoration: underline;'>3</span>  -<span style='color: #BB0000;'>0.654</span> -<span style='color: #BB0000;'>0.011</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> 0.047<span style='text-decoration: underline;'>0</span>  -<span style='color: #BB0000;'>0.623</span> -<span style='color: #BB0000;'>0.057</span><span style='color: #BB0000; text-decoration: underline;'>2</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> 0.053<span style='text-decoration: underline;'>7</span>  -<span style='color: #BB0000;'>0.674</span>  0.200 
+#&gt; <span style='color: #BCBCBC;'>10</span> 0.060<span style='text-decoration: underline;'>4</span>  -<span style='color: #BB0000;'>0.643</span>  0.067<span style='text-decoration: underline;'>4</span>
 #&gt; <span style='color: #949494;'># … with 139 more rows</span>
 #&gt; 
 #&gt; $plot_explained</div><div class='img'><img src='reduce_pca-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
