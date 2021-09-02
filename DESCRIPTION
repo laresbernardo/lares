@@ -46,7 +46,7 @@ Suggests:
     wordcloud
 URL: https://github.com/laresbernardo/lares, https://laresbernardo.github.io/lares/
 BugReports: https://github.com/laresbernardo/lares/issues
-VignetteBuilder: rmarkdown
+VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 License: AGPL-3
 Encoding: UTF-8
