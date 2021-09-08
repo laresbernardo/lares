@@ -68,25 +68,25 @@ r <- h2o_automl(df, y = Survived, max_models = 1, impute = FALSE, target = "TRUE
 
 Let's take a look at the plots generated into a single dashboard:
 
-```{r results="show"}
+```{r class_2_print, results="show"}
 plot(r)
 ```
 
 We also have several calculations for our model's performance that may come useful such as a confusion matrix, gain and lift by percentile, area under the curve (AUC), accuracy (ACC), recall or true positive rate (TPR), cross-validation metrics, exact thresholds to maximize each metric, and others:
 
-```{r results="show"}
+```{r class_2_metrics, results="show"}
 r$metrics
 ```
 
 The same goes for the plots generated for these metrics. We have the gains and response plots on test data-set, confusion matrix, and ROC curves.
 
-```{r results="show"}
+```{r class_2_metrics_plots, results="show"}
 r$plots$metrics
 ```
 
 For all models, regardless of their type (classification or regression), you can check the importance of each variable as well:
 
-```{r results="show"}
+```{r class_2_importance, results="show"}
 head(r$importance)
 
 r$plots$importance
@@ -102,7 +102,7 @@ r <- h2o_automl(df, Pclass, ignore = c("Fare", "Cabin"), max_time = 30, plots = 
 
 Let's take a look at the plots generated into a single dashboard:
 
-```{r results="show"}
+```{r class_3_results, results="show"}
 plot(r)
 ```
 
@@ -117,7 +117,7 @@ print(r)
 
 Let's take a look at the plots generated into a single dashboard:
 
-```{r results="show"}
+```{r regression_plots, results="show"}
 plot(r)
 ```
 
@@ -137,3 +137,7 @@ If you'd like to re-use your exported models to predict new datasets, you have s
 
 - DataScience+: [Visualizations for Classification Models Results](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/)
 - DataScience+: [Visualizations for Regression Models Results](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/)
+
+```{r h2o_shutdown, echo=FALSE, include=FALSE, error=FALSE, message=FALSE}
+h2o::h2o.shutdown(prompt = FALSE)
+```

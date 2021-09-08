@@ -8,7 +8,7 @@ ohse(
   df,
   redundant = FALSE,
   drop = TRUE,
-  ignore = NA,
+  ignore = NULL,
   dates = FALSE,
   holidays = FALSE,
   country = "Colombia",

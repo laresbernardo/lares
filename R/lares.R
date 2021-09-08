@@ -85,7 +85,7 @@ recommended <- list(
   # ggrepel = "geom_label_repel",
   googleAnalyticsR = "google_analytics",
   googleAuthR = "gar_auth",
-  googledrive = c("drive_auth", "drive_find"),
+  googledrive = c("drive_auth", "drive_find", "local_drive_quiet"),
   googlesheets4 = c(
     "sheets_auth", "read_sheet", "gs4_create", "range_write",
     "gs4_auth_configure", "gs4_auth", "sheet_append"

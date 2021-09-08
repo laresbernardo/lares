@@ -27,7 +27,7 @@
 reduce_pca <- function(df, n = NULL, ignore = NULL,
                        comb = c(1, 2), quiet = FALSE,
                        plot = TRUE, ...) {
-  if (is.na(ignore)[1]) ignore <- NULL
+  if (isTRUE(is.na(ignore)[1])) ignore <- NULL
   df <- .prepare_reduce(df, ignore = ignore, ...)
 
   if (sum(is.na(df)) > 0) {
@@ -36,10 +36,10 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
   }
 
   PCA <- list()
-  pca <- prcomp(df[, !colnames(df) %in% ignore], ...)
+  pca <- prcomp(select(df, -any_of(ignore)), ...)
   PCA$pca_explained <- round(100 * pca$sdev^2 / sum(pca$sdev^2), 4)
   PCA$pcadf <- data.frame(pca$x)[, PCA$pca_explained > 0.1]
-  PCA$pcadf <- as_tibble(cbind(select(as.data.frame(df), one_of(ignore)), PCA$pcadf))
+  PCA$pcadf <- as_tibble(cbind(select(as.data.frame(df), any_of(ignore)), PCA$pcadf))
   if (!is.null(n)) PCA$pcadf <- PCA$pcadf[, 1:n]
 
   if (plot) {
@@ -109,6 +109,7 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
 #' df$id <- 1:nrow(df)
 #' reduce_tsne(df, ignore = "id", max_iter = 800, perplexity = 20)
 #' }
+#' @export
 reduce_tsne <- function(df, n = 2, ignore = NULL,
                         quiet = FALSE,
                         plot = TRUE, ...) {
@@ -117,12 +118,12 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
   df <- .prepare_reduce(df, ignore = ignore, ...)
 
   tSNE <- list()
-
-  tSNE$tsne <- Rtsne(df[, !colnames(df) %in% ignore], dims = n, verbose = FALSE, ...)
+  
+  tSNE$tsne <- Rtsne(select(df, -any_of(ignore)), dims = n, verbose = FALSE, ...)
 
   tSNE$tsne$df <- as_tibble(
     data.frame(
-      select(df, one_of(ignore)),
+      select(df, any_of(ignore)),
       tSNE$tsne$Y,
       cost = tSNE$tsne$costs
     )
@@ -132,7 +133,7 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
 
   if (plot & n >= 2) {
     tSNE$tsne$plot <- tSNE$tsne$df %>%
-      ggplot(aes(.data$X1, .data$X2)) +
+      ggplot(aes(x = .data$X1, y = .data$X2)) +
       geom_point() +
       labs(
         title = "Dimensions reduction with t-SNE",
@@ -148,15 +149,15 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
 .prepare_reduce <- function(df, ignore = NULL, quiet = FALSE, norm = TRUE, ...) {
   df <- df[, !colnames(df) %in% c(zerovar(df))]
   df <- ohse(df, quiet = quiet, ignore = ignore, ...)
-  temp <- colnames(df)[!colnames(df) %in% ignore]
-  df <- distinct_at(df, all_of(temp), .keep_all = TRUE)
+  temp <- which(!colnames(df) %in% ignore)
+  df <- distinct_at(df, temp, .keep_all = TRUE)
   if (sum(is.na(df)) > 0) {
     if (!quiet) message(">>> Replacing NA values with column's means...")
     df <- mutate_all(df, ~ ifelse(is.na(.x), mean(.x, na.rm = TRUE), .x))
   }
   if (norm) {
     df <- df %>%
-      transmute_all(list(normalize)) %>%
+      transmute_if(is.numeric, normalize) %>%
       replace(., is.na(.), 0)
   }
   return(df)

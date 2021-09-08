@@ -71,8 +71,10 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   on.exit(set.seed(seed))
   check_opts(dim_red, c("PCA", "tSNE", "all", "none"))
   if ("all" %in% dim_red) dim_red <- c("PCA", "tSNE")
-  df <- .prepare_cluster(df, drop_na = drop_na, ohse = ohse, norm = norm, quiet = quiet)
-
+  
+  df <- .prepare_cluster(df, drop_na = drop_na, ohse = ohse,
+                         norm = norm, quiet = quiet, ...)
+  
   # Ignore some columns
   if (!is.na(ignore)[1]) {
     order <- colnames(df)
@@ -132,7 +134,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     # Dim reduction: PCA
     if ("PCA" %in% dim_red) {
       if (!quiet) message("Dimensionality reduction techinque: PCA")
-      PCA <- reduce_pca(df, ignore = ignore, comb = comb, quiet = quiet, ...)
+      PCA <- reduce_pca(df, ignore = c(ignore, "cluster"), comb = comb, quiet = quiet, ...)
       PCA$plot_2D <- PCA$plot_2D +
         geom_point(aes(colour = df$cluster)) +
         labs(colour = "Cluster", title = "Clusters with Principal Component Analysis")
@@ -164,9 +166,9 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
     # Dim reduction: t-SNE
     if ("tSNE" %in% dim_red) {
       if (!quiet) message("Dimensionality reduction techinque: t-SNE")
-      tsne <- reduce_tsne(df, ignore = ignore, quiet = quiet, ...)
+      tsne <- reduce_tsne(df, ignore = c(ignore, "cluster"), quiet = quiet, ...)
       tsne$plot <- tsne$plot +
-        geom_point(aes(colour = df$cluster)) +
+        geom_point(aes(colour = df$cluster[1:nrow(tsne$df)])) +
         labs(colour = "Cluster", title = "Clusters with t-SNE")
       results[["tSNE"]] <- tsne
     }
@@ -269,9 +271,8 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
 }
 
 .prepare_cluster <- function(df, drop_na = TRUE, ohse = TRUE, norm = TRUE, quiet = FALSE, ...) {
-  df <- distinct(df)
-
-  # There should not be NAs
+  
+  # There should be no NAs
   df <- removenacols(df, all = TRUE)
   if (sum(is.na(df)) > 0) {
     if (drop_na) {
@@ -306,6 +307,7 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
       transmute_all(list(normalize)) %>%
       replace(., is.na(.), 0)
   }
-
+  df <- distinct(df)
+  
   return(df)
 }
