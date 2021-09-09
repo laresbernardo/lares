@@ -63,8 +63,8 @@
 #' plot(clusters$PCA$plot_explained)
 #' plot(clusters$PCA$plot_2D)
 #' @export
-clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
-                          ignore = NA, ohse = TRUE, norm = TRUE,
+clusterKmeans <- function(df, k = NULL, limit = 20, drop_na = TRUE,
+                          ignore = NULL, ohse = TRUE, norm = TRUE,
                           dim_red = "PCA",
                           comb = c(1, 2), seed = 123,
                           quiet = FALSE, ...) {
@@ -104,7 +104,7 @@ clusterKmeans <- function(df, k = NA, limit = 20, drop_na = TRUE,
   results[["nclusters_plot"]] <- nclusters_plot
 
   # If n is already selected
-  if (!is.na(k)) {
+  if (!is.null(k)) {
     if (isTRUE(!is.na(ignore)[1]) | is.null(ignore)) {
       df <- cbind(df, aux) %>% select(one_of(order), everything())
     }
