@@ -44,7 +44,7 @@
 corr <- function(df, method = "pearson",
                  pvalue = FALSE,
                  dec = 6,
-                 ignore = NA,
+                 ignore = NULL,
                  dummy = TRUE,
                  redundant = NULL,
                  logs = FALSE,
@@ -53,7 +53,8 @@ corr <- function(df, method = "pearson",
                  ...) {
 
   # Ignored columns
-  if (!is.na(ignore)[1]) df <- select(df, -one_of(ignore))
+  if (isTRUE(is.na(ignore)[1])) ignore <- NULL
+  df <- select(df, -one_of(ignore))
 
   # One hot encoding for categorical features
   if (dummy) {

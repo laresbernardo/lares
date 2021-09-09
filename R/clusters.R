@@ -71,12 +71,14 @@ clusterKmeans <- function(df, k = NULL, limit = 20, drop_na = TRUE,
   on.exit(set.seed(seed))
   check_opts(dim_red, c("PCA", "tSNE", "all", "none"))
   if ("all" %in% dim_red) dim_red <- c("PCA", "tSNE")
+  if (isTRUE(is.na(ignore)[1])) ignore <- NULL
   
   df <- .prepare_cluster(df, drop_na = drop_na, ohse = ohse,
                          norm = norm, quiet = quiet, ...)
   
   # Ignore some columns
-  if (!is.na(ignore)[1]) {
+  if (isTRUE(is.na(ignore)[1])) ignore <- NULL
+  if (!is.null(ignore)) {
     order <- colnames(df)
     aux <- df[, colnames(df) %in% ignore]
     df <- df[, !colnames(df) %in% ignore]
@@ -105,7 +107,7 @@ clusterKmeans <- function(df, k = NULL, limit = 20, drop_na = TRUE,
 
   # If n is already selected
   if (!is.null(k)) {
-    if (isTRUE(!is.na(ignore)[1]) | is.null(ignore)) {
+    if (!is.null(ignore)) {
       df <- cbind(df, aux) %>% select(one_of(order), everything())
     }
     results[["df"]] <- df
