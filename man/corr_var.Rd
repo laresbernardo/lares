@@ -7,7 +7,7 @@
 corr_var(
   df,
   var,
-  ignore = NA,
+  ignore = NULL,
   trim = 0,
   clean = FALSE,
   plot = TRUE,

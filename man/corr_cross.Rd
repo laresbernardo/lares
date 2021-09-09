@@ -13,7 +13,7 @@ corr_cross(
   max = 1,
   top = 25,
   local = 1,
-  ignore = NA,
+  ignore = NULL,
   contains = NA,
   grid = FALSE,
   rm.na = FALSE,

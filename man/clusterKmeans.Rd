@@ -94,7 +94,7 @@ plot(clusters$correlations)
 
 # PCA Results (when dim_red = "PCA")
 plot(clusters$PCA$plot_explained)
-plot(clusters$PCA$plot_2D)
+plot(clusters$PCA$plot)
 }
 \seealso{
 Other Clusters: 

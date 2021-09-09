@@ -84,9 +84,7 @@ ohse <- function(df,
 
   # No variance columns
   no_variance <- zerovar(df)
-  if (drop) {
-    df <- df[, !colnames(df) %in% no_variance]
-  }
+  if (drop) df <- select(df, !any_of(no_variance))
 
   # Create features out of date/time variables
   if (dates == TRUE | holidays == TRUE | !is.na(currency_pair)) {
@@ -174,7 +172,8 @@ ohse <- function(df,
       ))
     }
     if (length(no_variance) > 0 & drop) {
-      message(paste0(
+      no_variance <- no_variance[no_variance %in% ignore]
+      if (length(no_variance) > 0) message(paste0(
         ">>> Automatically dropped ", length(no_variance),
         " columns with 0% or >=", round(variance * 100),
         "% variance: ", vector2text(no_variance)

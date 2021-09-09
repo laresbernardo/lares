@@ -54,7 +54,7 @@ corr <- function(df, method = "pearson",
 
   # Ignored columns
   if (isTRUE(is.na(ignore)[1])) ignore <- NULL
-  df <- select(df, -one_of(ignore))
+  df <- select(df, -any_of(ignore))
 
   # One hot encoding for categorical features
   if (dummy) {
@@ -157,7 +157,7 @@ corr <- function(df, method = "pearson",
 #' dft %>% corr_var(Survived_TRUE, ceiling = 60, top = 15, ranks = TRUE)
 #' @export
 corr_var <- function(df, var,
-                     ignore = NA,
+                     ignore = NULL,
                      trim = 0,
                      clean = FALSE,
                      plot = TRUE,
@@ -337,7 +337,7 @@ corr_var <- function(df, var,
 corr_cross <- function(df, plot = TRUE,
                        pvalue = TRUE, max_pvalue = 1,
                        type = 1, max = 1, top = 25, local = 1,
-                       ignore = NA, contains = NA, grid = FALSE,
+                       ignore = NULL, contains = NA, grid = FALSE,
                        rm.na = FALSE, quiet = FALSE,
                        ...) {
   check_opts(type, 1:2)
