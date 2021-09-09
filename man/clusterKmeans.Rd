@@ -6,10 +6,10 @@
 \usage{
 clusterKmeans(
   df,
-  k = NA,
+  k = NULL,
   limit = 20,
   drop_na = TRUE,
-  ignore = NA,
+  ignore = NULL,
   ohse = TRUE,
   norm = TRUE,
   dim_red = "PCA",

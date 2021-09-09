@@ -9,7 +9,7 @@ corr(
   method = "pearson",
   pvalue = FALSE,
   dec = 6,
-  ignore = NA,
+  ignore = NULL,
   dummy = TRUE,
   redundant = NULL,
   logs = FALSE,
