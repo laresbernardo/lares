@@ -238,15 +238,15 @@ elapsed time and message printed.</p>
 <span class='fu'>tic</span><span class='op'>(</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>0.1</span><span class='op'>)</span>
 <span class='fu'>toc</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Elapsed time: 0.185s</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Elapsed time: 0.103s</span></div><div class='input'>
 <span class='co'># Multiple tic tocs</span>
 <span class='fu'>tic</span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"two"</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Tic `id = two` start time: 2021-09-09 18:05:37</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>0.2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Tic `id = two` start time: 2021-09-10 14:07:47</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>0.2</span><span class='op'>)</span>
 <span class='fu'>toc</span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"two"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Elapsed time: 0.301s</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Elapsed time: 0.335s</span></div><div class='input'>
 <span class='co'># Global is still working (id = 1)</span>
 <span class='fu'>toc</span><span class='op'>(</span>msg <span class='op'>=</span> <span class='st'>"The function finished its work in"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>The function finished its work in 0.488s</span></div></pre>
+</div><div class='output co'>#&gt; <span class='message'>The function finished its work in 0.441s</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
