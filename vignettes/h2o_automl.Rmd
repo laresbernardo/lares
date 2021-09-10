@@ -140,4 +140,5 @@ If you'd like to re-use your exported models to predict new datasets, you have s
 
 ```{r h2o_shutdown, echo=FALSE, include=FALSE, error=FALSE, message=FALSE}
 h2o::h2o.shutdown(prompt = FALSE)
+Sys.sleep(2)
 ```
