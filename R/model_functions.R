@@ -293,7 +293,6 @@ print.h2o_automl <- function(x, importance = TRUE, ...) {
   if (!inherits(x, "h2o_automl")) {
     stop("Object must be class h2o_automl")
   }
-
   aux <- list()
   selected <- which(as.vector(x$leaderboard$model_id) == x$model_name)
   n_models <- nrow(x$leaderboard)

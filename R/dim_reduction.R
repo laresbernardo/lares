@@ -28,6 +28,7 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
                        comb = c(1, 2), quiet = FALSE,
                        plot = TRUE, ...) {
   if (isTRUE(is.na(ignore)[1])) ignore <- NULL
+  ignore <- unique(ignore)
   df <- .prepare_reduce(df, ignore = ignore, ...)
   
   if (sum(is.na(df)) > 0) {
@@ -114,7 +115,8 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
                         quiet = FALSE,
                         plot = TRUE, ...) {
   try_require("Rtsne")
-
+  if (isTRUE(is.na(ignore)[1])) ignore <- NULL
+  ignore <- unique(ignore)
   df <- .prepare_reduce(df, ignore = ignore, ...)
 
   tSNE <- list()

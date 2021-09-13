@@ -17,7 +17,7 @@
     "LARES_STATUSBAR" = if (Sys.getenv("LARES_STATUSBAR") != "") {
       Sys.getenv("LARES_STATUSBAR")
     } else {
-      "sword"
+      "filled"
     },
     # Scrabble and other language settings
     "LARES_LANG" = if (Sys.getenv("LARES_LANG") != "") {
