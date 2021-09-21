@@ -127,8 +127,7 @@ filesGD <- function(title, server = FALSE, json = NULL, api_key = NULL, email = 
   files <- drive_find(
     pattern = title,
     n_max = 199,
-    type = "spreadsheet",
-    verbose = FALSE
+    type = "spreadsheet"
   )
 
   nfiles <- nrow(files)

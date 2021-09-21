@@ -348,48 +348,11 @@ corr_cross <- function(df, plot = TRUE,
 
   cor <- corr(df, ignore = ignore, pvalue = pvalue, ...)
 
-  transf <- function(x, max = 1, contains = NA, rm.na = FALSE) {
-    x <- data.frame(x)
-    ret <- gather(x) %>%
-      mutate(mix = rep(colnames(x), length(x))) %>%
-      mutate(
-        p1 = rep(seq_along(x), each = length(x)),
-        p2 = rep(seq_along(x), length(x)),
-        aux = .data$p2 - .data$p1
-      ) %>%
-      filter(.data$aux > 0) %>%
-      mutate(rel = abs(.data$value)) %>%
-      filter(.data$rel < max) %>%
-      arrange(desc(.data$rel)) %>%
-      {
-        if (!is.na(contains[1])) {
-          filter(., grepl(
-            paste(
-              contains,
-              collapse = ifelse(length(contains) > 1, "|", "")
-            ),
-            paste(.data$mix, .data$key)
-          ))
-        } else {
-          .
-        }
-      } %>%
-      # add key?
-      {
-        if (rm.na) filter(., !grepl("_NAs", .data$mix)) else .
-      } %>%
-      filter(!grepl("_OTHER", .data$key)) %>%
-      rename(corr = .data$value) %>%
-      mutate(value = paste(.data$key, .data$mix)) %>%
-      select(.data$key, .data$mix, .data$corr)
-    return(ret)
-  }
-
   if (!is.data.frame(cor)) {
-    ret <- transf(cor$cor, max = max, contains = contains, rm.na = rm.na)
-    aux <- transf(cor$pvalue, max = max, contains = contains, rm.na = rm.na)
+    ret <- .transf(cor$cor, max = max, contains = contains, rm.na = rm.na)
+    aux <- .transf(cor$pvalue, max = max, contains = contains, rm.na = rm.na)
   } else {
-    ret <- aux <- transf(cor, max = max, contains = contains, rm.na = rm.na)
+    ret <- aux <- .transf(cor, max = max, contains = contains, rm.na = rm.na)
     aux$corr <- 0
   }
 
@@ -514,6 +477,40 @@ corr_cross <- function(df, plot = TRUE,
     }
     return(p)
   }
+  return(ret)
+}
+
+.transf <- function(x, max = 1, contains = NA, rm.na = FALSE) {
+  x <- data.frame(x)
+  aux <- gather(x, "key", "value")
+  ret <- mutate(ret, mix = rep(unique(aux$key), length = nrow(aux))) %>%
+    mutate(p1 = cumsum(!duplicated(.data$mix))) %>%
+    group_by(.data$mix) %>% mutate(p2 = row_number()) %>% ungroup() %>%
+    filter(.data$p2 - .data$p1 > 0) %>%
+    mutate(rel = abs(.data$value)) %>%
+    filter(.data$rel < max) %>%
+    arrange(desc(.data$rel)) %>%
+    {
+      if (!is.na(contains[1])) {
+        filter(., grepl(
+          paste(
+            contains,
+            collapse = ifelse(length(contains) > 1, "|", "")
+          ),
+          paste(.data$mix, .data$key)
+        ))
+      } else {
+        .
+      }
+    } %>%
+    # add key?
+    {
+      if (rm.na) filter(., !grepl("_NAs", .data$mix)) else .
+    } %>%
+    filter(!grepl("_OTHER", .data$key)) %>%
+    rename(corr = .data$value) %>%
+    mutate(value = paste(.data$key, .data$mix)) %>%
+    select(.data$key, .data$mix, .data$corr)
   return(ret)
 }
 

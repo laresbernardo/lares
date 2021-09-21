@@ -69,7 +69,8 @@ db_download <- function(query,
     drop_download(x$matches[[1]]$metadata$path_lower,
       local_path = local_path,
       overwrite = TRUE,
-      dtoken = token
+      dtoken = token,
+      verbose = FALSE
     )
   )
   if (!quiet) message(paste("> File", x$matches[[1]]$metadata$name, "downloaded succesfully!"))
