@@ -481,12 +481,11 @@ corr_cross <- function(df, plot = TRUE,
 }
 
 .transf <- function(x, max = 1, contains = NA, rm.na = FALSE) {
-  x <- data.frame(x)
-  aux <- gather(x, "key", "value")
+  aux <- gather(data.frame(x), "key", "value")
   ret <- mutate(aux, mix = rep(unique(aux$key), length = nrow(aux))) %>%
     mutate(p1 = cumsum(!duplicated(.data$mix))) %>%
     group_by(.data$mix) %>% mutate(p2 = row_number()) %>% ungroup() %>%
-    filter(.data$p2 - .data$p1 > 0) %>%
+    filter(.data$p2 != .data$p1) %>%
     mutate(rel = abs(.data$value)) %>%
     filter(.data$rel < max) %>%
     arrange(desc(.data$rel)) %>%
