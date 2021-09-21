@@ -63,7 +63,7 @@
 #' plot(clusters$PCA$plot_explained)
 #' plot(clusters$PCA$plot)
 #' @export
-clusterKmeans <- function(df, k = NULL, limit = 20, drop_na = TRUE,
+clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
                           ignore = NULL, ohse = TRUE, norm = TRUE,
                           dim_red = "PCA",
                           comb = c(1, 2), seed = 123,
@@ -121,7 +121,7 @@ clusterKmeans <- function(df, k = NULL, limit = 20, drop_na = TRUE,
     results[["nclusters_plot"]] <- nclusters_plot
     
     # K-Means Cluster Analysis
-    fit <- kmeans(df, k)
+    fit <- kmeans(df, k, iter.max = limit)
     results[["fit"]] <- fit
     # Append cluster assignment
     df <- data.frame(results[["df"]], cluster = as.factor(fit$cluster))
@@ -134,7 +134,7 @@ clusterKmeans <- function(df, k = NULL, limit = 20, drop_na = TRUE,
     
     # Correlations
     results[["correlations"]] <- corr_cross(
-      df, contains = "cluster", quiet = TRUE, ignore = ignore)
+      df, contains = "cluster_", quiet = TRUE, ignore = ignore)
     
     # Dim reduction: PCA
     if ("PCA" %in% dim_red) {

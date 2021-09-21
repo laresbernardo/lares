@@ -7,7 +7,7 @@
 clusterKmeans(
   df,
   k = NULL,
-  limit = 20,
+  limit = 15,
   drop_na = TRUE,
   ignore = NULL,
   ohse = TRUE,

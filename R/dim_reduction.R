@@ -37,7 +37,8 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
   }
 
   PCA <- list()
-  pca <- prcomp(select(df, -any_of(ignore)), ...)
+  temp <- select(df, -any_of(ignore))
+  pca <- prcomp(temp, ...)
   PCA$pca_explained <- round(100 * pca$sdev^2 / sum(pca$sdev^2), 4)
   PCA$pcadf <- data.frame(pca$x)[, PCA$pca_explained > 0.01]
   PCA$pcadf <- as_tibble(cbind(select(as.data.frame(df), any_of(ignore)), PCA$pcadf))
@@ -121,7 +122,8 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
 
   tSNE <- list()
   
-  tSNE$tsne <- Rtsne(select(df, -any_of(ignore)), dims = n, verbose = FALSE, ...)
+  temp <- select(df, -any_of(ignore))
+  tSNE$tsne <- Rtsne(temp, dims = n, verbose = FALSE, ...)
 
   tSNE$tsne$df <- as_tibble(
     data.frame(

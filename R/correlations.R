@@ -348,11 +348,12 @@ corr_cross <- function(df, plot = TRUE,
 
   cor <- corr(df, ignore = ignore, pvalue = pvalue, ...)
 
+  cluster <- "cluster_" %in% contains
   if (!is.data.frame(cor)) {
-    ret <- .transf(cor$cor, max = max, contains = contains, rm.na = rm.na)
-    aux <- .transf(cor$pvalue, max = max, contains = contains, rm.na = rm.na)
+    ret <- .transf(cor$cor, max = max, contains = contains, cluster = cluster, rm.na = rm.na)
+    aux <- .transf(cor$pvalue, max = max, contains = contains, cluster = cluster, rm.na = rm.na)
   } else {
-    ret <- aux <- .transf(cor, max = max, contains = contains, rm.na = rm.na)
+    ret <- aux <- .transf(cor, max = max, contains = contains, cluster = cluster, rm.na = rm.na)
     aux$corr <- 0
   }
 
@@ -480,7 +481,7 @@ corr_cross <- function(df, plot = TRUE,
   return(ret)
 }
 
-.transf <- function(x, max = 1, contains = NA, rm.na = FALSE) {
+.transf <- function(x, max = 1, contains = NA, cluster = FALSE, rm.na = FALSE) {
   aux <- gather(data.frame(x), "key", "value")
   ret <- mutate(aux, mix = rep(unique(aux$key), length = nrow(aux))) %>%
     mutate(p1 = cumsum(!duplicated(.data$mix))) %>%
@@ -502,7 +503,8 @@ corr_cross <- function(df, plot = TRUE,
         .
       }
     } %>%
-    # add key?
+    # When cluster, filter "contains" by mix only
+    {if (cluster) filter(., grepl(contains, .data$mix)) else .} %>%
     {
       if (rm.na) filter(., !grepl("_NAs", .data$mix)) else .
     } %>%
