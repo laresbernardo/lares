@@ -200,18 +200,18 @@ grouped by date.</p>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># For today (or any one single date)</span>
 <span class='fu'>get_currency</span><span class='op'>(</span><span class='st'>"USD/COP"</span>, from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;         date    rate
-#&gt; 1 2021-09-21 3841.53</div><div class='input'><span class='co'># For multiple dates</span>
+</div><div class='output co'>#&gt;         date   rate
+#&gt; 1 2021-09-23 3833.3</div><div class='input'><span class='co'># For multiple dates</span>
 <span class='fu'>get_currency</span><span class='op'>(</span><span class='st'>"EUR/USD"</span>, from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>7</span>, fill <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;         date     rate
-#&gt; 1 2021-09-14 1.181070
-#&gt; 2 2021-09-15 1.180359
-#&gt; 3 2021-09-16 1.181935
-#&gt; 4 2021-09-17 1.176484
-#&gt; 5 2021-09-18 1.176484
-#&gt; 6 2021-09-19 1.176484
-#&gt; 7 2021-09-20 1.172883
-#&gt; 8 2021-09-21 1.173020</div><div class='input'><span class='co'># }</span>
+#&gt; 1 2021-09-16 1.181935
+#&gt; 2 2021-09-17 1.176484
+#&gt; 3 2021-09-18 1.176484
+#&gt; 4 2021-09-19 1.176484
+#&gt; 5 2021-09-20 1.172883
+#&gt; 6 2021-09-21 1.172567
+#&gt; 7 2021-09-22 1.172608
+#&gt; 8 2021-09-23 1.170001</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
