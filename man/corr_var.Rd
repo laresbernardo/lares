@@ -7,6 +7,7 @@
 corr_var(
   df,
   var,
+  pvalue = TRUE,
   ignore = NULL,
   trim = 0,
   clean = FALSE,
@@ -30,6 +31,9 @@ columns: they will be filtered!}
 variable \code{var} is not numerical, 1. you may define which category to select
 from using `var_category`; 2. You may have to add \code{redundant = TRUE} to
 enable all categories (instead of \code{n-1}).}
+
+\item{pvalue}{Boolean. Returns a list, with correlations and statistical
+significance (p-value) for each value}
 
 \item{ignore}{Character vector. Which columns do you wish to exclude?}
 
@@ -60,7 +64,7 @@ values of each column. Set to \code{NA} to ignore argument.}
 
 \item{quiet}{Boolean. Keep quiet? If not, show messages}
 
-\item{...}{Additional parameters passed to \code{corr}}
+\item{...}{Additional parameters passed to \code{corr} and \code{cor.test}}
 }
 \value{
 data.frame. With variables, correlation and p-value results

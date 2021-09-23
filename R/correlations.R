@@ -20,7 +20,8 @@
 #' be applied to categorical columns?
 #' @param top Integer. Select top N most relevant variables? Filtered
 #' and sorted by mean of each variable's correlations
-#' @param ... Additional parameters to pass to \code{ohse()}
+#' @param ... Additional parameters passed to \code{ohse}, \code{corr},
+#' and/or \code{cor.test}
 #' @return data.frame. Squared dimensions (N x N) to match every
 #' correlation between every \code{df} data.frame column/variable. Notice
 #' that when using \code{ohse()} you may get more dimensions.
@@ -101,7 +102,7 @@ corr <- function(df, method = "pearson",
 
   # Statistical significance (p-value)
   if (pvalue) {
-    return(list(cor = cor, pvalue = .cor_test_p(d, method = method)))
+    return(list(cor = cor, pvalue = .cor_test_p(d, method = method, ...)))
   }
 
   return(cor)
@@ -139,7 +140,7 @@ corr <- function(df, method = "pearson",
 #' @param zeroes Do you wish to keep zeroes in correlations too?
 #' @param save Boolean. Save output plot into working directory
 #' @param quiet Boolean. Keep quiet? If not, show messages
-#' @param ... Additional parameters passed to \code{corr}
+#' @param ... Additional parameters passed to \code{corr} and \code{cor.test}
 #' @return data.frame. With variables, correlation and p-value results
 #' for each feature, arranged by descending absolute correlation value.
 #' @examples
@@ -157,6 +158,7 @@ corr <- function(df, method = "pearson",
 #' dft %>% corr_var(Survived_TRUE, ceiling = 60, top = 15, ranks = TRUE)
 #' @export
 corr_var <- function(df, var,
+                     pvalue = TRUE,
                      ignore = NULL,
                      trim = 0,
                      clean = FALSE,
@@ -175,7 +177,8 @@ corr_var <- function(df, var,
   df <- select(df, -contains(paste0(var, "_log")))
 
   # Calculate correlations
-  rs <- corr(df, ignore = ignore, limit = limit, ...)
+  if (plot) pvalue <- FALSE # No need to calculate
+  rs <- corr(df, ignore = ignore, limit = limit, pvalue = pvalue, ...)
   if (is.data.frame(rs)) rs <- list(cor = rs, pvalue = mutate_all(rs, ~1))
 
   # Check if main variable exists
@@ -517,14 +520,15 @@ corr_cross <- function(df, plot = TRUE,
 
 
 # https://stackoverflow.com/questions/60512043/r-creating-a-p-value-matrix-with-missing-values
-.cor_test_p <- function(mat, method = "pearson") {
+.cor_test_p <- function(mat, method = "pearson", exact = TRUE, ...) {
   mat <- as.matrix(mat)
   n <- ncol(mat)
   p.mat <- matrix(NA, n, n)
   diag(p.mat) <- 0
   for (i in 1:(n - 1)) {
     for (j in (i + 1):n) {
-      error <- try(tmp <- cor.test(mat[, i], mat[, j], method = method), silent = TRUE)
+      error <- try(tmp <- cor.test(
+        mat[, i], mat[, j], method = method, exact = exact, ...), silent = TRUE)
       if (class(error) == "try-error") {
         p.mat[i, j] <- NA
       } else {

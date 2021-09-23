@@ -46,7 +46,8 @@ values of each column. Set to \code{NA} to ignore argument.}
 \item{top}{Integer. Select top N most relevant variables? Filtered
 and sorted by mean of each variable's correlations}
 
-\item{...}{Additional parameters to pass to \code{ohse()}}
+\item{...}{Additional parameters passed to \code{ohse}, \code{corr},
+and/or \code{cor.test}}
 }
 \value{
 data.frame. Squared dimensions (N x N) to match every
