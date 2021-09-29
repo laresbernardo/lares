@@ -161,7 +161,7 @@ study variable's responses vs independent vector." />
 study variable's responses vs independent vector.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dalex_variable</span><span class='op'>(</span><span class='va'>explainer</span>, <span class='va'>vars</span>, force_class <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>dalex_variable</span><span class='op'>(</span><span class='va'>explainer</span>, <span class='va'>vars</span>, force_class <span class='op'>=</span> <span class='cn'>NA</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,6 +178,10 @@ study variable's responses vs independent vector.</p>
       <th>force_class</th>
       <td><p>Character. If you wish to force a class on your
 vars, which one do you need?</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters passed to <code>model_profile</code>.</p></td>
     </tr>
     </table>
 
