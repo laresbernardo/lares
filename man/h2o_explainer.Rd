@@ -5,7 +5,7 @@
 \alias{dalex_explainer}
 \title{DALEX Explainer for H2O}
 \usage{
-h2o_explainer(df, model, y = "tag", ignore = NA)
+h2o_explainer(df, model, y = "tag", ignore = NULL, ...)
 }
 \arguments{
 \item{df}{Dataframe. Must contain all columns and predictions}
@@ -15,6 +15,9 @@ h2o_explainer(df, model, y = "tag", ignore = NA)
 \item{y}{Character or Variable name. Variable's column name.}
 
 \item{ignore}{Character vector. Which columns should be ignored?}
+
+\item{...}{Additional parameters to pass to \code{h2o_predict_model} or
+\code{h2o_predict_MOJO}.}
 }
 \value{
 List; explainer. Containing the model, data, y, predict_function,

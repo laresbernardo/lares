@@ -21,11 +21,12 @@ h2o_predict_MOJO <- function(df, model_path, method = "mojo", batch = 300) {
   files <- list.files(model_path)
   file <- files[endsWith(files, ".zip")][1]
   zip <- paste0(model_path, "/", file)
+  # message(">>> MOJO file: ", zip)
 
   if (method == "mojo") {
-    df <- quiet(as.h2o(df))
-    mojo_model <- quiet(h2o.import_mojo(zip))
-    output <- quiet(as.data.frame(h2o.predict(mojo_model, df)))
+    df <- .quiet_h2o(as.h2o(df))
+    mojo_model <- .quiet_h2o(h2o.import_mojo(zip))
+    output <- .quiet_h2o(as.data.frame(h2o.predict(mojo_model, df)))
   }
 
   if (method == "json") {

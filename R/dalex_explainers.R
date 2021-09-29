@@ -9,6 +9,8 @@
 #' @param model Model object (H2O)
 #' @param y Character or Variable name. Variable's column name.
 #' @param ignore Character vector. Which columns should be ignored?
+#' @param ... Additional parameters to pass to \code{h2o_predict_model} or
+#' \code{h2o_predict_MOJO}.
 #' @return List; explainer. Containing the model, data, y, predict_function,
 #' y_hat, residuals, class, label, model_info, residual_function, and weights.
 #' @aliases dalex_explainer
@@ -46,48 +48,58 @@
 #' xai2shiny(explainer, run = TRUE)
 #' }
 #' @export
-h2o_explainer <- function(df, model, y = "tag", ignore = NA) {
+h2o_explainer <- function(df, model, y = "tag", ignore = NULL, ...) {
   try_require("DALEX")
-
-  if (!any(grepl("H2O", class(model)))) {
-    stop("This function currently works with h2o models only!")
-  }
-
+  
   df <- data.frame(df) %>%
     # No need to use prediction results
     select(-c(which(colnames(.) == "train_test"):ncol(.))) %>%
     # Exclude variables with no variance
     select(-one_of(zerovar(.)))
-
+  
   y <- gsub('"', "", as_label(enquo(y)))
-
+  
   if (!y %in% colnames(df)) {
     stop(paste("The y value", y, "is not in your data.frame"))
   }
-
-  if (!is.na(ignore[1])) {
-    df <- df[, !(colnames(df) %in% ignore)]
-  }
-
+  
+  df <- df[, !(colnames(df) %in% ignore)]
   x_valid <- select(df, -one_of(y))
   y_valid <- df[y][, 1]
-
-  h2o_predict_fx <- function(model, newdata) {
-    try_require("h2o")
-    h2o.no_progress()
-    results <- as.data.frame(h2o.predict(model, as.h2o(newdata)))
-    return(results[[3L]])
+  
+  if (any(grepl("H2O", class(model)))) {
+    label <- model@model_id
+  } else {
+    label <- basename(model)
   }
-
+  
+  h2o_predict_fx <- function(model, newdata, ...) {
+    try_require("h2o")
+    # h2o_predict_model()
+    if (any(grepl("H2O", class(model)))) {
+      results <- .quiet_h2o(h2o_predict_model(newdata, model))
+    } else {
+      model <- dirname(model)
+      # h2o_predict_MOJO()
+      if (dir.exists(model)) {
+        results <- .quiet_h2o(h2o_predict_MOJO(newdata, model, ...))
+      } else {
+        stop("Directory doesn't exist: ", model)
+      }
+    }
+    results <- results[[2L]]
+    return(results)
+  }
+  
   explainer <- explain.default(
     model = model,
     data = x_valid,
     y = y_valid,
     predict_function = h2o_predict_fx,
-    label = model@model_id
+    label = label
   )
   explainer$model_info$package <- "h2o"
-
+  
   return(explainer)
 }
 
@@ -109,7 +121,7 @@ h2o_explainer <- function(df, model, y = "tag", ignore = NA) {
 dalex_local <- function(explainer, observation = NA, row = 1, type = "break_down") {
   try_require("DALEX")
   tic("dalex_local")
-
+  
   subtitle <- paste0("Observation #", v2t(row, quotes = FALSE))
   if (!is.data.frame(observation)) {
     observation <- explainer$data[row, ]
@@ -121,14 +133,14 @@ dalex_local <- function(explainer, observation = NA, row = 1, type = "break_down
       ))
     }
   }
-
+  
   # BREAKDOWN
   breakdown <- predict_parts(explainer, new_observation = observation, type = type)
-
+  
   p <- plot(breakdown) +
     theme_lares(legend = "none") +
     labs(subtitle = NULL, caption = subtitle)
-
+  
   return <- list(observation = observation, breakdown = breakdown, plot = p)
   toc("dalex_local")
   return(return)
@@ -146,14 +158,14 @@ dalex_local <- function(explainer, observation = NA, row = 1, type = "break_down
 #' @export
 dalex_residuals <- function(explainer) {
   try_require("DALEX")
-
+  
   resids <- model_performance(explainer)
-
+  
   p1 <- plot(resids) + theme_lares(legend = "none")
   p2 <- plot(resids, geom = "boxplot") + theme_lares(legend = "none")
-
+  
   p <- p1 + p2 + plot_layout(nrow = 2)
-
+  
   return(p)
 }
 
@@ -169,6 +181,7 @@ dalex_residuals <- function(explainer) {
 #' @param vars Character vector. Which features do you wish to study?
 #' @param force_class Character. If you wish to force a class on your
 #' vars, which one do you need?
+#' @param ... Additional parameters passed to \code{model_profile}.
 #' @return List. Containing PDP results, plot and \code{vars} input.
 #' @examples
 #' # You must have "DALEX" library to use this auxiliary function:
@@ -180,31 +193,33 @@ dalex_residuals <- function(explainer) {
 #' dalex_variable(explainer, vars = c("Pclass", "Sex"))
 #' }
 #' @export
-dalex_variable <- function(explainer, vars, force_class = NA) {
+dalex_variable <- function(explainer, vars, force_class = NA, ...) {
   try_require("DALEX")
   tic("dalex_variable")
-
+  
   all_vars <- colnames(explainer$data)
   if (!all(vars %in% all_vars)) {
     stop("Select any variable(s) from the following: ", v2t(all_vars))
   }
-
+  
   if (!is.na(force_class)) {
     classes <- c("factor", "numeric")
     if (force_class %in% classes) {
       class(explainer$data[[vars]]) <- force_class
-      message(paste("Changeed class to", force_class))
+      message(paste("Changed class to", force_class))
     } else {
       if (!is.na(force_class)) {
         stop(paste("Try using force_class:", vector2text(classes)))
       }
     }
   }
-
-  aux <- model_profile(explainer, variables = vars)
-  p <- plot(aux) + theme_lares() + labs(y = "Average Prediction")
+  
+  aux <- model_profile(explainer, variables = vars, ...)
+  p <- plot(aux) + theme_lares(legend = "top") +
+    labs(y = "Average Prediction") +
+    scale_y_formatNum(signif = 2)
   pdp <- list(pdp = aux, plot = p, vars = vars)
-
+  
   toc("dalex_variable")
   return(pdp)
 }

@@ -965,9 +965,7 @@ importxlsx <- function(file) {
 #' @return Same as \code{fx} but with no messages or prints.
 #' @export
 quiet <- function(fx, quiet = TRUE) {
-  if (!quiet) {
-    return(fx)
-  }
+  if (!quiet) return(fx)
   invisible(capture.output(fx))
 }
 

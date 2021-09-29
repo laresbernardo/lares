@@ -4,7 +4,7 @@
 \alias{dalex_variable}
 \title{DALEX Partial Dependency Plots (PDP)}
 \usage{
-dalex_variable(explainer, vars, force_class = NA)
+dalex_variable(explainer, vars, force_class = NA, ...)
 }
 \arguments{
 \item{explainer}{Object. Result from \code{h2o_explainer} function.}
@@ -13,6 +13,8 @@ dalex_variable(explainer, vars, force_class = NA)
 
 \item{force_class}{Character. If you wish to force a class on your
 vars, which one do you need?}
+
+\item{...}{Additional parameters passed to \code{model_profile}.}
 }
 \value{
 List. Containing PDP results, plot and \code{vars} input.
