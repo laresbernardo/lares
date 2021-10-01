@@ -583,7 +583,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
 #' @param plot Boolean. Plot viz? Will be generated anyways in the output object
 #' @return List. data.frame with the data results, elements and combinations.
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' df <- dplyr::starwars
 #' head(df[, c(1, 4, 5, 12)], 10)
 #'

@@ -81,7 +81,7 @@ Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 
 # Relation for categorical/categorical values
-dft \%>\% distr(Survived, Sex)
+distr(dft, Survived, Sex)
 
 # Relation for categorical/numeric values
 dft \%>\%
