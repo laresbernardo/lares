@@ -266,7 +266,7 @@ distr <- function(data, ...,
         .data$row
       ))
     )
-  if (length(unique(value)) > top & !is.numeric(.data$value)) {
+  if (length(unique(value)) > top & !is.numeric(value)) {
     message(paste("Filtering the", top, "most frequent values. Use 'top' to overrule."))
     which <- freqs(df, .data$value) %>% slice(1:top)
     freqs <- freqs %>%
