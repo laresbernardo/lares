@@ -422,7 +422,7 @@ fb_rf <- function(token,
 }
 
 ####################################################################
-#' Get Facebook's Page Posts (API Graph)
+#' Facebook Page Posts API
 #'
 #' Connect to an API Graph's token of a given page and get posts,
 #' comments, shares, and reactions of n posts (with no limits).
@@ -625,7 +625,7 @@ fb_posts <- function(token,
 
 
 ####################################################################
-#' Get Facebook's Post Comments (API Graph)
+#' Facebook Post Comments API
 #'
 #' Connect to an API Graph's token and get posts comments given the
 #' post(s) id.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/facebook.R
 \name{fb_posts}
 \alias{fb_posts}
-\title{Get Facebook's Page Posts (API Graph)}
+\title{Facebook Page Posts API}
 \usage{
 fb_posts(
   token,
