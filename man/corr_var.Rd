@@ -25,7 +25,7 @@ corr_var(
 }
 \arguments{
 \item{df}{Dataframe. It doesn't matter if it's got non-numerical
-columns: they will be filtered!}
+columns: they will be filtered.}
 
 \item{var}{Variable. Name of the variable to correlate. Note that if the
 variable \code{var} is not numerical, 1. you may define which category to select
@@ -33,7 +33,7 @@ from using `var_category`; 2. You may have to add \code{redundant = TRUE} to
 enable all categories (instead of \code{n-1}).}
 
 \item{pvalue}{Boolean. Returns a list, with correlations and statistical
-significance (p-value) for each value}
+significance (p-value) for each value.}
 
 \item{ignore}{Character vector. Which columns do you wish to exclude?}
 

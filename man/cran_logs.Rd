@@ -28,5 +28,7 @@ It can also be used as an auxiliary function to plot
 (\code{cranlogs::cran_downloads}) results.
 }
 \examples{
-cran_logs(c("lares", "dplyr"), from = "2021-05-31")
+if (haveInternet()) {
+  cran_logs(c("lares", "dplyr"), from = "2021-05-31")
+}
 }

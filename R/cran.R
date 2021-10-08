@@ -10,7 +10,9 @@
 #' @param from,to Dates. Range of dates to fetch downloads metrics.
 #' @param plot Boolean. Create a plot?
 #' @examples
-#' cran_logs(c("lares", "dplyr"), from = "2021-05-31")
+#' if (haveInternet()) {
+#'   cran_logs(c("lares", "dplyr"), from = "2021-05-31")
+#' }
 #' @return List with data.frame and plot if \code{plot=TRUE}.
 #' @export
 cran_logs <- function(input = "lares",

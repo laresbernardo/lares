@@ -119,9 +119,9 @@ recommended <- list(
   wordcloud = c("wordcloud", "textplot")
 )
 
-# For read.file function... will be deprecated!
-temp <- c("read.dta13", "read.spss")
+# For read.file function... deprecated
+# c("read.dta13", "read.spss")
 
 if (getRversion() >= "2.15.1") {
-  globalVariables(c(as.vector(unlist(recommended)), temp, "."))
+  globalVariables(c(as.vector(unlist(recommended)), "."))
 }

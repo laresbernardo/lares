@@ -134,7 +134,8 @@ clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
     
     # Correlations
     results[["correlations"]] <- corr_cross(
-      df, contains = "cluster_", quiet = TRUE, ignore = ignore)
+      df, contains = "cluster_", quiet = TRUE, ignore = ignore) +
+      labs(subtitle = "Most relevant correlations grouped by cluster")
     
     # Dim reduction: PCA
     if ("PCA" %in% dim_red) {

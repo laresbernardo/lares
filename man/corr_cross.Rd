@@ -15,7 +15,7 @@ corr_cross(
   local = 1,
   ignore = NULL,
   contains = NA,
-  grid = FALSE,
+  grid = TRUE,
   rm.na = FALSE,
   quiet = FALSE,
   ...
@@ -23,12 +23,12 @@ corr_cross(
 }
 \arguments{
 \item{df}{Dataframe. It doesn't matter if it's got non-numerical
-columns: they will be filtered!}
+columns: they will be filtered.}
 
 \item{plot}{Boolean. Show and return a plot?}
 
 \item{pvalue}{Boolean. Returns a list, with correlations and statistical
-significance (p-value) for each value}
+significance (p-value) for each value.}
 
 \item{max_pvalue}{Numeric. Filter non-significant variables. Range (0, 1]}
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/facebook.R
 \name{fb_post}
 \alias{fb_post}
-\title{Get Facebook's Post Comments (API Graph)}
+\title{Facebook Post Comments API}
 \usage{
 fb_post(token, post_id, limit = 5000)
 }

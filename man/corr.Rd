@@ -8,6 +8,7 @@ corr(
   df,
   method = "pearson",
   pvalue = FALSE,
+  half = FALSE,
   dec = 6,
   ignore = NULL,
   dummy = TRUE,
@@ -20,14 +21,17 @@ corr(
 }
 \arguments{
 \item{df}{Dataframe. It doesn't matter if it's got non-numerical
-columns: they will be filtered!}
+columns: they will be filtered.}
 
-\item{method}{Character. Any of: c("pearson", "kendall", "spearman")}
+\item{method}{Character. Any of: c("pearson", "kendall", "spearman").}
 
 \item{pvalue}{Boolean. Returns a list, with correlations and statistical
-significance (p-value) for each value}
+significance (p-value) for each value.}
 
-\item{dec}{Integer. Number of decimals to round correlations and p-values}
+\item{half}{Boolean. Return only half of the matrix? The redundant
+symmetrical correlations will be \code{NA}.}
+
+\item{dec}{Integer. Number of decimals to round correlations and p-values.}
 
 \item{ignore}{Vector or character. Which column should be ignored?}
 
@@ -44,10 +48,10 @@ Is set to \code{NULL}, only binary variables will dump redundant columns.}
 values of each column. Set to \code{NA} to ignore argument.}
 
 \item{top}{Integer. Select top N most relevant variables? Filtered
-and sorted by mean of each variable's correlations}
+and sorted by mean of each variable's correlations.}
 
 \item{...}{Additional parameters passed to \code{ohse}, \code{corr},
-and/or \code{cor.test}}
+and/or \code{cor.test}.}
 }
 \value{
 data.frame. Squared dimensions (N x N) to match every
@@ -64,7 +68,8 @@ with less than 3 non missing values and warn the user.
 data(dft) # Titanic dataset
 df <- dft[, 2:5]
 
-corr(df)
+# Correlation matrix (without redundancy)
+corr(df, half = TRUE)
 
 # Ignore specific column
 corr(df, ignore = "Pclass")

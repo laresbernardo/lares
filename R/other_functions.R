@@ -1048,17 +1048,17 @@ read.file <- function(filename, current_wd = TRUE, sheet = 1, quiet = FALSE) {
       try_require("gdata")
       results <- read.xls(filename, read.xls)
     }
-    if (filetype == "sav") {
-      try_require("foreign")
-      results <- quiet(read.spss(filename, to.data.frame = T))
-    }
-    if (filetype == "dta") {
-      # Stata version 5-12 .dta file
-      # results <- foreign::read.dta(filename)
-      # Stata version 13 .dta file
-      try_require("readstata13")
-      results <- read.dta13(filename)
-    }
+    # if (filetype == "sav") {
+    #   try_require("foreign")
+    #   results <- quiet(read.spss(filename, to.data.frame = T))
+    # }
+    # if (filetype == "dta") {
+    #   # Stata version 5-12 .dta file
+    #   # results <- foreign::read.dta(filename)
+    #   # Stata version 13 .dta file
+    #   try_require("readstata13")
+    #   results <- read.dta13(filename)
+    # }
     if (filetype == "dat") {
       results <- read.table(filename, header = TRUE)
     }

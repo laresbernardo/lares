@@ -11,25 +11,28 @@
 #' @inheritParams ohse
 #' @inheritParams numericalonly
 #' @param df Dataframe. It doesn't matter if it's got non-numerical
-#' columns: they will be filtered!
-#' @param method Character. Any of: c("pearson", "kendall", "spearman")
+#' columns: they will be filtered.
+#' @param method Character. Any of: c("pearson", "kendall", "spearman").
 #' @param pvalue Boolean. Returns a list, with correlations and statistical
-#' significance (p-value) for each value
-#' @param dec Integer. Number of decimals to round correlations and p-values
+#' significance (p-value) for each value.
+#' @param half Boolean. Return only half of the matrix? The redundant
+#' symmetrical correlations will be \code{NA}.
+#' @param dec Integer. Number of decimals to round correlations and p-values.
 #' @param dummy Boolean. Should One Hot (Smart) Encoding (\code{ohse()})
 #' be applied to categorical columns?
 #' @param top Integer. Select top N most relevant variables? Filtered
-#' and sorted by mean of each variable's correlations
+#' and sorted by mean of each variable's correlations.
 #' @param ... Additional parameters passed to \code{ohse}, \code{corr},
-#' and/or \code{cor.test}
+#' and/or \code{cor.test}.
 #' @return data.frame. Squared dimensions (N x N) to match every
 #' correlation between every \code{df} data.frame column/variable. Notice
 #' that when using \code{ohse()} you may get more dimensions.
 #' @examples
 #' data(dft) # Titanic dataset
 #' df <- dft[, 2:5]
-#'
-#' corr(df)
+#' 
+#' # Correlation matrix (without redundancy)
+#' corr(df, half = TRUE)
 #'
 #' # Ignore specific column
 #' corr(df, ignore = "Pclass")
@@ -44,6 +47,7 @@
 #' @export
 corr <- function(df, method = "pearson",
                  pvalue = FALSE,
+                 half = FALSE,
                  dec = 6,
                  ignore = NULL,
                  dummy = TRUE,
@@ -84,7 +88,7 @@ corr <- function(df, method = "pearson",
 
   # Correlations
   rs <- suppressWarnings(cor(d, use = "pairwise.complete.obs", method = method))
-  rs[is.na(rs)] <- 0
+  if (half) for (i in 1:nrow(rs)) rs[1:i, i] <- NA
   cor <- round(data.frame(rs), dec)
   colnames(cor) <- row.names(cor) <- colnames(d)
 
@@ -178,7 +182,7 @@ corr_var <- function(df, var,
 
   # Calculate correlations
   if (plot) pvalue <- FALSE # No need to calculate
-  rs <- corr(df, ignore = ignore, limit = limit, pvalue = pvalue, ...)
+  rs <- corr(df, half = TRUE, ignore = ignore, limit = limit, pvalue = pvalue, ...)
   if (is.data.frame(rs)) rs <- list(cor = rs, pvalue = mutate_all(rs, ~1))
 
   # Check if main variable exists
@@ -340,7 +344,7 @@ corr_var <- function(df, var,
 corr_cross <- function(df, plot = TRUE,
                        pvalue = TRUE, max_pvalue = 1,
                        type = 1, max = 1, top = 25, local = 1,
-                       ignore = NULL, contains = NA, grid = FALSE,
+                       ignore = NULL, contains = NA, grid = TRUE,
                        rm.na = FALSE, quiet = FALSE,
                        ...) {
   check_opts(type, 1:2)
@@ -349,7 +353,7 @@ corr_cross <- function(df, plot = TRUE,
     warning("There are NA values in your data!")
   }
 
-  cor <- corr(df, ignore = ignore, pvalue = pvalue, ...)
+  cor <- corr(df, half = TRUE, ignore = ignore, pvalue = pvalue, ...)
 
   cluster <- "cluster_" %in% contains
   if (!is.data.frame(cor)) {
@@ -438,7 +442,7 @@ corr_cross <- function(df, plot = TRUE,
           labels = function(x) sub("^(-)?0[.]", "\\1.", x)
         ) +
         theme_lares(legend = "top")
-      if ((!is.na(contains)[1] & length(contains) == 1) | grid) {
+      if ((!is.na(contains)[1] & length(contains) == 1) & grid) {
         p <- p + facet_grid(.data$facet ~ ., scales = "free", space = "free")
       }
     }
@@ -496,21 +500,14 @@ corr_cross <- function(df, plot = TRUE,
     {
       if (!is.na(contains[1])) {
         filter(., grepl(
-          paste(
-            contains,
-            collapse = ifelse(length(contains) > 1, "|", "")
-          ),
-          paste(.data$mix, .data$key)
+          paste(contains, collapse = "|"),
+          paste(.data$mix)
         ))
       } else {
         .
       }
     } %>%
-    # When cluster, filter "contains" by mix only
-    {if (cluster) filter(., grepl(contains, .data$mix)) else .} %>%
-    {
-      if (rm.na) filter(., !grepl("_NAs", .data$mix)) else .
-    } %>%
+    {if (rm.na) filter(., !grepl("_NAs", .data$mix)) else .} %>%
     filter(!grepl("_OTHER", .data$key)) %>%
     rename(corr = .data$value) %>%
     mutate(value = paste(.data$key, .data$mix)) %>%
