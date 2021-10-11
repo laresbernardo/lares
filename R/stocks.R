@@ -713,7 +713,7 @@ splot_growth <- function(p, save = FALSE) {
     geom_hline(yintercept = 0, size = 0.3, color = "black") +
     geom_hline(
       yintercept = aux$Amount[1], alpha = 0.9,
-      colour = names(lares::lares_pal()$palette[3])
+      colour = names(lares_pal()$palette[3])
     ) +
     geom_hline(
       yintercept = max(aux$Amount), size = 0.2,

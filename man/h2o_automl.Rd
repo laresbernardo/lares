@@ -170,7 +170,7 @@ data(dft) # Titanic dataset
 dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
 
 # Classification: Binomial - 2 Classes
-r <- h2o_automl(dft, y = Survived, max_models = 1, impute = FALSE, target = "TRUE")
+r <- h2o_automl(dft, y = Survived, max_models = 1, impute = FALSE, target = "TRUE", alarm = FALSE)
 
 # Let's see all the stuff we have inside:
 lapply(r, names)

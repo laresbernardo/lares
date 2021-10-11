@@ -314,8 +314,7 @@ distr <- function(data, ...,
     }
     # Custom colours if wanted...
     if (custom_colours) {
-      count <- count +
-        suppressWarnings(gg_fill_customs())
+      count <- count + suppressWarnings(gg_fill_customs())
     }
   }
 

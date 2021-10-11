@@ -260,12 +260,16 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
     ret <- list(ret, scale_fill_manual(values = names(colours_pal)))
   }
 
-  # Custom Palette Colours defined in colour_palettes.R (personal use)
+  # Custom palette defined in colour_palettes.R and/or lares.colours.custom options
   if (pal == 4) {
-    ret <- list(ret)
-    if (grepl("f", which)) ret <- append(ret, gg_fill_customs())
-    if (grepl("c", which)) ret <- append(ret, gg_colour_customs())
-    if (grepl("t", which)) ret <- append(ret, gg_text_customs())
+    # FIX: Scale for 'fill' is already present. Adding another scale for 'fill',
+    # which will replace the existing scale. (not being suppressed)
+    suppressMessages({
+      ret <- list(ret)
+      if (grepl("f", which)) ret <- append(ret, gg_fill_customs())
+      if (grepl("c", which)) ret <- append(ret, gg_colour_customs())
+      if (grepl("t", which)) ret <- append(ret, gg_text_customs())    
+    })
   }
 
   return(ret)

@@ -131,7 +131,7 @@ clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
       group_by(.data$cluster) %>%
       summarise_if(is.numeric, list(mean)) %>%
       mutate(n = as.integer(table(df$cluster)))
-    
+
     # Correlations
     results[["correlations"]] <- corr_cross(
       df, contains = "cluster_", quiet = TRUE, ignore = ignore) +

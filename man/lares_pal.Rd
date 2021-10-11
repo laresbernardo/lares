@@ -24,7 +24,15 @@ Depending on the \code{return} input, we get a:
 }
 }
 \description{
-This function plots a list of colours on a specific palette
+Fetch customizable palettes for the library's usage. The package has
+its own default colour-blind friendly colours but can be customized using
+R internal options (i.e. \code{options("lares.palette" = c("#FF8303" = "#000",
+"#40A4D8" = "#FFF", ...))}. There are 3 options you can use to customize all
+colour palletes: "lares.palette" (vector, will be used in the same order as passed,
+and must have a counter colour defined), "lares.colours" (vector, simple colour
+names and their HEX codes), and "lares.colours.custom" (data.frame, containing
+"values" to use dynamically, "fill" for main colour, and "colour" (not obligatory)
+for counter colour).
 }
 \examples{
 # Simple colour-named palette
