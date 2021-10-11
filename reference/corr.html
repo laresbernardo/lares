@@ -169,6 +169,7 @@ with less than 3 non missing values and warn the user.</p>
   <span class='va'>df</span>,
   method <span class='op'>=</span> <span class='st'>"pearson"</span>,
   pvalue <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  half <span class='op'>=</span> <span class='cn'>FALSE</span>,
   dec <span class='op'>=</span> <span class='fl'>6</span>,
   ignore <span class='op'>=</span> <span class='cn'>NULL</span>,
   dummy <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -185,20 +186,25 @@ with less than 3 non missing values and warn the user.</p>
     <tr>
       <th>df</th>
       <td><p>Dataframe. It doesn't matter if it's got non-numerical
-columns: they will be filtered!</p></td>
+columns: they will be filtered.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>Character. Any of: c("pearson", "kendall", "spearman")</p></td>
+      <td><p>Character. Any of: c("pearson", "kendall", "spearman").</p></td>
     </tr>
     <tr>
       <th>pvalue</th>
       <td><p>Boolean. Returns a list, with correlations and statistical
-significance (p-value) for each value</p></td>
+significance (p-value) for each value.</p></td>
+    </tr>
+    <tr>
+      <th>half</th>
+      <td><p>Boolean. Return only half of the matrix? The redundant
+symmetrical correlations will be <code>NA</code>.</p></td>
     </tr>
     <tr>
       <th>dec</th>
-      <td><p>Integer. Number of decimals to round correlations and p-values</p></td>
+      <td><p>Integer. Number of decimals to round correlations and p-values.</p></td>
     </tr>
     <tr>
       <th>ignore</th>
@@ -227,12 +233,12 @@ values of each column. Set to <code>NA</code> to ignore argument.</p></td>
     <tr>
       <th>top</th>
       <td><p>Integer. Select top N most relevant variables? Filtered
-and sorted by mean of each variable's correlations</p></td>
+and sorted by mean of each variable's correlations.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Additional parameters passed to <code>ohse</code>, <code>corr</code>,
-and/or <code>cor.test</code></p></td>
+and/or <code>cor.test</code>.</p></td>
     </tr>
     </table>
 
@@ -255,14 +261,15 @@ that when using <code><a href='ohse.html'>ohse()</a></code> you may get more dim
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>dft</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
 
-<span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                     Age Survived_TRUE  Sex_male  Pclass_1  Pclass_2  Pclass_3
-#&gt; Age            1.000000     -0.077221  0.093254  0.348941  0.006954 -0.312271
-#&gt; Survived_TRUE -0.077221      1.000000 -0.543351  0.285904  0.093349 -0.322308
-#&gt; Sex_male       0.093254     -0.543351  1.000000 -0.098013 -0.064746  0.137143
-#&gt; Pclass_1       0.348941      0.285904 -0.098013  1.000000 -0.288585 -0.626738
-#&gt; Pclass_2       0.006954      0.093349 -0.064746 -0.288585  1.000000 -0.565210
-#&gt; Pclass_3      -0.312271     -0.322308  0.137143 -0.626738 -0.565210  1.000000</div><div class='input'>
+<span class='co'># Correlation matrix (without redundancy)</span>
+<span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, half <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                     Age Survived_TRUE  Sex_male  Pclass_1 Pclass_2 Pclass_3
+#&gt; Age                  NA            NA        NA        NA       NA       NA
+#&gt; Survived_TRUE -0.077221            NA        NA        NA       NA       NA
+#&gt; Sex_male       0.093254     -0.543351        NA        NA       NA       NA
+#&gt; Pclass_1       0.348941      0.285904 -0.098013        NA       NA       NA
+#&gt; Pclass_2       0.006954      0.093349 -0.064746 -0.288585       NA       NA
+#&gt; Pclass_3      -0.312271     -0.322308  0.137143 -0.626738 -0.56521       NA</div><div class='input'>
 <span class='co'># Ignore specific column</span>
 <span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, ignore <span class='op'>=</span> <span class='st'>"Pclass"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                     Age Survived_TRUE  Sex_male
