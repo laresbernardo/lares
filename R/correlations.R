@@ -416,12 +416,12 @@ corr_cross <- function(df, plot = TRUE,
         ggplot(aes(
           x = reorder(.data$label, .data$abs),
           y = .data$abs,
-          fill = .data$sign
+          fill = .data$sign,
+          colour = .data$sign
         )) +
         geom_col(colour = "transparent") +
         geom_text(aes(
-          label = sub("^(-)?0[.]", "\\1.", signif(.data$corr, 3)),
-          colour = sign),
+          label = sub("^(-)?0[.]", "\\1.", signif(.data$corr, 3))),
           size = 3, hjust = 1.1
         ) +
         coord_flip() +
@@ -431,12 +431,12 @@ corr_cross <- function(df, plot = TRUE,
           subtitle = subtitle,
           x = NULL, y = NULL
         ) +
-        scale_fill_identity() +
         scale_y_continuous(
           expand = c(0, 0), position = "right",
           labels = function(x) sub("^(-)?0[.]", "\\1.", x)
         ) +
-        theme_lares(legend = "top", pal = 4)
+        theme_lares(legend = "top", pal = 4, which = "f")
+      
       if ((!is.na(contains)[1] & length(contains) == 1) & grid) {
         p <- p + facet_grid(.data$facet ~ ., scales = "free", space = "free")
       }
