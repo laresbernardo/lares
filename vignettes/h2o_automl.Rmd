@@ -131,7 +131,7 @@ If you'd like to re-use your exported models to predict new datasets, you have s
 
 - `h2o_predict_MOJO()` *[recommended]*: This function lets the user predict using `h2o`'s `.zip` file containing the MOJO files. These files are also the ones used when putting the model into production on any other environment. Also, MOJO let's you change `h2o`'s versions without issues
 - `h2o_predict_binary()`: This function lets the user predict using the h2o binary file. The `h2o` version/build must match for it to work.
-- `h2o_predict_model()`: This function lets the user run predictions from a `H2O Model Object` same as you'd use the `predict` base function. Will probably only work in your current session as you must havee the actual trained object to use it.
+- `h2o_predict_model()`: This function lets the user run predictions from a `H2O Model Object` same as you'd use the `predict` base function. Will probably only work in your current session as you must have the actual trained object to use it.
 
 ## Addittional Posts
 
