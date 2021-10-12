@@ -7,6 +7,7 @@
 corr(
   df,
   method = "pearson",
+  use = "pairwise.complete.obs",
   pvalue = FALSE,
   half = FALSE,
   dec = 6,
@@ -24,6 +25,9 @@ corr(
 columns: they will be filtered.}
 
 \item{method}{Character. Any of: c("pearson", "kendall", "spearman").}
+
+\item{use}{Character. Method for computing covariances in the presence
+of missing values. Check \code{stats::cor} for options.}
 
 \item{pvalue}{Boolean. Returns a list, with correlations and statistical
 significance (p-value) for each value.}

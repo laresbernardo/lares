@@ -13,6 +13,8 @@
 #' @param df Dataframe. It doesn't matter if it's got non-numerical
 #' columns: they will be filtered.
 #' @param method Character. Any of: c("pearson", "kendall", "spearman").
+#' @param use Character. Method for computing covariances in the presence
+#' of missing values. Check \code{stats::cor} for options.
 #' @param pvalue Boolean. Returns a list, with correlations and statistical
 #' significance (p-value) for each value.
 #' @param half Boolean. Return only half of the matrix? The redundant
@@ -46,6 +48,7 @@
 #' corr(df, method = "spearman")
 #' @export
 corr <- function(df, method = "pearson",
+                 use = "pairwise.complete.obs",
                  pvalue = FALSE,
                  half = FALSE,
                  dec = 6,
@@ -87,7 +90,7 @@ corr <- function(df, method = "pearson",
   d <- Filter(function(x) sd(x, na.rm = TRUE) != 0, d)
 
   # Correlations
-  rs <- suppressWarnings(cor(d, use = "pairwise.complete.obs", method = method))
+  rs <- suppressWarnings(cor(d, method = method, ...))
   if (half) for (i in 1:nrow(rs)) rs[1:i, i] <- NA
   cor <- round(data.frame(rs), dec)
   colnames(cor) <- row.names(cor) <- colnames(d)
@@ -181,7 +184,8 @@ corr_var <- function(df, var,
   df <- select(df, -contains(paste0(var, "_log")))
 
   # Calculate correlations
-  if (plot) pvalue <- FALSE # No need to calculate
+  if (max_pvalue < 1) pvalue <- TRUE
+  if (plot & max_pvalue == 1) pvalue <- FALSE # No need to calculate
   rs <- corr(df, half = TRUE, ignore = ignore, limit = limit, pvalue = pvalue, ...)
   if (is.data.frame(rs)) rs <- list(cor = rs, pvalue = mutate_all(rs, ~1))
 
@@ -211,7 +215,7 @@ corr_var <- function(df, var,
   original_n <- nrow(d)
 
   if (!zeroes) d <- d[d$corr != 0, ]
-
+  
   # Suppress non-statistical significant correlations
   if (max_pvalue < 1) {
     d <- d %>%
@@ -512,7 +516,7 @@ corr_cross <- function(df, plot = TRUE,
 
 
 # https://stackoverflow.com/questions/60512043/r-creating-a-p-value-matrix-with-missing-values
-.cor_test_p <- function(mat, method = "pearson", exact = TRUE, ...) {
+.cor_test_p <- function(mat, method = "pearson", exact = FALSE, ...) {
   mat <- as.matrix(mat)
   n <- ncol(mat)
   p.mat <- matrix(NA, n, n)
