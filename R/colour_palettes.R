@@ -195,9 +195,9 @@ gg_colour_customs <- function() {
   x <- last_plot()
   cols <- lares_pal()$labels
   cols <- cols[cols$values %in% unique(unlist(select(x$data, !!x$mapping$colour))),]
-  values <- as.character(t(cols$fill)[1, ])
+  values <- as.character(t(cols$colour)[1, ])
   names(values) <- cols$values
-  return(scale_color_manual(values = values))
+  return(scale_color_manual(values = values, aesthetics = "colour"))
 }
 
 
@@ -216,7 +216,7 @@ gg_fill_customs <- function() {
   cols <- cols[cols$values %in% unique(unlist(select(x$data, !!x$mapping$fill))),]
   values <- as.character(t(cols$fill)[1, ])
   names(values) <- cols$values
-  return(scale_fill_manual(values = values))
+  return(scale_fill_manual(values = values, aesthetics = "fill"))
 }
 
 
@@ -237,5 +237,5 @@ gg_text_customs <- function() {
   cols <- cols[cols$values %in% unique(unlist(select(x$data, any_of(labs)))),]
   values <- as.character(t(cols$colour)[1, ])
   names(values) <- cols$values
-  return(scale_color_manual(values = values))
+  return(scale_color_manual(values = values, aesthetics = "colour"))
 }

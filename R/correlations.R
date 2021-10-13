@@ -423,7 +423,6 @@ corr_cross <- function(df, plot = TRUE,
           fill = .data$sign,
           colour = .data$sign
         )) +
-        geom_col(colour = "transparent") +
         geom_text(aes(
           label = sub("^(-)?0[.]", "\\1.", signif(.data$corr, 3))),
           size = 3, hjust = 1.1
@@ -439,7 +438,7 @@ corr_cross <- function(df, plot = TRUE,
           expand = c(0, 0), position = "right",
           labels = function(x) sub("^(-)?0[.]", "\\1.", x)
         ) +
-        theme_lares(legend = "top", pal = 4, which = "f")
+        theme_lares(pal = 4)
       
       if ((!is.na(contains)[1] & length(contains) == 1) & grid) {
         p <- p + facet_grid(.data$facet ~ ., scales = "free", space = "free")

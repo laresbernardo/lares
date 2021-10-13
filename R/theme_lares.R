@@ -67,7 +67,7 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
                         mg = 9,
                         pal = 0,
                         palette = NULL,
-                        which = "fct",
+                        which = "fc",
                         ...) {
 
   # Start from theme_minimal()

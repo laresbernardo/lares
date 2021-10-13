@@ -21,7 +21,7 @@ theme_lares(
   mg = 9,
   pal = 0,
   palette = NULL,
-  which = "fct",
+  which = "fc",
   ...
 )
 }

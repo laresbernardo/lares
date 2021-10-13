@@ -117,7 +117,8 @@ lasso_vars <- function(df, variable,
     labs(
       x = NULL, y = "Absolute Standarized Coefficient",
       title = "Most Relevant Features (Lasso Regression)",
-      subtitle = paste("RSQ =", round(rsq$metrics$rsq, 4)),
+      subtitle = sprintf("Response variable: %s | RSQ = %s",
+                         as_label(var), round(rsq$metrics$rsq, 4)),
       fill = "Coeff > 0"
     ) +
     theme_lares(legend = "top", pal = 4) +
