@@ -1,8 +1,8 @@
 ---
-title: "Introduction to AutoML using `lares`"
+title: "Introduction to AutoML using lares"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to h2o_automl}
+  %\VignetteIndexEntry{Introduction to AutoML using lares}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
