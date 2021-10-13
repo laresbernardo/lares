@@ -58,7 +58,8 @@ lasso_vars <- function(df, variable,
   colnames(temp)[1] <- "main"
   temp <- temp %>%
     filter(!is.na(.data$main)) %>%
-    mutate(main = as.vector(base::scale(as.numeric(.data$main), scale = FALSE, center = TRUE)))
+    mutate(main = as.vector(base::scale(as.numeric(.data$main), scale = FALSE, center = TRUE))) %>%
+    select(-!!var)
 
   if (!quiet) message(">>> Searching for optimal lambda with CV...")
   lasso_logistic <- h2o.glm(
@@ -96,19 +97,14 @@ lasso_vars <- function(df, variable,
   if (nrow(t_lasso_model_coeff) > top & !quiet) {
     message(paste("- Plotting only the", top, "most relevant features..."))
   }
-  good <- lares_pal("labels") %>%
-    filter(.data$values == "good") %>%
-    pull("fill")
-  bad <- lares_pal("labels") %>%
-    filter(.data$values == "bad") %>%
-    pull("fill")
+  
   p <- t_lasso_model_coeff %>%
     head(top) %>%
     filter(.data$names != "Intercept") %>%
     mutate(
       abs = abs(.data$standardized_coefficients),
       prc = .data$abs / sum(.data$abs),
-      coef = ifelse(.data$coefficients > 0, good, bad)
+      coef = ifelse(.data$coefficients > 0, "positive", "negative")
     ) %>%
     filter(.data$prc > 0) %>%
     ggplot(aes(
@@ -116,7 +112,6 @@ lasso_vars <- function(df, variable,
       y = abs(.data$standardized_coefficients),
       fill = .data$coef
     )) +
-    scale_fill_identity() +
     coord_flip() +
     geom_col() +
     labs(
@@ -125,7 +120,7 @@ lasso_vars <- function(df, variable,
       subtitle = paste("RSQ =", round(rsq$metrics$rsq, 4)),
       fill = "Coeff > 0"
     ) +
-    theme_lares(legend = "top", pal = 2) +
+    theme_lares(legend = "top", pal = 4) +
     scale_y_percent(expand = c(0, 0), position = "right")
 
   toc("lasso_vars", quiet = quiet)

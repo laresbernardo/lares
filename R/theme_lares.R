@@ -36,6 +36,7 @@
 #' used as fill and the values will be used as colour.
 #' @param which Character. When \code{pal = 3}, select which colours should be
 #' added with the custom colours palette: fill, colour, text (fct) - first letters.
+#' @param ... Additional parameters passed
 #' @return Themed ggplot2 object
 #' @examples
 #' \donttest{
@@ -66,7 +67,8 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
                         mg = 9,
                         pal = 0,
                         palette = NULL,
-                        which = "fct") {
+                        which = "fct",
+                        ...) {
 
   # Start from theme_minimal()
   ret <- theme_minimal(base_size = size)
@@ -106,38 +108,6 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
     }
   } else {
     ret <- ret + theme(panel.grid = element_blank())
-  }
-
-  # Legend
-  aux <- ifelse("top" %in% legend, "right", "left")
-  xj <- switch(tolower(substr(aux, 1, 1)),
-    b = 0,
-    l = 0,
-    m = 0.5,
-    c = 0.5,
-    r = 1,
-    t = 1
-  )
-  yj <- switch(tolower(substr(aux, 2, 2)),
-    b = 0,
-    l = 0,
-    m = 0.5,
-    c = 0.5,
-    r = 1,
-    t = 1
-  )
-  if (!is.null(legend)) {
-    ret <- ret + theme(
-      legend.title = element_text(
-        color = soft_colour, size = size * 0.9, face = "bold"
-      ),
-      legend.position = legend,
-      legend.justification = c(
-        ifelse(legend %in% c("top", "bottom"), 0, .5),
-        ifelse(legend == "top", 0, .5)
-      ),
-      legend.margin = margin(-3, 0, -4, 0)
-    )
   }
 
   # Axis lines
@@ -270,6 +240,23 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
       if (grepl("c", which)) ret <- append(ret, gg_colour_customs())
       if (grepl("t", which)) ret <- append(ret, gg_text_customs())    
     })
+    
+  }
+  
+  # Legend
+  aux <- ifelse("top" %in% legend, "right", "left")
+  xj <- switch(tolower(substr(aux, 1, 1)), b = 0, l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
+  yj <- switch(tolower(substr(aux, 2, 2)), b = 0, l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
+  if (!is.null(legend)) {
+    ret <- ret + theme(
+      legend.title = element_text(color = soft_colour, size = size * 0.9, face = "bold"),
+      legend.position = legend,
+      legend.justification = c(
+        ifelse(legend %in% c("top", "bottom"), 0, .5),
+        ifelse(legend == "top", 0, .5)
+      ),
+      legend.margin = margin(-3, 0, -4, 0)
+    )
   }
 
   return(ret)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/colour_palettes.R
 \name{gg_fill_customs}
 \alias{gg_fill_customs}
-\title{Custom colours for scale_fill_manual [Deprecated]}
+\title{Custom colours for scale_fill_manual for fill}
 \usage{
 gg_fill_customs()
 }
@@ -10,7 +10,8 @@ gg_fill_customs()
 Same as \code{scale_fill_manual} but with custom palette.
 }
 \description{
-This function lets the user use pre-defined default colours
+This function lets the user use pre-defined default colours.
+Check your \code{lares_pal()$labels} scale.
 }
 \seealso{
 Other Auxiliary: 

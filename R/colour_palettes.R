@@ -81,10 +81,10 @@ lares_pal <- function(return = "list") {
     c("summer", simple[["red"]], simple[["white"]]),
     c("fall", simple[["orange"]], simple[["black"]]),
     c("winter", simple[["blue"]], simple[["black"]]),
-    c("meg1", "071D49", simple[["white"]]),
-    c("meg2", "EBB600", simple[["black"]]),
-    c("meg3", "F2F1F0", simple[["black"]]),
-    c("meg4", "9A9A9A", simple[["white"]]),
+    c("meg1", "#071D49", simple[["white"]]),
+    c("meg2", "#EBB600", simple[["black"]]),
+    c("meg3", "#F2F1F0", simple[["black"]]),
+    c("meg4", "#9A9A9A", simple[["white"]]),
     c("r5", "#290452", simple[["white"]]),
     c("otro", simple[["grey"]], simple[["black"]]),
     c("fear", "#810806", simple[["white"]]),
@@ -183,48 +183,59 @@ plot_palette <- function(fill, colour = "black", id = NA, limit = 12) {
 
 
 ####################################################################
-#' Custom colours for scale_color_manual [Deprecated]
+#' Custom colours for scale_color_manual for colour
 #'
-#' This function lets the user use pre-defined default colours
+#' This function lets the user use pre-defined default colours.
+#' Check your \code{lares_pal()$labels} scale.
 #'
 #' @family Auxiliary
 #' @return Same as \code{scale_color_manual} but with custom palette.
 #' @export
 gg_colour_customs <- function() {
-  colours_list <- lares_pal()$labels
-  values <- as.character(t(colours_list$colour)[1, ])
-  names(values) <- colours_list$values
+  x <- last_plot()
+  cols <- lares_pal()$labels
+  cols <- cols[cols$values %in% unique(unlist(select(x$data, !!x$mapping$colour))),]
+  values <- as.character(t(cols$fill)[1, ])
+  names(values) <- cols$values
   return(scale_color_manual(values = values))
 }
 
 
 ####################################################################
-#' Custom colours for scale_fill_manual [Deprecated]
+#' Custom colours for scale_fill_manual for fill
 #'
-#' This function lets the user use pre-defined default colours
+#' This function lets the user use pre-defined default colours.
+#' Check your \code{lares_pal()$labels} scale.
 #'
 #' @family Auxiliary
 #' @return Same as \code{scale_fill_manual} but with custom palette.
 #' @export
 gg_fill_customs <- function() {
-  colours_list <- lares_pal()$labels
-  values <- as.character(t(colours_list$fill)[1, ])
-  names(values) <- colours_list$values
+  x <- last_plot()
+  cols <- lares_pal()$labels
+  cols <- cols[cols$values %in% unique(unlist(select(x$data, !!x$mapping$fill))),]
+  values <- as.character(t(cols$fill)[1, ])
+  names(values) <- cols$values
   return(scale_fill_manual(values = values))
 }
 
 
 ####################################################################
-#' Custom colours for scale_color_manual on texts [Deprecated]
+#' Custom colours for scale_color_manual for text
 #'
-#' This function lets the user use pre-defined default colours
+#' This function lets the user use pre-defined default colours.
+#' Check your \code{lares_pal()$labels} scale.
 #'
 #' @family Auxiliary
 #' @return Same as \code{scale_color_manual} but with custom palette.
 #' @export
 gg_text_customs <- function() {
-  colours_list <- lares_pal()$labels
-  values <- as.character(t(colours_list$colour)[1, ])
-  names(values) <- colours_list$values
+  x <- last_plot()
+  cols <- lares_pal()$labels
+  labs <- unlist(lapply(x$layers, function(y) as_label(y$mapping$colour)))
+  labs <- labs[labs != "NULL"]
+  cols <- cols[cols$values %in% unique(unlist(select(x$data, any_of(labs)))),]
+  values <- as.character(t(cols$colour)[1, ])
+  names(values) <- cols$values
   return(scale_color_manual(values = values))
 }
