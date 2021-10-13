@@ -90,7 +90,7 @@ corr <- function(df, method = "pearson",
   d <- Filter(function(x) sd(x, na.rm = TRUE) != 0, d)
 
   # Correlations
-  rs <- suppressWarnings(cor(d, method = method, ...))
+  rs <- suppressWarnings(cor(d, method = method, use = use))
   if (half) for (i in 1:nrow(rs)) rs[1:i, i] <- NA
   cor <- round(data.frame(rs), dec)
   colnames(cor) <- row.names(cor) <- colnames(d)
@@ -516,7 +516,7 @@ corr_cross <- function(df, plot = TRUE,
 
 
 # https://stackoverflow.com/questions/60512043/r-creating-a-p-value-matrix-with-missing-values
-.cor_test_p <- function(mat, method = "pearson", exact = FALSE, ...) {
+.cor_test_p <- function(mat, method = "pearson", exact = TRUE, ...) {
   mat <- as.matrix(mat)
   n <- ncol(mat)
   p.mat <- matrix(NA, n, n)
