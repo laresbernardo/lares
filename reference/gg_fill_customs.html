@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Custom colours for scale_fill_manual for fill — gg_fill_customs • lares</title>
+<title>Custom fill, colour and text colours for ggplot2 — gg_fill_customs • lares</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,9 +52,10 @@
 
 
 
-<meta property="og:title" content="Custom colours for scale_fill_manual for fill — gg_fill_customs" />
+<meta property="og:title" content="Custom fill, colour and text colours for ggplot2 — gg_fill_customs" />
 <meta property="og:description" content="This function lets the user use pre-defined default colours.
-Check your lares_pal()$labels scale." />
+Check your lares_pal()$labels scale. Feel free to use
+lares:::.gg_vals() to debug colours used in latest plot." />
 <meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png" />
 
 
@@ -151,18 +152,36 @@ Check your lares_pal()$labels scale." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Custom colours for scale_fill_manual for fill</h1>
-    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/colour_palettes.R'><code>R/colour_palettes.R</code></a></small>
+    <h1>Custom fill, colour and text colours for ggplot2</h1>
+    <small class="dont-index">Source: <a href='https://github.com/laresbernardo/lares/blob/master/R/theme_lares.R'><code>R/theme_lares.R</code></a></small>
     <div class="hidden name"><code>gg_fill_customs.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>This function lets the user use pre-defined default colours.
-Check your <code>lares_pal()$labels</code> scale.</p>
+Check your <code>lares_pal()$labels</code> scale. Feel free to use
+<code>lares:::.gg_vals()</code> to debug colours used in latest plot.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gg_fill_customs</span><span class='op'>(</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>gg_fill_customs</span><span class='op'>(</span>layer <span class='op'>=</span> <span class='st'>"fill"</span>, <span class='va'>...</span><span class='op'>)</span>
 
+<span class='fu'>gg_colour_customs</span><span class='op'>(</span>layer <span class='op'>=</span> <span class='st'>"colour"</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>gg_text_customs</span><span class='op'>(</span>layer <span class='op'>=</span> <span class='st'>"colour"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>layer</th>
+      <td><p>Select any of "fill" or "colour" to use on
+your <code>lares_pal()$labels</code> palette.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Alow additional parameters not used.</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -170,8 +189,6 @@ Check your <code>lares_pal()$labels</code> scale.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Auxiliary: 
-<code><a href='gg_colour_customs.html'>gg_colour_customs</a>()</code>,
-<code><a href='gg_text_customs.html'>gg_text_customs</a>()</code>,
 <code><a href='lares_pal.html'>lares_pal</a>()</code>,
 <code><a href='plot_palette.html'>plot_palette</a>()</code></p></div>
 
