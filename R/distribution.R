@@ -359,8 +359,7 @@ distr <- function(data, ...,
     }
     # Custom colours if wanted...
     if (custom_colours) {
-      prop <- prop +
-        suppressMessages(gg_fill_customs())
+      prop <- prop + suppressMessages(gg_fill_customs())
     }
   }
 

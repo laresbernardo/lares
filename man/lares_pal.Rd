@@ -50,9 +50,7 @@ df[sample(nrow(df), 5), ]
 }
 \seealso{
 Other Auxiliary: 
-\code{\link{gg_colour_customs}()},
 \code{\link{gg_fill_customs}()},
-\code{\link{gg_text_customs}()},
 \code{\link{plot_palette}()}
 }
 \concept{Auxiliary}

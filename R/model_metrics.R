@@ -389,7 +389,7 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
 #' range. It also works for multi-categorical models.
 #'
 #' @section Plot Results:
-#' To plot results, use the \code{mplot_roNULL} function.
+#' To plot results, use the \code{mplot_roc()} function.
 #'
 #' @family Machine Learning
 #' @family Model metrics

@@ -109,11 +109,10 @@ lasso_vars <- function(df, variable,
     filter(.data$prc > 0) %>%
     ggplot(aes(
       x = reorder(.data$names, .data$prc),
-      y = abs(.data$standardized_coefficients),
-      fill = .data$coef
+      y = abs(.data$standardized_coefficients)
     )) +
+    geom_col(aes(fill = .data$coef)) +
     coord_flip() +
-    geom_col() +
     labs(
       x = NULL, y = "Absolute Standarized Coefficient",
       title = "Most Relevant Features (Lasso Regression)",

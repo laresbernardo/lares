@@ -22,3 +22,9 @@ No return value, called for side effects.
 This function checks if an object has a specific attribute and
 stops if not
 }
+\examples{
+test <- data.frame()
+attributes(test)
+check_attr(test, "class", "data.frame")
+# check_attr(test, "class", "not.data.frame")
+}

@@ -61,6 +61,11 @@ check_opts <- function(inputs, opts,
 #' @param check Character. Attribute value
 #' @param stop Boolean. Stop if doesn't check?
 #' @return No return value, called for side effects.
+#' @examples
+#' test <- data.frame()
+#' attributes(test)
+#' check_attr(test, "class", "data.frame")
+#' # check_attr(test, "class", "not.data.frame")
 #' @export
 check_attr <- function(object, attr = "type", check = NULL, stop = TRUE) {
   if (is.null(check)) stop("You must set a valid check input")

@@ -32,9 +32,7 @@ plot_palette(fill = names(pal), colour = as.vector(pal))
 }
 \seealso{
 Other Auxiliary: 
-\code{\link{gg_colour_customs}()},
 \code{\link{gg_fill_customs}()},
-\code{\link{gg_text_customs}()},
 \code{\link{lares_pal}()}
 }
 \concept{Auxiliary}

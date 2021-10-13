@@ -10,7 +10,7 @@
 #' names and their HEX codes), and "lares.colours.custom" (data.frame, containing
 #' "values" to use dynamically, "fill" for main colour, and "colour" (not obligatory)
 #' for counter colour).
-#' 
+#'
 #' @family Auxiliary
 #' @param return Character. Get only what you need. Select any of:
 #' "all" or "list" (list),
@@ -40,20 +40,24 @@
 #' df[sample(nrow(df), 5), ]
 #' @export
 lares_pal <- function(return = "list") {
-  
+
   # Generic colour and counter-colour palette
   colours_names <- getOption("lares.palette")
-  if (length(unique(names(colours_names))) != length(colours_names))
+  if (length(unique(names(colours_names))) != length(colours_names)) {
     stop("Check your lares.palette option. Do not repeat colours.")
-  if (!"character" %in% class(colours_names))
+  }
+  if (!"character" %in% class(colours_names)) {
     stop("Check your lares.palette option. Must be a character vector.")
-  
+  }
+
   # Specific (simple) colours by names
   simple <- c(getOption("lares.colours"), getOption("lares.colors"))
-  if (length(unique(names(simple))) != length(simple))
+  if (length(unique(names(simple))) != length(simple)) {
     stop("Check your lares.colours option. Do not repeat colours.")
-  if (!"character" %in% class(simple))
+  }
+  if (!"character" %in% class(simple)) {
     stop("Check your lares.colours option. Must be a character vector.")
+  }
 
   # Personal colours list (add more with lares.colours.custom options)
   colours_list <- data.frame(rbind(
@@ -100,20 +104,24 @@ lares_pal <- function(return = "list") {
     c("fb3", "#AFBEE3", simple[["black"]])
   ))
   colnames(colours_list) <- c("values", "fill", "colour")
-  
+
   more_cols <- getOption("lares.colours.custom")
   if (length(more_cols) > 1) {
-    if (!"data.frame" %in% class(more_cols))
+    if (!"data.frame" %in% class(more_cols)) {
       stop("Check your lares.colours.custom option. Must be a data.frame.")
+    }
     if (!"colour" %in% colnames(more_cols)) more_cols$colour <- "#000"
-    if (!all(colnames(more_cols) %in% colnames(colours_list)))
-      stop("Check your lares.colours.custom option. Column names must match: ",
-           v2t(colnames(colours_list)))
+    if (!all(colnames(more_cols) %in% colnames(colours_list))) {
+      stop(
+        "Check your lares.colours.custom option. Column names must match: ",
+        v2t(colnames(colours_list))
+      )
+    }
     colours_list <- colours_list %>%
       filter(!.data$values %in% more_cols$values) %>%
       bind_rows(more_cols)
   }
-  
+
   pal <- list(
     labels = colours_list,
     palette = rep(colours_names, 4),
@@ -179,63 +187,4 @@ plot_palette <- function(fill, colour = "black", id = NA, limit = 12) {
     guides(fill = "none", colour = "none") +
     theme_lares(font = NA, axis = "Y")
   return(p)
-}
-
-
-####################################################################
-#' Custom colours for scale_color_manual for colour
-#'
-#' This function lets the user use pre-defined default colours.
-#' Check your \code{lares_pal()$labels} scale.
-#'
-#' @family Auxiliary
-#' @return Same as \code{scale_color_manual} but with custom palette.
-#' @export
-gg_colour_customs <- function() {
-  x <- last_plot()
-  cols <- lares_pal()$labels
-  cols <- cols[cols$values %in% unique(unlist(select(x$data, !!x$mapping$colour))),]
-  values <- as.character(t(cols$colour)[1, ])
-  names(values) <- cols$values
-  return(scale_color_manual(values = values, aesthetics = "colour"))
-}
-
-
-####################################################################
-#' Custom colours for scale_fill_manual for fill
-#'
-#' This function lets the user use pre-defined default colours.
-#' Check your \code{lares_pal()$labels} scale.
-#'
-#' @family Auxiliary
-#' @return Same as \code{scale_fill_manual} but with custom palette.
-#' @export
-gg_fill_customs <- function() {
-  x <- last_plot()
-  cols <- lares_pal()$labels
-  cols <- cols[cols$values %in% unique(unlist(select(x$data, !!x$mapping$fill))),]
-  values <- as.character(t(cols$fill)[1, ])
-  names(values) <- cols$values
-  return(scale_fill_manual(values = values, aesthetics = "fill"))
-}
-
-
-####################################################################
-#' Custom colours for scale_color_manual for text
-#'
-#' This function lets the user use pre-defined default colours.
-#' Check your \code{lares_pal()$labels} scale.
-#'
-#' @family Auxiliary
-#' @return Same as \code{scale_color_manual} but with custom palette.
-#' @export
-gg_text_customs <- function() {
-  x <- last_plot()
-  cols <- lares_pal()$labels
-  labs <- unlist(lapply(x$layers, function(y) as_label(y$mapping$colour)))
-  labs <- labs[labs != "NULL"]
-  cols <- cols[cols$values %in% unique(unlist(select(x$data, any_of(labs)))),]
-  values <- as.character(t(cols$colour)[1, ])
-  names(values) <- cols$values
-  return(scale_color_manual(values = values, aesthetics = "colour"))
 }

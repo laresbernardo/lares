@@ -274,14 +274,13 @@ corr_var <- function(df, var,
         geom_col(colour = "transparent") +
         coord_flip() +
         geom_text(aes(hjust = .data$hjust), size = 3, colour = "black") +
-        scale_fill_manual(values = c("FALSE" = "#E5586E", "TRUE" = "#59B3D2")) +
         guides(fill = "none") +
         labs(title = paste("Correlations of", var), x = NULL, y = NULL) +
         scale_y_continuous(
           expand = c(0, 0), position = "right",
           labels = function(x) sub("^(-)?0[.]", "\\1.", x)
         ) +
-        theme_lares(pal = 2)
+        theme_lares(pal = 4)
 
       if (!is.na(top) & top < original_n) {
         p <- p +
@@ -352,11 +351,7 @@ corr_cross <- function(df, plot = TRUE,
                        rm.na = FALSE, quiet = FALSE,
                        ...) {
   check_opts(type, 1:2)
-
-  if (sum(is.na(df)) & rm.na == FALSE & !quiet) {
-    warning("There are NA values in your data!")
-  }
-
+  
   cor <- corr(df, half = TRUE, ignore = ignore, pvalue = pvalue, ...)
 
   cluster <- "cluster_" %in% contains
@@ -419,11 +414,11 @@ corr_cross <- function(df, plot = TRUE,
         ) %>%
         ggplot(aes(
           x = reorder(.data$label, .data$abs),
-          y = .data$abs,
-          fill = .data$sign,
-          colour = .data$sign
+          y = .data$abs
         )) +
+        geom_col(aes(fill = .data$sign)) +
         geom_text(aes(
+          colour = .data$sign,
           label = sub("^(-)?0[.]", "\\1.", signif(.data$corr, 3))),
           size = 3, hjust = 1.1
         ) +
@@ -438,7 +433,7 @@ corr_cross <- function(df, plot = TRUE,
           expand = c(0, 0), position = "right",
           labels = function(x) sub("^(-)?0[.]", "\\1.", x)
         ) +
-        theme_lares(pal = 4)
+        theme_lares(pal = 4, ...)
       
       if ((!is.na(contains)[1] & length(contains) == 1) & grid) {
         p <- p + facet_grid(.data$facet ~ ., scales = "free", space = "free")

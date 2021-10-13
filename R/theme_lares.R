@@ -248,18 +248,66 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
 
   # Custom palette defined in colour_palettes.R and/or lares.colours.custom options
   if (pal == 4) {
+    which <- tolower(which)
+    if ((grepl("c", which) & grepl("t", which))) {
+      stop("In your 'which' parameter, pass only 'c' OR 't', not both") 
+    }
     # FIX: Scale for 'fill' is already present. Adding another scale for 'fill',
     # which will replace the existing scale. (not being suppressed)
     suppressMessages({
       ret <- list(ret)
-      if (grepl("f", which)) ret <- append(ret, gg_fill_customs())
-      if (grepl("c", which)) ret <- append(ret, gg_colour_customs())
-      if (grepl("t", which)) ret <- append(ret, gg_text_customs())    
+      if (grepl("f", which)) ret <- append(ret, gg_fill_customs(...))
+      if (grepl("c", which)) ret <- append(ret, gg_colour_customs(...))
+      if (grepl("t", which)) ret <- append(ret, gg_text_customs(...))    
     })
     
   }
 
   return(ret)
+}
+
+####################################################################
+#' Custom fill, colour and text colours for ggplot2
+#'
+#' This function lets the user use pre-defined default colours.
+#' Check your \code{lares_pal()$labels} scale. Feel free to use
+#' \code{lares:::.gg_vals()} to debug colours used in latest plot.
+#'
+#' @family Auxiliary
+#' @param layer Select any of "fill" or "colour" to use on
+#' your \code{lares_pal()$labels} palette.
+#' @param ... Alow additional parameters not used.
+#' @return Same as \code{scale_fill_manual} but with custom palette.
+#' @export
+gg_fill_customs <- function(layer = "fill", ...) {
+  scale_fill_manual(values = .gg_vals("fill", layer), aesthetics = "fill")
+}
+
+#' @rdname gg_fill_customs
+#' @export
+gg_colour_customs <- function(layer = "colour", ...) {
+  scale_color_manual(values = .gg_vals("colour", layer), aesthetics = "colour")
+}
+
+#' @rdname gg_fill_customs
+#' @export
+gg_text_customs <- function(layer = "colour", ...) {
+  scale_color_manual(values = .gg_vals("label", layer), aesthetics = "colour")
+}
+
+.gg_vals <- function(type = "fill", layer = "fill") {
+  check_opts(type, c("fill", "colour", "label"))
+  check_opts(layer, c("fill", "colour"))
+  type <- type[1]
+  x <- last_plot()
+  cols <- lares_pal()$labels
+  labs <- unlist(lapply(x$layers, function(y) as_label(y$mapping[[type]])))
+  labs <- c(labs, as_label(x$mapping[[type]]))
+  labs <- labs[!labs %in% c("NULL", "<uneval>")]
+  cols <- cols[cols$values %in% unique(unlist(select(x$data, any_of(labs)))), ]
+  values <- as.character(t(cols[, layer])[1, ])
+  names(values) <- cols$values
+  return(values)
 }
 
 .font_global <- function(font, quiet = TRUE, when_not = NA) {

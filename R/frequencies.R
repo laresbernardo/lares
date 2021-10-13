@@ -171,13 +171,13 @@ freqs <- function(df, ..., wt = NULL,
 
   # Create some dynamic aesthetics
   plot$labels <- paste0(formatNum(plot$n, decimals = 0), " (", signif(plot$p, 4), "%)")
-  plot$label_colours <- ifelse(plot$p > mean(range(plot$p)) * 0.9, "m", "f")
+  plot$label_colours <- ifelse(plot$p > mean(range(plot$p)) * 0.9, "TRUE", "FALSE")
   lim <- 0.35
   plot$label_hjust <- ifelse(
     plot$n < min(plot$n) + diff(range(plot$n)) * lim, -0.1, 1.05
   )
   plot$label_colours <- ifelse(
-    plot$label_colours == "m" & plot$label_hjust < lim, "f", plot$label_colours
+    plot$label_colours == "TRUE" & plot$label_hjust < lim, "FALSE", plot$label_colours
   )
   variable <- colnames(plot)[1]
 
@@ -238,7 +238,7 @@ freqs <- function(df, ..., wt = NULL,
       ), caption = obs
     ) +
     scale_fill_gradient(low = "lightskyblue2", high = "navy") +
-    theme_lares(legend = "none", grid = "Xx") + gg_text_customs() +
+    theme_lares(pal = 4, which = "c", legend = "none", grid = "Xx") +
     scale_y_comma(position = "right", expand = c(0, 0), limits = c(0, 1.03 * max(output$n)))
 
   # When two features

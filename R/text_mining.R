@@ -412,12 +412,11 @@ sentimentBreakdown <- function(text, lang = "spanish",
     p <- ggplot(
       ret$summary, aes(
         x = reorder(.data$sentiment, .data$freq),
-        y = .data$freq, fill = .data$sentiment
+        y = .data$freq
       )
     ) +
-      geom_col() +
-      theme_lares(pal = 0) +
-      gg_fill_customs() +
+      geom_col(aes(fill = .data$sentiment)) +
+      theme_lares(pal = 4) +
       coord_flip() +
       guides(fill = "none") +
       labs(x = NULL, y = "Intensity", title = "Sentiment Breakdown")

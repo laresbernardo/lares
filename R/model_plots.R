@@ -468,8 +468,7 @@ mplot_cuts_error <- function(tag,
     labs(subtitle = paste("Cuts and distribution by absolute error")) +
     scale_y_comma() +
     guides(colour = "none") +
-    gg_text_customs() +
-    theme_lares(plot_colour = "white")
+    theme_lares(pal = 4, plot_colour = "white")
 
   # Second: percentual errors
   deciles_perabs <- quantsfx(abs(df$p_error), splits = splits, just = 0.3)
@@ -488,8 +487,7 @@ mplot_cuts_error <- function(tag,
     labs(subtitle = paste("Cuts and distribution by absolute percentage error")) +
     scale_y_comma() +
     guides(colour = "none") +
-    gg_text_customs() +
-    theme_lares(plot_colour = "white")
+    theme_lares(pal = 4, plot_colour = "white")
 
   # Third: errors distribution
   pd_error <- ggplot(df) +
