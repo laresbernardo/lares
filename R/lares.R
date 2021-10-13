@@ -30,7 +30,8 @@
 #' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict
 #' reorder start kmeans var xtabs as.formula prcomp p.adjust pt model.matrix qt cor.test
-#' @import stringr
+#' @importFrom stringr fixed str_count str_length str_pad str_replace_all str_split
+#' str_to_title word
 #' @importFrom tidyr gather spread
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file
 #' globalVariables installed.packages write.table install.packages remove.packages object.size

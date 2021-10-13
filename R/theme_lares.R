@@ -271,41 +271,73 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
 #'
 #' This function lets the user use pre-defined default colours.
 #' Check your \code{lares_pal()$labels} scale. Feel free to use
-#' \code{lares:::.gg_vals()} to debug colours used in latest plot.
+#' \code{gg_vals()} to debug colours used in latest plot.
 #'
 #' @family Auxiliary
-#' @param layer Select any of "fill" or "colour" to use on
+#' @param column Character. Select any of "fill" or "colour" to use on
 #' your \code{lares_pal()$labels} palette.
 #' @param ... Alow additional parameters not used.
-#' @return Same as \code{scale_fill_manual} but with custom palette.
+#' @examples 
+#' library("ggplot2")
+#' # Generic plot function to run examples to
+#' run_plot <- function(add_fxs = TRUE) {
+#'   p <- data.frame(station = c("spring", "summer", "fall", "winter"), num = 1:4) %>%
+#'     ggplot(aes(x = station, y = num, fill = station)) + geom_col() +
+#'     geom_text(aes(y = 0.5, label = num, colour = station), size = 6)
+#'   if (add_fxs) p <- p + gg_fill_customs() + gg_colour_customs() 
+#'   return(p)
+#' }
+#' # Default colours
+#' run_plot()
+#' # Check last colours used
+#' gg_vals("fill", "fill")
+#' gg_vals("colour", "colour")
+#' # Change any default colour
+#' options("lares.colours.custom" = data.frame(
+#'   values = c("summer", "winter"),
+#'   fill = c("black", "pink"),
+#'   colour = c("white", "black")))
+#' run_plot()
+#' # Check last colours used
+#' gg_vals("fill", "fill")
+#' gg_vals("colour", "colour")
+#' # Reset to default colours
+#' options("lares.colours.custom" = NULL)
+#' # Notice you can use 'pal = 4' argument on theme_lares() too
+#' run_plot(add_fxs = FALSE) + theme_lares(pal = 4)
+#' @return Same as \code{scale_fill_manual} or \code{scale_colour_manual}
+#' but with custom palette applied.
 #' @export
-gg_fill_customs <- function(layer = "fill", ...) {
-  scale_fill_manual(values = .gg_vals("fill", layer), aesthetics = "fill")
+gg_fill_customs <- function(column = "fill", ...) {
+  scale_fill_manual(values = gg_vals("fill", column), aesthetics = "fill")
 }
 
 #' @rdname gg_fill_customs
 #' @export
-gg_colour_customs <- function(layer = "colour", ...) {
-  scale_color_manual(values = .gg_vals("colour", layer), aesthetics = "colour")
+gg_colour_customs <- function(column = "colour", ...) {
+  scale_color_manual(values = gg_vals("colour", column), aesthetics = "colour")
 }
 
 #' @rdname gg_fill_customs
 #' @export
-gg_text_customs <- function(layer = "colour", ...) {
-  scale_color_manual(values = .gg_vals("label", layer), aesthetics = "colour")
+gg_text_customs <- function(column = "colour", ...) {
+  scale_color_manual(values = gg_vals("label", column), aesthetics = "colour")
 }
 
-.gg_vals <- function(type = "fill", layer = "fill") {
-  check_opts(type, c("fill", "colour", "label"))
-  check_opts(layer, c("fill", "colour"))
-  type <- type[1]
+#' @rdname gg_fill_customs
+#' @param layer Character. Select any of "fill" or "colour" to use on
+#' your \code{lares_pal()$labels} palette.
+#' @export
+gg_vals <- function(layer = "fill", column = "fill") {
+  check_opts(layer, c("fill", "colour", "label"))
+  check_opts(column, c("fill", "colour"))
   x <- last_plot()
   cols <- lares_pal()$labels
-  labs <- unlist(lapply(x$layers, function(y) as_label(y$mapping[[type]])))
-  labs <- c(labs, as_label(x$mapping[[type]]))
+  labs <- unlist(lapply(x$layers, function(y) as_label(y$mapping[[layer]])))
+  labs <- c(labs, as_label(x$mapping[[layer]]))
   labs <- labs[!labs %in% c("NULL", "<uneval>")]
   cols <- cols[cols$values %in% unique(unlist(select(x$data, any_of(labs)))), ]
-  values <- as.character(t(cols[, layer])[1, ])
+  values <- as.character(t(cols[, column])[1, ])
   names(values) <- cols$values
   return(values)
 }

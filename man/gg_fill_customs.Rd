@@ -4,27 +4,63 @@
 \alias{gg_fill_customs}
 \alias{gg_colour_customs}
 \alias{gg_text_customs}
+\alias{gg_vals}
 \title{Custom fill, colour and text colours for ggplot2}
 \usage{
-gg_fill_customs(layer = "fill", ...)
+gg_fill_customs(column = "fill", ...)
 
-gg_colour_customs(layer = "colour", ...)
+gg_colour_customs(column = "colour", ...)
 
-gg_text_customs(layer = "colour", ...)
+gg_text_customs(column = "colour", ...)
+
+gg_vals(layer = "fill", column = "fill")
 }
 \arguments{
-\item{layer}{Select any of "fill" or "colour" to use on
+\item{column}{Character. Select any of "fill" or "colour" to use on
 your \code{lares_pal()$labels} palette.}
 
 \item{...}{Alow additional parameters not used.}
+
+\item{layer}{Character. Select any of "fill" or "colour" to use on
+your \code{lares_pal()$labels} palette.}
 }
 \value{
-Same as \code{scale_fill_manual} but with custom palette.
+Same as \code{scale_fill_manual} or \code{scale_colour_manual}
+but with custom palette applied.
 }
 \description{
 This function lets the user use pre-defined default colours.
 Check your \code{lares_pal()$labels} scale. Feel free to use
-\code{lares:::.gg_vals()} to debug colours used in latest plot.
+\code{gg_vals()} to debug colours used in latest plot.
+}
+\examples{
+library("ggplot2")
+# Generic plot function to run examples to
+run_plot <- function(add_fxs = TRUE) {
+  p <- data.frame(station = c("spring", "summer", "fall", "winter"), num = 1:4) \%>\%
+    ggplot(aes(x = station, y = num, fill = station)) + geom_col() +
+    geom_text(aes(y = 0.5, label = num, colour = station), size = 6)
+  if (add_fxs) p <- p + gg_fill_customs() + gg_colour_customs() 
+  return(p)
+}
+# Default colours
+run_plot()
+# Check last colours used
+gg_vals("fill", "fill")
+gg_vals("colour", "colour")
+# Change any default colour
+options("lares.colours.custom" = data.frame(
+  values = c("summer", "winter"),
+  fill = c("black", "pink"),
+  colour = c("white", "black")))
+run_plot()
+# Check last colours used
+gg_vals("fill", "fill")
+gg_vals("colour", "colour")
+# Reset to default colours
+options("lares.colours.custom" = NULL)
+# Notice you can use 'pal = 4' argument on theme_lares() too
+run_plot(add_fxs = FALSE) + theme_lares(pal = 4)
 }
 \seealso{
 Other Auxiliary: 
