@@ -94,6 +94,22 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   update_geom_defaults("col", list(fill = main_colour, alpha = 0.95))
   update_geom_defaults("boxplot", list(fill = main_colour, alpha = 0.9))
   # update_geom_defaults("text_repel", list(family = font))
+  
+  # Legend
+  aux <- ifelse("top" %in% legend, "right", "left")
+  xj <- switch(tolower(substr(aux, 1, 1)), b = 0, l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
+  yj <- switch(tolower(substr(aux, 2, 2)), b = 0, l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
+  if (!is.null(legend)) {
+    ret <- ret + theme(
+      legend.title = element_text(color = soft_colour, size = size * 0.9, face = "bold"),
+      legend.position = legend,
+      legend.justification = c(
+        ifelse(legend %in% c("top", "bottom"), 0, .5),
+        ifelse(legend == "top", 0, .5)
+      ),
+      legend.margin = margin(-3, 0, -4, 0)
+    )
+  }
 
   if (inherits(grid, "character") | grid == TRUE) {
     grid_col <- "#CCCCCC"
@@ -241,22 +257,6 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
       if (grepl("t", which)) ret <- append(ret, gg_text_customs())    
     })
     
-  }
-  
-  # Legend
-  aux <- ifelse("top" %in% legend, "right", "left")
-  xj <- switch(tolower(substr(aux, 1, 1)), b = 0, l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
-  yj <- switch(tolower(substr(aux, 2, 2)), b = 0, l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
-  if (!is.null(legend)) {
-    ret <- ret + theme(
-      legend.title = element_text(color = soft_colour, size = size * 0.9, face = "bold"),
-      legend.position = legend,
-      legend.justification = c(
-        ifelse(legend %in% c("top", "bottom"), 0, .5),
-        ifelse(legend == "top", 0, .5)
-      ),
-      legend.margin = margin(-3, 0, -4, 0)
-    )
   }
 
   return(ret)
