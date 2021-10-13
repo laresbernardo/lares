@@ -269,28 +269,28 @@ that when using <code><a href='ohse.html'>ohse()</a></code> you may get more dim
 
 <span class='co'># Correlation matrix (without redundancy)</span>
 <span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, half <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;               Age Survived_TRUE  Sex_male  Pclass_1 Pclass_2 Pclass_3
-#&gt; Age            NA            NA        NA        NA       NA       NA
-#&gt; Survived_TRUE  NA            NA        NA        NA       NA       NA
-#&gt; Sex_male       NA     -0.543351        NA        NA       NA       NA
-#&gt; Pclass_1       NA      0.285904 -0.098013        NA       NA       NA
-#&gt; Pclass_2       NA      0.093349 -0.064746 -0.288585       NA       NA
-#&gt; Pclass_3       NA     -0.322308  0.137143 -0.626738 -0.56521       NA</div><div class='input'>
+</div><div class='output co'>#&gt;                     Age Survived_TRUE  Sex_male  Pclass_1 Pclass_2 Pclass_3
+#&gt; Age                  NA            NA        NA        NA       NA       NA
+#&gt; Survived_TRUE -0.077221            NA        NA        NA       NA       NA
+#&gt; Sex_male       0.093254     -0.543351        NA        NA       NA       NA
+#&gt; Pclass_1       0.348941      0.285904 -0.098013        NA       NA       NA
+#&gt; Pclass_2       0.006954      0.093349 -0.064746 -0.288585       NA       NA
+#&gt; Pclass_3      -0.312271     -0.322308  0.137143 -0.626738 -0.56521       NA</div><div class='input'>
 <span class='co'># Ignore specific column</span>
 <span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, ignore <span class='op'>=</span> <span class='st'>"Pclass"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;               Age Survived_TRUE  Sex_male
-#&gt; Age             1            NA        NA
-#&gt; Survived_TRUE  NA      1.000000 -0.543351
-#&gt; Sex_male       NA     -0.543351  1.000000</div><div class='input'>
+</div><div class='output co'>#&gt;                     Age Survived_TRUE  Sex_male
+#&gt; Age            1.000000     -0.077221  0.093254
+#&gt; Survived_TRUE -0.077221      1.000000 -0.543351
+#&gt; Sex_male       0.093254     -0.543351  1.000000</div><div class='input'>
 <span class='co'># Calculate p-values as well</span>
 <span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, pvalue <span class='op'>=</span> <span class='cn'>TRUE</span>, limit <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $cor
-#&gt;               Age Survived_TRUE  Sex_male  Pclass_3 Pclass_OTHER
-#&gt; Age             1            NA        NA        NA           NA
-#&gt; Survived_TRUE  NA      1.000000 -0.543351 -0.322308     0.322308
-#&gt; Sex_male       NA     -0.543351  1.000000  0.137143    -0.137143
-#&gt; Pclass_3       NA     -0.322308  0.137143  1.000000    -1.000000
-#&gt; Pclass_OTHER   NA      0.322308 -0.137143 -1.000000     1.000000
+#&gt;                     Age Survived_TRUE  Sex_male  Pclass_3 Pclass_OTHER
+#&gt; Age            1.000000     -0.077221  0.093254 -0.312271     0.312271
+#&gt; Survived_TRUE -0.077221      1.000000 -0.543351 -0.322308     0.322308
+#&gt; Sex_male       0.093254     -0.543351  1.000000  0.137143    -0.137143
+#&gt; Pclass_3      -0.312271     -0.322308  0.137143  1.000000    -1.000000
+#&gt; Pclass_OTHER   0.312271      0.322308 -0.137143 -1.000000     1.000000
 #&gt; 
 #&gt; $pvalue
 #&gt;                        Age Survived_TRUE     Sex_male     Pclass_3 Pclass_OTHER
@@ -304,13 +304,13 @@ that when using <code><a href='ohse.html'>ohse()</a></code> you may get more dim
 <span class='va'>df</span><span class='op'>$</span><span class='va'>trash</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># and another method...</span>
 <span class='fu'>corr</span><span class='op'>(</span><span class='va'>df</span>, method <span class='op'>=</span> <span class='st'>"spearman"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Dropped columns with less than 3 non-missing values: 'trash'</span></div><div class='output co'>#&gt;               Age Survived_TRUE  Sex_male  Pclass_1  Pclass_2  Pclass_3
-#&gt; Age             1            NA        NA        NA        NA        NA
-#&gt; Survived_TRUE  NA      1.000000 -0.543351  0.285904  0.093349 -0.322308
-#&gt; Sex_male       NA     -0.543351  1.000000 -0.098013 -0.064746  0.137143
-#&gt; Pclass_1       NA      0.285904 -0.098013  1.000000 -0.288585 -0.626738
-#&gt; Pclass_2       NA      0.093349 -0.064746 -0.288585  1.000000 -0.565210
-#&gt; Pclass_3       NA     -0.322308  0.137143 -0.626738 -0.565210  1.000000</div></pre>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Dropped columns with less than 3 non-missing values: 'trash'</span></div><div class='output co'>#&gt;                     Age Survived_TRUE  Sex_male  Pclass_1  Pclass_2  Pclass_3
+#&gt; Age            1.000000     -0.052565  0.083330  0.333881  0.031291 -0.319907
+#&gt; Survived_TRUE -0.052565      1.000000 -0.543351  0.285904  0.093349 -0.322308
+#&gt; Sex_male       0.083330     -0.543351  1.000000 -0.098013 -0.064746  0.137143
+#&gt; Pclass_1       0.333881      0.285904 -0.098013  1.000000 -0.288585 -0.626738
+#&gt; Pclass_2       0.031291      0.093349 -0.064746 -0.288585  1.000000 -0.565210
+#&gt; Pclass_3      -0.319907     -0.322308  0.137143 -0.626738 -0.565210  1.000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
