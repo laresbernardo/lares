@@ -181,7 +181,7 @@ your <code>lares_pal()$labels</code> palette.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Alow additional parameters not used.</p></td>
+      <td><p>Allow additional parameters not used.</p></td>
     </tr>
     <tr>
       <th>layer</th>
@@ -211,9 +211,10 @@ GeomText or GeomLabel, <code>gg_colour_customs()</code> will force
 <span class='co'># Generic plot function to run examples to</span>
 <span class='va'>run_plot</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>add_fxs</span> <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>station <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"spring"</span>, <span class='st'>"summer"</span>, <span class='st'>"fall"</span>, <span class='st'>"winter"</span><span class='op'>)</span>, num <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>station</span>, y <span class='op'>=</span> <span class='va'>num</span>, fill <span class='op'>=</span> <span class='va'>station</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>station</span>, y <span class='op'>=</span> <span class='va'>num</span>, fill <span class='op'>=</span> <span class='va'>station</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='fl'>0.5</span>, label <span class='op'>=</span> <span class='va'>num</span>, colour <span class='op'>=</span> <span class='va'>station</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
-  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>add_fxs</span><span class='op'>)</span> <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>p</span> <span class='op'>+</span> <span class='fu'>gg_fill_customs</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>gg_colour_customs</span><span class='op'>(</span><span class='op'>)</span> 
+  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>add_fxs</span><span class='op'>)</span> <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>p</span> <span class='op'>+</span> <span class='fu'>gg_fill_customs</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>gg_colour_customs</span><span class='op'>(</span><span class='op'>)</span>
   <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
 <span class='op'>}</span>
 <span class='co'># Default colours</span>
@@ -227,7 +228,8 @@ GeomText or GeomLabel, <code>gg_colour_customs()</code> will force
 <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"lares.colours.custom"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
   values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"summer"</span>, <span class='st'>"winter"</span><span class='op'>)</span>,
   fill <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pink"</span>, <span class='st'>"black"</span><span class='op'>)</span>,
-  colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"black"</span>, <span class='st'>"white"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+  colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"black"</span>, <span class='st'>"white"</span><span class='op'>)</span>
+<span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>run_plot</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='gg_fill_customs-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Check last colours used</span>
 <span class='fu'>gg_vals</span><span class='op'>(</span><span class='st'>"fill"</span>, <span class='st'>"fill"</span><span class='op'>)</span>
