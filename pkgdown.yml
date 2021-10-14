@@ -3,7 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   h2o_automl: h2o_automl.html
-last_built: 2021-10-14T02:32Z
+last_built: 2021-10-14T17:48Z
 urls:
   reference: https://laresbernardo.github.io/lares//reference
   article: https://laresbernardo.github.io/lares//articles
