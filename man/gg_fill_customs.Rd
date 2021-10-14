@@ -19,7 +19,7 @@ gg_vals(layer = "fill", column = layer)
 \item{column}{Character. Select any of "fill" or "colour" to use on
 your \code{lares_pal()$labels} palette.}
 
-\item{...}{Alow additional parameters not used.}
+\item{...}{Allow additional parameters not used.}
 
 \item{layer}{Character. Select any of "fill", "colour", or "label" to get the
 layer containing the colours labels you wish to colour.}
@@ -43,9 +43,10 @@ library("ggplot2")
 # Generic plot function to run examples to
 run_plot <- function(add_fxs = TRUE) {
   p <- data.frame(station = c("spring", "summer", "fall", "winter"), num = 1:4) \%>\%
-    ggplot(aes(x = station, y = num, fill = station)) + geom_col() +
+    ggplot(aes(x = station, y = num, fill = station)) +
+    geom_col() +
     geom_text(aes(y = 0.5, label = num, colour = station), size = 6)
-  if (add_fxs) p <- p + gg_fill_customs() + gg_colour_customs() 
+  if (add_fxs) p <- p + gg_fill_customs() + gg_colour_customs()
   return(p)
 }
 # Default colours
@@ -57,7 +58,8 @@ gg_vals("colour", "colour")
 options("lares.colours.custom" = data.frame(
   values = c("summer", "winter"),
   fill = c("pink", "black"),
-  colour = c("black", "white")))
+  colour = c("black", "white")
+))
 run_plot()
 # Check last colours used
 gg_vals("fill", "fill")

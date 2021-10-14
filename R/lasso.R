@@ -49,8 +49,6 @@ lasso_vars <- function(df, variable,
 
   if (!is.na(ignore[1])) {
     ignore <- c(ignore, as_label(var))
-  } else {
-    ignore <- NULL
   }
 
   # Run one-hot-smart-encoding

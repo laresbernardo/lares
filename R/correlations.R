@@ -262,7 +262,7 @@ corr_var <- function(df, var,
       p <- ungroup(d) %>%
         filter(.data$variables != "pvalue") %>%
         mutate(
-          pos = ifelse(.data$corr > 0, TRUE, FALSE),
+          pos = ifelse(.data$corr > 0, "positive", "negative"),
           hjust = ifelse(abs(.data$corr) < max(abs(.data$corr)) / 1.5, -0.1, 1.1)
         ) %>%
         ggplot(aes(
