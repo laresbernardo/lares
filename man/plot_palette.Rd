@@ -31,8 +31,9 @@ pal <- lares_pal("pal")
 plot_palette(fill = names(pal), colour = as.vector(pal))
 }
 \seealso{
-Other Auxiliary: 
+Other Themes: 
 \code{\link{gg_fill_customs}()},
-\code{\link{lares_pal}()}
+\code{\link{lares_pal}()},
+\code{\link{theme_lares}()}
 }
-\concept{Auxiliary}
+\concept{Themes}

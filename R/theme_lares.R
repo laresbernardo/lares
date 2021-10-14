@@ -10,7 +10,7 @@
 #' available on any modern system, so it's "free"-ish; plus, it is a condensed font
 #' with solid default kerning pairs and geometric numbers.
 #'
-#' @family Visualization
+#' @family Themes
 #' @param font,size Character and numeric. Base font family and base size for texts.
 #' \code{Arial Narrow} is set by default when the library is loaded; you may change it
 #' with \code{Sys.getenv("LARES_FONT" = "X")} or by using this parameter manually.
@@ -273,7 +273,7 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
 #' Check your \code{lares_pal()$labels} scale. Feel free to use
 #' \code{gg_vals()} to debug colours used in latest plot.
 #'
-#' @family Auxiliary
+#' @family Themes
 #' @param column Character. Select any of "fill" or "colour" to use on
 #' your \code{lares_pal()$labels} palette.
 #' @param ... Alow additional parameters not used.
@@ -295,8 +295,8 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
 #' # Change any default colour
 #' options("lares.colours.custom" = data.frame(
 #'   values = c("summer", "winter"),
-#'   fill = c("black", "pink"),
-#'   colour = c("white", "black")))
+#'   fill = c("pink", "black"),
+#'   colour = c("black", "white")))
 #' run_plot()
 #' # Check last colours used
 #' gg_vals("fill", "fill")
@@ -325,10 +325,10 @@ gg_text_customs <- function(column = "colour", ...) {
 }
 
 #' @rdname gg_fill_customs
-#' @param layer Character. Select any of "fill" or "colour" to use on
-#' your \code{lares_pal()$labels} palette.
+#' @param layer Character. Select any of "fill", "colour", or "label" to get the
+#' layer containing the colours labels you wish to colour.
 #' @export
-gg_vals <- function(layer = "fill", column = "fill") {
+gg_vals <- function(layer = "fill", column = layer) {
   check_opts(layer, c("fill", "colour", "label"))
   check_opts(column, c("fill", "colour"))
   x <- last_plot()

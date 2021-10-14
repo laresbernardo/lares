@@ -13,7 +13,7 @@ gg_colour_customs(column = "colour", ...)
 
 gg_text_customs(column = "colour", ...)
 
-gg_vals(layer = "fill", column = "fill")
+gg_vals(layer = "fill", column = layer)
 }
 \arguments{
 \item{column}{Character. Select any of "fill" or "colour" to use on
@@ -21,8 +21,8 @@ your \code{lares_pal()$labels} palette.}
 
 \item{...}{Alow additional parameters not used.}
 
-\item{layer}{Character. Select any of "fill" or "colour" to use on
-your \code{lares_pal()$labels} palette.}
+\item{layer}{Character. Select any of "fill", "colour", or "label" to get the
+layer containing the colours labels you wish to colour.}
 }
 \value{
 Same as \code{scale_fill_manual} or \code{scale_colour_manual}
@@ -51,8 +51,8 @@ gg_vals("colour", "colour")
 # Change any default colour
 options("lares.colours.custom" = data.frame(
   values = c("summer", "winter"),
-  fill = c("black", "pink"),
-  colour = c("white", "black")))
+  fill = c("pink", "black"),
+  colour = c("black", "white")))
 run_plot()
 # Check last colours used
 gg_vals("fill", "fill")
@@ -63,8 +63,9 @@ options("lares.colours.custom" = NULL)
 run_plot(add_fxs = FALSE) + theme_lares(pal = 4)
 }
 \seealso{
-Other Auxiliary: 
+Other Themes: 
 \code{\link{lares_pal}()},
-\code{\link{plot_palette}()}
+\code{\link{plot_palette}()},
+\code{\link{theme_lares}()}
 }
-\concept{Auxiliary}
+\concept{Themes}

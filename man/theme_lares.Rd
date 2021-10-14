@@ -93,16 +93,9 @@ p + theme_lares(clean = TRUE)
 }
 }
 \seealso{
-Other Visualization: 
-\code{\link{distr}()},
-\code{\link{freqs_df}()},
-\code{\link{freqs_list}()},
-\code{\link{freqs_plot}()},
-\code{\link{freqs}()},
-\code{\link{noPlot}()},
-\code{\link{plot_chord}()},
-\code{\link{plot_survey}()},
-\code{\link{plot_timeline}()},
-\code{\link{tree_var}()}
+Other Themes: 
+\code{\link{gg_fill_customs}()},
+\code{\link{lares_pal}()},
+\code{\link{plot_palette}()}
 }
-\concept{Visualization}
+\concept{Themes}

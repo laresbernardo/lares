@@ -11,7 +11,7 @@
 #' "values" to use dynamically, "fill" for main colour, and "colour" (not obligatory)
 #' for counter colour).
 #'
-#' @family Auxiliary
+#' @family Themes
 #' @param return Character. Get only what you need. Select any of:
 #' "all" or "list" (list),
 #' "colors" or "colours" (vector),
@@ -152,7 +152,7 @@ lares_pal <- function(return = "list") {
 #'
 #' This function plots a list of colours
 #'
-#' @family Auxiliary
+#' @family Themes
 #' @param fill Vector. List of colours for fills.
 #' @param colour Vector. List of colours for colours.
 #' @param id Vector. ID for each color.

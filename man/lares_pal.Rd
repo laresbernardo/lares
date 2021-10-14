@@ -49,8 +49,9 @@ df <- lares_pal("custom")
 df[sample(nrow(df), 5), ]
 }
 \seealso{
-Other Auxiliary: 
+Other Themes: 
 \code{\link{gg_fill_customs}()},
-\code{\link{plot_palette}()}
+\code{\link{plot_palette}()},
+\code{\link{theme_lares}()}
 }
-\concept{Auxiliary}
+\concept{Themes}

@@ -123,7 +123,6 @@ Other Visualization:
 \code{\link{plot_chord}()},
 \code{\link{plot_survey}()},
 \code{\link{plot_timeline}()},
-\code{\link{theme_lares}()},
 \code{\link{tree_var}()}
 }
 \concept{Exploratory}
