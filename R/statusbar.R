@@ -56,7 +56,7 @@ statusbar <- function(run = 1, max.run = 100, label = run, msg = "",
   if (type == "equal") syms <- list(first = " ", middle = "=", last = "=")
   if (type == "sword") syms <- list(first = " ", middle = ">", last = ":")
   if (type == "filled") syms <- list(last = "\u2593", middle = "\u2593", first = "\u2591")
-  
+
 
   percent.step <- trunc(percent * width.set, 5)
   part_done <- paste0(rep(syms$last, percent.step), collapse = "")

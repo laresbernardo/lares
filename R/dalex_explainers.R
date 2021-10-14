@@ -50,29 +50,29 @@
 #' @export
 h2o_explainer <- function(df, model, y = "tag", ignore = NULL, ...) {
   try_require("DALEX")
-  
+
   df <- data.frame(df) %>%
     # No need to use prediction results
     select(-c(which(colnames(.) == "train_test"):ncol(.))) %>%
     # Exclude variables with no variance
     select(-one_of(zerovar(.)))
-  
+
   y <- gsub('"', "", as_label(enquo(y)))
-  
+
   if (!y %in% colnames(df)) {
     stop(paste("The y value", y, "is not in your data.frame"))
   }
-  
+
   df <- df[, !(colnames(df) %in% ignore)]
   x_valid <- select(df, -one_of(y))
   y_valid <- df[y][, 1]
-  
+
   if (any(grepl("H2O", class(model)))) {
     label <- model@model_id
   } else {
     label <- basename(model)
   }
-  
+
   h2o_predict_fx <- function(model, newdata, ...) {
     try_require("h2o")
     # h2o_predict_model()
@@ -90,7 +90,7 @@ h2o_explainer <- function(df, model, y = "tag", ignore = NULL, ...) {
     results <- results[[2L]]
     return(results)
   }
-  
+
   explainer <- explain.default(
     model = model,
     data = x_valid,
@@ -99,7 +99,7 @@ h2o_explainer <- function(df, model, y = "tag", ignore = NULL, ...) {
     label = label
   )
   explainer$model_info$package <- "h2o"
-  
+
   return(explainer)
 }
 
@@ -121,7 +121,7 @@ h2o_explainer <- function(df, model, y = "tag", ignore = NULL, ...) {
 dalex_local <- function(explainer, observation = NA, row = 1, type = "break_down") {
   try_require("DALEX")
   tic("dalex_local")
-  
+
   subtitle <- paste0("Observation #", v2t(row, quotes = FALSE))
   if (!is.data.frame(observation)) {
     observation <- explainer$data[row, ]
@@ -133,14 +133,14 @@ dalex_local <- function(explainer, observation = NA, row = 1, type = "break_down
       ))
     }
   }
-  
+
   # BREAKDOWN
   breakdown <- predict_parts(explainer, new_observation = observation, type = type)
-  
+
   p <- plot(breakdown) +
     theme_lares(legend = "none") +
     labs(subtitle = NULL, caption = subtitle)
-  
+
   return <- list(observation = observation, breakdown = breakdown, plot = p)
   toc("dalex_local")
   return(return)
@@ -158,14 +158,14 @@ dalex_local <- function(explainer, observation = NA, row = 1, type = "break_down
 #' @export
 dalex_residuals <- function(explainer) {
   try_require("DALEX")
-  
+
   resids <- model_performance(explainer)
-  
+
   p1 <- plot(resids) + theme_lares(legend = "none")
   p2 <- plot(resids, geom = "boxplot") + theme_lares(legend = "none")
-  
+
   p <- p1 + p2 + plot_layout(nrow = 2)
-  
+
   return(p)
 }
 
@@ -196,12 +196,12 @@ dalex_residuals <- function(explainer) {
 dalex_variable <- function(explainer, vars, force_class = NA, ...) {
   try_require("DALEX")
   tic("dalex_variable")
-  
+
   all_vars <- colnames(explainer$data)
   if (!all(vars %in% all_vars)) {
     stop("Select any variable(s) from the following: ", v2t(all_vars))
   }
-  
+
   if (!is.na(force_class)) {
     classes <- c("factor", "numeric")
     if (force_class %in% classes) {
@@ -213,13 +213,13 @@ dalex_variable <- function(explainer, vars, force_class = NA, ...) {
       }
     }
   }
-  
+
   aux <- model_profile(explainer, variables = vars, ...)
   p <- plot(aux) + theme_lares(legend = "top") +
     labs(y = "Average Prediction") +
     scale_y_formatNum(signif = 2)
   pdp <- list(pdp = aux, plot = p, vars = vars)
-  
+
   toc("dalex_variable")
   return(pdp)
 }

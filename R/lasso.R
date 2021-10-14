@@ -97,7 +97,7 @@ lasso_vars <- function(df, variable,
   if (nrow(t_lasso_model_coeff) > top & !quiet) {
     message(paste("- Plotting only the", top, "most relevant features..."))
   }
-  
+
   p <- t_lasso_model_coeff %>%
     head(top) %>%
     filter(.data$names != "Intercept") %>%
@@ -116,8 +116,10 @@ lasso_vars <- function(df, variable,
     labs(
       x = NULL, y = "Absolute Standarized Coefficient",
       title = "Most Relevant Features (Lasso Regression)",
-      subtitle = sprintf("Response variable: %s | RSQ = %s",
-                         as_label(var), round(rsq$metrics$rsq, 4)),
+      subtitle = sprintf(
+        "Response variable: %s | RSQ = %s",
+        as_label(var), round(rsq$metrics$rsq, 4)
+      ),
       fill = "Coeff > 0"
     ) +
     theme_lares(legend = "top", pal = 4) +

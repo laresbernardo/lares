@@ -30,7 +30,7 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
   if (isTRUE(is.na(ignore)[1])) ignore <- NULL
   ignore <- unique(ignore)
   df <- .prepare_reduce(df, ignore = ignore, ...)
-  
+
   if (sum(is.na(df)) > 0) {
     if (!quiet) message("Replacing NA values with column's means...")
     df <- mutate_all(df, ~ ifelse(is.na(.x), mean(.x, na.rm = TRUE), .x))
@@ -121,7 +121,7 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
   df <- .prepare_reduce(df, ignore = ignore, ...)
 
   tSNE <- list()
-  
+
   temp <- select(df, -any_of(ignore))
   tSNE$tsne <- Rtsne(temp, dims = n, verbose = FALSE, ...)
 

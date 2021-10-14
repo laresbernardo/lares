@@ -94,11 +94,25 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   update_geom_defaults("col", list(fill = main_colour, alpha = 0.95))
   update_geom_defaults("boxplot", list(fill = main_colour, alpha = 0.9))
   # update_geom_defaults("text_repel", list(family = font))
-  
+
   # Legend
   aux <- ifelse("top" %in% legend, "right", "left")
-  xj <- switch(tolower(substr(aux, 1, 1)), b = 0, l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
-  yj <- switch(tolower(substr(aux, 2, 2)), b = 0, l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
+  xj <- switch(tolower(substr(aux, 1, 1)),
+    b = 0,
+    l = 0,
+    m = 0.5,
+    c = 0.5,
+    r = 1,
+    t = 1
+  )
+  yj <- switch(tolower(substr(aux, 2, 2)),
+    b = 0,
+    l = 0,
+    m = 0.5,
+    c = 0.5,
+    r = 1,
+    t = 1
+  )
   if (!is.null(legend)) {
     ret <- ret + theme(
       legend.title = element_text(color = soft_colour, size = size * 0.9, face = "bold"),
@@ -250,17 +264,16 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   if (pal == 4) {
     which <- tolower(which)
     if ((grepl("c", which) & grepl("t", which))) {
-      stop("In your 'which' parameter, pass only 'c' OR 't', not both") 
+      stop("In your 'which' parameter, pass only 'c' OR 't', not both")
     }
     # FIX: Scale for 'fill' is already present. Adding another scale for 'fill',
     # which will replace the existing scale. (not being suppressed)
     suppressMessages({
       ret <- list(ret)
-      if (grepl("f", which)) ret <- append(ret, gg_fill_customs(...))
-      if (grepl("c", which)) ret <- append(ret, gg_colour_customs(...))
-      if (grepl("t", which)) ret <- append(ret, gg_text_customs(...))    
+      if (grepl("f", which)) ret <- append(ret, gg_fill_customs())
+      if (grepl("c", which)) ret <- append(ret, gg_colour_customs())
+      if (grepl("t", which)) ret <- append(ret, gg_text_customs())
     })
-    
   }
 
   return(ret)
@@ -273,18 +286,23 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
 #' Check your \code{lares_pal()$labels} scale. Feel free to use
 #' \code{gg_vals()} to debug colours used in latest plot.
 #'
+#' Notice that when the layer defined is any of GeomPoint, GeomLine,
+#' GeomText or GeomLabel, \code{gg_colour_customs()} will force
+#' \code{column = "fill"} parameter.
+#'
 #' @family Themes
 #' @param column Character. Select any of "fill" or "colour" to use on
 #' your \code{lares_pal()$labels} palette.
-#' @param ... Alow additional parameters not used.
-#' @examples 
+#' @param ... Allow additional parameters not used.
+#' @examples
 #' library("ggplot2")
 #' # Generic plot function to run examples to
 #' run_plot <- function(add_fxs = TRUE) {
 #'   p <- data.frame(station = c("spring", "summer", "fall", "winter"), num = 1:4) %>%
-#'     ggplot(aes(x = station, y = num, fill = station)) + geom_col() +
+#'     ggplot(aes(x = station, y = num, fill = station)) +
+#'     geom_col() +
 #'     geom_text(aes(y = 0.5, label = num, colour = station), size = 6)
-#'   if (add_fxs) p <- p + gg_fill_customs() + gg_colour_customs() 
+#'   if (add_fxs) p <- p + gg_fill_customs() + gg_colour_customs()
 #'   return(p)
 #' }
 #' # Default colours
@@ -296,7 +314,8 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
 #' options("lares.colours.custom" = data.frame(
 #'   values = c("summer", "winter"),
 #'   fill = c("pink", "black"),
-#'   colour = c("black", "white")))
+#'   colour = c("black", "white")
+#' ))
 #' run_plot()
 #' # Check last colours used
 #' gg_vals("fill", "fill")
@@ -333,10 +352,16 @@ gg_vals <- function(layer = "fill", column = layer) {
   check_opts(column, c("fill", "colour"))
   x <- last_plot()
   cols <- lares_pal()$labels
+  # Get colours present in data
   labs <- unlist(lapply(x$layers, function(y) as_label(y$mapping[[layer]])))
   labs <- c(labs, as_label(x$mapping[[layer]]))
   labs <- labs[!labs %in% c("NULL", "<uneval>")]
   cols <- cols[cols$values %in% unique(unlist(select(x$data, any_of(labs)))), ]
+  # If point, line, text, label, force using fill colours
+  invert <- c("GeomPoint", "GeomLine", "GeomText", "GeomLabel")
+  layers_present <- unique(unlist(lapply(x$layers, function(y) class(y$geom))))
+  if (any(invert %in% layers_present)) column <- "fill"
+  # Final values vector
   values <- as.character(t(cols[, column])[1, ])
   names(values) <- cols$values
   return(values)

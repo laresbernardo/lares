@@ -33,6 +33,11 @@ This function lets the user use pre-defined default colours.
 Check your \code{lares_pal()$labels} scale. Feel free to use
 \code{gg_vals()} to debug colours used in latest plot.
 }
+\details{
+Notice that when the layer defined is any of GeomPoint, GeomLine,
+GeomText or GeomLabel, \code{gg_colour_customs()} will force
+\code{column = "fill"} parameter.
+}
 \examples{
 library("ggplot2")
 # Generic plot function to run examples to

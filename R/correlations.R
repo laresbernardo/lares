@@ -32,7 +32,7 @@
 #' @examples
 #' data(dft) # Titanic dataset
 #' df <- dft[, 2:5]
-#' 
+#'
 #' # Correlation matrix (without redundancy)
 #' corr(df, half = TRUE)
 #'
@@ -215,7 +215,7 @@ corr_var <- function(df, var,
   original_n <- nrow(d)
 
   if (!zeroes) d <- d[d$corr != 0, ]
-  
+
   # Suppress non-statistical significant correlations
   if (max_pvalue < 1) {
     d <- d %>%
@@ -351,7 +351,7 @@ corr_cross <- function(df, plot = TRUE,
                        rm.na = FALSE, quiet = FALSE,
                        ...) {
   check_opts(type, 1:2)
-  
+
   cor <- corr(df, half = TRUE, ignore = ignore, pvalue = pvalue, ...)
 
   cluster <- "cluster_" %in% contains
@@ -419,8 +419,9 @@ corr_cross <- function(df, plot = TRUE,
         geom_col(aes(fill = .data$sign)) +
         geom_text(aes(
           colour = .data$sign,
-          label = sub("^(-)?0[.]", "\\1.", signif(.data$corr, 3))),
-          size = 3, hjust = 1.1
+          label = sub("^(-)?0[.]", "\\1.", signif(.data$corr, 3))
+        ),
+        size = 3, hjust = 1.1
         ) +
         coord_flip() +
         guides(fill = "none", colour = "none") +
@@ -434,7 +435,7 @@ corr_cross <- function(df, plot = TRUE,
           labels = function(x) sub("^(-)?0[.]", "\\1.", x)
         ) +
         theme_lares(pal = 4, ...)
-      
+
       if ((!is.na(contains)[1] & length(contains) == 1) & grid) {
         p <- p + facet_grid(.data$facet ~ ., scales = "free", space = "free")
       }
@@ -485,7 +486,9 @@ corr_cross <- function(df, plot = TRUE,
   aux <- gather(data.frame(x), "key", "value")
   ret <- mutate(aux, mix = rep(unique(aux$key), length = nrow(aux))) %>%
     mutate(p1 = cumsum(!duplicated(.data$mix))) %>%
-    group_by(.data$mix) %>% mutate(p2 = row_number()) %>% ungroup() %>%
+    group_by(.data$mix) %>%
+    mutate(p2 = row_number()) %>%
+    ungroup() %>%
     filter(.data$p2 != .data$p1) %>%
     mutate(rel = abs(.data$value)) %>%
     filter(.data$rel < max) %>%
@@ -500,7 +503,9 @@ corr_cross <- function(df, plot = TRUE,
         .
       }
     } %>%
-    {if (rm.na) filter(., !grepl("_NAs", .data$mix)) else .} %>%
+    {
+      if (rm.na) filter(., !grepl("_NAs", .data$mix)) else .
+    } %>%
     filter(!grepl("_OTHER", .data$key)) %>%
     rename(corr = .data$value) %>%
     mutate(value = paste(.data$key, .data$mix)) %>%
@@ -518,7 +523,9 @@ corr_cross <- function(df, plot = TRUE,
   for (i in 1:(n - 1)) {
     for (j in (i + 1):n) {
       error <- try(tmp <- cor.test(
-        mat[, i], mat[, j], method = method, exact = exact, ...), silent = TRUE)
+        mat[, i], mat[, j],
+        method = method, exact = exact, ...
+      ), silent = TRUE)
       if (class(error) == "try-error") {
         p.mat[i, j] <- NA
       } else {

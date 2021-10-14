@@ -174,11 +174,13 @@ ohse <- function(df,
     }
     if (length(no_variance) > 0 & drop) {
       no_variance <- no_variance[no_variance %in% ignore]
-      if (length(no_variance) > 0) message(paste0(
-        ">>> Automatically dropped ", length(no_variance),
-        " columns with 0% or >=", round(variance * 100),
-        "% variance: ", vector2text(no_variance)
-      ))
+      if (length(no_variance) > 0) {
+        message(paste0(
+          ">>> Automatically dropped ", length(no_variance),
+          " columns with 0% or >=", round(variance * 100),
+          "% variance: ", vector2text(no_variance)
+        ))
+      }
     }
   }
 
@@ -186,11 +188,11 @@ ohse <- function(df,
   if (drop) {
     df <- df[, c(!colnames(df) %in% c(converted, no_variance))]
   }
-  
+
   # Bind ignored untouched columns and order
   order <- order[order %in% colnames(df)]
   df <- bind_cols(df, ignored) %>% select(any_of(order), everything())
-  
+
   return(as_tibble(df))
 }
 

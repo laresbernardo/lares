@@ -74,20 +74,22 @@ clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
 
   if (isTRUE(is.na(ignore)[1])) ignore <- NULL
   ignore <- unique(ignore)
-  df <- .prepare_cluster(df, drop_na = drop_na, ohse = ohse,
-                         norm = norm, quiet = quiet,
-                         ignore = ignore, ...)
-  
+  df <- .prepare_cluster(df,
+    drop_na = drop_na, ohse = ohse,
+    norm = norm, quiet = quiet,
+    ignore = ignore, ...
+  )
+
   # Ignore some columns
   if (!is.null(ignore)) {
     order <- colnames(df)
     aux <- select(df, any_of(ignore))
     df <- select(df, -any_of(ignore))
-    if (!quiet) message(paste("Ignored features:", v2t(ignore))) 
+    if (!quiet) message(paste("Ignored features:", v2t(ignore)))
   }
-  
+
   results <- list()
-  
+
   # Determine number of clusters (n) using WSS methodology
   wss <- sum(apply(df, 2, var)) * (nrow(df) - 1)
   for (i in 2:limit) wss[i] <- sum(kmeans(df, centers = i)$withinss)
@@ -105,13 +107,13 @@ clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
     theme_lares()
   results[["nclusters"]] <- nclusters
   results[["nclusters_plot"]] <- nclusters_plot
-  
+
   # If n is already selected
   if (!is.null(k)) {
     if (!is.null(ignore)) {
       results[["df"]] <- bind_cols(df, aux) %>% select(any_of(order), everything())
     } else {
-      results[["df"]] <- df 
+      results[["df"]] <- df
     }
     yintercept <- nclusters$wss[nclusters$n == k]
     nclusters_plot <- nclusters_plot +
@@ -119,7 +121,7 @@ clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
       labs(subtitle = paste("Number of clusters selected:", k))
     results[["clusters"]] <- k
     results[["nclusters_plot"]] <- nclusters_plot
-    
+
     # K-Means Cluster Analysis
     fit <- kmeans(df, k, iter.max = limit)
     results[["fit"]] <- fit
@@ -134,9 +136,11 @@ clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
 
     # Correlations
     results[["correlations"]] <- corr_cross(
-      df, contains = "cluster_", quiet = TRUE, ignore = ignore) +
+      df,
+      contains = "cluster_", quiet = TRUE, ignore = ignore
+    ) +
       labs(subtitle = "Most relevant correlations grouped by cluster")
-    
+
     # Dim reduction: PCA
     if ("PCA" %in% dim_red) {
       PCA <- reduce_pca(df, ignore = c(ignore, "cluster"), comb = comb, quiet = quiet, ...)
@@ -145,7 +149,7 @@ clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
         labs(colour = "Cluster", title = "Clusters with Principal Component Analysis")
       results[["PCA"]] <- PCA
     }
-    
+
     # Dim reduction: t-SNE
     if ("tSNE" %in% dim_red) {
       tsne <- reduce_tsne(df, ignore = c(ignore, "cluster"), quiet = quiet, ...)
@@ -155,7 +159,7 @@ clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
       results[["tSNE"]] <- tsne
     }
   }
-  
+
   return(results)
 }
 
@@ -189,7 +193,7 @@ clusterVisualK <- function(df, ks = 1:6, ...) {
     explained <<- pca$pca_explained[1:2]
     return(x)
   }
-  
+
   clus_plot <- function(clus_dat) {
     clus_dat %>%
       ggplot(aes(x = .data$PC1, y = .data$PC2, colour = .data$cluster)) +
@@ -198,23 +202,23 @@ clusterVisualK <- function(df, ks = 1:6, ...) {
       labs(subtitle = glued("{clus_dat$k[1]} clusters")) +
       theme_lares(pal = 2)
   }
-  
+
   dats <- lapply(ks, function(x) clus_dat(df, x, ...))
   plots <- lapply(dats, clus_plot)
-  
+
   total <- formatNum(sum(explained), 1, pos = "%")
   explained <- formatNum(explained, 1, pos = "%")
   subtitle <- sprintf(
     "Explaining %s of the variance with 2 PCA:\nPC1 (%s), PC2 (%s)",
     total, explained[1], explained[2]
   )
-  
+
   wrapped <- wrap_plots(plots) +
     plot_annotation(
       title = "Kmeans Clustering across potential number of clusters",
       subtitle = subtitle
     )
-  
+
   ret <- list(plot = wrapped, data = dats)
   return(invisible(ret))
 }
@@ -254,7 +258,7 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
 
 .prepare_cluster <- function(df, drop_na = TRUE, ohse = TRUE,
                              norm = TRUE, quiet = FALSE, ignore = NULL, ...) {
-  
+
   # Leave some columns out of the logic
   if (!is.null(ignore)) {
     ignored <- select(df, any_of(ignore))
@@ -262,7 +266,7 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
   } else {
     ignored <- NULL
   }
-  
+
   # There should be no NAs
   df <- removenacols(df, all = TRUE)
   if (sum(is.na(df)) > 0) {
@@ -275,15 +279,15 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
       }
     } else {
       stop(paste("There should be no NAs in your dataframe!",
-                 "You can manually fix it or set drop_na to TRUE to remove these rows.",
-                 sep = "\n"
+        "You can manually fix it or set drop_na to TRUE to remove these rows.",
+        sep = "\n"
       ))
     }
     if (nrow(df) == 0) {
       stop("There are no observations without NA values. Please, check your dataset")
     }
   }
-  
+
   # Only numerical values
   nums <- df_str(df, return = "names", quiet = TRUE)$nums
   if (isTRUE(ohse) & length(nums) != ncol(df)) {
@@ -291,21 +295,24 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
   } else {
     df <- data.frame(df) %>% select_if(is.numeric)
   }
-  
+
   # Data should be normalized
   if (norm) {
     df <- df %>%
       transmute_if(is.numeric, list(normalize)) %>%
       replace(., is.na(.), 0)
   }
-  
+
   # No duplicates
   df <- bind_cols(ignored, df)
   temp <- which(!colnames(df) %in% ignore)
   new_df <- distinct_at(df, temp, .keep_all = TRUE)
-  if (nrow(new_df) != nrow(df)) if (!quiet)
-    message(paste(">>> Removed duplicate obserations:", nrow(df) - nrow(new_df)))
+  if (nrow(new_df) != nrow(df)) {
+    if (!quiet) {
+      message(paste(">>> Removed duplicate obserations:", nrow(df) - nrow(new_df)))
+    }
+  }
   df <- new_df
-  
+
   return(df)
 }
