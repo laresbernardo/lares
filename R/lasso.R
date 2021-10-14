@@ -88,7 +88,13 @@ lasso_vars <- function(df, variable,
       .data$names == "Intercept", 0, .data$standardized_coefficients
     )))
 
-  t_lasso_model_coeff <- filter(t_lasso_model_coeff, .data$prc > 0)
+  t_lasso_model_coeff <- mutate(
+    t_lasso_model_coeff,
+    abs = abs(.data$standardized_coefficients),
+    prc = .data$abs / sum(.data$abs),
+    coef = ifelse(.data$coefficients > 0, "positive", "negative")
+  ) %>%
+    filter(.data$prc > 0)
   if (!quiet) message(">>> Generating plots for ", as_label(var), "...")
   if (nrow(t_lasso_model_coeff) > top & !quiet) {
     message(paste("- Plotting only the", top, "most relevant features..."))
@@ -96,11 +102,6 @@ lasso_vars <- function(df, variable,
 
   p <- t_lasso_model_coeff %>%
     head(top) %>%
-    mutate(
-      abs = abs(.data$standardized_coefficients),
-      prc = .data$abs / sum(.data$abs),
-      coef = ifelse(.data$coefficients > 0, "positive", "negative")
-    ) %>%
     ggplot(aes(
       x = reorder(.data$names, .data$prc),
       y = abs(.data$standardized_coefficients)
@@ -116,7 +117,7 @@ lasso_vars <- function(df, variable,
       ),
       fill = "Coeff > 0"
     ) +
-    theme_lares(legend = "top", pal = 4) +
+    theme_lares(legend = "none", pal = 4) +
     scale_y_percent(expand = c(0, 0), position = "right")
 
   toc("lasso_vars", quiet = quiet)

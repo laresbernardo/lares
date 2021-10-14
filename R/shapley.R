@@ -126,11 +126,6 @@ plot.h2o_shap <- function(x, relevant = TRUE, top = 15, quiet = FALSE, ...) {
   df$feature <- factor(df$feature, levels = features)
 
   if (length(features) > top) {
-    if (!quiet) {
-      message(sprintf(
-        "Plotting top %s important features only. Use 'top' argument to overwrite.", top
-      ))
-    }
     df <- dplyr::filter(df, .data$feature %in% features[1:top])
     subtitle <- sprintf("%s most important variables (of %s)", top, length(features))
   }
