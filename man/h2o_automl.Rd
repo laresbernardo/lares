@@ -34,7 +34,7 @@ h2o_automl(
   print = TRUE,
   save = FALSE,
   subdir = NA,
-  project = "ML Project",
+  project = "AutoML Results",
   ...
 )
 

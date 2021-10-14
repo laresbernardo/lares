@@ -7,7 +7,7 @@
 lasso_vars(
   df,
   variable,
-  ignore = NA,
+  ignore = NULL,
   nlambdas = 100,
   nfolds = 10,
   top = 20,

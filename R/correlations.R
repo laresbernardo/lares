@@ -223,9 +223,9 @@ corr_var <- function(df, var,
       filter(.data$pvalue <= max_pvalue)
   }
 
-  # Limit automatically when more than 30 observations
-  if (is.na(top) & nrow(d) > 30) {
-    top <- 30
+  # Limit automatically when more than 20 observations
+  if (is.na(top) & nrow(d) > 20) {
+    top <- 20
     if (!quiet) {
       message(paste(
         "Automatically reduced results to the top", top, "variables.",
