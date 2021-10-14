@@ -34,7 +34,7 @@
 #' }
 #' @export
 lasso_vars <- function(df, variable,
-                       ignore = NA,
+                       ignore = NULL,
                        nlambdas = 100,
                        nfolds = 10,
                        top = 20,
@@ -46,10 +46,7 @@ lasso_vars <- function(df, variable,
   on.exit(set.seed(seed))
   var <- enquo(variable)
   df <- select(df, !!var, everything())
-
-  if (!is.na(ignore[1])) {
-    ignore <- c(ignore, as_label(var))
-  }
+  if (!is.null(ignore)) ignore <- c(ignore, as_label(var))
 
   # Run one-hot-smart-encoding
   temp <- data.frame(as.vector(df[, 1]), ohse(df[, -1], ignore = ignore, quiet = quiet, ...))
