@@ -9,7 +9,7 @@ fb_accounts(
   business_id = "904189322962915",
   type = c("owned", "client"),
   limit = 1000,
-  api_version = "v8.0"
+  api_version = "v11.0"
 )
 }
 \arguments{

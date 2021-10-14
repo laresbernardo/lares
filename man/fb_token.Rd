@@ -4,7 +4,7 @@
 \alias{fb_token}
 \title{Facebook's Long Life User Token}
 \usage{
-fb_token(app_id, app_secret, token, api_version = "v10.0")
+fb_token(app_id, app_secret, token, api_version = "v11.0")
 }
 \arguments{
 \item{app_id, app_secret}{Character. Application ID and Secret.}

@@ -16,7 +16,7 @@ fb_rf(
   frequency_cap = 8,
   prediction_mode = 1,
   curve = TRUE,
-  api_version = "v10.0",
+  api_version = "v11.0",
   process = TRUE,
   ...
 )
