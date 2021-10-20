@@ -41,8 +41,8 @@ check_opts <- function(inputs, opts,
     not(paste(
       "Your", input_name, vector2text(inputs),
       ifelse(length(inputs) > 1, "are", "is"),
-      "NOT valid; should match", toupper(type),
-      "of these options:\n ", vector2text(opts)
+      "NOT valid;", toupper(type), "should match",
+      "these options:\n ", vector2text(opts)
     ))
   }
   if (!quiet) {

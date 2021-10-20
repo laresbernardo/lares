@@ -119,7 +119,7 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
       legend.position = legend,
       legend.justification = c(
         ifelse(legend %in% c("top", "bottom"), 0, .5),
-        ifelse(legend == "top", 0, .5)
+        ifelse(legend == "top", 0, ifelse(legend %in% "left", 1, .5))
       ),
       legend.margin = margin(-3, 0, -4, 0)
     )

@@ -2,6 +2,7 @@
 % Please edit documentation in R/stocks.R
 \name{stocks_hist}
 \alias{stocks_hist}
+\alias{plot.stocks_hist}
 \title{Download Stocks Historical Data}
 \usage{
 stocks_hist(
@@ -14,6 +15,8 @@ stocks_hist(
   cache = TRUE,
   quiet = FALSE
 )
+
+\method{plot}{stocks_hist}(x, type = 1, ...)
 }
 \arguments{
 \item{symbols}{Character Vector. List of symbols to download historical data}
@@ -32,6 +35,12 @@ case, taxes changed from A to B in given date (hard-coded)}
 \item{cache}{Boolean. Use daily cache if available?}
 
 \item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed.}
+
+\item{x}{stocks_hist object}
+
+\item{type}{Integer. Select type of plot.}
+
+\item{...}{Additional parameters}
 }
 \value{
 data.frame for each Date and Symbol closing quote value.
@@ -41,7 +50,9 @@ This function lets the user download stocks historical data
 }
 \examples{
 \donttest{
-stocks_hist(symbols = c("VTI", "FB"), from = Sys.Date() - 7, quiet = TRUE)
+df <- stocks_hist(symbols = c("VTI", "FB", "FIW"), from = Sys.Date() - 180)
+print(head(df))
+plot(df)
 }
 }
 \seealso{

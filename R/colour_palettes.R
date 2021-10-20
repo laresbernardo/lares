@@ -101,7 +101,11 @@ lares_pal <- function(return = "list") {
     c("joy", "#BD116F", simple[["black"]]),
     c("fb1", "#405996", simple[["white"]]),
     c("fb2", "#7184B2", simple[["black"]]),
-    c("fb3", "#AFBEE3", simple[["black"]])
+    c("fb3", "#AFBEE3", simple[["black"]]),
+    c("facebook", "#4267B2", simple[["black"]]),
+    c("instagram", "#E95950", simple[["black"]]),
+    c("messenger", "#0084FF", simple[["black"]]),
+    c("whatsapp", "#4DC247", simple[["black"]])
   ))
   colnames(colours_list) <- c("values", "fill", "colour")
 

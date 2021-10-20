@@ -156,10 +156,13 @@ stocks_quote <- function(ticks) {
 #' @param tax Numeric. How much [0-99] of your dividends are gone with taxes?
 #' @param parg Boolean. Personal argument. Used to personalize stuff, in this
 #' case, taxes changed from A to B in given date (hard-coded)
+#' @param ... Additional parameters
 #' @return data.frame for each Date and Symbol closing quote value.
 #' @examples
 #' \donttest{
-#' stocks_hist(symbols = c("VTI", "FB"), from = Sys.Date() - 7, quiet = TRUE)
+#' df <- stocks_hist(symbols = c("VTI", "FB", "FIW"), from = Sys.Date() - 180)
+#' print(head(df))
+#' plot(df)
 #' }
 #' @export
 stocks_hist <- function(symbols = c("VTI", "TSLA"),
@@ -172,7 +175,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
                         quiet = FALSE) {
   cache_file <- c(
     as.character(Sys.Date()), "stocks_hist",
-    symbols, sum(as.integer(c(from, to)))
+    symbols, sum(as.integer(as.Date(from)), as.integer(as.Date(to)))
   )
   if (cache_exists(cache_file) & cache) {
     results <- cache_read(cache_file, quiet = quiet)
@@ -186,7 +189,6 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
     if (length(from) != length(symbols)) {
       from <- rep(from[1], length(symbols))
     }
-
     for (i in seq_along(symbols)) {
       # Daily quotes (except today)
       symbol <- as.character(symbols[i])
@@ -271,8 +273,31 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
 
   results <- as_tibble(results)
   attr(results, "type") <- "stocks_hist"
+  class(results) <- c("stocks_hist", class(results))
   cache_write(results, cache_file, quiet = TRUE)
   return(results)
+}
+
+#' @rdname stocks_hist
+#' @aliases stocks_hist
+#' @param x stocks_hist object
+#' @param type Integer. Select type of plot.
+#' @export
+plot.stocks_hist <- function(x, type = 1, ...) {
+  if (!inherits(x, "stocks_hist")) stop("Object must be class stocks_hist")
+  if (type == 1) group_by(x, .data$Symbol) %>%
+    mutate(RelValue = (.data$Value - last(.data$Value)),
+           Growth = .data$RelValue / last(.data$Value),
+           Total = first(.data$Growth)) %>% ungroup() %>%
+    arrange(desc(.data$Total)) %>%
+    mutate(Symbol = sprintf("%s (%s%%)", .data$Symbol,round(100 * .data$Total, 2)),
+           Symbol = factor(.data$Symbol, unique(.data$Symbol))) %>%
+    ggplot(aes(x = .data$Date, y = .data$Growth, colour = .data$Symbol)) +
+    geom_line(alpha = 0.8) + theme_lares(pal = 2, legend = "left") +
+    scale_y_percent(position = "right") +
+    labs(title = "Relative Growth since Origin", colour = NULL,
+         subtitle = sprintf("%s - %s", min(x$Date), max(x$Date)),
+         x = NULL, y = "Value Growth [%]")
 }
 
 
