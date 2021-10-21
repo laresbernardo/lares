@@ -200,16 +200,16 @@ original name of column will be used.</p></td>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>name</span>, <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"films"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 8 × 9</span>
-#&gt;   name               films     `films_A New Ho… `films_Attack o… `films_Return o…
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>           
-#&gt; <span style='color: #BCBCBC;'>1</span> Luke Skywalker     <span style='color: #949494;'>&lt;chr [5]&gt;</span> TRUE             FALSE            TRUE            
-#&gt; <span style='color: #BCBCBC;'>2</span> C-3PO              <span style='color: #949494;'>&lt;chr [6]&gt;</span> TRUE             TRUE             TRUE            
-#&gt; <span style='color: #BCBCBC;'>3</span> R2-D2              <span style='color: #949494;'>&lt;chr [7]&gt;</span> TRUE             TRUE             TRUE            
-#&gt; <span style='color: #BCBCBC;'>4</span> Darth Vader        <span style='color: #949494;'>&lt;chr [4]&gt;</span> TRUE             FALSE            TRUE            
-#&gt; <span style='color: #BCBCBC;'>5</span> Leia Organa        <span style='color: #949494;'>&lt;chr [5]&gt;</span> TRUE             FALSE            TRUE            
-#&gt; <span style='color: #BCBCBC;'>6</span> Owen Lars          <span style='color: #949494;'>&lt;chr [3]&gt;</span> TRUE             TRUE             FALSE           
-#&gt; <span style='color: #BCBCBC;'>7</span> Beru Whitesun lars <span style='color: #949494;'>&lt;chr [3]&gt;</span> TRUE             TRUE             FALSE           
-#&gt; <span style='color: #BCBCBC;'>8</span> R5-D4              <span style='color: #949494;'>&lt;chr [1]&gt;</span> TRUE             FALSE            FALSE           
+#&gt;   name               films  `films_A New Ho… `films_Attack of… `films_Return of…
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>            
+#&gt; <span style='color: #BCBCBC;'>1</span> Luke Skywalker     <span style='color: #949494;'>&lt;chr </span>… TRUE             FALSE             TRUE             
+#&gt; <span style='color: #BCBCBC;'>2</span> C-3PO              <span style='color: #949494;'>&lt;chr </span>… TRUE             TRUE              TRUE             
+#&gt; <span style='color: #BCBCBC;'>3</span> R2-D2              <span style='color: #949494;'>&lt;chr </span>… TRUE             TRUE              TRUE             
+#&gt; <span style='color: #BCBCBC;'>4</span> Darth Vader        <span style='color: #949494;'>&lt;chr </span>… TRUE             FALSE             TRUE             
+#&gt; <span style='color: #BCBCBC;'>5</span> Leia Organa        <span style='color: #949494;'>&lt;chr </span>… TRUE             FALSE             TRUE             
+#&gt; <span style='color: #BCBCBC;'>6</span> Owen Lars          <span style='color: #949494;'>&lt;chr </span>… TRUE             TRUE              FALSE            
+#&gt; <span style='color: #BCBCBC;'>7</span> Beru Whitesun lars <span style='color: #949494;'>&lt;chr </span>… TRUE             TRUE              FALSE            
+#&gt; <span style='color: #BCBCBC;'>8</span> R5-D4              <span style='color: #949494;'>&lt;chr </span>… TRUE             FALSE             FALSE            
 #&gt; <span style='color: #949494;'># … with 4 more variables: films_Revenge of the Sith &lt;lgl&gt;,</span>
 #&gt; <span style='color: #949494;'>#   films_The Empire Strikes Back &lt;lgl&gt;, films_The Force Awakens &lt;lgl&gt;,</span>
 #&gt; <span style='color: #949494;'>#   films_The Phantom Menace &lt;lgl&gt;</span></div><div class='input'><span class='co'># Named (and un-nammed) list columns</span>
