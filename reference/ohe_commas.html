@@ -222,37 +222,40 @@ transformed with one hot encoding.</p>
 <code><a href='ohse.html'>ohse</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
-  id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>,
-  x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AA, D"</span>, <span class='st'>"AA,B"</span>, <span class='st'>"B,  D"</span>, <span class='st'>"A,D,B"</span>, <span class='cn'>NA</span><span class='op'>)</span>,
-  z <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AA+BB+AA"</span>, <span class='st'>"AA"</span>, <span class='st'>"BB,  AA"</span>, <span class='cn'>NA</span>, <span class='st'>"BB+AA"</span><span class='op'>)</span>
-<span class='op'>)</span>
-<span class='fu'>ohe_commas</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>x</span>, remove <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 × 7</span>
-#&gt;      id z        x_AA  x_D   x_B   x_A   x_NoVal
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>  
-#&gt; <span style='color: #BCBCBC;'>1</span>     1 AA+BB+AA TRUE  TRUE  FALSE FALSE FALSE  
-#&gt; <span style='color: #BCBCBC;'>2</span>     2 AA       TRUE  FALSE TRUE  FALSE FALSE  
-#&gt; <span style='color: #BCBCBC;'>3</span>     3 BB,  AA  FALSE TRUE  TRUE  FALSE FALSE  
-#&gt; <span style='color: #BCBCBC;'>4</span>     4 <span style='color: #BB0000;'>NA</span>       FALSE TRUE  TRUE  TRUE  FALSE  
-#&gt; <span style='color: #BCBCBC;'>5</span>     5 BB+AA    FALSE FALSE FALSE FALSE TRUE   </div><div class='input'><span class='fu'>ohe_commas</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>z</span>, sep <span class='op'>=</span> <span class='st'>"\\+"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 × 6</span>
-#&gt;      id x     z        z_AA  z_BB  `z_AA, AA, BB,  AA, NoVal, BB`
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>                         
-#&gt; <span style='color: #BCBCBC;'>1</span>     1 AA, D AA+BB+AA TRUE  TRUE  FALSE                         
-#&gt; <span style='color: #BCBCBC;'>2</span>     2 AA,B  AA       TRUE  FALSE FALSE                         
-#&gt; <span style='color: #BCBCBC;'>3</span>     3 B,  D BB,  AA  FALSE FALSE FALSE                         
-#&gt; <span style='color: #BCBCBC;'>4</span>     4 A,D,B <span style='color: #BB0000;'>NA</span>       FALSE FALSE FALSE                         
-#&gt; <span style='color: #BCBCBC;'>5</span>     5 <span style='color: #BB0000;'>NA</span>    BB+AA    TRUE  TRUE  FALSE                         </div><div class='input'><span class='fu'>ohe_commas</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>x</span>, <span class='va'>z</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 × 13</span>
-#&gt;      id x     z        x_AA  z_D   x_B   z_A   x_NoVal `x_AA+BB+AA` z_AA  x_BB 
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span>     1 AA, D AA+BB+AA TRUE  TRUE  FALSE FALSE FALSE   TRUE         FALSE FALSE
-#&gt; <span style='color: #BCBCBC;'>2</span>     2 AA,B  AA       TRUE  FALSE TRUE  FALSE FALSE   FALSE        TRUE  FALSE
-#&gt; <span style='color: #BCBCBC;'>3</span>     3 B,  D BB,  AA  FALSE TRUE  TRUE  FALSE FALSE   FALSE        TRUE  TRUE 
-#&gt; <span style='color: #BCBCBC;'>4</span>     4 A,D,B <span style='color: #BB0000;'>NA</span>       FALSE TRUE  TRUE  TRUE  FALSE   FALSE        FALSE FALSE
-#&gt; <span style='color: #BCBCBC;'>5</span>     5 <span style='color: #BB0000;'>NA</span>    BB+AA    FALSE FALSE FALSE FALSE TRUE    FALSE        FALSE FALSE
-#&gt; <span style='color: #949494;'># … with 2 more variables: z_NoVal &lt;lgl&gt;, x_BB+AA &lt;lgl&gt;</span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span class='r-in'>  id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>,</span>
+<span class='r-in'>  x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AA, D"</span>, <span class='st'>"AA,B"</span>, <span class='st'>"B,  D"</span>, <span class='st'>"A,D,B"</span>, <span class='cn'>NA</span><span class='op'>)</span>,</span>
+<span class='r-in'>  z <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AA+BB+AA"</span>, <span class='st'>"AA"</span>, <span class='st'>"BB,  AA"</span>, <span class='cn'>NA</span>, <span class='st'>"BB+AA"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>ohe_commas</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>x</span>, remove <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 5 × 7</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      id z        x_AA  x_D   x_B   x_A   x_NoVal</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     1 AA+BB+AA TRUE  TRUE  FALSE FALSE FALSE  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     2 AA       TRUE  FALSE TRUE  FALSE FALSE  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>     3 BB,  AA  FALSE TRUE  TRUE  FALSE FALSE  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span>     4 <span style='color: #BB0000;'>NA</span>       FALSE TRUE  TRUE  TRUE  FALSE  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span>     5 BB+AA    FALSE FALSE FALSE FALSE TRUE   </span>
+<span class='r-in'><span class='fu'>ohe_commas</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>z</span>, sep <span class='op'>=</span> <span class='st'>"\\+"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 5 × 6</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      id x     z        z_AA  z_BB  `z_AA, AA, BB,  AA, NoVal, BB`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>                         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     1 AA, D AA+BB+AA TRUE  TRUE  FALSE                         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     2 AA,B  AA       TRUE  FALSE FALSE                         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>     3 B,  D BB,  AA  FALSE FALSE FALSE                         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span>     4 A,D,B <span style='color: #BB0000;'>NA</span>       FALSE FALSE FALSE                         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span>     5 <span style='color: #BB0000;'>NA</span>    BB+AA    TRUE  TRUE  FALSE                         </span>
+<span class='r-in'><span class='fu'>ohe_commas</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>x</span>, <span class='va'>z</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 5 × 13</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      id x     z        x_AA  z_D   x_B   z_A   x_NoVal `x_AA+BB+AA` z_AA  x_BB </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     1 AA, D AA+BB+AA TRUE  TRUE  FALSE FALSE FALSE   TRUE         FALSE FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     2 AA,B  AA       TRUE  FALSE TRUE  FALSE FALSE   FALSE        TRUE  FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>     3 B,  D BB,  AA  FALSE TRUE  TRUE  FALSE FALSE   FALSE        TRUE  TRUE </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span>     4 A,D,B <span style='color: #BB0000;'>NA</span>       FALSE TRUE  TRUE  TRUE  FALSE   FALSE        FALSE FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span>     5 <span style='color: #BB0000;'>NA</span>    BB+AA    FALSE FALSE FALSE FALSE TRUE    FALSE        FALSE FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 2 more variables: z_NoVal &lt;lgl&gt;, x_BB+AA &lt;lgl&gt;</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

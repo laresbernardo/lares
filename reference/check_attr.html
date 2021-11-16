@@ -189,19 +189,20 @@ stops if not</p>
     <p>No return value, called for side effects.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $names
-#&gt; character(0)
-#&gt; 
-#&gt; $row.names
-#&gt; integer(0)
-#&gt; 
-#&gt; $class
-#&gt; [1] "data.frame"
-#&gt; </div><div class='input'><span class='fu'>check_attr</span><span class='op'>(</span><span class='va'>test</span>, <span class='st'>"class"</span>, <span class='st'>"data.frame"</span><span class='op'>)</span>
-<span class='co'># check_attr(test, "class", "not.data.frame")</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $names</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> character(0)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $row.names</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> integer(0)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $class</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "data.frame"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'>check_attr</span><span class='op'>(</span><span class='va'>test</span>, <span class='st'>"class"</span>, <span class='st'>"data.frame"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># check_attr(test, "class", "not.data.frame")</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

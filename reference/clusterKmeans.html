@@ -221,7 +221,7 @@ encoding to non-numerical columns?</p></td>
     <tr>
       <th>dim_red</th>
       <td><p>Character. Select dimensionality reduction technique.
-Pass any of: <code><a href='https://rdrr.io/r/base/c.html'>c("PCA", "tSNE", "all", "none")</a></code>.</p></td>
+Pass any of: <code>c("PCA", "tSNE", "all", "none")</code>.</p></td>
     </tr>
     <tr>
       <th>comb</th>
@@ -265,38 +265,46 @@ Groups Sum of Squares). If <code>k</code> is provided, additionally we get:</p><
 <code><a href='reduce_tsne.html'>reduce_tsne</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.unsetenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span> <span class='co'># Temporal</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"iris"</span><span class='op'>)</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width
-#&gt; 1          5.1         3.5          1.4         0.2
-#&gt; 2          4.9         3.0          1.4         0.2
-#&gt; 3          4.7         3.2          1.3         0.2
-#&gt; 4          4.6         3.1          1.5         0.2
-#&gt; 5          5.0         3.6          1.4         0.2
-#&gt; 6          5.4         3.9          1.7         0.4</div><div class='input'>
-<span class='co'># If dataset has +5 columns, feel free to reduce dimenstionalities</span>
-<span class='co'># with reduce_pca() or reduce_tsne() first</span>
-
-<span class='co'># Find optimal k</span>
-<span class='va'>check_k</span> <span class='op'>&lt;-</span> <span class='fu'>clusterKmeans</span><span class='op'>(</span><span class='va'>df</span>, limit <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Removed duplicate obserations: 1</span></div><div class='input'><span class='va'>check_k</span><span class='op'>$</span><span class='va'>nclusters_plot</span>
-</div><div class='img'><img src='clusterKmeans-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># You can also use our other functions:</span>
-<span class='co'># clusterOptimalK() and clusterVisualK()</span>
-
-<span class='co'># Run with selected k</span>
-<span class='va'>clusters</span> <span class='op'>&lt;-</span> <span class='fu'>clusterKmeans</span><span class='op'>(</span><span class='va'>df</span>, k <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Removed duplicate obserations: 1</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>clusters</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "nclusters"      "nclusters_plot" "df"             "clusters"      
-#&gt; [5] "fit"            "means"          "correlations"   "PCA"           </div><div class='input'>
-<span class='co'># Cross-Correlations for each cluster</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>clusters</span><span class='op'>$</span><span class='va'>correlations</span><span class='op'>)</span>
-</div><div class='img'><img src='clusterKmeans-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># PCA Results (when dim_red = "PCA")</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>clusters</span><span class='op'>$</span><span class='va'>PCA</span><span class='op'>$</span><span class='va'>plot_explained</span><span class='op'>)</span>
-</div><div class='img'><img src='clusterKmeans-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>clusters</span><span class='op'>$</span><span class='va'>PCA</span><span class='op'>$</span><span class='va'>plot</span><span class='op'>)</span>
-</div><div class='img'><img src='clusterKmeans-4.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.unsetenv</a></span><span class='op'>(</span><span class='st'>"LARES_FONT"</span><span class='op'>)</span> <span class='co'># Temporal</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"iris"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1          5.1         3.5          1.4         0.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2          4.9         3.0          1.4         0.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3          4.7         3.2          1.3         0.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4          4.6         3.1          1.5         0.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5          5.0         3.6          1.4         0.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6          5.4         3.9          1.7         0.4</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># If dataset has +5 columns, feel free to reduce dimenstionalities</span></span>
+<span class='r-in'><span class='co'># with reduce_pca() or reduce_tsne() first</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Find optimal k</span></span>
+<span class='r-in'><span class='va'>check_k</span> <span class='op'>&lt;-</span> <span class='fu'>clusterKmeans</span><span class='op'>(</span><span class='va'>df</span>, limit <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> &gt;&gt;&gt; Removed duplicate obserations: 1</span>
+<span class='r-in'><span class='va'>check_k</span><span class='op'>$</span><span class='va'>nclusters_plot</span></span>
+<span class='r-plt img'><img src='clusterKmeans-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># You can also use our other functions:</span></span>
+<span class='r-in'><span class='co'># clusterOptimalK() and clusterVisualK()</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Run with selected k</span></span>
+<span class='r-in'><span class='va'>clusters</span> <span class='op'>&lt;-</span> <span class='fu'>clusterKmeans</span><span class='op'>(</span><span class='va'>df</span>, k <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> &gt;&gt;&gt; Removed duplicate obserations: 1</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>clusters</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "nclusters"      "nclusters_plot" "df"             "clusters"      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [5] "fit"            "means"          "correlations"   "PCA"           </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Cross-Correlations for each cluster</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>clusters</span><span class='op'>$</span><span class='va'>correlations</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='clusterKmeans-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># PCA Results (when dim_red = "PCA")</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>clusters</span><span class='op'>$</span><span class='va'>PCA</span><span class='op'>$</span><span class='va'>plot_explained</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='clusterKmeans-3.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>clusters</span><span class='op'>$</span><span class='va'>PCA</span><span class='op'>$</span><span class='va'>plot</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='clusterKmeans-4.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

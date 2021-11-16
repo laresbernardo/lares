@@ -191,7 +191,7 @@ major and minor grids, legend, font and font size.</p>
       <th>font, size</th>
       <td><p>Character and numeric. Base font family and base size for texts.
 <code>Arial Narrow</code> is set by default when the library is loaded; you may change it
-with <code><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv("LARES_FONT" = "X")</a></code> or by using this parameter manually.</p></td>
+with <code>Sys.getenv("LARES_FONT" = "X")</code> or by using this parameter manually.</p></td>
     </tr>
     <tr>
       <th>main_colour, hard_colour, soft_colour, plot_colour, panel_colour</th>
@@ -271,18 +271,23 @@ with solid default kerning pairs and geometric numbers.</p>
 <code><a href='plot_palette.html'>plot_palette</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>dft</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Pclass</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>Fare</span><span class='op'>)</span>, fill <span class='op'>=</span> <span class='va'>Pclass</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>p</span> <span class='op'>+</span> <span class='fu'>theme_lares</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='theme_lares-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>p</span> <span class='op'>+</span> <span class='fu'>theme_lares</span><span class='op'>(</span>pal <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='img'><img src='theme_lares-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>p</span> <span class='op'>+</span> <span class='fu'>theme_lares</span><span class='op'>(</span>background <span class='op'>=</span> <span class='st'>"#999999"</span>, mg <span class='op'>=</span> <span class='fl'>25</span><span class='op'>)</span>
-</div><div class='img'><img src='theme_lares-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>p</span> <span class='op'>+</span> <span class='fu'>theme_lares</span><span class='op'>(</span>legend <span class='op'>=</span> <span class='st'>"top"</span>, grid <span class='op'>=</span> <span class='st'>"Yy"</span><span class='op'>)</span>
-</div><div class='img'><img src='theme_lares-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>p</span> <span class='op'>+</span> <span class='fu'>theme_lares</span><span class='op'>(</span>clean <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='img'><img src='theme_lares-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>dft</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Pclass</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>Fare</span><span class='op'>)</span>, fill <span class='op'>=</span> <span class='va'>Pclass</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>+</span> <span class='fu'>theme_lares</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='theme_lares-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>+</span> <span class='fu'>theme_lares</span><span class='op'>(</span>pal <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='theme_lares-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>+</span> <span class='fu'>theme_lares</span><span class='op'>(</span>background <span class='op'>=</span> <span class='st'>"#999999"</span>, mg <span class='op'>=</span> <span class='fl'>25</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='theme_lares-3.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>+</span> <span class='fu'>theme_lares</span><span class='op'>(</span>legend <span class='op'>=</span> <span class='st'>"top"</span>, grid <span class='op'>=</span> <span class='st'>"Yy"</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='theme_lares-4.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>+</span> <span class='fu'>theme_lares</span><span class='op'>(</span>clean <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='theme_lares-5.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -181,7 +181,7 @@
     <tr>
       <th>decimals</th>
       <td><p>Integer. Amount of decimals to display. If set to
-<code>NULL</code>, then <code><a href='https://rdrr.io/r/base/options.html'>getOption("digits")</a></code> will be used.</p></td>
+<code>NULL</code>, then <code>getOption("digits")</code> will be used.</p></td>
     </tr>
     <tr>
       <th>signif</th>
@@ -191,7 +191,7 @@ the specified number of significant digits.</p></td>
     <tr>
       <th>type</th>
       <td><p>Integer. <code>1</code> for International standards. <code>2</code>
-for American Standards. Use <code><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.setenv("LARES_NUMFORMAT" = 2)</a></code>
+for American Standards. Use <code>Sys.setenv("LARES_NUMFORMAT" = 2)</code>
 to set this parameter globally.</p></td>
     </tr>
     <tr>
@@ -200,7 +200,7 @@ to set this parameter globally.</p></td>
     </tr>
     <tr>
       <th>sign</th>
-      <td><p>Boolean. Add <code><a href='https://rdrr.io/r/base/Arithmetic.html'>+</a></code> sign to positive values.</p></td>
+      <td><p>Boolean. Add <code>+</code> sign to positive values.</p></td>
     </tr>
     <tr>
       <th>abbr</th>
@@ -241,14 +241,21 @@ the `decimals` parameter to set abbr's <code>n</code>(-1) parameter.</p></td>
 <code><a href='year_week.html'>year_week</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1.23456</span>, decimals <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "1.235"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1.23456</span>, type <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "1,23"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1.23456</span>, pre <span class='op'>=</span> <span class='st'>"$"</span>, pos <span class='op'>=</span> <span class='st'>"/person"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "$1.23/person"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>123456</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "123K"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1234567890</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span>, signif <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "1.2B"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1234567890</span>, decimals <span class='op'>=</span> <span class='fl'>0</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "1B"</div><div class='input'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>, sign <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "-3" "-2" "-1" "0"  "+1" "+2" "+3"</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1.23456</span>, decimals <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "1.235"</span>
+<span class='r-in'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1.23456</span>, type <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "1,23"</span>
+<span class='r-in'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1.23456</span>, pre <span class='op'>=</span> <span class='st'>"$"</span>, pos <span class='op'>=</span> <span class='st'>"/person"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "$1.23/person"</span>
+<span class='r-in'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>123456</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "123K"</span>
+<span class='r-in'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1234567890</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span>, signif <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "1.2B"</span>
+<span class='r-in'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fl'>1234567890</span>, decimals <span class='op'>=</span> <span class='fl'>0</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "1B"</span>
+<span class='r-in'><span class='fu'>formatNum</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>, sign <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "-3" "-2" "-1" "0"  "+1" "+2" "+3"</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

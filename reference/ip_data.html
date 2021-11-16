@@ -227,32 +227,34 @@ and columns will bee created for all the additional information found.</p>
 <code><a href='writeGS.html'>writeGS</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>ip_data</span><span class='op'>(</span><span class='st'>"163.114.132.0"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;              id addresstype                   asn          isp  organization
-#&gt; 1 163.114.132.0        IPv4 54115 - FACEBOOK-CORP Facebook Inc Facebook Corp
-#&gt;         country stateregion districtcounty    city zippostalcode
-#&gt; 1 United States  Washington           King Redmond         98073
-#&gt;       weatherstation      coordinates                    timezone localtime
-#&gt; 1 USWA0367 - Redmond 47.674, -122.122 America/Los_Angeles (UTC-7)          
-#&gt;               languages     currency
-#&gt; 1 en-US, es-US, haw, fr Dollar (USD)</div><div class='input'><span class='fu'>ip_data</span><span class='op'>(</span>ip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='myip.html'>myip</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"201.244.197.199"</span><span class='op'>)</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                id addresstype                                asn
-#&gt; 1    13.105.49.87        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK
-#&gt; 2 201.244.197.199        IPv4             19429 - ETB - Colombia
-#&gt;                     isp connection       country stateregion districtcounty
-#&gt; 1 Microsoft Corporation    Hosting United States  Washington          Grant
-#&gt; 2        ETB - Colombia       &lt;NA&gt;      Colombia Bogota D.C.    Bogotá D.C.
-#&gt;              city zippostalcode            weatherstation       coordinates
-#&gt; 1      Moses Lake         98837     USWA0285 - Moses Lake 47.1301, -119.278
-#&gt; 2 Barrio San Luis          &lt;NA&gt; COXX7742 - Vereda El Hato 4.66779, -74.0215
-#&gt;                      timezone localtime             languages     currency
-#&gt; 1 America/Los_Angeles (UTC-7)           en-US, es-US, haw, fr Dollar (USD)
-#&gt; 2      America/Bogota (UTC-5)                           es-CO   Peso (COP)
-#&gt;                                     hostname
-#&gt; 1                                       &lt;NA&gt;
-#&gt; 2 dynamic-201-244-197-199.dynamic.etb.net.co</div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='fu'>ip_data</span><span class='op'>(</span><span class='st'>"163.114.132.0"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              id addresstype                   asn          isp  organization</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 163.114.132.0        IPv4 54115 - FACEBOOK-CORP Facebook Inc Facebook Corp</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         country stateregion districtcounty    city zippostalcode</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 United States  Washington           King Seattle         98127</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       weatherstation       coordinates                    timezone localtime</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 USWA0395 - Seattle 47.6062, -122.332 America/Los_Angeles (UTC-8)          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               languages     currency</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 en-US, es-US, haw, fr Dollar (USD)</span>
+<span class='r-in'><span class='fu'>ip_data</span><span class='op'>(</span>ip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='myip.html'>myip</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"201.244.197.199"</span><span class='op'>)</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                id addresstype                                asn</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    13.105.49.86        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 201.244.197.199        IPv4             19429 - ETB - Colombia</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     isp connection       country stateregion districtcounty</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 Microsoft Corporation    Hosting United States  Washington          Grant</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2        ETB - Colombia       &lt;NA&gt;      Colombia Bogota D.C.    Bogotá D.C.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              city zippostalcode            weatherstation       coordinates</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      Moses Lake         98837     USWA0285 - Moses Lake 47.1301, -119.278</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 Barrio San Luis          &lt;NA&gt; COXX7742 - Vereda El Hato 4.66779, -74.0215</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      timezone localtime             languages     currency</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 America/Los_Angeles (UTC-8)           en-US, es-US, haw, fr Dollar (USD)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2      America/Bogota (UTC-5)                           es-CO   Peso (COP)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                     hostname</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1                                       &lt;NA&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 dynamic-201-244-197-199.dynamic.etb.net.co</span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

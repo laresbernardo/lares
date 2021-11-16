@@ -219,7 +219,7 @@ confusion matrix. Range of values: (0-1)</p></td>
     <tr>
       <th>target</th>
       <td><p>Value. Which is your target positive value? If
-set to <code>'auto'</code>, the target with largest <code><a href='https://rdrr.io/r/base/mean.html'>mean(score)</a></code> will be
+set to <code>'auto'</code>, the target with largest <code>mean(score)</code> will be
 selected. Change the value to overwrite. Only used when binary
 categorical model.</p></td>
     </tr>
@@ -280,131 +280,136 @@ multiple plots are also returned.</p>
 <code><a href='quants.html'>quants</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>)</span> <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>dfr</span>, <span class='va'>head</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $class2
-#&gt;     tag    scores
-#&gt; 1  TRUE 0.3155498
-#&gt; 2  TRUE 0.8747599
-#&gt; 3  TRUE 0.8952823
-#&gt; 4 FALSE 0.0436517
-#&gt; 5  TRUE 0.2196593
-#&gt; 6 FALSE 0.2816101
-#&gt; 
-#&gt; $class3
-#&gt;   tag score        n_1        n_2        n_3
-#&gt; 1 n_3   n_2 0.20343865 0.60825062 0.18831071
-#&gt; 2 n_2   n_3 0.17856154 0.07657769 0.74486071
-#&gt; 3 n_1   n_1 0.50516951 0.40168718 0.09314334
-#&gt; 4 n_3   n_2 0.30880713 0.39062151 0.30057135
-#&gt; 5 n_2   n_3 0.01956827 0.07069011 0.90974158
-#&gt; 6 n_2   n_3 0.07830017 0.15408720 0.76761264
-#&gt; 
-#&gt; $regr
-#&gt;       tag    score
-#&gt; 1 11.1333 25.93200
-#&gt; 2 30.0708 39.91900
-#&gt; 3 26.5500 50.72246
-#&gt; 4 31.2750 47.81292
-#&gt; 5 13.0000 30.12853
-#&gt; 6 26.0000 13.24153
-#&gt; </div><div class='input'>
-<span class='co'># Metrics for Binomial Model</span>
-<span class='va'>met1</span> <span class='op'>&lt;-</span> <span class='fu'>model_metrics</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>scores</span>,
-  model_name <span class='op'>=</span> <span class='st'>"Titanic Survived Model"</span>,
-  plots <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Target value: TRUE</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>met1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $dictionary
-#&gt; [1] "AUC: Area Under the Curve"                                                             
-#&gt; [2] "ACC: Accuracy"                                                                         
-#&gt; [3] "PRC: Precision = Positive Predictive Value"                                            
-#&gt; [4] "TPR: Sensitivity = Recall = Hit rate = True Positive Rate"                             
-#&gt; [5] "TNR: Specificity = Selectivity = True Negative Rate"                                   
-#&gt; [6] "Logloss (Error): Logarithmic loss [Neutral classification: 0.69315]"                   
-#&gt; [7] "Gain: When best n deciles selected, what % of the real target observations are picked?"
-#&gt; [8] "Lift: When best n deciles selected, how much better than random is?"                   
-#&gt; 
-#&gt; $confusion_matrix
-#&gt;        Pred
-#&gt; Real    FALSE TRUE
-#&gt;   FALSE     9  156
-#&gt;   TRUE     68   35
-#&gt; 
-#&gt; $gain_lift
-#&gt; <span style='color: #949494;'># A tibble: 10 × 10</span>
-#&gt;    percentile value random target total  gain optimal  lift response score
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> 1          TRUE    10.4     26    28  25.2    27.2 142.     25.2  93.3 
-#&gt; <span style='color: #BCBCBC;'> 2</span> 2          TRUE    20.5     24    27  48.5    53.4 137.     23.3  79.7 
-#&gt; <span style='color: #BCBCBC;'> 3</span> 3          TRUE    30.2     19    26  67.0    78.6 122.     18.4  46.2 
-#&gt; <span style='color: #BCBCBC;'> 4</span> 4          TRUE    39.9     12    26  78.6   100    97.0    11.7  31.5 
-#&gt; <span style='color: #BCBCBC;'> 5</span> 5          TRUE    50        9    27  87.4   100    74.8     8.74 19.8 
-#&gt; <span style='color: #BCBCBC;'> 6</span> 6          TRUE    60.1      5    27  92.2   100    53.5     4.85 13.3 
-#&gt; <span style='color: #BCBCBC;'> 7</span> 7          TRUE    69.8      3    26  95.1   100    36.4     2.91  9.31
-#&gt; <span style='color: #BCBCBC;'> 8</span> 8          TRUE    79.9      2    27  97.1   100    21.6     1.94  7.49
-#&gt; <span style='color: #BCBCBC;'> 9</span> 9          TRUE    89.9      3    27 100     100    11.2     2.91  6.14
-#&gt; <span style='color: #BCBCBC;'>10</span> 10         TRUE   100        0    27 100     100     0       0     3.19
-#&gt; 
-#&gt; $metrics
-#&gt;       AUC     ACC     PRC     TPR      TNR
-#&gt; 1 0.89467 0.16418 0.18325 0.33981 0.054545
-#&gt; </div><div class='input'>
-<span class='co'># Metrics for Multi-Categorical Model</span>
-<span class='va'>met2</span> <span class='op'>&lt;-</span> <span class='fu'>model_metrics</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>score</span>,
-  multis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span>, select <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>score</span><span class='op'>)</span><span class='op'>)</span>,
-  model_name <span class='op'>=</span> <span class='st'>"Titanic Class Model"</span>,
-  plots <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>met2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $dictionary
-#&gt; [1] "AUC: Area Under the Curve"                                                             
-#&gt; [2] "ACC: Accuracy"                                                                         
-#&gt; [3] "PRC: Precision = Positive Predictive Value"                                            
-#&gt; [4] "TPR: Sensitivity = Recall = Hit rate = True Positive Rate"                             
-#&gt; [5] "TNR: Specificity = Selectivity = True Negative Rate"                                   
-#&gt; [6] "Logloss (Error): Logarithmic loss [Neutral classification: 0.69315]"                   
-#&gt; [7] "Gain: When best n deciles selected, what % of the real target observations are picked?"
-#&gt; [8] "Lift: When best n deciles selected, how much better than random is?"                   
-#&gt; 
-#&gt; $confusion_matrix
-#&gt; <span style='color: #949494;'># A tibble: 3 × 4</span>
-#&gt;   `Real x Pred`   n_3   n_1   n_2
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> n_3             120    11    18
-#&gt; <span style='color: #BCBCBC;'>2</span> n_1              12    43     8
-#&gt; <span style='color: #BCBCBC;'>3</span> n_2              26    15    15
-#&gt; 
-#&gt; $metrics
-#&gt;      AUC     ACC
-#&gt; 1 0.7896 0.66418
-#&gt; 
-#&gt; $metrics_tags
-#&gt; <span style='color: #949494;'># A tibble: 3 × 9</span>
-#&gt;   tag       n     p   AUC order   ACC   PRC   TPR   TNR
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> n_3     149  55.6 0.826     1 0.75  0.759 0.805 0.681
-#&gt; <span style='color: #BCBCBC;'>2</span> n_1      63  23.5 0.867     2 0.828 0.623 0.683 0.873
-#&gt; <span style='color: #BCBCBC;'>3</span> n_2      56  20.9 0.675     3 0.75  0.366 0.268 0.877
-#&gt; </div><div class='input'>
-<span class='co'># Metrics for Regression Model</span>
-<span class='va'>met3</span> <span class='op'>&lt;-</span> <span class='fu'>model_metrics</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>regr</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>regr</span><span class='op'>$</span><span class='va'>score</span>,
-  model_name <span class='op'>=</span> <span class='st'>"Titanic Fare Model"</span>,
-  plots <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>met3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $dictionary
-#&gt; [1] "RMSE: Root Mean Squared Error"       
-#&gt; [2] "MAE: Mean Average Error"             
-#&gt; [3] "MAPE: Mean Absolute Percentage Error"
-#&gt; [4] "MSE: Mean Squared Error"             
-#&gt; [5] "RSQ: R Squared"                      
-#&gt; [6] "RSQA: Adjusted R Squared"            
-#&gt; 
-#&gt; $metrics
-#&gt;       rmse      mae       mape      mse    rsq   rsqa
-#&gt; 1 20.30881 14.24359 0.07303959 412.4477 0.3169 0.3143
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>)</span> <span class='co'># Results for AutoML Predictions</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>dfr</span>, <span class='va'>head</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $class2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     tag    scores</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  TRUE 0.3155498</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  TRUE 0.8747599</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  TRUE 0.8952823</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 FALSE 0.0436517</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  TRUE 0.2196593</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6 FALSE 0.2816101</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $class3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   tag score        n_1        n_2        n_3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 n_3   n_2 0.20343865 0.60825062 0.18831071</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 n_2   n_3 0.17856154 0.07657769 0.74486071</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 n_1   n_1 0.50516951 0.40168718 0.09314334</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 n_3   n_2 0.30880713 0.39062151 0.30057135</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 n_2   n_3 0.01956827 0.07069011 0.90974158</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6 n_2   n_3 0.07830017 0.15408720 0.76761264</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $regr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       tag    score</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 11.1333 25.93200</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 30.0708 39.91900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 26.5500 50.72246</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 31.2750 47.81292</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 13.0000 30.12853</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6 26.0000 13.24153</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Metrics for Binomial Model</span></span>
+<span class='r-in'><span class='va'>met1</span> <span class='op'>&lt;-</span> <span class='fu'>model_metrics</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>scores</span>,</span>
+<span class='r-in'>  model_name <span class='op'>=</span> <span class='st'>"Titanic Survived Model"</span>,</span>
+<span class='r-in'>  plots <span class='op'>=</span> <span class='cn'>FALSE</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Target value: TRUE</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>met1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $dictionary</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "AUC: Area Under the Curve"                                                             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2] "ACC: Accuracy"                                                                         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3] "PRC: Precision = Positive Predictive Value"                                            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4] "TPR: Sensitivity = Recall = Hit rate = True Positive Rate"                             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [5] "TNR: Specificity = Selectivity = True Negative Rate"                                   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [6] "Logloss (Error): Logarithmic loss [Neutral classification: 0.69315]"                   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [7] "Gain: When best n deciles selected, what % of the real target observations are picked?"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [8] "Lift: When best n deciles selected, how much better than random is?"                   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $confusion_matrix</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        Pred</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Real    FALSE TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   FALSE     9  156</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   TRUE     68   35</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $gain_lift</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 10 × 10</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    percentile value random target total  gain optimal  lift response score</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> 1          TRUE    10.4     26    28  25.2    27.2 142.     25.2  93.3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> 2          TRUE    20.5     24    27  48.5    53.4 137.     23.3  79.7 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> 3          TRUE    30.2     19    26  67.0    78.6 122.     18.4  46.2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> 4          TRUE    39.9     12    26  78.6   100    97.0    11.7  31.5 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> 5          TRUE    50        9    27  87.4   100    74.8     8.74 19.8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> 6          TRUE    60.1      5    27  92.2   100    53.5     4.85 13.3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> 7          TRUE    69.8      3    26  95.1   100    36.4     2.91  9.31</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> 8          TRUE    79.9      2    27  97.1   100    21.6     1.94  7.49</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> 9          TRUE    89.9      3    27 100     100    11.2     2.91  6.14</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> 10         TRUE   100        0    27 100     100     0       0     3.19</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $metrics</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       AUC     ACC     PRC     TPR      TNR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 0.89467 0.16418 0.18325 0.33981 0.054545</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Metrics for Multi-Categorical Model</span></span>
+<span class='r-in'><span class='va'>met2</span> <span class='op'>&lt;-</span> <span class='fu'>model_metrics</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>score</span>,</span>
+<span class='r-in'>  multis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span>, select <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>score</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>  model_name <span class='op'>=</span> <span class='st'>"Titanic Class Model"</span>,</span>
+<span class='r-in'>  plots <span class='op'>=</span> <span class='cn'>FALSE</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>met2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $dictionary</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "AUC: Area Under the Curve"                                                             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2] "ACC: Accuracy"                                                                         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3] "PRC: Precision = Positive Predictive Value"                                            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4] "TPR: Sensitivity = Recall = Hit rate = True Positive Rate"                             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [5] "TNR: Specificity = Selectivity = True Negative Rate"                                   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [6] "Logloss (Error): Logarithmic loss [Neutral classification: 0.69315]"                   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [7] "Gain: When best n deciles selected, what % of the real target observations are picked?"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [8] "Lift: When best n deciles selected, how much better than random is?"                   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $confusion_matrix</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 3 × 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   `Real x Pred`   n_3   n_1   n_2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> n_3             120    11    18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> n_1              12    43     8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> n_2              26    15    15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $metrics</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      AUC     ACC</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 0.7896 0.66418</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $metrics_tags</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 3 × 9</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   tag       n     p   AUC order   ACC   PRC   TPR   TNR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> n_3     149  55.6 0.826     1 0.75  0.759 0.805 0.681</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> n_1      63  23.5 0.867     2 0.828 0.623 0.683 0.873</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> n_2      56  20.9 0.675     3 0.75  0.366 0.268 0.877</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Metrics for Regression Model</span></span>
+<span class='r-in'><span class='va'>met3</span> <span class='op'>&lt;-</span> <span class='fu'>model_metrics</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>regr</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>regr</span><span class='op'>$</span><span class='va'>score</span>,</span>
+<span class='r-in'>  model_name <span class='op'>=</span> <span class='st'>"Titanic Fare Model"</span>,</span>
+<span class='r-in'>  plots <span class='op'>=</span> <span class='cn'>FALSE</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>met3</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $dictionary</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "RMSE: Root Mean Squared Error"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2] "MAE: Mean Average Error"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3] "MAPE: Mean Absolute Percentage Error"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4] "MSE: Mean Squared Error"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [5] "RSQ: R Squared"                      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [6] "RSQA: Adjusted R Squared"            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $metrics</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       rmse      mae       mape      mse    rsq   rsqa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 20.30881 14.24359 0.07303959 412.4477 0.3169 0.3143</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

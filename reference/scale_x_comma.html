@@ -214,7 +214,7 @@ further customize your numerical scales with <code>formatNum</code>.</p>
     <tr>
       <th>decimals</th>
       <td><p>Integer. Amount of decimals to display. If set to
-<code>NULL</code>, then <code><a href='https://rdrr.io/r/base/options.html'>getOption("digits")</a></code> will be used.</p></td>
+<code>NULL</code>, then <code>getOption("digits")</code> will be used.</p></td>
     </tr>
     <tr>
       <th>signif</th>
@@ -224,7 +224,7 @@ the specified number of significant digits.</p></td>
     <tr>
       <th>type</th>
       <td><p>Integer. <code>1</code> for International standards. <code>2</code>
-for American Standards. Use <code><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.setenv("LARES_NUMFORMAT" = 2)</a></code>
+for American Standards. Use <code>Sys.setenv("LARES_NUMFORMAT" = 2)</code>
 to set this parameter globally.</p></td>
     </tr>
     <tr>
@@ -237,7 +237,7 @@ to set this parameter globally.</p></td>
     </tr>
     <tr>
       <th>sign</th>
-      <td><p>Boolean. Add <code><a href='https://rdrr.io/r/base/Arithmetic.html'>+</a></code> sign to positive values.</p></td>
+      <td><p>Boolean. Add <code>+</code> sign to positive values.</p></td>
     </tr>
     <tr>
       <th>abbr</th>
@@ -251,26 +251,30 @@ the `decimals` parameter to set abbr's <code>n</code>(-1) parameter.</p></td>
     <p>Reformatted scales on ggplot2 object</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='va'><a href='https://ggplot2.tidyverse.org/reference/txhousing.html'>txhousing</a></span> <span class='op'>%&gt;%</span> <span class='fu'><a href='removenarows.html'>removenarows</a></span><span class='op'>(</span>all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>sales</span>, y <span class='op'>=</span> <span class='va'>volume</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_x_dollar</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_y_abbr</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='scale_x_comma-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Use any argument from scale_x/y_continuous</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>listings</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>inventory</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_x_comma</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_y_percent</span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 204 rows containing missing values (geom_point).</span></div><div class='img'><img src='scale_x_comma-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Use any argument from scale_x/y_continuous AND formatNum</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>median</span>, y <span class='op'>=</span> <span class='va'>inventory</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_x_formatNum</span><span class='op'>(</span>n.breaks <span class='op'>=</span> <span class='fl'>3</span>, pre <span class='op'>=</span> <span class='st'>"@"</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_y_formatNum</span><span class='op'>(</span>position <span class='op'>=</span> <span class='st'>"right"</span>, decimals <span class='op'>=</span> <span class='fl'>0</span>, pos <span class='op'>=</span> <span class='st'>" X"</span><span class='op'>)</span>
-</div><div class='img'><img src='scale_x_comma-3.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='va'><a href='https://ggplot2.tidyverse.org/reference/txhousing.html'>txhousing</a></span> <span class='op'><a href='lares-exports.html'>%&gt;%</a></span> <span class='fu'><a href='removenarows.html'>removenarows</a></span><span class='op'>(</span>all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>sales</span>, y <span class='op'>=</span> <span class='va'>volume</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fu'>scale_x_dollar</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fu'>scale_y_abbr</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='scale_x_comma-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Use any argument from scale_x/y_continuous</span></span>
+<span class='r-in'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>listings</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>inventory</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fu'>scale_x_comma</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fu'>scale_y_percent</span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>Removed 204 rows containing missing values (geom_point).</span>
+<span class='r-plt img'><img src='scale_x_comma-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Use any argument from scale_x/y_continuous AND formatNum</span></span>
+<span class='r-in'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>median</span>, y <span class='op'>=</span> <span class='va'>inventory</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fu'>scale_x_formatNum</span><span class='op'>(</span>n.breaks <span class='op'>=</span> <span class='fl'>3</span>, pre <span class='op'>=</span> <span class='st'>"@"</span>, abbr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fu'>scale_y_formatNum</span><span class='op'>(</span>position <span class='op'>=</span> <span class='st'>"right"</span>, decimals <span class='op'>=</span> <span class='fl'>0</span>, pos <span class='op'>=</span> <span class='st'>" X"</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='scale_x_comma-3.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

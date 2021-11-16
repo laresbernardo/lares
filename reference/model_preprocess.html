@@ -224,7 +224,7 @@ row twice. Negative weights are not allowed.</p></td>
     <tr>
       <th>target</th>
       <td><p>Value. Which is your target positive value? If
-set to <code>'auto'</code>, the target with largest <code><a href='https://rdrr.io/r/base/mean.html'>mean(score)</a></code> will be
+set to <code>'auto'</code>, the target with largest <code>mean(score)</code> will be
 selected. Change the value to overwrite. Only used when binary
 categorical model.</p></td>
     </tr>
@@ -300,29 +300,53 @@ to identify which observations with be part of the train dataset
 <code><a href='msplit.html'>msplit</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
-
-<span class='fu'>model_preprocess</span><span class='op'>(</span><span class='va'>dft</span>, <span class='st'>"Survived"</span>, balance <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>- INDEPENDENT VARIABLE: Survived</span></div><div class='output co'>#&gt; <span class='message'>- MODEL TYPE: Classification</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 × 5</span>
-#&gt;   tag       n     p order  pcum
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> FALSE   549  61.6     1  61.6
-#&gt; <span style='color: #BCBCBC;'>2</span> TRUE    342  38.4     2 100  </div><div class='output co'>#&gt; <span class='message'>- MISSINGS: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span></div><div class='output co'>#&gt; <span class='message'>- CATEGORICALS: There are 5 non-numerical features. Consider using ohse() or equivalent prior to encode categorical variables.</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Splitting data: train = 0.7 &amp; test = 0.3</span></div><div class='output co'>#&gt; train_size  test_size 
-#&gt;        623        268 </div><div class='output co'>#&gt; <span class='message'>- BALANCE: Training set balanced: 242 observations for each (2) category; using 77.69% of training data</span></div><div class='input'>
-<span class='fu'>model_preprocess</span><span class='op'>(</span><span class='va'>dft</span>, <span class='st'>"Fare"</span>, split <span class='op'>=</span> <span class='fl'>0.5</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>- INDEPENDENT VARIABLE: Fare</span></div><div class='output co'>#&gt; <span class='message'>- MODEL TYPE: Regression</span></div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;    0.00    7.91   14.45   32.20   31.00  512.33 </div><div class='output co'>#&gt; <span class='message'>- MISSINGS: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span></div><div class='output co'>#&gt; <span class='message'>- CATEGORICALS: There are 6 non-numerical features. Consider using ohse() or equivalent prior to encode categorical variables.</span></div><div class='output co'>#&gt; <span class='message'>- TRANSFORMATIONS: All numerical features (4) were scaled</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Splitting data: train = 0.5 &amp; test = 0.5</span></div><div class='output co'>#&gt; train_size  test_size 
-#&gt;        435        436 </div><div class='input'>
-<span class='fu'>model_preprocess</span><span class='op'>(</span><span class='va'>dft</span>, <span class='st'>"Pclass"</span>, ignore <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Fare"</span>, <span class='st'>"Cabin"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>- INDEPENDENT VARIABLE: Pclass</span></div><div class='output co'>#&gt; <span class='message'>- MODEL TYPE: Classification</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 × 5</span>
-#&gt;   tag       n     p order  pcum
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> n_3     491  55.1     1  55.1
-#&gt; <span style='color: #BCBCBC;'>2</span> n_1     216  24.2     2  79.4
-#&gt; <span style='color: #BCBCBC;'>3</span> n_2     184  20.6     3 100  </div><div class='output co'>#&gt; <span class='message'>- MISSINGS: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span></div><div class='output co'>#&gt; <span class='message'>- SKIPPED: Ignored variables for training models: 'Fare', 'Cabin'</span></div><div class='output co'>#&gt; <span class='message'>- CATEGORICALS: There are 4 non-numerical features. Consider using ohse() or equivalent prior to encode categorical variables.</span></div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; Splitting data: train = 0.7 &amp; test = 0.3</span></div><div class='output co'>#&gt; train_size  test_size 
-#&gt;        623        268 </div><div class='input'>
-<span class='fu'>model_preprocess</span><span class='op'>(</span><span class='va'>dft</span>, <span class='st'>"Pclass"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>model_preprocess</span><span class='op'>(</span><span class='va'>dft</span>, <span class='st'>"Survived"</span>, balance <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - INDEPENDENT VARIABLE: Survived</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - MODEL TYPE: Classification</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2 × 5</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   tag       n     p order  pcum</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> FALSE   549  61.6     1  61.6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> TRUE    342  38.4     2 100  </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - MISSINGS: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - CATEGORICALS: There are 5 non-numerical features. Consider using ohse() or equivalent prior to encode categorical variables.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> &gt;&gt;&gt; Splitting data: train = 0.7 &amp; test = 0.3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> train_size  test_size </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        623        268 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - BALANCE: Training set balanced: 242 observations for each (2) category; using 77.69% of training data</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>model_preprocess</span><span class='op'>(</span><span class='va'>dft</span>, <span class='st'>"Fare"</span>, split <span class='op'>=</span> <span class='fl'>0.5</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - INDEPENDENT VARIABLE: Fare</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - MODEL TYPE: Regression</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    0.00    7.91   14.45   32.20   31.00  512.33 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - MISSINGS: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - CATEGORICALS: There are 6 non-numerical features. Consider using ohse() or equivalent prior to encode categorical variables.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - TRANSFORMATIONS: All numerical features (4) were scaled</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> &gt;&gt;&gt; Splitting data: train = 0.5 &amp; test = 0.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> train_size  test_size </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        435        436 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>model_preprocess</span><span class='op'>(</span><span class='va'>dft</span>, <span class='st'>"Pclass"</span>, ignore <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Fare"</span>, <span class='st'>"Cabin"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - INDEPENDENT VARIABLE: Pclass</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - MODEL TYPE: Classification</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 3 × 5</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   tag       n     p order  pcum</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> n_3     491  55.1     1  55.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> n_1     216  24.2     2  79.4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> n_2     184  20.6     3 100  </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - MISSINGS: The following variables contain missing observations: Age (19.87%). Consider using the impute parameter.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - SKIPPED: Ignored variables for training models: 'Fare', 'Cabin'</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - CATEGORICALS: There are 4 non-numerical features. Consider using ohse() or equivalent prior to encode categorical variables.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> &gt;&gt;&gt; Splitting data: train = 0.7 &amp; test = 0.3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> train_size  test_size </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        623        268 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>model_preprocess</span><span class='op'>(</span><span class='va'>dft</span>, <span class='st'>"Pclass"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

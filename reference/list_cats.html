@@ -184,31 +184,33 @@
 frequency data.frame using <code><a href='freqs.html'>freqs()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>dft</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   PassengerId Survived Pclass    Sex Age
-#&gt; 1           1    FALSE      3   male  22
-#&gt; 2           2     TRUE      1 female  38
-#&gt; 3           3     TRUE      3 female  26
-#&gt; 4           4     TRUE      1 female  35
-#&gt; 5           5    FALSE      3   male  35
-#&gt; 6           6    FALSE      3   male  NA</div><div class='input'><span class='fu'>list_cats</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $Pclass
-#&gt; <span style='color: #949494;'># A tibble: 3 × 3</span>
-#&gt;   Pclass     n     p
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> 1        216  24.2
-#&gt; <span style='color: #BCBCBC;'>2</span> 2        184  20.6
-#&gt; <span style='color: #BCBCBC;'>3</span> 3        491  55.1
-#&gt; 
-#&gt; $Sex
-#&gt; <span style='color: #949494;'># A tibble: 2 × 3</span>
-#&gt;   Sex        n     p
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> female   314  35.2
-#&gt; <span style='color: #BCBCBC;'>2</span> male     577  64.8
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>dft</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   PassengerId Survived Pclass    Sex Age</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1           1    FALSE      3   male  22</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2           2     TRUE      1 female  38</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3           3     TRUE      3 female  26</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4           4     TRUE      1 female  35</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5           5    FALSE      3   male  35</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6           6    FALSE      3   male  NA</span>
+<span class='r-in'><span class='fu'>list_cats</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Pclass</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 3 × 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Pclass     n     p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> 1        216  24.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> 2        184  20.6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> 3        491  55.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Sex</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2 × 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Sex        n     p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> female   314  35.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> male     577  64.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

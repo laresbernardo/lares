@@ -211,34 +211,37 @@ set to NA no calculation will run.</p></td>
 <code><a href='year_week.html'>year_week</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 'data.frame':	891 obs. of  11 variables:
-#&gt;  $ PassengerId: int  1 2 3 4 5 6 7 8 9 10 ...
-#&gt;  $ Survived   : logi  FALSE TRUE TRUE TRUE FALSE FALSE ...
-#&gt;  $ Pclass     : Factor w/ 3 levels "1","2","3": 3 1 3 1 3 3 1 3 3 2 ...
-#&gt;  $ Sex        : Factor w/ 2 levels "female","male": 2 1 1 1 2 2 2 2 1 1 ...
-#&gt;  $ Age        : num  22 38 26 35 35 NA 54 2 27 14 ...
-#&gt;  $ SibSp      : int  1 1 0 1 0 0 0 3 0 1 ...
-#&gt;  $ Parch      : int  0 0 0 0 0 0 0 1 2 0 ...
-#&gt;  $ Ticket     : chr  "A/5 21171" "PC 17599" "STON/O2. 3101282" "113803" ...
-#&gt;  $ Fare       : num  7.25 71.28 7.92 53.1 8.05 ...
-#&gt;  $ Cabin      : Factor w/ 148 levels "","A10","A14",..: 1 83 1 57 1 1 131 1 1 1 ...
-#&gt;  $ Embarked   : Factor w/ 4 levels "","C","Q","S": 4 2 4 4 4 3 4 4 4 2 ...</div><div class='input'><span class='fu'>numericalonly</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   PassengerId Age SibSp Parch    Fare Survived Sex
-#&gt; 1           1  22     1     0  7.2500        0   1
-#&gt; 2           2  38     1     0 71.2833        1   0
-#&gt; 3           3  26     0     0  7.9250        1   0
-#&gt; 4           4  35     1     0 53.1000        1   0
-#&gt; 5           5  35     0     0  8.0500        0   1
-#&gt; 6           6  NA     0     0  8.4583        0   1</div><div class='input'><span class='fu'>numericalonly</span><span class='op'>(</span><span class='va'>dft</span>, natransform <span class='op'>=</span> <span class='st'>"mean"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   PassengerId      Age SibSp Parch    Fare Survived Sex
-#&gt; 1           1 22.00000     1     0  7.2500        0   1
-#&gt; 2           2 38.00000     1     0 71.2833        1   0
-#&gt; 3           3 26.00000     0     0  7.9250        1   0
-#&gt; 4           4 35.00000     1     0 53.1000        1   0
-#&gt; 5           5 35.00000     0     0  8.0500        0   1
-#&gt; 6           6 29.69912     0     0  8.4583        0   1</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 'data.frame':	891 obs. of  11 variables:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ PassengerId: int  1 2 3 4 5 6 7 8 9 10 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ Survived   : logi  FALSE TRUE TRUE TRUE FALSE FALSE ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ Pclass     : Factor w/ 3 levels "1","2","3": 3 1 3 1 3 3 1 3 3 2 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ Sex        : Factor w/ 2 levels "female","male": 2 1 1 1 2 2 2 2 1 1 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ Age        : num  22 38 26 35 35 NA 54 2 27 14 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ SibSp      : int  1 1 0 1 0 0 0 3 0 1 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ Parch      : int  0 0 0 0 0 0 0 1 2 0 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ Ticket     : chr  "A/5 21171" "PC 17599" "STON/O2. 3101282" "113803" ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ Fare       : num  7.25 71.28 7.92 53.1 8.05 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ Cabin      : Factor w/ 148 levels "","A10","A14",..: 1 83 1 57 1 1 131 1 1 1 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ Embarked   : Factor w/ 4 levels "","C","Q","S": 4 2 4 4 4 3 4 4 4 2 ...</span>
+<span class='r-in'><span class='fu'>numericalonly</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='op'><a href='lares-exports.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   PassengerId Age SibSp Parch    Fare Survived Sex</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1           1  22     1     0  7.2500        0   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2           2  38     1     0 71.2833        1   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3           3  26     0     0  7.9250        1   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4           4  35     1     0 53.1000        1   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5           5  35     0     0  8.0500        0   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6           6  NA     0     0  8.4583        0   1</span>
+<span class='r-in'><span class='fu'>numericalonly</span><span class='op'>(</span><span class='va'>dft</span>, natransform <span class='op'>=</span> <span class='st'>"mean"</span><span class='op'>)</span> <span class='op'><a href='lares-exports.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   PassengerId      Age SibSp Parch    Fare Survived Sex</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1           1 22.00000     1     0  7.2500        0   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2           2 38.00000     1     0 71.2833        1   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3           3 26.00000     0     0  7.9250        1   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4           4 35.00000     1     0 53.1000        1   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5           5 35.00000     0     0  8.0500        0   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6           6 29.69912     0     0  8.4583        0   1</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

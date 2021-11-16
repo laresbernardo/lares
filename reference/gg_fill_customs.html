@@ -207,40 +207,47 @@ GeomText or GeomLabel, <code>gg_colour_customs()</code> will force
 <code><a href='theme_lares.html'>theme_lares</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ggplot2.tidyverse.org'>"ggplot2"</a></span><span class='op'>)</span>
-<span class='co'># Generic plot function to run examples to</span>
-<span class='va'>run_plot</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>add_fxs</span> <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>station <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"spring"</span>, <span class='st'>"summer"</span>, <span class='st'>"fall"</span>, <span class='st'>"winter"</span><span class='op'>)</span>, num <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>station</span>, y <span class='op'>=</span> <span class='va'>num</span>, fill <span class='op'>=</span> <span class='va'>station</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='fl'>0.5</span>, label <span class='op'>=</span> <span class='va'>num</span>, colour <span class='op'>=</span> <span class='va'>station</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
-  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>add_fxs</span><span class='op'>)</span> <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>p</span> <span class='op'>+</span> <span class='fu'>gg_fill_customs</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>gg_colour_customs</span><span class='op'>(</span><span class='op'>)</span>
-  <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
-<span class='op'>}</span>
-<span class='co'># Default colours</span>
-<span class='fu'>run_plot</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='gg_fill_customs-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Check last colours used</span>
-<span class='fu'>gg_vals</span><span class='op'>(</span><span class='st'>"fill"</span>, <span class='st'>"fill"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    spring    summer      fall    winter 
-#&gt; "#A1BD4D" "#E63946" "#FF8303" "#40A4D8" </div><div class='input'><span class='fu'>gg_vals</span><span class='op'>(</span><span class='st'>"colour"</span>, <span class='st'>"colour"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    spring    summer      fall    winter 
-#&gt; "#A1BD4D" "#E63946" "#FF8303" "#40A4D8" </div><div class='input'><span class='co'># Change any default colour</span>
-<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"lares.colours.custom"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
-  values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"summer"</span>, <span class='st'>"winter"</span><span class='op'>)</span>,
-  fill <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pink"</span>, <span class='st'>"black"</span><span class='op'>)</span>,
-  colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"black"</span>, <span class='st'>"white"</span><span class='op'>)</span>
-<span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>run_plot</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='gg_fill_customs-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Check last colours used</span>
-<span class='fu'>gg_vals</span><span class='op'>(</span><span class='st'>"fill"</span>, <span class='st'>"fill"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    spring      fall    summer    winter 
-#&gt; "#A1BD4D" "#FF8303"    "pink"   "black" </div><div class='input'><span class='fu'>gg_vals</span><span class='op'>(</span><span class='st'>"colour"</span>, <span class='st'>"colour"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    spring      fall    summer    winter 
-#&gt; "#A1BD4D" "#FF8303"    "pink"   "black" </div><div class='input'><span class='co'># Reset to default colours</span>
-<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"lares.colours.custom"</span> <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
-<span class='co'># Notice you can use 'pal = 4' argument on theme_lares() too</span>
-<span class='fu'>run_plot</span><span class='op'>(</span>add_fxs <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='theme_lares.html'>theme_lares</a></span><span class='op'>(</span>pal <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-</div><div class='img'><img src='gg_fill_customs-3.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ggplot2.tidyverse.org'>"ggplot2"</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># Generic plot function to run examples to</span></span>
+<span class='r-in'><span class='va'>run_plot</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>add_fxs</span> <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>station <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"spring"</span>, <span class='st'>"summer"</span>, <span class='st'>"fall"</span>, <span class='st'>"winter"</span><span class='op'>)</span>, num <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'><a href='lares-exports.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>station</span>, y <span class='op'>=</span> <span class='va'>num</span>, fill <span class='op'>=</span> <span class='va'>station</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='fl'>0.5</span>, label <span class='op'>=</span> <span class='va'>num</span>, colour <span class='op'>=</span> <span class='va'>station</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>add_fxs</span><span class='op'>)</span> <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>p</span> <span class='op'>+</span> <span class='fu'>gg_fill_customs</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>gg_colour_customs</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'><span class='co'># Default colours</span></span>
+<span class='r-in'><span class='fu'>run_plot</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='gg_fill_customs-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># Check last colours used</span></span>
+<span class='r-in'><span class='fu'>gg_vals</span><span class='op'>(</span><span class='st'>"fill"</span>, <span class='st'>"fill"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    spring    summer      fall    winter </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "#A1BD4D" "#E63946" "#FF8303" "#40A4D8" </span>
+<span class='r-in'><span class='fu'>gg_vals</span><span class='op'>(</span><span class='st'>"colour"</span>, <span class='st'>"colour"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    spring    summer      fall    winter </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "#A1BD4D" "#E63946" "#FF8303" "#40A4D8" </span>
+<span class='r-in'><span class='co'># Change any default colour</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"lares.colours.custom"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span class='r-in'>  values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"summer"</span>, <span class='st'>"winter"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  fill <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pink"</span>, <span class='st'>"black"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"black"</span>, <span class='st'>"white"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>run_plot</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='gg_fill_customs-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># Check last colours used</span></span>
+<span class='r-in'><span class='fu'>gg_vals</span><span class='op'>(</span><span class='st'>"fill"</span>, <span class='st'>"fill"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    spring      fall    summer    winter </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "#A1BD4D" "#FF8303"    "pink"   "black" </span>
+<span class='r-in'><span class='fu'>gg_vals</span><span class='op'>(</span><span class='st'>"colour"</span>, <span class='st'>"colour"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    spring      fall    summer    winter </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "#A1BD4D" "#FF8303"    "pink"   "black" </span>
+<span class='r-in'><span class='co'># Reset to default colours</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"lares.colours.custom"</span> <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># Notice you can use 'pal = 4' argument on theme_lares() too</span></span>
+<span class='r-in'><span class='fu'>run_plot</span><span class='op'>(</span>add_fxs <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='theme_lares.html'>theme_lares</a></span><span class='op'>(</span>pal <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='gg_fill_customs-3.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -215,93 +215,96 @@ range. It also works for multi-categorical models.</p>
 <code><a href='model_metrics.html'>model_metrics</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>)</span> <span class='co'># Results for AutoML Predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>head</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $class2
-#&gt;     tag    scores
-#&gt; 1  TRUE 0.3155498
-#&gt; 2  TRUE 0.8747599
-#&gt; 3  TRUE 0.8952823
-#&gt; 4 FALSE 0.0436517
-#&gt; 5  TRUE 0.2196593
-#&gt; 6 FALSE 0.2816101
-#&gt; 
-#&gt; $class3
-#&gt;   tag score        n_1        n_2        n_3
-#&gt; 1 n_3   n_2 0.20343865 0.60825062 0.18831071
-#&gt; 2 n_2   n_3 0.17856154 0.07657769 0.74486071
-#&gt; 3 n_1   n_1 0.50516951 0.40168718 0.09314334
-#&gt; 4 n_3   n_2 0.30880713 0.39062151 0.30057135
-#&gt; 5 n_2   n_3 0.01956827 0.07069011 0.90974158
-#&gt; 6 n_2   n_3 0.07830017 0.15408720 0.76761264
-#&gt; </div><div class='input'>
-<span class='co'># ROC Data for Binomial Model</span>
-<span class='va'>roc1</span> <span class='op'>&lt;-</span> <span class='fu'>ROC</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>scores</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>roc1</span>, <span class='va'>head</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $ci
-#&gt;        roc.ci
-#&gt; min 0.8542079
-#&gt; AUC 0.8946749
-#&gt; max 0.9351419
-#&gt; 
-#&gt; $roc
-#&gt;   fpr         tpr label
-#&gt; 1   1 0.000000000 2cats
-#&gt; 2   1 0.009708738 2cats
-#&gt; 3   1 0.019417476 2cats
-#&gt; 4   1 0.029126214 2cats
-#&gt; 5   1 0.038834951 2cats
-#&gt; 6   1 0.048543689 2cats
-#&gt; </div><div class='input'>
-<span class='co'># ROC Data for Multi-Categorical Model</span>
-<span class='va'>roc2</span> <span class='op'>&lt;-</span> <span class='fu'>ROC</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>score</span>,
-  multis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span>, select <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>score</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>roc2</span>, <span class='va'>head</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $ci
-#&gt;           n_1       n_2       n_3      mean
-#&gt; min 0.8198601 0.6018566 0.7774864 0.7330677
-#&gt; AUC 0.8669377 0.6754127 0.8264621 0.7896042
-#&gt; max 0.9140153 0.7489689 0.8754379 0.8461407
-#&gt; 
-#&gt; $roc
-#&gt;   fpr         tpr        label
-#&gt; 1   1 0.000000000 86.69% | n_1
-#&gt; 2   1 0.004878049 86.69% | n_1
-#&gt; 3   1 0.009756098 86.69% | n_1
-#&gt; 4   1 0.019512195 86.69% | n_1
-#&gt; 5   1 0.024390244 86.69% | n_1
-#&gt; 6   1 0.029268293 86.69% | n_1
-#&gt; 
-#&gt; $rocs
-#&gt; $rocs$n_1
-#&gt; 
-#&gt; Call:
-#&gt; roc.default(response = label, predictor = res, quiet = TRUE,     ci = TRUE)
-#&gt; 
-#&gt; Data: res in 63 controls (label n_1) &gt; 205 cases (label other_label).
-#&gt; Area under the curve: 0.8669
-#&gt; 95% CI: 0.8199-0.914 (DeLong)
-#&gt; 
-#&gt; $rocs$n_2
-#&gt; 
-#&gt; Call:
-#&gt; roc.default(response = label, predictor = res, quiet = TRUE,     ci = TRUE)
-#&gt; 
-#&gt; Data: res in 56 controls (label n_2) &gt; 212 cases (label other_label).
-#&gt; Area under the curve: 0.6754
-#&gt; 95% CI: 0.6019-0.749 (DeLong)
-#&gt; 
-#&gt; $rocs$n_3
-#&gt; 
-#&gt; Call:
-#&gt; roc.default(response = label, predictor = res, quiet = TRUE,     ci = TRUE)
-#&gt; 
-#&gt; Data: res in 149 controls (label n_3) &gt; 119 cases (label other_label).
-#&gt; Area under the curve: 0.8265
-#&gt; 95% CI: 0.7775-0.8754 (DeLong)
-#&gt; 
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>)</span> <span class='co'># Results for AutoML Predictions</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>head</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $class2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     tag    scores</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  TRUE 0.3155498</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  TRUE 0.8747599</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  TRUE 0.8952823</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 FALSE 0.0436517</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  TRUE 0.2196593</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6 FALSE 0.2816101</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $class3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   tag score        n_1        n_2        n_3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 n_3   n_2 0.20343865 0.60825062 0.18831071</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 n_2   n_3 0.17856154 0.07657769 0.74486071</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 n_1   n_1 0.50516951 0.40168718 0.09314334</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 n_3   n_2 0.30880713 0.39062151 0.30057135</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 n_2   n_3 0.01956827 0.07069011 0.90974158</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6 n_2   n_3 0.07830017 0.15408720 0.76761264</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># ROC Data for Binomial Model</span></span>
+<span class='r-in'><span class='va'>roc1</span> <span class='op'>&lt;-</span> <span class='fu'>ROC</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class2</span><span class='op'>$</span><span class='va'>scores</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>roc1</span>, <span class='va'>head</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ci</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        roc.ci</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> min 0.8542079</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AUC 0.8946749</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> max 0.9351419</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $roc</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   fpr         tpr label</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   1 0.000000000 2cats</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2   1 0.009708738 2cats</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   1 0.019417476 2cats</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   1 0.029126214 2cats</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5   1 0.038834951 2cats</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   1 0.048543689 2cats</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># ROC Data for Multi-Categorical Model</span></span>
+<span class='r-in'><span class='va'>roc2</span> <span class='op'>&lt;-</span> <span class='fu'>ROC</span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>tag</span>, <span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span><span class='op'>$</span><span class='va'>score</span>,</span>
+<span class='r-in'>  multis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>$</span><span class='va'>class3</span>, select <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>score</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>roc2</span>, <span class='va'>head</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ci</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           n_1       n_2       n_3      mean</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> min 0.8198601 0.6018566 0.7774864 0.7330677</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AUC 0.8669377 0.6754127 0.8264621 0.7896042</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> max 0.9140153 0.7489689 0.8754379 0.8461407</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $roc</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   fpr         tpr        label</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   1 0.000000000 86.69% | n_1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2   1 0.004878049 86.69% | n_1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   1 0.009756098 86.69% | n_1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   1 0.019512195 86.69% | n_1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5   1 0.024390244 86.69% | n_1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   1 0.029268293 86.69% | n_1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $rocs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $rocs$n_1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> roc.default(response = label, predictor = res, quiet = TRUE,     ci = TRUE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Data: res in 63 controls (label n_1) &gt; 205 cases (label other_label).</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Area under the curve: 0.8669</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95% CI: 0.8199-0.914 (DeLong)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $rocs$n_2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> roc.default(response = label, predictor = res, quiet = TRUE,     ci = TRUE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Data: res in 56 controls (label n_2) &gt; 212 cases (label other_label).</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Area under the curve: 0.6754</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95% CI: 0.6019-0.749 (DeLong)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $rocs$n_3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> roc.default(response = label, predictor = res, quiet = TRUE,     ci = TRUE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Data: res in 149 controls (label n_3) &gt; 119 cases (label other_label).</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Area under the curve: 0.8265</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95% CI: 0.7775-0.8754 (DeLong)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

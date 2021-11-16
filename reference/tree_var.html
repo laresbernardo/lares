@@ -298,47 +298,54 @@ predictions, performance metrics, and interpret auxiliary text.</p>
   and the R port of that package by Brian Ripley.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span>
-<span class='co'># Regression Tree</span>
-<span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Fare</span>, subtitle <span class='op'>=</span> <span class='st'>"Titanic dataset"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 6 variables: 'Pclass', 'Ticket', 'Cabin', 'Embarked', 'Survived', 'Sex'</span></div><div class='input'><span class='va'>tree</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span> <span class='co'># tree plot</span>
-</div><div class='img'><img src='tree_var-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>tree</span><span class='op'>$</span><span class='va'>model</span> <span class='co'># rpart model object</span>
-</div><div class='output co'>#&gt; n= 891 
-#&gt; 
-#&gt; node), split, n, deviance, yval
-#&gt;       * denotes terminal node
-#&gt; 
-#&gt;  1) root 891 2197799.00  32.20421  
-#&gt;    2) Pclass_1&lt; 0.5 675  107453.20  15.58005  
-#&gt;      4) Ticket_OTHER&gt;=0.5 602   36951.84  12.77241  
-#&gt;        8) SibSp&lt; 0.5 454   11332.08  10.27211 *
-#&gt;        9) SibSp&gt;=0.5 148   14075.24  20.44226 *
-#&gt;      5) Ticket_OTHER&lt; 0.5 73   26621.89  38.73350  
-#&gt;       10) SibSp&lt; 6.5 66   19269.25  35.46508 *
-#&gt;       11) SibSp&gt;=6.5 7       0.00  69.55000 *
-#&gt;    3) Pclass_1&gt;=0.5 216 1320849.00  84.15469  
-#&gt;      6) Ticket_OTHER&gt;=0.5 193 1067421.00  74.74652  
-#&gt;       12) Parch&lt; 0.5 154  626392.20  63.35249 *
-#&gt;       13) Parch&gt;=0.5 39  342089.30 119.73840 *
-#&gt;      7) Ticket_OTHER&lt; 0.5 23   92995.43 163.10140  
-#&gt;       14) PassengerId&gt;=469 12   32097.01 144.27710 *
-#&gt;       15) PassengerId&lt; 469 11   52007.28 183.63710 *</div><div class='input'><span class='va'>tree</span><span class='op'>$</span><span class='va'>performance</span> <span class='co'># metrics</span>
-</div><div class='output co'>#&gt; $dictionary
-#&gt; [1] "RMSE: Root Mean Squared Error"       
-#&gt; [2] "MAE: Mean Average Error"             
-#&gt; [3] "MAPE: Mean Absolute Percentage Error"
-#&gt; [4] "MSE: Mean Squared Error"             
-#&gt; [5] "RSQ: R Squared"                      
-#&gt; [6] "RSQA: Adjusted R Squared"            
-#&gt; 
-#&gt; $metrics
-#&gt;       rmse      mae       mape      mse    rsq   rsqa
-#&gt; 1 35.09267 14.68424 0.03144996 1231.495 0.5007 0.5002
-#&gt; </div><div class='input'><span class='co'># Binary Tree</span>
-<span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Survived_TRUE</span>, explain <span class='op'>=</span> <span class='cn'>FALSE</span>, cex <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>&gt;&gt;&gt; One Hot Encoding applied to 6 variables: 'Pclass', 'Ticket', 'Cabin', 'Embarked', 'Survived', 'Sex'</span></div><div class='img'><img src='tree_var-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Multiclass tree</span>
-<span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Pclass"</span>, <span class='st'>"Fare"</span>, <span class='st'>"Age"</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>Pclass</span>, ohse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='tree_var-3.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># Regression Tree</span></span>
+<span class='r-in'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Fare</span>, subtitle <span class='op'>=</span> <span class='st'>"Titanic dataset"</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> &gt;&gt;&gt; One Hot Encoding applied to 6 variables: 'Pclass', 'Ticket', 'Cabin', 'Embarked', 'Survived', 'Sex'</span>
+<span class='r-in'><span class='va'>tree</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span> <span class='co'># tree plot</span></span>
+<span class='r-plt img'><img src='tree_var-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='va'>tree</span><span class='op'>$</span><span class='va'>model</span> <span class='co'># rpart model object</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n= 891 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> node), split, n, deviance, yval</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       * denotes terminal node</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1) root 891 2197799.00  32.20421  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    2) Pclass_1&lt; 0.5 675  107453.20  15.58005  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      4) Ticket_OTHER&gt;=0.5 602   36951.84  12.77241  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        8) SibSp&lt; 0.5 454   11332.08  10.27211 *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        9) SibSp&gt;=0.5 148   14075.24  20.44226 *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      5) Ticket_OTHER&lt; 0.5 73   26621.89  38.73350  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       10) SibSp&lt; 6.5 66   19269.25  35.46508 *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       11) SibSp&gt;=6.5 7       0.00  69.55000 *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    3) Pclass_1&gt;=0.5 216 1320849.00  84.15469  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      6) Ticket_OTHER&gt;=0.5 193 1067421.00  74.74652  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       12) Parch&lt; 0.5 154  626392.20  63.35249 *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       13) Parch&gt;=0.5 39  342089.30 119.73840 *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      7) Ticket_OTHER&lt; 0.5 23   92995.43 163.10140  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       14) PassengerId&gt;=469 12   32097.01 144.27710 *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       15) PassengerId&lt; 469 11   52007.28 183.63710 *</span>
+<span class='r-in'><span class='va'>tree</span><span class='op'>$</span><span class='va'>performance</span> <span class='co'># metrics</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $dictionary</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "RMSE: Root Mean Squared Error"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2] "MAE: Mean Average Error"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3] "MAPE: Mean Absolute Percentage Error"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4] "MSE: Mean Squared Error"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [5] "RSQ: R Squared"                      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [6] "RSQA: Adjusted R Squared"            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $metrics</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       rmse      mae       mape      mse    rsq   rsqa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 35.09267 14.68424 0.03144996 1231.495 0.5007 0.5002</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='co'># Binary Tree</span></span>
+<span class='r-in'><span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span>, <span class='va'>Survived_TRUE</span>, explain <span class='op'>=</span> <span class='cn'>FALSE</span>, cex <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> &gt;&gt;&gt; One Hot Encoding applied to 6 variables: 'Pclass', 'Ticket', 'Cabin', 'Embarked', 'Survived', 'Sex'</span>
+<span class='r-plt img'><img src='tree_var-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># Multiclass tree</span></span>
+<span class='r-in'><span class='fu'>tree_var</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Pclass"</span>, <span class='st'>"Fare"</span>, <span class='st'>"Age"</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>Pclass</span>, ohse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='tree_var-3.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

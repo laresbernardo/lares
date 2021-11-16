@@ -174,7 +174,7 @@ internal (created within <code>glued</code>) and external (environment) objects.
     </tr>
     <tr>
       <th>.sep</th>
-      <td><p>[<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>: &#8216;""&#8217;]<br /> Separator used to separate elements.</p></td>
+      <td><p>[<code>character(1)</code>: &#8216;""&#8217;]<br /> Separator used to separate elements.</p></td>
     </tr>
     <tr>
       <th>empty_lines</th>
@@ -194,37 +194,42 @@ evaluated in that environment and <code>.envir</code> is ignored.</p></td>
     <p>Same as input but transformed (glued).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>name</span> <span class='op'>&lt;-</span> <span class='st'>"Bernardo"</span>
-<span class='va'>age</span> <span class='op'>&lt;-</span> <span class='fl'>29</span>
-<span class='va'>anniversary</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2016-04-30"</span><span class='op'>)</span>
-<span class='fu'>glued</span><span class='op'>(</span><span class='st'>"
-  My name is {name},
-  my age next year will be {age + 1},
-  and I got married on {format(anniversary, '%A, %B %d, %Y')}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; My name is Bernardo,
-#&gt; my age next year will be 30,
-#&gt; and I got married on Saturday, April 30, 2016.</div><div class='input'>
-<span class='co'># Single braces can be inserted by doubling them</span>
-<span class='fu'>glued</span><span class='op'>(</span><span class='st'>"My name is {name}, not {{name}}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; My name is Bernardo, not {name}.</div><div class='input'>
-<span class='co'># You can also used named arguments</span>
-<span class='fu'>glued</span><span class='op'>(</span>
-  <span class='st'>"Her name is {name}, "</span>,
-  <span class='st'>"and her age next year will be {age + 1}."</span>,
-  name <span class='op'>=</span> <span class='st'>"Maru"</span>,
-  age <span class='op'>=</span> <span class='fl'>6</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; Her name is Maru, and her age next year will be 7.</div><div class='input'>
-<span class='co'># And run operations with memories (beware!)</span>
-<span class='fu'>glued</span><span class='op'>(</span><span class='st'>"My name, {name}, has {n &lt;- nchar(name); n} characters.
-       If we multiply by ten, we'll have {10 * n} characters!"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; My name, Bernardo, has 8 characters.
-#&gt; If we multiply by ten, we'll have 80 characters!</div><div class='input'>
-<span class='co'># If you pass a vector, the operation will be repeated for each element</span>
-<span class='fu'>glued</span><span class='op'>(</span><span class='st'>"Here's the value #{1:3}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Here's the value #1
-#&gt; Here's the value #2
-#&gt; Here's the value #3</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>name</span> <span class='op'>&lt;-</span> <span class='st'>"Bernardo"</span></span>
+<span class='r-in'><span class='va'>age</span> <span class='op'>&lt;-</span> <span class='fl'>29</span></span>
+<span class='r-in'><span class='va'>anniversary</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2016-04-30"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>glued</span><span class='op'>(</span><span class='st'>"</span>
+<span class='r-in'>  My name is {name},</span>
+<span class='r-in'>  my age next year will be {age + 1},</span>
+<span class='r-in'>  and I got married on {format(anniversary, '%A, %B %d, %Y')}."</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> My name is Bernardo,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> my age next year will be 30,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> and I got married on Saturday, April 30, 2016.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Single braces can be inserted by doubling them</span></span>
+<span class='r-in'><span class='fu'>glued</span><span class='op'>(</span><span class='st'>"My name is {name}, not {{name}}."</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> My name is Bernardo, not {name}.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># You can also used named arguments</span></span>
+<span class='r-in'><span class='fu'>glued</span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='st'>"Her name is {name}, "</span>,</span>
+<span class='r-in'>  <span class='st'>"and her age next year will be {age + 1}."</span>,</span>
+<span class='r-in'>  name <span class='op'>=</span> <span class='st'>"Maru"</span>,</span>
+<span class='r-in'>  age <span class='op'>=</span> <span class='fl'>6</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Her name is Maru, and her age next year will be 7.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># And run operations with memories (beware!)</span></span>
+<span class='r-in'><span class='fu'>glued</span><span class='op'>(</span><span class='st'>"My name, {name}, has {n &lt;- nchar(name); n} characters.</span>
+<span class='r-in'>       If we multiply by ten, we'll have {10 * n} characters!"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> My name, Bernardo, has 8 characters.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> If we multiply by ten, we'll have 80 characters!</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># If you pass a vector, the operation will be repeated for each element</span></span>
+<span class='r-in'><span class='fu'>glued</span><span class='op'>(</span><span class='st'>"Here's the value #{1:3}"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Here's the value #1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Here's the value #2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Here's the value #3</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

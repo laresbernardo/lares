@@ -191,32 +191,34 @@ function to format text in <code>ggplot2</code> objects.</p>
     <p>String with format characters included.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>formatText</span><span class='op'>(</span><span class='st'>"Text test"</span>, color <span class='op'>=</span> <span class='st'>"#000000"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "&lt;span style='font-size:20px; color:#000000'&gt;Text test&lt;/span&gt;"</div><div class='input'><span class='fu'>formatText</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>123</span>, <span class='fl'>456</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"orange"</span>, size <span class='op'>=</span> <span class='fl'>120</span>, bold <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "&lt;span style='font-size:120px; color:orange'&gt;**123**&lt;br/&gt;**456**&lt;/span&gt;"</div><div class='input'>
-<span class='co'># If you want to use it with \code{ggtext}:</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>col1</span> <span class='op'>&lt;-</span> <span class='st'>"grey"</span>
-<span class='va'>col2</span> <span class='op'>&lt;-</span> <span class='st'>"orange"</span>
-<span class='va'>pt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
-  label <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span>
-    <span class='fu'>formatText</span><span class='op'>(</span><span class='fl'>123</span>, color <span class='op'>=</span> <span class='va'>col2</span>, size <span class='op'>=</span> <span class='fl'>120</span>, bold <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, <span class='st'>"&lt;br/&gt;"</span>,
-    <span class='fu'>formatText</span><span class='op'>(</span><span class='st'>"of children had a"</span>, <span class='va'>col1</span><span class='op'>)</span>, <span class='st'>"&lt;br/&gt;"</span>,
-    <span class='fu'>formatText</span><span class='op'>(</span><span class='st'>"traditional stay-at-home mom"</span>, color <span class='op'>=</span> <span class='va'>col2</span>, bold <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, <span class='st'>"&lt;br/&gt;"</span>,
-    <span class='fu'>formatText</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"in 2012, compared to "</span>, <span class='fl'>321</span>, <span class='st'>" in 1970"</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='va'>col1</span><span class='op'>)</span>
-  <span class='op'>)</span>
-<span class='op'>)</span>
-<span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>pt</span>, <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span>, y <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>ggtext</span><span class='fu'>::</span><span class='fu'>geom_richtext</span><span class='op'>(</span>
-    <span class='fu'>aes</span><span class='op'>(</span>label <span class='op'>=</span> <span class='va'>label</span><span class='op'>)</span>,
-    hjust <span class='op'>=</span> <span class='fl'>0</span>,
-    label.color <span class='op'>=</span> <span class='cn'>NA</span>,
-    lineheight <span class='op'>=</span> <span class='fl'>1.5</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.window.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.01</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>theme_void</span><span class='op'>(</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>formatText</span><span class='op'>(</span><span class='st'>"Text test"</span>, color <span class='op'>=</span> <span class='st'>"#000000"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "&lt;span style='font-size:20px; color:#000000'&gt;Text test&lt;/span&gt;"</span>
+<span class='r-in'><span class='fu'>formatText</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>123</span>, <span class='fl'>456</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"orange"</span>, size <span class='op'>=</span> <span class='fl'>120</span>, bold <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "&lt;span style='font-size:120px; color:orange'&gt;**123**&lt;br/&gt;**456**&lt;/span&gt;"</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># If you want to use it with \code{ggtext}:</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='va'>col1</span> <span class='op'>&lt;-</span> <span class='st'>"grey"</span></span>
+<span class='r-in'><span class='va'>col2</span> <span class='op'>&lt;-</span> <span class='st'>"orange"</span></span>
+<span class='r-in'><span class='va'>pt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span class='r-in'>  label <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'>formatText</span><span class='op'>(</span><span class='fl'>123</span>, color <span class='op'>=</span> <span class='va'>col2</span>, size <span class='op'>=</span> <span class='fl'>120</span>, bold <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, <span class='st'>"&lt;br/&gt;"</span>,</span>
+<span class='r-in'>    <span class='fu'>formatText</span><span class='op'>(</span><span class='st'>"of children had a"</span>, <span class='va'>col1</span><span class='op'>)</span>, <span class='st'>"&lt;br/&gt;"</span>,</span>
+<span class='r-in'>    <span class='fu'>formatText</span><span class='op'>(</span><span class='st'>"traditional stay-at-home mom"</span>, color <span class='op'>=</span> <span class='va'>col2</span>, bold <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, <span class='st'>"&lt;br/&gt;"</span>,</span>
+<span class='r-in'>    <span class='fu'>formatText</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"in 2012, compared to "</span>, <span class='fl'>321</span>, <span class='st'>" in 1970"</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='va'>col1</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>pt</span>, <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span>, y <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fu'>ggtext</span><span class='fu'>::</span><span class='fu'>geom_richtext</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'>aes</span><span class='op'>(</span>label <span class='op'>=</span> <span class='va'>label</span><span class='op'>)</span>,</span>
+<span class='r-in'>    hjust <span class='op'>=</span> <span class='fl'>0</span>,</span>
+<span class='r-in'>    label.color <span class='op'>=</span> <span class='cn'>NA</span>,</span>
+<span class='r-in'>    lineheight <span class='op'>=</span> <span class='fl'>1.5</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.window.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.01</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='fu'>theme_void</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -200,17 +200,19 @@ formatting the break numbers.</p></td>
 <code><a href='model_metrics.html'>model_metrics</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span>
-<span class='fu'>quants</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>$</span><span class='va'>Age</span>, splits <span class='op'>=</span> <span class='fl'>5</span>, <span class='st'>"summary"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;      percentile  cut   label
-#&gt; 20%         20% 19.0 [19-19]
-#&gt; 40%         40% 25.0 (19-25]
-#&gt; 60%         60% 31.8 (25-32]
-#&gt; 80%         80% 41.0 (32-41]
-#&gt; 100%       100% 80.0 (41-80]</div><div class='input'><span class='fu'>quants</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>$</span><span class='va'>Age</span>, splits <span class='op'>=</span> <span class='fl'>5</span>, <span class='st'>"labels"</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>
-</div><div class='output co'>#&gt;  [1] (19,25]   (32,41]   (25,32]   (32,41]   (32,41]   &lt;NA&gt;      (41,80]  
-#&gt;  [8] [0.42,19] (25,32]   [0.42,19]
-#&gt; Levels: [0.42,19] &lt; (19,25] &lt; (25,32] &lt; (32,41] &lt; (41,80]</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dft</span><span class='op'>)</span> <span class='co'># Titanic dataset</span></span>
+<span class='r-in'><span class='fu'>quants</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>$</span><span class='va'>Age</span>, splits <span class='op'>=</span> <span class='fl'>5</span>, <span class='st'>"summary"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      percentile  cut   label</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20%         20% 19.0 [19-19]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40%         40% 25.0 (19-25]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60%         60% 31.8 (25-32]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 80%         80% 41.0 (32-41]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 100%       100% 80.0 (41-80]</span>
+<span class='r-in'><span class='fu'>quants</span><span class='op'>(</span><span class='va'>dft</span><span class='op'>$</span><span class='va'>Age</span>, splits <span class='op'>=</span> <span class='fl'>5</span>, <span class='st'>"labels"</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] (19,25]   (32,41]   (25,32]   (32,41]   (32,41]   &lt;NA&gt;      (41,80]  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [8] [0.42,19] (25,32]   [0.42,19]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Levels: [0.42,19] &lt; (19,25] &lt; (25,32] &lt; (32,41] &lt; (41,80]</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
