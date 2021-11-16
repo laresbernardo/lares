@@ -100,8 +100,8 @@ cleanNames <- function(df, num = "x", ...) {
 #' @return data.frame. Tokenized words with counters.
 #' @export
 textTokenizer <- function(text,
-                          exclude = NA,
-                          lang = NA,
+                          exclude = NULL,
+                          lang = NULL,
                           min_word_freq = 5,
                           min_word_len = 2,
                           keep_spaces = FALSE,
@@ -183,13 +183,13 @@ textTokenizer <- function(text,
   }
 
   # Remove your own stop words
-  if (!is.na(exclude[1])) {
+  if (!is.null(exclude)) {
     if (!quiet) message(">>> Removing stopwords")
     docs <- tm_map(docs, removeWords, c("https", "http", "que", as.character(exclude)))
   }
 
   # Remove stopwords (common stopwords)
-  if (!is.na(lang)) {
+  if (!is.null(lang)) {
     if (!quiet) message(">>> Removing language stopwords")
     docs <- tm_map(docs, removeWords, stopwords(lang))
   }

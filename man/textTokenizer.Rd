@@ -6,8 +6,8 @@
 \usage{
 textTokenizer(
   text,
-  exclude = NA,
-  lang = NA,
+  exclude = NULL,
+  lang = NULL,
   min_word_freq = 5,
   min_word_len = 2,
   keep_spaces = FALSE,
