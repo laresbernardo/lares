@@ -97,7 +97,7 @@ It also lets filter files which contains a string." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">5.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">5.0.4</span>
       </span>
     </div>
 
@@ -225,25 +225,25 @@ It also lets filter files which contains a string.</p>
 <span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span><span class='op'>(</span>recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fl'>3</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>            filename size isdir mode               mtime               ctime</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     autoline.html   22 FALSE  666 2021-11-16 18:24:40 2021-11-16 18:24:40</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 balance_data.html   12 FALSE  666 2021-11-16 18:24:41 2021-11-16 18:24:41</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 3    bindfiles.html   10 FALSE  666 2021-11-16 18:24:10 2021-11-16 18:24:10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     autoline.html   22 FALSE  666 2021-11-26 20:23:38 2021-11-26 20:23:38</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 balance_data.html   12 FALSE  666 2021-11-26 20:23:38 2021-11-26 20:23:38</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3    bindfiles.html   10 FALSE  666 2021-11-26 20:23:38 2021-11-26 20:23:38</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>                 atime uid gid  uname grname</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 2021-11-16 18:24:40 501  20 runner  staff</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 2021-11-16 18:24:41 501  20 runner  staff</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 2021-11-16 18:24:41 501  20 runner  staff</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 2021-11-26 20:23:38 501  20 runner  staff</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 2021-11-26 20:23:38 501  20 runner  staff</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 2021-11-26 20:23:38 501  20 runner  staff</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># All files in current directory (with recursive files)</span></span>
 <span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span><span class='op'>(</span>recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='fl'>3</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>            filename size isdir mode               mtime               ctime</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 296 year_month.html    9 FALSE  666 2021-11-16 18:24:11 2021-11-16 18:24:11</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 297  year_week.html    9 FALSE  666 2021-11-16 18:24:11 2021-11-16 18:24:11</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 298    zerovar.html   11 FALSE  666 2021-11-16 18:24:11 2021-11-16 18:24:11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 296 year_month.html   10 FALSE  666 2021-11-26 20:23:13 2021-11-26 20:23:13</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 297  year_week.html   10 FALSE  666 2021-11-26 20:23:13 2021-11-26 20:23:13</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 298    zerovar.html   11 FALSE  666 2021-11-26 20:23:13 2021-11-26 20:23:13</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>                   atime uid gid  uname grname</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 296 2021-11-16 18:24:11 501  20 runner  staff</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 297 2021-11-16 18:24:11 501  20 runner  staff</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 298 2021-11-16 18:24:11 501  20 runner  staff</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 296 2021-11-26 20:23:13 501  20 runner  staff</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 297 2021-11-26 20:23:13 501  20 runner  staff</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 298 2021-11-26 20:23:13 501  20 runner  staff</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># Check R files using regex</span></span>
 <span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>listfiles</span><span class='op'>(</span>regex <span class='op'>=</span> <span class='st'>"\\.R$"</span><span class='op'>)</span></span>
