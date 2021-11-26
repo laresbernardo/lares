@@ -8,7 +8,7 @@ date_feats(
   dates,
   drop = FALSE,
   only = NA,
-  features = TRUE,
+  append = FALSE,
   holidays = FALSE,
   country = "Venezuela",
   currency_pair = NA,
@@ -25,7 +25,8 @@ kept in the results? Only valid when input is a dataframe.}
 \item{only}{Character or vector. Which columns do you wish to process? If
 non are explicitly defined, all will be processed}
 
-\item{features}{Create features out of date/time columns?}
+\item{append}{Boolean. Append results to existing data.frame? If FALSE,
+only calculated values will be returned.}
 
 \item{holidays}{Boolean. Include holidays as new columns?}
 
