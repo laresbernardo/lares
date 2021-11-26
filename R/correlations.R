@@ -186,7 +186,7 @@ corr_var <- function(df, var,
   # Calculate correlations
   if (max_pvalue < 1) pvalue <- TRUE
   if (plot & max_pvalue == 1) pvalue <- FALSE # No need to calculate
-  rs <- corr(df, half = TRUE, ignore = ignore, limit = limit, pvalue = pvalue, ...)
+  rs <- corr(df, half = FALSE, ignore = ignore, limit = limit, pvalue = pvalue, ...)
   if (is.data.frame(rs)) rs <- list(cor = rs, pvalue = mutate_all(rs, ~1))
 
   # Check if main variable exists
