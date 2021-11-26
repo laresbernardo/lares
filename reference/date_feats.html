@@ -165,7 +165,7 @@ of a dataframe or vector with date/time variables.</p>
   <span class='va'>dates</span>,
   drop <span class='op'>=</span> <span class='cn'>FALSE</span>,
   only <span class='op'>=</span> <span class='cn'>NA</span>,
-  features <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  append <span class='op'>=</span> <span class='cn'>FALSE</span>,
   holidays <span class='op'>=</span> <span class='cn'>FALSE</span>,
   country <span class='op'>=</span> <span class='st'>"Venezuela"</span>,
   currency_pair <span class='op'>=</span> <span class='cn'>NA</span>,
@@ -191,8 +191,9 @@ kept in the results? Only valid when input is a dataframe.</p></td>
 non are explicitly defined, all will be processed</p></td>
     </tr>
     <tr>
-      <th>features</th>
-      <td><p>Create features out of date/time columns?</p></td>
+      <th>append</th>
+      <td><p>Boolean. Append results to existing data.frame? If FALSE,
+only calculated values will be returned.</p></td>
     </tr>
     <tr>
       <th>holidays</th>
@@ -257,7 +258,8 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
 <span class='r-in'><span class='co'># Input as a vector or dataframe</span></span>
 <span class='r-in'><span class='fu'>date_feats</span><span class='op'>(</span><span class='va'>df</span>, drop <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'><a href='lares-exports.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span></span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> &gt;&gt;&gt; Processing 2 date/time columns: 'dates', 'times'</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 10 × 22</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>argument 'pattern' has length &gt; 1 and only the first element will be used</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 10 × 14</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    dates_year dates_month dates_day dates_week dates_weekday dates_weekend</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>        </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>       <span style='text-decoration: underline;'>2</span>021           5        23         21 Sun           TRUE         </span>
@@ -270,12 +272,9 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>       <span style='text-decoration: underline;'>2</span>021           7        27         30 Tue           FALSE        </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>       <span style='text-decoration: underline;'>2</span>021          11        25         47 Thu           FALSE        </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>       <span style='text-decoration: underline;'>2</span>021           4        27         17 Tue           FALSE        </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 16 more variables: dates_year_day &lt;int&gt;, dates_hour &lt;int&gt;,</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   dates_minute &lt;int&gt;, dates_minutes &lt;int&gt;, dates_second &lt;dbl&gt;,</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   times_year &lt;dbl&gt;, times_month &lt;dbl&gt;, times_day &lt;int&gt;, times_week &lt;dbl&gt;,</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   times_weekday &lt;chr&gt;, times_weekend &lt;lgl&gt;, times_year_day &lt;int&gt;,</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   times_hour &lt;int&gt;, times_minute &lt;int&gt;, times_minutes &lt;int&gt;,</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   times_second &lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 8 more variables: dates_year_day &lt;int&gt;, times_year &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   times_month &lt;dbl&gt;, times_day &lt;int&gt;, times_week &lt;dbl&gt;, times_weekday &lt;chr&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   times_weekend &lt;lgl&gt;, times_year_day &lt;int&gt;</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># Holidays given a date range and country</span></span>
 <span class='r-in'><span class='co'># \donttest{</span></span>
@@ -289,19 +288,18 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></td>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> &gt;&gt;&gt; Extracting Colombia's holidays for 2021</span>
 <span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>invalid factor level, NA generated</span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>hol</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>hol</span><span class='op'>$</span><span class='va'>holidayname</span><span class='op'>)</span>, <span class='op'>]</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 × 20</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    year month   day  week weekday weekend year_day  hour minute minutes second</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>  <span style='text-decoration: underline;'>2</span>020    12     7    49 Mon     FALSE        341     0      0       0      0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>  <span style='text-decoration: underline;'>2</span>020    12     8    49 Tue     FALSE        342     0      0       0      0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>  <span style='text-decoration: underline;'>2</span>020    12    21    51 Mon     FALSE        355     0      0       0      0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span>  <span style='text-decoration: underline;'>2</span>020    12    24    52 Thu     FALSE        358     0      0       0      0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span>  <span style='text-decoration: underline;'>2</span>020    12    25    52 Fri     FALSE        359     0      0       0      0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span>  <span style='text-decoration: underline;'>2</span>020    12    31    53 Thu     FALSE        365     0      0       0      0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 9 more variables: holidayname &lt;chr&gt;, holidaytype &lt;chr&gt;,</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   holiday_national &lt;lgl&gt;, holiday_observance &lt;lgl&gt;, holiday_bank &lt;lgl&gt;,</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   holiday_nonwork &lt;lgl&gt;, holiday_season &lt;lgl&gt;, holiday_hother &lt;lgl&gt;,</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   holiday_county &lt;fct&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 × 16</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   values month   day  week weekday weekend year_day holidayname     holidaytype </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>   <span style='text-decoration: underline;'>2</span>020    12     7    49 Mon     FALSE        341 Eve of the Fea… Observance  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>   <span style='text-decoration: underline;'>2</span>020    12     8    49 Tue     FALSE        342 Feast of the I… National ho…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>   <span style='text-decoration: underline;'>2</span>020    12    21    51 Mon     FALSE        355 December Solst… Season      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span>   <span style='text-decoration: underline;'>2</span>020    12    24    52 Thu     FALSE        358 Christmas Eve   Observance  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span>   <span style='text-decoration: underline;'>2</span>020    12    25    52 Fri     FALSE        359 Christmas Day   National ho…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span>   <span style='text-decoration: underline;'>2</span>020    12    31    53 Thu     FALSE        365 New Year's Eve  Observance  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 7 more variables: holiday_national &lt;lgl&gt;, holiday_observance &lt;lgl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   holiday_bank &lt;lgl&gt;, holiday_nonwork &lt;lgl&gt;, holiday_season &lt;lgl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   holiday_hother &lt;lgl&gt;, holiday_county &lt;fct&gt;</span></span>
 <span class='r-in'><span class='co'># }</span></span>
 </pre>
   </div>
