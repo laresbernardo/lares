@@ -411,13 +411,16 @@ formatNum <- function(x, decimals = 2, signif = NULL,
 #' @examples
 #' data(dft) # Titanic dataset
 #' df <- balance_data(dft, Survived, rate = 0.5)
-#' df <- balance_data(dft, Survived, rate = 0.5, target = "TRUE")
+#' df <- balance_data(dft, .data$Survived, rate = 0.1, target = "TRUE")
 #' @export
 balance_data <- function(df, variable, rate = 1, target = "auto", seed = 0, quiet = FALSE) {
   on.exit(set.seed(seed))
-  variable <- gsub('\"', "", deparse(substitute(variable)))
+  var <- enquo(variable)
+  variable <- rlang::as_label(var)
   names(df)[names(df) == variable] <- "tag"
-  tags <- freqs(df, .data$tag) %>%
+  tags <- group_by(df, .data$tag) %>%
+    summarize(n = n()) %>%
+    arrange(desc(.data$n)) %>%
     pull(.data$tag) %>%
     as.character()
 
@@ -457,7 +460,7 @@ balance_data <- function(df, variable, rate = 1, target = "auto", seed = 0, quie
     }
   }
   balanced <- rename_at(balanced, vars("tag"), list(~ paste0(variable)))
-  return(balanced)
+  return(as_tibble(balanced))
 }
 
 
@@ -647,9 +650,7 @@ replaceall <- function(df, original, change, which = "all",
     stop("Vectors original and change should have the same length!")
   }
   if (length(unique(original)) != length(original)) {
-    aux <- freqs(dic, original) %>%
-      filter(.data$n > 1) %>%
-      .$original
+    aux <- freqs(dic, original) %>% filter(.data$n > 1) %>% .$original
     stop("You have repeated original values to replace: ", vector2text(aux))
   }
   if (which[1] != "all") {

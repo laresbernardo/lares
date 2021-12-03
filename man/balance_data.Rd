@@ -33,7 +33,7 @@ with a given relation rate and a binary feature.
 \examples{
 data(dft) # Titanic dataset
 df <- balance_data(dft, Survived, rate = 0.5)
-df <- balance_data(dft, Survived, rate = 0.5, target = "TRUE")
+df <- balance_data(dft, .data$Survived, rate = 0.1, target = "TRUE")
 }
 \seealso{
 Other Data Wrangling: 
