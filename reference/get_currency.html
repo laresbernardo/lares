@@ -200,19 +200,19 @@ grouped by date.</p>
     <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
 <span class='r-in'><span class='co'># For today (or any one single date)</span></span>
 <span class='r-in'><span class='fu'>get_currency</span><span class='op'>(</span><span class='st'>"USD/COP"</span>, from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>         date    rate</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 2021-11-26 4001.23</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         date   rate</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 2021-12-03 3963.4</span>
 <span class='r-in'><span class='co'># For multiple dates</span></span>
 <span class='r-in'><span class='fu'>get_currency</span><span class='op'>(</span><span class='st'>"EUR/USD"</span>, from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>7</span>, fill <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>         date     rate</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 2021-11-19 1.137010</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 2021-11-20 1.137010</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 2021-11-21 1.137010</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 2021-11-22 1.127574</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 2021-11-23 1.124354</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 6 2021-11-24 1.124391</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 7 2021-11-25 1.120699</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 8 2021-11-26 1.121328</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 2021-11-26 1.120900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 2021-11-27 1.120900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 2021-11-28 1.120900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 2021-11-29 1.129114</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 2021-11-30 1.129357</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6 2021-12-01 1.133003</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7 2021-12-02 1.131964</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8 2021-12-03 1.130454</span>
 <span class='r-in'><span class='co'># }</span></span>
 </pre>
   </div>
