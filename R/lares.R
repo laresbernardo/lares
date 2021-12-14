@@ -6,7 +6,12 @@
 #' @name lares
 #' @docType package
 #' @author Bernardo Lares (laresbernardo@@gmail.com)
-#' @import dplyr
+#' @importFrom dplyr any_of arrange as_tibble bind_cols bind_rows case_when contains
+#' count desc distinct distinct_at everything filter first group_by inner_join
+#' lag last left_join mutate mutate_all mutate_at mutate_if n ntile
+#' one_of pull rename rename_at right_join row_number rowwise sample_n
+#' select select_if slice starts_with summarise summarise_all
+#' summarise_if summarize summarize_all tally tibble transmute_if ungroup
 #' @import ggplot2
 #' @importFrom graphics box hist plot points rasterImage rect grid legend mtext
 #' @importFrom grDevices graphics.off dev.off png dev.size

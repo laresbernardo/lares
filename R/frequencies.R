@@ -743,7 +743,7 @@ freqs_list <- function(df,
     mutate(var = factor(.data$var, levels = rev(elements$key))) %>%
     group_by(.data$var) %>%
     mutate(id = row_number(), order = row_number()) %>%
-    mutate(label = sprintf("#%s", id)) %>%
+    mutate(label = sprintf("#%s", .data$id)) %>%
     filter(.data$value == TRUE) %>%
     mutate(label = ifelse(.data$id > min(limit, limit_x), "...", .data$label)) %>%
     ungroup() %>%
