@@ -37,6 +37,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -49,18 +51,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">lares</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">5.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.0.5</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -79,7 +75,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/laresbernardo/lares/">
+  <a href="https://github.com/laresbernardo/lares/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -102,77 +98,81 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="lares-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#lares-" class="anchor"></a>lares <img src="reference/figures/logo.png" align="right" height="139px">
+<div class="section level1">
+<div class="page-header"><h1 id="lares-">lares <img src="reference/figures/logo.png" align="right" height="139px"><a class="anchor" aria-label="anchor" href="#lares-"></a>
 </h1></div>
-<div id="r-package-for-analytics-and-machine-learning" class="section level3">
-<h3 class="hasAnchor">
-<a href="#r-package-for-analytics-and-machine-learning" class="anchor"></a>R Package for Analytics and Machine Learning</h3>
+<div class="section level3">
+<h3 id="r-package-for-analytics-and-machine-learning">R Package for Analytics and Machine Learning<a class="anchor" aria-label="anchor" href="#r-package-for-analytics-and-machine-learning"></a>
+</h3>
 </div>
-<div id="cran_status_badge-r-cmd-check-documentation-codefactor-saythanks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#cran_status_badge-r-cmd-check-documentation-codefactor-saythanks" class="anchor"></a><a href="https://cran.r-project.org/package=lares"><img src="https://www.r-pkg.org/badges/version/lares" alt="CRAN_Status_Badge"></a> <a href="https://github.com/laresbernardo/lares/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg?branch=main" alt="R-CMD-check"></a> <a href="https://laresbernardo.github.io/lares/reference/index.html"><img src="https://github.com/laresbernardo/lares/workflows/documentation/badge.svg" alt="documentation"></a> <a href="https://www.codefactor.io/repository/github/laresbernardo/lares"><img src="https://www.codefactor.io/repository/github/laresbernardo/lares/badge" alt="CodeFactor"></a> <a href="https://www.linkedin.com/in/laresbernardo"><img src="https://img.shields.io/badge/say-hi-blue.svg" alt="saythanks"></a>
+<div class="section level2">
+<h2 id="cran_status_badge-r-cmd-check-documentation-codefactor-saythanks">
+<a href="https://cran.r-project.org/package=lares" class="external-link"><img src="https://www.r-pkg.org/badges/version/lares" alt="CRAN_Status_Badge"></a> <a href="https://github.com/laresbernardo/lares/actions?query=workflow%3AR-CMD-check" class="external-link"><img src="https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg?branch=main" alt="R-CMD-check"></a> <a href="https://laresbernardo.github.io/lares/reference/index.html"><img src="https://github.com/laresbernardo/lares/workflows/documentation/badge.svg" alt="documentation"></a> <a href="https://www.codefactor.io/repository/github/laresbernardo/lares" class="external-link"><img src="https://www.codefactor.io/repository/github/laresbernardo/lares/badge" alt="CodeFactor"></a> <a href="https://www.linkedin.com/in/laresbernardo" class="external-link"><img src="https://img.shields.io/badge/say-hi-blue.svg" alt="saythanks"></a>
+<a class="anchor" aria-label="anchor" href="#cran_status_badge-r-cmd-check-documentation-codefactor-saythanks"></a>
 </h2>
 <p>R package built to automate, improve, and speed everyday <strong>Analysis and Machine Learning</strong> tasks. With a wide variety of family functions like Machine Learning, data cleaning and processing, EDA, Investment, NLP, Queries, Scrappers, API interactions, <code>lares</code> helps the analyst or data scientist get quick, reproducible, robust results, without the need of repetitive coding nor extensive programming skills. Feel free to install, use, and/or comment on any of the code and functionalities. And if you are also colourblind, be sure to check the colour palettes!</p>
 <p>Don’t hesitate to contact me, and please when you do, let me know where did you first hear from the library and which family of functions you are most interested in.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<pre class="{r}"><code>## CRAN VERSION
-install.packages("lares")
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<pre class="{r}"><code><span class="co">## CRAN VERSION</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"lares"</span><span class="op">)</span>
 
-## DEV VERSION
-# If you don't have remotes yet, run: install.packages('remotes')
-remotes::install_github("laresbernardo/lares")
-# Full installation with recommended dependencies (takes more time)
-remotes::install_github("laresbernardo/lares", dependencies = TRUE)</code></pre>
-<p><strong>Windows users</strong>: you MAY have to install <code>RTools</code> before installing the dev version. Download it <a href="https://cran.r-project.org/bin/windows/Rtools/">here</a>.</p>
+<span class="co">## DEV VERSION</span>
+<span class="co"># If you don't have remotes yet, run: install.packages('remotes')</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"laresbernardo/lares"</span><span class="op">)</span>
+<span class="co"># Full installation with recommended dependencies (takes more time)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"laresbernardo/lares"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre>
+<p><strong>Windows users</strong>: you MAY have to install <code>RTools</code> before installing the dev version. Download it <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link">here</a>.</p>
 </div>
-<div id="see-the-library-in-action" class="section level2">
-<h2 class="hasAnchor">
-<a href="#see-the-library-in-action" class="anchor"></a>See the library in action!</h2>
+<div class="section level2">
+<h2 id="see-the-library-in-action">See the library in action!<a class="anchor" aria-label="anchor" href="#see-the-library-in-action"></a>
+</h2>
 <ul>
 <li><p>Vignette: <a href="https://laresbernardo.github.io/lares/articles/h2o_automl.html">Introduction to AutoML using <code>lares</code></a></p></li>
-<li><p>DataScience+: <a href="https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/">Visualizations for Classification Models Results</a></p></li>
-<li><p>DataScience+: <a href="https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/">Visualizations for Regression Models Results</a></p></li>
-<li><p>DataScience+: <a href="https://datascienceplus.com/understanding-titanic-dataset-with-h2os-automl-dalex-and-lares-library/">AutoML and DALEX for Dataset Understanding</a></p></li>
-<li><p>DataScience+: <a href="https://datascienceplus.com/find-insights-with-ranked-cross-correlations/">Find Insights with Ranked Cross-Correlations</a></p></li>
-<li><p>DataScience+: <a href="https://datascienceplus.com/visualize-your-portfolios-performance-and-generate-a-nice-report-with-r/">Portfolio’s Performance and Reporting</a></p></li>
-<li><p>DataScience+: <a href="https://datascienceplus.com/how-to-manage-credentials-and-secrets-safely-in-r/">Manage Credentials Safely in R</a></p></li>
-<li><p>DataScience+: <a href="https://datascienceplus.com/using-cache-to-avoid-re-processing-improve-ux-and-quicken-results-in-r/">Using cache to avoid re-processing in R</a></p></li>
-<li><p>DataScience+: <a href="https://datascienceplus.com/visualize-your-cvs-timeline-with-r-gantt-style/">Plot Timelines with Gantt Charts</a></p></li>
-<li><p>RPubs: <a href="http://rpubs.com/laresbernardo/freqs-distr-corr">freqs(), distr(), and corr_var() Examples</a></p></li>
+<li><p>DataScience+: <a href="https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/" class="external-link">Visualizations for Classification Models Results</a></p></li>
+<li><p>DataScience+: <a href="https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/" class="external-link">Visualizations for Regression Models Results</a></p></li>
+<li><p>DataScience+: <a href="https://datascienceplus.com/understanding-titanic-dataset-with-h2os-automl-dalex-and-lares-library/" class="external-link">AutoML and DALEX for Dataset Understanding</a></p></li>
+<li><p>DataScience+: <a href="https://datascienceplus.com/find-insights-with-ranked-cross-correlations/" class="external-link">Find Insights with Ranked Cross-Correlations</a></p></li>
+<li><p>DataScience+: <a href="https://datascienceplus.com/visualize-your-portfolios-performance-and-generate-a-nice-report-with-r/" class="external-link">Portfolio’s Performance and Reporting</a></p></li>
+<li><p>DataScience+: <a href="https://datascienceplus.com/how-to-manage-credentials-and-secrets-safely-in-r/" class="external-link">Manage Credentials Safely in R</a></p></li>
+<li><p>DataScience+: <a href="https://datascienceplus.com/using-cache-to-avoid-re-processing-improve-ux-and-quicken-results-in-r/" class="external-link">Using cache to avoid re-processing in R</a></p></li>
+<li><p>DataScience+: <a href="https://datascienceplus.com/visualize-your-cvs-timeline-with-r-gantt-style/" class="external-link">Plot Timelines with Gantt Charts</a></p></li>
+<li><p>RPubs: <a href="http://rpubs.com/laresbernardo/freqs-distr-corr" class="external-link">freqs(), distr(), and corr_var() Examples</a></p></li>
 </ul>
-<div id="automl-simplified-map-h2o_automl" class="section level3">
-<h3 class="hasAnchor">
-<a href="#automl-simplified-map-h2o_automl" class="anchor"></a>AutoML Simplified Map <a href="https://laresbernardo.github.io/lares/reference/h2o_automl.html"><code>h2o_automl()</code></a>
+<div class="section level3">
+<h3 id="automl-simplified-map-h2o_automl">AutoML Simplified Map <a href="https://laresbernardo.github.io/lares/reference/h2o_automl.html"><code>h2o_automl()</code></a>
+<a class="anchor" aria-label="anchor" href="#automl-simplified-map-h2o_automl"></a>
 </h3>
-<p><img src="reference/figures/automl_map.png?raw=true" alt="AutoML Map (lares)"></p>
+<div class="figure">
+<img src="reference/figures/automl_map.png?raw=true" alt=""><p class="caption">AutoML Map (lares)</p>
 </div>
-<div id="insights-while-understanding" class="section level3">
-<h3 class="hasAnchor">
-<a href="#insights-while-understanding" class="anchor"></a>Insights While Understanding</h3>
+</div>
+<div class="section level3">
+<h3 id="insights-while-understanding">Insights While Understanding<a class="anchor" aria-label="anchor" href="#insights-while-understanding"></a>
+</h3>
 <p>To get insights and value out of your dataset, first you need to understand its structure, types of data, empty values, interactions between variables… <code><a href="reference/corr_cross.html">corr_cross()</a></code> and <code><a href="reference/freqs.html">freqs()</a></code> are here to give you just that! They show a wide perspective of your dataset content, correlations, and frequencies. Additionally, with the <code><a href="reference/missingness.html">missingness()</a></code> function to detect all missing values and <code><a href="reference/df_str.html">df_str()</a></code> to break down you data frame’s structure, you will be ready to squeeze valuable insights out of your data. If you’d like to go deeper, try the <code><a href="reference/x2y.html">x2y()</a></code>, <code><a href="reference/lasso_vars.html">lasso_vars()</a></code> and <code><a href="reference/tree_var.html">tree_var()</a></code> to use Machine Learning to detect patterns, predictive powers, and variables importance.</p>
-<p><img src="reference/figures/titanic_df.png?raw=true" alt="Cross-Correlations and Frequencies (lares)"></p>
+<div class="figure">
+<img src="reference/figures/titanic_df.png?raw=true" alt=""><p class="caption">Cross-Correlations and Frequencies (lares)</p>
 </div>
-<div id="kings-of-data-mining" class="section level3">
-<h3 class="hasAnchor">
-<a href="#kings-of-data-mining" class="anchor"></a>Kings of Data Mining</h3>
-<p>My favourite and most used functions are <code><a href="reference/freqs.html">freqs()</a></code>, <code><a href="reference/distr.html">distr()</a></code>, and <code><a href="reference/corr_var.html">corr_var()</a></code>. In this <a href="http://rpubs.com/laresbernardo/freqs-distr-corr">RMarkdown</a> you can see them in action. Basically, they group and count values within variables, show distributions of one variable vs another one (numerical or categorical), and calculate/plot correlations of one variables vs all others, no matter what type of data you insert.</p>
+</div>
+<div class="section level3">
+<h3 id="kings-of-data-mining">Kings of Data Mining<a class="anchor" aria-label="anchor" href="#kings-of-data-mining"></a>
+</h3>
+<p>My favourite and most used functions are <code><a href="reference/freqs.html">freqs()</a></code>, <code><a href="reference/distr.html">distr()</a></code>, and <code><a href="reference/corr_var.html">corr_var()</a></code>. In this <a href="http://rpubs.com/laresbernardo/freqs-distr-corr" class="external-link">RMarkdown</a> you can see them in action. Basically, they group and count values within variables, show distributions of one variable vs another one (numerical or categorical), and calculate/plot correlations of one variables vs all others, no matter what type of data you insert.</p>
 <p>If there is space for one more, I would add <code><a href="reference/ohse.html">ohse()</a></code> (One Hot Smart Encoding), which has made my life much easier and my work much valuable. It converts a whole data frame into numerical values by making dummy variables (categoricals turned into new columns with 1s and 0s, ordered by frequencies and grouping less frequent into a single column) and dates into new features (such as month, year, week of the year, minutes if time is present, holidays given a country, currency exchange rates, etc).</p>
 </div>
 </div>
-<div id="what-else-is-there" class="section level2">
-<h2 class="hasAnchor">
-<a href="#what-else-is-there" class="anchor"></a>What else is there?</h2>
+<div class="section level2">
+<h2 id="what-else-is-there">What else is there?<a class="anchor" aria-label="anchor" href="#what-else-is-there"></a>
+</h2>
 <p>You can check all active functions and documentations <a href="https://laresbernardo.github.io/lares/reference/index.html">here</a> or type <code>lares::</code> in <strong>RStudio</strong> and you will get a pop-up with all the functions that are currently available within the package. You might also want to check the whole documentation by running <code><a href="https://laresbernardo.github.io/lares//reference">help(package = "lares")</a></code> in your RStudio or in the <a href="https://laresbernardo.github.io/lares/reference/index.html">Online Official Documentation</a>. Remember to check the families and similar functions on the <strong>See Also</strong> sections as well.</p>
-<div id="getting-further-help" class="section level3">
-<h3 class="hasAnchor">
-<a href="#getting-further-help" class="anchor"></a>Getting further help</h3>
+<div class="section level3">
+<h3 id="getting-further-help">Getting further help<a class="anchor" aria-label="anchor" href="#getting-further-help"></a>
+</h3>
 <p>If you need help with any of the functions when using RStudio, use the <code>?</code> function (i.e. <code>?lares::function</code>) and the <strong>Help</strong> tab will display a short explanation on each function and its parameters. You might also be interested in the <a href="https://laresbernardo.github.io/lares/reference/index.html">online documentation</a> to check all functions and parameters.</p>
-<p>If you encounter a bug, please share with me a reproducible example on <a href="https://github.com/laresbernardo/lares/issues">Github issues</a> and I’ll take care of it. For inquiries, and other matters, you can contact me on LinkedIn anytime!</p>
+<p>If you encounter a bug, please share with me a reproducible example on <a href="https://github.com/laresbernardo/lares/issues" class="external-link">Github issues</a> and I’ll take care of it. For inquiries, and other matters, you can contact me on LinkedIn anytime!</p>
 </div>
 </div>
 </div>
@@ -180,39 +180,50 @@ remotes::install_github("laresbernardo/lares", dependencies = TRUE)</code></pre>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=lares">https://​cloud.r-project.org/​package=lares</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/laresbernardo/lares/">https://​github.com/​laresbernardo/​lares/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/laresbernardo/lares/issues">https://​github.com/​laresbernardo/​lares/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=lares" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/laresbernardo/lares/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/laresbernardo/lares/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/AGPL-3">AGPL-3</a></li>
+<li><a href="https://www.r-project.org/Licenses/AGPL-3" class="external-link">AGPL-3</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing lares</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Bernardo Lares <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
+
+
 
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernardo Lares.</p>
+  <p></p>
+<p>Developed by Bernardo Lares.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>

@@ -2,21 +2,21 @@
   "index_name": "lares",
   "start_urls": [
     {
-      "url": "https://laresbernardo.github.io/lares//index.html",
+      "url": "https://laresbernardo.github.io/lares/index.html",
       "selectors_key": "homepage",
       "tags": [
         "homepage"
       ]
     },
     {
-      "url": "https://laresbernardo.github.io/lares//reference",
+      "url": "https://laresbernardo.github.io/lares/reference",
       "selectors_key": "reference",
       "tags": [
         "reference"
       ]
     },
     {
-      "url": "https://laresbernardo.github.io/lares//articles",
+      "url": "https://laresbernardo.github.io/lares/articles",
       "selectors_key": "articles",
       "tags": [
         "articles"
@@ -30,7 +30,7 @@
     "/articles/index.html"
   ],
   "sitemap_urls": [
-    "https://laresbernardo.github.io/lares//sitemap.xml"
+    "https://laresbernardo.github.io/lares/sitemap.xml"
   ],
   "selectors": {
     "homepage": {

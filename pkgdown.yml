@@ -1,10 +1,10 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1
+pkgdown: 2.0.1
 pkgdown_sha: ~
 articles:
   h2o_automl: h2o_automl.html
-last_built: 2021-12-03T21:07Z
+last_built: 2021-12-14T23:11Z
 urls:
-  reference: https://laresbernardo.github.io/lares//reference
-  article: https://laresbernardo.github.io/lares//articles
+  reference: https://laresbernardo.github.io/lares/reference
+  article: https://laresbernardo.github.io/lares/articles
 
