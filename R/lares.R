@@ -11,8 +11,24 @@
 #' lag last left_join mutate mutate_all mutate_at mutate_if n ntile
 #' one_of pull rename rename_at right_join row_number rowwise sample_n
 #' select select_if slice starts_with summarise summarise_all
-#' summarise_if summarize summarize_all tally tibble transmute_if ungroup
-#' @import ggplot2
+#' summarise_if summarize summarize_all tally tibble transmute_if ungroup vars
+#' @importFrom ggplot2 aes after_stat annotate coord_equal coord_flip 
+#' element_blank element_line element_rect element_text enquo enquos expand_limits
+#' facet_grid facet_wrap geom_abline geom_area geom_bar geom_boxplot
+#' geom_col geom_density geom_hline geom_jitter geom_label geom_line
+#' geom_path geom_point geom_polygon geom_raster geom_rect geom_segment
+#' geom_smooth geom_text geom_tile geom_vline ggplot ggsave ggtitle
+#' guide_colorbar guide_colourbar guide_legend guides labs last_plot
+#' margin position_dodge position_fill position_jitter position_stack
+#' quo_name quos rel scale_color_brewer scale_color_identity
+#' scale_color_manual scale_colour_brewer scale_colour_continuous
+#' scale_colour_gradient scale_colour_identity scale_colour_manual
+#' scale_fill_brewer scale_fill_continuous scale_fill_gradient
+#' scale_fill_grey scale_fill_identity scale_fill_manual
+#' scale_shape_identity scale_size scale_x_continuous scale_x_date
+#' scale_x_discrete scale_x_reverse scale_y_continuous sec_axis
+#' stat_density_2d stat_ecdf theme theme_minimal unit
+#' update_geom_defaults xlab xlim ylab ylim
 #' @importFrom graphics box hist plot points rasterImage rect grid legend mtext
 #' @importFrom grDevices graphics.off dev.off png dev.size
 #' @importFrom h2o as.h2o h2o.automl h2o.accuracy h2o.getModel h2o.performance h2o.init
