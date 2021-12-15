@@ -51,11 +51,11 @@ lasso_vars <- function(df, variable,
   # Run one-hot-smart-encoding
   temp <- data.frame(as.vector(df[, 1]), ohse(df[, -1], ignore = ignore, quiet = quiet, ...))
   colnames(temp)[1] <- "main"
-  
+
   temp <- temp %>%
     filter(!is.na(.data$main)) %>%
     mutate(main = as.vector(base::scale(as.numeric(.data$main), scale = FALSE, center = TRUE)))
-  
+
   if (!quiet) message(">>> Searching for optimal lambda with CV...")
   lasso_logistic <- h2o.glm(
     alpha = 1,

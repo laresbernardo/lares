@@ -650,7 +650,9 @@ replaceall <- function(df, original, change, which = "all",
     stop("Vectors original and change should have the same length!")
   }
   if (length(unique(original)) != length(original)) {
-    aux <- freqs(dic, original) %>% filter(.data$n > 1) %>% .$original
+    aux <- freqs(dic, original) %>%
+      filter(.data$n > 1) %>%
+      .$original
     stop("You have repeated original values to replace: ", vector2text(aux))
   }
   if (which[1] != "all") {
@@ -1535,7 +1537,7 @@ spread_list <- function(df, col, str = NULL, replace = TRUE) {
   # Non-named list columns
   if (sum(nonames) == nrow(df)) {
     binded <- select(df, !!var) %>%
-      mutate(temp_cross_id = 1:nrow(df)) %>%
+      mutate(temp_cross_id = row_number()) %>%
       tidyr::unnest_longer(!!var) %>%
       mutate(key = TRUE) %>%
       tidyr::spread(key = !!var, value = .data$key) %>%
@@ -1552,7 +1554,7 @@ spread_list <- function(df, col, str = NULL, replace = TRUE) {
   ids <- which(colnames(binded) == "temp_cross_id")
   colnames(binded)[-ids] <- paste0(str, colnames(binded))[-ids]
   done <- df %>%
-    mutate(temp_cross_id = 1:nrow(df)) %>%
+    mutate(temp_cross_id = row_number()) %>%
     left_join(binded, "temp_cross_id") %>%
     select(-.data$temp_cross_id)
 

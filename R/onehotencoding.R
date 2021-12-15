@@ -67,12 +67,12 @@ ohse <- function(df,
   } else {
     df <- data.frame(df)
   }
-  
+
   order <- colnames(df)
-  
+
   # Dummy variables that will be filled
   no_need_to_convert <- converted <- converted_binary <- NULL
-  
+
   # Leave some columns out of the logic
   ignore <- unique(ignore)
   if (!is.null(ignore)) {
@@ -82,56 +82,56 @@ ohse <- function(df,
   } else {
     ignored <- NULL
   }
-  
+
   # No variance columns
   no_variance <- zerovar(df)
   if (drop) df <- select(df, !any_of(no_variance))
-  
+
   # Create features out of date/time variables
   if (dates == TRUE | holidays == TRUE | !is.na(currency_pair)) {
     times <- df_str(df, return = "names", quiet = TRUE)$time
     if (length(times) <= 1) {
       df_dates <- date_feats(df,
-                             drop = FALSE,
-                             append = FALSE,
-                             holidays = holidays,
-                             country = country,
-                             currency_pair = currency_pair,
-                             quiet = quiet
+        drop = FALSE,
+        append = FALSE,
+        holidays = holidays,
+        country = country,
+        currency_pair = currency_pair,
+        quiet = quiet
       )
-      
+
       if (ncol(df_dates) != ncol(df)) {
         df <- left_join(df, df_dates, by = as.character(times[1])) %>% distinct()
       }
     }
   }
-  
+
   # Name and type of variables
   types <- data.frame(
     name = colnames(df),
     type = unlist(lapply(lapply(df, class), `[[`, 1))
   )
-  
+
   # Iterate all columns
   for (i in seq_along(df)) {
     vector_type <- types[i, "type"]
     vector_name <- as.character(types$name[i])
     vector_levels <- length(unique(df[, c(vector_name)]))
     vector_values <- df[toString(types[i, "name"])]
-    
+
     # Non numeric or date/time variables
     if (!vector_type %in% c("integer", "numeric", "POSIXct", "POSIXt", "Date")) {
-      
+
       # Char columns with too much variance (unique values vs total observations)
       if (vector_levels >= variance * nrow(df)) {
         no_variance <- c(no_variance, vector_name)
       }
-      
+
       vector_values <- vector_values %>%
         mutate_all(as.character) %>%
         replace(., is.na(.), "NAs")
       vector_values[, 1] <- paste0(sep, vector_values[, 1])
-      
+
       # Columns with 2 possible values
       if (vector_levels == 2 & !isTRUE(redundant)) {
         which <- as.character(levels(as.factor(df[, c(vector_name)]))[2])
@@ -139,7 +139,7 @@ ohse <- function(df,
         converted_binary <- rbind(converted_binary, vector_name)
         df <- rename_at(df, vars(vector_name), list(~ paste0(vector_name, "_", which)))
       }
-      
+
       # ONE HOT ENCODING
       if (!colnames(vector_values) %in% c(converted_binary, no_variance)) {
         if (vector_levels >= 2 & !vector_name %in% converted_binary) {
@@ -159,10 +159,10 @@ ohse <- function(df,
     }
     no_need_to_convert <- rbind(no_need_to_convert, vector_name)
   }
-  
+
   # Shorten up the long names of some variables
   if (trim > 0) colnames(df) <- substr(colnames(df), 1, trim)
-  
+
   # Summary of transformations
   if (!quiet) {
     total_converted <- rbind(converted, converted_binary)
@@ -183,16 +183,16 @@ ohse <- function(df,
       }
     }
   }
-  
+
   # Return only useful columns
   if (drop) {
     df <- df[, c(!colnames(df) %in% c(converted, no_variance))]
   }
-  
+
   # Bind ignored untouched columns and order
   order <- order[order %in% colnames(df)]
   df <- bind_cols(df, ignored) %>% select(any_of(order), everything())
-  
+
   return(as_tibble(df))
 }
 
@@ -226,9 +226,9 @@ ohse <- function(df,
 ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
   vars <- quos(...)
   var <- gsub("~", "", as.character(vars))
-  
+
   df <- as.data.frame(df)
-  
+
   for (i in var) {
     df$temp <- as.character(df[, i])
     # Handling missingness
@@ -302,20 +302,19 @@ date_feats <- function(dates,
                        country = "Venezuela",
                        currency_pair = NA,
                        quiet = FALSE) {
-  
   results <- NULL
   original <- dates
   date_cols <- df_str(dates, return = "names", quiet = TRUE)$time
   vector <- is.null(dim(dates))
-  
+
   if (length(date_cols) == 0) {
     return(dates)
   }
-  
+
   if (!is.na(only)) {
     date_cols <- date_cols[date_cols %in% only]
   }
-  
+
   iters <- ifelse(date_cols == "df", 1, length(date_cols))[1]
   if (!is.na(iters)) {
     if (!quiet) {
@@ -324,19 +323,19 @@ date_feats <- function(dates,
   } else {
     return(dates)
   }
-  
+
   if (!"data.frame" %in% class(dates) & iters == 1) {
     dates <- data.frame(values_date = dates)
     date_cols <- "values_date"
   }
-  
+
   if (holidays | !is.na(currency_pair)) {
     search_dates <- dates[, c(colnames(dates) %in% date_cols)]
     search_dates[] <- unlist(lapply(search_dates, function(x) gsub(" .*", "", as.character(x))))
     alldates <- as.Date(unlist(search_dates, use.names = FALSE))
     alldates <- alldates[!is.na(alldates)]
   }
-  
+
   if (holidays) {
     years <- sort(unique(year(alldates)))
     holidays_dates <- holidays(countries = country, years)
@@ -345,14 +344,14 @@ date_feats <- function(dates,
     cols <- paste0("values_date_holiday_", colnames(holidays_dates)[4:ncol(holidays_dates)])
     colnames(holidays_dates)[-c(1:3)] <- cols
   }
-  
+
   # Features creator
   for (col in 1:iters) {
     col_name <- date_cols[col]
     result <- dates %>% select(!!as.name(col_name))
     values <- result[, 1]
     result$values_date <- as.character(as.Date(values))
-    
+
     result$values_date_year <- year(values)
     result$values_date_month <- month(values)
     result$values_date_day <- day(values)
@@ -363,7 +362,7 @@ date_feats <- function(dates,
       values, floor_date(values, unit = "year"),
       units = "day"
     ))
-    
+
     if (any(grepl(class(values), "POSIX"))) {
       result$values_date_hour <- hour(values)
       result$values_date_minute <- minute(values)
@@ -373,14 +372,14 @@ date_feats <- function(dates,
       ))
       result$values_date_second <- second(values)
     }
-    
+
     # Holidays data
     if (holidays) {
       result <- result %>%
         left_join(holidays_dates, by = "values_date") %>%
         mutate_at(vars(cols), list(~ replace(., which(is.na(.)), FALSE)))
     }
-    
+
     # Currencies data
     if (!is.na(currency_pair)) {
       currency <- get_currency(currency_pair, from = min(alldates), to = max(alldates))
@@ -388,7 +387,7 @@ date_feats <- function(dates,
       currency[, 1] <- as.character(currency[, 1])
       result <- result %>% left_join(currency, by = "values_date")
     }
-    
+
     col_name <- ifelse(col_name == "values_date", "", paste0(col_name, "_"))
     colnames(result)[-1] <- gsub("values_date_", col_name, colnames(result)[-1])
     results <- results %>%
@@ -396,7 +395,7 @@ date_feats <- function(dates,
       select(-contains("values_date"))
     if (vector) colnames(results)[1] <- "values"
   }
-  
+
   if (append) results <- bind_cols(original, select(results, -any_of(colnames(original))))
   if (drop) results <- results[, !colnames(results) %in% date_cols]
   return(as_tibble(results))
@@ -425,9 +424,9 @@ date_feats <- function(dates,
 #' }
 #' @export
 holidays <- function(countries = "Venezuela", years = year(Sys.Date())) {
-  
+
   # Further improvement: let the user bring more than +-5 years
-  
+
   results <- NULL
   year <- year(Sys.Date())
   years <- years[years %in% ((year - 5):(year + 5))]

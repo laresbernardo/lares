@@ -155,8 +155,6 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
   df <- ohse(df, quiet = TRUE, ignore = ignore, ...)
   temp <- which(!colnames(df) %in% ignore)
   new_df <- distinct_at(df, temp, .keep_all = TRUE)
-  # if (nrow(new_df) != nrow(df)) if (!quiet)
-  #   message(paste(">>> Removed duplicate obserations:", nrow(df) - nrow(new_df)))
   df <- new_df
   if (sum(is.na(df)) > 0) {
     if (!quiet) message(">>> Replacing NA values with column's means...")

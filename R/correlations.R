@@ -91,7 +91,7 @@ corr <- function(df, method = "pearson",
 
   # Correlations
   rs <- suppressWarnings(cor(d, method = method, use = use))
-  if (half) for (i in 1:nrow(rs)) rs[1:i, i] <- NA
+  if (half) for (i in seq_along(rs[, 1])) rs[1:i, i] <- NA
   cor <- round(data.frame(rs), dec)
   colnames(cor) <- row.names(cor) <- colnames(d)
 

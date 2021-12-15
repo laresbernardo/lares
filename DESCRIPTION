@@ -1,6 +1,6 @@
 Package: lares
 Type: Package
-Title: Analytics, Data Mining & Machine Learning Sidekick
+Title: Analytics & Machine Learning Sidekick
 Version: 5.0.5
 Authors@R: c(
     person("Bernardo", "Lares", , "laresbernardo@gmail.com", c("aut", "cre")))

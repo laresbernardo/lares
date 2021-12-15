@@ -141,7 +141,7 @@ lares_pal <- function(return = "list") {
   if (return %in% c("personal", "custom", "labels")) {
     pal <- colours_list
   }
-  if (return %in% c("simple")) {
+  if (return %in% "simple") {
     pal <- simple
   }
 

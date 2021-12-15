@@ -285,19 +285,29 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
 #' @export
 plot.stocks_hist <- function(x, type = 1, ...) {
   if (!inherits(x, "stocks_hist")) stop("Object must be class stocks_hist")
-  if (type == 1) group_by(x, .data$Symbol) %>%
-    mutate(RelValue = (.data$Value - last(.data$Value)),
-           Growth = .data$RelValue / last(.data$Value),
-           Total = first(.data$Growth)) %>% ungroup() %>%
-    arrange(desc(.data$Total)) %>%
-    mutate(Symbol = sprintf("%s (%s%%)", .data$Symbol,round(100 * .data$Total, 2)),
-           Symbol = factor(.data$Symbol, unique(.data$Symbol))) %>%
-    ggplot(aes(x = .data$Date, y = .data$Growth, colour = .data$Symbol)) +
-    geom_line(alpha = 0.8) + theme_lares(pal = 2, legend = "left") +
-    scale_y_percent(position = "right") +
-    labs(title = "Relative Growth since Origin", colour = NULL,
-         subtitle = sprintf("%s - %s", min(x$Date), max(x$Date)),
-         x = NULL, y = "Value Growth [%]")
+  if (type == 1) {
+    group_by(x, .data$Symbol) %>%
+      mutate(
+        RelValue = (.data$Value - last(.data$Value)),
+        Growth = .data$RelValue / last(.data$Value),
+        Total = first(.data$Growth)
+      ) %>%
+      ungroup() %>%
+      arrange(desc(.data$Total)) %>%
+      mutate(
+        Symbol = sprintf("%s (%s%%)", .data$Symbol, round(100 * .data$Total, 2)),
+        Symbol = factor(.data$Symbol, unique(.data$Symbol))
+      ) %>%
+      ggplot(aes(x = .data$Date, y = .data$Growth, colour = .data$Symbol)) +
+      geom_line(alpha = 0.8) +
+      theme_lares(pal = 2, legend = "left") +
+      scale_y_percent(position = "right") +
+      labs(
+        title = "Relative Growth since Origin", colour = NULL,
+        subtitle = sprintf("%s - %s", min(x$Date), max(x$Date)),
+        x = NULL, y = "Value Growth [%]"
+      )
+  }
 }
 
 
@@ -944,7 +954,7 @@ etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
 
   if (!quiet) message(">>> Downloading sectors for each ETF...")
   ret <- data.frame()
-  nodata <- c()
+  nodata <- NULL
   for (i in seq_along(etf)) {
     info <- toupper(etf[i])
     url <- paste0("https://etfdb.com/etf/", info)
