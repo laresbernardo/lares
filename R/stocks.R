@@ -440,7 +440,9 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
       .data$CumDividend, .data$CumCost,
       .direction = "up"
     ) %>%
-    left_join(select(cash, .data$Date, .data$Cash), "Date") %>%
+    mutate(Date = as.character(.data$Date)) %>%
+    left_join(mutate(cash, Date = as.character(.data$Date)) %>% select(.data$Date, .data$Cash), "Date") %>%
+    mutate(Date = as.Date(.data$Date)) %>%
     replace(is.na(.), 0) %>%
     arrange(.data$Date) %>%
     mutate(
