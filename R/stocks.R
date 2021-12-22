@@ -1218,7 +1218,7 @@ stocks_report <- function(data = NA,
     filter(.data$Date == max(.data$Date), .data$CumQuant > 0) %>%
     mutate(Change = sprintf(
       "%s (%s)",
-      formatNum(100 * .data$DifUSD / .data$CumValue, 2, pos = "%", sign = TRUE),
+      formatNum(100 * .data$DifUSD / (.data$CumValue - .data$DifUSD), 2, pos = "%", sign = TRUE),
       formatNum(.data$DifUSD / .data$CumQuant, 2, sign = TRUE)
     )) %>%
     arrange(desc(abs(.data$DifUSD / .data$CumValue))) %>%
@@ -1233,7 +1233,7 @@ stocks_report <- function(data = NA,
     )
   data$summary_df2 <- data$portfolio %>%
     filter(.data$Date == max(.data$Date)) %>%
-    mutate(DifP = round(100 * .data$DifUSD / .data$CumValue, 2)) %>%
+    mutate(DifP = round(100 * .data$DifUSD / (.data$CumValue - .data$DifUSD), 2)) %>%
     mutate_if(is.numeric, function(x) formatNum(x, 2, signif = 6)) %>%
     mutate_all(as.character) %>%
     select(.data$Date, one_of(sort(colnames(.)))) %>%
