@@ -148,7 +148,7 @@
 </h3>
 <p>Let’s begin with a binary (TRUE/FALSE) model to predict if each passenger <code>Survived</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>r &lt;-<span class="st"> </span><span class="kw">h2o_automl</span>(df, <span class="dt">y =</span> Survived, <span class="dt">max_models =</span> <span class="dv">1</span>, <span class="dt">impute =</span> <span class="ot">FALSE</span>, <span class="dt">target =</span> <span class="st">"TRUE"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; 2021-12-15 19:45:19 | Started process...</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; 2021-12-22 08:30:53 | Started process...</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt; - INDEPENDENT VARIABLE: Survived</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt; - MODEL TYPE: Classification</span></span>
 <span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt;  [38;5;246m# A tibble: 2 × 5 [39m</span></span>
@@ -161,7 +161,7 @@
 <span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt; &gt;&gt;&gt; Splitting data: train = 0.7 &amp; test = 0.3</span></span>
 <span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt; train_size  test_size </span></span>
 <span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt;        623        268</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt; - REPEATED: There were 73 repeated rows which are being suppressed from the train dataset</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt; - REPEATED: There were 63 repeated rows which are being suppressed from the train dataset</span></span>
 <span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt; - ALGORITHMS: excluded 'StackedEnsemble', 'DeepLearning'</span></span>
 <span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt; - CACHE: Previous models are not being erased. You may use 'start_clean' [clear] or 'project_name' [join]</span></span>
 <span id="cb2-18"><a href="#cb2-18"></a><span class="co">#&gt; - UI: You may check results using H2O Flow's interactive platform: http://localhost:54321/flow/index.html</span></span>
@@ -171,47 +171,114 @@
 <span id="cb2-22"><a href="#cb2-22"></a><span class="st">  </span><span class="er">|</span><span class="st">                                                                      </span><span class="er">|</span><span class="st">   </span><span class="dv">0</span>%</span>
 <span id="cb2-23"><a href="#cb2-23"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
 <span id="cb2-24"><a href="#cb2-24"></a><span class="st">  </span><span class="er">|======================================================================|</span><span class="st"> </span><span class="dv">100</span>%</span>
-<span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt; - EUREKA: Succesfully generated 1 models</span></span>
-<span id="cb2-26"><a href="#cb2-26"></a><span class="co">#&gt;                             model_id       auc   logloss     aucpr</span></span>
-<span id="cb2-27"><a href="#cb2-27"></a><span class="co">#&gt; 1 XGBoost_1_AutoML_5_20211215_194520 0.8245509 0.4750615 0.8131531</span></span>
-<span id="cb2-28"><a href="#cb2-28"></a><span class="co">#&gt;   mean_per_class_error      rmse       mse</span></span>
-<span id="cb2-29"><a href="#cb2-29"></a><span class="co">#&gt; 1             0.222472 0.3892829 0.1515412</span></span>
-<span id="cb2-30"><a href="#cb2-30"></a><span class="co">#&gt; SELECTED MODEL: XGBoost_1_AutoML_5_20211215_194520</span></span>
-<span id="cb2-31"><a href="#cb2-31"></a><span class="co">#&gt; - </span><span class="al">NOTE</span><span class="co">: The following variables were the least important: Embarked.C, Pclass.2, Embarked.S, Parch</span></span>
-<span id="cb2-32"><a href="#cb2-32"></a><span class="co">#&gt; &gt;&gt;&gt; Running predictions for Survived...</span></span>
-<span id="cb2-33"><a href="#cb2-33"></a><span class="co">#&gt; </span></span>
-<span id="cb2-34"><a href="#cb2-34"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
-<span id="cb2-35"><a href="#cb2-35"></a><span class="st">  </span><span class="er">|</span><span class="st">                                                                      </span><span class="er">|</span><span class="st">   </span><span class="dv">0</span>%</span>
-<span id="cb2-36"><a href="#cb2-36"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
-<span id="cb2-37"><a href="#cb2-37"></a><span class="st">  </span><span class="er">|======================================================================|</span><span class="st"> </span><span class="dv">100</span>%</span>
-<span id="cb2-38"><a href="#cb2-38"></a><span class="co">#&gt; </span></span>
-<span id="cb2-39"><a href="#cb2-39"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
-<span id="cb2-40"><a href="#cb2-40"></a><span class="st">  </span><span class="er">|</span><span class="st">                                                                      </span><span class="er">|</span><span class="st">   </span><span class="dv">0</span>%</span>
-<span id="cb2-41"><a href="#cb2-41"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
-<span id="cb2-42"><a href="#cb2-42"></a><span class="st">  </span><span class="er">|======================================================================|</span><span class="st"> </span><span class="dv">100</span>%</span>
-<span id="cb2-43"><a href="#cb2-43"></a><span class="co">#&gt; Target value: TRUE</span></span>
-<span id="cb2-44"><a href="#cb2-44"></a><span class="co">#&gt; &gt;&gt;&gt; Generating plots...</span></span>
-<span id="cb2-45"><a href="#cb2-45"></a><span class="co">#&gt; Model (1/1): XGBoost_1_AutoML_5_20211215_194520</span></span>
-<span id="cb2-46"><a href="#cb2-46"></a><span class="co">#&gt; Independent Variable: Survived</span></span>
-<span id="cb2-47"><a href="#cb2-47"></a><span class="co">#&gt; Type: Classification (2 classes)</span></span>
-<span id="cb2-48"><a href="#cb2-48"></a><span class="co">#&gt; Algorithm: XGBOOST</span></span>
-<span id="cb2-49"><a href="#cb2-49"></a><span class="co">#&gt; Split: 70% training data (of 891 observations)</span></span>
-<span id="cb2-50"><a href="#cb2-50"></a><span class="co">#&gt; Seed: 0</span></span>
-<span id="cb2-51"><a href="#cb2-51"></a><span class="co">#&gt; </span></span>
-<span id="cb2-52"><a href="#cb2-52"></a><span class="co">#&gt; Test metrics:</span></span>
-<span id="cb2-53"><a href="#cb2-53"></a><span class="co">#&gt;    AUC = 0.87194</span></span>
-<span id="cb2-54"><a href="#cb2-54"></a><span class="co">#&gt;    ACC = 0.1791</span></span>
-<span id="cb2-55"><a href="#cb2-55"></a><span class="co">#&gt;    PRC = 0.15556</span></span>
-<span id="cb2-56"><a href="#cb2-56"></a><span class="co">#&gt;    TPR = 0.29167</span></span>
-<span id="cb2-57"><a href="#cb2-57"></a><span class="co">#&gt;    TNR = 0.11628</span></span>
-<span id="cb2-58"><a href="#cb2-58"></a><span class="co">#&gt; </span></span>
-<span id="cb2-59"><a href="#cb2-59"></a><span class="co">#&gt; Most important variables:</span></span>
-<span id="cb2-60"><a href="#cb2-60"></a><span class="co">#&gt;    Sex.female (40.7%)</span></span>
-<span id="cb2-61"><a href="#cb2-61"></a><span class="co">#&gt;    Age (17.2%)</span></span>
-<span id="cb2-62"><a href="#cb2-62"></a><span class="co">#&gt;    Pclass.3 (12.6%)</span></span>
-<span id="cb2-63"><a href="#cb2-63"></a><span class="co">#&gt;    Fare (12.4%)</span></span>
-<span id="cb2-64"><a href="#cb2-64"></a><span class="co">#&gt;    Sex.male (6.7%)</span></span>
-<span id="cb2-65"><a href="#cb2-65"></a><span class="co">#&gt; Process duration: 9.88s</span></span></code></pre></div>
+<span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt; </span></span>
+<span id="cb2-26"><a href="#cb2-26"></a><span class="co">#&gt; 08:30:54.251: Project: AutoML_5_20211222_83054</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="co">#&gt; 08:30:54.251: Setting stopping tolerance adaptively based on the training frame: 0.0400641540107502</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a><span class="co">#&gt; 08:30:54.251: Build control seed: 0</span></span>
+<span id="cb2-29"><a href="#cb2-29"></a><span class="co">#&gt; 08:30:54.251: training frame: Frame key: AutoML_5_20211222_83054_training_train_sid_ae0a_1    cols: 8    rows: 623  chunks: 1    size: 9400  checksum: -6748529001116748596</span></span>
+<span id="cb2-30"><a href="#cb2-30"></a><span class="co">#&gt; 08:30:54.251: validation frame: NULL</span></span>
+<span id="cb2-31"><a href="#cb2-31"></a><span class="co">#&gt; 08:30:54.251: leaderboard frame: NULL</span></span>
+<span id="cb2-32"><a href="#cb2-32"></a><span class="co">#&gt; 08:30:54.251: blending frame: NULL</span></span>
+<span id="cb2-33"><a href="#cb2-33"></a><span class="co">#&gt; 08:30:54.252: response column: tag</span></span>
+<span id="cb2-34"><a href="#cb2-34"></a><span class="co">#&gt; 08:30:54.252: fold column: null</span></span>
+<span id="cb2-35"><a href="#cb2-35"></a><span class="co">#&gt; 08:30:54.252: weights column: null</span></span>
+<span id="cb2-36"><a href="#cb2-36"></a><span class="co">#&gt; 08:30:54.252: Loading execution steps: [{XGBoost : [def_2 (1g, 10w), def_1 (2g, 10w), def_3 (3g, 10w), grid_1 (4g, 90w), lr_search (6g, 30w)]}, {GLM : [def_1 (1g, 10w)]}, {DRF : [def_1 (2g, 10w), XRT (3g, 10w)]}, {GBM : [def_5 (1g, 10w), def_2 (2g, 10w), def_3 (2g, 10w), def_4 (2g, 10w), def_1 (3g, 10w), grid_1 (4g, 60w), lr_annealing (6g, 10w)]}, {DeepLearning : [def_1 (3g, 10w), grid_1 (4g, 30w), grid_2 (5g, 30w), grid_3 (5g, 30w)]}, {completion : [resume_best_grids (10g, 60w)]}, {StackedEnsemble : [best_of_family_1 (1g, 5w), best_of_family_2 (2g, 5w), best_of_family_3 (3g, 5w), best_of_family_4 (4g, 5w), best_of_family_5 (5g, 5w), all_2 (2g, 10w), all_3 (3g, 10w), all_4 (4g, 10w), all_5 (5g, 10w), monotonic (6g, 10w), best_of_family_xgboost (6g, 10w), best_of_family_gbm (6g, 10w), all_xgboost (7g, 10w), all_gbm (7g, 10w), best_of_family_xglm (8g, 10w), all_xglm (8g, 10w), best_of_family (10g, 10w), best_N (10g, 10w)]}]</span></span>
+<span id="cb2-37"><a href="#cb2-37"></a><span class="co">#&gt; 08:30:54.253: Disabling Algo: StackedEnsemble as requested by the user.</span></span>
+<span id="cb2-38"><a href="#cb2-38"></a><span class="co">#&gt; 08:30:54.253: Disabling Algo: DeepLearning as requested by the user.</span></span>
+<span id="cb2-39"><a href="#cb2-39"></a><span class="co">#&gt; 08:30:54.253: Defined work allocations: [Work{def_2, XGBoost, ModelBuild, group=1, weight=10}, Work{def_1, GLM, ModelBuild, group=1, weight=10}, Work{def_5, GBM, ModelBuild, group=1, weight=10}, Work{def_1, XGBoost, ModelBuild, group=2, weight=10}, Work{def_1, DRF, ModelBuild, group=2, weight=10}, Work{def_2, GBM, ModelBuild, group=2, weight=10}, Work{def_3, GBM, ModelBuild, group=2, weight=10}, Work{def_4, GBM, ModelBuild, group=2, weight=10}, Work{def_3, XGBoost, ModelBuild, group=3, weight=10}, Work{XRT, DRF, ModelBuild, group=3, weight=10}, Work{def_1, GBM, ModelBuild, group=3, weight=10}, Work{grid_1, XGBoost, HyperparamSearch, group=4, weight=90}, Work{grid_1, GBM, HyperparamSearch, group=4, weight=60}, Work{lr_search, XGBoost, Selection, group=6, weight=30}, Work{lr_annealing, GBM, Selection, group=6, weight=10}, Work{resume_best_grids, virtual, Dynamic, group=10, weight=60}]</span></span>
+<span id="cb2-40"><a href="#cb2-40"></a><span class="co">#&gt; 08:30:54.253: Actual work allocations: [Work{def_2, XGBoost, ModelBuild, group=1, weight=10}, Work{def_1, GLM, ModelBuild, group=1, weight=10}, Work{def_5, GBM, ModelBuild, group=1, weight=10}, Work{def_1, XGBoost, ModelBuild, group=2, weight=10}, Work{def_1, DRF, ModelBuild, group=2, weight=10}, Work{def_2, GBM, ModelBuild, group=2, weight=10}, Work{def_3, GBM, ModelBuild, group=2, weight=10}, Work{def_4, GBM, ModelBuild, group=2, weight=10}, Work{def_3, XGBoost, ModelBuild, group=3, weight=10}, Work{XRT, DRF, ModelBuild, group=3, weight=10}, Work{def_1, GBM, ModelBuild, group=3, weight=10}, Work{grid_1, XGBoost, HyperparamSearch, group=4, weight=90}, Work{grid_1, GBM, HyperparamSearch, group=4, weight=60}, Work{lr_search, XGBoost, Selection, group=6, weight=30}, Work{lr_annealing, GBM, Selection, group=6, weight=10}, Work{resume_best_grids, virtual, Dynamic, group=10, weight=60}]</span></span>
+<span id="cb2-41"><a href="#cb2-41"></a><span class="co">#&gt; 08:30:54.253: AutoML job created: 2021.12.22 08:30:54.251</span></span>
+<span id="cb2-42"><a href="#cb2-42"></a><span class="co">#&gt; 08:30:54.264: AutoML build started: 2021.12.22 08:30:54.264</span></span>
+<span id="cb2-43"><a href="#cb2-43"></a><span class="co">#&gt; 08:30:54.264: Time assigned for XGBoost_1_AutoML_5_20211222_83054: 200.0s</span></span>
+<span id="cb2-44"><a href="#cb2-44"></a><span class="co">#&gt; 08:30:54.264: AutoML: starting XGBoost_1_AutoML_5_20211222_83054 model training</span></span>
+<span id="cb2-45"><a href="#cb2-45"></a><span class="co">#&gt; 08:30:54.286: XGBoost_1_AutoML_5_20211222_83054 [XGBoost def_2] started</span></span>
+<span id="cb2-46"><a href="#cb2-46"></a><span class="co">#&gt; 08:30:55.286: XGBoost_1_AutoML_5_20211222_83054 [XGBoost def_2] complete</span></span>
+<span id="cb2-47"><a href="#cb2-47"></a><span class="co">#&gt; 08:30:55.286: Adding model XGBoost_1_AutoML_5_20211222_83054 to leaderboard Leaderboard_AutoML_5_20211222_83054@@tag. Training time: model=0s, total=0s</span></span>
+<span id="cb2-48"><a href="#cb2-48"></a><span class="co">#&gt; 08:30:55.288: New leader: XGBoost_1_AutoML_5_20211222_83054, auc: 0.8580504786771105</span></span>
+<span id="cb2-49"><a href="#cb2-49"></a><span class="co">#&gt; 08:30:55.288: AutoML: hit the max_models limit; skipping GLM def_1</span></span>
+<span id="cb2-50"><a href="#cb2-50"></a><span class="co">#&gt; 08:30:55.288: AutoML: hit the max_models limit; skipping GBM def_5</span></span>
+<span id="cb2-51"><a href="#cb2-51"></a><span class="co">#&gt; 08:30:55.288: Skipping StackedEnsemble 'best_of_family_1' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-52"><a href="#cb2-52"></a><span class="co">#&gt; 08:30:55.288: AutoML: hit the max_models limit; skipping XGBoost def_1</span></span>
+<span id="cb2-53"><a href="#cb2-53"></a><span class="co">#&gt; 08:30:55.289: AutoML: hit the max_models limit; skipping DRF def_1</span></span>
+<span id="cb2-54"><a href="#cb2-54"></a><span class="co">#&gt; 08:30:55.289: AutoML: hit the max_models limit; skipping GBM def_2</span></span>
+<span id="cb2-55"><a href="#cb2-55"></a><span class="co">#&gt; 08:30:55.289: AutoML: hit the max_models limit; skipping GBM def_3</span></span>
+<span id="cb2-56"><a href="#cb2-56"></a><span class="co">#&gt; 08:30:55.289: AutoML: hit the max_models limit; skipping GBM def_4</span></span>
+<span id="cb2-57"><a href="#cb2-57"></a><span class="co">#&gt; 08:30:55.289: Skipping StackedEnsemble 'best_of_family_2' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-58"><a href="#cb2-58"></a><span class="co">#&gt; 08:30:55.289: Skipping StackedEnsemble 'all_2' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-59"><a href="#cb2-59"></a><span class="co">#&gt; 08:30:55.289: AutoML: hit the max_models limit; skipping XGBoost def_3</span></span>
+<span id="cb2-60"><a href="#cb2-60"></a><span class="co">#&gt; 08:30:55.289: AutoML: hit the max_models limit; skipping DRF XRT (Extremely Randomized Trees)</span></span>
+<span id="cb2-61"><a href="#cb2-61"></a><span class="co">#&gt; 08:30:55.289: AutoML: hit the max_models limit; skipping GBM def_1</span></span>
+<span id="cb2-62"><a href="#cb2-62"></a><span class="co">#&gt; 08:30:55.289: AutoML: hit the max_models limit; skipping DeepLearning def_1</span></span>
+<span id="cb2-63"><a href="#cb2-63"></a><span class="co">#&gt; 08:30:55.289: Skipping StackedEnsemble 'best_of_family_3' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-64"><a href="#cb2-64"></a><span class="co">#&gt; 08:30:55.289: Skipping StackedEnsemble 'all_3' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-65"><a href="#cb2-65"></a><span class="co">#&gt; 08:30:55.289: AutoML: hit the max_models limit; skipping XGBoost grid_1</span></span>
+<span id="cb2-66"><a href="#cb2-66"></a><span class="co">#&gt; 08:30:55.289: AutoML: hit the max_models limit; skipping GBM grid_1</span></span>
+<span id="cb2-67"><a href="#cb2-67"></a><span class="co">#&gt; 08:30:55.289: AutoML: hit the max_models limit; skipping DeepLearning grid_1</span></span>
+<span id="cb2-68"><a href="#cb2-68"></a><span class="co">#&gt; 08:30:55.289: Skipping StackedEnsemble 'best_of_family_4' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-69"><a href="#cb2-69"></a><span class="co">#&gt; 08:30:55.289: Skipping StackedEnsemble 'all_4' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-70"><a href="#cb2-70"></a><span class="co">#&gt; 08:30:55.289: AutoML: hit the max_models limit; skipping DeepLearning grid_2</span></span>
+<span id="cb2-71"><a href="#cb2-71"></a><span class="co">#&gt; 08:30:55.289: AutoML: hit the max_models limit; skipping DeepLearning grid_3</span></span>
+<span id="cb2-72"><a href="#cb2-72"></a><span class="co">#&gt; 08:30:55.290: Skipping StackedEnsemble 'best_of_family_5' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-73"><a href="#cb2-73"></a><span class="co">#&gt; 08:30:55.290: Skipping StackedEnsemble 'all_5' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-74"><a href="#cb2-74"></a><span class="co">#&gt; 08:30:55.290: AutoML: hit the max_models limit; skipping XGBoost lr_search</span></span>
+<span id="cb2-75"><a href="#cb2-75"></a><span class="co">#&gt; 08:30:55.290: AutoML: hit the max_models limit; skipping GBM lr_annealing</span></span>
+<span id="cb2-76"><a href="#cb2-76"></a><span class="co">#&gt; 08:30:55.290: Skipping StackedEnsemble 'monotonic' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-77"><a href="#cb2-77"></a><span class="co">#&gt; 08:30:55.290: Skipping StackedEnsemble 'best_of_family_xgboost' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-78"><a href="#cb2-78"></a><span class="co">#&gt; 08:30:55.290: Skipping StackedEnsemble 'best_of_family_gbm' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-79"><a href="#cb2-79"></a><span class="co">#&gt; 08:30:55.290: Skipping StackedEnsemble 'all_xgboost' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-80"><a href="#cb2-80"></a><span class="co">#&gt; 08:30:55.290: Skipping StackedEnsemble 'all_gbm' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-81"><a href="#cb2-81"></a><span class="co">#&gt; 08:30:55.291: Skipping StackedEnsemble 'best_of_family_xglm' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-82"><a href="#cb2-82"></a><span class="co">#&gt; 08:30:55.291: Skipping StackedEnsemble 'all_xglm' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-83"><a href="#cb2-83"></a><span class="co">#&gt; 08:30:55.291: AutoML: hit the max_models limit; skipping completion resume_best_grids</span></span>
+<span id="cb2-84"><a href="#cb2-84"></a><span class="co">#&gt; 08:30:55.291: Skipping StackedEnsemble 'best_of_family' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-85"><a href="#cb2-85"></a><span class="co">#&gt; 08:30:55.291: Skipping StackedEnsemble 'best_N' due to the exclude_algos option or it is already trained.</span></span>
+<span id="cb2-86"><a href="#cb2-86"></a><span class="co">#&gt; 08:30:55.291: Actual modeling steps: [{XGBoost : [def_2 (1g, 10w)]}]</span></span>
+<span id="cb2-87"><a href="#cb2-87"></a><span class="co">#&gt; 08:30:55.291: AutoML build stopped: 2021.12.22 08:30:55.291</span></span>
+<span id="cb2-88"><a href="#cb2-88"></a><span class="co">#&gt; 08:30:55.291: AutoML build done: built 1 models</span></span>
+<span id="cb2-89"><a href="#cb2-89"></a><span class="co">#&gt; 08:30:55.291: AutoML duration:  1.027 sec</span></span>
+<span id="cb2-90"><a href="#cb2-90"></a><span class="co">#&gt; 08:30:55.297: Verifying training frame immutability. . .</span></span>
+<span id="cb2-91"><a href="#cb2-91"></a><span class="co">#&gt; 08:30:55.297: Training frame was not mutated (as expected).</span></span>
+<span id="cb2-92"><a href="#cb2-92"></a><span class="co">#&gt; - EUREKA: Succesfully generated 1 models</span></span>
+<span id="cb2-93"><a href="#cb2-93"></a><span class="co">#&gt;                            model_id       auc   logloss     aucpr</span></span>
+<span id="cb2-94"><a href="#cb2-94"></a><span class="co">#&gt; 1 XGBoost_1_AutoML_5_20211222_83054 0.8580505 0.4354417 0.8328423</span></span>
+<span id="cb2-95"><a href="#cb2-95"></a><span class="co">#&gt;   mean_per_class_error     rmse       mse</span></span>
+<span id="cb2-96"><a href="#cb2-96"></a><span class="co">#&gt; 1            0.1970518 0.368945 0.1361204</span></span>
+<span id="cb2-97"><a href="#cb2-97"></a><span class="co">#&gt; SELECTED MODEL: XGBoost_1_AutoML_5_20211222_83054</span></span>
+<span id="cb2-98"><a href="#cb2-98"></a><span class="co">#&gt; - </span><span class="al">NOTE</span><span class="co">: The following variables were the least important: Parch, SibSp, Embarked.C, Pclass.2</span></span>
+<span id="cb2-99"><a href="#cb2-99"></a><span class="co">#&gt; &gt;&gt;&gt; Running predictions for Survived...</span></span>
+<span id="cb2-100"><a href="#cb2-100"></a><span class="co">#&gt; </span></span>
+<span id="cb2-101"><a href="#cb2-101"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
+<span id="cb2-102"><a href="#cb2-102"></a><span class="st">  </span><span class="er">|</span><span class="st">                                                                      </span><span class="er">|</span><span class="st">   </span><span class="dv">0</span>%</span>
+<span id="cb2-103"><a href="#cb2-103"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
+<span id="cb2-104"><a href="#cb2-104"></a><span class="st">  </span><span class="er">|======================================================================|</span><span class="st"> </span><span class="dv">100</span>%</span>
+<span id="cb2-105"><a href="#cb2-105"></a><span class="co">#&gt; </span></span>
+<span id="cb2-106"><a href="#cb2-106"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
+<span id="cb2-107"><a href="#cb2-107"></a><span class="st">  </span><span class="er">|</span><span class="st">                                                                      </span><span class="er">|</span><span class="st">   </span><span class="dv">0</span>%</span>
+<span id="cb2-108"><a href="#cb2-108"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
+<span id="cb2-109"><a href="#cb2-109"></a><span class="st">  </span><span class="er">|======================================================================|</span><span class="st"> </span><span class="dv">100</span>%</span>
+<span id="cb2-110"><a href="#cb2-110"></a><span class="co">#&gt; Target value: TRUE</span></span>
+<span id="cb2-111"><a href="#cb2-111"></a><span class="co">#&gt; &gt;&gt;&gt; Generating plots...</span></span>
+<span id="cb2-112"><a href="#cb2-112"></a><span class="co">#&gt; Model (1/1): XGBoost_1_AutoML_5_20211222_83054</span></span>
+<span id="cb2-113"><a href="#cb2-113"></a><span class="co">#&gt; Independent Variable: Survived</span></span>
+<span id="cb2-114"><a href="#cb2-114"></a><span class="co">#&gt; Type: Classification (2 classes)</span></span>
+<span id="cb2-115"><a href="#cb2-115"></a><span class="co">#&gt; Algorithm: XGBOOST</span></span>
+<span id="cb2-116"><a href="#cb2-116"></a><span class="co">#&gt; Split: 70% training data (of 891 observations)</span></span>
+<span id="cb2-117"><a href="#cb2-117"></a><span class="co">#&gt; Seed: 0</span></span>
+<span id="cb2-118"><a href="#cb2-118"></a><span class="co">#&gt; </span></span>
+<span id="cb2-119"><a href="#cb2-119"></a><span class="co">#&gt; Test metrics:</span></span>
+<span id="cb2-120"><a href="#cb2-120"></a><span class="co">#&gt;    AUC = 0.8323</span></span>
+<span id="cb2-121"><a href="#cb2-121"></a><span class="co">#&gt;    ACC = 0.18657</span></span>
+<span id="cb2-122"><a href="#cb2-122"></a><span class="co">#&gt;    PRC = 0.20408</span></span>
+<span id="cb2-123"><a href="#cb2-123"></a><span class="co">#&gt;    TPR = 0.39216</span></span>
+<span id="cb2-124"><a href="#cb2-124"></a><span class="co">#&gt;    TNR = 0.060241</span></span>
+<span id="cb2-125"><a href="#cb2-125"></a><span class="co">#&gt; </span></span>
+<span id="cb2-126"><a href="#cb2-126"></a><span class="co">#&gt; Most important variables:</span></span>
+<span id="cb2-127"><a href="#cb2-127"></a><span class="co">#&gt;    Sex.female (45.6%)</span></span>
+<span id="cb2-128"><a href="#cb2-128"></a><span class="co">#&gt;    Pclass.3 (14.5%)</span></span>
+<span id="cb2-129"><a href="#cb2-129"></a><span class="co">#&gt;    Fare (12.4%)</span></span>
+<span id="cb2-130"><a href="#cb2-130"></a><span class="co">#&gt;    Age (11.7%)</span></span>
+<span id="cb2-131"><a href="#cb2-131"></a><span class="co">#&gt;    Sex.male (6.7%)</span></span>
+<span id="cb2-132"><a href="#cb2-132"></a><span class="co">#&gt; Process duration: 9.76s</span></span></code></pre></div>
 <p>Let’s take a look at the plots generated into a single dashboard:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></code></pre></div>
@@ -232,73 +299,73 @@
 <span class="co">#&gt; $confusion_matrix</span>
 <span class="co">#&gt;        Pred</span>
 <span class="co">#&gt; Real    FALSE TRUE</span>
-<span class="co">#&gt;   FALSE    20  152</span>
-<span class="co">#&gt;   TRUE     68   28</span>
+<span class="co">#&gt;   FALSE    10  156</span>
+<span class="co">#&gt;   TRUE     62   40</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $gain_lift</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 10</span></span>
 <span class="co">#&gt;    percentile value random target total  gain optimal   lift response score</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1          TRUE    10.1     26    27  27.1    28.1 169.      27.1  87.4 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2          TRUE    20.9     21    29  49.0    58.3 134.      21.9  67.9 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 3          TRUE    30.2     16    25  65.6    84.4 117.      16.7  55.4 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 4          TRUE    40.3     13    27  79.2   100    96.5     13.5  38.5 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 5          TRUE    50.4      9    27  88.5   100    75.8      9.38 26.9 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 6          TRUE    60.1      3    26  91.7   100    52.6      3.12 19.3 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 7          TRUE    69.8      2    26  93.8   100    34.4      2.08 15.9 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 8          TRUE    79.9      2    27  95.8   100    20.0      2.08 11.4 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 9          TRUE    89.9      2    27  97.9   100     8.89     2.08  9.45</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 10         TRUE   100        2    27 100     100     0        2.08  5.25</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1          TRUE    10.1     26    27  25.5    26.5 153.      25.5  89.9 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2          TRUE    20.5     25    28  50      53.9 144.      24.5  62.3 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 3          TRUE    30.6     15    27  64.7    80.4 111.      14.7  45.5 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 4          TRUE    39.9      6    25  70.6   100    76.8      5.88 33.0 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 5          TRUE    50        9    27  79.4   100    58.8      8.82 26.0 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 6          TRUE    60.1      7    27  86.3   100    43.6      6.86 16.8 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 7          TRUE    69.8      2    26  88.2   100    26.5      1.96 11.8 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 8          TRUE    80.6      6    29  94.1   100    16.8      5.88  9.06</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 9          TRUE    89.9      3    25  97.1   100     7.93     2.94  7.52</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 10         TRUE   100        3    27 100     100     0        2.94  3.49</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $metrics</span>
-<span class="co">#&gt;       AUC    ACC     PRC     TPR     TNR</span>
-<span class="co">#&gt; 1 0.87194 0.1791 0.15556 0.29167 0.11628</span>
+<span class="co">#&gt;      AUC     ACC     PRC     TPR      TNR</span>
+<span class="co">#&gt; 1 0.8323 0.18657 0.20408 0.39216 0.060241</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $cv_metrics</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 8</span></span>
 <span class="co">#&gt;    metric     mean     sd cv_1_valid cv_2_valid cv_3_valid cv_4_valid cv_5_valid</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> accuracy  0.803 0.045<span style="text-decoration: underline;">2</span>      0.776      0.88       0.792      0.798      0.766</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> auc       0.826 0.028<span style="text-decoration: underline;">9</span>      0.800      0.860      0.792      0.834      0.843</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> err       0.197 0.045<span style="text-decoration: underline;">2</span>      0.224      0.12       0.208      0.202      0.234</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> err_cou… 24.6   5.59       28         15         26         25         29    </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> f0point5  0.767 0.068<span style="text-decoration: underline;">9</span>      0.702      0.870      0.768      0.788      0.705</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> f1        0.743 0.041<span style="text-decoration: underline;">9</span>      0.702      0.810      0.729      0.719      0.752</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> f2        0.724 0.057<span style="text-decoration: underline;">4</span>      0.702      0.758      0.694      0.661      0.806</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> lift_to…  2.54  0.200       2.66       2.84       2.40       2.43       2.38 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> logloss   0.475 0.044<span style="text-decoration: underline;">2</span>      0.504      0.403      0.513      0.492      0.464</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> max_per…  0.312 0.038<span style="text-decoration: underline;">9</span>      0.298      0.273      0.327      0.373      0.292</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">11</span> mcc       0.591 0.083<span style="text-decoration: underline;">2</span>      0.523      0.734      0.567      0.582      0.548</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">12</span> mean_pe…  0.786 0.033<span style="text-decoration: underline;">5</span>      0.761      0.845      0.775      0.773      0.777</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">13</span> mean_pe…  0.214 0.033<span style="text-decoration: underline;">5</span>      0.239      0.155      0.225      0.227      0.223</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">14</span> mse       0.152 0.018<span style="text-decoration: underline;">1</span>      0.164      0.121      0.163      0.161      0.148</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">15</span> pr_auc    0.816 0.027<span style="text-decoration: underline;">7</span>      0.794      0.864      0.813      0.799      0.813</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">16</span> precisi…  0.786 0.098<span style="text-decoration: underline;">3</span>      0.702      0.914      0.795      0.842      0.677</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">17</span> r2        0.365 0.066<span style="text-decoration: underline;">7</span>      0.301      0.468      0.327      0.335      0.392</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">18</span> recall    0.715 0.082<span style="text-decoration: underline;">1</span>      0.702      0.727      0.673      0.627      0.846</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">19</span> rmse      0.389 0.024<span style="text-decoration: underline;">1</span>      0.405      0.348      0.404      0.401      0.385</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">20</span> specifi…  0.857 0.098<span style="text-decoration: underline;">4</span>      0.821      0.963      0.877      0.918      0.708</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> accuracy  0.822 0.041<span style="text-decoration: underline;">8</span>     0.88        0.84       0.824      0.790      0.774</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> auc       0.867 0.045<span style="text-decoration: underline;">7</span>     0.946       0.861      0.838      0.855      0.833</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> err       0.178 0.041<span style="text-decoration: underline;">8</span>     0.12        0.16       0.176      0.210      0.226</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> err_cou… 22.2   5.12      15          20         22         26         28    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> f0point5  0.768 0.046<span style="text-decoration: underline;">6</span>     0.809       0.806      0.792      0.714      0.721</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> f1        0.776 0.033<span style="text-decoration: underline;">5</span>     0.835       0.773      0.761      0.755      0.759</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> f2        0.788 0.052<span style="text-decoration: underline;">9</span>     0.864       0.742      0.732      0.8        0.8  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> lift_to…  2.61  0.205      2.91        2.66       2.55       2.58       2.34 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> logloss   0.436 0.066<span style="text-decoration: underline;">5</span>     0.328       0.420      0.471      0.462      0.497</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> max_per…  0.238 0.067<span style="text-decoration: underline;">3</span>     0.122       0.277      0.286      0.237      0.268</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">11</span> mcc       0.633 0.072<span style="text-decoration: underline;">8</span>     0.744       0.654      0.626      0.582      0.557</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">12</span> mean_pe…  0.816 0.038<span style="text-decoration: underline;">3</span>     0.881       0.817      0.805      0.798      0.781</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">13</span> mean_pe…  0.184 0.038<span style="text-decoration: underline;">3</span>     0.119       0.183      0.195      0.202      0.219</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">14</span> mse       0.136 0.024<span style="text-decoration: underline;">6</span>     0.096<span style="text-decoration: underline;">8</span>      0.129      0.147      0.149      0.159</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">15</span> pr_auc    0.842 0.041<span style="text-decoration: underline;">2</span>     0.913       0.834      0.809      0.818      0.836</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">16</span> precisi…  0.765 0.065<span style="text-decoration: underline;">9</span>     0.792       0.829      0.814      0.690      0.698</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">17</span> r2        0.425 0.089<span style="text-decoration: underline;">9</span>     0.571       0.451      0.383      0.371      0.350</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">18</span> recall    0.797 0.074<span style="text-decoration: underline;">5</span>     0.884       0.723      0.714      0.833      0.830</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">19</span> rmse      0.368 0.034<span style="text-decoration: underline;">8</span>     0.311       0.359      0.383      0.386      0.399</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">20</span> specifi…  0.836 0.081<span style="text-decoration: underline;">8</span>     0.878       0.910      0.895      0.763      0.732</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $max_metrics</span>
 <span class="co">#&gt;                         metric  threshold       value idx</span>
-<span class="co">#&gt; 1                       max f1 0.46351165   0.7298969 178</span>
-<span class="co">#&gt; 2                       max f2 0.12855648   0.7738896 339</span>
-<span class="co">#&gt; 3                 max f0point5 0.75523686   0.7987013  95</span>
-<span class="co">#&gt; 4                 max accuracy 0.58568615   0.8089888 135</span>
-<span class="co">#&gt; 5                max precision 0.97120935   1.0000000   0</span>
-<span class="co">#&gt; 6                   max recall 0.05467717   1.0000000 395</span>
-<span class="co">#&gt; 7              max specificity 0.97120935   1.0000000   0</span>
-<span class="co">#&gt; 8             max absolute_mcc 0.58568615   0.5965039 135</span>
-<span class="co">#&gt; 9   max min_per_class_accuracy 0.36215261   0.7586207 209</span>
-<span class="co">#&gt; 10 max mean_per_class_accuracy 0.57685667   0.7800242 139</span>
-<span class="co">#&gt; 11                     max tns 0.97120935 377.0000000   0</span>
-<span class="co">#&gt; 12                     max fns 0.97120935 245.0000000   0</span>
-<span class="co">#&gt; 13                     max fps 0.04458189 377.0000000 399</span>
-<span class="co">#&gt; 14                     max tps 0.05467717 246.0000000 395</span>
-<span class="co">#&gt; 15                     max tnr 0.97120935   1.0000000   0</span>
-<span class="co">#&gt; 16                     max fnr 0.97120935   0.9959350   0</span>
-<span class="co">#&gt; 17                     max fpr 0.04458189   1.0000000 399</span>
-<span class="co">#&gt; 18                     max tpr 0.05467717   1.0000000 395</span></code></pre></div>
+<span class="co">#&gt; 1                       max f1 0.46894562   0.7574468 173</span>
+<span class="co">#&gt; 2                       max f2 0.24541338   0.8112324 244</span>
+<span class="co">#&gt; 3                 max f0point5 0.69501430   0.8052885 112</span>
+<span class="co">#&gt; 4                 max accuracy 0.46894562   0.8170144 173</span>
+<span class="co">#&gt; 5                max precision 0.96080315   1.0000000   0</span>
+<span class="co">#&gt; 6                   max recall 0.03826427   1.0000000 396</span>
+<span class="co">#&gt; 7              max specificity 0.96080315   1.0000000   0</span>
+<span class="co">#&gt; 8             max absolute_mcc 0.46894562   0.6110028 173</span>
+<span class="co">#&gt; 9   max min_per_class_accuracy 0.34979387   0.7875000 206</span>
+<span class="co">#&gt; 10 max mean_per_class_accuracy 0.46894562   0.8029482 173</span>
+<span class="co">#&gt; 11                     max tns 0.96080315 383.0000000   0</span>
+<span class="co">#&gt; 12                     max fns 0.96080315 239.0000000   0</span>
+<span class="co">#&gt; 13                     max fps 0.02521262 383.0000000 399</span>
+<span class="co">#&gt; 14                     max tps 0.03826427 240.0000000 396</span>
+<span class="co">#&gt; 15                     max tnr 0.96080315   1.0000000   0</span>
+<span class="co">#&gt; 16                     max fnr 0.96080315   0.9958333   0</span>
+<span class="co">#&gt; 17                     max fpr 0.02521262   1.0000000 399</span>
+<span class="co">#&gt; 18                     max tpr 0.03826427   1.0000000 396</span></code></pre></div>
 <p>The same goes for the plots generated for these metrics. We have the gains and response plots on test data-set, confusion matrix, and ROC curves.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">r</span><span class="op">$</span><span class="va">plots</span><span class="op">$</span><span class="va">metrics</span>
@@ -317,12 +384,12 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">importance</span><span class="op">)</span>
 <span class="co">#&gt;     variable relative_importance scaled_importance importance</span>
-<span class="co">#&gt; 1 Sex.female           203.65041        1.00000000 0.40678792</span>
-<span class="co">#&gt; 2        Age            85.87612        0.42168402 0.17153596</span>
-<span class="co">#&gt; 3   Pclass.3            63.00670        0.30938658 0.12585472</span>
-<span class="co">#&gt; 4       Fare            62.15265        0.30519286 0.12414877</span>
-<span class="co">#&gt; 5   Sex.male            33.41940        0.16410181 0.06675463</span>
-<span class="co">#&gt; 6      SibSp            18.92848        0.09294593 0.03780928</span>
+<span class="co">#&gt; 1 Sex.female           241.84279        1.00000000 0.45613572</span>
+<span class="co">#&gt; 2   Pclass.3            76.90151        0.31798141 0.14504268</span>
+<span class="co">#&gt; 3       Fare            65.71823        0.27173947 0.12395008</span>
+<span class="co">#&gt; 4        Age            62.12172        0.25686821 0.11716676</span>
+<span class="co">#&gt; 5   Sex.male            35.27571        0.14586214 0.06653293</span>
+<span class="co">#&gt; 6   Pclass.1            16.80339        0.06948062 0.03169259</span>
 
 <span class="va">r</span><span class="op">$</span><span class="va">plots</span><span class="op">$</span><span class="va">importance</span></code></pre></div>
 <p><img src="h2o_automl_files/figure-html/class_2_importance-1.png" width="681.6"></p>
@@ -332,7 +399,7 @@
 </h3>
 <p>Now, let’s run a multi-categorical (+2 labels) model to predict <code>Pclass</code> of each passenger:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>r &lt;-<span class="st"> </span><span class="kw">h2o_automl</span>(df, Pclass, <span class="dt">ignore =</span> <span class="kw">c</span>(<span class="st">"Fare"</span>, <span class="st">"Cabin"</span>), <span class="dt">max_time =</span> <span class="dv">30</span>, <span class="dt">plots =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="co">#&gt; 2021-12-15 19:45:33 | Started process...</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co">#&gt; 2021-12-22 08:31:09 | Started process...</span></span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="co">#&gt; - INDEPENDENT VARIABLE: Pclass</span></span>
 <span id="cb10-4"><a href="#cb10-4"></a><span class="co">#&gt; - MODEL TYPE: Classification</span></span>
 <span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt;  [38;5;246m# A tibble: 3 × 5 [39m</span></span>
@@ -351,46 +418,69 @@
 <span id="cb10-18"><a href="#cb10-18"></a><span class="co">#&gt; - CACHE: Previous models are not being erased. You may use 'start_clean' [clear] or 'project_name' [join]</span></span>
 <span id="cb10-19"><a href="#cb10-19"></a><span class="co">#&gt; - UI: You may check results using H2O Flow's interactive platform: http://localhost:54321/flow/index.html</span></span>
 <span id="cb10-20"><a href="#cb10-20"></a><span class="co">#&gt; &gt;&gt;&gt; Iterating until 3 models or 30 seconds...</span></span>
-<span id="cb10-21"><a href="#cb10-21"></a><span class="co">#&gt; - EUREKA: Succesfully generated 3 models</span></span>
-<span id="cb10-22"><a href="#cb10-22"></a><span class="co">#&gt;                             model_id mean_per_class_error   logloss      rmse</span></span>
-<span id="cb10-23"><a href="#cb10-23"></a><span class="co">#&gt; 1     GLM_1_AutoML_6_20211215_194533            0.4742325 0.8170807 0.5409388</span></span>
-<span id="cb10-24"><a href="#cb10-24"></a><span class="co">#&gt; 2 XGBoost_1_AutoML_6_20211215_194533            0.4946035 0.8255072 0.5392879</span></span>
-<span id="cb10-25"><a href="#cb10-25"></a><span class="co">#&gt; 3     GBM_1_AutoML_6_20211215_194533            0.5037168 0.8620436 0.5616772</span></span>
-<span id="cb10-26"><a href="#cb10-26"></a><span class="co">#&gt;         mse</span></span>
-<span id="cb10-27"><a href="#cb10-27"></a><span class="co">#&gt; 1 0.2926147</span></span>
-<span id="cb10-28"><a href="#cb10-28"></a><span class="co">#&gt; 2 0.2908315</span></span>
-<span id="cb10-29"><a href="#cb10-29"></a><span class="co">#&gt; 3 0.3154812</span></span>
-<span id="cb10-30"><a href="#cb10-30"></a><span class="co">#&gt; SELECTED MODEL: GLM_1_AutoML_6_20211215_194533</span></span>
-<span id="cb10-31"><a href="#cb10-31"></a><span class="co">#&gt; - </span><span class="al">NOTE</span><span class="co">: The following variables were the least important: Sex.male, Sex.female, Parch</span></span>
-<span id="cb10-32"><a href="#cb10-32"></a><span class="co">#&gt; &gt;&gt;&gt; Running predictions for Pclass...</span></span>
-<span id="cb10-33"><a href="#cb10-33"></a><span class="co">#&gt; </span></span>
-<span id="cb10-34"><a href="#cb10-34"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
-<span id="cb10-35"><a href="#cb10-35"></a><span class="st">  </span><span class="er">|</span><span class="st">                                                                      </span><span class="er">|</span><span class="st">   </span><span class="dv">0</span>%</span>
-<span id="cb10-36"><a href="#cb10-36"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
-<span id="cb10-37"><a href="#cb10-37"></a><span class="st">  </span><span class="er">|======================================================================|</span><span class="st"> </span><span class="dv">100</span>%</span>
-<span id="cb10-38"><a href="#cb10-38"></a><span class="co">#&gt; </span></span>
-<span id="cb10-39"><a href="#cb10-39"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
-<span id="cb10-40"><a href="#cb10-40"></a><span class="st">  </span><span class="er">|</span><span class="st">                                                                      </span><span class="er">|</span><span class="st">   </span><span class="dv">0</span>%</span>
-<span id="cb10-41"><a href="#cb10-41"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
-<span id="cb10-42"><a href="#cb10-42"></a><span class="st">  </span><span class="er">|======================================================================|</span><span class="st"> </span><span class="dv">100</span>%</span>
-<span id="cb10-43"><a href="#cb10-43"></a><span class="co">#&gt; Model (1/3): GLM_1_AutoML_6_20211215_194533</span></span>
-<span id="cb10-44"><a href="#cb10-44"></a><span class="co">#&gt; Independent Variable: Pclass</span></span>
-<span id="cb10-45"><a href="#cb10-45"></a><span class="co">#&gt; Type: Classification (3 classes)</span></span>
-<span id="cb10-46"><a href="#cb10-46"></a><span class="co">#&gt; Algorithm: GLM</span></span>
-<span id="cb10-47"><a href="#cb10-47"></a><span class="co">#&gt; Split: 70% training data (of 891 observations)</span></span>
-<span id="cb10-48"><a href="#cb10-48"></a><span class="co">#&gt; Seed: 0</span></span>
-<span id="cb10-49"><a href="#cb10-49"></a><span class="co">#&gt; </span></span>
-<span id="cb10-50"><a href="#cb10-50"></a><span class="co">#&gt; Test metrics:</span></span>
-<span id="cb10-51"><a href="#cb10-51"></a><span class="co">#&gt;    AUC = 0.76337</span></span>
-<span id="cb10-52"><a href="#cb10-52"></a><span class="co">#&gt;    ACC = 0.64179</span></span>
-<span id="cb10-53"><a href="#cb10-53"></a><span class="co">#&gt; </span></span>
-<span id="cb10-54"><a href="#cb10-54"></a><span class="co">#&gt; Most important variables:</span></span>
-<span id="cb10-55"><a href="#cb10-55"></a><span class="co">#&gt;    Embarked.Q (25.3%)</span></span>
-<span id="cb10-56"><a href="#cb10-56"></a><span class="co">#&gt;    Embarked.C (13.5%)</span></span>
-<span id="cb10-57"><a href="#cb10-57"></a><span class="co">#&gt;    Embarked.S (13.3%)</span></span>
-<span id="cb10-58"><a href="#cb10-58"></a><span class="co">#&gt;    Age (11.9%)</span></span>
-<span id="cb10-59"><a href="#cb10-59"></a><span class="co">#&gt;    Survived.FALSE (10.6%)</span></span>
-<span id="cb10-60"><a href="#cb10-60"></a><span class="co">#&gt; Process duration: 14.7s</span></span></code></pre></div>
+<span id="cb10-21"><a href="#cb10-21"></a><span class="co">#&gt; </span></span>
+<span id="cb10-22"><a href="#cb10-22"></a><span class="co">#&gt; 08:31:09.749: Project: AutoML_6_20211222_83109</span></span>
+<span id="cb10-23"><a href="#cb10-23"></a><span class="co">#&gt; 08:31:09.750: Setting stopping tolerance adaptively based on the training frame: 0.0400641540107502</span></span>
+<span id="cb10-24"><a href="#cb10-24"></a><span class="co">#&gt; 08:31:09.750: Build control seed: 0</span></span>
+<span id="cb10-25"><a href="#cb10-25"></a><span class="co">#&gt; 08:31:09.750: training frame: Frame key: AutoML_6_20211222_83109_training_train_sid_88a8_82    cols: 8    rows: 623  chunks: 1    size: 9412  checksum: -6266075352297987636</span></span>
+<span id="cb10-26"><a href="#cb10-26"></a><span class="co">#&gt; 08:31:09.750: validation frame: NULL</span></span>
+<span id="cb10-27"><a href="#cb10-27"></a><span class="co">#&gt; 08:31:09.750: leaderboard frame: NULL</span></span>
+<span id="cb10-28"><a href="#cb10-28"></a><span class="co">#&gt; 08:31:09.750: blending frame: NULL</span></span>
+<span id="cb10-29"><a href="#cb10-29"></a><span class="co">#&gt; 08:31:09.750: response column: tag</span></span>
+<span id="cb10-30"><a href="#cb10-30"></a><span class="co">#&gt; 08:31:09.750: fold column: null</span></span>
+<span id="cb10-31"><a href="#cb10-31"></a><span class="co">#&gt; 08:31:09.750: weights column: null</span></span>
+<span id="cb10-32"><a href="#cb10-32"></a><span class="co">#&gt; 08:31:09.751: Loading execution steps: [{XGBoost : [def_2 (1g, 10w), def_1 (2g, 10w), def_3 (3g, 10w), grid_1 (4g, 90w), lr_search (6g, 30w)]}, {GLM : [def_1 (1g, 10w)]}, {DRF : [def_1 (2g, 10w), XRT (3g, 10w)]}, {GBM : [def_5 (1g, 10w), def_2 (2g, 10w), def_3 (2g, 10w), def_4 (2g, 10w), def_1 (3g, 10w), grid_1 (4g, 60w), lr_annealing (6g, 10w)]}, {DeepLearning : [def_1 (3g, 10w), grid_1 (4g, 30w), grid_2 (5g, 30w), grid_3 (5g, 30w)]}, {completion : [resume_best_grids (10g, 60w)]}, {StackedEnsemble : [best_of_family_1 (1g, 5w), best_of_family_2 (2g, 5w), best_of_family_3 (3g, 5w), best_of_family_4 (4g, 5w), best_of_family_5 (5g, 5w), all_2 (2g, 10w), all_3 (3g, 10w), all_4 (4g, 10w), all_5 (5g, 10w), monotonic (6g, 10w), best_of_family_xgboost (6g, 10w), best_of_family_gbm (6g, 10w), all_xgboost (7g, 10w), all_gbm (7g, 10w), best_of_family_xglm (8g, 10w), all_xglm (8g, 10w), best_of_family (10g, 10w), best_N (10g, 10w)]}]</span></span>
+<span id="cb10-33"><a href="#cb10-33"></a><span class="co">#&gt; 08:31:09.751: Disabling Algo: StackedEnsemble as requested by the user.</span></span>
+<span id="cb10-34"><a href="#cb10-34"></a><span class="co">#&gt; 08:31:09.752: Disabling Algo: DeepLearning as requested by the user.</span></span>
+<span id="cb10-35"><a href="#cb10-35"></a><span class="co">#&gt; 08:31:09.752: Defined work allocations: [Work{def_2, XGBoost, ModelBuild, group=1, weight=10}, Work{def_1, GLM, ModelBuild, group=1, weight=10}, Work{def_5, GBM, ModelBuild, group=1, weight=10}, Work{def_1, XGBoost, ModelBuild, group=2, weight=10}, Work{def_1, DRF, ModelBuild, group=2, weight=10}, Work{def_2, GBM, ModelBuild, group=2, weight=10}, Work{def_3, GBM, ModelBuild, group=2, weight=10}, Work{def_4, GBM, ModelBuild, group=2, weight=10}, Work{def_3, XGBoost, ModelBuild, group=3, weight=10}, Work{XRT, DRF, ModelBuild, group=3, weight=10}, Work{def_1, GBM, ModelBuild, group=3, weight=10}, Work{grid_1, XGBoost, HyperparamSearch, group=4, weight=90}, Work{grid_1, GBM, HyperparamSearch, group=4, weight=60}, Work{lr_search, XGBoost, Selection, group=6, weight=30}, Work{lr_annealing, GBM, Selection, group=6, weight=10}, Work{resume_best_grids, virtual, Dynamic, group=10, weight=60}]</span></span>
+<span id="cb10-36"><a href="#cb10-36"></a><span class="co">#&gt; 08:31:09.752: Actual work allocations: [Work{def_2, XGBoost, ModelBuild, group=1, weight=10}, Work{def_1, GLM, ModelBuild, group=1, weight=10}, Work{def_5, GBM, ModelBuild, group=1, weight=10}, Work{def_1, XGBoost, ModelBuild, group=2, weight=10}, Work{def_1, DRF, ModelBuild, group=2, weight=10}, Work{def_2, GBM, ModelBuild, group=2, weight=10}, Work{def_3, GBM, ModelBuild, group=2, weight=10}, Work{def_4, GBM, ModelBuild, group=2, weight=10}, Work{def_3, XGBoost, ModelBuild, group=3, weight=10}, Work{XRT, DRF, ModelBuild, group=3, weight=10}, Work{def_1, GBM, ModelBuild, group=3, weight=10}, Work{grid_1, XGBoost, HyperparamSearch, group=4, weight=90}, Work{grid_1, GBM, HyperparamSearch, group=4, weight=60}, Work{lr_search, XGBoost, Selection, group=6, weight=30}, Work{lr_annealing, GBM, Selection, group=6, weight=10}, Work{resume_best_grids, virtual, Dynamic, group=10, weight=60}]</span></span>
+<span id="cb10-37"><a href="#cb10-37"></a><span class="co">#&gt; 08:31:09.752: AutoML job created: 2021.12.22 08:31:09.749</span></span>
+<span id="cb10-38"><a href="#cb10-38"></a><span class="co">#&gt; 08:31:09.764: AutoML build started: 2021.12.22 08:31:09.764</span></span>
+<span id="cb10-39"><a href="#cb10-39"></a><span class="co">#&gt; 08:31:09.764: Time assigned for XGBoost_1_AutoML_6_20211222_83109: 10.0s</span></span>
+<span id="cb10-40"><a href="#cb10-40"></a><span class="co">#&gt; 08:31:09.764: AutoML: starting XGBoost_1_AutoML_6_20211222_83109 model training</span></span>
+<span id="cb10-41"><a href="#cb10-41"></a><span class="co">#&gt; 08:31:09.795: XGBoost_1_AutoML_6_20211222_83109 [XGBoost def_2] started</span></span>
+<span id="cb10-42"><a href="#cb10-42"></a><span class="co">#&gt; 08:31:13.91: XGBoost_1_AutoML_6_20211222_83109 [XGBoost def_2] complete</span></span>
+<span id="cb10-43"><a href="#cb10-43"></a><span class="co">#&gt; 08:31:13.91: Adding model XGBoost_1_AutoML_6_20211222_83109 to leaderboard Leaderboard_AutoML_6_20211222_83109@@tag. Training time: model=0s, total=2s</span></span>
+<span id="cb10-44"><a href="#cb10-44"></a><span class="co">#&gt; 08:31:13.92: New leader: XGBoost_1_AutoML_6_20211222_83109, mean_per_class_error: 0.4946035431716546</span></span>
+<span id="cb10-45"><a href="#cb10-45"></a><span class="co">#&gt; 08:31:13.93: Time assigned for GLM_1_AutoML_6_20211222_83109: 13.3355s</span></span>
+<span id="cb10-46"><a href="#cb10-46"></a><span class="co">#&gt; 08:31:13.93: AutoML: starting GLM_1_AutoML_6_20211222_83109 model training</span></span>
+<span id="cb10-47"><a href="#cb10-47"></a><span class="co">#&gt; 08:31:13.122: GLM_1_AutoML_6_20211222_83109 [GLM def_1] started</span></span>
+<span id="cb10-48"><a href="#cb10-48"></a><span class="co">#&gt; 08:31:40.15: AutoML: out of time; skipping GLM_1_AutoML_6_20211222_83109 [GLM def_1]</span></span>
+<span id="cb10-49"><a href="#cb10-49"></a><span class="co">#&gt; - EUREKA: Succesfully generated 1 models</span></span>
+<span id="cb10-50"><a href="#cb10-50"></a><span class="co">#&gt;                            model_id mean_per_class_error   logloss      rmse</span></span>
+<span id="cb10-51"><a href="#cb10-51"></a><span class="co">#&gt; 1 XGBoost_1_AutoML_6_20211222_83109            0.4946035 0.8255072 0.5392879</span></span>
+<span id="cb10-52"><a href="#cb10-52"></a><span class="co">#&gt;         mse</span></span>
+<span id="cb10-53"><a href="#cb10-53"></a><span class="co">#&gt; 1 0.2908315</span></span>
+<span id="cb10-54"><a href="#cb10-54"></a><span class="co">#&gt; SELECTED MODEL: XGBoost_1_AutoML_6_20211222_83109</span></span>
+<span id="cb10-55"><a href="#cb10-55"></a><span class="co">#&gt; &gt;&gt;&gt; Running predictions for Pclass...</span></span>
+<span id="cb10-56"><a href="#cb10-56"></a><span class="co">#&gt; </span></span>
+<span id="cb10-57"><a href="#cb10-57"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
+<span id="cb10-58"><a href="#cb10-58"></a><span class="st">  </span><span class="er">|</span><span class="st">                                                                      </span><span class="er">|</span><span class="st">   </span><span class="dv">0</span>%</span>
+<span id="cb10-59"><a href="#cb10-59"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
+<span id="cb10-60"><a href="#cb10-60"></a><span class="st">  </span><span class="er">|======================================================================|</span><span class="st"> </span><span class="dv">100</span>%</span>
+<span id="cb10-61"><a href="#cb10-61"></a><span class="co">#&gt; </span></span>
+<span id="cb10-62"><a href="#cb10-62"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
+<span id="cb10-63"><a href="#cb10-63"></a><span class="st">  </span><span class="er">|</span><span class="st">                                                                      </span><span class="er">|</span><span class="st">   </span><span class="dv">0</span>%</span>
+<span id="cb10-64"><a href="#cb10-64"></a>  <span class="op">|</span><span class="st">                                                                            </span></span>
+<span id="cb10-65"><a href="#cb10-65"></a><span class="st">  </span><span class="er">|======================================================================|</span><span class="st"> </span><span class="dv">100</span>%</span>
+<span id="cb10-66"><a href="#cb10-66"></a><span class="co">#&gt; Model (1/1): XGBoost_1_AutoML_6_20211222_83109</span></span>
+<span id="cb10-67"><a href="#cb10-67"></a><span class="co">#&gt; Independent Variable: Pclass</span></span>
+<span id="cb10-68"><a href="#cb10-68"></a><span class="co">#&gt; Type: Classification (3 classes)</span></span>
+<span id="cb10-69"><a href="#cb10-69"></a><span class="co">#&gt; Algorithm: XGBOOST</span></span>
+<span id="cb10-70"><a href="#cb10-70"></a><span class="co">#&gt; Split: 70% training data (of 891 observations)</span></span>
+<span id="cb10-71"><a href="#cb10-71"></a><span class="co">#&gt; Seed: 0</span></span>
+<span id="cb10-72"><a href="#cb10-72"></a><span class="co">#&gt; </span></span>
+<span id="cb10-73"><a href="#cb10-73"></a><span class="co">#&gt; Test metrics:</span></span>
+<span id="cb10-74"><a href="#cb10-74"></a><span class="co">#&gt;    AUC = 0.78305</span></span>
+<span id="cb10-75"><a href="#cb10-75"></a><span class="co">#&gt;    ACC = 0.65672</span></span>
+<span id="cb10-76"><a href="#cb10-76"></a><span class="co">#&gt; </span></span>
+<span id="cb10-77"><a href="#cb10-77"></a><span class="co">#&gt; Most important variables:</span></span>
+<span id="cb10-78"><a href="#cb10-78"></a><span class="co">#&gt;    Age (52.3%)</span></span>
+<span id="cb10-79"><a href="#cb10-79"></a><span class="co">#&gt;    Survived.TRUE (9.0%)</span></span>
+<span id="cb10-80"><a href="#cb10-80"></a><span class="co">#&gt;    Survived.FALSE (8.5%)</span></span>
+<span id="cb10-81"><a href="#cb10-81"></a><span class="co">#&gt;    Embarked.C (7.5%)</span></span>
+<span id="cb10-82"><a href="#cb10-82"></a><span class="co">#&gt;    SibSp (4.7%)</span></span>
+<span id="cb10-83"><a href="#cb10-83"></a><span class="co">#&gt; Process duration: 41.7s</span></span></code></pre></div>
 <p>Let’s take a look at the plots generated into a single dashboard:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></code></pre></div>
@@ -402,8 +492,86 @@
 <p>Finally, a regression model with continuous values to predict <code>Fare</code> payed by passenger:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/h2o_automl.html">h2o_automl</a></span><span class="op">(</span><span class="va">df</span>, y <span class="op">=</span> <span class="st">"Fare"</span>, ignore <span class="op">=</span> <span class="st">"Pclass"</span>, exclude_algos <span class="op">=</span> <span class="cn">NULL</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; 08:31:53.815: Project: AutoML_7_20211222_83153</span>
+<span class="co">#&gt; 08:31:53.815: Setting stopping tolerance adaptively based on the training frame: 0.04052204492365539</span>
+<span class="co">#&gt; 08:31:53.816: Build control seed: 0</span>
+<span class="co">#&gt; 08:31:53.816: training frame: Frame key: AutoML_7_20211222_83153_training_train_sid_94ba_168    cols: 8    rows: 609  chunks: 1    size: 9258  checksum: 6553451394746990112</span>
+<span class="co">#&gt; 08:31:53.816: validation frame: NULL</span>
+<span class="co">#&gt; 08:31:53.816: leaderboard frame: NULL</span>
+<span class="co">#&gt; 08:31:53.816: blending frame: NULL</span>
+<span class="co">#&gt; 08:31:53.816: response column: tag</span>
+<span class="co">#&gt; 08:31:53.816: fold column: null</span>
+<span class="co">#&gt; 08:31:53.816: weights column: null</span>
+<span class="co">#&gt; 08:31:53.817: Loading execution steps: [{XGBoost : [def_2 (1g, 10w), def_1 (2g, 10w), def_3 (3g, 10w), grid_1 (4g, 90w), lr_search (6g, 30w)]}, {GLM : [def_1 (1g, 10w)]}, {DRF : [def_1 (2g, 10w), XRT (3g, 10w)]}, {GBM : [def_5 (1g, 10w), def_2 (2g, 10w), def_3 (2g, 10w), def_4 (2g, 10w), def_1 (3g, 10w), grid_1 (4g, 60w), lr_annealing (6g, 10w)]}, {DeepLearning : [def_1 (3g, 10w), grid_1 (4g, 30w), grid_2 (5g, 30w), grid_3 (5g, 30w)]}, {completion : [resume_best_grids (10g, 60w)]}, {StackedEnsemble : [best_of_family_1 (1g, 5w), best_of_family_2 (2g, 5w), best_of_family_3 (3g, 5w), best_of_family_4 (4g, 5w), best_of_family_5 (5g, 5w), all_2 (2g, 10w), all_3 (3g, 10w), all_4 (4g, 10w), all_5 (5g, 10w), monotonic (6g, 10w), best_of_family_xgboost (6g, 10w), best_of_family_gbm (6g, 10w), all_xgboost (7g, 10w), all_gbm (7g, 10w), best_of_family_xglm (8g, 10w), all_xglm (8g, 10w), best_of_family (10g, 10w), best_N (10g, 10w)]}]</span>
+<span class="co">#&gt; 08:31:53.817: Defined work allocations: [Work{def_2, XGBoost, ModelBuild, group=1, weight=10}, Work{def_1, GLM, ModelBuild, group=1, weight=10}, Work{def_5, GBM, ModelBuild, group=1, weight=10}, Work{best_of_family_1, StackedEnsemble, ModelBuild, group=1, weight=5}, Work{def_1, XGBoost, ModelBuild, group=2, weight=10}, Work{def_1, DRF, ModelBuild, group=2, weight=10}, Work{def_2, GBM, ModelBuild, group=2, weight=10}, Work{def_3, GBM, ModelBuild, group=2, weight=10}, Work{def_4, GBM, ModelBuild, group=2, weight=10}, Work{best_of_family_2, StackedEnsemble, ModelBuild, group=2, weight=5}, Work{all_2, StackedEnsemble, ModelBuild, group=2, weight=10}, Work{def_3, XGBoost, ModelBuild, group=3, weight=10}, Work{XRT, DRF, ModelBuild, group=3, weight=10}, Work{def_1, GBM, ModelBuild, group=3, weight=10}, Work{def_1, DeepLearning, ModelBuild, group=3, weight=10}, Work{best_of_family_3, StackedEnsemble, ModelBuild, group=3, weight=5}, Work{all_3, StackedEnsemble, ModelBuild, group=3, weight=10}, Work{grid_1, XGBoost, HyperparamSearch, group=4, weight=90}, Work{grid_1, GBM, HyperparamSearch, group=4, weight=60}, Work{grid_1, DeepLearning, HyperparamSearch, group=4, weight=30}, Work{best_of_family_4, StackedEnsemble, ModelBuild, group=4, weight=5}, Work{all_4, StackedEnsemble, ModelBuild, group=4, weight=10}, Work{grid_2, DeepLearning, HyperparamSearch, group=5, weight=30}, Work{grid_3, DeepLearning, HyperparamSearch, group=5, weight=30}, Work{best_of_family_5, StackedEnsemble, ModelBuild, group=5, weight=5}, Work{all_5, StackedEnsemble, ModelBuild, group=5, weight=10}, Work{lr_search, XGBoost, Selection, group=6, weight=30}, Work{lr_annealing, GBM, Selection, group=6, weight=10}, Work{monotonic, StackedEnsemble, ModelBuild, group=6, weight=10}, Work{best_of_family_xgboost, StackedEnsemble, ModelBuild, group=6, weight=10}, Work{best_of_family_gbm, StackedEnsemble, ModelBuild, group=6, weight=10}, Work{all_xgboost, StackedEnsemble, ModelBuild, group=7, weight=10}, Work{all_gbm, StackedEnsemble, ModelBuild, group=7, weight=10}, Work{best_of_family_xglm, StackedEnsemble, ModelBuild, group=8, weight=10}, Work{all_xglm, StackedEnsemble, ModelBuild, group=8, weight=10}, Work{resume_best_grids, virtual, Dynamic, group=10, weight=60}, Work{best_of_family, StackedEnsemble, ModelBuild, group=10, weight=10}, Work{best_N, StackedEnsemble, ModelBuild, group=10, weight=10}]</span>
+<span class="co">#&gt; 08:31:53.818: Actual work allocations: [Work{def_2, XGBoost, ModelBuild, group=1, weight=10}, Work{def_1, GLM, ModelBuild, group=1, weight=10}, Work{def_5, GBM, ModelBuild, group=1, weight=10}, Work{best_of_family_1, StackedEnsemble, ModelBuild, group=1, weight=5}, Work{def_1, XGBoost, ModelBuild, group=2, weight=10}, Work{def_1, DRF, ModelBuild, group=2, weight=10}, Work{def_2, GBM, ModelBuild, group=2, weight=10}, Work{def_3, GBM, ModelBuild, group=2, weight=10}, Work{def_4, GBM, ModelBuild, group=2, weight=10}, Work{best_of_family_2, StackedEnsemble, ModelBuild, group=2, weight=5}, Work{all_2, StackedEnsemble, ModelBuild, group=2, weight=10}, Work{def_3, XGBoost, ModelBuild, group=3, weight=10}, Work{XRT, DRF, ModelBuild, group=3, weight=10}, Work{def_1, GBM, ModelBuild, group=3, weight=10}, Work{def_1, DeepLearning, ModelBuild, group=3, weight=10}, Work{best_of_family_3, StackedEnsemble, ModelBuild, group=3, weight=5}, Work{all_3, StackedEnsemble, ModelBuild, group=3, weight=10}, Work{grid_1, XGBoost, HyperparamSearch, group=4, weight=90}, Work{grid_1, GBM, HyperparamSearch, group=4, weight=60}, Work{grid_1, DeepLearning, HyperparamSearch, group=4, weight=30}, Work{best_of_family_4, StackedEnsemble, ModelBuild, group=4, weight=5}, Work{all_4, StackedEnsemble, ModelBuild, group=4, weight=10}, Work{grid_2, DeepLearning, HyperparamSearch, group=5, weight=30}, Work{grid_3, DeepLearning, HyperparamSearch, group=5, weight=30}, Work{best_of_family_5, StackedEnsemble, ModelBuild, group=5, weight=5}, Work{all_5, StackedEnsemble, ModelBuild, group=5, weight=10}, Work{lr_search, XGBoost, Selection, group=6, weight=30}, Work{lr_annealing, GBM, Selection, group=6, weight=10}, Work{monotonic, StackedEnsemble, ModelBuild, group=6, weight=10}, Work{best_of_family_xgboost, StackedEnsemble, ModelBuild, group=6, weight=10}, Work{best_of_family_gbm, StackedEnsemble, ModelBuild, group=6, weight=10}, Work{all_xgboost, StackedEnsemble, ModelBuild, group=7, weight=10}, Work{all_gbm, StackedEnsemble, ModelBuild, group=7, weight=10}, Work{best_of_family_xglm, StackedEnsemble, ModelBuild, group=8, weight=10}, Work{all_xglm, StackedEnsemble, ModelBuild, group=8, weight=10}, Work{resume_best_grids, virtual, Dynamic, group=10, weight=60}, Work{best_of_family, StackedEnsemble, ModelBuild, group=10, weight=10}, Work{best_N, StackedEnsemble, ModelBuild, group=10, weight=10}]</span>
+<span class="co">#&gt; 08:31:53.818: AutoML job created: 2021.12.22 08:31:53.815</span>
+<span class="co">#&gt; 08:31:53.828: AutoML build started: 2021.12.22 08:31:53.828</span>
+<span class="co">#&gt; 08:31:53.828: Time assigned for XGBoost_1_AutoML_7_20211222_83153: 171.428578125s</span>
+<span class="co">#&gt; 08:31:53.828: AutoML: starting XGBoost_1_AutoML_7_20211222_83153 model training</span>
+<span class="co">#&gt; 08:31:53.839: XGBoost_1_AutoML_7_20211222_83153 [XGBoost def_2] started</span>
+<span class="co">#&gt; 08:31:56.67: XGBoost_1_AutoML_7_20211222_83153 [XGBoost def_2] complete</span>
+<span class="co">#&gt; 08:31:56.67: Adding model XGBoost_1_AutoML_7_20211222_83153 to leaderboard Leaderboard_AutoML_7_20211222_83153@@tag. Training time: model=0s, total=1s</span>
+<span class="co">#&gt; 08:31:56.68: New leader: XGBoost_1_AutoML_7_20211222_83153, mean_residual_deviance: 830.4367206836267</span>
+<span class="co">#&gt; 08:31:56.68: Time assigned for GLM_1_AutoML_7_20211222_83153: 239.104s</span>
+<span class="co">#&gt; 08:31:56.68: AutoML: starting GLM_1_AutoML_7_20211222_83153 model training</span>
+<span class="co">#&gt; 08:31:56.87: GLM_1_AutoML_7_20211222_83153 [GLM def_1] started</span>
+<span class="co">#&gt; 08:31:58.336: GLM_1_AutoML_7_20211222_83153 [GLM def_1] complete</span>
+<span class="co">#&gt; 08:31:58.336: Adding model GLM_1_AutoML_7_20211222_83153 to leaderboard Leaderboard_AutoML_7_20211222_83153@@tag. Training time: model=0s, total=1s</span>
+<span class="co">#&gt; 08:31:58.337: New leader: GLM_1_AutoML_7_20211222_83153, mean_residual_deviance: 739.2163401351919</span>
+<span class="co">#&gt; 08:31:58.337: Time assigned for GBM_1_AutoML_7_20211222_83153: 396.994s</span>
+<span class="co">#&gt; 08:31:58.337: AutoML: starting GBM_1_AutoML_7_20211222_83153 model training</span>
+<span class="co">#&gt; 08:31:58.353: GBM_1_AutoML_7_20211222_83153 [GBM def_5] started</span>
+<span class="co">#&gt; 08:32:01.574: GBM_1_AutoML_7_20211222_83153 [GBM def_5] complete</span>
+<span class="co">#&gt; 08:32:01.574: Adding model GBM_1_AutoML_7_20211222_83153 to leaderboard Leaderboard_AutoML_7_20211222_83153@@tag. Training time: model=0s, total=2s</span>
+<span class="co">#&gt; 08:32:01.575: Time assigned for StackedEnsemble_BestOfFamily_1_AutoML_7_20211222_83153: 592.253s</span>
+<span class="co">#&gt; 08:32:01.575: AutoML: starting StackedEnsemble_BestOfFamily_1_AutoML_7_20211222_83153 model training</span>
+<span class="co">#&gt; 08:32:01.584: StackedEnsemble_BestOfFamily_1_AutoML_7_20211222_83153 [StackedEnsemble best_of_family_1 (built with AUTO metalearner, using top model from each algorithm type)] started</span>
+<span class="co">#&gt; 08:32:02.693: StackedEnsemble_BestOfFamily_1_AutoML_7_20211222_83153 [StackedEnsemble best_of_family_1 (built with AUTO metalearner, using top model from each algorithm type)] complete</span>
+<span class="co">#&gt; 08:32:02.693: Adding model StackedEnsemble_BestOfFamily_1_AutoML_7_20211222_83153 to leaderboard Leaderboard_AutoML_7_20211222_83153@@tag. Training time: model=0s, total=0s</span>
+<span class="co">#&gt; 08:32:02.694: New leader: StackedEnsemble_BestOfFamily_1_AutoML_7_20211222_83153, mean_residual_deviance: 730.9754634709968</span>
+<span class="co">#&gt; 08:32:02.694: AutoML: hit the max_models limit; skipping XGBoost def_1</span>
+<span class="co">#&gt; 08:32:02.694: AutoML: hit the max_models limit; skipping DRF def_1</span>
+<span class="co">#&gt; 08:32:02.695: AutoML: hit the max_models limit; skipping GBM def_2</span>
+<span class="co">#&gt; 08:32:02.695: AutoML: hit the max_models limit; skipping GBM def_3</span>
+<span class="co">#&gt; 08:32:02.695: AutoML: hit the max_models limit; skipping GBM def_4</span>
+<span class="co">#&gt; 08:32:02.695: AutoML: hit the max_models limit; skipping XGBoost def_3</span>
+<span class="co">#&gt; 08:32:02.695: AutoML: hit the max_models limit; skipping DRF XRT (Extremely Randomized Trees)</span>
+<span class="co">#&gt; 08:32:02.695: AutoML: hit the max_models limit; skipping GBM def_1</span>
+<span class="co">#&gt; 08:32:02.695: AutoML: hit the max_models limit; skipping DeepLearning def_1</span>
+<span class="co">#&gt; 08:32:02.695: AutoML: hit the max_models limit; skipping XGBoost grid_1</span>
+<span class="co">#&gt; 08:32:02.695: AutoML: hit the max_models limit; skipping GBM grid_1</span>
+<span class="co">#&gt; 08:32:02.695: AutoML: hit the max_models limit; skipping DeepLearning grid_1</span>
+<span class="co">#&gt; 08:32:02.695: AutoML: hit the max_models limit; skipping DeepLearning grid_2</span>
+<span class="co">#&gt; 08:32:02.695: AutoML: hit the max_models limit; skipping DeepLearning grid_3</span>
+<span class="co">#&gt; 08:32:02.695: AutoML: hit the max_models limit; skipping XGBoost lr_search</span>
+<span class="co">#&gt; 08:32:02.695: AutoML: hit the max_models limit; skipping GBM lr_annealing</span>
+<span class="co">#&gt; 08:32:02.696: No base models, due to timeouts or the exclude_algos option. Skipping StackedEnsemble 'monotonic'.</span>
+<span class="co">#&gt; 08:32:02.696: Time assigned for StackedEnsemble_BestOfFamily_2_AutoML_7_20211222_83153: 98.522s</span>
+<span class="co">#&gt; 08:32:02.696: AutoML: starting StackedEnsemble_BestOfFamily_2_AutoML_7_20211222_83153 model training</span>
+<span class="co">#&gt; 08:32:02.705: StackedEnsemble_BestOfFamily_2_AutoML_7_20211222_83153 [StackedEnsemble best_of_family_xgboost (built with xgboost metalearner, using top model from each algorithm type)] started</span>
+<span class="co">#&gt; 08:32:08.131: StackedEnsemble_BestOfFamily_2_AutoML_7_20211222_83153 [StackedEnsemble best_of_family_xgboost (built with xgboost metalearner, using top model from each algorithm type)] complete</span>
+<span class="co">#&gt; 08:32:08.131: Adding model StackedEnsemble_BestOfFamily_2_AutoML_7_20211222_83153 to leaderboard Leaderboard_AutoML_7_20211222_83153@@tag. Training time: model=4s, total=4s</span>
+<span class="co">#&gt; 08:32:08.132: Time assigned for StackedEnsemble_BestOfFamily_3_AutoML_7_20211222_83153: 117.139203125s</span>
+<span class="co">#&gt; 08:32:08.133: AutoML: starting StackedEnsemble_BestOfFamily_3_AutoML_7_20211222_83153 model training</span>
+<span class="co">#&gt; 08:32:08.133: StackedEnsemble_BestOfFamily_3_AutoML_7_20211222_83153 [StackedEnsemble best_of_family_gbm (built with gbm metalearner, using top model from each algorithm type)] started</span>
+<span class="co">#&gt; 08:32:09.281: StackedEnsemble_BestOfFamily_3_AutoML_7_20211222_83153 [StackedEnsemble best_of_family_gbm (built with gbm metalearner, using top model from each algorithm type)] complete</span>
+<span class="co">#&gt; 08:32:09.281: Adding model StackedEnsemble_BestOfFamily_3_AutoML_7_20211222_83153 to leaderboard Leaderboard_AutoML_7_20211222_83153@@tag. Training time: model=0s, total=0s</span>
+<span class="co">#&gt; 08:32:09.283: Time assigned for StackedEnsemble_BestOfFamily_4_AutoML_7_20211222_83153: 292.2725s</span>
+<span class="co">#&gt; 08:32:09.283: AutoML: starting StackedEnsemble_BestOfFamily_4_AutoML_7_20211222_83153 model training</span>
+<span class="co">#&gt; 08:32:09.284: StackedEnsemble_BestOfFamily_4_AutoML_7_20211222_83153 [StackedEnsemble best_of_family_xglm (built with AUTO metalearner, using top model from each algorithm type)] started</span>
+<span class="co">#&gt; 08:32:10.418: StackedEnsemble_BestOfFamily_4_AutoML_7_20211222_83153 [StackedEnsemble best_of_family_xglm (built with AUTO metalearner, using top model from each algorithm type)] complete</span>
+<span class="co">#&gt; 08:32:10.418: Adding model StackedEnsemble_BestOfFamily_4_AutoML_7_20211222_83153 to leaderboard Leaderboard_AutoML_7_20211222_83153@@tag. Training time: model=0s, total=0s</span>
+<span class="co">#&gt; 08:32:10.420: AutoML: hit the max_models limit; skipping completion resume_best_grids</span>
+<span class="co">#&gt; 08:32:10.420: Actual modeling steps: [{XGBoost : [def_2 (1g, 10w)]}, {GLM : [def_1 (1g, 10w)]}, {GBM : [def_5 (1g, 10w)]}, {StackedEnsemble : [best_of_family_1 (1g, 5w), best_of_family_xgboost (6g, 10w), best_of_family_gbm (6g, 10w), best_of_family_xglm (8g, 10w)]}]</span>
+<span class="co">#&gt; 08:32:10.420: AutoML build stopped: 2021.12.22 08:32:10.420</span>
+<span class="co">#&gt; 08:32:10.420: AutoML build done: built 3 models</span>
+<span class="co">#&gt; 08:32:10.420: AutoML duration: 16.592 sec</span>
+<span class="co">#&gt; 08:32:10.427: Verifying training frame immutability. . .</span>
+<span class="co">#&gt; 08:32:10.427: Training frame was not mutated (as expected).</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
-<span class="co">#&gt; Model (1/7): StackedEnsemble_BestOfFamily_1_AutoML_7_20211215_194550</span>
+<span class="co">#&gt; Model (1/7): StackedEnsemble_BestOfFamily_1_AutoML_7_20211222_83153</span>
 <span class="co">#&gt; Independent Variable: Fare</span>
 <span class="co">#&gt; Type: Regression</span>
 <span class="co">#&gt; Algorithm: STACKEDENSEMBLE</span>
