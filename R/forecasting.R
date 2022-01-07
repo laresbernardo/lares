@@ -195,7 +195,7 @@ forecast_arima <- function(time, values, n_future = 30,
 #' @param project Character. Name of your forecast project for plot title
 #' @return List. Containing the forecast results, the prophet model, and a plot.
 #' @export
-prophesize <- function(df, n_future = 60, country = "AR",
+prophesize <- function(df, n_future = 60, country = NULL,
                        trend.param = 0.05, logged = FALSE, pout = 0.03,
                        project = "Prophet Forecast") {
   try_require("prophet")
@@ -231,7 +231,7 @@ prophesize <- function(df, n_future = 60, country = "AR",
     ) +
     scale_y_comma()
 
-  plots2 <- prophet_plot_components(m, forecast)
+  plots2 <- prophet_plot_components(m, forecast, render_plot = FALSE)
   plots2 <- lapply(plots2, function(x) x + theme_lares())
   plot2 <- wrap_plots(plots2, ncol = 1) +
     plot_annotation(title = "Forecast components", theme = theme_lares())

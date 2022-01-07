@@ -7,7 +7,7 @@
 prophesize(
   df,
   n_future = 60,
-  country = "AR",
+  country = NULL,
   trend.param = 0.05,
   logged = FALSE,
   pout = 0.03,
