@@ -92,7 +92,7 @@ have in \code{'tag'} (more than: regression; less than: classification)}
 guarantee reproducibility if max_models is used because max_time is
 resource limited.}
 
-\item{nfolds}{Number of folds for k-fold cross-validation. Must be >= 2; defaults to 5. Use 0 to disable cross-validation; 
+\item{nfolds}{Number of folds for k-fold cross-validation. Must be >= 2; defaults to 5. Use 0 to disable cross-validation;
 this will also disable Stacked Ensemble (thus decreasing the overall model performance).}
 
 \item{max_models, max_time}{Numeric. Max number of models and seconds

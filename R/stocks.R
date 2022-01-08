@@ -234,14 +234,14 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
           Symbol = rep(symbol, nrow(d)),
           Date = ymd(row.names(data.frame(d))),
           Div = as.vector(d),
-          DivReal = as.vector(d) * (100 - tax) / 100
+          DivReal = as.vector(d) * (1 - tax/100)
         )
         divs <- rbind(divs, div)
         if (parg == TRUE) {
           divs <- mutate(divs, DivReal = ifelse(
             .data$Date < as.Date("2020-03-03"),
-            as.vector(d) * 0.30,
-            as.vector(d) * 0.15
+            as.vector(d) * (1 - 0.30),
+            as.vector(d) * (1 - 0.15)
           ))
         }
       }
