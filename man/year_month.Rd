@@ -2,9 +2,15 @@
 % Please edit documentation in R/other_functions.R
 \name{year_month}
 \alias{year_month}
-\title{Convert Date into Year-Month (YYYY-MM)}
+\alias{year_quarter}
+\alias{year_week}
+\title{Convert Date into Year-Month, Year-Quarter or Year-Week Format}
 \usage{
 year_month(date)
+
+year_quarter(date)
+
+year_week(date)
 }
 \arguments{
 \item{date}{Date vector. Date to transform format.}
@@ -13,10 +19,13 @@ year_month(date)
 Vector with dates reformatted
 }
 \description{
-This function lets the user convert a date into YYYY-MM format
+This function lets the user convert a date into YYYY-MM, YYYY-QX,
+or YYYY-WW format easily.
 }
 \examples{
 year_month(Sys.Date())
+year_quarter(Sys.Date())
+year_week(Sys.Date())
 }
 \seealso{
 Other Data Wrangling: 
@@ -38,7 +47,6 @@ Other Data Wrangling:
 \code{\link{replaceall}()},
 \code{\link{textFeats}()},
 \code{\link{textTokenizer}()},
-\code{\link{vector2text}()},
-\code{\link{year_week}()}
+\code{\link{vector2text}()}
 }
 \concept{Data Wrangling}

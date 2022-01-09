@@ -28,30 +28,29 @@ try_require <- function(package, stop = TRUE) {
 }
 
 ####################################################################
-#' Convert Date into Year-Month (YYYY-MM)
+#' Convert Date into Year-Month, Year-Quarter or Year-Week Format
 #'
-#' This function lets the user convert a date into YYYY-MM format
+#' This function lets the user convert a date into YYYY-MM, YYYY-QX,
+#' or YYYY-WW format easily.
 #'
 #' @family Data Wrangling
 #' @param date Date vector. Date to transform format.
+#' 
 #' @return Vector with dates reformatted
 #' @examples
 #' year_month(Sys.Date())
+#' year_quarter(Sys.Date())
+#' year_week(Sys.Date())
 #' @export
 year_month <- function(date) {
   paste(year(date), str_pad(lubridate::month(date), 2, pad = "0"), sep = "-")
 }
-
-####################################################################
-#' Convert Date into Year-Week (YYYY-WW)
-#'
-#' This function lets the user convert a date into YYYY-WW format
-#'
-#' @family Data Wrangling
-#' @param date Date. Date we wish to transform
-#' @return Vector with dates reformatted
-#' @examples
-#' year_week(Sys.Date())
+#' @rdname year_month
+#' @export
+year_quarter <- function(date) {
+  paste(year(date), date_cuts(date, type = "Q"), sep = "-")
+}
+#' @rdname year_month
 #' @export
 year_week <- function(date) {
   paste(year(date), str_pad(lubridate::week(date), 2, pad = "0"), sep = "-")

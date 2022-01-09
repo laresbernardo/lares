@@ -19,7 +19,7 @@ daily_stocks(hist, trans, tickers = NA, window = "MAX")
 data.frame. Processed at date and symbol level.
 }
 \description{
-This function creates a dataframe will all relevant metrics and values,
+This function creates a dataframe with all relevant metrics and values,
 for each ticker or symbol, for every day since inception.
 }
 \seealso{

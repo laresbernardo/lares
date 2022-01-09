@@ -83,8 +83,7 @@ Other Data Wrangling:
 \code{\link{replaceall}()},
 \code{\link{textFeats}()},
 \code{\link{vector2text}()},
-\code{\link{year_month}()},
-\code{\link{year_week}()}
+\code{\link{year_month}()}
 
 Other Text Mining: 
 \code{\link{cleanNames}()},

@@ -316,7 +316,7 @@ plot.stocks_hist <- function(x, type = 1, ...) {
 ####################################################################
 #' Daily Stocks Dataframe
 #'
-#' This function creates a dataframe will all relevant metrics and values,
+#' This function creates a dataframe with all relevant metrics and values,
 #' for each ticker or symbol, for every day since inception.
 #'
 #' @family Investment

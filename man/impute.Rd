@@ -43,8 +43,7 @@ Other Data Wrangling:
 \code{\link{textFeats}()},
 \code{\link{textTokenizer}()},
 \code{\link{vector2text}()},
-\code{\link{year_month}()},
-\code{\link{year_week}()}
+\code{\link{year_month}()}
 
 Other Machine Learning: 
 \code{\link{ROC}()},
