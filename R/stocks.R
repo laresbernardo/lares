@@ -784,6 +784,41 @@ splot_growth <- function(p, save = FALSE) {
 
 
 ####################################################################
+#' Portfolio Plots: Dividends per Year and Quarter
+#'
+#' This function plots a portfolio's historical dividends incomes
+#' grouped by quarter an year.
+#'
+#' @family Investment
+#' @family Investment Plots
+#' @inheritParams splot_summary
+#' @param type Integer. Typo of plot. 1 for incomes. 
+#' @return ggplot object
+#' @export
+splot_divs <- function(p, type = 1) {
+  if (type == 1) p %>%
+    mutate(year = year(.data$Date),
+           quarter = date_cuts(.data$Date, "Q")) %>%
+    group_by(.data$year, .data$quarter) %>%
+    summarise(Dividend = sum(.data$Dividend)) %>%
+    ungroup() %>%
+    group_by(year) %>%
+    mutate(DividendYear = sum(.data$Dividend)) %>%
+    ungroup() %>%
+    mutate(year = sprintf("%s\n%s", .data$year, formatNum(.data$DividendYear, pre = "$", abbr = TRUE))) %>%
+    filter(.data$DividendYear > 0) %>%
+    ggplot(aes(x = .data$quarter, y = .data$Dividend, fill = .data$quarter)) +
+    geom_col() + 
+    facet_grid(.~year) +
+    scale_y_dollar() +
+    labs(title = "Dividends per Quarter and Year",
+         subtitle = sprintf("Total: %s", formatNum(sum(p$Dividend), 0, pre = "$")),
+         x = NULL, y = "Dividends (post-tax)") +
+    theme_lares(pal = 1, grid = "Yy", legend = "none")
+}
+
+
+####################################################################
 #' Portfolio Plots: Daily ROI
 #'
 #' This function plots a portfolio's historical ROI since inception
@@ -964,7 +999,7 @@ etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
   nodata <- NULL
   for (i in seq_along(etf)) {
     info <- toupper(etf[i])
-    url <- paste0("https://etfdb.com/etf/", info)
+    url <- sprintf("https://etfdb.com/etf/%s/", info)
     # exists <- tryCatch({!httr::http_error(url)}, error = function(err) {FALSE})
     sector <- tryCatch(
       suppressWarnings(content(GET(url))),
@@ -1137,7 +1172,8 @@ stocks_obj <- function(data = stocks_file(),
   ret[["plots_fixed"]] <- list(
     "Positions" = splot_summary(p, s),
     "Types of Stocks" = splot_types(s),
-    "ETFs by Industry" = if (sectors) splot_etf(s, cache = cache) else NULL
+    "ETFs by Industry" = if (sectors) splot_etf(s, cache = cache) else NULL,
+    "Dividends Incomes" = if (sum(p$Dividend) > 0) splot_divs(p, type = 1) else NULL
   )
 
   # Relative plots (using time windows)
@@ -1342,6 +1378,7 @@ stocks_report <- function(data = NA,
 }
 
 # # TESTING
+# devtools::load_all()
 # library(lares)
 # library(tidyverse)
 # library(openxlsx)
@@ -1355,7 +1392,7 @@ stocks_report <- function(data = NA,
 # trans <- data$transactions
 # cash <- data$cash
 # tickers <- data$portfolio
-# q <- stocks_obj(window = c("1M","1Y","MAX"), sectors = TRUE)
+# q <- stocks_obj(window = c("1M","1Y","MAX"), sectors = FALSE)
 # hist <- q$quotes
 # p <- q$portfolio
 # s <- q$stocks

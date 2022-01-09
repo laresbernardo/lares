@@ -32,6 +32,7 @@ Other Investment:
 \code{\link{daily_stocks}()},
 \code{\link{etf_sector}()},
 \code{\link{splot_change}()},
+\code{\link{splot_divs}()},
 \code{\link{splot_etf}()},
 \code{\link{splot_growth}()},
 \code{\link{splot_summary}()},
@@ -44,6 +45,7 @@ Other Investment:
 
 Other Investment Plots: 
 \code{\link{splot_change}()},
+\code{\link{splot_divs}()},
 \code{\link{splot_etf}()},
 \code{\link{splot_growth}()},
 \code{\link{splot_summary}()},
