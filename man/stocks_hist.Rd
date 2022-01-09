@@ -10,7 +10,7 @@ stocks_hist(
   from = Sys.Date() - 365,
   to = Sys.Date(),
   today = TRUE,
-  tax = 30,
+  tax = 15,
   parg = FALSE,
   cache = TRUE,
   quiet = FALSE

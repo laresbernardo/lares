@@ -169,7 +169,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
                         from = Sys.Date() - 365,
                         to = Sys.Date(),
                         today = TRUE,
-                        tax = 30,
+                        tax = 15,
                         parg = FALSE,
                         cache = TRUE,
                         quiet = FALSE) {
@@ -224,7 +224,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
       # Append to other symbols' data
       data <- rbind(data, values)
 
-      # Dividends
+      # Dividends (with Taxes deduction)
       d <- suppressWarnings(getDividends(
         as.character(symbol),
         from = start_date, split.adjust = FALSE
@@ -234,16 +234,19 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
           Symbol = rep(symbol, nrow(d)),
           Date = ymd(row.names(data.frame(d))),
           Div = as.vector(d),
-          DivReal = as.vector(d) * (1 - tax/100)
+          TaxP = tax/100
         )
-        divs <- rbind(divs, div)
-        if (parg == TRUE) {
-          divs <- mutate(divs, DivReal = ifelse(
+        if (parg) {
+          div <- mutate(div, TaxP = ifelse(
             .data$Date < as.Date("2020-03-03"),
-            as.vector(d) * (1 - 0.30),
-            as.vector(d) * (1 - 0.15)
+            (1 - 30/100), # Interactive Brokers (Colombia)
+            (1 - 15/100) # Schwab (Argentina/Veneezuela)
           ))
         }
+        div <- mutate(div,
+                      DivReal = as.vector(d) * (1 - .data$TaxP),
+                      Symbol = as.character(.data$Symbol))
+        divs <- rbind(divs, div)
       }
 
       if (!quiet & length(symbols) > 1) {
@@ -264,8 +267,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
       Symbol = as.character(.data$Symbol)
     )
   if (length(divs) > 0) {
-    results <- results %>%
-      left_join(mutate(divs, Symbol = as.character(.data$Symbol)), by = c("Date", "Symbol"))
+    results <- left_join(results, divs, by = c("Date", "Symbol"))
   }
   results <- results %>%
     replace(is.na(.), 0) %>%
@@ -354,14 +356,17 @@ daily_stocks <- function(hist, trans, tickers = NA, window = "MAX") {
       CumCost = cumsum(.data$Cost),
       CumValue = .data$CumQuant * .data$Value,
       CumROI = 100 * (.data$CumValue / .data$CumInvested - 1),
+      DivPreTax = .data$Div * .data$CumQuant,
       Dividend = .data$DivReal * .data$CumQuant,
       DifUSD = .data$CumValue - .data$Invested - lag(.data$CumValue),
+      CumDivPreTax = cumsum(.data$DivPreTax),
       CumDividend = cumsum(.data$Dividend)
     ) %>%
     select(
-      .data$Date, .data$Symbol, .data$Value, .data$Quant, .data$Each, .data$Invested,
-      .data$Cost, .data$Dividend, .data$CumValue, .data$CumInvested, .data$CumROI,
-      .data$CumQuant, .data$DifUSD, .data$CumDividend, .data$CumCost
+      .data$Date, .data$Symbol, .data$Value, .data$Quant, .data$Each,
+      .data$Invested, .data$Cost, .data$Dividend,
+      .data$CumValue, .data$CumInvested, .data$CumROI, .data$CumQuant,
+      .data$DifUSD, .data$CumDivPreTax, .data$CumDividend, .data$CumCost
     ) %>%
     group_by(.data$Date, .data$Symbol) %>%
     slice(1) %>%
@@ -1028,7 +1033,7 @@ splot_etf <- function(s, keep_all = FALSE, cache = TRUE, save = FALSE) {
     etfs <- etf_sector(s)
   }
 
-  if (nrow(etfs) > 0) {
+  if (length(etfs) > 0) {
     df <- etfs %>%
       right_join(select(s, .data$Symbol, .data$CumValue, .data$Date) %>%
         filter(.data$Date == max(.data$Date)) %>%
@@ -1350,7 +1355,7 @@ stocks_report <- function(data = NA,
 # trans <- data$transactions
 # cash <- data$cash
 # tickers <- data$portfolio
-# q <- stocks_obj(window = c("1M","YTD","1Y","MAX"), sectors = TRUE)
+# q <- stocks_obj(window = c("1M","1Y","MAX"), sectors = TRUE)
 # hist <- q$quotes
 # p <- q$portfolio
 # s <- q$stocks
