@@ -499,6 +499,9 @@
     <loc>https://laresbernardo.github.io/lares/reference/splot_change.html</loc>
   </url>
   <url>
+    <loc>https://laresbernardo.github.io/lares/reference/splot_divs.html</loc>
+  </url>
+  <url>
     <loc>https://laresbernardo.github.io/lares/reference/splot_etf.html</loc>
   </url>
   <url>
@@ -590,9 +593,6 @@
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/year_month.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/year_week.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/zerovar.html</loc>
