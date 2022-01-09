@@ -234,17 +234,17 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
           Symbol = rep(symbol, nrow(d)),
           Date = ymd(row.names(data.frame(d))),
           Div = as.vector(d),
-          TaxP = tax/100
+          DivTaxP = tax/100
         )
         if (parg) {
-          div <- mutate(div, TaxP = ifelse(
+          div <- mutate(div, DivTaxP = ifelse(
             .data$Date < as.Date("2020-03-03"),
-            (1 - 30/100), # Interactive Brokers (Colombia)
-            (1 - 15/100) # Schwab (Argentina/Veneezuela)
+            (30/100), # Interactive Brokers (Colombia)
+            (15/100) # Schwab (Argentina/Veneezuela)
           ))
         }
         div <- mutate(div,
-                      DivReal = as.vector(d) * (1 - .data$TaxP),
+                      DivReal = as.vector(d) * (1 - .data$DivTaxP),
                       Symbol = as.character(.data$Symbol))
         divs <- rbind(divs, div)
       }
