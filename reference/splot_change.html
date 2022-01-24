@@ -76,7 +76,7 @@ inception, with weighted attributions or absolute values.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">splot_change</span><span class="op">(</span>
   <span class="va">p</span>,
   <span class="va">s</span>,
-  weighted <span class="op">=</span> <span class="cn">TRUE</span>,
+  rel <span class="op">=</span> <span class="cn">TRUE</span>,
   group <span class="op">=</span> <span class="cn">FALSE</span>,
   n_days <span class="op">=</span> <span class="fl">365</span>,
   keep_old <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -90,9 +90,9 @@ inception, with weighted attributions or absolute values.</p>
 <dd><p>Dataframe. Result from <code><a href="daily_portfolio.html">daily_portfolio()</a></code></p></dd>
 <dt>s</dt>
 <dd><p>Dataframe. Result from <code><a href="daily_stocks.html">daily_stocks()</a></code></p></dd>
-<dt>weighted</dt>
-<dd><p>Boolean. Should variation values be weighted to the
-portfolio (or simply compared with value since inception)?</p></dd>
+<dt>rel</dt>
+<dd><p>Boolean. Relative delta values (weighted with portfolio)?
+If not, absolute monetary delta values.</p></dd>
 <dt>group</dt>
 <dd><p>Boolean. Group stocks by stocks type?</p></dd>
 <dt>n_days</dt>
@@ -145,7 +145,7 @@ sold entirely?</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>
