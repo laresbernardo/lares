@@ -598,14 +598,15 @@ splot_summary <- function(p, s, save = FALSE) {
 #' @family Investment Plots
 #' @inheritParams splot_summary
 #' @inheritParams stocks_file
-#' @param weighted Boolean. Should variation values be weighted to the
-#' portfolio (or simply compared with value since inception)?
+#' @param rel Boolean. Relative delta values (weighted with portfolio)?
+#' If not, absolute monetary delta values.
 #' @param group Boolean. Group stocks by stocks type?
 #' @param n_days Integer. How many days back you want to see?
 #' sold entirely?
 #' @return ggplot object
 #' @export
-splot_change <- function(p, s, weighted = TRUE,
+splot_change <- function(p, s,
+                         rel = TRUE,
                          group = FALSE,
                          n_days = 365,
                          keep_old = FALSE,
@@ -613,85 +614,87 @@ splot_change <- function(p, s, weighted = TRUE,
   check_attr(p, check = "daily_portfolio")
   check_attr(s, check = "daily_stocks")
 
-  current <- s[s$Date == max(s$Date), ]
-  current_stocks <- as.character(current$Symbol[current$CumQuant > 0])
+  current_stocks <- as.character(s$Symbol[s$Date == max(s$Date) & s$CumQuant > 0])
+  start_stocks <- as.character(s$Symbol[s$Date == max(s$Date) - n_days & s$CumQuant > 0])
 
   d <- s %>%
+    filter(CumQuant > 0) %>%
+    arrange(.data$Date) %>%
+    {
+      if (!is.na(n_days)) filter(., .data$Date >= max(s$Date) - n_days) else .
+    } %>%
     select(
-      .data$Date, .data$Symbol, .data$CumQuant, .data$CumValue,
+      .data$Date, .data$Symbol, .data$Value, .data$CumQuant, .data$CumValue,
       .data$CumInvested, .data$Invested, .data$wt
     ) %>%
     {
       if (!keep_old) filter(., as.character(.data$Symbol) %in% current_stocks) else .
     } %>%
-    arrange(.data$Date) %>%
     group_by(.data$Symbol) %>%
-    mutate(
-      first_date = .data$Date == min(.data$Date),
-      minus = cumsum(ifelse(.data$first_date & .data$Date <= min(s$Date), 0, .data$Invested))
-    ) %>%
+    mutate(first_date = .data$Date == min(.data$Date)) %>%
+           #run_fix = .data$Symbol %in% start_stocks) %>%
+    #mutate(CumValue = .data$CumValue - .data$CumValue[.data$first_date] * as.integer(.data$run_fix)) %>%
     mutate(CumValue = .data$CumValue - .data$CumValue[.data$first_date]) %>%
     {
-      if (weighted) {
-        mutate(., Hist = 100 * (.data$CumValue - .data$minus) / .data$CumInvested)
+      if (rel) {
+        mutate(., Hist = .data$CumValue / .data$CumInvested)
       } else {
-        mutate(., Hist = .data$CumValue - .data$minus)
+        mutate(., Hist = .data$CumValue)
       }
     } %>%
     mutate(Hist = ifelse(.data$CumQuant == 0, NA, .data$Hist)) %>%
-    mutate(BuySell = ifelse(.data$Invested > 0, "Bought", ifelse(.data$Invested < 0, "Sold", NA))) %>%
+    mutate(BuySell = case_when(
+      .data$Invested > 0 ~ "Bought",
+      .data$Invested < 0 ~ "Sold",
+    )) %>%
+    mutate(BuySellShape = case_when(
+      BuySell == "Bought" ~ "24",
+      BuySell == "Sold" ~ "25"
+    )) %>%
     mutate(Hist = ifelse(.data$CumQuant > 0, .data$Hist, tail(.data$Hist, 1))) %>%
-    {
-      if (!is.na(n_days)) filter(., .data$Date >= max(s$Date) - n_days) else .
-    } %>%
     mutate(Symbol = factor(.data$Symbol, levels = current$Symbol)) %>%
     filter(.data$CumQuant > 0)
-
+  
   # Plot auxiliary stuff
-  labels <- group_by(d, .data$Symbol) %>% filter(.data$Date == max(.data$Date))
-  amounts <- filter(d, .data$Invested != 0) %>%
-    mutate(label = paste0(round(.data$Invested / 1000, 1), "K"))
   days <- as.integer(difftime(range(d$Date)[2], range(d$Date)[1], units = "days"))
-
-  plot <- ggplot(d, aes(x = .data$Date, y = .data$Hist, colour = .data$Symbol)) +
+  plot <- ggplot(d, aes(x = .data$Date, y = .data$Hist)) +
     geom_vline(xintercept = max(s$Date), linetype = "dashed", alpha = 0.7) +
-    ylab(glued("Total changed [{x}]", x = ifelse(weighted, "%", "$"))) +
+    ylab(glued("Total changed [{x}]", x = ifelse(rel, "%", "$"))) +
     geom_hline(yintercept = 0, alpha = 0.8, colour = "black") +
-    geom_line(alpha = 0.9, size = 0.5, na.rm = TRUE) +
-    geom_point(aes(size = abs(.data$Invested), colour = .data$BuySell), na.rm = TRUE) +
-    scale_y_comma(position = "right") +
+    geom_line(aes(colour = .data$Symbol),
+              alpha = 0.9, size = 0.5, na.rm = TRUE) +
+    geom_point(data = filter(d, !is.na(BuySellShape)),
+               aes(shape = .data$BuySellShape, colour = .data$Symbol),
+               fill = "grey10", na.rm = TRUE) +
+    ggplot2::scale_shape_manual(values = c(24, 25), labels = c("Bought", "Sold")) +
     scale_size(range = c(0, 3.2)) +
-    guides(size = "none", colour = "none") +
+    guides(size = "none", colour = "none", fill = "none") +
     xlim(min(d$Date), max(d$Date) + round(days * 0.06)) +
     labs(
-      title = glued(
-        "Stocks Daily Change [{x}]",
-        x = ifelse(weighted, "%", "$")
-      ),
+      title = glued("Weighted Stocks Daily Change [{x}]", x = ifelse(rel, "%", "$")),
       x = NULL, colour = NULL,
-      subtitle = "Absolute delta values since first purchase"
+      subtitle = sprintf("%s delta since %s or first transaction",
+                         ifelse(rel, "Relative total", "Total"), min(d$Date)),
+      shape = "Transaction"
     ) +
-    theme_lares(pal = 2) +
+    theme_lares(pal = 2, legend = "top") +
     geom_text(
-      data = d[which(d$Date == max(d$Date)), ], aes(label = .data$Symbol),
+      data = d[which(d$Date == max(d$Date)), ],
+      aes(label = .data$Symbol, colour = .data$Symbol),
       hjust = -0.1, size = 3
     )
 
   if (group) plot <- plot + facet_grid(.data$Type ~ ., scales = "free", switch = "both")
-  if (weighted) {
-    plot <- plot +
-      labs(subtitle = "Real weighted portfolio delta values")
+  if (!is.na(n_days)) plot <- plot + labs(caption = glued("Last {n_days} days"))
+  if (rel) {
+    plot <- plot + scale_y_percent(position = "right")
+  } else {
+    plot <- plot + scale_y_formatNum(position = "right", abbr = TRUE, pos = "$")
   }
-  if (!is.na(n_days)) {
-    plot <- plot +
-      labs(caption = glued("Last {n_days} days"))
-  }
-
   if (save) {
     plot <- plot +
       ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300)
   }
-
   return(plot)
 }
 
@@ -957,8 +960,8 @@ splot_types <- function(s, save = FALSE) {
       width = 1, stat = "identity"
     ) +
     facet_grid(. ~ label, scales = "free") +
-    scale_y_comma(expand = c(0, 0)) +
     theme_lares(pal = 1) +
+    scale_y_formatNum(expand = c(0, 0), abbr = TRUE, pre = "$") +
     labs(x = NULL, y = "Total value", title = "Portfolio's Category Distribution")
   if (save) {
     plot <- plot +
@@ -1188,8 +1191,8 @@ stocks_obj <- function(data = stocks_file(),
     plots <- list()
     # plots[["ROI"]] <- splot_roi(p, n_days = 5)
     plots[["History"]] <- splot_growth(p)
-    plots[["Relative Growth"]] <- splot_change(p, s, weighted = TRUE, n_days = NA, keep_old = FALSE)
-    plots[["Absolute Growth"]] <- splot_change(p, s, weighted = FALSE, n_days = NA, keep_old = FALSE)
+    plots[["Relative Growth"]] <- splot_change(p, s, rel = TRUE, n_days = NA, keep_old = FALSE)
+    plots[["Absolute Growth"]] <- splot_change(p, s, rel = FALSE, n_days = NA, keep_old = FALSE)
     return(plots)
   })
   names(plots_relative) <- sprintf("plots_%s", window)
@@ -1392,8 +1395,20 @@ stocks_report <- function(data = NA,
 # trans <- data$transactions
 # cash <- data$cash
 # tickers <- data$portfolio
-# q <- stocks_obj(window = c("1M","1Y","MAX"), sectors = FALSE)
+# q <- stocks_obj(window = c("1M","1Y","MAX"), sectors = FALSE, cache = TRUE)
 # hist <- q$quotes
 # p <- q$portfolio
 # s <- q$stocks
 # stocks_report(q, dir = "~/Desktop")
+
+# s %>%
+#   filter(Value > 0, CumQuant > 0) %>%
+#   select(Symbol, Date, CumQuant, Value) %>%
+#   arrange(Date) %>%
+#   group_by(Symbol) %>%
+#   mutate(RelValue = Value / Value[1]) %>%
+#   #filter(Symbol == "TSLA") %>%
+#   ggplot(aes(x = Date, y = log(RelValue), colour = Symbol)) +
+#   geom_line() +
+#   theme_lares(pal = 2) +
+#   scale_y_percent()

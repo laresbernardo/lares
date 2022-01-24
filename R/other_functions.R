@@ -416,6 +416,7 @@ balance_data <- function(df, variable, rate = 1, target = "auto", seed = 0, quie
   on.exit(set.seed(seed))
   var <- enquo(variable)
   variable <- rlang::as_label(var)
+  stopifnot(variable %in% names(df))
   names(df)[names(df) == variable] <- "tag"
   tags <- group_by(df, .data$tag) %>%
     summarize(n = n()) %>%
