@@ -255,8 +255,9 @@ scrabble_words <- function(tiles,
                            language = Sys.getenv("LARES_LANG"),
                            words = NA,
                            quiet = FALSE) {
+  tiles <- paste(tiles, collapse = "")
   if (is.data.frame(scores)) {
-    if (!colnames(scores) %in% c("tiles", "scores")) {
+    if (!all(colnames(scores) %in% c("tiles", "scores"))) {
       stop("Please, provide a valid scores data.frame with 'tiles' and 'scores' columns")
     }
   } else {
@@ -264,7 +265,7 @@ scrabble_words <- function(tiles,
   }
 
   dictionary <- scrabble_dictionary(language)[, 1]
-  if (!is.na(words)) {
+  if (!is.na(words[1])) {
     message(paste(">>> Added", formatNum(length(words), 0), "custom words"))
     dictionary <- c(words, dictionary)
   }
@@ -277,6 +278,7 @@ scrabble_words <- function(tiles,
   # Add logical tiles when using force_ arguments
   tiles <- .add_letters(force_start, tiles)
   tiles <- .add_letters(force_end, tiles)
+  tiles <- .add_letters(force_str, tiles)
   ntiles <- as.integer(length(tiles))
 
   # Words can't have more letters than inputs
@@ -285,8 +287,8 @@ scrabble_words <- function(tiles,
   if (force_n > 0) words <- words[nchar(words) == force_n]
   if (force_max > 0) words <- words[nchar(words) <= force_max]
 
-  # Words can't have different letters than inputs (unless there are free tiles)
-  if (free == 0) words <- words[grepl(v2t(tiles, sep = "|", quotes = FALSE), words)]
+  # Words can't have different letters than inputs
+  words <- words[.all_tiles_present(words, tiles, free = 0)]
   # Force start/end strings
   words <- .force_words(words, force_start)
   words <- .force_words(.reverse(words), .reverse(force_end), rev = TRUE)
@@ -298,12 +300,19 @@ scrabble_words <- function(tiles,
     }
   }
 
-  if (length(word) > 0) {
+  if (length(words) > 0) {
     done <- scrabble_score(words, scores)
     return(as_tibble(done))
   } else {
     message("No words found with set criteria!")
   }
+}
+
+# Tile used, tile that must be skipped on next iterations
+.all_tiles_present <- function(words, tiles, free = 0) {
+  free <- free + sum(tiles == "_")
+  for (x in tiles) words <- sub(x, "", words)
+  nchar(words) <= free
 }
 
 .force_words <- function(words, pattern, rev = FALSE, invert = FALSE) {
@@ -342,13 +351,12 @@ scrabble_words <- function(tiles,
   return(tiles)
 }
 
-# library(lares)
+# devtools::load_all()
 # library(dplyr)
 # library(stringr)
 # Sys.setenv("LARES_LANG" = "es")
-#
 # words <- scrabble_dictionary("es")$words
-#
+# 
 # # Play and win!
 # scrabble_words(tiles = "abcdef",
 #                free = 0,
@@ -358,5 +366,7 @@ scrabble_words <- function(tiles,
 #                force_n = 0,
 #                force_max = 0,
 #                quiet = FALSE)
-#
-# x <- scrabble_score(words, scores)
+# # Fix this case (not using the tiles provided)
+# scrabble_words(tiles = "bernardo",
+#                free = 0,
+#                quiet = FALSE)

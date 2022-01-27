@@ -618,7 +618,7 @@ splot_change <- function(p, s,
   start_stocks <- as.character(s$Symbol[s$Date == max(s$Date) - n_days & s$CumQuant > 0])
 
   d <- s %>%
-    filter(CumQuant > 0) %>%
+    filter(.data$CumQuant > 0) %>%
     arrange(.data$Date) %>%
     {
       if (!is.na(n_days)) filter(., .data$Date >= max(s$Date) - n_days) else .
@@ -648,11 +648,11 @@ splot_change <- function(p, s,
       .data$Invested < 0 ~ "Sold",
     )) %>%
     mutate(BuySellShape = case_when(
-      BuySell == "Bought" ~ "24",
-      BuySell == "Sold" ~ "25"
+      .data$BuySell == "Bought" ~ "24",
+      .data$BuySell == "Sold" ~ "25"
     )) %>%
     mutate(Hist = ifelse(.data$CumQuant > 0, .data$Hist, tail(.data$Hist, 1))) %>%
-    mutate(Symbol = factor(.data$Symbol, levels = current$Symbol)) %>%
+    mutate(Symbol = factor(.data$Symbol, levels = current_stocks$Symbol)) %>%
     filter(.data$CumQuant > 0)
   
   # Plot auxiliary stuff
@@ -663,7 +663,7 @@ splot_change <- function(p, s,
     geom_hline(yintercept = 0, alpha = 0.8, colour = "black") +
     geom_line(aes(colour = .data$Symbol),
               alpha = 0.9, size = 0.5, na.rm = TRUE) +
-    geom_point(data = filter(d, !is.na(BuySellShape)),
+    geom_point(data = filter(d, !is.na(.data$BuySellShape)),
                aes(shape = .data$BuySellShape, colour = .data$Symbol),
                fill = "grey10", na.rm = TRUE) +
     ggplot2::scale_shape_manual(values = c(24, 25), labels = c("Bought", "Sold")) +
