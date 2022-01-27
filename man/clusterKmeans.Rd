@@ -12,7 +12,7 @@ clusterKmeans(
   ignore = NULL,
   ohse = TRUE,
   norm = TRUE,
-  algorithm = "Lloyd",
+  algorithm = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"),
   dim_red = "PCA",
   comb = c(1, 2),
   seed = 123,

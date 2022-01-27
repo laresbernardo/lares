@@ -66,8 +66,8 @@
 #' @export
 clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
                           ignore = NULL, ohse = TRUE, norm = TRUE,
-                          algorithm = "Lloyd", dim_red = "PCA",
-                          comb = c(1, 2), seed = 123,
+                          algorithm = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"),
+                          dim_red = "PCA", comb = c(1, 2), seed = 123,
                           quiet = FALSE, ...) {
   on.exit(set.seed(seed))
   check_opts(dim_red, c("PCA", "tSNE", "all", "none"))
