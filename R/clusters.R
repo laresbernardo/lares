@@ -126,7 +126,7 @@ clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
     results[["nclusters_plot"]] <- nclusters_plot
 
     # K-Means Cluster Analysis
-    fit <- kmeans(df, k, iter.max = limit)
+    fit <- kmeans(df, k, algorithm = algorithm, iter.max = limit)
     results[["fit"]] <- fit
     # Append cluster assignment
     df <- data.frame(results[["df"]], cluster = as.factor(fit$cluster))
