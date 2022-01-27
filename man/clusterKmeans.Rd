@@ -12,6 +12,7 @@ clusterKmeans(
   ignore = NULL,
   ohse = TRUE,
   norm = TRUE,
+  algorithm = "Lloyd",
   dim_red = "PCA",
   comb = c(1, 2),
   seed = 123,
@@ -34,6 +35,10 @@ clusterKmeans(
 encoding to non-numerical columns?}
 
 \item{norm}{Boolean. Should the data be normalized?}
+
+\item{algorithm}{character: may be abbreviated.  Note that
+    \code{"Lloyd"} and \code{"Forgy"} are alternative names for one
+    algorithm.}
 
 \item{dim_red}{Character. Select dimensionality reduction technique.
 Pass any of: \code{c("PCA", "tSNE", "all", "none")}.}
