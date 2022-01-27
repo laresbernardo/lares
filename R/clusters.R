@@ -93,6 +93,7 @@ clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
 
   # Determine number of clusters (n) using WSS methodology
   wss <- sum(apply(df, 2, var)) * (nrow(df) - 1)
+  limit <- min(nrow(df) - 1, limit)
   for (i in 2:limit) wss[i] <- suppressWarnings(
     sum(kmeans(df, centers = i, algorithm = algorithm)$withinss)
   )
