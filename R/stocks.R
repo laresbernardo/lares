@@ -258,6 +258,8 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
     message("You need to define which stocks to bring. Use the 'symbols=' parameter.")
   }
 
+  closeAllConnections()
+  
   results <- data %>%
     select(.data$Date, .data$Symbol, .data$Close) %>%
     rename(Value = .data$Close) %>%
@@ -652,7 +654,7 @@ splot_change <- function(p, s,
       .data$BuySell == "Sold" ~ "25"
     )) %>%
     mutate(Hist = ifelse(.data$CumQuant > 0, .data$Hist, tail(.data$Hist, 1))) %>%
-    mutate(Symbol = factor(.data$Symbol, levels = current_stocks$Symbol)) %>%
+    mutate(Symbol = factor(.data$Symbol, levels = unique(s$Symbol))) %>%
     filter(.data$CumQuant > 0)
   
   # Plot auxiliary stuff

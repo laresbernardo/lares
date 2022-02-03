@@ -1,7 +1,7 @@
 Package: lares
 Type: Package
 Title: Analytics & Machine Learning Sidekick
-Version: 5.0.5
+Version: 5.0.6
 Authors@R: c(
     person("Bernardo", "Lares", , "laresbernardo@gmail.com", c("aut", "cre")))
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
