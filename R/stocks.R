@@ -234,18 +234,19 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
           Symbol = rep(symbol, nrow(d)),
           Date = ymd(row.names(data.frame(d))),
           Div = as.vector(d),
-          DivTaxP = tax/100
+          DivTaxP = tax / 100
         )
         if (parg) {
           div <- mutate(div, DivTaxP = ifelse(
             .data$Date < as.Date("2020-03-03"),
-            (30/100), # Interactive Brokers (Colombia)
-            (15/100) # Schwab (Argentina/Veneezuela)
+            (30 / 100), # Interactive Brokers (Colombia)
+            (15 / 100) # Schwab (Argentina/Veneezuela)
           ))
         }
         div <- mutate(div,
-                      DivReal = as.vector(d) * (1 - .data$DivTaxP),
-                      Symbol = as.character(.data$Symbol))
+          DivReal = as.vector(d) * (1 - .data$DivTaxP),
+          Symbol = as.character(.data$Symbol)
+        )
         divs <- rbind(divs, div)
       }
 
@@ -258,8 +259,6 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
     message("You need to define which stocks to bring. Use the 'symbols=' parameter.")
   }
 
-  closeAllConnections()
-  
   results <- data %>%
     select(.data$Date, .data$Symbol, .data$Close) %>%
     rename(Value = .data$Close) %>%
@@ -634,8 +633,8 @@ splot_change <- function(p, s,
     } %>%
     group_by(.data$Symbol) %>%
     mutate(first_date = .data$Date == min(.data$Date)) %>%
-           #run_fix = .data$Symbol %in% start_stocks) %>%
-    #mutate(CumValue = .data$CumValue - .data$CumValue[.data$first_date] * as.integer(.data$run_fix)) %>%
+    # run_fix = .data$Symbol %in% start_stocks) %>%
+    # mutate(CumValue = .data$CumValue - .data$CumValue[.data$first_date] * as.integer(.data$run_fix)) %>%
     mutate(CumValue = .data$CumValue - .data$CumValue[.data$first_date]) %>%
     {
       if (rel) {
@@ -656,7 +655,7 @@ splot_change <- function(p, s,
     mutate(Hist = ifelse(.data$CumQuant > 0, .data$Hist, tail(.data$Hist, 1))) %>%
     mutate(Symbol = factor(.data$Symbol, levels = unique(s$Symbol))) %>%
     filter(.data$CumQuant > 0)
-  
+
   # Plot auxiliary stuff
   days <- as.integer(difftime(range(d$Date)[2], range(d$Date)[1], units = "days"))
   plot <- ggplot(d, aes(x = .data$Date, y = .data$Hist)) +
@@ -664,10 +663,13 @@ splot_change <- function(p, s,
     ylab(glued("Total changed [{x}]", x = ifelse(rel, "%", "$"))) +
     geom_hline(yintercept = 0, alpha = 0.8, colour = "black") +
     geom_line(aes(colour = .data$Symbol),
-              alpha = 0.9, size = 0.5, na.rm = TRUE) +
-    geom_point(data = filter(d, !is.na(.data$BuySellShape)),
-               aes(shape = .data$BuySellShape, colour = .data$Symbol),
-               fill = "grey10", na.rm = TRUE) +
+      alpha = 0.9, size = 0.5, na.rm = TRUE
+    ) +
+    geom_point(
+      data = filter(d, !is.na(.data$BuySellShape)),
+      aes(shape = .data$BuySellShape, colour = .data$Symbol),
+      fill = "grey10", na.rm = TRUE
+    ) +
     ggplot2::scale_shape_manual(values = c(24, 25), labels = c("Bought", "Sold")) +
     scale_size(range = c(0, 3.2)) +
     guides(size = "none", colour = "none", fill = "none") +
@@ -675,8 +677,10 @@ splot_change <- function(p, s,
     labs(
       title = glued("Weighted Stocks Daily Change [{x}]", x = ifelse(rel, "%", "$")),
       x = NULL, colour = NULL,
-      subtitle = sprintf("%s delta since %s or first transaction",
-                         ifelse(rel, "Relative total", "Total"), min(d$Date)),
+      subtitle = sprintf(
+        "%s delta since %s or first transaction",
+        ifelse(rel, "Relative total", "Total"), min(d$Date)
+      ),
       shape = "Transaction"
     ) +
     theme_lares(pal = 2, legend = "top") +
@@ -797,29 +801,35 @@ splot_growth <- function(p, save = FALSE) {
 #' @family Investment
 #' @family Investment Plots
 #' @inheritParams splot_summary
-#' @param type Integer. Typo of plot. 1 for incomes. 
+#' @param type Integer. Typo of plot. 1 for incomes.
 #' @return ggplot object
 #' @export
 splot_divs <- function(p, type = 1) {
-  if (type == 1) p %>%
-    mutate(year = year(.data$Date),
-           quarter = date_cuts(.data$Date, "Q")) %>%
-    group_by(.data$year, .data$quarter) %>%
-    summarise(Dividend = sum(.data$Dividend)) %>%
-    ungroup() %>%
-    group_by(year) %>%
-    mutate(DividendYear = sum(.data$Dividend)) %>%
-    ungroup() %>%
-    mutate(year = sprintf("%s\n%s", .data$year, formatNum(.data$DividendYear, pre = "$", abbr = TRUE))) %>%
-    filter(.data$DividendYear > 0) %>%
-    ggplot(aes(x = .data$quarter, y = .data$Dividend, fill = .data$quarter)) +
-    geom_col() + 
-    facet_grid(.~year) +
-    scale_y_dollar() +
-    labs(title = "Dividends per Quarter and Year",
-         subtitle = sprintf("Total: %s", formatNum(sum(p$Dividend), 0, pre = "$")),
-         x = NULL, y = "Dividends (post-tax)") +
-    theme_lares(pal = 1, grid = "Yy", legend = "none")
+  if (type == 1) {
+    p %>%
+      mutate(
+        year = year(.data$Date),
+        quarter = date_cuts(.data$Date, "Q")
+      ) %>%
+      group_by(.data$year, .data$quarter) %>%
+      summarise(Dividend = sum(.data$Dividend)) %>%
+      ungroup() %>%
+      group_by(year) %>%
+      mutate(DividendYear = sum(.data$Dividend)) %>%
+      ungroup() %>%
+      mutate(year = sprintf("%s\n%s", .data$year, formatNum(.data$DividendYear, pre = "$", abbr = TRUE))) %>%
+      filter(.data$DividendYear > 0) %>%
+      ggplot(aes(x = .data$quarter, y = .data$Dividend, fill = .data$quarter)) +
+      geom_col() +
+      facet_grid(. ~ year) +
+      scale_y_dollar() +
+      labs(
+        title = "Dividends per Quarter and Year",
+        subtitle = sprintf("Total: %s", formatNum(sum(p$Dividend), 0, pre = "$")),
+        x = NULL, y = "Dividends (post-tax)"
+      ) +
+      theme_lares(pal = 1, grid = "Yy", legend = "none")
+  }
 }
 
 

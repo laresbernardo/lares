@@ -35,7 +35,7 @@ try_require <- function(package, stop = TRUE) {
 #'
 #' @family Data Wrangling
 #' @param date Date vector. Date to transform format.
-#' 
+#'
 #' @return Vector with dates reformatted
 #' @examples
 #' year_month(Sys.Date())

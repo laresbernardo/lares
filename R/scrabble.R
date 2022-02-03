@@ -356,7 +356,7 @@ scrabble_words <- function(tiles,
 # library(stringr)
 # Sys.setenv("LARES_LANG" = "es")
 # words <- scrabble_dictionary("es")$words
-# 
+#
 # # Play and win!
 # scrabble_words(tiles = "abcdef",
 #                free = 0,
