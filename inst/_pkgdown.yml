@@ -1,7 +1,7 @@
 url: https://laresbernardo.github.io/lares/
 
 template:
-  bootswatch: united
+  bootstrap: 5
   params:
     ganalytics: UA-166493168-2
     noindex: false
