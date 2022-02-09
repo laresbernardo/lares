@@ -139,6 +139,7 @@ h2o_automl <- function(df, y = "tag",
                        save = FALSE,
                        subdir = NA,
                        project = "AutoML Results",
+                       verbosity = NULL,
                        ...) {
   tic(id = "h2o_automl")
   on.exit(toc(id = "h2o_automl", msg = "Process duration:", quiet = quiet))
@@ -222,6 +223,7 @@ h2o_automl <- function(df, y = "tag",
     nfolds = nfolds,
     # project_name = project,
     seed = seed,
+    verbosity = verbosity,
     ...
   ), quiet = quiet)
 

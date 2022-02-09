@@ -35,6 +35,7 @@ h2o_automl(
   save = FALSE,
   subdir = NA,
   project = "AutoML Results",
+  verbosity = NULL,
   ...
 )
 
@@ -124,6 +125,9 @@ working directory?}
 the results? Working directory as default.}
 
 \item{project}{Character. Your project's name}
+
+\item{verbosity}{Verbosity of the backend messages printed during training; Optional.
+Must be one of NULL (live log disabled), "debug", "info", "warn", "error". Defaults to "warn".}
 
 \item{...}{Additional parameters on \code{h2o::h2o.automl}}
 

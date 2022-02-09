@@ -12,6 +12,7 @@ knitr::opts_chunk$set(
   collapse = TRUE, comment = "#>", results = "hide",
   fig.width = 7.1, fig.height = 5.5
 )
+h2o::h2o.init() # Just to be sure
 ```
 
 The `lares` package has multiple families of functions to help the analyst or data scientist achieve quality robust analysis without the need of much coding. One of the most complex but valuable functions we have is `h2o_automl`, which semi-automatically runs the whole pipeline of a Machine Learning model given a dataset and some customizable parameters. **AutoML** enables you to train high-quality models specific to your needs and accelerate the research and development process.
