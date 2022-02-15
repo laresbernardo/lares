@@ -5,15 +5,15 @@
 \title{Scrabble: Highest score words finder}
 \usage{
 scrabble_words(
-  tiles,
+  tiles = "",
   free = 0,
   force_start = "",
   force_end = "",
   force_str = "",
   force_n = 0,
   force_max = 0,
-  scores = Sys.getenv("LARES_LANG"),
   language = Sys.getenv("LARES_LANG"),
+  scores = language,
   words = NA,
   quiet = FALSE
 )
@@ -69,6 +69,14 @@ scrabble_words(
   force_n = 5,
   force_max = 0,
   quiet = TRUE
+)
+
+wordle <- c("board", "tempo", "shoes", "hoard")
+scrabble_words(
+  language = NULL,
+  words = wordle,
+  force_n = 5,
+  force_str = "O_R"
 )
 
 # Words considered for a language (you can custom it too!)
