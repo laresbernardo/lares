@@ -17,6 +17,7 @@
 #' dictionary <- scrabble_dictionary("es")
 #' }
 #' @export
+#' @rdname scrabble
 scrabble_dictionary <- function(language) {
   if (is.null(language)) return(invisible(NULL))
   if (length(language) != 1) {
@@ -78,6 +79,7 @@ scrabble_dictionary <- function(language) {
 #' scrabble_score(words, cu_scores)
 #' }
 #' @export
+#' @rdname scrabble
 scrabble_score <- function(words, scores) {
   scores <- data.frame(
     tiles = tolower(scores$tiles),
@@ -103,13 +105,14 @@ scrabble_score <- function(words, scores) {
 #'
 #' @family Scrabble
 #' @param language Character. Any of "en","es".
-#' @return data.frame with tiles and scores for each letter.
+#' @return data.frame with tiles and scores for each alphabet letter.
 #' @examples
 #' scrabble_points("es")
 #' scrabble_points("en")
 #' # Not yet available
 #' scrabble_points("fr")
 #' @export
+#' @rdname scrabble
 scrabble_points <- function(language) {
   if (is.null(language)) {
     message(">>> Skipping points schema...")
@@ -255,6 +258,7 @@ grepl_letters <- function(x, pattern, blank = "_") {
 #' es_words <- scrabble_dictionary("es")
 #' }
 #' @export
+#' @rdname scrabble
 scrabble_words <- function(tiles = "",
                            free = 0,
                            force_start = "",
