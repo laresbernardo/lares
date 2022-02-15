@@ -26,9 +26,8 @@ scrabble_dictionary <- function(language) {
   if (language == "none") {
     return(invisible(NULL))
   }
-  filename <- file.path(tempdir(), paste0(language, ".RData"))
-  if (file.exists(filename)) {
-    load(filename)
+  if (cache_exists(language)) {
+    words <- cache_read(language)
     message(sprintf(
       ">>> Loaded %s '%s' words",
       formatNum(nrow(words), 0), language
@@ -45,8 +44,8 @@ scrabble_dictionary <- function(language) {
   )
   words <- read.table(url, col.names = "words")
   words$language <- language
-  save(words, file = filename, version = 2)
-  message(">>> Saved into ", filename)
+  cache_write(words, language)
+  message(sprintf(">>> Saved (%s words) into cache"))
   return(words)
 }
 
@@ -113,7 +112,7 @@ scrabble_score <- function(words, scores) {
 #' @export
 scrabble_points <- function(language) {
   if (is.null(language)) {
-    message("Skipping points schema...")
+    message(">>> Skipping points schema...")
     return(invisible(NULL))
   }
   if (!language %in% c("en", "es")) {
@@ -217,6 +216,8 @@ grepl_letters <- function(x, pattern, blank = "_") {
 #' @param force_str Character vector. Force words to contain strings.
 #' If the string contains tiles that were not specified in \code{tiles}, they
 #' will automatically be included.
+#' @param force_exclude Character vector. Exclude words containing these tiles.
+#' Not very useful for Scrabble but relevant for Wordle.
 #' @param force_n,force_max Integer. Force words to be n or max n characters
 #' long. Leave 0 to ignore parameter.
 #' @param scores,language Character. Any of "en","es","de","fr".
@@ -262,12 +263,16 @@ scrabble_words <- function(tiles = "",
                            force_start = "",
                            force_end = "",
                            force_str = "",
+                           force_exclude = "",
                            force_n = 0,
                            force_max = 0,
                            language = Sys.getenv("LARES_LANG"),
                            scores = language,
                            words = NA,
                            quiet = FALSE) {
+  
+  ### POINTS
+  
   tiles <- paste(tiles, collapse = "")
   if (is.data.frame(scores)) {
     if (!all(colnames(scores) %in% c("tiles", "scores"))) {
@@ -279,6 +284,7 @@ scrabble_words <- function(tiles = "",
 
   ### TILES
   
+  message(">>> Setting up tiles...")
   # Split letters
   tiles <- tolower(unlist(strsplit(tiles, "")))
   # Add free letters/tiles
@@ -291,20 +297,29 @@ scrabble_words <- function(tiles = "",
   if (force_n > 0 & length(tiles) != force_n)
     tiles <- c(tiles, rep("_", force_n - length(tiles)))
   ntiles <- as.integer(length(tiles))
+  # Exclude these tiles
+  force_not <- unique(tolower(unlist(strsplit(force_exclude, ""))))
   
   message("Tiles: ", v2t(tiles))
   
   ### WORDS
   
+  # Consolidate dictionary
   dictionary <- scrabble_dictionary(language)[, 1]
+  nwords <- length(dictionary)
   if (!is.na(words[1])) {
-    message(paste("Added", formatNum(length(words), 0), "custom words"))
-    dictionary <- c(words, dictionary)
+    dictionary <- unique(tolower(c(words, dictionary)))
+    unique_new <- length(dictionary) - nwords
+    message(sprintf(">>> Added %s custom words %s", formatNum(length(words), 0), ifelse(
+      unique_new != length(words), sprintf("(%s new)", unique_new))
+    ))
   }
-  words <- tolower(dictionary)
-
+  words <- dictionary
   # Words can't have more letters than inputs
   words <- words[nchar(words) <= ntiles]
+  .temp_print(length(words))
+  # Exclude specific tiles (Wordle)
+  words <- words[!grepl(paste(force_not, collapse = "|"), words)]
   .temp_print(length(words))
   # You may want to force their lengths
   if (force_n > 0) words <- words[nchar(words) == force_n]
@@ -332,7 +347,7 @@ scrabble_words <- function(tiles = "",
     if (sum(done$scores) == 0) done$scores <- NULL
     return(as_tibble(done))
   } else {
-    message("No words found with set criteria :(")
+    message("No words found with set criteria")
   }
 }
 

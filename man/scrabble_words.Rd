@@ -10,6 +10,7 @@ scrabble_words(
   force_start = "",
   force_end = "",
   force_str = "",
+  force_exclude = "",
   force_n = 0,
   force_max = 0,
   language = Sys.getenv("LARES_LANG"),
@@ -31,6 +32,9 @@ will automatically be included.}
 \item{force_str}{Character vector. Force words to contain strings.
 If the string contains tiles that were not specified in \code{tiles}, they
 will automatically be included.}
+
+\item{force_exclude}{Character vector. Exclude words containing these tiles.
+Not very useful for Scrabble but relevant for Wordle.}
 
 \item{force_n, force_max}{Integer. Force words to be n or max n characters
 long. Leave 0 to ignore parameter.}
