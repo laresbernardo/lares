@@ -67,15 +67,15 @@ place to post your tiles.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">scrabble_words</span><span class="op">(</span>
-  <span class="va">tiles</span>,
+  tiles <span class="op">=</span> <span class="st">""</span>,
   free <span class="op">=</span> <span class="fl">0</span>,
   force_start <span class="op">=</span> <span class="st">""</span>,
   force_end <span class="op">=</span> <span class="st">""</span>,
   force_str <span class="op">=</span> <span class="st">""</span>,
   force_n <span class="op">=</span> <span class="fl">0</span>,
   force_max <span class="op">=</span> <span class="fl">0</span>,
-  scores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"LARES_LANG"</span><span class="op">)</span>,
   language <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"LARES_LANG"</span><span class="op">)</span>,
+  scores <span class="op">=</span> <span class="va">language</span>,
   words <span class="op">=</span> <span class="cn">NA</span>,
   quiet <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span></code></pre></div>
@@ -140,26 +140,25 @@ You might also want to set this parameter globally with
 <span class="r-in">  force_max <span class="op">=</span> <span class="fl">0</span>,</span>
 <span class="r-in">  quiet <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Auto-loaded points for 'es'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Loaded 636,598 'es' words</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 15 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    word  scores length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> hozad     18      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> hozan     17      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> hozar     17      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> hozas     17      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> hojas     15      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> hoyad     13      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> hoyan     12      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> hoyar     12      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> hoyas     12      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> hogar     10      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> hopan     10      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> hopar     10      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> hopas     10      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> holan      8      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> horas      8      5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Loaded points for 'es'</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in rep("_", force_n - length(tiles)):</span> invalid 'times' argument</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">wordle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"board"</span>, <span class="st">"tempo"</span>, <span class="st">"shoes"</span>, <span class="st">"hoard"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">scrabble_words</span><span class="op">(</span></span>
+<span class="r-in">  language <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span class="r-in">  words <span class="op">=</span> <span class="va">wordle</span>,</span>
+<span class="r-in">  force_n <span class="op">=</span> <span class="fl">5</span>,</span>
+<span class="r-in">  force_str <span class="op">=</span> <span class="st">"O_R"</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Skipping points schema...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> o and r were not in your tiles: now included</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Tiles: 'o', 'r', '_', '_', '_'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Added 4 custom words</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   word  length</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> board      5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> hoard      5</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Words considered for a language (you can custom it too!)</span></span>
 <span class="r-in"><span class="va">es_words</span> <span class="op">&lt;-</span> <span class="fu"><a href="scrabble_dictionary.html">scrabble_dictionary</a></span><span class="op">(</span><span class="st">"es"</span><span class="op">)</span></span>
