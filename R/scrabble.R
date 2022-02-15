@@ -308,7 +308,7 @@ scrabble_words <- function(tiles = "",
     dictionary <- unique(tolower(c(words, dictionary)))
     unique_new <- length(dictionary) - nwords
     message(sprintf(">>> Added %s custom words %s", formatNum(length(words), 0), ifelse(
-      unique_new != length(words), sprintf("(%s new)", unique_new))
+      unique_new != length(words), sprintf("(%s new)", unique_new), "")
     ))
   }
   words <- dictionary
