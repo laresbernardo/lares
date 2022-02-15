@@ -90,11 +90,11 @@ place to post your tiles.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">scrabble_dictionary</span><span class="op">(</span><span class="va">language</span><span class="op">)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">scrabble_dictionary</span><span class="op">(</span><span class="va">lang_dic</span><span class="op">)</span>
 
-<span class="fu">scrabble_score</span><span class="op">(</span><span class="va">words</span>, <span class="va">scores</span><span class="op">)</span>
+<span class="fu">scrabble_score</span><span class="op">(</span><span class="va">words</span>, <span class="va">scores.df</span><span class="op">)</span>
 
-<span class="fu">scrabble_points</span><span class="op">(</span><span class="va">language</span><span class="op">)</span>
+<span class="fu">scrabble_points</span><span class="op">(</span><span class="va">lang</span><span class="op">)</span>
 
 <span class="fu">scrabble_words</span><span class="op">(</span>
   tiles <span class="op">=</span> <span class="st">""</span>,
@@ -114,13 +114,19 @@ place to post your tiles.</p>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>language</dt>
-<dd><p>Character. Any of "en","es".</p></dd>
+    <dl><dt>lang_dic</dt>
+<dd><p>Character. Any of "en","es","de","fr". Set to NULL
+if you wish to skip this step (and use <code>words</code> parameter in
+<code>scrabble_words</code> instead).</p></dd>
 <dt>words</dt>
 <dd><p>Character vector. Use if you wish to manually add words.</p></dd>
-<dt>scores</dt>
+<dt>scores.df</dt>
 <dd><p>Dataframe. Must contain two columns: "tiles" with every
 letter of the alphabet and "scores" for each letter's score.</p></dd>
+<dt>lang</dt>
+<dd><p>Character. Any of "en","es". Set to NULL
+if you wish to skip this step (and use <code>words</code> parameter in
+<code>scrabble_words()</code> instead).</p></dd>
 <dt>tiles</dt>
 <dd><p>Character. The letters you wish to consider.</p></dd>
 <dt>free</dt>
@@ -140,8 +146,6 @@ Not very useful for Scrabble but relevant for Wordle.</p></dd>
 <dt>force_n, force_max</dt>
 <dd><p>Integer. Force words to be n or max n characters
 long. Leave 0 to ignore parameter.</p></dd>
-<dt>quiet</dt>
-<dd><p>Boolean. Do not print words as they are being searched.</p></dd>
 <dt>scores, language</dt>
 <dd><p>Character. Any of "en","es","de","fr".
 If scores is not any of those languages, must be a data.frame that
@@ -151,6 +155,8 @@ to overwrite or complement this dictionaries other words you can set to
 <code>"none"</code> and/or use the <code>words</code> parameter.
 You might also want to set this parameter globally with
 <code>Sys.setenv("LARES_LANG" = "en")</code> and forget about it!</p></dd>
+<dt>quiet</dt>
+<dd><p>Boolean. Do not print words as they are being searched.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>

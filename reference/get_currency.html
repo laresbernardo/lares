@@ -94,8 +94,8 @@ previous values?</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in"><span class="co"># For today (or any one single date)</span></span>
 <span class="r-in"><span class="fu">get_currency</span><span class="op">(</span><span class="st">"USD/COP"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         date   rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2022-02-15 3949.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         date rate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2022-02-15 3948</span>
 <span class="r-in"><span class="co"># For multiple dates</span></span>
 <span class="r-in"><span class="fu">get_currency</span><span class="op">(</span><span class="st">"EUR/USD"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         date     rate</span>
