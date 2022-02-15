@@ -5,9 +5,9 @@
 #' German, and French. Words will be save into the \code{temp} directory.
 #' This is an auxiliary function. You may want to use \code{scrabble_words}
 #' directly if you are searching for the highest score words!
-#'
+#' 
 #' @family Scrabble
-#' @param language Character. Any of "en","es","de","fr". Set to "none"
+#' @param lang_dic Character. Any of "en","es","de","fr". Set to NULL
 #' if you wish to skip this step (and use \code{words} parameter in
 #' \code{scrabble_words} instead).
 #' @return data.frame with words and language columns.
@@ -18,34 +18,31 @@
 #' }
 #' @export
 #' @rdname scrabble
-scrabble_dictionary <- function(language) {
-  if (is.null(language)) return(invisible(NULL))
-  if (length(language) != 1) {
+scrabble_dictionary <- function(lang_dic) {
+  if (is.null(lang_dic)) return(invisible(NULL))
+  if (length(lang_dic) != 1) {
     stop("Select only 1 language at a time...")
   }
-  check_opts(language, c("en", "es", "de", "fr", "none"))
-  if (language == "none") {
-    return(invisible(NULL))
-  }
-  if (cache_exists(language)) {
-    words <- cache_read(language)
+  check_opts(lang_dic, c("en", "es", "de", "fr"))
+  if (cache_exists(lang_dic)) {
+    words <- cache_read(lang_dic)
     message(sprintf(
       ">>> Loaded %s '%s' words",
-      formatNum(nrow(words), 0), language
+      formatNum(nrow(words), 0), lang_dic
     ))
     return(words)
   }
   message(sprintf(
     ">>> Downloading '%s' words. Source: %s",
-    language, "github.com/lorenbrichter/Words"
+    lang_dic, "github.com/lorenbrichter/Words"
   ))
   url <- sprintf(
     "https://raw.githubusercontent.com/lorenbrichter/Words/master/Words/%s.txt",
-    language
+    lang_dic
   )
   words <- read.table(url, col.names = "words")
-  words$language <- language
-  cache_write(words, language)
+  words$language <- lang_dic
+  cache_write(words, lang_dic)
   message(sprintf(">>> Saved (%s words) into cache", formatNum(nrow(words), 0)))
   return(words)
 }
@@ -60,7 +57,7 @@ scrabble_dictionary <- function(language) {
 #'
 #' @family Scrabble
 #' @param words Character vector. Words to score
-#' @param scores Dataframe. Must contain two columns: "tiles" with every
+#' @param scores.df Dataframe. Must contain two columns: "tiles" with every
 #' letter of the alphabet and "scores" for each letter's score.
 #' @return data.frame with word, scores, and length values for each \code{word}.
 #' @examples
@@ -80,10 +77,10 @@ scrabble_dictionary <- function(language) {
 #' }
 #' @export
 #' @rdname scrabble
-scrabble_score <- function(words, scores) {
+scrabble_score <- function(words, scores.df) {
   scores <- data.frame(
-    tiles = tolower(scores$tiles),
-    scores = as.integer(scores$scores)
+    tiles = tolower(scores.df$tiles),
+    scores = as.integer(scores.df$scores)
   )
   counter <- lapply(words, function(word) {
     lapply(scores$tiles, function(letter) {
@@ -104,7 +101,9 @@ scrabble_score <- function(words, scores) {
 #' Dataframe for every letter and points given a language.
 #'
 #' @family Scrabble
-#' @param language Character. Any of "en","es".
+#' @param lang Character. Any of "en","es". Set to NULL
+#' if you wish to skip this step (and use \code{words} parameter in
+#' \code{scrabble_words()} instead).
 #' @return data.frame with tiles and scores for each alphabet letter.
 #' @examples
 #' scrabble_points("es")
@@ -113,16 +112,16 @@ scrabble_score <- function(words, scores) {
 #' scrabble_points("fr")
 #' @export
 #' @rdname scrabble
-scrabble_points <- function(language) {
-  if (is.null(language)) {
+scrabble_points <- function(lang) {
+  if (is.null(lang)) {
     message(">>> Skipping points schema...")
     return(invisible(NULL))
   }
-  if (!language %in% c("en", "es")) {
+  if (!lang %in% c("en", "es")) {
     message("We do not have the points for this language yet!")
     return(invisible(NULL))
   }
-  if (language == "es") {
+  if (lang == "es") {
     scores <- data.frame(
       tiles = c(
         tolower(LETTERS)[1:14], intToUtf8(241),
@@ -131,14 +130,14 @@ scrabble_points <- function(language) {
       scores = c(1, 3, 2, 2, 1, 4, 3, 4, 1, 8, 10, 1, 3, 1, 8, 1, 3, 5, 1, 1, 1, 2, 4, 10, 10, 5, 10)
     )
   }
-  if (language == "en") {
+  if (lang == "en") {
     scores <- data.frame(
       tiles = tolower(LETTERS),
       scores = c(1, 4, 4, 2, 1, 4, 3, 3, 1, 10, 5, 2, 4, 2, 1, 4, 10, 1, 1, 1, 2, 5, 4, 8, 3, 10)
     )
   }
 
-  message(sprintf(">>> Loaded points for '%s'", language))
+  message(sprintf(">>> Loaded points for '%s'", lang))
   return(scores)
 }
 

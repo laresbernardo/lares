@@ -7,11 +7,11 @@
 \alias{scrabble_words}
 \title{Scrabble: Dictionaries}
 \usage{
-scrabble_dictionary(language)
+scrabble_dictionary(lang_dic)
 
-scrabble_score(words, scores)
+scrabble_score(words, scores.df)
 
-scrabble_points(language)
+scrabble_points(lang)
 
 scrabble_words(
   tiles = "",
@@ -29,12 +29,18 @@ scrabble_words(
 )
 }
 \arguments{
-\item{language}{Character. Any of "en","es".}
+\item{lang_dic}{Character. Any of "en","es","de","fr". Set to NULL
+if you wish to skip this step (and use \code{words} parameter in
+\code{scrabble_words} instead).}
 
 \item{words}{Character vector. Use if you wish to manually add words.}
 
-\item{scores}{Dataframe. Must contain two columns: "tiles" with every
+\item{scores.df}{Dataframe. Must contain two columns: "tiles" with every
 letter of the alphabet and "scores" for each letter's score.}
+
+\item{lang}{Character. Any of "en","es". Set to NULL
+if you wish to skip this step (and use \code{words} parameter in
+\code{scrabble_words()} instead).}
 
 \item{tiles}{Character. The letters you wish to consider.}
 
@@ -55,8 +61,6 @@ Not very useful for Scrabble but relevant for Wordle.}
 \item{force_n, force_max}{Integer. Force words to be n or max n characters
 long. Leave 0 to ignore parameter.}
 
-\item{quiet}{Boolean. Do not print words as they are being searched.}
-
 \item{scores, language}{Character. Any of "en","es","de","fr".
 If scores is not any of those languages, must be a data.frame that
 contains two columns: "tiles" with every letter of the alphabet and
@@ -65,6 +69,8 @@ to overwrite or complement this dictionaries other words you can set to
 \code{"none"} and/or use the \code{words} parameter.
 You might also want to set this parameter globally with
 \code{Sys.setenv("LARES_LANG" = "en")} and forget about it!}
+
+\item{quiet}{Boolean. Do not print words as they are being searched.}
 }
 \value{
 data.frame with words and language columns.
