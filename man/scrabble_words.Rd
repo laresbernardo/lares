@@ -68,11 +68,8 @@ scrabble_words(
   tiles = "hola",
   free = 2,
   force_start = "h",
-  # force_end = "",
-  force_str = "_o_a",
-  force_n = 5,
-  force_max = 0,
-  quiet = TRUE
+  force_n = 4,
+  force_str = "_o_a"
 )
 
 wordle <- c("board", "tempo", "shoes", "hoard")

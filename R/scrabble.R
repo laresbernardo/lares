@@ -45,7 +45,7 @@ scrabble_dictionary <- function(language) {
   words <- read.table(url, col.names = "words")
   words$language <- language
   cache_write(words, language)
-  message(sprintf(">>> Saved (%s words) into cache"))
+  message(sprintf(">>> Saved (%s words) into cache", formatNum(nrow(words), 0)))
   return(words)
 }
 
@@ -239,11 +239,8 @@ grepl_letters <- function(x, pattern, blank = "_") {
 #'   tiles = "hola",
 #'   free = 2,
 #'   force_start = "h",
-#'   # force_end = "",
-#'   force_str = "_o_a",
-#'   force_n = 5,
-#'   force_max = 0,
-#'   quiet = TRUE
+#'   force_n = 4,
+#'   force_str = "_o_a"
 #' )
 #' 
 #' wordle <- c("board", "tempo", "shoes", "hoard")
@@ -294,8 +291,8 @@ scrabble_words <- function(tiles = "",
   tiles <- .add_letters(force_end, tiles)
   tiles <- .add_letters(force_str, tiles)
   # Force N letters (complete free)
-  if (force_n > 0 & length(tiles) != force_n)
-    tiles <- c(tiles, rep("_", force_n - length(tiles)))
+  if (force_n > 0 & length(tiles) < force_n)
+    tiles <- c(tiles, rep("_", times = (force_n - length(tiles))))
   ntiles <- as.integer(length(tiles))
   # Exclude these tiles
   force_not <- unique(tolower(unlist(strsplit(force_exclude, ""))))
@@ -319,7 +316,7 @@ scrabble_words <- function(tiles = "",
   words <- words[nchar(words) <= ntiles]
   .temp_print(length(words))
   # Exclude specific tiles (Wordle)
-  words <- words[!grepl(paste(force_not, collapse = "|"), words)]
+  if (length(force_not) > 0) words <- words[!grepl(paste(force_not, collapse = "|"), words)]
   .temp_print(length(words))
   # You may want to force their lengths
   if (force_n > 0) words <- words[nchar(words) == force_n]
