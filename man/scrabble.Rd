@@ -7,7 +7,7 @@
 \alias{scrabble_words}
 \title{Scrabble: Dictionaries}
 \usage{
-scrabble_dictionary(lang_dic)
+scrabble_dictionary(lang_dic, quiet = FALSE)
 
 scrabble_score(words, scores.df)
 
@@ -32,6 +32,8 @@ scrabble_words(
 \item{lang_dic}{Character. Any of "en","es","de","fr". Set to NULL
 if you wish to skip this step (and use \code{words} parameter in
 \code{scrabble_words} instead).}
+
+\item{quiet}{Boolean. Do not print words as they are being searched.}
 
 \item{words}{Character vector. Use if you wish to manually add words.}
 
@@ -69,8 +71,6 @@ to overwrite or complement this dictionaries other words you can set to
 \code{"none"} and/or use the \code{words} parameter.
 You might also want to set this parameter globally with
 \code{Sys.setenv("LARES_LANG" = "en")} and forget about it!}
-
-\item{quiet}{Boolean. Do not print words as they are being searched.}
 }
 \value{
 data.frame with words and language columns.

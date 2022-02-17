@@ -57,7 +57,7 @@
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file
 #' globalVariables installed.packages write.table install.packages remove.packages object.size
 #' type.convert flush.console read.table modifyList write.csv combn browseURL type.convert
-#' getParseData find
+#' getParseData find read.delim
 #' @importFrom yaml read_yaml
 "_PACKAGE"
 

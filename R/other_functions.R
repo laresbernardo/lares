@@ -1696,3 +1696,28 @@ grepm <- function(pattern, x, type = "all", ...) {
     unlist() %>%
     suppressWarnings()
 }
+
+####################################################################
+#' Print Coloured Messages
+#'
+#' @param txt Character. Text to print.
+#' @param colour Character. Any of: grey, red, green, yellow, blue, or purple.
+#' @param cat Boolean. Print with cat? If not, raw string
+#' @return Depends on \code{cat}: NULL if TRUE or character string if FALSE.
+#' @examples
+#' opts <- c("GREY", "RED", "GREEN", "YELLOW", "BLUE", "PURPLE")
+#' for (colour in opts) print_coloured(paste("Colour:", colour, "\n"), colour)
+#' @export
+print_coloured <- function(txt, colour = c("BLUE", "YELLOW", "GREY"), cat = TRUE) {
+  colour <- toupper(colour)[1]
+  opts <- c("GREY", "RED", "GREEN", "YELLOW", "BLUE", "PURPLE")
+  check_opts(colour, opts)
+  if (colour == opts[1]) code <- 30
+  if (colour == opts[2]) code <- 31
+  if (colour == opts[3]) code <- 32
+  if (colour == opts[4]) code <- 33
+  if (colour == opts[5]) code <- 34
+  if (colour == opts[6]) code <- 35
+  out <- paste0("\033[0;", code, "m", txt, "\033[0m")
+  if (cat) cat(out) else return(out)
+}

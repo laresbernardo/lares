@@ -10,6 +10,7 @@
 #' @param lang_dic Character. Any of "en","es","de","fr". Set to NULL
 #' if you wish to skip this step (and use \code{words} parameter in
 #' \code{scrabble_words} instead).
+#' @param quiet Boolean. Keep quiet? If not, print informative messages.
 #' @return data.frame with words and language columns.
 #' @examples
 #' \donttest{
@@ -18,15 +19,15 @@
 #' }
 #' @export
 #' @rdname scrabble
-scrabble_dictionary <- function(lang_dic) {
+scrabble_dictionary <- function(lang_dic, quiet = FALSE) {
   if (is.null(lang_dic)) return(invisible(NULL))
   if (length(lang_dic) != 1) {
     stop("Select only 1 language at a time...")
   }
   check_opts(lang_dic, c("en", "es", "de", "fr"))
   if (cache_exists(lang_dic)) {
-    words <- cache_read(lang_dic)
-    message(sprintf(
+    words <- cache_read(lang_dic, quiet = quiet)
+    if (!quiet) message(sprintf(
       ">>> Loaded %s '%s' words",
       formatNum(nrow(words), 0), lang_dic
     ))
@@ -42,8 +43,8 @@ scrabble_dictionary <- function(lang_dic) {
   )
   words <- read.table(url, col.names = "words")
   words$language <- lang_dic
-  cache_write(words, lang_dic)
-  message(sprintf(">>> Saved (%s words) into cache", formatNum(nrow(words), 0)))
+  cache_write(words, lang_dic, quiet = quiet)
+  if (!quiet) message(sprintf(">>> Saved (%s words) into cache", formatNum(nrow(words), 0)))
   return(words)
 }
 
