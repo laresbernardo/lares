@@ -90,7 +90,7 @@ place to post your tiles.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">scrabble_dictionary</span><span class="op">(</span><span class="va">lang_dic</span><span class="op">)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">scrabble_dictionary</span><span class="op">(</span><span class="va">lang_dic</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="fu">scrabble_score</span><span class="op">(</span><span class="va">words</span>, <span class="va">scores.df</span><span class="op">)</span>
 
@@ -118,6 +118,8 @@ place to post your tiles.</p>
 <dd><p>Character. Any of "en","es","de","fr". Set to NULL
 if you wish to skip this step (and use <code>words</code> parameter in
 <code>scrabble_words</code> instead).</p></dd>
+<dt>quiet</dt>
+<dd><p>Boolean. Do not print words as they are being searched.</p></dd>
 <dt>words</dt>
 <dd><p>Character vector. Use if you wish to manually add words.</p></dd>
 <dt>scores.df</dt>
@@ -155,8 +157,6 @@ to overwrite or complement this dictionaries other words you can set to
 <code>"none"</code> and/or use the <code>words</code> parameter.
 You might also want to set this parameter globally with
 <code>Sys.setenv("LARES_LANG" = "en")</code> and forget about it!</p></dd>
-<dt>quiet</dt>
-<dd><p>Boolean. Do not print words as they are being searched.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
