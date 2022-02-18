@@ -220,6 +220,9 @@
     <loc>https://laresbernardo.github.io/lares/reference/google_sheets.html</loc>
   </url>
   <url>
+    <loc>https://laresbernardo.github.io/lares/reference/google_trends.html</loc>
+  </url>
+  <url>
     <loc>https://laresbernardo.github.io/lares/reference/grepl_letters.html</loc>
   </url>
   <url>
@@ -511,9 +514,6 @@
     <loc>https://laresbernardo.github.io/lares/reference/stocks_obj.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/stocks_quote.html</loc>
-  </url>
-  <url>
     <loc>https://laresbernardo.github.io/lares/reference/stocks_report.html</loc>
   </url>
   <url>
@@ -542,12 +542,6 @@
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/tree_var.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/trendsRelated.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/trendsTime.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/trim_mp3.html</loc>
