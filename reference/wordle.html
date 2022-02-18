@@ -20,7 +20,7 @@ placement (yellow), letter is not present (red)."><meta property="og:image" cont
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,31 +116,31 @@ words from github, 3 for scrapping NYTimes set of words.</p></dd>
 <span class="r-in"><span class="co"># Or pick a random one:</span></span>
 <span class="r-in"><span class="co"># word &lt;- sample(wordle_dictionary("en"), 1)</span></span>
 <span class="r-in"><span class="fu">wordle_check</span><span class="op">(</span><span class="st">"OPENS"</span>, <span class="va">word</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">O</span> <span style="color: #BB0000;">P</span> <span style="color: #BBBB00;">E</span> <span style="color: #BB0000;">N</span> <span style="color: #BB0000;">S</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; font-weight: bold;">O</span> <span style="color: #BB0000; font-weight: bold;">P</span> <span style="color: #BBBB00; font-weight: bold;">E</span> <span style="color: #BB0000; font-weight: bold;">N</span> <span style="color: #BB0000; font-weight: bold;">S</span></span>
 <span class="r-in"><span class="fu">wordle_check</span><span class="op">(</span><span class="st">"BABES"</span>, <span class="va">word</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">B</span> <span style="color: #BBBB00;">A</span> <span style="color: #00BB00;">B</span> <span style="color: #00BB00;">E</span> <span style="color: #BB0000;">S</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00; font-weight: bold;">B</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">E</span> <span style="color: #BB0000; font-weight: bold;">S</span></span>
 <span class="r-in"><span class="fu">wordle_check</span><span class="op">(</span><span class="st">"BABES"</span>, <span class="va">word</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        B        A        B        E        S </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> "YELLOW" "YELLOW"  "GREEN"  "GREEN"    "RED" </span>
 <span class="r-in"><span class="fu">wordle_check</span><span class="op">(</span><span class="st">"KEBAB"</span>, <span class="va">word</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">K</span> <span style="color: #BBBB00;">E</span> <span style="color: #00BB00;">B</span> <span style="color: #BBBB00;">A</span> <span style="color: #BBBB00;">B</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; font-weight: bold;">K</span> <span style="color: #BBBB00; font-weight: bold;">E</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #BBBB00; font-weight: bold;">B</span></span>
 <span class="r-in"><span class="fu">wordle_check</span><span class="op">(</span><span class="st">"ABYSS"</span>, <span class="va">word</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">A</span> <span style="color: #00BB00;">B</span> <span style="color: #BBBB00;">Y</span> <span style="color: #BB0000;">S</span> <span style="color: #BB0000;">S</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00; font-weight: bold;">A</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #BBBB00; font-weight: bold;">Y</span> <span style="color: #BB0000; font-weight: bold;">S</span> <span style="color: #BB0000; font-weight: bold;">S</span></span>
 <span class="r-in"><span class="fu">wordle_check</span><span class="op">(</span><span class="st">"ABBEY"</span>, <span class="va">word</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">A</span> <span style="color: #00BB00;">B</span> <span style="color: #00BB00;">B</span> <span style="color: #00BB00;">E</span> <span style="color: #00BB00;">Y</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00; font-weight: bold;">A</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">E</span> <span style="color: #00BB00; font-weight: bold;">Y</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">wordle_simulation</span><span class="op">(</span>input <span class="op">=</span> <span class="st">"SAINT"</span>, word <span class="op">=</span> <span class="st">"ABBEY"</span>, seed <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">S</span> <span style="color: #BBBB00;">A</span> <span style="color: #BB0000;">I</span> <span style="color: #BB0000;">N</span> <span style="color: #BB0000;">T</span> reduced from 12,951 to 793</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; font-weight: bold;">S</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #BB0000; font-weight: bold;">I</span> <span style="color: #BB0000; font-weight: bold;">N</span> <span style="color: #BB0000; font-weight: bold;">T</span> reduced from 12,951 to 793</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">P</span> <span style="color: #BB0000;">U</span> <span style="color: #BB0000;">C</span> <span style="color: #BB0000;">K</span> <span style="color: #BBBB00;">A</span> reduced from 793 to 323</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; font-weight: bold;">P</span> <span style="color: #BB0000; font-weight: bold;">U</span> <span style="color: #BB0000; font-weight: bold;">C</span> <span style="color: #BB0000; font-weight: bold;">K</span> <span style="color: #BBBB00; font-weight: bold;">A</span> reduced from 793 to 323</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">H</span> <span style="color: #BB0000;">O</span> <span style="color: #BB0000;">D</span> <span style="color: #BBBB00;">A</span> <span style="color: #BB0000;">D</span> reduced from 323 to 92</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; font-weight: bold;">H</span> <span style="color: #BB0000; font-weight: bold;">O</span> <span style="color: #BB0000; font-weight: bold;">D</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #BB0000; font-weight: bold;">D</span> reduced from 323 to 92</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">A</span> <span style="color: #BB0000;">G</span> <span style="color: #BBBB00;">A</span> <span style="color: #BB0000;">Z</span> <span style="color: #BBBB00;">E</span> reduced from 92 to 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00; font-weight: bold;">A</span> <span style="color: #BB0000; font-weight: bold;">G</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #BB0000; font-weight: bold;">Z</span> <span style="color: #BBBB00; font-weight: bold;">E</span> reduced from 92 to 12</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">A</span> <span style="color: #BB0000;">M</span> <span style="color: #BBBB00;">E</span> <span style="color: #00BB00;">E</span> <span style="color: #BB0000;">R</span> reduced from 12 to 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00; font-weight: bold;">A</span> <span style="color: #BB0000; font-weight: bold;">M</span> <span style="color: #BBBB00; font-weight: bold;">E</span> <span style="color: #00BB00; font-weight: bold;">E</span> <span style="color: #BB0000; font-weight: bold;">R</span> reduced from 12 to 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">A</span> <span style="color: #00BB00;">B</span> <span style="color: #00BB00;">B</span> <span style="color: #00BB00;">E</span> <span style="color: #00BB00;">Y</span> reduced from 3 to 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00; font-weight: bold;">A</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">E</span> <span style="color: #00BB00; font-weight: bold;">Y</span> reduced from 3 to 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Answer: ABBEY</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; Total iterations (seed = 2): 6</span>
