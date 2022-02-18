@@ -150,41 +150,16 @@ actual model fitted and a plot.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="co"># CRAN</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.unsetenv</a></span><span class="op">(</span><span class="st">"LARES_FONT"</span><span class="op">)</span> <span class="co"># Temporal</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dft</span><span class="op">)</span> <span class="co"># Titanic dataset</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">lasso_vars</span><span class="op">(</span><span class="va">dft</span>, <span class="va">Survived</span>, ignore <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cabin"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Omitting transformations for 'Cabin', 'Survived'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; One Hot Encoding applied to 4 variables: 'Pclass', 'Ticket', 'Embarked', 'Sex'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Searching for optimal lambda with CV...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Found best lambda: 0.02351</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Fetching most relevant variables...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Generating plots for Survived...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Elapsed time: 4.02s</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">m</span><span class="op">$</span><span class="va">coef</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    names         coefficients standardized_coefficients     abs     prc coef    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Sex_male        -<span style="color: #BB0000;">0.474</span>                      -<span style="color: #BB0000;">0.227</span>   0.227   0.439   negative</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Pclass_1         0.252                       0.108   0.108   0.209   positive</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Ticket_1601      0.455                       0.040<span style="text-decoration: underline;">2</span>  0.040<span style="text-decoration: underline;">2</span>  0.077<span style="text-decoration: underline;">8</span>  positive</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Pclass_2         0.097<span style="text-decoration: underline;">0</span>                      0.039<span style="text-decoration: underline;">3</span>  0.039<span style="text-decoration: underline;">3</span>  0.076<span style="text-decoration: underline;">1</span>  positive</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Age             -<span style="color: #BB0000;">0.002</span><span style="color: #BB0000; text-decoration: underline;">43</span>                    -<span style="color: #BB0000;">0.035</span><span style="color: #BB0000; text-decoration: underline;">2</span>  0.035<span style="text-decoration: underline;">2</span>  0.068<span style="text-decoration: underline;">2</span>  negative</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Ticket_OTHER     0.143                       0.035<span style="text-decoration: underline;">1</span>  0.035<span style="text-decoration: underline;">1</span>  0.068<span style="text-decoration: underline;">0</span>  positive</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Ticket_113760    0.148                       0.009<span style="text-decoration: underline;">90</span> 0.009<span style="text-decoration: underline;">90</span> 0.019<span style="text-decoration: underline;">2</span>  positive</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Embarked_C       0.024<span style="text-decoration: underline;">9</span>                      0.009<span style="text-decoration: underline;">75</span> 0.009<span style="text-decoration: underline;">75</span> 0.018<span style="text-decoration: underline;">9</span>  positive</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Ticket_347082   -<span style="color: #BB0000;">0.101</span>                      -<span style="color: #BB0000;">0.008</span><span style="color: #BB0000; text-decoration: underline;">96</span> 0.008<span style="text-decoration: underline;">96</span> 0.017<span style="text-decoration: underline;">3</span>  negative</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Fare             0.000<span style="text-decoration: underline;">069</span>0                   0.003<span style="text-decoration: underline;">43</span> 0.003<span style="text-decoration: underline;">43</span> 0.006<span style="text-decoration: underline;">63</span> positive</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">m</span><span class="op">$</span><span class="va">metrics</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    rmse   mae  mape   mse   rsq  rsqa bestlambda</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 0.377 0.308  1.45 0.142 0.409 0.409     0.023<span style="text-decoration: underline;">5</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">m</span><span class="op">$</span><span class="va">plot</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="lasso_vars-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
