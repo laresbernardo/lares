@@ -1706,15 +1706,17 @@ grepm <- function(pattern, x, type = "all", ...) {
 #'
 #' @param txt Character. Text to print or transform.
 #' @param colour Character. Any of: grey, red, green, yellow, blue, or purple.
+#' @param bold Boolean. Set bold text?
 #' @param cat Boolean. Print with cat? If not, raw string
 #' @return Depends on \code{cat}: NULL if TRUE or character string if FALSE.
 #' @examples
 #' opts <- c("GREY", "RED", "GREEN", "YELLOW", "BLUE", "PURPLE")
 #' for (colour in opts) formatColoured(paste("Colour:", colour, "\n"), colour)
+#' formatColoured("my bold coloured text", bold = TRUE, cat = TRUE)
 #' @export
-formatColoured <- function(txt, colour = c("blue", "yellow", "grey"), cat = TRUE) {
+formatColoured <- function(txt, colour = c("yellow", "blue", "grey"), bold = FALSE, cat = TRUE) {
   colour <- toupper(colour)[1]
-  opts <- c("GREY", "RED", "GREEN", "YELLOW", "BLUE", "PURPLE")
+  opts <- c("GREY", "RED", "GREEN", "YELLOW", "BLUE", "PURPLE", "CYAN", "WHITE")
   check_opts(colour, opts)
   if (colour == opts[1]) code <- 30
   if (colour == opts[2]) code <- 31
@@ -1722,6 +1724,8 @@ formatColoured <- function(txt, colour = c("blue", "yellow", "grey"), cat = TRUE
   if (colour == opts[4]) code <- 33
   if (colour == opts[5]) code <- 34
   if (colour == opts[6]) code <- 35
-  out <- paste0("\033[0;", code, "m", txt, "\033[0m")
+  if (colour == opts[7]) code <- 36
+  if (colour == opts[8]) code <- 37
+  out <- paste0("\033[", ifelse(!bold, 0, 1), ";", code, "m", txt, "\033[0m")
   if (cat) cat(out) else return(out)
 }

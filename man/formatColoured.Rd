@@ -4,12 +4,19 @@
 \alias{formatColoured}
 \title{Print Coloured Messages}
 \usage{
-formatColoured(txt, colour = c("blue", "yellow", "grey"), cat = TRUE)
+formatColoured(
+  txt,
+  colour = c("yellow", "blue", "grey"),
+  bold = FALSE,
+  cat = TRUE
+)
 }
 \arguments{
 \item{txt}{Character. Text to print or transform.}
 
 \item{colour}{Character. Any of: grey, red, green, yellow, blue, or purple.}
+
+\item{bold}{Boolean. Set bold text?}
 
 \item{cat}{Boolean. Print with cat? If not, raw string}
 }
@@ -22,4 +29,5 @@ Print Coloured Messages
 \examples{
 opts <- c("GREY", "RED", "GREEN", "YELLOW", "BLUE", "PURPLE")
 for (colour in opts) formatColoured(paste("Colour:", colour, "\n"), colour)
+formatColoured("my bold coloured text", bold = TRUE, cat = TRUE)
 }
