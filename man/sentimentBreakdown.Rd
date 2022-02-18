@@ -43,7 +43,6 @@ Then, makes a summary for all words and plot results.
 }
 \seealso{
 Other Text Mining: 
-\code{\link{cleanNames}()},
 \code{\link{cleanText}()},
 \code{\link{ngrams}()},
 \code{\link{remove_stopwords}()},

@@ -24,7 +24,7 @@ Other Credentials:
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
 \code{\link{get_credentials}()},
-\code{\link{mailSend}()},
+\code{\link{mail_send}()},
 \code{\link{queryDB}()},
 \code{\link{queryGA}()},
 \code{\link{slackSend}()},

@@ -19,7 +19,7 @@
 #' @examples
 #' \dontrun{
 #' myPlot <- noPlot("My plot")
-#' mailSend(
+#' mail_send(
 #'   from = "BLV <myuser@mail.com>",
 #'   to = "youruser@mail.com",
 #'   cc = "myuser@mail.com",
@@ -28,7 +28,7 @@
 #' )
 #' }
 #' @export
-mailSend <- function(from = "RMail <laresbernardo@gmail.com>",
+mail_send <- function(from = "RMail <laresbernardo@gmail.com>",
                      to = "laresbernardo@gmail.com",
                      cc = NULL, bcc = NULL,
                      subject = "Mail from R",

@@ -30,7 +30,7 @@ ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
 \seealso{
 Other Tools: 
 \code{\link{autoline}()},
-\code{\link{bindfiles}()},
+\code{\link{bind_files}()},
 \code{\link{bring_api}()},
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
@@ -47,7 +47,7 @@ Other Tools:
 \code{\link{importxlsx}()},
 \code{\link{json2vector}()},
 \code{\link{listfiles}()},
-\code{\link{mailSend}()},
+\code{\link{mail_send}()},
 \code{\link{msplit}()},
 \code{\link{myip}()},
 \code{\link{quiet}()},
@@ -66,8 +66,7 @@ Other Scrapper:
 \code{\link{splot_etf}()},
 \code{\link{stocks_hist}()},
 \code{\link{stocks_quote}()},
-\code{\link{trendsRelated}()},
-\code{\link{writeGS}()}
+\code{\link{trendsRelated}()}
 }
 \concept{Scrapper}
 \concept{Tools}

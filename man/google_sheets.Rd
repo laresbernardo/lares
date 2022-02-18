@@ -3,13 +3,29 @@
 \name{readGS}
 \alias{readGS}
 \alias{readGS4}
-\title{Google Sheets Reading (API v4)}
+\alias{writeGS}
+\alias{writeGS4}
+\title{Google Sheets Reading and Writing (API v4)}
 \usage{
 readGS(
   title,
   sheet = "Hoja 1",
   range = NULL,
   drop_nas = TRUE,
+  json = NULL,
+  email = NULL,
+  api_key = NULL,
+  server = FALSE,
+  ...
+)
+
+writeGS(
+  data,
+  title,
+  sheet = "Hoja 1",
+  range = "A1",
+  reformat = FALSE,
+  append = FALSE,
   json = NULL,
   email = NULL,
   api_key = NULL,
@@ -36,14 +52,22 @@ which one you wish to use by email and/or api_key.}
 \item{server}{Boolean. Force interacting auth process?}
 
 \item{...}{Additional parameters passed to \code{read_sheet()}.}
+
+\item{data}{Object (value, vector, dataframe, list).}
+
+\item{reformat}{Boolean. Reformat the affected cells?}
+
+\item{append}{Boolean.}
 }
 \value{
 data.frame with the results of your Google Sheets file based on its
 \code{title}, specificially the \code{sheet} and \code{range} requested.
+
+No return value, called for side effects.
 }
 \description{
-Read data from Google Sheets knowing the file's title. You may read
-a single value from a cell or a data.frame from a cell range.
+Read and write data from Google Sheets knowing the file's title.
+You may use a single value from a cell or a data.frame from a cell range.
 }
 \seealso{
 Other Scrapper: 
@@ -54,15 +78,13 @@ Other Scrapper:
 \code{\link{splot_etf}()},
 \code{\link{stocks_hist}()},
 \code{\link{stocks_quote}()},
-\code{\link{trendsRelated}()},
-\code{\link{writeGS}()}
+\code{\link{trendsRelated}()}
 
 Other Google: 
 \code{\link{filesGD}()},
 \code{\link{queryGA}()},
 \code{\link{trendsRelated}()},
-\code{\link{trendsTime}()},
-\code{\link{writeGS}()}
+\code{\link{trendsTime}()}
 }
 \concept{Google}
 \concept{Scrapper}

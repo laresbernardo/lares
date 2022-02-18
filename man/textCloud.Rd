@@ -44,7 +44,6 @@ function is quite similar to the funModeling's corrplot function.
 }
 \seealso{
 Other Text Mining: 
-\code{\link{cleanNames}()},
 \code{\link{cleanText}()},
 \code{\link{ngrams}()},
 \code{\link{remove_stopwords}()},

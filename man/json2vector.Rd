@@ -23,7 +23,7 @@ json2vector('{"id": 1, "nodata": null, "gender": "M"}')
 \seealso{
 Other Tools: 
 \code{\link{autoline}()},
-\code{\link{bindfiles}()},
+\code{\link{bind_files}()},
 \code{\link{bring_api}()},
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
@@ -40,7 +40,7 @@ Other Tools:
 \code{\link{importxlsx}()},
 \code{\link{ip_data}()},
 \code{\link{listfiles}()},
-\code{\link{mailSend}()},
+\code{\link{mail_send}()},
 \code{\link{msplit}()},
 \code{\link{myip}()},
 \code{\link{quiet}()},

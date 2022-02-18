@@ -60,5 +60,6 @@ wordle_check("BABES", word, print = FALSE)
 wordle_check("KEBAB", word)
 wordle_check("ABYSS", word)
 wordle_check("ABBEY", word)
+
 wordle_simulation(input = "SAINT", word = "ABBEY", seed = 2)
 }

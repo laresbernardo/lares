@@ -326,7 +326,7 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
 
 
 ####################################################################
-#' Nicely Format Numerical Values
+#' Nicely Format Texts and Numericals
 #'
 #' This function lets the user format numerical values nicely
 #'
@@ -354,6 +354,7 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
 #' formatNum(1234567890, decimals = 0, abbr = TRUE)
 #' formatNum(c(-3:3), sign = TRUE)
 #' @export
+#' @rdname format_string
 formatNum <- function(x, decimals = 2, signif = NULL,
                       type = Sys.getenv("LARES_NUMFORMAT"),
                       pre = "", pos = "", sign = FALSE,
@@ -710,6 +711,7 @@ replaceall <- function(df, original, change, which = "all",
 #' @param ignore Character vector. Column names to ignore validation.
 #' @return data.frame with removed columns.
 #' @export
+#' @rdname filterdata
 removenacols <- function(df, all = TRUE, ignore = NULL) {
   if (is.null(df)) {
     return(NULL)
@@ -736,6 +738,7 @@ removenacols <- function(df, all = TRUE, ignore = NULL) {
 #' If set to FALSE, rows which contains at least one NA will be removed
 #' @return data.frame with removed rows.
 #' @export
+#' @rdname filterdata
 removenarows <- function(df, all = TRUE) {
   if (is.null(df)) {
     return(NULL)
@@ -765,6 +768,7 @@ removenarows <- function(df, all = TRUE) {
 #' numericalonly(dft) %>% head()
 #' numericalonly(dft, natransform = "mean") %>% head()
 #' @export
+#' @rdname filterdata
 numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA) {
 
   # Drop ALL NAs columns
@@ -911,13 +915,14 @@ json2vector <- function(json) {
 #' left("Bernardo", 3)
 #' right(c("Bernardo", "Lares", "V"), 3)
 #' @export
+#' @rdname left_right
 left <- function(string, n = 1) {
   string <- as.character(string)
   l <- substr(string, 1, n)
   return(l)
 }
 
-#' @rdname left
+#' @rdname left_right
 #' @export
 right <- function(string, n = 1) {
   string <- as.character(string)
@@ -968,9 +973,7 @@ importxlsx <- function(file) {
 #' @return Same as \code{fx} but with no messages or prints.
 #' @export
 quiet <- function(fx, quiet = TRUE) {
-  if (!quiet) {
-    return(fx)
-  }
+  if (!quiet) return(fx)
   invisible(capture.output(fx))
 }
 
@@ -1091,7 +1094,7 @@ read.file <- function(filename, current_wd = TRUE, sheet = 1, quiet = FALSE) {
 #' @param files Character vector. Files names.
 #' @return data.frame with data joined from all \code{files} passed.
 #' @export
-bindfiles <- function(files) {
+bind_files <- function(files) {
   alldat <- data.frame()
   for (i in seq_along(files)) {
     file <- files[i]
@@ -1578,8 +1581,8 @@ spread_list <- function(df, col, str = NULL, replace = TRUE) {
 #' @param bold Boolean. Should the text be bold?
 #' @return String with format characters included.
 #' @examples
-#' formatText("Text test", color = "#000000")
-#' formatText(c(123, 456), color = "orange", size = 120, bold = TRUE)
+#' formatHTML("Text test", color = "#000000")
+#' formatHTML(c(123, 456), color = "orange", size = 120, bold = TRUE)
 #'
 #' # If you want to use it with \code{ggtext}:
 #' \dontrun{
@@ -1587,10 +1590,10 @@ spread_list <- function(df, col, str = NULL, replace = TRUE) {
 #' col2 <- "orange"
 #' pt <- data.frame(
 #'   label = paste0(
-#'     formatText(123, color = col2, size = 120, bold = TRUE), "<br/>",
-#'     formatText("of children had a", col1), "<br/>",
-#'     formatText("traditional stay-at-home mom", color = col2, bold = TRUE), "<br/>",
-#'     formatText(paste0("in 2012, compared to ", 321, " in 1970"), color = col1)
+#'     formatHTML(123, color = col2, size = 120, bold = TRUE), "<br/>",
+#'     formatHTML("of children had a", col1), "<br/>",
+#'     formatHTML("traditional stay-at-home mom", color = col2, bold = TRUE), "<br/>",
+#'     formatHTML(paste0("in 2012, compared to ", 321, " in 1970"), color = col1)
 #'   )
 #' )
 #' ggplot(pt, aes(x = 0, y = 0)) +
@@ -1604,7 +1607,8 @@ spread_list <- function(df, col, str = NULL, replace = TRUE) {
 #'   theme_void()
 #' }
 #' @export
-formatText <- function(text, color = "black", size = 20, bold = FALSE) {
+#' @rdname format_string
+formatHTML <- function(text, color = "black", size = 20, bold = FALSE) {
   opening_span <- paste0("<span style='font-size:", size, "px; color:", color, "'>")
   if (bold) text <- paste0("**", text, "**")
   closing_span <- "</span>"
@@ -1700,15 +1704,16 @@ grepm <- function(pattern, x, type = "all", ...) {
 ####################################################################
 #' Print Coloured Messages
 #'
-#' @param txt Character. Text to print.
+#' @param txt Character. Text to print or transform.
 #' @param colour Character. Any of: grey, red, green, yellow, blue, or purple.
 #' @param cat Boolean. Print with cat? If not, raw string
 #' @return Depends on \code{cat}: NULL if TRUE or character string if FALSE.
 #' @examples
 #' opts <- c("GREY", "RED", "GREEN", "YELLOW", "BLUE", "PURPLE")
-#' for (colour in opts) print_coloured(paste("Colour:", colour, "\n"), colour)
+#' for (colour in opts) formatColoured(paste("Colour:", colour, "\n"), colour)
 #' @export
-print_coloured <- function(txt, colour = c("BLUE", "YELLOW", "GREY"), cat = TRUE) {
+#' @rdname format_string
+formatColoured <- function(txt, colour = c("blue", "yellow", "grey"), cat = TRUE) {
   colour <- toupper(colour)[1]
   opts <- c("GREY", "RED", "GREEN", "YELLOW", "BLUE", "PURPLE")
   check_opts(colour, opts)

@@ -37,11 +37,9 @@ Other Data Wrangling:
 \code{\link{impute}()},
 \code{\link{left}()},
 \code{\link{normalize}()},
-\code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
 \code{\link{removenacols}()},
-\code{\link{removenarows}()},
 \code{\link{replaceall}()},
 \code{\link{textFeats}()},
 \code{\link{textTokenizer}()},
@@ -60,8 +58,7 @@ Other Scrapper:
 \code{\link{splot_etf}()},
 \code{\link{stocks_hist}()},
 \code{\link{stocks_quote}()},
-\code{\link{trendsRelated}()},
-\code{\link{writeGS}()}
+\code{\link{trendsRelated}()}
 
 Other One Hot Encoding: 
 \code{\link{date_feats}()},

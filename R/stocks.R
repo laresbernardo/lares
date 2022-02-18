@@ -1340,7 +1340,7 @@ stocks_report <- function(data = NA,
     )
 
     message(">>> Sending email...")
-    mailSend(
+    mail_send(
       to = to,
       subject = subject,
       html = html_body,

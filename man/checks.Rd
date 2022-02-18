@@ -2,7 +2,8 @@
 % Please edit documentation in R/checks.R
 \name{check_opts}
 \alias{check_opts}
-\title{Validate options within vector}
+\alias{check_attr}
+\title{Validate inputs (attributions, options, ...)}
 \usage{
 check_opts(
   inputs,
@@ -12,6 +13,8 @@ check_opts(
   not = "stop",
   quiet = TRUE
 )
+
+check_attr(object, attr = "type", check = NULL, stop = TRUE)
 }
 \arguments{
 \item{inputs}{Vector character. Check options.}
@@ -26,15 +29,28 @@ for any other string. For example: "column names".}
 \item{not}{Character. Options: "stop", "message", "print", "return".}
 
 \item{quiet}{Boolean. Keep quiet? If not, returns logical value.}
+
+\item{object}{Object of any kind}
+
+\item{attr}{Character. Attribute to check}
+
+\item{check}{Character. Attribute value}
+
+\item{stop}{Boolean. Stop if doesn't check?}
 }
 \value{
 Boolean. Result of \code{inputs} in \code{opts} (options).
 Depending on \code{type} and/or \code{stop} arguments,
 errors or messages will be shown.
+
+No return value, called for side effects.
 }
 \description{
 This function validates if inputs match all/any of your options
 and return error/message with possible options to use.
+
+This function checks if an object has a specific attribute and
+stops if not.
 }
 \examples{
 opts <- c("A", "B", "C")
@@ -48,4 +64,8 @@ check_opts(inputs = c("X"), opts, type = "any", not = "message")
 check_opts(inputs = c("A", NA), opts, type = "any")
 # Final trick: just ignore results
 check_opts(inputs = "X", opts, not = "invisible")
+test <- data.frame()
+attributes(test)
+check_attr(test, "class", "data.frame")
+# check_attr(test, "class", "not.data.frame")
 }

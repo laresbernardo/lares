@@ -26,8 +26,7 @@ Other Google:
 \code{\link{filesGD}()},
 \code{\link{queryGA}()},
 \code{\link{readGS}()},
-\code{\link{trendsRelated}()},
-\code{\link{writeGS}()}
+\code{\link{trendsRelated}()}
 }
 \concept{Google}
 \concept{Google Trends}

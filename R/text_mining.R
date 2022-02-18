@@ -20,6 +20,7 @@
 #' cleanText("\\@®ì÷å   %ñS  ..-X", spaces = FALSE)
 #' cleanText(c("maría", "€", "núñez_a."), title = TRUE)
 #' @export
+#' @rdname clean_text
 cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = FALSE) {
   text <- as.character(text)
   if (ascii) {
@@ -42,11 +43,10 @@ cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = F
 #' numbers, and ASCII letters. Capitalization preferences can be specified using
 #' the \code{lower} parameter. Inspired by \code{janitor::clean_names}.
 #'
-#' @family Text Mining
-#' @param df data.frame/tibble
-#' @param num Add character before only-numeric names
-#' @param ... Additional parameters passed to \code{cleanText}
-#' @return Character vector with transformed strings.
+#' @param df data.frame/tibble.
+#' @param num Add character before only-numeric names.
+#' @param ... Additional parameters passed to \code{cleanText()}.
+#' @return data.frame/tibble with transformed column names.
 #' @examples
 #' df <- dft[1:5, 1:6] # Dummy data
 #' colnames(df) <- c("ID.", "34", "x_2", "Num 123", "Nòn-äscì", "  white   Spaces  ")
@@ -54,6 +54,7 @@ cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = F
 #' cleanNames(df)
 #' cleanNames(df, lower = FALSE)
 #' @export
+#' @rdname clean_text
 cleanNames <- function(df, num = "x", ...) {
   # Initial cleanse
   cols <- cleanText(colnames(df), ...)

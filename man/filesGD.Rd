@@ -37,15 +37,13 @@ Other Scrapper:
 \code{\link{splot_etf}()},
 \code{\link{stocks_hist}()},
 \code{\link{stocks_quote}()},
-\code{\link{trendsRelated}()},
-\code{\link{writeGS}()}
+\code{\link{trendsRelated}()}
 
 Other Google: 
 \code{\link{queryGA}()},
 \code{\link{readGS}()},
 \code{\link{trendsRelated}()},
-\code{\link{trendsTime}()},
-\code{\link{writeGS}()}
+\code{\link{trendsTime}()}
 }
 \concept{Google}
 \concept{Scrapper}

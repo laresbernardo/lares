@@ -67,8 +67,7 @@ Other Scrapper:
 \code{\link{splot_etf}()},
 \code{\link{stocks_hist}()},
 \code{\link{stocks_quote}()},
-\code{\link{trendsRelated}()},
-\code{\link{writeGS}()}
+\code{\link{trendsRelated}()}
 
 Other Audio: 
 \code{\link{trim_mp3}()}

@@ -80,8 +80,7 @@ Other Scrapper:
 \code{\link{readGS}()},
 \code{\link{splot_etf}()},
 \code{\link{stocks_quote}()},
-\code{\link{trendsRelated}()},
-\code{\link{writeGS}()}
+\code{\link{trendsRelated}()}
 }
 \concept{Investment}
 \concept{Scrapper}

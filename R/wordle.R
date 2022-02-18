@@ -53,7 +53,7 @@ wordle_valid <- function(input, dictionary, lang_dic = "en", method = 3) {
 wordle_print <- function(results, print = TRUE) {
   texts <- NULL
   for (i in seq_along(results))
-    texts <- c(texts, print_coloured(names(results)[i], results[i], cat = FALSE))
+    texts <- c(texts, formatColoured(names(results)[i], results[i], cat = FALSE))
   txt <- paste(texts, collapse = " ")
   if (print) cat(txt) else return(txt)
 }
@@ -100,6 +100,7 @@ wordle_dictionary <- function(lang_dic = "en", method = 3, quiet = TRUE) {
 #' @param ... Additional parameters passed to \code{lares:::wordle_opts()}
 #' @export
 #' @examples 
+#' 
 #' wordle_simulation(input = "SAINT", word = "ABBEY", seed = 2)
 #' @rdname wordle
 wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {

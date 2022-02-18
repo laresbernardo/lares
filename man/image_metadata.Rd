@@ -18,7 +18,7 @@ This function lets the user get meta data from image files or directory.
 \seealso{
 Other Tools: 
 \code{\link{autoline}()},
-\code{\link{bindfiles}()},
+\code{\link{bind_files}()},
 \code{\link{bring_api}()},
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
@@ -35,7 +35,7 @@ Other Tools:
 \code{\link{ip_data}()},
 \code{\link{json2vector}()},
 \code{\link{listfiles}()},
-\code{\link{mailSend}()},
+\code{\link{mail_send}()},
 \code{\link{msplit}()},
 \code{\link{myip}()},
 \code{\link{quiet}()},

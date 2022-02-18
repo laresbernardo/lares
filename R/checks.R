@@ -1,5 +1,5 @@
 ####################################################################
-#' Validate options within vector
+#' Validate inputs (attributions, options, ...)
 #'
 #' This function validates if inputs match all/any of your options
 #' and return error/message with possible options to use.
@@ -27,6 +27,7 @@
 #' # Final trick: just ignore results
 #' check_opts(inputs = "X", opts, not = "invisible")
 #' @export
+#' @rdname checks
 check_opts <- function(inputs, opts,
                        input_name = "input",
                        type = "all", not = "stop",
@@ -51,10 +52,10 @@ check_opts <- function(inputs, opts,
 }
 
 ####################################################################
-#' Attribute checker
+#' Validate attributions
 #'
 #' This function checks if an object has a specific attribute and
-#' stops if not
+#' stops if not.
 #'
 #' @param object Object of any kind
 #' @param attr Character. Attribute to check
@@ -67,6 +68,7 @@ check_opts <- function(inputs, opts,
 #' check_attr(test, "class", "data.frame")
 #' # check_attr(test, "class", "not.data.frame")
 #' @export
+#' @rdname checks
 check_attr <- function(object, attr = "type", check = NULL, stop = TRUE) {
   if (is.null(check)) stop("You must set a valid check input")
   if (is.null(attr)) {

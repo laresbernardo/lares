@@ -34,7 +34,7 @@ using a previously created token or with interactive window.
 \seealso{
 Other Tools: 
 \code{\link{autoline}()},
-\code{\link{bindfiles}()},
+\code{\link{bind_files}()},
 \code{\link{bring_api}()},
 \code{\link{db_download}()},
 \code{\link{export_plot}()},
@@ -51,7 +51,7 @@ Other Tools:
 \code{\link{ip_data}()},
 \code{\link{json2vector}()},
 \code{\link{listfiles}()},
-\code{\link{mailSend}()},
+\code{\link{mail_send}()},
 \code{\link{msplit}()},
 \code{\link{myip}()},
 \code{\link{quiet}()},
@@ -66,7 +66,7 @@ Other Credentials:
 \code{\link{db_download}()},
 \code{\link{get_credentials}()},
 \code{\link{get_tweets}()},
-\code{\link{mailSend}()},
+\code{\link{mail_send}()},
 \code{\link{queryDB}()},
 \code{\link{queryGA}()},
 \code{\link{slackSend}()},

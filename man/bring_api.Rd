@@ -22,7 +22,7 @@ transform it into data.frame.
 \seealso{
 Other Tools: 
 \code{\link{autoline}()},
-\code{\link{bindfiles}()},
+\code{\link{bind_files}()},
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
 \code{\link{export_plot}()},
@@ -39,7 +39,7 @@ Other Tools:
 \code{\link{ip_data}()},
 \code{\link{json2vector}()},
 \code{\link{listfiles}()},
-\code{\link{mailSend}()},
+\code{\link{mail_send}()},
 \code{\link{msplit}()},
 \code{\link{myip}()},
 \code{\link{quiet}()},

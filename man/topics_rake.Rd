@@ -24,7 +24,6 @@ Based on \code{udpipe} library, model models, and keywords_rake function.
 }
 \seealso{
 Other Text Mining: 
-\code{\link{cleanNames}()},
 \code{\link{cleanText}()},
 \code{\link{ngrams}()},
 \code{\link{remove_stopwords}()},

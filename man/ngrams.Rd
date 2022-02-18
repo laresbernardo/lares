@@ -37,7 +37,6 @@ ngrams(x, ngram = 2, top = 6, stop_words = c("a", "is", "of", "the"))
 }
 \seealso{
 Other Text Mining: 
-\code{\link{cleanNames}()},
 \code{\link{cleanText}()},
 \code{\link{remove_stopwords}()},
 \code{\link{replaceall}()},

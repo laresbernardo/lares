@@ -50,8 +50,7 @@ Other Scrapper:
 \code{\link{readGS}()},
 \code{\link{splot_etf}()},
 \code{\link{stocks_hist}()},
-\code{\link{stocks_quote}()},
-\code{\link{writeGS}()}
+\code{\link{stocks_quote}()}
 
 Other Google Trends: 
 \code{\link{trendsTime}()}
@@ -60,8 +59,7 @@ Other Google:
 \code{\link{filesGD}()},
 \code{\link{queryGA}()},
 \code{\link{readGS}()},
-\code{\link{trendsTime}()},
-\code{\link{writeGS}()}
+\code{\link{trendsTime}()}
 }
 \concept{Exploratory}
 \concept{Google}

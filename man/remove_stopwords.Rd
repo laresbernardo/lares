@@ -29,7 +29,6 @@ remove_stopwords(x, stop_words = c("dog", "brown", "a"), exclude = "\\\\.")
 }
 \seealso{
 Other Text Mining: 
-\code{\link{cleanNames}()},
 \code{\link{cleanText}()},
 \code{\link{ngrams}()},
 \code{\link{replaceall}()},

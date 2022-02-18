@@ -40,18 +40,15 @@ Other Data Wrangling:
 \code{\link{impute}()},
 \code{\link{left}()},
 \code{\link{normalize}()},
-\code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
 \code{\link{removenacols}()},
-\code{\link{removenarows}()},
 \code{\link{replaceall}()},
 \code{\link{textTokenizer}()},
 \code{\link{vector2text}()},
 \code{\link{year_month}()}
 
 Other Text Mining: 
-\code{\link{cleanNames}()},
 \code{\link{cleanText}()},
 \code{\link{ngrams}()},
 \code{\link{remove_stopwords}()},

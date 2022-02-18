@@ -2,9 +2,12 @@
 % Please edit documentation in R/text_mining.R
 \name{cleanText}
 \alias{cleanText}
+\alias{cleanNames}
 \title{Clean text}
 \usage{
 cleanText(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = FALSE)
+
+cleanNames(df, num = "x", ...)
 }
 \arguments{
 \item{text}{Character Vector}
@@ -17,13 +20,25 @@ will be transformed into passed argument.}
 \item{ascii}{Boolean. Only ASCII characters?}
 
 \item{title}{Boolean. Transform to title format (upper case on first letters)}
+
+\item{df}{data.frame/tibble.}
+
+\item{num}{Add character before only-numeric names.}
+
+\item{...}{Additional parameters passed to \code{cleanText()}.}
 }
 \value{
 Character vector with transformed strings.
+
+data.frame/tibble with transformed column names.
 }
 \description{
 This function lets the user clean text into getting only alphanumeric
 characters and no accents/symbols on letters.
+
+Resulting names are unique and consist only of the \code{_} character,
+numbers, and ASCII letters. Capitalization preferences can be specified using
+the \code{lower} parameter. Inspired by \code{janitor::clean_names}.
 }
 \examples{
 cleanText("Bernardo Lares 123")
@@ -31,6 +46,11 @@ cleanText("Bèrnärdo LáreS 123", lower = FALSE)
 cleanText("Bernardo Lare$", spaces = ".", ascii = FALSE)
 cleanText("\\\\@®ì÷å   \%ñS  ..-X", spaces = FALSE)
 cleanText(c("maría", "€", "núñez_a."), title = TRUE)
+df <- dft[1:5, 1:6] # Dummy data
+colnames(df) <- c("ID.", "34", "x_2", "Num 123", "Nòn-äscì", "  white   Spaces  ")
+print(df)
+cleanNames(df)
+cleanNames(df, lower = FALSE)
 }
 \seealso{
 Other Data Wrangling: 
@@ -43,11 +63,9 @@ Other Data Wrangling:
 \code{\link{impute}()},
 \code{\link{left}()},
 \code{\link{normalize}()},
-\code{\link{numericalonly}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
 \code{\link{removenacols}()},
-\code{\link{removenarows}()},
 \code{\link{replaceall}()},
 \code{\link{textFeats}()},
 \code{\link{textTokenizer}()},
@@ -55,7 +73,6 @@ Other Data Wrangling:
 \code{\link{year_month}()}
 
 Other Text Mining: 
-\code{\link{cleanNames}()},
 \code{\link{ngrams}()},
 \code{\link{remove_stopwords}()},
 \code{\link{replaceall}()},

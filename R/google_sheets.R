@@ -1,8 +1,8 @@
 ####################################################################
-#' Google Sheets Reading (API v4)
+#' Google Sheets Reading and Writing (API v4)
 #'
-#' Read data from Google Sheets knowing the file's title. You may read
-#' a single value from a cell or a data.frame from a cell range.
+#' Read and write data from Google Sheets knowing the file's title.
+#' You may use a single value from a cell or a data.frame from a cell range.
 #'
 #' @family Scrapper
 #' @family Google
@@ -21,6 +21,7 @@
 #' \code{title}, specificially the \code{sheet} and \code{range} requested.
 #' @aliases readGS4
 #' @export
+#' @rdname google_sheets
 readGS <- function(title, sheet = "Hoja 1", range = NULL, drop_nas = TRUE,
                    json = NULL, email = NULL, api_key = NULL, server = FALSE, ...) {
   files <- filesGD(title = title, server = server, json = json, email = email)
@@ -39,21 +40,13 @@ readGS <- function(title, sheet = "Hoja 1", range = NULL, drop_nas = TRUE,
   }
 }
 
-####################################################################
-#' Google Sheets Writing (API v4)
-#'
-#' Write data into Google Sheets knowing the file's title. You may write
-#' a single value into a cell or a data.frame into a cell range.
-#'
-#' @family Scrapper
-#' @family Google
-#' @inheritParams readGS
-#' @param data Object (value, vector, dataframe, list)
+#' @param data Object (value, vector, dataframe, list).
 #' @param reformat Boolean. Reformat the affected cells?
 #' @param append Boolean.
 #' @return No return value, called for side effects.
 #' @aliases writeGS4
 #' @export
+#' @rdname google_sheets
 writeGS <- function(data, title, sheet = "Hoja 1", range = "A1",
                     reformat = FALSE, append = FALSE,
                     json = NULL, email = NULL, api_key = NULL, server = FALSE, ...) {
