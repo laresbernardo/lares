@@ -28,7 +28,7 @@
     <loc>https://laresbernardo.github.io/lares/reference/balance_data.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/bindfiles.html</loc>
+    <loc>https://laresbernardo.github.io/lares/reference/bind_files.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/bring_api.html</loc>
@@ -40,10 +40,7 @@
     <loc>https://laresbernardo.github.io/lares/reference/categ_reducer.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/check_attr.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/check_opts.html</loc>
+    <loc>https://laresbernardo.github.io/lares/reference/checks.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/ci_lower.html</loc>
@@ -52,10 +49,7 @@
     <loc>https://laresbernardo.github.io/lares/reference/ci_var.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/cleanNames.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/cleanText.html</loc>
+    <loc>https://laresbernardo.github.io/lares/reference/clean_text.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/clusterKmeans.html</loc>
@@ -175,16 +169,16 @@
     <loc>https://laresbernardo.github.io/lares/reference/files_functions.html</loc>
   </url>
   <url>
+    <loc>https://laresbernardo.github.io/lares/reference/filterdata.html</loc>
+  </url>
+  <url>
     <loc>https://laresbernardo.github.io/lares/reference/font_exists.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/forecast_arima.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/formatNum.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/formatText.html</loc>
+    <loc>https://laresbernardo.github.io/lares/reference/format_string.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/freqs.html</loc>
@@ -218,6 +212,9 @@
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/glued.html</loc>
+  </url>
+  <url>
+    <loc>https://laresbernardo.github.io/lares/reference/google_sheets.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/grepl_letters.html</loc>
@@ -298,7 +295,7 @@
     <loc>https://laresbernardo.github.io/lares/reference/lasso_vars.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/left.html</loc>
+    <loc>https://laresbernardo.github.io/lares/reference/left_right.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/li_auth.html</loc>
@@ -316,7 +313,7 @@
     <loc>https://laresbernardo.github.io/lares/reference/loglossBinary.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mailSend.html</loc>
+    <loc>https://laresbernardo.github.io/lares/reference/mail_send.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/missingness.html</loc>
@@ -388,9 +385,6 @@
     <loc>https://laresbernardo.github.io/lares/reference/num_abbr.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/numericalonly.html</loc>
-  </url>
-  <url>
     <loc>https://laresbernardo.github.io/lares/reference/ohe_commas.html</loc>
   </url>
   <url>
@@ -427,9 +421,6 @@
     <loc>https://laresbernardo.github.io/lares/reference/plot_timeline.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/print_coloured.html</loc>
-  </url>
-  <url>
     <loc>https://laresbernardo.github.io/lares/reference/prophesize.html</loc>
   </url>
   <url>
@@ -448,9 +439,6 @@
     <loc>https://laresbernardo.github.io/lares/reference/read.file.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/readGS.html</loc>
-  </url>
-  <url>
     <loc>https://laresbernardo.github.io/lares/reference/reduce_pca.html</loc>
   </url>
   <url>
@@ -458,12 +446,6 @@
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/remove_stopwords.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/removenacols.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/removenarows.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/replaceall.html</loc>
@@ -581,9 +563,6 @@
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/wordle.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/writeGS.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/x2y.html</loc>

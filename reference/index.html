@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.0.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +80,7 @@
         <dd>Balance Binary Data by Resampling: Under-Over Sampling</dd>
       </dl><dl><dt>
           
-          <code><a href="bindfiles.html">bindfiles()</a></code> 
+          <code><a href="bind_files.html">bind_files()</a></code> 
         </dt>
         <dd>Bind Files into Dataframe</dd>
       </dl><dl><dt>
@@ -100,14 +100,9 @@
         <dd>Reduce categorical values</dd>
       </dl><dl><dt>
           
-          <code><a href="check_attr.html">check_attr()</a></code> 
+          <code><a href="checks.html">check_opts()</a></code> <code><a href="checks.html">check_attr()</a></code> 
         </dt>
-        <dd>Attribute checker</dd>
-      </dl><dl><dt>
-          
-          <code><a href="check_opts.html">check_opts()</a></code> 
-        </dt>
-        <dd>Validate options within vector</dd>
+        <dd>Validate inputs (attributions, options, ...)</dd>
       </dl><dl><dt>
           
           <code><a href="ci_lower.html">ci_lower()</a></code> <code><a href="ci_lower.html">ci_upper()</a></code> 
@@ -120,12 +115,7 @@
         <dd>Confidence Intervals on Dataframe</dd>
       </dl><dl><dt>
           
-          <code><a href="cleanNames.html">cleanNames()</a></code> 
-        </dt>
-        <dd>Clean title names of a data.frame/tibble object</dd>
-      </dl><dl><dt>
-          
-          <code><a href="cleanText.html">cleanText()</a></code> 
+          <code><a href="clean_text.html">cleanText()</a></code> <code><a href="clean_text.html">cleanNames()</a></code> 
         </dt>
         <dd>Clean text</dd>
       </dl><dl><dt>
@@ -325,6 +315,11 @@
         <dd>List all functions used in R script files by package</dd>
       </dl><dl><dt>
           
+          <code><a href="filterdata.html">removenacols()</a></code> <code><a href="filterdata.html">removenarows()</a></code> <code><a href="filterdata.html">numericalonly()</a></code> 
+        </dt>
+        <dd>Remove/Drop Columns in which ALL or SOME values are NAs</dd>
+      </dl><dl><dt>
+          
           <code><a href="font_exists.html">font_exists()</a></code> 
         </dt>
         <dd>Check if Font is Installed</dd>
@@ -335,14 +330,9 @@
         <dd>ARIMA Forecast</dd>
       </dl><dl><dt>
           
-          <code><a href="formatNum.html">formatNum()</a></code> 
+          <code><a href="format_string.html">formatNum()</a></code> <code><a href="format_string.html">formatHTML()</a></code> <code><a href="format_string.html">formatColoured()</a></code> 
         </dt>
-        <dd>Nicely Format Numerical Values</dd>
-      </dl><dl><dt>
-          
-          <code><a href="formatText.html">formatText()</a></code> 
-        </dt>
-        <dd>Format a string text as markdown/HTML</dd>
+        <dd>Nicely Format Texts and Numericals</dd>
       </dl><dl><dt>
           
           <code><a href="freqs.html">freqs()</a></code> 
@@ -398,6 +388,11 @@
           <code><a href="glued.html">glued()</a></code> 
         </dt>
         <dd>Interpolate a string [glue wrapper]</dd>
+      </dl><dl><dt>
+          
+          <code><a href="google_sheets.html">readGS()</a></code> <code><a href="google_sheets.html">writeGS()</a></code> 
+        </dt>
+        <dd>Google Sheets Reading and Writing (API v4)</dd>
       </dl><dl><dt>
           
           <code><a href="grepl_letters.html">grepl_letters()</a></code> 
@@ -525,7 +520,7 @@
         <dd>Most Relevant Features Using Lasso Regression</dd>
       </dl><dl><dt>
           
-          <code><a href="left.html">left()</a></code> <code><a href="left.html">right()</a></code> 
+          <code><a href="left_right.html">left()</a></code> <code><a href="left_right.html">right()</a></code> 
         </dt>
         <dd>Left or Right N characters of a string</dd>
       </dl><dl><dt>
@@ -555,7 +550,7 @@
         <dd>Logarithmic Loss Function for Binary Models</dd>
       </dl><dl><dt>
           
-          <code><a href="mailSend.html">mailSend()</a></code> 
+          <code><a href="mail_send.html">mail_send()</a></code> 
         </dt>
         <dd>Send Emails with Attachments (POST)</dd>
       </dl><dl><dt>
@@ -675,11 +670,6 @@
         <dd>Abbreviate numbers</dd>
       </dl><dl><dt>
           
-          <code><a href="numericalonly.html">numericalonly()</a></code> 
-        </dt>
-        <dd>Select only numerical columns in a dataframe</dd>
-      </dl><dl><dt>
-          
           <code><a href="ohe_commas.html">ohe_commas()</a></code> 
         </dt>
         <dd>One Hot Encoding for a Vector with Comma Separated Values</dd>
@@ -740,11 +730,6 @@
         <dd>Plot timeline as Gantt Plot</dd>
       </dl><dl><dt>
           
-          <code><a href="print_coloured.html">print_coloured()</a></code> 
-        </dt>
-        <dd>Print Coloured Messages</dd>
-      </dl><dl><dt>
-          
           <code><a href="prophesize.html">prophesize()</a></code> 
         </dt>
         <dd>Facebook's Prophet Forecast</dd>
@@ -775,11 +760,6 @@
         <dd>Read Files Quickly (Auto-detected)</dd>
       </dl><dl><dt>
           
-          <code><a href="readGS.html">readGS()</a></code> 
-        </dt>
-        <dd>Google Sheets Reading (API v4)</dd>
-      </dl><dl><dt>
-          
           <code><a href="reduce_pca.html">reduce_pca()</a></code> 
         </dt>
         <dd>Reduce Dimensionality with PCA</dd>
@@ -793,16 +773,6 @@
           <code><a href="remove_stopwords.html">remove_stopwords()</a></code> 
         </dt>
         <dd>Remove stop-words and patterns from character vector</dd>
-      </dl><dl><dt>
-          
-          <code><a href="removenacols.html">removenacols()</a></code> 
-        </dt>
-        <dd>Remove/Drop Columns in which ALL or SOME values are NAs</dd>
-      </dl><dl><dt>
-          
-          <code><a href="removenarows.html">removenarows()</a></code> 
-        </dt>
-        <dd>Remove/Drop Rows in which ALL or SOME values are NAs</dd>
       </dl><dl><dt>
           
           <code><a href="replaceall.html">replaceall()</a></code> 
@@ -998,11 +968,6 @@
           <code><a href="wordle.html">wordle_check()</a></code> <code><a href="wordle.html">wordle_dictionary()</a></code> <code><a href="wordle.html">wordle_simulation()</a></code> 
         </dt>
         <dd>Wordle Game Validation</dd>
-      </dl><dl><dt>
-          
-          <code><a href="writeGS.html">writeGS()</a></code> 
-        </dt>
-        <dd>Google Sheets Writing (API v4)</dd>
       </dl><dl><dt>
           
           <code><a href="x2y.html">x2y()</a></code> <code><a href="x2y.html">x2y_metric()</a></code> <code><a href="x2y.html">plot(<i>&lt;x2y_preds&gt;</i>)</a></code> <code><a href="x2y.html">plot(<i>&lt;x2y&gt;</i>)</a></code> <code><a href="x2y.html">x2y_preds()</a></code> 
