@@ -22,7 +22,7 @@
 #' @return List. Contains lasso model coefficients, performance metrics, the
 #' actual model fitted and a plot.
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # CRAN
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
