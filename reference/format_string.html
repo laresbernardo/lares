@@ -81,9 +81,7 @@ function to format text in <code>ggplot2</code> objects.</p>
   <span class="va">...</span>
 <span class="op">)</span>
 
-<span class="fu">formatHTML</span><span class="op">(</span><span class="va">text</span>, color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">20</span>, bold <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="fu">formatColoured</span><span class="op">(</span><span class="va">txt</span>, colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"yellow"</span>, <span class="st">"grey"</span><span class="op">)</span>, cat <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<span class="fu">formatHTML</span><span class="op">(</span><span class="va">text</span>, color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">20</span>, bold <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -117,18 +115,11 @@ the `decimals` parameter to set abbr's <code>n</code>(-1) parameter.</p></dd>
 <dd><p>Numeric. Text size.</p></dd>
 <dt>bold</dt>
 <dd><p>Boolean. Should the text be bold?</p></dd>
-<dt>txt</dt>
-<dd><p>Character. Text to print or transform.</p></dd>
-<dt>colour</dt>
-<dd><p>Character. Any of: grey, red, green, yellow, blue, or purple.</p></dd>
-<dt>cat</dt>
-<dd><p>Boolean. Print with cat? If not, raw string</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Character. String vector with reformatted continuous numbers
-String with format characters included.
-Depends on <code>cat</code>: NULL if TRUE or character string if FALSE.</p>
+String with format characters included.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -195,15 +186,6 @@ Depends on <code>cat</code>: NULL if TRUE or character string if FALSE.</p>
 <span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.window.html" class="external-link">xlim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.01</span><span class="op">)</span> <span class="op">+</span></span>
 <span class="r-in">  <span class="fu">theme_void</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="va">opts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GREY"</span>, <span class="st">"RED"</span>, <span class="st">"GREEN"</span>, <span class="st">"YELLOW"</span>, <span class="st">"BLUE"</span>, <span class="st">"PURPLE"</span><span class="op">)</span></span>
-<span class="r-in"><span class="kw">for</span> <span class="op">(</span><span class="va">colour</span> <span class="kw">in</span> <span class="va">opts</span><span class="op">)</span> <span class="fu">formatColoured</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Colour:"</span>, <span class="va">colour</span>, <span class="st">"\n"</span><span class="op">)</span>, <span class="va">colour</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #000000;">Colour: GREY </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">Colour: RED </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">Colour: GREEN </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Colour: YELLOW </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Colour: BLUE </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB00BB;">Colour: PURPLE </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
