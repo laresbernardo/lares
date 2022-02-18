@@ -17,8 +17,9 @@
 #' which one you wish to use by email and/or api_key.
 #' @param server Boolean. Force interacting auth process?
 #' @param ... Additional parameters passed to \code{read_sheet()}.
-#' @return data.frame with the results of your Google Sheets file based on its
-#' \code{title}, specificially the \code{sheet} and \code{range} requested.
+#' @return For reading, data.frame with the results of your Google Sheets file
+#' based on its \code{title}, specificially the \code{sheet} and \code{range}
+#' requested. For writing, no return value.
 #' @aliases readGS4
 #' @export
 #' @rdname google_sheets
@@ -40,10 +41,9 @@ readGS <- function(title, sheet = "Hoja 1", range = NULL, drop_nas = TRUE,
   }
 }
 
-#' @param data Object (value, vector, dataframe, list).
+#' @param data Object (value, vector, data.frame, list).
 #' @param reformat Boolean. Reformat the affected cells?
 #' @param append Boolean.
-#' @return No return value, called for side effects.
 #' @aliases writeGS4
 #' @export
 #' @rdname google_sheets

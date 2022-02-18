@@ -53,17 +53,16 @@ which one you wish to use by email and/or api_key.}
 
 \item{...}{Additional parameters passed to \code{read_sheet()}.}
 
-\item{data}{Object (value, vector, dataframe, list).}
+\item{data}{Object (value, vector, data.frame, list).}
 
 \item{reformat}{Boolean. Reformat the affected cells?}
 
 \item{append}{Boolean.}
 }
 \value{
-data.frame with the results of your Google Sheets file based on its
-\code{title}, specificially the \code{sheet} and \code{range} requested.
-
-No return value, called for side effects.
+For reading, data.frame with the results of your Google Sheets file
+based on its \code{title}, specificially the \code{sheet} and \code{range}
+requested. For writing, no return value.
 }
 \description{
 Read and write data from Google Sheets knowing the file's title.

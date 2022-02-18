@@ -169,7 +169,7 @@ importance, and plots. Read more about the \code{h2o_automl()} pipeline
 }
 
 \examples{
-\donttest{
+\dontrun{
 # CRAN
 data(dft) # Titanic dataset
 dft <- subset(dft, select = -c(Ticket, PassengerId, Cabin))
