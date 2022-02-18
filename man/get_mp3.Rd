@@ -61,13 +61,12 @@ get_mp3("lrlKcCdVw9Q")
 \seealso{
 Other Scrapper: 
 \code{\link{filesGD}()},
+\code{\link{gtrends_related}()},
 \code{\link{holidays}()},
 \code{\link{ip_data}()},
 \code{\link{readGS}()},
 \code{\link{splot_etf}()},
-\code{\link{stocks_hist}()},
-\code{\link{stocks_quote}()},
-\code{\link{trendsRelated}()}
+\code{\link{stocks_quote}()}
 
 Other Audio: 
 \code{\link{trim_mp3}()}

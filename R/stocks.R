@@ -89,13 +89,13 @@ stocks_file <- function(file = NA,
 }
 
 ####################################################################
-#' Download Stocks Current Data
+#' Download Stocks Historical and Current Values
 #'
 #' This function lets the user download stocks live data.
 #'
 #' @family Investment
 #' @family Scrapper
-#' @param ticks Character Vector. Symbols/Tickers to quote in real time.
+#' @param symbols Character Vector. List of symbols to download historical data
 #' @return data.frame with Symbol, Type of stock, Quote time, current value,
 #' Daily Change, Market, and Symbol Name.
 #' @examples
@@ -104,14 +104,15 @@ stocks_file <- function(file = NA,
 #' stocks_quote(c("VTI", "VOO", "TSLA"))
 #' }
 #' @export
-stocks_quote <- function(ticks) {
+#' @rdname stocks_hist
+stocks_quote <- function(symbols) {
   ret <- noret <- NULL
   qRoot <- paste0(
     "https://query1.finance.yahoo.com/v7/finance/quote?fields=symbol,",
     "longName,regularMarketPrice,regularMarketChange,regularMarketTime&formatted=false&symbols="
   )
-  for (i in seq_along(ticks)) {
-    z <- fromJSON(paste(qRoot, paste(ticks[i], collapse = ","), sep = ""))
+  for (i in seq_along(symbols)) {
+    z <- fromJSON(paste(qRoot, paste(symbols[i], collapse = ","), sep = ""))
     if (length(z$quoteResponse$result) > 0) {
       cols <- c(
         "symbol", "quoteType", "regularMarketTime",
@@ -124,7 +125,7 @@ stocks_quote <- function(ticks) {
       z <- select(z$quoteResponse$result, one_of(cols))
       ret <- rbind(ret, z)
     } else {
-      noret <- rbind(noret, ticks[i])
+      noret <- rbind(noret, symbols[i])
     }
   }
   if (length(noret) > 0) {
@@ -139,16 +140,12 @@ stocks_quote <- function(ticks) {
   }
 }
 
-
 ####################################################################
 #' Download Stocks Historical Data
-#'
-#' This function lets the user download stocks historical data
-#'
-#' @family Investment
-#' @family Scrapper
+#' 
+#' This function lets the user download stocks historical data.
+#' 
 #' @inheritParams stocks_file
-#' @param symbols Character Vector. List of symbols to download historical data
 #' @param from,to Date. Dates for range. If not set, 1 year will be downloaded.
 #' Do use more than 4 days or will be over-written.
 #' @param today Boolean. Do you wish to add today's live quote? This will happen
@@ -157,13 +154,13 @@ stocks_quote <- function(ticks) {
 #' @param parg Boolean. Personal argument. Used to personalize stuff, in this
 #' case, taxes changed from A to B in given date (hard-coded)
 #' @param ... Additional parameters
-#' @return data.frame for each Date and Symbol closing quote value.
 #' @examples
 #' \donttest{
 #' df <- stocks_hist(symbols = c("VTI", "FB", "FIW"), from = Sys.Date() - 180)
 #' print(head(df))
 #' plot(df)
 #' }
+#' @rdname stocks_hist
 #' @export
 stocks_hist <- function(symbols = c("VTI", "TSLA"),
                         from = Sys.Date() - 365,
@@ -172,7 +169,8 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
                         tax = 15,
                         parg = FALSE,
                         cache = TRUE,
-                        quiet = FALSE) {
+                        quiet = FALSE,
+                        ...) {
   cache_file <- c(
     as.character(Sys.Date()), "stocks_hist",
     symbols, sum(as.integer(as.Date(from)), as.integer(as.Date(to)))

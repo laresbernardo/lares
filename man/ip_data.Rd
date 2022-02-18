@@ -61,12 +61,11 @@ Other Tools:
 Other Scrapper: 
 \code{\link{filesGD}()},
 \code{\link{get_mp3}()},
+\code{\link{gtrends_related}()},
 \code{\link{holidays}()},
 \code{\link{readGS}()},
 \code{\link{splot_etf}()},
-\code{\link{stocks_hist}()},
-\code{\link{stocks_quote}()},
-\code{\link{trendsRelated}()}
+\code{\link{stocks_quote}()}
 }
 \concept{Scrapper}
 \concept{Tools}

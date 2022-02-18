@@ -72,18 +72,16 @@ You may use a single value from a cell or a data.frame from a cell range.
 Other Scrapper: 
 \code{\link{filesGD}()},
 \code{\link{get_mp3}()},
+\code{\link{gtrends_related}()},
 \code{\link{holidays}()},
 \code{\link{ip_data}()},
 \code{\link{splot_etf}()},
-\code{\link{stocks_hist}()},
-\code{\link{stocks_quote}()},
-\code{\link{trendsRelated}()}
+\code{\link{stocks_quote}()}
 
 Other Google: 
 \code{\link{filesGD}()},
-\code{\link{queryGA}()},
-\code{\link{trendsRelated}()},
-\code{\link{trendsTime}()}
+\code{\link{gtrends_related}()},
+\code{\link{queryGA}()}
 }
 \concept{Google}
 \concept{Scrapper}

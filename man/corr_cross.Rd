@@ -103,8 +103,7 @@ Other Exploratory:
 \code{\link{plot_cats}()},
 \code{\link{plot_df}()},
 \code{\link{plot_nums}()},
-\code{\link{tree_var}()},
-\code{\link{trendsRelated}()}
+\code{\link{tree_var}()}
 }
 \concept{Correlations}
 \concept{Exploratory}

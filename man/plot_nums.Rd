@@ -35,7 +35,6 @@ Other Exploratory:
 \code{\link{missingness}()},
 \code{\link{plot_cats}()},
 \code{\link{plot_df}()},
-\code{\link{tree_var}()},
-\code{\link{trendsRelated}()}
+\code{\link{tree_var}()}
 }
 \concept{Exploratory}

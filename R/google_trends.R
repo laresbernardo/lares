@@ -1,13 +1,12 @@
 ####################################################################
-#' Google Trends: Related Plot
+#' Google Trends: Related and Time Plots
 #'
 #' This function creates a plot with Google Trend's related topics
 #' and queries, and let the user compare different keywords.
 #'
-#' @family Exploratory
 #' @family Scrapper
-#' @family Google Trends
 #' @family Google
+#' @aliases trendsRelated
 #' @param gtrend List. Result from \code{gtrendsR::gtrends(keyword, geo, time)}
 #' @param top Integer. Filter top n results only.
 #' @param title Character. Custom title for the plot.
@@ -15,7 +14,8 @@
 #' @param exclude Character vector. Which observations do you wish to exclude?
 #' @return plot for Google Trend's results input \code{gtrend}.
 #' @export
-trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = NULL) {
+#' @rdname google_trends
+gtrends_related <- function(gtrend, top = NA, title = NA, note = NA, exclude = NULL) {
   start <- as.Date(min(gtrend$interest_over_time$date))
   end <- as.Date(max(gtrend$interest_over_time$date))
   range <- paste0(start, " - ", end, " (", as.integer(end - start), "d)")
@@ -135,12 +135,11 @@ trendsRelated <- function(gtrend, top = NA, title = NA, note = NA, exclude = NUL
 #' This function creates a plot with google trend's data on timelines
 #' and let the user compare different keywords.
 #'
-#' @family Google Trends
-#' @family Google
-#' @inheritParams trendsRelated
-#' @return plot for Google Trend's results input \code{gtrend}
+#' @return Plot for Google Trend's results input \code{gtrend}.
+#' @aliases trendsTime
 #' @export
-trendsTime <- function(gtrend, title = NA) {
+#' @rdname google_trends
+gtrends_time <- function(gtrend, title = NA) {
   try_require("gtrendsR")
   int1 <- plot(gtrend) + theme_lares() +
     labs(x = "", colour = "") + ylim(0, 100) +

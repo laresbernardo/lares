@@ -121,8 +121,7 @@ Other Exploratory:
 \code{\link{missingness}()},
 \code{\link{plot_cats}()},
 \code{\link{plot_df}()},
-\code{\link{plot_nums}()},
-\code{\link{trendsRelated}()}
+\code{\link{plot_nums}()}
 
 Other Visualization: 
 \code{\link{distr}()},

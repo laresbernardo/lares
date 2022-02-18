@@ -31,19 +31,17 @@ Authenticate and find Google Drive files and IDs by name.
 \seealso{
 Other Scrapper: 
 \code{\link{get_mp3}()},
+\code{\link{gtrends_related}()},
 \code{\link{holidays}()},
 \code{\link{ip_data}()},
 \code{\link{readGS}()},
 \code{\link{splot_etf}()},
-\code{\link{stocks_hist}()},
-\code{\link{stocks_quote}()},
-\code{\link{trendsRelated}()}
+\code{\link{stocks_quote}()}
 
 Other Google: 
+\code{\link{gtrends_related}()},
 \code{\link{queryGA}()},
-\code{\link{readGS}()},
-\code{\link{trendsRelated}()},
-\code{\link{trendsTime}()}
+\code{\link{readGS}()}
 }
 \concept{Google}
 \concept{Scrapper}

@@ -34,7 +34,6 @@ Other Investment:
 \code{\link{splot_summary}()},
 \code{\link{splot_types}()},
 \code{\link{stocks_file}()},
-\code{\link{stocks_hist}()},
 \code{\link{stocks_obj}()},
 \code{\link{stocks_quote}()},
 \code{\link{stocks_report}()}
@@ -50,12 +49,11 @@ Other Investment Plots:
 Other Scrapper: 
 \code{\link{filesGD}()},
 \code{\link{get_mp3}()},
+\code{\link{gtrends_related}()},
 \code{\link{holidays}()},
 \code{\link{ip_data}()},
 \code{\link{readGS}()},
-\code{\link{stocks_hist}()},
-\code{\link{stocks_quote}()},
-\code{\link{trendsRelated}()}
+\code{\link{stocks_quote}()}
 }
 \concept{Investment}
 \concept{Investment Plots}

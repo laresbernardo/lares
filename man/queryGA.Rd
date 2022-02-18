@@ -57,9 +57,8 @@ Other Credentials:
 
 Other Google: 
 \code{\link{filesGD}()},
-\code{\link{readGS}()},
-\code{\link{trendsRelated}()},
-\code{\link{trendsTime}()}
+\code{\link{gtrends_related}()},
+\code{\link{readGS}()}
 
 Other API: 
 \code{\link{bring_api}()},
