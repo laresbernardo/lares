@@ -3,7 +3,6 @@
 \name{formatNum}
 \alias{formatNum}
 \alias{formatHTML}
-\alias{formatColoured}
 \title{Nicely Format Texts and Numericals}
 \usage{
 formatNum(
@@ -19,8 +18,6 @@ formatNum(
 )
 
 formatHTML(text, color = "black", size = 20, bold = FALSE)
-
-formatColoured(txt, colour = c("blue", "yellow", "grey"), cat = TRUE)
 }
 \arguments{
 \item{x}{Numerical Vector}
@@ -51,19 +48,11 @@ the `decimals` parameter to set abbr's \code{n}(-1) parameter.}
 \item{size}{Numeric. Text size.}
 
 \item{bold}{Boolean. Should the text be bold?}
-
-\item{txt}{Character. Text to print or transform.}
-
-\item{colour}{Character. Any of: grey, red, green, yellow, blue, or purple.}
-
-\item{cat}{Boolean. Print with cat? If not, raw string}
 }
 \value{
 Character. String vector with reformatted continuous numbers
 
 String with format characters included.
-
-Depends on \code{cat}: NULL if TRUE or character string if FALSE.
 }
 \description{
 This function lets the user format numerical values nicely
@@ -105,8 +94,6 @@ ggplot(pt, aes(x = 0, y = 0)) +
   xlim(0, 0.01) +
   theme_void()
 }
-opts <- c("GREY", "RED", "GREEN", "YELLOW", "BLUE", "PURPLE")
-for (colour in opts) formatColoured(paste("Colour:", colour, "\n"), colour)
 }
 \seealso{
 Other Data Wrangling: 

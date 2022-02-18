@@ -10,7 +10,7 @@ vignette: >
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE, comment = "#>", results = "hide",
-  fig.width = 7.1, fig.height = 5.5,
+  fig.width = 7.1, fig.height = 5.5, dpi = 70,
   error = TRUE, purl = FALSE
 )
 h2o::h2o.init() # Just to be sure
@@ -140,7 +140,7 @@ If you'd like to re-use your exported models to predict new datasets, you have s
 - DataScience+: [Visualizations for Classification Models Results](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/)
 - DataScience+: [Visualizations for Regression Models Results](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/)
 
-```{r h2o_shutdown, echo=FALSE, include=FALSE, error=FALSE, message=FALSE}
+```{r h2o_shutdown, echo=FALSE, include=FALSE, message=FALSE}
 h2o::h2o.shutdown(prompt = FALSE)
 Sys.sleep(2)
 ```

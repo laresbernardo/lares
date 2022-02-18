@@ -1712,7 +1712,6 @@ grepm <- function(pattern, x, type = "all", ...) {
 #' opts <- c("GREY", "RED", "GREEN", "YELLOW", "BLUE", "PURPLE")
 #' for (colour in opts) formatColoured(paste("Colour:", colour, "\n"), colour)
 #' @export
-#' @rdname format_string
 formatColoured <- function(txt, colour = c("blue", "yellow", "grey"), cat = TRUE) {
   colour <- toupper(colour)[1]
   opts <- c("GREY", "RED", "GREEN", "YELLOW", "BLUE", "PURPLE")
