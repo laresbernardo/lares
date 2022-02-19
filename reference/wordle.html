@@ -75,9 +75,15 @@ placement (yellow), letter is not present (red).</p>
   print <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
 
+<span class="co"># S3 method for wordle_check</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, print <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
+
 <span class="fu">wordle_dictionary</span><span class="op">(</span>lang_dic <span class="op">=</span> <span class="st">"en"</span>, method <span class="op">=</span> <span class="fl">3</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
-<span class="fu">wordle_simulation</span><span class="op">(</span><span class="va">input</span>, <span class="va">word</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu">wordle_simulation</span><span class="op">(</span><span class="va">input</span>, <span class="va">word</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="co"># S3 method for wordle_simulation</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -98,12 +104,15 @@ parameter is NULL. Requires internet connection the first time. Uses cache.</p><
 words from github, 3 for scrapping NYTimes set of words.</p></dd>
 <dt>print</dt>
 <dd><p>Boolean. Print validation results?</p></dd>
+<dt>x</dt>
+<dd><p>Object to print</p></dd>
+<dt>...</dt>
+<dd><p>Additional parameters to pass.</p></dd>
 <dt>quiet</dt>
 <dd><p>Boolean. Do not print words as they are being searched.</p></dd>
 <dt>seed</dt>
-<dd><p>Numeric. For reproducibility.</p></dd>
-<dt>...</dt>
-<dd><p>Additional parameters passed to <code>lares:::wordle_opts()</code></p></dd>
+<dd><p>Numeric. For reproducibility. Accepts more than one: will
+run as many seeds there are.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -120,8 +129,7 @@ words from github, 3 for scrapping NYTimes set of words.</p></dd>
 <span class="r-in"><span class="fu">wordle_check</span><span class="op">(</span><span class="st">"BABES"</span>, <span class="va">word</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00; font-weight: bold;">B</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">E</span> <span style="color: #BB0000; font-weight: bold;">S</span></span>
 <span class="r-in"><span class="fu">wordle_check</span><span class="op">(</span><span class="st">"BABES"</span>, <span class="va">word</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        B        A        B        E        S </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "YELLOW" "YELLOW"  "GREEN"  "GREEN"    "RED" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00; font-weight: bold;">B</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">E</span> <span style="color: #BB0000; font-weight: bold;">S</span></span>
 <span class="r-in"><span class="fu">wordle_check</span><span class="op">(</span><span class="st">"KEBAB"</span>, <span class="va">word</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; font-weight: bold;">K</span> <span style="color: #BBBB00; font-weight: bold;">E</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #BBBB00; font-weight: bold;">B</span></span>
 <span class="r-in"><span class="fu">wordle_check</span><span class="op">(</span><span class="st">"ABYSS"</span>, <span class="va">word</span><span class="op">)</span></span>
@@ -129,7 +137,20 @@ words from github, 3 for scrapping NYTimes set of words.</p></dd>
 <span class="r-in"><span class="fu">wordle_check</span><span class="op">(</span><span class="st">"ABBEY"</span>, <span class="va">word</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00; font-weight: bold;">A</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">E</span> <span style="color: #00BB00; font-weight: bold;">Y</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu">wordle_simulation</span><span class="op">(</span>input <span class="op">=</span> <span class="st">"SAINT"</span>, word <span class="op">=</span> <span class="st">"ABBEY"</span>, seed <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">wordle_simulation</span><span class="op">(</span>input <span class="op">=</span> <span class="st">"SAINT"</span>, word <span class="op">=</span> <span class="st">"ABBEY"</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; font-weight: bold;">S</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #BB0000; font-weight: bold;">I</span> <span style="color: #BB0000; font-weight: bold;">N</span> <span style="color: #BB0000; font-weight: bold;">T</span> reduced from 12,951 to 793</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; font-weight: bold;">O</span> <span style="color: #BB0000; font-weight: bold;">R</span> <span style="color: #BBBB00; font-weight: bold;">E</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #BB0000; font-weight: bold;">D</span> reduced from 793 to 175</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; font-weight: bold;">K</span> <span style="color: #BBBB00; font-weight: bold;">E</span> <span style="color: #BB0000; font-weight: bold;">H</span> <span style="color: #BB0000; font-weight: bold;">U</span> <span style="color: #BBBB00; font-weight: bold;">A</span> reduced from 175 to 46</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00; font-weight: bold;">B</span> <span style="color: #BB0000; font-weight: bold;">L</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #BB0000; font-weight: bold;">F</span> <span style="color: #BB0000; font-weight: bold;">F</span> reduced from 46 to 5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00; font-weight: bold;">A</span> <span style="color: #BB0000; font-weight: bold;">Z</span> <span style="color: #BBBB00; font-weight: bold;">Y</span> <span style="color: #BB0000; font-weight: bold;">M</span> <span style="color: #BBBB00; font-weight: bold;">E</span> reduced from 5 to 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00; font-weight: bold;">A</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">E</span> <span style="color: #00BB00; font-weight: bold;">Y</span> reduced from 1 to 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; Iterations (seed = 1): 6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; font-weight: bold;">S</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #BB0000; font-weight: bold;">I</span> <span style="color: #BB0000; font-weight: bold;">N</span> <span style="color: #BB0000; font-weight: bold;">T</span> reduced from 12,951 to 793</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; font-weight: bold;">P</span> <span style="color: #BB0000; font-weight: bold;">U</span> <span style="color: #BB0000; font-weight: bold;">C</span> <span style="color: #BB0000; font-weight: bold;">K</span> <span style="color: #BBBB00; font-weight: bold;">A</span> reduced from 793 to 323</span>
@@ -142,8 +163,19 @@ words from github, 3 for scrapping NYTimes set of words.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00; font-weight: bold;">A</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">E</span> <span style="color: #00BB00; font-weight: bold;">Y</span> reduced from 3 to 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Answer: ABBEY</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; Total iterations (seed = 2): 6</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; Iterations (seed = 2): 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; font-weight: bold;">S</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #BB0000; font-weight: bold;">I</span> <span style="color: #BB0000; font-weight: bold;">N</span> <span style="color: #BB0000; font-weight: bold;">T</span> reduced from 12,951 to 793</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; font-weight: bold;">W</span> <span style="color: #BB0000; font-weight: bold;">H</span> <span style="color: #BBBB00; font-weight: bold;">E</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #BB0000; font-weight: bold;">L</span> reduced from 793 to 244</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; font-weight: bold;">G</span> <span style="color: #BB0000; font-weight: bold;">R</span> <span style="color: #BBBB00; font-weight: bold;">A</span> <span style="color: #BB0000; font-weight: bold;">P</span> <span style="color: #00BB00; font-weight: bold;">Y</span> reduced from 244 to 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00; font-weight: bold;">A</span> <span style="color: #BB0000; font-weight: bold;">C</span> <span style="color: #BB0000; font-weight: bold;">C</span> <span style="color: #BB0000; font-weight: bold;">O</span> <span style="color: #00BB00; font-weight: bold;">Y</span> reduced from 2 to 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00; font-weight: bold;">A</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">B</span> <span style="color: #00BB00; font-weight: bold;">E</span> <span style="color: #00BB00; font-weight: bold;">Y</span> reduced from 1 to 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; Iterations (seed = 3): 5</span>
+<span class="r-in"><span class="co"># hist(sapply(x, function(x) x$iters))</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

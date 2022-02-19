@@ -194,14 +194,14 @@ complements our <code><a href="corr_cross.html">lares::corr_cross()</a></code> o
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   x        y        obs_p   x2y lower_ci upper_ci</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Sex      Survived 100   44.4    40.1       51.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Survived Sex      100   39.5    33.3       44.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Fare     Survived 100   20.5     0.290     18.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Age      Parch     80.1 18.9     9.57      21.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Pclass   Survived 100   16.4    14.3       22.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Age      Pclass    80.1 14.8     5.53      15.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> Age      SibSp     80.1 10.6     3.91      13.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> Cabin    Survived 100    8.19    8.17      13.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Sex      Survived 100   44.4     35.2      48.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Survived Sex      100   39.5     33.6      45.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Fare     Survived 100   20.5     -<span style="color: #BB0000;">6.4</span>      17.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Age      Parch     80.1 18.9     12.8      21.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Pclass   Survived 100   16.4     11.9      24.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Age      Pclass    80.1 14.8      7.57     15.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> Age      SibSp     80.1 10.6      3.5      12.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> Cabin    Survived 100    8.19     5.95     10.5</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Compare with mean absolute correlations</span></span>
 <span class="r-in"><span class="fu">x2y</span><span class="op">(</span><span class="va">dft</span>, <span class="st">"Fare"</span>, corr <span class="op">=</span> <span class="cn">TRUE</span>, top <span class="op">=</span> <span class="fl">6</span>, target_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
