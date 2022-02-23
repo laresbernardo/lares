@@ -143,10 +143,10 @@ Daily Change, Market, and Symbol Name.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in"><span class="co"># Multiple quotes at the same time</span></span>
 <span class="r-in"><span class="fu">stocks_quote</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VTI"</span>, <span class="st">"VOO"</span>, <span class="st">"TSLA"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Symbol   Type           QuoteTime  Value DailyChange    Market</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    VTI    ETF 2022-02-22 21:00:00 216.85   -2.519989 us_market</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    VOO    ETF 2022-02-22 21:00:00 394.92   -4.370000 us_market</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   TSLA EQUITY 2022-02-22 21:00:03 821.53  -35.449950 us_market</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Symbol   Type           QuoteTime   Value   DailyChange    Market</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    VTI    ETF 2022-02-23 15:24:05 216.860   0.009994507 us_market</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    VOO    ETF 2022-02-23 15:24:04 395.070   0.149993900 us_market</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   TSLA EQUITY 2022-02-23 15:24:03 802.415 -19.115051000 us_market</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                          SymbolName</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Vanguard Total Stock Market Index Fund ETF Shares</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                              Vanguard S&amp;P 500 ETF</span>
@@ -159,12 +159,12 @@ Daily Change, Market, and Symbol Name.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Date       Symbol Value   Div DivTaxP DivReal</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2022-02-22 VTI    217.      0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2022-02-22 FB     202.      0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2022-02-22 FIW     79.9     0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2022-02-18 VTI    219.      0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2022-02-18 FB     206.      0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2022-02-18 FIW     80.8     0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2022-02-23 VTI    217.      0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2022-02-23 FB     203.      0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2022-02-23 FIW     80.0     0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2022-02-22 VTI    217.      0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2022-02-22 FB     202.      0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2022-02-22 FIW     79.9     0       0       0</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="stocks_hist-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span class="co"># }</span></span>
