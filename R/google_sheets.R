@@ -116,7 +116,7 @@ filesGD <- function(title, server = FALSE, json = NULL, api_key = NULL, email = 
     }
   }
 
-  local_drive_quiet()
+  try(local_drive_quiet())
   files <- drive_find(
     pattern = title,
     n_max = 199,

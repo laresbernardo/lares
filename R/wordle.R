@@ -127,7 +127,8 @@ wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
       # If random word picked is the word
       if (random_word == word) break
       # If last word remaining is the one
-      if (all(iter == word)) iter <- wordle_opts(word, word, iter, quiet = quiet, ...)
+      if (length(iter) == 1 & all(iter == word))
+        iter <- wordle_opts(word, word, iter, quiet = quiet, ...)
       i <- i + 1
     }
     output[[paste0("seed_", s)]] <- list(words = used_words, iters = sum(used_words != word) + 1)
@@ -174,6 +175,7 @@ print.wordle_simulation <- function(x, ...) {
 wordle_opts <- function(input, word, dictionary = NULL, lang_dic = "en", method = 3, quiet = FALSE, ...) {
   
   if (is.null(dictionary)) dictionary <- wordle_dictionary(lang_dic, quiet = TRUE)
+  if (!word %in% dictionary) dictionary <- c(dictionary, word)
   n_words_init <- length(dictionary)
   check <- wordle_check(input, word, dictionary, lang_dic, method, print = FALSE)
   
@@ -184,7 +186,8 @@ wordle_opts <- function(input, word, dictionary = NULL, lang_dic = "en", method 
     
     # Letters not present
     these <- names(check[check == "RED"])
-    words_df <- filter(words_df, !grepl(paste(these, collapse = "|"), .data$word))
+    if (length(these) > 0)
+      words_df <- filter(words_df, !grepl(paste(these, collapse = "|"), .data$word))
     # Letters present but not in position
     these <- names(check[check == "YELLOW"])
     words_df <- filter(words_df, grepl(paste(these, collapse = "|"), .data$word))
