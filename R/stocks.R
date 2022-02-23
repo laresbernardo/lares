@@ -142,9 +142,9 @@ stocks_quote <- function(symbols) {
 
 ####################################################################
 #' Download Stocks Historical Data
-#' 
+#'
 #' This function lets the user download stocks historical data.
-#' 
+#'
 #' @inheritParams stocks_file
 #' @param from,to Date. Dates for range. If not set, 1 year will be downloaded.
 #' Do use more than 4 days or will be over-written.

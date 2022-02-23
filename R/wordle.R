@@ -1,6 +1,6 @@
 ####################################################################
 #' Wordle Game Validation
-#' 
+#'
 #' Given and input and a word, validate each letter based on Wordle's
 #' rules: correct letter in correct placement (green), correct letter in wrong
 #' placement (yellow), letter is not present (red).
@@ -32,15 +32,15 @@ wordle_check <- function(input, word, dictionary = NULL, lang_dic = "en", method
   wordle_valid(input, dictionary, lang_dic, method)
   tiles <- toupper(unlist(strsplit(word, "")))
   in_tiles <- toupper(unlist(strsplit(input, "")))
-  
+
   init <- rep("_", 5)
   init[which(!in_tiles %in% tiles)] <- "RED"
   init[which(in_tiles %in% tiles)] <- "YELLOW"
   init[which(in_tiles == tiles)] <- "GREEN"
-  
+
   out <- init
   names(out) <- in_tiles
-  
+
   class(out) <- c("wordle_check", class(out))
   print(out, print = print)
   return(invisible(out))
@@ -51,36 +51,43 @@ wordle_check <- function(input, word, dictionary = NULL, lang_dic = "en", method
 #' @export
 print.wordle_check <- function(x, print = TRUE, ...) {
   texts <- NULL
-  for (i in seq_along(x))
+  for (i in seq_along(x)) {
     texts <- c(texts, formatColoured(names(x)[i], x[i], bold = TRUE, cat = FALSE))
+  }
   txt <- paste(texts, collapse = " ")
   if (print) cat(txt) else return(txt)
 }
 
 wordle_valid <- function(input, dictionary, lang_dic = "en", method = 3) {
-  if (is.null(dictionary))
+  if (is.null(dictionary)) {
     dictionary <- wordle_dictionary(lang_dic, method, quiet = TRUE)
-  if (!toupper(input) %in% toupper(dictionary))
-    stop(input, " is not a valid input word")  
+  }
+  if (!toupper(input) %in% toupper(dictionary)) {
+    stop(input, " is not a valid input word")
+  }
 }
 
 #' @inheritParams scrabble_dictionary
 #' @export
 #' @rdname wordle
 wordle_dictionary <- function(lang_dic = "en", method = 3, quiet = TRUE) {
-  if (is.null(lang_dic)) return(NULL)
+  if (is.null(lang_dic)) {
+    return(NULL)
+  }
   check_opts(lang_dic, c("en", "es"))
   cache_name <- c(lang_dic, method)
   if (cache_exists(cache_name)) {
     words <- cache_read(cache_name, quiet = quiet)
-    if (!quiet) message(sprintf(
-      ">>> Loaded %s '%s' words",
-      formatNum(length(words), 0), lang_dic
-    ))
+    if (!quiet) {
+      message(sprintf(
+        ">>> Loaded %s '%s' words",
+        formatNum(length(words), 0), lang_dic
+      ))
+    }
     return(words)
   }
   if (method == 1) {
-    words <- scrabble_dictionary(lang_dic, quiet)[[1]] 
+    words <- scrabble_dictionary(lang_dic, quiet)[[1]]
   }
   if (method == 3) {
     url <- "https://www.nytimes.com/games/wordle/main.bd4cb59c.js"
@@ -99,13 +106,14 @@ wordle_dictionary <- function(lang_dic = "en", method = 3, quiet = TRUE) {
 #' run as many seeds there are.
 #' @param ... Additional parameters to pass.
 #' @export
-#' @examples 
-#' 
+#' @examples
+#'
 #' x <- wordle_simulation(input = "SAINT", word = "ABBEY", seed = 1:3)
 #' print(x)
 #' # hist(sapply(x, function(x) x$iters))
 #' @rdname wordle
 wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
+  tic("wordle_simulation")
   output <- NULL
   if (is.null(seed)) seed <- sample(1:100, 1)
   # First iteration with picked word (no random stuff happens here)
@@ -114,7 +122,7 @@ wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
     # Print first word for nicer and more informative output
     if (s != seed[1]) {
       wordle_check(input, word, ...)
-      if (isTRUE(list(...)[["print"]])) cat("\n") 
+      if (!isFALSE(list(...)[["print"]])) cat("\n")
     }
     set.seed(s) # s = seed[1]
     seed_loop <- NULL
@@ -129,8 +137,9 @@ wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
       # If random word picked is the word
       if (random_word == word) break
       # If last word remaining is the one
-      if (length(iter) == 1 & all(iter == word))
+      if (length(iter) == 1 & all(iter == word)) {
         iter <- wordle_opts(word, word, iter, quiet = quiet, ...)
+      }
       i <- i + 1
     }
     output[[paste0("seed_", s)]] <- list(words = used_words, iters = sum(used_words != word) + 1)
@@ -139,6 +148,7 @@ wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
   attr(output, "input") <- input
   attr(output, "word") <- word
   attr(output, "iterations") <- length(seed)
+  attr(output, "elapsed") <- toc("wordle_simulation")$time
   class(output) <- c("wordle_simulation", class(output))
   return(invisible(output))
 }
@@ -179,7 +189,7 @@ print.wordle_simulation <- function(x, type = 1, ...) {
       for_print <- append(for_print, res)
     }
     txts <- sapply(for_print, function(x) paste(print(x, print = FALSE)))
-    cat(txts, sep = "\n")   
+    cat(txts, sep = "\n")
   }
 }
 
@@ -189,39 +199,41 @@ print.wordle_simulation <- function(x, type = 1, ...) {
 
 # SIMULATE N SOLUTIONS BY START WORD
 wordle_opts <- function(input, word, dictionary = NULL, lang_dic = "en", method = 3, quiet = FALSE, ...) {
-  
   if (is.null(dictionary)) dictionary <- wordle_dictionary(lang_dic, quiet = TRUE)
   if (!word %in% dictionary) dictionary <- c(dictionary, word)
   n_words_init <- length(dictionary)
   check <- wordle_check(input, word, dictionary, lang_dic, method, print = FALSE)
-  
+
   if (input[1] != word[1]) {
     # Prepare data.frame to filtering words that match criteria
     words_lst <- lapply(dictionary, function(x) toupper(unlist(strsplit(x, ""))))
     words_df <- bind_rows(lapply(words_lst, function(x) as.data.frame(t(x)))) %>% mutate(word = dictionary)
-    
+
     # Letters not present
     these <- names(check[check == "RED"])
-    if (length(these) > 0)
+    if (length(these) > 0) {
       words_df <- filter(words_df, !grepl(paste(these, collapse = "|"), .data$word))
+    }
     # Letters present but not in position
     these <- names(check[check == "YELLOW"])
     words_df <- filter(words_df, grepl(paste(these, collapse = "|"), .data$word))
     these_id <- which(check == "YELLOW")
-    for (i in seq_along(these)) words_df <- words_df[words_df[, these_id[i]] != these[i],]
+    for (i in seq_along(these)) words_df <- words_df[words_df[, these_id[i]] != these[i], ]
     # Letters present in position
     these <- names(check[check == "GREEN"])
     these_id <- which(check == "GREEN")
-    for (i in seq_along(these)) words_df <- words_df[words_df[, these_id[i]] == these[i],]
-    dictionary <- words_df$word 
-  } else dictionary <- word
-  
+    for (i in seq_along(these)) words_df <- words_df[words_df[, these_id[i]] == these[i], ]
+    dictionary <- words_df$word
+  } else {
+    dictionary <- word
+  }
+
   input_coloured <- print(check, print = FALSE)
   if (!quiet) message(cat(input_coloured, "reduced from", formatNum(n_words_init, 0), "to", formatNum(length(dictionary), 0)))
-  
+
   attr(dictionary, "answer") <- word
   attr(dictionary, "last_word") <- input
-  
+
   return(dictionary)
 }
 
@@ -234,7 +246,7 @@ wordle_opts <- function(input, word, dictionary = NULL, lang_dic = "en", method 
 # wordle_check("KEBAB", word)
 # wordle_check("ABYSS", word)
 # wordle_check("ABBEY", word)
-# 
+#
 # # Cheat using scrabble_words()
 # set.seed(1) # For reproducibility
 # # word <- sample(wordle_dictionary("en"), 1)

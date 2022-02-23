@@ -29,15 +29,15 @@
 #' }
 #' @export
 mail_send <- function(from = "RMail <laresbernardo@gmail.com>",
-                     to = "laresbernardo@gmail.com",
-                     cc = NULL, bcc = NULL,
-                     subject = "Mail from R",
-                     text = " \n",
-                     html = NULL,
-                     attachment = NULL,
-                     service = "mailgun",
-                     creds = NULL,
-                     quiet = FALSE) {
+                      to = "laresbernardo@gmail.com",
+                      cc = NULL, bcc = NULL,
+                      subject = "Mail from R",
+                      text = " \n",
+                      html = NULL,
+                      attachment = NULL,
+                      service = "mailgun",
+                      creds = NULL,
+                      quiet = FALSE) {
 
   # MailGun documentation:
   # https://documentation.mailgun.com/en/latest/api-sending.html#sending
