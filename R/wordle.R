@@ -113,7 +113,8 @@ wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
   for (s in seed) {
     # Print first word for nicer and more informative output
     if (s != seed[1]) {
-      wordle_check(input, word, print = TRUE); cat("\n") 
+      wordle_check(input, word, ...)
+      if (isTRUE(list(...)[["print"]])) cat("\n") 
     }
     set.seed(s) # s = seed[1]
     seed_loop <- NULL
@@ -224,16 +225,6 @@ wordle_opts <- function(input, word, dictionary = NULL, lang_dic = "en", method 
   return(dictionary)
 }
 
-# iterations <- NULL
-# for (i in 1:20) iterations <- c(iterations, wordle_simulation(input = "SAINT", word = "ABBEY", seed = i))
-# hist(iterations)
-# wordle_simulation(input = "SAINT", word = "ABBEY", seed = which.max(iterations)) # 2 with method 3
-
-# wordle_simulation(input = "SAINT", word = "ABBEY", seed = 15)
-
-# word <- "TEXTS"
-# wordle_simulation(word, word)
-
 ############ PLAY AREA ############
 
 # # word <- sample(wordle_dictionary("en"), 1)
@@ -276,4 +267,3 @@ wordle_opts <- function(input, word, dictionary = NULL, lang_dic = "en", method 
 # )
 # # Fourth iteration
 # wordle_check("flesh", word)
-
