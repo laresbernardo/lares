@@ -23,7 +23,7 @@ wordle_dictionary(lang_dic = "en", method = 3, quiet = TRUE)
 
 wordle_simulation(input, word, seed = NULL, quiet = FALSE, ...)
 
-\method{print}{wordle_simulation}(x, ...)
+\method{print}{wordle_simulation}(x, type = 1, ...)
 }
 \arguments{
 \item{input}{Character. Word to validate (5-letters)}
@@ -37,8 +37,8 @@ Use \code{lang_dic} param to set language.}
 \item{lang_dic}{Character. Any of: "en", "es". Only used when \code{dictionary}
 parameter is NULL. Requires internet connection the first time. Uses cache.}
 
-\item{method}{Integer. 1 for \code{scrabble_dictionary()}, 2 for reduced Wordle
-words from github, 3 for scrapping NYTimes set of words.}
+\item{method}{Integer. 1 for \code{scrabble_dictionary()}, 3 for scrapping
+\href{https://www.nytimes.com/games/wordle/index.html}{NYTimes} set of words.}
 
 \item{print}{Boolean. Print validation results?}
 
@@ -50,9 +50,11 @@ words from github, 3 for scrapping NYTimes set of words.}
 
 \item{seed}{Numeric. For reproducibility. Accepts more than one: will
 run as many seeds there are.}
+
+\item{type}{Integer. 1 for summary and 2 for coloured results.}
 }
 \value{
-Depends on \code{cat}: NULL if TRUE or character string if FALSE.
+Invisible vector with results by letter.
 }
 \description{
 Given and input and a word, validate each letter based on Wordle's
@@ -65,11 +67,12 @@ word <- "ABBEY"
 # word <- sample(wordle_dictionary("en"), 1)
 wordle_check("OPENS", word)
 wordle_check("BABES", word)
-wordle_check("BABES", word, print = FALSE)
-wordle_check("KEBAB", word)
+wordle_check("KEBAB", word, print = FALSE)
 wordle_check("ABYSS", word)
 wordle_check("ABBEY", word)
+# Feel free to use scrabble_words() for hints
 
 x <- wordle_simulation(input = "SAINT", word = "ABBEY", seed = 1:3)
+print(x)
 # hist(sapply(x, function(x) x$iters))
 }

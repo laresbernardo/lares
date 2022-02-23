@@ -12,20 +12,20 @@
 #' Use \code{lang_dic} param to set language.
 #' @param lang_dic Character. Any of: "en", "es". Only used when \code{dictionary}
 #' parameter is NULL. Requires internet connection the first time. Uses cache.
-#' @param method Integer. 1 for \code{scrabble_dictionary()}, 2 for reduced Wordle
-#' words from github, 3 for scrapping NYTimes set of words.
+#' @param method Integer. 1 for \code{scrabble_dictionary()}, 3 for scrapping
+#' \href{https://www.nytimes.com/games/wordle/index.html}{NYTimes} set of words.
 #' @param print Boolean. Print validation results?
-#' @return Depends on \code{cat}: NULL if TRUE or character string if FALSE.
+#' @return Invisible vector with results by letter.
 #' @examples
 #' word <- "ABBEY"
 #' # Or pick a random one:
 #' # word <- sample(wordle_dictionary("en"), 1)
 #' wordle_check("OPENS", word)
 #' wordle_check("BABES", word)
-#' wordle_check("BABES", word, print = FALSE)
-#' wordle_check("KEBAB", word)
+#' wordle_check("KEBAB", word, print = FALSE)
 #' wordle_check("ABYSS", word)
 #' wordle_check("ABBEY", word)
+#' # Feel free to use scrabble_words() for hints
 #' @export
 #' @rdname wordle
 wordle_check <- function(input, word, dictionary = NULL, lang_dic = "en", method = 3, print = TRUE) {
@@ -40,8 +40,10 @@ wordle_check <- function(input, word, dictionary = NULL, lang_dic = "en", method
   
   out <- init
   names(out) <- in_tiles
+  
   class(out) <- c("wordle_check", class(out))
-  if (print) print(out) else return(out)
+  print(out, print = print)
+  return(invisible(out))
 }
 
 #' @rdname wordle
@@ -80,13 +82,6 @@ wordle_dictionary <- function(lang_dic = "en", method = 3, quiet = TRUE) {
   if (method == 1) {
     words <- scrabble_dictionary(lang_dic, quiet)[[1]] 
   }
-  if (method == 2) {
-    source <- paste0(
-      "https://gist.githubusercontent.com/cfreshman/",
-      "a03ef2cba789d8cf00c08f767e0fad7b/raw/5d752e5f0702da315298a6bb5a771586d6ff445c/",
-      "wordle-answers-alphabetical.txt")
-    words <- read.delim(source, header = FALSE)$V1 
-  }
   if (method == 3) {
     url <- "https://www.nytimes.com/games/wordle/main.bd4cb59c.js"
     temp <- str_split(readLines(url), '"')[[1]]
@@ -107,6 +102,7 @@ wordle_dictionary <- function(lang_dic = "en", method = 3, quiet = TRUE) {
 #' @examples 
 #' 
 #' x <- wordle_simulation(input = "SAINT", word = "ABBEY", seed = 1:3)
+#' print(x)
 #' # hist(sapply(x, function(x) x$iters))
 #' @rdname wordle
 wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
@@ -141,30 +137,43 @@ wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
 }
 
 #' @rdname wordle
+#' @param type Integer. 1 for summary and 2 for coloured results.
 #' @export
-print.wordle_simulation <- function(x, ...) {
+print.wordle_simulation <- function(x, type = 1, ...) {
   words <- lapply(x, function(x) x$words)
   iters_n <- sapply(x, function(x) x$iters)
-  for_print <- list()
-  split_col <- "BLUE"
-  names(split_col) <- attr(x, "word")
-  for (i in seq_along(x)) {
-    # Namings: word + seed + iterations
-    word_split_iter <- split_col
-    names(word_split_iter) <- paste(attr(x, "word"), names(x)[i], "->", iters_n[i], "iterations")
-    class(word_split_iter) <- "wordle_check"
-    res <- NULL
-    res[[1]] <- word_split_iter
-    # Word by word coloring
-    list <- words[[i]]
-    ## Remove the word when it's guessed when more than 1 opts
-    list <- list[list != attr(x, "word")]
-    results <- lapply(list, function(i) wordle_check(i, attr(x, "word"), print = FALSE))
-    res <- append(res, results)
-    for_print <- append(for_print, res)
+  if (type == 1) {
+    print(glued(
+      "Seed Word: {attr(x, 'input')}
+      Objective Word: {attr(x, 'word')}
+      Iterations: {length(iters_n)}
+        Mean to succeed: {signif(mean(iters_n), 3)}
+        Max to succeed: {max(iters_n)} [seed = {which.max(iters_n)}]
+      "
+    ))
   }
-  txts <- sapply(for_print, function(x) paste(print(x, print = FALSE)))
-  cat(txts, sep = "\n")  
+  if (type == 2) {
+    for_print <- list()
+    split_col <- "BLUE"
+    names(split_col) <- attr(x, "word")
+    for (i in seq_along(x)) {
+      # Namings: word + seed + iterations
+      word_split_iter <- split_col
+      names(word_split_iter) <- paste(attr(x, "word"), names(x)[i], "->", iters_n[i], "iterations")
+      class(word_split_iter) <- "wordle_check"
+      res <- NULL
+      res[[1]] <- word_split_iter
+      # Word by word coloring
+      list <- words[[i]]
+      ## Remove the word when it's guessed when more than 1 opts
+      list <- list[list != attr(x, "word")]
+      results <- lapply(list, function(i) wordle_check(i, attr(x, "word"), print = FALSE))
+      res <- append(res, results)
+      for_print <- append(for_print, res)
+    }
+    txts <- sapply(for_print, function(x) paste(print(x, print = FALSE)))
+    cat(txts, sep = "\n")   
+  }
 }
 
 # which.max(sapply(x, function(x) x$iters))
