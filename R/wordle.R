@@ -148,7 +148,7 @@ wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
   attr(output, "input") <- input
   attr(output, "word") <- word
   attr(output, "iterations") <- length(seed)
-  attr(output, "elapsed") <- toc("wordle_simulation")$time
+  attr(output, "elapsed") <- toc("wordle_simulation", quiet = quiet)$time
   class(output) <- c("wordle_simulation", class(output))
   return(invisible(output))
 }
