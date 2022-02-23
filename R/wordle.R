@@ -108,13 +108,18 @@ wordle_dictionary <- function(lang_dic = "en", method = 3, quiet = TRUE) {
 wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
   output <- NULL
   if (is.null(seed)) seed <- sample(1:100, 1)
+  # First iteration with picked word (no random stuff happens here)
+  iter_first <- wordle_opts(input, word, quiet = quiet, ...)
   for (s in seed) {
+    # Print first word for nicer and more informative output
+    if (s != seed[1]) {
+      wordle_check(input, word, print = TRUE); cat("\n") 
+    }
     set.seed(s) # s = seed[1]
     seed_loop <- NULL
     i <- 1
     used_words <- input
-    # First iteration with picked word
-    iter <- wordle_opts(input, word, quiet = quiet, ...)
+    iter <- iter_first
     # Second iteration onwards
     while (length(iter) > 1) {
       random_word <- sample(iter, 1)
@@ -132,6 +137,7 @@ wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
   }
   attr(output, "input") <- input
   attr(output, "word") <- word
+  attr(output, "iterations") <- length(seed)
   class(output) <- c("wordle_simulation", class(output))
   return(invisible(output))
 }
@@ -140,19 +146,19 @@ wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
 #' @param type Integer. 1 for summary and 2 for coloured results.
 #' @export
 print.wordle_simulation <- function(x, type = 1, ...) {
-  words <- lapply(x, function(x) x$words)
   iters_n <- sapply(x, function(x) x$iters)
   if (type == 1) {
     print(glued(
       "Seed Word: {attr(x, 'input')}
       Objective Word: {attr(x, 'word')}
-      Iterations: {length(iters_n)}
+      Iterations: {attr(x, 'iterations')}
         Mean to succeed: {signif(mean(iters_n), 3)}
         Max to succeed: {max(iters_n)} [seed = {which.max(iters_n)}]
       "
     ))
   }
   if (type == 2) {
+    words <- lapply(x, function(x) x$words)
     for_print <- list()
     split_col <- "BLUE"
     names(split_col) <- attr(x, "word")
