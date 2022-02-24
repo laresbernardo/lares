@@ -9,6 +9,7 @@ corr(
   method = "pearson",
   use = "pairwise.complete.obs",
   pvalue = FALSE,
+  padjust = NULL,
   half = FALSE,
   dec = 6,
   ignore = NULL,
@@ -31,6 +32,9 @@ of missing values. Check \code{stats::cor} for options.}
 
 \item{pvalue}{Boolean. Returns a list, with correlations and statistical
 significance (p-value) for each value.}
+
+\item{padjust}{Character. NULL to skip or any of \code{p.adjust.methods} to
+calculate adjust p-values for multiple comparisons using \code{p.adjust()}.}
 
 \item{half}{Boolean. Return only half of the matrix? The redundant
 symmetrical correlations will be \code{NA}.}

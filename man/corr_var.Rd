@@ -2,6 +2,7 @@
 % Please edit documentation in R/correlations.R
 \name{corr_var}
 \alias{corr_var}
+\alias{plot.corr_var}
 \title{Correlation between variable and dataframe}
 \usage{
 corr_var(
@@ -22,6 +23,8 @@ corr_var(
   quiet = FALSE,
   ...
 )
+
+\method{plot}{corr_var}(x, var, max_pvalue = 1, top = NA, limit = NULL, ...)
 }
 \arguments{
 \item{df}{Dataframe. It doesn't matter if it's got non-numerical
@@ -65,6 +68,8 @@ values of each column. Set to \code{NA} to ignore argument.}
 \item{quiet}{Boolean. Keep quiet? If not, show messages}
 
 \item{...}{Additional parameters passed to \code{corr} and \code{cor.test}}
+
+\item{x}{corr_var object}
 }
 \value{
 data.frame. With variables, correlation and p-value results
