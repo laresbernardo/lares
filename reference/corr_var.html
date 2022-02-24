@@ -83,7 +83,10 @@ only numerical values.</p>
   save <span class="op">=</span> <span class="cn">FALSE</span>,
   quiet <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+<span class="op">)</span>
+
+<span class="co"># S3 method for corr_var</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">var</span>, max_pvalue <span class="op">=</span> <span class="fl">1</span>, top <span class="op">=</span> <span class="cn">NA</span>, limit <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -130,6 +133,8 @@ values of each column. Set to <code>NA</code> to ignore argument.</p></dd>
 <dd><p>Boolean. Keep quiet? If not, show messages</p></dd>
 <dt>...</dt>
 <dd><p>Additional parameters passed to <code>corr</code> and <code>cor.test</code></p></dd>
+<dt>x</dt>
+<dd><p>corr_var object</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -794,32 +799,45 @@ for each feature, arranged by descending absolute correlation value.</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Cannot compute exact p-value with ties</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Cannot compute exact p-value with ties</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Cannot compute exact p-value with ties</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Maybe you meant one of: 'Survived_TRUE'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Automatically using 'Survived_TRUE</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Not a valid input: Survived was transformed or does not exist.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 variables      corr       pvalue</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sex_male         Sex_male -0.543351 1.406066e-69</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Fare                 Fare  0.323736 3.471228e-23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Pclass_3         Pclass_3 -0.322308 5.510281e-23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Cabin_             Cabin_ -0.316912 3.090891e-22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Pclass_1         Pclass_1  0.285904 3.190582e-18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Cabin_OTHER   Cabin_OTHER  0.277835 2.949939e-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Embarked_C     Embarked_C  0.168240 4.397151e-07</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Embarked_S     Embarked_S -0.155660 3.036111e-06</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parch               Parch  0.138266 3.453591e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ticket_OTHER Ticket_OTHER  0.102598 2.167223e-03</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   &gt;&gt; Automatically using 'Survived_TRUE'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    variables      corr   pvalue</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Sex_male     -<span style="color: #BB0000;">0.543</span> 1.41<span style="color: #949494;">e</span><span style="color: #BB0000;">-69</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Fare          0.324 3.47<span style="color: #949494;">e</span><span style="color: #BB0000;">-23</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Pclass_3     -<span style="color: #BB0000;">0.322</span> 5.51<span style="color: #949494;">e</span><span style="color: #BB0000;">-23</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Cabin_       -<span style="color: #BB0000;">0.317</span> 3.09<span style="color: #949494;">e</span><span style="color: #BB0000;">-22</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Pclass_1      0.286 3.19<span style="color: #949494;">e</span><span style="color: #BB0000;">-18</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Cabin_OTHER   0.278 2.95<span style="color: #949494;">e</span><span style="color: #BB0000;">-17</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Embarked_C    0.168 4.40<span style="color: #949494;">e</span><span style="color: #BB0000;">- 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Embarked_S   -<span style="color: #BB0000;">0.156</span> 3.04<span style="color: #949494;">e</span><span style="color: #BB0000;">- 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Parch         0.138 3.45<span style="color: #949494;">e</span><span style="color: #BB0000;">- 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Ticket_OTHER  0.103 2.17<span style="color: #949494;">e</span><span style="color: #BB0000;">- 3</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># With plots, results are easier to compare:</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Correlate Survived with everything else and show only significant results</span></span>
 <span class="r-in"><span class="va">dft</span> <span class="op"><a href="lares-exports.html">%&gt;%</a></span> <span class="fu">corr_var</span><span class="op">(</span><span class="va">Survived_TRUE</span>, max_pvalue <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the standard deviation is zero</span>
-<span class="r-plt img"><img src="corr_var-1.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    variables       corr   pvalue</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Sex_male     -<span style="color: #BB0000;">0.543</span>  1.41<span style="color: #949494;">e</span><span style="color: #BB0000;">-69</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Pclass_3     -<span style="color: #BB0000;">0.322</span>  5.51<span style="color: #949494;">e</span><span style="color: #BB0000;">-23</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Cabin_       -<span style="color: #BB0000;">0.317</span>  3.09<span style="color: #949494;">e</span><span style="color: #BB0000;">-22</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Pclass_1      0.286  3.19<span style="color: #949494;">e</span><span style="color: #BB0000;">-18</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Cabin_OTHER   0.278  2.95<span style="color: #949494;">e</span><span style="color: #BB0000;">-17</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Fare          0.257  6.12<span style="color: #949494;">e</span><span style="color: #BB0000;">-15</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Embarked_C    0.168  4.40<span style="color: #949494;">e</span><span style="color: #BB0000;">- 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Embarked_S   -<span style="color: #BB0000;">0.156</span>  3.04<span style="color: #949494;">e</span><span style="color: #BB0000;">- 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Ticket_OTHER  0.103  2.17<span style="color: #949494;">e</span><span style="color: #BB0000;">- 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Pclass_2      0.093<span style="text-decoration: underline;">3</span> 5.29<span style="color: #949494;">e</span><span style="color: #BB0000;">- 3</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Top 15 with less than 50% correlation and show ranks</span></span>
 <span class="r-in"><span class="va">dft</span> <span class="op"><a href="lares-exports.html">%&gt;%</a></span> <span class="fu">corr_var</span><span class="op">(</span><span class="va">Survived_TRUE</span>, ceiling <span class="op">=</span> <span class="fl">60</span>, top <span class="op">=</span> <span class="fl">15</span>, ranks <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Removing all correlations greater than 60% (absolute)</span>
-<span class="r-plt img"><img src="corr_var-2.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="corr_var-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

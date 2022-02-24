@@ -74,6 +74,7 @@ with less than 3 non missing values and warn the user.</p>
   method <span class="op">=</span> <span class="st">"pearson"</span>,
   use <span class="op">=</span> <span class="st">"pairwise.complete.obs"</span>,
   pvalue <span class="op">=</span> <span class="cn">FALSE</span>,
+  padjust <span class="op">=</span> <span class="cn">NULL</span>,
   half <span class="op">=</span> <span class="cn">FALSE</span>,
   dec <span class="op">=</span> <span class="fl">6</span>,
   ignore <span class="op">=</span> <span class="cn">NULL</span>,
@@ -99,6 +100,9 @@ of missing values. Check <code><a href="https://rdrr.io/r/stats/cor.html" class=
 <dt>pvalue</dt>
 <dd><p>Boolean. Returns a list, with correlations and statistical
 significance (p-value) for each value.</p></dd>
+<dt>padjust</dt>
+<dd><p>Character. NULL to skip or any of <code>p.adjust.methods</code> to
+calculate adjust p-values for multiple comparisons using <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">p.adjust()</a></code>.</p></dd>
 <dt>half</dt>
 <dd><p>Boolean. Return only half of the matrix? The redundant
 symmetrical correlations will be <code>NA</code>.</p></dd>

@@ -143,10 +143,10 @@ Daily Change, Market, and Symbol Name.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in"><span class="co"># Multiple quotes at the same time</span></span>
 <span class="r-in"><span class="fu">stocks_quote</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VTI"</span>, <span class="st">"VOO"</span>, <span class="st">"TSLA"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Symbol   Type           QuoteTime   Value DailyChange    Market</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    VTI    ETF 2022-02-23 16:23:15 215.520   -1.330002 us_market</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    VOO    ETF 2022-02-23 16:23:11 392.650   -2.270020 us_market</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   TSLA EQUITY 2022-02-23 16:23:14 789.455  -32.075012 us_market</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Symbol   Type           QuoteTime  Value DailyChange    Market</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    VTI    ETF 2022-02-24 17:25:31 210.00   -2.860001 us_market</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    VOO    ETF 2022-02-24 17:25:30 382.07   -5.739990 us_market</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   TSLA EQUITY 2022-02-24 17:25:31 752.02  -12.019958 us_market</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                          SymbolName</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Vanguard Total Stock Market Index Fund ETF Shares</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                              Vanguard S&amp;P 500 ETF</span>
@@ -154,17 +154,17 @@ Daily Change, Market, and Symbol Name.</p>
 <span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">stocks_hist</span><span class="op">(</span>symbols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VTI"</span>, <span class="st">"FB"</span>, <span class="st">"FIW"</span><span class="op">)</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">180</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  00:00:00 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░] 33.3% | VTI since 2021-08-27     00:00:00 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░] 66.7% | FB since 2021-08-27     00:00:00 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100% | FIW since 2021-08-27     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  00:00:00 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░] 33.3% | VTI since 2021-08-28     00:00:00 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░] 66.7% | FB since 2021-08-28     00:00:00 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100% | FIW since 2021-08-28     </span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Date       Symbol Value   Div DivTaxP DivReal</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2022-02-23 VTI    216.      0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2022-02-23 FB     201.      0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2022-02-23 FIW     79.7     0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2022-02-22 VTI    217.      0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2022-02-22 FB     202.      0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2022-02-22 FIW     79.9     0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2022-02-24 VTI    210       0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2022-02-24 FB     198       0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2022-02-24 FIW     78.2     0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2022-02-23 VTI    213.      0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2022-02-23 FB     198.      0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2022-02-23 FIW     78.6     0       0       0</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="stocks_hist-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span class="co"># }</span></span>
