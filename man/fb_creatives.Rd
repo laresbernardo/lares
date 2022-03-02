@@ -4,7 +4,7 @@
 \alias{fb_creatives}
 \title{Facebook Creatives API}
 \usage{
-fb_creatives(token, which, api_version = "v11.0", process = TRUE)
+fb_creatives(token, which, api_version = "v12.0", process = TRUE)
 }
 \arguments{
 \item{token}{Character. Valid access token with sufficient privileges. Visit the

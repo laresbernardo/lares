@@ -178,7 +178,7 @@ fb_insights <- function(token,
                         breakdowns = NA,
                         fields = NA,
                         limit = 10000,
-                        api_version = "v11.0",
+                        api_version = "v12.0",
                         process = TRUE) {
   set_config(config(http_version = 0))
   check_opts(report_level, c("ad", "adset", "campaign", "account"))
@@ -324,7 +324,7 @@ fb_rf <- function(token,
                   frequency_cap = 8,
                   prediction_mode = 1,
                   curve = TRUE,
-                  api_version = "v11.0",
+                  api_version = "v12.0",
                   process = TRUE,
                   ...) {
   set_config(config(http_version = 0))
@@ -723,7 +723,7 @@ fb_accounts <- function(token,
                         business_id = "904189322962915",
                         type = c("owned", "client"),
                         limit = 1000,
-                        api_version = "v11.0") {
+                        api_version = "v12.0") {
   set_config(config(http_version = 0))
 
   # Starting URL
@@ -811,7 +811,7 @@ fb_ads <- function(token,
                    start_date = Sys.Date() - 31,
                    end_date = Sys.Date(),
                    fields = NA,
-                   api_version = "v11.0",
+                   api_version = "v12.0",
                    process = TRUE) {
   set_config(config(http_version = 0))
 
@@ -874,7 +874,7 @@ fb_ads <- function(token,
 #' }
 #' @export
 fb_creatives <- function(token, which,
-                         api_version = "v11.0",
+                         api_version = "v12.0",
                          process = TRUE) {
   set_config(config(http_version = 0))
 
@@ -925,7 +925,7 @@ fb_creatives <- function(token, which,
 #' or with this same \code{fb_token()}'s token.
 #' @return Character. String with token requested.
 #' @export
-fb_token <- function(app_id, app_secret, token, api_version = "v11.0") {
+fb_token <- function(app_id, app_secret, token, api_version = "v12.0") {
   link <- paste0(
     "https://graph.facebook.com/", api_version, "/oauth/access_token?",
     "grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s"
