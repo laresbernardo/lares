@@ -155,7 +155,8 @@ stocks_quote <- function(symbols) {
 #' case, taxes changed from A to B in given date (hard-coded)
 #' @param ... Additional parameters
 #' @examples
-#' \donttest{
+#' \dontrun{
+#' # CRAN
 #' df <- stocks_hist(symbols = c("VTI", "FB", "FIW"), from = Sys.Date() - 180)
 #' print(head(df))
 #' plot(df)

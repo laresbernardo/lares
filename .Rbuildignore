@@ -1,4 +1,5 @@
 ^cran-comments\.md$
+^CRAN-SUBMISSION$
 ^CRAN-RELEASE$
 ^.*\.Rproj$
 ^\.Rproj\.user$
@@ -11,4 +12,4 @@
 ^\.DS_Store
 ^doc$
 ^Meta$
-^CRAN-SUBMISSION$
+^vignettes

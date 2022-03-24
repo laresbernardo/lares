@@ -60,7 +60,8 @@ This function lets the user download stocks historical data.
 # Multiple quotes at the same time
 stocks_quote(c("VTI", "VOO", "TSLA"))
 }
-\donttest{
+\dontrun{
+# CRAN
 df <- stocks_hist(symbols = c("VTI", "FB", "FIW"), from = Sys.Date() - 180)
 print(head(df))
 plot(df)

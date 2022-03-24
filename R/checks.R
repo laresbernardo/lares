@@ -2,7 +2,8 @@
 #' Validate inputs (attributions, options, ...)
 #'
 #' This function validates if inputs match all/any of your options
-#' and return error/message with possible options to use.
+#' and return error/message with possible options to use. Similar
+#' to \code{match.arg()} but more flexible.
 #'
 #' @param inputs Vector character. Check options.
 #' @param opts Vector character. Valid options.
