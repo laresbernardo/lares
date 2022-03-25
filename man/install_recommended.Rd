@@ -4,10 +4,12 @@
 \alias{install_recommended}
 \title{Install/Update Additional Recommended Libraries}
 \usage{
-install_recommended(progress = TRUE)
+install_recommended(progress = TRUE, all = FALSE)
 }
 \arguments{
 \item{progress}{Boolean. Show status bar?}
+
+\item{all}{Boolean. All packages? If not, only the ones not installed yet.}
 }
 \description{
 All needed libraries to use (most) lares are already a dependency.

@@ -24,7 +24,7 @@ data.frame with un-nested processed results if \code{process=TRUE} or
 raw API results as list when \code{process=FALSE}.
 }
 \description{
-For more information: \href{https://developers.facebook.com/docs/marketing-api/reference/ad-creative/}{Ad Creative}
+For more information: \href{https://developers.facebook.com/docs/marketing-apis}{Marketing API}
 }
 \examples{
 \dontrun{

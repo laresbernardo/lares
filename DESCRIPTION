@@ -1,7 +1,7 @@
 Package: lares
 Type: Package
 Title: Analytics & Machine Learning Sidekick
-Version: 5.1.1
+Version: 5.1.2
 Authors@R: c(
     person("Bernardo", "Lares", , "laresbernardo@gmail.com", c("aut", "cre")))
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
@@ -18,7 +18,6 @@ Imports:
     httr,
     jsonlite,
     lubridate,
-    magrittr,
     openxlsx,
     patchwork,
     pROC,
@@ -32,21 +31,15 @@ Imports:
 Suggests:
     beepr,
     DALEX,
-    DBI,
-    forecast,
     googleAuthR,
     googlesheets4,
     knitr,
     quantmod,
-    plotly,
     rdrop2,
     rmarkdown,
-    rtweet,
-    tm,
-    wordcloud
+    tm
 URL: https://github.com/laresbernardo/lares, https://laresbernardo.github.io/lares/
 BugReports: https://github.com/laresbernardo/lares/issues
-VignetteBuilder: knitr
 RoxygenNote: 7.1.2
 License: AGPL-3
 Encoding: UTF-8

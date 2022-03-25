@@ -856,7 +856,7 @@ fb_ads <- function(token,
 ####################################################################
 #' Facebook Creatives API
 #'
-#' For more information: \href{https://developers.facebook.com/docs/marketing-api/reference/ad-creative/}{Ad Creative}
+#' For more information: \href{https://developers.facebook.com/docs/marketing-apis}{Marketing API}
 #'
 #' @family API
 #' @family Facebook

@@ -6,8 +6,8 @@
 #' @name lares
 #' @docType package
 #' @author Bernardo Lares (laresbernardo@@gmail.com)
-#' @importFrom dplyr any_of arrange as_tibble bind_cols bind_rows case_when contains
-#' count desc distinct distinct_at everything filter first group_by inner_join
+#' @importFrom dplyr %>% any_of arrange as_tibble bind_cols bind_rows case_when
+#' contains count desc distinct distinct_at everything filter first group_by inner_join
 #' lag last left_join mutate mutate_all mutate_at mutate_if n ntile
 #' one_of pull rename rename_at right_join row_number rowwise sample_n
 #' select select_if slice starts_with summarise summarise_all
@@ -40,7 +40,6 @@
 #' @importFrom jsonlite fromJSON toJSON flatten
 #' @importFrom lubridate date day week weeks month year wday dmy_hms dmy ymd_hms ymd days
 #' minute hour second %m+% %m-% floor_date ceiling_date years
-#' @importFrom magrittr %>% set_colnames set_names
 #' @importFrom openxlsx addWorksheet copyWorkbook loadWorkbook read.xlsx removeWorksheet
 #' getSheetNames renameWorksheet saveWorkbook sheets write.xlsx
 #' @importFrom patchwork guide_area plot_layout plot_annotation wrap_plots
@@ -61,7 +60,6 @@
 #' @importFrom yaml read_yaml
 "_PACKAGE"
 
-
 ####################################################################
 #' Install/Update Additional Recommended Libraries
 #'
@@ -71,36 +69,30 @@
 #' used as a Docker way of installing useful libraries on an new instance.
 #'
 #' @param progress Boolean. Show status bar?
+#' @param all Boolean. All packages? If not, only the ones not installed yet.
 #' @export
-install_recommended <- function(progress = TRUE) {
-  for (lib in names(recommended)) {
+install_recommended <- function(progress = TRUE, all = FALSE) {
+  pkgs <- names(recommended)
+  these <- if (!all) pkgs[!pkgs %in% installed.packages()[,1]] else pkgs
+  message(sprintf("Installing %s packages: %s", length(these), v2t(these)))
+  for (lib in these) {
     invisible(install.packages(lib, quiet = TRUE, verbose = FALSE))
     if (progress) {
-      statusbar(which(lib == names(recommended)), length(recommended), lib, msg = "")
+      statusbar(which(lib == these), length(these), lib, msg = "")
     }
   }
 }
-
-#' Pipe operator
-#' @name lares-exports
-NULL
-
-#' @name %>%
-#' @export
-#' @rdname lares-exports
-NULL
 
 # Recommended additional libraries to fully take advantage of lares library
 recommended <- list(
   beepr = "beep",
   circlize = c("chordDiagram", "uh"),
   DALEX = c("explain.default", "model_performance", "model_profile", "predict_parts"),
-  data.table = "fread",
   DBI = c("dbDriver", "dbConnect", "dbSendQuery", "fetch", "dbDisconnect"),
   devtools = c("install", "install_github", "with_proxy"),
   exifr = "read_exif",
   factoextra = "fviz_nbclust",
-  forecast = c("Arima", "auto.arima", "forecast"),
+  forecast = c("Arima", "auto.arima", "forecast", "accuracy"),
   gdata = "read.xls",
   ggbeeswarm = "geom_quasirandom",
   # ggforce = "geom_mark_ellipse",
@@ -140,9 +132,6 @@ recommended <- list(
   udpipe = c("keywords_rake", "udpipe_annotate", "udpipe_download_model", "udpipe_load_model"),
   wordcloud = c("wordcloud", "textplot")
 )
-
-# For read.file function... deprecated
-# c("read.dta13", "read.spss")
 
 if (getRversion() >= "2.15.1") {
   globalVariables(c(as.vector(unlist(recommended)), "."))

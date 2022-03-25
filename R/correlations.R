@@ -543,7 +543,7 @@ corr_cross <- function(df, plot = TRUE,
         mat[, i], mat[, j],
         method = method, exact = exact, ...
       ), silent = TRUE)
-      if (class(error) == "try-error") {
+      if (inherits(error, "try-error")) {
         p.mat[i, j] <- NA
       } else {
         p.mat[i, j] <- p.mat[j, i] <- tmp$p.value

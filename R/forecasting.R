@@ -49,8 +49,6 @@ forecast_arima <- function(time, values, n_future = 30,
                            wd_excluded = NA,
                            plot = TRUE, plot_days = 90, project = NA) {
 
-  # require(lubridate)
-  # require(ggplot2)
   try_require("forecast")
 
   # ARIMA doesn't use zeroes!
@@ -113,7 +111,7 @@ forecast_arima <- function(time, values, n_future = 30,
   # Outut list with all results
   output <- list(
     model = model,
-    metrics = forecast::accuracy(model),
+    metrics = accuracy(model),
     forecast = test,
     train = train
   )
