@@ -1739,38 +1739,3 @@ formatColoured <- function(txt, colour = c("yellow", "blue", "grey"), bold = FAL
   out <- paste0("\033[", ifelse(!bold, 0, 1), ";", code, "m", txt, "\033[0m")
   if (cat) cat(out) else return(out)
 }
-
-####################################################################
-#' Set Columns/Rows Names within Pipes
-#' 
-#' Borrowed from \code{magrittr}.
-#'
-#' @param x data.frame or vector.
-#' @param value Character vector. Names to by added. Same length as \code{x}.
-#' @export
-set_colnames <- function (x, value) {
-  if (is.data.frame(x)) {
-    names(x) <- value
-  } else {
-    dn <- dimnames(x)
-    if (is.null(dn)) {
-      if (is.null(value)) 
-        return(x)
-      if ((nd <- length(dim(x))) < 2L) 
-        stop("Attempt to set 'colnames' on an object with less than two dimensions")
-      dn <- vector("list", nd)
-    }
-    if (length(dn) < 2L) 
-      stop("Attempt to set 'colnames' on an object with less than two dimensions")
-    if (is.null(value)) 
-      dn[2L] <- list(NULL)
-    else dn[[2L]] <- value
-    dimnames(x) <- dn
-  }
-  x
-}
-
-#' @rdname set_colnames
-#' @aliases set_colnames
-#' @export
-set_names <- function (x, value)  .Primitive("names<-")
