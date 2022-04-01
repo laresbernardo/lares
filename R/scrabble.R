@@ -223,8 +223,8 @@ grepl_letters <- function(x, pattern, blank = "_") {
 #' @param force_str Character vector. Force words to contain strings.
 #' If the string contains tiles that were not specified in \code{tiles}, they
 #' will automatically be included.
-#' @param force_exclude Character vector. Exclude words containing these tiles.
-#' Not very useful for Scrabble but relevant for Wordle.
+#' @param force_exclude,exclude_here Character vector. Exclude words containing
+#' these tiles (and positions). Not very relevant on Scrabble but for Wordle.
 #' @param force_n,force_max Integer. Force words to be n or max n characters
 #' long. Leave 0 to ignore parameter.
 #' @param scores,language Character. Any of "en","es","de","fr".
@@ -237,6 +237,7 @@ grepl_letters <- function(x, pattern, blank = "_") {
 #' \code{Sys.setenv("LARES_LANG" = "en")} and forget about it!
 #' @param words Character vector. Use if you wish to manually add words.
 #' @param quiet Boolean. Do not print words as they are being searched.
+#' @param print Boolean. Print how many words are left by step.
 #' @return data.frame with matching words found, sorted by higher points.
 #' @examples
 #' \donttest{
@@ -269,12 +270,14 @@ scrabble_words <- function(tiles = "",
                            force_end = "",
                            force_str = "",
                            force_exclude = "",
+                           exclude_here = "",
                            force_n = 0,
                            force_max = 0,
                            language = Sys.getenv("LARES_LANG"),
                            scores = language,
-                           words = NA,
-                           quiet = FALSE) {
+                           words = NULL,
+                           quiet = FALSE,
+                           print = TRUE) {
 
   ### POINTS
 
@@ -313,7 +316,7 @@ scrabble_words <- function(tiles = "",
   # Consolidate dictionary
   dictionary <- scrabble_dictionary(language)[, 1]
   nwords <- length(dictionary)
-  if (!is.na(words[1])) {
+  if (!is.null(words)) {
     dictionary <- unique(tolower(c(words, dictionary)))
     unique_new <- length(dictionary) - nwords
     message(sprintf(">>> Added %s custom words %s", formatNum(length(words), 0), ifelse(
@@ -347,7 +350,17 @@ scrabble_words <- function(tiles = "",
       .temp_print(length(words))
     }
   }
+  # Exclude letters from positions (Wordle)
+  pos_tiles <- tolower(unlist(strsplit(exclude_here, "")))
+  for (i in seq_along(pos_tiles)) {
+    if (!pos_tiles[i] %in% letters) next
+    located <- stringr::str_locate_all(words, pos_tiles[i])
+    these <- !sapply(located, function(x) sum(x[,1] == i) > 0)
+    words <- words[these]
+    .temp_print(length(words))
+  }
 
+  .temp_print(length(words), last = TRUE)
   if (length(words) > 0) {
     done <- scrabble_score(words, scores)
     if (sum(done$scores) == 0) done$scores <- NULL
@@ -357,8 +370,8 @@ scrabble_words <- function(tiles = "",
   }
 }
 
-.temp_print <- function(x) {
-  if (FALSE) print(x)
+.temp_print <- function(x, print = TRUE, last = FALSE) {
+ if (print) if (!last) formatColoured(paste(x, "> ")) else formatColoured(paste(x, "\n"))
 }
 
 # Tile used, tile that must be skipped on next iterations
@@ -407,8 +420,8 @@ scrabble_words <- function(tiles = "",
 # devtools::load_all()
 # library(dplyr)
 # library(stringr)
-# Sys.setenv("LARES_LANG" = "es")
-# words <- scrabble_dictionary("es")$words
+# Sys.setenv("LARES_LANG" = "en")
+# words <- scrabble_dictionary("en")$words
 #
 # # Play and win!
 # scrabble_words(tiles = "abcdef",
@@ -423,3 +436,13 @@ scrabble_words <- function(tiles = "",
 # scrabble_words(tiles = "bernardo",
 #                free = 0,
 #                quiet = FALSE)
+
+# scrabble_words(
+#   language = "en", # SOARE
+#   tiles = "O",
+#   force_start = "S",
+#   force_end = "",
+#   force_n = 5,
+#   force_exclude = "ARE",
+#   exclude_here = "_O__S"
+# ) %>% pull(word)

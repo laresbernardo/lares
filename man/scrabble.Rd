@@ -20,12 +20,14 @@ scrabble_words(
   force_end = "",
   force_str = "",
   force_exclude = "",
+  exclude_here = "",
   force_n = 0,
   force_max = 0,
   language = Sys.getenv("LARES_LANG"),
   scores = language,
-  words = NA,
-  quiet = FALSE
+  words = NULL,
+  quiet = FALSE,
+  print = TRUE
 )
 }
 \arguments{
@@ -57,8 +59,8 @@ will automatically be included.}
 If the string contains tiles that were not specified in \code{tiles}, they
 will automatically be included.}
 
-\item{force_exclude}{Character vector. Exclude words containing these tiles.
-Not very useful for Scrabble but relevant for Wordle.}
+\item{force_exclude, exclude_here}{Character vector. Exclude words containing
+these tiles (and positions). Not very relevant on Scrabble but for Wordle.}
 
 \item{force_n, force_max}{Integer. Force words to be n or max n characters
 long. Leave 0 to ignore parameter.}
@@ -71,6 +73,8 @@ to overwrite or complement this dictionaries other words you can set to
 \code{"none"} and/or use the \code{words} parameter.
 You might also want to set this parameter globally with
 \code{Sys.setenv("LARES_LANG" = "en")} and forget about it!}
+
+\item{print}{Boolean. Print how many words are left by step.}
 }
 \value{
 data.frame with words and language columns.
