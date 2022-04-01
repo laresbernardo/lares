@@ -103,12 +103,14 @@ place to post your tiles.</p>
   force_end <span class="op">=</span> <span class="st">""</span>,
   force_str <span class="op">=</span> <span class="st">""</span>,
   force_exclude <span class="op">=</span> <span class="st">""</span>,
+  exclude_here <span class="op">=</span> <span class="st">""</span>,
   force_n <span class="op">=</span> <span class="fl">0</span>,
   force_max <span class="op">=</span> <span class="fl">0</span>,
   language <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"LARES_LANG"</span><span class="op">)</span>,
   scores <span class="op">=</span> <span class="va">language</span>,
-  words <span class="op">=</span> <span class="cn">NA</span>,
-  quiet <span class="op">=</span> <span class="cn">FALSE</span>
+  words <span class="op">=</span> <span class="cn">NULL</span>,
+  quiet <span class="op">=</span> <span class="cn">FALSE</span>,
+  print <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -142,9 +144,9 @@ will automatically be included.</p></dd>
 <dd><p>Character vector. Force words to contain strings.
 If the string contains tiles that were not specified in <code>tiles</code>, they
 will automatically be included.</p></dd>
-<dt>force_exclude</dt>
-<dd><p>Character vector. Exclude words containing these tiles.
-Not very useful for Scrabble but relevant for Wordle.</p></dd>
+<dt>force_exclude, exclude_here</dt>
+<dd><p>Character vector. Exclude words containing
+these tiles (and positions). Not very relevant on Scrabble but for Wordle.</p></dd>
 <dt>force_n, force_max</dt>
 <dd><p>Integer. Force words to be n or max n characters
 long. Leave 0 to ignore parameter.</p></dd>
@@ -157,6 +159,8 @@ to overwrite or complement this dictionaries other words you can set to
 <code>"none"</code> and/or use the <code>words</code> parameter.
 You might also want to set this parameter globally with
 <code>Sys.setenv("LARES_LANG" = "en")</code> and forget about it!</p></dd>
+<dt>print</dt>
+<dd><p>Boolean. Print how many words are left by step.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -275,6 +279,8 @@ data.frame with matching words found, sorted by higher points.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Tiles: 'h', 'o', 'l', 'a', '_', '_'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; Cache loaded succesfully: lares_cache_es</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Loaded 636,598 'es' words</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">39735 &gt; 39735 &gt; 2927 &gt; 2927 &gt; 853 &gt; 71 &gt; 71 &gt; 6 &gt; 6 </span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   word  scores length</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
@@ -297,6 +303,8 @@ data.frame with matching words found, sorted by higher points.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> o and r were not in your tiles: now included</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Tiles: 'o', 'r', '_', '_', '_'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Added 4 custom words </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">4 &gt; 4 &gt; 4 &gt; 4 &gt; 2 &gt; 2 &gt; 2 &gt; 2 &gt; 2 </span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   word  length</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
