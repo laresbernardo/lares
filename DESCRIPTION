@@ -5,10 +5,10 @@ Version: 5.1.2
 Authors@R: c(
     person("Bernardo", "Lares", , "laresbernardo@gmail.com", c("aut", "cre")))
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
-Description: Auxiliary package for better/faster analytics, visualization, data mining, and machine learning
-    tasks. With a wide variety of family functions, like Machine Learning, Data Wrangling,
-    Exploratory, and Scrapper, it helps the analyst or data scientist to get quick and robust
-    results, without the need of repetitive coding or extensive programming skills.
+Description: Auxiliary package for better/faster analytics, visualization, data mining, and machine
+    learning tasks. With a wide variety of family functions, like Machine Learning, Data Wrangling,
+    Exploratory, API, and Scrapper, it helps the analyst or data scientist to get quick and robust
+    results, without the need of repetitive coding or extensive R programming skills.
 Depends:
     R (>= 3.5)
 Imports:
