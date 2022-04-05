@@ -81,6 +81,7 @@ when clusters are in different shapes such as elliptical clusters.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">clusterKmeans</span><span class="op">(</span>
   <span class="va">df</span>,
   k <span class="op">=</span> <span class="cn">NULL</span>,
+  wss_var <span class="op">=</span> <span class="fl">0</span>,
   limit <span class="op">=</span> <span class="fl">15</span>,
   drop_na <span class="op">=</span> <span class="cn">TRUE</span>,
   ignore <span class="op">=</span> <span class="cn">NULL</span>,
@@ -101,6 +102,11 @@ when clusters are in different shapes such as elliptical clusters.</p>
 <dd><p>Dataframe</p></dd>
 <dt>k</dt>
 <dd><p>Integer. Number of clusters</p></dd>
+<dt>wss_var</dt>
+<dd><p>Numeric. Used to pick automatic <code>k</code> value,
+when <code>k</code> is <code>NULL</code> based on WSS variance while considering
+<code>limit</code> clusters. Values between (0, 1). Default value could be
+0.05 to consider convergence.</p></dd>
 <dt>limit</dt>
 <dd><p>Integer. How many clusters should be considered?</p></dd>
 <dt>drop_na</dt>
@@ -155,14 +161,6 @@ Groups Sum of Squares). If <code>k</code> is provided, additionally we get:</p><
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.unsetenv</a></span><span class="op">(</span><span class="st">"LARES_FONT"</span><span class="op">)</span> <span class="co"># Temporal</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">iris</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          5.1         3.5          1.4         0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2          4.9         3.0          1.4         0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          4.7         3.2          1.3         0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          4.6         3.1          1.5         0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          5.0         3.6          1.4         0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6          5.4         3.9          1.7         0.4</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># If dataset has +5 columns, feel free to reduce dimenstionalities</span></span>
 <span class="r-in"><span class="co"># with reduce_pca() or reduce_tsne() first</span></span>
@@ -172,8 +170,12 @@ Groups Sum of Squares). If <code>k</code> is provided, additionally we get:</p><
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Removed duplicate obserations: 1</span>
 <span class="r-in"><span class="va">check_k</span><span class="op">$</span><span class="va">nclusters_plot</span></span>
 <span class="r-plt img"><img src="clusterKmeans-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span class="co"># Or pick k automatically based on WSS variance</span></span>
+<span class="r-in"><span class="va">check_k</span> <span class="op">&lt;-</span> <span class="fu">clusterKmeans</span><span class="op">(</span><span class="va">df</span>, wss_var <span class="op">=</span> <span class="fl">0.05</span>, limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Removed duplicate obserations: 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; Auto selected k = 3 (clusters) based on minimum WSS variance of 5%</span>
 <span class="r-in"><span class="co"># You can also use our other functions:</span></span>
-<span class="r-in"><span class="co"># clusterOptimalK() and clusterVisualK()</span></span>
+<span class="r-in"><span class="co"># clusterOptimalK(df) and clusterVisualK(df)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Run with selected k</span></span>
 <span class="r-in"><span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu">clusterKmeans</span><span class="op">(</span><span class="va">df</span>, k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
