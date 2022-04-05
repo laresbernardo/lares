@@ -13,6 +13,10 @@
 #' @inheritParams stats::kmeans
 #' @param df Dataframe
 #' @param k Integer. Number of clusters
+#' @param wss_var Numeric. Used to pick automatic \code{k} value,
+#' when \code{k} is \code{NULL} based on WSS variance while considering
+#' \code{limit} clusters. Values between (0, 1). Default value could be
+#' 0.05 to consider convergence.
 #' @param limit Integer. How many clusters should be considered?
 #' @param drop_na Boolean. Should NA rows be removed?
 #' @param ignore Character vector. Names of columns to ignore.
@@ -42,7 +46,6 @@
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data("iris")
 #' df <- subset(iris, select = c(-Species))
-#' print(head(df))
 #'
 #' # If dataset has +5 columns, feel free to reduce dimenstionalities
 #' # with reduce_pca() or reduce_tsne() first
@@ -50,8 +53,10 @@
 #' # Find optimal k
 #' check_k <- clusterKmeans(df, limit = 10)
 #' check_k$nclusters_plot
+#' # Or pick k automatically based on WSS variance
+#' check_k <- clusterKmeans(df, wss_var = 0.05, limit = 10)
 #' # You can also use our other functions:
-#' # clusterOptimalK() and clusterVisualK()
+#' # clusterOptimalK(df) and clusterVisualK(df)
 #'
 #' # Run with selected k
 #' clusters <- clusterKmeans(df, k = 3)
@@ -64,7 +69,7 @@
 #' plot(clusters$PCA$plot_explained)
 #' plot(clusters$PCA$plot)
 #' @export
-clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
+clusterKmeans <- function(df, k = NULL, wss_var = 0, limit = 15, drop_na = TRUE,
                           ignore = NULL, ohse = TRUE, norm = TRUE,
                           algorithm = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"),
                           dim_red = "PCA", comb = c(1, 2), seed = 123,
@@ -113,6 +118,17 @@ clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
     theme_lares()
   results[["nclusters"]] <- nclusters
   results[["nclusters_plot"]] <- nclusters_plot
+  
+  # Auto K selected by less X WSS variance (convergence)
+  if (wss_var > 0 & is.null(k)) {
+    k <- nclusters %>%
+      mutate(pareto = .data$wss/.data$wss[1],
+             dif = lag(.data$pareto) - .data$pareto) %>%
+      filter(.data$dif > wss_var) %>% pull(.data$n) %>% max(.)
+    if (!quiet) message(sprintf(
+      ">> Auto selected k = %s (clusters) based on minimum WSS variance of %s%%",
+      k, wss_var * 100))
+  }
 
   # If n is already selected
   if (!is.null(k)) {
@@ -185,30 +201,31 @@ clusterKmeans <- function(df, k = NULL, limit = 15, drop_na = TRUE,
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data("iris")
 #' df <- subset(iris, select = c(-Species))
+#' df <- df[sample(nrow(df)), ]
 #'
 #' # Calculate and plot
-#' result <- clusterVisualK(df)
+#' result <- clusterVisualK(df, ks = 2:4)
+#' plot(result$plot)
 #'
 #' # You can use the data generated as well
-#' lapply(result$data, function(x) head(x$cluster))
+#' lapply(result$data, function(x) head(x$cluster, 10))
 #' @export
-clusterVisualK <- function(df, ks = 1:6, ...) {
+clusterVisualK <- function(df, ks = 2:6, ...) {
   clus_dat <- function(df, k, n = length(ks), ...) {
-    pca <- clusterKmeans(df, k, ...)$PCA
-    x <- pca$pcadf %>% mutate(k = k)
-    explained <<- pca$pca_explained[1:2]
-    return(x)
+    clusters <- clusterKmeans(df, k, quiet = TRUE, ...)
+    pca <- clusters$PCA$pcadf %>% 
+      mutate(cluster = clusters$df$cluster, k = k)
+    explained <<- clusters$PCA$pca_explained[1:2]
+    return(pca)
   }
-
   clus_plot <- function(clus_dat) {
     clus_dat %>%
-      ggplot(aes(x = .data$PC1, y = .data$PC2, colour = .data$cluster)) +
+      ggplot(aes(x = .data$PC1, y = .data$PC2, colour = as.character(.data$cluster))) +
       geom_point() +
       guides(colour = "none") +
       labs(subtitle = glued("{clus_dat$k[1]} clusters")) +
       theme_lares(pal = 2)
   }
-
   dats <- lapply(ks, function(x) clus_dat(df, x, ...))
   plots <- lapply(dats, clus_plot)
 

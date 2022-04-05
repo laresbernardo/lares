@@ -4,7 +4,7 @@
 \alias{clusterVisualK}
 \title{Visualize K-Means Clusters for Several K}
 \usage{
-clusterVisualK(df, ks = 1:6, ...)
+clusterVisualK(df, ks = 2:6, ...)
 }
 \arguments{
 \item{df}{Dataframe}
@@ -26,7 +26,8 @@ data("iris")
 df <- subset(iris, select = c(-Species))
 
 # Calculate and plot
-result <- clusterVisualK(df)
+result <- clusterVisualK(df, ks = 2:4)
+result$plot
 
 # You can use the data generated as well
 lapply(result$data, function(x) head(x$cluster))

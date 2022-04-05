@@ -7,6 +7,7 @@
 clusterKmeans(
   df,
   k = NULL,
+  wss_var = 0,
   limit = 15,
   drop_na = TRUE,
   ignore = NULL,
@@ -24,6 +25,11 @@ clusterKmeans(
 \item{df}{Dataframe}
 
 \item{k}{Integer. Number of clusters}
+
+\item{wss_var}{Numeric. Used to pick automatic \code{k} value,
+when \code{k} is \code{NULL} based on WSS variance while considering
+\code{limit} clusters. Values between (0, 1). Default value could be
+0.05 to consider convergence.}
 
 \item{limit}{Integer. How many clusters should be considered?}
 
@@ -79,7 +85,6 @@ when clusters are in different shapes such as elliptical clusters.
 Sys.unsetenv("LARES_FONT") # Temporal
 data("iris")
 df <- subset(iris, select = c(-Species))
-print(head(df))
 
 # If dataset has +5 columns, feel free to reduce dimenstionalities
 # with reduce_pca() or reduce_tsne() first
@@ -87,8 +92,10 @@ print(head(df))
 # Find optimal k
 check_k <- clusterKmeans(df, limit = 10)
 check_k$nclusters_plot
+# Or pick k automatically based on WSS variance
+check_k <- clusterKmeans(df, wss_var = 0.05, limit = 10)
 # You can also use our other functions:
-# clusterOptimalK() and clusterVisualK()
+# clusterOptimalK(df) and clusterVisualK(df)
 
 # Run with selected k
 clusters <- clusterKmeans(df, k = 3)
