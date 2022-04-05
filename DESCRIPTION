@@ -40,6 +40,7 @@ Suggests:
     tm
 URL: https://github.com/laresbernardo/lares, https://laresbernardo.github.io/lares/
 BugReports: https://github.com/laresbernardo/lares/issues
+VignetteBuilder: knitr
 RoxygenNote: 7.1.2
 License: AGPL-3
 Encoding: UTF-8

@@ -228,7 +228,7 @@ h2o_automl <- function(df, y = "tag",
   ), quiet = quiet)
 
   if (nrow(aml@leaderboard) == 0) {
-    stop("NO MODELS TRAINED. Please set max_models to at least 1 and increase max_time")
+    warning("NO MODELS TRAINED. Please set max_models to at least 1 and increase max_time")
   } else {
     if (!is.nan(aml@leaderboard[1, 2])) {
       if (!quiet) {
