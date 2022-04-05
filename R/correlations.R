@@ -148,7 +148,7 @@ corr <- function(df, method = "pearson",
 #' function will return only the plot and not the result's data
 #' @param top Integer. If you want to plot the top correlations,
 #' define how many
-#' @param ceiling Numeric. Remove all correlations above... Range: (0-100]
+#' @param ceiling Numeric. Remove all correlations above... Range: (0-1]
 #' @param max_pvalue Numeric. Filter non-significant variables. Range (0, 1]
 #' @param limit Integer. Limit one hot encoding to the n most frequent
 #' values of each column. Set to \code{NA} to ignore argument.
@@ -168,19 +168,18 @@ corr <- function(df, method = "pearson",
 #' # With plots, results are easier to compare:
 #'
 #' # Correlate Survived with everything else and show only significant results
-#' dft %>% corr_var(Survived_TRUE, max_pvalue = 0.01)
+#' dft %>% corr_var(Survived_TRUE, max_pvalue = 0.05)
 #'
 #' # Top 15 with less than 50% correlation and show ranks
-#' dft %>% corr_var(Survived_TRUE, ceiling = 60, top = 15, ranks = TRUE)
+#' dft %>% corr_var(Survived_TRUE, ceiling = .6, top = 15, ranks = TRUE)
 #' @export
 corr_var <- function(df, var,
-                     pvalue = TRUE,
                      ignore = NULL,
                      trim = 0,
                      clean = FALSE,
                      plot = TRUE,
                      top = NA,
-                     ceiling = 100,
+                     ceiling = 1,
                      max_pvalue = 1,
                      limit = 10,
                      ranks = FALSE,
@@ -193,9 +192,7 @@ corr_var <- function(df, var,
   df <- select(df, -contains(paste0(var, "_log")))
   
   # Calculate correlations
-  if (max_pvalue < 1) pvalue <- TRUE
-  if (plot & max_pvalue == 1) pvalue <- FALSE # No need to calculate
-  rs <- corr(df, half = FALSE, ignore = ignore, limit = limit, pvalue = pvalue, ...)
+  rs <- corr(df, half = FALSE, ignore = ignore, limit = limit, pvalue = TRUE, ...)
   if (is.data.frame(rs)) rs <- list(cor = rs, pvalue = mutate_all(rs, ~1))
   
   # Check if main variable exists
@@ -227,20 +224,17 @@ corr_var <- function(df, var,
   if (!zeroes) d <- d[d$corr != 0, ]
   
   # Suppress non-statistical significant correlations
-  if (max_pvalue < 1) {
-    if ("pvalue_adj" %in% colnames(d)) {
-      d <- d %>%
-        mutate(max_pvalue = as.numeric(ifelse(is.na(.data$pvalue_adj), 1, .data$pvalue_adj))) %>%
-        filter(.data$pvalue_adj <= max_pvalue)
-      message(">>> Filtered 'max_pvalue' using adjusted p-values")
-    } else {
-      d <- d %>%
-        mutate(pvalue = as.numeric(ifelse(is.na(.data$pvalue), 1, .data$pvalue))) %>%
-        filter(.data$pvalue <= max_pvalue) 
-    }
-    if (nrow(d) == 0) warning("Check your 'max_pvalue' input: might be too low!")
-    return(d)
+  if ("pvalue_adj" %in% colnames(d)) {
+    d <- d %>%
+      mutate(max_pvalue = as.numeric(ifelse(is.na(.data$pvalue_adj), 1, .data$pvalue_adj))) %>%
+      filter(.data$pvalue_adj <= max_pvalue)
+    message(">>> Filtered 'max_pvalue' using adjusted p-values")
+  } else {
+    d <- d %>%
+      mutate(pvalue = as.numeric(ifelse(is.na(.data$pvalue), 1, .data$pvalue))) %>%
+      filter(.data$pvalue <= max_pvalue) 
   }
+  if (nrow(d) == 0) warning("Check your 'max_pvalue' input: might be too low!")
   
   # Limit automatically when more than 20 observations
   if (is.na(top) & nrow(d) > 20) {
@@ -248,9 +242,9 @@ corr_var <- function(df, var,
     if (!quiet) message(paste(">>> Reduced results to", top, "largest correlations. Set by 'top' parameter"))
   }
   
-  if (ceiling < 100) {
-    d <- d[abs(d$corr) < ceiling / 100, ]
-    if (!quiet) message(paste0("Removing all correlations greater than ", ceiling, "% (absolute)"))
+  if (ceiling < 1) {
+    d <- d[abs(d$corr) < ceiling, ]
+    if (!quiet) message(paste0("Removing all correlations greater than ", 100 * ceiling, "% (absolute)"))
   }
   
   d <- d[complete.cases(d), ]
@@ -539,10 +533,10 @@ corr_cross <- function(df, plot = TRUE,
   diag(p.mat) <- 0
   for (i in 1:(n - 1)) {
     for (j in (i + 1):n) {
-      error <- try(tmp <- cor.test(
+      error <- try(tmp <- suppressWarnings(cor.test(
         mat[, i], mat[, j],
         method = method, exact = exact, ...
-      ), silent = TRUE)
+      )), silent = TRUE)
       if (inherits(error, "try-error")) {
         p.mat[i, j] <- NA
       } else {

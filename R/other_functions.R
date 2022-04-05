@@ -26,7 +26,7 @@ NULL
 try_require <- function(package, stop = TRUE) {
   present <- length(find.package(package, quiet = TRUE)) > 0
   if (present) {
-    suppressMessages(library(package, character.only = TRUE))
+    suppressPackageStartupMessages(library(package, character.only = TRUE))
   } else {
     if (stop) {
       stop(paste0("Package '", package, "' required. Install and try again."), call. = FALSE)

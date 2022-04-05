@@ -8,13 +8,12 @@
 corr_var(
   df,
   var,
-  pvalue = TRUE,
   ignore = NULL,
   trim = 0,
   clean = FALSE,
   plot = TRUE,
   top = NA,
-  ceiling = 100,
+  ceiling = 1,
   max_pvalue = 1,
   limit = 10,
   ranks = FALSE,
@@ -35,9 +34,6 @@ variable \code{var} is not numerical, 1. you may define which category to select
 from using `var_category`; 2. You may have to add \code{redundant = TRUE} to
 enable all categories (instead of \code{n-1}).}
 
-\item{pvalue}{Boolean. Returns a list, with correlations and statistical
-significance (p-value) for each value.}
-
 \item{ignore}{Character vector. Which columns do you wish to exclude?}
 
 \item{trim}{Integer. Trim words until the nth character for
@@ -52,7 +48,7 @@ function will return only the plot and not the result's data}
 \item{top}{Integer. If you want to plot the top correlations,
 define how many}
 
-\item{ceiling}{Numeric. Remove all correlations above... Range: (0-100]}
+\item{ceiling}{Numeric. Remove all correlations above... Range: (0-1]}
 
 \item{max_pvalue}{Numeric. Filter non-significant variables. Range (0, 1]}
 
@@ -89,10 +85,10 @@ corr_var(dft, Survived, method = "spearman", plot = FALSE, top = 10)
 # With plots, results are easier to compare:
 
 # Correlate Survived with everything else and show only significant results
-dft \%>\% corr_var(Survived_TRUE, max_pvalue = 0.01)
+dft \%>\% corr_var(Survived_TRUE, max_pvalue = 0.05)
 
 # Top 15 with less than 50\% correlation and show ranks
-dft \%>\% corr_var(Survived_TRUE, ceiling = 60, top = 15, ranks = TRUE)
+dft \%>\% corr_var(Survived_TRUE, ceiling = .6, top = 15, ranks = TRUE)
 }
 \seealso{
 Other Exploratory: 

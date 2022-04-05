@@ -41,6 +41,8 @@ remotes::install_github("laresbernardo/lares", dependencies = TRUE)
 
 - DataScience+: [Using cache to avoid re-processing in R](https://datascienceplus.com/using-cache-to-avoid-re-processing-improve-ux-and-quicken-results-in-r/)
 
+- DataScience+: [Best/Worst starting words for Wordle using simulations](https://datascienceplus.com/how-i-selected-my-starting-word-for-wordle-using-simulations-and-r/)
+
 - DataScience+: [Plot Timelines with Gantt Charts](https://datascienceplus.com/visualize-your-cvs-timeline-with-r-gantt-style/)
 
 - RPubs: [freqs(), distr(), and corr_var() Examples](http://rpubs.com/laresbernardo/freqs-distr-corr)
