@@ -41,10 +41,10 @@ check_opts <- function(inputs, opts,
       inputs <- inputs[which(!inputs %in% opts)]
     }
     not(paste(
-      "Your", input_name, vector2text(inputs),
+      "Your", input_name, formatColoured(v2t(inputs), cat = FALSE),
       ifelse(length(inputs) > 1, "are", "is"),
-      "NOT valid;", toupper(type), "should match",
-      "these options:\n ", vector2text(opts)
+      "NOT valid;", toupper(type), "inputs should match",
+      "these options:", formatColoured(v2t(opts), colour = "green", cat = FALSE)
     ))
   }
   if (!quiet) {
@@ -74,11 +74,11 @@ check_attr <- function(object, attr = "type", check = NULL, stop = TRUE) {
   if (is.null(check)) stop("You must set a valid check input")
   if (is.null(attr)) {
     attrs <- attributes(object)
-    nattrs <- length(attrs)
-    if (nattrs > 0) {
-      stop("Your objct has no attributes to be checked")
+    if (length(attrs) > 0) {
+      stop("Your attr input should be any of: ",
+           formatColoured(v2t(attrs), colour = "green", cat = FALSE))
     } else {
-      stop("Your attr input should be any of: ", v2t(attrs))
+      stop("Your objct has no attributes to be checked")
     }
   }
   aux <- attr(object, attr)
