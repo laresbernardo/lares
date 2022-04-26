@@ -30,20 +30,22 @@
 #' @rdname wordle
 wordle_check <- function(input, word, dictionary = NULL, lang_dic = "en", method = 3, print = TRUE) {
   wordle_valid(input, dictionary, lang_dic, method)
-  tiles <- toupper(unlist(strsplit(word, "")))
-  in_tiles <- toupper(unlist(strsplit(input, "")))
+  out <- pos_check(input, word, len = 5, print = print)
+  return(invisible(out))
+}
 
-  init <- rep("_", 5)
+pos_check <- function(input, solution, len = 5, print = TRUE) {
+  tiles <- toupper(unlist(strsplit(solution, "")))
+  in_tiles <- toupper(unlist(strsplit(input, "")))
+  init <- rep("_", len)
   init[which(!in_tiles %in% tiles)] <- "RED"
   init[which(in_tiles %in% tiles)] <- "YELLOW"
   init[which(in_tiles == tiles)] <- "GREEN"
-
   out <- init
   names(out) <- in_tiles
-
   class(out) <- c("wordle_check", class(out))
   print(out, print = print)
-  return(invisible(out))
+  return(out)
 }
 
 #' @rdname wordle
@@ -203,16 +205,33 @@ wordle_opts <- function(input, word, dictionary = NULL, lang_dic = "en", method 
   if (!word %in% dictionary) dictionary <- c(dictionary, word)
   n_words_init <- length(dictionary)
   check <- wordle_check(input, word, dictionary, lang_dic, method, print = FALSE)
+  dictionary <- discard_words(input, word, dictionary, check)
+  input_coloured <- print(check, print = FALSE)
+  if (!quiet) message(cat(input_coloured, "reduced from", formatNum(n_words_init, 0),
+                          "to", formatNum(length(dictionary), 0)))
+  attr(dictionary, "answer") <- word
+  attr(dictionary, "last_word") <- input
 
+  return(dictionary)
+}
+
+discard_words <- function(input, word, dictionary, check) {
   if (input[1] != word[1]) {
     # Prepare data.frame to filtering words that match criteria
     words_lst <- lapply(dictionary, function(x) toupper(unlist(strsplit(x, ""))))
     words_df <- bind_rows(lapply(words_lst, function(x) as.data.frame(t(x)))) %>% mutate(word = dictionary)
-
     # Letters not present
-    these <- names(check[check == "RED"])
+    these <- unique(names(check[check == "RED"]))
     if (length(these) > 0) {
-      words_df <- filter(words_df, !grepl(paste(these, collapse = "|"), .data$word))
+      are_nums <- these %in% as.character(0:9)
+      if (any(are_nums))
+        words_df <- filter(words_df, !grepl(paste0("[", paste(these[are_nums], collapse = "-"), "]"), .data$word))
+      are_lets <- grepl("[a-zA-Z]", these)
+      if (any(are_lets))
+        words_df <- filter(words_df, !grepl(paste(these[are_lets], collapse = "|"), .data$word))
+      are_symbs <- !(are_nums | are_lets)
+      if (any(are_symbs))
+        words_df <- filter(words_df, !grepl(paste(paste0("\\", these[are_symbs]), collapse = "|"), .data$word))
     }
     # Letters present but not in position
     these <- names(check[check == "YELLOW"])
@@ -226,14 +245,7 @@ wordle_opts <- function(input, word, dictionary = NULL, lang_dic = "en", method 
     dictionary <- words_df$word
   } else {
     dictionary <- word
-  }
-
-  input_coloured <- print(check, print = FALSE)
-  if (!quiet) message(cat(input_coloured, "reduced from", formatNum(n_words_init, 0), "to", formatNum(length(dictionary), 0)))
-
-  attr(dictionary, "answer") <- word
-  attr(dictionary, "last_word") <- input
-
+  } 
   return(dictionary)
 }
 

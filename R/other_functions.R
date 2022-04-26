@@ -1739,3 +1739,17 @@ formatColoured <- function(txt, colour = c("yellow", "blue", "grey"), bold = FAL
   out <- paste0("\033[", ifelse(!bold, 0, 1), ";", code, "m", txt, "\033[0m")
   if (cat) cat(out) else return(out)
 }
+
+####################################################################
+#' Test the Truth of R Expressions and Warn
+#' 
+#' If the expression in ... is not \code{TRUE}, \code{warning} is called,
+#' producing a warning message indicating the expression which was not true.
+#'
+#' @param ... any R expression, which should evaluate to TRUE
+#' @examples
+#' warnifnot(TRUE)
+#' warnifnot(FALSE)
+#' warnifnot(1 + 1 == 3)
+#' @export
+warnifnot <- function(...) if (!isTRUE(...)) warning(paste(deparse(...), "is not TRUE"))
