@@ -18,7 +18,7 @@ rate between two currencies."><meta property="og:image" content="https://laresbe
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.1.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,19 +94,11 @@ previous values?</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in"><span class="co"># For today (or any one single date)</span></span>
 <span class="r-in"><span class="fu">get_currency</span><span class="op">(</span><span class="st">"USD/COP"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         date    rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2022-04-26 3937.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         date   rate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2022-04-29 3977.9</span>
 <span class="r-in"><span class="co"># For multiple dates</span></span>
 <span class="r-in"><span class="fu">get_currency</span><span class="op">(</span><span class="st">"EUR/USD"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         date     rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2022-04-19 1.078179</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2022-04-20 1.079447</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2022-04-21 1.084987</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2022-04-22 1.083518</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2022-04-23 1.083518</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2022-04-24 1.083518</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2022-04-25 1.081105</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 2022-04-26 1.071421</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in new.session():</span> Could not establish session after 5 attempts.</span>
 <span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
     </div>
@@ -119,7 +111,7 @@ previous values?</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>
