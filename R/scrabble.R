@@ -248,7 +248,8 @@ grepl_letters <- function(x, pattern, blank = "_") {
 #'   free = 2,
 #'   force_start = "h",
 #'   force_n = 4,
-#'   force_str = "_o_a"
+#'   force_str = "_o_a",
+#'   exclude_here = "__z|j"
 #' )
 #'
 #' wordle <- c("board", "tempo", "shoes", "hoard")
@@ -351,9 +352,10 @@ scrabble_words <- function(tiles = "",
     }
   }
   # Exclude letters from positions (Wordle)
-  pos_tiles <- tolower(unlist(strsplit(exclude_here, "")))
+  pos_tiles <- str_split_merge(exclude_here)
   for (i in seq_along(pos_tiles)) {
-    if (!pos_tiles[i] %in% letters) next
+    these <- str_split(pos_tiles, "\\|")[i][[1]]
+    if (!any(these %in% letters)) next
     located <- stringr::str_locate_all(words, pos_tiles[i])
     these <- !sapply(located, function(x) sum(x[,1] == i) > 0)
     words <- words[these]
@@ -415,6 +417,16 @@ scrabble_words <- function(tiles = "",
     }
   }
   return(tiles)
+}
+
+# x <- "AB|CDE|F|GHIJK"
+str_split_merge <- function(x, sep = "|") {
+  temp <- stringr::str_split(x, "")[[1]]
+  seps <- which(temp == "|")
+  for (i in seq_along(temp)[-length(temp)]) {
+    if (!i %in% c(seps, seps - 1)) temp[i] <- paste0(temp[i], ",")
+  }
+  stringr::str_split(paste(temp, collapse = ""), ",")[[1]]
 }
 
 # devtools::load_all()

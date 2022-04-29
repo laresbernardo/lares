@@ -132,7 +132,8 @@ scrabble_words(
   free = 2,
   force_start = "h",
   force_n = 4,
-  force_str = "_o_a"
+  force_str = "_o_a",
+  exclude_here = "__z|j"
 )
 
 wordle <- c("board", "tempo", "shoes", "hoard")
