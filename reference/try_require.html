@@ -60,7 +60,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">try_require</span><span class="op">(</span><span class="va">package</span>, stop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">try_require</span><span class="op">(</span><span class="va">package</span>, stop <span class="op">=</span> <span class="cn">TRUE</span>, load <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -70,6 +70,10 @@
 <dt>stop</dt>
 <dd><p>Boolean. Stop if not installed. If <code>FALSE</code> and
 library is not available, warning will be shown.</p></dd>
+<dt>load</dt>
+<dd><p>Boolean. Load library?</p></dd>
+<dt>...</dt>
+<dd><p>Enabled lazyeval to ignore shared parameters.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
