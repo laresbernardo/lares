@@ -4,13 +4,17 @@
 \alias{try_require}
 \title{Check if Specific Package is Installed}
 \usage{
-try_require(package, stop = TRUE)
+try_require(package, stop = TRUE, load = TRUE, ...)
 }
 \arguments{
 \item{package}{Character. Name of the library}
 
 \item{stop}{Boolean. Stop if not installed. If \code{FALSE} and
 library is not available, warning will be shown.}
+
+\item{load}{Boolean. Load library?}
+
+\item{...}{Enabled lazyeval to ignore shared parameters.}
 }
 \value{
 No return value, called for side effects.

@@ -156,15 +156,6 @@ freqs <- function(df, ..., wt = NULL,
 
   if (abc) note <- gsub("most frequent", "A-Z sorted values", note)
 
-  reorder_within <- function(x, by, within, fun = mean, sep = "___", ...) {
-    new_x <- paste(x, within, sep = sep)
-    stats::reorder(new_x, by, FUN = fun)
-  }
-  scale_x_reordered <- function(..., sep = "___") {
-    reg <- paste0(sep, ".+$")
-    ggplot2::scale_x_discrete(labels = function(x) gsub(reg, "", x), ...)
-  }
-
   plot <- ungroup(output)
 
   if (rm.na) plot <- plot[complete.cases(plot), ]
@@ -277,6 +268,16 @@ freqs <- function(df, ..., wt = NULL,
   # Export file name and folder for plot
   if (save) export_plot(p, "viz_freqs", vars, subdir = subdir)
   return(p)
+}
+
+reorder_within <- function(x, by, within, fun = mean, sep = "___", ...) {
+  new_x <- paste(x, within, sep = sep)
+  stats::reorder(new_x, by, FUN = fun)
+}
+
+scale_x_reordered <- function(..., sep = "___") {
+  reg <- paste0(sep, ".+$")
+  ggplot2::scale_x_discrete(labels = function(x) gsub(reg, "", x), ...)
 }
 
 

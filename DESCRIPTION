@@ -36,8 +36,7 @@ Suggests:
     knitr,
     quantmod,
     rdrop2,
-    rmarkdown,
-    tm
+    rmarkdown
 URL: https://github.com/laresbernardo/lares, https://laresbernardo.github.io/lares/
 BugReports: https://github.com/laresbernardo/lares/issues
 VignetteBuilder: knitr
