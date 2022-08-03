@@ -10,7 +10,7 @@ fb_ads(
   start_date = Sys.Date() - 31,
   end_date = Sys.Date(),
   fields = NA,
-  api_version = "v12.0",
+  api_version = "v13.0",
   process = TRUE
 )
 }

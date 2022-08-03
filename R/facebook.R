@@ -56,33 +56,11 @@ fb_process <- function(response, paginate = TRUE) {
       }
     }
   }
-  done <- bind_rows(results)
-
-  # So columns that consist in lists but only have 1 element may be used as normal vectors
-  are_lists <- unlist(lapply(lapply(done, class), function(x) any(x %in% c("data.frame", "matrix"))))
-  nolists <- done[, !are_lists]
-  nolists <- replace(nolists, nolists == "NULL", NA)
-  total <- bind_cols(lapply(nolists, as.character))
-
-  fixedlists <- bind_cols(lapply(
-    apply(done[are_lists], 2, function(x) {
-      if (all(unlist(lapply(x, length) <= 1))) {
-        x[unlist(lapply(x, is.null))] <- NA
-        unlist(x)
-      }
-    }), function(x) {
-      if (!is.null(x)) {
-        return(x)
-      }
-    }
-  ))
-
-  if (nrow(fixedlists) > 0) {
-    total <- cbind(total, fixedlists, done[are_lists])
-  }
+  done <- as_tibble(bind_rows(results)) %>%
+    mutate_all(function(x) as.vector(unlist(x)))
 
   ret <- suppressMessages(type.convert(
-    total,
+    done,
     numerals = "no.loss", as.is = TRUE
   )) %>%
     mutate_at(vars(contains("date")), list(as.Date)) %>%
@@ -178,7 +156,7 @@ fb_insights <- function(token,
                         breakdowns = NA,
                         fields = NA,
                         limit = 10000,
-                        api_version = "v12.0",
+                        api_version = "v13.0",
                         process = TRUE) {
   set_config(config(http_version = 0))
   check_opts(report_level, c("ad", "adset", "campaign", "account"))
@@ -265,7 +243,7 @@ fb_insights <- function(token,
 #' basic1 <- fb_rf(token, account_id, destination_ids = 187071108930, countries = "AR")
 #'
 #' # BASIC 2: Fetch data for an existing prediction ID
-#' basic2 <- fb_rf(token, account_id, prediction = 6260368700774)
+#' basic2 <- fb_rf(token, account_id, prediction = 6317720998974)
 #'
 #' # ADVANCED (Fully custom prediction)
 #' advanced <- fb_rf(token, account_id,
@@ -324,7 +302,7 @@ fb_rf <- function(token,
                   frequency_cap = 8,
                   prediction_mode = 1,
                   curve = TRUE,
-                  api_version = "v12.0",
+                  api_version = "v13.0",
                   process = TRUE,
                   ...) {
   set_config(config(http_version = 0))
@@ -398,7 +376,8 @@ fb_rf <- function(token,
     )
 
     if (process) {
-      curves <- fb_process(curves) %>%
+      this <- fb_process(curves)
+      curves <- this %>%
         select(-one_of(zerovar(.))) %>%
         mutate(
           budget = .data$budget / 100,
@@ -446,126 +425,22 @@ fb_posts <- function(token,
                      limits = 100,
                      comments = FALSE,
                      shares = FALSE,
-                     reactions = FALSE) {
+                     reactions = FALSE,
+                     api_version = "v13.0") {
 
   # TOKEN: https://developers.facebook.com/tools/explorer/
-  # require(httr)
-  # require(jsonlite)
-  # require(rlist)
-  # require(dplyr)
 
   set_config(config(http_version = 0))
-
-  fb_comments <- function(posts) {
-    comments <- NULL
-    if ("data" %in% names(posts)) posts$posts$data <- posts$data
-    iters <- ifelse("comments" %in% names(posts$posts$data),
-      length(posts$posts$data$comments$data),
-      length(posts$posts$data)
-    )
-    for (i in 1:iters) {
-      if (length(posts$posts$data$comments$data) > 0) {
-        all <- posts$posts$data$comments$data[[i]]
-        id <- posts$posts$data$id[[i]]
-      } else {
-        all <- data.frame(lapply(posts$posts$data, `[`, "comments")[[i]])
-        id <- posts$posts$data[[i]]$id
-      }
-      if ("data" %in% names(posts)) posts$posts$data <- posts$data
-      if (length(all) > 0) {
-        ids <- c(t(select(all, starts_with("id"))))
-        times <- c(t(select(all, starts_with("created_time"))))
-        times <- as.POSIXct(times, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
-        coms <- c(t(select(all, starts_with("message"))))
-        names <- c(t(select(all, starts_with("from"))))
-        name <- names[seq(1, 2 * nrow(all), 2)]
-        name_id <- names[seq(2, 2 * nrow(all), 2)]
-        dfi <- data.frame(
-          post_id = id,
-          comment_id = ids,
-          comment_time = times,
-          comment = coms,
-          name = name,
-          name_id = name_id
-        ) %>%
-          filter(comment != "")
-        comments <- rbind(comments, dfi)
-      }
-    }
-    return(comments)
-  }
-
-  fb_reactions <- function(posts) {
-    reactions <- NULL
-    if ("data" %in% names(posts)) posts$posts$data <- posts$data
-    iters <- ifelse("reactions" %in% names(posts$posts$data),
-      length(posts$posts$data$reactions$data),
-      length(posts$posts$data)
-    )
-    for (i in 1:iters) {
-      if (length(posts$posts$data$reactions$data) > 0) {
-        all <- posts$posts$data$reactions$data[[i]]
-        id <- posts$posts$data$id[[i]]
-      } else {
-        all <- data.frame(lapply(posts$posts$data, `[`, "reactions")[[i]])
-        id <- posts$posts$data[[i]]$id
-      }
-      if (length(all) > 0) {
-        ids <- c(t(select(all, starts_with("id"))))
-        reac <- c(t(select(all, starts_with("type"))))
-        name <- c(t(select(all, starts_with("name"))))
-        dfi <- data.frame(
-          post_id = id,
-          reaction_id = ids,
-          reaction = reac,
-          name = name
-        )
-        reactions <- rbind(reactions, dfi)
-      }
-    }
-    return(reactions)
-  }
-
-  fb_shares <- function(posts) {
-    shares <- NULL
-    if ("data" %in% names(posts)) posts$posts$data <- posts$data
-    if (length(posts$posts$data$shares) > 0) {
-      all <- posts$posts$data$shares$count
-      id <- posts$posts$data$id
-    } else {
-      for (i in seq_along(posts$posts$data)) {
-        all <- posts$posts$data[[i]]$shares$count
-        id <- posts$posts$data[[i]]$id
-      }
-    }
-    shares <- data.frame(post_id = id, shares = all)
-    return(shares)
-  }
-
-  fb_pposts <- function(posts) {
-    if ("data" %in% names(posts)) posts$posts$data <- posts$data
-    plinks <- data.frame(
-      id = posts$posts$data$id,
-      created_time = as.POSIXct(posts$posts$data$created_time,
-        format = "%Y-%m-%dT%H:%M:%S", tz = "UTC"
-      ),
-      url = posts$posts$data$permalink_url,
-      message = posts$posts$data$message,
-      status_type = posts$posts$data$status_type
-    )
-    return(plinks)
-  }
-
   limit_posts <- 100
   total_iters <- ceiling(n / limit_posts)
   all_comments <- all_shares <- all_reactions <- all_posts <- ret <- NULL
 
-  for (iter in 1:total_iters) {
+  for (iter in 1:total_iters) { # iter = 1
     limit_posts <- ifelse(iter == total_iters, limit_posts - (iter * limit_posts - n), limit_posts)
     limit_posts <- ifelse(n < limit_posts, n, limit_posts)
     if (iter == 1) {
       url <- paste0(
-        "https://graph.facebook.com/v3.3/me?fields=",
+        "https://graph.facebook.com/", api_version, "/me?fields=",
         "id,name,posts.limit(", limit_posts, ")",
         "{created_time,message,status_type,",
         ifelse(comments, paste0("comments.limit(", limits, "),"), ""),
@@ -591,7 +466,7 @@ fb_posts <- function(token,
         message("3. Copy and use the Acces Token created.")
         url <- paste0(
           "https://developers.facebook.com/tools/explorer/1866795993626030/",
-          "?version=v3.3&classic=1"
+          "?version=", api_version, "&classic=1"
         )
         browseURL(url)
       }
@@ -600,10 +475,10 @@ fb_posts <- function(token,
     }
 
     if (iter == 1) ret[["account"]] <- data.frame(id = json$id, name = json$name)
-    all_posts <- rbind(all_posts, fb_pposts(json))
-    all_comments <- if (comments) rbind(all_comments, fb_comments(json))
-    all_reactions <- if (reactions) rbind(all_reactions, fb_reactions(json))
-    all_shares <- if (shares) rbind(all_shares, fb_shares(json))
+    all_posts <- rbind(all_posts, posts_fb(json))
+    all_comments <- if (comments & !is.null(all_comments)) rbind(all_comments, comments_fb(json))
+    all_reactions <- if (reactions & !is.null(all_reactions)) rbind(all_reactions, reactions_fb(json))
+    all_shares <- if (shares & !is.null(all_shares)) rbind(all_shares, shares_fb(json))
     new_url <- ifelse(length(json$paging) > 0, json$paging$`next`, json$posts$paging$`next`)
     if (total_iters > 1) statusbar(iter, total_iters)
   }
@@ -613,14 +488,113 @@ fb_posts <- function(token,
   ret[["shares"]] <- all_shares
   # ret[["json"]] <- json
 
-  msg <- paste("Succesfully exported", n, "posts from", ret$account$name, "with")
-  msg <- ifelse(!is.null(ret$comments), paste(msg, nrow(ret$comments), "comments,"), msg)
-  msg <- ifelse(!is.null(ret$reactions), paste(msg, nrow(ret$reactions), "reactions,"), msg)
-  msg <- ifelse(!is.null(ret$shares), paste(msg, nrow(ret$shares), "reactions,"), msg)
-  msg <- paste(msg, "and one happy client! :)")
+  msg <- paste("Exported", nrow(ret$posts), "posts from", ret$account$name, " ")
+  msg <- ifelse(!is.null(ret$comments), paste(msg, nrow(ret$comments), "comments"), msg)
+  msg <- ifelse(!is.null(ret$reactions), paste(msg, nrow(ret$reactions), "reactions"), msg)
+  msg <- ifelse(!is.null(ret$shares), paste(msg, nrow(ret$shares), "share"), msg)
   ret[["msg"]] <- msg
   message(msg)
   return(ret)
+}
+
+comments_fb <- function(posts) {
+  comments <- NULL
+  if ("data" %in% names(posts)) posts$posts$data <- posts$data
+  iters <- ifelse("comments" %in% names(posts$posts$data),
+    length(posts$posts$data$comments$data),
+    length(posts$posts$data)
+  )
+  for (i in 1:iters) {
+    if (length(posts$posts$data$comments$data) > 0) {
+      all <- posts$posts$data$comments$data[[i]]
+      id <- posts$posts$data$id[[i]]
+    } else {
+      all <- data.frame(lapply(posts$posts$data, `[`, "comments")[[i]])
+      id <- posts$posts$data[[i]]$id
+    }
+    if ("data" %in% names(posts)) posts$posts$data <- posts$data
+    if (length(all) > 0) {
+      ids <- c(t(select(all, starts_with("id"))))
+      times <- c(t(select(all, starts_with("created_time"))))
+      times <- as.POSIXct(times, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+      coms <- c(t(select(all, starts_with("message"))))
+      names <- c(t(select(all, starts_with("from"))))
+      name <- names[seq(1, 2 * nrow(all), 2)]
+      name_id <- names[seq(2, 2 * nrow(all), 2)]
+      dfi <- data.frame(
+        post_id = id,
+        comment_id = ids,
+        comment_time = times,
+        comment = coms,
+        name = name,
+        name_id = name_id
+      ) %>%
+        filter(comment != "")
+      comments <- rbind(comments, dfi)
+    }
+  }
+  return(comments)
+}
+
+reactions_fb <- function(posts) {
+  reactions <- NULL
+  if ("data" %in% names(posts)) posts$posts$data <- posts$data
+  iters <- ifelse("reactions" %in% names(posts$posts$data),
+    length(posts$posts$data$reactions$data),
+    length(posts$posts$data)
+  )
+  for (i in 1:iters) {
+    if (length(posts$posts$data$reactions$data) > 0) {
+      all <- posts$posts$data$reactions$data[[i]]
+      id <- posts$posts$data$id[[i]]
+    } else {
+      all <- data.frame(lapply(posts$posts$data, `[`, "reactions")[[i]])
+      id <- posts$posts$data[[i]]$id
+    }
+    if (length(all) > 0) {
+      ids <- c(t(select(all, starts_with("id"))))
+      reac <- c(t(select(all, starts_with("type"))))
+      name <- c(t(select(all, starts_with("name"))))
+      dfi <- data.frame(
+        post_id = id,
+        reaction_id = ids,
+        reaction = reac,
+        name = name
+      )
+      reactions <- rbind(reactions, dfi)
+    }
+  }
+  return(reactions)
+}
+
+shares_fb <- function(posts) {
+  shares <- NULL
+  if ("data" %in% names(posts)) posts$posts$data <- posts$data
+  if (length(posts$posts$data$shares) > 0) {
+    all <- posts$posts$data$shares$count
+    id <- posts$posts$data$id
+  } else {
+    for (i in seq_along(posts$posts$data)) {
+      all <- posts$posts$data[[i]]$shares$count
+      id <- posts$posts$data[[i]]$id
+    }
+  }
+  shares <- data.frame(post_id = id, shares = all)
+  return(shares)
+}
+
+posts_fb <- function(posts) {
+  if ("data" %in% names(posts)) posts$posts$data <- posts$data
+  plinks <- data.frame(
+    id = posts$posts$data$id,
+    created_time = as.POSIXct(posts$posts$data$created_time,
+      format = "%Y-%m-%dT%H:%M:%S", tz = "UTC"
+    ),
+    url = posts$posts$data$permalink_url,
+    message = posts$posts$data$message,
+    status_type = posts$posts$data$status_type
+  )
+  return(plinks)
 }
 
 
@@ -723,7 +697,7 @@ fb_accounts <- function(token,
                         business_id = "904189322962915",
                         type = c("owned", "client"),
                         limit = 1000,
-                        api_version = "v12.0") {
+                        api_version = "v13.0") {
   set_config(config(http_version = 0))
 
   # Starting URL
@@ -811,7 +785,7 @@ fb_ads <- function(token,
                    start_date = Sys.Date() - 31,
                    end_date = Sys.Date(),
                    fields = NA,
-                   api_version = "v12.0",
+                   api_version = "v13.0",
                    process = TRUE) {
   set_config(config(http_version = 0))
 
@@ -874,7 +848,7 @@ fb_ads <- function(token,
 #' }
 #' @export
 fb_creatives <- function(token, which,
-                         api_version = "v12.0",
+                         api_version = "v13.0",
                          process = TRUE) {
   set_config(config(http_version = 0))
 
@@ -925,7 +899,7 @@ fb_creatives <- function(token, which,
 #' or with this same \code{fb_token()}'s token.
 #' @return Character. String with token requested.
 #' @export
-fb_token <- function(app_id, app_secret, token, api_version = "v12.0") {
+fb_token <- function(app_id, app_secret, token, api_version = "v13.0") {
   link <- paste0(
     "https://graph.facebook.com/", api_version, "/oauth/access_token?",
     "grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s"

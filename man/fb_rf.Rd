@@ -16,7 +16,7 @@ fb_rf(
   frequency_cap = 8,
   prediction_mode = 1,
   curve = TRUE,
-  api_version = "v12.0",
+  api_version = "v13.0",
   process = TRUE,
   ...
 )
@@ -75,7 +75,7 @@ account_id <- "act_20846447"
 basic1 <- fb_rf(token, account_id, destination_ids = 187071108930, countries = "AR")
 
 # BASIC 2: Fetch data for an existing prediction ID
-basic2 <- fb_rf(token, account_id, prediction = 6260368700774)
+basic2 <- fb_rf(token, account_id, prediction = 6317720998974)
 
 # ADVANCED (Fully custom prediction)
 advanced <- fb_rf(token, account_id,

@@ -10,7 +10,8 @@ fb_posts(
   limits = 100,
   comments = FALSE,
   shares = FALSE,
-  reactions = FALSE
+  reactions = FALSE,
+  api_version = "v13.0"
 )
 }
 \arguments{
@@ -23,6 +24,8 @@ to acquire one.}
 \item{limits}{Integer. For each post, hoy many results do you need?}
 
 \item{comments, shares, reactions}{Boolean. Include in your query?}
+
+\item{api_version}{Character. Facebook API version}
 }
 \value{
 data.frame with un-nested processed results fetched with API.

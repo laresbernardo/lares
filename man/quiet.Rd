@@ -2,7 +2,7 @@
 % Please edit documentation in R/other_functions.R
 \name{quiet}
 \alias{quiet}
-\title{Quiet prints and verbose noice}
+\title{Quiet prints and verbose noise}
 \usage{
 quiet(fx, quiet = TRUE)
 }
