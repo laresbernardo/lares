@@ -5,7 +5,7 @@ a predictive model, can measure the strength of the relationship between
 two features. In other words, x2y measures the ability of x
 to predict y. We use CART (Classification And Regression Trees) models
 to be able to 1) compare numerical and non-numerical features, 2) detect
-non-linear relationships, and 3) because they are easy/quick to train."><title>Ranked Predictive Power of Cross-Features (x2y) — x2y • lares</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Ranked Predictive Power of Cross-Features (x2y) — x2y"><meta property="og:description" content="The relative reduction in error when we go from a baseline model
+non-linear relationships, and 3) because they are easy/quick to train."><title>Ranked Predictive Power of Cross-Features (x2y) — x2y • lares</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Ranked Predictive Power of Cross-Features (x2y) — x2y"><meta property="og:description" content="The relative reduction in error when we go from a baseline model
 (average for continuous and most frequent for categorical features) to
 a predictive model, can measure the strength of the relationship between
 two features. In other words, x2y measures the ability of x
@@ -78,83 +78,114 @@ non-linear relationships, and 3) because they are easy/quick to train.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">x2y</span><span class="op">(</span>
-  <span class="va">df</span>,
-  target <span class="op">=</span> <span class="cn">NULL</span>,
-  symmetric <span class="op">=</span> <span class="cn">FALSE</span>,
-  target_x <span class="op">=</span> <span class="cn">FALSE</span>,
-  target_y <span class="op">=</span> <span class="cn">FALSE</span>,
-  plot <span class="op">=</span> <span class="cn">FALSE</span>,
-  top <span class="op">=</span> <span class="fl">20</span>,
-  quiet <span class="op">=</span> <span class="st">"auto"</span>,
-  ohse <span class="op">=</span> <span class="cn">FALSE</span>,
-  corr <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">x2y_metric</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, confidence <span class="op">=</span> <span class="cn">FALSE</span>, bootstraps <span class="op">=</span> <span class="fl">20</span>, max_cat <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
-
-<span class="co"># S3 method for x2y_preds</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, corr <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for x2y</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">x2y_preds</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, max_cat <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">x2y</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  target <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  symmetric <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  target_x <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  target_y <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  top <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="st">"auto"</span>,</span>
+<span>  ohse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  corr <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">x2y_metric</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, confidence <span class="op">=</span> <span class="cn">FALSE</span>, bootstraps <span class="op">=</span> <span class="fl">20</span>, max_cat <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for x2y_preds</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, corr <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for x2y</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">x2y_preds</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, max_cat <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>df</dt>
 <dd><p>data.frame. Note that variables with no variance will be ignored.</p></dd>
+
+
 <dt>target</dt>
 <dd><p>Character vector. If you are only interested in the <code>x2y</code>
 values between particular variable(s) in <code>df</code>, set
 name(s) of the variable(s) you are interested in. Keep <code>NULL</code>
 to calculate for every variable (column). Check <code>target_x</code> and
 <code>target_y</code> parameters as well.</p></dd>
+
+
 <dt>symmetric</dt>
 <dd><p>Boolean. <code>x2y</code> metric is not symmetric with respect to
 <code>x</code> and <code>y</code>. The extent to which <code>x</code> can predict <code>y</code> can
 be different from the extent to which <code>y</code> can predict <code>x</code>. Set
 <code>symmetric=TRUE</code> if you wish to average both numbers.</p></dd>
+
+
 <dt>target_x, target_y</dt>
 <dd><p>Boolean. Force target features to be part of
 <code>x</code> OR <code>y</code>?</p></dd>
+
+
 <dt>plot</dt>
 <dd><p>Boolean. Return a plot? If not, only a data.frame with calculated
 results will be returned.</p></dd>
+
+
 <dt>top</dt>
 <dd><p>Integer. Show/plot only top N predictive cross-features. Set
 to <code>NULL</code> to return all.</p></dd>
+
+
 <dt>quiet</dt>
 <dd><p>Boolean. Keep quiet? If not, show progress bar.</p></dd>
+
+
 <dt>ohse</dt>
 <dd><p>Boolean. Use <code><a href="ohse.html">lares::ohse()</a></code> to pre-process the data?</p></dd>
+
+
 <dt>corr</dt>
 <dd><p>Boolean. Add correlation and pvalue data to compare with? For
 more custom studies, use <code><a href="corr_cross.html">lares::corr_cross()</a></code> directly.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional parameters passed to <code>x2y_metric()</code></p></dd>
+
+
 <dt>x, y</dt>
 <dd><p>Vectors. Categorical or numerical vectors of same length.</p></dd>
+
+
 <dt>confidence</dt>
 <dd><p>Boolean. Calculate 95% confidence intervals estimated
 with N <code>bootstraps</code>.</p></dd>
+
+
 <dt>bootstraps</dt>
 <dd><p>Integer. If <code>confidence=TRUE</code>, how many bootstraps?
 The more iterations we run the more precise the confidence internal will be.</p></dd>
+
+
 <dt>max_cat</dt>
 <dd><p>Integer. Maximum number of unique <code>x</code> or <code>y</code> values
 when categorical. Will select then most frequent values and the rest will
 be passed as <code>""</code>.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>Integer. Plot type: <code>1</code> for tile plot,
 <code>2</code> for ranked bar plot.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Depending on <code>plot</code> input, a plot or a data.frame with x2y results.</p>
+    
+
+<p>Depending on <code>plot</code> input, a plot or a data.frame with x2y results.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -166,10 +197,10 @@ complements our <code><a href="corr_cross.html">lares::corr_cross()</a></code> o
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dft</span><span class="op">)</span> <span class="co"># Titanic dataset</span></span>
-<span class="r-in"><span class="va">x2y_results</span> <span class="op">&lt;-</span> <span class="fu">x2y</span><span class="op">(</span><span class="va">dft</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, max_cat <span class="op">=</span> <span class="fl">10</span>, top <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x2y_results</span>, <span class="fl">10</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dft</span><span class="op">)</span> <span class="co"># Titanic dataset</span></span></span>
+<span class="r-in"><span><span class="va">x2y_results</span> <span class="op">&lt;-</span> <span class="fu">x2y</span><span class="op">(</span><span class="va">dft</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, max_cat <span class="op">=</span> <span class="fl">10</span>, top <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x2y_results</span>, <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    x        y        obs_p   x2y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -183,14 +214,14 @@ complements our <code><a href="corr_cross.html">lares::corr_cross()</a></code> o
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Ticket   SibSp      100  25.3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> SibSp    Parch      100  21.6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Fare     Survived   100  20.5</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x2y_results</span>, type <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x2y_results</span>, type <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="x2y-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Confidence intervals with 10 bootstrap iterations</span></span>
-<span class="r-in"><span class="fu">x2y</span><span class="op">(</span><span class="va">dft</span>,</span>
-<span class="r-in">  target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Survived"</span>, <span class="st">"Age"</span><span class="op">)</span>,</span>
-<span class="r-in">  confidence <span class="op">=</span> <span class="cn">TRUE</span>, bootstraps <span class="op">=</span> <span class="fl">10</span>, top <span class="op">=</span> <span class="fl">8</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Confidence intervals with 10 bootstrap iterations</span></span></span>
+<span class="r-in"><span><span class="fu">x2y</span><span class="op">(</span><span class="va">dft</span>,</span></span>
+<span class="r-in"><span>  target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Survived"</span>, <span class="st">"Age"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  confidence <span class="op">=</span> <span class="cn">TRUE</span>, bootstraps <span class="op">=</span> <span class="fl">10</span>, top <span class="op">=</span> <span class="fl">8</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   x        y        obs_p   x2y lower_ci upper_ci</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -202,9 +233,9 @@ complements our <code><a href="corr_cross.html">lares::corr_cross()</a></code> o
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Age      Pclass    80.1 14.8      7.57     15.3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> Age      SibSp     80.1 10.6      3.5      12.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> Cabin    Survived 100    8.19     5.95     10.5</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Compare with mean absolute correlations</span></span>
-<span class="r-in"><span class="fu">x2y</span><span class="op">(</span><span class="va">dft</span>, <span class="st">"Fare"</span>, corr <span class="op">=</span> <span class="cn">TRUE</span>, top <span class="op">=</span> <span class="fl">6</span>, target_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Compare with mean absolute correlations</span></span></span>
+<span class="r-in"><span><span class="fu">x2y</span><span class="op">(</span><span class="va">dft</span>, <span class="st">"Fare"</span>, corr <span class="op">=</span> <span class="cn">TRUE</span>, top <span class="op">=</span> <span class="fl">6</span>, target_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   x     y        obs_p   x2y mean_abs_corr mean_pvalue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -214,24 +245,24 @@ complements our <code><a href="corr_cross.html">lares::corr_cross()</a></code> o
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Fare  SibSp      100  35.4         0.160    1.67<span style="color: #949494;">e</span><span style="color: #BB0000;">- 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Fare  Survived   100  20.5         0.257    6.12<span style="color: #949494;">e</span><span style="color: #BB0000;">-15</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Fare  Sex        100  13.7         0.182    4.23<span style="color: #949494;">e</span><span style="color: #BB0000;">- 8</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Plot (symmetric) results</span></span>
-<span class="r-in"><span class="va">symm</span> <span class="op">&lt;-</span> <span class="fu">x2y</span><span class="op">(</span><span class="va">dft</span>, target <span class="op">=</span> <span class="st">"Survived"</span>, symmetric <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">symm</span>, type <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Plot (symmetric) results</span></span></span>
+<span class="r-in"><span><span class="va">symm</span> <span class="op">&lt;-</span> <span class="fu">x2y</span><span class="op">(</span><span class="va">dft</span>, target <span class="op">=</span> <span class="st">"Survived"</span>, symmetric <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">symm</span>, type <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="x2y-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Symmetry: x2y vs y2x</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0.01</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Knowing x reduces the uncertainty about the value of y a lot more than</span></span>
-<span class="r-in"><span class="co"># knowing y reduces the uncertainty about the value of x. Note correlation.</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">x2y_preds</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>, corr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Symmetry: x2y vs y2x</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0.01</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Knowing x reduces the uncertainty about the value of y a lot more than</span></span></span>
+<span class="r-in"><span><span class="co"># knowing y reduces the uncertainty about the value of x. Note correlation.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">x2y_preds</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>, corr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="x2y-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">x2y_preds</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span><span class="op">)</span>, corr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">x2y_preds</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span><span class="op">)</span>, corr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="x2y-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -243,7 +274,7 @@ complements our <code><a href="corr_cross.html">lares::corr_cross()</a></code> o
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

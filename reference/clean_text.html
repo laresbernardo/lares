@@ -3,7 +3,7 @@
 characters and no accents/symbols on letters.
 Resulting names are unique and consist only of the _ character,
 numbers, and ASCII letters. Capitalization preferences can be specified using
-the lower parameter. Inspired by janitor::clean_names."><title>Clean text — cleanText • lares</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Clean text — cleanText"><meta property="og:description" content="This function lets the user clean text into getting only alphanumeric
+the lower parameter. Inspired by janitor::clean_names."><title>Clean text — cleanText • lares</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Clean text — cleanText"><meta property="og:description" content="This function lets the user clean text into getting only alphanumeric
 characters and no accents/symbols on letters.
 Resulting names are unique and consist only of the _ character,
 numbers, and ASCII letters. Capitalization preferences can be specified using
@@ -72,35 +72,54 @@ the <code>lower</code> parameter. Inspired by <code>janitor::clean_names</code>.
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cleanText</span><span class="op">(</span><span class="va">text</span>, spaces <span class="op">=</span> <span class="cn">TRUE</span>, lower <span class="op">=</span> <span class="cn">TRUE</span>, ascii <span class="op">=</span> <span class="cn">TRUE</span>, title <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="fu">cleanNames</span><span class="op">(</span><span class="va">df</span>, num <span class="op">=</span> <span class="st">"x"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cleanText</span><span class="op">(</span><span class="va">text</span>, spaces <span class="op">=</span> <span class="cn">TRUE</span>, lower <span class="op">=</span> <span class="cn">TRUE</span>, ascii <span class="op">=</span> <span class="cn">TRUE</span>, title <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">cleanNames</span><span class="op">(</span><span class="va">df</span>, num <span class="op">=</span> <span class="st">"x"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>text</dt>
 <dd><p>Character Vector</p></dd>
+
+
 <dt>spaces</dt>
 <dd><p>Boolean. Keep spaces? If character input, spaces
 will be transformed into passed argument.</p></dd>
+
+
 <dt>lower</dt>
 <dd><p>Boolean. Transform all to lower case?</p></dd>
+
+
 <dt>ascii</dt>
 <dd><p>Boolean. Only ASCII characters?</p></dd>
+
+
 <dt>title</dt>
 <dd><p>Boolean. Transform to title format (upper case on first letters)</p></dd>
+
+
 <dt>df</dt>
 <dd><p>data.frame/tibble.</p></dd>
+
+
 <dt>num</dt>
 <dd><p>Add character before only-numeric names.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional parameters passed to <code>cleanText()</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Character vector with transformed strings.
-data.frame/tibble with transformed column names.</p>
+    
+
+<p>Character vector with transformed strings.</p>
+
+
+<p>data.frame/tibble with transformed column names.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -135,33 +154,33 @@ data.frame/tibble with transformed column names.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">cleanText</span><span class="op">(</span><span class="st">"Bernardo Lares 123"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">cleanText</span><span class="op">(</span><span class="st">"Bernardo Lares 123"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "bernardo lares 123"</span>
-<span class="r-in"><span class="fu">cleanText</span><span class="op">(</span><span class="st">"Bèrnärdo LáreS 123"</span>, lower <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cleanText</span><span class="op">(</span><span class="st">"Bèrnärdo LáreS 123"</span>, lower <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Bernardo LareS 123"</span>
-<span class="r-in"><span class="fu">cleanText</span><span class="op">(</span><span class="st">"Bernardo Lare$"</span>, spaces <span class="op">=</span> <span class="st">"."</span>, ascii <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cleanText</span><span class="op">(</span><span class="st">"Bernardo Lare$"</span>, spaces <span class="op">=</span> <span class="st">"."</span>, ascii <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "bernardo lare$"</span>
-<span class="r-in"><span class="fu">cleanText</span><span class="op">(</span><span class="st">"\\@®ì÷å   %ñS  ..-X"</span>, spaces <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cleanText</span><span class="op">(</span><span class="st">"\\@®ì÷å   %ñS  ..-X"</span>, spaces <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "riansx"</span>
-<span class="r-in"><span class="fu">cleanText</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"maría"</span>, <span class="st">"€"</span>, <span class="st">"núñez_a."</span><span class="op">)</span>, title <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cleanText</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"maría"</span>, <span class="st">"€"</span>, <span class="st">"núñez_a."</span><span class="op">)</span>, title <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Maria"  "Eur"    "Nuneza"</span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">dft</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span> <span class="co"># Dummy data</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ID."</span>, <span class="st">"34"</span>, <span class="st">"x_2"</span>, <span class="st">"Num 123"</span>, <span class="st">"Nòn-äscì"</span>, <span class="st">"  white   Spaces  "</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">dft</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span> <span class="co"># Dummy data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ID."</span>, <span class="st">"34"</span>, <span class="st">"x_2"</span>, <span class="st">"Num 123"</span>, <span class="st">"Nòn-äscì"</span>, <span class="st">"  white   Spaces  "</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ID.    34 x_2 Num 123 Nòn-äscì   white   Spaces  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   1 FALSE   3    male       22                  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   2  TRUE   1  female       38                  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3   3  TRUE   3  female       26                  0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   4  TRUE   1  female       35                  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5   5 FALSE   3    male       35                  0</span>
-<span class="r-in"><span class="fu">cleanNames</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cleanNames</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   id   x34 x2 num_123 nonasci white_spaces</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  1 FALSE  3    male      22            1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  2  TRUE  1  female      38            1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3  3  TRUE  3  female      26            0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4  4  TRUE  1  female      35            1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5  5 FALSE  3    male      35            0</span>
-<span class="r-in"><span class="fu">cleanNames</span><span class="op">(</span><span class="va">df</span>, lower <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cleanNames</span><span class="op">(</span><span class="va">df</span>, lower <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ID   x34 x2 Num_123 Nonasci white_Spaces</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  1 FALSE  3    male      22            1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  2  TRUE  1  female      38            1</span>
@@ -179,7 +198,7 @@ data.frame/tibble with transformed column names.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

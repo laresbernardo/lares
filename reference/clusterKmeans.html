@@ -5,7 +5,7 @@ distinct non-overlapping subgroups. If needed, one hot encoding will
 be applied to categorical values automatically with this function.
 For consideration: Scale/standardize the data when applying kmeans.
 Also, kmeans assumes spherical shapes of clusters and does not work well
-when clusters are in different shapes such as elliptical clusters."><title>Automated K-Means Clustering + PCA/t-SNE — clusterKmeans • lares</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Automated K-Means Clustering + PCA/t-SNE — clusterKmeans"><meta property="og:description" content="This function lets the user cluster a whole data.frame automatically.
+when clusters are in different shapes such as elliptical clusters."><title>Automated K-Means Clustering + PCA/t-SNE — clusterKmeans • lares</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Automated K-Means Clustering + PCA/t-SNE — clusterKmeans"><meta property="og:description" content="This function lets the user cluster a whole data.frame automatically.
 As you might know, the goal of kmeans is to group data points into
 distinct non-overlapping subgroups. If needed, one hot encoding will
 be applied to categorical values automatically with this function.
@@ -78,66 +78,95 @@ when clusters are in different shapes such as elliptical clusters.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">clusterKmeans</span><span class="op">(</span>
-  <span class="va">df</span>,
-  k <span class="op">=</span> <span class="cn">NULL</span>,
-  wss_var <span class="op">=</span> <span class="fl">0</span>,
-  limit <span class="op">=</span> <span class="fl">15</span>,
-  drop_na <span class="op">=</span> <span class="cn">TRUE</span>,
-  ignore <span class="op">=</span> <span class="cn">NULL</span>,
-  ohse <span class="op">=</span> <span class="cn">TRUE</span>,
-  norm <span class="op">=</span> <span class="cn">TRUE</span>,
-  algorithm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hartigan-Wong"</span>, <span class="st">"Lloyd"</span>, <span class="st">"Forgy"</span>, <span class="st">"MacQueen"</span><span class="op">)</span>,
-  dim_red <span class="op">=</span> <span class="st">"PCA"</span>,
-  comb <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,
-  seed <span class="op">=</span> <span class="fl">123</span>,
-  quiet <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">clusterKmeans</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  k <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  wss_var <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  limit <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>  drop_na <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  ignore <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ohse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  norm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  algorithm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hartigan-Wong"</span>, <span class="st">"Lloyd"</span>, <span class="st">"Forgy"</span>, <span class="st">"MacQueen"</span><span class="op">)</span>,</span>
+<span>  dim_red <span class="op">=</span> <span class="st">"PCA"</span>,</span>
+<span>  comb <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">123</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>df</dt>
 <dd><p>Dataframe</p></dd>
+
+
 <dt>k</dt>
 <dd><p>Integer. Number of clusters</p></dd>
+
+
 <dt>wss_var</dt>
 <dd><p>Numeric. Used to pick automatic <code>k</code> value,
 when <code>k</code> is <code>NULL</code> based on WSS variance while considering
 <code>limit</code> clusters. Values between (0, 1). Default value could be
 0.05 to consider convergence.</p></dd>
+
+
 <dt>limit</dt>
 <dd><p>Integer. How many clusters should be considered?</p></dd>
+
+
 <dt>drop_na</dt>
 <dd><p>Boolean. Should NA rows be removed?</p></dd>
+
+
 <dt>ignore</dt>
 <dd><p>Character vector. Names of columns to ignore.</p></dd>
+
+
 <dt>ohse</dt>
 <dd><p>Boolean. Do you wish to automatically run one hot
 encoding to non-numerical columns?</p></dd>
+
+
 <dt>norm</dt>
 <dd><p>Boolean. Should the data be normalized?</p></dd>
+
+
 <dt>algorithm</dt>
 <dd><p>character: may be abbreviated.  Note that
     <code>"Lloyd"</code> and <code>"Forgy"</code> are alternative names for one
     algorithm.</p></dd>
+
+
 <dt>dim_red</dt>
 <dd><p>Character. Select dimensionality reduction technique.
 Pass any of: <code>c("PCA", "tSNE", "all", "none")</code>.</p></dd>
+
+
 <dt>comb</dt>
 <dd><p>Vector. Which columns do you wish to plot? Select which
 two variables by name or column position.</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>Numeric. Seed for reproducibility</p></dd>
+
+
 <dt>quiet</dt>
 <dd><p>Boolean. Keep quiet? If not, print messages.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional parameters to pass sub-functions.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>List. If no <code>k</code> is provided, contains <code>nclusters</code> and
+    
+
+<p>List. If no <code>k</code> is provided, contains <code>nclusters</code> and
 <code>nclusters_plot</code> to determine optimal <code>k</code> given their WSS (Within
 Groups Sum of Squares). If <code>k</code> is provided, additionally we get:</p><ul><li><p><code>df</code> data.frame with original <code>df</code> plus <code>cluster</code> column</p></li>
 <li><p><code>clusters</code> integer which is the same as <code>k</code></p></li>
@@ -158,40 +187,40 @@ Groups Sum of Squares). If <code>k</code> is provided, additionally we get:</p><
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.unsetenv</a></span><span class="op">(</span><span class="st">"LARES_FONT"</span><span class="op">)</span> <span class="co"># Temporal</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">iris</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If dataset has +5 columns, feel free to reduce dimenstionalities</span></span>
-<span class="r-in"><span class="co"># with reduce_pca() or reduce_tsne() first</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Find optimal k</span></span>
-<span class="r-in"><span class="va">check_k</span> <span class="op">&lt;-</span> <span class="fu">clusterKmeans</span><span class="op">(</span><span class="va">df</span>, limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.unsetenv</a></span><span class="op">(</span><span class="st">"LARES_FONT"</span><span class="op">)</span> <span class="co"># Temporal</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">iris</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># If dataset has +5 columns, feel free to reduce dimenstionalities</span></span></span>
+<span class="r-in"><span><span class="co"># with reduce_pca() or reduce_tsne() first</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Find optimal k</span></span></span>
+<span class="r-in"><span><span class="va">check_k</span> <span class="op">&lt;-</span> <span class="fu">clusterKmeans</span><span class="op">(</span><span class="va">df</span>, limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Removed duplicate obserations: 1</span>
-<span class="r-in"><span class="va">check_k</span><span class="op">$</span><span class="va">nclusters_plot</span></span>
+<span class="r-in"><span><span class="va">check_k</span><span class="op">$</span><span class="va">nclusters_plot</span></span></span>
 <span class="r-plt img"><img src="clusterKmeans-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="co"># Or pick k automatically based on WSS variance</span></span>
-<span class="r-in"><span class="va">check_k</span> <span class="op">&lt;-</span> <span class="fu">clusterKmeans</span><span class="op">(</span><span class="va">df</span>, wss_var <span class="op">=</span> <span class="fl">0.05</span>, limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Or pick k automatically based on WSS variance</span></span></span>
+<span class="r-in"><span><span class="va">check_k</span> <span class="op">&lt;-</span> <span class="fu">clusterKmeans</span><span class="op">(</span><span class="va">df</span>, wss_var <span class="op">=</span> <span class="fl">0.05</span>, limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Removed duplicate obserations: 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; Auto selected k = 3 (clusters) based on minimum WSS variance of 5%</span>
-<span class="r-in"><span class="co"># You can also use our other functions:</span></span>
-<span class="r-in"><span class="co"># clusterOptimalK(df) and clusterVisualK(df)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Run with selected k</span></span>
-<span class="r-in"><span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu">clusterKmeans</span><span class="op">(</span><span class="va">df</span>, k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># You can also use our other functions:</span></span></span>
+<span class="r-in"><span><span class="co"># clusterOptimalK(df) and clusterVisualK(df)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Run with selected k</span></span></span>
+<span class="r-in"><span><span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu">clusterKmeans</span><span class="op">(</span><span class="va">df</span>, k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Removed duplicate obserations: 1</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "nclusters"      "nclusters_plot" "df"             "clusters"      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [5] "fit"            "means"          "correlations"   "PCA"           </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Cross-Correlations for each cluster</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">$</span><span class="va">correlations</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Cross-Correlations for each cluster</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">$</span><span class="va">correlations</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="clusterKmeans-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># PCA Results (when dim_red = "PCA")</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">$</span><span class="va">PCA</span><span class="op">$</span><span class="va">plot_explained</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># PCA Results (when dim_red = "PCA")</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">$</span><span class="va">PCA</span><span class="op">$</span><span class="va">plot_explained</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="clusterKmeans-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">$</span><span class="va">PCA</span><span class="op">$</span><span class="va">plot</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">$</span><span class="va">PCA</span><span class="op">$</span><span class="va">plot</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="clusterKmeans-4.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -204,7 +233,7 @@ Groups Sum of Squares). If <code>k</code> is provided, additionally we get:</p><
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

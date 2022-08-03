@@ -3,7 +3,7 @@
 comma separated values. Detect which combinations and elements are
 the most frequent and how much they represent of your total observations.
 This is similar to the UpSet Plots
-which may be used as an alternative to Venn diagrams."><title>Frequencies on Lists and UpSet Plot — freqs_list • lares</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Frequencies on Lists and UpSet Plot — freqs_list"><meta property="og:description" content="Visualize frequency of elements on a list, list vector, or vector with
+which may be used as an alternative to Venn diagrams."><title>Frequencies on Lists and UpSet Plot — freqs_list • lares</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Frequencies on Lists and UpSet Plot — freqs_list"><meta property="og:description" content="Visualize frequency of elements on a list, list vector, or vector with
 comma separated values. Detect which combinations and elements are
 the most frequent and how much they represent of your total observations.
 This is similar to the UpSet Plots
@@ -72,62 +72,89 @@ which may be used as an alternative to Venn diagrams.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">freqs_list</span><span class="op">(</span>
-  <span class="va">df</span>,
-  var <span class="op">=</span> <span class="cn">NULL</span>,
-  wt <span class="op">=</span> <span class="cn">NULL</span>,
-  fx <span class="op">=</span> <span class="st">"mean"</span>,
-  rm.na <span class="op">=</span> <span class="cn">FALSE</span>,
-  min_elements <span class="op">=</span> <span class="fl">1</span>,
-  limit <span class="op">=</span> <span class="fl">10</span>,
-  limit_x <span class="op">=</span> <span class="cn">NA</span>,
-  limit_y <span class="op">=</span> <span class="cn">NA</span>,
-  tail <span class="op">=</span> <span class="cn">TRUE</span>,
-  size <span class="op">=</span> <span class="fl">10</span>,
-  unique <span class="op">=</span> <span class="cn">TRUE</span>,
-  abc <span class="op">=</span> <span class="cn">FALSE</span>,
-  title <span class="op">=</span> <span class="st">""</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">freqs_list</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  var <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  wt <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fx <span class="op">=</span> <span class="st">"mean"</span>,</span>
+<span>  rm.na <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  min_elements <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  limit <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  limit_x <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  limit_y <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  tail <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  size <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  unique <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  abc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  title <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>df</dt>
 <dd><p>Data.frame</p></dd>
+
+
 <dt>var</dt>
 <dd><p>Variable. Variables you wish to process.</p></dd>
+
+
 <dt>wt</dt>
 <dd><p>Variable, numeric. Select a numeric column to use
 in the colour scale, used as sum, mean... of those values for each
 of the combinations.</p></dd>
+
+
 <dt>fx</dt>
 <dd><p>Character. Set operation: mean, sum</p></dd>
+
+
 <dt>rm.na</dt>
 <dd><p>Boolean. Remove NA value from <code>wt</code>?</p></dd>
+
+
 <dt>min_elements</dt>
 <dd><p>Integer. Exclude combinations with less than n elements</p></dd>
+
+
 <dt>limit, limit_x, limit_y</dt>
 <dd><p>Integer. Show top n combinations (x) and/or
 elements (y). The rest will be grouped into a single element.
 Set argument to 0 to ignore. <code>limit_x</code>/<code>limit_y</code> answer to
 <code>limit</code>'s argument.</p></dd>
+
+
 <dt>tail</dt>
 <dd><p>Boolean. Show tail grouped into "..." on the plots?</p></dd>
+
+
 <dt>size</dt>
 <dd><p>Numeric. Text base size</p></dd>
+
+
 <dt>unique</dt>
 <dd><p>Boolean. a,b = b,a?</p></dd>
+
+
 <dt>abc</dt>
 <dd><p>Boolean. Do you wish to sort by alphabetical order?</p></dd>
+
+
 <dt>title</dt>
 <dd><p>Character. Overwrite plot's title with.</p></dd>
+
+
 <dt>plot</dt>
 <dd><p>Boolean. Plot viz? Will be generated anyways in the output object</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>List. data.frame with the data results, elements and combinations.</p>
+    
+
+<p>List. data.frame with the data results, elements and combinations.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -164,31 +191,31 @@ Set argument to 0 to ignore. <code>limit_x</code>/<code>limit_y</code> answer to
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/starwars.html" class="external-link">starwars</a></span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">12</span><span class="op">)</span><span class="op">]</span>, <span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Characters per movies combinations in a list column</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">films</span>, <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">freqs_list</span><span class="op">(</span><span class="va">df</span>, <span class="va">films</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Skin colours in a comma-separated column</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">skin_color</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">freqs_list</span><span class="op">(</span><span class="va">df</span>, <span class="va">skin_color</span>, min_elements <span class="op">=</span> <span class="fl">2</span>, limit <span class="op">=</span> <span class="fl">5</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># Inside "x" we'll have:</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using the 'wt' argument to add a continuous value metric</span></span>
-<span class="r-in"><span class="co"># into an already one-hot encoded columns dataset (and hide tail)</span></span>
-<span class="r-in"><span class="va">csv</span> <span class="op">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/hms-dbmi/UpSetR/master/inst/extdata/movies.csv"</span></span>
-<span class="r-in"><span class="va">movies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">csv</span>, sep <span class="op">=</span> <span class="st">";"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">movies</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">freqs_list</span><span class="op">(</span><span class="va">movies</span>,</span>
-<span class="r-in">  wt <span class="op">=</span> <span class="va">AvgRating</span>, min_elements <span class="op">=</span> <span class="fl">2</span>, tail <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span class="r-in">  title <span class="op">=</span> <span class="st">"Movies\nMixed Genres\nRanking"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="co"># So, please: no more Comedy+SciFi and more Drama+Horror films (based on ~50 movies)!</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/starwars.html" class="external-link">starwars</a></span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">12</span><span class="op">)</span><span class="op">]</span>, <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Characters per movies combinations in a list column</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">films</span>, <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">freqs_list</span><span class="op">(</span><span class="va">df</span>, <span class="va">films</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Skin colours in a comma-separated column</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">skin_color</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">freqs_list</span><span class="op">(</span><span class="va">df</span>, <span class="va">skin_color</span>, min_elements <span class="op">=</span> <span class="fl">2</span>, limit <span class="op">=</span> <span class="fl">5</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Inside "x" we'll have:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Using the 'wt' argument to add a continuous value metric</span></span></span>
+<span class="r-in"><span><span class="co"># into an already one-hot encoded columns dataset (and hide tail)</span></span></span>
+<span class="r-in"><span><span class="va">csv</span> <span class="op">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/hms-dbmi/UpSetR/master/inst/extdata/movies.csv"</span></span></span>
+<span class="r-in"><span><span class="va">movies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">csv</span>, sep <span class="op">=</span> <span class="st">";"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">movies</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">freqs_list</span><span class="op">(</span><span class="va">movies</span>,</span></span>
+<span class="r-in"><span>  wt <span class="op">=</span> <span class="va">AvgRating</span>, min_elements <span class="op">=</span> <span class="fl">2</span>, tail <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>  title <span class="op">=</span> <span class="st">"Movies\nMixed Genres\nRanking"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># So, please: no more Comedy+SciFi and more Drama+Horror films (based on ~50 movies)!</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -200,7 +227,7 @@ Set argument to 0 to ignore. <code>limit_x</code>/<code>limit_y</code> answer to
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>
