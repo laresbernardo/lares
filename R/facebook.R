@@ -725,13 +725,13 @@ fb_accounts <- function(token,
 
     ret <- fb_process(import)
 
-    if ("data.frame" %in% class(ret)) {
+    if (inherits(ret, "data.frame")) {
       ret$type <- type[i]
       output <- bind_rows(output, ret)
     }
   }
 
-  if (class(output) != "data.frame") {
+  if (inherits(output, "data.frame")) {
     invisible(return(NULL))
   }
 
@@ -817,7 +817,7 @@ fb_ads <- function(token,
   }
 
   ret <- fb_process(import)
-  if ("data.frame" %in% class(ret)) {
+  if (inherits(ret, "data.frame")) {
     ret <- ret %>%
       # rename(adcreatives_id = .data$list_id) %>%
       # arrange(desc(.data$created_time)) %>%
@@ -872,7 +872,7 @@ fb_creatives <- function(token, which,
     return(import)
   }
   ret <- fb_process(import)
-  if ("data.frame" %in% class(ret)) {
+  if (inherits(ret, "data.frame")) {
     ret <- select(ret, one_of("id", .data$fields))
   }
   attr(ret, "cURL") <- linkurl
