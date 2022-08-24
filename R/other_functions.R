@@ -1755,3 +1755,29 @@ formatColoured <- function(txt, colour = c("yellow", "blue", "grey"), bold = FAL
 #' warnifnot(1 + 1 == 3)
 #' @export
 warnifnot <- function(...) if (!isTRUE(...)) warning(paste(deparse(...), "is not TRUE"))
+
+
+####################################################################
+#' Print lares R library Logo
+#' 
+#' Used "ASCII Art Generator" from manytools.org to convert logo to ASCII.
+#' \href{https://manytools.org/hacker-tools/convert-images-to-ascii-art/}{Visit}.
+#'
+#' @param version Boolean. Include R and lares version?
+#' @examples
+#' lares_logo()
+#' @export
+lares_logo <- function(version = TRUE) {
+  try({
+    file <- system.file("inst/docs", "ascii-art.txt", package = "lares")
+    this <- read.delim(file)
+    colnames(this) <- "lares"
+    cat(this$lares, sep = "\n")
+    if (version) {
+      ver <- paste(ifelse(is.null(packageDescription("lares")$Repository), "dev", "stable"),
+                   packageDescription("lares")$Version, sep = "-")
+      cat(paste("\nlares:", ver, "\n"))
+      cat(R.version$version.string)
+    } 
+  })
+}
