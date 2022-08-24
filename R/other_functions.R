@@ -1797,8 +1797,9 @@ lares_logo <- function(version = TRUE) {
                             /   %
 "))
   if (version) {
-    ver <- paste(ifelse(is.null(packageDescription("lares")$Repository), "dev", "stable"),
-      packageDescription("lares")$Version,
+    temp <- packageDescription("lares")
+    ver <- paste(ifelse(is.null(temp$Repository), "dev", "stable"),
+      temp$Version,
       sep = "-"
     )
     cat(paste("\nlares:", ver, "\n"))
