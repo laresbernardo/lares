@@ -53,7 +53,8 @@ ohse <- function(df,
                  drop = TRUE,
                  ignore = NULL,
                  dates = FALSE,
-                 holidays = FALSE, country = "Colombia",
+                 holidays = FALSE,
+                 country = "Venezuela",
                  currency_pair = NA,
                  trim = 0,
                  limit = 10,
@@ -185,7 +186,7 @@ ohse <- function(df,
   }
 
   # Return only useful columns
-  if (drop) {
+  if (drop & length(c(converted, no_variance)) > 0) {
     df <- df[, c(!colnames(df) %in% c(converted, no_variance))]
   }
 

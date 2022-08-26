@@ -11,7 +11,7 @@ ohse(
   ignore = NULL,
   dates = FALSE,
   holidays = FALSE,
-  country = "Colombia",
+  country = "Venezuela",
   currency_pair = NA,
   trim = 0,
   limit = 10,
