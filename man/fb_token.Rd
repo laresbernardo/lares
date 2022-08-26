@@ -25,7 +25,7 @@ Generate a new valid User Token with the
 \href{https://developers.facebook.com/tools/explorer}{API Graph}.
 }
 \details{
-More info: \href{https://developers.facebook.com/docs/facebook-login/access-tokens/refreshing/}{Long-Lived Access Tokens}
+More info: \href{https://developers.facebook.com/docs/facebook-login/guides/access-tokens/get-long-lived}{Long-Lived Access Tokens}
 }
 \seealso{
 Other API: 
