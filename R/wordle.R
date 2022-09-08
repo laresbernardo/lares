@@ -13,7 +13,7 @@
 #' @param lang_dic Character. Any of: "en", "es". Only used when \code{dictionary}
 #' parameter is NULL. Requires internet connection the first time. Uses cache.
 #' @param method Integer. 1 for \code{scrabble_dictionary()}, 3 for scrapping
-#' \href{https://www.nytimes.com/games/wordle/index.html}{NYTimes} set of words.
+#' the words taken straight from the game's source code.
 #' @param print Boolean. Print validation results?
 #' @return Invisible vector with results by letter.
 #' @examples
@@ -92,10 +92,8 @@ wordle_dictionary <- function(lang_dic = "en", method = 3, quiet = TRUE) {
     words <- scrabble_dictionary(lang_dic, quiet)[[1]]
   }
   if (method == 3) {
-    url <- "https://www.nytimes.com/games/wordle/main.bd4cb59c.js"
-    temp <- str_split(readLines(url), '"')[[1]]
-    words <- toupper(unique(temp[nchar(temp) == 5]))
-    words <- grep("^[[:alnum:]]+$", words, value = TRUE)
+    url <- "https://raw.githubusercontent.com/tabatkins/wordle-list/main/words"
+    words <- readLines(url, warn = FALSE)
   }
   out <- toupper(words[nchar(words) == 5])
   cache_write(out, cache_name, quiet = quiet)

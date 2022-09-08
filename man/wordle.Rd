@@ -38,7 +38,7 @@ Use \code{lang_dic} param to set language.}
 parameter is NULL. Requires internet connection the first time. Uses cache.}
 
 \item{method}{Integer. 1 for \code{scrabble_dictionary()}, 3 for scrapping
-\href{https://www.nytimes.com/games/wordle/index.html}{NYTimes} set of words.}
+the words taken straight from the game's source code.}
 
 \item{print}{Boolean. Print validation results?}
 

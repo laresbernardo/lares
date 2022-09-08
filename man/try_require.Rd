@@ -4,7 +4,7 @@
 \alias{try_require}
 \title{Check if Specific Package is Installed}
 \usage{
-try_require(package, stop = TRUE, load = TRUE, ...)
+try_require(package, stop = TRUE, load = TRUE, lib.loc = NULL, ...)
 }
 \arguments{
 \item{package}{Character. Name of the library}
@@ -14,7 +14,12 @@ library is not available, warning will be shown.}
 
 \item{load}{Boolean. Load library?}
 
-\item{...}{Enabled lazyeval to ignore shared parameters.}
+\item{lib.loc}{Character vector. Location of R library trees
+to search through, or \code{NULL}. The default value of \code{NULL}
+corresponds to all libraries currently known to \code{.libPaths()}.
+Non-existent library trees are silently ignored.}
+
+\item{...}{Pass additional parameters.}
 }
 \value{
 No return value, called for side effects.
