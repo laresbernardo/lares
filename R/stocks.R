@@ -42,9 +42,10 @@ stocks_file <- function(file = NA,
   }
 
   processFile <- function(file, keep_old = TRUE) {
-    port <- read.xlsx(file, sheet = sheets[1], skipEmptyRows = TRUE, detectDates = TRUE)
-    cash <- read.xlsx(file, sheet = sheets[2], skipEmptyRows = TRUE, detectDates = TRUE)
-    trans <- read.xlsx(file, sheet = sheets[3], skipEmptyRows = TRUE, detectDates = TRUE)
+    port <- as_tibble(read.xlsx(file, sheet = sheets[1], skipEmptyRows = TRUE, detectDates = TRUE))
+    cash <- as_tibble(read.xlsx(file, sheet = sheets[2], skipEmptyRows = TRUE, detectDates = TRUE))
+    trans <- as_tibble(read.xlsx(file, sheet = sheets[3], skipEmptyRows = TRUE, detectDates = TRUE))
+    trans$Date <- as.Date(trans$Date, origin = "1970-01-01")
     if ("Value" %in% colnames(trans)) {
       trans <- rename(trans, Each = .data$Value, Invested = .data$Amount)
     }
