@@ -396,9 +396,9 @@ scrabble_words <- function(tiles = "",
 }
 
 .reverse <- function(words) {
-  splits <- unlist(lapply(words, function(x) strsplit(x, "")))
-  reversed <- lapply(splits, rev)
-  words <- as.vector(unlist(lapply(reversed, function(x) paste(x, collapse = ""))))
+  splits <- lapply(words, function(x) strsplit(x, ""))
+  reversed <- lapply(splits, function(x) rev(x[[1]]))
+  words <- unlist(lapply(reversed, function(x) paste(x, collapse = "")))
   return(words)
 }
 
