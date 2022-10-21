@@ -33,7 +33,7 @@
 #' @export
 get_mp3 <- function(id,
                     mp3 = TRUE,
-                    params = "",
+                    params = "--no-check-certificate",
                     start_time = 0,
                     end_time = NA,
                     overwrite = TRUE,
