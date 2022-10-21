@@ -130,25 +130,25 @@ It also lets filter files which contains a string.</p>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">listfiles</span><span class="op">(</span>recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       filename size isdir mode               mtime               ctime</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     ROC.html   19 FALSE  644 2022-10-21 21:56:08 2022-10-21 21:56:08</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Rplot001.png    0 FALSE  644 2022-10-21 21:57:11 2022-10-21 21:57:11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Rplot002.png   10 FALSE  644 2022-10-21 21:56:56 2022-10-21 21:56:56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     ROC.html   19 FALSE  644 2022-10-21 22:38:15 2022-10-21 22:38:15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Rplot001.png    0 FALSE  644 2022-10-21 22:39:17 2022-10-21 22:39:17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Rplot002.png   10 FALSE  644 2022-10-21 22:39:04 2022-10-21 22:39:04</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 atime uid gid  uname grname</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2022-10-21 21:56:08 501  20 runner  staff</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2022-10-21 21:56:07 501  20 runner  staff</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2022-10-21 21:56:14 501  20 runner  staff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2022-10-21 22:38:15 501  20 runner  staff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2022-10-21 22:38:15 501  20 runner  staff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2022-10-21 22:38:21 501  20 runner  staff</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># All files in current directory (with recursive files)</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">listfiles</span><span class="op">(</span>recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            filename size isdir mode               mtime               ctime</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 139    li_auth.html    8 FALSE  644 2022-10-21 21:57:10 2022-10-21 21:57:10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 140 li_profile.html    8 FALSE  644 2022-10-21 21:57:11 2022-10-21 21:57:11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 141  list_cats.html   11 FALSE  644 2022-10-21 21:57:11 2022-10-21 21:57:11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 139    li_auth.html    8 FALSE  644 2022-10-21 22:39:17 2022-10-21 22:39:17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 140 li_profile.html    8 FALSE  644 2022-10-21 22:39:17 2022-10-21 22:39:17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 141  list_cats.html   11 FALSE  644 2022-10-21 22:39:18 2022-10-21 22:39:18</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   atime uid gid  uname grname</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 139 2022-10-21 21:57:10 501  20 runner  staff</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 140 2022-10-21 21:57:11 501  20 runner  staff</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 141 2022-10-21 21:57:11 501  20 runner  staff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 139 2022-10-21 22:39:17 501  20 runner  staff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 140 2022-10-21 22:39:17 501  20 runner  staff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 141 2022-10-21 22:39:18 501  20 runner  staff</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Check R files using regex</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">listfiles</span><span class="op">(</span>regex <span class="op">=</span> <span class="st">"\\.R$"</span><span class="op">)</span></span></span>
