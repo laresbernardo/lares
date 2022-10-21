@@ -343,7 +343,7 @@ date_feats <- function(dates,
     colnames(holidays_dates)[1] <- "values_date"
     holidays_dates$values_date <- as.character(as.Date(holidays_dates$values_date))
     cols <- paste0("values_date_holiday_", colnames(holidays_dates)[4:ncol(holidays_dates)])
-    colnames(holidays_dates)[-1:3] <- cols
+    colnames(holidays_dates)[-(1:3)] <- cols
   }
 
   # Features creator
