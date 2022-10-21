@@ -189,9 +189,21 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Processing 1 date/time columns: 'df'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Colombia's holidays for 2021</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Colombia's holidays for 2022</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in colnames(holidays_dates)[-1:3] &lt;- cols:</span> only 0's may be mixed with negative subscripts</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>invalid factor level, NA generated</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">hol</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">hol</span><span class="op">$</span><span class="va">holidayname</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(hol[!is.na(hol$holidayname), ]):</span> object 'hol' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 16</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   values month   day  week weekday weekend year_day holidayname  holid…¹ holid…²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>   <span style="text-decoration: underline;">2</span>021    10    31    44 Sun     TRUE         303 Halloween    Observ… FALSE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>   <span style="text-decoration: underline;">2</span>021    11     1    44 Mon     FALSE        304 All Saints'… Nation… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>   <span style="text-decoration: underline;">2</span>021    11     1    44 Mon     FALSE        304 All Saints'… Observ… FALSE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>   <span style="text-decoration: underline;">2</span>021    11    11    45 Thu     FALSE        314 Independenc… Observ… FALSE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>   <span style="text-decoration: underline;">2</span>021    11    14    46 Sun     TRUE         317 Colombian W… Observ… FALSE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>   <span style="text-decoration: underline;">2</span>021    11    15    46 Mon     FALSE        318 Independenc… Nation… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 6 more variables: holiday_observance &lt;lgl&gt;, holiday_bank &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   holiday_nonwork &lt;lgl&gt;, holiday_season &lt;lgl&gt;, holiday_hother &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   holiday_county &lt;fct&gt;, and abbreviated variable names ¹​holidaytype,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​holiday_national</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
