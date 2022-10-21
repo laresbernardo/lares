@@ -31,7 +31,7 @@ NULL
 #' @export
 try_require <- function(package, stop = TRUE, load = TRUE, lib.loc = NULL, ...) {
   present <- length(find.package(package, quiet = TRUE)) > 0
-  if (present & load) {
+  if (present && load) {
     # Be careful: ... parameter is not enabled in library()
     suppressPackageStartupMessages(library(package, character.only = TRUE, lib.loc = lib.loc))
   } else {
@@ -151,7 +151,7 @@ categ_reducer <- function(df, var,
   if (!is.na(top)) {
     tops <- dff %>% slice(1:top)
   } else {
-    tops <- dff %>% filter(.data$n >= nmin & .data$p >= pmin & .data$p <= pcummax)
+    tops <- filter(dff, .data$n >= nmin & .data$p >= pmin & .data$p <= pcummax)
   }
 
   name <- as.name(names(dff[, 1]))
@@ -251,7 +251,7 @@ vector2text <- function(vector, sep = ", ", quotes = TRUE, force_single = FALSE,
   }
 
   # Get rid of the last comma when using and?
-  if (and != "" & (Sys.getenv("LARES_NUMFORMAT") == 1 | n == 2)) {
+  if (and != "" && (Sys.getenv("LARES_NUMFORMAT") == 1 || n == 2)) {
     last_comma <- tail(c(gregexpr(",", output)[[1]]), 1)
     output <- paste0(
       substr(output, 1, last_comma - 1),
@@ -303,7 +303,7 @@ ip_data <- function(ip = myip(), quiet = FALSE) {
     colnames(row) <- clean$X1
     row <- data.frame(id = ip[i], row)
     output <- bind_rows(output, row)
-    if (length(ip) > 1 & !quiet) statusbar(i, length(ip), ip[i])
+    if (length(ip) > 1 && !quiet) statusbar(i, length(ip), ip[i])
   }
   output <- cleanNames(output)
   row.names(output) <- NULL
@@ -732,10 +732,10 @@ removenacols <- function(df, all = TRUE, ignore = NULL) {
   if (is.null(df)) {
     return(NULL)
   }
-  if (!is.data.frame(df)) stop("df must be a valid data.frame")
+  if (!is.data.frame(df)) stop("Input 'df' must be a valid data.frame")
   if (all) {
     not_all_nas <- colSums(is.na(df)) != nrow(df)
-    keep <- colnames(df) %in% ignore | not_all_nas
+    keep <- (colnames(df) %in% ignore) | as.vector(not_all_nas)
     df[, keep]
   } else {
     df[, complete.cases(t(df[!colnames(df) %in% ignore]))]
@@ -1413,7 +1413,7 @@ files_functions <- function(filename, abc = TRUE, quiet = FALSE) {
     funs$package <- gsub("package:", "", unlist(pkgs))
     funs$file <- filename[i]
     results <- rbind(results, funs)
-    if (length(filename) > 1 & !quiet) {
+    if (length(filename) > 1 && !quiet) {
       statusbar(i, length(filename), filename[i])
     }
   }

@@ -105,7 +105,7 @@ distr <- function(data, ...,
     is.Date <- function(x) inherits(x, "Date")
     is.POSIXct <- function(x) inherits(x, "POSIXct")
     is.POSIXlt <- function(x) inherits(x, "POSIXlt")
-    if (is.numeric(value) | is.Date(value) | is.POSIXct(value) | is.POSIXlt(value)) {
+    if (is.numeric(value) || is.Date(value) || is.POSIXct(value) || is.POSIXlt(value)) {
       # Continuous and date values
       if (is.numeric(value)) {
         p <- ggplot(df, aes(x = .data$value))
@@ -141,7 +141,7 @@ distr <- function(data, ...,
   if (!var %in% colnames(data)) {
     msg <- paste("Not a valid input:", var, "was transformed or does not exist.")
     maybes <- colnames(data)[grepl(var, colnames(data))]
-    if (length(maybes) > 0 & maybes[1] %in% colnames(data)) {
+    if (length(maybes) > 0 && maybes[1] %in% colnames(data)) {
       message(paste0(
         "Maybe you meant one of: ", vector2text(maybes), ". ",
         "Automatically using '", maybes[1], "'"
@@ -174,7 +174,7 @@ distr <- function(data, ...,
 
   # For num-num distributions or too many unique target variables
   if (length(unique(targets)) >= 8) {
-    if (is.numeric(targets) & is.numeric(value)) {
+    if (is.numeric(targets) && is.numeric(value)) {
       subtitle <- paste0(
         "Variables: ", variable_name, " vs. ", targets_name,
         ". Obs: ", formatNum(length(value), 0)
@@ -218,7 +218,7 @@ distr <- function(data, ...,
   }
 
   # Only n numeric values, really numeric?
-  if (is.numeric(value) & length(unique(value)) <= 8) {
+  if (is.numeric(value) && length(unique(value)) <= 8) {
     value <- .force_class(value, class = "char")
   }
 
@@ -266,7 +266,7 @@ distr <- function(data, ...,
         .data$row
       ))
     )
-  if (length(unique(value)) > top & !is.numeric(value)) {
+  if (length(unique(value)) > top && !is.numeric(value)) {
     message(paste("Filtering the", top, "most frequent values. Use 'top' to overrule."))
     which <- freqs(df, .data$value) %>% slice(1:top)
     freqs <- freqs %>%
@@ -343,7 +343,7 @@ distr <- function(data, ...,
       theme_lares(pal = 1)
 
     # Show a reference line if levels = 2; quite useful when data is unbalanced (not 50/50)
-    if (length(unique(targets)) == 2 & ref) {
+    if (length(unique(targets)) == 2 && ref) {
       distr <- df %>%
         freqs(.data$targets) %>%
         arrange(as.character(.data$targets))
@@ -410,10 +410,10 @@ distr <- function(data, ...,
 
 .force_class <- function(value, class = "none") {
   if (class != "none") {
-    if (grepl("char|fact", class) & is.numeric(value)) {
+    if (grepl("char|fact", class) && is.numeric(value)) {
       value <- as.character(value)
     }
-    if (grepl("num|int", class) & !is.numeric(value)) {
+    if (grepl("num|int", class) && !is.numeric(value)) {
       value <- as.numeric(value)
     }
     if (grepl("dat|day|time", class)) {
@@ -429,7 +429,7 @@ distr <- function(data, ...,
     if (!is.numeric(value)) {
       value <- substr(value, 1, trim)
     }
-    if (!is.numeric(targets) & !is.na(targets)) {
+    if (!is.numeric(targets) && !is.na(targets)) {
       targets <- substr(targets, 1, trim)
     }
     message(paste("Chopping everything to", trim, "characters..."))
@@ -442,7 +442,7 @@ distr <- function(data, ...,
     if (!is.numeric(value)) {
       value <- cleanText(value, spaces = FALSE)
     }
-    if (!is.numeric(targets) & !is.na(targets)) {
+    if (!is.numeric(targets) && !is.na(targets)) {
       targets <- cleanText(targets, spaces = FALSE)
     }
   }

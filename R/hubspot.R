@@ -70,7 +70,7 @@
 #'     output <- plyr::rbind.fill(output, imports)
 #'
 #'     # Stop if there are no more deals
-#'     if (i > 1 & import$has_more[nrow(import)] == FALSE) {
+#'     if (i > 1 && import$has_more[nrow(import)] == FALSE) {
 #'       output <- endfx(output)
 #'       output <- mutate_at(output, vars(contains('fecha_')), funs(anytime::anydate(as.character(.))))
 #'       message(paste0("All contacts (", dim(output)[1],") brought. Stopping my work now!"))
@@ -182,7 +182,7 @@
 #'     output <- plyr::rbind.fill(output, imports)
 #'
 #'     # Stop if there are no more deals
-#'     if (i > 1 & import$hasMore[nrow(import)] == FALSE) {
+#'     if (i > 1 && import$hasMore[nrow(import)] == FALSE) {
 #'       output <- endfx(output)
 #'       message(paste0("All deals (", dim(output)[1],") brought. Stopping my work now!"))
 #'       return(output)

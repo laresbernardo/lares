@@ -36,7 +36,7 @@ stocks_file <- function(file = NA,
                         cache = TRUE,
                         quiet = FALSE) {
   cache_file <- c(as.character(Sys.Date()), "stocks_file")
-  if (cache_exists(cache_file) & cache) {
+  if (cache_exists(cache_file) && cache) {
     results <- cache_read(cache_file, quiet = quiet)
     return(results)
   }
@@ -56,14 +56,14 @@ stocks_file <- function(file = NA,
 
   # FOR PERSONAL USE
   local <- Sys.info()
-  if (auto & Sys.getenv("LARES_PORTFOLIO") != "") {
+  if (auto && Sys.getenv("LARES_PORTFOLIO") != "") {
     if (!quiet) message("Using BL's local file...")
     local <- Sys.getenv("LARES_PORTFOLIO")
     results <- processFile(local, keep_old)
   } else {
     # FOR EVERYONE'S USE
     if (!is.na(file)) {
-      if (file.exists(file) | is_url(file)) {
+      if (file.exists(file) || is_url(file)) {
         results <- processFile(file, keep_old)
       } else {
         stop("Error: that file doesn't exist or it's not in your working directory!")
@@ -177,7 +177,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
     as.character(Sys.Date()), "stocks_hist",
     symbols, sum(as.integer(as.Date(from)), as.integer(as.Date(to)))
   )
-  if (cache_exists(cache_file) & cache) {
+  if (cache_exists(cache_file) && cache) {
     results <- cache_read(cache_file, quiet = quiet)
     return(results)
   }
@@ -206,7 +206,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
       #   values <- head(values, 1)
 
       # Add right now's data
-      if (today & to == Sys.Date()) {
+      if (today && to == Sys.Date()) {
         now <- stocks_quote(symbol)
         # Append to historical data / replace most recent
         if (length(now) > 0) {
@@ -250,7 +250,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
         divs <- rbind(divs, div)
       }
 
-      if (!quiet & length(symbols) > 1) {
+      if (!quiet && length(symbols) > 1) {
         info <- paste(symbol, "since", start_date, "   ")
         statusbar(i, length(symbols), info)
       }
@@ -1004,7 +1004,7 @@ etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
   }
 
   cache_file <- c(as.character(Sys.Date()), "etf_sector", etf)
-  if (cache_exists(cache_file) & cache) {
+  if (cache_exists(cache_file) && cache) {
     results <- cache_read(cache_file, quiet = quiet)
     return(results)
   }
@@ -1038,7 +1038,7 @@ etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
     } else {
       nodata <- c(nodata, info)
     }
-    if (!quiet & length(etf) > 1) {
+    if (!quiet && length(etf) > 1) {
       statusbar(i, length(etf), info)
     }
   }
@@ -1077,7 +1077,7 @@ splot_etf <- function(s, keep_all = FALSE, cache = TRUE, save = FALSE) {
   if (!"Date" %in% colnames(s)) s$Date <- Sys.Date()
 
   cache_file <- c(as.character(Sys.Date()), "splot_etf", s)
-  if (cache_exists(cache_file) & cache) {
+  if (cache_exists(cache_file) && cache) {
     etfs <- cache_read(cache_file, quiet = quiet)
   } else {
     etfs <- etf_sector(s)
@@ -1348,7 +1348,7 @@ stocks_report <- function(data = NA,
       creds = creds,
       quiet = FALSE
     )
-    if (!keep & attachment) invisible(file.remove(html_file))
+    if (!keep && attachment) invisible(file.remove(html_file))
   }
 
   toc("stocks_report")
@@ -1377,13 +1377,13 @@ stocks_report <- function(data = NA,
       if (window == "5Y") filter(., .data$Date >= Sys.Date() %m-% years(5)) else .
     }
 
-  if ("ROI" %in% colnames(df) & window == "MAX") { # Dataframe: portfolio
+  if ("ROI" %in% colnames(df) && window == "MAX") { # Dataframe: portfolio
     # Add a last row (first date) with no data
     new_df <- rbind(new_df, df %>% arrange(.data$Date) %>% slice(1) %>% ungroup() %>% mutate_if(
       is.numeric, function(x) 0
     ) %>% mutate(Date = .data$Date - 1))
   }
-  if (!"ROI" %in% colnames(df) & window == "MAX") { # Dataframe: stocks
+  if (!"ROI" %in% colnames(df) && window == "MAX") { # Dataframe: stocks
     new_df <- rbind(new_df, df %>% arrange(.data$Date) %>%
       group_by(.data$Symbol) %>% slice(1) %>% ungroup() %>% mutate_if(
         is.numeric, function(x) 0

@@ -39,7 +39,7 @@ fb_process <- function(response, paginate = TRUE) {
   results[[i]] <- .flattener(import[[1]])
 
   # Following iterations
-  if (exists("paging", import) & paginate) {
+  if (exists("paging", import) && paginate) {
     if (exists("next", import$paging)) {
       i <- i + 1
       out <- fromJSON(import$paging$`next`)
@@ -476,9 +476,9 @@ fb_posts <- function(token,
 
     if (iter == 1) ret[["account"]] <- data.frame(id = json$id, name = json$name)
     all_posts <- rbind(all_posts, posts_fb(json))
-    all_comments <- if (comments & !is.null(all_comments)) rbind(all_comments, comments_fb(json))
-    all_reactions <- if (reactions & !is.null(all_reactions)) rbind(all_reactions, reactions_fb(json))
-    all_shares <- if (shares & !is.null(all_shares)) rbind(all_shares, shares_fb(json))
+    all_comments <- if (comments && !is.null(all_comments)) rbind(all_comments, comments_fb(json))
+    all_reactions <- if (reactions && !is.null(all_reactions)) rbind(all_reactions, reactions_fb(json))
+    all_shares <- if (shares && !is.null(all_shares)) rbind(all_shares, shares_fb(json))
     new_url <- ifelse(length(json$paging) > 0, json$paging$`next`, json$posts$paging$`next`)
     if (total_iters > 1) statusbar(iter, total_iters)
   }
@@ -666,7 +666,7 @@ fb_post <- function(token, post_id, limit = 5000) {
     }
     if (iters > 1) statusbar(i, iters)
   }
-  if (i == iters & length(nodata) > 0) {
+  if (i == iters && length(nodata) > 0) {
     message(paste("NO DATA: no comments on", vector2text(nodata)))
   }
   return(as_tibble(ret))

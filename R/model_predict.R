@@ -159,7 +159,7 @@ h2o_predict_API <- function(df, api, exclude = "tag") {
     values <- unlist(x[[i]])
     aux <- data.frame(t(values))
     ret <- suppressWarnings(bind_rows(ret, aux))
-    if (n > 500 & !quiet) statusbar(i, n, i)
+    if (n > 500 && !quiet) statusbar(i, n, i)
     if (i == n) ret <- as_tibble(ret)
   }
   return(ret)

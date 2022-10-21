@@ -137,7 +137,7 @@ wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
       # If random word picked is the word
       if (random_word == word) break
       # If last word remaining is the one
-      if (length(iter) == 1 & all(iter == word)) {
+      if (length(iter) == 1 && all(iter == word)) {
         iter <- wordle_opts(word, word, iter, quiet = quiet, ...)
       }
       i <- i + 1

@@ -75,10 +75,10 @@ x2y <- function(df, target = NULL, symmetric = FALSE,
                 target_x = FALSE, target_y = FALSE,
                 plot = FALSE, top = 20, quiet = "auto",
                 ohse = FALSE, corr = FALSE, ...) {
-  if (target_x & target_y) {
+  if (target_x && target_y) {
     stop("Set to TRUE only target_x OR target_y, not both.")
   }
-  if ((target_x || target_y) & symmetric) {
+  if ((target_x || target_y) && symmetric) {
     target_x <- target_y <- FALSE
     warning("When symmetric, target_x NOR target_y will affect results.")
   }
@@ -187,7 +187,7 @@ x2y_metric <- function(x, y, confidence = FALSE, bootstraps = 20, max_cat = 20) 
   if (confidence) {
     results$lower_ci <- NA
     results$upper_ci <- NA
-    if (!is.na(results$x2y) & results$x2y > 0) {
+    if (!is.na(results$x2y) && results$x2y > 0) {
       n <- length(x)
       draws <- replicate(bootstraps, .simple_boot(x, y))
       errors <- draws - results$x2y
@@ -220,7 +220,7 @@ plot.x2y_preds <- function(x, corr = FALSE, ...) {
       subtitle = sprintf("x2y: %s", x2y_metric(x$x, x$y)$x2y)
     ) +
     theme_lares()
-  if (corr & is.numeric(x$x) & is.numeric(x$y)) {
+  if (corr && is.numeric(x$x) && is.numeric(x$y)) {
     p <- p + labs(caption = paste("Correlation:", signif(cor(x$x, x$y), 1))) +
       geom_smooth(aes(y = .data$y), method = "lm", formula = "y ~ x", size = 0.5)
   }
@@ -299,7 +299,7 @@ plot.x2y <- function(x, type = 1, ...) {
 #' @export
 x2y_preds <- function(x, y, max_cat = 10) {
   # If no variance
-  if (length(unique(x)) == 1 | length(unique(y)) == 1) {
+  if (length(unique(x)) == 1 || length(unique(y)) == 1) {
     return(NA)
   }
   # If x is categorical
@@ -321,7 +321,7 @@ x2y_preds <- function(x, y, max_cat = 10) {
 }
 
 .x2y_vals <- function(x, y, ...) {
-  if (length(unique(x)) == 1 | length(unique(y)) == 1) {
+  if (length(unique(x)) == 1 || length(unique(y)) == 1) {
     return(NA)
   }
   preds <- x2y_preds(x, y, ...)$p
@@ -358,7 +358,7 @@ x2y_preds <- function(x, y, max_cat = 10) {
 }
 
 .reduce_cats <- function(x, max_cat) {
-  if (!is.numeric(x) & length(unique(x)) > max_cat) {
+  if (!is.numeric(x) && length(unique(x)) > max_cat) {
     x <- as.character(x)
     top <- head(names(sort(table(x), decreasing = TRUE)), max_cat)
     x[!x %in% top] <- ""

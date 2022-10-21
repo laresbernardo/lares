@@ -89,7 +89,7 @@ ohse <- function(df,
   if (drop) df <- select(df, !any_of(no_variance))
 
   # Create features out of date/time variables
-  if (dates == TRUE | holidays == TRUE | !is.na(currency_pair)) {
+  if (dates == TRUE || holidays == TRUE || !is.na(currency_pair)) {
     times <- df_str(df, return = "names", quiet = TRUE)$time
     if (length(times) <= 1) {
       df_dates <- date_feats(df,
@@ -134,7 +134,7 @@ ohse <- function(df,
       vector_values[, 1] <- paste0(sep, vector_values[, 1])
 
       # Columns with 2 possible values
-      if (vector_levels == 2 & !isTRUE(redundant)) {
+      if (vector_levels == 2 && !isTRUE(redundant)) {
         which <- as.character(levels(as.factor(df[, c(vector_name)]))[2])
         df[, c(vector_name)] <- as.integer(as.factor(df[, c(vector_name)])) - 1
         converted_binary <- rbind(converted_binary, vector_name)
@@ -143,7 +143,7 @@ ohse <- function(df,
 
       # ONE HOT ENCODING
       if (!colnames(vector_values) %in% c(converted_binary, no_variance)) {
-        if (vector_levels >= 2 & !vector_name %in% converted_binary) {
+        if (vector_levels >= 2 && !vector_name %in% converted_binary) {
           options("na.action" = "na.pass")
           reduced <- categ_reducer(
             vector_values, !!as.name(vector_name),
@@ -173,7 +173,7 @@ ohse <- function(df,
         "variables:", vector2text(total_converted)
       ))
     }
-    if (length(no_variance) > 0 & drop) {
+    if (length(no_variance) > 0 && drop) {
       no_variance <- no_variance[no_variance %in% ignore]
       if (length(no_variance) > 0) {
         message(paste0(
@@ -186,7 +186,7 @@ ohse <- function(df,
   }
 
   # Return only useful columns
-  if (drop & length(c(converted, no_variance)) > 0) {
+  if (drop && length(c(converted, no_variance)) > 0) {
     df <- df[, c(!colnames(df) %in% c(converted, no_variance))]
   }
 
@@ -325,12 +325,12 @@ date_feats <- function(dates,
     return(dates)
   }
 
-  if (!"data.frame" %in% class(dates) & iters == 1) {
+  if (!"data.frame" %in% class(dates) && iters == 1) {
     dates <- data.frame(values_date = dates)
     date_cols <- "values_date"
   }
 
-  if (holidays | !is.na(currency_pair)) {
+  if (holidays || !is.na(currency_pair)) {
     search_dates <- dates[, c(colnames(dates) %in% date_cols)]
     search_dates[] <- unlist(lapply(search_dates, function(x) gsub(" .*", "", as.character(x))))
     alldates <- as.Date(unlist(search_dates, use.names = FALSE))

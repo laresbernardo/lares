@@ -54,7 +54,7 @@ db_download <- function(query,
   if (length(x$matches) == 0) {
     stop("There were no files found in your Dropbox with: ", query)
   }
-  if (length(x$matches) > 1 & !quiet) {
+  if (length(x$matches) > 1 && !quiet) {
     warning(
       "There were multiple files found in your Dropbox with: ", query,
       "\nUsing: ", x$matches[[1]]$metadata$name
@@ -75,7 +75,7 @@ db_download <- function(query,
   )
   if (!quiet) message(paste("> File", x$matches[[1]]$metadata$name, "downloaded succesfully!"))
 
-  if (xlsx & right(local_path, 5) == ".xlsx") {
+  if (xlsx && right(local_path, 5) == ".xlsx") {
     results <- importxlsx(local_path)
     invisible(file.remove(local_path))
     if (!quiet) message("> File imported succesfully as an object!")

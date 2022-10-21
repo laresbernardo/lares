@@ -15,7 +15,7 @@ li_auth <- function(app_name = NA, client_id = NA, client_secret = NA) {
 
   # Idea from https://github.com/mpiccirilli/Rlinkedin/blob/master/R/getProfile.R
 
-  if (is.na(app_name) & is.na(client_id) & is.na(client_secret)) {
+  if (is.na(app_name) && is.na(client_id) && is.na(client_secret)) {
     app_name <- "LaresApp"
     client_id <- "78a384k5n1otml"
     client_secret <- "NDKzgFgurKt1M0Ab"

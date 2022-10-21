@@ -71,7 +71,7 @@ model_metrics <- function(tag, score, multis = NA,
   model_type <- ifelse(length(cats) <= thresh, "Classification", "Regression")
 
   # When seems numeric but is categorical
-  if (model_type == "Classification" & sum(grepl("^[0-9]", cats)) > 0 & auto_n) {
+  if (model_type == "Classification" && sum(grepl("^[0-9]", cats)) > 0 && auto_n) {
     tag <- as.factor(as.character(ifelse(
       grepl("^[0-9]", tag), paste0("n_", tag), as.character(tag)
     )))
@@ -175,7 +175,7 @@ model_metrics <- function(tag, score, multis = NA,
       metrics[["metrics_tags"]] <- mutate_if(nums, is.numeric, list(~ signif(., 5)))
     }
 
-    if (plots & type == "test") {
+    if (plots && type == "test") {
       plots <- list()
       # CUMULATIVE GAINS PLOT
       plots[["gains"]] <- mplot_gain(
@@ -273,7 +273,7 @@ conf_mat <- function(tag, score, thresh = 0.5,
   df <- df %>% mutate(tag = factor(.data$tag, levels = unique(.data$tag)))
 
   # About scores
-  if (is.numeric(df$score) & length(unique(tag)) == 2) {
+  if (is.numeric(df$score) && length(unique(tag)) == 2) {
     check_opts(sense, c("<", "<=", ">=", ">"))
     s <- do.call(sense, list(df$score, thresh))
     df <- mutate(df, pred = ifelse(s, as.character(labels[1]), as.character(labels[2])))
@@ -415,7 +415,7 @@ ROC <- function(tag, score, multis = NA) {
     stop(message(paste("Currently, tag has", length(tag), "rows and score has", length(score))))
   }
 
-  if (!is.numeric(score) & length(multis) == 1) {
+  if (!is.numeric(score) && length(multis) == 1) {
     score <- as.numeric(score)
     warning("You should use the 'multis' parameter to add each category's score")
   }

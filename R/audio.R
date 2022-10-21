@@ -87,7 +87,7 @@ get_mp3 <- function(id,
   invisible(file.remove(f))
   infox[["formats"]] <- NULL
 
-  if (cover & mp3 & info) {
+  if (cover && mp3 && info) {
     aux <- gsub("\\.mp3", "", infox$title)
     aux <- gsub("lyrics|lyric|official|video", "", tolower(aux))
     aux <- gsub(" ", "\\+", cleanText(aux))

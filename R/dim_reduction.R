@@ -135,7 +135,7 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
 
   tSNE$tsne$Y <- tSNE$tsne$costs <- tSNE$tsne$N <- NULL
 
-  if (plot & n >= 2) {
+  if (plot && n >= 2) {
     tSNE$tsne$plot <- tSNE$tsne$df %>%
       ggplot(aes(x = .data$X1, y = .data$X2)) +
       geom_point() +

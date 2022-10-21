@@ -23,7 +23,7 @@ gtrends_related <- function(gtrend, top = NA, title = NA, note = NA, exclude = N
   t <- !is.null(gtrend$related_topics) # Related topics
   q <- !is.null(gtrend$related_queries) # Related queries
 
-  if (!t & !q) {
+  if (!t && !q) {
     stop("No related topics nor queries found!")
   }
 
@@ -60,7 +60,7 @@ gtrends_related <- function(gtrend, top = NA, title = NA, note = NA, exclude = N
     }
 
     n <- ifelse(is.na(top), round(50 / more2, 0), top)
-    if (!is.na(top) | more2 > 3) {
+    if (!is.na(top) || more2 > 3) {
       related <- related %>%
         group_by(.data$keyword) %>%
         arrange(desc(.data$rank)) %>%
@@ -116,7 +116,7 @@ gtrends_related <- function(gtrend, top = NA, title = NA, note = NA, exclude = N
     rq1 <- rq1 + labs(caption = range)
   }
 
-  if (t & q) {
+  if (t && q) {
     rq1 <- rq1 + guides(fill = "none") + labs(caption = NULL)
     rq2 <- rq2 + labs(title = range) +
       theme(plot.title = element_text(size = 9))
@@ -124,9 +124,7 @@ gtrends_related <- function(gtrend, top = NA, title = NA, note = NA, exclude = N
     return(p)
   }
 
-  if (t | q) {
-    return(rq1)
-  }
+  if (t || q) return(rq1)
 }
 
 ####################################################################

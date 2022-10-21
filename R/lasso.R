@@ -96,7 +96,7 @@ lasso_vars <- function(df, variable,
   ) %>%
     filter(.data$prc > 0)
   if (!quiet) message(">>> Generating plots for ", as_label(var), "...")
-  if (nrow(t_lasso_model_coeff) > top & !quiet) {
+  if (nrow(t_lasso_model_coeff) > top && !quiet) {
     message(paste("- Plotting only the", top, "most relevant features..."))
   }
 

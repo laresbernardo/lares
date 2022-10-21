@@ -84,7 +84,7 @@ mail_send <- function(from = "RMail <laresbernardo@gmail.com>",
   stop_for_status(req)
 
   # Delete temporary files created
-  if (!is.null(file) & !"attachment" %in% as) file.remove(file)
+  if (!is.null(file) && !"attachment" %in% as) file.remove(file)
 
   if (!quiet) {
     message(paste(

@@ -38,7 +38,7 @@ cran_logs <- function(input = "lares",
   cran.df <- arrange(cran.df, desc(.data$date))
 
   package <- unique(cran.df$package)
-  if (nrow(cran.df) >= length(package) * 2 & plot == TRUE) {
+  if (nrow(cran.df) >= length(package) * 2 && plot) {
     input <- cran.df %>%
       arrange(.data$date) %>%
       group_by(.data$package) %>%

@@ -29,12 +29,12 @@ readGS <- function(title, sheet = "Hoja 1", range = NULL, drop_nas = TRUE,
   if (nrow(files) > 0) {
     message(sprintf("Using: %s (%s)", files$name[1], files$id[1]))
     df <- read_sheet(files$id[1], sheet = sheet, range = range, ...)
-    if (drop_nas & isTRUE(ncol(df) > 0) & isTRUE(nrow(df) > 0)) {
+    if (drop_nas && isTRUE(ncol(df) > 0) && isTRUE(nrow(df) > 0)) {
       df <- df %>%
         removenacols() %>%
         removenarows()
     }
-    if (length(df) > 0 & nrow(df) == 0) {
+    if (length(df) > 0 && nrow(df) == 0) {
       df <- names(df)
     }
     return(df)
@@ -53,7 +53,7 @@ writeGS <- function(data, title, sheet = "Hoja 1", range = "A1",
   files <- filesGD(title = title, server = server, json = json, email = email)
 
   if (nrow(files) > 0) {
-    if (is.vector(data) & !is.list(data)) {
+    if (is.vector(data) && !is.list(data)) {
       data <- data.frame(data)
       col_names <- FALSE
     } else {

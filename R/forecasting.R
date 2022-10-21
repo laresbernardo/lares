@@ -71,7 +71,7 @@ forecast_arima <- function(time, values, n_future = 30,
   }
 
   # Which AR and MA values minimize our AIC
-  if (is.na(AR) & is.na(MA)) {
+  if (is.na(AR) && is.na(MA)) {
     arma <- c(ARMA_min:ARMA)
     aic <- expand.grid(AR = arma, MA = arma, cals = 0)
     message("Iterating for best AR / MA combinations; there are ", nrow(aic), "!")

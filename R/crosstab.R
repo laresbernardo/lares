@@ -85,7 +85,7 @@ crosstab <- function(df, ..., wt = NULL,
 
   # Create totals
   ret <- ret %>% mutate(total = rowSums(select_if(., is.numeric), na.rm = TRUE))
-  if (pcol | prow) {
+  if (pcol || prow) {
     ret <- ret %>% mutate_if(is.numeric, list(~ round(100 * . / sum(., na.rm = TRUE), decimals)))
   }
   if (pall) {

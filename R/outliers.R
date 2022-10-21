@@ -14,7 +14,7 @@
 #' @return Numeric vector transformed.
 #' @export
 winsorize <- function(x, thresh = c(0.05, 0.95), na.rm = FALSE) {
-  if (length(thresh) != 2 | any(abs(thresh) > 1)) {
+  if (length(thresh) != 2 || any(abs(thresh) > 1)) {
     stop("thresh: pass a valid numeric vector of length 2 and values within [0, 1]")
   }
   cut_point_bottom <- quantile(x, thresh[1], na.rm = na.rm)

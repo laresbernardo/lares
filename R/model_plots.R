@@ -875,7 +875,7 @@ mplot_full <- function(tag,
 
 
   # Categorical Binomial Models
-  if (length(unique(tag)) == 2 & is.numeric(score)) {
+  if (length(unique(tag)) == 2 && is.numeric(score)) {
     p1 <- mplot_density(tag = tag, score = score, subtitle = subtitle, model_name = model_name)
     p2 <- mplot_splits(tag = tag, score = score, splits = splits) +
       theme(plot.margin = margin(10, 8, 5, 0))
@@ -893,7 +893,7 @@ mplot_full <- function(tag,
   }
 
   # Multi-Categorical Models
-  if (length(unique(tag)) > 2 & length(unique(tag)) <= thresh) {
+  if (length(unique(tag)) > 2 && length(unique(tag)) <= thresh) {
     m <- model_metrics(tag, score, multis, thresh = thresh)
     p1 <- m$plots$conf_matrix +
       labs(
@@ -905,7 +905,7 @@ mplot_full <- function(tag,
   }
 
   # Regression Continuous Models
-  if (is.numeric(tag) & is.numeric(score) & length(unique(tag)) > thresh) {
+  if (is.numeric(tag) && is.numeric(score) && length(unique(tag)) > thresh) {
     p1 <- mplot_lineal(tag = tag, score = score, subtitle = subtitle, model_name = model_name) +
       theme_lares(plot_colour = "white")
     p2 <- mplot_density(tag = tag, score = score)
@@ -982,7 +982,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
   if (!diagonal) df <- filter(df, .data$tag != .data$score)
 
   # About scores
-  if (is.numeric(df$score) & length(unique(tag)) == 2) {
+  if (is.numeric(df$score) && length(unique(tag)) == 2) {
     means <- df %>%
       group_by(.data$tag) %>%
       summarise(mean = mean(.data$score))
@@ -1151,7 +1151,7 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
         slice(1) %>%
         .$percentile
     }
-    if (highlight %in% gains$percentile & highlight != "none") {
+    if (highlight %in% gains$percentile && highlight != "none") {
       highlight <- as.integer(highlight)
       note <- paste0(
         "If we select the top ",
@@ -1296,7 +1296,7 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
         slice(1) %>%
         .$percentile
     }
-    if (highlight %in% gains$percentile & highlight != "none") {
+    if (highlight %in% gains$percentile && highlight != "none") {
       highlight <- as.integer(highlight)
       note <- paste0(
         "If we select the top ",

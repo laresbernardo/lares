@@ -313,7 +313,7 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
 
   # Only numerical values
   nums <- df_str(df, return = "names", quiet = TRUE)$nums
-  if (isTRUE(ohse) & length(nums) != ncol(df)) {
+  if (isTRUE(ohse) && length(nums) != ncol(df)) {
     df <- ohse(df, dates = TRUE, limit = 8, ignore = ignore, ...)
   } else {
     df <- data.frame(df) %>% select_if(is.numeric)

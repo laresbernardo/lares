@@ -28,18 +28,18 @@
 statusbar <- function(run = 1, max.run = 100, label = run, msg = "",
                       type = Sys.getenv("LARES_STATUSBAR"),
                       start_time = NA, multiples = 1, alarm = FALSE) {
-  if (run == 1 & is.na(start_time)) tic("startclock")
+  if (run == 1 && is.na(start_time)) tic("startclock")
   if (!is.na(start_time)) tic("startclock", start = start_time)
 
   if (multiples > 1) {
-    if (!run %% multiples == 0 & run != max.run) {
+    if (!run %% multiples == 0 && run != max.run) {
       return()
     }
   }
-  if (length(run) > 1 & !is.numeric(run)) {
+  if (length(run) > 1 && !is.numeric(run)) {
     stop("Parameter 'run' must be a numerical value!")
   }
-  if (length(max.run) == 0 & !is.numeric(run)) {
+  if (length(max.run) == 0 && !is.numeric(run)) {
     stop("Parameter 'max.run' needs to be greater than 0!")
   }
 
@@ -63,7 +63,7 @@ statusbar <- function(run = 1, max.run = 100, label = run, msg = "",
   part_middle <- if (percent == 1) syms$last else syms$middle
   part_left <- paste0(rep(syms$first, width.set - percent.step), collapse = "")
   perc <- signif(percent * 100, 3)
-  if (percent == 1 & msg != "") label <- msg
+  if (percent == 1 && msg != "") label <- msg
   parts <- ifelse(label != "", paste("|", label), label)
   parts <- stringr::str_pad(parts, width = width.labs, pad = " ", side = "right")
 

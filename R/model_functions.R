@@ -180,16 +180,16 @@ h2o_automl <- function(df, y = "tag",
   model_type <- processed$model_type
 
   # ALGORITHMS
-  if (length(exclude_algos) > 0 & length(include_algos) == 0 & !quiet) {
+  if (length(exclude_algos) > 0 && length(include_algos) == 0 && !quiet) {
     message(paste("- ALGORITHMS: excluded", vector2text(exclude_algos)))
   }
-  if (length(include_algos) > 0 & !quiet) {
+  if (length(include_algos) > 0 && !quiet) {
     message(paste("- ALGORITHMS: included", vector2text(include_algos)))
     exclude_algos <- NULL
   }
 
   # START FRESH?
-  if (!quiet & !isTRUE(start_clean)) {
+  if (!quiet && !isTRUE(start_clean)) {
     message(sprintf(
       paste(
         "- CACHE: Previous models %s being erased.",
@@ -202,7 +202,7 @@ h2o_automl <- function(df, y = "tag",
 
   # INFORMATIVE MSG ON FLOW's UI
   flow <- "http://localhost:54321/flow/index.html"
-  if (!quiet & Sys.getenv("HOSTNAME") == "") {
+  if (!quiet && Sys.getenv("HOSTNAME") == "") {
     message("- UI: You may check results using H2O Flow's interactive platform: ", flow)
   }
 
@@ -257,9 +257,9 @@ h2o_automl <- function(df, y = "tag",
     if (!quiet) message("- EXPORT: Results and model files exported succesfully!")
   }
 
-  if (!quiet & print) print(results)
+  if (!quiet && print) print(results)
 
-  if (alarm & !quiet) {
+  if (alarm && !quiet) {
     try_require("beepr", stop = FALSE)
     try(beep())
   }
@@ -319,7 +319,7 @@ print.h2o_automl <- function(x, importance = TRUE, ...) {
     )
   )
 
-  if ("importance" %in% names(x) & importance == TRUE) {
+  if ("importance" %in% names(x) && importance == TRUE) {
     aux[["imp"]] <- glued(
       "Most important variables:
 {v2t({imp}, sep = '\n', quotes = FALSE)}",
@@ -613,7 +613,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   }
 
   # Selected target value
-  if (target != "auto" & length(cats) == 2) {
+  if (target != "auto" && length(cats) == 2) {
     scores <- target_set(
       tag = as.vector(traintest$tag),
       score = scores[, 2],
@@ -739,7 +739,7 @@ export_results <- function(results,
     if ("dev" %in% which) which <- unique(c(which, "txt", "csv", "rds"))
     if ("production" %in% which) which <- unique(c(which, "binary", "mojo"))
 
-    if ("txt" %in% which | !is.na(note)[1] & pass) {
+    if ("txt" %in% which || !is.na(note)[1] && pass) {
       on.exit(set.seed(seed))
       results_txt <- list(
         "Project" = results$project,
@@ -778,7 +778,7 @@ export_results <- function(results,
     }
 
     # Export CSV with predictions and datasets
-    if ("csv" %in% which & pass) {
+    if ("csv" %in% which && pass) {
       write.csv(results$datasets$global,
         paste0(dir, "/", name, ".csv"),
         row.names = FALSE
@@ -792,7 +792,7 @@ export_results <- function(results,
       message(">>> RDS file exported...")
     }
 
-    # Export Model as POJO & MOJO for Production
+    # Export Model as POJO && MOJO for Production
     if ("mojo" %in% which) {
       h2o.download_mojo(results$model, path = dir, get_genmodel_jar = TRUE)
       message(">>> MOJO (zip + jar files) exported...")
@@ -806,7 +806,7 @@ export_results <- function(results,
       message(">>> Binary file saved...")
     }
 
-    if ("plots" %in% which & "plots" %in% names(results) & pass) {
+    if ("plots" %in% which && "plots" %in% names(results) && pass) {
       message(">>> Saving plots...")
       # Metrics plots
       aux <- results$plots$metrics
@@ -858,13 +858,13 @@ export_results <- function(results,
 #' names(splits)
 #' @export
 msplit <- function(df, size = 0.7, seed = 0, print = TRUE) {
-  if (size <= 0 | size > 1) stop("Set size parameter to a value >0 and <=1")
+  if (size <= 0 || size > 1) stop("Set size parameter to a value >0 and <=1")
 
   on.exit(set.seed(seed))
   df <- data.frame(df)
   if (size == 1) train <- test <- df
 
-  if (size < 1 & size > 0) {
+  if (size < 1 && size > 0) {
     ind <- sample(seq_len(nrow(df)), size = floor(size * nrow(df)))
     train <- df[ind, ]
     test <- df[-ind, ]
@@ -910,7 +910,7 @@ target_set <- function(tag, score, target = "auto", quiet = FALSE) {
   df <- data.frame(tag = tag, score = score)
 
   # Validate inputs
-  if (!is.numeric(score) | is.numeric(tag)) {
+  if (!is.numeric(score) || is.numeric(tag)) {
     stop("Your tag must be categorical. Your score must be numerical.")
   }
 

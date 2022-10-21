@@ -174,7 +174,7 @@ plot_timeline <- function(event,
     )
   # scale_x_date(expand = c(0, 0))
 
-  if (!is.na(cvlong$type)[1] | length(unique(cvlong$type)) > 1) {
+  if (!is.na(cvlong$type)[1] || length(unique(cvlong$type)) > 1) {
     p <- p + geom_line(aes(colour = .data$type), size = 7) +
       facet_grid(.data$type ~ ., scales = "free", space = "free") +
       guides(colour = "none")

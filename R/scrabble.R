@@ -303,7 +303,7 @@ scrabble_words <- function(tiles = "",
   tiles <- .add_letters(force_end, tiles)
   tiles <- .add_letters(force_str, tiles)
   # Force N letters (complete free)
-  if (force_n > 0 & length(tiles) < force_n) {
+  if (force_n > 0 && length(tiles) < force_n) {
     tiles <- c(tiles, rep("_", times = (force_n - length(tiles))))
   }
   ntiles <- as.integer(length(tiles))

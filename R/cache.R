@@ -43,7 +43,7 @@ cache_write <- function(data,
     stop("Your file name can't contain more than 250 characters.")
   }
   if (dir.exists(cache_dir)) {
-    if (cache_exists(file) & ask) {
+    if (cache_exists(file) && ask) {
       message("> Cache found: ", base)
       answer <- readline("Press ENTER to rewrite cache or type [i] to ignore: ")
     } else {

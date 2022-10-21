@@ -132,7 +132,7 @@ is_ip <- function(x, ...) {
 #' @return \code{are_id}. Boolean. Result of checking if \code{x} is a potential ID vector
 #' @export
 are_id <- function(x) {
-  return(is.character(x) & length(unique(x)) == length(x))
+  return(is.character(x) && length(unique(x)) == length(x))
 }
 
 #' @rdname is_url

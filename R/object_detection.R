@@ -24,7 +24,7 @@
 #'     stop("Please try 'faster' or 'better' on your type parameter!")
 #'   }
 #'
-#'   if (threshold > 1 | threshold < 0) {
+#'   if (threshold > 1 || threshold < 0) {
 #'     stop("You should use a threshold value between 0 and 1")
 #'   }
 #'

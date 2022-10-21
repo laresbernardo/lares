@@ -199,7 +199,7 @@ corr_var <- function(df, var,
   if (!var %in% colnames(rs$cor)) {
     msg <- paste("Not a valid input:", var, "was transformed or does not exist.")
     maybes <- colnames(rs$cor)[grepl(var, colnames(rs$cor))]
-    if (length(maybes) > 0 & maybes[1] %in% colnames(rs$cor)) {
+    if (length(maybes) > 0 && maybes[1] %in% colnames(rs$cor)) {
       msg <- sprintf("%s\n  >> Automatically using '%s'", msg, maybes[1])
       var <- maybes[1]
       fixable <- TRUE
@@ -237,7 +237,7 @@ corr_var <- function(df, var,
   if (nrow(d) == 0) warning("Check your 'max_pvalue' input: might be too low!")
   
   # Limit automatically when more than 20 observations
-  if (is.na(top) & nrow(d) > 20) {
+  if (is.na(top) && nrow(d) > 20) {
     top <- 20
     if (!quiet) message(paste(">>> Reduced results to", top, "largest correlations. Set by 'top' parameter"))
   }
@@ -299,7 +299,7 @@ plot.corr_var <- function(x, var, max_pvalue = 1, top = NA, limit = NULL, ...) {
     theme_lares(pal = 4)
   
   if (is.null(limit)) limit <- 100
-  if (!is.na(top) & top < limit) {
+  if (!is.na(top) && top < limit) {
     p <- p + labs(subtitle = paste(top, "largest correlation variables (original & dummy)"))
   }
   
@@ -389,7 +389,7 @@ corr_cross <- function(df, plot = TRUE,
     ret$group2 <- ifelse(ret$group2 == "fill", aux, ret$group2)
   }
   ret <- filter(ret, .data$group1 != .data$group2)
-  if (nrow(ret) > top & !is.na(top) & !quiet & type != 2) {
+  if (nrow(ret) > top && !is.na(top) && !quiet && type != 2) {
     message(sprintf("Returning only the top %s. You may override with the 'top' argument", top))
     ret <- slice(ret, 1:top)
   }
@@ -447,7 +447,7 @@ corr_cross <- function(df, plot = TRUE,
         ) +
         theme_lares(pal = 4, ...)
 
-      if ((!is.na(contains)[1] & length(contains) == 1) & grid) {
+      if ((!is.na(contains)[1] && length(contains) == 1) && grid) {
         p <- p + facet_grid(.data$facet ~ ., scales = "free", space = "free")
       }
     }

@@ -29,7 +29,7 @@ get_currency <- function(currency_pair,
 
   string <- paste0(toupper(cleanText(currency_pair)), "=X")
 
-  if (is.na(from) | is.na(to)) {
+  if (is.na(from) || is.na(to)) {
     stop("You must insert a valid date")
   }
 
