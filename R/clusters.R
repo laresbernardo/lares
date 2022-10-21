@@ -104,7 +104,7 @@ clusterKmeans <- function(df, k = NULL, wss_var = 0, limit = 15, drop_na = TRUE,
       sum(kmeans(df, centers = i, algorithm = algorithm)$withinss)
     )
   }
-  nclusters <- data.frame(n = c(1:limit), wss = wss)
+  nclusters <- data.frame(n = 1:limit, wss = wss)
   nclusters_plot <- ggplot(nclusters, aes(x = .data$n, y = .data$wss)) +
     geom_line() +
     geom_point() +

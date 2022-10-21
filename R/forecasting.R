@@ -205,7 +205,7 @@ prophesize <- function(df, n_future = 60, country = NULL,
   if (logged) df$y <- log(df$y)
 
   # Outliers
-  df <- df[!rank(-df$y) %in% c(1:round(nrow(df) * pout)), ]
+  df <- df[!rank(-df$y) %in% 1:round(nrow(df) * pout), ]
 
   # Run prophet functions
   m <- prophet(
