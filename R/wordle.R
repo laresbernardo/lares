@@ -157,7 +157,7 @@ wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
 #' @param type Integer. 1 for summary and 2 for coloured results.
 #' @export
 print.wordle_simulation <- function(x, type = 1, ...) {
-  iters_n <- sapply(x, function(x) x$iters)
+  iters_n <- unlist(lapply(x, function(x) x$iters))
   if (type == 1) {
     print(glued(
       "Seed Word: {attr(x, 'input')}
@@ -188,7 +188,7 @@ print.wordle_simulation <- function(x, type = 1, ...) {
       res <- append(res, results)
       for_print <- append(for_print, res)
     }
-    txts <- sapply(for_print, function(x) paste(print(x, print = FALSE)))
+    txts <- unlist(lapply(for_print, function(x) paste(print(x, print = FALSE))))
     cat(txts, sep = "\n")
   }
 }

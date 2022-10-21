@@ -357,7 +357,7 @@ scrabble_words <- function(tiles = "",
     these <- str_split(pos_tiles, "\\|")[i][[1]]
     if (!any(these %in% letters)) next
     located <- stringr::str_locate_all(words, pos_tiles[i])
-    these <- !sapply(located, function(x) sum(x[,1] == i) > 0)
+    these <- !unlist(lapply(located, function(x) sum(x[,1] == i) > 0))
     words <- words[these]
     .temp_print(length(words))
   }
@@ -396,7 +396,7 @@ scrabble_words <- function(tiles = "",
 }
 
 .reverse <- function(words) {
-  splits <- sapply(words, function(x) strsplit(x, ""))
+  splits <- unlist(lapply(words, function(x) strsplit(x, "")))
   reversed <- lapply(splits, rev)
   words <- as.vector(unlist(lapply(reversed, function(x) paste(x, collapse = ""))))
   return(words)
