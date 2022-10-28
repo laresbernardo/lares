@@ -56,17 +56,19 @@ cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = F
 #' @export
 #' @rdname clean_text
 cleanNames <- function(df, num = "x", ...) {
-  # Initial cleanse
-  cols <- cleanText(colnames(df), ...)
-  # Simple spaces turned into "_"
-  cols <- trimws(gsub("[[:space:].]+", "_", cols))
-  # If only numeric, add x at the begining
-  onlynum <- !grepl("[[:alpha:]]", cols)
-  cols[onlynum] <- paste0(num, cols[onlynum])
-  # Change column names
-  df <- stats::setNames(df, cols)
-  # Keep tibble if original data.frame is tibble
-  if ("tbl_df" %in% class(df)) df <- as_tibble(df)
+  if (!is.null(df)) {
+    # Initial cleanse
+    cols <- cleanText(colnames(df), ...)
+    # Simple spaces turned into "_"
+    cols <- trimws(gsub("[[:space:].]+", "_", cols))
+    # If only numeric, add x at the begining
+    onlynum <- !grepl("[[:alpha:]]", cols)
+    cols[onlynum] <- paste0(num, cols[onlynum])
+    # Change column names
+    df <- stats::setNames(df, cols)
+    # Keep tibble if original data.frame is tibble
+    if ("tbl_df" %in% class(df)) df <- as_tibble(df) 
+  }
   return(df)
 }
 
