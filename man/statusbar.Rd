@@ -26,7 +26,7 @@ at the end of the line. The default is \code{run}.}
 
 \item{msg}{Character. Finish message.}
 
-\item{type}{Character. Loading type style: equal, domino}
+\item{type}{Character. Loading type style: equal, domino, sword, filled.}
 
 \item{start_time}{POSIXct. Start time to consider. If NA, then
 when first iteration starts will be set as start time. Useful

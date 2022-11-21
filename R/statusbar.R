@@ -11,7 +11,7 @@
 #' @param label String. With additionaly information to be printed
 #' at the end of the line. The default is \code{run}.
 #' @param msg Character. Finish message.
-#' @param type Character. Loading type style: equal, domino
+#' @param type Character. Loading type style: equal, domino, sword, filled.
 #' @param start_time POSIXct. Start time to consider. If NA, then
 #' when first iteration starts will be set as start time. Useful
 #' for when first iteration is showed as done but started a few
@@ -55,8 +55,7 @@ statusbar <- function(run = 1, max.run = 100, label = run, msg = "",
   if (type == "domino") syms <- list(first = "|", middle = "/", last = "_")
   if (type == "equal") syms <- list(first = " ", middle = "=", last = "=")
   if (type == "sword") syms <- list(first = " ", middle = ">", last = ":")
-  if (type == "filled") syms <- list(last = "\u2593", middle = "\u2593", first = "\u2591")
-
+  if (type == "filled") syms <- list(first = " ", middle = "\u2588", last = "\u2588")
 
   percent.step <- trunc(percent * width.set, 5)
   part_done <- paste0(rep(syms$last, percent.step), collapse = "")
