@@ -88,6 +88,7 @@ Other Tools:
 \code{\link{tic}()},
 \code{\link{try_require}()},
 \code{\link{updateLares}()},
+\code{\link{what_size}()},
 \code{\link{zerovar}()}
 }
 \concept{Machine Learning}

@@ -62,6 +62,7 @@ Other Tools:
 \code{\link{statusbar}()},
 \code{\link{tic}()},
 \code{\link{updateLares}()},
+\code{\link{what_size}()},
 \code{\link{zerovar}()}
 }
 \concept{Tools}

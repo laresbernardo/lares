@@ -1811,3 +1811,20 @@ lares_logo <- function(version = TRUE) {
     cat(R.version$version.string)
   }
 }
+
+####################################################################
+#' Calculate the size of any R object
+#'
+#' @family Tools
+#' @inheritParams base::format
+#' @param x Object
+#' @param units Character. Specify which unit to use,
+#' i.e. "Gb", "Mb", "Kb".
+#' @examples
+#' what_size(seq(1:1e3), "Kb")
+#' what_size(seq(1:1e6))
+#' what_size(as.character(seq(1:1e6)))
+#' @export
+what_size <- function(x, units = "Mb", ...) {
+  format(object.size(x), units = units, ...)
+}

@@ -78,6 +78,7 @@ Other Tools:
 \code{\link{statusbar}()},
 \code{\link{try_require}()},
 \code{\link{updateLares}()},
+\code{\link{what_size}()},
 \code{\link{zerovar}()}
 }
 \concept{Time}
