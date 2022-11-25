@@ -155,26 +155,17 @@ numerical output; use na.omit() or filter() if needed)</p></dd>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dft</span><span class="op">)</span> <span class="co"># Titanic dataset</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">freqs_plot</span><span class="op">(</span><span class="va">dft</span>, <span class="va">Pclass</span>, <span class="va">Survived</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in freqs_plot(dft, Pclass, Survived):</span> could not find function "freqs_plot"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   order     n     p  pcum name     value label          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 6        80  8.98 100   Pclass   1     Pclass: 1      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 6        80  8.98 100   Survived FALSE Survived: FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 5        87  9.76  91.0 Pclass   2     Pclass: 2      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 5        87  9.76  91.0 Survived TRUE  Survived: TRUE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 4        97 10.9   81.3 Pclass   2     Pclass: 2      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 4        97 10.9   81.3 Survived FALSE Survived: FALSE</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in df$data:</span> object of type 'closure' is not subsettable</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="freqs_plot-1.png" alt="" width="700" height="433"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in x(x):</span> argument "df1" is missing, with no default</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">freqs_plot</span><span class="op">(</span><span class="va">dft</span>, <span class="va">Pclass</span>, <span class="va">Survived</span>, <span class="va">Sex</span>, <span class="va">Embarked</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Showing 10 most frequent values. Tail of 22 other values grouped into one</span>
-<span class="r-plt img"><img src="freqs_plot-2.png" alt="" width="700" height="433"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in freqs_plot(dft, Pclass, Survived, Sex, Embarked):</span> could not find function "freqs_plot"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">freqs_plot</span><span class="op">(</span><span class="va">dft</span>, <span class="va">Pclass</span>, <span class="va">Survived</span>, <span class="va">Sex</span>, <span class="va">Embarked</span>, top <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Showing 15 most frequent values. Tail of 17 other values grouped into one</span>
-<span class="r-plt img"><img src="freqs_plot-3.png" alt="" width="700" height="433"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in freqs_plot(dft, Pclass, Survived, Sex, Embarked, top = 15):</span> could not find function "freqs_plot"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

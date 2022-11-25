@@ -135,9 +135,15 @@ metrics on continuous numerical vectors inputs.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 13.0000 30.12853</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 26.0000 13.24153</span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">errors</span><span class="op">(</span><span class="va">dfr</span><span class="op">$</span><span class="va">regr</span><span class="op">$</span><span class="va">tag</span>, <span class="va">dfr</span><span class="op">$</span><span class="va">regr</span><span class="op">$</span><span class="va">score</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in errors(dfr$regr$tag, dfr$regr$score):</span> could not find function "errors"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       rmse      mae       mape      mse    rsq   rsqa</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 20.30881 14.24359 0.07303959 412.4477 0.3169 0.3143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 function (x, df1, df2, ncp, log = FALSE)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 {                                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     if (missing(ncp))                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         .Call(C_df, x, df1, df2, log)       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     else .Call(C_dnf, x, df1, df2, ncp, log)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 }                                           </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

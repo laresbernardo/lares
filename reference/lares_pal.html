@@ -119,32 +119,22 @@ for counter colour).</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Simple colour-named palette</span></span></span>
 <span class="r-in"><span><span class="fu">lares_pal</span><span class="op">(</span><span class="st">"simple"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    orange      blue    purple       red     green      navy    yellow      grey </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "#EA9A28" "#00B1DA" "#6A2C70" "#E63946" "#00C9AE" "#125D98" "#F8D962" "#8D99AE" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      pink   fuchsia     brown     black     white </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "#F6B8B8" "#FF2EB5" "#884F3E" "#0c0c0c" "#F6F5F5" </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in lares_pal("simple"):</span> could not find function "lares_pal"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Raw colours and counter-colours</span></span></span>
 <span class="r-in"><span><span class="co"># OR simply: lares_pal("palette")</span></span></span>
 <span class="r-in"><span><span class="va">nice_palette</span> <span class="op">&lt;-</span> <span class="fu">lares_pal</span><span class="op">(</span><span class="st">"colours"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in lares_pal("colours"):</span> could not find function "lares_pal"</span>
 <span class="r-in"><span><span class="va">nice_palette_ctr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu">lares_pal</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">palette</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in lares_pal():</span> could not find function "lares_pal"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">nice_palette</span>, <span class="va">nice_palette_ctr</span><span class="op">)</span>, <span class="va">head</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "#EA9A28" "#00B1DA" "#6A2C70" "#E63946" "#00C9AE" "#F8D962"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "#000000" "#000000" "#FFFFFF" "#000000" "#000000" "#000000"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in lapply(list(nice_palette, nice_palette_ctr), head):</span> object 'nice_palette' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Personal colours by name</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">lares_pal</span><span class="op">(</span><span class="st">"custom"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in lares_pal("custom"):</span> could not find function "lares_pal"</span>
 <span class="r-in"><span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span>, <span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    values    fill  colour</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   false #E63946 #0c0c0c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 spring #00C9AE #F6F5F5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       f #F6B8B8 #0c0c0c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13     -1 #E63946 #0c0c0c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   mujer #F6B8B8 #0c0c0c</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in sample.int(length(x), size, replace, prob):</span> invalid first argument</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

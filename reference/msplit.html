@@ -143,6 +143,7 @@ printing the split counter result.</p>
 <code><a href="tic.html">tic</a>()</code>,
 <code><a href="try_require.html">try_require</a>()</code>,
 <code><a href="updateLares.html">updateLares</a>()</code>,
+<code><a href="what_size.html">what_size</a>()</code>,
 <code><a href="zerovar.html">zerovar</a>()</code></p></div>
     </div>
 
@@ -150,10 +151,9 @@ printing the split counter result.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dft</span><span class="op">)</span> <span class="co"># Titanic dataset</span></span></span>
 <span class="r-in"><span><span class="va">splits</span> <span class="op">&lt;-</span> <span class="fu">msplit</span><span class="op">(</span><span class="va">dft</span>, size <span class="op">=</span> <span class="fl">0.7</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> train_size  test_size </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        623        268 </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in msplit(dft, size = 0.7, seed = 123):</span> could not find function "msplit"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">splits</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "train"       "test"        "summary"     "split_size"  "train_index"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'splits' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -125,42 +125,9 @@ holiday dates?</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">holidays</span><span class="op">(</span>countries <span class="op">=</span> <span class="st">"Argentina"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Argentina's holidays for 2022</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 44 × 10</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    holiday    holid…¹ holid…² natio…³ obser…⁴ bank  nonwork season hother county</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2022-01-13 Public… Public… FALSE   FALSE   FALSE FALSE   FALSE  TRUE   Argen…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2022-01-14 Public… Public… FALSE   FALSE   FALSE FALSE   FALSE  TRUE   Argen…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2022-02-28 Carniv… Nation… TRUE    FALSE   FALSE FALSE   FALSE  FALSE  Argen…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2022-03-01 Carniv… Nation… TRUE    FALSE   FALSE FALSE   FALSE  FALSE  Argen…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2022-03-20 March … Season  FALSE   FALSE   FALSE FALSE   TRUE   FALSE  Argen…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2022-03-24 Memori… Nation… TRUE    FALSE   FALSE FALSE   FALSE  FALSE  Argen…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2022-04-02 Day of… Nation… TRUE    FALSE   FALSE FALSE   FALSE  FALSE  Argen…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2022-04-14 Maundy… Nation… TRUE    FALSE   FALSE FALSE   FALSE  FALSE  Argen…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2022-04-15 Good F… Nation… TRUE    FALSE   FALSE FALSE   FALSE  FALSE  Argen…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2022-04-15 Passov… Observ… FALSE   TRUE    FALSE FALSE   FALSE  FALSE  Argen…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 34 more rows, and abbreviated variable names ¹​holidayname,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​holidaytype, ³​national, ⁴​observance</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in holidays(countries = "Argentina"):</span> could not find function "holidays"</span>
 <span class="r-in"><span><span class="fu">holidays</span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Argentina"</span>, <span class="st">"Venezuela"</span><span class="op">)</span>, years <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2019</span>, <span class="fl">2020</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Argentina's holidays for 2019</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Argentina's holidays for 2020</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Venezuela's holidays for 2019</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Venezuela's holidays for 2020</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 158 × 11</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    holiday    holidayname    holid…¹ natio…² obser…³ bank  nonwork season hother</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2019-03-04 Carnival / Sh… Nation… TRUE    FALSE   FALSE FALSE   FALSE  FALSE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2019-03-05 Carnival / Sh… Nation… TRUE    FALSE   FALSE FALSE   FALSE  FALSE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2019-03-20 March Equinox  Season  FALSE   FALSE   FALSE FALSE   TRUE   FALSE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2019-03-24 Memorial Day   Nation… TRUE    FALSE   FALSE FALSE   FALSE  FALSE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2019-04-02 Day of the Ve… Nation… TRUE    FALSE   FALSE FALSE   FALSE  FALSE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2019-04-18 Maundy Thursd… Nation… TRUE    FALSE   FALSE FALSE   FALSE  FALSE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2019-04-19 Good Friday    Nation… TRUE    FALSE   FALSE FALSE   FALSE  FALSE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2019-04-19 Passover Eve   Observ… FALSE   TRUE    FALSE FALSE   FALSE  FALSE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2019-04-20 First day of … Option… FALSE   FALSE   FALSE FALSE   FALSE  TRUE  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2019-04-21 Easter Sunday  Observ… FALSE   TRUE    FALSE FALSE   FALSE  FALSE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 148 more rows, 2 more variables: country &lt;fct&gt;, county &lt;fct&gt;, and</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   abbreviated variable names ¹​holidaytype, ²​national, ³​observance</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in holidays(countries = c("Argentina", "Venezuela"), years = c(2019,     2020)):</span> could not find function "holidays"</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

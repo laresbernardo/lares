@@ -130,34 +130,11 @@ transformed with one hot encoding.</p>
 <span class="r-in"><span>  z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AA+BB+AA"</span>, <span class="st">"AA"</span>, <span class="st">"BB,  AA"</span>, <span class="cn">NA</span>, <span class="st">"BB+AA"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ohe_commas</span><span class="op">(</span><span class="va">df</span>, <span class="va">x</span>, remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      id z        x_AA  x_D   x_B   x_A   x_NoVal</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 AA+BB+AA TRUE  TRUE  FALSE FALSE FALSE  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2 AA       TRUE  FALSE TRUE  FALSE FALSE  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 BB,  AA  FALSE TRUE  TRUE  FALSE FALSE  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     4 <span style="color: #BB0000;">NA</span>       FALSE TRUE  TRUE  TRUE  FALSE  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>     5 BB+AA    FALSE FALSE FALSE FALSE TRUE   </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ohe_commas(df, x, remove = TRUE):</span> could not find function "ohe_commas"</span>
 <span class="r-in"><span><span class="fu">ohe_commas</span><span class="op">(</span><span class="va">df</span>, <span class="va">z</span>, sep <span class="op">=</span> <span class="st">"\\+"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      id x     z        z_AA  z_BB  `z_AA, AA, BB,  AA, NoVal, BB`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 AA, D AA+BB+AA TRUE  TRUE  FALSE                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2 AA,B  AA       TRUE  FALSE FALSE                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 B,  D BB,  AA  FALSE FALSE FALSE                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     4 A,D,B <span style="color: #BB0000;">NA</span>       FALSE FALSE FALSE                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>     5 <span style="color: #BB0000;">NA</span>    BB+AA    TRUE  TRUE  FALSE                         </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ohe_commas(df, z, sep = "\\+"):</span> could not find function "ohe_commas"</span>
 <span class="r-in"><span><span class="fu">ohe_commas</span><span class="op">(</span><span class="va">df</span>, <span class="va">x</span>, <span class="va">z</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 13</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      id x     z      x_AA  z_D   x_B   z_A   x_NoVal x_AA+…¹ z_AA  x_BB  z_NoVal</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 AA, D AA+BB… TRUE  TRUE  FALSE FALSE FALSE   TRUE    FALSE FALSE FALSE  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2 AA,B  AA     TRUE  FALSE TRUE  FALSE FALSE   FALSE   TRUE  FALSE FALSE  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 B,  D BB,  … FALSE TRUE  TRUE  FALSE FALSE   FALSE   TRUE  TRUE  FALSE  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     4 A,D,B <span style="color: #BB0000;">NA</span>     FALSE TRUE  TRUE  TRUE  FALSE   FALSE   FALSE FALSE TRUE   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>     5 <span style="color: #BB0000;">NA</span>    BB+AA  FALSE FALSE FALSE FALSE TRUE    FALSE   FALSE FALSE FALSE  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1 more variable: `x_BB+AA` &lt;lgl&gt;, and abbreviated variable name</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ¹​`x_AA+BB+AA`</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ohe_commas(df, x, z):</span> could not find function "ohe_commas"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

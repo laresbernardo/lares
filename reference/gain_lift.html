@@ -151,30 +151,9 @@ categorical model.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Results for Binomial Model</span></span></span>
 <span class="r-in"><span><span class="fu">gain_lift</span><span class="op">(</span><span class="va">dfr</span><span class="op">$</span><span class="va">class2</span><span class="op">$</span><span class="va">tag</span>, <span class="va">dfr</span><span class="op">$</span><span class="va">class2</span><span class="op">$</span><span class="va">scores</span>, target <span class="op">=</span> <span class="st">"FALSE"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Target value: FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 10</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    percentile value random target total  gain optimal  lift response score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 1          FALSE   10.1     27    27  16.4    16.4 62.4     16.4  93.9 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2          FALSE   20.1     23    27  30.3    32.7 50.4     13.9  92.5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 3          FALSE   30.2     26    27  46.1    49.1 52.4     15.8  90.7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 4          FALSE   39.9     23    26  60      64.8 50.3     13.9  86.8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 5          FALSE   50       22    27  73.3    81.2 46.7     13.3  80.4 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 6          FALSE   60.1     18    27  84.2    97.6 40.2     10.9  68.8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 7          FALSE   69.8     14    26  92.7   100   32.9      8.48 54.0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 8          FALSE   80.2      8    28  97.6   100   21.6      4.85 19.8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 9          FALSE   90.3      2    27  98.8   100    9.40     1.21  6.66</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 10         FALSE  100        2    26 100     100    0        1.21  1.76</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in gain_lift(dfr$class2$tag, dfr$class2$scores, target = "FALSE"):</span> could not find function "gain_lift"</span>
 <span class="r-in"><span><span class="fu">gain_lift</span><span class="op">(</span><span class="va">dfr</span><span class="op">$</span><span class="va">class2</span><span class="op">$</span><span class="va">tag</span>, <span class="va">dfr</span><span class="op">$</span><span class="va">class2</span><span class="op">$</span><span class="va">scores</span>, target <span class="op">=</span> <span class="st">"TRUE"</span>, splits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Target value: TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 10</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   percentile value random target total  gain optimal  lift response score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 1          TRUE    20.5     50    55  48.5    53.4 137.     48.5  79.7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2          TRUE    39.9     31    52  78.6   100    97.0    30.1  31.5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 3          TRUE    60.1     14    54  92.2   100    53.5    13.6  13.3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 4          TRUE    79.9      5    53  97.1   100    21.6     4.85  7.49</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 5          TRUE   100        3    54 100     100     0       2.91  3.19</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in gain_lift(dfr$class2$tag, dfr$class2$scores, target = "TRUE",     splits = 5):</span> could not find function "gain_lift"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

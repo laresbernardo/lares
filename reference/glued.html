@@ -108,13 +108,11 @@ evaluated in that environment and <code>.envir</code> is ignored. If <code>NULL<
 <span class="r-in"><span><span class="st">  My name is {name},</span></span></span>
 <span class="r-in"><span><span class="st">  my age next year will be {age + 1},</span></span></span>
 <span class="r-in"><span><span class="st">  and I got married on {format(anniversary, '%A, %B %d, %Y')}."</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> My name is Bernardo,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> my age next year will be 30,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> and I got married on Saturday, April 30, 2016.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in glued("\n  My name is {name},\n  my age next year will be {age + 1},\n  and I got married on {format(anniversary, '%A, %B %d, %Y')}."):</span> could not find function "glued"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Single braces can be inserted by doubling them</span></span></span>
 <span class="r-in"><span><span class="fu">glued</span><span class="op">(</span><span class="st">"My name is {name}, not {{name}}."</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> My name is Bernardo, not {name}.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in glued("My name is {name}, not {{name}}."):</span> could not find function "glued"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># You can also used named arguments</span></span></span>
 <span class="r-in"><span><span class="fu">glued</span><span class="op">(</span></span></span>
@@ -123,19 +121,16 @@ evaluated in that environment and <code>.envir</code> is ignored. If <code>NULL<
 <span class="r-in"><span>  name <span class="op">=</span> <span class="st">"Maru"</span>,</span></span>
 <span class="r-in"><span>  age <span class="op">=</span> <span class="fl">6</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Her name is Maru, and her age next year will be 7.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in glued("Her name is {name}, ", "and her age next year will be {age + 1}.",     name = "Maru", age = 6):</span> could not find function "glued"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># And run operations with memories (beware!)</span></span></span>
 <span class="r-in"><span><span class="fu">glued</span><span class="op">(</span><span class="st">"My name, {name}, has {n &lt;- nchar(name); n} characters.</span></span></span>
 <span class="r-in"><span><span class="st">       If we multiply by ten, we'll have {10 * n} characters!"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> My name, Bernardo, has 8 characters.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> If we multiply by ten, we'll have 80 characters!</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in glued("My name, {name}, has {n &lt;- nchar(name); n} characters.\n       If we multiply by ten, we'll have {10 * n} characters!"):</span> could not find function "glued"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># If you pass a vector, the operation will be repeated for each element</span></span></span>
 <span class="r-in"><span><span class="fu">glued</span><span class="op">(</span><span class="st">"Here's the value #{1:3}"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Here's the value #1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Here's the value #2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Here's the value #3</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in glued("Here's the value #{1:3}"):</span> could not find function "glued"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

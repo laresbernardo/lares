@@ -208,14 +208,12 @@ You might also want to set this parameter globally with
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># For Spanish words</span></span></span>
 <span class="r-in"><span><span class="va">dictionary</span> <span class="op">&lt;-</span> <span class="fu">scrabble_dictionary</span><span class="op">(</span><span class="st">"es"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Downloading 'es' words. Source: github.com/lorenbrichter/Words</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; Cache saved succesfully: lares_cache_es</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Saved (636,598 words) into cache</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in scrabble_dictionary("es"):</span> could not find function "scrabble_dictionary"</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># For Spanish words (default)</span></span></span>
 <span class="r-in"><span><span class="va">es_scores</span> <span class="op">&lt;-</span> <span class="fu">scrabble_points</span><span class="op">(</span><span class="st">"es"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Loaded points for 'es'</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in scrabble_points("es"):</span> could not find function "scrabble_points"</span>
 <span class="r-in"><span><span class="co"># Custom scores for each letter</span></span></span>
 <span class="r-in"><span><span class="va">cu_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  tiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">)</span>,</span></span>
@@ -225,78 +223,17 @@ You might also want to set this parameter globally with
 <span class="r-in"><span><span class="co"># Score values for each set of rules</span></span></span>
 <span class="r-in"><span><span class="va">words</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Bernardo"</span>, <span class="st">"Whiskey"</span>, <span class="st">"R is great"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">scrabble_score</span><span class="op">(</span><span class="va">words</span>, <span class="va">es_scores</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         word scores length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Whiskey     22      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 R is great      9     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Bernardo      8      8</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in scrabble_score(words, es_scores):</span> could not find function "scrabble_score"</span>
 <span class="r-in"><span><span class="fu">scrabble_score</span><span class="op">(</span><span class="va">words</span>, <span class="va">cu_scores</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         word scores length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Whiskey     16      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Bernardo      8      8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 R is great      7     10</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in scrabble_score(words, cu_scores):</span> could not find function "scrabble_score"</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="fu">scrabble_points</span><span class="op">(</span><span class="st">"es"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Loaded points for 'es'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    tiles scores</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      a      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      b      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      c      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      d      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      e      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      f      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      g      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      h      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      i      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     j      8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11     k     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12     l      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13     m      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14     n      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15     ñ      8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16     o      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17     p      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18     q      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19     r      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20     s      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21     t      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22     u      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23     v      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24     w     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25     x     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26     y      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27     z     10</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in scrabble_points("es"):</span> could not find function "scrabble_points"</span>
 <span class="r-in"><span><span class="fu">scrabble_points</span><span class="op">(</span><span class="st">"en"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Loaded points for 'en'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    tiles scores</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      a      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      b      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      c      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      d      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      e      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      f      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      g      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      h      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      i      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     j     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11     k      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12     l      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13     m      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14     n      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15     o      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16     p      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17     q     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18     r      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19     s      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20     t      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21     u      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22     v      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23     w      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24     x      8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25     y      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26     z     10</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in scrabble_points("en"):</span> could not find function "scrabble_points"</span>
 <span class="r-in"><span><span class="co"># Not yet available</span></span></span>
 <span class="r-in"><span><span class="fu">scrabble_points</span><span class="op">(</span><span class="st">"fr"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> We do not have the points for this language yet!</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in scrabble_points("fr"):</span> could not find function "scrabble_points"</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># Automatic use of languages and scores</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span><span class="st">"LARES_LANG"</span> <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span></span></span>
@@ -308,20 +245,7 @@ You might also want to set this parameter globally with
 <span class="r-in"><span>  force_str <span class="op">=</span> <span class="st">"_o_a"</span>,</span></span>
 <span class="r-in"><span>  exclude_here <span class="op">=</span> <span class="st">"__z|j"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Loaded points for 'es'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Setting up tiles...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Tiles: 'h', 'o', 'l', 'a', '_', '_'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; Cache loaded succesfully: lares_cache_es</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Loaded 636,598 'es' words</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">39735 &gt; 39735 &gt; 2927 &gt; 2927 &gt; 853 &gt; 71 &gt; 71 &gt; 6 &gt; 4 &gt; 4 </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   word  scores length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> hoya      11      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> hopa       9      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> hola       7      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> hora       7      4</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in scrabble_words(tiles = "hola", free = 2, force_start = "h", force_n = 4,     force_str = "_o_a", exclude_here = "__z|j"):</span> could not find function "scrabble_words"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">wordle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"board"</span>, <span class="st">"tempo"</span>, <span class="st">"shoes"</span>, <span class="st">"hoard"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">scrabble_words</span><span class="op">(</span></span></span>
@@ -330,23 +254,11 @@ You might also want to set this parameter globally with
 <span class="r-in"><span>  force_n <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>  force_str <span class="op">=</span> <span class="st">"O_R"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Skipping points schema...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Setting up tiles...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> o and r were not in your tiles: now included</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Tiles: 'o', 'r', '_', '_', '_'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Added 4 custom words </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">4 &gt; 4 &gt; 4 &gt; 4 &gt; 2 &gt; 2 &gt; 2 &gt; 2 &gt; 2 </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   word  length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> board      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> hoard      5</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in scrabble_words(language = NULL, words = wordle, force_n = 5,     force_str = "O_R"):</span> could not find function "scrabble_words"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Words considered for a language (you can custom it too!)</span></span></span>
 <span class="r-in"><span><span class="va">es_words</span> <span class="op">&lt;-</span> <span class="fu">scrabble_dictionary</span><span class="op">(</span><span class="st">"es"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; Cache loaded succesfully: lares_cache_es</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Loaded 636,598 'es' words</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in scrabble_dictionary("es"):</span> could not find function "scrabble_dictionary"</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

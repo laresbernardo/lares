@@ -221,43 +221,9 @@ multiple plots are also returned.</p>
 <span class="r-in"><span>  model_name <span class="op">=</span> <span class="st">"Titanic Survived Model"</span>,</span></span>
 <span class="r-in"><span>  plots <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Target value: TRUE</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in model_metrics(dfr$class2$tag, dfr$class2$scores, model_name = "Titanic Survived Model",     plots = FALSE):</span> could not find function "model_metrics"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">met1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $dictionary</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "AUC: Area Under the Curve"                                                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "ACC: Accuracy"                                                                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "PRC: Precision = Positive Predictive Value"                                            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "TPR: Sensitivity = Recall = Hit rate = True Positive Rate"                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "TNR: Specificity = Selectivity = True Negative Rate"                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6] "Logloss (Error): Logarithmic loss [Neutral classification: 0.69315]"                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "Gain: When best n deciles selected, what % of the real target observations are picked?"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [8] "Lift: When best n deciles selected, how much better than random is?"                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $confusion_matrix</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Pred</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Real    FALSE TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   FALSE     9  156</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   TRUE     68   35</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $gain_lift</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 10</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    percentile value random target total  gain optimal  lift response score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 1          TRUE    10.4     26    28  25.2    27.2 142.     25.2  93.3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2          TRUE    20.5     24    27  48.5    53.4 137.     23.3  79.7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 3          TRUE    30.2     19    26  67.0    78.6 122.     18.4  46.2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 4          TRUE    39.9     12    26  78.6   100    97.0    11.7  31.5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 5          TRUE    50        9    27  87.4   100    74.8     8.74 19.8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 6          TRUE    60.1      5    27  92.2   100    53.5     4.85 13.3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 7          TRUE    69.8      3    26  95.1   100    36.4     2.91  9.31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 8          TRUE    79.9      2    27  97.1   100    21.6     1.94  7.49</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 9          TRUE    89.9      3    27 100     100    11.2     2.91  6.14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 10         TRUE   100        0    27 100     100     0       0     3.19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $metrics</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       AUC     ACC     PRC     TPR      TNR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.89467 0.16418 0.18325 0.33981 0.054545</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in print(met1):</span> object 'met1' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Metrics for Multi-Categorical Model</span></span></span>
 <span class="r-in"><span><span class="va">met2</span> <span class="op">&lt;-</span> <span class="fu">model_metrics</span><span class="op">(</span><span class="va">dfr</span><span class="op">$</span><span class="va">class3</span><span class="op">$</span><span class="va">tag</span>, <span class="va">dfr</span><span class="op">$</span><span class="va">class3</span><span class="op">$</span><span class="va">score</span>,</span></span>
@@ -265,56 +231,18 @@ multiple plots are also returned.</p>
 <span class="r-in"><span>  model_name <span class="op">=</span> <span class="st">"Titanic Class Model"</span>,</span></span>
 <span class="r-in"><span>  plots <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in model_metrics(dfr$class3$tag, dfr$class3$score, multis = subset(dfr$class3,     select = -c(tag, score)), model_name = "Titanic Class Model",     plots = FALSE):</span> could not find function "model_metrics"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">met2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $dictionary</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "AUC: Area Under the Curve"                                                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "ACC: Accuracy"                                                                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "PRC: Precision = Positive Predictive Value"                                            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "TPR: Sensitivity = Recall = Hit rate = True Positive Rate"                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "TNR: Specificity = Selectivity = True Negative Rate"                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6] "Logloss (Error): Logarithmic loss [Neutral classification: 0.69315]"                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "Gain: When best n deciles selected, what % of the real target observations are picked?"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [8] "Lift: When best n deciles selected, how much better than random is?"                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $confusion_matrix</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `Real x Pred`   n_3   n_1   n_2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> n_3             120    11    18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> n_1              12    43     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> n_2              26    15    15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $metrics</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      AUC     ACC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.7896 0.66418</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $metrics_tags</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   tag       n     p   AUC order   ACC   PRC   TPR   TNR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> n_3     149  55.6 0.826     1 0.75  0.759 0.805 0.681</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> n_1      63  23.5 0.867     2 0.828 0.623 0.683 0.873</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> n_2      56  20.9 0.675     3 0.75  0.366 0.268 0.877</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in print(met2):</span> object 'met2' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Metrics for Regression Model</span></span></span>
 <span class="r-in"><span><span class="va">met3</span> <span class="op">&lt;-</span> <span class="fu">model_metrics</span><span class="op">(</span><span class="va">dfr</span><span class="op">$</span><span class="va">regr</span><span class="op">$</span><span class="va">tag</span>, <span class="va">dfr</span><span class="op">$</span><span class="va">regr</span><span class="op">$</span><span class="va">score</span>,</span></span>
 <span class="r-in"><span>  model_name <span class="op">=</span> <span class="st">"Titanic Fare Model"</span>,</span></span>
 <span class="r-in"><span>  plots <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in model_metrics(dfr$regr$tag, dfr$regr$score, model_name = "Titanic Fare Model",     plots = FALSE):</span> could not find function "model_metrics"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">met3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $dictionary</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "RMSE: Root Mean Squared Error"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "MAE: Mean Average Error"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "MAPE: Mean Absolute Percentage Error"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "MSE: Mean Squared Error"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "RSQ: R Squared"                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6] "RSQA: Adjusted R Squared"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $metrics</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       rmse      mae       mape      mse    rsq   rsqa</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 20.30881 14.24359 0.07303959 412.4477 0.3169 0.3143</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in print(met3):</span> object 'met3' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

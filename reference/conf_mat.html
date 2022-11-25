@@ -160,32 +160,15 @@ given a <code>thresh</code>old, similar to <code><a href="https://rdrr.io/r/base
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Results for Binomial Model</span></span></span>
 <span class="r-in"><span><span class="fu">conf_mat</span><span class="op">(</span><span class="va">dfr</span><span class="op">$</span><span class="va">class2</span><span class="op">$</span><span class="va">tag</span>, <span class="va">dfr</span><span class="op">$</span><span class="va">class2</span><span class="op">$</span><span class="va">scores</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `Real x Pred` `FALSE` `TRUE`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> FALSE               9    156</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> TRUE               68     35</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in conf_mat(dfr$class2$tag, dfr$class2$scores):</span> could not find function "conf_mat"</span>
 <span class="r-in"><span><span class="fu">conf_mat</span><span class="op">(</span><span class="va">dfr</span><span class="op">$</span><span class="va">class2</span><span class="op">$</span><span class="va">tag</span>, <span class="va">dfr</span><span class="op">$</span><span class="va">class2</span><span class="op">$</span><span class="va">scores</span>, thresh <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `Real x Pred` `FALSE` `TRUE`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> FALSE              27    138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> TRUE               84     19</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in conf_mat(dfr$class2$tag, dfr$class2$scores, thresh = 0.3):</span> could not find function "conf_mat"</span>
 <span class="r-in"><span><span class="fu">conf_mat</span><span class="op">(</span><span class="va">dfr</span><span class="op">$</span><span class="va">class2</span><span class="op">$</span><span class="va">tag</span>, <span class="va">dfr</span><span class="op">$</span><span class="va">class2</span><span class="op">$</span><span class="va">scores</span>, sense <span class="op">=</span> <span class="st">"&lt;="</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `Real x Pred` `FALSE` `TRUE`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> FALSE             156      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> TRUE               35     68</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in conf_mat(dfr$class2$tag, dfr$class2$scores, sense = "&lt;="):</span> could not find function "conf_mat"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Results for Multi-Categorical Model</span></span></span>
 <span class="r-in"><span><span class="fu">conf_mat</span><span class="op">(</span><span class="va">dfr</span><span class="op">$</span><span class="va">class3</span><span class="op">$</span><span class="va">tag</span>, <span class="va">dfr</span><span class="op">$</span><span class="va">class3</span><span class="op">$</span><span class="va">score</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `Real x Pred`   n_3   n_1   n_2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> n_3             120    11    18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> n_1              12    43     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> n_2              26    15    15</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in conf_mat(dfr$class3$tag, dfr$class3$score):</span> could not find function "conf_mat"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
