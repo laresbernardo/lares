@@ -539,17 +539,19 @@ splot_summary <- function(p, s, save = FALSE) {
     geom_col(aes(y = .data$box), fill = "grey", alpha = 0.5) +
     geom_point(aes(y = .data$CumInvested + .data$DifUSD, shape = .data$shapeflag), colour = "black") +
     scale_shape_identity() +
-    geom_text(aes(
-      label = paste0("$", formatNum(.data$DifUSD, 0)),
-      y = .data$CumInvested + .data$DifUSD
-    ),
-    size = 3, hjust = -.2, vjust = -0.2
+    geom_text(
+      aes(
+        label = paste0("$", formatNum(.data$DifUSD, 0)),
+        y = .data$CumInvested + .data$DifUSD
+      ),
+      size = 3, hjust = -.2, vjust = -0.2
     ) +
-    geom_text(aes(
-      label = paste0(round(.data$DifPer, 1), "%"),
-      y = .data$CumInvested + .data$DifUSD
-    ),
-    size = 2.9, hjust = -.2, vjust = 1.2
+    geom_text(
+      aes(
+        label = paste0(round(.data$DifPer, 1), "%"),
+        y = .data$CumInvested + .data$DifUSD
+      ),
+      size = 2.9, hjust = -.2, vjust = 1.2
     ) +
     geom_text(aes(label = paste0("$", formatNum(.data$CumValue, 0)), y = .data$box),
       size = 3, hjust = -.1, vjust = -0.2
@@ -558,17 +560,19 @@ splot_summary <- function(p, s, save = FALSE) {
       label = paste0(.data$CumQuant, " @$", formatNum(.data$CumValue / .data$CumQuant, 1)),
       y = .data$box
     ), size = 2, hjust = -.1, vjust = 1.5) +
-    geom_text(aes(
-      label = paste0("$", formatNum(.data$CumInvested, 1)),
-      y = 0, colour = .data$Symbol
-    ),
-    size = 2, hjust = 0, vjust = -0.2
+    geom_text(
+      aes(
+        label = paste0("$", formatNum(.data$CumInvested, 1)),
+        y = 0, colour = .data$Symbol
+      ),
+      size = 2, hjust = 0, vjust = -0.2
     ) +
-    geom_text(aes(
-      label = paste0("@$", formatNum(.data$CumInvested / .data$CumQuant, 1)),
-      y = 0, x = .data$Symbol, colour = .data$Symbol
-    ),
-    size = 2, hjust = 0, vjust = 1.5
+    geom_text(
+      aes(
+        label = paste0("@$", formatNum(.data$CumInvested / .data$CumQuant, 1)),
+        y = 0, x = .data$Symbol, colour = .data$Symbol
+      ),
+      size = 2, hjust = 0, vjust = 1.5
     ) +
     annotate("label",
       x = length(unique(today$CumQuant)) * 0.25, y = tops * 0.6,
@@ -1085,10 +1089,11 @@ splot_etf <- function(s, keep_all = FALSE, cache = TRUE, save = FALSE) {
 
   if (length(etfs) > 0) {
     df <- etfs %>%
-      right_join(select(s, .data$Symbol, .data$CumValue, .data$Date) %>%
-        filter(.data$Date == max(.data$Date)) %>%
-        mutate(Symbol = as.character(.data$Symbol)),
-      by = c("ETF" = "Symbol")
+      right_join(
+        select(s, .data$Symbol, .data$CumValue, .data$Date) %>%
+          filter(.data$Date == max(.data$Date)) %>%
+          mutate(Symbol = as.character(.data$Symbol)),
+        by = c("ETF" = "Symbol")
       ) %>%
       {
         if (keep_all == FALSE) filter(., !is.na(.data$Sector)) else .
@@ -1194,7 +1199,6 @@ stocks_obj <- function(data = stocks_file(),
   # Relative plots (using time windows)
   message(glued(">>> Running calculations and plots for {ws} time window{ifelse(ws>1,'s','')}..."))
   plots_relative <- lapply(window, function(x) {
-
     # Filter the data given the window
     s <- daily_stocks(hist, trans, tickers, window = x)
     p <- daily_portfolio(hist, trans, cash, cash_fix = cash_fix, window = x)

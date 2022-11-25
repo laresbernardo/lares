@@ -243,11 +243,12 @@ plot.x2y <- function(x, type = 1, ...) {
         filter(.data$x2y > 0) %>%
         ggplot(aes(y = reorder(.data$var, .data$x2y), x = .data$x2y / 100)) +
         geom_col(colour = "transparent") +
-        geom_text(aes(
-          label = sub("^(-)?0[.]", "\\1.", signif(.data$x2y, 3)),
-          hjust = ifelse(.data$x2y > max(.data$x2y) / 5, 1.1, -0.1)
-        ),
-        size = 3
+        geom_text(
+          aes(
+            label = sub("^(-)?0[.]", "\\1.", signif(.data$x2y, 3)),
+            hjust = ifelse(.data$x2y > max(.data$x2y) / 5, 1.1, -0.1)
+          ),
+          size = 3
         ) +
         scale_x_percent(expand = c(0, 0), position = "top") +
         labs(

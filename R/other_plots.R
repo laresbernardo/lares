@@ -137,7 +137,6 @@ plot_timeline <- function(event,
                           interactive = FALSE,
                           save = FALSE,
                           subdir = NA) {
-
   # Let's gather all the data
   df <- data.frame(
     Role = as.character(event),

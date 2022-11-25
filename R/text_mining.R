@@ -67,7 +67,7 @@ cleanNames <- function(df, num = "x", ...) {
     # Change column names
     df <- stats::setNames(df, cols)
     # Keep tibble if original data.frame is tibble
-    if ("tbl_df" %in% class(df)) df <- as_tibble(df) 
+    if ("tbl_df" %in% class(df)) df <- as_tibble(df)
   }
   return(df)
 }

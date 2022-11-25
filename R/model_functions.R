@@ -374,7 +374,6 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
                         leaderboard = list(),
                         plots = TRUE,
                         ...) {
-
   # MODEL TYPE
   types <- c("Classification", "Regression")
   check_opts(model_type, types)

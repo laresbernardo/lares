@@ -40,7 +40,6 @@ get_mp3 <- function(id,
                     info = TRUE,
                     cover = FALSE,
                     quiet = FALSE) {
-
   # Build query's parameters
   query <- "--rm-cache-dir"
   if (mp3) {

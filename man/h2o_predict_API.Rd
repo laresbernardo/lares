@@ -37,36 +37,10 @@ Other Machine Learning:
 \code{\link{model_preprocess}()},
 \code{\link{msplit}()}
 
-Other Tools: 
-\code{\link{autoline}()},
-\code{\link{bind_files}()},
-\code{\link{bring_api}()},
-\code{\link{db_download}()},
-\code{\link{db_upload}()},
-\code{\link{export_plot}()},
-\code{\link{export_results}()},
-\code{\link{get_credentials}()},
+Other H2O: 
 \code{\link{h2o_predict_MOJO}()},
 \code{\link{h2o_predict_binary}()},
-\code{\link{h2o_predict_model}()},
-\code{\link{h2o_selectmodel}()},
-\code{\link{haveInternet}()},
-\code{\link{image_metadata}()},
-\code{\link{importxlsx}()},
-\code{\link{ip_data}()},
-\code{\link{json2vector}()},
-\code{\link{listfiles}()},
-\code{\link{mail_send}()},
-\code{\link{msplit}()},
-\code{\link{myip}()},
-\code{\link{quiet}()},
-\code{\link{read.file}()},
-\code{\link{statusbar}()},
-\code{\link{tic}()},
-\code{\link{try_require}()},
-\code{\link{updateLares}()},
-\code{\link{what_size}()},
-\code{\link{zerovar}()}
+\code{\link{h2o_predict_model}()}
 }
+\concept{H2O}
 \concept{Machine Learning}
-\concept{Tools}

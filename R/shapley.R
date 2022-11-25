@@ -47,7 +47,6 @@
 #' }
 #' @export
 h2o_shap <- function(model, test = "auto", scores = "auto", y = "y", ...) {
-
   # When h2o_automl object and test = "auto"
   if (!is.null(attr(model, "type"))) {
     if (!is.data.frame(test)) {

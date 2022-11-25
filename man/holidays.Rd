@@ -33,18 +33,23 @@ Other Data Wrangling:
 \code{\link{cleanText}()},
 \code{\link{date_cuts}()},
 \code{\link{date_feats}()},
-\code{\link{formatNum}()},
+\code{\link{file_name}()},
+\code{\link{formatHTML}()},
 \code{\link{impute}()},
 \code{\link{left}()},
 \code{\link{normalize}()},
+\code{\link{num_abbr}()},
 \code{\link{ohe_commas}()},
 \code{\link{ohse}()},
+\code{\link{quants}()},
 \code{\link{removenacols}()},
 \code{\link{replaceall}()},
+\code{\link{replacefactor}()},
 \code{\link{textFeats}()},
 \code{\link{textTokenizer}()},
 \code{\link{vector2text}()},
-\code{\link{year_month}()}
+\code{\link{year_month}()},
+\code{\link{zerovar}()}
 
 Other Feature Engineering: 
 \code{\link{date_feats}()},

@@ -73,7 +73,7 @@
 #' @export
 install_recommended <- function(progress = TRUE, all = FALSE) {
   pkgs <- names(recommended)
-  these <- if (!all) pkgs[!pkgs %in% installed.packages()[,1]] else pkgs
+  these <- if (!all) pkgs[!pkgs %in% installed.packages()[, 1]] else pkgs
   message(sprintf("Installing %s packages: %s", length(these), v2t(these)))
   for (lib in these) {
     invisible(install.packages(lib, quiet = TRUE, verbose = FALSE))

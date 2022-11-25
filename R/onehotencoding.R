@@ -122,7 +122,6 @@ ohse <- function(df,
 
     # Non numeric or date/time variables
     if (!vector_type %in% c("integer", "numeric", "POSIXct", "POSIXt", "Date")) {
-
       # Char columns with too much variance (unique values vs total observations)
       if (vector_levels >= variance * nrow(df)) {
         no_variance <- c(no_variance, vector_name)
@@ -425,7 +424,6 @@ date_feats <- function(dates,
 #' }
 #' @export
 holidays <- function(countries = "Venezuela", years = year(Sys.Date())) {
-
   # Further improvement: let the user bring more than +-5 years
 
   results <- NULL

@@ -761,10 +761,11 @@ freqs_list <- function(df,
     formatNum(sum(elements$n), 0)
   )
   if (min_elements > 1) {
-    caption <- v2t(c(caption, sprintf(
-      "Excluding combinations with less than %s elements", min_elements
-    )),
-    quotes = FALSE, sep = "\n"
+    caption <- v2t(
+      c(caption, sprintf(
+        "Excluding combinations with less than %s elements", min_elements
+      )),
+      quotes = FALSE, sep = "\n"
     )
   }
   if (!tail) caption <- paste(caption, "Tail combinations suppressed from plot", sep = "\n")

@@ -205,8 +205,12 @@ wordle_opts <- function(input, word, dictionary = NULL, lang_dic = "en", method 
   check <- wordle_check(input, word, dictionary, lang_dic, method, print = FALSE)
   dictionary <- discard_words(input, word, dictionary, check)
   input_coloured <- print(check, print = FALSE)
-  if (!quiet) message(cat(input_coloured, "reduced from", formatNum(n_words_init, 0),
-                          "to", formatNum(length(dictionary), 0)))
+  if (!quiet) {
+    message(cat(
+      input_coloured, "reduced from", formatNum(n_words_init, 0),
+      "to", formatNum(length(dictionary), 0)
+    ))
+  }
   attr(dictionary, "answer") <- word
   attr(dictionary, "last_word") <- input
 
@@ -222,14 +226,17 @@ discard_words <- function(input, word, dictionary, check) {
     these <- unique(names(check[check == "RED"]))
     if (length(these) > 0) {
       are_nums <- these %in% as.character(0:9)
-      if (any(are_nums))
+      if (any(are_nums)) {
         words_df <- filter(words_df, !grepl(paste0("[", paste(these[are_nums], collapse = "-"), "]"), .data$word))
+      }
       are_lets <- grepl("[a-zA-Z]", these)
-      if (any(are_lets))
+      if (any(are_lets)) {
         words_df <- filter(words_df, !grepl(paste(these[are_lets], collapse = "|"), .data$word))
+      }
       are_symbs <- !(are_nums | are_lets)
-      if (any(are_symbs))
+      if (any(are_symbs)) {
         words_df <- filter(words_df, !grepl(paste(paste0("\\", these[are_symbs]), collapse = "|"), .data$word))
+      }
     }
     # Letters present but not in position
     these <- names(check[check == "YELLOW"])
@@ -243,7 +250,7 @@ discard_words <- function(input, word, dictionary, check) {
     dictionary <- words_df$word
   } else {
     dictionary <- word
-  } 
+  }
   return(dictionary)
 }
 

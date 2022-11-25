@@ -76,7 +76,6 @@ distr <- function(data, ...,
                   chords = FALSE,
                   save = FALSE,
                   subdir = NA) {
-
   # # To handle scientific notation inputs correctly
   # on.exit(options("scipen" = 999))
 

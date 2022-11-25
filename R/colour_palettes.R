@@ -40,7 +40,6 @@
 #' df[sample(nrow(df), 5), ]
 #' @export
 lares_pal <- function(return = "list") {
-
   # Generic colour and counter-colour palette
   colours_names <- getOption("lares.palette")
   if (length(unique(names(colours_names))) != length(colours_names)) {

@@ -62,7 +62,7 @@ model_preprocess <- function(df,
   # Change spaces for dots as 'multis' arguments may not match
   if (model_type == "Classification") cats <- gsub(" ", ".", cats)
   # If y variables is named as one of the categories, prediction values will be a problem
-  if (model_type == "Classification" &&  y %in% cats) {
+  if (model_type == "Classification" && y %in% cats) {
     stop(paste(
       "Your y parameter can't be named as any of the labels used.",
       "Please, rename", y, "into a valid column name next such as",
@@ -71,7 +71,7 @@ model_preprocess <- function(df,
   }
 
   # If target value is not an existing target value
-  if (!target %in% cats &&  length(cats) == 2) {
+  if (!target %in% cats && length(cats) == 2) {
     if (!target %in% c(cats, "auto")) {
       stop(paste(
         "Your target value", target, "is not valid.",
@@ -80,7 +80,7 @@ model_preprocess <- function(df,
     }
   }
   # When might seem numeric but is categorical
-  if (model_type == "Classification" &&  sum(grepl("^[0-9]", cats)) > 0) {
+  if (model_type == "Classification" && sum(grepl("^[0-9]", cats)) > 0) {
     df <- mutate(df, tag = as.factor(as.character(
       ifelse(grepl("^[0-9]", .data$tag), paste0("n_", .data$tag), as.character(.data$tag))
     )))
@@ -90,8 +90,8 @@ model_preprocess <- function(df,
     df$tag <- as.numeric(df$tag)
   }
   # Show a summary of our tags
-  if (model_type == "Classification" &&  !quiet) print(freqs(df, .data$tag))
-  if (model_type == "Regression" &&  !quiet) print(summary(df$tag))
+  if (model_type == "Classification" && !quiet) print(freqs(df, .data$tag))
+  if (model_type == "Regression" && !quiet) print(summary(df$tag))
 
   # MISSING VALUES
   m <- missingness(df, summary = FALSE)
@@ -107,7 +107,7 @@ model_preprocess <- function(df,
       }
       message(paste0(
         "- MISSINGS: The following variables contain missing observations: ", which,
-        if (!impute &&  !quiet) ". Consider using the impute parameter."
+        if (!impute && !quiet) ". Consider using the impute parameter."
       ))
     }
     if (impute) {
@@ -119,7 +119,7 @@ model_preprocess <- function(df,
   # IGNORED VARIABLES
   if (length(ignore) > 0) {
     ignore <- ignore[ignore %in% colnames(df)]
-    if (length(ignore) > 0 &&  !quiet) {
+    if (length(ignore) > 0 && !quiet) {
       message(paste("- SKIPPED: Ignored variables for training models:", vector2text(ignore)))
     }
   }
@@ -127,7 +127,7 @@ model_preprocess <- function(df,
   # ONE HOT SMART ENCODING
   temp <- df[, !colnames(df) %in% c("tag", ignore)]
   nums <- df_str(temp, "names", quiet = TRUE)$nums
-  if (length(nums) != ncol(temp) &&  !quiet) {
+  if (length(nums) != ncol(temp) && !quiet) {
     message(paste(
       "- CATEGORICALS: There are", ncol(temp) - length(nums), "non-numerical features.",
       "Consider using ohse() or equivalent prior to encode categorical variables."
@@ -147,7 +147,7 @@ model_preprocess <- function(df,
   if (is.numeric(df$tag)) {
     thresh <- ifelse(is.numeric(no_outliers), no_outliers, 3)
     is_outlier <- outlier_zscore(df$tag, thresh = thresh)
-    if (!quiet &&  !isTRUE(no_outliers)) {
+    if (!quiet && !isTRUE(no_outliers)) {
       message(sprintf(
         "- OUTLIERS: %s (%s) of %s values are considered outliers (Z-Score: >%ssd). %s",
         formatNum(100 * sum(is_outlier) / nrow(df), 1, pos = "%"),
@@ -194,19 +194,19 @@ model_preprocess <- function(df,
   if (unique_train) {
     train_rows <- nrow(train)
     train <- distinct(train)
-    if (nrow(train) != train_rows &&  !quiet) {
+    if (nrow(train) != train_rows && !quiet) {
       message(paste(
         "- REPEATED: There were", train_rows - nrow(train),
         "repeated rows which are being suppressed from the train dataset"
       ))
     }
   }
-  if (nrow(train) > 10000 &&  !quiet) {
+  if (nrow(train) > 10000 && !quiet) {
     message("- SAMPLE: Consider sampling or reduce the 'split' argument for faster results")
   }
 
   # BALANCE TRAINING SET
-  if (model_type == "Classification" &&  balance) {
+  if (model_type == "Classification" && balance) {
     total <- nrow(train)
     min <- freqs(train, .data$tag) %>%
       .$n %>%

@@ -125,7 +125,6 @@ model_metrics <- function(tag, score, multis = NA,
       metrics[["gain_lift"]] <- gain_lift(tag, score, target = target, quiet = quiet)
       metrics[["metrics"]] <- signif(nums, 5)
     } else {
-
       # For Multi-Categories
       tags <- sort(unique(tag))
       if (is.na(multis)[1]) {

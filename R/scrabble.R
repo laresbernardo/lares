@@ -170,7 +170,6 @@ scrabble_points <- function(lang) {
 #' grepl_letters(x, "c")
 #' @export
 grepl_letters <- function(x, pattern, blank = "_") {
-
   # When no black tile, use simple grepl function
   if (!grepl(blank, pattern)) {
     return(grepl(pattern, x, fixed = TRUE))
@@ -279,7 +278,6 @@ scrabble_words <- function(tiles = "",
                            words = NULL,
                            quiet = FALSE,
                            print = TRUE) {
-
   ### POINTS
 
   tiles <- paste(tiles, collapse = "")
@@ -357,7 +355,7 @@ scrabble_words <- function(tiles = "",
     these <- str_split(pos_tiles, "\\|")[i][[1]]
     if (!any(these %in% letters)) next
     located <- stringr::str_locate_all(words, pos_tiles[i])
-    these <- !unlist(lapply(located, function(x) sum(x[,1] == i) > 0))
+    these <- !unlist(lapply(located, function(x) sum(x[, 1] == i) > 0))
     words <- words[these]
     .temp_print(length(words))
   }
@@ -373,7 +371,7 @@ scrabble_words <- function(tiles = "",
 }
 
 .temp_print <- function(x, print = TRUE, last = FALSE) {
- if (print) if (!last) formatColoured(paste(x, "> ")) else formatColoured(paste(x, "\n"))
+  if (print) if (!last) formatColoured(paste(x, "> ")) else formatColoured(paste(x, "\n"))
 }
 
 # Tile used, tile that must be skipped on next iterations

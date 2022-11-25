@@ -49,12 +49,13 @@ mplot_density <- function(tag,
     }
 
     p1 <- ggplot(out) +
-      geom_density(aes(
-        x = as.numeric(.data$score),
-        group = .data$tag,
-        fill = as.character(.data$tag)
-      ),
-      alpha = 0.6, adjust = 0.25, size = 0
+      geom_density(
+        aes(
+          x = as.numeric(.data$score),
+          group = .data$tag,
+          fill = as.character(.data$tag)
+        ),
+        alpha = 0.6, adjust = 0.25, size = 0
       ) +
       labs(
         title = "Classification Model Results",
@@ -376,11 +377,12 @@ mplot_cuts <- function(score,
     geom_col(fill = "deepskyblue", colour = "transparent") +
     xlab("Cumulative volume") +
     ylab("Score") +
-    geom_text(aes(
-      label = round(100 * .data$cuts, 1),
-      vjust = ifelse(.data$cuts * 100 < 50, -0.3, 1.3)
-    ),
-    size = 3, colour = "black", inherit.aes = TRUE, check_overlap = TRUE
+    geom_text(
+      aes(
+        label = round(100 * .data$cuts, 1),
+        vjust = ifelse(.data$cuts * 100 < 50, -0.3, 1.3)
+      ),
+      size = 3, colour = "black", inherit.aes = TRUE, check_overlap = TRUE
     ) +
     guides(colour = "none") +
     labs(title = sprintf("Score cuts (%s quantiles)", splits)) +
@@ -672,17 +674,19 @@ mplot_metrics <- function(results,
       colour = "Dataset", x = "# of trees", y = "LogLoss"
     ) +
     scale_colour_brewer(palette = "Set1") +
-    geom_text(aes(
-      x = .data$trees, y = .data$train_ll, colour = "Train",
-      label = round(.data$train_ll, 2)
-    ),
-    check_overlap = TRUE, nudge_y = 0.03, size = 3
+    geom_text(
+      aes(
+        x = .data$trees, y = .data$train_ll, colour = "Train",
+        label = round(.data$train_ll, 2)
+      ),
+      check_overlap = TRUE, nudge_y = 0.03, size = 3
     ) +
-    geom_text(aes(
-      x = .data$trees, y = .data$test_ll, colour = "Test",
-      label = round(.data$test_ll, 2)
-    ),
-    check_overlap = TRUE, nudge_y = 0.03, size = 3
+    geom_text(
+      aes(
+        x = .data$trees, y = .data$test_ll, colour = "Test",
+        label = round(.data$test_ll, 2)
+      ),
+      check_overlap = TRUE, nudge_y = 0.03, size = 3
     ) +
     theme_lares(pal = 1) +
     theme(
@@ -700,17 +704,19 @@ mplot_metrics <- function(results,
     ) +
     scale_colour_brewer(palette = "Set1") +
     guides(colour = "none") +
-    geom_text(aes(
-      x = .data$trees, y = .data$train_auc * 100, colour = "Train",
-      label = round(.data$train_auc * 100, 2)
-    ),
-    check_overlap = TRUE, nudge_y = 3, size = 3
+    geom_text(
+      aes(
+        x = .data$trees, y = .data$train_auc * 100, colour = "Train",
+        label = round(.data$train_auc * 100, 2)
+      ),
+      check_overlap = TRUE, nudge_y = 3, size = 3
     ) +
-    geom_text(aes(
-      x = .data$trees, y = .data$test_auc * 100, colour = "Test",
-      label = round(.data$test_auc * 100, 2)
-    ),
-    check_overlap = TRUE, nudge_y = 3, size = 3
+    geom_text(
+      aes(
+        x = .data$trees, y = .data$test_auc * 100, colour = "Test",
+        label = round(.data$test_auc * 100, 2)
+      ),
+      check_overlap = TRUE, nudge_y = 3, size = 3
     ) +
     theme_lares(pal = 1)
 

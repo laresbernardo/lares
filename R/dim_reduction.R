@@ -45,7 +45,6 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
   if (!is.null(n)) PCA$pcadf <- PCA$pcadf[, 1:n]
 
   if (plot) {
-
     # How much variance is explained by n PCA features?
     pca_explained <- PCA$pca_explained
     PCA$plot_explained <- data.frame(id = seq_along(pca_explained)) %>%

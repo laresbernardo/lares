@@ -124,7 +124,9 @@ gtrends_related <- function(gtrend, top = NA, title = NA, note = NA, exclude = N
     return(p)
   }
 
-  if (t || q) return(rq1)
+  if (t || q) {
+    return(rq1)
+  }
 }
 
 ####################################################################

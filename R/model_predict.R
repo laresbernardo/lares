@@ -6,7 +6,7 @@
 #' generated when using the function export_results()
 #'
 #' @family Machine Learning
-#' @family Tools
+#' @family H2O
 #' @param df Dataframe. Data to pass to the model.
 #' @param model_path Character. Relative path of directory
 #' where your zip model file is. If multiple zip files are found,
@@ -74,7 +74,7 @@ h2o_predict_MOJO <- function(df, model_path, method = "mojo", batch = 300) {
 #' h2o's version without problem.
 #'
 #' @family Machine Learning
-#' @family Tools
+#' @family H2O
 #' @param df Dataframe. Data to insert into the model.
 #' @param model_path Character. Relative model path directory or zip file.
 #' @param sample Integer. How many rows should the function predict?
@@ -105,7 +105,7 @@ h2o_predict_binary <- function(df, model_path, sample = NA) {
 #' This function lets the user get scores from a H2O Model Object.
 #'
 #' @family Machine Learning
-#' @family Tools
+#' @family H2O
 #' @param df Dataframe/Vector. Data to insert into the model.
 #' @param model h2o model Object
 #' @return data.frame with predicted results.
@@ -121,7 +121,7 @@ h2o_predict_model <- function(df, model) {
 #' This function lets the user get the score from an API service
 #'
 #' @family Machine Learning
-#' @family Tools
+#' @family H2O
 #' @param df Dataframe/Vector. Data to insert into the model.
 #' @param api Character. API URL.
 #' @param exclude Character. Name of the variables to exclude.

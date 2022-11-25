@@ -55,3 +55,40 @@ glued("My name, {name}, has {n <- nchar(name); n} characters.
 # If you pass a vector, the operation will be repeated for each element
 glued("Here's the value #{1:3}")
 }
+\seealso{
+Other Tools: 
+\code{\link{autoline}()},
+\code{\link{bind_files}()},
+\code{\link{bring_api}()},
+\code{\link{db_download}()},
+\code{\link{db_upload}()},
+\code{\link{export_plot}()},
+\code{\link{export_results}()},
+\code{\link{files_functions}()},
+\code{\link{font_exists}()},
+\code{\link{formatColoured}()},
+\code{\link{formatHTML}()},
+\code{\link{get_credentials}()},
+\code{\link{grepm}()},
+\code{\link{h2o_selectmodel}()},
+\code{\link{haveInternet}()},
+\code{\link{image_metadata}()},
+\code{\link{importxlsx}()},
+\code{\link{ip_data}()},
+\code{\link{json2vector}()},
+\code{\link{list_cats}()},
+\code{\link{listfiles}()},
+\code{\link{mail_send}()},
+\code{\link{move_files}()},
+\code{\link{msplit}()},
+\code{\link{myip}()},
+\code{\link{quiet}()},
+\code{\link{read.file}()},
+\code{\link{statusbar}()},
+\code{\link{tic}()},
+\code{\link{try_require}()},
+\code{\link{updateLares}()},
+\code{\link{warnifnot}()},
+\code{\link{what_size}()}
+}
+\concept{Tools}

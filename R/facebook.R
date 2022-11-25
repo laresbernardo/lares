@@ -427,7 +427,6 @@ fb_posts <- function(token,
                      shares = FALSE,
                      reactions = FALSE,
                      api_version = "v13.0") {
-
   # TOKEN: https://developers.facebook.com/tools/explorer/
 
   set_config(config(http_version = 0))

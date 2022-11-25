@@ -38,7 +38,6 @@ mail_send <- function(from = "RMail <laresbernardo@gmail.com>",
                       service = "mailgun",
                       creds = NULL,
                       quiet = FALSE) {
-
   # MailGun documentation:
   # https://documentation.mailgun.com/en/latest/api-sending.html#sending
 

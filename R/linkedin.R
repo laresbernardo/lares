@@ -12,7 +12,6 @@
 #' @return Character. String with token requested.
 #' @export
 li_auth <- function(app_name = NA, client_id = NA, client_secret = NA) {
-
   # Idea from https://github.com/mpiccirilli/Rlinkedin/blob/master/R/getProfile.R
 
   if (is.na(app_name) && is.na(client_id) && is.na(client_secret)) {

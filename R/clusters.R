@@ -118,16 +118,23 @@ clusterKmeans <- function(df, k = NULL, wss_var = 0, limit = 15, drop_na = TRUE,
     theme_lares()
   results[["nclusters"]] <- nclusters
   results[["nclusters_plot"]] <- nclusters_plot
-  
+
   # Auto K selected by less X WSS variance (convergence)
   if (wss_var > 0 & is.null(k)) {
     k <- nclusters %>%
-      mutate(pareto = .data$wss/.data$wss[1],
-             dif = lag(.data$pareto) - .data$pareto) %>%
-      filter(.data$dif > wss_var) %>% pull(.data$n) %>% max(.)
-    if (!quiet) message(sprintf(
-      ">> Auto selected k = %s (clusters) based on minimum WSS variance of %s%%",
-      k, wss_var * 100))
+      mutate(
+        pareto = .data$wss / .data$wss[1],
+        dif = lag(.data$pareto) - .data$pareto
+      ) %>%
+      filter(.data$dif > wss_var) %>%
+      pull(.data$n) %>%
+      max(.)
+    if (!quiet) {
+      message(sprintf(
+        ">> Auto selected k = %s (clusters) based on minimum WSS variance of %s%%",
+        k, wss_var * 100
+      ))
+    }
   }
 
   # If n is already selected
@@ -213,7 +220,7 @@ clusterKmeans <- function(df, k = NULL, wss_var = 0, limit = 15, drop_na = TRUE,
 clusterVisualK <- function(df, ks = 2:6, ...) {
   clus_dat <- function(df, k, n = length(ks), ...) {
     clusters <- clusterKmeans(df, k, quiet = TRUE, ...)
-    pca <- clusters$PCA$pcadf %>% 
+    pca <- clusters$PCA$pcadf %>%
       mutate(cluster = clusters$df$cluster, k = k)
     explained <<- clusters$PCA$pca_explained[1:2]
     return(pca)
@@ -281,7 +288,6 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
 
 .prepare_cluster <- function(df, drop_na = TRUE, ohse = TRUE,
                              norm = TRUE, quiet = FALSE, ignore = NULL, ...) {
-
   # Leave some columns out of the logic
   if (!is.null(ignore)) {
     ignored <- select(df, any_of(ignore))
