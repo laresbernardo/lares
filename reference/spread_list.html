@@ -105,7 +105,21 @@ original name of column will be used.</p></dd>
 <span class="r-in"><span><span class="fu">spread_list</span><span class="op">(</span><span class="va">df</span>, <span class="va">films</span>, replace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="lares-exports.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"films"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="lares-exports.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in spread_list(df, films, replace = FALSE):</span> could not find function "spread_list"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   name             films films…¹ films…² films…³ films…⁴ films…⁵ films…⁶ films…⁷</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;lis&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Luke Skywalker   &lt;chr&gt; TRUE    FALSE   TRUE    TRUE    TRUE    TRUE    FALSE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> C-3PO            &lt;chr&gt; TRUE    TRUE    TRUE    TRUE    TRUE    FALSE   TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> R2-D2            &lt;chr&gt; TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Darth Vader      &lt;chr&gt; TRUE    FALSE   TRUE    TRUE    TRUE    FALSE   FALSE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Leia Organa      &lt;chr&gt; TRUE    FALSE   TRUE    TRUE    TRUE    TRUE    FALSE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Owen Lars        &lt;chr&gt; TRUE    TRUE    FALSE   TRUE    FALSE   FALSE   FALSE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> Beru Whitesun l… &lt;chr&gt; TRUE    TRUE    FALSE   TRUE    FALSE   FALSE   FALSE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> R5-D4            &lt;chr&gt; TRUE    FALSE   FALSE   FALSE   FALSE   FALSE   FALSE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable names ¹​`films_A New Hope`,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​`films_Attack of the Clones`, ³​`films_Return of the Jedi`,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ⁴​`films_Revenge of the Sith`, ⁵​`films_The Empire Strikes Back`,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ⁶​`films_The Force Awakens`, ⁷​`films_The Phantom Menace`</span></span>
 <span class="r-in"><span><span class="co"># Named (and un-nammed) list columns</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, platform <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"fb"</span> <span class="op">=</span> <span class="fl">1</span>, <span class="st">"ig"</span> <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span></span>
@@ -113,7 +127,12 @@ original name of column will be used.</p></dd>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">spread_list</span><span class="op">(</span><span class="va">df</span>, <span class="va">platform</span>, str <span class="op">=</span> <span class="st">"ptf_"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in spread_list(df, platform, str = "ptf_"):</span> could not find function "spread_list"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      id ptf_fb ptf_ig</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1      1      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2      3      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

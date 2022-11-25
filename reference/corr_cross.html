@@ -186,19 +186,34 @@ Insights with Ranked Cross-Correlations</a></p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Only data with no plot</span></span></span>
 <span class="r-in"><span><span class="fu">corr_cross</span><span class="op">(</span><span class="va">dft</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, top <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in corr_cross(dft, plot = FALSE, top = 10):</span> could not find function "corr_cross"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning only the top 10. You may override with the 'top' argument</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Rowwise: </span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    key           mix               corr    pvalue group1   cat1   group2 cat2   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Ticket_113781 Cabin_C22.C26    0.866 3.35<span style="color: #949494;">e</span><span style="color: #BB0000;">-269</span> Ticket   113781 Cabin  <span style="color: #949494;">"</span>C22.C…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Pclass_1      Cabin_OTHER      0.795 4.58<span style="color: #949494;">e</span><span style="color: #BB0000;">-195</span> Pclass   1      Cabin  <span style="color: #949494;">"</span>OTHER<span style="color: #949494;">"</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Pclass_1      Cabin_          -<span style="color: #BB0000;">0.789</span> 4.39<span style="color: #949494;">e</span><span style="color: #BB0000;">-190</span> Pclass   1      Cabin  <span style="color: #949494;">""</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> SibSp         Ticket_CA..2343  0.604 1.40<span style="color: #949494;">e</span><span style="color: #BB0000;">- 89</span> SibSp    SibSp  Ticket <span style="color: #949494;">"</span>CA..2…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Fare          Pclass_1         0.592 2.87<span style="color: #949494;">e</span><span style="color: #BB0000;">- 85</span> Fare     Fare   Pclass <span style="color: #949494;">"</span>1<span style="color: #949494;">"</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> SibSp         Ticket_OTHER    -<span style="color: #BB0000;">0.571</span> 3.37<span style="color: #949494;">e</span><span style="color: #BB0000;">- 78</span> SibSp    SibSp  Ticket <span style="color: #949494;">"</span>OTHER<span style="color: #949494;">"</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Survived_TRUE Sex_male        -<span style="color: #BB0000;">0.543</span> 1.41<span style="color: #949494;">e</span><span style="color: #BB0000;">- 69</span> Survived TRUE   Sex    <span style="color: #949494;">"</span>male<span style="color: #949494;">"</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Pclass_3      Cabin_           0.539 2.25<span style="color: #949494;">e</span><span style="color: #BB0000;">- 68</span> Pclass   3      Cabin  <span style="color: #949494;">""</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Pclass_3      Cabin_OTHER     -<span style="color: #BB0000;">0.502</span> 3.94<span style="color: #949494;">e</span><span style="color: #BB0000;">- 58</span> Pclass   3      Cabin  <span style="color: #949494;">"</span>OTHER<span style="color: #949494;">"</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Fare          Cabin_          -<span style="color: #BB0000;">0.482</span> 4.85<span style="color: #949494;">e</span><span style="color: #BB0000;">- 53</span> Fare     Fare   Cabin  <span style="color: #949494;">""</span>     </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Show only most relevant results filtered by pvalue</span></span></span>
 <span class="r-in"><span><span class="fu">corr_cross</span><span class="op">(</span><span class="va">dft</span>, rm.na <span class="op">=</span> <span class="cn">TRUE</span>, max_pvalue <span class="op">=</span> <span class="fl">0.05</span>, top <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in corr_cross(dft, rm.na = TRUE, max_pvalue = 0.05, top = 15):</span> could not find function "corr_cross"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Returning only the top 15. You may override with the 'top' argument</span>
+<span class="r-plt img"><img src="corr_cross-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Cross-Correlation for certain variables</span></span></span>
 <span class="r-in"><span><span class="fu">corr_cross</span><span class="op">(</span><span class="va">dft</span>, contains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Survived"</span>, <span class="st">"Fare"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in corr_cross(dft, contains = c("Survived", "Fare")):</span> could not find function "corr_cross"</span>
+<span class="r-plt img"><img src="corr_cross-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Cross-Correlation max values per category</span></span></span>
 <span class="r-in"><span><span class="fu">corr_cross</span><span class="op">(</span><span class="va">dft</span>, type <span class="op">=</span> <span class="fl">2</span>, top <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in corr_cross(dft, type = 2, top = NA):</span> could not find function "corr_cross"</span>
+<span class="r-plt img"><img src="corr_cross-3.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

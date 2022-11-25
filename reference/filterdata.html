@@ -191,9 +191,21 @@ set to NA no calculation will run.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ Cabin      : Factor w/ 148 levels "","A10","A14",..: 1 83 1 57 1 1 131 1 1 1 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ Embarked   : Factor w/ 4 levels "","C","Q","S": 4 2 4 4 4 3 4 4 4 2 ...</span>
 <span class="r-in"><span><span class="fu">numericalonly</span><span class="op">(</span><span class="va">dft</span><span class="op">)</span> <span class="op"><a href="lares-exports.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in numericalonly(dft) %&gt;% head():</span> could not find function "%&gt;%"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   PassengerId Age SibSp Parch    Fare Survived Sex</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           1  22     1     0  7.2500        0   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           2  38     1     0 71.2833        1   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           3  26     0     0  7.9250        1   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4           4  35     1     0 53.1000        1   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           5  35     0     0  8.0500        0   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           6  NA     0     0  8.4583        0   1</span>
 <span class="r-in"><span><span class="fu">numericalonly</span><span class="op">(</span><span class="va">dft</span>, natransform <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span> <span class="op"><a href="lares-exports.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in numericalonly(dft, natransform = "mean") %&gt;% head():</span> could not find function "%&gt;%"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   PassengerId      Age SibSp Parch    Fare Survived Sex</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           1 22.00000     1     0  7.2500        0   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           2 38.00000     1     0 71.2833        1   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           3 26.00000     0     0  7.9250        1   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4           4 35.00000     1     0 53.1000        1   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           5 35.00000     0     0  8.0500        0   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           6 29.69912     0     0  8.4583        0   1</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

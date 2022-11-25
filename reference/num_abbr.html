@@ -87,9 +87,11 @@ significant figures to show. Range 1 to 6.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">num_abbr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">*</span> <span class="fl">1e6</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in num_abbr(rnorm(10) * 1e+06):</span> could not find function "num_abbr"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "-560K"  "-230K"  "1.56M"  "70.5K"  "129K"   "1.72M"  "461K"   "-1.27M"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "-687K"  "-446K" </span>
 <span class="r-in"><span><span class="fu">num_abbr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">*</span> <span class="fl">1e6</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in num_abbr(rnorm(10) * 1e+06, n = 1):</span> could not find function "num_abbr"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1M"    "400K"  "400K"  "100K"  "-600K" "2M"    "500K"  "-2M"   "700K" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "-500K"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

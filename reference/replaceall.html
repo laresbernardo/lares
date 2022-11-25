@@ -153,25 +153,74 @@ leave as default classes as character)?</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5  NA   E     A    C</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">replaceall</span><span class="op">(</span><span class="va">df</span>, <span class="st">"A"</span>, <span class="cn">NA</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in replaceall(df, "A", NA):</span> could not find function "replaceall"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     one two   three four </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2 B     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 C     <span style="color: #BB0000;">NA</span>    123  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     4 D     <span style="color: #BB0000;">NA</span>    B    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>    <span style="color: #BB0000;">NA</span> E     <span style="color: #BB0000;">NA</span>    C    </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">replaceall</span><span class="op">(</span><span class="va">df</span>, <span class="st">"A"</span>, <span class="st">"a"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in replaceall(df, "A", "a"):</span> could not find function "replaceall"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     one two   three four </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 a     a     <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2 B     a     aaa  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 C     a     123  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     4 D     a     B    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>    <span style="color: #BB0000;">NA</span> E     a     C    </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">replaceall</span><span class="op">(</span><span class="va">df</span>, <span class="fl">1</span>, <span class="st">"*"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in replaceall(df, 1, "*"):</span> could not find function "replaceall"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   one   two   three four </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> *     A     A     <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2     B     A     Aaa  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 3     C     A     *23  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 4     D     A     B    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #BB0000;">NA</span>    E     A     C    </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">replaceall</span><span class="op">(</span><span class="va">df</span>, <span class="cn">NA</span>, <span class="st">"NotNA"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in replaceall(df, NA, "NotNA"):</span> could not find function "replaceall"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   one   two   three four </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 1     A     A     NotNA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2     B     A     Aaa  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 3     C     A     123  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 4     D     A     B    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> NotNA E     A     C    </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">replaceall</span><span class="op">(</span><span class="va">df</span>, <span class="cn">NA</span>, <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in replaceall(df, NA, 0):</span> could not find function "replaceall"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     one two   three four </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 A     A     0    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2 B     A     Aaa  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 C     A     123  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     4 D     A     B    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>     0 E     A     C    </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">replaceall</span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"'A'"</span>, <span class="st">"'B'"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in replaceall(df, c("A", "B"), c("'A'", "'B'")):</span> could not find function "replaceall"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     one two   three four </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 'A'   'A'   <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2 'B'   'A'   'A'aa</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 C     'A'   123  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     4 D     'A'   'B'  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>    <span style="color: #BB0000;">NA</span> E     'A'   C    </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">replaceall</span><span class="op">(</span><span class="va">df</span>, <span class="st">"a"</span>, <span class="st">"*"</span>, which <span class="op">=</span> <span class="st">"four"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in replaceall(df, "a", "*", which = "four"):</span> could not find function "replaceall"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     one two   three four </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 A     A     <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2 B     A     A**  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 C     A     123  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     4 D     A     B    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>    <span style="color: #BB0000;">NA</span> E     A     C    </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

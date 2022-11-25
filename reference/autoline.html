@@ -135,18 +135,103 @@ is a factor, the levels will be kept in order and transformed.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">autoline</span><span class="op">(</span><span class="st">"This is a long text that may not fit into a single line"</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in autoline("This is a long text that may not fit into a single line",     8):</span> could not find function "autoline"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> This is</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> a long</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> text</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> that may</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> not fit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> into a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> single</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> line</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">text</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"First value"</span>, <span class="st">"Second value"</span>, <span class="st">"First value"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"First value"</span>, <span class="st">"Second value"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">autoline</span><span class="op">(</span><span class="va">text</span>, <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in autoline(text, 1):</span> could not find function "autoline"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] First\nvalue  Second\nvalue First\nvalue </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: First\nvalue Second\nvalue</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Rhome.html" class="external-link">R.home</a></span><span class="op">(</span><span class="st">"doc"</span><span class="op">)</span>, <span class="st">"THANKS"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">text</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">autoline</span><span class="op">(</span><span class="va">text</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in autoline(text):</span> could not find function "autoline"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R would not be what it is today without the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> invaluable help of these people outside of the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (former and current) R Core team, who contributed by</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> donating code, bug fixes and documentation: Valerio</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Aimale, Suharto Anggono, Thomas Baier, Gabe Becker,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Henrik Bengtsson, Roger Bivand, Ben Bolker, David</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Brahm, G"oran Brostr"om, Patrick Burns, Vince Carey,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Saikat DebRoy, Matt Dowle, Brian D'Urso, Lyndon</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Drake, Dirk Eddelbuettel, Claus Ekstrom, Sebastian</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fischmeister, John Fox, Paul Gilbert, Yu Gong, Gabor</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Grothendieck, Frank E Harrell Jr, Peter M. Haverty,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Torsten Hothorn, Robert King, Kjetil Kjernsmo,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Roger Koenker, Philippe Lambert, Jan de Leeuw,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Jim Lindsey, Patrick Lindsey, Catherine Loader,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gordon Maclean, Arni Magnusson, John Maindonald,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> David Meyer, Ei-ji Nakama, Jens Oehlschl"agel,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Steve Oncley, Richard O'Keefe, Hubert Palme, Roger</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> D. Peng, Jose' C. Pinheiro, Tony Plate, Anthony</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rossini, Jonathan Rougier, Petr Savicky, Guenther</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sawitzki, Marc Schwartz, Arun Srinivasan, Detlef</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Steuer, Bill Simpson, Gordon Smyth, Adrian Trapletti,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Terry Therneau, Rolf Turner, Bill Venables, Gregory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R. Warnes, Andreas Weingessel, Morten Welinder,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> James Wettenhall, Simon Wood, and Achim Zeileis.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Others have written code that has been adopted by</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R and is acknowledged in the code files, including</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> J. D. Beasley, David J. Best, Richard Brent, Kevin</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Buhr, Michael A. Covington, Bill Cleveland, Robert</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cleveland,, G. W. Cran, C. G. Ding, Ulrich Drepper,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Paul Eggert, J. O. Evans, David M. Gay, H. Frick,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> G. W. Hill, Richard H. Jones, Eric Grosse, Shelby</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Haberman, Bruno Haible, John Hartigan, Andrew Harvey,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trevor Hastie, Min Long Lam, George Marsaglia, K.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> J. Martin, Gordon Matzigkeit, C. R. Mckenzie, Jean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> McRae, Cyrus Mehta, Fionn Murtagh, John C. Nash,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Finbarr O'Sullivan, R. E. Odeh, William Patefield,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Nitin Patel, Alan Richardson, D. E. Roberts, Patrick</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Royston, Russell Lenth, Ming-Jen Shyu, Richard C.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Singleton, S. G. Springer, Supoj Sutanthavibul,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Irma Terpenning, G. E. Thomas, Rob Tibshirani,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Wai Wan Tsang, Berwin Turlach, Gary V. Vaughan,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Michael Wichura, Jingbo Wang, M. A. Wong, and the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Free Software Foundation (for autoconf code and</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> utilities). See also files under src/extras. Many</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> more, too numerous to mention here, have contributed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> by sending bug reports and suggesting various</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> improvements. Simon Davies whilst at the University</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> of Auckland wrote the original version of glm().</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Julian Harris and Wing Kwong (Tiki) Wan whilst at</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> the University of Auckland assisted Ross Ihaka with</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> the original Macintosh port. R was inspired by the S</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> environment which has been principally developed by</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> John Chambers, with substantial input from Douglas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bates, Rick Becker, Bill Cleveland, Trevor Hastie,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Daryl Pregibon and Allan Wilks. A special debt is</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> owed to John Chambers who has graciously contributed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> advice and encouragement in the early days of R and</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> later became a member of the core team. Stefano Iacus</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (up to 2014, a former member of R Core) and Simon</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Urbanek developed the macOS port, including the R.app</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GUI, toolchains and packaging. The Windows port was</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> originally developed by Guido Masarotto (for a while</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> a member of R Core) and Brian Ripley, then further</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> by Duncan Murdoch (a former member of R Core) and</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> then Jeroen Ooms (base) and Uwe Ligges (packages).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tomas Kalibera is the current main developer of the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Windows port and provides assistance with package</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> porting. Tomas Kalibera's work has been sponsored</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> by Jan Vitek and funded by his European Research</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Council grant "Evolving Language Ecosystems (ELE)".</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Computing support (including hardware, hosting and</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> infrastructure) has been provided/funded by the R</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Foundation, employers of R-Core members (notably</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> WU Wien, ETH Zurich, U Oxford and U Iowa) and by</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Northeastern University and the University of Kent.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Distributions of R contain the recommended packages,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> whose authors/contributors are listed in their</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DESCRIPTION files.</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

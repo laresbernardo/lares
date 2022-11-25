@@ -162,9 +162,27 @@ when <code>plot=FALSE</code>.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dft</span><span class="op">)</span> <span class="co"># Titanic dataset</span></span></span>
 <span class="r-in"><span><span class="fu">freqs_df</span><span class="op">(</span><span class="va">dft</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in freqs_df(dft):</span> could not find function "freqs_df"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>cannot xtfrm data frames</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 variables with more than 0.9 variance exluded: 'PassengerId'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,191 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   variable [10]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    variable value        n     p  pcum</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Cabin    <span style="color: #949494;">""</span>         687  77.1  77.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Parch    <span style="color: #949494;">"</span>0<span style="color: #949494;">"</span>        678  76.1  76.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Embarked <span style="color: #949494;">"</span>S<span style="color: #949494;">"</span>        644  72.3  72.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> SibSp    <span style="color: #949494;">"</span>0<span style="color: #949494;">"</span>        608  68.2  68.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Sex      <span style="color: #949494;">"</span>male<span style="color: #949494;">"</span>     577  64.8  64.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Survived <span style="color: #949494;">"</span>FALSE<span style="color: #949494;">"</span>    549  61.6  61.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Pclass   <span style="color: #949494;">"</span>3<span style="color: #949494;">"</span>        491  55.1  55.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Survived <span style="color: #949494;">"</span>TRUE<span style="color: #949494;">"</span>     342  38.4 100  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Sex      <span style="color: #949494;">"</span>female<span style="color: #949494;">"</span>   314  35.2 100  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Pclass   <span style="color: #949494;">"</span>1<span style="color: #949494;">"</span>        216  24.2  79.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1,181 more rows</span></span>
 <span class="r-in"><span><span class="fu">freqs_df</span><span class="op">(</span><span class="va">dft</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in freqs_df(dft, plot = TRUE):</span> could not find function "freqs_df"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>cannot xtfrm data frames</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 variables with more than 0.9 variance exluded: 'PassengerId'</span>
+<span class="r-plt img"><img src="freqs_df-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

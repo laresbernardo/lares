@@ -104,9 +104,16 @@ formatting the break numbers.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dft</span><span class="op">)</span> <span class="co"># Titanic dataset</span></span></span>
 <span class="r-in"><span><span class="fu">quants</span><span class="op">(</span><span class="va">dft</span><span class="op">$</span><span class="va">Age</span>, splits <span class="op">=</span> <span class="fl">5</span>, <span class="st">"summary"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in quants(dft$Age, splits = 5, "summary"):</span> could not find function "quants"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      percentile  cut   label</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20%         20% 19.0 [19-19]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40%         40% 25.0 (19-25]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60%         60% 31.8 (25-32]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80%         80% 41.0 (32-41]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100%       100% 80.0 (41-80]</span>
 <span class="r-in"><span><span class="fu">quants</span><span class="op">(</span><span class="va">dft</span><span class="op">$</span><span class="va">Age</span>, splits <span class="op">=</span> <span class="fl">5</span>, <span class="st">"labels"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in quants(dft$Age, splits = 5, "labels"):</span> could not find function "quants"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] (19,25]   (32,41]   (25,32]   (32,41]   (32,41]   &lt;NA&gt;      (41,80]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] [0.42,19] (25,32]   [0.42,19]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: [0.42,19] &lt; (19,25] &lt; (25,32] &lt; (32,41] &lt; (41,80]</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

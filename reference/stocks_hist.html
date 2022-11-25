@@ -164,7 +164,14 @@ Daily Change, Market, and Symbol Name.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># Multiple quotes at the same time</span></span></span>
 <span class="r-in"><span><span class="fu">stocks_quote</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VTI"</span>, <span class="st">"VOO"</span>, <span class="st">"TSLA"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in stocks_quote(c("VTI", "VOO", "TSLA")):</span> could not find function "stocks_quote"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Symbol   Type           QuoteTime  Value DailyChange    Market</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    VTI    ETF 2022-11-25 18:00:00 201.54   0.1499940 us_market</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    VOO    ETF 2022-11-25 18:00:00 369.80  -0.0400085 us_market</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   TSLA EQUITY 2022-11-25 18:00:04 182.86  -0.3399963 us_market</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               SymbolName</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Vanguard Total Stock Market Index Fund</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                Vanguard 500 Index Fund</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                            Tesla, Inc.</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># CRAN</span></span></span>

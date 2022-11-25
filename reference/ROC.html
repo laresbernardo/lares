@@ -144,17 +144,72 @@ range. It also works for multi-categorical models.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># ROC Data for Binomial Model</span></span></span>
 <span class="r-in"><span><span class="va">roc1</span> <span class="op">&lt;-</span> <span class="fu">ROC</span><span class="op">(</span><span class="va">dfr</span><span class="op">$</span><span class="va">class2</span><span class="op">$</span><span class="va">tag</span>, <span class="va">dfr</span><span class="op">$</span><span class="va">class2</span><span class="op">$</span><span class="va">scores</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ROC(dfr$class2$tag, dfr$class2$scores):</span> could not find function "ROC"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">roc1</span>, <span class="va">head</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in lapply(roc1, head):</span> object 'roc1' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ci</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        roc.ci</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min 0.8542079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AUC 0.8946749</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> max 0.9351419</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $roc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   fpr         tpr label</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1 0.000000000 2cats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   1 0.009708738 2cats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   1 0.019417476 2cats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   1 0.029126214 2cats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1 0.038834951 2cats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   1 0.048543689 2cats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># ROC Data for Multi-Categorical Model</span></span></span>
 <span class="r-in"><span><span class="va">roc2</span> <span class="op">&lt;-</span> <span class="fu">ROC</span><span class="op">(</span><span class="va">dfr</span><span class="op">$</span><span class="va">class3</span><span class="op">$</span><span class="va">tag</span>, <span class="va">dfr</span><span class="op">$</span><span class="va">class3</span><span class="op">$</span><span class="va">score</span>,</span></span>
 <span class="r-in"><span>  multis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dfr</span><span class="op">$</span><span class="va">class3</span>, select <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">tag</span>, <span class="va">score</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ROC(dfr$class3$tag, dfr$class3$score, multis = subset(dfr$class3,     select = -c(tag, score))):</span> could not find function "ROC"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">roc2</span>, <span class="va">head</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in lapply(roc2, head):</span> object 'roc2' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ci</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           n_1       n_2       n_3      mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min 0.8198601 0.6018566 0.7774864 0.7330677</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AUC 0.8669377 0.6754127 0.8264621 0.7896042</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> max 0.9140153 0.7489689 0.8754379 0.8461407</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $roc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   fpr         tpr        label</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1 0.000000000 86.69% | n_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   1 0.004878049 86.69% | n_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   1 0.009756098 86.69% | n_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   1 0.019512195 86.69% | n_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1 0.024390244 86.69% | n_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   1 0.029268293 86.69% | n_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $rocs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $rocs$n_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> roc.default(response = label, predictor = res, quiet = TRUE,     ci = TRUE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: res in 63 controls (label n_1) &gt; 205 cases (label other_label).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Area under the curve: 0.8669</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95% CI: 0.8199-0.914 (DeLong)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $rocs$n_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> roc.default(response = label, predictor = res, quiet = TRUE,     ci = TRUE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: res in 56 controls (label n_2) &gt; 212 cases (label other_label).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Area under the curve: 0.6754</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95% CI: 0.6019-0.749 (DeLong)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $rocs$n_3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> roc.default(response = label, predictor = res, quiet = TRUE,     ci = TRUE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: res in 149 controls (label n_3) &gt; 119 cases (label other_label).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Area under the curve: 0.8265</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95% CI: 0.7775-0.8754 (DeLong)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

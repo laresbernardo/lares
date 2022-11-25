@@ -200,28 +200,56 @@ complements our <code><a href="corr_cross.html">lares::corr_cross()</a></code> o
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dft</span><span class="op">)</span> <span class="co"># Titanic dataset</span></span></span>
 <span class="r-in"><span><span class="va">x2y_results</span> <span class="op">&lt;-</span> <span class="fu">x2y</span><span class="op">(</span><span class="va">dft</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, max_cat <span class="op">=</span> <span class="fl">10</span>, top <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in x2y(dft, quiet = TRUE, max_cat = 10, top = NULL):</span> could not find function "x2y"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x2y_results</span>, <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(x2y_results, 10):</span> object 'x2y_results' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    x        y        obs_p   x2y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Fare     Pclass     100  65.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Fare     Embarked   100  45.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Sex      Survived   100  44.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Fare     Parch      100  40.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Survived Sex        100  39.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Fare     SibSp      100  35.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Pclass   Fare       100  32.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Ticket   SibSp      100  25.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> SibSp    Parch      100  21.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Fare     Survived   100  20.5</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x2y_results</span>, type <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot(x2y_results, type = 2):</span> object 'x2y_results' not found</span>
+<span class="r-plt img"><img src="x2y-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Confidence intervals with 10 bootstrap iterations</span></span></span>
 <span class="r-in"><span><span class="fu">x2y</span><span class="op">(</span><span class="va">dft</span>,</span></span>
 <span class="r-in"><span>  target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Survived"</span>, <span class="st">"Age"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  confidence <span class="op">=</span> <span class="cn">TRUE</span>, bootstraps <span class="op">=</span> <span class="fl">10</span>, top <span class="op">=</span> <span class="fl">8</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in x2y(dft, target = c("Survived", "Age"), confidence = TRUE, bootstraps = 10,     top = 8):</span> could not find function "x2y"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x        y        obs_p   x2y lower_ci upper_ci</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Sex      Survived 100   44.4     35.2      48.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Survived Sex      100   39.5     33.6      45.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Fare     Survived 100   20.5     -<span style="color: #BB0000;">6.4</span>      17.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Age      Parch     80.1 18.9     12.8      21.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Pclass   Survived 100   16.4     11.9      24.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Age      Pclass    80.1 14.8      7.57     15.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> Age      SibSp     80.1 10.6      3.5      12.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> Cabin    Survived 100    8.19     5.95     10.5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Compare with mean absolute correlations</span></span></span>
 <span class="r-in"><span><span class="fu">x2y</span><span class="op">(</span><span class="va">dft</span>, <span class="st">"Fare"</span>, corr <span class="op">=</span> <span class="cn">TRUE</span>, top <span class="op">=</span> <span class="fl">6</span>, target_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in x2y(dft, "Fare", corr = TRUE, top = 6, target_x = TRUE):</span> could not find function "x2y"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x     y        obs_p   x2y mean_abs_corr mean_pvalue</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Fare  Pclass     100  65.2         0.375    1.30<span style="color: #949494;">e</span><span style="color: #BB0000;">- 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Fare  Embarked   100  45.3         0.150    4.35<span style="color: #949494;">e</span><span style="color: #BB0000;">- 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Fare  Parch      100  40.0         0.216    6.92<span style="color: #949494;">e</span><span style="color: #BB0000;">-11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Fare  SibSp      100  35.4         0.160    1.67<span style="color: #949494;">e</span><span style="color: #BB0000;">- 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Fare  Survived   100  20.5         0.257    6.12<span style="color: #949494;">e</span><span style="color: #BB0000;">-15</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Fare  Sex        100  13.7         0.182    4.23<span style="color: #949494;">e</span><span style="color: #BB0000;">- 8</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Plot (symmetric) results</span></span></span>
 <span class="r-in"><span><span class="va">symm</span> <span class="op">&lt;-</span> <span class="fu">x2y</span><span class="op">(</span><span class="va">dft</span>, target <span class="op">=</span> <span class="st">"Survived"</span>, symmetric <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in x2y(dft, target = "Survived", symmetric = TRUE):</span> could not find function "x2y"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">symm</span>, type <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot(symm, type = 1):</span> object 'symm' not found</span>
+<span class="r-plt img"><img src="x2y-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Symmetry: x2y vs y2x</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -231,9 +259,9 @@ complements our <code><a href="corr_cross.html">lares::corr_cross()</a></code> o
 <span class="r-in"><span><span class="co"># Knowing x reduces the uncertainty about the value of y a lot more than</span></span></span>
 <span class="r-in"><span><span class="co"># knowing y reduces the uncertainty about the value of x. Note correlation.</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">x2y_preds</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>, corr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in x2y_preds(x, y):</span> could not find function "x2y_preds"</span>
+<span class="r-plt img"><img src="x2y-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">x2y_preds</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span><span class="op">)</span>, corr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in x2y_preds(y, x):</span> could not find function "x2y_preds"</span>
+<span class="r-plt img"><img src="x2y-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

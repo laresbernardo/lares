@@ -173,23 +173,23 @@ the `decimals` parameter to set abbr's <code>n</code>(-1) parameter.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">formatNum</span><span class="op">(</span><span class="fl">1.23456</span>, decimals <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in formatNum(1.23456, decimals = 3):</span> could not find function "formatNum"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1.235"</span>
 <span class="r-in"><span><span class="fu">formatNum</span><span class="op">(</span><span class="fl">1.23456</span>, type <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in formatNum(1.23456, type = 1):</span> could not find function "formatNum"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1,23"</span>
 <span class="r-in"><span><span class="fu">formatNum</span><span class="op">(</span><span class="fl">1.23456</span>, pre <span class="op">=</span> <span class="st">"$"</span>, pos <span class="op">=</span> <span class="st">"/person"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in formatNum(1.23456, pre = "$", pos = "/person"):</span> could not find function "formatNum"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1.23/person"</span>
 <span class="r-in"><span><span class="fu">formatNum</span><span class="op">(</span><span class="fl">123456</span>, abbr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in formatNum(123456, abbr = TRUE):</span> could not find function "formatNum"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "123K"</span>
 <span class="r-in"><span><span class="fu">formatNum</span><span class="op">(</span><span class="fl">1234567890</span>, abbr <span class="op">=</span> <span class="cn">TRUE</span>, signif <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in formatNum(1234567890, abbr = TRUE, signif = 2):</span> could not find function "formatNum"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1.2B"</span>
 <span class="r-in"><span><span class="fu">formatNum</span><span class="op">(</span><span class="fl">1234567890</span>, decimals <span class="op">=</span> <span class="fl">0</span>, abbr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in formatNum(1234567890, decimals = 0, abbr = TRUE):</span> could not find function "formatNum"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1B"</span>
 <span class="r-in"><span><span class="fu">formatNum</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>, sign <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in formatNum(c(-3:3), sign = TRUE):</span> could not find function "formatNum"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "-3" "-2" "-1" "0"  "+1" "+2" "+3"</span>
 <span class="r-in"><span><span class="fu">formatHTML</span><span class="op">(</span><span class="st">"Text test"</span>, color <span class="op">=</span> <span class="st">"#000000"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in formatHTML("Text test", color = "#000000"):</span> could not find function "formatHTML"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "&lt;span style='font-size:20px; color:#000000'&gt;Text test&lt;/span&gt;"</span>
 <span class="r-in"><span><span class="fu">formatHTML</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">123</span>, <span class="fl">456</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"orange"</span>, size <span class="op">=</span> <span class="fl">120</span>, bold <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in formatHTML(c(123, 456), color = "orange", size = 120, bold = TRUE):</span> could not find function "formatHTML"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "&lt;span style='font-size:120px; color:orange'&gt;**123**&lt;br/&gt;**456**&lt;/span&gt;"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># If you want to use it with \code{ggtext}:</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>

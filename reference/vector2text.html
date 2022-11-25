@@ -121,18 +121,18 @@ is set to <code>1</code> and you have less than 3 values.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">vector2text</span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in vector2text(LETTERS[1:5]):</span> could not find function "vector2text"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "'A', 'B', 'C', 'D', 'E'"</span>
 <span class="r-in"><span><span class="fu">vector2text</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, quotes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in vector2text(c(1:5), quotes = FALSE):</span> could not find function "vector2text"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1, 2, 3, 4, 5"</span>
 <span class="r-in"><span><span class="fu">vector2text</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, quotes <span class="op">=</span> <span class="cn">FALSE</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in vector2text(c(1:5), quotes = FALSE, sep = "-"):</span> could not find function "vector2text"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1-2-3-4-5"</span>
 <span class="r-in"><span><span class="fu">vector2text</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, and <span class="op">=</span> <span class="st">"and also"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in vector2text(c(1:5), and = "and also"):</span> could not find function "vector2text"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1, 2, 3, 4, and also 5"</span>
 <span class="r-in"><span><span class="fu">vector2text</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Text"</span>, <span class="st">"R's"</span><span class="op">)</span>, force_single <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in vector2text(c("Text", "R's"), force_single = TRUE):</span> could not find function "vector2text"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "'Text', 'R's'"</span>
 <span class="r-in"><span><span class="co"># Shorter function with same purpose</span></span></span>
 <span class="r-in"><span><span class="fu">v2t</span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in v2t(LETTERS[1:5]):</span> could not find function "v2t"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "'A', 'B', 'C', 'D', 'E'"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
