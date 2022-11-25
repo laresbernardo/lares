@@ -101,18 +101,22 @@ It also lets filter files which contains a string.</p>
 <code><a href="db_upload.html">db_upload</a>()</code>,
 <code><a href="export_plot.html">export_plot</a>()</code>,
 <code><a href="export_results.html">export_results</a>()</code>,
+<code><a href="files_functions.html">files_functions</a>()</code>,
+<code><a href="font_exists.html">font_exists</a>()</code>,
+<code><a href="formatColoured.html">formatColoured</a>()</code>,
+<code><a href="format_string.html">formatHTML</a>()</code>,
 <code><a href="get_credentials.html">get_credentials</a>()</code>,
-<code><a href="h2o_predict_API.html">h2o_predict_API</a>()</code>,
-<code><a href="h2o_predict_MOJO.html">h2o_predict_MOJO</a>()</code>,
-<code><a href="h2o_predict_binary.html">h2o_predict_binary</a>()</code>,
-<code><a href="h2o_predict_model.html">h2o_predict_model</a>()</code>,
+<code><a href="glued.html">glued</a>()</code>,
+<code><a href="grepm.html">grepm</a>()</code>,
 <code><a href="h2o_selectmodel.html">h2o_selectmodel</a>()</code>,
 <code><a href="haveInternet.html">haveInternet</a>()</code>,
 <code><a href="image_metadata.html">image_metadata</a>()</code>,
 <code><a href="importxlsx.html">importxlsx</a>()</code>,
 <code><a href="ip_data.html">ip_data</a>()</code>,
 <code><a href="json2vector.html">json2vector</a>()</code>,
+<code><a href="list_cats.html">list_cats</a>()</code>,
 <code><a href="mail_send.html">mail_send</a>()</code>,
+<code><a href="move_files.html">move_files</a>()</code>,
 <code><a href="msplit.html">msplit</a>()</code>,
 <code><a href="myip.html">myip</a>()</code>,
 <code><a href="quiet.html">quiet</a>()</code>,
@@ -121,8 +125,8 @@ It also lets filter files which contains a string.</p>
 <code><a href="tic.html">tic</a>()</code>,
 <code><a href="try_require.html">try_require</a>()</code>,
 <code><a href="updateLares.html">updateLares</a>()</code>,
-<code><a href="what_size.html">what_size</a>()</code>,
-<code><a href="zerovar.html">zerovar</a>()</code></p></div>
+<code><a href="warnifnot.html">warnifnot</a>()</code>,
+<code><a href="what_size.html">what_size</a>()</code></p></div>
     </div>
 
     <div class="section level2">
@@ -131,25 +135,25 @@ It also lets filter files which contains a string.</p>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">listfiles</span><span class="op">(</span>recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       filename size isdir mode               mtime               ctime</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     ROC.html   19 FALSE  644 2022-11-25 18:42:32 2022-11-25 18:42:32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Rplot001.png    0 FALSE  644 2022-11-25 18:44:04 2022-11-25 18:44:04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Rplot002.png   10 FALSE  644 2022-11-25 18:43:46 2022-11-25 18:43:46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     ROC.html   19 FALSE  644 2022-11-25 22:23:27 2022-11-25 22:23:27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Rplot001.png    0 FALSE  644 2022-11-25 22:24:43 2022-11-25 22:24:43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Rplot002.png   10 FALSE  644 2022-11-25 22:24:28 2022-11-25 22:24:28</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 atime uid gid  uname grname</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2022-11-25 18:42:32 501  20 runner  staff</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2022-11-25 18:42:31 501  20 runner  staff</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2022-11-25 18:42:41 501  20 runner  staff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2022-11-25 22:23:27 501  20 runner  staff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2022-11-25 22:23:27 501  20 runner  staff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2022-11-25 22:23:34 501  20 runner  staff</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># All files in current directory (with recursive files)</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">listfiles</span><span class="op">(</span>recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            filename size isdir mode               mtime               ctime</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 139    li_auth.html    8 FALSE  644 2022-11-25 18:44:03 2022-11-25 18:44:03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 140 li_profile.html    8 FALSE  644 2022-11-25 18:44:03 2022-11-25 18:44:03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 141  list_cats.html   11 FALSE  644 2022-11-25 18:44:04 2022-11-25 18:44:04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 139    li_auth.html    8 FALSE  644 2022-11-25 22:24:42 2022-11-25 22:24:42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 140 li_profile.html    8 FALSE  644 2022-11-25 22:24:43 2022-11-25 22:24:43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 141  list_cats.html   13 FALSE  644 2022-11-25 22:24:43 2022-11-25 22:24:43</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   atime uid gid  uname grname</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 139 2022-11-25 18:44:03 501  20 runner  staff</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 140 2022-11-25 18:44:03 501  20 runner  staff</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 141 2022-11-25 18:44:04 501  20 runner  staff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 139 2022-11-25 22:24:42 501  20 runner  staff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 140 2022-11-25 22:24:43 501  20 runner  staff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 141 2022-11-25 22:24:43 501  20 runner  staff</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Check R files using regex</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">listfiles</span><span class="op">(</span>regex <span class="op">=</span> <span class="st">"\\.R$"</span><span class="op">)</span></span></span>
