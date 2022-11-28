@@ -8,6 +8,7 @@ cran_logs(
   input = "lares",
   from = Sys.Date() - 31,
   to = Sys.Date() - 1,
+  type = "daily",
   plot = TRUE
 )
 }
@@ -16,6 +17,8 @@ cran_logs(
 \code{cranlogs::cran_downloads}.}
 
 \item{from, to}{Dates. Range of dates to fetch downloads metrics.}
+
+\item{type}{Character. Any of: "daily" or "total".}
 
 \item{plot}{Boolean. Create a plot?}
 }

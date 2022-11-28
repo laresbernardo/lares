@@ -8,6 +8,7 @@
 #' @param input Character vector with package names or data.frame product of
 #' \code{cranlogs::cran_downloads}.
 #' @param from,to Dates. Range of dates to fetch downloads metrics.
+#' @param type Character. Any of: "daily" or "total".
 #' @param plot Boolean. Create a plot?
 #' @examples
 #' \donttest{
@@ -18,27 +19,37 @@
 cran_logs <- function(input = "lares",
                       from = Sys.Date() - 31,
                       to = Sys.Date() - 1,
+                      type = "daily",
                       plot = TRUE) {
   if (is.vector(input)) {
-    base <- "https://cranlogs.r-pkg.org/downloads/daily"
+    check_opts(type, c("daily", "total"))
+    base <- sprintf("https://cranlogs.r-pkg.org/downloads/%s", type)
     dates <- sprintf("%s:%s", as.character(from), as.character(to))
     packages <- paste(unique(input), collapse = ",")
     url <- paste(base, dates, packages, sep = "/")
-    scrap <- content(GET(url))
-    cran.df <- bind_rows(scrap) %>%
-      mutate(
-        date = unlist(lapply(.data$downloads, function(x) x[[1]])),
-        count = unlist(lapply(.data$downloads, function(x) x[[2]]))
-      ) %>%
-      select(.data$date, .data$count, .data$package) %>%
-      mutate(date = as.Date(.data$date, origin = "1970-01-01"))
+    scrap <- content(GET(url), encoding = "UTF-8")
+    if (!"downloads" %in% names(scrap[[1]])) {
+      warning("Site currently unavailable")
+      return(invisible(url)) 
+    }
+    cran.df <- bind_rows(scrap)
+    if (type == "daily") {
+      cran.df <- cran.df %>%
+        mutate(
+          date = unlist(lapply(.data$downloads, function(x) x[[1]])),
+          count = unlist(lapply(.data$downloads, function(x) x[[2]]))
+        ) %>%
+        select(.data$date, .data$count, .data$package) %>%
+        mutate(date = as.Date(.data$date, origin = "1970-01-01")) %>%
+        arrange(desc(.data$date)) 
+    }
+  } else {
+    check_opts(colnames(input), c("date", "count", "package"), input_name = "column names")
+    cran.df <- as_tibble(input)
   }
 
-  check_opts(colnames(input), c("date", "count", "package"), input_name = "column names")
-  cran.df <- arrange(cran.df, desc(.data$date))
-
   package <- unique(cran.df$package)
-  if (nrow(cran.df) >= length(package) * 2 && plot) {
+  if (nrow(cran.df) >= length(package) * 2 && plot && type == "daily") {
     input <- cran.df %>%
       arrange(.data$date) %>%
       group_by(.data$package) %>%
