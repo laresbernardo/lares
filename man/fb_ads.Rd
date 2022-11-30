@@ -10,7 +10,7 @@ fb_ads(
   start_date = Sys.Date() - 31,
   end_date = Sys.Date(),
   fields = NA,
-  api_version = "v13.0",
+  api_version = "v15.0",
   process = TRUE
 )
 }
@@ -72,7 +72,7 @@ Other API:
 \code{\link{queryGA}()},
 \code{\link{slackSend}()}
 
-Other Facebook: 
+Other Meta: 
 \code{\link{fb_accounts}()},
 \code{\link{fb_creatives}()},
 \code{\link{fb_insights}()},
@@ -83,4 +83,4 @@ Other Facebook:
 \code{\link{fb_token}()}
 }
 \concept{API}
-\concept{Facebook}
+\concept{Meta}

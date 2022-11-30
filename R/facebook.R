@@ -5,7 +5,7 @@
 #' querying the API with \code{httr::GET}.
 #'
 #' @family API
-#' @family Facebook
+#' @family Meta
 #' @param response GET's output object, class response
 #' @param paginate Boolean. Run through all paginations? If not,
 #' only the first one will be processed.
@@ -81,7 +81,7 @@ fb_process <- function(response, paginate = TRUE) {
 #' \href{https://developers.facebook.com/docs/marketing-api/insights/}{documentaion}.
 #'
 #' @family API
-#' @family Facebook
+#' @family Meta
 #' @param token Character. Valid access token with sufficient privileges. Visit the
 #' \href{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
 #' to acquire one.
@@ -156,7 +156,7 @@ fb_insights <- function(token,
                         breakdowns = NA,
                         fields = NA,
                         limit = 10000,
-                        api_version = "v13.0",
+                        api_version = "v15.0",
                         process = TRUE) {
   set_config(config(http_version = 0))
   check_opts(report_level, c("ad", "adset", "campaign", "account"))
@@ -214,7 +214,7 @@ fb_insights <- function(token,
 #' \href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}.
 #'
 #' @family API
-#' @family Facebook
+#' @family Meta
 #' @inheritParams fb_insights
 #' @param ad_account Character. Ad Account. Remember to start with \code{act_}. If you
 #' use the \code{prediction} argument, no need to provide this parameter.
@@ -302,7 +302,7 @@ fb_rf <- function(token,
                   frequency_cap = 8,
                   prediction_mode = 1,
                   curve = TRUE,
-                  api_version = "v13.0",
+                  api_version = "v15.0",
                   process = TRUE,
                   ...) {
   set_config(config(http_version = 0))
@@ -407,7 +407,7 @@ fb_rf <- function(token,
 #' comments, shares, and reactions of n posts (with no limits).
 #'
 #' @family API
-#' @family Facebook
+#' @family Meta
 #' @inheritParams fb_insights
 #' @param n Integer. How many most recent posts do you need?
 #' @param limits Integer. For each post, hoy many results do you need?
@@ -426,7 +426,7 @@ fb_posts <- function(token,
                      comments = FALSE,
                      shares = FALSE,
                      reactions = FALSE,
-                     api_version = "v13.0") {
+                     api_version = "v15.0") {
   # TOKEN: https://developers.facebook.com/tools/explorer/
 
   set_config(config(http_version = 0))
@@ -604,7 +604,7 @@ posts_fb <- function(posts) {
 #' post(s) id.
 #'
 #' @family API
-#' @family Facebook
+#' @family Meta
 #' @inheritParams fb_insights
 #' @param post_id Character vector. Post id(s)
 #' @return data.frame with un-nested processed results fetched with API.
@@ -680,7 +680,7 @@ fb_post <- function(token, post_id, limit = 5000) {
 #' \href{https://developers.facebook.com/docs/marketing-api/insights/}{original documentaion}
 #'
 #' @family API
-#' @family Facebook
+#' @family Meta
 #' @inheritParams fb_insights
 #' @inheritParams fb_process
 #' @param business_id Character. Business ID.
@@ -696,7 +696,7 @@ fb_accounts <- function(token,
                         business_id = "904189322962915",
                         type = c("owned", "client"),
                         limit = 1000,
-                        api_version = "v13.0") {
+                        api_version = "v15.0") {
   set_config(config(http_version = 0))
 
   # Starting URL
@@ -765,7 +765,7 @@ fb_accounts <- function(token,
 #' This function was based on FBinsightsR.
 #'
 #' @family API
-#' @family Facebook
+#' @family Meta
 #' @inheritParams fb_insights
 #' @inheritParams fb_process
 #' @return data.frame with un-nested processed results if \code{process=TRUE} or
@@ -784,7 +784,7 @@ fb_ads <- function(token,
                    start_date = Sys.Date() - 31,
                    end_date = Sys.Date(),
                    fields = NA,
-                   api_version = "v13.0",
+                   api_version = "v15.0",
                    process = TRUE) {
   set_config(config(http_version = 0))
 
@@ -832,7 +832,7 @@ fb_ads <- function(token,
 #' For more information: \href{https://developers.facebook.com/docs/marketing-apis}{Marketing API}
 #'
 #' @family API
-#' @family Facebook
+#' @family Meta
 #' @inheritParams fb_process
 #' @inheritParams fb_insights
 #' @return data.frame with un-nested processed results if \code{process=TRUE} or
@@ -847,7 +847,7 @@ fb_ads <- function(token,
 #' }
 #' @export
 fb_creatives <- function(token, which,
-                         api_version = "v13.0",
+                         api_version = "v15.0",
                          process = TRUE) {
   set_config(config(http_version = 0))
 
@@ -890,7 +890,7 @@ fb_creatives <- function(token, which,
 #' More info: \href{https://developers.facebook.com/docs/facebook-login/guides/access-tokens/get-long-lived}{Long-Lived Access Tokens}
 #'
 #' @family API
-#' @family Facebook
+#' @family Meta
 #' @inheritParams fb_insights
 #' @param app_id,app_secret Character. Application ID and Secret.
 #' @param token Character. User token, created with
@@ -898,7 +898,7 @@ fb_creatives <- function(token, which,
 #' or with this same \code{fb_token()}'s token.
 #' @return Character. String with token requested.
 #' @export
-fb_token <- function(app_id, app_secret, token, api_version = "v13.0") {
+fb_token <- function(app_id, app_secret, token, api_version = "v15.0") {
   link <- paste0(
     "https://graph.facebook.com/", api_version, "/oauth/access_token?",
     "grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s"

@@ -4,7 +4,7 @@
 \alias{fb_token}
 \title{Facebook's Long Life User Token}
 \usage{
-fb_token(app_id, app_secret, token, api_version = "v13.0")
+fb_token(app_id, app_secret, token, api_version = "v15.0")
 }
 \arguments{
 \item{app_id, app_secret}{Character. Application ID and Secret.}
@@ -43,7 +43,7 @@ Other API:
 \code{\link{queryGA}()},
 \code{\link{slackSend}()}
 
-Other Facebook: 
+Other Meta: 
 \code{\link{fb_accounts}()},
 \code{\link{fb_ads}()},
 \code{\link{fb_creatives}()},
@@ -54,4 +54,4 @@ Other Facebook:
 \code{\link{fb_rf}()}
 }
 \concept{API}
-\concept{Facebook}
+\concept{Meta}
