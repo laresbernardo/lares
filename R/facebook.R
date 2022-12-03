@@ -896,7 +896,8 @@ fb_creatives <- function(token, which,
 #' @param token Character. User token, created with
 #' \href{https://developers.facebook.com/tools/explorer}{API Graph}
 #' or with this same \code{fb_token()}'s token.
-#' @return Character. String with token requested.
+#' @return Character. String with token requested. If successful, it'll contain
+#' an attribute called "expiration" with date and time of expiration.
 #' @export
 fb_token <- function(app_id, app_secret, token, api_version = "v15.0") {
   link <- paste0(
@@ -906,12 +907,13 @@ fb_token <- function(app_id, app_secret, token, api_version = "v15.0") {
   linkurl <- sprintf(link, app_id, app_secret, token)
   ret <- content(GET(linkurl))
   if ("access_token" %in% names(ret)) {
-    message(sprintf(
-      "Your token was created succesfully. It will expire on %s",
-      Sys.time() + ret$expires_in
-    ))
-    return(ret$access_token)
+    expiration <- Sys.time() + ret$expires_in
+    message(sprintf("Your token was created succesfully. It will expire on %s", expiration))
+    output <- ret$access_token
+    attr(output, "expiration") <- expiration
+    return(output)
   } else {
+    message(ret$error$message)
     return(ret)
   }
 }

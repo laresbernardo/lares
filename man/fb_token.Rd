@@ -16,7 +16,8 @@ or with this same \code{fb_token()}'s token.}
 \item{api_version}{Character. Facebook API version}
 }
 \value{
-Character. String with token requested.
+Character. String with token requested. If successful, it'll contain
+an attribute called "expiration" with date and time of expiration.
 }
 \description{
 Using a 1-hour generic user token you can generate a 60 day token.
