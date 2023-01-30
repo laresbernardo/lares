@@ -15,7 +15,7 @@ fb_insights(
   breakdowns = NA,
   fields = NA,
   limit = 10000,
-  api_version = "v15.0",
+  api_version = NULL,
   process = TRUE
 )
 }

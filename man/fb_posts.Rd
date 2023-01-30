@@ -11,7 +11,7 @@ fb_posts(
   comments = FALSE,
   shares = FALSE,
   reactions = FALSE,
-  api_version = "v15.0"
+  api_version = NULL
 )
 }
 \arguments{

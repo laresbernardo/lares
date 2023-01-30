@@ -10,7 +10,7 @@ fb_ads(
   start_date = Sys.Date() - 31,
   end_date = Sys.Date(),
   fields = NA,
-  api_version = "v15.0",
+  api_version = NULL,
   process = TRUE
 )
 }
@@ -23,10 +23,7 @@ to acquire one.}
 or ads IDs to be queried. Remember: if \code{report_level = "account"}, you must
 start the ID with \code{act_}.}
 
-\item{start_date}{Character. The first and last full day to report, in the
-format \code{"YYYY-MM-DD"}.}
-
-\item{end_date}{Character. The first and last full day to report, in the
+\item{start_date, end_date}{Character. The first and last full day to report, in the
 format \code{"YYYY-MM-DD"}.}
 
 \item{fields}{Character, json format. Leave \code{NA} for default fields.}

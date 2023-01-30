@@ -16,10 +16,7 @@ trim_mp3(
 \arguments{
 \item{file}{Character. File name to trim.}
 
-\item{start_time}{Numeric. Start and end time
-to trim the audio output in seconds.}
-
-\item{end_time}{Numeric. Start and end time
+\item{start_time, end_time}{Numeric. Start and end time
 to trim the audio output in seconds.}
 
 \item{overwrite}{Boolean. Overwrite original file?}

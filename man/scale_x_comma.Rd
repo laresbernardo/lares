@@ -65,9 +65,7 @@ the specified number of significant digits.}
 for American Standards. Use \code{Sys.setenv("LARES_NUMFORMAT" = 2)}
 to set this parameter globally.}
 
-\item{pre}{Character. Add string before or after number.}
-
-\item{pos}{Character. Add string before or after number.}
+\item{pre, pos}{Character. Add string before or after number.}
 
 \item{sign}{Boolean. Add \code{+} sign to positive values.}
 

@@ -62,10 +62,7 @@ or numeric to set a different multiplier.}
 
 \item{unique_train}{Boolean. Keep only unique row observations for training data?}
 
-\item{center}{Boolean. Using the base function scale, do you wish
-to center and/or scale all numerical values?}
-
-\item{scale}{Boolean. Using the base function scale, do you wish
+\item{center, scale}{Boolean. Using the base function scale, do you wish
 to center and/or scale all numerical values?}
 
 \item{thresh}{Integer. Threshold for selecting binary or regression

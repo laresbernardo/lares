@@ -1,3 +1,7 @@
+# Auxiliary constant values
+META_GRAPH_URL <- "https://graph.facebook.com"
+META_API_VER <- "v16.0"
+
 ####################################################################
 #' Process Facebook's API Objects
 #'
@@ -156,7 +160,7 @@ fb_insights <- function(token,
                         breakdowns = NA,
                         fields = NA,
                         limit = 10000,
-                        api_version = "v15.0",
+                        api_version = NULL,
                         process = TRUE) {
   set_config(config(http_version = 0))
   check_opts(report_level, c("ad", "adset", "campaign", "account"))
@@ -174,7 +178,8 @@ fb_insights <- function(token,
   }
 
   aux <- v2t(which, quotes = FALSE)
-  URL <- glued("https://graph.facebook.com/{api_version}/{aux}/{ad_object}")
+  api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
+  URL <- glued("{META_GRAPH_URL}/{api_version}/{aux}/{ad_object}")
 
   # Call insights
   import <- GET(
@@ -302,7 +307,7 @@ fb_rf <- function(token,
                   frequency_cap = 8,
                   prediction_mode = 1,
                   curve = TRUE,
-                  api_version = "v15.0",
+                  api_version = NULL,
                   process = TRUE,
                   ...) {
   set_config(config(http_version = 0))
@@ -332,8 +337,9 @@ fb_rf <- function(token,
     # Create a prediction (returns ID if successful)
     daysecs <- 60 * 60 * 24
     current_time <- as.integer(Sys.time())
+    api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
     prediction <- content(POST(
-      glued("https://graph.facebook.com/{api_version}/{ad_account}/reachfrequencypredictions"),
+      glued("{META_GRAPH_URL}/{api_version}/{ad_account}/reachfrequencypredictions"),
       query = list(
         access_token = token,
         start_time = current_time + daysecs,
@@ -367,8 +373,9 @@ fb_rf <- function(token,
     if (length(prediction) > 1) {
       stop("Please, provide only 1 prediction per query")
     }
+    api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
     curves <- GET(
-      glued("https://graph.facebook.com/{api_version}/{prediction}"),
+      glued("{META_GRAPH_URL}/{api_version}/{prediction}"),
       query = list(
         access_token = token,
         fields = "curve_budget_reach"
@@ -426,20 +433,21 @@ fb_posts <- function(token,
                      comments = FALSE,
                      shares = FALSE,
                      reactions = FALSE,
-                     api_version = "v15.0") {
+                     api_version = NULL) {
   # TOKEN: https://developers.facebook.com/tools/explorer/
 
   set_config(config(http_version = 0))
   limit_posts <- 100
   total_iters <- ceiling(n / limit_posts)
   all_comments <- all_shares <- all_reactions <- all_posts <- ret <- NULL
-
+  api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
+  
   for (iter in 1:total_iters) { # iter = 1
     limit_posts <- ifelse(iter == total_iters, limit_posts - (iter * limit_posts - n), limit_posts)
     limit_posts <- ifelse(n < limit_posts, n, limit_posts)
     if (iter == 1) {
-      url <- paste0(
-        "https://graph.facebook.com/", api_version, "/me?fields=",
+      url <- glued(paste0(
+        "{META_GRAPH_URL}/", api_version, "/me?fields=",
         "id,name,posts.limit(", limit_posts, ")",
         "{created_time,message,status_type,",
         ifelse(comments, paste0("comments.limit(", limits, "),"), ""),
@@ -447,7 +455,7 @@ fb_posts <- function(token,
         ifelse(shares, "shares,", ""),
         "permalink_url}",
         "&access_token=", token
-      )
+      ))
     } else {
       url <- new_url
     }
@@ -624,10 +632,10 @@ fb_post <- function(token, post_id, limit = 5000) {
   for (i in 1:iters) {
     if (i == 1) ret <- NULL
     if (i == 1) nodata <- NULL
-    url <- paste0(
-      "https://graph.facebook.com/v3.0/", post_id[i],
+    url <- glued(paste0(
+      "{META_GRAPH_URL}/v3.0/", post_id[i],
       "/comments?limit=", limit, "&access_token=", token
-    )
+    ))
     get <- GET(url = url)
     char <- rawToChar(get$content)
     json <- fromJSON(char)
@@ -696,11 +704,9 @@ fb_accounts <- function(token,
                         business_id = "904189322962915",
                         type = c("owned", "client"),
                         limit = 1000,
-                        api_version = "v15.0") {
+                        api_version = NULL) {
   set_config(config(http_version = 0))
-
-  # Starting URL
-  url <- "https://graph.facebook.com/"
+  api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
   output <- NULL
 
   # Select which type of ad accounts
@@ -784,9 +790,10 @@ fb_ads <- function(token,
                    start_date = Sys.Date() - 31,
                    end_date = Sys.Date(),
                    fields = NA,
-                   api_version = "v15.0",
+                   api_version = NULL,
                    process = TRUE) {
   set_config(config(http_version = 0))
+  api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
 
   if (is.na(fields[1])) {
     fields <- paste(
@@ -798,7 +805,7 @@ fb_ads <- function(token,
 
   # Call insights
   import <- GET(
-    glued("https://graph.facebook.com/{api_version}/{which}/ads"),
+    glued("{META_GRAPH_URL}/{api_version}/{which}/ads"),
     query = list(
       access_token = token,
       time_range = paste0('{\"since\":\"', start_date, '\",\"until\":\"', end_date, '\"}'),
@@ -847,20 +854,21 @@ fb_ads <- function(token,
 #' }
 #' @export
 fb_creatives <- function(token, which,
-                         api_version = "v15.0",
+                         api_version = NULL,
                          process = TRUE) {
   set_config(config(http_version = 0))
+  api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
 
   fields <- c(
     "account_id", "object_type", "name", "status", "campaign_id",
     "call_to_action_type", "image_url", "thumbnail_url"
   )
-  link <- paste0(
-    "https://graph.facebook.com/%s/%s/adcreatives?",
+  link <- glued(paste0(
+    "{META_GRAPH_URL}/%s/%s/adcreatives?",
     "grant_type=fb_exchange_token",
     "&fields=%s",
     "&access_token=%s"
-  )
+  ))
   linkurl <- sprintf(
     link, api_version, which,
     vector2text(fields, sep = ",", quotes = FALSE),
@@ -899,11 +907,12 @@ fb_creatives <- function(token, which,
 #' @return Character. String with token requested. If successful, it'll contain
 #' an attribute called "expiration" with date and time of expiration.
 #' @export
-fb_token <- function(app_id, app_secret, token, api_version = "v15.0") {
-  link <- paste0(
-    "https://graph.facebook.com/", api_version, "/oauth/access_token?",
+fb_token <- function(app_id, app_secret, token, api_version = NULL) {
+  api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
+  link <- glued(paste0(
+    "{META_GRAPH_URL}/", api_version, "/oauth/access_token?",
     "grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s"
-  )
+  ))
   linkurl <- sprintf(link, app_id, app_secret, token)
   ret <- content(GET(linkurl))
   if ("access_token" %in% names(ret)) {

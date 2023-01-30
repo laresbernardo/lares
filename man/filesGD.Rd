@@ -14,11 +14,7 @@ expressions so you may fetch with patterns instead of names.}
 
 \item{json}{Character. JSON filename with service auth}
 
-\item{api_key}{Character. If you have multiple pre-authorized
-accounts in your machine, you may non-interactively select
-which one you wish to use by email and/or api_key.}
-
-\item{email}{Character. If you have multiple pre-authorized
+\item{email, api_key}{Character. If you have multiple pre-authorized
 accounts in your machine, you may non-interactively select
 which one you wish to use by email and/or api_key.}
 }
