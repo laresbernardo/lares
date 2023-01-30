@@ -4,7 +4,7 @@
 \alias{fb_creatives}
 \title{Facebook Creatives API}
 \usage{
-fb_creatives(token, which, api_version = NULL, process = TRUE)
+fb_creatives(token, which, api_version = NULL, process = TRUE, ...)
 }
 \arguments{
 \item{token}{Character. Valid access token with sufficient privileges. Visit the
@@ -15,9 +15,11 @@ to acquire one.}
 or ads IDs to be queried. Remember: if \code{report_level = "account"}, you must
 start the ID with \code{act_}.}
 
-\item{api_version}{Character. Facebook API version}
+\item{api_version}{Character. Facebook API version.}
 
 \item{process}{Boolean. Process GET results to a more friendly format?}
+
+\item{...}{Additional parameters.}
 }
 \value{
 data.frame with un-nested processed results if \code{process=TRUE} or

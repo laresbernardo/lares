@@ -13,7 +13,7 @@ fb_token(app_id, app_secret, token, api_version = NULL)
 \href{https://developers.facebook.com/tools/explorer}{API Graph}
 or with this same \code{fb_token()}'s token.}
 
-\item{api_version}{Character. Facebook API version}
+\item{api_version}{Character. Facebook API version.}
 }
 \value{
 Character. String with token requested. If successful, it'll contain

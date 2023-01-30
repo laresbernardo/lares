@@ -16,7 +16,9 @@ fb_insights(
   fields = NA,
   limit = 10000,
   api_version = NULL,
-  process = TRUE
+  process = TRUE,
+  async = FALSE,
+  ...
 )
 }
 \arguments{
@@ -46,9 +48,14 @@ segmentation results. Set to NA for no breakdowns}
 
 \item{limit}{Integer. Query limit}
 
-\item{api_version}{Character. Facebook API version}
+\item{api_version}{Character. Facebook API version.}
 
 \item{process}{Boolean. Process GET results to a more friendly format?}
+
+\item{async}{Boolean. Run an async query. When set to \code{TRUE}, instead of making
+a GET query, it'll run a POST query and will return a report run ID.}
+
+\item{...}{Additional parameters}
 }
 \value{
 data.frame with un-nested processed results if \code{process=TRUE} or

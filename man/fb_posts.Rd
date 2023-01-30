@@ -11,7 +11,8 @@ fb_posts(
   comments = FALSE,
   shares = FALSE,
   reactions = FALSE,
-  api_version = NULL
+  api_version = NULL,
+  ...
 )
 }
 \arguments{
@@ -25,7 +26,9 @@ to acquire one.}
 
 \item{comments, shares, reactions}{Boolean. Include in your query?}
 
-\item{api_version}{Character. Facebook API version}
+\item{api_version}{Character. Facebook API version.}
+
+\item{...}{Additional parameters}
 }
 \value{
 data.frame with un-nested processed results fetched with API.

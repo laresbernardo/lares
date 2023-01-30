@@ -888,6 +888,9 @@ glued <- function(..., .sep = "", empty_lines = "keep", .envir = parent.frame())
 #'
 #' @family Tools
 #' @inheritParams base::grep
+#' @param x Character vector. Text where matches are sought, or an object
+#' which can be coerced by as.character to a character vector.
+#' Long vectors are supported.
 #' @param type Character. Type of match. Choose one of:
 #' \code{any}, \code{all}
 #' @param ... Additional arguments to pass to \code{grepl}

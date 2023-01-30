@@ -4,13 +4,18 @@
 \alias{fb_process}
 \title{Process Facebook's API Objects}
 \usage{
-fb_process(response, paginate = TRUE)
+fb_process(response, paginate = TRUE, sleep = 0, ...)
 }
 \arguments{
 \item{response}{GET's output object, class response}
 
 \item{paginate}{Boolean. Run through all paginations? If not,
 only the first one will be processed.}
+
+\item{sleep}{Numeric value. How much should each loop wait until until running
+the next pagination query?}
+
+\item{...}{Additional parameters.}
 }
 \value{
 data.frame with un-nested processed results or NULL if no results found.

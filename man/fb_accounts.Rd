@@ -9,7 +9,8 @@ fb_accounts(
   business_id = "904189322962915",
   type = c("owned", "client"),
   limit = 1000,
-  api_version = NULL
+  api_version = NULL,
+  ...
 )
 }
 \arguments{
@@ -23,7 +24,9 @@ to acquire one.}
 
 \item{limit}{Integer. Query limit}
 
-\item{api_version}{Character. Facebook API version}
+\item{api_version}{Character. Facebook API version.}
+
+\item{...}{Additional parameters}
 }
 \value{
 data.frame with un-nested processed results fetched with API.

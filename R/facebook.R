@@ -13,9 +13,12 @@ META_API_VER <- "v16.0"
 #' @param response GET's output object, class response
 #' @param paginate Boolean. Run through all paginations? If not,
 #' only the first one will be processed.
+#' @param sleep Numeric value. How much should each loop wait until until running
+#' the next pagination query?
+#' @param ... Additional parameters.
 #' @return data.frame with un-nested processed results or NULL if no results found.
 #' @export
-fb_process <- function(response, paginate = TRUE) {
+fb_process <- function(response, paginate = TRUE, sleep = 0, ...) {
   if (!"response" %in% class(response)) {
     stop("You must provide a response object (GET's output)")
   }
@@ -45,6 +48,7 @@ fb_process <- function(response, paginate = TRUE) {
   # Following iterations
   if (exists("paging", import) && paginate) {
     if (exists("next", import$paging)) {
+      Sys.sleep(sleep)
       i <- i + 1
       out <- fromJSON(import$paging$`next`)
       results[[i]] <- .flattener(out$data, i)
@@ -103,8 +107,11 @@ fb_process <- function(response, paginate = TRUE) {
 #' segmentation results. Set to NA for no breakdowns
 #' @param fields Character, json format. Leave \code{NA} for default fields.
 #' @param limit Integer. Query limit
-#' @param api_version Character. Facebook API version
+#' @param api_version Character. Facebook API version.
 #' @param process Boolean. Process GET results to a more friendly format?
+#' @param async Boolean. Run an async query. When set to \code{TRUE}, instead of making
+#' a GET query, it'll run a POST query and will return a report run ID.
+#' @param ... Additional parameters
 #' @return data.frame with un-nested processed results if \code{process=TRUE} or
 #' raw API results as list when \code{process=FALSE}.
 #' @examples
@@ -161,7 +168,9 @@ fb_insights <- function(token,
                         fields = NA,
                         limit = 10000,
                         api_version = NULL,
-                        process = TRUE) {
+                        process = TRUE,
+                        async = FALSE,
+                        ...) {
   set_config(config(http_version = 0))
   check_opts(report_level, c("ad", "adset", "campaign", "account"))
 
@@ -180,9 +189,10 @@ fb_insights <- function(token,
   aux <- v2t(which, quotes = FALSE)
   api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
   URL <- glued("{META_GRAPH_URL}/{api_version}/{aux}/{ad_object}")
+  api_verb <- ifelse(async, httr::POST, httr::GET)
 
-  # Call insights
-  import <- GET(
+  # Call insights API
+  import <- api_verb(
     URL,
     query = list(
       access_token = token,
@@ -204,10 +214,10 @@ fb_insights <- function(token,
     encode = "json"
   )
 
-  if (!process) {
+  if (!process | async) {
     return(import)
   }
-  output <- fb_process(import)
+  output <- fb_process(import, ...)
   return(as_tibble(output))
 }
 
@@ -383,7 +393,7 @@ fb_rf <- function(token,
     )
 
     if (process) {
-      this <- fb_process(curves)
+      this <- fb_process(curves, ...)
       curves <- this %>%
         select(-one_of(zerovar(.))) %>%
         mutate(
@@ -433,15 +443,14 @@ fb_posts <- function(token,
                      comments = FALSE,
                      shares = FALSE,
                      reactions = FALSE,
-                     api_version = NULL) {
-  # TOKEN: https://developers.facebook.com/tools/explorer/
-
+                     api_version = NULL,
+                     ...) {
   set_config(config(http_version = 0))
   limit_posts <- 100
   total_iters <- ceiling(n / limit_posts)
   all_comments <- all_shares <- all_reactions <- all_posts <- ret <- NULL
   api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
-  
+
   for (iter in 1:total_iters) { # iter = 1
     limit_posts <- ifelse(iter == total_iters, limit_posts - (iter * limit_posts - n), limit_posts)
     limit_posts <- ifelse(n < limit_posts, n, limit_posts)
@@ -704,7 +713,8 @@ fb_accounts <- function(token,
                         business_id = "904189322962915",
                         type = c("owned", "client"),
                         limit = 1000,
-                        api_version = NULL) {
+                        api_version = NULL,
+                        ...) {
   set_config(config(http_version = 0))
   api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
   output <- NULL
@@ -728,7 +738,7 @@ fb_accounts <- function(token,
       encode = "json"
     )
 
-    ret <- fb_process(import)
+    ret <- fb_process(import, ...)
 
     if (inherits(ret, "data.frame")) {
       ret$type <- type[i]
@@ -791,7 +801,8 @@ fb_ads <- function(token,
                    end_date = Sys.Date(),
                    fields = NA,
                    api_version = NULL,
-                   process = TRUE) {
+                   process = TRUE,
+                   ...) {
   set_config(config(http_version = 0))
   api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
 
@@ -822,7 +833,7 @@ fb_ads <- function(token,
     return(import)
   }
 
-  ret <- fb_process(import)
+  ret <- fb_process(import, ...)
   if (inherits(ret, "data.frame")) {
     ret <- ret %>%
       # rename(adcreatives_id = .data$list_id) %>%
@@ -855,7 +866,8 @@ fb_ads <- function(token,
 #' @export
 fb_creatives <- function(token, which,
                          api_version = NULL,
-                         process = TRUE) {
+                         process = TRUE,
+                         ...) {
   set_config(config(http_version = 0))
   api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
 
@@ -878,7 +890,7 @@ fb_creatives <- function(token, which,
   if (!process) {
     return(import)
   }
-  ret <- fb_process(import)
+  ret <- fb_process(import, ...)
   if (inherits(ret, "data.frame")) {
     ret <- select(ret, one_of("id", .data$fields))
   }
@@ -926,7 +938,6 @@ fb_token <- function(app_id, app_secret, token, api_version = NULL) {
     return(ret)
   }
 }
-
 
 .flattener <- function(x, i = 1) {
   bind_rows(x) %>%

@@ -51,7 +51,7 @@ rest of arguments of this function will be ignored.}
 
 \item{curve}{Boolean. Return curve data? If not, only prediction will be created.}
 
-\item{api_version}{Character. Facebook API version}
+\item{api_version}{Character. Facebook API version.}
 
 \item{process}{Boolean. Process GET results to a more friendly format?}
 

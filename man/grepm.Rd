@@ -15,6 +15,10 @@ grepm(pattern, x, type = "all", ...)
     is used with a warning.  Missing values are allowed except for
     \code{regexpr}, \code{gregexpr} and \code{regexec}.}
 
+\item{x}{Character vector. Text where matches are sought, or an object
+which can be coerced by as.character to a character vector.
+Long vectors are supported.}
+
 \item{type}{Character. Type of match. Choose one of:
 \code{any}, \code{all}}
 

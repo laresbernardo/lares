@@ -11,7 +11,8 @@ fb_ads(
   end_date = Sys.Date(),
   fields = NA,
   api_version = NULL,
-  process = TRUE
+  process = TRUE,
+  ...
 )
 }
 \arguments{
@@ -28,9 +29,11 @@ format \code{"YYYY-MM-DD"}.}
 
 \item{fields}{Character, json format. Leave \code{NA} for default fields.}
 
-\item{api_version}{Character. Facebook API version}
+\item{api_version}{Character. Facebook API version.}
 
 \item{process}{Boolean. Process GET results to a more friendly format?}
+
+\item{...}{Additional parameters}
 }
 \value{
 data.frame with un-nested processed results if \code{process=TRUE} or
