@@ -31,7 +31,7 @@ fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = FALSE, ...)
   # Show and return error
   if ("error" %in% names(import)) {
     message(paste("API ERROR:", import$error$message))
-    invisible(return(import$error))
+    invisible(return(import))
   }
 
   # Check for no-data (user might think there was an error on GET request - warn him!)
@@ -114,7 +114,12 @@ show_pag_status <- function(results, i = 1, sleep = 0, quiet = FALSE) {
 #'
 #' @family API
 #' @family Meta
-#' @param ... Additional parameters
+#' @inheritParams fb_insights
+#' @inheritParams fb_process
+#' @param report_run_id Integer. Report ID to check status.
+#' @param live Boolean. Run until status report is finished?
+#' @param sleep Boolean. If \code{live=TRUE}, then how many seconds should
+#' we wait until next check?
 #' @return List with API status results.
 #' @examples
 #' \dontrun{
@@ -167,7 +172,8 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
 #' @param ad_object Character. One of: "insights" (default), "adsets", ...
 #' @param breakdowns Character Vector. One or more of breakdowns for
 #' segmentation results. Set to NA for no breakdowns
-#' @param fields Character, json format. Leave \code{NA} for default fields.
+#' @param fields Character, json format. Leave \code{NA} for default fields OR
+#' \code{NULL} to ignore.
 #' @param limit Integer. Query limit
 #' @param api_version Character. Facebook API version.
 #' @param process Boolean. Process GET results to a more friendly format?
@@ -283,7 +289,7 @@ fb_insights <- function(token,
         message(paste("API ERROR:", import$error$message))
       }
     }
-    return(invisible(import))
+    invisible(return(import))
   }
   output <- fb_process(import, ...)
   return(as_tibble(output))

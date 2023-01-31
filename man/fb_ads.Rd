@@ -27,7 +27,8 @@ start the ID with \code{act_}.}
 \item{start_date, end_date}{Character. The first and last full day to report, in the
 format \code{"YYYY-MM-DD"}.}
 
-\item{fields}{Character, json format. Leave \code{NA} for default fields.}
+\item{fields}{Character, json format. Leave \code{NA} for default fields OR
+\code{NULL} to ignore.}
 
 \item{api_version}{Character. Facebook API version.}
 

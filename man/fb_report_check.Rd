@@ -4,10 +4,30 @@
 \alias{fb_report_check}
 \title{Check Async Facebook API Report Status}
 \usage{
-fb_report_check(token, report_run_id, live = FALSE, sleep = 10, quiet = FALSE)
+fb_report_check(
+  token,
+  report_run_id,
+  api_version = NULL,
+  live = FALSE,
+  sleep = 10,
+  quiet = FALSE
+)
 }
 \arguments{
-\item{...}{Additional parameters}
+\item{token}{Character. Valid access token with sufficient privileges. Visit the
+\href{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
+to acquire one.}
+
+\item{report_run_id}{Integer. Report ID to check status.}
+
+\item{api_version}{Character. Facebook API version.}
+
+\item{live}{Boolean. Run until status report is finished?}
+
+\item{sleep}{Boolean. If \code{live=TRUE}, then how many seconds should
+we wait until next check?}
+
+\item{quiet}{Boolean. Quiet messages?}
 }
 \value{
 List with API status results.

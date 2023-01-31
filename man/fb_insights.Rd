@@ -44,7 +44,8 @@ Default: each day separately (i.e. "1").}
 \item{breakdowns}{Character Vector. One or more of breakdowns for
 segmentation results. Set to NA for no breakdowns}
 
-\item{fields}{Character, json format. Leave \code{NA} for default fields.}
+\item{fields}{Character, json format. Leave \code{NA} for default fields OR
+\code{NULL} to ignore.}
 
 \item{limit}{Integer. Query limit}
 
