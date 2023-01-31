@@ -10,6 +10,7 @@ META_API_VER <- "v16.0"
 #'
 #' @family API
 #' @family Meta
+#' @inheritParams tic
 #' @param response GET's output object, class response
 #' @param paginate Boolean. Run through all paginations? If not,
 #' only the first one will be processed.
@@ -18,11 +19,11 @@ META_API_VER <- "v16.0"
 #' @param ... Additional parameters.
 #' @return data.frame with un-nested processed results or NULL if no results found.
 #' @export
-fb_process <- function(response, paginate = TRUE, sleep = 0, ...) {
+fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = TRUE, ...) {
   if (!"response" %in% class(response)) {
     stop("You must provide a response object (GET's output)")
   }
-
+  tic("fb_process")
   import <- content(response)
 
   # Show and return error
@@ -57,16 +58,22 @@ fb_process <- function(response, paginate = TRUE, sleep = 0, ...) {
         out <- fromJSON(out$paging$`previous`)
         results[[1]] <- .flattener(out$data, i)
       }
-      while (exists("next", out$paging)) {
+      while (exists("next", out$paging) && !"error" %in% names(out)) {
         i <- i + 1
         out <- fromJSON(out$paging$`next`)
-        results[[i]] <- .flattener(out$data, i)
+        if ("error" %in% names(out)) {
+          warning(paste(
+            "Returning partial results given last pagination returned error:\n",
+            out$error$message
+          ))
+        } else {
+          results[[i]] <- .flattener(out$data, i)
+        }
       }
     }
   }
   done <- as_tibble(bind_rows(results)) %>%
     mutate_all(function(x) as.vector(unlist(x)))
-
   ret <- suppressMessages(type.convert(
     done,
     numerals = "no.loss", as.is = TRUE
@@ -76,6 +83,7 @@ fb_process <- function(response, paginate = TRUE, sleep = 0, ...) {
     mutate_at(vars(contains("url")), list(as.character)) %>%
     mutate_at(vars(contains("name")), list(as.character)) %>%
     as_tibble()
+  toc("fb_process", quiet = quiet, ...)
   return(ret)
 }
 

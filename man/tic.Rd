@@ -7,7 +7,14 @@
 \usage{
 tic(id = 1, start = proc.time()["elapsed"], quiet = TRUE)
 
-toc(id = 1, msg = "Elapsed time:", type = "units", signif = 3, quiet = FALSE)
+toc(
+  id = 1,
+  msg = "Elapsed time:",
+  type = "units",
+  signif = 3,
+  quiet = FALSE,
+  ...
+)
 }
 \arguments{
 \item{id}{Define ID if multiple \code{tic} & \code{toc} are being used.}
@@ -21,7 +28,9 @@ toc(id = 1, msg = "Elapsed time:", type = "units", signif = 3, quiet = FALSE)
 \item{type}{Character. Output format for \code{time} list element.
 Choose any of: \code{units, clock, seconds}.}
 
-\item{signif}{Integer. Significant digits}
+\item{signif}{Integer. Significant digits.}
+
+\item{...}{Additional parameters.}
 }
 \value{
 Invisible list. Contains tic (start time), toc (stop time),

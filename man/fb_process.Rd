@@ -4,7 +4,7 @@
 \alias{fb_process}
 \title{Process Facebook's API Objects}
 \usage{
-fb_process(response, paginate = TRUE, sleep = 0, ...)
+fb_process(response, paginate = TRUE, sleep = 0, quiet = TRUE, ...)
 }
 \arguments{
 \item{response}{GET's output object, class response}
@@ -14,6 +14,8 @@ only the first one will be processed.}
 
 \item{sleep}{Numeric value. How much should each loop wait until until running
 the next pagination query?}
+
+\item{quiet}{Boolean. Quiet messages?}
 
 \item{...}{Additional parameters.}
 }

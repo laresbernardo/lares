@@ -40,12 +40,13 @@ tic <- function(id = 1, start = proc.time()["elapsed"], quiet = TRUE) {
 #' @param msg Character. Custom message shown
 #' @param type Character. Output format for \code{time} list element.
 #' Choose any of: \code{units, clock, seconds}.
-#' @param signif Integer. Significant digits
+#' @param signif Integer. Significant digits.
+#' @param ... Additional parameters.
 #' @return \code{toc} returns an (invisible) list containing the time-stamps
 #' \code{tic} and \code{toc}, \code{time} in seconds and the message \code{msg}.
 #' @export
 #' @rdname tic
-toc <- function(id = 1, msg = "Elapsed time:", type = "units", signif = 3, quiet = FALSE) {
+toc <- function(id = 1, msg = "Elapsed time:", type = "units", signif = 3, quiet = FALSE, ...) {
   check_opts(type, c("units", "clock", "seconds"))
   current <- getOption("LARES_TICTOC")
   id <- as.character(id)
