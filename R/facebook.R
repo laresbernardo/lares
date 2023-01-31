@@ -1,5 +1,6 @@
 # Auxiliary constant values
-META_GRAPH_URL <- "https://graph.facebook.com"
+# META_GRAPH_URL <- "https://graph.facebook.com"
+META_GRAPH_URL <- "https://graph.intern.facebook.com"
 META_API_VER <- "v16.0"
 
 ####################################################################
@@ -88,7 +89,7 @@ fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = FALSE, ...)
     mutate_at(vars(contains("name")), list(as.character)) %>%
     as_tibble()
   if (!quiet) cat("\n")
-  toc("fb_process_fx", quiet = quiet, ...)
+  toc("fb_process_fx", ...)
   return(ret)
 }
 
@@ -99,6 +100,44 @@ show_pag_status <- function(results, i = 1, sleep = 0, quiet = FALSE) {
     cat(paste(sprintf("\r>>> Pagination imported: %s | Total rows: %s", i, total)))
   }
   Sys.sleep(sleep)
+}
+
+
+####################################################################
+#' Check Async Facebook API Report Status
+#'
+#' This returns all available FB insights per day including any given
+#' breakdown to the specified report level, and place into a data frame.
+#' For more information on Ad Insights' API, go to the original
+#' \href{https://developers.facebook.com/docs/marketing-api/insights/}{documentaion}.
+#'
+#' @family API
+#' @family Meta
+#' @param ... Additional parameters
+#' @return List with API status results.
+#' @examples
+#' \dontrun{
+#' token <- "YOURTOKEN"
+#' report_run_id <- "123456789"
+#' fb_report_check(token, report_run_id, live = TRUE, quiet = FALSE)
+#' }
+#' @export
+fb_report_check <- function(token, report_run_id, api_version = NULL, 
+                            live = FALSE, sleep = 10, quiet = FALSE) {
+  keep_running <- TRUE
+  api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
+  URL <- glued("{META_GRAPH_URL}/{api_version}/{report_run_id}")
+  while (isTRUE(keep_running)) {
+    async_s <- httr::GET(url = URL, query = list(access_token = token))
+    results_async_status <- httr::content(async_s)
+    keep_running <- "is_running" %in% names(results_async_status) && isTRUE(live)
+    if (!quiet) {
+      flush.console()
+      cat(paste("\rStatus:", results_async_status$async_status, "\n")) 
+    }
+    if (keep_running) Sys.sleep(sleep)
+  }
+  return(results_async_status)
 }
 
 
@@ -196,7 +235,7 @@ fb_insights <- function(token,
   set_config(config(http_version = 0))
   check_opts(report_level, c("ad", "adset", "campaign", "account"))
 
-  if (is.na(fields[1])) {
+  if (isTRUE(is.na(fields[1]))) {
     fields <- c(
       "campaign_name", "campaign_id",
       "objective", "adset_id",
@@ -237,9 +276,10 @@ fb_insights <- function(token,
   )
 
   if (!process | async) {
+    if (async) import <- httr::content(import)
     return(import)
   }
-  output <- fb_process(import, quiet = TRUE, ...)
+  output <- fb_process(import, ...)
   return(as_tibble(output))
 }
 
@@ -415,7 +455,7 @@ fb_rf <- function(token,
     )
 
     if (process) {
-      this <- fb_process(curves, quiet = TRUE, ...)
+      this <- fb_process(curves, ...)
       curves <- this %>%
         select(-one_of(zerovar(.))) %>%
         mutate(
@@ -760,7 +800,7 @@ fb_accounts <- function(token,
       encode = "json"
     )
 
-    ret <- fb_process(import, quiet = TRUE, ...)
+    ret <- fb_process(import, ...)
 
     if (inherits(ret, "data.frame")) {
       ret$type <- type[i]
@@ -855,7 +895,7 @@ fb_ads <- function(token,
     return(import)
   }
 
-  ret <- fb_process(import, quiet = TRUE, ...)
+  ret <- fb_process(import, ...)
   if (inherits(ret, "data.frame")) {
     ret <- ret %>%
       # rename(adcreatives_id = .data$list_id) %>%
@@ -912,7 +952,7 @@ fb_creatives <- function(token, which,
   if (!process) {
     return(import)
   }
-  ret <- fb_process(import, quiet = TRUE, ...)
+  ret <- fb_process(import, ...)
   if (inherits(ret, "data.frame")) {
     ret <- select(ret, one_of("id", .data$fields))
   }

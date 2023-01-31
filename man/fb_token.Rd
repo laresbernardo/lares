@@ -38,6 +38,7 @@ Other API:
 \code{\link{fb_posts}()},
 \code{\link{fb_post}()},
 \code{\link{fb_process}()},
+\code{\link{fb_report_check}()},
 \code{\link{fb_rf}()},
 \code{\link{li_auth}()},
 \code{\link{li_profile}()},
@@ -52,6 +53,7 @@ Other Meta:
 \code{\link{fb_posts}()},
 \code{\link{fb_post}()},
 \code{\link{fb_process}()},
+\code{\link{fb_report_check}()},
 \code{\link{fb_rf}()}
 }
 \concept{API}
