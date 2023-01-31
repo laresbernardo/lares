@@ -1,6 +1,6 @@
 # Auxiliary constant values
-# META_GRAPH_URL <- "https://graph.facebook.com"
-META_GRAPH_URL <- "https://graph.intern.facebook.com"
+META_GRAPH_URL <- "https://graph.facebook.com"
+# META_GRAPH_URL <- "https://graph.intern.facebook.com"
 META_API_VER <- "v16.0"
 
 ####################################################################
@@ -71,7 +71,8 @@ fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = FALSE, ...)
             if (!quiet) show_pag_status(results, i, sleep, quiet)
           },
           error = function(err) {
-            warning("Returning partial results given last pagination returned error")
+            warning(paste0("Returning partial results given last pagination (", i, ") returned error"))
+            paginate <- FALSE
           }
         )
       }
@@ -276,8 +277,13 @@ fb_insights <- function(token,
   )
 
   if (!process | async) {
-    if (async) import <- httr::content(import)
-    return(import)
+    if (async) {
+      import <- httr::content(import)
+      if ("error" %in% names(import)) {
+        message(paste("API ERROR:", import$error$message))
+      }
+    }
+    return(invisible(import))
   }
   output <- fb_process(import, ...)
   return(as_tibble(output))
