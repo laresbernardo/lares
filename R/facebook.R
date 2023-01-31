@@ -1015,7 +1015,7 @@ fb_token <- function(app_id, app_secret, token, api_version = NULL) {
 
 .flattener <- function(x, i = 1) {
   bind_rows(x) %>%
-    mutate(get_id = paste(i, row_number(), sep = "-")) %>%
+    mutate(get_id = paste(i - 1, row_number(), sep = "-")) %>%
     select(.data$get_id, everything()) %>%
     dplyr::as_tibble()
 }
