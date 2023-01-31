@@ -63,7 +63,7 @@ querying the API with <code><a href="https://httr.r-lib.org/reference/GET.html" 
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fb_process</span><span class="op">(</span><span class="va">response</span>, paginate <span class="op">=</span> <span class="cn">TRUE</span>, sleep <span class="op">=</span> <span class="fl">0</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fb_process</span><span class="op">(</span><span class="va">response</span>, paginate <span class="op">=</span> <span class="cn">TRUE</span>, sleep <span class="op">=</span> <span class="fl">0</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -80,6 +80,10 @@ only the first one will be processed.</p></dd>
 <dt>sleep</dt>
 <dd><p>Numeric value. How much should each loop wait until until running
 the next pagination query?</p></dd>
+
+
+<dt>quiet</dt>
+<dd><p>Boolean. Quiet messages?</p></dd>
 
 
 <dt>...</dt>
