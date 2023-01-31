@@ -30,7 +30,7 @@ cran_logs <- function(input = "lares",
     scrap <- content(GET(url), encoding = "UTF-8")
     if (!"downloads" %in% names(scrap[[1]])) {
       warning("Site currently unavailable")
-      return(invisible(url)) 
+      return(invisible(url))
     }
     cran.df <- bind_rows(scrap)
     if (type == "daily") {
@@ -41,7 +41,7 @@ cran_logs <- function(input = "lares",
         ) %>%
         select(.data$date, .data$count, .data$package) %>%
         mutate(date = as.Date(.data$date, origin = "1970-01-01")) %>%
-        arrange(desc(.data$date)) 
+        arrange(desc(.data$date))
     }
   } else {
     check_opts(colnames(input), c("date", "count", "package"), input_name = "column names")

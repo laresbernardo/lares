@@ -12,18 +12,19 @@ META_API_VER <- "v16.0"
 #' @family Meta
 #' @inheritParams tic
 #' @param response GET's output object, class response
-#' @param paginate Boolean. Run through all paginations? If not,
-#' only the first one will be processed.
+#' @param paginate Boolean or integer. Run through all paginations? If set
+#' to \code{FALSE}, only the first one will be processed. If set to any other
+#' integer value, will process the first N paginations.
 #' @param sleep Numeric value. How much should each loop wait until until running
 #' the next pagination query?
 #' @param ... Additional parameters.
 #' @return data.frame with un-nested processed results or NULL if no results found.
 #' @export
-fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = TRUE, ...) {
+fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
   if (!"response" %in% class(response)) {
     stop("You must provide a response object (GET's output)")
   }
-  tic("fb_process")
+  tic("fb_process_fx")
   import <- content(response)
 
   # Show and return error
@@ -45,30 +46,33 @@ fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = TRUE, ...) 
   results <- list()
   i <- 1
   results[[i]] <- .flattener(import[[1]])
+  if (!quiet) show_pag_status(results, i, quiet)
 
   # Following iterations
-  if (exists("paging", import) && paginate) {
+  if (exists("paging", import) && as.integer(paginate) >= 1) {
     if (exists("next", import$paging)) {
-      Sys.sleep(sleep)
       i <- i + 1
       out <- fromJSON(import$paging$`next`)
       results[[i]] <- .flattener(out$data, i)
+      if (!quiet) show_pag_status(results, i, sleep, quiet)
       # Re-run first iteration as everything MUST match to bind
       if (i == 2) {
         out <- fromJSON(out$paging$`previous`)
         results[[1]] <- .flattener(out$data, i)
+        if (!quiet) show_pag_status(results, i, sleep, quiet)
       }
-      while (exists("next", out$paging) && !"error" %in% names(out)) {
+      while (exists("next", out$paging) && (i < as.integer(paginate) || isTRUE(paginate))) {
         i <- i + 1
-        out <- fromJSON(out$paging$`next`)
-        if ("error" %in% names(out)) {
-          warning(paste(
-            "Returning partial results given last pagination returned error:\n",
-            out$error$message
-          ))
-        } else {
-          results[[i]] <- .flattener(out$data, i)
-        }
+        tryCatch(
+          {
+            out <- fromJSON(out$paging$`next`)
+            results[[i]] <- .flattener(out$data, i)
+            if (!quiet) show_pag_status(results, i, sleep, quiet)
+          },
+          error = function(err) {
+            warning("Returning partial results given last pagination returned error")
+          }
+        )
       }
     }
   }
@@ -83,8 +87,18 @@ fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = TRUE, ...) 
     mutate_at(vars(contains("url")), list(as.character)) %>%
     mutate_at(vars(contains("name")), list(as.character)) %>%
     as_tibble()
-  toc("fb_process", quiet = quiet, ...)
+  if (!quiet) cat("\n")
+  toc("fb_process_fx", quiet = quiet, ...)
   return(ret)
+}
+
+show_pag_status <- function(results, i = 1, sleep = 0, quiet = FALSE) {
+  if (!quiet) {
+    flush.console()
+    total <- sum(unlist(lapply(results, nrow)))
+    cat(paste(sprintf("\r>>> Pagination imported: %s | Total rows: %s", i, total)))
+  }
+  Sys.sleep(sleep)
 }
 
 
@@ -225,7 +239,7 @@ fb_insights <- function(token,
   if (!process | async) {
     return(import)
   }
-  output <- fb_process(import, ...)
+  output <- fb_process(import, quiet = TRUE, ...)
   return(as_tibble(output))
 }
 
@@ -401,7 +415,7 @@ fb_rf <- function(token,
     )
 
     if (process) {
-      this <- fb_process(curves, ...)
+      this <- fb_process(curves, quiet = TRUE, ...)
       curves <- this %>%
         select(-one_of(zerovar(.))) %>%
         mutate(
@@ -746,7 +760,7 @@ fb_accounts <- function(token,
       encode = "json"
     )
 
-    ret <- fb_process(import, ...)
+    ret <- fb_process(import, quiet = TRUE, ...)
 
     if (inherits(ret, "data.frame")) {
       ret$type <- type[i]
@@ -841,7 +855,7 @@ fb_ads <- function(token,
     return(import)
   }
 
-  ret <- fb_process(import, ...)
+  ret <- fb_process(import, quiet = TRUE, ...)
   if (inherits(ret, "data.frame")) {
     ret <- ret %>%
       # rename(adcreatives_id = .data$list_id) %>%
@@ -898,7 +912,7 @@ fb_creatives <- function(token, which,
   if (!process) {
     return(import)
   }
-  ret <- fb_process(import, ...)
+  ret <- fb_process(import, quiet = TRUE, ...)
   if (inherits(ret, "data.frame")) {
     ret <- select(ret, one_of("id", .data$fields))
   }
@@ -951,5 +965,5 @@ fb_token <- function(app_id, app_secret, token, api_version = NULL) {
   bind_rows(x) %>%
     mutate(get_id = paste(i, row_number(), sep = "-")) %>%
     select(.data$get_id, everything()) %>%
-    data.frame()
+    dplyr::as_tibble()
 }

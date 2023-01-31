@@ -4,13 +4,14 @@
 \alias{fb_process}
 \title{Process Facebook's API Objects}
 \usage{
-fb_process(response, paginate = TRUE, sleep = 0, quiet = TRUE, ...)
+fb_process(response, paginate = TRUE, sleep = 0, quiet = FALSE, ...)
 }
 \arguments{
 \item{response}{GET's output object, class response}
 
-\item{paginate}{Boolean. Run through all paginations? If not,
-only the first one will be processed.}
+\item{paginate}{Boolean or integer. Run through all paginations? If set
+to \code{FALSE}, only the first one will be processed. If set to any other
+integer value, will process the first N paginations.}
 
 \item{sleep}{Numeric value. How much should each loop wait until until running
 the next pagination query?}
