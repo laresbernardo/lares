@@ -63,7 +63,7 @@ querying the API with <code><a href="https://httr.r-lib.org/reference/GET.html" 
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fb_process</span><span class="op">(</span><span class="va">response</span>, paginate <span class="op">=</span> <span class="cn">TRUE</span>, sleep <span class="op">=</span> <span class="fl">0</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fb_process</span><span class="op">(</span><span class="va">response</span>, paginate <span class="op">=</span> <span class="cn">TRUE</span>, sleep <span class="op">=</span> <span class="fl">0</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -73,8 +73,9 @@ querying the API with <code><a href="https://httr.r-lib.org/reference/GET.html" 
 
 
 <dt>paginate</dt>
-<dd><p>Boolean. Run through all paginations? If not,
-only the first one will be processed.</p></dd>
+<dd><p>Boolean or integer. Run through all paginations? If set
+to <code>FALSE</code>, only the first one will be processed. If set to any other
+integer value, will process the first N paginations.</p></dd>
 
 
 <dt>sleep</dt>
@@ -106,6 +107,7 @@ the next pagination query?</p></dd>
 <code><a href="fb_insights.html">fb_insights</a>()</code>,
 <code><a href="fb_posts.html">fb_posts</a>()</code>,
 <code><a href="fb_post.html">fb_post</a>()</code>,
+<code><a href="fb_report_check.html">fb_report_check</a>()</code>,
 <code><a href="fb_rf.html">fb_rf</a>()</code>,
 <code><a href="fb_token.html">fb_token</a>()</code>,
 <code><a href="li_auth.html">li_auth</a>()</code>,
@@ -119,6 +121,7 @@ the next pagination query?</p></dd>
 <code><a href="fb_insights.html">fb_insights</a>()</code>,
 <code><a href="fb_posts.html">fb_posts</a>()</code>,
 <code><a href="fb_post.html">fb_post</a>()</code>,
+<code><a href="fb_report_check.html">fb_report_check</a>()</code>,
 <code><a href="fb_rf.html">fb_rf</a>()</code>,
 <code><a href="fb_token.html">fb_token</a>()</code></p></div>
     </div>
