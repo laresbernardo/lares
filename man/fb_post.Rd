@@ -4,7 +4,7 @@
 \alias{fb_post}
 \title{Facebook Post Comments API}
 \usage{
-fb_post(token, post_id, limit = 5000)
+fb_post(token, post_id, limit = 100)
 }
 \arguments{
 \item{token}{Character. Valid access token with sufficient privileges. Visit the
@@ -13,7 +13,7 @@ to acquire one.}
 
 \item{post_id}{Character vector. Post id(s)}
 
-\item{limit}{Integer. Query limit}
+\item{limit}{Integer. Query limit by pagination.}
 }
 \value{
 data.frame with un-nested processed results fetched with API.

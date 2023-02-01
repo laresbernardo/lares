@@ -1,6 +1,5 @@
 # Auxiliary constant values
 META_GRAPH_URL <- "https://graph.facebook.com"
-# META_GRAPH_URL <- "https://graph.intern.facebook.com"
 META_API_VER <- "v16.0"
 
 ####################################################################
@@ -72,9 +71,9 @@ fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = FALSE, ...)
           },
           error = function(err) {
             warning(paste0("Returning partial results given last pagination (", i, ") returned error"))
-            paginate <- FALSE
           }
         )
+        if ("error" %in% names(out)) paginate <- FALSE
       }
     }
   }
@@ -128,7 +127,7 @@ show_pag_status <- function(results, i = 1, sleep = 0, quiet = FALSE) {
 #' fb_report_check(token, report_run_id, live = TRUE, quiet = FALSE)
 #' }
 #' @export
-fb_report_check <- function(token, report_run_id, api_version = NULL, 
+fb_report_check <- function(token, report_run_id, api_version = NULL,
                             live = FALSE, sleep = 10, quiet = FALSE) {
   keep_running <- TRUE
   api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
@@ -174,7 +173,7 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
 #' segmentation results. Set to NA for no breakdowns
 #' @param fields Character, json format. Leave \code{NA} for default fields OR
 #' \code{NULL} to ignore.
-#' @param limit Integer. Query limit
+#' @param limit Integer. Query limit by pagination.
 #' @param api_version Character. Facebook API version.
 #' @param process Boolean. Process GET results to a more friendly format?
 #' @param async Boolean. Run an async query. When set to \code{TRUE}, instead of making
@@ -234,7 +233,7 @@ fb_insights <- function(token,
                         ad_object = "insights",
                         breakdowns = NA,
                         fields = NA,
-                        limit = 10000,
+                        limit = 100,
                         api_version = NULL,
                         process = TRUE,
                         async = FALSE,
@@ -282,17 +281,11 @@ fb_insights <- function(token,
     encode = "json"
   )
 
-  if (!process | async) {
-    if (async) {
-      import <- httr::content(import)
-      if ("error" %in% names(import)) {
-        message(paste("API ERROR:", import$error$message))
-      }
-    }
+  if (!process) {
     invisible(return(import))
   }
   output <- fb_process(import, ...)
-  return(as_tibble(output))
+  return(output)
 }
 
 ####################################################################
@@ -448,7 +441,7 @@ fb_rf <- function(token,
         prediction$error_user_msg,
         sep = "\n"
       ))
-      return(invisible(prediction))
+      invisible(return(prediction))
     }
     message(glued("Prediction created: {prediction}"))
   }
@@ -708,9 +701,8 @@ posts_fb <- function(posts) {
 #' posts <- fb_post(token, ids, 50)
 #' }
 #' @export
-fb_post <- function(token, post_id, limit = 5000) {
+fb_post <- function(token, post_id, limit = 100) {
   set_config(config(http_version = 0))
-
   iters <- length(post_id)
   for (i in 1:iters) {
     if (i == 1) ret <- NULL
@@ -786,7 +778,7 @@ fb_post <- function(token, post_id, limit = 5000) {
 fb_accounts <- function(token,
                         business_id = "904189322962915",
                         type = c("owned", "client"),
-                        limit = 1000,
+                        limit = 100,
                         api_version = NULL,
                         ...) {
   set_config(config(http_version = 0))

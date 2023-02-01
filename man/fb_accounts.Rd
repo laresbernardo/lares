@@ -8,7 +8,7 @@ fb_accounts(
   token,
   business_id = "904189322962915",
   type = c("owned", "client"),
-  limit = 1000,
+  limit = 100,
   api_version = NULL,
   ...
 )
@@ -22,7 +22,7 @@ to acquire one.}
 
 \item{type}{Character vector. Values: owned, client.}
 
-\item{limit}{Integer. Query limit}
+\item{limit}{Integer. Query limit by pagination.}
 
 \item{api_version}{Character. Facebook API version.}
 

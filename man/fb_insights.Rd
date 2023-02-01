@@ -14,7 +14,7 @@ fb_insights(
   ad_object = "insights",
   breakdowns = NA,
   fields = NA,
-  limit = 10000,
+  limit = 100,
   api_version = NULL,
   process = TRUE,
   async = FALSE,
@@ -47,7 +47,7 @@ segmentation results. Set to NA for no breakdowns}
 \item{fields}{Character, json format. Leave \code{NA} for default fields OR
 \code{NULL} to ignore.}
 
-\item{limit}{Integer. Query limit}
+\item{limit}{Integer. Query limit by pagination.}
 
 \item{api_version}{Character. Facebook API version.}
 
