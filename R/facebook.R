@@ -34,6 +34,7 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
   # Show and return error
   if ("error" %in% names(import)) {
     message(paste("API ERROR:", import$error$message))
+    import$url <- input$url
     invisible(return(import))
   }
 
@@ -274,7 +275,6 @@ fb_insights <- function(token,
   import <- api_verb(
     URL,
     query = list(
-      access_token = token,
       time_range = paste0('{\"since\":\"', start_date, '\",\"until\":\"', end_date, '\"}'),
       level = report_level,
       fields = if (length(fields) > 1) {
@@ -289,7 +289,8 @@ fb_insights <- function(token,
       },
       filtering = ifelse(!is.null(filtering), toJSON(filtering), ""),
       time_increment = time_increment,
-      limit = as.character(limit)
+      limit = as.character(limit),
+      access_token = token
     ),
     encode = "json"
   )
@@ -431,7 +432,6 @@ fb_rf <- function(token,
     prediction <- content(POST(
       glued("{META_GRAPH_URL}/{api_version}/{ad_account}/reachfrequencypredictions"),
       query = list(
-        access_token = token,
         start_time = current_time + daysecs,
         end_time = min(
           (current_time + daysecs + (days) * daysecs),
@@ -442,7 +442,8 @@ fb_rf <- function(token,
         prediction_mode = prediction_mode,
         budget = as.integer(budget),
         destination_ids = toJSON(as.character(destination_ids)),
-        target_spec = ts
+        target_spec = ts,
+        access_token = token
       )), encode = "json")[[1]]
 
     if ("message" %in% names(prediction)) {
@@ -465,8 +466,8 @@ fb_rf <- function(token,
     curves <- GET(
       glued("{META_GRAPH_URL}/{api_version}/{prediction}"),
       query = list(
-        access_token = token,
-        fields = "curve_budget_reach"
+        fields = "curve_budget_reach",
+        access_token = token
       )
     )
 
@@ -808,9 +809,9 @@ fb_accounts <- function(token,
     import <- GET(
       URL,
       query = list(
-        access_token = token,
         fields = "name,account_status,amount_spent,business_country_code",
-        limit = as.character(limit)
+        limit = as.character(limit),
+        access_token = token
       ),
       encode = "json"
     )
@@ -895,13 +896,13 @@ fb_ads <- function(token,
   import <- GET(
     glued("{META_GRAPH_URL}/{api_version}/{which}/ads"),
     query = list(
-      access_token = token,
       time_range = paste0('{\"since\":\"', start_date, '\",\"until\":\"', end_date, '\"}'),
       fields = if (length(fields) > 1) {
         vector2text(fields, sep = ",", quotes = FALSE)
       } else {
         fields
-      }
+      },
+      access_token = token
     ),
     encode = "json"
   )
