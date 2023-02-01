@@ -135,15 +135,15 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
   URL <- glued("{META_GRAPH_URL}/{api_version}/{report_run_id}")
   while (isTRUE(keep_running)) {
     async_s <- httr::GET(url = URL, query = list(access_token = token))
-    results_async_status <- httr::content(async_s)
-    keep_running <- "is_running" %in% names(results_async_status) && isTRUE(live)
+    resp <- httr::content(async_s)
+    keep_running <- resp$async_percent_completion < 100 && isTRUE(live)
     if (!quiet) {
       flush.console()
-      cat(paste("\rStatus:", results_async_status$async_status, "\n")) 
+      cat(sprintf("\rStatus: %s (%.0f%%)\n", resp$async_status, resp$async_percent_completion, "\n")) 
     }
     if (keep_running) Sys.sleep(sleep)
   }
-  return(results_async_status)
+  return(resp)
 }
 
 
