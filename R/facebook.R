@@ -65,17 +65,15 @@ fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = FALSE, ...)
       }
       while (exists("next", out$paging) && (i < as.integer(paginate) || isTRUE(paginate))) {
         i <- i + 1
-        tryCatch(
-          {
-            out <- fromJSON(out$paging$`next`)
-            results[[i]] <- .flattener(out$data, i)
-            if (!quiet) show_pag_status(results, i, sleep, quiet)
-          },
-          error = function(err) {
-            warning(paste0("Returning partial results given last pagination (", i, ") returned error"))
-          }
-        )
-        if ("error" %in% names(out)) paginate <- FALSE
+        res <- try({
+          out <- fromJSON(out$paging$`next`)
+          results[[i]] <- .flattener(out$data, i)
+          if (!quiet) show_pag_status(results, i, sleep, quiet)
+        }, silent = TRUE)
+        if (inherits(res, "try-error")) {
+          warning(paste0("Returning partial results given last pagination (", i, ") returned error"))
+          break
+        }
       }
     }
   }
