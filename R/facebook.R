@@ -1,5 +1,6 @@
 # Auxiliary constant values
 META_GRAPH_URL <- "https://graph.facebook.com"
+# META_GRAPH_URL <- "https://graph.intern.facebook.com"
 META_API_VER <- "v16.0"
 
 ####################################################################
@@ -24,7 +25,7 @@ fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = FALSE, ...)
   if (!"response" %in% class(response)) {
     stop("You must provide a response object (GET's output)")
   }
-  tic("fb_process_fx")
+  tic(paste("fb_process_", response$url))
   import <- content(response)
 
   # Show and return error
@@ -41,7 +42,8 @@ fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = FALSE, ...)
 
   # Deal with GET+response vs jsonlite
   import <- fromJSON(toJSON(import))
-
+  if (length(import) == 1) return(import)
+  
   # First pagination
   results <- list()
   i <- 1
@@ -89,7 +91,7 @@ fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = FALSE, ...)
     mutate_at(vars(contains("name")), list(as.character)) %>%
     as_tibble()
   if (!quiet) cat("\n")
-  toc("fb_process_fx", ...)
+  toc(paste("fb_process_", response$url), ...)
   return(ret)
 }
 
