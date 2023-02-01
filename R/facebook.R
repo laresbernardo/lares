@@ -12,7 +12,7 @@ META_API_VER <- "v16.0"
 #' @family API
 #' @family Meta
 #' @inheritParams tic
-#' @param response GET's output object, class response
+#' @param input GET's output object (response) or link (character).
 #' @param paginate Boolean or integer. Run through all paginations? If set
 #' to \code{FALSE}, only the first one will be processed. If set to any other
 #' integer value, will process the first N paginations.
@@ -21,12 +21,15 @@ META_API_VER <- "v16.0"
 #' @param ... Additional parameters.
 #' @return data.frame with un-nested processed results or NULL if no results found.
 #' @export
-fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
-  if (!"response" %in% class(response)) {
-    stop("You must provide a response object (GET's output)")
+fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
+  if (is.character(input)) {
+    if (is_url(input)) input <- httr::GET(input)
   }
-  tic(paste("fb_process_", response$url))
-  import <- content(response)
+  if (!"response" %in% class(input)) {
+    stop("You must provide a response object (GET's output) or a valid URL")
+  }
+  tic(paste("fb_process_", input$url))
+  import <- content(input, encoding = "json")
 
   # Show and return error
   if ("error" %in% names(import)) {
@@ -41,32 +44,32 @@ fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = FALSE, ...)
   }
 
   # Deal with GET+response vs jsonlite
-  import <- fromJSON(toJSON(import))
-  if (length(import) == 1) return(import)
+  out <- fromJSON(toJSON(import))
+  if (length(out) == 1) return(out)
   
   # First pagination
   results <- list()
   i <- 1
-  results[[i]] <- .flattener(import[[1]])
+  results[[i]] <- .flattener(out[[1]], first = TRUE)
   if (!quiet) show_pag_status(results, i, quiet)
 
   # Following iterations
-  if (exists("paging", import) && as.integer(paginate) >= 1) {
-    if (exists("next", import$paging)) {
+  if (exists("paging", out) && as.integer(paginate) >= 1) {
+    if (exists("next", out$paging)) {
       i <- i + 1
-      out <- fromJSON(import$paging$`next`)
+      out <- fromJSON(out$paging[["next"]])
       results[[i]] <- .flattener(out$data, i)
       if (!quiet) show_pag_status(results, i, sleep, quiet)
-      # Re-run first iteration as everything MUST match to bind
+      # Re-run first iteration and overwrite as everything MUST match to bind
       if (i == 2) {
-        out <- fromJSON(out$paging$`previous`)
+        out <- fromJSON(out$paging[["previous"]])
         results[[1]] <- .flattener(out$data, i)
         if (!quiet) show_pag_status(results, i, sleep, quiet)
       }
       while (exists("next", out$paging) && (i < as.integer(paginate) || isTRUE(paginate))) {
         i <- i + 1
         res <- try({
-          out <- fromJSON(out$paging$`next`)
+          out <- fromJSON(out$paging[["next"]])
           results[[i]] <- .flattener(out$data, i)
           if (!quiet) show_pag_status(results, i, sleep, quiet)
         }, silent = TRUE)
@@ -89,7 +92,12 @@ fb_process <- function(response, paginate = TRUE, sleep = 0, quiet = FALSE, ...)
     mutate_at(vars(contains("name")), list(as.character)) %>%
     as_tibble()
   if (!quiet) cat("\n")
-  toc(paste("fb_process_", response$url), ...)
+  
+  # Save last pagination and if it returned complete results
+  attr(ret, "pag_full") <- !("next" %in% names(out[["paging"]]))
+  attr(ret, "paging") <- out[["paging"]]
+
+  toc(paste("fb_process_", input$url), ...)
   return(ret)
 }
 
@@ -134,7 +142,7 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
   URL <- glued("{META_GRAPH_URL}/{api_version}/{report_run_id}")
   while (isTRUE(keep_running)) {
     async_s <- httr::GET(url = URL, query = list(access_token = token))
-    resp <- httr::content(async_s)
+    resp <- httr::content(async_s, encoding = "json")
     keep_running <- resp$async_percent_completion < 100 && isTRUE(live)
     if (!quiet) {
       flush.console()
@@ -173,6 +181,9 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
 #' segmentation results. Set to NA for no breakdowns
 #' @param fields Character, json format. Leave \code{NA} for default fields OR
 #' \code{NULL} to ignore.
+#' @param filtering List. Each filter will be a list containing "field",
+#' "operator", and "value". Read more about the operators in the official
+#' \href{https://developers.facebook.com/docs/marketing-api/insights/parameters}{docs}.
 #' @param limit Integer. Query limit by pagination.
 #' @param api_version Character. Facebook API version.
 #' @param process Boolean. Process GET results to a more friendly format?
@@ -233,6 +244,7 @@ fb_insights <- function(token,
                         ad_object = "insights",
                         breakdowns = NA,
                         fields = NA,
+                        filtering = NULL,
                         limit = 100,
                         api_version = NULL,
                         process = TRUE,
@@ -275,6 +287,7 @@ fb_insights <- function(token,
       } else {
         NULL
       },
+      filtering = ifelse(!is.null(filtering), toJSON(filtering), ""),
       time_increment = time_increment,
       limit = as.character(limit)
     ),
@@ -430,9 +443,7 @@ fb_rf <- function(token,
         budget = as.integer(budget),
         destination_ids = toJSON(as.character(destination_ids)),
         target_spec = ts
-      ),
-      encode = "json"
-    ))[[1]]
+      )), encode = "json")[[1]]
 
     if ("message" %in% names(prediction)) {
       message(paste(
@@ -992,7 +1003,7 @@ fb_token <- function(app_id, app_secret, token, api_version = NULL) {
     "grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s"
   ))
   linkurl <- sprintf(link, app_id, app_secret, token)
-  ret <- content(GET(linkurl))
+  ret <- content(GET(linkurl), encode = "json")
   if ("access_token" %in% names(ret)) {
     expiration <- Sys.time() + ret$expires_in
     message(sprintf("Your token was created succesfully. It will expire on %s", expiration))
@@ -1005,9 +1016,9 @@ fb_token <- function(app_id, app_secret, token, api_version = NULL) {
   }
 }
 
-.flattener <- function(x, i = 1) {
+.flattener <- function(x, i = 1, first = FALSE) {
   bind_rows(x) %>%
-    mutate(get_id = paste(i - 1, row_number(), sep = "-")) %>%
+    mutate(get_id = paste(i - !first, row_number(), sep = "-")) %>%
     select(.data$get_id, everything()) %>%
     dplyr::as_tibble()
 }

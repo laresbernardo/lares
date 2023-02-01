@@ -14,6 +14,7 @@ fb_insights(
   ad_object = "insights",
   breakdowns = NA,
   fields = NA,
+  filtering = NULL,
   limit = 100,
   api_version = NULL,
   process = TRUE,
@@ -46,6 +47,10 @@ segmentation results. Set to NA for no breakdowns}
 
 \item{fields}{Character, json format. Leave \code{NA} for default fields OR
 \code{NULL} to ignore.}
+
+\item{filtering}{List. Each filter will be a list containing "field",
+"operator", and "value". Read more about the operators in the official
+\href{https://developers.facebook.com/docs/marketing-api/insights/parameters}{docs}.}
 
 \item{limit}{Integer. Query limit by pagination.}
 

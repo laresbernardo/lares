@@ -4,10 +4,10 @@
 \alias{fb_process}
 \title{Process Facebook's API Objects}
 \usage{
-fb_process(response, paginate = TRUE, sleep = 0, quiet = FALSE, ...)
+fb_process(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...)
 }
 \arguments{
-\item{response}{GET's output object, class response}
+\item{input}{GET's output object (response) or link (character).}
 
 \item{paginate}{Boolean or integer. Run through all paginations? If set
 to \code{FALSE}, only the first one will be processed. If set to any other
