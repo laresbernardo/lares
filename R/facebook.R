@@ -139,7 +139,7 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
     keep_running <- resp$async_percent_completion < 100 && isTRUE(live)
     if (!quiet) {
       flush.console()
-      cat(sprintf("\rStatus: %s (%.0f%%)\n", resp$async_status, resp$async_percent_completion, "\n")) 
+      cat(sprintf("\rStatus: %s (%.0f%%)\n", resp$async_status, resp$async_percent_completion))
     }
     if (keep_running) Sys.sleep(sleep)
   }
