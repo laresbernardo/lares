@@ -52,7 +52,7 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
   results <- list()
   i <- 1
   results[[i]] <- .flattener(out[[1]], first = TRUE)
-  if (!quiet) show_pag_status(results, i, quiet)
+  if (!quiet) show_pag_status(results, i, sleep, quiet)
 
   # Following iterations
   if (exists("paging", out) && as.integer(paginate) >= 1) {
@@ -143,7 +143,7 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
   while (isTRUE(keep_running)) {
     async_s <- httr::GET(url = URL, query = list(access_token = token))
     resp <- httr::content(async_s, encoding = "json")
-    keep_running <- resp$async_percent_completion < 100 && isTRUE(live)
+    keep_running <- isTRUE(resp$async_percent_completion < 100 && isTRUE(live))
     if (!quiet) {
       flush.console()
       cat(sprintf("\rStatus: %s (%.0f%%)\n", resp$async_status, resp$async_percent_completion))
@@ -182,9 +182,9 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
 #' @param fields Character, json format. Leave \code{NA} for default fields OR
 #' \code{NULL} to ignore.
 #' @param filtering List. Each filter will be a list containing "field",
-#' "operator", and "value". Read more about the operators in the official. An example:
-#' \code{data.frame(field = "impressions", operator = "GREATER_THAN", value = 100)}.
+#' "operator", and "value". Read more about the operators in the official
 #' \href{https://developers.facebook.com/docs/marketing-api/insights/parameters}{docs}.
+#' Example: \code{dplyr::tibble(field = "country", operator = "IN", value = list("PE")))}.
 #' @param limit Integer. Query limit by pagination.
 #' @param api_version Character. Facebook API version.
 #' @param process Boolean. Process GET results to a more friendly format?
