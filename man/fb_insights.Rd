@@ -49,7 +49,8 @@ segmentation results. Set to NA for no breakdowns}
 \code{NULL} to ignore.}
 
 \item{filtering}{List. Each filter will be a list containing "field",
-"operator", and "value". Read more about the operators in the official
+"operator", and "value". Read more about the operators in the official. An example:
+\code{data.frame(field = "impressions", operator = "GREATER_THAN", value = 100)}.
 \href{https://developers.facebook.com/docs/marketing-api/insights/parameters}{docs}.}
 
 \item{limit}{Integer. Query limit by pagination.}

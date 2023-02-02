@@ -1,6 +1,6 @@
 # Auxiliary constant values
-META_GRAPH_URL <- "https://graph.facebook.com"
 # META_GRAPH_URL <- "https://graph.intern.facebook.com"
+META_GRAPH_URL <- "https://graph.facebook.com"
 META_API_VER <- "v16.0"
 
 ####################################################################
@@ -183,7 +183,8 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
 #' @param fields Character, json format. Leave \code{NA} for default fields OR
 #' \code{NULL} to ignore.
 #' @param filtering List. Each filter will be a list containing "field",
-#' "operator", and "value". Read more about the operators in the official
+#' "operator", and "value". Read more about the operators in the official. An example:
+#' \code{data.frame(field = "impressions", operator = "GREATER_THAN", value = 100)}.
 #' \href{https://developers.facebook.com/docs/marketing-api/insights/parameters}{docs}.
 #' @param limit Integer. Query limit by pagination.
 #' @param api_version Character. Facebook API version.
