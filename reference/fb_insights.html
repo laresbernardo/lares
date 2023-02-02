@@ -133,9 +133,9 @@ segmentation results. Set to NA for no breakdowns</p></dd>
 
 <dt>filtering</dt>
 <dd><p>List. Each filter will be a list containing "field",
-"operator", and "value". Read more about the operators in the official. An example:
-<code>data.frame(field = "impressions", operator = "GREATER_THAN", value = 100)</code>.
-<a href="https://developers.facebook.com/docs/marketing-api/insights/parameters" class="external-link">docs</a>.</p></dd>
+"operator", and "value". Read more about the operators in the official
+<a href="https://developers.facebook.com/docs/marketing-api/insights/parameters" class="external-link">docs</a>.
+Example: <code>dplyr::tibble(field = "country", operator = "IN", value = list("PE")))</code>.</p></dd>
 
 
 <dt>limit</dt>
