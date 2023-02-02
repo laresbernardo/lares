@@ -420,24 +420,21 @@ corr_cross <- function(df, plot = TRUE,
     if (type == 1) {
       p <- ret %>%
         head(top) %>%
+        ungroup() %>%
         mutate(
           label = paste(.data$key, "+", .data$mix),
           abs = abs(.data$corr),
-          sign = ifelse(.data$corr < 0, "negative", "positive")
+          sign = ifelse(.data$corr < 0, "negative", "positive"),
+          hjust = ifelse(.data$abs < max(.data$abs) / 1.5, -0.1, 1.1)
         ) %>%
         ggplot(aes(
           x = reorder(.data$label, .data$abs),
-          y = .data$abs
+          y = .data$abs,
+          label = sub("^(-)?0[.]", "\\1.", signif(.data$corr, 3))
         )) +
         geom_col(aes(fill = .data$sign)) +
-        geom_text(
-          aes(
-            colour = .data$sign,
-            label = sub("^(-)?0[.]", "\\1.", signif(.data$corr, 3))
-          ),
-          size = 3, hjust = 1.1
-        ) +
         coord_flip() +
+        geom_text(aes(hjust = .data$hjust), size = 3, colour = "black") +
         guides(fill = "none", colour = "none") +
         labs(
           title = "Ranked Cross-Correlations",

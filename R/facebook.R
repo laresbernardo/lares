@@ -81,8 +81,7 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
       }
     }
   }
-  done <- as_tibble(bind_rows(results)) %>%
-    mutate_all(function(x) as.vector(unlist(x)))
+  done <- bind_rows(results)
   ret <- suppressMessages(type.convert(
     done,
     numerals = "no.loss", as.is = TRUE
@@ -1022,5 +1021,6 @@ fb_token <- function(app_id, app_secret, token, api_version = NULL) {
   bind_rows(x) %>%
     mutate(get_id = paste(i - !first, row_number(), sep = "-")) %>%
     select(.data$get_id, everything()) %>%
+    tidyr::unnest(everything(), names_sep = ".") %>%
     dplyr::as_tibble()
 }
