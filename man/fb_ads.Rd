@@ -51,10 +51,10 @@ This function was based on FBinsightsR.
 \examples{
 \dontrun{
 token <- YOURTOKEN
-which <- act_ADACCOUNT
+account <- act_ADACCOUNT
 
-# Query all ads for "which" with results in the last 10 days
-ads <- fb_ads(YOURTOKEN, which, start_date = Sys.Date() - 10)
+# Query all ads for "which" (account) with results in the last 10 days
+ads <- fb_ads(token, account, start_date = Sys.Date() - 10)
 }
 }
 \seealso{
@@ -63,8 +63,6 @@ Other API:
 \code{\link{fb_accounts}()},
 \code{\link{fb_creatives}()},
 \code{\link{fb_insights}()},
-\code{\link{fb_posts}()},
-\code{\link{fb_post}()},
 \code{\link{fb_process}()},
 \code{\link{fb_report_check}()},
 \code{\link{fb_rf}()},
@@ -78,8 +76,6 @@ Other Meta:
 \code{\link{fb_accounts}()},
 \code{\link{fb_creatives}()},
 \code{\link{fb_insights}()},
-\code{\link{fb_posts}()},
-\code{\link{fb_post}()},
 \code{\link{fb_process}()},
 \code{\link{fb_report_check}()},
 \code{\link{fb_rf}()},

@@ -4,10 +4,10 @@ META_GRAPH_URL <- "https://graph.facebook.com"
 META_API_VER <- "v16.0"
 
 ####################################################################
-#' Process Facebook's API Objects
+#' Paginate and Process Facebook's API Results
 #'
 #' Process and paginate raw results from Facebook's API, result of
-#' querying the API with \code{httr::GET}.
+#' querying the API with \code{httr::GET} or by passing an API link.
 #'
 #' @family API
 #' @family Meta
@@ -28,13 +28,24 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
   if (!"response" %in% class(input)) {
     stop("You must provide a response object (GET's output) or a valid URL")
   }
-  tic(paste("fb_process_", input$url))
+  tic(paste0("fb_process_", input$url))
   import <- content(input, encoding = "json")
 
-  # Show and return error
+  # Show and return error (and help is token expired)
   if ("error" %in% names(import)) {
-    message(paste("API ERROR:", import$error$message))
+    if (!quiet) message(paste("API ERROR:", import$error$message))
     import$url <- input$url
+    if ("error" %in% names(import)) {
+      if (grepl("expired", import$error$message) & !quiet) {
+        message(paste(
+          "You must be logged in to your Facebook account and refresh/get a new token:",
+          "\n1. Within the Graph API Explorer, select an Application.",
+          "\n2. Go to Get Token and select the Page Acces Token needed.",
+          "Note that there are navigation arrows if there are lots of accounts.",
+          "\n3. Copy and use the Acces Token created."))
+        browseURL("https://developers.facebook.com/tools/explorer")
+      }
+    }
     invisible(return(import))
   }
 
@@ -44,14 +55,14 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
     invisible(return(import))
   }
 
-  # Deal with GET+response vs jsonlite
+  # Deal with GET + response vs jsonlite
   out <- fromJSON(toJSON(import))
-  if (length(out) == 1) return(out)
+  if (all(lapply(out, length) == 1)) return(out)
   
   # First pagination
   results <- list()
   i <- 1
-  results[[i]] <- .flattener(out[[1]], first = TRUE)
+  results[[i]] <- list_flattener(out[[1]], first = TRUE)
   if (!quiet) show_pag_status(results, i, sleep, quiet)
 
   # Following iterations
@@ -59,19 +70,19 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
     if (exists("next", out$paging)) {
       i <- i + 1
       out <- fromJSON(out$paging[["next"]])
-      results[[i]] <- .flattener(out$data, i)
+      results[[i]] <- list_flattener(out$data, i)
       if (!quiet) show_pag_status(results, i, sleep, quiet)
       # Re-run first iteration and overwrite as everything MUST match to bind
       if (i == 2) {
         out <- fromJSON(out$paging[["previous"]])
-        results[[1]] <- .flattener(out$data, i)
+        results[[1]] <- list_flattener(out$data, i)
         if (!quiet) show_pag_status(results, i, sleep, quiet)
       }
       while (exists("next", out$paging) && (i < as.integer(paginate) || isTRUE(paginate))) {
         i <- i + 1
         res <- try({
           out <- fromJSON(out$paging[["next"]])
-          results[[i]] <- .flattener(out$data, i)
+          results[[i]] <- list_flattener(out$data, i)
           if (!quiet) show_pag_status(results, i, sleep, quiet)
         }, silent = TRUE)
         if (inherits(res, "try-error")) {
@@ -91,14 +102,21 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
     mutate_at(vars(contains("url")), list(as.character)) %>%
     mutate_at(vars(contains("name")), list(as.character)) %>%
     as_tibble()
-  if (!quiet) cat("\n")
   
   # Save last pagination and if it returned complete results
-  attr(ret, "pag_full") <- !("next" %in% names(out[["paging"]]))
+  attr(ret, "paging_done") <- !("next" %in% names(out[["paging"]]))
   attr(ret, "paging") <- out[["paging"]]
 
-  toc(paste("fb_process_", input$url), quiet = quiet, ...)
+  toc(paste0("fb_process_", input$url), quiet = quiet, ...)
   return(ret)
+}
+
+list_flattener <- function(x, i = 1, first = FALSE) {
+  bind_rows(x) %>%
+    mutate(get_id = paste(i - !first, row_number(), sep = "-")) %>%
+    select(.data$get_id, everything()) %>%
+    tidyr::unnest(everything(), names_sep = ".") %>%
+    dplyr::as_tibble()
 }
 
 show_pag_status <- function(results, i = 1, sleep = 0, quiet = FALSE) {
@@ -116,7 +134,7 @@ show_pag_status <- function(results, i = 1, sleep = 0, quiet = FALSE) {
 
 
 ####################################################################
-#' Check Async Facebook API Report Status
+#' Facebook API Report Status Check
 #'
 #' This returns all available FB insights per day including any given
 #' breakdown to the specified report level, and place into a data frame.
@@ -500,276 +518,6 @@ fb_rf <- function(token,
   return(prediction)
 }
 
-####################################################################
-#' Facebook Page Posts API
-#'
-#' Connect to an API Graph's token of a given page and get posts,
-#' comments, shares, and reactions of n posts (with no limits).
-#'
-#' @family API
-#' @family Meta
-#' @inheritParams fb_insights
-#' @param n Integer. How many most recent posts do you need?
-#' @param limits Integer. For each post, hoy many results do you need?
-#' @param comments,shares,reactions Boolean. Include in your query?
-#' @return data.frame with un-nested processed results fetched with API.
-#' @examples
-#' \dontrun{
-#' token <- YOURTOKEN
-#' # Query latest 10 posts and 50 comments for each
-#' posts <- fb_posts(token, n = 10, limits = 50, comments = TRUE)
-#' }
-#' @export
-fb_posts <- function(token,
-                     n = 150,
-                     limits = 100,
-                     comments = FALSE,
-                     shares = FALSE,
-                     reactions = FALSE,
-                     api_version = NULL,
-                     ...) {
-  set_config(config(http_version = 0))
-  limit_posts <- 100
-  total_iters <- ceiling(n / limit_posts)
-  all_comments <- all_shares <- all_reactions <- all_posts <- ret <- NULL
-  api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
-
-  for (iter in 1:total_iters) { # iter = 1
-    limit_posts <- ifelse(iter == total_iters, limit_posts - (iter * limit_posts - n), limit_posts)
-    limit_posts <- ifelse(n < limit_posts, n, limit_posts)
-    if (iter == 1) {
-      url <- glued(paste0(
-        "{META_GRAPH_URL}/", api_version, "/me?fields=",
-        "id,name,posts.limit(", limit_posts, ")",
-        "{created_time,message,status_type,",
-        ifelse(comments, paste0("comments.limit(", limits, "),"), ""),
-        ifelse(reactions, paste0("reactions.limit(", limits, "),"), ""),
-        ifelse(shares, "shares,", ""),
-        "permalink_url}",
-        "&access_token=", token
-      ))
-    } else {
-      url <- new_url
-    }
-    get <- GET(url = url)
-    char <- rawToChar(get$content)
-    json <- fromJSON(char)
-    if ("error" %in% names(json)) {
-      if (grepl("expired", json$error$message)) {
-        message("You must be logged in to your Facebook account and refresh/get the token!")
-        message("1. Within the Graph API Explorer, select an Application.")
-        message(
-          "2. Go to Get Token and select the Page Acces Token needed. ",
-          "Note that there are navigation arrows if lots of accounts axists."
-        )
-        message("3. Copy and use the Acces Token created.")
-        url <- paste0(
-          "https://developers.facebook.com/tools/explorer/1866795993626030/",
-          "?version=", api_version, "&classic=1"
-        )
-        browseURL(url)
-      }
-      error <- paste("API ERROR:", json$error$message)
-      return(error)
-    }
-
-    if (iter == 1) ret[["account"]] <- data.frame(id = json$id, name = json$name)
-    all_posts <- rbind(all_posts, posts_fb(json))
-    all_comments <- if (comments && !is.null(all_comments)) rbind(all_comments, comments_fb(json))
-    all_reactions <- if (reactions && !is.null(all_reactions)) rbind(all_reactions, reactions_fb(json))
-    all_shares <- if (shares && !is.null(all_shares)) rbind(all_shares, shares_fb(json))
-    new_url <- ifelse(length(json$paging) > 0, json$paging$`next`, json$posts$paging$`next`)
-    if (total_iters > 1) statusbar(iter, total_iters)
-  }
-  ret[["posts"]] <- all_posts
-  ret[["comments"]] <- all_comments
-  ret[["reactions"]] <- all_reactions
-  ret[["shares"]] <- all_shares
-  # ret[["json"]] <- json
-
-  msg <- paste("Exported", nrow(ret$posts), "posts from", ret$account$name, " ")
-  msg <- ifelse(!is.null(ret$comments), paste(msg, nrow(ret$comments), "comments"), msg)
-  msg <- ifelse(!is.null(ret$reactions), paste(msg, nrow(ret$reactions), "reactions"), msg)
-  msg <- ifelse(!is.null(ret$shares), paste(msg, nrow(ret$shares), "share"), msg)
-  ret[["msg"]] <- msg
-  message(msg)
-  return(ret)
-}
-
-comments_fb <- function(posts) {
-  comments <- NULL
-  if ("data" %in% names(posts)) posts$posts$data <- posts$data
-  iters <- ifelse("comments" %in% names(posts$posts$data),
-    length(posts$posts$data$comments$data),
-    length(posts$posts$data)
-  )
-  for (i in 1:iters) {
-    if (length(posts$posts$data$comments$data) > 0) {
-      all <- posts$posts$data$comments$data[[i]]
-      id <- posts$posts$data$id[[i]]
-    } else {
-      all <- data.frame(lapply(posts$posts$data, `[`, "comments")[[i]])
-      id <- posts$posts$data[[i]]$id
-    }
-    if ("data" %in% names(posts)) posts$posts$data <- posts$data
-    if (length(all) > 0) {
-      ids <- c(t(select(all, starts_with("id"))))
-      times <- c(t(select(all, starts_with("created_time"))))
-      times <- as.POSIXct(times, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
-      coms <- c(t(select(all, starts_with("message"))))
-      names <- c(t(select(all, starts_with("from"))))
-      name <- names[seq(1, 2 * nrow(all), 2)]
-      name_id <- names[seq(2, 2 * nrow(all), 2)]
-      dfi <- data.frame(
-        post_id = id,
-        comment_id = ids,
-        comment_time = times,
-        comment = coms,
-        name = name,
-        name_id = name_id
-      ) %>%
-        filter(comment != "")
-      comments <- rbind(comments, dfi)
-    }
-  }
-  return(comments)
-}
-
-reactions_fb <- function(posts) {
-  reactions <- NULL
-  if ("data" %in% names(posts)) posts$posts$data <- posts$data
-  iters <- ifelse("reactions" %in% names(posts$posts$data),
-    length(posts$posts$data$reactions$data),
-    length(posts$posts$data)
-  )
-  for (i in 1:iters) {
-    if (length(posts$posts$data$reactions$data) > 0) {
-      all <- posts$posts$data$reactions$data[[i]]
-      id <- posts$posts$data$id[[i]]
-    } else {
-      all <- data.frame(lapply(posts$posts$data, `[`, "reactions")[[i]])
-      id <- posts$posts$data[[i]]$id
-    }
-    if (length(all) > 0) {
-      ids <- c(t(select(all, starts_with("id"))))
-      reac <- c(t(select(all, starts_with("type"))))
-      name <- c(t(select(all, starts_with("name"))))
-      dfi <- data.frame(
-        post_id = id,
-        reaction_id = ids,
-        reaction = reac,
-        name = name
-      )
-      reactions <- rbind(reactions, dfi)
-    }
-  }
-  return(reactions)
-}
-
-shares_fb <- function(posts) {
-  shares <- NULL
-  if ("data" %in% names(posts)) posts$posts$data <- posts$data
-  if (length(posts$posts$data$shares) > 0) {
-    all <- posts$posts$data$shares$count
-    id <- posts$posts$data$id
-  } else {
-    for (i in seq_along(posts$posts$data)) {
-      all <- posts$posts$data[[i]]$shares$count
-      id <- posts$posts$data[[i]]$id
-    }
-  }
-  shares <- data.frame(post_id = id, shares = all)
-  return(shares)
-}
-
-posts_fb <- function(posts) {
-  if ("data" %in% names(posts)) posts$posts$data <- posts$data
-  plinks <- data.frame(
-    id = posts$posts$data$id,
-    created_time = as.POSIXct(posts$posts$data$created_time,
-      format = "%Y-%m-%dT%H:%M:%S", tz = "UTC"
-    ),
-    url = posts$posts$data$permalink_url,
-    message = posts$posts$data$message,
-    status_type = posts$posts$data$status_type
-  )
-  return(plinks)
-}
-
-
-####################################################################
-#' Facebook Post Comments API
-#'
-#' Connect to an API Graph's token and get posts comments given the
-#' post(s) id.
-#'
-#' @family API
-#' @family Meta
-#' @inheritParams fb_insights
-#' @param post_id Character vector. Post id(s)
-#' @return data.frame with un-nested processed results fetched with API.
-#' @examples
-#' \dontrun{
-#' token <- YOURTOKEN
-#' ids <- c(POST_ID1, POST_ID2)
-#'
-#' # Query 50 comments for two post ids
-#' posts <- fb_post(token, ids, 50)
-#' }
-#' @export
-fb_post <- function(token, post_id, limit = 100) {
-  set_config(config(http_version = 0))
-  iters <- length(post_id)
-  for (i in 1:iters) {
-    if (i == 1) ret <- NULL
-    if (i == 1) nodata <- NULL
-    url <- glued(paste0(
-      "{META_GRAPH_URL}/v3.0/", post_id[i],
-      "/comments?limit=", limit, "&access_token=", token
-    ))
-    get <- GET(url = url)
-    char <- rawToChar(get$content)
-    json <- fromJSON(char)
-
-    if ("error" %in% names(json)) {
-      if (grepl("expired", json$error$message)) {
-        message("You must be logged in to your Facebook account and refresh/get the token!")
-        message("1. Within the Graph API Explorer, select an Application.")
-        message(
-          "2. Go to Get Token and select the Page Acces Token needed. ",
-          "Note that there are navigation arrows if lots of accounts axists."
-        )
-        message("3. Copy and use the Acces Token created.")
-        url <- paste0(
-          "https://developers.facebook.com/tools/explorer/1866795993626030/",
-          "?version=v3.3&classic=1"
-        )
-        browseURL(url)
-      }
-      error <- paste("API ERROR:", json$error$message)
-      return(error)
-    } else {
-      if (length(json$data) != 0) {
-        json$data$post_id <- post_id[i]
-        json$data$created_time <- as.POSIXct(
-          json$data$created_time,
-          format = "%Y-%m-%dT%H:%M:%S", tz = "UTC"
-        )
-        json$data$from <- json$data$from$name
-        json$data <- as.data.frame(json$data, row.names = paste0(i, ":", rownames(json$data)))
-        ret <- rbind(ret, json$data)
-      } else {
-        nodata <- c(nodata, post_id[i])
-      }
-    }
-    if (iters > 1) statusbar(i, iters)
-  }
-  if (i == iters && length(nodata) > 0) {
-    message(paste("NO DATA: no comments on", vector2text(nodata)))
-  }
-  return(as_tibble(ret))
-}
-
 
 ####################################################################
 #' Facebook Ad Accounts
@@ -800,15 +548,15 @@ fb_accounts <- function(token,
   set_config(config(http_version = 0))
   api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
   output <- NULL
-
+  
   # Select which type of ad accounts
   type <- paste0(type, "_ad_accounts")
-
+  
   for (i in seq_along(type)) {
     message(paste(">>> Fetching", type[i]))
     URL <- paste(META_GRAPH_URL, api_version, business_id, type[i], sep = "/")
     continue <- TRUE
-
+    
     # Call insights
     import <- GET(
       URL,
@@ -819,9 +567,8 @@ fb_accounts <- function(token,
       ),
       encode = "json"
     )
-
     ret <- fb_process(import, quiet = TRUE, ...)
-
+    
     if (inherits(ret, "data.frame")) {
       ret$type <- type[i]
       output <- bind_rows(output, ret)
@@ -831,7 +578,7 @@ fb_accounts <- function(token,
   if (!inherits(output, "data.frame")) {
     return(invisible(NULL))
   }
-
+  
   # Account status dictionary
   output <- mutate(output, account_status = case_when(
     account_status == "1" ~ "ACTIVE",
@@ -845,145 +592,17 @@ fb_accounts <- function(token,
     account_status == "201" ~ "ANY_ACTIVE",
     account_status == "202" ~ "ANY_CLOSED"
   ))
-
+  
   output <- suppressMessages(type.convert(
     output, numerals = "no.loss", as.is = TRUE)) %>%
     arrange(desc(.data$amount_spent)) %>%
     as_tibble()
-
+  
   return(output)
 }
 
 ####################################################################
-#' Facebook Ads API
-#'
-#' This returns all available FB ads for any account, campaign, or ad set id.
-#' For more information on Ad' API, go to the
-#' \href{https://developers.facebook.com/docs/marketing-api/reference/adgroup}{original documentaion}
-#'
-#' This function was based on FBinsightsR.
-#'
-#' @family API
-#' @family Meta
-#' @inheritParams fb_insights
-#' @inheritParams fb_process
-#' @return data.frame with un-nested processed results if \code{process=TRUE} or
-#' raw API results as list when \code{process=FALSE}.
-#' @examples
-#' \dontrun{
-#' token <- YOURTOKEN
-#' which <- act_ADACCOUNT
-#'
-#' # Query all ads for "which" with results in the last 10 days
-#' ads <- fb_ads(YOURTOKEN, which, start_date = Sys.Date() - 10)
-#' }
-#' @export
-fb_ads <- function(token,
-                   which,
-                   start_date = Sys.Date() - 31,
-                   end_date = Sys.Date(),
-                   fields = NA,
-                   api_version = NULL,
-                   process = TRUE,
-                   ...) {
-  set_config(config(http_version = 0))
-  api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
-
-  if (is.na(fields[1])) {
-    fields <- paste(
-      "campaign_name, campaign_id, objective, adset_id, adset_name, ad_id, ad_name,",
-      "impressions, cpm, spend, reach, clicks, unique_clicks, ctr, cpc, unique_ctr,",
-      "cost_per_unique_click"
-    )
-  }
-
-  # Call insights
-  import <- GET(
-    glued("{META_GRAPH_URL}/{api_version}/{which}/ads"),
-    query = list(
-      time_range = paste0('{\"since\":\"', start_date, '\",\"until\":\"', end_date, '\"}'),
-      fields = if (length(fields) > 1) {
-        vector2text(fields, sep = ",", quotes = FALSE)
-      } else {
-        fields
-      },
-      access_token = token
-    ),
-    encode = "json"
-  )
-
-  if (!process) {
-    return(import)
-  }
-
-  ret <- fb_process(import, ...)
-  if (inherits(ret, "data.frame")) {
-    ret <- ret %>%
-      # rename(adcreatives_id = .data$list_id) %>%
-      # arrange(desc(.data$created_time)) %>%
-      as_tibble()
-    return(ret)
-  }
-}
-
-
-####################################################################
-#' Facebook Creatives API
-#'
-#' For more information: \href{https://developers.facebook.com/docs/marketing-apis}{Marketing API}
-#'
-#' @family API
-#' @family Meta
-#' @inheritParams fb_process
-#' @inheritParams fb_insights
-#' @return data.frame with un-nested processed results if \code{process=TRUE} or
-#' raw API results as list when \code{process=FALSE}.
-#' @examples
-#' \dontrun{
-#' token <- YOURTOKEN
-#' which <- act_ADACCOUNT
-#'
-#' # Query all creatives for "which"
-#' creatives <- fb_creatives(YOURTOKEN, which)
-#' }
-#' @export
-fb_creatives <- function(token, which,
-                         api_version = NULL,
-                         process = TRUE,
-                         ...) {
-  set_config(config(http_version = 0))
-  api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
-
-  fields <- c(
-    "account_id", "object_type", "name", "status", "campaign_id",
-    "call_to_action_type", "image_url", "thumbnail_url"
-  )
-  link <- glued(paste0(
-    "{META_GRAPH_URL}/%s/%s/adcreatives?",
-    "grant_type=fb_exchange_token",
-    "&fields=%s",
-    "&access_token=%s"
-  ))
-  linkurl <- sprintf(
-    link, api_version, which,
-    vector2text(fields, sep = ",", quotes = FALSE),
-    token
-  )
-  import <- GET(linkurl)
-  if (!process) {
-    return(import)
-  }
-  ret <- fb_process(import, ...)
-  if (inherits(ret, "data.frame")) {
-    ret <- select(ret, one_of("id", .data$fields))
-  }
-  attr(ret, "cURL") <- linkurl
-  return(ret)
-}
-
-
-####################################################################
-#' Facebook's Long Life User Token
+#' Facebook's Long-Life User API Token
 #'
 #' Using a 1-hour generic user token you can generate a 60 day token.
 #' You will need to have an App ID and App secret, and a valid token.
@@ -1022,10 +641,111 @@ fb_token <- function(app_id, app_secret, token, api_version = NULL) {
   }
 }
 
-.flattener <- function(x, i = 1, first = FALSE) {
-  bind_rows(x) %>%
-    mutate(get_id = paste(i - !first, row_number(), sep = "-")) %>%
-    select(.data$get_id, everything()) %>%
-    tidyr::unnest(everything(), names_sep = ".") %>%
-    dplyr::as_tibble()
+####################################################################
+#' Facebook Creatives API
+#'
+#' For more information: \href{https://developers.facebook.com/docs/marketing-apis}{Marketing API}
+#'
+#' @family API
+#' @family Meta
+#' @inheritParams fb_process
+#' @inheritParams fb_insights
+#' @return data.frame with un-nested processed results if \code{process=TRUE} or
+#' raw API results as list when \code{process=FALSE}.
+#' @examples
+#' \dontrun{
+#' token <- YOURTOKEN
+#' account <- act_ADACCOUNT
+#'
+#' # Query all creatives for "which" (account in this case)
+#' creatives <- fb_creatives(token, account)
+#' }
+#' @export
+fb_creatives <- function(token, which,
+                         api_version = NULL,
+                         process = TRUE,
+                         ...) {
+  set_config(config(http_version = 0))
+  api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
+  
+  fields <- c(
+    "account_id", "object_type", "name", "status", "campaign_id",
+    "call_to_action_type", "image_url", "thumbnail_url"
+  )
+  link <- glued(paste0(
+    "{META_GRAPH_URL}/%s/%s/adcreatives?",
+    "grant_type=fb_exchange_token",
+    "&fields=%s",
+    "&access_token=%s"
+  ))
+  linkurl <- sprintf(
+    link, api_version, which,
+    vector2text(fields, sep = ",", quotes = FALSE),
+    token
+  )
+  import <- GET(linkurl)
+  if (!process) return(import)
+  ret <- fb_process(import, ...)
+  return(ret)
+}
+
+####################################################################
+#' Facebook Ads API
+#'
+#' This returns all available FB ads for any account, campaign, or ad set id.
+#' For more information on Ad' API, go to the
+#' \href{https://developers.facebook.com/docs/marketing-api/reference/adgroup}{original documentaion}
+#'
+#' This function was based on FBinsightsR.
+#'
+#' @family API
+#' @family Meta
+#' @inheritParams fb_insights
+#' @inheritParams fb_process
+#' @return data.frame with un-nested processed results if \code{process=TRUE} or
+#' raw API results as list when \code{process=FALSE}.
+#' @examples
+#' \dontrun{
+#' token <- YOURTOKEN
+#' account <- act_ADACCOUNT
+#'
+#' # Query all ads for "which" (account) with results in the last 10 days
+#' ads <- fb_ads(token, account, start_date = Sys.Date() - 10)
+#' }
+#' @export
+fb_ads <- function(token,
+                   which,
+                   start_date = Sys.Date() - 31,
+                   end_date = Sys.Date(),
+                   fields = NA,
+                   api_version = NULL,
+                   process = TRUE,
+                   ...) {
+  set_config(config(http_version = 0))
+  api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
+  
+  if (is.na(fields[1])) {
+    fields <- paste(
+      "account_id, campaign, campaign_id, objective, adset_id, id,",
+      "name, source_ad, cpm, spend, recommendations"
+    )
+  }
+  
+  import <- GET(
+    glued("{META_GRAPH_URL}/{api_version}/{which}/ads"),
+    query = list(
+      time_range = paste0('{\"since\":\"', start_date, '\",\"until\":\"', end_date, '\"}'),
+      fields = if (length(fields) > 1) {
+        vector2text(fields, sep = ",", quotes = FALSE)
+      } else {
+        fields
+      },
+      access_token = token
+    ),
+    encode = "json"
+  )
+  
+  if (!process) return(import)
+  ret <- fb_process(import, ...)
+  return(ret)
 }

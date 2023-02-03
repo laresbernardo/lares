@@ -2,7 +2,7 @@
 % Please edit documentation in R/facebook.R
 \name{fb_process}
 \alias{fb_process}
-\title{Process Facebook's API Objects}
+\title{Paginate and Process Facebook's API Results}
 \usage{
 fb_process(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...)
 }
@@ -25,7 +25,7 @@ data.frame with un-nested processed results or NULL if no results found.
 }
 \description{
 Process and paginate raw results from Facebook's API, result of
-querying the API with \code{httr::GET}.
+querying the API with \code{httr::GET} or by passing an API link.
 }
 \seealso{
 Other API: 
@@ -34,8 +34,6 @@ Other API:
 \code{\link{fb_ads}()},
 \code{\link{fb_creatives}()},
 \code{\link{fb_insights}()},
-\code{\link{fb_posts}()},
-\code{\link{fb_post}()},
 \code{\link{fb_report_check}()},
 \code{\link{fb_rf}()},
 \code{\link{fb_token}()},
@@ -49,8 +47,6 @@ Other Meta:
 \code{\link{fb_ads}()},
 \code{\link{fb_creatives}()},
 \code{\link{fb_insights}()},
-\code{\link{fb_posts}()},
-\code{\link{fb_post}()},
 \code{\link{fb_report_check}()},
 \code{\link{fb_rf}()},
 \code{\link{fb_token}()}
