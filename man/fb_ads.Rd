@@ -54,7 +54,7 @@ token <- YOURTOKEN
 which <- act_ADACCOUNT
 
 # Query all ads for "which" with results in the last 10 days
-ads <- fb_accounts(YOURTOKEN, which, start_date = Sys.Date() - 10)
+ads <- fb_ads(YOURTOKEN, which, start_date = Sys.Date() - 10)
 }
 }
 \seealso{

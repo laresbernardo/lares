@@ -40,8 +40,8 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
 
   # Check for no-data (user might think there was an error on GET request - warn him!)
   if (length(import[[1]]) == 0) {
-    message("No data found!")
-    invisible(return(list(NULL)))
+    message("NO DATA: No results found for this request")
+    invisible(return(import))
   }
 
   # Deal with GET+response vs jsonlite
@@ -97,15 +97,19 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
   attr(ret, "pag_full") <- !("next" %in% names(out[["paging"]]))
   attr(ret, "paging") <- out[["paging"]]
 
-  toc(paste("fb_process_", input$url), ...)
+  toc(paste("fb_process_", input$url), quiet = quiet, ...)
   return(ret)
 }
 
 show_pag_status <- function(results, i = 1, sleep = 0, quiet = FALSE) {
   if (!quiet) {
-    flush.console()
-    total <- sum(unlist(lapply(results, nrow)))
-    cat(paste(sprintf("\r>>> Pagination imported: %s | Total rows: %s", i, total)))
+    if (i == 1 & !"next" %in% names(results[["paging"]])) {
+      # We can skip this message: no paginations
+    } else {
+      flush.console()
+      total <- sum(unlist(lapply(results, nrow)))
+      cat(paste(sprintf("\r>>> Pagination imported: %s | Total rows: %s", i, total)))  
+    }
   }
   Sys.sleep(sleep)
 }
@@ -801,8 +805,8 @@ fb_accounts <- function(token,
   type <- paste0(type, "_ad_accounts")
 
   for (i in seq_along(type)) {
-    message(paste("Getting", type[i]))
-    URL <- paste0(url, api_version, "/", business_id, "/", type[i])
+    message(paste(">>> Fetching", type[i]))
+    URL <- paste(META_GRAPH_URL, api_version, business_id, type[i], sep = "/")
     continue <- TRUE
 
     # Call insights
@@ -816,16 +820,16 @@ fb_accounts <- function(token,
       encode = "json"
     )
 
-    ret <- fb_process(import, ...)
+    ret <- fb_process(import, quiet = TRUE, ...)
 
     if (inherits(ret, "data.frame")) {
       ret$type <- type[i]
       output <- bind_rows(output, ret)
     }
   }
-
-  if (inherits(output, "data.frame")) {
-    invisible(return(NULL))
+  
+  if (!inherits(ret, "data.frame")) {
+    return(invisible(NULL))
   }
 
   # Account status dictionary
@@ -842,8 +846,9 @@ fb_accounts <- function(token,
     account_status == "202" ~ "ANY_CLOSED"
   ))
 
-  output <- suppressMessages(type.convert(output, numerals = "no.loss")) %>%
-    arrange(desc(data$.amount_spent)) %>%
+  output <- suppressMessages(type.convert(
+    output, numerals = "no.loss", as.is = TRUE)) %>%
+    arrange(desc(.data$amount_spent)) %>%
     as_tibble()
 
   return(output)
@@ -870,7 +875,7 @@ fb_accounts <- function(token,
 #' which <- act_ADACCOUNT
 #'
 #' # Query all ads for "which" with results in the last 10 days
-#' ads <- fb_accounts(YOURTOKEN, which, start_date = Sys.Date() - 10)
+#' ads <- fb_ads(YOURTOKEN, which, start_date = Sys.Date() - 10)
 #' }
 #' @export
 fb_ads <- function(token,
