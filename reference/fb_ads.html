@@ -132,8 +132,6 @@ raw API results as list when <code>process=FALSE</code>.</p>
 <code><a href="fb_accounts.html">fb_accounts</a>()</code>,
 <code><a href="fb_creatives.html">fb_creatives</a>()</code>,
 <code><a href="fb_insights.html">fb_insights</a>()</code>,
-<code><a href="fb_posts.html">fb_posts</a>()</code>,
-<code><a href="fb_post.html">fb_post</a>()</code>,
 <code><a href="fb_process.html">fb_process</a>()</code>,
 <code><a href="fb_report_check.html">fb_report_check</a>()</code>,
 <code><a href="fb_rf.html">fb_rf</a>()</code>,
@@ -146,8 +144,6 @@ raw API results as list when <code>process=FALSE</code>.</p>
 <code><a href="fb_accounts.html">fb_accounts</a>()</code>,
 <code><a href="fb_creatives.html">fb_creatives</a>()</code>,
 <code><a href="fb_insights.html">fb_insights</a>()</code>,
-<code><a href="fb_posts.html">fb_posts</a>()</code>,
-<code><a href="fb_post.html">fb_post</a>()</code>,
 <code><a href="fb_process.html">fb_process</a>()</code>,
 <code><a href="fb_report_check.html">fb_report_check</a>()</code>,
 <code><a href="fb_rf.html">fb_rf</a>()</code>,
@@ -158,10 +154,10 @@ raw API results as list when <code>process=FALSE</code>.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="va">token</span> <span class="op">&lt;-</span> <span class="va">YOURTOKEN</span></span></span>
-<span class="r-in"><span><span class="va">which</span> <span class="op">&lt;-</span> <span class="va">act_ADACCOUNT</span></span></span>
+<span class="r-in"><span><span class="va">account</span> <span class="op">&lt;-</span> <span class="va">act_ADACCOUNT</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Query all ads for "which" with results in the last 10 days</span></span></span>
-<span class="r-in"><span><span class="va">ads</span> <span class="op">&lt;-</span> <span class="fu">fb_ads</span><span class="op">(</span><span class="va">YOURTOKEN</span>, <span class="va">which</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Query all ads for "which" (account) with results in the last 10 days</span></span></span>
+<span class="r-in"><span><span class="va">ads</span> <span class="op">&lt;-</span> <span class="fu">fb_ads</span><span class="op">(</span><span class="va">token</span>, <span class="va">account</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
