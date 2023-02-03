@@ -828,7 +828,7 @@ fb_accounts <- function(token,
     }
   }
   
-  if (!inherits(ret, "data.frame")) {
+  if (!inherits(output, "data.frame")) {
     return(invisible(NULL))
   }
 
