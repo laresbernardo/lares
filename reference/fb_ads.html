@@ -161,7 +161,7 @@ raw API results as list when <code>process=FALSE</code>.</p>
 <span class="r-in"><span><span class="va">which</span> <span class="op">&lt;-</span> <span class="va">act_ADACCOUNT</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Query all ads for "which" with results in the last 10 days</span></span></span>
-<span class="r-in"><span><span class="va">ads</span> <span class="op">&lt;-</span> <span class="fu"><a href="fb_accounts.html">fb_accounts</a></span><span class="op">(</span><span class="va">YOURTOKEN</span>, <span class="va">which</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ads</span> <span class="op">&lt;-</span> <span class="fu">fb_ads</span><span class="op">(</span><span class="va">YOURTOKEN</span>, <span class="va">which</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
