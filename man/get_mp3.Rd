@@ -7,6 +7,7 @@
 get_mp3(
   id,
   mp3 = TRUE,
+  repo = "youtube-dl",
   params = "--no-check-certificate",
   start_time = 0,
   end_time = NA,
@@ -20,6 +21,10 @@ get_mp3(
 \item{id}{Character. YouTube URL or ID to search for.}
 
 \item{mp3}{Boolean. Add mp3 optimal parameters?}
+
+\item{repo}{Character. Chose repository you installed youtube-dl from.
+Any of: "youtube-dl" (latest stable version), "yt-dlp"
+(latest dev version).}
 
 \item{params}{Character. Additional parameters.}
 
@@ -56,6 +61,8 @@ More info from the original developers and its code:
 get_mp3("https://www.youtube.com/watch?v=lrlKcCdVw9Q")
 # OR simply
 get_mp3("lrlKcCdVw9Q")
+# For dev version, use:
+get_mp3("m3RX4LJh0iI", repo = "yt-dlp")
 }
 }
 \seealso{

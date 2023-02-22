@@ -14,6 +14,9 @@
 #' @family Audio
 #' @param id Character. YouTube URL or ID to search for.
 #' @param mp3 Boolean. Add mp3 optimal parameters?
+#' @param repo Character. Chose repository you installed youtube-dl from.
+#' Any of: "youtube-dl" (latest stable version), "yt-dlp"
+#' (latest dev version).
 #' @param params Character. Additional parameters.
 #' @param start_time,end_time Numeric. Start and end time
 #' to trim the audio output in seconds.
@@ -29,10 +32,13 @@
 #' get_mp3("https://www.youtube.com/watch?v=lrlKcCdVw9Q")
 #' # OR simply
 #' get_mp3("lrlKcCdVw9Q")
+#' # For dev version, use:
+#' get_mp3("m3RX4LJh0iI", repo = "yt-dlp")
 #' }
 #' @export
 get_mp3 <- function(id,
                     mp3 = TRUE,
+                    repo = "youtube-dl",
                     params = "--no-check-certificate",
                     start_time = 0,
                     end_time = NA,
@@ -53,11 +59,11 @@ get_mp3 <- function(id,
   }
   if (info) query <- c(query, "--write-info-json")
   query <- c(query, '-o "%(title)s.%(ext)s"', params)
-  query <- v2t(c("youtube-dl", query, id), quotes = FALSE, sep = " ")
+  query <- v2t(c(repo, query, id), quotes = FALSE, sep = " ")
   if (!quiet) message(v2t(c("Query:", query), quotes = FALSE, sep = " "))
 
   # Run youtube-dl
-  tryCatch(
+  ret <- tryCatch(
     {
       system(query)
     },
@@ -73,9 +79,15 @@ get_mp3 <- function(id,
         "sudo pip3 install --upgrade youtube_dl",
         sep = "\n"
       )
+      msg <- paste(msg, "Our you could also try latest dev version that contains new features:",
+        "https://github.com/yt-dlp/yt-dlp/wiki/Installation",
+        sep = "\n"
+      )
       stop(msg)
     }
   )
+  
+  if (1 %in% ret) return(NULL)
 
   f <- listfiles(getwd(), recursive = FALSE) %>%
     filter(grepl("\\.info\\.json", .data$filename)) %>%
