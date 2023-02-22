@@ -22,7 +22,7 @@ playlist. It also returns metadata into an (invisible) list."><meta property="og
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,6 +72,7 @@ playlist. It also returns metadata into an (invisible) list.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_mp3</span><span class="op">(</span></span>
 <span>  <span class="va">id</span>,</span>
 <span>  mp3 <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  repo <span class="op">=</span> <span class="st">"youtube-dl"</span>,</span>
 <span>  params <span class="op">=</span> <span class="st">"--no-check-certificate"</span>,</span>
 <span>  start_time <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  end_time <span class="op">=</span> <span class="cn">NA</span>,</span>
@@ -90,6 +91,12 @@ playlist. It also returns metadata into an (invisible) list.</p>
 
 <dt>mp3</dt>
 <dd><p>Boolean. Add mp3 optimal parameters?</p></dd>
+
+
+<dt>repo</dt>
+<dd><p>Character. Chose repository you installed youtube-dl from.
+Any of: "youtube-dl" (latest stable version), "yt-dlp"
+(latest dev version).</p></dd>
 
 
 <dt>params</dt>
@@ -152,6 +159,8 @@ to trim the audio output in seconds.</p></dd>
 <span class="r-in"><span><span class="fu">get_mp3</span><span class="op">(</span><span class="st">"https://www.youtube.com/watch?v=lrlKcCdVw9Q"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># OR simply</span></span></span>
 <span class="r-in"><span><span class="fu">get_mp3</span><span class="op">(</span><span class="st">"lrlKcCdVw9Q"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># For dev version, use:</span></span></span>
+<span class="r-in"><span><span class="fu">get_mp3</span><span class="op">(</span><span class="st">"m3RX4LJh0iI"</span>, repo <span class="op">=</span> <span class="st">"yt-dlp"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
