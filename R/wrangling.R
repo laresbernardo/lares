@@ -377,9 +377,9 @@ formatNum <- function(x, decimals = 2, signif = NULL,
   } else {
     if (is.null(decimals)) decimals <- 0L
     if (type == 1) {
-      x <- format(as.numeric(x), big.mark = ".", decimal.mark = ",")
+      x <- format(as.numeric(x), big.mark = ".", decimal.mark = ",", ...)
     } else {
-      x <- format(as.numeric(x), big.mark = ",", decimal.mark = ".")
+      x <- format(as.numeric(x), big.mark = ",", decimal.mark = ".", ...)
     }
     x <- trimws(x)
   }

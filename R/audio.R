@@ -87,7 +87,7 @@ get_mp3 <- function(id,
     }
   )
   
-  if (1 %in% ret) return(NULL)
+  if (1 %in% ret) return(invisible(NULL))
 
   f <- listfiles(getwd(), recursive = FALSE) %>%
     filter(grepl("\\.info\\.json", .data$filename)) %>%
