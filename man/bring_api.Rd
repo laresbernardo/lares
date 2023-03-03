@@ -56,6 +56,7 @@ Other Tools:
 \code{\link{what_size}()}
 
 Other API: 
+\code{\link{chatgpt_ask}()},
 \code{\link{fb_accounts}()},
 \code{\link{fb_ads}()},
 \code{\link{fb_creatives}()},

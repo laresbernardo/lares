@@ -126,6 +126,7 @@ advanced <- fb_rf(token, account_id,
 \seealso{
 Other API: 
 \code{\link{bring_api}()},
+\code{\link{chatgpt_ask}()},
 \code{\link{fb_accounts}()},
 \code{\link{fb_ads}()},
 \code{\link{fb_creatives}()},

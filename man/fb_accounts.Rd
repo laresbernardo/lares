@@ -45,6 +45,7 @@ accounts <- fb_accounts(YOURTOKEN, YOURBUSINESS)
 \seealso{
 Other API: 
 \code{\link{bring_api}()},
+\code{\link{chatgpt_ask}()},
 \code{\link{fb_ads}()},
 \code{\link{fb_creatives}()},
 \code{\link{fb_insights}()},

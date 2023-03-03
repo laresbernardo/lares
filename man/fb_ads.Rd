@@ -60,6 +60,7 @@ ads <- fb_ads(token, account, start_date = Sys.Date() - 10)
 \seealso{
 Other API: 
 \code{\link{bring_api}()},
+\code{\link{chatgpt_ask}()},
 \code{\link{fb_accounts}()},
 \code{\link{fb_creatives}()},
 \code{\link{fb_insights}()},
