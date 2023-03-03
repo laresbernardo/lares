@@ -10,6 +10,7 @@
 #' @param secret_key Character. Secret Key. Get yours in:
 #' \href{https://platform.openai.com}{platform.openai.com}.
 #' @param url Character. Base URL for OpenAI's ChatGPT API.
+#' @param model Character. OpenAI model to use.
 #' @return (Invisible) list. Content returned from API POST.
 #' @examples
 #' \dontrun{
@@ -20,6 +21,7 @@
 chatgpt_ask <- function(ask,
                         secret_key = get_credentials()$openai$secret_key,
                         url = "https://api.openai.com/v1/chat/completions",
+                        model = "gpt-3.5-turbo",
                         quiet = FALSE) {
   response <- POST(
     url = url, 
@@ -27,7 +29,7 @@ chatgpt_ask <- function(ask,
     httr::content_type_json(),
     encode = "json",
     body = list(
-      model = "gpt-3.5-turbo",
+      model = model,
       messages = list(list(
         role = "user", 
         content = ask
@@ -35,6 +37,7 @@ chatgpt_ask <- function(ask,
     )
   )
   ret <- content(response)
+  if ("error" %in% names(ret)) warning(ret$error$message)
   if ("message" %in% names(ret$choices[[1]]) & !quiet)
     cat(stringr::str_trim(ret$choices[[1]]$message$content))
   return(invisible(ret))

@@ -8,6 +8,7 @@ chatgpt_ask(
   ask,
   secret_key = get_credentials()$openai$secret_key,
   url = "https://api.openai.com/v1/chat/completions",
+  model = "gpt-3.5-turbo",
   quiet = FALSE
 )
 }
@@ -18,6 +19,8 @@ chatgpt_ask(
 \href{https://platform.openai.com}{platform.openai.com}.}
 
 \item{url}{Character. Base URL for OpenAI's ChatGPT API.}
+
+\item{model}{Character. OpenAI model to use.}
 
 \item{quiet}{Boolean. Keep quiet? If not, show informative messages.}
 }
