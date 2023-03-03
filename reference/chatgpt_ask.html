@@ -78,7 +78,8 @@ the rendered reply.</p>
 
 
 <dt>secret_key</dt>
-<dd><p>Character. Secret Key. Get yours in: platform.openai.com.</p></dd>
+<dd><p>Character. Secret Key. Get yours in:
+<a href="https://platform.openai.com" class="external-link">platform.openai.com</a>.</p></dd>
 
 
 <dt>url</dt>
@@ -93,7 +94,7 @@ the rendered reply.</p>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>List. Content returned from API POST.</p>
+<p>(Invisible) list. Content returned from API POST.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -115,15 +116,10 @@ the rendered reply.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="va">api_key</span> <span class="op">&lt;-</span> <span class="fu">lares</span><span class="fu">::</span><span class="fu"><a href="get_credentials.html">get_credentials</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">openai</span><span class="op">$</span><span class="va">secret_key</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Please, set your creds directory (one-time only step to set LARES_CREDS):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Set directory where your config.yml file is saved: </span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in lares::get_credentials():</span> Directory: . </span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> Can't find or does not exist. Please try again...</span>
 <span class="r-in"><span><span class="fu">chatgpt_ask</span><span class="op">(</span><span class="st">"Can you write a dummy R function to plot a histogram in R?"</span>, <span class="va">api_key</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in paste("Bearer", secret_key):</span> object 'api_key' not found</span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
