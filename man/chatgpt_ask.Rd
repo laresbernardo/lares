@@ -2,7 +2,7 @@
 % Please edit documentation in R/chatgpt.R
 \name{chatgpt_ask}
 \alias{chatgpt_ask}
-\title{ChatGTP API Interaction}
+\title{ChatGPT API Interaction with R}
 \usage{
 chatgpt_ask(
   ask,
@@ -33,8 +33,8 @@ the rendered reply.
 }
 \examples{
 \dontrun{
-api_key <- lares::get_credentials()$openai$secret_key
-chatgpt_ask("Can you write a dummy R function to plot a histogram in R?", api_key)
+api_key <- get_credentials()$openai$secret_key
+chatgpt_ask("Can you write an R function to plot a dummy histogram?", api_key)
 }
 }
 \seealso{

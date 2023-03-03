@@ -1,5 +1,5 @@
 ####################################################################
-#' ChatGTP API Interaction
+#' ChatGPT API Interaction with R
 #'
 #' This function lets the user ask ChatGPT via its API, and returns
 #' the rendered reply.
@@ -14,8 +14,8 @@
 #' @return (Invisible) list. Content returned from API POST.
 #' @examples
 #' \dontrun{
-#' api_key <- lares::get_credentials()$openai$secret_key
-#' chatgpt_ask("Can you write a dummy R function to plot a histogram in R?", api_key)
+#' api_key <- get_credentials()$openai$secret_key
+#' chatgpt_ask("Can you write an R function to plot a dummy histogram?", api_key)
 #' }
 #' @export
 chatgpt_ask <- function(ask,
