@@ -14,21 +14,22 @@ chatgpt_ask(
 \arguments{
 \item{ask}{Character. Redacted prompt to ask ChatGPT.}
 
-\item{secret_key}{Character. Secret Key. Get yours in: platform.openai.com.}
+\item{secret_key}{Character. Secret Key. Get yours in:
+\href{https://platform.openai.com}{platform.openai.com}.}
 
 \item{url}{Character. Base URL for OpenAI's ChatGPT API.}
 
 \item{quiet}{Boolean. Keep quiet? If not, show informative messages.}
 }
 \value{
-List. Content returned from API POST.
+(Invisible) list. Content returned from API POST.
 }
 \description{
 This function lets the user ask ChatGPT via its API, and returns
 the rendered reply.
 }
 \examples{
-\donttest{
+\dontrun{
 api_key <- lares::get_credentials()$openai$secret_key
 chatgpt_ask("Can you write a dummy R function to plot a histogram in R?", api_key)
 }

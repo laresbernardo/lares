@@ -7,11 +7,12 @@
 #' @family API
 #' @inheritParams db_download
 #' @param ask Character. Redacted prompt to ask ChatGPT.
-#' @param secret_key Character. Secret Key. Get yours in: platform.openai.com.
+#' @param secret_key Character. Secret Key. Get yours in:
+#' \href{https://platform.openai.com}{platform.openai.com}.
 #' @param url Character. Base URL for OpenAI's ChatGPT API.
-#' @return List. Content returned from API POST.
+#' @return (Invisible) list. Content returned from API POST.
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' api_key <- lares::get_credentials()$openai$secret_key
 #' chatgpt_ask("Can you write a dummy R function to plot a histogram in R?", api_key)
 #' }
