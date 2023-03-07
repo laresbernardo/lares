@@ -68,14 +68,30 @@ the rendered reply.</p>
 <span>  secret_key <span class="op">=</span> <span class="fu"><a href="get_credentials.html">get_credentials</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">openai</span><span class="op">$</span><span class="va">secret_key</span>,</span>
 <span>  url <span class="op">=</span> <span class="st">"https://api.openai.com/v1/chat/completions"</span>,</span>
 <span>  model <span class="op">=</span> <span class="st">"gpt-3.5-turbo"</span>,</span>
-<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">chatgpt_classify</span><span class="op">(</span><span class="va">x</span>, <span class="va">categories</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">chatgpt_tag</span><span class="op">(</span><span class="va">x</span>, <span class="va">tags</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">chatgpt_extract</span><span class="op">(</span><span class="va">x</span>, <span class="va">extract</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">chatgpt_format</span><span class="op">(</span><span class="va">x</span>, <span class="va">format</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">chatgpt_convert</span><span class="op">(</span><span class="va">x</span>, <span class="va">unit</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">chatgpt_table</span><span class="op">(</span><span class="va">ask</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">chatgpt_translate</span><span class="op">(</span><span class="va">x</span>, <span class="va">language</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>ask</dt>
-<dd><p>Character. Redacted prompt to ask ChatGPT.</p></dd>
+<dd><p>Character. Redacted prompt to ask ChatGPT. If multiple asks are requested,
+they will be concatenated with "+" into a single request.</p></dd>
 
 
 <dt>secret_key</dt>
@@ -93,6 +109,28 @@ the rendered reply.</p>
 
 <dt>quiet</dt>
 <dd><p>Boolean. Keep quiet? If not, show informative messages.</p></dd>
+
+
+<dt>...</dt>
+<dd><p>Additional parameters.</p></dd>
+
+
+<dt>x</dt>
+<dd><p>Vector. List items you wish to process</p></dd>
+
+
+<dt>categories, tags</dt>
+<dd><p>Vector. List of possible categories/tags to consider.</p></dd>
+
+
+<dt>extract, format, unit</dt>
+<dd><p>Character. Length 1 or same as x to extract/format/unit
+information from x. For example: email, country of phone number, country, amount as number,
+currency ISO code, ISO, Fahrenheit, etc.</p></dd>
+
+
+<dt>language</dt>
+<dd><p>Character. Language to translate to</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -123,7 +161,38 @@ the rendered reply.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="va">api_key</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_credentials.html">get_credentials</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">openai</span><span class="op">$</span><span class="va">secret_key</span></span></span>
+<span class="r-in"><span><span class="co"># Open question:</span></span></span>
 <span class="r-in"><span><span class="fu">chatgpt_ask</span><span class="op">(</span><span class="st">"Can you write an R function to plot a dummy histogram?"</span>, <span class="va">api_key</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">##### The following examples return dataframes:</span></span></span>
+<span class="r-in"><span><span class="co"># Classify each element based on categories:</span></span></span>
+<span class="r-in"><span><span class="fu">chatgpt_classify</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"odd"</span>, <span class="st">"even"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Add all tags that apply to each element based on tags:</span></span></span>
+<span class="r-in"><span><span class="fu">chatgpt_tag</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"I love chocolate"</span>, <span class="st">"I hate chocolate"</span>, <span class="st">"I like Coke"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"food"</span>, <span class="st">"positive"</span>, <span class="st">"negative"</span>, <span class="st">"beverage"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Extract specific information:</span></span></span>
+<span class="r-in"><span><span class="fu">chatgpt_extract</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"My mail is 123@test.com"</span>, <span class="st">"30 Main Street, Brooklyn, NY, USA"</span>, <span class="st">"+82 2-312-3456"</span>, <span class="st">"$1.5M"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"email"</span>, <span class="st">"full state name"</span>, <span class="st">"country of phone number"</span>, <span class="st">"amount as number"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Format values</span></span></span>
+<span class="r-in"><span><span class="fu">chatgpt_format</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"March 27th, 2021"</span>, <span class="st">"12-25-2023 3:45PM"</span>, <span class="st">"01.01.2000"</span>, <span class="st">"29 Feb 92"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  format <span class="op">=</span> <span class="st">"ISO Date getting rid of timestamps"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="co"># Convert units</span></span></span>
+<span class="r-in"><span><span class="fu">chatgpt_convert</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"50C"</span>, <span class="st">"300K"</span><span class="op">)</span>, <span class="st">"Fahrenheit"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="co"># Create a table with data</span></span></span>
+<span class="r-in"><span><span class="fu">chatgpt_table</span><span class="op">(</span><span class="st">"5 random people's address in South America, email, phone, age between 18-30"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Translate text to any language</span></span></span>
+<span class="r-in"><span><span class="fu">chatgpt_translate</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"I love you with all my heart"</span>, <span class="fl">5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  language <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"spanish"</span>, <span class="st">"chinese"</span>, <span class="st">"japanese"</span>, <span class="st">"russian"</span>, <span class="st">"german"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
