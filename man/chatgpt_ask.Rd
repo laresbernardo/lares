@@ -2,6 +2,13 @@
 % Please edit documentation in R/chatgpt.R
 \name{chatgpt_ask}
 \alias{chatgpt_ask}
+\alias{chatgpt_classify}
+\alias{chatgpt_tag}
+\alias{chatgpt_extract}
+\alias{chatgpt_format}
+\alias{chatgpt_convert}
+\alias{chatgpt_table}
+\alias{chatgpt_translate}
 \title{ChatGPT API Interaction with R}
 \usage{
 chatgpt_ask(
@@ -9,11 +16,27 @@ chatgpt_ask(
   secret_key = get_credentials()$openai$secret_key,
   url = "https://api.openai.com/v1/chat/completions",
   model = "gpt-3.5-turbo",
-  quiet = FALSE
+  quiet = FALSE,
+  ...
 )
+
+chatgpt_classify(x, categories, quiet = TRUE, ...)
+
+chatgpt_tag(x, tags, quiet = TRUE, ...)
+
+chatgpt_extract(x, extract, quiet = TRUE, ...)
+
+chatgpt_format(x, format, quiet = TRUE, ...)
+
+chatgpt_convert(x, unit, quiet = TRUE, ...)
+
+chatgpt_table(ask, quiet = TRUE, ...)
+
+chatgpt_translate(x, language, quiet = TRUE, ...)
 }
 \arguments{
-\item{ask}{Character. Redacted prompt to ask ChatGPT.}
+\item{ask}{Character. Redacted prompt to ask ChatGPT. If multiple asks are requested,
+they will be concatenated with "+" into a single request.}
 
 \item{secret_key}{Character. Secret Key. Get yours in:
 \href{https://platform.openai.com}{platform.openai.com}.}
@@ -23,6 +46,18 @@ chatgpt_ask(
 \item{model}{Character. OpenAI model to use.}
 
 \item{quiet}{Boolean. Keep quiet? If not, show informative messages.}
+
+\item{...}{Additional parameters.}
+
+\item{x}{Vector. List items you wish to process}
+
+\item{categories, tags}{Vector. List of possible categories/tags to consider.}
+
+\item{extract, format, unit}{Character. Length 1 or same as x to extract/format/unit
+information from x. For example: email, country of phone number, country, amount as number,
+currency ISO code, ISO, Fahrenheit, etc.}
+
+\item{language}{Character. Language to translate to}
 }
 \value{
 (Invisible) list. Content returned from API POST.
@@ -34,7 +69,38 @@ the rendered reply.
 \examples{
 \dontrun{
 api_key <- get_credentials()$openai$secret_key
+# Open question:
 chatgpt_ask("Can you write an R function to plot a dummy histogram?", api_key)
+
+##### The following examples return dataframes:
+# Classify each element based on categories:
+chatgpt_classify(1:10, c("odd", "even"))
+
+# Add all tags that apply to each element based on tags:
+chatgpt_tag(
+  c("I love chocolate", "I hate chocolate", "I like Coke"),
+  c("food", "positive", "negative", "beverage"))
+
+# Extract specific information:
+chatgpt_extract(
+  c("My mail is 123@test.com", "30 Main Street, Brooklyn, NY, USA", "+82 2-312-3456", "$1.5M"),
+  c("email", "full state name", "country of phone number", "amount as number"))
+
+# Format values
+chatgpt_format(
+  c("March 27th, 2021", "12-25-2023 3:45PM", "01.01.2000", "29 Feb 92"),
+  format = "ISO Date getting rid of timestamps")
+  
+# Convert units
+chatgpt_convert(c("50C", "300K"), "Fahrenheit")
+  
+# Create a table with data
+chatgpt_table("5 random people's address in South America, email, phone, age between 18-30")
+
+# Translate text to any language
+chatgpt_translate(
+  rep("I love you with all my heart", 5),
+  language = c("spanish", "chinese", "japanese", "russian", "german"))
 }
 }
 \seealso{
