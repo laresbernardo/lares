@@ -6,14 +6,14 @@
 #'
 #' @family API
 #' @inheritParams db_download
-#' @param ask Character. Redacted prompt to ask ChatGPT. If multiple asks are requested,
-#' they will be concatenated with "+" into a single request.
+#' @param ask Character. Redacted prompt to ask ChatGPT. If multiple asks are
+#' requested, they will be concatenated with "+" into a single request.
 #' @param secret_key Character. Secret Key. Get yours in:
 #' \href{https://platform.openai.com}{platform.openai.com}.
 #' @param url Character. Base URL for OpenAI's ChatGPT API.
 #' @param model Character. OpenAI model to use.
 #' @param ... Additional parameters.
-#' @return (Invisible) list. Content returned from API POST.
+#' @return (Invisible) list. Content returned from API POST and processed.
 #' @examples
 #' \dontrun{
 #' api_key <- get_credentials()$openai$secret_key
@@ -82,22 +82,18 @@ chatgpt_ask <- function(ask,
 #' @rdname chatgpt_ask
 #' @export
 chatgpt_classify <- function(x, categories, quiet = TRUE, ...) {
-  prompt <- paste("Considering all of these items:", v2t(x),
-                  ". What category is each one of them using these labels:", v2t(categories),
-                  .split_prompt(c("item", "category")))
-  df <- resp <- chatgpt_ask(prompt, quiet = quiet, ...)
-  df <- .chatgpt_create_df(resp, c("item", "category"))
+  prompt <- gpt_prompt_builder("category", x = x, y = categories)
+  resp <- chatgpt_ask(prompt, quiet = quiet, ...)
+  df <- gpt_markdown2df(resp)
   return(df)
 }
 
 #' @rdname chatgpt_ask
 #' @export
 chatgpt_tag <- function(x, tags, quiet = TRUE, ...) {
-  prompt <- paste("Considering all of these items:", v2t(x),
-                  ". Which of these tags make sense for each item:", v2t(tags),
-                  .split_prompt(c("item", "selected tags")))
-  df <- resp <- chatgpt_ask(prompt, quiet = quiet, ...)
-  df <- .chatgpt_create_df(resp, c("item", "tags"))
+  prompt <- gpt_prompt_builder("tags", x = x, y = tags)
+  resp <- chatgpt_ask(prompt, quiet = quiet, ...)
+  df <- gpt_markdown2df(resp)
   return(df)
 }
 
@@ -108,11 +104,9 @@ chatgpt_tag <- function(x, tags, quiet = TRUE, ...) {
 #' @export
 chatgpt_extract <- function(x, extract, quiet = TRUE, ...) {
   stopifnot(length(extract) %in% c(1, length(x)))
-  prompt <- paste("Considering all of these items:", v2t(x),
-                  ". Extract the information of its", v2t(extract), "respectively for each item.",
-                  .split_prompt(c("item", "extract", "extracted values")))
-  df <- resp <- chatgpt_ask(prompt, quiet = quiet, ...)
-  df <- .chatgpt_create_df(resp, cols = c("item", "extract", "value"))
+  prompt <- gpt_prompt_builder("extract", x = x, y = extract, cols = c("item", "extract", "value"))
+  resp <- chatgpt_ask(prompt, quiet = quiet, ...)
+  df <- gpt_markdown2df(resp)
   return(df)
 }
 
@@ -120,12 +114,9 @@ chatgpt_extract <- function(x, extract, quiet = TRUE, ...) {
 #' @export
 chatgpt_format <- function(x, format, quiet = TRUE, ...) {
   stopifnot(length(format) %in% c(1, length(x)))
-  prompt <- paste("Considering all of these items:", v2t(x),
-                  ". Return the original item and formatted values for each item as/with",
-                  v2t(format), "format respectively.",
-                  .split_prompt(c("item", "value")))
-  df <- resp <- chatgpt_ask(prompt, quiet = quiet, ...)
-  df <- .chatgpt_create_df(resp, cols = c("item", "value"))
+  prompt <- gpt_prompt_builder("format", x = x, y = format)
+  resp <- chatgpt_ask(prompt, quiet = quiet, ...)
+  df <- gpt_markdown2df(resp)
   return(df)
 }
 
@@ -133,11 +124,9 @@ chatgpt_format <- function(x, format, quiet = TRUE, ...) {
 #' @export
 chatgpt_convert <- function(x, unit, quiet = TRUE, ...) {
   stopifnot(length(unit) %in% c(1, length(x)))
-  prompt <- paste("Considering all of these values with units:", v2t(x),
-                  ". Convert each item to", v2t(unit), " unit respectively.",
-                  .split_prompt(c("item", "value")))
-  df <- resp <- chatgpt_ask(prompt, quiet = quiet, ...)
-  df <- .chatgpt_create_df(resp, cols = c("item", "value"))
+  prompt <- gpt_prompt_builder("value", x = x, y = unit)
+  resp <- chatgpt_ask(prompt, quiet = quiet, ...)
+  df <- gpt_markdown2df(resp)
   return(df)
 }
 
@@ -145,11 +134,8 @@ chatgpt_convert <- function(x, unit, quiet = TRUE, ...) {
 #' @export
 chatgpt_table <- function(ask, quiet = TRUE, ...) {
   prompt <- paste("Return a markdown table for:", ask)
-  df <- resp <- chatgpt_ask(prompt, quiet = quiet, ...)
-  if ("message" %in% names(resp$choices[[1]])) {
-    df <- markdown2df(text = resp$choices[[1]]$message$content)
-  }
-  attr(df, "response") <- resp
+  resp <- chatgpt_ask(prompt, quiet = quiet, ...)
+  df <- gpt_markdown2df(resp)
   return(df)
 }
 
@@ -158,39 +144,29 @@ chatgpt_table <- function(ask, quiet = TRUE, ...) {
 #' @export
 chatgpt_translate <- function(x, language, quiet = TRUE, ...) {
   stopifnot(length(language) %in% c(1, length(x)))
-  prompt <- paste("Considering all these texts:", v2t(x),
-                  ". Translate them to", v2t(language), "respectively for each text item.",
-                  "Return a mardown table with original text, translation, and language")
-  df <- resp <- chatgpt_ask(prompt, quiet = quiet, ...)
-  if ("message" %in% names(resp$choices[[1]])) {
-    df <- markdown2df(resp$choices[[1]]$message$content) 
-    colnames(df) <- c("item", "translation", "language")
-  }
+  prompt <- gpt_prompt_builder("translate", x = x, y = language, cols = c("item", "language", "translation"))
+  resp <- chatgpt_ask(prompt, quiet = quiet, ...)
+  df <- gpt_markdown2df(resp)
   return(df)
 }
-
-.chatgpt_create_df <- function(resp, cols = c("item", "value")) {
-  if ("message" %in% names(resp$choices[[1]])) {
-    splits <- stringr::str_split(resp$choices[[1]]$message$content, "\n")[[1]]
-    splits_clean <- gsub("\n|\'", "", splits[grepl("==", splits)])
-    df <- tidyr::separate(data.frame(values = splits_clean), .data$values, cols, sep = "==")
-    df <- removenacols(df)
-    df <- removenarows(df)
-    attr(df, "response") <- resp
-  }
-  return(df)
+ 
+gpt_prompt_builder <- function(type = "category", cols = c("item", type), x, y) {
+  paste(
+    "Return a markdown table with", length(cols), "columns named", v2t(cols, and = "and"),
+    ". Consider the following items:", v2t(x, quotes = FALSE),
+    ". For each respective item, what", type, "represent each item using:", v2t(y, quotes = FALSE)) 
 }
 
-markdown2df <- function(text) {
-  try({
-    df <- removenacols(read.table(text = text, sep = "|", header = TRUE, strip.white = TRUE))
+gpt_markdown2df <- function(resp) {
+  if ("message" %in% names(resp$choices[[1]])) {
+    df <- resp$choices[[1]]$message$content
+    # Convert markdown to data.frame
+    df <- removenacols(read.table(text = df, sep = "|", header = TRUE, strip.white = TRUE))
     # Get rid of potential first row with all values set as ---
     if (all(stringr::str_split(df[1, 1], "-")[[1]] == "")) df <- df[-1, ]
     rownames(df) <- NULL
-    return(as_tibble(df))
-  })
-}
-
-.split_prompt <- function(cols = c("item", "value")) {
-  paste("Do separate the information for", v2t(cols, and = "and"), "with '=='")
+    df <- as_tibble(df)
+    attr(df, "response") <- resp
+    return(df)
+  } else return(resp)
 }

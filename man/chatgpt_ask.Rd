@@ -35,8 +35,8 @@ chatgpt_table(ask, quiet = TRUE, ...)
 chatgpt_translate(x, language, quiet = TRUE, ...)
 }
 \arguments{
-\item{ask}{Character. Redacted prompt to ask ChatGPT. If multiple asks are requested,
-they will be concatenated with "+" into a single request.}
+\item{ask}{Character. Redacted prompt to ask ChatGPT. If multiple asks are
+requested, they will be concatenated with "+" into a single request.}
 
 \item{secret_key}{Character. Secret Key. Get yours in:
 \href{https://platform.openai.com}{platform.openai.com}.}
@@ -60,7 +60,7 @@ currency ISO code, ISO, Fahrenheit, etc.}
 \item{language}{Character. Language to translate to}
 }
 \value{
-(Invisible) list. Content returned from API POST.
+(Invisible) list. Content returned from API POST and processed.
 }
 \description{
 This function lets the user ask ChatGPT via its API, and returns
