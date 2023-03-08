@@ -228,7 +228,7 @@ prophesize <- function(df, n_future = 60, country = NULL,
     ) +
     scale_y_comma()
 
-  plots2 <- prophet_plot_components(m, forecast, render_plot = FALSE)
+  plots2 <- prophet_plot_components(m, forecast, render_plot = FALSE, weekly_start = 1)
   plots2 <- lapply(plots2, function(x) x + theme_lares())
   plot2 <- wrap_plots(plots2, ncol = 1) +
     plot_annotation(title = "Forecast components", theme = theme_lares())
