@@ -133,7 +133,7 @@ chatgpt_convert <- function(x, unit, quiet = TRUE, ...) {
 #' @rdname chatgpt_ask
 #' @export
 chatgpt_table <- function(ask, quiet = TRUE, ...) {
-  prompt <- paste("Return a markdown table for:", ask)
+  prompt <- paste("Return a markdown table for:", ask, ". If you don't know any item, replace with NA")
   resp <- chatgpt_ask(prompt, quiet = quiet, ...)
   df <- gpt_markdown2df(resp)
   return(df)
@@ -152,18 +152,20 @@ chatgpt_translate <- function(x, language, quiet = TRUE, ...) {
  
 gpt_prompt_builder <- function(type = "category", cols = c("item", type), x, y) {
   paste(
-    "Return a markdown table with", length(cols), "columns named", v2t(cols, and = "and"),
+    "Return a structured markdown table with", length(cols), "columns named", v2t(cols, and = "and"),
     ". Consider the following items:", v2t(x, quotes = FALSE),
-    ". For each respective item, what", type, "represent each item using:", v2t(y, quotes = FALSE)) 
+    ". For each respective item, what", type, "represent each item using:", v2t(y, quotes = FALSE),
+    ". If you don't know any item, replace with NA")
 }
 
 gpt_markdown2df <- function(resp) {
   if ("message" %in% names(resp$choices[[1]])) {
     df <- resp$choices[[1]]$message$content
     # Convert markdown to data.frame
-    df <- removenacols(read.table(text = df, sep = "|", header = TRUE, strip.white = TRUE))
-    # Get rid of potential first row with all values set as ---
+    df <- removenacols(read.table(text = df, sep = "|", header = TRUE, strip.white = TRUE, quote="\""))
+    # Get rid of potential first row with all values set as --- or :---
     if (all(stringr::str_split(df[1, 1], "-")[[1]] == "")) df <- df[-1, ]
+    if (substr(df[1, 1], 1, 4) == ":---") df <- df[-1, ]
     rownames(df) <- NULL
     df <- as_tibble(df)
     attr(df, "response") <- resp
