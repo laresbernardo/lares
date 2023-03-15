@@ -18,40 +18,40 @@
 #' \dontrun{
 #' api_key <- get_credentials()$openai$secret_key
 #' # Open question:
-#' chatgpt_ask("Can you write an R function to plot a dummy histogram?", api_key)
+#' gpt_ask("Can you write an R function to plot a dummy histogram?", api_key)
 #' 
 #' ##### The following examples return dataframes:
 #' # Classify each element based on categories:
-#' chatgpt_classify(1:10, c("odd", "even"))
+#' gpt_classify(1:10, c("odd", "even"))
 #'
 #' # Add all tags that apply to each element based on tags:
-#' chatgpt_tag(
+#' gpt_tag(
 #'   c("I love chocolate", "I hate chocolate", "I like Coke"),
 #'   c("food", "positive", "negative", "beverage"))
 #'
 #' # Extract specific information:
-#' chatgpt_extract(
+#' gpt_extract(
 #'   c("My mail is 123@@test.com", "30 Main Street, Brooklyn, NY, USA", "+82 2-312-3456", "$1.5M"),
 #'   c("email", "full state name", "country of phone number", "amount as number"))
 #' 
 #' # Format values
-#' chatgpt_format(
+#' gpt_format(
 #'   c("March 27th, 2021", "12-25-2023 3:45PM", "01.01.2000", "29 Feb 92"),
 #'   format = "ISO Date getting rid of timestamps")
 #'   
 #' # Convert units
-#' chatgpt_convert(c("50C", "300K"), "Fahrenheit")
+#' gpt_convert(c("50C", "300K"), "Fahrenheit")
 #'   
 #' # Create a table with data
-#' chatgpt_table("5 random people's address in South America, email, phone, age between 18-30")
+#' gpt_table("5 random people's address in South America, email, phone, age between 18-30")
 #' 
 #' # Translate text to any language
-#' chatgpt_translate(
+#' gpt_translate(
 #'   rep("I love you with all my heart", 5),
 #'   language = c("spanish", "chinese", "japanese", "russian", "german"))
 #' }
 #' @export
-chatgpt_ask <- function(ask,
+gpt_ask <- function(ask,
                         secret_key = get_credentials()$openai$secret_key,
                         url = "https://api.openai.com/v1/chat/completions",
                         model = "gpt-3.5-turbo",
@@ -79,20 +79,20 @@ chatgpt_ask <- function(ask,
 
 #' @param x Vector. List items you wish to process
 #' @param categories,tags Vector. List of possible categories/tags to consider.
-#' @rdname chatgpt_ask
+#' @rdname gpt_ask
 #' @export
-chatgpt_classify <- function(x, categories, quiet = TRUE, ...) {
+gpt_classify <- function(x, categories, quiet = TRUE, ...) {
   prompt <- gpt_prompt_builder("category", x = x, y = categories)
-  resp <- chatgpt_ask(prompt, quiet = quiet, ...)
+  resp <- gpt_ask(prompt, quiet = quiet, ...)
   df <- gpt_markdown2df(resp)
   return(df)
 }
 
-#' @rdname chatgpt_ask
+#' @rdname gpt_ask
 #' @export
-chatgpt_tag <- function(x, tags, quiet = TRUE, ...) {
+gpt_tag <- function(x, tags, quiet = TRUE, ...) {
   prompt <- gpt_prompt_builder("tags", x = x, y = tags)
-  resp <- chatgpt_ask(prompt, quiet = quiet, ...)
+  resp <- gpt_ask(prompt, quiet = quiet, ...)
   df <- gpt_markdown2df(resp)
   return(df)
 }
@@ -100,52 +100,52 @@ chatgpt_tag <- function(x, tags, quiet = TRUE, ...) {
 #' @param extract,format,unit Character. Length 1 or same as x to extract/format/unit
 #' information from x. For example: email, country of phone number, country, amount as number,
 #' currency ISO code, ISO, Fahrenheit, etc.
-#' @rdname chatgpt_ask
+#' @rdname gpt_ask
 #' @export
-chatgpt_extract <- function(x, extract, quiet = TRUE, ...) {
+gpt_extract <- function(x, extract, quiet = TRUE, ...) {
   stopifnot(length(extract) %in% c(1, length(x)))
   prompt <- gpt_prompt_builder("extract", x = x, y = extract, cols = c("item", "extract", "value"))
-  resp <- chatgpt_ask(prompt, quiet = quiet, ...)
+  resp <- gpt_ask(prompt, quiet = quiet, ...)
   df <- gpt_markdown2df(resp)
   return(df)
 }
 
-#' @rdname chatgpt_ask
+#' @rdname gpt_ask
 #' @export
-chatgpt_format <- function(x, format, quiet = TRUE, ...) {
+gpt_format <- function(x, format, quiet = TRUE, ...) {
   stopifnot(length(format) %in% c(1, length(x)))
   prompt <- gpt_prompt_builder("format", x = x, y = format)
-  resp <- chatgpt_ask(prompt, quiet = quiet, ...)
+  resp <- gpt_ask(prompt, quiet = quiet, ...)
   df <- gpt_markdown2df(resp)
   return(df)
 }
 
-#' @rdname chatgpt_ask
+#' @rdname gpt_ask
 #' @export
-chatgpt_convert <- function(x, unit, quiet = TRUE, ...) {
+gpt_convert <- function(x, unit, quiet = TRUE, ...) {
   stopifnot(length(unit) %in% c(1, length(x)))
   prompt <- gpt_prompt_builder("value", x = x, y = unit)
-  resp <- chatgpt_ask(prompt, quiet = quiet, ...)
+  resp <- gpt_ask(prompt, quiet = quiet, ...)
   df <- gpt_markdown2df(resp)
   return(df)
 }
 
-#' @rdname chatgpt_ask
+#' @rdname gpt_ask
 #' @export
-chatgpt_table <- function(ask, quiet = TRUE, ...) {
+gpt_table <- function(ask, quiet = TRUE, ...) {
   prompt <- paste("Return a markdown table for:", ask, ". If you don't know any item, replace with NA")
-  resp <- chatgpt_ask(prompt, quiet = quiet, ...)
+  resp <- gpt_ask(prompt, quiet = quiet, ...)
   df <- gpt_markdown2df(resp)
   return(df)
 }
 
 #' @param language Character. Language to translate to
-#' @rdname chatgpt_ask
+#' @rdname gpt_ask
 #' @export
-chatgpt_translate <- function(x, language, quiet = TRUE, ...) {
+gpt_translate <- function(x, language, quiet = TRUE, ...) {
   stopifnot(length(language) %in% c(1, length(x)))
   prompt <- gpt_prompt_builder("translate", x = x, y = language, cols = c("item", "language", "translation"))
-  resp <- chatgpt_ask(prompt, quiet = quiet, ...)
+  resp <- gpt_ask(prompt, quiet = quiet, ...)
   df <- gpt_markdown2df(resp)
   return(df)
 }

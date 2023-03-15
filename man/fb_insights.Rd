@@ -120,7 +120,6 @@ insights_adset <- fb_insights(
 \seealso{
 Other API: 
 \code{\link{bring_api}()},
-\code{\link{chatgpt_ask}()},
 \code{\link{fb_accounts}()},
 \code{\link{fb_ads}()},
 \code{\link{fb_creatives}()},
@@ -128,6 +127,7 @@ Other API:
 \code{\link{fb_report_check}()},
 \code{\link{fb_rf}()},
 \code{\link{fb_token}()},
+\code{\link{gpt_ask}()},
 \code{\link{li_auth}()},
 \code{\link{li_profile}()},
 \code{\link{queryGA}()},

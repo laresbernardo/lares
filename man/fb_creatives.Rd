@@ -40,7 +40,6 @@ creatives <- fb_creatives(token, account)
 \seealso{
 Other API: 
 \code{\link{bring_api}()},
-\code{\link{chatgpt_ask}()},
 \code{\link{fb_accounts}()},
 \code{\link{fb_ads}()},
 \code{\link{fb_insights}()},
@@ -48,6 +47,7 @@ Other API:
 \code{\link{fb_report_check}()},
 \code{\link{fb_rf}()},
 \code{\link{fb_token}()},
+\code{\link{gpt_ask}()},
 \code{\link{li_auth}()},
 \code{\link{li_profile}()},
 \code{\link{queryGA}()},
