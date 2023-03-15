@@ -40,9 +40,6 @@
     <loc>https://laresbernardo.github.io/lares/reference/categ_reducer.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/chatgpt_ask.html</loc>
-  </url>
-  <url>
     <loc>https://laresbernardo.github.io/lares/reference/checks.html</loc>
   </url>
   <url>
@@ -221,6 +218,9 @@
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/google_trends.html</loc>
+  </url>
+  <url>
+    <loc>https://laresbernardo.github.io/lares/reference/gpt_ask.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/grepl_letters.html</loc>
