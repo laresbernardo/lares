@@ -438,7 +438,7 @@ freqs_df <- function(df,
 
 
 ####################################################################
-#' Combinated Frequencies Plot for Categorical Features
+#' Combined Frequencies Plot for Categorical Features
 #'
 #' Plot frequencies of multiple categories within a data.frame in
 #' a new fancy way. Tidyverse friendly, based on \code{lares::freqs()},

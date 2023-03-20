@@ -2,7 +2,7 @@
 % Please edit documentation in R/frequencies.R
 \name{freqs_plot}
 \alias{freqs_plot}
-\title{Combinated Frequencies Plot for Categorical Features}
+\title{Combined Frequencies Plot for Categorical Features}
 \usage{
 freqs_plot(
   df,
