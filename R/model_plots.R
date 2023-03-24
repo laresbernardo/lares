@@ -165,6 +165,7 @@ mplot_importance <- function(var,
                              save = FALSE,
                              subdir = NA,
                              file_name = "viz_importance.png") {
+  if (is.null(imp)) return(NULL)
   if (length(var) != length(imp)) {
     message("The variables and importance values vectors should be the same length.")
     stop(message(paste("Currently, there are", length(var), "variables and", length(imp), "importance values!")))

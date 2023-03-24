@@ -320,20 +320,22 @@ print.h2o_automl <- function(x, importance = TRUE, ...) {
   )
 
   if ("importance" %in% names(x) && importance == TRUE) {
-    aux[["imp"]] <- glued(
-      "Most important variables:
+    if (nrow(x$importance) > 0) {
+      aux[["imp"]] <- glued(
+        "Most important variables:
 {v2t({imp}, sep = '\n', quotes = FALSE)}",
-      imp = paste(
-        "  ",
-        x$importance %>% head(5) %>%
-          mutate(label = sprintf(
-            "%s (%s)",
-            .data$variable,
-            formatNum(100 * .data$importance, 1, pos = "%")
-          )) %>%
-          pull(.data$label)
+        imp = paste(
+          "  ",
+          x$importance %>% head(5) %>%
+            mutate(label = sprintf(
+              "%s (%s)",
+              .data$variable,
+              formatNum(100 * .data$importance, 1, pos = "%")
+            )) %>%
+            pull(.data$label)
+        )
       )
-    )
+    }
   }
 
   print(glued("
@@ -439,7 +441,12 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
           .
         }
       }
-    noimp <- dplyr::filter(imp, .data$importance < 1 / (nrow(imp) * 4)) %>% arrange(desc(.data$importance))
+    noimp <- if (nrow(imp) > 0) {
+      dplyr::filter(imp, .data$importance < 1 / (nrow(imp) * 4)) %>%
+        arrange(desc(.data$importance))
+    } else {
+      imp
+    }
     if (nrow(noimp) > 0) {
       topn <- noimp %>%
         ungroup() %>%
@@ -918,6 +925,9 @@ target_set <- function(tag, score, target = "auto", quiet = FALSE) {
     group_by(.data$tag) %>%
     summarise(mean = mean(.data$score))
   auto <- means$tag[means$mean == max(means$mean)]
+  if (length(auto) > 1) {
+    auto <- if (any(auto %in% target)) target else auto[1]
+  }
   if (target == "auto") {
     target <- auto
   }
