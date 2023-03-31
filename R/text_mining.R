@@ -1,17 +1,19 @@
 ####################################################################
-#' Clean text
+#' Clean text strings automatically
 #'
-#' This function lets the user clean text into getting only alphanumeric
-#' characters and no accents/symbols on letters.
+#' \code{cleanText}: Clean character strings automatically. Options to keep ASCII
+#' characters only, keep certain characters, lower caps, title format, are available.
 #'
 #' @family Data Wrangling
 #' @family Text Mining
 #' @param text Character Vector
 #' @param spaces Boolean. Keep spaces? If character input, spaces
 #' will be transformed into passed argument.
+#' @param keep Character. String (concatenated or as vector) with all characters
+#' that are accepted and should be kept, in addition to alphanumeric.
 #' @param lower Boolean. Transform all to lower case?
 #' @param ascii Boolean. Only ASCII characters?
-#' @param title Boolean. Transform to title format (upper case on first letters)
+#' @param title Boolean. Transform to title format (upper case on first letters).
 #' @return Character vector with transformed strings.
 #' @examples
 #' cleanText("Bernardo Lares 123")
@@ -19,14 +21,17 @@
 #' cleanText("Bernardo Lare$", spaces = ".", ascii = FALSE)
 #' cleanText("\\@®ì÷å   %ñS  ..-X", spaces = FALSE)
 #' cleanText(c("maría", "€", "núñez_a."), title = TRUE)
+#' cleanText("29_Feb-92()#", keep = c("#", "_"), spaces = FALSE)
 #' @export
 #' @rdname clean_text
-cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = FALSE) {
+cleanText <- function(text, spaces = TRUE, keep = "", lower = TRUE,
+                      ascii = TRUE, title = FALSE) {
   text <- as.character(text)
   if (ascii) {
     text <- iconv(text, from = "UTF-8", to = "ASCII//TRANSLIT", sub = "")
-    text <- gsub("[^[:alnum:] ]", "", text)
   }
+  keep <- paste(keep, collapse = "")
+  text <- gsub(paste("[^[:alnum:] ", keep, "]"), "", text)
   if (lower) text <- tolower(text)
   if (title) text <- stringr::str_to_title(text)
   if (is.character(spaces)) text <- gsub(" ", spaces, text)
@@ -37,17 +42,21 @@ cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = F
 
 
 ####################################################################
-#' Clean title names of a data.frame/tibble object
+#' Clean column names for data.frame/tibble objects
 #'
-#' Resulting names are unique and consist only of the \code{_} character,
-#' numbers, and ASCII letters. Capitalization preferences can be specified using
-#' the \code{lower} parameter. Inspired by \code{janitor::clean_names}.
+#' \code{cleanNames}: Resulting names are unique and consist only of the \code{_}
+#' character, numbers, and ASCII letters. Capitalization preferences can be
+#' specified using the \code{lower} parameter.
+#'
+#' Inspired by \code{janitor::clean_names}.
 #'
 #' @param df data.frame/tibble.
 #' @param num Add character before only-numeric names.
 #' @param ... Additional parameters passed to \code{cleanText()}.
 #' @return data.frame/tibble with transformed column names.
 #' @examples
+#'
+#' # For a data.frame directly:
 #' df <- dft[1:5, 1:6] # Dummy data
 #' colnames(df) <- c("ID.", "34", "x_2", "Num 123", "Nòn-äscì", "  white   Spaces  ")
 #' print(df)
@@ -55,10 +64,10 @@ cleanText <- function(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = F
 #' cleanNames(df, lower = FALSE)
 #' @export
 #' @rdname clean_text
-cleanNames <- function(df, num = "x", ...) {
+cleanNames <- function(df, num = "x", keep = "_", ...) {
   if (!is.null(df)) {
     # Initial cleanse
-    cols <- cleanText(colnames(df), ...)
+    cols <- cleanText(colnames(df), keep = keep, ...)
     # Simple spaces turned into "_"
     cols <- trimws(gsub("[[:space:].]+", "_", cols))
     # If only numeric, add x at the begining

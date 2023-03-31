@@ -3,11 +3,18 @@
 \name{cleanText}
 \alias{cleanText}
 \alias{cleanNames}
-\title{Clean text}
+\title{Clean text strings automatically}
 \usage{
-cleanText(text, spaces = TRUE, lower = TRUE, ascii = TRUE, title = FALSE)
+cleanText(
+  text,
+  spaces = TRUE,
+  keep = "",
+  lower = TRUE,
+  ascii = TRUE,
+  title = FALSE
+)
 
-cleanNames(df, num = "x", ...)
+cleanNames(df, num = "x", keep = "_", ...)
 }
 \arguments{
 \item{text}{Character Vector}
@@ -15,11 +22,14 @@ cleanNames(df, num = "x", ...)
 \item{spaces}{Boolean. Keep spaces? If character input, spaces
 will be transformed into passed argument.}
 
+\item{keep}{Character. String (concatenated or as vector) with all characters
+that are accepted and should be kept, in addition to alphanumeric.}
+
 \item{lower}{Boolean. Transform all to lower case?}
 
 \item{ascii}{Boolean. Only ASCII characters?}
 
-\item{title}{Boolean. Transform to title format (upper case on first letters)}
+\item{title}{Boolean. Transform to title format (upper case on first letters).}
 
 \item{df}{data.frame/tibble.}
 
@@ -33,12 +43,15 @@ Character vector with transformed strings.
 data.frame/tibble with transformed column names.
 }
 \description{
-This function lets the user clean text into getting only alphanumeric
-characters and no accents/symbols on letters.
+\code{cleanText}: Clean character strings automatically. Options to keep ASCII
+characters only, keep certain characters, lower caps, title format, are available.
 
-Resulting names are unique and consist only of the \code{_} character,
-numbers, and ASCII letters. Capitalization preferences can be specified using
-the \code{lower} parameter. Inspired by \code{janitor::clean_names}.
+\code{cleanNames}: Resulting names are unique and consist only of the \code{_}
+character, numbers, and ASCII letters. Capitalization preferences can be
+specified using the \code{lower} parameter.
+}
+\details{
+Inspired by \code{janitor::clean_names}.
 }
 \examples{
 cleanText("Bernardo Lares 123")
@@ -46,6 +59,9 @@ cleanText("Bèrnärdo LáreS 123", lower = FALSE)
 cleanText("Bernardo Lare$", spaces = ".", ascii = FALSE)
 cleanText("\\\\@®ì÷å   \%ñS  ..-X", spaces = FALSE)
 cleanText(c("maría", "€", "núñez_a."), title = TRUE)
+cleanText("29_Feb-92()#", keep = c("#", "_"), spaces = FALSE)
+
+# For a data.frame directly:
 df <- dft[1:5, 1:6] # Dummy data
 colnames(df) <- c("ID.", "34", "x_2", "Num 123", "Nòn-äscì", "  white   Spaces  ")
 print(df)
