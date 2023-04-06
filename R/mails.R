@@ -37,11 +37,12 @@ mail_send <- function(from = "RMail <laresbernardo@gmail.com>",
                       attachment = NULL,
                       service = "mailgun",
                       creds = NULL,
-                      quiet = FALSE) {
+                      quiet = FALSE,
+                      ...) {
   # MailGun documentation:
   # https://documentation.mailgun.com/en/latest/api-sending.html#sending
 
-  credentials <- get_credentials(from = service, dir = creds)
+  credentials <- get_credentials(from = service, dir = creds, ...)
   url <- credentials$url
   api_key <- credentials$api
 

@@ -9,10 +9,17 @@ get_credentials(
   from = NA,
   dir = NA,
   filename = "config.yml",
-  env = "LARES_CREDS"
+  env = "LARES_CREDS",
+  ...
 )
 
-get_creds(from = NA, dir = NA, filename = "config.yml", env = "LARES_CREDS")
+get_creds(
+  from = NA,
+  dir = NA,
+  filename = "config.yml",
+  env = "LARES_CREDS",
+  ...
+)
 }
 \arguments{
 \item{from}{Character. Family of values to import from the YML file.

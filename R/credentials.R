@@ -52,12 +52,10 @@
 #' @export
 get_credentials <- function(from = NA, dir = NA,
                             filename = "config.yml",
-                            env = "LARES_CREDS") {
-  if (is.list(dir)) {
-    return(dir)
-  }
-
-  if (is.na(dir)) {
+                            env = "LARES_CREDS",
+                            ...) {
+  if (is.list(dir)) return(dir)
+  if (isTRUE(is.na(dir)) || isTRUE(is.null(dir))) {
     dir <- Sys.getenv(env)
     if (dir == "") {
       message(sprintf(

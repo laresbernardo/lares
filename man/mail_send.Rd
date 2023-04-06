@@ -15,7 +15,8 @@ mail_send(
   attachment = NULL,
   service = "mailgun",
   creds = NULL,
-  quiet = FALSE
+  quiet = FALSE,
+  ...
 )
 }
 \arguments{
