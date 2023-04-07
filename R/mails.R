@@ -15,6 +15,7 @@
 #' @param creds Character. Credential's user (see \code{get_creds()}).
 #' Must contain: url (POST address), api (API key).
 #' @param quiet Boolean. Keep quite or display messages?
+#' @param ... Additional parameters.
 #' @return No return value, called for side effects.
 #' @examples
 #' \dontrun{

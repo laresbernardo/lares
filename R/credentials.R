@@ -32,6 +32,7 @@
 #' @param filename Character. YML filename with your credentials.
 #' @param env Character. Environment variable name. No need to set differently
 #' for any function that uses this library. Only for external use.
+#' @param ... Additional parameters.
 #' @return List. Result of reading your credential's YML file, filtered by your
 #' \code{from} input if provided.
 #' @examples

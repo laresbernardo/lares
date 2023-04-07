@@ -35,6 +35,8 @@ plot as PNG or data.frame as CSV, respectively.}
 Must contain: url (POST address), api (API key).}
 
 \item{quiet}{Boolean. Keep quite or display messages?}
+
+\item{...}{Additional parameters.}
 }
 \value{
 No return value, called for side effects.

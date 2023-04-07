@@ -35,6 +35,8 @@ If \code{dir} is a list, it'll return \code{dir} (manual credentials input).}
 
 \item{env}{Character. Environment variable name. No need to set differently
 for any function that uses this library. Only for external use.}
+
+\item{...}{Additional parameters.}
 }
 \value{
 List. Result of reading your credential's YML file, filtered by your
