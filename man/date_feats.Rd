@@ -55,13 +55,13 @@ df <- data.frame(
 date_feats(df, drop = TRUE) \%>\% head(10)
 
 # Holidays given a date range and country
-\donttest{
+\dontrun{
 hol <- date_feats(
   seq(Sys.Date() - 365, Sys.Date(), by = 1),
   holidays = TRUE,
-  country = "Colombia"
+  country = "Venezuela"
 )
-head(hol[!is.na(hol$holidayname), ])
+head(hol[!is.na(hol$holiday_name), ])
 }
 }
 \seealso{
