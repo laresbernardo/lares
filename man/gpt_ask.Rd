@@ -2,6 +2,7 @@
 % Please edit documentation in R/chatgpt.R
 \name{gpt_ask}
 \alias{gpt_ask}
+\alias{gpt_history}
 \alias{gpt_classify}
 \alias{gpt_tag}
 \alias{gpt_extract}
@@ -14,11 +15,13 @@
 gpt_ask(
   ask,
   secret_key = get_credentials()$openai$secret_key,
-  url = "https://api.openai.com/v1/chat/completions",
-  model = "gpt-3.5-turbo",
+  url = Sys.getenv("LARES_GPT_URL"),
+  model = Sys.getenv("LARES_GPT_MODEL"),
   quiet = FALSE,
   ...
 )
+
+gpt_history()
 
 gpt_classify(x, categories, quiet = TRUE, ...)
 
@@ -64,7 +67,10 @@ currency ISO code, ISO, Fahrenheit, etc.}
 }
 \description{
 This function lets the user ask ChatGPT via its API, and returns
-the rendered reply.
+the rendered reply. There are a couple of specific verbs (functions) with a
+preset prompt to help fetch the data in specific formats. We also
+store the prompts and replies in current session with their respective
+time-stamps so user can gather historical results.
 }
 \examples{
 \dontrun{
@@ -101,6 +107,9 @@ gpt_table("5 random people's address in South America, email, phone, age between
 gpt_translate(
   rep("I love you with all my heart", 5),
   language = c("spanish", "chinese", "japanese", "russian", "german"))
+
+# Now let's read the historical prompts and replies from current session
+gpt_history()
 }
 }
 \seealso{

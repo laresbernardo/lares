@@ -47,6 +47,7 @@ Other Tools:
 \code{\link{list_cats}()},
 \code{\link{listfiles}()},
 \code{\link{mail_send}()},
+\code{\link{markdown2df}()},
 \code{\link{move_files}()},
 \code{\link{msplit}()},
 \code{\link{myip}()},

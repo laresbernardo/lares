@@ -1,5 +1,4 @@
 .onLoad <- function(libname, pkgname) {
-  # Old options: lares.font, lares.formatNum, lares.lang
   Sys.setenv(
     # So user can set another font be default on theme_lares()
     "LARES_FONT" = if (Sys.getenv("LARES_FONT") != "") {
@@ -24,6 +23,17 @@
       Sys.getenv("LARES_LANG")
     } else {
       "es"
+    },
+    # ChatGPT Default values
+    "LARES_GPT_MODEL" = if (Sys.getenv("LARES_GPT_MODEL") != "") {
+      Sys.getenv("LARES_GPT_MODEL")
+    } else {
+      "gpt-3.5-turbo"
+    },
+    "LARES_GPT_URL" = if (Sys.getenv("LARES_GPT_URL") != "") {
+      Sys.getenv("LARES_GPT_URL")
+    } else {
+      "https://api.openai.com/v1/chat/completions"
     }
   )
   options(

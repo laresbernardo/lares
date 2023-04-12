@@ -12,19 +12,21 @@ cache_write(
   base = "temp",
   cache_dir = getOption("LARES_CACHE_DIR"),
   ask = FALSE,
-  quiet = FALSE
+  quiet = FALSE,
+  ...
 )
 
 cache_read(
   base,
   cache_dir = getOption("LARES_CACHE_DIR"),
   ask = FALSE,
-  quiet = FALSE
+  quiet = FALSE,
+  ...
 )
 
-cache_exists(base = NULL, cache_dir = getOption("LARES_CACHE_DIR"))
+cache_exists(base = NULL, cache_dir = getOption("LARES_CACHE_DIR"), ...)
 
-cache_clear(cache_dir = getOption("LARES_CACHE_DIR"), quiet = FALSE)
+cache_clear(cache_dir = getOption("LARES_CACHE_DIR"), quiet = FALSE, ...)
 }
 \arguments{
 \item{data}{Object}
@@ -44,6 +46,8 @@ ask the user if the cache should be overwritten. Note that you can only ask for
 one cache file at a time because vectors are concatenated.}
 
 \item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
+
+\item{...}{Additional parameters.}
 }
 \value{
 \code{cache_write}. No return value, called for side effects.

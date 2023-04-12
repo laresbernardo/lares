@@ -59,6 +59,7 @@ Other Tools:
 \code{\link{json2vector}()},
 \code{\link{list_cats}()},
 \code{\link{mail_send}()},
+\code{\link{markdown2df}()},
 \code{\link{move_files}()},
 \code{\link{msplit}()},
 \code{\link{myip}()},

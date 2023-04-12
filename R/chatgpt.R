@@ -1,8 +1,14 @@
+hist_ask <- "GPT_HIST_ASK"
+hist_reply <- "GPT_HIST_REPLY"
+
 ####################################################################
 #' ChatGPT API Interaction with R
 #'
 #' This function lets the user ask ChatGPT via its API, and returns
-#' the rendered reply.
+#' the rendered reply. There are a couple of specific verbs (functions) with a
+#' preset prompt to help fetch the data in specific formats. We also
+#' store the prompts and replies in current session with their respective
+#' time-stamps so user can gather historical results.
 #'
 #' @family API
 #' @inheritParams db_download
@@ -49,14 +55,25 @@
 #' gpt_translate(
 #'   rep("I love you with all my heart", 5),
 #'   language = c("spanish", "chinese", "japanese", "russian", "german"))
+#'
+#' # Now let's read the historical prompts and replies from current session
+#' gpt_history()
 #' }
 #' @export
 gpt_ask <- function(ask,
-                        secret_key = get_credentials()$openai$secret_key,
-                        url = "https://api.openai.com/v1/chat/completions",
-                        model = "gpt-3.5-turbo",
-                        quiet = FALSE, ...) {
+                    secret_key = get_credentials()$openai$secret_key,
+                    url = Sys.getenv("LARES_GPT_URL"),
+                    model = Sys.getenv("LARES_GPT_MODEL"),
+                    quiet = FALSE, ...) {
+  ts <- Sys.time()
   if (length(ask) > 1) ask <- paste(ask, collapse = " + ")
+  # Save historical questions
+  if (cache_exists(hist_ask)){
+    cache <- cache_read(hist_ask, quiet = TRUE, ...)
+    cache <- rbind(cache, data.frame(ts = ts, prompt = ask))
+  } else cache <- data.frame(ts = ts, prompt = ask)
+  cache_write(distinct(cache), hist_ask, quiet = TRUE, ...)
+  # Ask ChatGPT using their API
   response <- POST(
     url = url, 
     add_headers(Authorization = paste("Bearer", secret_key)),
@@ -74,7 +91,27 @@ gpt_ask <- function(ask,
   if ("error" %in% names(ret)) warning(ret$error$message)
   if ("message" %in% names(ret$choices[[1]]) & !quiet)
     cat(stringr::str_trim(ret$choices[[1]]$message$content))
+  # Save historical answers
+  if (cache_exists(hist_ask)){
+    cache <- cache_read(hist_reply, quiet = TRUE, ...)
+    cache <- rbind(cache, data.frame(ts = ts, reply = ret))
+  } else cache <- data.frame(ts = ts, prompt = ret)
+  cache_write(distinct(cache), hist_reply, quiet = TRUE, ...)
   return(invisible(ret))
+}
+
+#' @rdname gpt_ask
+#' @export
+gpt_history <- function() {
+  asks <- cache_read(hist_ask, quiet = TRUE)
+  if (!is.null(asks)) {
+    replies <- cache_read(hist_reply, quiet = TRUE)
+    hist <- as_tibble(left_join(asks, replies, by = "ts")) %>%
+      select(.data$ts, .data$prompt, contains("message.content"), everything())
+    return(hist) 
+  } else {
+    warning("No historical prompts nor replies registered yet")
+  }
 }
 
 #' @param x Vector. List items you wish to process
@@ -160,15 +197,9 @@ gpt_prompt_builder <- function(type = "category", cols = c("item", type), x, y) 
 
 gpt_markdown2df <- function(resp) {
   if ("message" %in% names(resp$choices[[1]])) {
-    df <- resp$choices[[1]]$message$content
-    # Convert markdown to data.frame
-    df <- removenacols(read.table(text = df, sep = "|", header = TRUE, strip.white = TRUE, quote="\""))
-    # Get rid of potential first row with all values set as --- or :---
-    if (all(stringr::str_split(df[1, 1], "-")[[1]] == "")) df <- df[-1, ]
-    if (substr(df[1, 1], 1, 4) == ":---") df <- df[-1, ]
-    rownames(df) <- NULL
-    df <- as_tibble(df)
-    attr(df, "response") <- resp
-    return(df)
-  } else return(resp)
+    resp <- resp$choices[[1]]$message$content
+  }
+  df <- try(markdown2df(resp))
+  attr(df, "response") <- df
+  return(df)
 }

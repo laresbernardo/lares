@@ -81,6 +81,7 @@ Other Tools:
 \code{\link{json2vector}()},
 \code{\link{list_cats}()},
 \code{\link{listfiles}()},
+\code{\link{markdown2df}()},
 \code{\link{move_files}()},
 \code{\link{msplit}()},
 \code{\link{myip}()},

@@ -970,3 +970,22 @@ warnifnot <- function(...) if (!isTRUE(...)) warning(paste(deparse(...), "is not
 what_size <- function(x, units = "Mb", ...) {
   format(object.size(x), units = units, ...)
 }
+
+####################################################################
+#' Convert markdown string tables to data.frame
+#'
+#' @family Tools
+#' @param text Character. Markdown text representing a table.
+#' @examples
+#' txt <- "| Item | Value |\n|------|-------|\n| 50C  | 122F  |\n| 300K | 80.33F |"
+#' markdown2df(txt)
+#' @export
+markdown2df <- function(text) {
+  df <- removenacols(read.table(text = text, sep = "|", header = TRUE, strip.white = TRUE, quote="\""))
+  # Get rid of potential first row with all values set as --- or :---
+  if (all(stringr::str_split(df[1, 1], "-")[[1]] == "")) df <- df[-1, ]
+  if (substr(df[1, 1], 1, 4) == ":---") df <- df[-1, ]
+  rownames(df) <- NULL
+  df <- as_tibble(df)
+  return(df)
+}

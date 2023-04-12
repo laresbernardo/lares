@@ -18,6 +18,7 @@
 #' if the cache should be used to proceed or ignored; when writing, (interactive)
 #' ask the user if the cache should be overwritten. Note that you can only ask for
 #' one cache file at a time because vectors are concatenated.
+#' @param ... Additional parameters.
 #' @return \code{cache_write}. No return value, called for side effects.
 #' @examples
 #' x <- list(a = 1, b = 2:4)
@@ -31,7 +32,8 @@ cache_write <- function(data,
                         base = "temp",
                         cache_dir = getOption("LARES_CACHE_DIR"),
                         ask = FALSE,
-                        quiet = FALSE) {
+                        quiet = FALSE,
+                        ...) {
   if (is.null(getOption("LARES_CACHE_DIR"))) {
     cache_dir <- tempdir()
   }
@@ -67,7 +69,8 @@ cache_write <- function(data,
 cache_read <- function(base,
                        cache_dir = getOption("LARES_CACHE_DIR"),
                        ask = FALSE,
-                       quiet = FALSE) {
+                       quiet = FALSE,
+                       ...) {
   base <- paste(base, collapse = ".")
   if (left(base, 12) != "lares_cache_") base <- paste0("lares_cache_", base)
   if (right(base, 4) == ".RDS") base <- gsub("\\.RDS", "", base)
@@ -95,7 +98,7 @@ cache_read <- function(base,
 #' @rdname cache_write
 #' @return \code{cache_exists}. Boolean. Result of \code{base} existence.
 #' @export
-cache_exists <- function(base = NULL, cache_dir = getOption("LARES_CACHE_DIR")) {
+cache_exists <- function(base = NULL, cache_dir = getOption("LARES_CACHE_DIR"), ...) {
   if (is.null(getOption("LARES_CACHE_DIR"))) {
     cache_dir <- tempdir()
   }
@@ -119,7 +122,7 @@ cache_exists <- function(base = NULL, cache_dir = getOption("LARES_CACHE_DIR")) 
 #' @rdname cache_write
 #' @return \code{cache_clear}. Invisible vector containing cache file names removed.
 #' @export
-cache_clear <- function(cache_dir = getOption("LARES_CACHE_DIR"), quiet = FALSE) {
+cache_clear <- function(cache_dir = getOption("LARES_CACHE_DIR"), quiet = FALSE, ...) {
   if (is.null(cache_dir)) cache_dir <- tempdir()
   files <- list.files(cache_dir)
   caches <- files[startsWith(files, "lares_cache_")]
