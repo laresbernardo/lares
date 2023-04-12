@@ -143,6 +143,7 @@ elapsed time and message printed.</p>
 <code><a href="list_cats.html">list_cats</a>()</code>,
 <code><a href="listfiles.html">listfiles</a>()</code>,
 <code><a href="mail_send.html">mail_send</a>()</code>,
+<code><a href="markdown2df.html">markdown2df</a>()</code>,
 <code><a href="move_files.html">move_files</a>()</code>,
 <code><a href="msplit.html">msplit</a>()</code>,
 <code><a href="myip.html">myip</a>()</code>,
@@ -161,18 +162,18 @@ elapsed time and message printed.</p>
 <span class="r-in"><span><span class="fu">tic</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">toc</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Elapsed time: 0.105s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Elapsed time: 0.104s</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Multiple tic tocs</span></span></span>
 <span class="r-in"><span><span class="fu">tic</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"two"</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Tic `id = two` start time: 2023-04-10 16:33:08</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Tic `id = two` start time: 2023-04-12 20:52:13</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">toc</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"two"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Elapsed time: 0.205s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Elapsed time: 0.204s</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Global is still working (id = 1)</span></span></span>
 <span class="r-in"><span><span class="fu">toc</span><span class="op">(</span>msg <span class="op">=</span> <span class="st">"The function finished its work in"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The function finished its work in 0.316s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The function finished its work in 0.313s</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
