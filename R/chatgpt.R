@@ -25,7 +25,7 @@ hist_reply <- "GPT_HIST_REPLY"
 #' api_key <- get_credentials()$openai$secret_key
 #' # Open question:
 #' gpt_ask("Can you write an R function to plot a dummy histogram?", api_key)
-#' 
+#'
 #' ##### The following examples return dataframes:
 #' # Classify each element based on categories:
 #' gpt_classify(1:10, c("odd", "even"))
@@ -33,28 +33,32 @@ hist_reply <- "GPT_HIST_REPLY"
 #' # Add all tags that apply to each element based on tags:
 #' gpt_tag(
 #'   c("I love chocolate", "I hate chocolate", "I like Coke"),
-#'   c("food", "positive", "negative", "beverage"))
+#'   c("food", "positive", "negative", "beverage")
+#' )
 #'
 #' # Extract specific information:
 #' gpt_extract(
 #'   c("My mail is 123@@test.com", "30 Main Street, Brooklyn, NY, USA", "+82 2-312-3456", "$1.5M"),
-#'   c("email", "full state name", "country of phone number", "amount as number"))
-#' 
+#'   c("email", "full state name", "country of phone number", "amount as number")
+#' )
+#'
 #' # Format values
 #' gpt_format(
 #'   c("March 27th, 2021", "12-25-2023 3:45PM", "01.01.2000", "29 Feb 92"),
-#'   format = "ISO Date getting rid of timestamps")
-#'   
+#'   format = "ISO Date getting rid of timestamps"
+#' )
+#'
 #' # Convert units
 #' gpt_convert(c("50C", "300K"), "Fahrenheit")
-#'   
+#'
 #' # Create a table with data
 #' gpt_table("5 random people's address in South America, email, phone, age between 18-30")
-#' 
+#'
 #' # Translate text to any language
 #' gpt_translate(
 #'   rep("I love you with all my heart", 5),
-#'   language = c("spanish", "chinese", "japanese", "russian", "german"))
+#'   language = c("spanish", "chinese", "japanese", "russian", "german")
+#' )
 #'
 #' # Now let's read the historical prompts and replies from current session
 #' gpt_history()
@@ -68,34 +72,39 @@ gpt_ask <- function(ask,
   ts <- Sys.time()
   if (length(ask) > 1) ask <- paste(ask, collapse = " + ")
   # Save historical questions
-  if (cache_exists(hist_ask)){
+  if (cache_exists(hist_ask)) {
     cache <- cache_read(hist_ask, quiet = TRUE, ...)
     cache <- rbind(cache, data.frame(ts = ts, prompt = ask))
-  } else cache <- data.frame(ts = ts, prompt = ask)
+  } else {
+    cache <- data.frame(ts = ts, prompt = ask)
+  }
   cache_write(distinct(cache), hist_ask, quiet = TRUE, ...)
   # Ask ChatGPT using their API
   response <- POST(
-    url = url, 
+    url = url,
     add_headers(Authorization = paste("Bearer", secret_key)),
     httr::content_type_json(),
     encode = "json",
     body = list(
       model = model,
       messages = list(list(
-        role = "user", 
+        role = "user",
         content = ask
       ))
     )
   )
   ret <- content(response)
   if ("error" %in% names(ret)) warning(ret$error$message)
-  if ("message" %in% names(ret$choices[[1]]) & !quiet)
+  if ("message" %in% names(ret$choices[[1]]) & !quiet) {
     cat(stringr::str_trim(ret$choices[[1]]$message$content))
+  }
   # Save historical answers
-  if (cache_exists(hist_ask)){
+  if (cache_exists(hist_ask)) {
     cache <- cache_read(hist_reply, quiet = TRUE, ...)
     cache <- rbind(cache, data.frame(ts = ts, reply = ret))
-  } else cache <- data.frame(ts = ts, prompt = ret)
+  } else {
+    cache <- data.frame(ts = ts, prompt = ret)
+  }
   cache_write(distinct(cache), hist_reply, quiet = TRUE, ...)
   return(invisible(ret))
 }
@@ -108,7 +117,7 @@ gpt_history <- function() {
     replies <- cache_read(hist_reply, quiet = TRUE)
     hist <- as_tibble(left_join(asks, replies, by = "ts")) %>%
       select(.data$ts, .data$prompt, contains("message.content"), everything())
-    return(hist) 
+    return(hist)
   } else {
     warning("No historical prompts nor replies registered yet")
   }
@@ -186,13 +195,14 @@ gpt_translate <- function(x, language, quiet = TRUE, ...) {
   df <- gpt_markdown2df(resp)
   return(df)
 }
- 
+
 gpt_prompt_builder <- function(type = "category", cols = c("item", type), x, y) {
   paste(
     "Return a structured markdown table with", length(cols), "columns named", v2t(cols, and = "and"),
     ". Consider the following items:", v2t(x, quotes = FALSE),
     ". For each respective item, what", type, "represent each item using:", v2t(y, quotes = FALSE),
-    ". If you don't know any item, replace with NA")
+    ". If you don't know any item, replace with NA"
+  )
 }
 
 gpt_markdown2df <- function(resp) {

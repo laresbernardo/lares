@@ -39,23 +39,20 @@ get_currency <- function(currency_pair,
   if (from == to) to <- from + 1
   if (to > Sys.Date()) to <- Sys.Date()
 
-  if (Sys.Date() == from) {
-    x <- suppressWarnings(getQuote(string, auto.assign = FALSE))
-    rownames(x) <- Sys.Date()
-    x[, 1] <- NULL
-  } else {
-    x <- data.frame(suppressWarnings(getSymbols(
-      string,
-      env = NULL,
-      from = from, to = to,
-      src = "yahoo"
-    )))
-    if (substr(rownames(x), 1, 1)[1] == "X") {
-      x <- x[1, ]
-      rownames(x) <- Sys.Date()
-    }
+  x <- try(data.frame(suppressWarnings(getSymbols(
+    string,
+    env = NULL,
+    from = from, to = to,
+    src = "yahoo"
+  ))))
+  if ("try-error" %in% class(x)) {
+    warning(x)
+    return(x)
   }
-
+  if (substr(rownames(x), 1, 1)[1] == "X") {
+    x <- x[1, ]
+    rownames(x) <- Sys.Date()
+  }
   rate <- data.frame(date = as.Date(rownames(x)), rate = x[, 1])
 
   if (fill) {

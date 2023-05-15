@@ -305,11 +305,9 @@ scale_x_reordered <- function(..., sep = "___") {
 #' @return Plot when \code{plot=TRUE} and data.frame with grouped frequency results
 #' when \code{plot=FALSE}.
 #' @examples
-#' \donttest{
 #' data(dft) # Titanic dataset
 #' freqs_df(dft)
 #' freqs_df(dft, plot = TRUE)
-#' }
 #' @export
 freqs_df <- function(df,
                      max = 0.9, min = 0.0, novar = TRUE,
@@ -327,7 +325,7 @@ freqs_df <- function(df,
   names <- lapply(df, function(x) length(unique(x)))
   unique <- as.data.frame(names)
   colnames(unique) <- names(names)
-  which <- rownames(t(-sort(unique)))
+  which <- names(sort(-rank(unique, ties.method = "first")))
 
   # Too much variance
   no <- names(unique)[unique > nrow(df) * max]

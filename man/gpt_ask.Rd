@@ -85,28 +85,32 @@ gpt_classify(1:10, c("odd", "even"))
 # Add all tags that apply to each element based on tags:
 gpt_tag(
   c("I love chocolate", "I hate chocolate", "I like Coke"),
-  c("food", "positive", "negative", "beverage"))
+  c("food", "positive", "negative", "beverage")
+)
 
 # Extract specific information:
 gpt_extract(
   c("My mail is 123@test.com", "30 Main Street, Brooklyn, NY, USA", "+82 2-312-3456", "$1.5M"),
-  c("email", "full state name", "country of phone number", "amount as number"))
+  c("email", "full state name", "country of phone number", "amount as number")
+)
 
 # Format values
 gpt_format(
   c("March 27th, 2021", "12-25-2023 3:45PM", "01.01.2000", "29 Feb 92"),
-  format = "ISO Date getting rid of timestamps")
-  
+  format = "ISO Date getting rid of timestamps"
+)
+
 # Convert units
 gpt_convert(c("50C", "300K"), "Fahrenheit")
-  
+
 # Create a table with data
 gpt_table("5 random people's address in South America, email, phone, age between 18-30")
 
 # Translate text to any language
 gpt_translate(
   rep("I love you with all my heart", 5),
-  language = c("spanish", "chinese", "japanese", "russian", "german"))
+  language = c("spanish", "chinese", "japanese", "russian", "german")
+)
 
 # Now let's read the historical prompts and replies from current session
 gpt_history()

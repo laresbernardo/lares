@@ -42,7 +42,8 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
           "\n1. Within the Graph API Explorer, select an Application.",
           "\n2. Go to Get Token and select the Page Acces Token needed.",
           "Note that there are navigation arrows if there are lots of accounts.",
-          "\n3. Copy and use the Acces Token created."))
+          "\n3. Copy and use the Acces Token created."
+        ))
         browseURL("https://developers.facebook.com/tools/explorer")
       }
     }
@@ -57,8 +58,10 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
 
   # Deal with GET + response vs jsonlite
   out <- fromJSON(toJSON(import))
-  if (all(lapply(out, length) == 1)) return(out)
-  
+  if (all(lapply(out, length) == 1)) {
+    return(out)
+  }
+
   # First pagination
   results <- list()
   i <- 1
@@ -80,11 +83,14 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
       }
       while (exists("next", out$paging) && (i < as.integer(paginate) || isTRUE(paginate))) {
         i <- i + 1
-        res <- try({
-          out <- fromJSON(out$paging[["next"]])
-          results[[i]] <- list_flattener(out$data, i)
-          if (!quiet) show_pag_status(results, i, sleep, quiet)
-        }, silent = TRUE)
+        res <- try(
+          {
+            out <- fromJSON(out$paging[["next"]])
+            results[[i]] <- list_flattener(out$data, i)
+            if (!quiet) show_pag_status(results, i, sleep, quiet)
+          },
+          silent = TRUE
+        )
         if (inherits(res, "try-error")) {
           warning(paste0("Returning partial results given last pagination (", i, ") returned error"))
           break
@@ -102,7 +108,7 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
     mutate_at(vars(contains("url")), list(as.character)) %>%
     mutate_at(vars(contains("name")), list(as.character)) %>%
     as_tibble()
-  
+
   # Save last pagination and if it returned complete results
   attr(ret, "paging_done") <- !("next" %in% names(out[["paging"]]))
   attr(ret, "paging") <- out[["paging"]]
@@ -126,7 +132,7 @@ show_pag_status <- function(results, i = 1, sleep = 0, quiet = FALSE) {
     } else {
       flush.console()
       total <- sum(unlist(lapply(results, nrow)))
-      cat(paste(sprintf("\r>>> Pagination imported: %s | Total rows: %s", i, total)))  
+      cat(paste(sprintf("\r>>> Pagination imported: %s | Total rows: %s", i, total)))
     }
   }
   Sys.sleep(sleep)
@@ -466,7 +472,8 @@ fb_rf <- function(token,
         destination_ids = toJSON(as.character(destination_ids)),
         target_spec = ts,
         access_token = token
-      )), encode = "json")[[1]]
+      )
+    ), encode = "json")[[1]]
 
     if ("message" %in% names(prediction)) {
       message(paste(
@@ -548,15 +555,15 @@ fb_accounts <- function(token,
   set_config(config(http_version = 0))
   api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
   output <- NULL
-  
+
   # Select which type of ad accounts
   type <- paste0(type, "_ad_accounts")
-  
+
   for (i in seq_along(type)) {
     message(paste(">>> Fetching", type[i]))
     URL <- paste(META_GRAPH_URL, api_version, business_id, type[i], sep = "/")
     continue <- TRUE
-    
+
     # Call insights
     import <- GET(
       URL,
@@ -568,17 +575,17 @@ fb_accounts <- function(token,
       encode = "json"
     )
     ret <- fb_process(import, quiet = TRUE, ...)
-    
+
     if (inherits(ret, "data.frame")) {
       ret$type <- type[i]
       output <- bind_rows(output, ret)
     }
   }
-  
+
   if (!inherits(output, "data.frame")) {
     return(invisible(NULL))
   }
-  
+
   # Account status dictionary
   output <- mutate(output, account_status = case_when(
     account_status == "1" ~ "ACTIVE",
@@ -592,12 +599,14 @@ fb_accounts <- function(token,
     account_status == "201" ~ "ANY_ACTIVE",
     account_status == "202" ~ "ANY_CLOSED"
   ))
-  
+
   output <- suppressMessages(type.convert(
-    output, numerals = "no.loss", as.is = TRUE)) %>%
+    output,
+    numerals = "no.loss", as.is = TRUE
+  )) %>%
     arrange(desc(.data$amount_spent)) %>%
     as_tibble()
-  
+
   return(output)
 }
 
@@ -667,7 +676,7 @@ fb_creatives <- function(token, which,
                          ...) {
   set_config(config(http_version = 0))
   api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
-  
+
   fields <- c(
     "account_id", "object_type", "name", "status", "campaign_id",
     "call_to_action_type", "image_url", "thumbnail_url"
@@ -684,7 +693,9 @@ fb_creatives <- function(token, which,
     token
   )
   import <- GET(linkurl)
-  if (!process) return(import)
+  if (!process) {
+    return(import)
+  }
   ret <- fb_process(import, ...)
   return(ret)
 }
@@ -723,14 +734,14 @@ fb_ads <- function(token,
                    ...) {
   set_config(config(http_version = 0))
   api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
-  
+
   if (is.na(fields[1])) {
     fields <- paste(
       "account_id, campaign, campaign_id, objective, adset_id, id,",
       "name, source_ad, cpm, spend, recommendations"
     )
   }
-  
+
   import <- GET(
     glued("{META_GRAPH_URL}/{api_version}/{which}/ads"),
     query = list(
@@ -744,8 +755,10 @@ fb_ads <- function(token,
     ),
     encode = "json"
   )
-  
-  if (!process) return(import)
+
+  if (!process) {
+    return(import)
+  }
   ret <- fb_process(import, ...)
   return(ret)
 }

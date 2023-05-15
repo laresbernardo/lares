@@ -113,7 +113,8 @@ stocks_quote <- function(symbols) {
     "longName,regularMarketPrice,regularMarketChange,regularMarketTime&formatted=false&symbols="
   )
   for (i in seq_along(symbols)) {
-    z <- fromJSON(paste(qRoot, paste(symbols[i], collapse = ","), sep = ""))
+    z <- try(fromJSON(paste(qRoot, paste(symbols[i], collapse = ","), sep = "")))
+    if ("try-error" %in% class(z)) return(invisible(ret))
     if (length(z$quoteResponse$result) > 0) {
       cols <- c(
         "symbol", "quoteType", "regularMarketTime",

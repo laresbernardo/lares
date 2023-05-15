@@ -981,7 +981,7 @@ what_size <- function(x, units = "Mb", ...) {
 #' markdown2df(txt)
 #' @export
 markdown2df <- function(text) {
-  df <- removenacols(read.table(text = text, sep = "|", header = TRUE, strip.white = TRUE, quote="\""))
+  df <- removenacols(read.table(text = text, sep = "|", header = TRUE, strip.white = TRUE, quote = "\""))
   # Get rid of potential first row with all values set as --- or :---
   if (all(stringr::str_split(df[1, 1], "-")[[1]] == "")) df <- df[-1, ]
   if (substr(df[1, 1], 1, 4) == ":---") df <- df[-1, ]
