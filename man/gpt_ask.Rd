@@ -17,6 +17,10 @@ gpt_ask(
   secret_key = get_credentials()$openai$secret_key,
   url = Sys.getenv("LARES_GPT_URL"),
   model = Sys.getenv("LARES_GPT_MODEL"),
+  num_retries = 3,
+  temperature = 0.5,
+  max_tokens = 50,
+  pause_base = 1,
   quiet = FALSE,
   ...
 )
@@ -46,7 +50,19 @@ requested, they will be concatenated with "+" into a single request.}
 
 \item{url}{Character. Base URL for OpenAI's ChatGPT API.}
 
-\item{model}{Character. OpenAI model to use.}
+\item{model}{Character. OpenAI model to use. This can be adjusted
+according to the available models in the OpenAI API (such as "gpt-4").}
+
+\item{num_retries}{Integer. Number of times to retry the request in
+case of failure. Default is 3.}
+
+\item{temperature}{Numeric. The temperature to use for generating
+the response. Default is 0.5.}
+
+\item{max_tokens}{Integer. The maximum number of tokens in the
+response. Default is 50.}
+
+\item{pause_base}{The number of seconds to wait between retries. Default is 1.}
 
 \item{quiet}{Boolean. Keep quiet? If not, show informative messages.}
 

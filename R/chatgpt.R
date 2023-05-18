@@ -17,7 +17,15 @@ hist_reply <- "GPT_HIST_REPLY"
 #' @param secret_key Character. Secret Key. Get yours in:
 #' \href{https://platform.openai.com}{platform.openai.com}.
 #' @param url Character. Base URL for OpenAI's ChatGPT API.
-#' @param model Character. OpenAI model to use.
+#' @param model Character. OpenAI model to use. This can be adjusted
+#' according to the available models in the OpenAI API (such as "gpt-4").
+#' @param temperature Numeric. The temperature to use for generating
+#' the response. Default is 0.5.
+#' @param max_tokens Integer. The maximum number of tokens in the
+#' response. Default is 50.
+#' @param num_retries Integer. Number of times to retry the request in
+#' case of failure. Default is 3.
+#' @param pause_base The number of seconds to wait between retries. Default is 1.
 #' @param ... Additional parameters.
 #' @return (Invisible) list. Content returned from API POST and processed.
 #' @examples
@@ -68,6 +76,10 @@ gpt_ask <- function(ask,
                     secret_key = get_credentials()$openai$secret_key,
                     url = Sys.getenv("LARES_GPT_URL"),
                     model = Sys.getenv("LARES_GPT_MODEL"),
+                    num_retries = 3,
+                    temperature = 0.5,
+                    max_tokens = 50,
+                    pause_base = 1,
                     quiet = FALSE, ...) {
   ts <- Sys.time()
   if (length(ask) > 1) ask <- paste(ask, collapse = " + ")
@@ -85,8 +97,12 @@ gpt_ask <- function(ask,
     add_headers(Authorization = paste("Bearer", secret_key)),
     httr::content_type_json(),
     encode = "json",
+    times = num_retries,
+    pause_base = pause_base,
     body = list(
       model = model,
+      temperature = temperature,
+      max_tokens = max_tokens,
       messages = list(list(
         role = "user",
         content = ask
