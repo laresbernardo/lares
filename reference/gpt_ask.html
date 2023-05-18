@@ -24,7 +24,7 @@ time-stamps so user can gather historical results."><meta property="og:image" co
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.3.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,6 +77,10 @@ time-stamps so user can gather historical results.</p>
 <span>  secret_key <span class="op">=</span> <span class="fu"><a href="get_credentials.html">get_credentials</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">openai</span><span class="op">$</span><span class="va">secret_key</span>,</span>
 <span>  url <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"LARES_GPT_URL"</span><span class="op">)</span>,</span>
 <span>  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"LARES_GPT_MODEL"</span><span class="op">)</span>,</span>
+<span>  num_retries <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  temperature <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  max_tokens <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  pause_base <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -115,7 +119,27 @@ requested, they will be concatenated with "+" into a single request.</p></dd>
 
 
 <dt>model</dt>
-<dd><p>Character. OpenAI model to use.</p></dd>
+<dd><p>Character. OpenAI model to use. This can be adjusted
+according to the available models in the OpenAI API (such as "gpt-4").</p></dd>
+
+
+<dt>num_retries</dt>
+<dd><p>Integer. Number of times to retry the request in
+case of failure. Default is 3.</p></dd>
+
+
+<dt>temperature</dt>
+<dd><p>Numeric. The temperature to use for generating
+the response. Default is 0.5.</p></dd>
+
+
+<dt>max_tokens</dt>
+<dd><p>Integer. The maximum number of tokens in the
+response. Default is 50.</p></dd>
+
+
+<dt>pause_base</dt>
+<dd><p>The number of seconds to wait between retries. Default is 1.</p></dd>
 
 
 <dt>quiet</dt>
