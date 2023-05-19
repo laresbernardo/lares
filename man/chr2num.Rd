@@ -4,19 +4,24 @@
 \alias{chr2num}
 \title{Check character values for numeric and change datatype automatically}
 \usage{
-chr2num(x)
+chr2num(data)
 }
 \arguments{
-\item{x}{Vector or data.frame.}
+\item{data}{Vector, data.frame or list}
 }
 \description{
-Automatically check a vector or data.frame for numeric values and
-change their datatype to numeric.
+Automatically check a vector, data.frame or list for numeric content and
+change their datatype to numeric. Note that factors are skipped in
+case the user requires character numeric values to be kept as they are.
 }
 \examples{
+str(chr2num(c("1", "2", "3")))
 df <- data.frame(A = c("1", "3"), B = c("A", "B"), c = c(pi, pi*2))
-new_df <- chr2num(df)
-str(new_df)
+str(chr2num(df))
+lst <- list(A = c("1", "2", "3"), B = c("A", "B", "3"), C = pi, D = 3L)
+str(chr2num(lst))
+lst2 <- list(layer1 = ":D", layer2 = lst)
+str(chr2num(lst2))
 }
 \seealso{
 Other Tools: 

@@ -993,21 +993,31 @@ markdown2df <- function(text) {
 ####################################################################
 #' Check character values for numeric and change datatype automatically
 #' 
-#' Automatically check a vector or data.frame for numeric values and
-#' change their datatype to numeric.
+#' Automatically check a vector, data.frame or list for numeric content and
+#' change their datatype to numeric. Note that factors are skipped in
+#' case the user requires character numeric values to be kept as they are.
 #'
 #' @family Tools
-#' @param x Vector or data.frame.
+#' @param data Vector, data.frame or list
 #' @examples
+#' str(chr2num(c("1", "2", "3")))
 #' df <- data.frame(A = c("1", "3"), B = c("A", "B"), c = c(pi, pi*2))
-#' new_df <- chr2num(df)
-#' str(new_df)
+#' str(chr2num(df))
+#' lst <- list(A = c("1", "2", "3"), B = c("A", "B", "3"), C = pi, D = 3L)
+#' str(chr2num(lst))
+#' lst2 <- list(layer1 = ":D", layer2 = lst)
+#' str(chr2num(lst2))
 #' @export
-chr2num <- function(x) {
-  smartConvert <- function(x) {
-    if (any(is.na(as.numeric(as.character(x))))) x else as.numeric(x)
+chr2num <- function(data) {
+  if (is.list(data)) {
+    char_elements <- sapply(data, is.character)
+    num_elements <- sapply(data, function(element) all(grepl("^\\d+\\.?\\d*$", element)))
+    elements_to_convert <- char_elements & num_elements
+    data[elements_to_convert] <- lapply(data[elements_to_convert], as.numeric)
+  } else {
+    if (is.character(data) && all(grepl("^\\d+\\.?\\d*$", data))) {
+      data <- as.numeric(data)
+    }
   }
-  x[] <- suppressWarnings(lapply(x, smartConvert))
-  if (!is.data.frame(x)) x <- unlist(x)
-  return(x)
+  return(data)
 }
