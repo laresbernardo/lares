@@ -2,16 +2,19 @@
 % Please edit documentation in R/other_functions.R
 \name{chr2num}
 \alias{chr2num}
-\title{Check character values for numeric and change datatype automatically}
+\alias{chr2logical}
+\title{Check character values for numeric/logical and change datatype}
 \usage{
 chr2num(data)
+
+chr2logical(data)
 }
 \arguments{
 \item{data}{Vector, data.frame or list}
 }
 \description{
-Automatically check a vector, data.frame or list for numeric content and
-change their datatype to numeric. Note that factors are skipped in
+Automatically check a vector, data.frame or list for numeric or logical
+content and change their datatype. Note that factors are skipped in
 case the user requires character numeric values to be kept as they are.
 }
 \examples{
@@ -22,6 +25,7 @@ lst <- list(A = c("1", "2", "3"), B = c("A", "B", "3"), C = pi, D = 3L)
 str(chr2num(lst))
 lst2 <- list(layer1 = ":D", layer2 = lst)
 str(chr2num(lst2))
+str(chr2logical(c(NA, "true", FALSE)))
 }
 \seealso{
 Other Tools: 

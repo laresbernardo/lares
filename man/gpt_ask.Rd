@@ -3,12 +3,12 @@
 \name{gpt_ask}
 \alias{gpt_ask}
 \alias{gpt_history}
+\alias{gpt_table}
 \alias{gpt_classify}
 \alias{gpt_tag}
 \alias{gpt_extract}
 \alias{gpt_format}
 \alias{gpt_convert}
-\alias{gpt_table}
 \alias{gpt_translate}
 \title{ChatGPT API Interaction with R}
 \usage{
@@ -27,6 +27,8 @@ gpt_ask(
 
 gpt_history()
 
+gpt_table(x, cols = NULL, quiet = TRUE, ...)
+
 gpt_classify(x, categories, quiet = TRUE, ...)
 
 gpt_tag(x, tags, quiet = TRUE, ...)
@@ -36,8 +38,6 @@ gpt_extract(x, extract, quiet = TRUE, ...)
 gpt_format(x, format, quiet = TRUE, ...)
 
 gpt_convert(x, unit, quiet = TRUE, ...)
-
-gpt_table(ask, colnames = NULL, quiet = TRUE, ...)
 
 gpt_translate(x, language, quiet = TRUE, ...)
 }
@@ -76,15 +76,15 @@ Default is 1.}
 
 \item{...}{Additional parameters.}
 
-\item{x}{Vector. List items you wish to process}
+\item{x}{Vector. List items you wish to process in your instruction}
+
+\item{cols}{Vector. Force column names for your table results.}
 
 \item{categories, tags}{Vector. List of possible categories/tags to consider.}
 
 \item{extract, format, unit}{Character. Length 1 or same as x to extract/format/unit
 information from x. For example: email, country of phone number, country, amount as number,
 currency ISO code, ISO, Fahrenheit, etc.}
-
-\item{colnames}{Vector. Force column names for your table results.}
 
 \item{language}{Character. Language to translate to}
 }
@@ -131,8 +131,10 @@ gpt_convert(c("50C", "300K"), "Fahrenheit")
 
 # Create a table with data
 gpt_table("5 random people's address in South America, email, phone, age between 18-30")
-gpt_table(ask = "5 largest cities, their countries, and population",
-          colnames = c("city_name", "where", "POP"))
+gpt_table(
+  ask = "5 largest cities, their countries, and population",
+  cols = c("city_name", "where", "POP")
+)
 
 # Translate text to any language
 gpt_translate(
@@ -159,5 +161,9 @@ Other API:
 \code{\link{li_profile}()},
 \code{\link{queryGA}()},
 \code{\link{slackSend}()}
+
+Other ChatGPT: 
+\code{\link{gpt_prompter}()}
 }
 \concept{API}
+\concept{ChatGPT}

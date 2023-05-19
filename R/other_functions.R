@@ -981,20 +981,21 @@ what_size <- function(x, units = "Mb", ...) {
 #' markdown2df(txt)
 #' @export
 markdown2df <- function(text) {
-  df <- removenacols(read.table(text = text, sep = "|", header = TRUE, strip.white = TRUE, quote = "\""))
+  df <- removenacols(read.table(
+    text = text, sep = "|", header = TRUE, strip.white = TRUE, quote = "\""))
   # Get rid of potential first row with all values set as --- or :---
   if (all(stringr::str_split(df[1, 1], "-")[[1]] == "")) df <- df[-1, ]
   if (substr(df[1, 1], 1, 4) == ":---") df <- df[-1, ]
   rownames(df) <- NULL
-  df <- as_tibble(df)
+  df <- as_tibble(df) %>% chr2num() %>% chr2logical()
   return(df)
 }
 
 ####################################################################
-#' Check character values for numeric and change datatype automatically
+#' Check character values for numeric/logical and change datatype
 #' 
-#' Automatically check a vector, data.frame or list for numeric content and
-#' change their datatype to numeric. Note that factors are skipped in
+#' Automatically check a vector, data.frame or list for numeric or logical
+#' content and change their datatype. Note that factors are skipped in
 #' case the user requires character numeric values to be kept as they are.
 #'
 #' @family Tools
@@ -1007,16 +1008,35 @@ markdown2df <- function(text) {
 #' str(chr2num(lst))
 #' lst2 <- list(layer1 = ":D", layer2 = lst)
 #' str(chr2num(lst2))
+#' str(chr2logical(c(NA, "true", FALSE)))
 #' @export
 chr2num <- function(data) {
+  pattern <- "^-?\\d+(\\.\\d+)?$"
   if (is.list(data)) {
     char_elements <- sapply(data, is.character)
-    num_elements <- sapply(data, function(element) all(grepl("^\\d+\\.?\\d*$", element)))
+    num_elements <- sapply(data, function(element)
+      all(grepl(pattern, element[!is.na(element)])))
     elements_to_convert <- char_elements & num_elements
     data[elements_to_convert] <- lapply(data[elements_to_convert], as.numeric)
   } else {
-    if (is.character(data) && all(grepl("^\\d+\\.?\\d*$", data))) {
+    if (is.character(data) && all(grepl(pattern, data))) {
       data <- as.numeric(data)
+    }
+  }
+  return(data)
+}
+#' @rdname chr2num
+#' @export
+chr2logical <- function(data) {
+  if (is.list(data)) {
+    char_elements <- sapply(data, is.character)
+    log_elements <- sapply(data, function(element)
+      all(toupper(element) %in% c("TRUE", "FALSE", NA)))
+    elements_to_convert <- char_elements & log_elements
+    data[elements_to_convert] <- lapply(toupper(data[elements_to_convert]), as.logical)
+  } else {
+    if (is.character(data) && all(toupper(data) %in% c("TRUE", "FALSE", NA))) {
+      data <- as.logical(toupper(data))
     }
   }
   return(data)
