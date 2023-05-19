@@ -19,7 +19,7 @@ gpt_ask(
   model = Sys.getenv("LARES_GPT_MODEL"),
   num_retries = 3,
   temperature = 0.5,
-  max_tokens = 50,
+  max_tokens = NULL,
   pause_base = 1,
   quiet = FALSE,
   ...
@@ -37,7 +37,7 @@ gpt_format(x, format, quiet = TRUE, ...)
 
 gpt_convert(x, unit, quiet = TRUE, ...)
 
-gpt_table(ask, quiet = TRUE, ...)
+gpt_table(ask, colnames = NULL, quiet = TRUE, ...)
 
 gpt_translate(x, language, quiet = TRUE, ...)
 }
@@ -57,12 +57,20 @@ according to the available models in the OpenAI API (such as "gpt-4").}
 case of failure. Default is 3.}
 
 \item{temperature}{Numeric. The temperature to use for generating
-the response. Default is 0.5.}
+the response. Default is 0.5. The lower the \code{temperature},
+the more deterministic the results in the sense that the highest probable
+next token is always picked. Increasing temperature could lead to more
+randomness, which encourages more diverse or creative outputs. You are
+essentially increasing the weights of the other possible tokens.
+In terms of application, you might want to use a lower temperature value
+for tasks like fact-based QA to encourage more factual and concise responses.
+For poem generation or other creative tasks, it might be beneficial to
+increase the temperature value.}
 
-\item{max_tokens}{Integer. The maximum number of tokens in the
-response. Default is 50.}
+\item{max_tokens}{Integer. The maximum number of tokens in the response.}
 
-\item{pause_base}{The number of seconds to wait between retries. Default is 1.}
+\item{pause_base}{Numeric. The number of seconds to wait between retries.
+Default is 1.}
 
 \item{quiet}{Boolean. Keep quiet? If not, show informative messages.}
 
@@ -75,6 +83,8 @@ response. Default is 50.}
 \item{extract, format, unit}{Character. Length 1 or same as x to extract/format/unit
 information from x. For example: email, country of phone number, country, amount as number,
 currency ISO code, ISO, Fahrenheit, etc.}
+
+\item{colnames}{Vector. Force column names for your table results.}
 
 \item{language}{Character. Language to translate to}
 }
@@ -113,14 +123,16 @@ gpt_extract(
 # Format values
 gpt_format(
   c("March 27th, 2021", "12-25-2023 3:45PM", "01.01.2000", "29 Feb 92"),
-  format = "ISO Date getting rid of timestamps"
+  format = "ISO Date getting rid of time stamps"
 )
 
-# Convert units
+# Convert temperature units
 gpt_convert(c("50C", "300K"), "Fahrenheit")
 
 # Create a table with data
 gpt_table("5 random people's address in South America, email, phone, age between 18-30")
+gpt_table(ask = "5 largest cities, their countries, and population",
+          colnames = c("city_name", "where", "POP"))
 
 # Translate text to any language
 gpt_translate(

@@ -55,6 +55,7 @@ Other Tools:
 \code{\link{autoline}()},
 \code{\link{bind_files}()},
 \code{\link{bring_api}()},
+\code{\link{chr2num}()},
 \code{\link{db_upload}()},
 \code{\link{export_plot}()},
 \code{\link{export_results}()},

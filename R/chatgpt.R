@@ -20,12 +20,20 @@ hist_reply <- "GPT_HIST_REPLY"
 #' @param model Character. OpenAI model to use. This can be adjusted
 #' according to the available models in the OpenAI API (such as "gpt-4").
 #' @param temperature Numeric. The temperature to use for generating
-#' the response. Default is 0.5.
-#' @param max_tokens Integer. The maximum number of tokens in the
-#' response. Default is 50.
+#' the response. Default is 0.5. The lower the \code{temperature},
+#' the more deterministic the results in the sense that the highest probable
+#' next token is always picked. Increasing temperature could lead to more
+#' randomness, which encourages more diverse or creative outputs. You are
+#' essentially increasing the weights of the other possible tokens.
+#' In terms of application, you might want to use a lower temperature value
+#' for tasks like fact-based QA to encourage more factual and concise responses.
+#' For poem generation or other creative tasks, it might be beneficial to
+#' increase the temperature value.
+#' @param max_tokens Integer. The maximum number of tokens in the response.
 #' @param num_retries Integer. Number of times to retry the request in
 #' case of failure. Default is 3.
-#' @param pause_base The number of seconds to wait between retries. Default is 1.
+#' @param pause_base Numeric. The number of seconds to wait between retries.
+#' Default is 1.
 #' @param ... Additional parameters.
 #' @return (Invisible) list. Content returned from API POST and processed.
 #' @examples
@@ -53,14 +61,16 @@ hist_reply <- "GPT_HIST_REPLY"
 #' # Format values
 #' gpt_format(
 #'   c("March 27th, 2021", "12-25-2023 3:45PM", "01.01.2000", "29 Feb 92"),
-#'   format = "ISO Date getting rid of timestamps"
+#'   format = "ISO Date getting rid of time stamps"
 #' )
 #'
-#' # Convert units
+#' # Convert temperature units
 #' gpt_convert(c("50C", "300K"), "Fahrenheit")
 #'
 #' # Create a table with data
 #' gpt_table("5 random people's address in South America, email, phone, age between 18-30")
+#' gpt_table(ask = "5 largest cities, their countries, and population",
+#'           colnames = c("city_name", "where", "POP"))
 #'
 #' # Translate text to any language
 #' gpt_translate(
@@ -78,7 +88,7 @@ gpt_ask <- function(ask,
                     model = Sys.getenv("LARES_GPT_MODEL"),
                     num_retries = 3,
                     temperature = 0.5,
-                    max_tokens = 50,
+                    max_tokens = NULL,
                     pause_base = 1,
                     quiet = FALSE, ...) {
   ts <- Sys.time()
@@ -192,10 +202,17 @@ gpt_convert <- function(x, unit, quiet = TRUE, ...) {
   return(df)
 }
 
+#' @param colnames Vector. Force column names for your table results.
 #' @rdname gpt_ask
 #' @export
-gpt_table <- function(ask, quiet = TRUE, ...) {
-  prompt <- paste("Return a markdown table for:", ask, ". If you don't know any item, replace with NA")
+gpt_table <- function(ask, colnames = NULL, quiet = TRUE, ...) {
+  prompt <- paste(
+    "Return a markdown table for:", ask,
+    ". If you don't know any item, replace with NA.",
+    "For numerical values, only use a dot for decimals, no delimiters, no abbreviations")
+  if (!is.null(colnames)) prompt <- paste(
+    prompt,
+    "Also, I fixed column names for the results to be: ", v2t(colnames))
   resp <- gpt_ask(prompt, quiet = quiet, ...)
   df <- gpt_markdown2df(resp)
   return(df)
@@ -209,6 +226,7 @@ gpt_translate <- function(x, language, quiet = TRUE, ...) {
   prompt <- gpt_prompt_builder("translate", x = x, y = language, cols = c("item", "language", "translation"))
   resp <- gpt_ask(prompt, quiet = quiet, ...)
   df <- gpt_markdown2df(resp)
+  df <- chr2num(df)
   return(df)
 }
 
@@ -229,3 +247,38 @@ gpt_markdown2df <- function(resp) {
   attr(df, "response") <- df
   return(df)
 }
+
+### TEST with theoretical prompt elements to build prompts in a standard way
+# Instruction (starts with a verb): a specific task or instruction you want the model to perform
+# Context - external information or additional context that can steer the model to better responses
+# Input Data - the input or question that we are interested to find a response for
+# Output Indicator - the type or format of the output.
+# Note: You do not need all the four elements for a prompt and the format depends on the task at hand.
+gpt_prompt_elements <- function(instruction = NULL, context = NULL, input = NULL, output = NULL) {
+  elements <- list(
+    instruction = if (!is.null(instruction)) paste("Instruction:", instruction) else NULL,
+    context = if (!is.null(context)) paste("Context:", context) else NULL,
+    input = if (!is.null(input)) paste("Input:", input) else NULL,
+    output = if (!is.null(output)) paste("Output:", output) else NULL
+  )
+  are_null <- unlist(lapply(elements, is.null))
+  if (all(are_null))
+    warning("No prompt provided. Set any of the elements: ", v2t(names(elements)))
+  return(
+    list(
+      prompt = v2t(elements[!are_null], quotes = FALSE, sep = " | "),
+      elements = elements
+    )
+  )
+}
+
+# p <- gpt_prompt_elements(
+#   instruction = "Top 10 largest cities of the world, country, region, coordinates (lat and lon), and population",
+#   output = "markdown table")$prompt
+# temp <- gpt_ask(p)
+# df <- gpt_markdown2df(temp)
+# freqs(df, Region)
+
+# res <- gpt_table(
+#   ask = "Top 10 largest cities of the world, country, region, coordinates in separate columns, and population",
+#   colnames = c("city_name", "Country", "region", "latitude", "long", "total pop"))

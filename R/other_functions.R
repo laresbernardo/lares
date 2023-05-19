@@ -989,3 +989,25 @@ markdown2df <- function(text) {
   df <- as_tibble(df)
   return(df)
 }
+
+####################################################################
+#' Check character values for numeric and change datatype automatically
+#' 
+#' Automatically check a vector or data.frame for numeric values and
+#' change their datatype to numeric.
+#'
+#' @family Tools
+#' @param x Vector or data.frame.
+#' @examples
+#' df <- data.frame(A = c("1", "3"), B = c("A", "B"), c = c(pi, pi*2))
+#' new_df <- chr2num(df)
+#' str(new_df)
+#' @export
+chr2num <- function(x) {
+  smartConvert <- function(x) {
+    if (any(is.na(as.numeric(as.character(x))))) x else as.numeric(x)
+  }
+  x[] <- suppressWarnings(lapply(x, smartConvert))
+  if (!is.data.frame(x)) x <- unlist(x)
+  return(x)
+}
