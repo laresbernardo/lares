@@ -79,7 +79,7 @@ time-stamps so user can gather historical results.</p>
 <span>  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"LARES_GPT_MODEL"</span><span class="op">)</span>,</span>
 <span>  num_retries <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  temperature <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>  max_tokens <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  max_tokens <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  pause_base <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -97,7 +97,7 @@ time-stamps so user can gather historical results.</p>
 <span></span>
 <span><span class="fu">gpt_convert</span><span class="op">(</span><span class="va">x</span>, <span class="va">unit</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">gpt_table</span><span class="op">(</span><span class="va">ask</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">gpt_table</span><span class="op">(</span><span class="va">ask</span>, colnames <span class="op">=</span> <span class="cn">NULL</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">gpt_translate</span><span class="op">(</span><span class="va">x</span>, <span class="va">language</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -130,16 +130,24 @@ case of failure. Default is 3.</p></dd>
 
 <dt>temperature</dt>
 <dd><p>Numeric. The temperature to use for generating
-the response. Default is 0.5.</p></dd>
+the response. Default is 0.5. The lower the <code>temperature</code>,
+the more deterministic the results in the sense that the highest probable
+next token is always picked. Increasing temperature could lead to more
+randomness, which encourages more diverse or creative outputs. You are
+essentially increasing the weights of the other possible tokens.
+In terms of application, you might want to use a lower temperature value
+for tasks like fact-based QA to encourage more factual and concise responses.
+For poem generation or other creative tasks, it might be beneficial to
+increase the temperature value.</p></dd>
 
 
 <dt>max_tokens</dt>
-<dd><p>Integer. The maximum number of tokens in the
-response. Default is 50.</p></dd>
+<dd><p>Integer. The maximum number of tokens in the response.</p></dd>
 
 
 <dt>pause_base</dt>
-<dd><p>The number of seconds to wait between retries. Default is 1.</p></dd>
+<dd><p>Numeric. The number of seconds to wait between retries.
+Default is 1.</p></dd>
 
 
 <dt>quiet</dt>
@@ -162,6 +170,10 @@ response. Default is 50.</p></dd>
 <dd><p>Character. Length 1 or same as x to extract/format/unit
 information from x. For example: email, country of phone number, country, amount as number,
 currency ISO code, ISO, Fahrenheit, etc.</p></dd>
+
+
+<dt>colnames</dt>
+<dd><p>Vector. Force column names for your table results.</p></dd>
 
 
 <dt>language</dt>
@@ -218,14 +230,16 @@ currency ISO code, ISO, Fahrenheit, etc.</p></dd>
 <span class="r-in"><span><span class="co"># Format values</span></span></span>
 <span class="r-in"><span><span class="fu">gpt_format</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"March 27th, 2021"</span>, <span class="st">"12-25-2023 3:45PM"</span>, <span class="st">"01.01.2000"</span>, <span class="st">"29 Feb 92"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  format <span class="op">=</span> <span class="st">"ISO Date getting rid of timestamps"</span></span></span>
+<span class="r-in"><span>  format <span class="op">=</span> <span class="st">"ISO Date getting rid of time stamps"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Convert units</span></span></span>
+<span class="r-in"><span><span class="co"># Convert temperature units</span></span></span>
 <span class="r-in"><span><span class="fu">gpt_convert</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"50C"</span>, <span class="st">"300K"</span><span class="op">)</span>, <span class="st">"Fahrenheit"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Create a table with data</span></span></span>
 <span class="r-in"><span><span class="fu">gpt_table</span><span class="op">(</span><span class="st">"5 random people's address in South America, email, phone, age between 18-30"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">gpt_table</span><span class="op">(</span>ask <span class="op">=</span> <span class="st">"5 largest cities, their countries, and population"</span>,</span></span>
+<span class="r-in"><span>          colnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"city_name"</span>, <span class="st">"where"</span>, <span class="st">"POP"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Translate text to any language</span></span></span>
 <span class="r-in"><span><span class="fu">gpt_translate</span><span class="op">(</span></span></span>
