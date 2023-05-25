@@ -22,7 +22,7 @@ cash amount for all reports, set the amount here}
 data.frame. Processed at date and portfolio level.
 }
 \description{
-This function creates a dataframe will all relevant metrics and values,
+This function creates a dataframe with all relevant metrics and values,
 for the overall portfolio, for every day since inception.
 }
 \seealso{

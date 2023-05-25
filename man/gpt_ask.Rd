@@ -142,7 +142,7 @@ gpt_translate(
   language = c("spanish", "chinese", "japanese", "russian", "german")
 )
 
-# Now let's read the historical prompts and replies from current session
+# Now let's read the historical prompts, replies, ano more from current session
 gpt_history()
 }
 }

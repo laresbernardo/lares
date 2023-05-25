@@ -400,11 +400,10 @@ daily_stocks <- function(hist, trans, tickers = NA, window = "MAX") {
   return(daily)
 }
 
-
 ####################################################################
 #' Daily Portfolio Dataframe
 #'
-#' This function creates a dataframe will all relevant metrics and values,
+#' This function creates a dataframe with all relevant metrics and values,
 #' for the overall portfolio, for every day since inception.
 #'
 #' @family Investment
@@ -477,6 +476,64 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
     ungroup()
 
   attr(ret, "type") <- "daily_portfolio"
+  return(ret)
+}
+
+
+####################################################################
+#' Calculate weighted stock values using FIFO/LIFO
+#'
+#' @param value Numeric vector. Representing the values of the stock.
+#' @param n Numeric vector. Representing the volume of the operation.
+#' Positive for 'Buy' and negative for 'Sale'.
+#' @param technique Character. Pick any of FIFO or LIFO, or NULL to skip.
+#' @param n_stocks Integer. Specify the number of stocks to consider. By
+#' default will sum postive values of \code{n}.
+#' @param buy_only Boolean. Consider only buy (positive) values?
+#' @param ... Additional parameters
+#' @return The calculated weighted mean value.
+#' @examples
+#' values <- c(10, 20, 30, 40, 50)
+#' weights <- c(2, 3, -4, 5, 6)
+#' mean(values)
+#' weighted_value(values)
+#' weighted.mean(values, weights)
+#' weighted_value(values, weights, buy_only = FALSE)
+#' # Using FIFO and LIFO
+#' weighted_value(values, weights, "FIFO")
+#' weighted_value(values, weights, "LIFO", n_stocks = 8)
+#' @export
+weighted_value <- function(value,
+                           n = rep(1, length(value)),
+                           technique = NULL, 
+                           n_stocks = NULL,
+                           buy_only = TRUE,
+                           ...) {
+  check_opts(technique, c("FIFO", "LIFO"))
+  stopifnot(length(value) == length(n))
+  df <- data.frame(value = value, n = n, total = n)
+  if (buy_only) df <- df[df$n > 0, ]
+  if (is.null(n_stocks)) n_stocks <- sum(n, na.rm = TRUE)
+  df$id <- 1:nrow(df)
+  if ("FIFO" %in% technique) {
+    df <- df %>%
+      arrange(desc(.data$id)) %>%
+      mutate(cum = cumsum(.data$n), n_stocks = n_stocks) %>%
+      rowwise() %>%
+      mutate(total = min(.data$n, .data$n_stocks - .data$cum + .data$n),
+             total = ifelse(.data$total < 0, 0, .data$total)) %>%
+      arrange(.data$id) %>%
+      data.frame()
+  } else if ("LIFO" %in% technique) {
+    df <- df %>%
+      mutate(cum = cumsum(.data$n), n_stocks = n_stocks) %>%
+      rowwise() %>%
+      mutate(total = min(.data$n, .data$n_stocks - .data$cum + .data$n),
+             total = ifelse(.data$total < 0, 0, .data$total)) %>%
+      data.frame()
+  }
+  ret <- sum(df$value * df$total, na.rm = TRUE) / sum(df$total, na.rm = TRUE)
+  attr(ret, "df") <- select(df, -any_of(c("id", "cum")))
   return(ret)
 }
 
