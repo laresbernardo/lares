@@ -12,7 +12,7 @@
 #' to set in into your .Renviron \code{LARES_PORTFOLIO=~/dir/to/your/file.xlsx} so you
 #' can leave all other parameters as \code{NA} and use it every time.
 #' @param sheets Character Vector. Names of each sheet containing Portfolio summary,
-#' Cash, and Transactions information
+#' Cash, and Transactions information. Please, keep the order of these tabs.
 #' @param keep_old Boolean. Include sold tickers even though not currently in portfolio?
 #' @param cache Boolean. Use daily cache if available?
 #' @param quiet Boolean. Keep quiet? If not, informative messages will be printed.
@@ -40,17 +40,23 @@ stocks_file <- function(file = NA,
     results <- cache_read(cache_file, quiet = quiet)
     return(results)
   }
-
-  processFile <- function(file, keep_old = TRUE) {
-    port <- as_tibble(read.xlsx(file, sheet = sheets[1], skipEmptyRows = TRUE, detectDates = TRUE))
-    cash <- as_tibble(read.xlsx(file, sheet = sheets[2], skipEmptyRows = TRUE, detectDates = TRUE))
-    trans <- as_tibble(read.xlsx(file, sheet = sheets[3], skipEmptyRows = TRUE, detectDates = TRUE))
-    trans$Date <- as.Date(trans$Date, origin = "1970-01-01")
-    if ("Value" %in% colnames(trans)) {
-      trans <- rename(trans, Each = .data$Value, Invested = .data$Amount)
+  processFile <- function(file, sheets = NULL, keep_old = TRUE) {
+    mylist <- lapply(sheets, function(x)
+      as_tibble(read.xlsx(
+        file, sheet = x,
+        skipEmptyRows = TRUE, detectDates = TRUE)))
+    if (length(mylist) == 3) {
+      names(mylist) <- c("port", "cash", "trans")  
+      mylist$trans$Date <- try(as.Date(mylist$trans$Date, origin = "1970-01-01"))
+      if ("Value" %in% colnames(mylist$trans)) {
+        mylist$trans <- rename(mylist$trans, Each = .data$Value, Invested = .data$Amount)
+      }
+      if (!keep_old) mylist$port <- try(mylist$port[mylist$port$Stocks != 0, ])
+      mylist <- list("portfolio" = mylist$port, "transactions" = mylist$trans, "cash" = mylist$cash)
+    } 
+    if (length(mylist) == 1) {
+      mylist <- mylist[[1]]
     }
-    if (!keep_old) port <- port[port$Stocks != 0, ]
-    mylist <- list("portfolio" = port, "transactions" = trans, "cash" = cash)
     return(mylist)
   }
 
@@ -59,12 +65,12 @@ stocks_file <- function(file = NA,
   if (auto && Sys.getenv("LARES_PORTFOLIO") != "") {
     if (!quiet) message("Using BL's local file...")
     local <- Sys.getenv("LARES_PORTFOLIO")
-    results <- processFile(local, keep_old)
+    results <- processFile(local, sheets, keep_old)
   } else {
     # FOR EVERYONE'S USE
     if (!is.na(file)) {
       if (file.exists(file) || is_url(file)) {
-        results <- processFile(file, keep_old)
+        results <- processFile(file, sheets, keep_old)
       } else {
         stop("Error: that file doesn't exist or it's not in your working directory!")
       }
@@ -77,13 +83,14 @@ stocks_file <- function(file = NA,
         xlsx = FALSE, # Do not import as Excel, just download
         token_dir = creds
       )
-      results <- processFile(file, keep_old = keep_old)
+      results <- processFile(file, sheets, keep_old = keep_old)
     }
   }
-
-  attr(results$portfolio, "type") <- "stocks_file_portfolio"
-  attr(results$transactions, "type") <- "stocks_file_transactions"
-  attr(results$cash, "type") <- "stocks_file_cash"
+  if (length(mylist) == 3) {
+    attr(results$portfolio, "type") <- "stocks_file_portfolio"
+    attr(results$transactions, "type") <- "stocks_file_transactions"
+    attr(results$cash, "type") <- "stocks_file_cash" 
+  }
   attr(results, "type") <- "stocks_file"
   cache_write(results, cache_file, quiet = TRUE)
   return(results)
@@ -195,10 +202,11 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
       symbol <- as.character(symbols[i])
       if (as.Date(from[i]) > (Sys.Date() - 4)) from[i] <- Sys.Date() - 4
       start_date <- as.character(from[i])
-      values <- suppressWarnings(data.frame(getSymbols(
+      values <- try(suppressWarnings(data.frame(getSymbols(
         symbol,
         env = NULL, from = start_date, to = to, src = "yahoo"
-      )))
+      ))))
+      if ("try-error" %in% class(values)) next
       values <- cbind(row.names(values), as.character(symbol), values)
       colnames(values) <- c("Date", "Symbol", "Open", "High", "Low", "Close", "Volume", "Adjusted")
       values <- mutate(values, Adjusted = rowMeans(select(values, .data$High, .data$Close), na.rm = TRUE))
@@ -515,7 +523,7 @@ weighted_value <- function(value,
   if (buy_only) df <- df[df$n > 0, ]
   if (is.null(n_stocks)) n_stocks <- sum(n, na.rm = TRUE)
   df$id <- 1:nrow(df)
-  if ("FIFO" %in% technique) {
+  if ("LIFO" %in% technique) {
     df <- df %>%
       arrange(desc(.data$id)) %>%
       mutate(cum = cumsum(.data$n), n_stocks = n_stocks) %>%
@@ -524,7 +532,7 @@ weighted_value <- function(value,
              total = ifelse(.data$total < 0, 0, .data$total)) %>%
       arrange(.data$id) %>%
       data.frame()
-  } else if ("LIFO" %in% technique) {
+  } else if ("FIFO" %in% technique) {
     df <- df %>%
       mutate(cum = cumsum(.data$n), n_stocks = n_stocks) %>%
       rowwise() %>%
