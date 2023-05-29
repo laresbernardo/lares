@@ -38,7 +38,7 @@ Remember to start simple and be very specific to get exactly what you need.
 \describe{
   \item{Instruction}{a specific task or instruction you want the model to perform.
   It usually starts with a verb given its an instruction.}
-  \item{Input}{input data, elemtns or question that we are interested to find a response for,}
+  \item{Input}{input data, elements or question that we are interested to find a response for,}
   \item{Context}{external information, additional context or references to steer
   the model to better responses.}
   \item{Output}{type or format of the output.}
@@ -106,6 +106,11 @@ p <- gpt_prompter(
   output = "table",
   cols = c("Input", "Original_Unit", "Total_Value", "Converted_Value", "New_Unit"),
   quiet = FALSE)
+  
+# Read a text and answer a question related to it
+gpt_prompter(instruction = "read",
+  context = "Long text here",
+  input = "Question here")$prompt
 }
 \seealso{
 Other ChatGPT: 

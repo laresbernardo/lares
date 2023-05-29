@@ -24,7 +24,7 @@ to set in into your .Renviron \code{LARES_PORTFOLIO=~/dir/to/your/file.xlsx} so 
 can leave all other parameters as \code{NA} and use it every time.}
 
 \item{sheets}{Character Vector. Names of each sheet containing Portfolio summary,
-Cash, and Transactions information}
+Cash, and Transactions information. Please, keep the order of these tabs.}
 
 \item{keep_old}{Boolean. Include sold tickers even though not currently in portfolio?}
 

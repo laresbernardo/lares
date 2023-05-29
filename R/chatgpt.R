@@ -316,7 +316,7 @@ gpt_markdown2df <- function(resp) {
 #' \describe{
 #'   \item{Instruction}{a specific task or instruction you want the model to perform.
 #'   It usually starts with a verb given its an instruction.}
-#'   \item{Input}{input data, elemtns or question that we are interested to find a response for,}
+#'   \item{Input}{input data, elements or question that we are interested to find a response for,}
 #'   \item{Context}{external information, additional context or references to steer
 #'   the model to better responses.}
 #'   \item{Output}{type or format of the output.}
@@ -391,6 +391,11 @@ gpt_markdown2df <- function(resp) {
 #'   output = "table",
 #'   cols = c("Input", "Original_Unit", "Total_Value", "Converted_Value", "New_Unit"),
 #'   quiet = FALSE)
+#'   
+#' # Read a text and answer a question related to it
+#' gpt_prompter(instruction = "read",
+#'   context = "Long text here",
+#'   input = "Question here")$prompt
 #' @export
 gpt_prompter <- function(instruction = NULL,
                          input = NULL,
@@ -403,6 +408,13 @@ gpt_prompter <- function(instruction = NULL,
     output <- paste(
       "Markdown format table. If missing elements, replace with NA.",
       "For numerical columns, only use a dot for decimals, no delimiters, no abbreviations"
+    )
+  }
+  if ("read" %in% instruction) {
+    instruction <- paste(
+      "You are a pro content editor who will read the context text and",
+      "reply using a single concise response to the question asked in input.",
+      "If the answer is not found in context, reply you cannot find the answer in the text"
     )
   }
   if ("cols" %in% names(list(...))) {
