@@ -77,6 +77,8 @@ playlist. It also returns metadata into an (invisible) list.</p>
 <span>  start_time <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  end_time <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  overwrite <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  open <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  delete <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  info <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cover <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -110,6 +112,11 @@ to trim the audio output in seconds.</p></dd>
 
 <dt>overwrite</dt>
 <dd><p>Boolean. Overwrite original file?</p></dd>
+
+
+<dt>open, delete</dt>
+<dd><p>Boolean. After everything's done, should the
+file be opened? Should it be deleted?</p></dd>
 
 
 <dt>info</dt>
