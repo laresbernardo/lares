@@ -114,7 +114,7 @@ explicitly set column names.</p></dd>
   It usually starts with a verb given its an instruction.</p></dd>
 
   <dt>Input</dt>
-<dd><p>input data, elemtns or question that we are interested to find a response for,</p></dd>
+<dd><p>input data, elements or question that we are interested to find a response for,</p></dd>
 
   <dt>Context</dt>
 <dd><p>external information, additional context or references to steer
@@ -234,6 +234,12 @@ explicitly set column names.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Input = 50C; 300K; 100F; 0F; 32C; 0K</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Context = Fahrenheit</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Output = Markdown format table. If missing elements, replace with NA. For numerical columns, only use a dot for decimals, no delimiters, no abbreviations; also, it must have 5 columns named exactly: Input, Original_Unit, Total_Value, Converted_Value, and New_Unit</span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="co"># Read a text and answer a question related to it</span></span></span>
+<span class="r-in"><span><span class="fu">gpt_prompter</span><span class="op">(</span>instruction <span class="op">=</span> <span class="st">"read"</span>,</span></span>
+<span class="r-in"><span>  context <span class="op">=</span> <span class="st">"Long text here"</span>,</span></span>
+<span class="r-in"><span>  input <span class="op">=</span> <span class="st">"Question here"</span><span class="op">)</span><span class="op">$</span><span class="va">prompt</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Instruction = You are a pro content editor who will read the context text and reply using a single concise response to the question asked in input. If the answer is not found in context, reply you cannot find the answer in the text ### Input = Question here ### Context = Long text here"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
