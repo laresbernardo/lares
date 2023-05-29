@@ -21,6 +21,8 @@
 #' @param start_time,end_time Numeric. Start and end time
 #' to trim the audio output in seconds.
 #' @param overwrite Boolean. Overwrite original file?
+#' @param open,delete Boolean. After everything's done, should the
+#' file be opened? Should it be deleted?
 #' @param info Boolean. Import and return metadata?
 #' @param cover Boolean. Google Search its squared cover?
 #' @param quiet Boolean. Keep quiet? If not, print messages.
@@ -43,6 +45,8 @@ get_mp3 <- function(id,
                     start_time = 0,
                     end_time = NA,
                     overwrite = TRUE,
+                    open = FALSE,
+                    delete = FALSE,
                     info = TRUE,
                     cover = FALSE,
                     quiet = FALSE) {
@@ -109,8 +113,8 @@ get_mp3 <- function(id,
   }
 
   # TRIM START AND/OR END OF AUDIO FILE
+  file <- sprintf("%s.mp3", infox$title)
   if (any(c(start_time > 0, !is.na(end_time)))) {
-    file <- sprintf("%s.mp3", infox$title)
     message(">>> Trimming audio file: ", file)
     trim_mp3(file,
       start_time = start_time,
@@ -119,6 +123,18 @@ get_mp3 <- function(id,
       quiet = quiet
     )
   }
+  
+  # Open file once everything is done
+  if (open) {
+    message("Opening file: ", file)
+    browseURL(file)
+  }
+  # Delete file if delete
+  if (delete) {
+    message("Deleting file: ", file)
+    file.remove(file)
+  }
+  
   return(invisible(infox))
 }
 

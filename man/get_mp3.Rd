@@ -12,6 +12,8 @@ get_mp3(
   start_time = 0,
   end_time = NA,
   overwrite = TRUE,
+  open = FALSE,
+  delete = FALSE,
   info = TRUE,
   cover = FALSE,
   quiet = FALSE
@@ -32,6 +34,9 @@ Any of: "youtube-dl" (latest stable version), "yt-dlp"
 to trim the audio output in seconds.}
 
 \item{overwrite}{Boolean. Overwrite original file?}
+
+\item{open, delete}{Boolean. After everything's done, should the
+file be opened? Should it be deleted?}
 
 \item{info}{Boolean. Import and return metadata?}
 
