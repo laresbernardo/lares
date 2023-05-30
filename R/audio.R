@@ -132,6 +132,7 @@ get_mp3 <- function(id,
   # Delete file if delete
   if (delete) {
     message("Deleting file: ", file)
+    if (open) Sys.sleep(5)
     file.remove(file)
   }
   
