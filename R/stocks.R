@@ -86,7 +86,7 @@ stocks_file <- function(file = NA,
       results <- processFile(file, sheets, keep_old = keep_old)
     }
   }
-  if (length(mylist) == 3) {
+  if (length(results) == 3) {
     attr(results$portfolio, "type") <- "stocks_file_portfolio"
     attr(results$transactions, "type") <- "stocks_file_transactions"
     attr(results$cash, "type") <- "stocks_file_cash" 
