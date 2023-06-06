@@ -49,11 +49,12 @@ get_currency <- function(currency_pair,
     warning(x)
     return(x)
   }
-  if (substr(rownames(x), 1, 1)[1] == "X") {
-    x <- x[1, ]
-    rownames(x) <- Sys.Date()
+  dates <- as.Date(gsub("\\.", "\\-", gsub("X", "", rownames(x))))
+  rate <- data.frame(date = dates, rate = x[, 1])
+  # Sometimes, the last date is repeated
+  if (tail(rate$date, 1) == tail(rate$date, 2)[1]) {
+    rate <- rate[-nrow(rate), ]
   }
-  rate <- data.frame(date = as.Date(rownames(x)), rate = x[, 1])
 
   if (fill) {
     rate <- data.frame(date = as.character(
