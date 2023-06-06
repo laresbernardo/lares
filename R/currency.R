@@ -52,7 +52,7 @@ get_currency <- function(currency_pair,
   dates <- as.Date(gsub("\\.", "\\-", gsub("X", "", rownames(x))))
   rate <- data.frame(date = dates, rate = x[, 1])
   # Sometimes, the last date is repeated
-  if (tail(rate$date, 1) == tail(rate$date, 2)[1]) {
+  if (tail(rate$date, 1) == tail(rate$date, 2)[1] && nrow(rate) > 1) {
     rate <- rate[-nrow(rate), ]
   }
 

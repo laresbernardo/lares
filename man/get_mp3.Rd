@@ -13,7 +13,7 @@ get_mp3(
   end_time = NA,
   overwrite = TRUE,
   open = FALSE,
-  delete = FALSE,
+  delete = open,
   info = TRUE,
   cover = FALSE,
   quiet = FALSE
