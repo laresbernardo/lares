@@ -106,19 +106,26 @@ previous values?</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># For today (or any one single date)</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"USD/COP"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         date    rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2023-06-06 4281.97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in getSymbols(string, env = NULL, from = from, to = to, ...) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   '...' used in an incorrect context</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Error in getSymbols(string, env = NULL, from = from, to = to, ...) : </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   '...' used in an incorrect context</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Error in getSymbols(string, env = NULL, from = from, to = to, ...) : \n  '...' used in an incorrect context\n"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "try-error"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"condition")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;simpleError in getSymbols(string, env = NULL, from = from, to = to, ...): '...' used in an incorrect context&gt;</span>
 <span class="r-in"><span><span class="co"># For multiple dates</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"EUR/USD"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         date     rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2023-05-31 1.069519</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2023-06-01 1.076079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2023-06-02 1.076079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2023-06-03 1.076079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2023-06-04 1.069862</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2023-06-05 1.071180</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2023-06-06 1.071180</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 2023-06-07 1.069747</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in getSymbols(string, env = NULL, from = from, to = to, ...) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   '...' used in an incorrect context</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Error in getSymbols(string, env = NULL, from = from, to = to, ...) : </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   '...' used in an incorrect context</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Error in getSymbols(string, env = NULL, from = from, to = to, ...) : \n  '...' used in an incorrect context\n"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "try-error"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"condition")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;simpleError in getSymbols(string, env = NULL, from = from, to = to, ...): '...' used in an incorrect context&gt;</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
