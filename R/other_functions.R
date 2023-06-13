@@ -976,18 +976,21 @@ what_size <- function(x, units = "Mb", ...) {
 #'
 #' @family Tools
 #' @param text Character. Markdown text representing a table.
+#' @param autoformat Boolean. Automatically format numerical,
+#' logical and date values to their classes?
 #' @examples
 #' txt <- "| Item | Value |\n|------|-------|\n| 50C  | 122F  |\n| 300K | 80.33F |"
 #' markdown2df(txt)
 #' @export
-markdown2df <- function(text) {
+markdown2df <- function(text, autoformat = TRUE) {
   df <- removenacols(read.table(
     text = text, sep = "|", header = TRUE, strip.white = TRUE, quote = "\""))
   # Get rid of potential first row with all values set as --- or :---
   if (all(stringr::str_split(df[1, 1], "-")[[1]] == "")) df <- df[-1, ]
   if (substr(df[1, 1], 1, 4) == ":---") df <- df[-1, ]
   rownames(df) <- NULL
-  df <- as_tibble(df) %>% chr2num() %>% chr2logical()
+  df <- as_tibble(df)
+  if (autoformat) df <- df %>% chr2num() %>% chr2logical() %>% chr2date()
   return(df)
 }
 
@@ -1037,6 +1040,22 @@ chr2logical <- function(data) {
   } else {
     if (is.character(data) && all(toupper(data) %in% c("TRUE", "FALSE", NA))) {
       data <- as.logical(toupper(data))
+    }
+  }
+  return(data)
+}
+#' @rdname chr2num
+#' @export
+chr2date <- function(data) {
+  if (is.list(data)) {
+    char_elements <- sapply(data, is.character)
+    log_elements <- sapply(data, function(element)
+      all(grepl("^[0-9-]+$", data) | is.na(data)))
+    elements_to_convert <- char_elements & log_elements
+    data[elements_to_convert] <- lapply(toupper(data[elements_to_convert]), as.Date)
+  } else {
+    if (is.character(data) && all(grepl("^[0-9-]+$", data) | is.na(data))) {
+      data <- as.Date(data, origin = "1970-01-01")
     }
   }
   return(data)

@@ -3,11 +3,14 @@
 \name{chr2num}
 \alias{chr2num}
 \alias{chr2logical}
+\alias{chr2date}
 \title{Check character values for numeric/logical and change datatype}
 \usage{
 chr2num(data)
 
 chr2logical(data)
+
+chr2date(data)
 }
 \arguments{
 \item{data}{Vector, data.frame or list}
