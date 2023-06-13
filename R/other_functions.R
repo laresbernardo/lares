@@ -1050,9 +1050,10 @@ chr2date <- function(data) {
   if (is.list(data)) {
     char_elements <- sapply(data, is.character)
     log_elements <- sapply(data, function(element)
-      all(grepl("^[0-9-]+$", data) | is.na(data)))
+      all(grepl("^[0-9-]+$", element) | is.na(element)))
     elements_to_convert <- char_elements & log_elements
-    data[elements_to_convert] <- lapply(toupper(data[elements_to_convert]), as.Date)
+    data[elements_to_convert] <- lapply(
+      data[elements_to_convert], function(x) as.Date(x, origin = "1970-01-01"))
   } else {
     if (is.character(data) && all(grepl("^[0-9-]+$", data) | is.na(data))) {
       data <- as.Date(data, origin = "1970-01-01")
