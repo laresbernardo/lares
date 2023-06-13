@@ -42,8 +42,9 @@ get_currency <- function(currency_pair,
   x <- try(data.frame(suppressWarnings(getSymbols(
     string,
     env = NULL,
-    from = from, to = to,
-    src = "yahoo"
+    from = from,
+    to = to,
+    ...
   ))))
   if ("try-error" %in% class(x)) {
     warning(x)

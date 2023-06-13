@@ -28,7 +28,7 @@ theme_lares(
 \arguments{
 \item{font, size}{Character and numeric. Base font family and base size for texts.
 \code{Arial Narrow} is set by default when the library is loaded; you may change it
-with \code{Sys.getenv("LARES_FONT" = "X")} or by using this parameter manually.}
+with \code{Sys.setenv("LARES_FONT" = "X")} or by using this parameter manually.}
 
 \item{main_colour, hard_colour, soft_colour, plot_colour, panel_colour}{Character. Main colours for your theme.}
 
