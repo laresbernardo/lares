@@ -67,7 +67,8 @@ rate between two currencies.</p>
 <span>  <span class="va">currency_pair</span>,</span>
 <span>  from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">99</span>,</span>
 <span>  to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  fill <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  fill <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -90,6 +91,10 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></dd>
 <dd><p>Boolean. Fill weekends and non-quoted dates with
 previous values?</p></dd>
 
+
+<dt>...</dt>
+<dd><p>Additional parameters</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -106,26 +111,19 @@ previous values?</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># For today (or any one single date)</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"USD/COP"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in getSymbols(string, env = NULL, from = from, to = to, ...) : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   '...' used in an incorrect context</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Error in getSymbols(string, env = NULL, from = from, to = to, ...) : </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   '...' used in an incorrect context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Error in getSymbols(string, env = NULL, from = from, to = to, ...) : \n  '...' used in an incorrect context\n"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "try-error"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"condition")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;simpleError in getSymbols(string, env = NULL, from = from, to = to, ...): '...' used in an incorrect context&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         date    rate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2023-06-19 4165.47</span>
 <span class="r-in"><span><span class="co"># For multiple dates</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"EUR/USD"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in getSymbols(string, env = NULL, from = from, to = to, ...) : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   '...' used in an incorrect context</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Error in getSymbols(string, env = NULL, from = from, to = to, ...) : </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   '...' used in an incorrect context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Error in getSymbols(string, env = NULL, from = from, to = to, ...) : \n  '...' used in an incorrect context\n"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "try-error"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"condition")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;simpleError in getSymbols(string, env = NULL, from = from, to = to, ...): '...' used in an incorrect context&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         date     rate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2023-06-12 1.076299</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2023-06-13 1.078935</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2023-06-14 1.084305</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2023-06-15 1.094595</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2023-06-16 1.094595</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2023-06-17 1.094595</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2023-06-18 1.094595</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8 2023-06-19 1.094092</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
