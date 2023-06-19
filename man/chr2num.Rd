@@ -4,7 +4,7 @@
 \alias{chr2num}
 \alias{chr2logical}
 \alias{chr2date}
-\title{Check character values for numeric/logical and change datatype}
+\title{Check character values for date/numeric/logical and change datatype}
 \usage{
 chr2num(data)
 
@@ -16,8 +16,8 @@ chr2date(data)
 \item{data}{Vector, data.frame or list}
 }
 \description{
-Automatically check a vector, data.frame or list for numeric or logical
-content and change their datatype. Note that factors are skipped in
+Automatically check a vector, data.frame or list for numeric, logical,
+date content and change their datatype. Note that factors are skipped in
 case the user requires character numeric values to be kept as they are.
 }
 \examples{

@@ -327,30 +327,37 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
 #' but with custom palette applied.
 #' @export
 gg_fill_customs <- function(column = "fill", ...) {
-  scale_fill_manual(values = gg_vals("fill", column), aesthetics = "fill")
+  scale_fill_manual(values = gg_vals("fill", column, ...), aesthetics = "fill")
 }
 
 #' @rdname gg_fill_customs
 #' @export
 gg_colour_customs <- function(column = "colour", ...) {
-  scale_color_manual(values = gg_vals("colour", column), aesthetics = "colour")
+  scale_color_manual(values = gg_vals("colour", column, ...), aesthetics = "colour")
 }
 
 #' @rdname gg_fill_customs
 #' @export
 gg_text_customs <- function(column = "colour", ...) {
-  scale_color_manual(values = gg_vals("label", column), aesthetics = "colour")
+  scale_color_manual(values = gg_vals("label", column, ...), aesthetics = "colour")
 }
 
 #' @rdname gg_fill_customs
 #' @param layer Character. Select any of "fill", "colour", or "label" to get the
 #' layer containing the colours labels you wish to colour.
+#' @param cols Data.frame. Customize colour palette with a data.frame. Must
+#' contain values, fill, and colour columns.
 #' @export
-gg_vals <- function(layer = "fill", column = layer) {
+gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
   check_opts(layer, c("fill", "colour", "label"))
   check_opts(column, c("fill", "colour"))
   x <- last_plot()
-  cols <- lares_pal()$labels
+  if (!is.null(cols)) {
+    stopifnot(is.data.frame(cols))
+    check_opts(colnames(cols), c("values", "fill", "colour"))
+  } else {
+    cols <- lares_pal()$labels
+  }
   # Get colours present in data
   labs <- unlist(lapply(x$layers, function(y) as_label(y$mapping[[layer]])))
   labs <- c(labs, as_label(x$mapping[[layer]]))

@@ -13,7 +13,7 @@ gg_colour_customs(column = "colour", ...)
 
 gg_text_customs(column = "colour", ...)
 
-gg_vals(layer = "fill", column = layer)
+gg_vals(layer = "fill", column = layer, cols = NULL, ...)
 }
 \arguments{
 \item{column}{Character. Select any of "fill" or "colour" to use on
@@ -23,6 +23,9 @@ your \code{lares_pal()$labels} palette.}
 
 \item{layer}{Character. Select any of "fill", "colour", or "label" to get the
 layer containing the colours labels you wish to colour.}
+
+\item{cols}{Data.frame. Customize colour palette with a data.frame. Must
+contain values, fill, and colour columns.}
 }
 \value{
 Same as \code{scale_fill_manual} or \code{scale_colour_manual}

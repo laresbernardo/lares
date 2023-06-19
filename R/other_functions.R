@@ -995,10 +995,10 @@ markdown2df <- function(text, autoformat = TRUE) {
 }
 
 ####################################################################
-#' Check character values for numeric/logical and change datatype
+#' Check character values for date/numeric/logical and change datatype
 #' 
-#' Automatically check a vector, data.frame or list for numeric or logical
-#' content and change their datatype. Note that factors are skipped in
+#' Automatically check a vector, data.frame or list for numeric, logical,
+#' date content and change their datatype. Note that factors are skipped in
 #' case the user requires character numeric values to be kept as they are.
 #'
 #' @family Tools
@@ -1047,15 +1047,16 @@ chr2logical <- function(data) {
 #' @rdname chr2num
 #' @export
 chr2date <- function(data) {
+  pattern <- "^[0-9-]+$"
   if (is.list(data)) {
     char_elements <- sapply(data, is.character)
     log_elements <- sapply(data, function(element)
-      all(grepl("^[0-9-]+$", element) | is.na(element)))
+      all(grepl(pattern, element) | is.na(element)))
     elements_to_convert <- char_elements & log_elements
     data[elements_to_convert] <- lapply(
       data[elements_to_convert], function(x) as.Date(x, origin = "1970-01-01"))
   } else {
-    if (is.character(data) && all(grepl("^[0-9-]+$", data) | is.na(data))) {
+    if (is.character(data) && all(grepl(pattern, data) | is.na(data))) {
       data <- as.Date(data, origin = "1970-01-01")
     }
   }
