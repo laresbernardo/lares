@@ -99,7 +99,7 @@ gpt_ask <- function(ask,
   # Save historical questions
   if (cache_exists(hist_ask)) {
     cache <- cache_read(hist_ask, quiet = TRUE, ...)
-    cache <- rbind(cache, data.frame(ts = ts, prompt = ask))
+    cache <- bind_rows(cache, data.frame(ts = ts, prompt = ask))
   } else {
     cache <- data.frame(ts = ts, prompt = ask)
   }
@@ -130,7 +130,7 @@ gpt_ask <- function(ask,
   # Save historical answers
   if (cache_exists(hist_ask)) {
     cache <- cache_read(hist_reply, quiet = TRUE, ...)
-    cache <- rbind(cache, data.frame(ts = ts, reply = ret))
+    cache <- bind_rows(cache, data.frame(ts = ts, reply = ret))
   } else {
     cache <- data.frame(ts = ts, prompt = ret)
   }
