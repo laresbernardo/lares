@@ -125,7 +125,7 @@ gpt_ask <- function(ask,
   ret <- content(response)
   if ("error" %in% names(ret)) warning(ret$error$message)
   if ("message" %in% names(ret$choices[[1]]) & !quiet) {
-    cat(stringr::str_trim(ret$choices[[1]]$message$content))
+    cat(paste(stringr::str_trim(ret$choices[[1]]$message$content), "\n"))
   }
   # Save historical answers
   if (cache_exists(hist_ask)) {
@@ -439,7 +439,7 @@ gpt_prompter <- function(instruction = NULL,
   # Check if something's actually being prompted
   are_null <- unlist(lapply(elements, is.null))
   if (all(are_null)) warning("No prompt provided. Set any of the elements: ", v2t(names(elements)))
-  if (!quiet) cat(paste(elements[!are_null], collapse = "\n"))
+  if (!quiet) cat(paste(paste(elements[!are_null], collapse = "\n"), "\n"))
   return(invisible(
     list(
       prompt = v2t(elements[!are_null], quotes = FALSE, sep = " ### "),
