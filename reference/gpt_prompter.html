@@ -166,7 +166,7 @@ explicitly set column names.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Instruction = For each of the inputs, classify using only the options in context</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Input = Molecule; Elephant; Milky Way; Cat; Planet Earth</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Context = Big; Medium; Small</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Output = Markdown format table. If missing elements, replace with NA. For numerical columns, only use a dot for decimals, no delimiters, no abbreviations; also, it must have 2 columns named exactly: Input and Category</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Output = Markdown format table. If missing elements, replace with NA. For numerical columns, only use a dot for decimals, no delimiters, no abbreviations; also, it must have 2 columns named exactly: Input and Category </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Tag all categories that apply</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">gpt_prompter</span><span class="op">(</span></span></span>
@@ -179,7 +179,7 @@ explicitly set column names.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Instruction = For each of the inputs, provide which of the context values apply as correct tags using TRUE/FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Input = I love chocolate; I hate chocolate; I like Coke; Who am I?; T-REX</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Context = food; positive; negative; beverage</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Output = Markdown format table. If missing elements, replace with NA. For numerical columns, only use a dot for decimals, no delimiters, no abbreviations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Output = Markdown format table. If missing elements, replace with NA. For numerical columns, only use a dot for decimals, no delimiters, no abbreviations </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Extract information from strings</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">gpt_prompter</span><span class="op">(</span></span></span>
@@ -192,7 +192,7 @@ explicitly set column names.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Instruction = For each of the inputs, extract each of the information asked in context</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Input = My mail is 123@test.com; 30 Main St, NY, USA; +82 2-312-3456; $1.5M</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Context = email; full state name; country of phone; full non-abbreviated number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Output = Markdown format table. If missing elements, replace with NA. For numerical columns, only use a dot for decimals, no delimiters, no abbreviations; also, it must have 3 columns named exactly: Input, Element_to_extract, and Value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Output = Markdown format table. If missing elements, replace with NA. For numerical columns, only use a dot for decimals, no delimiters, no abbreviations; also, it must have 3 columns named exactly: Input, Element_to_extract, and Value </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Translate to several languages</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">gpt_prompter</span><span class="op">(</span></span></span>
@@ -205,7 +205,7 @@ explicitly set column names.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Instruction = For each of the inputs, translate to the respective languages in context</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Input = I love you with all my heart; I love you with all my heart; I love you with all my heart; I love you with all my heart; I love you with all my heart</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Context = spanish; chinese; japanese; russian; german</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Output = Markdown format table. If missing elements, replace with NA. For numerical columns, only use a dot for decimals, no delimiters, no abbreviations; also, it must have 3 columns named exactly: Input, Language, and Translation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Output = Markdown format table. If missing elements, replace with NA. For numerical columns, only use a dot for decimals, no delimiters, no abbreviations; also, it must have 3 columns named exactly: Input, Language, and Translation </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Format date values</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">gpt_prompter</span><span class="op">(</span></span></span>
@@ -219,7 +219,7 @@ explicitly set column names.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Instruction = For each of the inputs, standardize and format all values to the format in context</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Input = March 27th, 2021; 12-25-2023 3:45PM; 01.01.2000; 29 Feb 92</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Context = ISO Date getting rid of time stamps</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Output = Markdown format table. If missing elements, replace with NA. For numerical columns, only use a dot for decimals, no delimiters, no abbreviations; also, it must have 2 columns named exactly: Input and Formatted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Output = Markdown format table. If missing elements, replace with NA. For numerical columns, only use a dot for decimals, no delimiters, no abbreviations; also, it must have 2 columns named exactly: Input and Formatted </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Convert units</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">gpt_prompter</span><span class="op">(</span></span></span>
@@ -233,7 +233,7 @@ explicitly set column names.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Instruction = For each of the inputs, provide new converted values using the units in context</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Input = 50C; 300K; 100F; 0F; 32C; 0K</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Context = Fahrenheit</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Output = Markdown format table. If missing elements, replace with NA. For numerical columns, only use a dot for decimals, no delimiters, no abbreviations; also, it must have 5 columns named exactly: Input, Original_Unit, Total_Value, Converted_Value, and New_Unit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Output = Markdown format table. If missing elements, replace with NA. For numerical columns, only use a dot for decimals, no delimiters, no abbreviations; also, it must have 5 columns named exactly: Input, Original_Unit, Total_Value, Converted_Value, and New_Unit </span>
 <span class="r-in"><span>  </span></span>
 <span class="r-in"><span><span class="co"># Read a text and answer a question related to it</span></span></span>
 <span class="r-in"><span><span class="fu">gpt_prompter</span><span class="op">(</span>instruction <span class="op">=</span> <span class="st">"read"</span>,</span></span>
