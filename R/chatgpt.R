@@ -130,11 +130,13 @@ gpt_ask <- function(ask,
   # Save historical answers
   if (cache_exists(hist_ask)) {
     cache <- cache_read(hist_reply, quiet = TRUE, ...)
-    cache <- bind_rows(cache, data.frame(ts = ts, reply = ret))
+    if (!is.null(cache))
+      cache <- bind_rows(cache, data.frame(ts = ts, reply = ret))
   } else {
     cache <- data.frame(ts = ts, prompt = ret)
   }
-  cache_write(distinct(cache), hist_reply, quiet = TRUE, ...)
+  if (!is.null(cache))
+    cache_write(distinct(cache), hist_reply, quiet = TRUE, ...)
   return(invisible(ret))
 }
 
