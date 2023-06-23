@@ -34,7 +34,7 @@ cache_write <- function(data,
                         ask = FALSE,
                         quiet = FALSE,
                         ...) {
-  if (is.null(getOption("LARES_CACHE_DIR"))) {
+  if (is.null(cache_dir)) {
     cache_dir <- tempdir()
   }
   base <- paste(base, collapse = ".")
@@ -99,7 +99,7 @@ cache_read <- function(base,
 #' @return \code{cache_exists}. Boolean. Result of \code{base} existence.
 #' @export
 cache_exists <- function(base = NULL, cache_dir = getOption("LARES_CACHE_DIR"), ...) {
-  if (is.null(getOption("LARES_CACHE_DIR"))) {
+  if (is.null(cache_dir)) {
     cache_dir <- tempdir()
   }
   if (!is.null(base)) {
