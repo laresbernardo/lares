@@ -1,6 +1,3 @@
-hist_ask <- "GPT_HIST_ASK"
-hist_reply <- "GPT_HIST_REPLY"
-
 ####################################################################
 #' ChatGPT API Interaction with R
 #'
@@ -97,13 +94,15 @@ gpt_ask <- function(ask,
   ts <- Sys.time()
   if (length(ask) > 1) ask <- paste(ask, collapse = " + ")
   # Save historical questions
-  if (cache_exists(hist_ask)) {
-    cache <- cache_read(hist_ask, quiet = TRUE, ...)
-    cache <- bind_rows(cache, data.frame(ts = ts, prompt = ask))
+  if (cache_exists("GPT_HIST_ASK")) {
+    cache <- cache_read("GPT_HIST_ASK", quiet = TRUE, ...) %>%
+      bind_rows(data.frame(ts = ts, prompt = ask)) %>%
+      as_tibble()
   } else {
-    cache <- data.frame(ts = ts, prompt = ask)
+    cache <- as_tibble(data.frame(ts = ts, prompt = ask))
   }
-  cache_write(distinct(cache), hist_ask, quiet = TRUE, ...)
+  cache_write(distinct(cache), "GPT_HIST_ASK", quiet = TRUE, ...)
+  
   # Ask ChatGPT using their API
   response <- POST(
     url = url,
@@ -127,28 +126,32 @@ gpt_ask <- function(ask,
   if ("message" %in% names(ret$choices[[1]]) & !quiet) {
     cat(paste(stringr::str_trim(ret$choices[[1]]$message$content), "\n"))
   }
+  
   # Save historical answers
-  if (cache_exists(hist_ask)) {
-    cache <- cache_read(hist_reply, quiet = TRUE, ...)
-    if (!is.null(cache))
-      cache <- bind_rows(cache, data.frame(ts = ts, reply = ret))
+  if (cache_exists("GPT_HIST_REPLY")) {
+    cache <- cache_read("GPT_HIST_REPLY", quiet = TRUE, ...) %>%
+      bind_rows(data.frame(ts = ts, reply = ret)) %>%
+      as_tibble()
   } else {
-    cache <- data.frame(ts = ts, prompt = ret)
+    cache <- as_tibble(data.frame(ts = ts, prompt = ret))
   }
-  if (!is.null(cache))
-    cache_write(distinct(cache), hist_reply, quiet = TRUE, ...)
+  cache_write(distinct(cache), "GPT_HIST_REPLY", quiet = TRUE, ...)
   return(invisible(ret))
 }
 
 #' @rdname gpt_ask
 #' @export
 gpt_history <- function(quiet = TRUE, ...) {
-  asks <- cache_read(hist_ask, quiet = quiet, ...)
+  asks <- cache_read("GPT_HIST_ASK", quiet = quiet, ...)
+  replies <- cache_read("GPT_HIST_REPLY", quiet = quiet, ...)
   if (!is.null(asks)) {
-    replies <- cache_read(hist_reply, quiet = quiet, ...)
-    hist <- as_tibble(left_join(asks, replies, by = "ts")) %>%
-      select(.data$ts, .data$prompt, contains("message.content"), everything())
-    return(hist)
+    if (!is.null(replies)) {
+      hist <- as_tibble(left_join(asks, replies, by = "ts")) %>%
+        select(.data$ts, .data$prompt, contains("message.content"), everything())
+      return(hist) 
+    } else {
+      return(asks)
+    }
   } else {
     message("No historical prompts nor replies registered yet")
     return(invisible(NULL))
