@@ -94,13 +94,10 @@ gpt_ask <- function(ask,
   ts <- Sys.time()
   if (length(ask) > 1) ask <- paste(ask, collapse = " + ")
   # Save historical questions
-  if (cache_exists("GPT_HIST_ASK")) {
-    cache <- cache_read("GPT_HIST_ASK", quiet = TRUE, ...) %>%
-      bind_rows(data.frame(ts = ts, prompt = ask)) %>%
-      as_tibble()
-  } else {
-    cache <- as_tibble(data.frame(ts = ts, prompt = ask))
-  }
+  cache <- bind_rows(
+    data.frame(ts = ts, prompt = ask),
+    cache_read("GPT_HIST_ASK", quiet = TRUE, ...)) %>%
+    as_tibble()
   cache_write(distinct(cache), "GPT_HIST_ASK", quiet = TRUE, ...)
   
   # Ask ChatGPT using their API
@@ -128,13 +125,10 @@ gpt_ask <- function(ask,
   }
   
   # Save historical answers
-  if (cache_exists("GPT_HIST_REPLY")) {
-    cache <- cache_read("GPT_HIST_REPLY", quiet = TRUE, ...) %>%
-      bind_rows(data.frame(ts = ts, reply = ret)) %>%
-      as_tibble()
-  } else {
-    cache <- as_tibble(data.frame(ts = ts, prompt = ret))
-  }
+  cache <- bind_rows(
+    data.frame(ts = ts, reply = ret),
+    cache_read("GPT_HIST_REPLY", quiet = TRUE, ...)) %>%
+    as_tibble()
   cache_write(distinct(cache), "GPT_HIST_REPLY", quiet = TRUE, ...)
   return(invisible(ret))
 }
@@ -146,7 +140,7 @@ gpt_history <- function(quiet = TRUE, ...) {
   replies <- cache_read("GPT_HIST_REPLY", quiet = quiet, ...)
   if (!is.null(asks)) {
     if (!is.null(replies)) {
-      hist <- as_tibble(left_join(asks, replies, by = "ts")) %>%
+      hist <- left_join(asks, replies, by = "ts") %>%
         select(.data$ts, .data$prompt, contains("message.content"), everything())
       return(hist) 
     } else {
