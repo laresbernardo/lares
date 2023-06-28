@@ -90,7 +90,11 @@ cache_read <- function(base,
       return(data)
     }
   } else {
-    if (!quiet) message("No cache found for: ", file)
+    if (!quiet) {
+      if (!is.function(file)) {
+        message("No cache found for: ", file) 
+      } else message("No cache file found for ", base)
+    }
     return(invisible(NULL))
   }
 }

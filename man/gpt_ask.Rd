@@ -25,7 +25,7 @@ gpt_ask(
   ...
 )
 
-gpt_history()
+gpt_history(quiet = TRUE, ...)
 
 gpt_table(x, cols = NULL, quiet = TRUE, ...)
 

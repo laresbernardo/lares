@@ -142,15 +142,16 @@ gpt_ask <- function(ask,
 
 #' @rdname gpt_ask
 #' @export
-gpt_history <- function() {
-  asks <- cache_read(hist_ask, quiet = TRUE)
+gpt_history <- function(quiet = TRUE, ...) {
+  asks <- cache_read(hist_ask, quiet = quiet, ...)
   if (!is.null(asks)) {
-    replies <- cache_read(hist_reply, quiet = TRUE)
+    replies <- cache_read(hist_reply, quiet = quiet, ...)
     hist <- as_tibble(left_join(asks, replies, by = "ts")) %>%
       select(.data$ts, .data$prompt, contains("message.content"), everything())
     return(hist)
   } else {
-    warning("No historical prompts nor replies registered yet")
+    message("No historical prompts nor replies registered yet")
+    return(invisible(NULL))
   }
 }
 
