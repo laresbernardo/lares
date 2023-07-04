@@ -188,7 +188,7 @@ environment.</p>
 <p>Let’s begin with a binary (TRUE/FALSE) model to predict if each
 passenger <code>Survived</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">h2o_automl</span>(df, <span class="at">y =</span> Survived, <span class="at">max_models =</span> <span class="dv">1</span>, <span class="at">impute =</span> <span class="cn">FALSE</span>, <span class="at">target =</span> <span class="st">"TRUE"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-04 21:15:00.036052 | Started process...</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-04 21:57:59.374113 | Started process...</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - INDEPENDENT VARIABLE: Survived</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - MODEL TYPE: Classification</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [38;5;246m# A tibble: 2 × 5 [39m</span></span>
@@ -201,7 +201,7 @@ passenger <code>Survived</code>:</p>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &gt;&gt;&gt; Splitting data: train = 0.7 &amp;&amp;  test = 0.3</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; train_size  test_size </span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        623        268</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - REPEATED: There were 59 repeated rows which are being suppressed from the train dataset</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - REPEATED: There were 58 repeated rows which are being suppressed from the train dataset</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - ALGORITHMS: excluded 'StackedEnsemble', 'DeepLearning'</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - CACHE: Previous models are not being erased. You may use 'start_clean' [clear] or 'project_name' [join]</span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - UI: You may check results using H2O Flow's interactive platform: http://localhost:54321/flow/index.html</span></span>
@@ -213,11 +213,11 @@ passenger <code>Survived</code>:</p>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="er">|======================================================================|</span> <span class="dv">100</span>%</span>
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - EUREKA: Succesfully generated 1 models</span></span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                             model_id       auc   logloss     aucpr</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 XGBoost_1_AutoML_1_20230704_211501 0.8518268 0.4398714 0.8305116</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 XGBoost_1_AutoML_1_20230704_215800 0.8515699 0.4446473 0.8050472</span></span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   mean_per_class_error      rmse       mse</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1             0.205871 0.3706533 0.1373838</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SELECTED MODEL: XGBoost_1_AutoML_1_20230704_211501</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - </span><span class="al">NOTE</span><span class="co">: The following variables were the least important: SibSp, Parch, Embarked.C</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1            0.2143893 0.3754694 0.1409773</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SELECTED MODEL: XGBoost_1_AutoML_1_20230704_215800</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - </span><span class="al">NOTE</span><span class="co">: The following variables were the least important: Embarked.S, SibSp, Embarked.C, Parch</span></span>
 <span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &gt;&gt;&gt; Running predictions for Survived...</span></span>
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="sc">|</span>                                                                            </span>
@@ -233,7 +233,7 @@ passenger <code>Survived</code>:</p>
 <span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in .font_global(font, quiet = FALSE): Font 'Arial Narrow' is not</span></span>
 <span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; installed, has other name, or can't be found</span></span>
 <span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &gt;&gt;&gt; Generating plots...</span></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Model (1/1): XGBoost_1_AutoML_1_20230704_211501</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Model (1/1): XGBoost_1_AutoML_1_20230704_215800</span></span>
 <span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Independent Variable: Survived</span></span>
 <span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Type: Classification (2 classes)</span></span>
 <span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algorithm: XGBOOST</span></span>
@@ -241,21 +241,21 @@ passenger <code>Survived</code>:</p>
 <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Seed: 0</span></span>
 <span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Test metrics:</span></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    AUC = 0.82621</span></span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    ACC = 0.23881</span></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    PRC = 0.24868</span></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TPR = 0.43119</span></span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TNR = 0.10692</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    AUC = 0.83414</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    ACC = 0.23134</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    PRC = 0.22159</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TPR = 0.36111</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    TNR = 0.14375</span></span>
 <span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Most important variables:</span></span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Sex.female (46.6%)</span></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Fare (13.6%)</span></span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Sex.male (10.1%)</span></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Age (10.0%)</span></span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Pclass.3 (8.4%)</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Sex.female (34.9%)</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Fare (16.3%)</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Age (14.7%)</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Pclass.3 (12.8%)</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Sex.male (11.7%)</span></span>
 <span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in value[[3L]](cond): beep() could not play the sound due to the following error:</span></span>
 <span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in play.default(x, rate, ...): no audio drivers are available</span></span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Process duration: 7.08s</span></span></code></pre></div>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Process duration: 6.7s</span></span></code></pre></div>
 <p>Let’s take a look at the plots generated into a single dashboard:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></code></pre></div>
@@ -280,73 +280,73 @@ metric, and others:</p>
 <span><span class="co">#&gt; $confusion_matrix</span></span>
 <span><span class="co">#&gt;        Pred</span></span>
 <span><span class="co">#&gt; Real    FALSE TRUE</span></span>
-<span><span class="co">#&gt;   FALSE    17  142</span></span>
-<span><span class="co">#&gt;   TRUE     62   47</span></span>
+<span><span class="co">#&gt;   FALSE    23  137</span></span>
+<span><span class="co">#&gt;   TRUE     69   39</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $gain_lift</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 10</span></span></span>
 <span><span class="co">#&gt;    percentile value random target total  gain optimal   lift response score</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1          TRUE    11.9     31    32  28.4    29.4 138.      28.4  85.0 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2          TRUE    20.1     18    22  45.0    49.5 123.      16.5  71.3 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 3          TRUE    30.6     13    28  56.9    75.2  85.9     11.9  48.7 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 4          TRUE    39.9     12    25  67.9    98.2  70.0     11.0  39.0 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 5          TRUE    50       15    27  81.7   100    63.3     13.8  24.5 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 6          TRUE    60.1      7    27  88.1   100    46.6      6.42 16.3 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 7          TRUE    69.8      2    26  89.9   100    28.9      1.83 13.8 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 8          TRUE    80.2      2    28  91.7   100    14.4      1.83  9.18</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 9          TRUE    89.9      6    26  97.2   100     8.14     5.50  6.40</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 10         TRUE   100        3    27 100     100     0        2.75  3.10</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1          TRUE    10.4     27    28  25      25.9 139.      25    89.4 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2          TRUE    21.6     27    30  50      53.7 131.      25    72.7 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 3          TRUE    30.2     12    23  61.1    75   102.      11.1  63.6 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 4          TRUE    39.9      8    26  68.5    99.1  71.6      7.41 46.4 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 5          TRUE    50       13    27  80.6   100    61.1     12.0  28.7 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 6          TRUE    60.1      6    27  86.1   100    43.3      5.56 17.8 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 7          TRUE    70.1      5    27  90.7   100    29.4      4.63 13.5 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 8          TRUE    79.9      2    26  92.6   100    16.0      1.85  9.72</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 9          TRUE    89.9      2    27  94.4   100     5.03     1.85  7.03</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 10         TRUE   100        6    27 100     100     0        5.56  2.23</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $metrics</span></span>
 <span><span class="co">#&gt;       AUC     ACC     PRC     TPR     TNR</span></span>
-<span><span class="co">#&gt; 1 0.82621 0.23881 0.24868 0.43119 0.10692</span></span>
+<span><span class="co">#&gt; 1 0.83414 0.23134 0.22159 0.36111 0.14375</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $cv_metrics</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 8</span></span></span>
 <span><span class="co">#&gt;    metric     mean     sd cv_1_valid cv_2_valid cv_3_valid cv_4_valid cv_5_valid</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> accuracy  0.835 0.065<span style="text-decoration: underline;">6</span>      0.92       0.856      0.808      0.742      0.847</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> auc       0.868 0.062<span style="text-decoration: underline;">4</span>      0.927      0.899      0.849      0.768      0.897</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> err       0.165 0.065<span style="text-decoration: underline;">6</span>      0.08       0.144      0.192      0.258      0.153</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> err_cou… 20.6   8.11       10         18         24         32         19    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> f0point5  0.789 0.079<span style="text-decoration: underline;">3</span>      0.891      0.827      0.745      0.683      0.798</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> f1        0.782 0.064<span style="text-decoration: underline;">6</span>      0.861      0.827      0.745      0.698      0.782</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> f2        0.777 0.051<span style="text-decoration: underline;">9</span>      0.833      0.827      0.745      0.714      0.766</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> lift_to…  2.71  0.358       3.29       2.40       2.66       2.43       2.76 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> logloss   0.440 0.118       0.337      0.397      0.455      0.638      0.373</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> max_per…  0.226 0.045<span style="text-decoration: underline;">0</span>      0.184      0.173      0.255      0.275      0.244</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> mcc       0.648 0.125       0.808      0.704      0.591      0.474      0.665</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> mean_pe…  0.821 0.057<span style="text-decoration: underline;">3</span>      0.891      0.852      0.795      0.739      0.827</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> mean_pe…  0.179 0.057<span style="text-decoration: underline;">3</span>      0.109      0.148      0.205      0.261      0.173</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> mse       0.137 0.041<span style="text-decoration: underline;">2</span>      0.102      0.120      0.144      0.206      0.116</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> pr_auc    0.843 0.067<span style="text-decoration: underline;">9</span>      0.890      0.900      0.812      0.738      0.876</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> precisi…  0.793 0.089<span style="text-decoration: underline;">9</span>      0.912      0.827      0.745      0.673      0.810</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> r2        0.412 0.156       0.518      0.508      0.386      0.149      0.500</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> recall    0.774 0.045<span style="text-decoration: underline;">0</span>      0.816      0.827      0.745      0.725      0.756</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> rmse      0.368 0.052<span style="text-decoration: underline;">8</span>      0.319      0.346      0.380      0.454      0.340</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> specifi…  0.868 0.077<span style="text-decoration: underline;">7</span>      0.966      0.877      0.846      0.753      0.899</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> accuracy  0.815 0.029<span style="text-decoration: underline;">1</span>      0.776      0.8        0.84       0.815      0.847</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> auc       0.860 0.047<span style="text-decoration: underline;">4</span>      0.800      0.860      0.890      0.829      0.920</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> err       0.185 0.029<span style="text-decoration: underline;">1</span>      0.224      0.2        0.16       0.185      0.153</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> err_cou… 23     3.67       28         25         20         23         19    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> f0point5  0.757 0.041<span style="text-decoration: underline;">8</span>      0.722      0.736      0.749      0.829      0.749</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> f1        0.757 0.021<span style="text-decoration: underline;">7</span>      0.745      0.757      0.787      0.729      0.765</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> f2        0.763 0.066<span style="text-decoration: underline;">4</span>      0.771      0.78       0.830      0.651      0.783</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> lift_to…  2.44  0.728       2.40       1.28       2.91       2.43       3.18 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> logloss   0.445 0.075<span style="text-decoration: underline;">5</span>      0.536      0.459      0.378      0.492      0.358</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> max_per…  0.241 0.087<span style="text-decoration: underline;">3</span>      0.233      0.204      0.171      0.392      0.205</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> mcc       0.617 0.047<span style="text-decoration: underline;">9</span>      0.549      0.590      0.667      0.625      0.653</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> mean_pe…  0.808 0.029<span style="text-decoration: underline;">9</span>      0.778      0.799      0.845      0.783      0.833</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> mean_pe…  0.192 0.029<span style="text-decoration: underline;">9</span>      0.222      0.201      0.155      0.217      0.167</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> mse       0.141 0.026<span style="text-decoration: underline;">9</span>      0.174      0.148      0.116      0.156      0.111</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> pr_auc    0.818 0.049<span style="text-decoration: underline;">9</span>      0.759      0.770      0.865      0.837      0.859</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> precisi…  0.761 0.085<span style="text-decoration: underline;">1</span>      0.707      0.722      0.725      0.912      0.738</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> r2        0.398 0.087<span style="text-decoration: underline;">6</span>      0.283      0.381      0.486      0.355      0.485</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> recall    0.770 0.095<span style="text-decoration: underline;">0</span>      0.788      0.796      0.860      0.608      0.795</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> rmse      0.374 0.036<span style="text-decoration: underline;">1</span>      0.417      0.384      0.341      0.395      0.333</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> specifi…  0.846 0.073<span style="text-decoration: underline;">7</span>      0.767      0.803      0.829      0.959      0.871</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $max_metrics</span></span>
 <span><span class="co">#&gt;                         metric  threshold       value idx</span></span>
-<span><span class="co">#&gt; 1                       max f1 0.55312699   0.7414634 141</span></span>
-<span><span class="co">#&gt; 2                       max f2 0.11947084   0.7951183 308</span></span>
-<span><span class="co">#&gt; 3                 max f0point5 0.66513884   0.8209806 126</span></span>
-<span><span class="co">#&gt; 4                 max accuracy 0.66513884   0.8298555 126</span></span>
-<span><span class="co">#&gt; 5                max precision 0.97951275   1.0000000   0</span></span>
-<span><span class="co">#&gt; 6                   max recall 0.02319330   1.0000000 398</span></span>
-<span><span class="co">#&gt; 7              max specificity 0.97951275   1.0000000   0</span></span>
-<span><span class="co">#&gt; 8             max absolute_mcc 0.66513884   0.6349185 126</span></span>
-<span><span class="co">#&gt; 9   max min_per_class_accuracy 0.32593590   0.7682403 209</span></span>
-<span><span class="co">#&gt; 10 max mean_per_class_accuracy 0.55312699   0.7941290 141</span></span>
-<span><span class="co">#&gt; 11                     max tns 0.97951275 390.0000000   0</span></span>
-<span><span class="co">#&gt; 12                     max fns 0.97951275 230.0000000   0</span></span>
-<span><span class="co">#&gt; 13                     max fps 0.02125436 390.0000000 399</span></span>
-<span><span class="co">#&gt; 14                     max tps 0.02319330 233.0000000 398</span></span>
-<span><span class="co">#&gt; 15                     max tnr 0.97951275   1.0000000   0</span></span>
-<span><span class="co">#&gt; 16                     max fnr 0.97951275   0.9871245   0</span></span>
-<span><span class="co">#&gt; 17                     max fpr 0.02125436   1.0000000 399</span></span>
-<span><span class="co">#&gt; 18                     max tpr 0.02319330   1.0000000 398</span></span></code></pre></div>
+<span><span class="co">#&gt; 1                       max f1 0.31891531   0.7337278 209</span></span>
+<span><span class="co">#&gt; 2                       max f2 0.16162126   0.7904690 284</span></span>
+<span><span class="co">#&gt; 3                 max f0point5 0.70308989   0.7898172  97</span></span>
+<span><span class="co">#&gt; 4                 max accuracy 0.61255527   0.8089888 126</span></span>
+<span><span class="co">#&gt; 5                max precision 0.92995894   0.9696970  22</span></span>
+<span><span class="co">#&gt; 6                   max recall 0.04150775   1.0000000 388</span></span>
+<span><span class="co">#&gt; 7              max specificity 0.96377802   0.9974293   0</span></span>
+<span><span class="co">#&gt; 8             max absolute_mcc 0.61255527   0.5850733 126</span></span>
+<span><span class="co">#&gt; 9   max min_per_class_accuracy 0.33950067   0.7840617 205</span></span>
+<span><span class="co">#&gt; 10 max mean_per_class_accuracy 0.31891531   0.7856107 209</span></span>
+<span><span class="co">#&gt; 11                     max tns 0.96377802 388.0000000   0</span></span>
+<span><span class="co">#&gt; 12                     max fns 0.96377802 234.0000000   0</span></span>
+<span><span class="co">#&gt; 13                     max fps 0.02942949 389.0000000 399</span></span>
+<span><span class="co">#&gt; 14                     max tps 0.04150775 234.0000000 388</span></span>
+<span><span class="co">#&gt; 15                     max tnr 0.96377802   0.9974293   0</span></span>
+<span><span class="co">#&gt; 16                     max fnr 0.96377802   1.0000000   0</span></span>
+<span><span class="co">#&gt; 17                     max fpr 0.02942949   1.0000000 399</span></span>
+<span><span class="co">#&gt; 18                     max tpr 0.04150775   1.0000000 388</span></span></code></pre></div>
 <p>The same goes for the plots generated for these metrics. We have the
 gains and response plots on test data-set, confusion matrix, and ROC
 curves.</p>
@@ -368,12 +368,12 @@ regression), you can check the importance of each variable as well:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">importance</span><span class="op">)</span></span>
 <span><span class="co">#&gt;     variable relative_importance scaled_importance importance</span></span>
-<span><span class="co">#&gt; 1 Sex.female           245.17189         1.0000000 0.46591507</span></span>
-<span><span class="co">#&gt; 2       Fare            71.64938         0.2922414 0.13615969</span></span>
-<span><span class="co">#&gt; 3   Sex.male            53.32042         0.2174818 0.10132804</span></span>
-<span><span class="co">#&gt; 4        Age            52.63963         0.2147050 0.10003429</span></span>
-<span><span class="co">#&gt; 5   Pclass.3            44.09004         0.1798332 0.08378698</span></span>
-<span><span class="co">#&gt; 6   Pclass.1            31.32179         0.1277544 0.05952270</span></span>
+<span><span class="co">#&gt; 1 Sex.female           188.46849         1.0000000 0.34942282</span></span>
+<span><span class="co">#&gt; 2       Fare            87.73950         0.4655394 0.16267008</span></span>
+<span><span class="co">#&gt; 3        Age            79.51173         0.4218834 0.14741569</span></span>
+<span><span class="co">#&gt; 4   Pclass.3            69.05974         0.3664259 0.12803758</span></span>
+<span><span class="co">#&gt; 5   Sex.male            63.14428         0.3350389 0.11707024</span></span>
+<span><span class="co">#&gt; 6   Pclass.1            20.66430         0.1096432 0.03831185</span></span>
 <span></span>
 <span><span class="va">r</span><span class="op">$</span><span class="va">plots</span><span class="op">$</span><span class="va">importance</span></span></code></pre></div>
 <p><img src="h2o_automl_files/figure-html/class_2_importance-1.png" width="497"></p>
@@ -384,7 +384,7 @@ regression), you can check the importance of each variable as well:</p>
 <p>Now, let’s run a multi-categorical (+2 labels) model to predict
 <code>Pclass</code> of each passenger:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">h2o_automl</span>(df, Pclass, <span class="at">ignore =</span> <span class="fu">c</span>(<span class="st">"Fare"</span>, <span class="st">"Cabin"</span>), <span class="at">max_time =</span> <span class="dv">30</span>, <span class="at">plots =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-04 21:15:10.564196 | Started process...</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2023-07-04 21:58:09.306137 | Started process...</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - INDEPENDENT VARIABLE: Pclass</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - MODEL TYPE: Classification</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [38;5;246m# A tibble: 3 × 5 [39m</span></span>
@@ -405,14 +405,14 @@ regression), you can check the importance of each variable as well:</p>
 <span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &gt;&gt;&gt; Iterating until 3 models or 30 seconds...</span></span>
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - EUREKA: Succesfully generated 3 models</span></span>
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                             model_id mean_per_class_error   logloss      rmse</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     GLM_1_AutoML_2_20230704_211511            0.4742325 0.8170807 0.5409388</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 XGBoost_1_AutoML_2_20230704_211511            0.4990997 0.8229646 0.5387748</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     GBM_1_AutoML_2_20230704_211511            0.5046914 0.8579317 0.5592290</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     GLM_1_AutoML_2_20230704_215809            0.4742325 0.8170807 0.5409388</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 XGBoost_1_AutoML_2_20230704_215809            0.4990997 0.8229646 0.5387748</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     GBM_1_AutoML_2_20230704_215809            0.5046914 0.8579317 0.5592290</span></span>
 <span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         mse</span></span>
 <span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 0.2926147</span></span>
 <span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 0.2902783</span></span>
 <span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 0.3127371</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SELECTED MODEL: GLM_1_AutoML_2_20230704_211511</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SELECTED MODEL: GLM_1_AutoML_2_20230704_215809</span></span>
 <span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; - </span><span class="al">NOTE</span><span class="co">: The following variables were the least important: Sex.male, Sex.female, Parch</span></span>
 <span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &gt;&gt;&gt; Running predictions for Pclass...</span></span>
 <span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
@@ -425,7 +425,7 @@ regression), you can check the importance of each variable as well:</p>
 <span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>  <span class="er">|</span>                                                                      <span class="er">|</span>   <span class="dv">0</span>%</span>
 <span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>  <span class="sc">|</span>                                                                            </span>
 <span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>  <span class="er">|======================================================================|</span> <span class="dv">100</span>%</span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Model (1/3): GLM_1_AutoML_2_20230704_211511</span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Model (1/3): GLM_1_AutoML_2_20230704_215809</span></span>
 <span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Independent Variable: Pclass</span></span>
 <span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Type: Classification (3 classes)</span></span>
 <span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algorithm: GLM</span></span>
@@ -444,7 +444,7 @@ regression), you can check the importance of each variable as well:</p>
 <span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Survived.FALSE (10.6%)</span></span>
 <span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in value[[3L]](cond): beep() could not play the sound due to the following error:</span></span>
 <span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in play.default(x, rate, ...): no audio drivers are available</span></span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Process duration: 9.66s</span></span></code></pre></div>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Process duration: 10.2s</span></span></code></pre></div>
 <p>Let’s take a look at the plots generated into a single dashboard:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></code></pre></div>
@@ -458,7 +458,7 @@ regression), you can check the importance of each variable as well:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/h2o_automl.html">h2o_automl</a></span><span class="op">(</span><span class="va">df</span>, y <span class="op">=</span> <span class="st">"Fare"</span>, ignore <span class="op">=</span> <span class="st">"Pclass"</span>, exclude_algos <span class="op">=</span> <span class="cn">NULL</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Model (1/4): StackedEnsemble_BestOfFamily_1_AutoML_3_20230704_211521</span></span>
+<span><span class="co">#&gt; Model (1/4): StackedEnsemble_BestOfFamily_1_AutoML_3_20230704_215821</span></span>
 <span><span class="co">#&gt; Independent Variable: Fare</span></span>
 <span><span class="co">#&gt; Type: Regression</span></span>
 <span><span class="co">#&gt; Algorithm: STACKEDENSEMBLE</span></span>

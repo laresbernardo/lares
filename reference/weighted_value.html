@@ -66,6 +66,7 @@
 <span>  technique <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  n_stocks <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  buy_only <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  type <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -87,11 +88,16 @@ Positive for 'Buy' and negative for 'Sale'.</p></dd>
 
 <dt>n_stocks</dt>
 <dd><p>Integer. Specify the number of stocks to consider. By
-default will sum postive values of <code>n</code>.</p></dd>
+default will sum positive values of <code>n</code>.</p></dd>
 
 
 <dt>buy_only</dt>
 <dd><p>Boolean. Consider only buy (positive) values?</p></dd>
+
+
+<dt>type</dt>
+<dd><p>Integer. 1 for returning the value, 2 for returning the
+data.frame with the details ("df" attribute)</p></dd>
 
 
 <dt>...</dt>
