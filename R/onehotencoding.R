@@ -417,6 +417,7 @@ date_feats <- function(dates,
 #' holiday dates?
 #' @param countries Character or vector. For which country(ies) should the
 #' holidays be imported?
+#' @param ... Additional parameters
 #' @return data.frame with holidays data for given \code{countries} and \code{years}.
 #' @examples
 #' \donttest{
@@ -424,7 +425,7 @@ date_feats <- function(dates,
 #' holidays(countries = c("Argentina", "Venezuela"), years = c(2019, 2020))
 #' }
 #' @export
-holidays <- function(countries = "Venezuela", years = year(Sys.Date())) {
+holidays <- function(countries = "Venezuela", years = year(Sys.Date()), ...) {
   # Further improvement: let the user bring more than +-5 years
 
   results <- NULL
@@ -449,9 +450,9 @@ holidays <- function(countries = "Venezuela", years = year(Sys.Date())) {
     holidays <- holidays[-1, ]
     first <- suppressWarnings(as.numeric(as.character(substr(holidays$Date, 1, 1))))
     if (!is.na(first[1])) {
-      holidays$Date <- as.Date(holidays$Date, format = "%d %b %Y")
+      holidays$Date <- lubridate::dmy(holidays$Date, ...)
     } else {
-      holidays$Date <- as.Date(holidays$Date, format = "%b %d %Y")
+      holidays$Date <- lubridate::dmy(holidays$Date, ...)
     }
     result <- data.frame(
       holiday = holidays$Date,
