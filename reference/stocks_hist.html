@@ -63,7 +63,7 @@ This function lets the user download stocks historical data."><meta property="og
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">stocks_quote</span><span class="op">(</span><span class="va">symbols</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">stocks_quote</span><span class="op">(</span><span class="va">symbols</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">stocks_hist</span><span class="op">(</span></span>
 <span>  symbols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VTI"</span>, <span class="st">"TSLA"</span><span class="op">)</span>,</span>
@@ -84,7 +84,11 @@ This function lets the user download stocks historical data."><meta property="og
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>symbols</dt>
-<dd><p>Character Vector. List of symbols to download historical data</p></dd>
+<dd><p>Character Vector. List of symbols to download historical data.</p></dd>
+
+
+<dt>...</dt>
+<dd><p>Additional parameters</p></dd>
 
 
 <dt>from, to</dt>
@@ -112,10 +116,6 @@ case, taxes changed from A to B in given date (hard-coded)</p></dd>
 
 <dt>quiet</dt>
 <dd><p>Boolean. Keep quiet? If not, informative messages will be printed.</p></dd>
-
-
-<dt>...</dt>
-<dd><p>Additional parameters</p></dd>
 
 
 <dt>x</dt>
@@ -164,9 +164,13 @@ Daily Change, Market, and Symbol Name.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># Multiple quotes at the same time</span></span></span>
 <span class="r-in"><span><span class="fu">stocks_quote</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VTI"</span>, <span class="st">"VOO"</span>, <span class="st">"TSLA"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>cannot open URL 'https://query1.finance.yahoo.com/v7/finance/quote?fields=symbol,longName,regularMarketPrice,regularMarketChange,regularMarketTime&amp;formatted=false&amp;symbols=VTI': HTTP status was '401 Unauthorized'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in open.connection(con, "rb") : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   cannot open the connection to 'https://query1.finance.yahoo.com/v7/finance/quote?fields=symbol,longName,regularMarketPrice,regularMarketChange,regularMarketTime&amp;formatted=false&amp;symbols=VTI'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Symbol QuoteTime           Value DailyChange DailyChangeP  Open  High   Low</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> VTI    2023-07-03 <span style="color: #949494;">13:00:00</span>  221.       0.660        0.300  220.  221.  220.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> VOO    2023-07-03 <span style="color: #949494;">13:00:00</span>  408.       0.780        0.192  407.  408.  407.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> TSLA   2023-07-03 <span style="color: #949494;">13:00:05</span>  280.      18.1          6.90   276.  284.  275.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: Volume &lt;int&gt;</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># CRAN</span></span></span>
