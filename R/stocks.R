@@ -103,7 +103,8 @@ stocks_file <- function(file = NA,
 #'
 #' @family Investment
 #' @family Scrapper
-#' @param symbols Character Vector. List of symbols to download historical data
+#' @param symbols Character Vector. List of symbols to download historical data.
+#' @param ... Additional parameters.
 #' @return data.frame with Symbol, Type of stock, Quote time, current value,
 #' Daily Change, Market, and Symbol Name.
 #' @examples
@@ -113,26 +114,15 @@ stocks_file <- function(file = NA,
 #' }
 #' @export
 #' @rdname stocks_hist
-stocks_quote <- function(symbols) {
+stocks_quote <- function(symbols, ...) {
   ret <- noret <- NULL
-  qRoot <- paste0(
-    "https://query1.finance.yahoo.com/v7/finance/quote?fields=symbol,",
-    "longName,regularMarketPrice,regularMarketChange,regularMarketTime&formatted=false&symbols="
-  )
+  try_require("quantmod")
   for (i in seq_along(symbols)) {
-    z <- try(fromJSON(paste(qRoot, paste(symbols[i], collapse = ","), sep = "")))
+    z <- try(data.frame(getQuote(symbols[i], ...)))
     if ("try-error" %in% class(z)) return(invisible(ret))
-    if (length(z$quoteResponse$result) > 0) {
-      cols <- c(
-        "symbol", "quoteType", "regularMarketTime",
-        "regularMarketPrice", "regularMarketChange",
-        "market", "longName"
-      )
-      if (!"longName" %in% colnames(z$quoteResponse$result)) {
-        z$quoteResponse$result$longName <- z$quoteResponse$result$symbol
-      }
-      z <- select(z$quoteResponse$result, one_of(cols))
-      ret <- rbind(ret, z)
+    if (length(z) > 0) {
+      z <- data.frame(Symbol = symbols[i], z)
+      ret <- bind_rows(ret, z)
     } else {
       noret <- rbind(noret, symbols[i])
     }
@@ -141,9 +131,12 @@ stocks_quote <- function(symbols) {
     message(paste("No results for", vector2text(noret)))
   }
   if (length(ret) > 0) {
-    colnames(ret) <- c("Symbol", "Type", "QuoteTime", "Value", "DailyChange", "Market", "SymbolName")
-    ret <- data.frame(ret) %>%
-      mutate(QuoteTime = as.POSIXct(.data$QuoteTime, origin = "1970-01-01 00:00:00"))
+    colnames(ret) <- c(
+      "Symbol", "QuoteTime", "Value", "DailyChange",
+      "DailyChangeP", "Open", "High", "Low", "Volume")
+    ret <- as_tibble(ret) %>%
+      mutate(QuoteTime = as.POSIXct(
+        .data$QuoteTime, origin = "1970-01-01 00:00:00"))
     row.names(ret) <- NULL
     return(ret)
   }
@@ -166,7 +159,7 @@ stocks_quote <- function(symbols) {
 #' @examples
 #' \dontrun{
 #' # CRAN
-#' df <- stocks_hist(symbols = c("VTI", "FB", "FIW"), from = Sys.Date() - 180)
+#' df <- stocks_hist(symbols = c("VTI", "META", "FIW"), from = Sys.Date() - 180)
 #' print(head(df))
 #' plot(df)
 #' }
@@ -216,7 +209,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
 
       # Add right now's data
       if (today && to == Sys.Date()) {
-        now <- stocks_quote(symbol)
+        now <- stocks_quote(symbol, ...)
         # Append to historical data / replace most recent
         if (length(now) > 0) {
           now <- data.frame(
@@ -238,7 +231,7 @@ stocks_hist <- function(symbols = c("VTI", "TSLA"),
         as.character(symbol),
         from = start_date, split.adjust = FALSE
       ))
-      if (nrow(d) > 0) {
+      if (isTRUE(nrow(d) > 0)) {
         div <- data.frame(
           Symbol = rep(symbol, nrow(d)),
           Date = ymd(row.names(data.frame(d))),

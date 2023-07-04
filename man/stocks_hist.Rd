@@ -6,7 +6,7 @@
 \alias{plot.stocks_hist}
 \title{Download Stocks Historical and Current Values}
 \usage{
-stocks_quote(symbols)
+stocks_quote(symbols, ...)
 
 stocks_hist(
   symbols = c("VTI", "TSLA"),
@@ -23,7 +23,9 @@ stocks_hist(
 \method{plot}{stocks_hist}(x, type = 1, ...)
 }
 \arguments{
-\item{symbols}{Character Vector. List of symbols to download historical data}
+\item{symbols}{Character Vector. List of symbols to download historical data.}
+
+\item{...}{Additional parameters}
 
 \item{from, to}{Date. Dates for range. If not set, 1 year will be downloaded.
 Do use more than 4 days or will be over-written.}
@@ -39,8 +41,6 @@ case, taxes changed from A to B in given date (hard-coded)}
 \item{cache}{Boolean. Use daily cache if available?}
 
 \item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed.}
-
-\item{...}{Additional parameters}
 
 \item{x}{stocks_hist object}
 
