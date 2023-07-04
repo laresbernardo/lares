@@ -10,6 +10,7 @@ weighted_value(
   technique = NULL,
   n_stocks = NULL,
   buy_only = TRUE,
+  type = 1,
   ...
 )
 }
@@ -22,9 +23,12 @@ Positive for 'Buy' and negative for 'Sale'.}
 \item{technique}{Character. Pick any of FIFO or LIFO, or NULL to skip.}
 
 \item{n_stocks}{Integer. Specify the number of stocks to consider. By
-default will sum postive values of \code{n}.}
+default will sum positive values of \code{n}.}
 
 \item{buy_only}{Boolean. Consider only buy (positive) values?}
+
+\item{type}{Integer. 1 for returning the value, 2 for returning the
+data.frame with the details ("df" attribute)}
 
 \item{...}{Additional parameters}
 }

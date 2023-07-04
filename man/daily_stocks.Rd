@@ -4,7 +4,7 @@
 \alias{daily_stocks}
 \title{Daily Stocks Dataframe}
 \usage{
-daily_stocks(hist, trans, tickers = NA, window = "MAX")
+daily_stocks(hist, trans, tickers = NA, window = "MAX", ...)
 }
 \arguments{
 \item{hist}{Dataframe. Result from \code{stocks_hist()}}
@@ -14,6 +14,8 @@ daily_stocks(hist, trans, tickers = NA, window = "MAX")
 \item{tickers}{Dataframe. Result from \code{stocks_file()$portfolio}}
 
 \item{window}{Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"}
+
+\item{...}{Additional parameters}
 }
 \value{
 data.frame. Processed at date and symbol level.

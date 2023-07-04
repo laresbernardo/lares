@@ -9,7 +9,7 @@
 stocks_quote(symbols, ...)
 
 stocks_hist(
-  symbols = c("VTI", "TSLA"),
+  symbols = c("VTI", "META"),
   from = Sys.Date() - 365,
   to = Sys.Date(),
   today = TRUE,
@@ -61,8 +61,7 @@ This function lets the user download stocks historical data.
 stocks_quote(c("VTI", "VOO", "TSLA"))
 }
 \dontrun{
-# CRAN
-df <- stocks_hist(symbols = c("VTI", "FB", "FIW"), from = Sys.Date() - 180)
+df <- stocks_hist(symbols = c("VTI", "META", "FIW"), from = Sys.Date() - 180)
 print(head(df))
 plot(df)
 }

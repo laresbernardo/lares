@@ -158,14 +158,13 @@ stocks_quote <- function(symbols, ...) {
 #' @param ... Additional parameters
 #' @examples
 #' \dontrun{
-#' # CRAN
 #' df <- stocks_hist(symbols = c("VTI", "META", "FIW"), from = Sys.Date() - 180)
 #' print(head(df))
 #' plot(df)
 #' }
 #' @rdname stocks_hist
 #' @export
-stocks_hist <- function(symbols = c("VTI", "TSLA"),
+stocks_hist <- function(symbols = c("VTI", "META"),
                         from = Sys.Date() - 365,
                         to = Sys.Date(),
                         today = TRUE,
@@ -327,9 +326,10 @@ plot.stocks_hist <- function(x, type = 1, ...) {
 #' @param trans Dataframe. Result from \code{stocks_file()$transactions}
 #' @param tickers Dataframe. Result from \code{stocks_file()$portfolio}
 #' @param window Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"
+#' @param ... Additional parameters
 #' @return data.frame. Processed at date and symbol level.
 #' @export
-daily_stocks <- function(hist, trans, tickers = NA, window = "MAX") {
+daily_stocks <- function(hist, trans, tickers = NA, window = "MAX", ...) {
   check_attr(hist, check = "stocks_hist")
   check_attr(trans, check = "stocks_file_transactions")
   if (!is.na(tickers)[1]) {
@@ -394,7 +394,9 @@ daily_stocks <- function(hist, trans, tickers = NA, window = "MAX") {
     mutate(Symbol = factor(.data$Symbol, levels = levs)) %>%
     .filter_window(window) %>%
     group_by(.data$Date) %>%
-    mutate(wt = signif(100 * .data$CumInvested / sum(.data$CumInvested), 4)) %>%
+    mutate(wt_value = weighted_value(.data$Value, n = .data$Quant),
+           wt_total = .data$wt_value * .data$Quant,
+           wt = signif(100 * .data$wt_total / sum(.data$wt_total), 4)) %>%
     ungroup()
 
   attr(daily, "type") <- "daily_stocks"
@@ -419,7 +421,8 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
   check_attr(trans, check = "stocks_file_transactions")
   check_attr(cash, check = "stocks_file_cash")
 
-  temp <- expand.grid(Date = unique(hist$Date), Symbol = unique(hist$Symbol)) %>%
+  temp <- expand.grid(Date = unique(hist$Date),
+                      Symbol = unique(hist$Symbol)) %>%
     left_join(daily_stocks(hist, trans), c("Date", "Symbol")) %>%
     mutate(Date = as.Date(.data$Date)) %>%
     arrange(desc(.data$Date), .data$Symbol) %>%
@@ -489,8 +492,10 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
 #' Positive for 'Buy' and negative for 'Sale'.
 #' @param technique Character. Pick any of FIFO or LIFO, or NULL to skip.
 #' @param n_stocks Integer. Specify the number of stocks to consider. By
-#' default will sum postive values of \code{n}.
+#' default will sum positive values of \code{n}.
 #' @param buy_only Boolean. Consider only buy (positive) values?
+#' @param type Integer. 1 for returning the value, 2 for returning the
+#' data.frame with the details ("df" attribute)
 #' @param ... Additional parameters
 #' @return The calculated weighted mean value.
 #' @examples
@@ -506,36 +511,39 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
 #' @export
 weighted_value <- function(value,
                            n = rep(1, length(value)),
-                           technique = NULL, 
+                           technique = NULL,
                            n_stocks = NULL,
                            buy_only = TRUE,
+                           type = 1,
                            ...) {
   check_opts(technique, c("FIFO", "LIFO"))
   stopifnot(length(value) == length(n))
   df <- data.frame(value = value, n = n, total = n)
   if (buy_only) df <- df[df$n > 0, ]
   if (is.null(n_stocks)) n_stocks <- sum(n, na.rm = TRUE)
-  df$id <- 1:nrow(df)
-  if ("LIFO" %in% technique) {
-    df <- df %>%
-      arrange(desc(.data$id)) %>%
-      mutate(cum = cumsum(.data$n), n_stocks = n_stocks) %>%
-      rowwise() %>%
-      mutate(total = min(.data$n, .data$n_stocks - .data$cum + .data$n),
-             total = ifelse(.data$total < 0, 0, .data$total)) %>%
-      arrange(.data$id) %>%
-      data.frame()
-  } else if ("FIFO" %in% technique) {
-    df <- df %>%
-      mutate(cum = cumsum(.data$n), n_stocks = n_stocks) %>%
-      rowwise() %>%
-      mutate(total = min(.data$n, .data$n_stocks - .data$cum + .data$n),
-             total = ifelse(.data$total < 0, 0, .data$total)) %>%
-      data.frame()
-  }
-  ret <- sum(df$value * df$total, na.rm = TRUE) / sum(df$total, na.rm = TRUE)
-  attr(ret, "df") <- select(df, -any_of(c("id", "cum")))
-  return(ret)
+  if (nrow(df) > 0) {
+    df$id <- 1:nrow(df)
+    if ("LIFO" %in% technique) {
+      df <- df %>%
+        arrange(desc(.data$id)) %>%
+        mutate(cum = cumsum(.data$n), n_stocks = n_stocks) %>%
+        rowwise() %>%
+        mutate(total = min(.data$n, .data$n_stocks - .data$cum + .data$n),
+               total = ifelse(.data$total < 0, 0, .data$total)) %>%
+        arrange(.data$id) %>%
+        data.frame()
+    } else if ("FIFO" %in% technique) {
+      df <- df %>%
+        mutate(cum = cumsum(.data$n), n_stocks = n_stocks) %>%
+        rowwise() %>%
+        mutate(total = min(.data$n, .data$n_stocks - .data$cum + .data$n),
+               total = ifelse(.data$total < 0, 0, .data$total)) %>%
+        data.frame()
+    }
+    ret <- sum(df$value * df$total, na.rm = TRUE) / sum(df$total, na.rm = TRUE) 
+    attr(ret, "df") <- select(df, -any_of(c("id", "cum")))
+    if (type == 2) return(attr(ret, "df")) else return(ret)
+  } else return(0)
 }
 
 ################# PLOTTING FUNCTIONS #################
