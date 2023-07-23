@@ -431,10 +431,8 @@ holidays <- function(countries = "Venezuela",
 
   results <- NULL
   if (!quiet) {
-    message(paste0(">>> Only allowing years from +- 5 years from today: ", 
-                   paste(sQuote(years), collapse = ", ")
-    ))
-  }
+    message(paste0(">>> Only allowing +- 5 years from today: ", 
+                   paste(sQuote(years), collapse = ", ")))}
   year <- year(Sys.Date())
   years <- years[years %in% ((year - 5):(year + 5))]
   combs <- expand.grid(years, countries) %>%
@@ -454,18 +452,18 @@ holidays <- function(countries = "Venezuela",
       html_table(fill = TRUE) %>%
       data.frame(.) %>%
       filter(!is.na(.data$Date))
-    holidays <- holidays[, -2]
+    holidays <- holidays[, -2L]
     colnames(holidays) <- c("Date", "Holiday", "Holiday.Type")
     holidays$Date <- paste(holidays$Date, combs$year[i])
-    if (sum(grepl("de", holidays$Date)) > 0) {
+    if (sum(grepl("de", holidays$Date)) > 0L) {
       holidays$Date <- gsub("de ", "", holidays$Date)
     }
-    holidays <- holidays[-1, ]
+    holidays <- holidays[-1L, ]
     first <- suppressWarnings(as.numeric(as.character(substr(holidays$Date, 1L, 1L))))
     if (!is.na(first[1L])) {
-      holidays$Date <- lubridate::dmy(holidays$Date, ...)
+      holidays$Date <- lubridate::dmy(holidays$Date)
     } else {
-      holidays$Date <- lubridate::dmy(holidays$Date, ...)
+      holidays$Date <- lubridate::dmy(holidays$Date)
     }
     result <- data.frame(
       holiday = holidays$Date,
@@ -481,7 +479,7 @@ holidays <- function(countries = "Venezuela",
         hother = !grepl("National|Federal|Observance|Season", holidays$Holiday.Type)
       ) %>%
       {
-        if (length(unique(countries)) > 1) {
+        if (length(unique(countries)) > 1L) {
           mutate(., country = combs$country[i])
         } else {
           .
