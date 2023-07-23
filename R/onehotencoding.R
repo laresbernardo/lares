@@ -417,7 +417,6 @@ date_feats <- function(dates,
 #' holiday dates?
 #' @param countries Character or vector. For which country(ies) should the
 #' holidays be imported?
-#' @param ... Additional parameters for parsing the dates from the online table source
 #' @return \code{data.frame} with holidays data for given \code{countries} and \code{years}.
 #' @examples
 #' \donttest{
@@ -425,26 +424,30 @@ date_feats <- function(dates,
 #' holidays(countries = c("Argentina", "Venezuela"), years = c(2019, 2020))
 #' }
 #' @export
-holidays <- function(countries = "Venezuela", years = year(Sys.Date()), ...) {
+holidays <- function(countries = "Venezuela",
+                     years = year(Sys.Date()),
+                     quiet = FALSE) {
   # Further improvement: let the user bring more than +-5 years
 
   results <- NULL
-  message(paste0(
-    ">>> Only allowing years from +- 5 years from today: ",
-    paste(sQuote(years), collapse = ", ")
-  ))
+  if (!quiet) {
+    message(paste0(">>> Only allowing years from +- 5 years from today: ", 
+                   paste(sQuote(years), collapse = ", ")
+    ))
+  }
   year <- year(Sys.Date())
   years <- years[years %in% ((year - 5):(year + 5))]
-  combs <- expand.grid(years, countries) %>% 
+  combs <- expand.grid(years, countries) %>%
     dplyr::rename(year = "Var1", country = "Var2")
-  
+
   for (i in seq_len(nrow(combs))) {
-    message(paste0(">>> Extracting ", combs$country[i], "'s holidays for ", combs$year[i]))
+    if (!quiet) 
+      message(paste0(">>> Extracting ", combs$country[i], "'s holidays for ", combs$year[i]))
     url <- paste0("https://www.timeanddate.com/holidays/", tolower(combs$country[i]), "/", combs$year[i])
-    
+
     # call httr's GET however set header to only accept English named date parts (months)
     # otherwise if user uses own locale, for instance German, an error can occur parsing dates of holidays
-    # compare with plain call without additional headers in different local: holidays <- content(GET(url))
+    # compare with plain call without additional headers in different locale: holidays <- content(GET(url))
     holidays <- content(GET(url, add_headers("Accept-Language" = "en")))
     holidays <- holidays %>%
       html_nodes(".table") %>%
