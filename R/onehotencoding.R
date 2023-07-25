@@ -417,6 +417,7 @@ date_feats <- function(dates,
 #' holiday dates?
 #' @param countries Character or vector. For which country(ies) should the
 #' holidays be imported?
+#' @param quiet Boolean. Default FALSE which disables verbosity of the function.
 #' @return \code{data.frame} with holidays data for given \code{countries} and \code{years}.
 #' @examples
 #' \donttest{
@@ -431,7 +432,7 @@ holidays <- function(countries = "Venezuela",
 
   results <- NULL
   if (!quiet) {
-    message(paste0(">>> Only allowing +- 5 years from today: ", 
+    message(paste0(">>> Only allowing ± 5 years from today: ", 
                    paste(sQuote(years), collapse = ", ")))}
   year <- year(Sys.Date())
   years <- years[years %in% ((year - 5):(year + 5))]

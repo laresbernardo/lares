@@ -4,7 +4,7 @@
 \alias{holidays}
 \title{Holidays in your Country}
 \usage{
-holidays(countries = "Venezuela", years = year(Sys.Date()), ...)
+holidays(countries = "Venezuela", years = year(Sys.Date()), quiet = FALSE)
 }
 \arguments{
 \item{countries}{Character or vector. For which country(ies) should the
@@ -13,10 +13,10 @@ holidays be imported?}
 \item{years}{Character or vector. For which year(s) do you wish to import
 holiday dates?}
 
-\item{...}{Additional parameters}
+\item{quiet}{Boolean. Default FALSE which disables verbosity of the function.}
 }
 \value{
-data.frame with holidays data for given \code{countries} and \code{years}.
+\code{data.frame} with holidays data for given \code{countries} and \code{years}.
 }
 \description{
 This function lets the user automatically scrap holiday dates from
