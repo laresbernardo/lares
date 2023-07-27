@@ -4,7 +4,12 @@
 \alias{holidays}
 \title{Holidays in your Country}
 \usage{
-holidays(countries = "Venezuela", years = year(Sys.Date()), ...)
+holidays(
+  countries = "Venezuela",
+  years = year(Sys.Date()),
+  quiet = FALSE,
+  include_regions = FALSE
+)
 }
 \arguments{
 \item{countries}{Character or vector. For which country(ies) should the
@@ -13,10 +18,14 @@ holidays be imported?}
 \item{years}{Character or vector. For which year(s) do you wish to import
 holiday dates?}
 
-\item{...}{Additional parameters}
+\item{quiet}{Boolean. Default FALSE which disables verbosity of the function.}
+
+\item{include_regions}{Boolean. Default FALSE. If TRUE, for countries with 
+internal subdivisions, it will provide details on which sub-state the found 
+holidays apply.}
 }
 \value{
-data.frame with holidays data for given \code{countries} and \code{years}.
+\code{data.frame} with holidays data for given \code{countries} and \code{years}.
 }
 \description{
 This function lets the user automatically scrap holiday dates from
@@ -26,6 +35,7 @@ any country and year within +- 5 years. Thanks to timeanddate.com!
 \donttest{
 holidays(countries = "Argentina")
 holidays(countries = c("Argentina", "Venezuela"), years = c(2019, 2020))
+holidays(countries = "Germany", years = 2021:2023, include_regions = TRUE)
 }
 }
 \seealso{

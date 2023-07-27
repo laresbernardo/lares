@@ -417,48 +417,96 @@ date_feats <- function(dates,
 #' holiday dates?
 #' @param countries Character or vector. For which country(ies) should the
 #' holidays be imported?
-#' @param ... Additional parameters
-#' @return data.frame with holidays data for given \code{countries} and \code{years}.
+#' @param quiet Boolean. Default FALSE which disables verbosity of the function.
+#' @param include_regions Boolean. Default FALSE. If TRUE, for countries with 
+#' internal subdivisions, it will provide details on which sub-state the found 
+#' holidays apply.
+#' @return \code{data.frame} with holidays data for given \code{countries} and \code{years}.
 #' @examples
 #' \donttest{
 #' holidays(countries = "Argentina")
 #' holidays(countries = c("Argentina", "Venezuela"), years = c(2019, 2020))
+#' holidays(countries = "Germany", years = 2021:2023, include_regions = TRUE)
 #' }
 #' @export
-holidays <- function(countries = "Venezuela", years = year(Sys.Date()), ...) {
+holidays <- function(countries = "Venezuela",
+                     years = year(Sys.Date()),
+                     quiet = FALSE,
+                     include_regions = FALSE) {
   # Further improvement: let the user bring more than +-5 years
 
   results <- NULL
+  if (!quiet) {
+    message(paste0(
+      ">>> Only allowing \u00b1 5 years from today: ",
+      paste(sQuote(years), collapse = ", ")
+    ))
+  }
   year <- year(Sys.Date())
-  years <- years[years %in% ((year - 5):(year + 5))]
-  combs <- expand.grid(years, countries) %>% dplyr::rename(year = "Var1", country = "Var2")
+  years <- years[years %in% ((year - 5L):(year + 5L))]
+  combs <- expand.grid(years, countries) %>%
+    dplyr::rename(year = "Var1", country = "Var2")
+
   for (i in seq_len(nrow(combs))) {
-    message(paste0(">>> Extracting ", combs$country[i], "'s holidays for ", combs$year[i]))
+    if (!quiet) {
+      message(paste0(">>> Extracting ", combs$country[i], "'s holidays for ", combs$year[i]))
+    }
     url <- paste0("https://www.timeanddate.com/holidays/", tolower(combs$country[i]), "/", combs$year[i])
-    holidays <- content(GET(url))
+
+    # call httr's GET however set header to only accept English named date parts (months)
+    # otherwise if user uses own locale, for instance German, an error can occur parsing dates of holidays
+    # compare with plain call without additional headers in different locale: holidays <- content(GET(url))
+    holidays <- content(GET(url, add_headers("Accept-Language" = "en")))
     holidays <- holidays %>%
       html_nodes(".table") %>%
       html_table(fill = TRUE) %>%
       data.frame(.) %>%
       filter(!is.na(.data$Date))
-    holidays <- holidays[, -2]
-    colnames(holidays) <- c("Date", "Holiday", "Holiday.Type")
-    holidays$Date <- paste(holidays$Date, combs$year[i])
-    if (sum(grepl("de", holidays$Date)) > 0) {
-      holidays$Date <- gsub("de ", "", holidays$Date)
-    }
-    holidays <- holidays[-1, ]
-    first <- suppressWarnings(as.numeric(as.character(substr(holidays$Date, 1, 1))))
-    if (!is.na(first[1])) {
-      holidays$Date <- lubridate::dmy(holidays$Date, ...)
+    holidays <- holidays[, -2L]
+    colnames(holidays) <- if (include_regions) {
+      c("Date", "Holiday", "Holiday.Type", "Holiday.Details")
     } else {
-      holidays$Date <- lubridate::dmy(holidays$Date, ...)
+      c("Date", "Holiday", "Holiday.Type")
     }
+    holidays$Date <- paste(holidays$Date, combs$year[i])
+    if (any(grepl("de", holidays$Date, fixed = TRUE))) {
+      holidays$Date <- gsub("de ", "", holidays$Date, fixed = TRUE)
+    }
+    holidays <- holidays[-1L, ]
+
+    # the table might contain comment about interstate holidays like
+    # '* Observed only in some communities of this state.Hover your mouse over the region or click on the holiday for details.'
+    # this will not parse as Date but create a warning, hence handling it here
+    grep_comment <- grep("*", holidays$Date, fixed = TRUE)
+    if (length(grep_comment) != 0L) {
+      holidays <- holidays[-grep_comment, ]
+    }
+
+    # control for warning & error parsing the date column and stop in case any of them occurs
+    tc <- tryCatch(
+      holidays$Date <- lubridate::dmy(holidays$Date),
+      error = function(cond) {
+        return(cond)
+      },
+      warning = function(cond) {
+        return(cond)
+      }
+    )
+    if (inherits(tc, c("warning", "error"))) {
+      print(tc)
+      stop(paste(
+        "Function 'holidays': Unaccounted problem(s) occured parsing the",
+        "date column 'holidays$Date'. Please contact the 'lares' package",
+        "maintainer!", sep = " "))
+    }
+
     result <- data.frame(
       holiday = holidays$Date,
       holiday_name = holidays$Holiday,
       holiday_type = holidays$Holiday.Type
-    ) %>%
+    )
+    if (include_regions) result$holiday_details <- holidays$Holiday.Details
+    result <- result %>%
       mutate(
         national = grepl("National|Federal", holidays$Holiday.Type),
         observance = grepl("Observance", holidays$Holiday.Type),
@@ -468,7 +516,7 @@ holidays <- function(countries = "Venezuela", years = year(Sys.Date()), ...) {
         hother = !grepl("National|Federal|Observance|Season", holidays$Holiday.Type)
       ) %>%
       {
-        if (length(unique(countries)) > 1) {
+        if (length(unique(countries)) > 1L) {
           mutate(., country = combs$country[i])
         } else {
           .
@@ -481,5 +529,6 @@ holidays <- function(countries = "Venezuela", years = year(Sys.Date()), ...) {
     filter(!is.na(.data$holiday)) %>%
     cleanNames() %>%
     as_tibble()
+
   return(results)
 }
