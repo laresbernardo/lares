@@ -437,7 +437,7 @@ holidays <- function(countries = "Venezuela",
   results <- NULL
   if (any(!years %in% (year(Sys.Date())-5):(year(Sys.Date())+5))) {
     warning(paste(
-      ">>> Only allowing \u00b1 5 years from today. Check:", v2t(years)
+      "Only allowing \u00b1 5 years from today. Check:", v2t(years)
     ))
   }
   year <- year(Sys.Date())
@@ -482,8 +482,8 @@ holidays <- function(countries = "Venezuela",
     }
 
     # control for warning & error parsing the date column and stop in case any of them occurs
-    tc <- tryCatch(
-      holidays$Date <- lubridate::dmy(holidays$Date),
+    holidays$Date <- tryCatch(
+      lubridate::dmy(holidays$Date),
       error = function(cond) {
         return(cond)
       },
@@ -492,11 +492,8 @@ holidays <- function(countries = "Venezuela",
       }
     )
     if (inherits(tc, c("warning", "error"))) {
-      print(tc)
-      stop(paste(
-        "Function 'holidays': Unaccounted problem(s) occurred parsing the",
-        "date column 'holidays$Date'. Please contact the 'lares' package",
-        "maintainer!", sep = " "))
+      message(tc)
+      stop("Unaccounted problem(s) occurred parsing the date column")
     }
 
     result <- data.frame(
