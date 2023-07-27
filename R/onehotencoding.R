@@ -479,14 +479,13 @@ holidays <- function(countries = "Venezuela",
     if (length(grep_comment) != 0L) {
       holidays <- holidays[-grep_comment, ]
     }
-
-    # control for warning & error parsing the date column and stop in case any of them occurs
     holidays$Date <- tryCatch({
-      print(head(holidays))
       lubridate::dmy(holidays$Date)
     },
     error = function(cond) {
-      stop("Unaccounted problem(s) occurred parsing the date column")
+      stop(
+        "Unaccounted problem(s) occurred parsing the date column.\n Check sample: ",
+        v2t(head(holidays$Date, 3)))
     })
 
     result <- data.frame(
