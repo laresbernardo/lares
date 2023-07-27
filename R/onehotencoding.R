@@ -454,23 +454,22 @@ holidays <- function(countries = "Venezuela",
     # call httr's GET however set header to only accept English named date parts (months)
     # otherwise if user uses own locale, for instance German, an error can occur parsing dates of holidays
     # compare with plain call without additional headers in different locale: holidays <- content(GET(url))
-    holidays <- content(GET(url, add_headers("Accept-Language" = "en")))
-    holidays <- holidays %>%
+    ret <- content(GET(url, add_headers("Accept-Language" = "en")))
+    holidays <- ret %>%
       html_nodes(".table") %>%
       html_table(fill = TRUE) %>%
       data.frame(.) %>%
-      filter(!is.na(.data$Date))
-    holidays <- holidays[, -2L]
-    colnames(holidays) <- if (include_regions) {
+      filter(!is.na(.data$Date)) %>%
+      select(-2L) %>%
+      mutate(Date = paste(.data$Date, combs$year[i])) %>%
+      .[-1L, ] %>%
+      removenacols(all = TRUE) %>%
+      removenarows(all = TRUE)
+    colnames(holidays) <- if (include_regions & ncol(holidays) > 3) {
       c("Date", "Holiday", "Holiday.Type", "Holiday.Details")
     } else {
       c("Date", "Holiday", "Holiday.Type")
     }
-    holidays$Date <- paste(holidays$Date, combs$year[i])
-    if (any(grepl("de", holidays$Date, fixed = TRUE))) {
-      holidays$Date <- gsub("de ", "", holidays$Date, fixed = TRUE)
-    }
-    holidays <- holidays[-1L, ]
 
     # the table might contain comment about interstate holidays like
     # '* Observed only in some communities of this state.
@@ -482,19 +481,13 @@ holidays <- function(countries = "Venezuela",
     }
 
     # control for warning & error parsing the date column and stop in case any of them occurs
-    holidays$Date <- tryCatch(
-      lubridate::dmy(holidays$Date),
-      error = function(cond) {
-        return(cond)
-      },
-      warning = function(cond) {
-        return(cond)
-      }
-    )
-    if (inherits(tc, c("warning", "error"))) {
-      message(tc)
+    holidays$Date <- tryCatch({
+      print(head(holidays))
+      lubridate::dmy(holidays$Date)
+    },
+    error = function(cond) {
       stop("Unaccounted problem(s) occurred parsing the date column")
-    }
+    })
 
     result <- data.frame(
       holiday = holidays$Date,
