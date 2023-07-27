@@ -18,7 +18,7 @@ any country and year within +- 5 years. Thanks to timeanddate.com!"><meta proper
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.3.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.3.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,20 +145,17 @@ holidays apply.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">holidays</span><span class="op">(</span>countries <span class="op">=</span> <span class="st">"Argentina"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Only allowing ± 5 years from today: ‘2023’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Argentina's holidays for 2023</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;simpleWarning: All formats failed to parse. No formats found.&gt;</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in holidays(countries = "Argentina"):</span> Function 'holidays': Unaccounted problem(s) occured parsing the date column 'holidays$Date'. Please contact the 'lares' package maintainer!</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in holidays(countries = "Argentina"):</span> Function 'holidays': Unaccounted problem(s) occurred parsing the date column 'holidays$Date'. Please contact the 'lares' package maintainer!</span>
 <span class="r-in"><span><span class="fu">holidays</span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Argentina"</span>, <span class="st">"Venezuela"</span><span class="op">)</span>, years <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2019</span>, <span class="fl">2020</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Only allowing ± 5 years from today: ‘2019’, ‘2020’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Argentina's holidays for 2019</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;simpleWarning: All formats failed to parse. No formats found.&gt;</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in holidays(countries = c("Argentina", "Venezuela"), years = c(2019,     2020)):</span> Function 'holidays': Unaccounted problem(s) occured parsing the date column 'holidays$Date'. Please contact the 'lares' package maintainer!</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in holidays(countries = c("Argentina", "Venezuela"), years = c(2019,     2020)):</span> Function 'holidays': Unaccounted problem(s) occurred parsing the date column 'holidays$Date'. Please contact the 'lares' package maintainer!</span>
 <span class="r-in"><span><span class="fu">holidays</span><span class="op">(</span>countries <span class="op">=</span> <span class="st">"Germany"</span>, years <span class="op">=</span> <span class="fl">2021</span><span class="op">:</span><span class="fl">2023</span>, include_regions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Only allowing ± 5 years from today: ‘2021’, ‘2022’, ‘2023’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Germany's holidays for 2021</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;simpleWarning: All formats failed to parse. No formats found.&gt;</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in holidays(countries = "Germany", years = 2021:2023, include_regions = TRUE):</span> Function 'holidays': Unaccounted problem(s) occured parsing the date column 'holidays$Date'. Please contact the 'lares' package maintainer!</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in holidays(countries = "Germany", years = 2021:2023, include_regions = TRUE):</span> Function 'holidays': Unaccounted problem(s) occurred parsing the date column 'holidays$Date'. Please contact the 'lares' package maintainer!</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
