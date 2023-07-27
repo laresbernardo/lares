@@ -438,7 +438,7 @@ holidays <- function(countries = "Venezuela",
   results <- NULL
   if (!quiet) {
     message(paste0(
-      ">>> Only allowing ± 5 years from today: ",
+      ">>> Only allowing \u00b1 5 years from today: ",
       paste(sQuote(years), collapse = ", ")
     ))
   }
