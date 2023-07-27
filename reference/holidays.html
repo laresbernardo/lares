@@ -146,13 +146,6 @@ holidays apply.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">holidays</span><span class="op">(</span>countries <span class="op">=</span> <span class="st">"Argentina"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Argentina's holidays for 2023</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Date                                 Holiday     Holiday.Type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Feb 20 2023                Carnival / Shrove Monday National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Feb 21 2023 Carnival / Shrove Tuesday / Pancake Day National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Mar 20 2023                           March Equinox           Season</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Mar 23 2023                           Ramadan Start       Observance</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Mar 24 2023                            Memorial Day National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  Apr 2 2023                     Day of the Veterans National holiday</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 0 × 10</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 10 variables: holiday &lt;date&gt;, holiday_name &lt;chr&gt;, holiday_type &lt;chr&gt;,</span></span>
@@ -160,47 +153,12 @@ holidays apply.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   hother &lt;lgl&gt;, county &lt;fct&gt;</span></span>
 <span class="r-in"><span><span class="fu">holidays</span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Argentina"</span>, <span class="st">"Venezuela"</span><span class="op">)</span>, years <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2019</span>, <span class="fl">2020</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Argentina's holidays for 2019</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Date                                 Holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Mar 4 2019                Carnival / Shrove Monday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Mar 5 2019 Carnival / Shrove Tuesday / Pancake Day</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Mar 20 2019                           March Equinox</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Mar 24 2019                            Memorial Day</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  Apr 2 2019                     Day of the Veterans</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 Apr 18 2019                         Maundy Thursday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Holiday.Type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2            National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3            National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                      Season</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 National holiday, Christian</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Argentina's holidays for 2020</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Date                                 Holiday     Holiday.Type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Feb 24 2020                Carnival / Shrove Monday National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Feb 25 2020 Carnival / Shrove Tuesday / Pancake Day National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Mar 20 2020                           March Equinox           Season</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Mar 23 2020                   Bridge Public Holiday National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Mar 24 2020                            Memorial Day National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 Mar 30 2020                   Bridge Public Holiday National holiday</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Venezuela's holidays for 2019</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Date                                 Holiday     Holiday.Type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Jan 6 2019                  The Three Wise Men Day     Bank holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Feb 28 2019            Carnaval Non-working Holiday  Non-working Day</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Mar 1 2019            Carnaval Non-working Holiday  Non-working Day</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Mar 4 2019                Carnival / Shrove Monday National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  Mar 5 2019 Carnival / Shrove Tuesday / Pancake Day National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 Mar 11 2019           Power Outage National Holiday National holiday</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Venezuela's holidays for 2020</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Date                                 Holiday          Holiday.Type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Jan 6 2020                  The Three Wise Men Day          Bank holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Feb 24 2020                Carnival / Shrove Monday      National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Feb 25 2020 Carnival / Shrove Tuesday / Pancake Day      National holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Mar 19 2020                      Saint Joseph's Day          Bank holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Mar 19 2020                           March Equinox                Season</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  Apr 5 2020                             Palm Sunday Observance, Christian</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 0 × 11</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 variables: holiday &lt;date&gt;, holiday_name &lt;chr&gt;, holiday_type &lt;chr&gt;,</span></span>
@@ -208,52 +166,10 @@ holidays apply.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   hother &lt;lgl&gt;, country &lt;fct&gt;, county &lt;fct&gt;</span></span>
 <span class="r-in"><span><span class="fu">holidays</span><span class="op">(</span>countries <span class="op">=</span> <span class="st">"Germany"</span>, years <span class="op">=</span> <span class="fl">2021</span><span class="op">:</span><span class="fl">2023</span>, include_regions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Germany's holidays for 2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Date                                               Holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Jan 6 2021                                              Epiphany</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Jan 6 2021                                              Epiphany</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Jan 22 2021                                     Franco-German Day</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Jan 27 2021 Remembrance Day for the Victims of National Socialism</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Feb 14 2021                                       Valentine's Day</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 Feb 15 2021                                         Shrove Monday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            Holiday.Type Holiday.Details</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Common local holiday      BW, BY, ST</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Observance, Christian    NDS*, SN, TH</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4            Observance                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            Observance                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            Observance                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7            Observance                </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Germany's holidays for 2022</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Date                                               Holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Jan 6 2022                                              Epiphany</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Jan 6 2022                                              Epiphany</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Jan 22 2022                                     Franco-German Day</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Jan 27 2022 Remembrance Day for the Victims of National Socialism</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Feb 14 2022                                       Valentine's Day</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 Feb 16 2022                                            Hizir Fast</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            Holiday.Type Holiday.Details</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Common local holiday      BW, BY, ST</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Observance, Christian    NDS*, SN, TH</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4            Observance                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            Observance                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            Observance                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7            Observance Bremen, Hamburg</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Germany's holidays for 2023</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Date                                               Holiday</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Jan 6 2023                                              Epiphany</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Jan 6 2023                                              Epiphany</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Jan 22 2023                                     Franco-German Day</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Jan 27 2023 Remembrance Day for the Victims of National Socialism</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Feb 14 2023                                       Valentine's Day</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 Feb 16 2023                                            Hizir Fast</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            Holiday.Type Holiday.Details</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Observance, Christian    NDS*, SN, TH</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Common local holiday      BW, BY, ST</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4            Observance                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            Observance                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            Observance                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7            Observance Bremen, Hamburg</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 0 × 11</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 variables: holiday &lt;date&gt;, holiday_name &lt;chr&gt;, holiday_type &lt;chr&gt;,</span></span>
