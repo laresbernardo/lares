@@ -434,12 +434,10 @@ holidays <- function(countries = "Venezuela",
                      quiet = FALSE,
                      include_regions = FALSE) {
   # Further improvement: let the user bring more than +-5 years
-
   results <- NULL
-  if (!quiet) {
-    message(paste0(
-      ">>> Only allowing \u00b1 5 years from today: ",
-      paste(sQuote(years), collapse = ", ")
+  if (any(!years %in% (year(Sys.Date())-5):(year(Sys.Date())+5))) {
+    warning(paste(
+      ">>> Only allowing \u00b1 5 years from today. Check:", v2t(years)
     ))
   }
   year <- year(Sys.Date())
@@ -452,7 +450,7 @@ holidays <- function(countries = "Venezuela",
       message(paste0(">>> Extracting ", combs$country[i], "'s holidays for ", combs$year[i]))
     }
     url <- paste0("https://www.timeanddate.com/holidays/", tolower(combs$country[i]), "/", combs$year[i])
-
+    
     # call httr's GET however set header to only accept English named date parts (months)
     # otherwise if user uses own locale, for instance German, an error can occur parsing dates of holidays
     # compare with plain call without additional headers in different locale: holidays <- content(GET(url))
@@ -475,7 +473,8 @@ holidays <- function(countries = "Venezuela",
     holidays <- holidays[-1L, ]
 
     # the table might contain comment about interstate holidays like
-    # '* Observed only in some communities of this state.Hover your mouse over the region or click on the holiday for details.'
+    # '* Observed only in some communities of this state.
+    # Hover your mouse over the region or click on the holiday for details.'
     # this will not parse as Date but create a warning, hence handling it here
     grep_comment <- grep("*", holidays$Date, fixed = TRUE)
     if (length(grep_comment) != 0L) {
@@ -495,7 +494,7 @@ holidays <- function(countries = "Venezuela",
     if (inherits(tc, c("warning", "error"))) {
       print(tc)
       stop(paste(
-        "Function 'holidays': Unaccounted problem(s) occured parsing the",
+        "Function 'holidays': Unaccounted problem(s) occurred parsing the",
         "date column 'holidays$Date'. Please contact the 'lares' package",
         "maintainer!", sep = " "))
     }
