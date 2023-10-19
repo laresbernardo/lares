@@ -152,6 +152,7 @@ normalize <- function(x) {
 #' num_abbr(rnorm(10) * 1e6, n = 1)
 #' @export
 num_abbr <- function(x, n = 3) {
+  if (is.null(x)) return(x)
   if (!is.numeric(x)) stop("Input vector x needs to be numeric.")
   if (!is.numeric(n)) stop("n needs to be numeric.")
   if (length(n) > 1) stop("Please make sure that n takes on a single value.")
@@ -362,6 +363,7 @@ formatNum <- function(x, decimals = 2, signif = NULL,
                       pre = "", pos = "", sign = FALSE,
                       abbr = FALSE,
                       ...) {
+  if (is.null(x)) return(x)
   # Auxiliary function to save signs
   if (sign) signs <- ifelse(x > 0, "+", "")
 
