@@ -470,24 +470,23 @@ autoline <- function(text, top = "auto", rel = 9) {
 #' Check if Font is Installed
 #'
 #' This function checks if a font is installed in your machine.
+#' To list all available fonts, set \code{font = NULL}.
 #'
 #' @family Tools
-#' @param font Character. Which font to check
+#' @param font Character. Which font to check. 
 #' @param quiet Boolean. Keep quiet? If not, show message
 #' @return Boolean result of the existing fonts check.
 #' @examples
 #' font_exists(font = "Arial")
-#' font_exists(font = "XOXO")
+#' font_exists(font = "arial")
 #' font_exists(font = "")
+#' font_exists(font = NULL)
 #' @export
 font_exists <- function(font = "Arial Narrow", quiet = FALSE) {
   if (isTRUE(font == "")) {
     return(FALSE)
   }
   if (isTRUE(is.na(font))) {
-    return(FALSE)
-  }
-  if (isTRUE(is.null(font))) {
     return(FALSE)
   }
 
@@ -525,14 +524,22 @@ font_exists <- function(font = "Arial Narrow", quiet = FALSE) {
           stop("Unknown platform. Don't know where to look for truetype fonts. Sorry!")
         }
       }
-      check <- function(font) {
+      check <- function(font, quiet = FALSE) {
         pattern <- "\\.ttf$|\\.otf"
         fonts_path <- ttf_find_default_path()
         ttfiles <- list.files(fonts_path,
           pattern = pattern,
           full.names = TRUE, ignore.case = TRUE
         )
-        ret <- font %in% gsub(pattern, "", basename(ttfiles))
+        font_names <- basename(ttfiles)
+        if (!is.null(font)) 
+          ret <- font %in% gsub(pattern, "", font_names) else ret <- FALSE
+        if (!quiet & !ret) {
+          if (!is.null(font)) font_names <- font_names[grepl(tolower(font), tolower(font_names))]
+          if (length(font_names) > 0)
+            message("Maybe you meant one of these: ",
+                    v2t(sort(gsub("\\..*", "", font_names))))
+        }
         return(ret)
       }
       check(font)

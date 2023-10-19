@@ -7,7 +7,7 @@
 font_exists(font = "Arial Narrow", quiet = FALSE)
 }
 \arguments{
-\item{font}{Character. Which font to check}
+\item{font}{Character. Which font to check.}
 
 \item{quiet}{Boolean. Keep quiet? If not, show message}
 }
@@ -16,11 +16,13 @@ Boolean result of the existing fonts check.
 }
 \description{
 This function checks if a font is installed in your machine.
+To list all available fonts, set \code{font = NULL}.
 }
 \examples{
 font_exists(font = "Arial")
-font_exists(font = "XOXO")
+font_exists(font = "arial")
 font_exists(font = "")
+font_exists(font = NULL)
 }
 \seealso{
 Other Tools: 
