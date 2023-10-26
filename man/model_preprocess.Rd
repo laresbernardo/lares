@@ -25,10 +25,10 @@ model_preprocess(
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including
-the independent variable labeled as \code{'tag'}. If you want to define
+the dependent variable labeled as \code{'tag'}. If you want to define
 which variable should be used instead, use the \code{y} parameter.}
 
-\item{y}{Character. Column name for independent variable.}
+\item{y}{Character. Column name for dependent variable or response.}
 
 \item{ignore}{Character vector. Force columns for the model to ignore}
 
@@ -57,7 +57,7 @@ categorical model.}
 
 \item{no_outliers}{Boolean/Numeric. Remove \code{y}'s outliers from the dataset?
 Will remove those values that are farther than n standard deviations from
-the independent variable's mean (Z-score). Set to \code{TRUE} for default (3)
+the dependent variable's mean (Z-score). Set to \code{TRUE} for default (3)
 or numeric to set a different multiplier.}
 
 \item{unique_train}{Boolean. Keep only unique row observations for training data?}

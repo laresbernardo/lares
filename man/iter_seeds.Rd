@@ -8,10 +8,10 @@ iter_seeds(df, y, tries = 10, ...)
 }
 \arguments{
 \item{df}{Dataframe. Dataframe containing all your data, including
-the independent variable labeled as \code{'tag'}. If you want to define
+the dependent variable labeled as \code{'tag'}. If you want to define
 which variable should be used instead, use the \code{y} parameter.}
 
-\item{y}{Variable or Character. Name of the independent variable.}
+\item{y}{Variable or Character. Name of the dependent variable or response.}
 
 \item{tries}{Integer. Number of iterations}
 

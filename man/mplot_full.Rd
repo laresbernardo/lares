@@ -51,7 +51,7 @@ Multiple plots gathered into one, showing \code{tag} vs
 \description{
 This function plots a whole dashboard with a model's results. It will automatically
 detect if it's a categorical or regression's model by checking how many different
-unique values the independent variable (tag) has.
+unique values the dependent variable (tag) has.
 }
 \examples{
 \donttest{

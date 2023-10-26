@@ -27,7 +27,7 @@ h2o_results(
 
 \item{test, train}{Dataframe. Must have the same columns}
 
-\item{y}{Variable or Character. Name of the independent variable.}
+\item{y}{Variable or Character. Name of the dependent variable or response.}
 
 \item{which}{Integer. Which model to select from leaderboard}
 

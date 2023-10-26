@@ -22,7 +22,7 @@ tree_var(
 \arguments{
 \item{df}{Data frame}
 
-\item{y}{Variable or Character. Name of the independent variable.}
+\item{y}{Variable or Character. Name of the dependent variable or response.}
 
 \item{type}{
     Type of plot. Possible values:

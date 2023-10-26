@@ -11,7 +11,7 @@
 #' @family Exploratory
 #' @param df Dataframe. Any dataframe is valid as \code{ohse} will be applied to
 #' process categorical values, and values will be standardize automatically.
-#' @param variable Variable. Independent variable.
+#' @param variable Variable. Dependent variable or response.
 #' @param ignore Character vector. Variables to exclude from study.
 #' @param nlambdas Integer. Number of lambdas to be used in a search.
 #' @param nfolds Integer. Number of folds for K-fold cross-validation (>= 2).

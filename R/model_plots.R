@@ -832,7 +832,7 @@ mplot_lineal <- function(tag,
 #'
 #' This function plots a whole dashboard with a model's results. It will automatically
 #' detect if it's a categorical or regression's model by checking how many different
-#' unique values the independent variable (tag) has.
+#' unique values the dependent variable (tag) has.
 #'
 #' @family ML Visualization
 #' @inheritParams mplot_roc

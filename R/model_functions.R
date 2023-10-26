@@ -28,9 +28,9 @@
 #' @family Machine Learning
 #' @inheritParams h2o::h2o.automl
 #' @param df Dataframe. Dataframe containing all your data, including
-#' the independent variable labeled as \code{'tag'}. If you want to define
+#' the dependent variable labeled as \code{'tag'}. If you want to define
 #' which variable should be used instead, use the \code{y} parameter.
-#' @param y Variable or Character. Name of the independent variable.
+#' @param y Variable or Character. Name of the dependent variable or response.
 #' @param ignore Character vector. Force columns for the model to ignore
 #' @param train_test Character. If needed, \code{df}'s column name with 'test'
 #' and 'train' values to split
@@ -51,7 +51,7 @@
 #' @param impute Boolean. Fill \code{NA} values with MICE?
 #' @param no_outliers Boolean/Numeric. Remove \code{y}'s outliers from the dataset?
 #' Will remove those values that are farther than n standard deviations from
-#' the independent variable's mean (Z-score). Set to \code{TRUE} for default (3)
+#' the dependent variable's mean (Z-score). Set to \code{TRUE} for default (3)
 #' or numeric to set a different multiplier.
 #' @param unique_train Boolean. Keep only unique row observations for training data?
 #' @param center,scale Boolean. Using the base function scale, do you wish
@@ -340,7 +340,7 @@ print.h2o_automl <- function(x, importance = TRUE, ...) {
 
   print(glued("
     Model ({selected}/{n_models}): {x$model_name}
-    Independent Variable: {x$y}
+    Dependent Variable: {x$y}
     Type: {x$type}
     Algorithm: {toupper(x$algorithm)}
     Split: {split}% training data (of {data_points} observations)
