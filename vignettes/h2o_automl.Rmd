@@ -26,9 +26,9 @@ In short, these are some of the things that happen on its backend:
 
 ![Mapping `h2o_automl`](https://raw.githubusercontent.com/laresbernardo/lares/master/man/figures/automl_map.png){width=100%}
 
-1. Input a dataframe `df` and choose which one is the independent variable (`y`) you'd like to predict. You may set/change the `seed` argument to guarantee reproducibility of your results.
+1. Input a dataframe `df` and choose which one is the dependent variable (`y`) you'd like to predict. You may set/change the `seed` argument to guarantee reproducibility of your results.
 
-2. The function decides if it's a classification (categorical) or regression (continuous) model looking at the independent variable's (`y`) class and number of unique values, which can be control with the `thresh` parameter.
+2. The function decides if it's a classification (categorical) or regression (continuous) model looking at the dependent variable's (`y`) class and number of unique values, which can be control with the `thresh` parameter.
 
 3. The dataframe will be split in two: test and train datasets. The proportion of this split can be control with the `split` argument. This can be replicated with the `msplit()` function.
 
