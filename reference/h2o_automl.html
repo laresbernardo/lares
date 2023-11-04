@@ -24,7 +24,7 @@ here."><meta property="og:image" content="https://laresbernardo.github.io/lares/
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.3.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,12 +116,12 @@ importance, and plots. Read more about the <code>h2o_automl()</code> pipeline
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>df</dt>
 <dd><p>Dataframe. Dataframe containing all your data, including
-the independent variable labeled as <code>'tag'</code>. If you want to define
+the dependent variable labeled as <code>'tag'</code>. If you want to define
 which variable should be used instead, use the <code>y</code> parameter.</p></dd>
 
 
 <dt>y</dt>
-<dd><p>Variable or Character. Name of the independent variable.</p></dd>
+<dd><p>Variable or Character. Name of the dependent variable or response.</p></dd>
 
 
 <dt>ignore</dt>
@@ -166,7 +166,7 @@ categorical model.</p></dd>
 <dt>no_outliers</dt>
 <dd><p>Boolean/Numeric. Remove <code>y</code>'s outliers from the dataset?
 Will remove those values that are farther than n standard deviations from
-the independent variable's mean (Z-score). Set to <code>TRUE</code> for default (3)
+the dependent variable's mean (Z-score). Set to <code>TRUE</code> for default (3)
 or numeric to set a different multiplier.</p></dd>
 
 
