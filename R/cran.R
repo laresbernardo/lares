@@ -60,13 +60,11 @@ cran_logs <- function(input = "lares",
       )
     dMean <- input %>%
       group_by(.data$package) %>%
-      summarise(MN = mean(.data$count, na.rm = TRUE)) %>%
-      mutate(
-        date = min(input$date),
-        MN_label = formatNum(.data$MN, 2, abbr = TRUE)
-      )
+      summarise(MN = mean(.data$count, na.rm = TRUE),
+                date = min(.data$date, na.rm = TRUE),
+                MN_label = formatNum(.data$MN, 2, abbr = TRUE))
     plot <- ggplot(input, aes(x = .data$date)) +
-      geom_line(aes(y = .data$count), size = 1.2, colour = lares_pal("simple")[1], alpha = 0.8) +
+      geom_line(aes(y = .data$count), colour = lares_pal("simple")[1], alpha = 0.8) +
       theme_lares(legend = "top", pal = 2, panel_colour = "grey95") +
       labs(
         title = glued("CRAN: {x} downloads", x = v2t(package, and = "and")),
@@ -78,7 +76,7 @@ cran_logs <- function(input = "lares",
       geom_line(aes(y = .data$MN), linetype = "dashed") +
       geom_text(
         data = dMean, aes(x = .data$date, y = .data$MN, label = .data$MN_label),
-        vjust = -0.5, size = 2.5
+        vjust = -0.5, hjust = 1, size = 2.7
       ) +
       scale_y_abbr() +
       expand_limits(y = 0)
