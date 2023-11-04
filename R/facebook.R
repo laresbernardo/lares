@@ -211,7 +211,7 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
 #' \code{NULL} to ignore.
 #' @param filtering List. Each filter will be a list containing "field",
 #' "operator", and "value". Read more about the operators in the official
-#' \href{https://developers.facebook.com/docs/marketing-api/insights/parameters}{docs}.
+#' \href{https://developers.facebook.com/docs/marketing-api/insights}{docs}.
 #' Example: \code{dplyr::tibble(field = "country", operator = "IN", value = list("PE")))}.
 #' @param limit Integer. Query limit by pagination.
 #' @param api_version Character. Facebook API version.

@@ -50,7 +50,7 @@ segmentation results. Set to NA for no breakdowns}
 
 \item{filtering}{List. Each filter will be a list containing "field",
 "operator", and "value". Read more about the operators in the official
-\href{https://developers.facebook.com/docs/marketing-api/insights/parameters}{docs}.
+\href{https://developers.facebook.com/docs/marketing-api/insights}{docs}.
 Example: \code{dplyr::tibble(field = "country", operator = "IN", value = list("PE")))}.}
 
 \item{limit}{Integer. Query limit by pagination.}
