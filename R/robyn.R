@@ -36,7 +36,7 @@ hyps_builder <- function(
     paid_media_spends,
     media_type = "default",
     lagged = FALSE,
-    adstock = "geomtric",
+    adstock = "geometric",
     date_type = "weekly") {
   
   # Check inputs validity
