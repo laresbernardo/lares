@@ -47,7 +47,7 @@ hyps_builder <- function(
   
   # Hyperparameters names
   hyps <- c("alpha", "gamma")
-  hyps2 <- if (adstock %in% "geomtric") "theta" else c("shape", "scale")
+  hyps2 <- if (adstock %in% "geometric") "theta" else c("shape", "scale")
   all_hyps <- c(hyps, hyps2)
   
   # Repeat to all channels when provided 1 value
@@ -55,7 +55,7 @@ hyps_builder <- function(
     media_type <- rep(media_type, length(paid_media_spends))
   if (length(lagged) == 1)
     lagged <- rep(lagged, length(paid_media_spends))
-  if (any(lagged) && adstock == "geomtric")
+  if (any(lagged) && adstock == "geometric")
     stop("To be able to have a lagged effect you need to set Weibull adstock")
   
   # Generate all combinations and data.frame
