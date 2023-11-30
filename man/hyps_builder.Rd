@@ -8,7 +8,7 @@ hyps_builder(
   paid_media_spends,
   media_type = "default",
   lagged = FALSE,
-  adstock = "geomtric",
+  adstock = "geometric",
   date_type = "weekly"
 )
 }

@@ -66,40 +66,40 @@ hyps_builder <- function(
   # Apply default rules
   df <- df %>%
     mutate(low = case_when(
-      Var2 == "alpha" ~ 0.01,
-      Var2 == "gamma" ~ 0.3,
-      Var2 == "theta" ~ 0.1,
-      Var2 == "shape" & isTRUE(lagged) ~ 2,
-      Var2 == "shape" ~ 0,
-      Var2 == "scale" ~ 0
+      .data$Var2 == "alpha" ~ 0.01,
+      .data$Var2 == "gamma" ~ 0.3,
+      .data$Var2 == "theta" ~ 0.1,
+      .data$Var2 == "shape" & isTRUE(.data$lagged) ~ 2,
+      .data$Var2 == "shape" ~ 0,
+      .data$Var2 == "scale" ~ 0
     )) %>%
     mutate(high = case_when(
-      Var2 == "alpha" & media_type == "online" ~ 3,
-      Var2 == "alpha" & media_type == "offline" ~ 1,
-      Var2 == "alpha" & media_type == "default" ~ 3,
-      Var2 == "gamma" ~ 1,
-      Var2 == "theta" ~ 0.5,
-      Var2 == "shape" & isTRUE(lagged) ~ 10,
-      Var2 == "shape" & isFALSE(lagged) ~ 1,
-      Var2 == "shape" ~ 10,
-      Var2 == "scale" & isTRUE(lagged) ~ 0.05,
-      Var2 == "scale" & isFALSE(lagged) ~ 0.2,
-      Var2 == "scale" ~ 0.2
+      .data$Var2 == "alpha" & .data$media_type == "online" ~ 3,
+      .data$Var2 == "alpha" & .data$media_type == "offline" ~ 1,
+      .data$Var2 == "alpha" & .data$media_type == "default" ~ 3,
+      .data$Var2 == "gamma" ~ 1,
+      .data$Var2 == "theta" ~ 0.5,
+      .data$Var2 == "shape" & isTRUE(.data$lagged) ~ 10,
+      .data$Var2 == "shape" & isFALSE(.data$lagged) ~ 1,
+      .data$Var2 == "shape" ~ 10,
+      .data$Var2 == "scale" & isTRUE(.data$lagged) ~ 0.05,
+      .data$Var2 == "scale" & isFALSE(.data$lagged) ~ 0.2,
+      .data$Var2 == "scale" ~ 0.2
     )) %>%
     mutate(
       low = case_when(
-        date_type == "daily" ~ low^(1/7),
-        date_type == "monthly" ~ low^(4),
-        TRUE ~ low
+        date_type == "daily" ~ .data$low^(1/7),
+        date_type == "monthly" ~ .data$low^(4),
+        TRUE ~ .data$low
       ),
       high = case_when(
-        date_type == "daily" ~ high^(1/7),
-        date_type == "monthly" ~ high^(4),
-        TRUE ~ high
+        date_type == "daily" ~ .data$high^(1/7),
+        date_type == "monthly" ~ .data$high^(4),
+        TRUE ~ .data$high
       )
     ) %>%
-    mutate(Var1 = factor(Var1, levels = paid_media_spends)) %>%
-    arrange(Var1)
+    mutate(Var1 = factor(.data$Var1, levels = paid_media_spends)) %>%
+    arrange(.data$Var1)
   
   # Return as named list
   out <- lapply(seq_along(df$Var1), function(x) c(df$low[x], df$high[x]))
