@@ -46,8 +46,8 @@ hyps_builder <- function(
   check_opts(lagged, c(TRUE, FALSE))
   
   # Hyperparameters names
-  hyps <- c("alpha", "gamma")
-  hyps2 <- if (adstock %in% "geometric") "theta" else c("shape", "scale")
+  hyps <- c("alphas", "gammas")
+  hyps2 <- if (adstock %in% "geometric") "thetas" else c("shapes", "scales")
   all_hyps <- c(hyps, hyps2)
   
   # Repeat to all channels when provided 1 value
