@@ -66,25 +66,25 @@ hyps_builder <- function(
   # Apply default rules
   df <- df %>%
     mutate(low = case_when(
-      .data$Var2 == "alpha" ~ 0.01,
-      .data$Var2 == "gamma" ~ 0.3,
-      .data$Var2 == "theta" ~ 0.1,
-      .data$Var2 == "shape" & isTRUE(.data$lagged) ~ 2,
-      .data$Var2 == "shape" ~ 0,
-      .data$Var2 == "scale" ~ 0
+      .data$Var2 == "alphas" ~ 0.01,
+      .data$Var2 == "gammas" ~ 0.3,
+      .data$Var2 == "thetas" ~ 0.1,
+      .data$Var2 == "shapes" & isTRUE(.data$lagged) ~ 2,
+      .data$Var2 == "shapes" ~ 0,
+      .data$Var2 == "scales" ~ 0
     )) %>%
     mutate(high = case_when(
-      .data$Var2 == "alpha" & .data$media_type == "online" ~ 3,
-      .data$Var2 == "alpha" & .data$media_type == "offline" ~ 1,
-      .data$Var2 == "alpha" & .data$media_type == "default" ~ 3,
-      .data$Var2 == "gamma" ~ 1,
-      .data$Var2 == "theta" ~ 0.5,
-      .data$Var2 == "shape" & isTRUE(.data$lagged) ~ 10,
-      .data$Var2 == "shape" & isFALSE(.data$lagged) ~ 1,
-      .data$Var2 == "shape" ~ 10,
-      .data$Var2 == "scale" & isTRUE(.data$lagged) ~ 0.05,
-      .data$Var2 == "scale" & isFALSE(.data$lagged) ~ 0.2,
-      .data$Var2 == "scale" ~ 0.2
+      .data$Var2 == "alphas" & .data$media_type == "online" ~ 3,
+      .data$Var2 == "alphas" & .data$media_type == "offline" ~ 1,
+      .data$Var2 == "alphas" & .data$media_type == "default" ~ 3,
+      .data$Var2 == "gammas" ~ 1,
+      .data$Var2 == "thetas" ~ 0.5,
+      .data$Var2 == "shapes" & isTRUE(.data$lagged) ~ 10,
+      .data$Var2 == "shapes" & isFALSE(.data$lagged) ~ 1,
+      .data$Var2 == "shapes" ~ 10,
+      .data$Var2 == "scales" & isTRUE(.data$lagged) ~ 0.05,
+      .data$Var2 == "scales" & isFALSE(.data$lagged) ~ 0.2,
+      .data$Var2 == "scales" ~ 0.2
     )) %>%
     mutate(
       low = case_when(
