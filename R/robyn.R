@@ -17,7 +17,7 @@
 #' Only valid to transform thetas when using geometric adstock.
 #' @return list with default hyperparameters ranges.
 #' @examples
-#' hyps_builder(
+#' robyn_hypsbuilder(
 #'   paid_media_spends = c(
 #'     "branded_search_spend",
 #'     "nonbranded_search_spend",
@@ -32,7 +32,7 @@
 #'   adstock = "geometric",
 #'   date_type = "weekly")
 #' @export
-hyps_builder <- function(
+robyn_hypsbuilder <- function(
     paid_media_spends,
     media_type = "default",
     lagged = FALSE,
@@ -127,6 +127,7 @@ hyps_builder <- function(
 #' (ROAS or CPA), Potential Performance Boost, Non-Zero Coefficients, Amount
 #' of models in a cluster.
 #' @param cache Use cache functionality for allocator's results?
+#' @param ... Additional parameters passed
 #' @return list with data.frame and plot.
 #' @export
 robyn_modelselector <- function(

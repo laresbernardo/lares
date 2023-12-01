@@ -33,7 +33,7 @@ of models in a cluster.}
 
 \item{cache}{Use cache functionality for allocator's results?}
 
-\item{...}{Additional parameters passed to \code{corr} and \code{cor.test}}
+\item{...}{Additional parameters passed}
 
 \item{x}{robyn_modelselector object}
 }
@@ -47,6 +47,6 @@ allocator and how many non-zero coefficients there are.
 }
 \seealso{
 Other Robyn: 
-\code{\link{hyps_builder}()}
+\code{\link{robyn_hypsbuilder}()}
 }
 \concept{Robyn}
