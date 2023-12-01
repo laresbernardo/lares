@@ -51,4 +51,8 @@ hyps_builder(
   adstock = "geometric",
   date_type = "weekly")
 }
+\seealso{
+Other Robyn: 
+\code{\link{robyn_modelselector}()}
+}
 \concept{Robyn}

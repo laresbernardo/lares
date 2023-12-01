@@ -6,11 +6,11 @@
 #' @name lares
 #' @docType package
 #' @author Bernardo Lares (laresbernardo@@gmail.com)
-#' @importFrom dplyr %>% any_of arrange as_tibble bind_cols bind_rows case_when
+#' @importFrom dplyr %>% all_of any_of arrange as_tibble bind_cols bind_rows case_when
 #' contains count desc distinct distinct_at everything filter first group_by inner_join
 #' lag last left_join mutate mutate_all mutate_at mutate_if n ntile
 #' one_of pull rename rename_at right_join row_number rowwise sample_n
-#' select select_if slice starts_with summarise summarise_all
+#' select select_if slice slice_head starts_with summarise summarise_all
 #' summarise_if summarize summarize_all tally tibble transmute_if ungroup vars
 #' @importFrom ggplot2 aes after_stat annotate coord_equal coord_flip
 #' element_blank element_line element_rect element_text enquo enquos expand_limits
@@ -115,6 +115,7 @@ recommended <- list(
   quantmod = c("getDividends", "getSymbols", "getQuote"),
   rdrop2 = c("drop_auth", "drop_dir", "drop_download", "drop_search", "drop_upload"),
   rgdal = c("readOGR", "project"),
+  Robyn = c("robyn_allocator"),
   RPostgreSQL = "PostgreSQL",
   Rtsne = "Rtsne",
   rtweet = c("create_token", "search_tweets"),

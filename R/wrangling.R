@@ -119,6 +119,7 @@ zerovar <- function(df) {
 #' the 0 to 1 range
 #'
 #' @family Data Wrangling
+#' @inheritParams corr_var
 #' @param x Numeric Vector. Numbers to be transformed into
 #' normalized vector
 #' @return Vector with normalized \code{x} values
@@ -126,9 +127,12 @@ zerovar <- function(df) {
 #' x <- c(0, 1, 4, 7.5, 10)
 #' normalize(x)
 #' @export
-normalize <- function(x) {
+normalize <- function(x, ...) {
   if (is.numeric(x)) {
-    x <- (x - min(x)) / (max(x) - min(x))
+    if (length(unique(x)) == 1) {
+      return(rep(1, length(x)))
+    }
+    x <- (x - min(x, ...)) / (max(x, ...) - min(x, ...))
     return(x)
   } else {
     stop("Try with a numerical vector!")

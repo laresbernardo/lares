@@ -4,11 +4,13 @@
 \alias{normalize}
 \title{Normalize Vector}
 \usage{
-normalize(x)
+normalize(x, ...)
 }
 \arguments{
 \item{x}{Numeric Vector. Numbers to be transformed into
 normalized vector}
+
+\item{...}{Additional parameters passed to \code{corr} and \code{cor.test}}
 }
 \value{
 Vector with normalized \code{x} values
