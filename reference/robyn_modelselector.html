@@ -69,8 +69,9 @@ allocator and how many non-zero coefficients there are.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">robyn_modelselector</span><span class="op">(</span></span>
 <span>  <span class="va">InputCollect</span>,</span>
 <span>  <span class="va">OutputCollect</span>,</span>
-<span>  n_per_cluster <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  wt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0.1</span><span class="op">)</span>,</span>
+<span>  n_per_cluster <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  allocator_limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  cache <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -86,17 +87,23 @@ allocator and how many non-zero coefficients there are.</p>
 <dd><p>Robyn output objects.</p></dd>
 
 
+<dt>wt</dt>
+<dd><p>Vector. Length 5. Pick the weight for each of the normalized
+metrics to calculate the score and rank models. In order: R2, Performance
+(ROAS or CPA), Potential Performance Boost, Non-Zero Coefficients, Amount
+of models in a cluster.</p></dd>
+
+
 <dt>n_per_cluster</dt>
 <dd><p>Integer. How many models per cluster do you
 want to plot? Default: 5. Keep in mind they will all be considered
 for the calculations.</p></dd>
 
 
-<dt>wt</dt>
-<dd><p>Vector. Length 5. Pick the weight for each of the normalized
-metrics to calculate the score and rank models. In order: R2, Performance
-(ROAS or CPA), Potential Performance Boost, Non-Zero Coefficients, Amount
-of models in a cluster.</p></dd>
+<dt>allocator_limits</dt>
+<dd><p>Numeric vector, length 2. How flexible do you
+want to be with the budget allocator? By default, we'll consider a
+0.5X and 2X range to let the budget shift across channels.</p></dd>
 
 
 <dt>quiet</dt>
