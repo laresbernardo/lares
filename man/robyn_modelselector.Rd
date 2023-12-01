@@ -8,8 +8,9 @@
 robyn_modelselector(
   InputCollect,
   OutputCollect,
-  n_per_cluster = 5,
   wt = c(2, 1, 1, 1, 0.1),
+  n_per_cluster = 5,
+  allocator_limits = c(0.5, 2),
   quiet = FALSE,
   cache = TRUE,
   ...
@@ -20,14 +21,18 @@ robyn_modelselector(
 \arguments{
 \item{InputCollect, OutputCollect}{Robyn output objects.}
 
-\item{n_per_cluster}{Integer. How many models per cluster do you
-want to plot? Default: 5. Keep in mind they will all be considered
-for the calculations.}
-
 \item{wt}{Vector. Length 5. Pick the weight for each of the normalized
 metrics to calculate the score and rank models. In order: R2, Performance
 (ROAS or CPA), Potential Performance Boost, Non-Zero Coefficients, Amount
 of models in a cluster.}
+
+\item{n_per_cluster}{Integer. How many models per cluster do you
+want to plot? Default: 5. Keep in mind they will all be considered
+for the calculations.}
+
+\item{allocator_limits}{Numeric vector, length 2. How flexible do you
+want to be with the budget allocator? By default, we'll consider a
+0.5X and 2X range to let the budget shift across channels.}
 
 \item{quiet}{Boolean. Keep quiet? If not, show messages}
 

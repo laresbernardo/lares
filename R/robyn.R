@@ -119,13 +119,16 @@ robyn_hypsbuilder <- function(
 #' @family Robyn
 #' @inheritParams corr_var
 #' @param InputCollect,OutputCollect Robyn output objects.
-#' @param n_per_cluster Integer. How many models per cluster do you
-#' want to plot? Default: 5. Keep in mind they will all be considered
-#' for the calculations.
 #' @param wt Vector. Length 5. Pick the weight for each of the normalized
 #' metrics to calculate the score and rank models. In order: R2, Performance
 #' (ROAS or CPA), Potential Performance Boost, Non-Zero Coefficients, Amount
 #' of models in a cluster.
+#' @param allocator_limits Numeric vector, length 2. How flexible do you
+#' want to be with the budget allocator? By default, we'll consider a
+#' 0.5X and 2X range to let the budget shift across channels.
+#' @param n_per_cluster Integer. How many models per cluster do you
+#' want to plot? Default: 5. Keep in mind they will all be considered
+#' for the calculations.
 #' @param cache Use cache functionality for allocator's results?
 #' @param ... Additional parameters passed
 #' @return list with data.frame and plot.
@@ -133,13 +136,15 @@ robyn_hypsbuilder <- function(
 robyn_modelselector <- function(
     InputCollect,
     OutputCollect,
-    n_per_cluster = 5,
     wt = c(2, 1, 1, 1, 0.1),
+    n_per_cluster = 5,
+    allocator_limits = c(0.5, 2),
     quiet = FALSE,
     cache = TRUE,
     ...) {
   
   stopifnot(length(wt) == 5)
+  stopifnot(length(allocator_limits) == 2)
   
   # Add Default Potential Improvement values
   if (wt[3] != 0) {
@@ -158,11 +163,12 @@ robyn_modelselector <- function(
           InputCollect = InputCollect,
           OutputCollect = OutputCollect,
           select_model = x,
-          channel_constr_low = 0.5,
-          channel_constr_up = 1.5,
+          channel_constr_low = min(allocator_limits),
+          channel_constr_up = max(allocator_limits),
           plots = FALSE,
           export = FALSE,
-          quiet = TRUE
+          quiet = TRUE,
+          ...
         )))
       })
       potOpt <- data.frame(
