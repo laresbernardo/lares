@@ -119,10 +119,12 @@ robyn_hypsbuilder <- function(
 #' @family Robyn
 #' @inheritParams corr_var
 #' @param InputCollect,OutputCollect Robyn output objects.
-#' @param wt Vector. Length 5. Pick the weight for each of the normalized
-#' metrics to calculate the score and rank models. In order: R2, Performance
-#' (ROAS or CPA), Potential Performance Boost, Non-Zero Coefficients, Amount
-#' of models in a cluster.
+#' @param metrics Character vector. Which metrics do you want to consider?
+#' Pick any combination from: "rsq_train", "performance", "potential_improvement",
+#' "non_zeroes", "incluster_models".
+#' @param wt Vector. Weight for each of the normalized \code{metrics} selected,
+#' to calculate the score and rank models. Must have the same order and length
+#' of \code{metrics} parameter input.
 #' @param allocator_limits Numeric vector, length 2. How flexible do you
 #' want to be with the budget allocator? By default, we'll consider a
 #' 0.5X and 2X range to let the budget shift across channels.
@@ -136,6 +138,9 @@ robyn_hypsbuilder <- function(
 robyn_modelselector <- function(
     InputCollect,
     OutputCollect,
+    metrics = c("rsq_train", "performance",
+                "potential_improvement",
+                "non_zeroes", "incluster_models"),
     wt = c(2, 1, 1, 1, 0.1),
     n_per_cluster = 5,
     allocator_limits = c(0.5, 2),
@@ -143,11 +148,24 @@ robyn_modelselector <- function(
     cache = TRUE,
     ...) {
   
-  stopifnot(length(wt) == 5)
+  stopifnot(length(wt) == length(metrics))
   stopifnot(length(allocator_limits) == 2)
   
+  # Available metrics
+  metrics_df <- data.frame(
+    metric = c("rsq_train", "performance", "potential_improvement", "non_zeroes", "incluster_models"),
+    metric_name = c(
+      "R^2", ifelse(InputCollect$dep_var_type == "revenue", "ROAS", "CPA"),
+      "Potential Boost", "Non-Zeroes", "Models in Cluster"))
+  check_opts(metrics, metrics_df$metric)
+  
+  # Metrics Used
+  metrics_used <- filter(metrics_df, .data$metric %in% metrics) %>%
+    arrange(match(.data$metric, metrics)) %>%
+    left_join(data.frame(metric = metrics, wt = wt), "metric")
+  
   # Add Default Potential Improvement values
-  if (wt[3] != 0) {
+  if ("potential_improvement" %in% metrics & length(wt[which(metrics == "potential_improvement")]) != 0) {
     sols <- sort(OutputCollect$allSolutions)
     cache_name <- c("robyn_modelselector", length(sols))
     if (cache & cache_exists(cache_name, ...)) {
@@ -186,7 +204,7 @@ robyn_modelselector <- function(
     filter(!is.na(.data$mean_spend)) %>%
     filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
     group_by(.data$solID) %>%
-    summarise(perf = ifelse(
+    summarise(performance = ifelse(
       InputCollect$dep_var_type == "revenue",
       sum(.data$xDecompAgg)/sum(.data$total_spend) - 1,
       sum(.data$total_spend)/sum(.data$xDecompAgg) - 1),
@@ -198,7 +216,7 @@ robyn_modelselector <- function(
     select(.data$solID, .data$cluster, .data$top_sol) %>%
     mutate(cluster = as.character(.data$cluster)) %>%
     left_join(select(OutputCollect$clusters$clusters_means, .data$cluster, .data$n), "cluster") %>%
-    rename(sols_in_cluster = "n")
+    rename(incluster_models = "n")
   # Gather everything up
   dfa <- OutputCollect$allPareto$resultHypParam %>%
     filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
@@ -207,48 +225,53 @@ robyn_modelselector <- function(
     left_join(temp, "solID") %>% ungroup() %>%
     mutate(
       score = normalize(
-        normalize(.data$rsq_train) * wt[1] + # Most important metric
-          normalize(.data$perf) * wt[2] +
-          normalize(.data$potential_improvement) * wt[3] +
-          normalize(.data$non_zeroes) * wt[4] +
-          normalize(.data$sols_in_cluster) * wt[5]), # Some weight to avoid outliers
+        normalize(.data$rsq_train) * ifelse(
+          !"rsq_train" %in% metrics, 0, wt[which(metrics == "rsq_train")]) +
+        normalize(.data$performance) * ifelse(
+          !"performance" %in% metrics, 0, wt[which(metrics == "performance")]) +
+        normalize(.data$potential_improvement) * ifelse(
+          !"potential_improvement" %in% metrics, 0, wt[which(metrics == "potential_improvement")]) +
+        normalize(.data$non_zeroes) * ifelse(
+          !"non_zeroes" %in% metrics, 0, wt[which(metrics == "non_zeroes")]) +
+        normalize(.data$incluster_models) * ifelse(
+          !"incluster_models" %in% metrics, 0, wt[which(metrics == "incluster_models")])),
       note = case_when(
+        #.data$score == max(.data$score) ~ "****",
         rank(-.data$score) == 1 ~ "****",
         rank(-.data$score) == 2 ~ "***",
         rank(-.data$score) == 3 ~ "**",
         rank(-.data$score) == 4 ~ "*",
         TRUE ~ ""
       )) %>%
+    select(-.data$top_sol) %>%
     arrange(desc(.data$score))
   if (!quiet) message("Recommended considering these models first: ", v2t(head(dfa$solID, 4)))
   
-  # Metrics Used
-  metrics <- c("rsq_train", "perf", "potential_improvement", "non_zeroes")
-  metrics_names <- c(
-    "R2", ifelse(InputCollect$dep_var_type == "revenue", "ROAS", "CPA"),
-    "Potential Boost", "Non-Zeroes")
-  caption <- data.frame(metric = c(metrics_names, "Models per Cluster"), value = wt/sum(wt)) %>%
-    mutate(lab = sprintf("%s: %s%%", .data$metric, round(100 * .data$value))) %>%
+  caption <- metrics_used %>%
+    mutate(value = .data$wt/sum(.data$wt)) %>%
+    mutate(lab = sprintf("%s: %s%%", .data$metric_name, round(100 * .data$value))) %>%
     pull(.data$lab) %>%
     paste(., collapse = " | ")
   
   # Generate plot/dashboard
   p <- dfa %>%
+    mutate(cluster = sprintf("%s (%s)", .data$cluster, .data$incluster_models)) %>%
     tidyr::pivot_longer(all_of(metrics)) %>%
-    mutate(name_metrics = rep(metrics_names, length.out = nrow(.))) %>%
-    mutate(name = factor(.data$name, levels = metrics),
-           name_metrics = factor(.data$name_metrics, levels = metrics_names)) %>%
+    filter(.data$name %in% metrics) %>%
+    mutate(name_metrics = rep(metrics_used$metric_name, length.out = nrow(.)),
+           name = factor(.data$name, levels = metrics),
+           name_metrics = factor(.data$name_metrics, levels = metrics_used$metric_name)) %>%
+    filter(!.data$name %in% "incluster_models") %>%
     group_by(.data$name) %>%
     mutate(top = rank(-.data$value)) %>%
     left_join(select(dfa, .data$solID, .data$rsq_train), "solID") %>%
     group_by(.data$cluster) %>% 
     slice(1:(length(metrics) * n_per_cluster)) %>%
-    mutate(solID = paste(.data$solID, .data$note)) %>%
-    ggplot(aes(y = reorder(.data$solID, .data$rsq_train), x = .data$value)) +
+    mutate(solID = paste(.data$note, .data$solID)) %>%
+    ggplot(aes(y = reorder(.data$solID, .data$score), x = .data$value)) +
     geom_col(aes(group = .data$name, fill = .data$top)) +
     # geom_vline(xintercept = 1, alpha = 0.5) +
-    facet_grid(sprintf("%s (%s)", .data$cluster, .data$sols_in_cluster) ~
-                 .data$name_metrics, scales = "free") +
+    facet_grid(.data$cluster ~ .data$name_metrics, scales = "free") +
     labs(x = NULL, y = NULL,
          title = "Select a model based on these metrics and rankings",
          subtitle = paste(
@@ -260,7 +283,7 @@ robyn_modelselector <- function(
   
   # Create the exported object
   ret <- invisible(list(
-    data = select(dfa, "solID", all_of(metrics), everything()),
+    data = select(dfa, "solID", "score", all_of(metrics), everything(), -.data$note),
     plot = p))
   class(ret) <- c("robyn_modelselector", class(ret))
   return(ret)

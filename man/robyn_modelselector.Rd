@@ -8,6 +8,8 @@
 robyn_modelselector(
   InputCollect,
   OutputCollect,
+  metrics = c("rsq_train", "performance", "potential_improvement", "non_zeroes",
+    "incluster_models"),
   wt = c(2, 1, 1, 1, 0.1),
   n_per_cluster = 5,
   allocator_limits = c(0.5, 2),
@@ -21,10 +23,13 @@ robyn_modelselector(
 \arguments{
 \item{InputCollect, OutputCollect}{Robyn output objects.}
 
-\item{wt}{Vector. Length 5. Pick the weight for each of the normalized
-metrics to calculate the score and rank models. In order: R2, Performance
-(ROAS or CPA), Potential Performance Boost, Non-Zero Coefficients, Amount
-of models in a cluster.}
+\item{metrics}{Character vector. Which metrics do you want to consider?
+Pick any combination from: "rsq_train", "performance", "potential_improvement",
+"non_zeroes", "incluster_models".}
+
+\item{wt}{Vector. Weight for each of the normalized \code{metrics} selected,
+to calculate the score and rank models. Must have the same order and length
+of \code{metrics} parameter input.}
 
 \item{n_per_cluster}{Integer. How many models per cluster do you
 want to plot? Default: 5. Keep in mind they will all be considered
