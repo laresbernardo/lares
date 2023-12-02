@@ -69,6 +69,8 @@ allocator and how many non-zero coefficients there are.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">robyn_modelselector</span><span class="op">(</span></span>
 <span>  <span class="va">InputCollect</span>,</span>
 <span>  <span class="va">OutputCollect</span>,</span>
+<span>  metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rsq_train"</span>, <span class="st">"performance"</span>, <span class="st">"potential_improvement"</span>, <span class="st">"non_zeroes"</span>,</span>
+<span>    <span class="st">"incluster_models"</span><span class="op">)</span>,</span>
 <span>  wt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0.1</span><span class="op">)</span>,</span>
 <span>  n_per_cluster <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  allocator_limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">2</span><span class="op">)</span>,</span>
@@ -87,11 +89,16 @@ allocator and how many non-zero coefficients there are.</p>
 <dd><p>Robyn output objects.</p></dd>
 
 
+<dt>metrics</dt>
+<dd><p>Character vector. Which metrics do you want to consider?
+Pick any combination from: "rsq_train", "performance", "potential_improvement",
+"non_zeroes", "incluster_models".</p></dd>
+
+
 <dt>wt</dt>
-<dd><p>Vector. Length 5. Pick the weight for each of the normalized
-metrics to calculate the score and rank models. In order: R2, Performance
-(ROAS or CPA), Potential Performance Boost, Non-Zero Coefficients, Amount
-of models in a cluster.</p></dd>
+<dd><p>Vector. Weight for each of the normalized <code>metrics</code> selected,
+to calculate the score and rank models. Must have the same order and length
+of <code>metrics</code> parameter input.</p></dd>
 
 
 <dt>n_per_cluster</dt>
