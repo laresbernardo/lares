@@ -20,7 +20,7 @@ allocator and how many non-zero coefficients there are."><meta property="og:imag
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.4.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.4.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,8 +91,11 @@ allocator and how many non-zero coefficients there are.</p>
 
 <dt>metrics</dt>
 <dd><p>Character vector. Which metrics do you want to consider?
-Pick any combination from: "rsq_train", "performance", "potential_improvement",
-"non_zeroes", "incluster_models".</p></dd>
+Pick any combination from: "rsq_train" for trained R squared,
+"performance" for ROAS or (inversed) CPA, "potential_improvement" for
+default budget allocator improvement using <code>allocator_limits</code>,
+"non_zeroes" for non-zero beta coefficients, and "incluster_models" for
+amount of models per cluster.</p></dd>
 
 
 <dt>wt</dt>
