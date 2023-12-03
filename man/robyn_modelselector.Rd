@@ -24,8 +24,11 @@ robyn_modelselector(
 \item{InputCollect, OutputCollect}{Robyn output objects.}
 
 \item{metrics}{Character vector. Which metrics do you want to consider?
-Pick any combination from: "rsq_train", "performance", "potential_improvement",
-"non_zeroes", "incluster_models".}
+Pick any combination from: "rsq_train" for trained R squared,
+"performance" for ROAS or (inversed) CPA, "potential_improvement" for
+default budget allocator improvement using \code{allocator_limits},
+"non_zeroes" for non-zero beta coefficients, and "incluster_models" for
+amount of models per cluster.}
 
 \item{wt}{Vector. Weight for each of the normalized \code{metrics} selected,
 to calculate the score and rank models. Must have the same order and length

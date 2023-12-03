@@ -120,8 +120,11 @@ robyn_hypsbuilder <- function(
 #' @inheritParams corr_var
 #' @param InputCollect,OutputCollect Robyn output objects.
 #' @param metrics Character vector. Which metrics do you want to consider?
-#' Pick any combination from: "rsq_train", "performance", "potential_improvement",
-#' "non_zeroes", "incluster_models".
+#' Pick any combination from: "rsq_train" for trained R squared,
+#' "performance" for ROAS or (inversed) CPA, "potential_improvement" for
+#' default budget allocator improvement using \code{allocator_limits},
+#' "non_zeroes" for non-zero beta coefficients, and "incluster_models" for
+#' amount of models per cluster.
 #' @param wt Vector. Weight for each of the normalized \code{metrics} selected,
 #' to calculate the score and rank models. Must have the same order and length
 #' of \code{metrics} parameter input.
@@ -156,7 +159,7 @@ robyn_modelselector <- function(
     metric = c("rsq_train", "performance", "potential_improvement",
                "non_zeroes", "incluster_models", "nrmse", "decomp.rssd", "mape"),
     metric_name = c(
-      "R^2", ifelse(InputCollect$dep_var_type == "revenue", "ROAS", "CPA"),
+      "R^2", ifelse(InputCollect$dep_var_type == "revenue", "ROAS", "CPA (Inversed)"),
       "Potential Boost", "Non-Zeroes", "Models in Cluster",
       "NRMSE", "DECOMP.RSSD", "MAPE"))
   check_opts(metrics, metrics_df$metric)
@@ -206,10 +209,8 @@ robyn_modelselector <- function(
     filter(!is.na(.data$mean_spend)) %>%
     filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
     group_by(.data$solID) %>%
-    summarise(performance = ifelse(
-      InputCollect$dep_var_type == "revenue",
-      sum(.data$xDecompAgg)/sum(.data$total_spend) - 1,
-      sum(.data$total_spend)/sum(.data$xDecompAgg) - 1),
+    summarise(
+      performance = sum(.data$xDecompAgg)/sum(.data$total_spend) - 1,
       non_zeroes = 1 - length(.data$rn[which(round(.data$coef, 6) == 0)])/length(.data$rn),
       top_channels = paste(.data$rn[head(rank(-.data$roi_total, ties.method = "first"), 3)], collapse = ", "),
       zero_coef = paste(.data$rn[which(round(.data$coef, 6) == 0)], collapse = ", ")) %>%
