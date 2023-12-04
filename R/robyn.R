@@ -9,12 +9,12 @@
 #' @param media_type Character vector. Must be ength 1 or same as
 #' \code{paid_media_spends}. Pick, for every \code{paid_media_spends} value,
 #' what type of media it is: "online" or "offline".
-#' @param lagged Boolean vector. Must be ength 1 or same as
-#' \code{paid_media_spends}. Pick, for every \code{paid_media_spends} value,
-#' if you wish to have a lagged effect. Only valid for Weibull adstock.
 #' @param adstock Character. Pick one of: "geometric" or "weibull".
 #' @param date_type Character. Pick one of: "daily", "weekly, or "monthly".
 #' Only valid to transform thetas when using geometric adstock.
+#' @param lagged Boolean vector. Must be ength 1 or same as
+#' \code{paid_media_spends}. Pick, for every \code{paid_media_spends} value,
+#' if you wish to have a lagged effect. Only valid for Weibull adstock.
 #' @return list with default hyperparameters ranges.
 #' @examples
 #' robyn_hypsbuilder(
@@ -35,9 +35,9 @@
 robyn_hypsbuilder <- function(
     paid_media_spends,
     media_type = "default",
-    lagged = FALSE,
     adstock = "geometric",
-    date_type = "weekly") {
+    date_type = "weekly",
+    lagged = FALSE) {
   
   # Check inputs validity
   check_opts(media_type, c("default", "online", "offline"))
@@ -86,15 +86,16 @@ robyn_hypsbuilder <- function(
       .data$Var2 == "scales" & isFALSE(.data$lagged) ~ 0.2,
       .data$Var2 == "scales" ~ 0.2
     )) %>%
+    # Applies only for geometric adstock
     mutate(
       low = case_when(
-        date_type == "daily" ~ .data$low^(1/7),
-        date_type == "monthly" ~ .data$low^(4),
+        .data$Var2 == "thetas" & date_type == "daily"~ .data$low^(1/7),
+        .data$Var2 == "thetas" & date_type == "monthly"~ .data$low^(4),
         TRUE ~ .data$low
       ),
       high = case_when(
-        date_type == "daily" ~ .data$high^(1/7),
-        date_type == "monthly" ~ .data$high^(4),
+        .data$Var2 == "thetas" & date_type == "daily"~ .data$high^(1/7),
+        .data$Var2 == "thetas" & date_type == "monthly"~ .data$high^(4),
         TRUE ~ .data$high
       )
     ) %>%

@@ -7,9 +7,9 @@
 robyn_hypsbuilder(
   paid_media_spends,
   media_type = "default",
-  lagged = FALSE,
   adstock = "geometric",
-  date_type = "weekly"
+  date_type = "weekly",
+  lagged = FALSE
 )
 }
 \arguments{
@@ -19,14 +19,14 @@ robyn_hypsbuilder(
 \code{paid_media_spends}. Pick, for every \code{paid_media_spends} value,
 what type of media it is: "online" or "offline".}
 
-\item{lagged}{Boolean vector. Must be ength 1 or same as
-\code{paid_media_spends}. Pick, for every \code{paid_media_spends} value,
-if you wish to have a lagged effect. Only valid for Weibull adstock.}
-
 \item{adstock}{Character. Pick one of: "geometric" or "weibull".}
 
 \item{date_type}{Character. Pick one of: "daily", "weekly, or "monthly".
 Only valid to transform thetas when using geometric adstock.}
+
+\item{lagged}{Boolean vector. Must be ength 1 or same as
+\code{paid_media_spends}. Pick, for every \code{paid_media_spends} value,
+if you wish to have a lagged effect. Only valid for Weibull adstock.}
 }
 \value{
 list with default hyperparameters ranges.
