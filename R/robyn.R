@@ -55,9 +55,9 @@ robyn_hypsbuilder <- function(
     media_type <- rep(media_type, length(paid_media_spends))
   if (length(lagged) == 1)
     lagged <- rep(lagged, length(paid_media_spends))
-  if (any(lagged) && adstock == "geometric")
-    stop("To be able to have a lagged effect you need to set Weibull adstock")
-  
+  if (any(lagged) && adstock %in% c("geometric", "weibull_cdf"))
+    stop("To be able to have a lagged effect you need to set 'weibull_pdf' adstock")
+ 
   # Generate all combinations and data.frame
   df <- expand.grid(paid_media_spends, all_hyps)
   df$media_type <- rep(media_type, length(all_hyps))
