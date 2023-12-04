@@ -18,7 +18,7 @@ passed to Robyn::robyn_inputs()."><meta property="og:image" content="https://lar
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.4.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.4.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,9 +66,9 @@ passed to <code>Robyn::robyn_inputs()</code>.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">robyn_hypsbuilder</span><span class="op">(</span></span>
 <span>  <span class="va">paid_media_spends</span>,</span>
 <span>  media_type <span class="op">=</span> <span class="st">"default"</span>,</span>
-<span>  lagged <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  adstock <span class="op">=</span> <span class="st">"geometric"</span>,</span>
-<span>  date_type <span class="op">=</span> <span class="st">"weekly"</span></span>
+<span>  date_type <span class="op">=</span> <span class="st">"weekly"</span>,</span>
+<span>  lagged <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -84,12 +84,6 @@ passed to <code>Robyn::robyn_inputs()</code>.</p>
 what type of media it is: "online" or "offline".</p></dd>
 
 
-<dt>lagged</dt>
-<dd><p>Boolean vector. Must be ength 1 or same as
-<code>paid_media_spends</code>. Pick, for every <code>paid_media_spends</code> value,
-if you wish to have a lagged effect. Only valid for Weibull adstock.</p></dd>
-
-
 <dt>adstock</dt>
 <dd><p>Character. Pick one of: "geometric" or "weibull".</p></dd>
 
@@ -97,6 +91,12 @@ if you wish to have a lagged effect. Only valid for Weibull adstock.</p></dd>
 <dt>date_type</dt>
 <dd><p>Character. Pick one of: "daily", "weekly, or "monthly".
 Only valid to transform thetas when using geometric adstock.</p></dd>
+
+
+<dt>lagged</dt>
+<dd><p>Boolean vector. Must be ength 1 or same as
+<code>paid_media_spends</code>. Pick, for every <code>paid_media_spends</code> value,
+if you wish to have a lagged effect. Only valid for Weibull adstock.</p></dd>
 
 </dl></div>
     <div class="section level2">
