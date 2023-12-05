@@ -5,7 +5,7 @@
 \title{Robyn: Generate default hyperparameters}
 \usage{
 robyn_hypsbuilder(
-  paid_media_spends,
+  channels,
   media_type = "default",
   adstock = "geometric",
   date_type = "weekly",
@@ -13,10 +13,10 @@ robyn_hypsbuilder(
 )
 }
 \arguments{
-\item{paid_media_spends}{Character vector. Paid media variables names.}
+\item{channels}{Character vector. Paid media and organic variables names.}
 
 \item{media_type}{Character vector. Must be ength 1 or same as
-\code{paid_media_spends}. Pick, for every \code{paid_media_spends} value,
+\code{channels}. Pick, for every \code{channels} value,
 what type of media it is: "online" or "offline".}
 
 \item{adstock}{Character. Pick one of: "geometric" or "weibull".}
@@ -25,19 +25,19 @@ what type of media it is: "online" or "offline".}
 Only valid to transform thetas when using geometric adstock.}
 
 \item{lagged}{Boolean vector. Must be ength 1 or same as
-\code{paid_media_spends}. Pick, for every \code{paid_media_spends} value,
+\code{channels}. Pick, for every \code{channels} value,
 if you wish to have a lagged effect. Only valid for Weibull adstock.}
 }
 \value{
 list with default hyperparameters ranges.
 }
 \description{
-Generate a list with hyperparameter defaults values, ready to be
+Generate a list with hyperparameter default values, ready to be
 passed to \code{Robyn::robyn_inputs()}.
 }
 \examples{
 robyn_hypsbuilder(
-  paid_media_spends = c(
+  channels = c(
     "branded_search_spend",
     "nonbranded_search_spend",
     "facebook_spend",

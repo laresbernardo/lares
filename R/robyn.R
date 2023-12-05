@@ -1,24 +1,24 @@
 ####################################################################
 #' Robyn: Generate default hyperparameters
 #'
-#' Generate a list with hyperparameter defaults values, ready to be
+#' Generate a list with hyperparameter default values, ready to be
 #' passed to \code{Robyn::robyn_inputs()}.
 #'
 #' @family Robyn
-#' @param paid_media_spends Character vector. Paid media variables names.
+#' @param channels Character vector. Paid media and organic variables names.
 #' @param media_type Character vector. Must be ength 1 or same as
-#' \code{paid_media_spends}. Pick, for every \code{paid_media_spends} value,
+#' \code{channels}. Pick, for every \code{channels} value,
 #' what type of media it is: "online" or "offline".
 #' @param adstock Character. Pick one of: "geometric" or "weibull".
 #' @param date_type Character. Pick one of: "daily", "weekly, or "monthly".
 #' Only valid to transform thetas when using geometric adstock.
 #' @param lagged Boolean vector. Must be ength 1 or same as
-#' \code{paid_media_spends}. Pick, for every \code{paid_media_spends} value,
+#' \code{channels}. Pick, for every \code{channels} value,
 #' if you wish to have a lagged effect. Only valid for Weibull adstock.
 #' @return list with default hyperparameters ranges.
 #' @examples
 #' robyn_hypsbuilder(
-#'   paid_media_spends = c(
+#'   channels = c(
 #'     "branded_search_spend",
 #'     "nonbranded_search_spend",
 #'     "facebook_spend",
@@ -33,7 +33,7 @@
 #'   date_type = "weekly")
 #' @export
 robyn_hypsbuilder <- function(
-    paid_media_spends,
+    channels,
     media_type = "default",
     adstock = "geometric",
     date_type = "weekly",
@@ -52,14 +52,14 @@ robyn_hypsbuilder <- function(
   
   # Repeat to all channels when provided 1 value
   if (length(media_type) == 1)
-    media_type <- rep(media_type, length(paid_media_spends))
+    media_type <- rep(media_type, length(channels))
   if (length(lagged) == 1)
-    lagged <- rep(lagged, length(paid_media_spends))
+    lagged <- rep(lagged, length(channels))
   if (any(lagged) && adstock %in% c("geometric", "weibull_cdf"))
     stop("To be able to have a lagged effect you need to set 'weibull_pdf' adstock")
  
   # Generate all combinations and data.frame
-  df <- expand.grid(paid_media_spends, all_hyps)
+  df <- expand.grid(channels, all_hyps)
   df$media_type <- rep(media_type, length(all_hyps))
   df$lagged <- rep(lagged, length(all_hyps))
   
@@ -99,7 +99,7 @@ robyn_hypsbuilder <- function(
         TRUE ~ .data$high
       )
     ) %>%
-    mutate(Var1 = factor(.data$Var1, levels = paid_media_spends)) %>%
+    mutate(Var1 = factor(.data$Var1, levels = channels)) %>%
     arrange(.data$Var1)
   
   # Return as named list
