@@ -113,22 +113,25 @@ robyn_hypsbuilder <- function(
 ####################################################################
 #' Robyn: Model Selection Viz 
 #'
-#' Consider N models per cluster to select the right one using
+#' Consider N models per cluster to select the right ones to study using
 #' several metrics to consider such as potential improvement on budget
-#' allocator and how many non-zero coefficients there are.
+#' allocator, how many non-zero coefficients there are, R squared,
+#' historical performance, etc.
 #'
 #' @family Robyn
 #' @inheritParams corr_var
 #' @param InputCollect,OutputCollect Robyn output objects.
 #' @param metrics Character vector. Which metrics do you want to consider?
 #' Pick any combination from: "rsq_train" for trained R squared,
-#' "performance" for ROAS or (inversed) CPA, "potential_improvement" for
+#' "performance" for ROAS or (inverse) CPA, "potential_improvement" for
 #' default budget allocator improvement using \code{allocator_limits},
 #' "non_zeroes" for non-zero beta coefficients, and "incluster_models" for
 #' amount of models per cluster.
 #' @param wt Vector. Weight for each of the normalized \code{metrics} selected,
 #' to calculate the score and rank models. Must have the same order and length
 #' of \code{metrics} parameter input.
+#' @param top Integer. How many ranked models to star? The better the model
+#' is, the more stars it will have marked.
 #' @param allocator_limits Numeric vector, length 2. How flexible do you
 #' want to be with the budget allocator? By default, we'll consider a
 #' 0.5X and 2X range to let the budget shift across channels.
@@ -146,6 +149,7 @@ robyn_modelselector <- function(
                 "potential_improvement",
                 "non_zeroes", "incluster_models"),
     wt = c(2, 1, 1, 1, 0.1),
+    top = 4,
     n_per_cluster = 5,
     allocator_limits = c(0.5, 2),
     quiet = FALSE,
@@ -246,17 +250,12 @@ robyn_modelselector <- function(
           normalize(.data$mape) * ifelse(
             !"mape" %in% metrics, 0, wt[which(metrics == "mape")])
       ),
-      note = case_when(
-        #.data$score == max(.data$score) ~ "****",
-        rank(-.data$score) == 1 ~ "****",
-        rank(-.data$score) == 2 ~ "***",
-        rank(-.data$score) == 3 ~ "**",
-        rank(-.data$score) == 4 ~ "*",
-        TRUE ~ ""
-      )) %>%
-    select(-.data$top_sol) %>%
+      aux = rank(-.data$score)) %>%
+    rowwise() %>%
+    mutate(note = ifelse(.data$aux %in% 1:top, paste(rep("*", (top + 1) - .data$aux), collapse = ""), "")) %>%
+    select(-.data$top_sol, -.data$aux) %>%
     arrange(desc(.data$score), desc(3), desc(4))
-  if (!quiet) message("Recommended considering these models first: ", v2t(head(dfa$solID, 4)))
+  if (!quiet) message("Recommended considering these models first: ", v2t(head(dfa$solID, top)))
   
   caption <- metrics_used %>%
     mutate(value = .data$wt/sum(.data$wt)) %>%

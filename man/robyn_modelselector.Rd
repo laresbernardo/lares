@@ -11,6 +11,7 @@ robyn_modelselector(
   metrics = c("rsq_train", "performance", "potential_improvement", "non_zeroes",
     "incluster_models"),
   wt = c(2, 1, 1, 1, 0.1),
+  top = 4,
   n_per_cluster = 5,
   allocator_limits = c(0.5, 2),
   quiet = FALSE,
@@ -25,7 +26,7 @@ robyn_modelselector(
 
 \item{metrics}{Character vector. Which metrics do you want to consider?
 Pick any combination from: "rsq_train" for trained R squared,
-"performance" for ROAS or (inversed) CPA, "potential_improvement" for
+"performance" for ROAS or (inverse) CPA, "potential_improvement" for
 default budget allocator improvement using \code{allocator_limits},
 "non_zeroes" for non-zero beta coefficients, and "incluster_models" for
 amount of models per cluster.}
@@ -33,6 +34,9 @@ amount of models per cluster.}
 \item{wt}{Vector. Weight for each of the normalized \code{metrics} selected,
 to calculate the score and rank models. Must have the same order and length
 of \code{metrics} parameter input.}
+
+\item{top}{Integer. How many ranked models to star? The better the model
+is, the more stars it will have marked.}
 
 \item{n_per_cluster}{Integer. How many models per cluster do you
 want to plot? Default: 5. Keep in mind they will all be considered
@@ -54,9 +58,10 @@ want to be with the budget allocator? By default, we'll consider a
 list with data.frame and plot.
 }
 \description{
-Consider N models per cluster to select the right one using
+Consider N models per cluster to select the right ones to study using
 several metrics to consider such as potential improvement on budget
-allocator and how many non-zero coefficients there are.
+allocator, how many non-zero coefficients there are, R squared,
+historical performance, etc.
 }
 \seealso{
 Other Robyn: 
