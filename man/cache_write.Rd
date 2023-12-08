@@ -5,6 +5,7 @@
 \alias{cache_read}
 \alias{cache_exists}
 \alias{cache_clear}
+\alias{cache_pipe}
 \title{Cache Save and Load (Write and Read)}
 \usage{
 cache_write(
@@ -27,6 +28,8 @@ cache_read(
 cache_exists(base = NULL, cache_dir = getOption("LARES_CACHE_DIR"), ...)
 
 cache_clear(cache_dir = getOption("LARES_CACHE_DIR"), quiet = FALSE, ...)
+
+cache_pipe(data, base = "cache_pipe", read = TRUE, write = TRUE, ...)
 }
 \arguments{
 \item{data}{Object}
@@ -48,6 +51,8 @@ one cache file at a time because vectors are concatenated.}
 \item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
 
 \item{...}{Additional parameters.}
+
+\item{read, write}{Boolean. Do you wish to read and or write cache?}
 }
 \value{
 \code{cache_write}. No return value, called for side effects.
@@ -57,6 +62,8 @@ one cache file at a time because vectors are concatenated.}
 \code{cache_exists}. Boolean. Result of \code{base} existence.
 
 \code{cache_clear}. Invisible vector containing cache file names removed.
+
+\code{cache_pipe}. Same as \code{x} or cached result.
 }
 \description{
 This function lets the user save and load a cache of any R object to

@@ -142,3 +142,20 @@ cache_clear <- function(cache_dir = getOption("LARES_CACHE_DIR"), quiet = FALSE,
   }
   return(invisible(caches))
 }
+
+#' @rdname cache_write
+#' @param read,write Boolean. Do you wish to read and or write cache?
+#' @return \code{cache_pipe}. Same as \code{x} or cached result.
+#' @export
+cache_pipe <- function(data, base = "cache_pipe", read = TRUE, write = TRUE, ...) {
+  if (isTRUE(read) && lares::cache_exists(base, ...)) {
+    y <- cache_read(base, ...)
+    return(y)
+  } else {
+    if (isTRUE(write)) {
+      data <- eval(data)
+      cache_write(data, base, ...) 
+    }
+    return(data)
+  }
+}
