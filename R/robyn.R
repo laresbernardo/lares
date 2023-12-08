@@ -166,7 +166,7 @@ robyn_modelselector <- function(
     metric_name = c(
       "R^2", ifelse(InputCollect$dep_var_type == "revenue", "ROAS", "CPA (Inversed)"),
       "Potential Boost", "Non-Zeroes", "Models in Cluster",
-      "NRMSE", "DECOMP.RSSD", "MAPE"))
+      "NRMSE (Inverted)", "DECOMP.RSSD (Inverted)", "MAPE (Inverted)"))
   check_opts(metrics, metrics_df$metric)
   
   # Metrics Used
@@ -243,11 +243,11 @@ robyn_modelselector <- function(
             !"non_zeroes" %in% metrics, 0, wt[which(metrics == "non_zeroes")]) +
           normalize(.data$incluster_models) * ifelse(
             !"incluster_models" %in% metrics, 0, wt[which(metrics == "incluster_models")]) +
-          normalize(.data$nrmse) * ifelse(
+          normalize(-.data$nrmse) * ifelse(
             !"nrmse" %in% metrics, 0, wt[which(metrics == "nrmse")]) +
-          normalize(.data$decomp.rssd) * ifelse(
+          normalize(-.data$decomp.rssd) * ifelse(
             !"decomp.rssd" %in% metrics, 0, wt[which(metrics == "decomp.rssd")]) +
-          normalize(.data$mape) * ifelse(
+          normalize(-.data$mape) * ifelse(
             !"mape" %in% metrics, 0, wt[which(metrics == "mape")])
       ),
       aux = rank(-.data$score)) %>%
