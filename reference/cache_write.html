@@ -82,7 +82,9 @@ improve timings and UX.</p>
 <span></span>
 <span><span class="fu">cache_exists</span><span class="op">(</span>base <span class="op">=</span> <span class="cn">NULL</span>, cache_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"LARES_CACHE_DIR"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">cache_clear</span><span class="op">(</span>cache_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"LARES_CACHE_DIR"</span><span class="op">)</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">cache_clear</span><span class="op">(</span>cache_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"LARES_CACHE_DIR"</span><span class="op">)</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">cache_pipe</span><span class="op">(</span><span class="va">data</span>, base <span class="op">=</span> <span class="st">"cache_pipe"</span>, read <span class="op">=</span> <span class="cn">TRUE</span>, write <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -118,6 +120,10 @@ one cache file at a time because vectors are concatenated.</p></dd>
 <dt>...</dt>
 <dd><p>Additional parameters.</p></dd>
 
+
+<dt>read, write</dt>
+<dd><p>Boolean. Do you wish to read and or write cache?</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -133,6 +139,9 @@ one cache file at a time because vectors are concatenated.</p></dd>
 
 
 <p><code>cache_clear</code>. Invisible vector containing cache file names removed.</p>
+
+
+<p><code>cache_pipe</code>. Same as <code>x</code> or cached result.</p>
     </div>
 
     <div class="section level2">
@@ -152,11 +161,11 @@ one cache file at a time because vectors are concatenated.</p></dd>
 <span class="r-in"><span><span class="fu">cache_exists</span><span class="op">(</span><span class="st">"lares_cache_2021-06-01.A.B.C"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"filename")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpNcsfVD/lares_cache_2021-06-01.A.B.C.RDS"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmpg3FyQa/lares_cache_2021-06-01.A.B.C.RDS"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"base")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "lares_cache_2021-06-01.A.B.C"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"cache_dir")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpNcsfVD"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmpg3FyQa"</span>
 <span class="r-in"><span><span class="fu">cache_clear</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 1 cache files succesfully!</span>
 </code></pre></div>
