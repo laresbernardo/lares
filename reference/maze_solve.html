@@ -26,7 +26,7 @@ search combining parameters to find best route."><meta property="og:image" conte
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.5.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.5.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,14 +82,24 @@ search combining parameters to find best route.</p>
 <span>  inertia <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  aim <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  diagonal <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  timeout <span class="op">=</span> <span class="fl">10</span>,</span>
-<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  random <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  timeout <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for maze_solve</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">maze_gridsearch</span><span class="op">(</span><span class="va">maze</span>, start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">maze</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">maze_gridsearch</span><span class="op">(</span></span>
+<span>  <span class="va">maze</span>,</span>
+<span>  start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">maze</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">123</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -117,6 +127,11 @@ closer to the <code>end</code> point, ranked and sorted by shorter distances.</p
 freedom to move, if not, only 4 (up, down, left, right).</p></dd>
 
 
+<dt>random</dt>
+<dd><p>Boolean. When enabled, algorithm will pick next direction
+randomly.</p></dd>
+
+
 <dt>timeout</dt>
 <dd><p>Numeric. How many seconds set for timeout to force
 algorithm to stop trying new paths?</p></dd>
@@ -126,12 +141,16 @@ algorithm to stop trying new paths?</p></dd>
 <dd><p>Boolean. Keep quiet? If not, show messages</p></dd>
 
 
-<dt>x</dt>
-<dd><p>maze_solve object</p></dd>
+<dt>seed</dt>
+<dd><p>Numeric. Seed to replicate random results.</p></dd>
 
 
 <dt>...</dt>
 <dd><p>Additional parameters passed to <code>corr</code></p></dd>
+
+
+<dt>x</dt>
+<dd><p>maze_solve object</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -159,8 +178,10 @@ path coordinates and directions, steps counter and turns counter.</p>
 <span class="r-in"><span>  <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span></span></span>
 <span class="r-in"><span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">12</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">maze_solve</span><span class="op">(</span><span class="va">micromouse</span>, start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total steps:  32 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total turns:  16 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Setup: Inertia (FALSE) | Aim (TRUE) | Random (FALSE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Total steps:  32 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Total turns:  16 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     1  2  3  4  5  6  7  8  9 10 11 12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  [] [] [] [] [] [] [] [] [] [] [] []</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  []  →  →  →  →  →  →  →  →  ↘    []</span>
