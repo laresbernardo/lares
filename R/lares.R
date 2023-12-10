@@ -48,7 +48,7 @@
 #' @importFrom rpart rpart rpart.control
 #' @importFrom rpart.plot rpart.rules rpart.plot
 #' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text
-#' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict
+#' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict runif
 #' reorder start kmeans var xtabs as.formula prcomp p.adjust pt model.matrix qt cor.test
 #' @importFrom stringr fixed str_count str_length str_pad str_replace_all str_split
 #' str_to_title word

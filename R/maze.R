@@ -18,8 +18,11 @@
 #' closer to the \code{end} point, ranked and sorted by shorter distances.
 #' @param diagonal Boolean. When enabled, algorithm will have 8 degrees of
 #' freedom to move, if not, only 4 (up, down, left, right).
+#' @param random Boolean. When enabled, algorithm will pick next direction
+#' randomly.
 #' @param timeout Numeric. How many seconds set for timeout to force
 #' algorithm to stop trying new paths?
+#' @param seed Numeric. Seed to replicate random results.
 #' @return List with data.frame containing solved solution, data.frame with
 #' path coordinates and directions, steps counter and turns counter.
 #' @examples
@@ -41,9 +44,12 @@
 #' @export
 maze_solve <- function(
     maze, start = c(1, 1), end = dim(maze),
-    inertia = FALSE, aim = TRUE, diagonal = TRUE,
-    timeout = 10,
-    quiet = FALSE) {
+    inertia = FALSE, aim = TRUE, diagonal = TRUE, random = FALSE,
+    timeout = 4,
+    quiet = FALSE,
+    seed = NULL,
+    ...) {
+  
   # Inputs validation
   if (!is.matrix(maze)) {
     stop("Input 'maze' must be a matrix or a data.frame")
@@ -55,10 +61,13 @@ maze_solve <- function(
   }
   if (maze[start[1], start[1]] != 0) stop("Starting point must be a 0")
   if (maze[end[1], end[1]] != 0) stop("Ending point must be a 0")
-
+  if (is.null(seed)) seed <- round(1000 * runif(1))
+  if (!random) seed <- 1
+  set.seed(seed)
+  
   # Initialize data frame to store path coordinates
   tic("maze_solve_timeout")
-  result <- maze_solve_recursive(maze, start, end, aim, inertia, diagonal, timeout)
+  result <- maze_solve_recursive(maze, start, end, aim, inertia, diagonal, random, timeout)
 
   # Process results
   if (!isFALSE(result)) {
@@ -80,7 +89,16 @@ maze_solve <- function(
     }
     result$steps_counter <- nrow(result$path_coords)
     result$turns_counter <- count_direction_changes(result$path_coords) + 1
+  } else {
+    result <- list(maze = NULL)  
   }
+  result$start <- paste(start, collapse = ",")
+  result$end <- paste(end, collapse = ",")
+  result$inertia <- inertia
+  result$aim <- aim
+  result$random <- random
+  result$seed <- seed
+  
   class(result) <- c("maze_solve", class(result))
   if (!quiet) print(result)
   return(invisible(result))
@@ -90,9 +108,13 @@ maze_solve <- function(
 #' @param x maze_solve object
 #' @export
 print.maze_solve <- function(x, ...) {
-  if (!isFALSE(x)) {
-    cat("Total steps: ", x$steps_counter, "\n")
-    cat("Total turns: ", x$turns_counter, "\n")
+  cat(sprintf(
+    "Setup: Inertia (%s) | Aim (%s) | Random (%s)%s\n",
+    x$inertia, x$aim, x$random,
+    ifelse(x$random, sprintf(" | Seed (%s)", x$seed), "")))
+  if (!is.null(x$maze)) {
+    cat("  Total steps: ", x$steps_counter, "\n")
+    cat("  Total turns: ", x$turns_counter, "\n\n")
     print(x$maze)
   } else {
     cat("No solution found for this maze\n")
@@ -105,9 +127,11 @@ maze_solve_recursive <- function(
     aim = TRUE,
     inertia = TRUE,
     diagonal = FALSE,
+    random = FALSE,
     timeout = 10,
     path_coords = data.frame(row = integer(0), col = integer(0)),
     prev_direction = NULL) {
+
   # When solution found or timeout reached, return results
   toci <- toc("maze_solve_timeout", quiet = TRUE)
   timeout_reached <- any(toci$toc - toci$tic > timeout)
@@ -129,6 +153,7 @@ maze_solve_recursive <- function(
   # Rank next positions based on minimum distance to goal
   temp <- if (aim) end else c(row, col)
   positions <- rank_positions(row, col, temp[1], temp[2], diagonal)
+  if (random) positions <- positions[sample(1:nrow(positions)), ]
 
   # Ensure that the direction it came from is the first move if inertia is TRUE
   if (!is.null(prev_direction) & isTRUE(inertia)) {
@@ -152,8 +177,8 @@ maze_solve_recursive <- function(
       # Recursively explore the next cell
       nexti <- c(next_row, next_col)
       result <- maze_solve_recursive(
-        maze, nexti, end, aim, inertia, diagonal, timeout,
-        path_coords,
+        maze, nexti, end, aim, inertia, diagonal, random, 
+        timeout, path_coords,
         prev_direction = c(row, col)
       )
       if (!is.logical(result)) {
@@ -166,31 +191,43 @@ maze_solve_recursive <- function(
 
 #' @rdname maze_solve
 #' @export
-maze_gridsearch <- function(maze, start = c(2, 2), end = round(dim(maze) / 2), quiet = TRUE) {
+maze_gridsearch <- function(
+    maze,
+    start = c(2, 2),
+    end = round(dim(maze) / 2),
+    quiet = TRUE,
+    seed = 123, ...) {
   results <- list()
   for (a in c(TRUE, FALSE)) {
     for (b in c(TRUE, FALSE)) {
-      results <- append(
-        results,
-        list(maze_solve(
-          maze,
-          start = start, end = end,
-          inertia = a, diagonal = b,
-          quiet = quiet
-        ))
-      )
-      results <- append(
-        results,
-        list(maze_solve(
-          maze,
-          start = end, end = start,
-          inertia = a, diagonal = b,
-          quiet = quiet
-        ))
-      )
+      for (c in c(TRUE, FALSE)) {
+        for (d in c(TRUE, FALSE)) {
+          this <- maze_solve(
+            maze,
+            start = start, end = end,
+            inertia = a, diagonal = b, random = c, aim = d,
+            quiet = quiet, seed = seed, ...
+          )
+          if (!is.logical(this))
+            results <- append(results, list(this)) 
+          this <- maze_solve(
+            maze,
+            start = end, end = start,
+            inertia = a, diagonal = b, random = c, aim = d,
+            quiet = quiet, seed = seed, ...
+          )
+          if (!is.logical(this))
+            results <- append(results, list(this))  
+        }
+      }
     }
   }
-  return(results)
+  counters <- dplyr::bind_rows(lapply(results, function(y)
+    y[unlist(lapply(y, function(x) !is.data.frame(x) && !is.null(x)))]))
+  counters <- data.frame(id = seq_along(results), counters) %>%
+    arrange(.data$steps_counter, .data$turns_counter) %>%
+    as_tibble()
+  return(list(solutions = results, results = counters))
 }
 
 # Function to calculate the number of direction changes

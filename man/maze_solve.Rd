@@ -13,13 +13,23 @@ maze_solve(
   inertia = FALSE,
   aim = TRUE,
   diagonal = TRUE,
-  timeout = 10,
-  quiet = FALSE
+  random = FALSE,
+  timeout = 4,
+  quiet = FALSE,
+  seed = NULL,
+  ...
 )
 
 \method{print}{maze_solve}(x, ...)
 
-maze_gridsearch(maze, start = c(2, 2), end = round(dim(maze)/2), quiet = TRUE)
+maze_gridsearch(
+  maze,
+  start = c(2, 2),
+  end = round(dim(maze)/2),
+  quiet = TRUE,
+  seed = 123,
+  ...
+)
 }
 \arguments{
 \item{maze}{Matrix. Using 0 for open space and 1 for walls.}
@@ -35,14 +45,19 @@ closer to the \code{end} point, ranked and sorted by shorter distances.}
 \item{diagonal}{Boolean. When enabled, algorithm will have 8 degrees of
 freedom to move, if not, only 4 (up, down, left, right).}
 
+\item{random}{Boolean. When enabled, algorithm will pick next direction
+randomly.}
+
 \item{timeout}{Numeric. How many seconds set for timeout to force
 algorithm to stop trying new paths?}
 
 \item{quiet}{Boolean. Keep quiet? If not, show messages}
 
-\item{x}{maze_solve object}
+\item{seed}{Numeric. Seed to replicate random results.}
 
 \item{...}{Additional parameters passed to \code{corr}}
+
+\item{x}{maze_solve object}
 }
 \value{
 List with data.frame containing solved solution, data.frame with
