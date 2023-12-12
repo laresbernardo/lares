@@ -156,6 +156,16 @@ robyn_modelselector <- function(
     cache = TRUE,
     ...) {
   
+  if (length(OutputCollect$allSolutions) <= 1){
+    msg <- "Not enough models for model selection"
+    warning(msg)
+    ret <- invisible(list(
+      data = tibble(solID = OutputCollect$allSolutions, score = 1),
+      plot = noPlot(msg)))
+    class(ret) <- c("robyn_modelselector", class(ret))
+    return(ret)
+  }
+  
   stopifnot(length(wt) == length(metrics))
   stopifnot(length(allocator_limits) == 2)
   

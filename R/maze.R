@@ -1,5 +1,5 @@
 ####################################################################
-#' Maze Solver, inspired in Micromouse competitions
+#' Maze Solver, inspired by Micromouse competitions
 #'
 #' Modified recursive depth-first search (DFS) algorithm to solve mazes.
 #' It explores the maze by recursively moving to adjacent cells until it finds a
@@ -29,9 +29,9 @@
 #' micromouse <- matrix(c(
 #'   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 #'   1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-#'   1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1,
+#'   1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1,
 #'   1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-#'   1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1,
+#'   1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1,
 #'   1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1,
 #'   1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1,
 #'   1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1,
@@ -62,8 +62,8 @@ maze_solve <- function(
   if (maze[start[1], start[1]] != 0) stop("Starting point must be a 0")
   if (maze[end[1], end[1]] != 0) stop("Ending point must be a 0")
   if (is.null(seed)) seed <- round(1000 * runif(1))
-  if (!random) seed <- 1
   set.seed(seed)
+  if (!random) seed <- NA
   
   # Initialize data frame to store path coordinates
   tic("maze_solve_timeout")
@@ -113,6 +113,8 @@ print.maze_solve <- function(x, ...) {
     x$inertia, x$aim, x$random,
     ifelse(x$random, sprintf(" | Seed (%s)", x$seed), "")))
   if (!is.null(x$maze)) {
+    if (isTRUE(x$coords_inv))
+      cat("  [Inverted start and end points]\n")
     cat("  Total steps: ", x$steps_counter, "\n")
     cat("  Total turns: ", x$turns_counter, "\n\n")
     print(x$maze)
@@ -208,16 +210,20 @@ maze_gridsearch <- function(
             inertia = a, diagonal = b, random = c, aim = d,
             quiet = quiet, seed = seed, ...
           )
-          if (!is.logical(this))
-            results <- append(results, list(this)) 
+          if (!is.logical(this)) {
+            this$coords_inv <- FALSE
+            results <- append(results, list(this))   
+          }
           this <- maze_solve(
             maze,
             start = end, end = start,
             inertia = a, diagonal = b, random = c, aim = d,
             quiet = quiet, seed = seed, ...
           )
-          if (!is.logical(this))
-            results <- append(results, list(this))  
+          if (!is.logical(this)) {
+            this$coords_inv <- TRUE
+            results <- append(results, list(this))   
+          }
         }
       }
     }
@@ -226,7 +232,8 @@ maze_gridsearch <- function(
     y[unlist(lapply(y, function(x) !is.data.frame(x) && !is.null(x)))]))
   counters <- data.frame(id = seq_along(results), counters) %>%
     arrange(.data$steps_counter, .data$turns_counter) %>%
-    as_tibble()
+    select(.data$id, contains("counter"), everything(), .data$start, .data$end) %>%
+    data.frame()
   return(list(solutions = results, results = counters))
 }
 
