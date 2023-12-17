@@ -1,5 +1,3 @@
-GEMINI_API <- "https://generativelanguage.googleapis.com/v1beta/models/"
-
 ####################################################################
 #' Gemini API Interaction with R
 #'
@@ -24,11 +22,12 @@ GEMINI_API <- "https://generativelanguage.googleapis.com/v1beta/models/"
 #' @export
 gemini_ask <- function(ask,
                        secret_key = get_creds("gemini")$api_key,
+                       url = Sys.getenv("LARES_GEMINI_API"),
                        temperature = 0.5, max_tokens = 1024,
                        quiet = FALSE, ...) {
   model_query <- "gemini-pro:generateContent"
   response <- POST(
-    url = paste0(GEMINI_API, model_query),
+    url = paste0(url, model_query),
     query = list(key = secret_key), 
     httr::content_type_json(), encode = "json", body = list(
       contents = list(parts = list(list(text = ask))), 
@@ -52,12 +51,13 @@ gemini_ask <- function(ask,
 #' @export
 gemini_image <- function(ask, image,
                          secret_key = get_creds("gemini")$api_key,
+                         url = Sys.getenv("LARES_GEMINI_API"),
                          temperature = 0.5, max_tokens = 1024,
                          quiet = FALSE, ...) {
   try_require("base64enc")
   model_query <- "gemini-pro-vision:generateContent"
   response <- POST(
-    url = paste0(GEMINI_API, model_query),
+    url = paste0(url, model_query),
     query = list(key = secret_key),
     httr::content_type_json(), encode = "json", body = list(
       contents = list(parts = list(list(text = ask), list(inline_data = list(

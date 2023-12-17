@@ -11,11 +11,11 @@
 #' @family ChatGPT
 #' @family LLM
 #' @inheritParams db_download
-#' @param ask Character. Redacted prompt to ask ChatGPT. If multiple asks are
+#' @param ask Character. Redacted prompt to ask. If multiple asks are
 #' requested, they will be concatenated with "+" into a single request.
 #' @param secret_key Character. Secret Key. Get yours in:
 #' \href{https://platform.openai.com}{platform.openai.com}.
-#' @param url Character. Base URL for OpenAI's ChatGPT API.
+#' @param url Character. Base API URL.
 #' @param model Character. OpenAI model to use. This can be adjusted
 #' according to the available models in the OpenAI API (such as "gpt-4").
 #' @param temperature Numeric. The temperature to use for generating

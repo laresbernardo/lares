@@ -8,6 +8,7 @@
 gemini_ask(
   ask,
   secret_key = get_creds("gemini")$api_key,
+  url = Sys.getenv("LARES_GEMINI_API"),
   temperature = 0.5,
   max_tokens = 1024,
   quiet = FALSE,
@@ -18,6 +19,7 @@ gemini_image(
   ask,
   image,
   secret_key = get_creds("gemini")$api_key,
+  url = Sys.getenv("LARES_GEMINI_API"),
   temperature = 0.5,
   max_tokens = 1024,
   quiet = FALSE,
@@ -25,11 +27,13 @@ gemini_image(
 )
 }
 \arguments{
-\item{ask}{Character. Redacted prompt to ask ChatGPT. If multiple asks are
+\item{ask}{Character. Redacted prompt to ask. If multiple asks are
 requested, they will be concatenated with "+" into a single request.}
 
 \item{secret_key}{Character. Secret Key. Get yours in:
 \href{https://platform.openai.com}{platform.openai.com}.}
+
+\item{url}{Character. Base API URL.}
 
 \item{temperature}{Numeric. The temperature to use for generating
 the response. Default is 0.5. The lower the \code{temperature},

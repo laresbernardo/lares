@@ -34,6 +34,11 @@
       Sys.getenv("LARES_GPT_URL")
     } else {
       "https://api.openai.com/v1/chat/completions"
+    },
+    "LARES_GEMINI_API" = if (Sys.getenv("LARES_GEMINI_API") != "") {
+      Sys.getenv("LARES_GEMINI_API")
+    } else {
+      "https://generativelanguage.googleapis.com/v1beta/models/"
     }
   )
   options(
