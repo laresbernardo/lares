@@ -115,5 +115,10 @@ gpt_prompter(instruction = "read",
 \seealso{
 Other ChatGPT: 
 \code{\link{gpt_ask}()}
+
+Other LLM: 
+\code{\link{gemini_ask}()},
+\code{\link{gpt_ask}()}
 }
 \concept{ChatGPT}
+\concept{LLM}

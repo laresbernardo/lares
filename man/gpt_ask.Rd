@@ -157,6 +157,7 @@ Other API:
 \code{\link{fb_report_check}()},
 \code{\link{fb_rf}()},
 \code{\link{fb_token}()},
+\code{\link{gemini_ask}()},
 \code{\link{li_auth}()},
 \code{\link{li_profile}()},
 \code{\link{queryGA}()},
@@ -164,6 +165,11 @@ Other API:
 
 Other ChatGPT: 
 \code{\link{gpt_prompter}()}
+
+Other LLM: 
+\code{\link{gemini_ask}()},
+\code{\link{gpt_prompter}()}
 }
 \concept{API}
 \concept{ChatGPT}
+\concept{LLM}

@@ -85,6 +85,7 @@ install_recommended <- function(progress = TRUE, all = FALSE) {
 
 # Recommended additional libraries to fully take advantage of lares library
 recommended <- list(
+  base64enc = "base64encode",
   beepr = "beep",
   circlize = c("chordDiagram", "uh"),
   DALEX = c("explain.default", "model_performance", "model_profile", "predict_parts"),

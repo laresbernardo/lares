@@ -9,6 +9,7 @@
 #'
 #' @family API
 #' @family ChatGPT
+#' @family LLM
 #' @inheritParams db_download
 #' @param ask Character. Redacted prompt to ask ChatGPT. If multiple asks are
 #' requested, they will be concatenated with "+" into a single request.
@@ -323,6 +324,7 @@ gpt_markdown2df <- function(resp) {
 #' }
 #'
 #' @family ChatGPT
+#' @family LLM
 #' @param instruction,input,context,output Character or vector.
 #' You do not need all the four elements for a prompt and the
 #' format depends on the task at hand.

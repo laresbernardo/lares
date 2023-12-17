@@ -4,7 +4,7 @@
 \alias{maze_solve}
 \alias{print.maze_solve}
 \alias{maze_gridsearch}
-\title{Maze Solver, inspired in Micromouse competitions}
+\title{Maze Solver, inspired by Micromouse competitions}
 \usage{
 maze_solve(
   maze,
@@ -75,9 +75,9 @@ search combining parameters to find best route.
 micromouse <- matrix(c(
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-  1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1,
+  1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1,
   1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-  1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1,
+  1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1,
   1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1,
   1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1,

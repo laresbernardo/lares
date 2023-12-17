@@ -38,6 +38,7 @@ Other API:
 \code{\link{fb_process}()},
 \code{\link{fb_report_check}()},
 \code{\link{fb_rf}()},
+\code{\link{gemini_ask}()},
 \code{\link{gpt_ask}()},
 \code{\link{li_auth}()},
 \code{\link{li_profile}()},
