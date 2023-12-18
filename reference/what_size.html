@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.5.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.5.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">what_size</span><span class="op">(</span><span class="va">x</span>, units <span class="op">=</span> <span class="st">"Mb"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">what_size</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, units <span class="op">=</span> <span class="st">"Mb"</span>, path <span class="op">=</span> <span class="cn">NULL</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -72,6 +72,19 @@
 <dt>units</dt>
 <dd><p>Character. Specify which unit to use,
 i.e. "Gb", "Mb", "Kb".</p></dd>
+
+
+<dt>path</dt>
+<dd><p>a character vector of full path names; the default
+    corresponds to the working directory, <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a>()</code>.  Tilde
+    expansion (see <code><a href="https://rdrr.io/r/base/path.expand.html" class="external-link">path.expand</a></code>) is performed.  Missing
+    values will be ignored.  Elements with a marked encoding will
+    be converted to the native encoding (and if that fails, considered
+    non-existent).</p></dd>
+
+
+<dt>recursive</dt>
+<dd><p>logical.  Should the listing recurse into directories?</p></dd>
 
 
 <dt>...</dt>
