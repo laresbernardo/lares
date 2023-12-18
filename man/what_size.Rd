@@ -4,13 +4,22 @@
 \alias{what_size}
 \title{Calculate the size of any R object}
 \usage{
-what_size(x, units = "Mb", ...)
+what_size(x = NULL, units = "Mb", path = NULL, recursive = TRUE, ...)
 }
 \arguments{
 \item{x}{Object}
 
 \item{units}{Character. Specify which unit to use,
 i.e. "Gb", "Mb", "Kb".}
+
+\item{path}{a character vector of full path names; the default
+    corresponds to the working directory, \code{\link[base]{getwd}()}.  Tilde
+    expansion (see \code{\link[base]{path.expand}}) is performed.  Missing
+    values will be ignored.  Elements with a marked encoding will
+    be converted to the native encoding (and if that fails, considered
+    non-existent).}
+
+\item{recursive}{logical.  Should the listing recurse into directories?}
 
 \item{...}{further arguments passed to or from other methods.}
 }

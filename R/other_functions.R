@@ -962,10 +962,11 @@ warnifnot <- function(...) if (!isTRUE(...)) warning(paste(deparse(...), "is not
 
 
 ####################################################################
-#' Calculate the size of any R object
+#' Calculate the size of any R object or directory
 #'
 #' @family Tools
 #' @inheritParams base::format
+#' @inheritParams base::list.files
 #' @param x Object
 #' @param units Character. Specify which unit to use,
 #' i.e. "Gb", "Mb", "Kb".
@@ -973,9 +974,24 @@ warnifnot <- function(...) if (!isTRUE(...)) warning(paste(deparse(...), "is not
 #' what_size(seq(1:1e3), "Kb")
 #' what_size(seq(1:1e6))
 #' what_size(as.character(seq(1:1e6)))
+#' what_size(path = ".")
 #' @export
-what_size <- function(x, units = "Mb", ...) {
-  format(object.size(x), units = units, ...)
+what_size <- function(x = NULL, units = "Mb", path = NULL, recursive = TRUE, ...) {
+  if (!is.null(path)) {
+    size <- dir_size(path, recursive)
+    format(size, units = units, ...) 
+  } else {
+    format(object.size(x), units = units, ...) 
+  }
+}
+
+dir_size <- function(path, recursive = TRUE) {
+  stopifnot(is.character(path))
+  files <- list.files(path, recursive = recursive)
+  vect_size <- sapply(files, function(x) file.size(x))
+  size_files <- sum(vect_size)
+  class(size_files) <- "object_size"
+  return(size_files)
 }
 
 ####################################################################
