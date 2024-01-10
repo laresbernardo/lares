@@ -987,7 +987,7 @@ what_size <- function(x = NULL, units = "Mb", path = NULL, recursive = TRUE, ...
 
 dir_size <- function(path, recursive = TRUE) {
   stopifnot(is.character(path))
-  files <- list.files(path, recursive = recursive)
+  files <- list.files(path, recursive = recursive, full.names = TRUE)
   vect_size <- sapply(files, function(x) file.size(x))
   size_files <- sum(vect_size, na.rm = TRUE)
   class(size_files) <- "object_size"
