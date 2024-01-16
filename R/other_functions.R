@@ -978,18 +978,24 @@ warnifnot <- function(...) if (!isTRUE(...)) warning(paste(deparse(...), "is not
 #' @export
 what_size <- function(x = NULL, units = "Mb", path = NULL, recursive = TRUE, ...) {
   if (!is.null(path)) {
-    size <- dir_size(path, recursive)
+    size <- dir_size(path, recursive, ...)
     format(size, units = units, ...) 
   } else {
     format(object.size(x), units = units, ...) 
   }
 }
 
-dir_size <- function(path, recursive = TRUE) {
+dir_size <- function(path, recursive = TRUE, pattern = NULL, ...) {
   stopifnot(is.character(path))
-  files <- list.files(path, recursive = recursive, full.names = TRUE)
-  vect_size <- sapply(files, function(x) file.size(x))
-  size_files <- sum(vect_size, na.rm = TRUE)
+  stopifnot(dir.exists(path))
+  files <- list.files(
+    path = path, pattern = pattern,
+    recursive = recursive, full.names = TRUE)
+  size_files <- 0
+  if (length(files) > 0) {
+    vect_size <- sapply(files, function(x) file.size(x))
+    size_files <- sum(vect_size, na.rm = TRUE)
+  }
   class(size_files) <- "object_size"
   return(size_files)
 }
