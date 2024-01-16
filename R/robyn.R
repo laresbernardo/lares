@@ -185,8 +185,8 @@ robyn_modelselector <- function(
     left_join(data.frame(metric = metrics, wt = wt), "metric")
   
   # Add Default Potential Improvement values
+  sols <- sort(OutputCollect$allSolutions)
   if ("potential_improvement" %in% metrics & length(wt[which(metrics == "potential_improvement")]) != 0) {
-    sols <- sort(OutputCollect$allSolutions)
     cache_name <- c("robyn_modelselector", length(sols))
     if (cache & cache_exists(cache_name, ...)) {
       potOpt <- cache_read(cache_name, quiet = quiet, ...)
