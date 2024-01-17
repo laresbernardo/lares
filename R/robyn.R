@@ -230,6 +230,10 @@ robyn_modelselector <- function(
       top_channels = paste(.data$rn[head(rank(-.data$roi_total, ties.method = "first"), 3)], collapse = ", "),
       zero_coef = paste(.data$rn[which(round(.data$coef, 6) == 0)], collapse = ", ")) %>%
     left_join(potOpt, "solID")
+  if (!"clusters" %in% names(OutputCollect)) {
+    OutputCollect$clusters$data <- data.frame(solID = sols, cluster = "None", top_sol = TRUE)
+    OutputCollect$clusters$clusters_means <- data.frame(cluster = "None", n = length(sols))
+  }
   temp <- OutputCollect$clusters$data %>%
     select(.data$solID, .data$cluster, .data$top_sol) %>%
     mutate(cluster = as.character(.data$cluster)) %>%
