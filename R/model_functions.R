@@ -141,6 +141,7 @@ h2o_automl <- function(df, y = "tag",
                        project = "AutoML Results",
                        verbosity = NULL,
                        ...) {
+  try_require("h2o")
   tic(id = "h2o_automl")
   on.exit(toc(id = "h2o_automl", msg = "Process duration:", quiet = quiet))
 

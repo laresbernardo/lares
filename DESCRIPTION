@@ -1,7 +1,7 @@
 Package: lares
 Type: Package
 Title: Analytics & Machine Learning Sidekick
-Version: 5.2.5.9005
+Version: 5.2.5
 Authors@R: c(
     person("Bernardo", "Lares", , "laresbernardo@gmail.com", c("aut", "cre")))
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
@@ -14,7 +14,6 @@ Depends:
 Imports:
     dplyr,
     ggplot2,
-    h2o,
     httr,
     jsonlite,
     lubridate,
@@ -33,13 +32,14 @@ Suggests:
     DALEX,
     googleAuthR,
     googlesheets4,
+    h2o,
     knitr,
     quantmod,
     rmarkdown
 URL: https://github.com/laresbernardo/lares, https://laresbernardo.github.io/lares/
 BugReports: https://github.com/laresbernardo/lares/issues
-VignetteBuilder: knitr
 RoxygenNote: 7.2.3
 License: AGPL-3
 Encoding: UTF-8
 LazyData: true
+Config/testthat/edition: 3

@@ -2,7 +2,7 @@
 % Please edit documentation in R/other_functions.R
 \name{what_size}
 \alias{what_size}
-\title{Calculate the size of any R object}
+\title{Calculate the size of any R object or directory}
 \usage{
 what_size(x = NULL, units = "Mb", path = NULL, recursive = TRUE, ...)
 }
@@ -24,12 +24,13 @@ i.e. "Gb", "Mb", "Kb".}
 \item{...}{further arguments passed to or from other methods.}
 }
 \description{
-Calculate the size of any R object
+Calculate the size of any R object or directory
 }
 \examples{
 what_size(seq(1:1e3), "Kb")
 what_size(seq(1:1e6))
 what_size(as.character(seq(1:1e6)))
+what_size(path = ".")
 }
 \seealso{
 Other Tools: 
