@@ -988,14 +988,17 @@ what_size <- function(x = NULL, units = "Mb", path = NULL, recursive = TRUE, ...
 dir_size <- function(path, recursive = TRUE, pattern = NULL, ...) {
   stopifnot(is.character(path))
   stopifnot(dir.exists(path))
-  files <- list.files(
-    path = path, pattern = pattern,
-    recursive = recursive, full.names = TRUE)
-  size_files <- 0
-  if (length(files) > 0) {
-    vect_size <- sapply(files, function(x) file.size(x))
-    size_files <- sum(vect_size, na.rm = TRUE)
-  }
+  # files <- list.files(
+  #   path = path, pattern = pattern,
+  #   recursive = recursive, full.names = TRUE)
+  # size_files <- 0
+  # if (length(files) > 0) {
+  #   vect_size <- sapply(files, function(x) file.size(x))
+  #   size_files <- sum(vect_size, na.rm = TRUE)
+  # }
+  size_files <- system(paste("du -hs", path), intern = TRUE)
+  size_files <- gsub("\\\t.*", "", size_files)
+  size_files <- num_abbr(size_files, numeric = TRUE)
   class(size_files) <- "object_size"
   return(size_files)
 }
