@@ -61,7 +61,7 @@ the filtered values with?}
 
 \item{quiet}{Boolean. Quiet all messages and summaries?}
 
-\item{...}{Additional parameters}
+\item{...}{Additional parameters.}
 }
 \value{
 data.frame on which all features are numerical by nature or

@@ -103,8 +103,8 @@ stocks_file <- function(file = NA,
 #'
 #' @family Investment
 #' @family Scrapper
+#' @inheritParams cache_write
 #' @param symbols Character Vector. List of symbols to download historical data.
-#' @param ... Additional parameters.
 #' @return data.frame with Symbol, Type of stock, Quote time, current value,
 #' Daily Change, Market, and Symbol Name.
 #' @examples
@@ -148,6 +148,7 @@ stocks_quote <- function(symbols, ...) {
 #' This function lets the user download stocks historical data.
 #'
 #' @inheritParams stocks_file
+#' @inheritParams cache_write
 #' @param from,to Date. Dates for range. If not set, 1 year will be downloaded.
 #' Do use more than 4 days or will be over-written.
 #' @param today Boolean. Do you wish to add today's live quote? This will happen
@@ -155,7 +156,6 @@ stocks_quote <- function(symbols, ...) {
 #' @param tax Numeric. How much [0-99] of your dividends are gone with taxes?
 #' @param parg Boolean. Personal argument. Used to personalize stuff, in this
 #' case, taxes changed from A to B in given date (hard-coded)
-#' @param ... Additional parameters
 #' @examples
 #' \dontrun{
 #' df <- stocks_hist(symbols = c("VTI", "META", "FIW"), from = Sys.Date() - 180)
@@ -322,11 +322,11 @@ plot.stocks_hist <- function(x, type = 1, ...) {
 #' for each ticker or symbol, for every day since inception.
 #'
 #' @family Investment
+#' @inheritParams cache_write
 #' @param hist Dataframe. Result from \code{stocks_hist()}
 #' @param trans Dataframe. Result from \code{stocks_file()$transactions}
 #' @param tickers Dataframe. Result from \code{stocks_file()$portfolio}
 #' @param window Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"
-#' @param ... Additional parameters
 #' @return data.frame. Processed at date and symbol level.
 #' @export
 daily_stocks <- function(hist, trans, tickers = NA, window = "MAX", ...) {
@@ -487,6 +487,7 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
 ####################################################################
 #' Calculate weighted stock values using FIFO/LIFO
 #'
+#' @inheritParams cache_write
 #' @param value Numeric vector. Representing the values of the stock.
 #' @param n Numeric vector. Representing the volume of the operation.
 #' Positive for 'Buy' and negative for 'Sale'.
@@ -496,7 +497,6 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
 #' @param buy_only Boolean. Consider only buy (positive) values?
 #' @param type Integer. 1 for returning the value, 2 for returning the
 #' data.frame with the details ("df" attribute)
-#' @param ... Additional parameters
 #' @return The calculated weighted mean value.
 #' @examples
 #' values <- c(10, 20, 30, 40, 50)

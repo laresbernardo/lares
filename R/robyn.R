@@ -119,7 +119,7 @@ robyn_hypsbuilder <- function(
 #' historical performance, etc.
 #'
 #' @family Robyn
-#' @inheritParams corr_var
+#' @inheritParams cache_write
 #' @param InputCollect,OutputCollect Robyn output objects.
 #' @param metrics Character vector. Which metrics do you want to consider?
 #' Pick any combination from: "rsq_train" for trained R squared,
@@ -139,7 +139,6 @@ robyn_hypsbuilder <- function(
 #' want to plot? Default: 5. Keep in mind they will all be considered
 #' for the calculations.
 #' @param cache Use cache functionality for allocator's results?
-#' @param ... Additional parameters passed
 #' @return list with data.frame and plot.
 #' @export
 robyn_modelselector <- function(

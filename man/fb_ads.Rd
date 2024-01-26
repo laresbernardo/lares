@@ -34,7 +34,7 @@ format \code{"YYYY-MM-DD"}.}
 
 \item{process}{Boolean. Process GET results to a more friendly format?}
 
-\item{...}{Additional parameters}
+\item{...}{Additional parameters.}
 }
 \value{
 data.frame with un-nested processed results if \code{process=TRUE} or

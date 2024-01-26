@@ -19,7 +19,7 @@ to search through, or \code{NULL}. The default value of \code{NULL}
 corresponds to all libraries currently known to \code{.libPaths()}.
 Non-existent library trees are silently ignored.}
 
-\item{...}{Pass additional parameters.}
+\item{...}{Additional parameters.}
 }
 \value{
 No return value, called for side effects.

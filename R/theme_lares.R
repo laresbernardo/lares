@@ -11,6 +11,7 @@
 #' with solid default kerning pairs and geometric numbers.
 #'
 #' @family Themes
+#' @inheritParams cache_write
 #' @param font,size Character and numeric. Base font family and base size for texts.
 #' \code{Arial Narrow} is set by default when the library is loaded; you may change it
 #' with \code{Sys.setenv("LARES_FONT" = "X")} or by using this parameter manually.
@@ -36,7 +37,6 @@
 #' used as fill and the values will be used as colour.
 #' @param which Character. When \code{pal = 3}, select which colours should be
 #' added with the custom colours palette: fill, colour, text (fct) - first letters.
-#' @param ... Additional parameters passed
 #' @return Themed ggplot2 object
 #' @examples
 #' \donttest{

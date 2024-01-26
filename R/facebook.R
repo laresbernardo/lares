@@ -12,13 +12,13 @@ META_API_VER <- "v16.0"
 #' @family API
 #' @family Meta
 #' @inheritParams tic
+#' @inheritParams cache_write
 #' @param input GET's output object (response) or link (character).
 #' @param paginate Boolean or integer. Run through all paginations? If set
 #' to \code{FALSE}, only the first one will be processed. If set to any other
 #' integer value, will process the first N paginations.
 #' @param sleep Numeric value. How much should each loop wait until until running
 #' the next pagination query?
-#' @param ... Additional parameters.
 #' @return data.frame with un-nested processed results or NULL if no results found.
 #' @export
 fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
@@ -192,6 +192,7 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
 #'
 #' @family API
 #' @family Meta
+#' @inheritParams cache_write
 #' @param token Character. Valid access token with sufficient privileges. Visit the
 #' \href{https://developers.facebook.com/tools/explorer}{Facebook API Graph Explorer}
 #' to acquire one.
@@ -218,7 +219,6 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
 #' @param process Boolean. Process GET results to a more friendly format?
 #' @param async Boolean. Run an async query. When set to \code{TRUE}, instead of making
 #' a GET query, it'll run a POST query and will return a report run ID.
-#' @param ... Additional parameters
 #' @return data.frame with un-nested processed results if \code{process=TRUE} or
 #' raw API results as list when \code{process=FALSE}.
 #' @examples

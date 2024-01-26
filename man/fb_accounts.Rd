@@ -26,7 +26,7 @@ to acquire one.}
 
 \item{api_version}{Character. Facebook API version.}
 
-\item{...}{Additional parameters}
+\item{...}{Additional parameters.}
 }
 \value{
 data.frame with un-nested processed results fetched with API.

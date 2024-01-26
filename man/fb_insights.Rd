@@ -62,7 +62,7 @@ Example: \code{dplyr::tibble(field = "country", operator = "IN", value = list("P
 \item{async}{Boolean. Run an async query. When set to \code{TRUE}, instead of making
 a GET query, it'll run a POST query and will return a report run ID.}
 
-\item{...}{Additional parameters}
+\item{...}{Additional parameters.}
 }
 \value{
 data.frame with un-nested processed results if \code{process=TRUE} or

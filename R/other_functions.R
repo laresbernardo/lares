@@ -13,6 +13,7 @@ NULL
 #' This function checks library dependencies
 #'
 #' @family Tools
+#' @inheritParams cache_write
 #' @param package Character. Name of the library
 #' @param stop Boolean. Stop if not installed. If \code{FALSE} and
 #' library is not available, warning will be shown.
@@ -21,7 +22,6 @@ NULL
 #' to search through, or \code{NULL}. The default value of \code{NULL}
 #' corresponds to all libraries currently known to \code{.libPaths()}.
 #' Non-existent library trees are silently ignored.
-#' @param ... Pass additional parameters.
 #' @return No return value, called for side effects.
 #' @examples
 #' # Check if library base is installed. If not, stop and show error

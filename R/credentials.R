@@ -22,6 +22,7 @@
 #'
 #' @family Tools
 #' @family Credentials
+#' @inheritParams cache_write
 #' @param from Character. Family of values to import from the YML file.
 #' If you don't know these names, set \code{from = NA}
 #' and a warning will display all possible values, depending on your YML file.
@@ -32,7 +33,6 @@
 #' @param filename Character. YML filename with your credentials.
 #' @param env Character. Environment variable name. No need to set differently
 #' for any function that uses this library. Only for external use.
-#' @param ... Additional parameters.
 #' @return List. Result of reading your credential's YML file, filtered by your
 #' \code{from} input if provided.
 #' @examples

@@ -6,6 +6,7 @@
 #'
 #' @family Tools
 #' @family Credentials
+#' @inheritParams cache_write
 #' @param from,to,cc,bcc Character. Emails
 #' @param subject Character. Subject for the email.
 #' @param text,html Character. Text or HTML to send in the body.
@@ -15,7 +16,6 @@
 #' @param creds Character. Credential's user (see \code{get_creds()}).
 #' Must contain: url (POST address), api (API key).
 #' @param quiet Boolean. Keep quite or display messages?
-#' @param ... Additional parameters.
 #' @return No return value, called for side effects.
 #' @examples
 #' \dontrun{

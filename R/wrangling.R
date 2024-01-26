@@ -141,55 +141,83 @@ normalize <- function(x, ...) {
 
 
 ####################################################################
-#' Abbreviate numbers
+#' Abbreviate or dis-abbreviate numerical values
 #'
 #' This function converts a numeric vector's values into their
-#' abbreviated character equivalent, i.e. 100,000,000 into 100M.
+#' abbreviated character equivalent, i.e. 100E6 into 100M
+#' and viceversa.
 #'
 #' @family Data Wrangling
+#' @inheritParams cache_write
 #' @param x Numeric vector
 #' @param n Integer. Single numeric value, specifying number of
 #' significant figures to show. Range 1 to 6.
-#' @return Vector of character values that contain converted values
+#' @param numeric Boolean. Transform abbreviated number into numeric?
+#' @return Vector of character or numeric values that contain converted values
 #' @examples
 #' num_abbr(rnorm(10) * 1e6)
 #' num_abbr(rnorm(10) * 1e6, n = 1)
+#' num_abbr(c("3K", "-58.3M", NA, 1), numeric = TRUE)
 #' @export
-num_abbr <- function(x, n = 3) {
+num_abbr <- function(x, n = 3, numeric = FALSE, ...) {
   if (is.null(x)) return(x)
-  if (!is.numeric(x)) stop("Input vector x needs to be numeric.")
-  if (!is.numeric(n)) stop("n needs to be numeric.")
+  if (!is.numeric(x)) {
+    if (!numeric) {
+      stop("Input vector 'x' needs to be numeric. To convert abbr to num, set numeric = TRUE")  
+    }
+  }
+  if (!is.numeric(n)) stop("Input 'n' needs to be numeric.")
   if (length(n) > 1) stop("Please make sure that n takes on a single value.")
   if (!n %in% 1:6) stop("Please make sure that n takes on an interger value between 1 to 6.")
-
-  # # To handle scientific notation inputs correctly
-  # on.exit(options("scipen" = getOption('scipen')))
-  # options("scipen" = 999)
-
-  # Clean up x
-  negative_positions <- ifelse(x < 0, "-", "")
-  x <- abs(x)
-
-  div <- findInterval(x, c(0, 1e3, 1e6, 1e9, 1e12, 1e15, 1e18))
-
-  # Round x with some cleaning
-  x <- round(x, -nchar(round(x, 0)) + n) / 10^(3 * (div - 1))
-
-  # Fix numbers rounded up to another digit
-  # i.e. 999k -> 1000k should actually be 1M
-  div <- ifelse(nchar(as.integer(x)) > 3, div + 1, div)
-  x <- ifelse(nchar(as.integer(x)) > 3, x / 1e3, x)
-
-  # Cap decimal places to 3
-  x <- round(x, 3)
-
-  # Qa = Quadrillion; Qi = Quintillion
-  x <- paste0(x, c("", "K", "M", "B", "T", "Qa", "Qi")[div])
-
-  output <- paste0(negative_positions, x)
-  output[grepl("NA", output)] <- NA
-
-  return(output)
+  
+  if (numeric) {
+    num <- as.numeric(gsub("[A-z]+", "", x))
+    abbr_value <- unlist(lapply(seq_along(x), function(i) {
+      abbr <- gsub(as.character(num[i]), "", x[i])
+      av <- dplyr::case_when(
+        abbr == "" ~ 1,
+        abbr == "K" ~ 1E3,
+        abbr == "M" ~ 1E6,
+        abbr == "B" ~ 1E9,
+        abbr == "T" ~ 1E12,
+        abbr == "Qa" ~ 1E15,
+        abbr == "Qi" ~ 1E18,
+        TRUE ~ NA
+      )
+      return(as.numeric(av))
+    }))
+    output <- num * abbr_value
+    return(output)
+  } else {
+    # # To handle scientific notation inputs correctly
+    # on.exit(options("scipen" = getOption('scipen')))
+    # options("scipen" = 999)
+    
+    # Clean up x
+    negative_positions <- ifelse(x < 0, "-", "")
+    x <- abs(x)
+    
+    div <- findInterval(x, c(0, 1e3, 1e6, 1e9, 1e12, 1e15, 1e18))
+    
+    # Round x with some cleaning
+    x <- round(x, -nchar(round(x, 0)) + n) / 10^(3 * (div - 1))
+    
+    # Fix numbers rounded up to another digit
+    # i.e. 999k -> 1000k should actually be 1M
+    div <- ifelse(nchar(as.integer(x)) > 3, div + 1, div)
+    x <- ifelse(nchar(as.integer(x)) > 3, x / 1e3, x)
+    
+    # Cap decimal places to 3
+    x <- round(x, 3)
+    
+    # Qa = Quadrillion; Qi = Quintillion
+    x <- paste0(x, c("", "K", "M", "B", "T", "Qa", "Qi")[div])
+    
+    output <- paste0(negative_positions, x)
+    output[grepl("NA", output)] <- NA
+    
+    return(output) 
+  }
 }
 
 
@@ -201,6 +229,7 @@ num_abbr <- function(x, n = 3) {
 #'
 #' @family Data Wrangling
 #' @inheritParams ohse
+#' @inheritParams cache_write
 #' @param df Categorical Vector
 #' @param var Variable. Which variable do you wish to reduce?
 #' @param nmin Integer. Number of minimum times a value is repeated
@@ -213,7 +242,6 @@ num_abbr <- function(x, n = 3) {
 #' column name will be compared with (numerical or binary).
 #' @param other_label Character. With which text do you wish to replace
 #' the filtered values with?
-#' @param ... Additional parameters
 #' @return data.frame \code{df} on which \code{var} has been transformed
 #' @examples
 #' data(dft) # Titanic dataset

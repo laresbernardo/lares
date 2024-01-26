@@ -30,7 +30,7 @@ default will sum positive values of \code{n}.}
 \item{type}{Integer. 1 for returning the value, 2 for returning the
 data.frame with the details ("df" attribute)}
 
-\item{...}{Additional parameters}
+\item{...}{Additional parameters.}
 }
 \value{
 The calculated weighted mean value.

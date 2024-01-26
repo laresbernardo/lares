@@ -101,10 +101,10 @@ wordle_dictionary <- function(lang_dic = "en", method = 3, quiet = TRUE) {
   return(out)
 }
 
+#' @inheritParams cache_write
 #' @inheritParams wordle_check
 #' @param seed Numeric. For reproducibility. Accepts more than one: will
 #' run as many seeds there are.
-#' @param ... Additional parameters to pass.
 #' @export
 #' @examples
 #'

@@ -74,7 +74,7 @@ increase the temperature value.}
 \item{pause_base}{Numeric. The number of seconds to wait between retries.
 Default is 1.}
 
-\item{quiet}{Boolean. Keep quiet? If not, show informative messages.}
+\item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
 
 \item{...}{Additional parameters.}
 

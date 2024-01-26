@@ -50,7 +50,7 @@ increase the temperature value.}
 
 \item{max_tokens}{Integer. The maximum number of tokens in the response.}
 
-\item{quiet}{Boolean. Keep quiet? If not, show informative messages.}
+\item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
 
 \item{...}{Additional parameters.}
 

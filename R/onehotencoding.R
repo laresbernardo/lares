@@ -7,6 +7,7 @@
 #' @family Data Wrangling
 #' @family Feature Engineering
 #' @family One Hot Encoding
+#' @inheritParams cache_write
 #' @param df Dataframe
 #' @param redundant Boolean. Should we keep redundant columns? i.e. If the
 #' column only has two different values, should we keep both new columns?
@@ -31,7 +32,6 @@
 #' the filtered values with?
 #' @param sep Character. Separator's string
 #' @param quiet Boolean. Quiet all messages and summaries?
-#' @param ... Additional parameters
 #' @return data.frame on which all features are numerical by nature or
 #' transformed with one hot encoding.
 #' @examples

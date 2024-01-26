@@ -62,7 +62,7 @@ used as fill and the values will be used as colour.}
 \item{which}{Character. When \code{pal = 3}, select which colours should be
 added with the custom colours palette: fill, colour, text (fct) - first letters.}
 
-\item{...}{Additional parameters passed}
+\item{...}{Additional parameters.}
 }
 \value{
 Themed ggplot2 object

@@ -43,7 +43,7 @@ values of each column. Set to \code{NA} to ignore argument.}
 \item{other_label}{Character. With which text do you wish to replace
 the filtered values with?}
 
-\item{...}{Additional parameters}
+\item{...}{Additional parameters.}
 }
 \value{
 data.frame \code{df} on which \code{var} has been transformed

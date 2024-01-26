@@ -23,7 +23,7 @@ wish to get the history from? i.e, USD/COP, EUR/USD...}
 \item{fill}{Boolean. Fill weekends and non-quoted dates with
 previous values?}
 
-\item{...}{Additional parameters}
+\item{...}{Additional parameters.}
 }
 \value{
 data.frame. Result of fetching online data for \code{currency_pair}

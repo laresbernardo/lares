@@ -8,7 +8,7 @@
 #' @family Gemini
 #' @family LLM
 #' @inheritParams gpt_ask
-#' @param ... Additional parameters.
+#' @inheritParams cache_write
 #' @return (Invisible) list. Content returned from API POST and processed.
 #' @examples
 #' \dontrun{

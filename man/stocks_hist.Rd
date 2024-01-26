@@ -25,7 +25,7 @@ stocks_hist(
 \arguments{
 \item{symbols}{Character Vector. List of symbols to download historical data.}
 
-\item{...}{Additional parameters}
+\item{...}{Additional parameters.}
 
 \item{from, to}{Date. Dates for range. If not set, 1 year will be downloaded.
 Do use more than 4 days or will be over-written.}
@@ -40,7 +40,7 @@ case, taxes changed from A to B in given date (hard-coded)}
 
 \item{cache}{Boolean. Use daily cache if available?}
 
-\item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed.}
+\item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
 
 \item{x}{stocks_hist object}
 

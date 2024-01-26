@@ -44,7 +44,7 @@ the words taken straight from the game's source code.}
 
 \item{x}{Object to print}
 
-\item{...}{Additional parameters to pass.}
+\item{...}{Additional parameters.}
 
 \item{quiet}{Boolean. Do not print words as they are being searched.}
 

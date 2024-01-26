@@ -2,26 +2,32 @@
 % Please edit documentation in R/wrangling.R
 \name{num_abbr}
 \alias{num_abbr}
-\title{Abbreviate numbers}
+\title{Abbreviate or dis-abbreviate numerical values}
 \usage{
-num_abbr(x, n = 3)
+num_abbr(x, n = 3, numeric = FALSE, ...)
 }
 \arguments{
 \item{x}{Numeric vector}
 
 \item{n}{Integer. Single numeric value, specifying number of
 significant figures to show. Range 1 to 6.}
+
+\item{numeric}{Boolean. Transform abbreviated number into numeric?}
+
+\item{...}{Additional parameters.}
 }
 \value{
-Vector of character values that contain converted values
+Vector of character or numeric values that contain converted values
 }
 \description{
 This function converts a numeric vector's values into their
-abbreviated character equivalent, i.e. 100,000,000 into 100M.
+abbreviated character equivalent, i.e. 100E6 into 100M
+and viceversa.
 }
 \examples{
 num_abbr(rnorm(10) * 1e6)
 num_abbr(rnorm(10) * 1e6, n = 1)
+num_abbr(c("3K", "-58.3M", NA, 1), numeric = TRUE)
 }
 \seealso{
 Other Data Wrangling: 

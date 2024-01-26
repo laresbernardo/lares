@@ -36,12 +36,12 @@ tic <- function(id = 1, start = proc.time()["elapsed"], quiet = TRUE) {
 #' Stopwatch Stop
 #'
 #' Stop a stopwatch.
-#'
+#' 
+#' @inheritParams cache_write
 #' @param msg Character. Custom message shown
 #' @param type Character. Output format for \code{time} list element.
 #' Choose any of: \code{units, clock, seconds}.
 #' @param signif Integer. Significant digits.
-#' @param ... Additional parameters.
 #' @return \code{toc} returns an (invisible) list containing the time-stamps
 #' \code{tic} and \code{toc}, \code{time} in seconds and the message \code{msg}.
 #' @export

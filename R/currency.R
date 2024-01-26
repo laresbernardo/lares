@@ -5,13 +5,13 @@
 #' rate between two currencies.
 #'
 #' @family Currency
+#' @inheritParams cache_write
 #' @param currency_pair Character. Which currency exchange do you
 #' wish to get the history from? i.e, USD/COP, EUR/USD...
 #' @param from Date. From date
 #' @param to Date. To date
 #' @param fill Boolean. Fill weekends and non-quoted dates with
 #' previous values?
-#' @param ... Additional parameters
 #' @return data.frame. Result of fetching online data for \code{currency_pair}
 #' grouped by date.
 #' @examples
