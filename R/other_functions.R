@@ -985,7 +985,7 @@ what_size <- function(x = NULL, units = "Mb", path = NULL, recursive = TRUE, ...
   }
 }
 
-dir_size <- function(path, recursive = TRUE, pattern = NULL, ...) {
+dir_size <- function(path = getwd(), recursive = TRUE, pattern = NULL, ...) {
   stopifnot(is.character(path))
   stopifnot(dir.exists(path))
   # files <- list.files(
