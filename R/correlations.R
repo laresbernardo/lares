@@ -359,7 +359,7 @@ plot.corr_var <- function(x, var, max_pvalue = 1, top = NA, limit = NULL, ...) {
 #' @export
 corr_cross <- function(df, plot = TRUE,
                        pvalue = TRUE, max_pvalue = 1,
-                       type = 1, max = 1, top = 25, local = 1,
+                       type = 1, max = 1, top = 15, local = 1,
                        ignore = NULL, contains = NA, grid = TRUE,
                        rm.na = FALSE, quiet = FALSE,
                        ...) {
@@ -413,7 +413,8 @@ corr_cross <- function(df, plot = TRUE,
     if (rm.na) subtitle <- paste(subtitle, paste("[NAs removed]"))
     if (!is.na(contains[1])) {
       ret <- ret %>%
-        mutate(facet = gsub(vector2text(contains, sep = "|", quotes = FALSE), "", .data$mix)) %>%
+        # Pick the one that contains is contained in key or mix
+        mutate(facet = ifelse(grepl(paste(contains, collapse = "|"), .data$key), .data$key, .data$mix)) %>%
         mutate(facet = gsub("_", "", .data$facet))
     }
 
@@ -447,7 +448,7 @@ corr_cross <- function(df, plot = TRUE,
         ) +
         theme_lares(pal = 4, ...)
 
-      if ((!is.na(contains)[1] && length(contains) == 1) && grid) {
+      if (!is.na(contains)[1] && grid) {
         p <- p + facet_grid(.data$facet ~ ., scales = "free", space = "free")
       }
     }
@@ -508,7 +509,7 @@ corr_cross <- function(df, plot = TRUE,
       if (!is.na(contains[1])) {
         filter(., grepl(
           paste(contains, collapse = "|"),
-          paste(.data$mix)
+          paste(.data$key, .data$mix)
         ))
       } else {
         .

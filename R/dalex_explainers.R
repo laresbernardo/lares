@@ -177,6 +177,7 @@ dalex_residuals <- function(explainer) {
 #' study variable's responses vs independent vector.
 #'
 #' @family Interpretability
+#' @inheritParams clusterKmeans
 #' @param explainer Object. Result from \code{h2o_explainer} function.
 #' @param vars Character vector. Which features do you wish to study?
 #' @param force_class Character. If you wish to force a class on your
@@ -193,10 +194,8 @@ dalex_residuals <- function(explainer) {
 #' dalex_variable(explainer, vars = c("Pclass", "Sex"))
 #' }
 #' @export
-dalex_variable <- function(explainer, vars, force_class = NA, ...) {
+dalex_variable <- function(explainer, vars, force_class = NA, seed = 123, ...) {
   try_require("DALEX")
-  tic("dalex_variable")
-
   all_vars <- colnames(explainer$data)
   if (!all(vars %in% all_vars)) {
     stop("Select any variable(s) from the following: ", v2t(all_vars))
@@ -213,13 +212,12 @@ dalex_variable <- function(explainer, vars, force_class = NA, ...) {
       }
     }
   }
-
+  
+  set.seed(seed)
   aux <- model_profile(explainer, variables = vars, ...)
   p <- plot(aux) + theme_lares(legend = "top") +
     labs(y = "Average Prediction") +
     scale_y_formatNum(signif = 2)
   pdp <- list(pdp = aux, plot = p, vars = vars)
-
-  toc("dalex_variable")
   return(pdp)
 }
