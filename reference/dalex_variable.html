@@ -18,7 +18,7 @@ study variable's responses vs independent vector."><meta property="og:image" con
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.6.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.6.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,7 @@ study variable's responses vs independent vector.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dalex_variable</span><span class="op">(</span><span class="va">explainer</span>, <span class="va">vars</span>, force_class <span class="op">=</span> <span class="cn">NA</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dalex_variable</span><span class="op">(</span><span class="va">explainer</span>, <span class="va">vars</span>, force_class <span class="op">=</span> <span class="cn">NA</span>, seed <span class="op">=</span> <span class="fl">123</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -73,6 +73,10 @@ study variable's responses vs independent vector.</p>
 <dt>force_class</dt>
 <dd><p>Character. If you wish to force a class on your
 vars, which one do you need?</p></dd>
+
+
+<dt>seed</dt>
+<dd><p>Numeric. Seed for reproducibility</p></dd>
 
 
 <dt>...</dt>
