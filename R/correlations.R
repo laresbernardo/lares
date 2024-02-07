@@ -359,7 +359,7 @@ plot.corr_var <- function(x, var, max_pvalue = 1, top = NA, limit = NULL, ...) {
 #' @export
 corr_cross <- function(df, plot = TRUE,
                        pvalue = TRUE, max_pvalue = 1,
-                       type = 1, max = 1, top = 15, local = 1,
+                       type = 1, max = 1, top = 20, local = 1,
                        ignore = NULL, contains = NA, grid = TRUE,
                        rm.na = FALSE, quiet = FALSE,
                        ...) {

@@ -11,7 +11,7 @@ corr_cross(
   max_pvalue = 1,
   type = 1,
   max = 1,
-  top = 25,
+  top = 20,
   local = 1,
   ignore = NULL,
   contains = NA,
