@@ -78,7 +78,7 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   if (isFALSE(legend)) legend <- "none"
 
   # Check and set font
-  font <- .font_global(font, quiet = FALSE)
+  font <- .font_global(font, quiet = FALSE, ...)
   ret <- ret + theme(text = element_text(family = font))
 
   # Set some defaults
@@ -373,8 +373,8 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
   return(values)
 }
 
-.font_global <- function(font, quiet = TRUE, when_not = NA) {
-  if (!isTRUE(font_exists(font))) {
+.font_global <- function(font, quiet = TRUE, when_not = NA, ...) {
+  if (!isTRUE(font_exists(font, ...))) {
     if (isFALSE(is.na(font))) {
       if (isTRUE(font != "") && !quiet) {
         warning(sprintf("Font '%s' is not installed, has other name, or can't be found", font))

@@ -4,12 +4,16 @@
 \alias{font_exists}
 \title{Check if Font is Installed}
 \usage{
-font_exists(font = "Arial Narrow", quiet = FALSE)
+font_exists(font = "Arial Narrow", font_dirs = NULL, quiet = FALSE, ...)
 }
 \arguments{
 \item{font}{Character. Which font to check.}
 
+\item{font_dirs}{Character vector. Additional directories to check for fonts.}
+
 \item{quiet}{Boolean. Keep quiet? If not, show message}
+
+\item{...}{Additional parameters.}
 }
 \value{
 Boolean result of the existing fonts check.
@@ -22,7 +26,7 @@ To list all available fonts, set \code{font = NULL}.
 font_exists(font = "Arial")
 font_exists(font = "arial")
 font_exists(font = "")
-font_exists(font = NULL)
+# font_exists(font = NULL)
 }
 \seealso{
 Other Tools: 

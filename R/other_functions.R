@@ -473,50 +473,48 @@ autoline <- function(text, top = "auto", rel = 9) {
 #' To list all available fonts, set \code{font = NULL}.
 #'
 #' @family Tools
+#' @inheritParams cache_write
 #' @param font Character. Which font to check. 
+#' @param font_dirs Character vector. Additional directories to check for fonts.
 #' @param quiet Boolean. Keep quiet? If not, show message
 #' @return Boolean result of the existing fonts check.
 #' @examples
 #' font_exists(font = "Arial")
 #' font_exists(font = "arial")
 #' font_exists(font = "")
-#' font_exists(font = NULL)
+#' # font_exists(font = NULL)
 #' @export
-font_exists <- function(font = "Arial Narrow", quiet = FALSE) {
-  if (isTRUE(font == "")) {
-    return(FALSE)
-  }
-  if (isTRUE(is.na(font))) {
-    return(FALSE)
-  }
-
+font_exists <- function(font = "Arial Narrow", font_dirs = NULL, quiet = FALSE, ...) {
+  if (isTRUE(font == "")) return(FALSE)
+  if (isTRUE(is.na(font))) return(FALSE)
   tryCatch(
     {
       # Thanks to extrafont for the idea for this code
       ttf_find_default_path <- function() {
         if (grepl("^darwin", R.version$os)) {
-          paths <- c(
-            "/Library/Fonts/",
-            "/System/Library/Fonts",
-            "/System/Library/Fonts/Supplemental",
-            "~/Library/Fonts/"
-          )
+          paths <-
+            c("/Library/Fonts/",                      # System fonts
+              "/System/Library/Fonts",                # More system fonts
+              "/System/Library/Fonts/Supplemental",   # More system fonts
+              "~/Library/Fonts/",                     # User fonts
+              font_dirs)
           return(paths[file.exists(paths)])
         } else if (grepl("^linux-gnu", R.version$os)) {
-          # Possible font paths, depending on the system
-          paths <- c(
-            "/usr/share/fonts/",
-            "/usr/X11R6/lib/X11/fonts/TrueType/",
-            "~/.fonts/"
-          )
+          paths <-
+            c("/usr/share/fonts/",                    # Ubuntu/Debian/Arch/Gentoo
+              "/usr/local/share/fonts/",              # system-admin-guide/stable/fonts.html.en
+              "/usr/X11R6/lib/X11/fonts/TrueType/",   # RH 6
+              "~/.local/share/fonts/",                # Added with Gnome font viewer
+              "~/.fonts/",                            # User fonts
+              font_dirs)
           return(paths[file.exists(paths)])
         } else if (grepl("^freebsd", R.version$os)) {
           # Possible font paths, depending on installed ports
-          paths <- c(
-            "/usr/local/share/fonts/truetype/",
-            "/usr/local/lib/X11/fonts/",
-            "~/.fonts/"
-          )
+          paths <-
+            c("/usr/local/share/fonts/truetype/",
+              "/usr/local/lib/X11/fonts/",
+              "~/.fonts/",                            # User fonts
+              font_dirs)
           return(paths[file.exists(paths)])
         } else if (grepl("^mingw", R.version$os)) {
           return(paste(Sys.getenv("SystemRoot"), "\\Fonts", sep = ""))
@@ -524,6 +522,7 @@ font_exists <- function(font = "Arial Narrow", quiet = FALSE) {
           stop("Unknown platform. Don't know where to look for truetype fonts. Sorry!")
         }
       }
+
       check <- function(font, quiet = FALSE) {
         pattern <- "\\.ttf$|\\.otf"
         fonts_path <- ttf_find_default_path()
@@ -537,8 +536,8 @@ font_exists <- function(font = "Arial Narrow", quiet = FALSE) {
         if (!quiet & !ret) {
           if (!is.null(font)) font_names <- font_names[grepl(tolower(font), tolower(font_names))]
           if (length(font_names) > 0)
-            message("Maybe you meant one of these: ",
-                    v2t(sort(gsub("\\..*", "", font_names))))
+            message("Maybe you meant one of these:\n",
+                    v2t(sort(gsub("\\..*", "", font_names)), "\n"))
         }
         return(ret)
       }
