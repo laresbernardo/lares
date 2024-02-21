@@ -18,7 +18,7 @@ To list all available fonts, set font = NULL."><meta property="og:image" content
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.6.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.6.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,7 @@ To list all available fonts, set <code>font = NULL</code>.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">font_exists</span><span class="op">(</span>font <span class="op">=</span> <span class="st">"Arial Narrow"</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">font_exists</span><span class="op">(</span>font <span class="op">=</span> <span class="st">"Arial Narrow"</span>, font_dirs <span class="op">=</span> <span class="cn">NULL</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -66,8 +66,16 @@ To list all available fonts, set <code>font = NULL</code>.</p>
 <dd><p>Character. Which font to check.</p></dd>
 
 
+<dt>font_dirs</dt>
+<dd><p>Character vector. Additional directories to check for fonts.</p></dd>
+
+
 <dt>quiet</dt>
 <dd><p>Boolean. Keep quiet? If not, show message</p></dd>
+
+
+<dt>...</dt>
+<dd><p>Additional parameters.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -124,8 +132,7 @@ To list all available fonts, set <code>font = NULL</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-in"><span><span class="fu">font_exists</span><span class="op">(</span>font <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-in"><span><span class="fu">font_exists</span><span class="op">(</span>font <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-in"><span><span class="co"># font_exists(font = NULL)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
