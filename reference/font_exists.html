@@ -63,7 +63,7 @@ To list all available fonts, set <code>font = NULL</code>.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>font</dt>
-<dd><p>Character. Which font to check.</p></dd>
+<dd><p>Character. Which font to check. No need to add .TFF.</p></dd>
 
 
 <dt>font_dirs</dt>
@@ -127,12 +127,62 @@ To list all available fonts, set <code>font = NULL</code>.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">font_exists</span><span class="op">(</span>font <span class="op">=</span> <span class="st">"Arial"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Font issue: Error in check_font(font, font_dirs, quiet): object 'f' not found</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-in"><span><span class="fu">font_exists</span><span class="op">(</span>font <span class="op">=</span> <span class="st">"arial"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Font issue: Error in check_font(font, font_dirs, quiet): object 'f' not found</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-in"><span><span class="fu">font_exists</span><span class="op">(</span>font <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-in"><span><span class="co"># font_exists(font = NULL)</span></span></span>
+<span class="r-in"><span><span class="fu">font_exists</span><span class="op">(</span>font <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "C059-BdIta"                      "C059-Bold"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "C059-Italic"                     "C059-Roman"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "D050000L"                        "NimbusMonoPS-Bold"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "NimbusMonoPS-BoldItalic"         "NimbusMonoPS-Italic"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "NimbusMonoPS-Regular"            "NimbusRoman-Bold"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "NimbusRoman-BoldItalic"          "NimbusRoman-Italic"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "NimbusRoman-Regular"             "NimbusSans-Bold"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "NimbusSans-BoldItalic"           "NimbusSans-Italic"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "NimbusSans-Regular"              "NimbusSansNarrow-Bold"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "NimbusSansNarrow-BoldOblique"    "NimbusSansNarrow-Oblique"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "NimbusSansNarrow-Regular"        "P052-Bold"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [23] "P052-BoldItalic"                 "P052-Italic"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "P052-Roman"                      "StandardSymbolsPS"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [27] "URWBookman-Demi"                 "URWBookman-DemiItalic"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "URWBookman-Light"                "URWBookman-LightItalic"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "URWGothic-Book"                  "URWGothic-BookOblique"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "URWGothic-Demi"                  "URWGothic-DemiOblique"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [35] "Z003-MediumItalic"               "DejaVuMathTeXGyre"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "DejaVuSans-Bold"                 "DejaVuSans-BoldOblique"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [39] "DejaVuSans-ExtraLight"           "DejaVuSans-Oblique"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "DejaVuSans"                      "DejaVuSansCondensed-Bold"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "DejaVuSansCondensed-BoldOblique" "DejaVuSansCondensed-Oblique"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "DejaVuSansCondensed"             "DejaVuSansMono-Bold"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [47] "DejaVuSansMono-BoldOblique"      "DejaVuSansMono-Oblique"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "DejaVuSansMono"                  "DejaVuSerif-Bold"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [51] "DejaVuSerif-BoldItalic"          "DejaVuSerif-Italic"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [53] "DejaVuSerif"                     "DejaVuSerifCondensed-Bold"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [55] "DejaVuSerifCondensed-BoldItalic" "DejaVuSerifCondensed-Italic"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [57] "DejaVuSerifCondensed"            "DroidSansFallbackFull"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [59] "Lato-Black"                      "Lato-BlackItalic"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [61] "Lato-Bold"                       "Lato-BoldItalic"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [63] "Lato-Hairline"                   "Lato-HairlineItalic"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [65] "Lato-Heavy"                      "Lato-HeavyItalic"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [67] "Lato-Italic"                     "Lato-Light"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [69] "Lato-LightItalic"                "Lato-Medium"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [71] "Lato-MediumItalic"               "Lato-Regular"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [73] "Lato-Semibold"                   "Lato-SemiboldItalic"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [75] "Lato-Thin"                       "Lato-ThinItalic"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [77] "LiberationMono-Bold"             "LiberationMono-BoldItalic"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [79] "LiberationMono-Italic"           "LiberationMono-Regular"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [81] "LiberationSans-Bold"             "LiberationSans-BoldItalic"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [83] "LiberationSans-Italic"           "LiberationSans-Regular"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [85] "LiberationSansNarrow-Bold"       "LiberationSansNarrow-BoldItalic"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [87] "LiberationSansNarrow-Italic"     "LiberationSansNarrow-Regular"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [89] "LiberationSerif-Bold"            "LiberationSerif-BoldItalic"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [91] "LiberationSerif-Italic"          "LiberationSerif-Regular"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [93] "NotoColorEmoji"                  "NotoMono-Regular"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [95] "NotoSansMono-Bold"               "NotoSansMono-Regular"           </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
