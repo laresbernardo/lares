@@ -1,6 +1,6 @@
 .onLoad <- function(libname, pkgname) {
   Sys.setenv(
-    # So user can set another font be default on theme_lares()
+    # So user can set another font by default on theme_lares()
     "LARES_FONT" = if (Sys.getenv("LARES_FONT") != "") {
       Sys.getenv("LARES_FONT")
     } else {

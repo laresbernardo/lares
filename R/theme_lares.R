@@ -374,14 +374,18 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
 }
 
 .font_global <- function(font, quiet = TRUE, when_not = NA, ...) {
-  if (!isTRUE(font_exists(font, ...))) {
-    if (isFALSE(is.na(font))) {
-      if (isTRUE(font != "") && !quiet) {
-        warning(sprintf("Font '%s' is not installed, has other name, or can't be found", font))
+  temp <- font_exists(font, ...)
+  if (!any(isTRUE(temp))) {
+    if (isFALSE(is.na(font[1]))) {
+      if (isTRUE(font[1] != "") && !quiet) {
+        warning(sprintf("Font(s) %s not installed, with other name, or can't be found", v2t(font)))
       }
       Sys.unsetenv("LARES_FONT") # So R doesn't try again by default
       font <- when_not
     }
+  } else {
+    # Return first one that is found
+    font <- font[head(which(temp), 1)]
   }
   return(font)
 }
