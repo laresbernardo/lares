@@ -21,7 +21,7 @@
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data("iris")
 #' df <- subset(iris, select = c(-Species))
-#' df$id <- 1:nrow(df)
+#' df$id <- seq_len(nrow(df))
 #' reduce_pca(df, n = 3, ignore = "id")
 #' @export
 reduce_pca <- function(df, n = NULL, ignore = NULL,
@@ -107,7 +107,7 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
 #' \dontrun{
 #' data("iris")
 #' df <- subset(iris, select = c(-Species))
-#' df$id <- 1:nrow(df)
+#' df$id <- seq_len(nrow(df))
 #' reduce_tsne(df, ignore = "id", max_iter = 800, perplexity = 20)
 #' }
 #' @export

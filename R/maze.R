@@ -80,7 +80,7 @@ maze_solve <- function(
       )
     }), "X")
 
-    colnames(result$maze) <- 1:ncol(result$maze)
+    colnames(result$maze) <- seq_len(ncol(result$maze))
     result$maze <- as.data.frame(result$maze)
     result$maze[result$maze == 0] <- " "
     result$maze[result$maze == 1] <- "[]"
@@ -155,7 +155,7 @@ maze_solve_recursive <- function(
   # Rank next positions based on minimum distance to goal
   temp <- if (aim) end else c(row, col)
   positions <- rank_positions(row, col, temp[1], temp[2], diagonal)
-  if (random) positions <- positions[sample(1:nrow(positions)), ]
+  if (random) positions <- positions[sample(seq_len(nrow(positions))), ]
 
   # Ensure that the direction it came from is the first move if inertia is TRUE
   if (!is.null(prev_direction) & isTRUE(inertia)) {
@@ -168,7 +168,7 @@ maze_solve_recursive <- function(
     }
   }
 
-  for (i in 1:nrow(positions)) {
+  for (i in seq_len(nrow(positions))) {
     next_row <- positions$x[i]
     next_col <- positions$y[i]
 

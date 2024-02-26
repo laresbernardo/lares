@@ -33,7 +33,7 @@ based on the distance between points instead of trying to maximize variance.
 \dontrun{
 data("iris")
 df <- subset(iris, select = c(-Species))
-df$id <- 1:nrow(df)
+df$id <- seq_len(nrow(df))
 reduce_tsne(df, ignore = "id", max_iter = 800, perplexity = 20)
 }
 }

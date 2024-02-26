@@ -47,7 +47,7 @@ information from our original dataset.
 Sys.unsetenv("LARES_FONT") # Temporal
 data("iris")
 df <- subset(iris, select = c(-Species))
-df$id <- 1:nrow(df)
+df$id <- seq_len(nrow(df))
 reduce_pca(df, n = 3, ignore = "id")
 }
 \seealso{

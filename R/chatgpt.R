@@ -439,7 +439,7 @@ gpt_prompter <- function(instruction = NULL,
     ...
   )
   # Get rid of already used information
-  elements[c("cols")] <- NULL
+  elements["cols"] <- NULL
   # Check if something's actually being prompted
   are_null <- unlist(lapply(elements, is.null))
   if (all(are_null)) warning("No prompt provided. Set any of the elements: ", v2t(names(elements)))
