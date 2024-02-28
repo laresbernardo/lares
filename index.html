@@ -97,16 +97,18 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<pre class="{r}"><code><span><span class="co">## CRAN VERSION</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"lares"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## DEV VERSION</span></span>
-<span><span class="co"># If you don't have remotes yet, run: install.packages('remotes')</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"laresbernardo/lares"</span><span class="op">)</span></span>
-<span><span class="co"># Full installation with recommended dependencies (takes more time)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"laresbernardo/lares"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
-<p><strong>Windows users</strong>: you MAY have to install <code>RTools</code> before installing the dev version. Download it <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link">here</a>.</p>
+<p>```{r} ## CRAN VERSION install.packages(“lares”)</p>
 </div>
+<div class="section level2">
+<h2 id="dev-version">DEV VERSION<a class="anchor" aria-label="anchor" href="#dev-version"></a>
+</h2>
+</div>
+</div>
+<div class="section level1">
+<h1 id="if-you-dont-have-remotes-yet-run-installpackagesremotes">If you don’t have remotes yet, run: install.packages(‘remotes’)<a class="anchor" aria-label="anchor" href="#if-you-dont-have-remotes-yet-run-installpackagesremotes"></a>
+</h1>
+<p>remotes::install_github(“laresbernardo/lares”) # Full installation with recommended dependencies (takes more time) remotes::install_github(“laresbernardo/lares”, dependencies = TRUE) ```</p>
+<p><strong>Windows users</strong>: you MAY have to install <code>RTools</code> before installing the dev version. Download it <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link">here</a>.</p>
 <div class="section level2">
 <h2 id="see-the-library-in-action">See the library in action!<a class="anchor" aria-label="anchor" href="#see-the-library-in-action"></a>
 </h2>
@@ -127,16 +129,16 @@
 <h3 id="automl-simplified-map-h2o_automl">AutoML Simplified Map <a href="https://laresbernardo.github.io/lares/reference/h2o_automl.html"><code>h2o_automl()</code></a>
 <a class="anchor" aria-label="anchor" href="#automl-simplified-map-h2o_automl"></a>
 </h3>
-<div class="figure">
-<img src="reference/figures/automl_map.png?raw=true" alt=""><p class="caption">AutoML Map (lares)</p>
+<div class="float">
+<img src="reference/figures/automl_map.png?raw=true" alt="AutoML Map (lares)"><div class="figcaption">AutoML Map (lares)</div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="insights-while-understanding">Insights While Understanding<a class="anchor" aria-label="anchor" href="#insights-while-understanding"></a>
 </h3>
 <p>To get insights and value out of your dataset, first you need to understand its structure, types of data, empty values, interactions between variables… <code><a href="reference/corr_cross.html">corr_cross()</a></code> and <code><a href="reference/freqs.html">freqs()</a></code> are here to give you just that! They show a wide perspective of your dataset content, correlations, and frequencies. Additionally, with the <code><a href="reference/missingness.html">missingness()</a></code> function to detect all missing values and <code><a href="reference/df_str.html">df_str()</a></code> to break down you data frame’s structure, you will be ready to squeeze valuable insights out of your data. If you’d like to go deeper, try the <code><a href="reference/x2y.html">x2y()</a></code>, <code><a href="reference/lasso_vars.html">lasso_vars()</a></code> and <code><a href="reference/tree_var.html">tree_var()</a></code> to use Machine Learning to detect patterns, predictive powers, and variables importance.</p>
-<div class="figure">
-<img src="reference/figures/titanic_df.png?raw=true" alt=""><p class="caption">Cross-Correlations and Frequencies (lares)</p>
+<div class="float">
+<img src="reference/figures/titanic_df.png?raw=true" alt="Cross-Correlations and Frequencies (lares)"><div class="figcaption">Cross-Correlations and Frequencies (lares)</div>
 </div>
 </div>
 <div class="section level3">
@@ -158,6 +160,7 @@
 </div>
 </div>
 </div>
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
