@@ -25,7 +25,7 @@ what type of media it is: "online" or "offline".}
 Only valid to transform thetas when using geometric adstock. Set to "skip"
 in case you wish to leave default weekly values.}
 
-\item{lagged}{Boolean vector. Must be ength 1 or same as
+\item{lagged}{Boolean vector. Must be length 1 or same as
 \code{channels}. Pick, for every \code{channels} value,
 if you wish to have a lagged effect. Only valid for Weibull adstock.}
 }
@@ -46,8 +46,8 @@ robyn_hypsbuilder(
     "tv_spend",
     "radio_spend"),
   media_type = c(
-    "online", "online", "online",
-    "offline", "offline", "offline", "offline"),
+    "online", "online", "offline", 
+    "offline", "offline", "offline"),
   adstock = "geometric",
   date_type = "weekly")
 }
