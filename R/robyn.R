@@ -21,7 +21,6 @@
 #'   channels = c(
 #'     "branded_search_spend",
 #'     "nonbranded_search_spend",
-#'     "facebook_spend",
 #'     "print_spend",
 #'     "ooh_spend",
 #'     "tv_spend",
@@ -263,7 +262,7 @@ robyn_modelselector <- function(
           normalize(-.data$mape) * ifelse(
             !"mape" %in% metrics, 0, wt[which(metrics == "mape")])
       ),
-      aux = rank(-.data$score)) %>%
+      aux = rank(-.data$score, ties.method = "first")) %>%
     rowwise() %>%
     mutate(note = ifelse(.data$aux %in% 1:top, paste(rep("*", (top + 1) - .data$aux), collapse = ""), "")) %>%
     select(-.data$top_sol, -.data$aux) %>%
