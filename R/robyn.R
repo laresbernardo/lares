@@ -6,12 +6,13 @@
 #'
 #' @family Robyn
 #' @param channels Character vector. Paid media and organic variables names.
-#' @param media_type Character vector. Must be ength 1 or same as
+#' @param media_type Character vector. Must be length 1 or same as
 #' \code{channels}. Pick, for every \code{channels} value,
 #' what type of media it is: "online" or "offline".
 #' @param adstock Character. Pick one of: "geometric" or "weibull".
-#' @param date_type Character. Pick one of: "daily", "weekly, or "monthly".
-#' Only valid to transform thetas when using geometric adstock.
+#' @param date_type Character. Pick one of: "daily", "weekly", or "monthly".
+#' Only valid to transform thetas when using geometric adstock. Set to "skip"
+#' in case you wish to leave default weekly values.
 #' @param lagged Boolean vector. Must be ength 1 or same as
 #' \code{channels}. Pick, for every \code{channels} value,
 #' if you wish to have a lagged effect. Only valid for Weibull adstock.
@@ -41,7 +42,7 @@ robyn_hypsbuilder <- function(
   # Check inputs validity
   check_opts(media_type, c("default", "online", "offline"))
   check_opts(adstock, c("geometric", "weibull", "weibull_pdf", "weibull_cdf"))
-  check_opts(date_type, c("daily", "weekly", "monthly"))
+  check_opts(date_type, c("daily", "weekly", "monthly", "skip"))
   check_opts(lagged, c(TRUE, FALSE))
   
   # Hyperparameters names

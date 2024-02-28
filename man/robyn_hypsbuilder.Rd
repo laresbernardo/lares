@@ -15,14 +15,15 @@ robyn_hypsbuilder(
 \arguments{
 \item{channels}{Character vector. Paid media and organic variables names.}
 
-\item{media_type}{Character vector. Must be ength 1 or same as
+\item{media_type}{Character vector. Must be length 1 or same as
 \code{channels}. Pick, for every \code{channels} value,
 what type of media it is: "online" or "offline".}
 
 \item{adstock}{Character. Pick one of: "geometric" or "weibull".}
 
-\item{date_type}{Character. Pick one of: "daily", "weekly, or "monthly".
-Only valid to transform thetas when using geometric adstock.}
+\item{date_type}{Character. Pick one of: "daily", "weekly", or "monthly".
+Only valid to transform thetas when using geometric adstock. Set to "skip"
+in case you wish to leave default weekly values.}
 
 \item{lagged}{Boolean vector. Must be ength 1 or same as
 \code{channels}. Pick, for every \code{channels} value,
@@ -40,7 +41,6 @@ robyn_hypsbuilder(
   channels = c(
     "branded_search_spend",
     "nonbranded_search_spend",
-    "facebook_spend",
     "print_spend",
     "ooh_spend",
     "tv_spend",
