@@ -89,7 +89,7 @@ in case you wish to leave default weekly values.</p></dd>
 
 
 <dt>lagged</dt>
-<dd><p>Boolean vector. Must be ength 1 or same as
+<dd><p>Boolean vector. Must be length 1 or same as
 <code>channels</code>. Pick, for every <code>channels</code> value,
 if you wish to have a lagged effect. Only valid for Weibull adstock.</p></dd>
 
@@ -117,11 +117,67 @@ if you wish to have a lagged effect. Only valid for Weibull adstock.</p></dd>
 <span class="r-in"><span>    <span class="st">"tv_spend"</span>,</span></span>
 <span class="r-in"><span>    <span class="st">"radio_spend"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  media_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">"online"</span>, <span class="st">"online"</span>, <span class="st">"online"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"offline"</span>, <span class="st">"offline"</span>, <span class="st">"offline"</span>, <span class="st">"offline"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"online"</span>, <span class="st">"online"</span>, <span class="st">"offline"</span>, </span></span>
+<span class="r-in"><span>    <span class="st">"offline"</span>, <span class="st">"offline"</span>, <span class="st">"offline"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  adstock <span class="op">=</span> <span class="st">"geometric"</span>,</span></span>
 <span class="r-in"><span>  date_type <span class="op">=</span> <span class="st">"weekly"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in `$&lt;-.data.frame`(`*tmp*`, "media_type", value = c("online", "online", "online", "offline", "offline", "offline", "offline", "online", "online", "online", "offline", "offline", "offline", "offline", "online", "online", "online", "offline", "offline", "offline", "offline")):</span> replacement has 21 rows, data has 18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $branded_search_spend_alphas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01 3.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $branded_search_spend_gammas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3 1.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $branded_search_spend_thetas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1 0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $nonbranded_search_spend_alphas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01 3.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $nonbranded_search_spend_gammas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3 1.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $nonbranded_search_spend_thetas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1 0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $print_spend_alphas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01 1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $print_spend_gammas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3 1.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $print_spend_thetas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1 0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ooh_spend_alphas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01 1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ooh_spend_gammas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3 1.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ooh_spend_thetas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1 0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $tv_spend_alphas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01 1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $tv_spend_gammas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3 1.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $tv_spend_thetas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1 0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $radio_spend_alphas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01 1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $radio_spend_gammas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3 1.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $radio_spend_thetas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1 0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $train_size</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5 0.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
