@@ -546,7 +546,7 @@ check_font <- function(font, font_dirs = NULL, quiet = FALSE) {
   if (is.null(font)) return(nice_names)
   ret <- font %in% nice_names
   if (!quiet & !all(ret)) {
-    if (!is.null(f)) font_names <- font_names[
+    if (!is.null(font)) font_names <- font_names[
       grepl(tolower(paste(font, collapse = "|")), tolower(font_names))]
     if (length(font_names) > 0)
       message("Maybe you meant one of these:\n", v2t(sort(gsub("\\..*", "", font_names))))
