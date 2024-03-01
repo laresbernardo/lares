@@ -474,7 +474,7 @@ autoline <- function(text, top = "auto", rel = 9) {
 #'
 #' @family Tools
 #' @inheritParams cache_write
-#' @param font Character. Which font to check. 
+#' @param font Character. Which font to check. No need to add .TFF.
 #' @param font_dirs Character vector. Additional directories to check for fonts.
 #' @param quiet Boolean. Keep quiet? If not, show message
 #' @return Boolean result of the existing fonts check.
@@ -482,72 +482,76 @@ autoline <- function(text, top = "auto", rel = 9) {
 #' font_exists(font = "Arial")
 #' font_exists(font = "arial")
 #' font_exists(font = "")
-#' # font_exists(font = NULL)
+#' font_exists(font = NULL)
 #' @export
 font_exists <- function(font = "Arial Narrow", font_dirs = NULL, quiet = FALSE, ...) {
-  if (isTRUE(font == "")) return(FALSE)
-  if (isTRUE(is.na(font))) return(FALSE)
+  if (isTRUE(font[1] == "")) return(FALSE)
+  if (isTRUE(is.na(font[1]))) return(FALSE)
   tryCatch(
-    {
-      # Thanks to extrafont for the idea for this code
-      ttf_find_default_path <- function() {
-        if (grepl("^darwin", R.version$os)) {
-          paths <-
-            c("/Library/Fonts/",                      # System fonts
-              "/System/Library/Fonts",                # More system fonts
-              "/System/Library/Fonts/Supplemental",   # More system fonts
-              "~/Library/Fonts/",                     # User fonts
-              font_dirs)
-          return(paths[file.exists(paths)])
-        } else if (grepl("^linux-gnu", R.version$os)) {
-          paths <-
-            c("/usr/share/fonts/",                    # Ubuntu/Debian/Arch/Gentoo
-              "/usr/local/share/fonts/",              # system-admin-guide/stable/fonts.html.en
-              "/usr/X11R6/lib/X11/fonts/TrueType/",   # RH 6
-              "~/.local/share/fonts/",                # Added with Gnome font viewer
-              "~/.fonts/",                            # User fonts
-              font_dirs)
-          return(paths[file.exists(paths)])
-        } else if (grepl("^freebsd", R.version$os)) {
-          # Possible font paths, depending on installed ports
-          paths <-
-            c("/usr/local/share/fonts/truetype/",
-              "/usr/local/lib/X11/fonts/",
-              "~/.fonts/",                            # User fonts
-              font_dirs)
-          return(paths[file.exists(paths)])
-        } else if (grepl("^mingw", R.version$os)) {
-          return(paste(Sys.getenv("SystemRoot"), "\\Fonts", sep = ""))
-        } else {
-          stop("Unknown platform. Don't know where to look for truetype fonts. Sorry!")
-        }
-      }
-
-      check <- function(font, quiet = FALSE) {
-        pattern <- "\\.ttf$|\\.otf"
-        fonts_path <- ttf_find_default_path()
-        ttfiles <- list.files(fonts_path,
-          pattern = pattern,
-          full.names = TRUE, ignore.case = TRUE
-        )
-        font_names <- basename(ttfiles)
-        if (!is.null(font)) 
-          ret <- font %in% gsub(pattern, "", font_names) else ret <- FALSE
-        if (!quiet & !ret) {
-          if (!is.null(font)) font_names <- font_names[grepl(tolower(font), tolower(font_names))]
-          if (length(font_names) > 0)
-            message("Maybe you meant one of these:\n",
-                    v2t(sort(gsub("\\..*", "", font_names)), "\n"))
-        }
-        return(ret)
-      }
-      check(font)
-    },
+    check_font(font, font_dirs, quiet),
     error = function(err) {
       if (!quiet) message(paste("Font issue:", err))
       return(FALSE)
     }
   )
+}
+
+# Thanks to extrafont for the idea for this code
+ttf_find_default_path <- function(font_dirs = NULL) {
+  if (grepl("^darwin", R.version$os)) {
+    paths <-
+      c("/Library/Fonts/",                      # System fonts
+        "/System/Library/Fonts",                # More system fonts
+        "/System/Library/Fonts/Supplemental",   # More system fonts
+        "~/Library/Fonts/",                     # User fonts
+        font_dirs)
+    return(paths[file.exists(paths)])
+  } else if (grepl("^linux-gnu", R.version$os)) {
+    paths <-
+      c("/usr/share/fonts/",                    # Ubuntu/Debian/Arch/Gentoo
+        "/usr/local/share/fonts/",              # system-admin-guide/stable/fonts.html.en
+        "/usr/X11R6/lib/X11/fonts/TrueType/",   # RH 6
+        "~/.local/share/fonts/",                # Added with Gnome font viewer
+        "~/.fonts/",                            # User fonts
+        font_dirs)
+    return(paths[file.exists(paths)])
+  } else if (grepl("^freebsd", R.version$os)) {
+    # Possible font paths, depending on installed ports
+    paths <-
+      c("/usr/local/share/fonts/truetype/",
+        "/usr/local/lib/X11/fonts/",
+        "~/.fonts/",                            # User fonts
+        font_dirs)
+    return(paths[file.exists(paths)])
+  } else if (grepl("^mingw", R.version$os)) {
+    paths <-
+      c(file.path(Sys.getenv("SystemRoot"), "Fonts"),
+        file.path(Sys.getenv("LOCALAPPDATA"), "Microsoft", "Windows", "Fonts"),
+        font_dirs)
+    return(paths[file.exists(paths)])
+  } else {
+    stop("Unknown platform. Don't know where to look for truetype fonts. Sorry!")
+  }
+}
+
+check_font <- function(font, font_dirs = NULL, quiet = FALSE) {
+  pattern <- "\\.ttf$|\\.otf"
+  fonts_path <- ttf_find_default_path(font_dirs)
+  ttfiles <- list.files(fonts_path,
+                        pattern = pattern, recursive = TRUE,
+                        full.names = TRUE, ignore.case = TRUE
+  )
+  font_names <- basename(ttfiles)
+  nice_names <- gsub(pattern, "", font_names, ignore.case = TRUE)
+  if (is.null(font)) return(nice_names)
+  ret <- font %in% nice_names
+  if (!quiet & !all(ret)) {
+    if (!is.null(font)) font_names <- font_names[
+      grepl(tolower(paste(font, collapse = "|")), tolower(font_names))]
+    if (length(font_names) > 0)
+      message("Maybe you meant one of these:\n", v2t(sort(gsub("\\..*", "", font_names))))
+  }
+  return(ret)
 }
 
 

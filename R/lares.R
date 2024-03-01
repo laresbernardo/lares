@@ -123,7 +123,7 @@ recommended <- list(
   quantmod = c("getDividends", "getSymbols", "getQuote"),
   rdrop2 = c("drop_auth", "drop_dir", "drop_download", "drop_search", "drop_upload"),
   rgdal = c("readOGR", "project"),
-  Robyn = c("robyn_allocator"),
+  Robyn = "robyn_allocator",
   RPostgreSQL = "PostgreSQL",
   Rtsne = "Rtsne",
   rtweet = c("create_token", "search_tweets"),

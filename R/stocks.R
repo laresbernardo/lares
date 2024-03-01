@@ -522,7 +522,7 @@ weighted_value <- function(value,
   if (buy_only) df <- df[df$n > 0, ]
   if (is.null(n_stocks)) n_stocks <- sum(n, na.rm = TRUE)
   if (nrow(df) > 0) {
-    df$id <- 1:nrow(df)
+    df$id <- seq_len(nrow(df))
     if ("LIFO" %in% technique) {
       df <- df %>%
         arrange(desc(.data$id)) %>%

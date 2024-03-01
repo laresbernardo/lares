@@ -7,7 +7,7 @@
 font_exists(font = "Arial Narrow", font_dirs = NULL, quiet = FALSE, ...)
 }
 \arguments{
-\item{font}{Character. Which font to check.}
+\item{font}{Character. Which font to check. No need to add .TFF.}
 
 \item{font_dirs}{Character vector. Additional directories to check for fonts.}
 
@@ -26,7 +26,7 @@ To list all available fonts, set \code{font = NULL}.
 font_exists(font = "Arial")
 font_exists(font = "arial")
 font_exists(font = "")
-# font_exists(font = NULL)
+font_exists(font = NULL)
 }
 \seealso{
 Other Tools: 
