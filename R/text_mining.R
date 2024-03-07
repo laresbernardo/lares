@@ -33,10 +33,10 @@ cleanText <- function(text, spaces = TRUE, keep = "", lower = TRUE,
   keep <- paste(keep, collapse = "")
   text <- gsub(paste("[^[:alnum:] ", keep, "]"), "", text)
   if (lower) text <- tolower(text)
-  if (title) text <- stringr::str_to_title(text)
   if (is.character(spaces)) text <- gsub(" ", spaces, text)
   if (isFALSE(spaces)) text <- gsub(" ", "", text)
   text <- trimws(gsub("[[:space:].]+", " ", text))
+  if (title) text <- stringr::str_to_title(text)
   return(text)
 }
 
