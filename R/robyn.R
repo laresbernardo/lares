@@ -278,21 +278,25 @@ robyn_modelselector <- function(
     paste(., collapse = " | ")
   
   # Generate plot/dashboard
-  p <- dfa %>%
-    mutate(cluster = sprintf("%s (%s)", .data$cluster, .data$incluster_models),
+  sorting <- dfa %>%
+    mutate(cluster = sprintf("%s (%s)", .data$cluster, .data$incluster_models),) %>%
+    group_by(.data$cluster, .data$note) %>% tally() %>%
+    arrange(desc(.data$note)) %>% pull(.data$cluster) %>% unique()
+  pdat <- dfa %>%
+    mutate(cluster = factor(sprintf("%s (%s)", .data$cluster, .data$incluster_models), levels = sorting),
            incluster_models = .data$incluster_models / max(dfa$incluster_models, na.rm = TRUE)) %>%
     tidyr::pivot_longer(all_of(metrics)) %>%
     filter(.data$name %in% metrics) %>%
-    arrange(desc(note)) %>% mutate(cluster = as.factor(cluster)) %>%
     mutate(name_metrics = rep(metrics_used$metric_name, length.out = nrow(.)),
            name = factor(.data$name, levels = metrics),
            name_metrics = factor(.data$name_metrics, levels = metrics_used$metric_name)) %>%
     group_by(.data$name) %>%
     mutate(top = rank(-.data$value)) %>%
     left_join(select(dfa, .data$solID, .data$rsq_train), "solID") %>%
-    group_by(.data$cluster) %>% 
+    group_by(.data$cluster) %>%
     slice(1:((length(metrics))* n_per_cluster)) %>%
-    mutate(solID = paste(.data$note, .data$solID)) %>%
+    mutate(solID = paste(.data$note, .data$solID))
+  p <- pdat %>%
     ggplot(aes(y = reorder(.data$solID, .data$score), x = .data$value)) +
     geom_col(aes(group = .data$name, fill = .data$top)) +
     # geom_vline(xintercept = 1, alpha = 0.5) +
