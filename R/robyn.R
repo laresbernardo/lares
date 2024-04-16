@@ -283,6 +283,7 @@ robyn_modelselector <- function(
            incluster_models = .data$incluster_models / max(dfa$incluster_models, na.rm = TRUE)) %>%
     tidyr::pivot_longer(all_of(metrics)) %>%
     filter(.data$name %in% metrics) %>%
+    arrange(desc(note)) %>% mutate(cluster = as.factor(cluster)) %>%
     mutate(name_metrics = rep(metrics_used$metric_name, length.out = nrow(.)),
            name = factor(.data$name, levels = metrics),
            name_metrics = factor(.data$name_metrics, levels = metrics_used$metric_name)) %>%
