@@ -18,7 +18,7 @@ rate between two currencies."><meta property="og:image" content="https://laresbe
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.7.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,29 +105,19 @@ previous values?</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># For today (or any one single date)</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"USD/COP"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in getSymbols.yahoo(Symbols = "USDCOP=X", env = NULL, verbose = FALSE,  : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Unable to import “USDCOP=X”.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attempt to set an attribute on NULL</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Error in getSymbols.yahoo(Symbols = "USDCOP=X", env = NULL, verbose = FALSE,  : </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   Unable to import “USDCOP=X”.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> attempt to set an attribute on NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Error in getSymbols.yahoo(Symbols = \"USDCOP=X\", env = NULL, verbose = FALSE,  : \n  Unable to import “USDCOP=X”.\nattempt to set an attribute on NULL\n"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "try-error"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"condition")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;simpleError in getSymbols.yahoo(Symbols = "USDCOP=X", env = NULL, verbose = FALSE,     warnings = TRUE, auto.assign = FALSE, from = structure(19834, class = "Date"),     to = structure(19834, class = "Date"), .has1sym. = TRUE): Unable to import “USDCOP=X”.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attempt to set an attribute on NULL&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         date    rate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2024-04-22 3904.57</span>
 <span class="r-in"><span><span class="co"># For multiple dates</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"EUR/USD"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         date     rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2024-04-14 1.064963</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2024-04-15 1.062575</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2024-04-16 1.062146</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2024-04-17 1.066940</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2024-04-18 1.064419</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2024-04-19 1.064623</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2024-04-20 1.064623</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 2024-04-21 1.064623</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2024-04-16 1.062146</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2024-04-17 1.066940</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2024-04-18 1.064419</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2024-04-19 1.064419</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2024-04-20 1.064419</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2024-04-21 1.065780</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2024-04-22 1.065780</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8 2024-04-23 1.065644</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
