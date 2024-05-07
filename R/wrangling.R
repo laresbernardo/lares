@@ -451,7 +451,7 @@ formatNum <- function(x, decimals = 2, signif = NULL,
 balance_data <- function(df, variable, rate = 1, target = "auto", seed = 0, quiet = FALSE) {
   on.exit(set.seed(seed))
   var <- enquo(variable)
-  variable <- rlang::as_label(var)
+  variable <- gsub('"', '', as_label(var))
   stopifnot(variable %in% names(df))
   names(df)[names(df) == variable] <- "tag"
   tags <- group_by(df, .data$tag) %>%

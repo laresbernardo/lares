@@ -130,8 +130,9 @@ freqs <- function(df, ..., wt = NULL,
   }
   obs_total <- sum(output$n)
   obs <- sprintf("Total Obs.: %s", formatNum(obs_total, 0))
-  weight_text <- ifelse((as_label(weight) != "NULL"),
-    sprintf("(weighted by %s)", as_label(weight)), ""
+  weight <- gsub('"', '', as_label(weight))
+  weight_text <- ifelse((weight != "NULL"),
+    sprintf("(weighted by %s)", weight), ""
   )
 
   # Use only the most n frequent values/combinations only
@@ -623,7 +624,7 @@ freqs_list <- function(df,
                        title = "",
                        plot = TRUE) {
   dff <- df
-  var_str <- as_label(enquo(var))
+  var_str <- gsub('"', '', as_label(enquo(var)))
   if (var_str != "NULL") {
     check_opts(var_str, colnames(df))
     colnames(df)[colnames(df) == var_str] <- "which"
@@ -647,7 +648,7 @@ freqs_list <- function(df,
   }
 
   # Weighted column
-  wt_str <- as_label(enquo(wt))
+  wt_str <- gsub('"', '', as_label(enquo(wt)))
   if (wt_str == "NULL") wt_str <- NULL
   if (length(wt_str) > 0) {
     if (wt_str %in% colnames(df)) {

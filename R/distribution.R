@@ -136,7 +136,7 @@ distr <- function(data, ...,
   }
 
   # Check if secondary variable exists and fix if possible
-  var <- as_label(var2)
+  var <- gsub('"', '', as_label(var2))
   if (!var %in% colnames(data)) {
     msg <- paste("Not a valid input:", var, "was transformed or does not exist.")
     maybes <- colnames(data)[grepl(var, colnames(data))]

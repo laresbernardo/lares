@@ -727,7 +727,7 @@ move_files <- function(from, to) {
 #' @export
 spread_list <- function(df, col, str = NULL, replace = TRUE) {
   var <- enquo(col)
-  col <- as_label(var)
+  col <- gsub('"', '', as_label(var))
   cols <- colnames(df)
 
   if (!"list" %in% unlist(lapply(df[, cols == col], class))) {
