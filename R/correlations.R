@@ -190,6 +190,7 @@ corr_var <- function(df, var,
                      ...) {
   vars <- enquos(var)
   var <- as_label(vars[[1]])
+  var <- gsub('"', '', var)
   df <- select(df, -contains(paste0(var, "_log")))
 
   # Calculate correlations
@@ -277,10 +278,12 @@ corr_var <- function(df, var,
 #' @rdname corr_var
 #' @export
 plot.corr_var <- function(x, var, max_pvalue = 1, top = NA, limit = NULL, ...) {
+  pal <- lares_pal("labels")
   p <- ungroup(x) %>%
     filter(!.data$variables %in% c("pvalue", "pvalue_adj")) %>%
     mutate(
-      pos = ifelse(.data$corr > 0, "positive", "negative"),
+      pos = ifelse(.data$corr > 0, pal$fill[pal$values == "positive"], 
+                   pal$fill[pal$values == "negative"]),
       hjust = ifelse(abs(.data$corr) < max(abs(.data$corr)) / 1.5, -0.1, 1.1)
     ) %>%
     ggplot(aes(
@@ -294,11 +297,12 @@ plot.corr_var <- function(x, var, max_pvalue = 1, top = NA, limit = NULL, ...) {
     geom_text(aes(hjust = .data$hjust), size = 3, colour = "black") +
     guides(fill = "none") +
     labs(title = paste("Correlations of", var), x = NULL, y = NULL) +
+    scale_fill_identity() +
     scale_y_continuous(
       expand = c(0, 0), position = "right",
       labels = function(x) sub("^(-)?0[.]", "\\1.", x)
     ) +
-    theme_lares(pal = 4)
+    theme_lares()
 
   if (is.null(limit)) limit <- 100
   if (!is.na(top) && top < limit) {
