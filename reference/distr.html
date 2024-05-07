@@ -20,7 +20,7 @@ Custom and tidyverse friendly."><meta property="og:image" content="https://lares
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.7.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.7.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -203,7 +203,8 @@ When <code>type</code> argument is used, single plots will be returned.</p>
 <span class="r-in"><span><span class="co"># Relation for categorical/categorical values</span></span></span>
 <span class="r-in"><span><span class="fu">distr</span><span class="op">(</span><span class="va">dft</span>, <span class="va">Survived</span>, <span class="va">Sex</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All aesthetics have length 1, but the data has 4 rows.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Did you mean to use `annotate()`?</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   a single row.</span>
 <span class="r-plt img"><img src="distr-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Relation for categorical/numeric values</span></span></span>
@@ -226,12 +227,14 @@ When <code>type</code> argument is used, single plots will be returned.</p>
 <span class="r-in"><span><span class="co"># Sort values</span></span></span>
 <span class="r-in"><span><span class="va">dft</span> <span class="op"><a href="lares-exports.html">%&gt;%</a></span> <span class="fu">distr</span><span class="op">(</span><span class="va">Survived</span>, <span class="va">Fare</span>, abc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All aesthetics have length 1, but the data has 20 rows.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Did you mean to use `annotate()`?</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   a single row.</span>
 <span class="r-plt img"><img src="distr-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># Less splits/breaks</span></span></span>
 <span class="r-in"><span><span class="va">dft</span> <span class="op"><a href="lares-exports.html">%&gt;%</a></span> <span class="fu">distr</span><span class="op">(</span><span class="va">Survived</span>, <span class="va">Fare</span>, abc <span class="op">=</span> <span class="cn">TRUE</span>, breaks <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All aesthetics have length 1, but the data has 10 rows.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Did you mean to use `annotate()`?</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   a single row.</span>
 <span class="r-plt img"><img src="distr-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Distribution of numerical only</span></span></span>
@@ -247,7 +250,8 @@ When <code>type</code> argument is used, single plots will be returned.</p>
 <span class="r-plt img"><img src="distr-6.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="va">dft</span> <span class="op"><a href="lares-exports.html">%&gt;%</a></span> <span class="fu">distr</span><span class="op">(</span><span class="va">Survived</span>, <span class="va">Age</span>, type <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All aesthetics have length 1, but the data has 20 rows.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Did you mean to use `annotate()`?</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   a single row.</span>
 <span class="r-plt img"><img src="distr-7.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
