@@ -54,7 +54,11 @@ ci_upper <- function(mean, ssd, n, conf = 0.95) {
 #' ci_var(dft, Fare, Pclass, conf = 0.99)
 #' @export
 ci_var <- function(df, var, group_var = NULL, conf = 0.95) {
-  var <- enquo(var)
+  if (isTRUE(try(is.character(var), silent = TRUE))) {
+    var <- eval(substitute(var), df)
+  } else {
+    var <- as_label(enquo(var))
+  }
   group_var <- enquo(group_var)
 
   if (as_label(group_var) != "NULL") {

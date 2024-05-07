@@ -12,7 +12,7 @@ Description: Auxiliary package for better/faster analytics, visualization, data 
 Depends:
     R (>= 3.5)
 Imports:
-    dplyr,
+    dplyr (>= 1.0.0),
     ggplot2,
     httr,
     jsonlite,

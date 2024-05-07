@@ -4,13 +4,13 @@
 \alias{balance_data}
 \title{Balance Binary Data by Resampling: Under-Over Sampling}
 \usage{
-balance_data(df, variable, rate = 1, target = "auto", seed = 0, quiet = FALSE)
+balance_data(df, var, rate = 1, target = "auto", seed = 0, quiet = FALSE)
 }
 \arguments{
 \item{df}{Vector or Dataframe. Contains different variables in each
 column, separated by a specific character}
 
-\item{variable}{Variable. Which variable should we used to re-sample dataset?}
+\item{var}{Variable. Which variable should we used to re-sample dataset?}
 
 \item{rate}{Numeric. How many X for every Y we need? Default: 1. If there are
 more than 2 unique values, rate will represent percentage for number of rows}

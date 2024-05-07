@@ -188,8 +188,13 @@ corr_var <- function(df, var,
                      save = FALSE,
                      quiet = FALSE,
                      ...) {
-  vars <- enquos(var)
-  var <- gsub('"', '', as_label(vars[[1]]))
+  
+  if (isTRUE(try(is.character(var), silent = TRUE))) {
+    var <- eval(substitute(var), df)
+  } else {
+    var <- as_label(enquo(var))
+  }
+  
   df <- select(df, -contains(paste0(var, "_log")))
 
   # Calculate correlations

@@ -434,7 +434,7 @@ formatNum <- function(x, decimals = 2, signif = NULL,
 #' @family Data Wrangling
 #' @param df Vector or Dataframe. Contains different variables in each
 #' column, separated by a specific character
-#' @param variable Variable. Which variable should we used to re-sample dataset?
+#' @param var Variable. Which variable should we used to re-sample dataset?
 #' @param rate Numeric. How many X for every Y we need? Default: 1. If there are
 #' more than 2 unique values, rate will represent percentage for number of rows
 #' @param target Character. If binary, which value should be reduced? If kept in
@@ -448,12 +448,15 @@ formatNum <- function(x, decimals = 2, signif = NULL,
 #' df <- balance_data(dft, Survived, rate = 0.5)
 #' df <- balance_data(dft, .data$Survived, rate = 0.1, target = "TRUE")
 #' @export
-balance_data <- function(df, variable, rate = 1, target = "auto", seed = 0, quiet = FALSE) {
+balance_data <- function(df, var, rate = 1, target = "auto", seed = 0, quiet = FALSE) {
   on.exit(set.seed(seed))
-  var <- enquo(variable)
-  variable <- gsub('"', '', as_label(var))
-  stopifnot(variable %in% names(df))
-  names(df)[names(df) == variable] <- "tag"
+  if (isTRUE(try(is.character(var), silent = TRUE))) {
+    var <- eval(substitute(var), df)
+  } else {
+    var <- as_label(enquo(var))
+  }
+  stopifnot(var %in% names(df))
+  names(df)[names(df) == var] <- "tag"
   tags <- group_by(df, .data$tag) %>%
     summarize(n = n()) %>%
     arrange(desc(.data$n)) %>%
@@ -495,7 +498,7 @@ balance_data <- function(df, variable, rate = 1, target = "auto", seed = 0, quie
       )))
     }
   }
-  balanced <- rename_at(balanced, vars("tag"), list(~ paste0(variable)))
+  balanced <- rename_at(balanced, vars("tag"), list(~ paste0(var)))
   return(as_tibble(balanced))
 }
 
