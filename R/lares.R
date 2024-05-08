@@ -92,6 +92,7 @@ recommended <- list(
   DBI = c("dbDriver", "dbConnect", "dbSendQuery", "fetch", "dbDisconnect"),
   devtools = c("install", "install_github", "with_proxy"),
   exifr = "read_exif",
+  extrafont = c("font_import", "loadfonts"),
   factoextra = "fviz_nbclust",
   forecast = c("Arima", "auto.arima", "forecast", "accuracy"),
   gdata = "read.xls",
@@ -105,6 +106,7 @@ recommended <- list(
     "sheets_auth", "read_sheet", "gs4_create", "range_write",
     "gs4_auth_configure", "gs4_auth", "sheet_append"
   ),
+  grDevices = "windowsFonts",
   h2o = c(
     "as.h2o", "h2o.automl", "h2o.accuracy", "h2o.getModel", "h2o.performance",
     "h2o.init", "h2o.removeAll", "h2o.download_mojo", "h2o.download_pojo",

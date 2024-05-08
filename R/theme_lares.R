@@ -78,7 +78,7 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   if (isFALSE(legend)) legend <- "none"
 
   # Check and set font
-  font <- .font_global(font, ...)
+  font <- .font_global(font, quiet = FALSE, ...)
   ret <- ret + theme(text = element_text(family = font))
 
   # Set some defaults
@@ -373,7 +373,7 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
   return(values)
 }
 
-.font_global <- function(font, quiet = TRUE, when_not = NA, ...) {
+.font_global <- function(font, quiet = FALSE, when_not = NA, ask_install = TRUE, ...) {
   if ("ignore" %in% tolower(font)) {
     return(NULL) 
   } else {
@@ -381,7 +381,12 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
     if (!any(isTRUE(temp))) {
       if (isFALSE(is.na(font[1]))) {
         if (isTRUE(font[1] != "") && !quiet) {
-          warning(sprintf("Font(s) %s not installed, with other name, or can't be found", v2t(font)))
+          if (ask_install & font[1] %in% list.files(system.file("fonts", package = "lares"))) {
+            yes <- readline(sprintf("Do you want to install %s font for better results? [y/n]: ", font))
+            if ("y" %in% yes) install_localfont(font)
+          } else {
+            warning(sprintf("Font(s) %s not installed, with other name, or can't be found", v2t(font))) 
+          }
         }
         Sys.unsetenv("LARES_FONT") # So R doesn't try again by default
         font <- when_not
@@ -392,4 +397,12 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
     }
     return(font) 
   }
+}
+
+install_localfont <- function(
+    font, dir = system.file(paste0("fonts/", font), package = "lares"),
+    ...) {
+  try_require("extrafont")
+  font_import(dir, prompt = FALSE, ...)
+  # loadfonts(quiet = TRUE)
 }

@@ -544,7 +544,12 @@ check_font <- function(font, font_dirs = NULL, quiet = FALSE) {
   font_names <- basename(ttfiles)
   nice_names <- gsub(pattern, "", font_names, ignore.case = TRUE)
   if (is.null(font)) return(nice_names)
-  ret <- font %in% nice_names
+  if (grepl("^mingw", R.version$os)) {
+    try_require("grDevices")
+    ret <- font %in% windowsFonts()
+  } else {
+    ret <- font %in% nice_names
+  }
   if (!quiet & !all(ret)) {
     if (!is.null(font)) font_names <- font_names[
       grepl(tolower(paste(font, collapse = "|")), tolower(font_names))]
@@ -999,8 +1004,9 @@ dir_size <- function(path = getwd(), recursive = TRUE, pattern = NULL, ...) {
   #   vect_size <- sapply(files, function(x) file.size(x))
   #   size_files <- sum(vect_size, na.rm = TRUE)
   # }
-  size_files <- system(paste("du -hs", path), intern = TRUE)
-  size_files <- gsub("\\\t.*", "", size_files)
+  cmd <- paste("du -hs", path)
+  size_files <- system(cmd, intern = TRUE, ignore.stdout = TRUE, ignore.stderr = TRUE)
+  size_files <- gsub("\\\t.*", "", as.numeric(size_files))
   size_files <- num_abbr(size_files, numeric = TRUE)
   class(size_files) <- "object_size"
   return(size_files)
