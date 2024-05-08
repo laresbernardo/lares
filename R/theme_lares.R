@@ -373,7 +373,7 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
   return(values)
 }
 
-.font_global <- function(font, quiet = FALSE, when_not = NA, ask_install = TRUE, ...) {
+.font_global <- function(font, quiet = FALSE, when_not = NA, ask_install = FALSE, ...) {
   if ("ignore" %in% tolower(font)) {
     return(NULL) 
   } else {
@@ -383,7 +383,7 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
         if (isTRUE(font[1] != "") && !quiet) {
           if (ask_install & font[1] %in% list.files(system.file("fonts", package = "lares"))) {
             yes <- readline(sprintf("Do you want to install %s font for better results? [y/n]: ", font))
-            if ("y" %in% yes) install_localfont(font)
+            if ("y" %in% yes) try(install_localfont(font))
           } else {
             warning(sprintf("Font(s) %s not installed, with other name, or can't be found", v2t(font))) 
           }
@@ -400,7 +400,7 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
 }
 
 install_localfont <- function(
-    font, dir = system.file(paste0("fonts/", font), package = "lares"),
+    font, dir = system.file(paste0("fonts/", gsub(" ", "_", font)), package = "lares"),
     ...) {
   try_require("extrafont")
   font_import(dir, prompt = FALSE, ...)

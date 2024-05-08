@@ -306,7 +306,7 @@ plot.corr_var <- function(x, var, max_pvalue = 1, top = NA, limit = NULL, ...) {
       expand = c(0, 0), position = "right",
       labels = function(x) sub("^(-)?0[.]", "\\1.", x)
     ) +
-    theme_lares()
+    theme_lares(...)
 
   if (is.null(limit)) limit <- 100
   if (!is.na(top) && top < limit) {
@@ -492,7 +492,7 @@ corr_cross <- function(df, plot = TRUE,
         ) +
         scale_y_continuous(labels = function(x) sub("^(-)?0[.]", "\\1.", x)) +
         coord_flip() +
-        theme_lares(pal = 2)
+        theme_lares(pal = 2, ...)
     }
     if (max_pvalue < 1) {
       p <- p + labs(caption = paste("Correlations with p-value <", max_pvalue))
