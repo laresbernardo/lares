@@ -9,8 +9,9 @@ robyn_modelselector(
   InputCollect,
   OutputCollect,
   metrics = c("rsq_train", "performance", "potential_improvement", "non_zeroes",
-    "incluster_models"),
-  wt = c(2, 1, 1, 1, 0.1),
+    "incluster_models", "baseline"),
+  wt = c(2, 1, 1, 1, 0.1, 0),
+  baseline_ref = 0,
   top = 4,
   n_per_cluster = 5,
   allocator_limits = c(0.5, 2),
@@ -34,6 +35,10 @@ amount of models per cluster.}
 \item{wt}{Vector. Weight for each of the normalized \code{metrics} selected,
 to calculate the score and rank models. Must have the same order and length
 of \code{metrics} parameter input.}
+
+\item{baseline_ref}{Numeric value. Between 0 and 1. What is the baseline
+percentage you expect? Baseline in this case are all the sales or conversions
+from non media channels (organic & paid). Used with \code{baseline} metric.}
 
 \item{top}{Integer. How many ranked models to star? The better the model
 is, the more stars it will have marked.}
