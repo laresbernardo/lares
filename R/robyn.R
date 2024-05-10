@@ -125,14 +125,15 @@ robyn_hypsbuilder <- function(
 #' Pick any combination from: "rsq_train" for trained R squared,
 #' "performance" for ROAS or (inverse) CPA, "potential_improvement" for
 #' default budget allocator improvement using \code{allocator_limits},
-#' "non_zeroes" for non-zero beta coefficients, and "incluster_models" for
-#' amount of models per cluster.
+#' "non_zeroes" for non-zero beta coefficients, "incluster_models" for
+#' amount of models per cluster, "baseline" for percentage of non-media
+#' channels contribution (set up \code{baseline_ref} too.)
 #' @param wt Vector. Weight for each of the normalized \code{metrics} selected,
 #' to calculate the score and rank models. Must have the same order and length
 #' of \code{metrics} parameter input.
 #' @param baseline_ref Numeric value. Between 0 and 1. What is the baseline
 #' percentage you expect? Baseline in this case are all the sales or conversions
-#' from non media channels (organic & paid). Used with \code{baseline} metric.
+#' from non-media channels (organic & paid). Used with "baseline" metric.
 #' @param top Integer. How many ranked models to star? The better the model
 #' is, the more stars it will have marked.
 #' @param allocator_limits Numeric vector, length 2. How flexible do you
