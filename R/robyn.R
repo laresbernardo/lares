@@ -277,9 +277,9 @@ robyn_modelselector <- function(
             !"performance" %in% metrics, 0, wt[which(metrics == "performance")]) +
           normalize(.data$potential_improvement) * ifelse(
             !"potential_improvement" %in% metrics, 0, wt[which(metrics == "potential_improvement")]) +
-          .data$baseline * ifelse(
+          normalize(.data$baseline) * ifelse(
             !"baseline" %in% metrics, 0, wt[which(metrics == "baseline")]) +
-          .data$non_zeroes / length(InputCollect$all_media) * ifelse(
+          normalize(.data$non_zeroes / length(InputCollect$all_media)) * ifelse(
             !"non_zeroes" %in% metrics, 0, wt[which(metrics == "non_zeroes")]) +
           normalize(.data$incluster_models) * ifelse(
             !"incluster_models" %in% metrics, 0, wt[which(metrics == "incluster_models")]) +
@@ -328,7 +328,7 @@ robyn_modelselector <- function(
     geom_col(aes(group = .data$name, fill = .data$top)) +
     # geom_vline(xintercept = 1, alpha = 0.5) +
     facet_grid(.data$cluster ~ .data$name_metrics, scales = "free") +
-    labs(y = NULL, x = "Normalized Scores (the highest the better)",
+    labs(y = NULL, x = "Criteria Scores (the highest the better)",
          title = "Select a model based on these metrics and rankings",
          subtitle = paste(
            "Showing up to", n_per_cluster,
