@@ -115,7 +115,7 @@ clusterKmeans <- function(df, k = NULL, wss_var = 0, limit = 15, drop_na = TRUE,
       y = "Within Groups Sum of Squares"
     ) +
     scale_y_comma() +
-    theme_lares()
+    theme_lares(...)
   results[["nclusters"]] <- nclusters
   results[["nclusters_plot"]] <- nclusters_plot
 
@@ -225,16 +225,16 @@ clusterVisualK <- function(df, ks = 2:6, ...) {
     explained <<- clusters$PCA$pca_explained[1:2]
     return(pca)
   }
-  clus_plot <- function(clus_dat) {
+  clus_plot <- function(clus_dat, ...) {
     clus_dat %>%
       ggplot(aes(x = .data$PC1, y = .data$PC2, colour = as.character(.data$cluster))) +
       geom_point() +
       guides(colour = "none") +
       labs(subtitle = glued("{clus_dat$k[1]} clusters")) +
-      theme_lares(pal = 2)
+      theme_lares(pal = 2, ...)
   }
   dats <- lapply(ks, function(x) clus_dat(df, x, ...))
-  plots <- lapply(dats, clus_plot)
+  plots <- lapply(dats, function(x) clus_plot(x, ...))
 
   total <- formatNum(sum(explained), 1, pos = "%")
   explained <- formatNum(explained, 1, pos = "%")
@@ -281,7 +281,7 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
   try_require("factoextra")
   df <- .prepare_cluster(df, drop_na = drop_na, ohse = ohse, norm = norm, quiet = quiet)
   plots <- lapply(method, function(x) {
-    fviz_nbclust(df, kmeans, method = x, ...) + theme_lares(pal = 2)
+    fviz_nbclust(df, kmeans, method = x, ...) + theme_lares(pal = 2, ...)
   })
   return(plots)
 }

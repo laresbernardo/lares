@@ -3,7 +3,7 @@
 \name{robyn_modelselector}
 \alias{robyn_modelselector}
 \alias{plot.robyn_modelselector}
-\title{Robyn: Model Selection Viz}
+\title{Robyn: Model Selection by Weighted Criteria Scores}
 \usage{
 robyn_modelselector(
   InputCollect,
@@ -63,10 +63,10 @@ want to be with the budget allocator? By default, we'll consider a
 list with data.frame and plot.
 }
 \description{
-Consider N models per cluster to select the right ones to study using
-several metrics to consider such as potential improvement on budget
+Consider N best models to select the right ones to study using
+several criteria/metrics such as potential improvement on budget
 allocator, how many non-zero coefficients there are, R squared,
-historical performance, etc.
+historical performance, baseline expectation, etc.
 }
 \seealso{
 Other Robyn: 

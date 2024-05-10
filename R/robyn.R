@@ -111,12 +111,12 @@ robyn_hypsbuilder <- function(
 
 
 ####################################################################
-#' Robyn: Model Selection Viz 
+#' Robyn: Model Selection by Weighted Criteria Scores 
 #'
-#' Consider N models per cluster to select the right ones to study using
-#' several metrics to consider such as potential improvement on budget
+#' Consider N best models to select the right ones to study using
+#' several criteria/metrics such as potential improvement on budget
 #' allocator, how many non-zero coefficients there are, R squared,
-#' historical performance, etc.
+#' historical performance, baseline expectation, etc.
 #'
 #' @family Robyn
 #' @inheritParams cache_write

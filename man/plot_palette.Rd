@@ -4,7 +4,7 @@
 \alias{plot_palette}
 \title{Plot Palette Colours}
 \usage{
-plot_palette(fill, colour = "black", id = NA, limit = 12)
+plot_palette(fill, colour = "black", id = NA, limit = 12, ...)
 }
 \arguments{
 \item{fill}{Vector. List of colours for fills.}
@@ -14,6 +14,8 @@ plot_palette(fill, colour = "black", id = NA, limit = 12)
 \item{id}{Vector. ID for each color.}
 
 \item{limit}{Integer. Show only first n values.}
+
+\item{...}{Additional parameters.}
 }
 \value{
 Plot with \code{fill} colours and \code{colour} counter-colours

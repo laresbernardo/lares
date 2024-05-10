@@ -80,7 +80,7 @@ dft \%>\% freqs(Pclass, Survived, wt = Fare / 100)
 
 # Let's check the results with plots:
 
-#' # How many survived and see plot?
+# How many survived and see plot?
 dft \%>\% freqs(Survived, plot = TRUE)
 
 # How many survived per class?

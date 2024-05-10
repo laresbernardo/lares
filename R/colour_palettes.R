@@ -159,6 +159,7 @@ lares_pal <- function(return = "list") {
 #' This function plots a list of colours
 #'
 #' @family Themes
+#' @inheritParams cache_write
 #' @param fill Vector. List of colours for fills.
 #' @param colour Vector. List of colours for colours.
 #' @param id Vector. ID for each color.
@@ -173,7 +174,7 @@ lares_pal <- function(return = "list") {
 #' pal <- lares_pal("pal")
 #' plot_palette(fill = names(pal), colour = as.vector(pal))
 #' @export
-plot_palette <- function(fill, colour = "black", id = NA, limit = 12) {
+plot_palette <- function(fill, colour = "black", id = NA, limit = 12, ...) {
   if (length(fill) > limit) {
     fill <- fill[1:limit]
     colour <- colour[1:limit]
@@ -191,6 +192,6 @@ plot_palette <- function(fill, colour = "black", id = NA, limit = 12) {
     coord_flip() +
     labs(x = NULL, y = NULL) +
     guides(fill = "none", colour = "none") +
-    theme_lares(font = NA, axis = "Y")
+    theme_lares(font = NA, axis = "Y", ...)
   return(p)
 }

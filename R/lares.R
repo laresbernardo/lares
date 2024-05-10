@@ -8,7 +8,7 @@
 #' @author Bernardo Lares (laresbernardo@@gmail.com)
 #' @importFrom dplyr %>% all_of any_of arrange as_tibble bind_cols bind_rows case_when
 #' contains count desc distinct distinct_at everything filter first group_by inner_join
-#' lag last left_join mutate mutate_all mutate_at mutate_if n ntile
+#' lag last left_join mutate mutate_all mutate_at mutate_if n ntile ensym
 #' one_of pull rename rename_at right_join row_number rowwise sample_n
 #' select select_if slice slice_head starts_with summarise summarise_all
 #' summarise_if summarize summarize_all tally tibble transmute_if ungroup vars
@@ -92,6 +92,7 @@ recommended <- list(
   DBI = c("dbDriver", "dbConnect", "dbSendQuery", "fetch", "dbDisconnect"),
   devtools = c("install", "install_github", "with_proxy"),
   exifr = "read_exif",
+  extrafont = c("font_import", "loadfonts"),
   factoextra = "fviz_nbclust",
   forecast = c("Arima", "auto.arima", "forecast", "accuracy"),
   gdata = "read.xls",
@@ -105,6 +106,7 @@ recommended <- list(
     "sheets_auth", "read_sheet", "gs4_create", "range_write",
     "gs4_auth_configure", "gs4_auth", "sheet_append"
   ),
+  grDevices = "windowsFonts",
   h2o = c(
     "as.h2o", "h2o.automl", "h2o.accuracy", "h2o.getModel", "h2o.performance",
     "h2o.init", "h2o.removeAll", "h2o.download_mojo", "h2o.download_pojo",

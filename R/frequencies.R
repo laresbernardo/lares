@@ -45,7 +45,7 @@
 #'
 #' # Let's check the results with plots:
 #'
-#' #' # How many survived and see plot?
+#' # How many survived and see plot?
 #' dft %>% freqs(Survived, plot = TRUE)
 #'
 #' # How many survived per class?
@@ -130,8 +130,9 @@ freqs <- function(df, ..., wt = NULL,
   }
   obs_total <- sum(output$n)
   obs <- sprintf("Total Obs.: %s", formatNum(obs_total, 0))
-  weight_text <- ifelse((as_label(weight) != "NULL"),
-    sprintf("(weighted by %s)", as_label(weight)), ""
+  weight <- gsub('"', '', as_label(weight))
+  weight_text <- ifelse((weight != "NULL"),
+    sprintf("(weighted by %s)", weight), ""
   )
 
   # Use only the most n frequent values/combinations only
@@ -162,13 +163,13 @@ freqs <- function(df, ..., wt = NULL,
 
   # Create some dynamic aesthetics
   plot$labels <- paste0(formatNum(plot$n, decimals = 0), " (", signif(plot$p, 4), "%)")
-  plot$label_colours <- ifelse(plot$p > mean(range(plot$p)) * 0.9, "TRUE", "FALSE")
+  plot$label_colours <- ifelse(plot$p > mean(range(plot$p)) * 0.9, "white", "black")
   lim <- 0.35
   plot$label_hjust <- ifelse(
     plot$n < min(plot$n) + diff(range(plot$n)) * lim, -0.1, 1.05
   )
   plot$label_colours <- ifelse(
-    plot$label_colours == "TRUE" & plot$label_hjust < lim, "FALSE", plot$label_colours
+    plot$label_colours == "white" & plot$label_hjust < lim, "black", plot$label_colours
   )
   variable <- colnames(plot)[1]
 
@@ -219,7 +220,7 @@ freqs <- function(df, ..., wt = NULL,
     coord_flip() + guides(colour = "none") +
     labs(
       x = NULL, y = NULL, fill = NULL,
-      title = ifelse(is.na(title), paste("Frequencies and Percentages"), title),
+      title = ifelse(is.na(title), "Frequencies and Percentages", title),
       subtitle = ifelse(is.na(subtitle),
         paste(
           "Variable:", ifelse(!is.na(variable_name), variable_name, variable),
@@ -229,7 +230,8 @@ freqs <- function(df, ..., wt = NULL,
       ), caption = obs
     ) +
     scale_fill_gradient(low = "lightskyblue2", high = "navy") +
-    theme_lares(pal = 4, which = "c", legend = "none", grid = "Xx") +
+    scale_color_identity() +
+    theme_lares(which = "c", legend = "none", grid = "Xx") +
     scale_y_comma(position = "right", expand = c(0, 0), limits = c(0, 1.03 * max(output$n)))
 
   # When two features
@@ -379,7 +381,7 @@ freqs_df <- function(df,
       out <- rbind(out, res)
     }
     out <- out %>%
-      mutate(p = round(100 * .data$count / nrow(df), 2)) %>%
+      mutate(p = signif(100 * .data$count / nrow(df), 3)) %>%
       mutate(value = ifelse(.data$p > min * 100, as.character(.data$value), "(HF)")) %>%
       group_by(.data$col, .data$value) %>%
       summarise(p = sum(.data$p), count = sum(.data$count)) %>%
@@ -429,7 +431,7 @@ freqs_df <- function(df,
     out <- select(out, .data$col, .data$value, .data$count, .data$p) %>%
       rename(n = .data$count, variable = .data$col) %>%
       group_by(.data$variable) %>%
-      mutate(pcum = round(cumsum(.data$p), 2))
+      mutate(pcum = signif(cumsum(.data$p), 3))
     return(out)
   }
 }
@@ -623,7 +625,7 @@ freqs_list <- function(df,
                        title = "",
                        plot = TRUE) {
   dff <- df
-  var_str <- as_label(enquo(var))
+  var_str <- gsub('"', '', as_label(enquo(var)))
   if (var_str != "NULL") {
     check_opts(var_str, colnames(df))
     colnames(df)[colnames(df) == var_str] <- "which"
@@ -647,7 +649,7 @@ freqs_list <- function(df,
   }
 
   # Weighted column
-  wt_str <- as_label(enquo(wt))
+  wt_str <- gsub('"', '', as_label(enquo(wt)))
   if (wt_str == "NULL") wt_str <- NULL
   if (length(wt_str) > 0) {
     if (wt_str %in% colnames(df)) {
