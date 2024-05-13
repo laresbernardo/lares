@@ -126,14 +126,14 @@ robyn_hypsbuilder <- function(
 #' "performance" for ROAS or (inverse) CPA, "potential_improvement" for
 #' default budget allocator improvement using \code{allocator_limits},
 #' "non_zeroes" for non-zero beta coefficients, "incluster_models" for
-#' amount of models per cluster, "baseline" for percentage of non-media
-#' channels contribution (set up \code{baseline_ref} too.)
+#' amount of models per cluster, "baseline_dist" for the difference between
+#' the model's baseline and \code{baseline_ref} value.
 #' @param wt Vector. Weight for each of the normalized \code{metrics} selected,
 #' to calculate the score and rank models. Must have the same order and length
 #' of \code{metrics} parameter input.
 #' @param baseline_ref Numeric value. Between 0 and 1. What is the baseline
 #' percentage you expect? Baseline in this case are all the sales or conversions
-#' from non-media channels (organic & paid). Used with "baseline" metric.
+#' from non-media channels (organic & paid). Used with "baseline_dist" metric.
 #' @param top Integer. How many ranked models to star? The better the model
 #' is, the more stars it will have marked.
 #' @param allocator_limits Numeric vector, length 2. How flexible do you
@@ -151,7 +151,7 @@ robyn_modelselector <- function(
     metrics = c("rsq_train", "performance",
                 "potential_improvement",
                 "non_zeroes", "incluster_models",
-                "baseline"),
+                "baseline_dist"),
     wt = c(2, 1, 1, 1, 0.1, 0),
     baseline_ref = 0,
     top = 4,
@@ -173,12 +173,12 @@ robyn_modelselector <- function(
   
   stopifnot(length(wt) == length(metrics))
   stopifnot(length(allocator_limits) == 2)
-  stopifnot(baseline_ref >=0 && baseline_ref <= 1)
+  stopifnot(baseline_ref >= 0 && baseline_ref <= 1)
   
   # Available metrics
   metrics_df <- data.frame(
     metric = c("rsq_train", "performance", "potential_improvement",
-               "non_zeroes", "incluster_models", "baseline",
+               "non_zeroes", "incluster_models", "baseline_dist",
                "nrmse", "decomp.rssd", "mape"),
     metric_name = c(
       "R^2", ifelse(InputCollect$dep_var_type == "revenue", "Best ROAS", "CPA (Inversed)"),
@@ -260,16 +260,15 @@ robyn_modelselector <- function(
     filter(.data$rn == "baseline") %>%
     mutate(baseline_dist = abs(.data$baseline - baseline_ref)) %>%
     arrange(.data$baseline_dist) %>%
-    mutate(baseline = 1 - normalize(.data$baseline_dist)) %>%
-    select(c("solID", "baseline"))
+    select(c("solID", "baseline", "baseline_dist"))
   
   # Gather everything up
   dfa <- OutputCollect$allPareto$resultHypParam %>%
     filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
     select(.data$solID, .data$rsq_train, .data$nrmse, .data$decomp.rssd, .data$mape) %>%
     left_join(performance, "solID") %>%
-    left_join(baselines, "solID") %>%
     left_join(temp, "solID") %>% ungroup() %>%
+    left_join(baselines, "solID") %>%
     mutate(
       score = normalize(
         normalize(.data$rsq_train) * ifelse(
@@ -278,8 +277,8 @@ robyn_modelselector <- function(
             !"performance" %in% metrics, 0, wt[which(metrics == "performance")]) +
           normalize(.data$potential_improvement) * ifelse(
             !"potential_improvement" %in% metrics, 0, wt[which(metrics == "potential_improvement")]) +
-          normalize(.data$baseline) * ifelse(
-            !"baseline" %in% metrics, 0, wt[which(metrics == "baseline")]) +
+          normalize(-.data$baseline_dist) * ifelse(
+            !"baseline_dist" %in% metrics, 0, wt[which(metrics == "baseline_dist")]) +
           normalize(.data$non_zeroes / length(InputCollect$all_media)) * ifelse(
             !"non_zeroes" %in% metrics, 0, wt[which(metrics == "non_zeroes")]) +
           normalize(.data$incluster_models) * ifelse(
