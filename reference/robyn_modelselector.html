@@ -67,7 +67,7 @@ historical performance, baseline expectation, etc.</p>
 <span>  <span class="va">InputCollect</span>,</span>
 <span>  <span class="va">OutputCollect</span>,</span>
 <span>  metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rsq_train"</span>, <span class="st">"performance"</span>, <span class="st">"potential_improvement"</span>, <span class="st">"non_zeroes"</span>,</span>
-<span>    <span class="st">"incluster_models"</span>, <span class="st">"baseline"</span><span class="op">)</span>,</span>
+<span>    <span class="st">"incluster_models"</span>, <span class="st">"baseline_dist"</span><span class="op">)</span>,</span>
 <span>  wt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0.1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>  baseline_ref <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  top <span class="op">=</span> <span class="fl">4</span>,</span>
@@ -94,8 +94,8 @@ Pick any combination from: "rsq_train" for trained R squared,
 "performance" for ROAS or (inverse) CPA, "potential_improvement" for
 default budget allocator improvement using <code>allocator_limits</code>,
 "non_zeroes" for non-zero beta coefficients, "incluster_models" for
-amount of models per cluster, "baseline" for percentage of non-media
-channels contribution (set up <code>baseline_ref</code> too.)</p></dd>
+amount of models per cluster, "baseline_dist" for the difference between
+the model's baseline and <code>baseline_ref</code> value.</p></dd>
 
 
 <dt>wt</dt>
@@ -107,7 +107,7 @@ of <code>metrics</code> parameter input.</p></dd>
 <dt>baseline_ref</dt>
 <dd><p>Numeric value. Between 0 and 1. What is the baseline
 percentage you expect? Baseline in this case are all the sales or conversions
-from non-media channels (organic &amp; paid). Used with "baseline" metric.</p></dd>
+from non-media channels (organic &amp; paid). Used with "baseline_dist" metric.</p></dd>
 
 
 <dt>top</dt>
