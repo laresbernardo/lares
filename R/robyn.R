@@ -230,11 +230,11 @@ robyn_modelselector <- function(
   
   # Check pareto-front models summaries to calculate performance (ROAS/CPA)
   performance <- OutputCollect$allPareto$xDecompAgg %>%
-    filter(!is.na(.data$mean_spend)) %>%
-    filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
+    # filter(!is.na(.data$mean_spend)) %>% keep organic for 
+    filter(.data$solID %in% OutputCollect$clusters$data$solID) %>% non_zeroes
     group_by(.data$solID) %>%
     summarise(
-      performance = sum(.data$xDecompAgg)/sum(.data$total_spend) - 1,
+      performance = sum(.data$xDecompAgg)/sum(.data$total_spend, na.rm = TRUE) - 1,
       non_zeroes = length(.data$rn[
         round(.data$coef, 6) > 0 & .data$rn %in% InputCollect$all_media]) /
         length(InputCollect$all_media),
@@ -275,7 +275,7 @@ robyn_modelselector <- function(
       score = normalize(
         normalize(.data$rsq_train) * ifelse(
           !"rsq_train" %in% metrics, 0, wt[which(metrics == "rsq_train")]) +
-          normalize(.data$performance) * ifelse(
+          normalize(.data$performance, na.rm = TRUE) * ifelse(
             !"performance" %in% metrics, 0, wt[which(metrics == "performance")]) +
           normalize(.data$potential_improvement) * ifelse(
             !"potential_improvement" %in% metrics, 0, wt[which(metrics == "potential_improvement")]) +
@@ -290,7 +290,8 @@ robyn_modelselector <- function(
           normalize(-.data$decomp.rssd) * ifelse(
             !"decomp.rssd" %in% metrics, 0, wt[which(metrics == "decomp.rssd")]) +
           normalize(-.data$mape) * ifelse(
-            !"mape" %in% metrics, 0, wt[which(metrics == "mape")])
+            !"mape" %in% metrics, 0, wt[which(metrics == "mape")]),
+        na.rm = TRUE
       ),
       aux = rank(-.data$score, ties.method = "first")) %>%
     rowwise() %>%
