@@ -258,9 +258,10 @@ robyn_modelselector <- function(
     group_by(.data$solID) %>%
     mutate(baseline = .data$contribution / sum(.data$contribution)) %>% ungroup() %>%
     filter(.data$rn == "baseline") %>%
-    mutate(baseline_dist = abs(1 - abs(.data$baseline - baseline_ref) / abs(.data$baseline))) %>%
-    arrange(.data$baseline_dist) %>%
-    select(c("solID", "baseline", "baseline_dist"))
+    arrange(abs(.data$baseline)) %>%
+    mutate(baseline_dist = 1 - normalize(abs(baseline_ref - .data$baseline))) %>%
+    select(c("solID", "baseline", "baseline_dist")) %>%
+    arrange(desc(.data$baseline_dist))
   
   # Gather everything up
   dfa <- OutputCollect$allPareto$resultHypParam %>%
