@@ -252,7 +252,7 @@ robyn_modelselector <- function(
   
   # Calculate baselines
   baselines <- OutputCollect$xDecompAgg %>%
-    mutate(rn = ifelse(!.data$rn %in% c(InputCollect$all_media), .data$rn, "baseline")) %>%
+    mutate(rn = ifelse(.data$rn %in% c(InputCollect$all_media), .data$rn, "baseline")) %>%
     group_by(.data$solID, .data$rn) %>%
     summarize(contribution = sum(.data$xDecompAgg), .groups = "drop") %>%
     group_by(.data$solID) %>%
