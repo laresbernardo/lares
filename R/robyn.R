@@ -258,7 +258,7 @@ robyn_modelselector <- function(
     group_by(.data$solID) %>%
     mutate(baseline = .data$contribution / sum(.data$contribution)) %>% ungroup() %>%
     filter(.data$rn == "baseline") %>%
-    mutate(baseline_dist = abs(.data$baseline - baseline_ref)) %>%
+    mutate(baseline_dist = 1 - abs(.data$baseline - baseline_ref) / abs(.data$baseline)) %>%
     arrange(.data$baseline_dist) %>%
     select(c("solID", "baseline", "baseline_dist"))
   
@@ -277,7 +277,7 @@ robyn_modelselector <- function(
             !"performance" %in% metrics, 0, wt[which(metrics == "performance")]) +
           normalize(.data$potential_improvement) * ifelse(
             !"potential_improvement" %in% metrics, 0, wt[which(metrics == "potential_improvement")]) +
-          normalize(-.data$baseline_dist) * ifelse(
+          normalize(.data$baseline_dist) * ifelse(
             !"baseline_dist" %in% metrics, 0, wt[which(metrics == "baseline_dist")]) +
           normalize(.data$non_zeroes / length(InputCollect$all_media)) * ifelse(
             !"non_zeroes" %in% metrics, 0, wt[which(metrics == "non_zeroes")]) +
