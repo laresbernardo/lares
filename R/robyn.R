@@ -231,7 +231,7 @@ robyn_modelselector <- function(
   # Check pareto-front models summaries to calculate performance (ROAS/CPA)
   performance <- OutputCollect$allPareto$xDecompAgg %>%
     # filter(!is.na(.data$mean_spend)) %>% keep organic for 
-    filter(.data$solID %in% OutputCollect$clusters$data$solID) %>% non_zeroes
+    filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
     group_by(.data$solID) %>%
     summarise(
       performance = sum(.data$xDecompAgg)/sum(.data$total_spend, na.rm = TRUE) - 1,
@@ -281,7 +281,7 @@ robyn_modelselector <- function(
             !"potential_improvement" %in% metrics, 0, wt[which(metrics == "potential_improvement")]) +
           normalize(.data$baseline_dist) * ifelse(
             !"baseline_dist" %in% metrics, 0, wt[which(metrics == "baseline_dist")]) +
-          normalize(.data$non_zeroes / length(InputCollect$all_media)) * ifelse(
+          normalize(.data$non_zeroes) * ifelse(
             !"non_zeroes" %in% metrics, 0, wt[which(metrics == "non_zeroes")]) +
           normalize(.data$incluster_models) * ifelse(
             !"incluster_models" %in% metrics, 0, wt[which(metrics == "incluster_models")]) +
