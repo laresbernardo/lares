@@ -236,7 +236,7 @@ robyn_modelselector <- function(
     summarise(
       performance = sum(.data$xDecompAgg)/sum(.data$total_spend) - 1,
       non_zeroes = length(.data$rn[
-        round(.data$coef, 6) == 0 & .data$rn %in% InputCollect$all_media]) /
+        round(.data$coef, 6) > 0 & .data$rn %in% InputCollect$all_media]) /
         length(InputCollect$all_media),
       top_channels = paste(.data$rn[head(rank(-.data$roi_total, ties.method = "first"), 3)], collapse = ", "),
       zero_coef = paste(.data$rn[which(round(.data$coef, 6) == 0)], collapse = ", ")) %>%
