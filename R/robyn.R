@@ -127,7 +127,9 @@ robyn_hypsbuilder <- function(
 #' default budget allocator improvement using \code{allocator_limits},
 #' "non_zeroes" for non-zero beta coefficients, "incluster_models" for
 #' amount of models per cluster, "baseline_dist" for the difference between
-#' the model's baseline and \code{baseline_ref} value.
+#' the model's baseline and \code{baseline_ref} value. You can also use the
+#' standard MOO errors: "nrmse", "decomp.rssd", and "mape" (the lowest the
+#' error, the highest the score).
 #' @param wt Vector. Weight for each of the normalized \code{metrics} selected,
 #' to calculate the score and rank models. Must have the same order and length
 #' of \code{metrics} parameter input.
@@ -152,7 +154,7 @@ robyn_modelselector <- function(
                 "potential_improvement",
                 "non_zeroes", "incluster_models",
                 "baseline_dist"),
-    wt = c(2, 1, 1, 1, 0.1, 0),
+    wt = c(2, 1, 0, 1, 0.1, 0),
     baseline_ref = 0,
     top = 4,
     n_per_cluster = 5,
@@ -181,7 +183,7 @@ robyn_modelselector <- function(
                "non_zeroes", "incluster_models", "baseline_dist",
                "nrmse", "decomp.rssd", "mape"),
     metric_name = c(
-      "R^2", ifelse(InputCollect$dep_var_type == "revenue", "Best ROAS", "CPA (Inversed)"),
+      "R^2", ifelse(InputCollect$dep_var_type == "revenue", "Highest ROAS", "Lowest CPA"),
       "Potential Boost", "Non-Zero Betas", "Models in Cluster",
       sprintf("Baseline Distance (%.0f%%)", signif(baseline_ref * 100, 2)),
       "NRMSE (Inverted)", "DECOMP.RSSD (Inverted)", "MAPE (Inverted)"))

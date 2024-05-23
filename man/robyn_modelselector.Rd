@@ -10,7 +10,7 @@ robyn_modelselector(
   OutputCollect,
   metrics = c("rsq_train", "performance", "potential_improvement", "non_zeroes",
     "incluster_models", "baseline_dist"),
-  wt = c(2, 1, 1, 1, 0.1, 0),
+  wt = c(2, 1, 0, 1, 0.1, 0),
   baseline_ref = 0,
   top = 4,
   n_per_cluster = 5,
@@ -31,7 +31,9 @@ Pick any combination from: "rsq_train" for trained R squared,
 default budget allocator improvement using \code{allocator_limits},
 "non_zeroes" for non-zero beta coefficients, "incluster_models" for
 amount of models per cluster, "baseline_dist" for the difference between
-the model's baseline and \code{baseline_ref} value.}
+the model's baseline and \code{baseline_ref} value. You can also use the
+standard MOO errors: "nrmse", "decomp.rssd", and "mape" (the lowest the
+error, the highest the score).}
 
 \item{wt}{Vector. Weight for each of the normalized \code{metrics} selected,
 to calculate the score and rank models. Must have the same order and length
