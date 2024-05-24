@@ -185,7 +185,7 @@ robyn_modelselector <- function(
     metric_name = c(
       "R^2", ifelse(InputCollect$dep_var_type == "revenue", "High ROAS", "Low CPA"),
       "Potential Boost", "Non-Zero Betas", "Models in Cluster",
-      sprintf("Baseline Distance (%.0f%%)", signif(baseline_ref * 100, 2)),
+      sprintf("Baseline Distance [%.0f%%]", signif(baseline_ref * 100, 2)),
       "NRMSE (Inverted)", "DECOMP.RSSD (Inverted)", "MAPE (Inverted)"))
   check_opts(metrics, metrics_df$metric)
   
@@ -316,11 +316,11 @@ robyn_modelselector <- function(
   caption <- metrics_used %>%
     mutate(value = .data$wt/sum(.data$wt)) %>%
     arrange(desc(.data$value)) %>%
-    mutate(lab = sprintf("%s %s%%", .data$metric_name, round(100 * .data$value))) %>%
+    mutate(lab = sprintf("%s%% %s", round(100 * .data$value), .data$metric_name)) %>%
     pull(.data$lab) %>%
     paste(., collapse = " | ")
   sorting <- dfa %>%
-    mutate(cluster = sprintf("%s (%s)", .data$cluster, .data$incluster_models),) %>%
+    mutate(cluster = sprintf("%s (%s)", .data$cluster, .data$incluster_models)) %>%
     group_by(.data$cluster, .data$note) %>% tally() %>%
     arrange(desc(.data$note)) %>% pull(.data$cluster) %>% unique()
   pdat <- dfa %>%
