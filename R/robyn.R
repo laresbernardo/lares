@@ -145,7 +145,7 @@ robyn_hypsbuilder <- function(
 #' want to plot? Default: 5. Keep in mind they will all be considered
 #' for the calculations.
 #' @param cache Use cache functionality for allocator's results?
-#' @return list with data.frame and plot.
+#' @return list with resulting ranked data.frames, weights and plot.
 #' @export
 robyn_modelselector <- function(
     InputCollect,
@@ -183,7 +183,7 @@ robyn_modelselector <- function(
                "non_zeroes", "incluster_models", "baseline_dist",
                "nrmse", "decomp.rssd", "mape"),
     metric_name = c(
-      "R^2", ifelse(InputCollect$dep_var_type == "revenue", "Highest ROAS", "Lowest CPA"),
+      "R^2", ifelse(InputCollect$dep_var_type == "revenue", "High ROAS", "Low CPA"),
       "Potential Boost", "Non-Zero Betas", "Models in Cluster",
       sprintf("Baseline Distance (%.0f%%)", signif(baseline_ref * 100, 2)),
       "NRMSE (Inverted)", "DECOMP.RSSD (Inverted)", "MAPE (Inverted)"))
@@ -231,18 +231,23 @@ robyn_modelselector <- function(
   }
   
   # Check pareto-front models summaries to calculate performance (ROAS/CPA)
-  performance <- OutputCollect$allPareto$xDecompAgg %>%
-    # filter(!is.na(.data$mean_spend)) %>% keep organic for 
+  performance <- OutputCollect$xDecompAgg %>%
+    filter(!is.na(.data$mean_spend)) %>% # get rid of organic
     filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
     group_by(.data$solID) %>%
     summarise(
-      performance = sum(.data$xDecompAgg)/sum(.data$total_spend, na.rm = TRUE) - 1,
+      performance = sum(.data$xDecompAgg) / sum(.data$total_spend, na.rm = TRUE))
+  
+  # Check pareto-front models to calculate non-zero betas in media channels
+  non_zeroes_rate <- OutputCollect$allPareto$xDecompAgg %>%
+    filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
+    group_by(.data$solID) %>%
+    summarise(
       non_zeroes = length(.data$rn[
         round(.data$coef, 6) > 0 & .data$rn %in% InputCollect$all_media]) /
-        length(InputCollect$all_media),
-      top_channels = paste(.data$rn[head(rank(-.data$roi_total, ties.method = "first"), 3)], collapse = ", "),
-      zero_coef = paste(.data$rn[which(round(.data$coef, 6) == 0)], collapse = ", ")) %>%
-    left_join(potOpt, "solID")
+        length(InputCollect$all_media))
+  
+  # Count models per cluster
   if (!"clusters" %in% names(OutputCollect)) {
     OutputCollect$clusters$data <- data.frame(solID = sols, cluster = "None", top_sol = TRUE)
     OutputCollect$clusters$clusters_means <- data.frame(cluster = "None", n = length(sols))
@@ -271,45 +276,49 @@ robyn_modelselector <- function(
     filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
     select(.data$solID, .data$rsq_train, .data$nrmse, .data$decomp.rssd, .data$mape) %>%
     left_join(performance, "solID") %>%
+    left_join(non_zeroes_rate, "solID") %>%
+    left_join(potOpt, "solID") %>%
     left_join(temp, "solID") %>% ungroup() %>%
-    left_join(baselines, "solID") %>%
-    mutate(
-      score = normalize(
-        normalize(.data$rsq_train) * ifelse(
-          !"rsq_train" %in% metrics, 0, wt[which(metrics == "rsq_train")]) +
-          normalize(.data$performance, na.rm = TRUE) * ifelse(
-            !"performance" %in% metrics, 0, wt[which(metrics == "performance")]) +
-          normalize(.data$potential_improvement) * ifelse(
-            !"potential_improvement" %in% metrics, 0, wt[which(metrics == "potential_improvement")]) +
-          normalize(.data$baseline_dist) * ifelse(
-            !"baseline_dist" %in% metrics, 0, wt[which(metrics == "baseline_dist")]) +
-          normalize(.data$non_zeroes) * ifelse(
-            !"non_zeroes" %in% metrics, 0, wt[which(metrics == "non_zeroes")]) +
-          normalize(.data$incluster_models) * ifelse(
-            !"incluster_models" %in% metrics, 0, wt[which(metrics == "incluster_models")]) +
-          normalize(-.data$nrmse) * ifelse(
-            !"nrmse" %in% metrics, 0, wt[which(metrics == "nrmse")]) +
-          normalize(-.data$decomp.rssd) * ifelse(
-            !"decomp.rssd" %in% metrics, 0, wt[which(metrics == "decomp.rssd")]) +
-          normalize(-.data$mape) * ifelse(
-            !"mape" %in% metrics, 0, wt[which(metrics == "mape")]),
-        na.rm = TRUE
-      ),
-      aux = rank(-.data$score, ties.method = "first")) %>%
+    left_join(baselines, "solID")
+  
+  # Calculate normalized and weighted scores
+  scores <- list(
+    rsq_train = normalize(dfa$rsq_train) * ifelse(
+      !"rsq_train" %in% metrics, 0, wt[which(metrics == "rsq_train")]),
+      performance = normalize(dfa$performance, na.rm = TRUE) * ifelse(
+        !"performance" %in% metrics, 0, wt[which(metrics == "performance")]),
+      potential_improvement = normalize(dfa$potential_improvement) * ifelse(
+        !"potential_improvement" %in% metrics, 0, wt[which(metrics == "potential_improvement")]),
+      baseline_dist = normalize(dfa$baseline_dist) * ifelse(
+        !"baseline_dist" %in% metrics, 0, wt[which(metrics == "baseline_dist")]),
+      non_zeroes = normalize(dfa$non_zeroes) * ifelse(
+        !"non_zeroes" %in% metrics, 0, wt[which(metrics == "non_zeroes")]),
+      incluster_models = normalize(dfa$incluster_models) * ifelse(
+        !"incluster_models" %in% metrics, 0, wt[which(metrics == "incluster_models")]),
+      nrmse = normalize(-dfa$nrmse) * ifelse(
+        !"nrmse" %in% metrics, 0, wt[which(metrics == "nrmse")]),
+      decomp.rssd = normalize(-dfa$decomp.rssd) * ifelse(
+        !"decomp.rssd" %in% metrics, 0, wt[which(metrics == "decomp.rssd")]),
+      mape = normalize(-dfa$mape) * ifelse(
+        !"mape" %in% metrics, 0, wt[which(metrics == "mape")])
+  )
+  dfa <- dfa %>%
+    mutate(score = normalize(rowSums(bind_cols(scores))),
+           aux = rank(-.data$score, ties.method = "first")) %>%
     rowwise() %>%
-    mutate(note = ifelse(.data$aux %in% 1:top, paste(rep("*", (top + 1) - .data$aux), collapse = ""), "")) %>%
+    mutate(note = ifelse(.data$aux %in% 1:top, paste(
+      rep("*", (top + 1) - .data$aux), collapse = ""), "")) %>%
     select(-.data$top_sol, -.data$aux) %>%
     arrange(desc(.data$score), desc(3), desc(4))
   if (!quiet) message("Recommended considering these models first: ", v2t(head(dfa$solID, top)))
   
+  # Generate plot/dashboard
   caption <- metrics_used %>%
     mutate(value = .data$wt/sum(.data$wt)) %>%
     arrange(desc(.data$value)) %>%
     mutate(lab = sprintf("%s %s%%", .data$metric_name, round(100 * .data$value))) %>%
     pull(.data$lab) %>%
     paste(., collapse = " | ")
-  
-  # Generate plot/dashboard
   sorting <- dfa %>%
     mutate(cluster = sprintf("%s (%s)", .data$cluster, .data$incluster_models),) %>%
     group_by(.data$cluster, .data$note) %>% tally() %>%
@@ -337,14 +346,16 @@ robyn_modelselector <- function(
          title = "Select a model based on these metrics and rankings",
          subtitle = paste(
            "Showing up to", n_per_cluster,
-           "models per cluster and best combined solutions marked with stars"),
+           "models per cluster and ranked solutions marked with stars"),
          caption = paste("Weights:", caption)) +
-    scale_x_percent() +
+    scale_x_percent(position = "top") +
     theme_lares(legend = FALSE)
   
   # Create the exported object
   ret <- invisible(list(
     data = select(dfa, "solID", "score", all_of(metrics_used$metric), everything(), -.data$note),
+    weights = wt, baseline_ref = baseline_ref,
+    weighted_scores = tibble(solID = dfa$solID, score = dfa$score, bind_cols(scores)),
     plot = p))
   class(ret) <- c("robyn_modelselector", class(ret))
   return(ret)

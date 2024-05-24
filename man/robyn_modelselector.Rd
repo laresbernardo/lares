@@ -63,7 +63,7 @@ want to be with the budget allocator? By default, we'll consider a
 \item{x}{robyn_modelselector object}
 }
 \value{
-list with data.frame and plot.
+list with resulting ranked data.frames, weights and plot.
 }
 \description{
 Consider N best models to select the right ones to study using
