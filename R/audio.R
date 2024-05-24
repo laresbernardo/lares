@@ -123,7 +123,7 @@ get_mp3 <- function(id,
       quiet = quiet
     )
   }
-  
+
   # Open file once everything is done
   if (open) {
     message("Opening file: ", file)
@@ -135,7 +135,7 @@ get_mp3 <- function(id,
     if (open) Sys.sleep(5)
     file.remove(file)
   }
-  
+
   return(invisible(infox))
 }
 

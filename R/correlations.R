@@ -188,13 +188,12 @@ corr_var <- function(df, var,
                      save = FALSE,
                      quiet = FALSE,
                      ...) {
-  
   if (isTRUE(try(is.character(var), silent = TRUE))) {
     var <- eval(substitute(var), df)
   } else {
     var <- as_label(enquo(var))
   }
-  
+
   df <- select(df, -contains(paste0(var, "_log")))
 
   # Calculate correlations
@@ -286,8 +285,9 @@ plot.corr_var <- function(x, var, max_pvalue = 1, top = NA, limit = NULL, ...) {
   p <- ungroup(x) %>%
     filter(!.data$variables %in% c("pvalue", "pvalue_adj")) %>%
     mutate(
-      pos = ifelse(.data$corr > 0, pal$fill[pal$values == "positive"], 
-                   pal$fill[pal$values == "negative"]),
+      pos = ifelse(.data$corr > 0, pal$fill[pal$values == "positive"],
+        pal$fill[pal$values == "negative"]
+      ),
       hjust = ifelse(abs(.data$corr) < max(abs(.data$corr)) / 1.5, -0.1, 1.1)
     ) %>%
     ggplot(aes(

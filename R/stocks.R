@@ -41,19 +41,22 @@ stocks_file <- function(file = NA,
     return(results)
   }
   processFile <- function(file, sheets = NULL, keep_old = TRUE) {
-    mylist <- lapply(sheets, function(x)
+    mylist <- lapply(sheets, function(x) {
       as_tibble(read.xlsx(
-        file, sheet = x,
-        skipEmptyRows = TRUE, detectDates = TRUE)))
+        file,
+        sheet = x,
+        skipEmptyRows = TRUE, detectDates = TRUE
+      ))
+    })
     if (length(mylist) == 3) {
-      names(mylist) <- c("port", "cash", "trans")  
+      names(mylist) <- c("port", "cash", "trans")
       mylist$trans$Date <- try(as.Date(mylist$trans$Date, origin = "1970-01-01"))
       if ("Value" %in% colnames(mylist$trans)) {
         mylist$trans <- rename(mylist$trans, Each = .data$Value, Invested = .data$Amount)
       }
       if (!keep_old) mylist$port <- try(mylist$port[mylist$port$Stocks != 0, ])
       mylist <- list("portfolio" = mylist$port, "transactions" = mylist$trans, "cash" = mylist$cash)
-    } 
+    }
     if (length(mylist) == 1) {
       mylist <- mylist[[1]]
     }
@@ -89,7 +92,7 @@ stocks_file <- function(file = NA,
   if (length(results) == 3) {
     attr(results$portfolio, "type") <- "stocks_file_portfolio"
     attr(results$transactions, "type") <- "stocks_file_transactions"
-    attr(results$cash, "type") <- "stocks_file_cash" 
+    attr(results$cash, "type") <- "stocks_file_cash"
   }
   attr(results, "type") <- "stocks_file"
   cache_write(results, cache_file, quiet = TRUE)
@@ -119,7 +122,9 @@ stocks_quote <- function(symbols, ...) {
   try_require("quantmod")
   for (i in seq_along(symbols)) {
     z <- try(data.frame(getQuote(symbols[i], ...)))
-    if ("try-error" %in% class(z)) return(invisible(ret))
+    if ("try-error" %in% class(z)) {
+      return(invisible(ret))
+    }
     if (length(z) > 0) {
       z <- data.frame(Symbol = symbols[i], z)
       ret <- bind_rows(ret, z)
@@ -133,10 +138,13 @@ stocks_quote <- function(symbols, ...) {
   if (length(ret) > 0) {
     colnames(ret) <- c(
       "Symbol", "QuoteTime", "Value", "DailyChange",
-      "DailyChangeP", "Open", "High", "Low", "Volume")
+      "DailyChangeP", "Open", "High", "Low", "Volume"
+    )
     ret <- as_tibble(ret) %>%
       mutate(QuoteTime = as.POSIXct(
-        .data$QuoteTime, origin = "1970-01-01 00:00:00"))
+        .data$QuoteTime,
+        origin = "1970-01-01 00:00:00"
+      ))
     row.names(ret) <- NULL
     return(ret)
   }
@@ -394,9 +402,11 @@ daily_stocks <- function(hist, trans, tickers = NA, window = "MAX", ...) {
     mutate(Symbol = factor(.data$Symbol, levels = levs)) %>%
     .filter_window(window) %>%
     group_by(.data$Date) %>%
-    mutate(wt_value = weighted_value(.data$Value, n = .data$Quant),
-           wt_total = .data$wt_value * .data$Quant,
-           wt = signif(100 * .data$wt_total / sum(.data$wt_total), 4)) %>%
+    mutate(
+      wt_value = weighted_value(.data$Value, n = .data$Quant),
+      wt_total = .data$wt_value * .data$Quant,
+      wt = signif(100 * .data$wt_total / sum(.data$wt_total), 4)
+    ) %>%
     ungroup()
 
   attr(daily, "type") <- "daily_stocks"
@@ -421,8 +431,10 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
   check_attr(trans, check = "stocks_file_transactions")
   check_attr(cash, check = "stocks_file_cash")
 
-  temp <- expand.grid(Date = unique(hist$Date),
-                      Symbol = unique(hist$Symbol)) %>%
+  temp <- expand.grid(
+    Date = unique(hist$Date),
+    Symbol = unique(hist$Symbol)
+  ) %>%
     left_join(daily_stocks(hist, trans), c("Date", "Symbol")) %>%
     mutate(Date = as.Date(.data$Date)) %>%
     arrange(desc(.data$Date), .data$Symbol) %>%
@@ -528,22 +540,32 @@ weighted_value <- function(value,
         arrange(desc(.data$id)) %>%
         mutate(cum = cumsum(.data$n), n_stocks = n_stocks) %>%
         rowwise() %>%
-        mutate(total = min(.data$n, .data$n_stocks - .data$cum + .data$n),
-               total = ifelse(.data$total < 0, 0, .data$total)) %>%
+        mutate(
+          total = min(.data$n, .data$n_stocks - .data$cum + .data$n),
+          total = ifelse(.data$total < 0, 0, .data$total)
+        ) %>%
         arrange(.data$id) %>%
         data.frame()
     } else if ("FIFO" %in% technique) {
       df <- df %>%
         mutate(cum = cumsum(.data$n), n_stocks = n_stocks) %>%
         rowwise() %>%
-        mutate(total = min(.data$n, .data$n_stocks - .data$cum + .data$n),
-               total = ifelse(.data$total < 0, 0, .data$total)) %>%
+        mutate(
+          total = min(.data$n, .data$n_stocks - .data$cum + .data$n),
+          total = ifelse(.data$total < 0, 0, .data$total)
+        ) %>%
         data.frame()
     }
-    ret <- sum(df$value * df$total, na.rm = TRUE) / sum(df$total, na.rm = TRUE) 
+    ret <- sum(df$value * df$total, na.rm = TRUE) / sum(df$total, na.rm = TRUE)
     attr(ret, "df") <- select(df, -any_of(c("id", "cum")))
-    if (type == 2) return(attr(ret, "df")) else return(ret)
-  } else return(0)
+    if (type == 2) {
+      return(attr(ret, "df"))
+    } else {
+      return(ret)
+    }
+  } else {
+    return(0)
+  }
 }
 
 ################# PLOTTING FUNCTIONS #################

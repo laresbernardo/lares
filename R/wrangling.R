@@ -160,16 +160,18 @@ normalize <- function(x, ...) {
 #' num_abbr(c("3K", "-58.3M", NA, 1), numeric = TRUE)
 #' @export
 num_abbr <- function(x, n = 3, numeric = FALSE, ...) {
-  if (is.null(x)) return(x)
+  if (is.null(x)) {
+    return(x)
+  }
   if (!is.numeric(x)) {
     if (!numeric) {
-      stop("Input vector 'x' needs to be numeric. To convert abbr to num, set numeric = TRUE")  
+      stop("Input vector 'x' needs to be numeric. To convert abbr to num, set numeric = TRUE")
     }
   }
   if (!is.numeric(n)) stop("Input 'n' needs to be numeric.")
   if (length(n) > 1) stop("Please make sure that n takes on a single value.")
   if (!n %in% 1:6) stop("Please make sure that n takes on an interger value between 1 to 6.")
-  
+
   if (numeric) {
     num <- as.numeric(gsub("[A-z]+", "", x))
     abbr_value <- unlist(lapply(seq_along(x), function(i) {
@@ -192,31 +194,31 @@ num_abbr <- function(x, n = 3, numeric = FALSE, ...) {
     # # To handle scientific notation inputs correctly
     # on.exit(options("scipen" = getOption('scipen')))
     # options("scipen" = 999)
-    
+
     # Clean up x
     negative_positions <- ifelse(x < 0, "-", "")
     x <- abs(x)
-    
+
     div <- findInterval(x, c(0, 1e3, 1e6, 1e9, 1e12, 1e15, 1e18))
-    
+
     # Round x with some cleaning
     x <- round(x, -nchar(round(x, 0)) + n) / 10^(3 * (div - 1))
-    
+
     # Fix numbers rounded up to another digit
     # i.e. 999k -> 1000k should actually be 1M
     div <- ifelse(nchar(as.integer(x)) > 3, div + 1, div)
     x <- ifelse(nchar(as.integer(x)) > 3, x / 1e3, x)
-    
+
     # Cap decimal places to 3
     x <- round(x, 3)
-    
+
     # Qa = Quadrillion; Qi = Quintillion
     x <- paste0(x, c("", "K", "M", "B", "T", "Qa", "Qi")[div])
-    
+
     output <- paste0(negative_positions, x)
     output[grepl("NA", output)] <- NA
-    
-    return(output) 
+
+    return(output)
   }
 }
 
@@ -395,7 +397,9 @@ formatNum <- function(x, decimals = 2, signif = NULL,
                       pre = "", pos = "", sign = FALSE,
                       abbr = FALSE,
                       ...) {
-  if (is.null(x)) return(x)
+  if (is.null(x)) {
+    return(x)
+  }
   # Auxiliary function to save signs
   if (sign) signs <- ifelse(x > 0, "+", "")
 

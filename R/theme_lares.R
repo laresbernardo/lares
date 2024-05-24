@@ -375,7 +375,7 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
 
 .font_global <- function(font, quiet = FALSE, when_not = NA, ask_install = FALSE, ...) {
   if ("ignore" %in% tolower(font)) {
-    return(NULL) 
+    return(NULL)
   } else {
     temp <- font_exists(font, ...)
     if (!any(isTRUE(temp))) {
@@ -385,7 +385,7 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
             yes <- readline(sprintf("Do you want to install %s font for better results? [y/n]: ", font))
             if ("y" %in% yes) try(install_localfont(font))
           } else {
-            warning(sprintf("Font(s) %s not installed, with other name, or can't be found", v2t(font))) 
+            warning(sprintf("Font(s) %s not installed, with other name, or can't be found", v2t(font)))
           }
         }
         Sys.unsetenv("LARES_FONT") # So R doesn't try again by default
@@ -395,7 +395,7 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
       # Return first one that is found
       font <- font[head(which(temp), 1)]
     }
-    return(font) 
+    return(font)
   }
 }
 

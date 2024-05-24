@@ -113,7 +113,8 @@ recommended <- list(
     "h2o.loadModel", "h2o.no_progress", "h2o.predict", "h2o.predict_json",
     "h2o.saveModel", "h2o.varimp", "h2o.getVersion", "h2o.glm",
     "predict_contributions.H2OModel", "h2o.import_mojo", "h2o.no_progress",
-    "h2o.show_progress"),
+    "h2o.show_progress"
+  ),
   knitr = c("kable", "knit"),
   methods = "as",
   mice = c("mice", "complete"),

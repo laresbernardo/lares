@@ -36,7 +36,7 @@ tic <- function(id = 1, start = proc.time()["elapsed"], quiet = TRUE) {
 #' Stopwatch Stop
 #'
 #' Stop a stopwatch.
-#' 
+#'
 #' @inheritParams cache_write
 #' @param msg Character. Custom message shown
 #' @param type Character. Output format for \code{time} list element.

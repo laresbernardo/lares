@@ -212,7 +212,7 @@ dalex_variable <- function(explainer, vars, force_class = NA, seed = 123, ...) {
       }
     }
   }
-  
+
   set.seed(seed)
   aux <- model_profile(explainer, variables = vars, ...)
   p <- plot(aux) + theme_lares(legend = "top") +

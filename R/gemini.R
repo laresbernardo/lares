@@ -28,18 +28,21 @@ gemini_ask <- function(ask,
   model_query <- "gemini-pro:generateContent"
   response <- POST(
     url = paste0(url, model_query),
-    query = list(key = secret_key), 
+    query = list(key = secret_key),
     httr::content_type_json(), encode = "json", body = list(
-      contents = list(parts = list(list(text = ask))), 
+      contents = list(parts = list(list(text = ask))),
       generationConfig = list(
         temperature = temperature,
-        maxOutputTokens = max_tokens)))
+        maxOutputTokens = max_tokens
+      )
+    )
+  )
   this <- content(response)
   if ("error" %in% names(this)) {
     message(this$error$message)
   } else {
     candidates <- this$candidates
-    if (!quiet) cat(unlist(lapply(candidates, function(candidate) candidate$content$parts))) 
+    if (!quiet) cat(unlist(lapply(candidates, function(candidate) candidate$content$parts)))
   }
   return(invisible(this))
 }
@@ -61,16 +64,20 @@ gemini_image <- function(ask, image,
     query = list(key = secret_key),
     httr::content_type_json(), encode = "json", body = list(
       contents = list(parts = list(list(text = ask), list(inline_data = list(
-        mime_type = "image/png", data = base64encode(image))))),
+        mime_type = "image/png", data = base64encode(image)
+      )))),
       generationConfig = list(
         temperature = temperature,
-        maxOutputTokens = max_tokens)))
+        maxOutputTokens = max_tokens
+      )
+    )
+  )
   this <- content(response)
   if ("error" %in% names(this)) {
     message(this$error$message)
   } else {
     candidates <- this$candidates
-    if (!quiet) cat(unlist(lapply(candidates, function(candidate) candidate$content$parts))) 
+    if (!quiet) cat(unlist(lapply(candidates, function(candidate) candidate$content$parts)))
   }
   return(invisible(this))
 }

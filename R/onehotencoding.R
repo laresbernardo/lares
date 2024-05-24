@@ -418,8 +418,8 @@ date_feats <- function(dates,
 #' @param countries Character or vector. For which country(ies) should the
 #' holidays be imported?
 #' @param quiet Boolean. Default FALSE which disables verbosity of the function.
-#' @param include_regions Boolean. Default FALSE. If TRUE, for countries with 
-#' internal subdivisions, it will provide details on which sub-state the found 
+#' @param include_regions Boolean. Default FALSE. If TRUE, for countries with
+#' internal subdivisions, it will provide details on which sub-state the found
 #' holidays apply.
 #' @return \code{data.frame} with holidays data for given \code{countries} and \code{years}.
 #' @examples
@@ -435,7 +435,7 @@ holidays <- function(countries = "Venezuela",
                      include_regions = FALSE) {
   # Further improvement: let the user bring more than +-5 years
   results <- NULL
-  if (any(!years %in% (year(Sys.Date())-5):(year(Sys.Date())+5))) {
+  if (any(!years %in% (year(Sys.Date()) - 5):(year(Sys.Date()) + 5))) {
     warning(paste(
       "Only allowing \u00b1 5 years from today. Check:", v2t(years)
     ))
@@ -450,7 +450,7 @@ holidays <- function(countries = "Venezuela",
       message(paste0(">>> Extracting ", combs$country[i], "'s holidays for ", combs$year[i]))
     }
     url <- paste0("https://www.timeanddate.com/holidays/", tolower(combs$country[i]), "/", combs$year[i])
-    
+
     # call httr's GET however set header to only accept English named date parts (months)
     # otherwise if user uses own locale, for instance German, an error can occur parsing dates of holidays
     # compare with plain call without additional headers in different locale: holidays <- content(GET(url))
@@ -479,14 +479,17 @@ holidays <- function(countries = "Venezuela",
     if (length(grep_comment) != 0L) {
       holidays <- holidays[-grep_comment, ]
     }
-    holidays$Date <- tryCatch({
-      lubridate::dmy(holidays$Date)
-    },
-    error = function(cond) {
-      stop(
-        "Unaccounted problem(s) occurred parsing the date column.\n Check sample: ",
-        v2t(head(holidays$Date, 3)))
-    })
+    holidays$Date <- tryCatch(
+      {
+        lubridate::dmy(holidays$Date)
+      },
+      error = function(cond) {
+        stop(
+          "Unaccounted problem(s) occurred parsing the date column.\n Check sample: ",
+          v2t(head(holidays$Date, 3))
+        )
+      }
+    )
 
     result <- data.frame(
       holiday = holidays$Date,

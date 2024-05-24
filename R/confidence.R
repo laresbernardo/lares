@@ -77,7 +77,7 @@ ci_var <- function(df, var, group_var = NULL, conf = 0.95) {
     )
 
   varname <- as_label(var)
-  varname <- gsub('"', '', varname)
+  varname <- gsub('"', "", varname)
   cols <- colnames(aux)
   colnames(aux)[cols == "smean"] <- sprintf("%s_mean", varname)
   colnames(aux)[cols == "ssd"] <- sprintf("%s_sd", varname)

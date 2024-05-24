@@ -485,8 +485,12 @@ autoline <- function(text, top = "auto", rel = 9) {
 #' font_exists(font = NULL)
 #' @export
 font_exists <- function(font = "Arial Narrow", font_dirs = NULL, quiet = FALSE, ...) {
-  if (isTRUE(font[1] == "")) return(FALSE)
-  if (isTRUE(is.na(font[1]))) return(FALSE)
+  if (isTRUE(font[1] == "")) {
+    return(FALSE)
+  }
+  if (isTRUE(is.na(font[1]))) {
+    return(FALSE)
+  }
   tryCatch(
     check_font(font, font_dirs, quiet),
     error = function(err) {
@@ -500,34 +504,42 @@ font_exists <- function(font = "Arial Narrow", font_dirs = NULL, quiet = FALSE, 
 ttf_find_default_path <- function(font_dirs = NULL) {
   if (grepl("^darwin", R.version$os)) {
     paths <-
-      c("/Library/Fonts/",                      # System fonts
-        "/System/Library/Fonts",                # More system fonts
-        "/System/Library/Fonts/Supplemental",   # More system fonts
-        "~/Library/Fonts/",                     # User fonts
-        font_dirs)
+      c(
+        "/Library/Fonts/", # System fonts
+        "/System/Library/Fonts", # More system fonts
+        "/System/Library/Fonts/Supplemental", # More system fonts
+        "~/Library/Fonts/", # User fonts
+        font_dirs
+      )
     return(paths[file.exists(paths)])
   } else if (grepl("^linux-gnu", R.version$os)) {
     paths <-
-      c("/usr/share/fonts/",                    # Ubuntu/Debian/Arch/Gentoo
-        "/usr/local/share/fonts/",              # system-admin-guide/stable/fonts.html.en
-        "/usr/X11R6/lib/X11/fonts/TrueType/",   # RH 6
-        "~/.local/share/fonts/",                # Added with Gnome font viewer
-        "~/.fonts/",                            # User fonts
-        font_dirs)
+      c(
+        "/usr/share/fonts/", # Ubuntu/Debian/Arch/Gentoo
+        "/usr/local/share/fonts/", # system-admin-guide/stable/fonts.html.en
+        "/usr/X11R6/lib/X11/fonts/TrueType/", # RH 6
+        "~/.local/share/fonts/", # Added with Gnome font viewer
+        "~/.fonts/", # User fonts
+        font_dirs
+      )
     return(paths[file.exists(paths)])
   } else if (grepl("^freebsd", R.version$os)) {
     # Possible font paths, depending on installed ports
     paths <-
-      c("/usr/local/share/fonts/truetype/",
+      c(
+        "/usr/local/share/fonts/truetype/",
         "/usr/local/lib/X11/fonts/",
-        "~/.fonts/",                            # User fonts
-        font_dirs)
+        "~/.fonts/", # User fonts
+        font_dirs
+      )
     return(paths[file.exists(paths)])
   } else if (grepl("^mingw", R.version$os)) {
     paths <-
-      c(file.path(Sys.getenv("SystemRoot"), "Fonts"),
+      c(
+        file.path(Sys.getenv("SystemRoot"), "Fonts"),
         file.path(Sys.getenv("LOCALAPPDATA"), "Microsoft", "Windows", "Fonts"),
-        font_dirs)
+        font_dirs
+      )
     return(paths[file.exists(paths)])
   } else {
     stop("Unknown platform. Don't know where to look for truetype fonts. Sorry!")
@@ -538,12 +550,14 @@ check_font <- function(font, font_dirs = NULL, quiet = FALSE) {
   pattern <- "\\.ttf$|\\.otf"
   fonts_path <- ttf_find_default_path(font_dirs)
   ttfiles <- list.files(fonts_path,
-                        pattern = pattern, recursive = TRUE,
-                        full.names = TRUE, ignore.case = TRUE
+    pattern = pattern, recursive = TRUE,
+    full.names = TRUE, ignore.case = TRUE
   )
   font_names <- basename(ttfiles)
   nice_names <- gsub(pattern, "", font_names, ignore.case = TRUE)
-  if (is.null(font)) return(nice_names)
+  if (is.null(font)) {
+    return(nice_names)
+  }
   if (grepl("^mingw", R.version$os)) {
     try_require("grDevices")
     ret <- font %in% windowsFonts()
@@ -551,10 +565,14 @@ check_font <- function(font, font_dirs = NULL, quiet = FALSE) {
     ret <- font %in% nice_names
   }
   if (!quiet & !all(ret)) {
-    if (!is.null(font)) font_names <- font_names[
-      grepl(tolower(paste(font, collapse = "|")), tolower(font_names))]
-    if (length(font_names) > 0)
+    if (!is.null(font)) {
+      font_names <- font_names[
+        grepl(tolower(paste(font, collapse = "|")), tolower(font_names))
+      ]
+    }
+    if (length(font_names) > 0) {
       message("Maybe you meant one of these:\n", v2t(sort(gsub("\\..*", "", font_names))))
+    }
   }
   return(ret)
 }
@@ -732,7 +750,7 @@ move_files <- function(from, to) {
 #' @export
 spread_list <- function(df, col, str = NULL, replace = TRUE) {
   var <- enquo(col)
-  col <- gsub('"', '', as_label(var))
+  col <- gsub('"', "", as_label(var))
   cols <- colnames(df)
 
   if (!"list" %in% unlist(lapply(df[, cols == col], class))) {
@@ -987,9 +1005,9 @@ warnifnot <- function(...) if (!isTRUE(...)) warning(paste(deparse(...), "is not
 what_size <- function(x = NULL, units = "Mb", path = NULL, recursive = TRUE, ...) {
   if (!is.null(path)) {
     size <- dir_size(path, recursive, ...)
-    format(size, units = units, ...) 
+    format(size, units = units, ...)
   } else {
-    format(object.size(x), units = units, ...) 
+    format(object.size(x), units = units, ...)
   }
 }
 
@@ -1025,19 +1043,25 @@ dir_size <- function(path = getwd(), recursive = TRUE, pattern = NULL, ...) {
 #' @export
 markdown2df <- function(text, autoformat = TRUE) {
   df <- removenacols(read.table(
-    text = text, sep = "|", header = TRUE, strip.white = TRUE, quote = "\""))
+    text = text, sep = "|", header = TRUE, strip.white = TRUE, quote = "\""
+  ))
   # Get rid of potential first row with all values set as --- or :---
   if (all(stringr::str_split(df[1, 1], "-")[[1]] == "")) df <- df[-1, ]
   if (substr(df[1, 1], 1, 4) == ":---") df <- df[-1, ]
   rownames(df) <- NULL
   df <- as_tibble(df)
-  if (autoformat) df <- df %>% chr2num() %>% chr2logical() %>% chr2date()
+  if (autoformat) {
+    df <- df %>%
+      chr2num() %>%
+      chr2logical() %>%
+      chr2date()
+  }
   return(df)
 }
 
 ####################################################################
 #' Check character values for date/numeric/logical and change datatype
-#' 
+#'
 #' Automatically check a vector, data.frame or list for numeric, logical,
 #' date content and change their datatype. Note that factors are skipped in
 #' case the user requires character numeric values to be kept as they are.
@@ -1046,7 +1070,7 @@ markdown2df <- function(text, autoformat = TRUE) {
 #' @param data Vector, data.frame or list
 #' @examples
 #' str(chr2num(c("1", "2", "3")))
-#' df <- data.frame(A = c("1", "3"), B = c("A", "B"), c = c(pi, pi*2))
+#' df <- data.frame(A = c("1", "3"), B = c("A", "B"), c = c(pi, pi * 2))
 #' str(chr2num(df))
 #' lst <- list(A = c("1", "2", "3"), B = c("A", "B", "3"), C = pi, D = 3L)
 #' str(chr2num(lst))
@@ -1058,8 +1082,9 @@ chr2num <- function(data) {
   pattern <- "^-?\\d+(\\.\\d+)?$"
   if (is.list(data)) {
     char_elements <- sapply(data, is.character)
-    num_elements <- sapply(data, function(element)
-      all(grepl(pattern, element[!is.na(element)])))
+    num_elements <- sapply(data, function(element) {
+      all(grepl(pattern, element[!is.na(element)]))
+    })
     elements_to_convert <- char_elements & num_elements
     data[elements_to_convert] <- lapply(data[elements_to_convert], as.numeric)
   } else {
@@ -1074,8 +1099,9 @@ chr2num <- function(data) {
 chr2logical <- function(data) {
   if (is.list(data)) {
     char_elements <- sapply(data, is.character)
-    log_elements <- sapply(data, function(element)
-      all(toupper(element) %in% c("TRUE", "FALSE", NA)))
+    log_elements <- sapply(data, function(element) {
+      all(toupper(element) %in% c("TRUE", "FALSE", NA))
+    })
     elements_to_convert <- char_elements & log_elements
     data[elements_to_convert] <- lapply(toupper(data[elements_to_convert]), as.logical)
   } else {
@@ -1091,11 +1117,13 @@ chr2date <- function(data) {
   pattern <- "^[0-9-]+$"
   if (is.list(data)) {
     char_elements <- sapply(data, is.character)
-    log_elements <- sapply(data, function(element)
-      all(grepl(pattern, element) | is.na(element)))
+    log_elements <- sapply(data, function(element) {
+      all(grepl(pattern, element) | is.na(element))
+    })
     elements_to_convert <- char_elements & log_elements
     data[elements_to_convert] <- lapply(
-      data[elements_to_convert], function(x) as.Date(x, origin = "1970-01-01"))
+      data[elements_to_convert], function(x) as.Date(x, origin = "1970-01-01")
+    )
   } else {
     if (is.character(data) && all(grepl(pattern, data) | is.na(data))) {
       data <- as.Date(data, origin = "1970-01-01")

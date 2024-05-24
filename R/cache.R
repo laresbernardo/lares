@@ -92,8 +92,10 @@ cache_read <- function(base,
   } else {
     if (!quiet) {
       if (!is.function(file)) {
-        message("No cache found for: ", file) 
-      } else message("No cache file found for ", base)
+        message("No cache found for: ", file)
+      } else {
+        message("No cache file found for ", base)
+      }
     }
     return(invisible(NULL))
   }
@@ -154,7 +156,7 @@ cache_pipe <- function(data, base = "cache_pipe", read = TRUE, write = TRUE, ...
   } else {
     if (isTRUE(write)) {
       data <- eval(data)
-      cache_write(data, base, ...) 
+      cache_write(data, base, ...)
     }
     return(data)
   }

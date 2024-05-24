@@ -99,10 +99,11 @@ gpt_ask <- function(ask,
   # Save historical questions
   cache <- bind_rows(
     data.frame(ts = ts, prompt = ask),
-    cache_read("GPT_HIST_ASK", quiet = TRUE, ...)) %>%
+    cache_read("GPT_HIST_ASK", quiet = TRUE, ...)
+  ) %>%
     as_tibble()
   cache_write(distinct(cache), "GPT_HIST_ASK", quiet = TRUE, ...)
-  
+
   # Ask ChatGPT using their API
   response <- POST(
     url = url,
@@ -126,11 +127,12 @@ gpt_ask <- function(ask,
   if ("message" %in% names(ret$choices[[1]]) & !quiet) {
     cat(paste(stringr::str_trim(ret$choices[[1]]$message$content), "\n"))
   }
-  
+
   # Save historical answers
   cache <- bind_rows(
     data.frame(ts = ts, reply = ret),
-    cache_read("GPT_HIST_REPLY", quiet = TRUE, ...)) %>%
+    cache_read("GPT_HIST_REPLY", quiet = TRUE, ...)
+  ) %>%
     as_tibble()
   cache_write(distinct(cache), "GPT_HIST_REPLY", quiet = TRUE, ...)
   return(invisible(ret))
@@ -145,7 +147,7 @@ gpt_history <- function(quiet = TRUE, ...) {
     if (!is.null(replies)) {
       hist <- left_join(asks, replies, by = "ts") %>%
         select(.data$ts, .data$prompt, contains("message.content"), everything())
-      return(hist) 
+      return(hist)
     } else {
       return(asks)
     }
@@ -338,7 +340,7 @@ gpt_markdown2df <- function(resp) {
 #' # A simple formatted table with data
 #' # Note: I mostly use output = "table" and enabled an auxiliary enrichment prompt
 #' (p <- gpt_prompter(instruction = "Capitals of the world", output = "table"))
-#' 
+#'
 #' # Classify
 #' p <- gpt_prompter(
 #'   instruction = "For each of the inputs, classify using only the options in context",
@@ -347,17 +349,21 @@ gpt_markdown2df <- function(resp) {
 #'   output = "table",
 #'   # This cols parameter is auxiliary
 #'   cols = c("Input", "Category"),
-#'   quiet = FALSE)
-#' 
+#'   quiet = FALSE
+#' )
+#'
 #' # Tag all categories that apply
 #' p <- gpt_prompter(
-#'   instruction = paste("For each of the inputs, provide which of the",
-#'                       "context values apply as correct tags using TRUE/FALSE"),
+#'   instruction = paste(
+#'     "For each of the inputs, provide which of the",
+#'     "context values apply as correct tags using TRUE/FALSE"
+#'   ),
 #'   input = c("I love chocolate", "I hate chocolate", "I like Coke", "Who am I?", "T-REX"),
 #'   context = c("food", "positive", "negative", "beverage"),
 #'   output = "table",
-#'   quiet = FALSE)
-#' 
+#'   quiet = FALSE
+#' )
+#'
 #' # Extract information from strings
 #' p <- gpt_prompter(
 #'   instruction = "For each of the inputs, extract each of the information asked in context",
@@ -365,8 +371,9 @@ gpt_markdown2df <- function(resp) {
 #'   context = c("email", "full state name", "country of phone", "full non-abbreviated number"),
 #'   output = "table",
 #'   cols = c("Input", "Element_to_extract", "Value"),
-#'   quiet = FALSE)
-#' 
+#'   quiet = FALSE
+#' )
+#'
 #' # Translate to several languages
 #' p <- gpt_prompter(
 #'   instruction = "For each of the inputs, translate to the respective languages in context",
@@ -374,32 +381,41 @@ gpt_markdown2df <- function(resp) {
 #'   context = c("spanish", "chinese", "japanese", "russian", "german"),
 #'   output = "table",
 #'   cols = c("Input", "Language", "Translation"),
-#'   quiet = FALSE)
-#' 
+#'   quiet = FALSE
+#' )
+#'
 #' # Format date values
 #' p <- gpt_prompter(
-#'   instruction = paste("For each of the inputs,",
-#'                       "standardize and format all values to the format in context"),
+#'   instruction = paste(
+#'     "For each of the inputs,",
+#'     "standardize and format all values to the format in context"
+#'   ),
 #'   input = c("March 27th, 2021", "12-25-2023 3:45PM", "01.01.2000", "29 Feb 92"),
 #'   context = "ISO Date getting rid of time stamps",
 #'   output = "table",
 #'   cols = c("Input", "Formatted"),
-#'   quiet = FALSE)
-#' 
+#'   quiet = FALSE
+#' )
+#'
 #' # Convert units
 #' p <- gpt_prompter(
-#'   instruction = paste("For each of the inputs,",
-#'                       "provide new converted values using the units in context"),
+#'   instruction = paste(
+#'     "For each of the inputs,",
+#'     "provide new converted values using the units in context"
+#'   ),
 #'   input = c("50C", "300K", "100F", "0F", "32C", "0K"),
 #'   context = "Fahrenheit",
 #'   output = "table",
 #'   cols = c("Input", "Original_Unit", "Total_Value", "Converted_Value", "New_Unit"),
-#'   quiet = FALSE)
-#'   
+#'   quiet = FALSE
+#' )
+#'
 #' # Read a text and answer a question related to it
-#' gpt_prompter(instruction = "read",
+#' gpt_prompter(
+#'   instruction = "read",
 #'   context = "Long text here",
-#'   input = "Question here")$prompt
+#'   input = "Question here"
+#' )$prompt
 #' @export
 gpt_prompter <- function(instruction = NULL,
                          input = NULL,

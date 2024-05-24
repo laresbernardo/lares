@@ -60,9 +60,11 @@ cran_logs <- function(input = "lares",
       )
     dMean <- input %>%
       group_by(.data$package) %>%
-      summarise(MN = mean(.data$count, na.rm = TRUE),
-                date = min(.data$date, na.rm = TRUE),
-                MN_label = formatNum(.data$MN, 2, abbr = TRUE))
+      summarise(
+        MN = mean(.data$count, na.rm = TRUE),
+        date = min(.data$date, na.rm = TRUE),
+        MN_label = formatNum(.data$MN, 2, abbr = TRUE)
+      )
     plot <- ggplot(input, aes(x = .data$date)) +
       geom_line(aes(y = .data$count), colour = lares_pal("simple")[1], alpha = 0.8) +
       theme_lares(legend = "top", pal = 2, panel_colour = "grey95") +

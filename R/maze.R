@@ -49,7 +49,6 @@ maze_solve <- function(
     quiet = FALSE,
     seed = NULL,
     ...) {
-  
   # Inputs validation
   if (!is.matrix(maze)) {
     stop("Input 'maze' must be a matrix or a data.frame")
@@ -64,7 +63,7 @@ maze_solve <- function(
   if (is.null(seed)) seed <- round(1000 * runif(1))
   set.seed(seed)
   if (!random) seed <- NA
-  
+
   # Initialize data frame to store path coordinates
   tic("maze_solve_timeout")
   result <- maze_solve_recursive(maze, start, end, aim, inertia, diagonal, random, timeout)
@@ -90,7 +89,7 @@ maze_solve <- function(
     result$steps_counter <- nrow(result$path_coords)
     result$turns_counter <- count_direction_changes(result$path_coords) + 1
   } else {
-    result <- list(maze = NULL)  
+    result <- list(maze = NULL)
   }
   result$start <- paste(start, collapse = ",")
   result$end <- paste(end, collapse = ",")
@@ -98,7 +97,7 @@ maze_solve <- function(
   result$aim <- aim
   result$random <- random
   result$seed <- seed
-  
+
   class(result) <- c("maze_solve", class(result))
   if (!quiet) print(result)
   return(invisible(result))
@@ -111,10 +110,12 @@ print.maze_solve <- function(x, ...) {
   cat(sprintf(
     "Setup: Inertia (%s) | Aim (%s) | Random (%s)%s\n",
     x$inertia, x$aim, x$random,
-    ifelse(x$random, sprintf(" | Seed (%s)", x$seed), "")))
+    ifelse(x$random, sprintf(" | Seed (%s)", x$seed), "")
+  ))
   if (!is.null(x$maze)) {
-    if (isTRUE(x$coords_inv))
+    if (isTRUE(x$coords_inv)) {
       cat("  [Inverted start and end points]\n")
+    }
     cat("  Total steps: ", x$steps_counter, "\n")
     cat("  Total turns: ", x$turns_counter, "\n\n")
     print(x$maze)
@@ -133,7 +134,6 @@ maze_solve_recursive <- function(
     timeout = 10,
     path_coords = data.frame(row = integer(0), col = integer(0)),
     prev_direction = NULL) {
-
   # When solution found or timeout reached, return results
   toci <- toc("maze_solve_timeout", quiet = TRUE)
   timeout_reached <- any(toci$toc - toci$tic > timeout)
@@ -179,7 +179,7 @@ maze_solve_recursive <- function(
       # Recursively explore the next cell
       nexti <- c(next_row, next_col)
       result <- maze_solve_recursive(
-        maze, nexti, end, aim, inertia, diagonal, random, 
+        maze, nexti, end, aim, inertia, diagonal, random,
         timeout, path_coords,
         prev_direction = c(row, col)
       )
@@ -212,7 +212,7 @@ maze_gridsearch <- function(
           )
           if (!is.logical(this)) {
             this$coords_inv <- FALSE
-            results <- append(results, list(this))   
+            results <- append(results, list(this))
           }
           this <- maze_solve(
             maze,
@@ -222,14 +222,15 @@ maze_gridsearch <- function(
           )
           if (!is.logical(this)) {
             this$coords_inv <- TRUE
-            results <- append(results, list(this))   
+            results <- append(results, list(this))
           }
         }
       }
     }
   }
-  counters <- dplyr::bind_rows(lapply(results, function(y)
-    y[unlist(lapply(y, function(x) !is.data.frame(x) && !is.null(x)))]))
+  counters <- dplyr::bind_rows(lapply(results, function(y) {
+    y[unlist(lapply(y, function(x) !is.data.frame(x) && !is.null(x)))]
+  }))
   counters <- data.frame(id = seq_along(results), counters) %>%
     arrange(.data$steps_counter, .data$turns_counter) %>%
     select(.data$id, contains("counter"), everything(), .data$start, .data$end) %>%
@@ -257,26 +258,26 @@ count_direction_changes <- function(path_coords) {
 # Function to calculate the direction of point in path
 calculate_direction <- function(row, col) {
   if (is.na(row) || is.na(col) || length(row) == 0 || length(col) == 0) {
-    return("\u003F")  # ?
+    return("\u003F") # ?
   }
   if (row == 0 && col == 1) {
-    return("\u2192")  # Right
+    return("\u2192") # Right
   } else if (row == 0 && col == -1) {
-    return("\u2190")  # Left
+    return("\u2190") # Left
   } else if (row == 1 && col == 0) {
-    return("\u2193")  # Down
+    return("\u2193") # Down
   } else if (row == -1 && col == 0) {
-    return("\u2191")  # Up
+    return("\u2191") # Up
   } else if (row == 1 && col == 1) {
-    return("\u2198")  # Diagonal down-right
+    return("\u2198") # Diagonal down-right
   } else if (row == -1 && col == 1) {
-    return("\u2197")  # Diagonal up-right
+    return("\u2197") # Diagonal up-right
   } else if (row == 1 && col == -1) {
-    return("\u2199")  # Diagonal down-left
+    return("\u2199") # Diagonal down-left
   } else if (row == -1 && col == -1) {
-    return("\u2196")  # Diagonal up-left
+    return("\u2196") # Diagonal up-left
   } else if (row == 0 && col == 0) {
-    return("\u2022")  # Center (no movement)
+    return("\u2022") # Center (no movement)
   } else {
     return("Invalid direction")
   }

@@ -25,12 +25,15 @@
 #'     "print_spend",
 #'     "ooh_spend",
 #'     "tv_spend",
-#'     "radio_spend"),
+#'     "radio_spend"
+#'   ),
 #'   media_type = c(
-#'     "online", "online", "offline", 
-#'     "offline", "offline", "offline"),
+#'     "online", "online", "offline",
+#'     "offline", "offline", "offline"
+#'   ),
 #'   adstock = "geometric",
-#'   date_type = "weekly")
+#'   date_type = "weekly"
+#' )
 #' @export
 robyn_hypsbuilder <- function(
     channels,
@@ -38,32 +41,34 @@ robyn_hypsbuilder <- function(
     adstock = "geometric",
     date_type = "weekly",
     lagged = FALSE) {
-  
   # Check inputs validity
   check_opts(media_type, c("default", "online", "offline"))
   check_opts(adstock, c("geometric", "weibull", "weibull_pdf", "weibull_cdf"))
   check_opts(date_type, c("daily", "weekly", "monthly", "skip"))
   check_opts(lagged, c(TRUE, FALSE))
-  
+
   # Hyperparameters names
   hyps <- c("alphas", "gammas")
   hyps2 <- if (adstock %in% "geometric") "thetas" else c("shapes", "scales")
   all_hyps <- c(hyps, hyps2)
-  
+
   # Repeat to all channels when provided 1 value
-  if (length(media_type) == 1)
+  if (length(media_type) == 1) {
     media_type <- rep(media_type, length(channels))
-  if (length(lagged) == 1)
+  }
+  if (length(lagged) == 1) {
     lagged <- rep(lagged, length(channels))
-  if (any(lagged) && adstock %in% c("geometric", "weibull_cdf"))
+  }
+  if (any(lagged) && adstock %in% c("geometric", "weibull_cdf")) {
     stop("To be able to have a lagged effect you need to set 'weibull_pdf' adstock")
+  }
   stopifnot(length(channels) == length(media_type))
-  
+
   # Generate all combinations and data.frame
   df <- expand.grid(channels, all_hyps)
   df$media_type <- rep(media_type, length(all_hyps))
   df$lagged <- rep(lagged, length(all_hyps))
-  
+
   # Apply default rules
   df <- df %>%
     mutate(low = case_when(
@@ -89,19 +94,19 @@ robyn_hypsbuilder <- function(
     # Applies only for geometric adstock
     mutate(
       low = case_when(
-        .data$Var2 == "thetas" & date_type == "daily" ~ .data$low^(1/7),
+        .data$Var2 == "thetas" & date_type == "daily" ~ .data$low^(1 / 7),
         .data$Var2 == "thetas" & date_type == "monthly" ~ .data$low^(4),
         TRUE ~ .data$low
       ),
       high = case_when(
-        .data$Var2 == "thetas" & date_type == "daily" ~ .data$high^(1/7),
+        .data$Var2 == "thetas" & date_type == "daily" ~ .data$high^(1 / 7),
         .data$Var2 == "thetas" & date_type == "monthly" ~ .data$high^(4),
         TRUE ~ .data$high
       )
     ) %>%
     mutate(Var1 = factor(.data$Var1, levels = channels)) %>%
     arrange(.data$Var1)
-  
+
   # Return as named list
   out <- lapply(seq_along(df$Var1), function(x) c(df$low[x], df$high[x]))
   names(out) <- paste(df$Var1, df$Var2, sep = "_")
@@ -111,7 +116,7 @@ robyn_hypsbuilder <- function(
 
 
 ####################################################################
-#' Robyn: Model Selection by Weighted Criteria Scores 
+#' Robyn: Model Selection by Weighted Criteria Scores
 #'
 #' Consider N best models to select the right ones to study using
 #' several criteria/metrics such as potential improvement on budget
@@ -150,10 +155,12 @@ robyn_hypsbuilder <- function(
 robyn_modelselector <- function(
     InputCollect,
     OutputCollect,
-    metrics = c("rsq_train", "performance",
-                "potential_improvement",
-                "non_zeroes", "incluster_models",
-                "baseline_dist"),
+    metrics = c(
+      "rsq_train", "performance",
+      "potential_improvement",
+      "non_zeroes", "incluster_models",
+      "baseline_dist"
+    ),
     wt = c(2, 1, 0, 1, 0.1, 0),
     baseline_ref = 0,
     top = 4,
@@ -162,39 +169,43 @@ robyn_modelselector <- function(
     quiet = FALSE,
     cache = TRUE,
     ...) {
-  
-  if (length(OutputCollect$allSolutions) <= 1){
+  if (length(OutputCollect$allSolutions) <= 1) {
     msg <- "Not enough models for model selection"
     warning(msg)
     ret <- invisible(list(
       data = tibble(solID = OutputCollect$allSolutions, score = 1),
-      plot = noPlot(msg)))
+      plot = noPlot(msg)
+    ))
     class(ret) <- c("robyn_modelselector", class(ret))
     return(ret)
   }
-  
+
   stopifnot(length(wt) == length(metrics))
   stopifnot(length(allocator_limits) == 2)
   stopifnot(baseline_ref >= 0 && baseline_ref <= 1)
-  
+
   # Available metrics
   metrics_df <- data.frame(
-    metric = c("rsq_train", "performance", "potential_improvement",
-               "non_zeroes", "incluster_models", "baseline_dist",
-               "nrmse", "decomp.rssd", "mape"),
+    metric = c(
+      "rsq_train", "performance", "potential_improvement",
+      "non_zeroes", "incluster_models", "baseline_dist",
+      "nrmse", "decomp.rssd", "mape"
+    ),
     metric_name = c(
       "R^2", ifelse(InputCollect$dep_var_type == "revenue", "High ROAS", "Low CPA"),
       "Potential Boost", "Non-Zero Betas", "Models in Cluster",
       sprintf("Baseline Distance [%.0f%%]", signif(baseline_ref * 100, 2)),
-      "NRMSE (Inverted)", "DECOMP.RSSD (Inverted)", "MAPE (Inverted)"))
+      "NRMSE (Inverted)", "DECOMP.RSSD (Inverted)", "MAPE (Inverted)"
+    )
+  )
   check_opts(metrics, metrics_df$metric)
-  
+
   # Metrics Used
   metrics_used <- filter(metrics_df, .data$metric %in% metrics) %>%
     arrange(match(.data$metric, metrics)) %>%
     left_join(data.frame(metric = metrics, wt = wt), "metric") %>%
     filter(.data$wt > 0)
-  
+
   # Add Default Potential Improvement values
   sols <- sort(OutputCollect$allSolutions)
   if ("potential_improvement" %in% metrics & isTRUE(wt[which(metrics == "potential_improvement")] != 0)) {
@@ -202,11 +213,14 @@ robyn_modelselector <- function(
     if (cache & cache_exists(cache_name, ...)) {
       potOpt <- cache_read(cache_name, quiet = quiet, ...)
     } else {
-      if (!quiet) message(sprintf(
-        ">>> Calculating potential performance improvements on %s Pareto-front models...",
-        length(sols)))
+      if (!quiet) {
+        message(sprintf(
+          ">>> Calculating potential performance improvements on %s Pareto-front models...",
+          length(sols)
+        ))
+      }
       try_require("Robyn")
-      defpot <- lapply(sols, function(x){
+      defpot <- lapply(sols, function(x) {
         if (!quiet) statusbar(which(sols == x), length(sols), x)
         return(suppressMessages(robyn_allocator(
           InputCollect = InputCollect,
@@ -222,31 +236,36 @@ robyn_modelselector <- function(
       })
       potOpt <- data.frame(
         solID = sols,
-        potential_improvement = unlist(lapply(defpot, function(x)
-          x$dt_optimOut$optmResponseUnitTotalLift[1])))
+        potential_improvement = unlist(lapply(defpot, function(x) {
+          x$dt_optimOut$optmResponseUnitTotalLift[1]
+        }))
+      )
       if (cache) cache_write(potOpt, cache_name, quiet = quiet, ...)
     }
   } else {
     potOpt <- data.frame(solID = sols, potential_improvement = 0)
   }
-  
+
   # Check pareto-front models summaries to calculate performance (ROAS/CPA)
   performance <- OutputCollect$xDecompAgg %>%
     filter(!is.na(.data$mean_spend)) %>% # get rid of organic
     filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
     group_by(.data$solID) %>%
     summarise(
-      performance = sum(.data$xDecompAgg) / sum(.data$total_spend, na.rm = TRUE))
-  
+      performance = sum(.data$xDecompAgg) / sum(.data$total_spend, na.rm = TRUE)
+    )
+
   # Check pareto-front models to calculate non-zero betas in media channels
   non_zeroes_rate <- OutputCollect$allPareto$xDecompAgg %>%
     filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
     group_by(.data$solID) %>%
     summarise(
       non_zeroes = length(.data$rn[
-        round(.data$coef, 6) > 0 & .data$rn %in% InputCollect$all_media]) /
-        length(InputCollect$all_media))
-  
+        round(.data$coef, 6) > 0 & .data$rn %in% InputCollect$all_media
+      ]) /
+        length(InputCollect$all_media)
+    )
+
   # Count models per cluster
   if (!"clusters" %in% names(OutputCollect)) {
     OutputCollect$clusters$data <- data.frame(solID = sols, cluster = "None", top_sol = TRUE)
@@ -257,20 +276,21 @@ robyn_modelselector <- function(
     mutate(cluster = as.character(.data$cluster)) %>%
     left_join(select(OutputCollect$clusters$clusters_means, .data$cluster, .data$n), "cluster") %>%
     rename(incluster_models = "n")
-  
+
   # Calculate baselines
   baselines <- OutputCollect$xDecompAgg %>%
     mutate(rn = ifelse(.data$rn %in% c(InputCollect$all_media), .data$rn, "baseline")) %>%
     group_by(.data$solID, .data$rn) %>%
     summarize(contribution = sum(.data$xDecompAgg), .groups = "drop") %>%
     group_by(.data$solID) %>%
-    mutate(baseline = .data$contribution / sum(.data$contribution)) %>% ungroup() %>%
+    mutate(baseline = .data$contribution / sum(.data$contribution)) %>%
+    ungroup() %>%
     filter(.data$rn == "baseline") %>%
     arrange(abs(.data$baseline)) %>%
     mutate(baseline_dist = 1 - normalize(abs(baseline_ref - .data$baseline))) %>%
     select(c("solID", "baseline", "baseline_dist")) %>%
     arrange(desc(.data$baseline_dist))
-  
+
   # Gather everything up
   dfa <- OutputCollect$allPareto$resultHypParam %>%
     filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
@@ -278,85 +298,110 @@ robyn_modelselector <- function(
     left_join(performance, "solID") %>%
     left_join(non_zeroes_rate, "solID") %>%
     left_join(potOpt, "solID") %>%
-    left_join(temp, "solID") %>% ungroup() %>%
+    left_join(temp, "solID") %>%
+    ungroup() %>%
     left_join(baselines, "solID")
-  
+
   # Calculate normalized and weighted scores
   scores <- list(
     rsq_train = normalize(dfa$rsq_train) * ifelse(
-      !"rsq_train" %in% metrics, 0, wt[which(metrics == "rsq_train")]),
-      performance = normalize(dfa$performance, na.rm = TRUE) * ifelse(
-        !"performance" %in% metrics, 0, wt[which(metrics == "performance")]),
-      potential_improvement = normalize(dfa$potential_improvement) * ifelse(
-        !"potential_improvement" %in% metrics, 0, wt[which(metrics == "potential_improvement")]),
-      baseline_dist = normalize(dfa$baseline_dist) * ifelse(
-        !"baseline_dist" %in% metrics, 0, wt[which(metrics == "baseline_dist")]),
-      non_zeroes = normalize(dfa$non_zeroes) * ifelse(
-        !"non_zeroes" %in% metrics, 0, wt[which(metrics == "non_zeroes")]),
-      incluster_models = normalize(dfa$incluster_models) * ifelse(
-        !"incluster_models" %in% metrics, 0, wt[which(metrics == "incluster_models")]),
-      nrmse = normalize(-dfa$nrmse) * ifelse(
-        !"nrmse" %in% metrics, 0, wt[which(metrics == "nrmse")]),
-      decomp.rssd = normalize(-dfa$decomp.rssd) * ifelse(
-        !"decomp.rssd" %in% metrics, 0, wt[which(metrics == "decomp.rssd")]),
-      mape = normalize(-dfa$mape) * ifelse(
-        !"mape" %in% metrics, 0, wt[which(metrics == "mape")])
+      !"rsq_train" %in% metrics, 0, wt[which(metrics == "rsq_train")]
+    ),
+    performance = normalize(dfa$performance, na.rm = TRUE) * ifelse(
+      !"performance" %in% metrics, 0, wt[which(metrics == "performance")]
+    ),
+    potential_improvement = normalize(dfa$potential_improvement) * ifelse(
+      !"potential_improvement" %in% metrics, 0, wt[which(metrics == "potential_improvement")]
+    ),
+    baseline_dist = normalize(dfa$baseline_dist) * ifelse(
+      !"baseline_dist" %in% metrics, 0, wt[which(metrics == "baseline_dist")]
+    ),
+    non_zeroes = normalize(dfa$non_zeroes) * ifelse(
+      !"non_zeroes" %in% metrics, 0, wt[which(metrics == "non_zeroes")]
+    ),
+    incluster_models = normalize(dfa$incluster_models) * ifelse(
+      !"incluster_models" %in% metrics, 0, wt[which(metrics == "incluster_models")]
+    ),
+    nrmse = normalize(-dfa$nrmse) * ifelse(
+      !"nrmse" %in% metrics, 0, wt[which(metrics == "nrmse")]
+    ),
+    decomp.rssd = normalize(-dfa$decomp.rssd) * ifelse(
+      !"decomp.rssd" %in% metrics, 0, wt[which(metrics == "decomp.rssd")]
+    ),
+    mape = normalize(-dfa$mape) * ifelse(
+      !"mape" %in% metrics, 0, wt[which(metrics == "mape")]
+    )
   )
   dfa <- dfa %>%
-    mutate(score = normalize(rowSums(bind_cols(scores))),
-           aux = rank(-.data$score, ties.method = "first")) %>%
+    mutate(
+      score = normalize(rowSums(bind_cols(scores))),
+      aux = rank(-.data$score, ties.method = "first")
+    ) %>%
     rowwise() %>%
     mutate(note = ifelse(.data$aux %in% 1:top, paste(
-      rep("*", (top + 1) - .data$aux), collapse = ""), "")) %>%
+      rep("*", (top + 1) - .data$aux),
+      collapse = ""
+    ), "")) %>%
     select(-.data$top_sol, -.data$aux) %>%
     arrange(desc(.data$score), desc(3), desc(4))
   if (!quiet) message("Recommended considering these models first: ", v2t(head(dfa$solID, top)))
-  
+
   # Generate plot/dashboard
   caption <- metrics_used %>%
-    mutate(value = .data$wt/sum(.data$wt)) %>%
+    mutate(value = .data$wt / sum(.data$wt)) %>%
     arrange(desc(.data$value)) %>%
     mutate(lab = sprintf("%s%% %s", round(100 * .data$value), .data$metric_name)) %>%
     pull(.data$lab) %>%
     paste(., collapse = " | ")
   sorting <- dfa %>%
     mutate(cluster = sprintf("%s (%s)", .data$cluster, .data$incluster_models)) %>%
-    group_by(.data$cluster, .data$note) %>% tally() %>%
-    arrange(desc(.data$note)) %>% pull(.data$cluster) %>% unique()
+    group_by(.data$cluster, .data$note) %>%
+    tally() %>%
+    arrange(desc(.data$note)) %>%
+    pull(.data$cluster) %>%
+    unique()
   pdat <- dfa %>%
-    mutate(cluster = factor(sprintf("%s (%s)", .data$cluster, .data$incluster_models), levels = sorting),
-           incluster_models = .data$incluster_models / max(dfa$incluster_models, na.rm = TRUE)) %>%
+    mutate(
+      cluster = factor(sprintf("%s (%s)", .data$cluster, .data$incluster_models), levels = sorting),
+      incluster_models = .data$incluster_models / max(dfa$incluster_models, na.rm = TRUE)
+    ) %>%
     tidyr::pivot_longer(any_of(metrics_used$metric)) %>%
     filter(.data$name %in% metrics_used$metric) %>%
-    mutate(name_metrics = rep(metrics_used$metric_name, length.out = nrow(.)),
-           name = factor(.data$name, levels = metrics_used$metric),
-           name_metrics = factor(.data$name_metrics, levels = metrics_used$metric_name)) %>%
+    mutate(
+      name_metrics = rep(metrics_used$metric_name, length.out = nrow(.)),
+      name = factor(.data$name, levels = metrics_used$metric),
+      name_metrics = factor(.data$name_metrics, levels = metrics_used$metric_name)
+    ) %>%
     group_by(.data$name) %>%
     mutate(top = rank(-.data$value)) %>%
     left_join(select(dfa, .data$solID, .data$rsq_train), "solID") %>%
     group_by(.data$cluster) %>%
-    slice(1:((length(metrics_used$metric))* n_per_cluster)) %>%
+    slice(1:((length(metrics_used$metric)) * n_per_cluster)) %>%
     mutate(solID = paste(.data$note, .data$solID))
   p <- pdat %>%
     ggplot(aes(y = reorder(.data$solID, .data$score), x = .data$value)) +
     geom_col(aes(group = .data$name, fill = .data$top)) +
     # geom_vline(xintercept = 1, alpha = 0.5) +
     facet_grid(.data$cluster ~ .data$name_metrics, scales = "free") +
-    labs(y = NULL, x = "Criteria Scores (the highest the better)",
-         title = "Select a model based on these metrics and rankings",
-         subtitle = paste(
-           "Showing up to", n_per_cluster,
-           "models per cluster and ranked solutions marked with stars"),
-         caption = paste("Weights:", caption)) +
+    labs(
+      y = NULL, x = "Criteria Scores (the highest the better)",
+      title = "Select a model based on these metrics and rankings",
+      subtitle = paste(
+        "Showing up to", n_per_cluster,
+        "models per cluster and ranked solutions marked with stars"
+      ),
+      caption = paste("Weights:", caption)
+    ) +
     scale_x_percent(position = "top") +
     theme_lares(legend = FALSE)
-  
+
   # Create the exported object
   ret <- invisible(list(
     data = select(dfa, "solID", "score", all_of(metrics_used$metric), everything(), -.data$note),
     weights = wt, baseline_ref = baseline_ref,
     weighted_scores = tibble(solID = dfa$solID, score = dfa$score, bind_cols(scores)),
-    plot = p))
+    plot = p
+  ))
   class(ret) <- c("robyn_modelselector", class(ret))
   return(ret)
 }
