@@ -428,7 +428,8 @@ plot.robyn_modelselector <- function(x, ...) {
 #' only one available in OutputCollect, no need to define.
 #' @param totals Boolean. Add total rows. This includes summary rows
 #' (promotional which is paid and organic channels, baseline, grand total).
-#' @return data.frame with results
+#' @return data.frame with results on ROAS/CPA, spend, response, contribution
+#' per channel, with or without total rows.
 #' @export
 robyn_performance <- function(
     InputCollect, OutputCollect,

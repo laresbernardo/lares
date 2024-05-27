@@ -29,7 +29,8 @@ only one available in OutputCollect, no need to define.}
 \item{...}{Additional parameters.}
 }
 \value{
-data.frame with results
+data.frame with results on ROAS/CPA, spend, response, contribution
+per channel, with or without total rows.
 }
 \description{
 Given a date range, calculate specific and total performance and
