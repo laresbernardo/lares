@@ -2,7 +2,7 @@
 % Please edit documentation in R/robyn.R
 \name{robyn_performance}
 \alias{robyn_performance}
-\title{Robyn: Dynamic Performance Report}
+\title{Robyn: Dynamic Performance and Contribution Report}
 \usage{
 robyn_performance(
   InputCollect,
