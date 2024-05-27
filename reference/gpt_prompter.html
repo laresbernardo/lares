@@ -24,7 +24,7 @@ Remember to start simple and be very specific to get exactly what you need."><me
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.7.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.7.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -159,7 +159,8 @@ explicitly set column names.</p></dd>
 <span class="r-in"><span>  output <span class="op">=</span> <span class="st">"table"</span>,</span></span>
 <span class="r-in"><span>  <span class="co"># This cols parameter is auxiliary</span></span></span>
 <span class="r-in"><span>  cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Input"</span>, <span class="st">"Category"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Instruction = For each of the inputs, classify using only the options in context</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Input = Molecule; Elephant; Milky Way; Cat; Planet Earth</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Context = Big; Medium; Small</span>
@@ -167,12 +168,15 @@ explicitly set column names.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Tag all categories that apply</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">gpt_prompter</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  instruction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"For each of the inputs, provide which of the"</span>,</span></span>
-<span class="r-in"><span>                      <span class="st">"context values apply as correct tags using TRUE/FALSE"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  instruction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"For each of the inputs, provide which of the"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"context values apply as correct tags using TRUE/FALSE"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  input <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"I love chocolate"</span>, <span class="st">"I hate chocolate"</span>, <span class="st">"I like Coke"</span>, <span class="st">"Who am I?"</span>, <span class="st">"T-REX"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  context <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"food"</span>, <span class="st">"positive"</span>, <span class="st">"negative"</span>, <span class="st">"beverage"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  output <span class="op">=</span> <span class="st">"table"</span>,</span></span>
-<span class="r-in"><span>  quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Instruction = For each of the inputs, provide which of the context values apply as correct tags using TRUE/FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Input = I love chocolate; I hate chocolate; I like Coke; Who am I?; T-REX</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Context = food; positive; negative; beverage</span>
@@ -185,7 +189,8 @@ explicitly set column names.</p></dd>
 <span class="r-in"><span>  context <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"email"</span>, <span class="st">"full state name"</span>, <span class="st">"country of phone"</span>, <span class="st">"full non-abbreviated number"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  output <span class="op">=</span> <span class="st">"table"</span>,</span></span>
 <span class="r-in"><span>  cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Input"</span>, <span class="st">"Element_to_extract"</span>, <span class="st">"Value"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Instruction = For each of the inputs, extract each of the information asked in context</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Input = My mail is 123@test.com; 30 Main St, NY, USA; +82 2-312-3456; $1.5M</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Context = email; full state name; country of phone; full non-abbreviated number</span>
@@ -198,7 +203,8 @@ explicitly set column names.</p></dd>
 <span class="r-in"><span>  context <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"spanish"</span>, <span class="st">"chinese"</span>, <span class="st">"japanese"</span>, <span class="st">"russian"</span>, <span class="st">"german"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  output <span class="op">=</span> <span class="st">"table"</span>,</span></span>
 <span class="r-in"><span>  cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Input"</span>, <span class="st">"Language"</span>, <span class="st">"Translation"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Instruction = For each of the inputs, translate to the respective languages in context</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Input = I love you with all my heart; I love you with all my heart; I love you with all my heart; I love you with all my heart; I love you with all my heart</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Context = spanish; chinese; japanese; russian; german</span>
@@ -206,13 +212,16 @@ explicitly set column names.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Format date values</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">gpt_prompter</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  instruction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"For each of the inputs,"</span>,</span></span>
-<span class="r-in"><span>                      <span class="st">"standardize and format all values to the format in context"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  instruction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"For each of the inputs,"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"standardize and format all values to the format in context"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  input <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"March 27th, 2021"</span>, <span class="st">"12-25-2023 3:45PM"</span>, <span class="st">"01.01.2000"</span>, <span class="st">"29 Feb 92"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  context <span class="op">=</span> <span class="st">"ISO Date getting rid of time stamps"</span>,</span></span>
 <span class="r-in"><span>  output <span class="op">=</span> <span class="st">"table"</span>,</span></span>
 <span class="r-in"><span>  cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Input"</span>, <span class="st">"Formatted"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Instruction = For each of the inputs, standardize and format all values to the format in context</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Input = March 27th, 2021; 12-25-2023 3:45PM; 01.01.2000; 29 Feb 92</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Context = ISO Date getting rid of time stamps</span>
@@ -220,22 +229,27 @@ explicitly set column names.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Convert units</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">gpt_prompter</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  instruction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"For each of the inputs,"</span>,</span></span>
-<span class="r-in"><span>                      <span class="st">"provide new converted values using the units in context"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  instruction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"For each of the inputs,"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"provide new converted values using the units in context"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  input <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"50C"</span>, <span class="st">"300K"</span>, <span class="st">"100F"</span>, <span class="st">"0F"</span>, <span class="st">"32C"</span>, <span class="st">"0K"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  context <span class="op">=</span> <span class="st">"Fahrenheit"</span>,</span></span>
 <span class="r-in"><span>  output <span class="op">=</span> <span class="st">"table"</span>,</span></span>
 <span class="r-in"><span>  cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Input"</span>, <span class="st">"Original_Unit"</span>, <span class="st">"Total_Value"</span>, <span class="st">"Converted_Value"</span>, <span class="st">"New_Unit"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Instruction = For each of the inputs, provide new converted values using the units in context</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Input = 50C; 300K; 100F; 0F; 32C; 0K</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Context = Fahrenheit</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Output = Markdown format table. If missing elements, replace with NA. For numerical columns, only use a dot for decimals, no delimiters, no abbreviations; also, it must have 5 columns named exactly: Input, Original_Unit, Total_Value, Converted_Value, and New_Unit </span>
-<span class="r-in"><span>  </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Read a text and answer a question related to it</span></span></span>
-<span class="r-in"><span><span class="fu">gpt_prompter</span><span class="op">(</span>instruction <span class="op">=</span> <span class="st">"read"</span>,</span></span>
+<span class="r-in"><span><span class="fu">gpt_prompter</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  instruction <span class="op">=</span> <span class="st">"read"</span>,</span></span>
 <span class="r-in"><span>  context <span class="op">=</span> <span class="st">"Long text here"</span>,</span></span>
-<span class="r-in"><span>  input <span class="op">=</span> <span class="st">"Question here"</span><span class="op">)</span><span class="op">$</span><span class="va">prompt</span></span></span>
+<span class="r-in"><span>  input <span class="op">=</span> <span class="st">"Question here"</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">$</span><span class="va">prompt</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Instruction = You are a pro content editor who will read the context text and reply using a single concise response to the question asked in input. If the answer is not found in context, reply you cannot find the answer in the text ### Input = Question here ### Context = Long text here"</span>
 </code></pre></div>
     </div>

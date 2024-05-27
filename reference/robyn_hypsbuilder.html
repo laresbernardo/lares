@@ -18,7 +18,7 @@ passed to Robyn::robyn_inputs()."><meta property="og:image" content="https://lar
     
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.7.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.7.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,8 @@ if you wish to have a lagged effect. Only valid for Weibull adstock.</p></dd>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other Robyn: 
-<code><a href="robyn_modelselector.html">robyn_modelselector</a>()</code></p></div>
+<code><a href="robyn_modelselector.html">robyn_modelselector</a>()</code>,
+<code><a href="robyn_performance.html">robyn_performance</a>()</code></p></div>
     </div>
 
     <div class="section level2">
@@ -115,12 +116,15 @@ if you wish to have a lagged effect. Only valid for Weibull adstock.</p></dd>
 <span class="r-in"><span>    <span class="st">"print_spend"</span>,</span></span>
 <span class="r-in"><span>    <span class="st">"ooh_spend"</span>,</span></span>
 <span class="r-in"><span>    <span class="st">"tv_spend"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"radio_spend"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"radio_spend"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  media_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">"online"</span>, <span class="st">"online"</span>, <span class="st">"offline"</span>, </span></span>
-<span class="r-in"><span>    <span class="st">"offline"</span>, <span class="st">"offline"</span>, <span class="st">"offline"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"online"</span>, <span class="st">"online"</span>, <span class="st">"offline"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"offline"</span>, <span class="st">"offline"</span>, <span class="st">"offline"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  adstock <span class="op">=</span> <span class="st">"geometric"</span>,</span></span>
-<span class="r-in"><span>  date_type <span class="op">=</span> <span class="st">"weekly"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  date_type <span class="op">=</span> <span class="st">"weekly"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $branded_search_spend_alphas</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01 3.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
