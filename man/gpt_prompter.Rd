@@ -58,16 +58,20 @@ p <- gpt_prompter(
   output = "table",
   # This cols parameter is auxiliary
   cols = c("Input", "Category"),
-  quiet = FALSE)
+  quiet = FALSE
+)
 
 # Tag all categories that apply
 p <- gpt_prompter(
-  instruction = paste("For each of the inputs, provide which of the",
-                      "context values apply as correct tags using TRUE/FALSE"),
+  instruction = paste(
+    "For each of the inputs, provide which of the",
+    "context values apply as correct tags using TRUE/FALSE"
+  ),
   input = c("I love chocolate", "I hate chocolate", "I like Coke", "Who am I?", "T-REX"),
   context = c("food", "positive", "negative", "beverage"),
   output = "table",
-  quiet = FALSE)
+  quiet = FALSE
+)
 
 # Extract information from strings
 p <- gpt_prompter(
@@ -76,7 +80,8 @@ p <- gpt_prompter(
   context = c("email", "full state name", "country of phone", "full non-abbreviated number"),
   output = "table",
   cols = c("Input", "Element_to_extract", "Value"),
-  quiet = FALSE)
+  quiet = FALSE
+)
 
 # Translate to several languages
 p <- gpt_prompter(
@@ -85,32 +90,41 @@ p <- gpt_prompter(
   context = c("spanish", "chinese", "japanese", "russian", "german"),
   output = "table",
   cols = c("Input", "Language", "Translation"),
-  quiet = FALSE)
+  quiet = FALSE
+)
 
 # Format date values
 p <- gpt_prompter(
-  instruction = paste("For each of the inputs,",
-                      "standardize and format all values to the format in context"),
+  instruction = paste(
+    "For each of the inputs,",
+    "standardize and format all values to the format in context"
+  ),
   input = c("March 27th, 2021", "12-25-2023 3:45PM", "01.01.2000", "29 Feb 92"),
   context = "ISO Date getting rid of time stamps",
   output = "table",
   cols = c("Input", "Formatted"),
-  quiet = FALSE)
+  quiet = FALSE
+)
 
 # Convert units
 p <- gpt_prompter(
-  instruction = paste("For each of the inputs,",
-                      "provide new converted values using the units in context"),
+  instruction = paste(
+    "For each of the inputs,",
+    "provide new converted values using the units in context"
+  ),
   input = c("50C", "300K", "100F", "0F", "32C", "0K"),
   context = "Fahrenheit",
   output = "table",
   cols = c("Input", "Original_Unit", "Total_Value", "Converted_Value", "New_Unit"),
-  quiet = FALSE)
-  
+  quiet = FALSE
+)
+
 # Read a text and answer a question related to it
-gpt_prompter(instruction = "read",
+gpt_prompter(
+  instruction = "read",
   context = "Long text here",
-  input = "Question here")$prompt
+  input = "Question here"
+)$prompt
 }
 \seealso{
 Other ChatGPT: 

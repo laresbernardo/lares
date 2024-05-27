@@ -73,6 +73,7 @@ historical performance, baseline expectation, etc.
 }
 \seealso{
 Other Robyn: 
-\code{\link{robyn_hypsbuilder}()}
+\code{\link{robyn_hypsbuilder}()},
+\code{\link{robyn_performance}()}
 }
 \concept{Robyn}

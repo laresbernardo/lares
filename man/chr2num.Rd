@@ -22,7 +22,7 @@ case the user requires character numeric values to be kept as they are.
 }
 \examples{
 str(chr2num(c("1", "2", "3")))
-df <- data.frame(A = c("1", "3"), B = c("A", "B"), c = c(pi, pi*2))
+df <- data.frame(A = c("1", "3"), B = c("A", "B"), c = c(pi, pi * 2))
 str(chr2num(df))
 lst <- list(A = c("1", "2", "3"), B = c("A", "B", "3"), C = pi, D = 3L)
 str(chr2num(lst))

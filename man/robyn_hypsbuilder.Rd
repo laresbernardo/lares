@@ -44,15 +44,19 @@ robyn_hypsbuilder(
     "print_spend",
     "ooh_spend",
     "tv_spend",
-    "radio_spend"),
+    "radio_spend"
+  ),
   media_type = c(
-    "online", "online", "offline", 
-    "offline", "offline", "offline"),
+    "online", "online", "offline",
+    "offline", "offline", "offline"
+  ),
   adstock = "geometric",
-  date_type = "weekly")
+  date_type = "weekly"
+)
 }
 \seealso{
 Other Robyn: 
-\code{\link{robyn_modelselector}()}
+\code{\link{robyn_modelselector}()},
+\code{\link{robyn_performance}()}
 }
 \concept{Robyn}

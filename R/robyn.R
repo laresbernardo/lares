@@ -412,3 +412,122 @@ robyn_modelselector <- function(
 plot.robyn_modelselector <- function(x, ...) {
   return(x$plot)
 }
+
+####################################################################
+#' Robyn: Dynamic Performance and Contribution Report
+#'
+#' Given a date range, calculate specific and total performance and
+#' contribution for each of your marketing and non-marketing channels.
+#'
+#' @family Robyn
+#' @inheritParams cache_write
+#' @inheritParams robyn_modelselector
+#' @param start_date,end_date Date. Start and end date to filter
+#' the data to be reported.
+#' @param solID Character. Single ID of the model to report. If there's
+#' only one available in OutputCollect, no need to define.
+#' @param totals Boolean. Add total rows. This includes summary rows
+#' (promotional which is paid and organic channels, baseline, grand total).
+#' @return data.frame with results
+#' @export
+robyn_performance <- function(
+    InputCollect, OutputCollect,
+    start_date = NULL, end_date = NULL,
+    solID = NULL, totals = TRUE, ...) {
+  df <- OutputCollect$mediaVecCollect
+  if (!is.null(solID)) {
+    if (length(solID) > 1) {
+      stop("Select a single model using 'solID' parameter input")
+    }
+  } else {
+    if (length(unique(df$solID)) > 1) {
+      stop("Provide single model results or define 'solID' parameter input")
+    } else {
+      solID <- unique(df$solID)
+    }
+  }
+  if (is.null(start_date)) {
+    start_date <- as.Date(InputCollect$window_start)
+  }
+  if (is.null(end_date)) {
+    end_date <- as.Date(InputCollect$window_end)
+  }
+  df <- df %>%
+    filter(.data$ds >= InputCollect$window_start, .data$ds <= InputCollect$window_end) %>%
+    filter(.data$solID == solID, .data$ds >= start_date, .data$ds <= end_date) %>%
+    select(c("ds", "solID", "type", InputCollect$all_media))
+  spends <- df %>%
+    filter(.data$type == "rawSpend") %>%
+    summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE))
+  response <- df %>%
+    filter(.data$type == "decompMedia") %>%
+    summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE))
+  metric <- ifelse(InputCollect$dep_var_type == "revenue", "ROAS", "CPA")
+  if (metric == "ROAS") {
+    performance <- response / spends
+    total <- sum(response) / sum(spends)
+  } else {
+    performance <- spends / response
+    total <- sum(spends) / sum(response)
+  }
+  ret <- dplyr::tibble(
+    solID = solID,
+    start_date = min(df$ds, na.rm = TRUE),
+    end_date = max(df$ds, na.rm = TRUE),
+    channel = InputCollect$all_media,
+    metric = metric,
+    performance = unlist(performance),
+    spend = unlist(spends),
+    response = unlist(response)
+  ) %>%
+    arrange(desc(.data$spend))
+  # Create TOTAL row
+  totals <- ret[1, 1:3] %>%
+    mutate(
+      channel = "PROMOTIONAL TOTAL",
+      metric = metric,
+      performance = total,
+      spend = sum(spends),
+      response = sum(response)
+    )
+  # Add marketing contribution to sales/conversions (dynamic depending on date)
+  xDecompPerc <- OutputCollect$xDecompVecCollect %>%
+    filter(.data$ds >= start_date, .data$ds <= end_date, solID == solID) %>%
+    summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE)) %>%
+    # Divide by prediction, not real values
+    mutate_all(function(x) x / .$depVarHat) %>%
+    tidyr::gather(key = "channel", value = "contribution")
+  mktg_contr <- filter(xDecompPerc, .data$channel %in% InputCollect$all_media)
+  mksum <- sum(mktg_contr$contribution)
+  mktg_contr2 <- rbind(
+    data.frame(
+      channel = c("PROMOTIONAL TOTAL", "BASELINE", "GRAND TOTAL"),
+      contribution = c(mksum, 1 - mksum, 1)
+    ),
+    mktg_contr
+  )
+  # Create Baseline row
+  resp_baseline <- (1 - mksum) * sum(ret$response) / mksum
+  totals_base <- ret[1, 1:3] %>%
+    mutate(
+      channel = "BASELINE",
+      metric = "",
+      performance = NA,
+      spend = 0,
+      response = resp_baseline
+    )
+  # Create TOTAL row
+  grand_total <- ret[1, 1:3] %>%
+    mutate(
+      channel = "GRAND TOTAL",
+      metric = metric,
+      performance = (resp_baseline + sum(ret$response)) / sum(ret$spend),
+      spend = sum(ret$spend),
+      response = resp_baseline + sum(ret$response)
+    )
+  # Join everything together
+  ret <- rbind(totals, ret)
+  if (totals) ret <- rbind(ret, totals_base, grand_total)
+  ret <- left_join(ret, mktg_contr2, "channel")
+  return(ret)
+}

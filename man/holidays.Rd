@@ -20,8 +20,8 @@ holiday dates?}
 
 \item{quiet}{Boolean. Default FALSE which disables verbosity of the function.}
 
-\item{include_regions}{Boolean. Default FALSE. If TRUE, for countries with 
-internal subdivisions, it will provide details on which sub-state the found 
+\item{include_regions}{Boolean. Default FALSE. If TRUE, for countries with
+internal subdivisions, it will provide details on which sub-state the found
 holidays apply.}
 }
 \value{
