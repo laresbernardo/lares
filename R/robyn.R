@@ -527,8 +527,7 @@ robyn_performance <- function(
       response = resp_baseline + sum(ret$response)
     )
   # Join everything together
-  ret <- rbind(totals_df, ret)
-  if (totals) ret <- rbind(ret, totals_base, grand_total)
+  if (totals) ret <- rbind(ret, totals_df, totals_base, grand_total)
   ret <- left_join(ret, mktg_contr2, "channel")
   return(ret)
 }
