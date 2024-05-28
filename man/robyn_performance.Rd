@@ -11,6 +11,7 @@ robyn_performance(
   end_date = NULL,
   solID = NULL,
   totals = TRUE,
+  quiet = FALSE,
   ...
 )
 }
@@ -25,6 +26,8 @@ only one available in OutputCollect, no need to define.}
 
 \item{totals}{Boolean. Add total rows. This includes summary rows
 (promotional which is paid and organic channels, baseline, grand total).}
+
+\item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
 
 \item{...}{Additional parameters.}
 }
