@@ -438,7 +438,7 @@ plot.robyn_modelselector <- function(x, ...) {
 robyn_performance <- function(
     InputCollect, OutputCollect,
     start_date = NULL, end_date = NULL,
-    solID = NULL, totals = TRUE, ...) {
+    solID = NULL, totals = TRUE, quiet = FALSE, ...) {
   df <- OutputCollect$mediaVecCollect
   if (!is.null(solID)) {
     if (length(solID) > 1) {
@@ -461,6 +461,13 @@ robyn_performance <- function(
     filter(.data$ds >= InputCollect$window_start, .data$ds <= InputCollect$window_end) %>%
     filter(.data$solID == solID, .data$ds >= start_date, .data$ds <= end_date) %>%
     select(c("ds", "solID", "type", InputCollect$all_media))
+  if (nrow(df) == 0 && !quiet) {
+    warning(sprintf(
+      "No data for model %s within modeling window (%s:%s) and date range filtered (%s:%s)",
+      solID, InputCollect$window_start, InputCollect$window_end, 
+      start_date, end_date))
+    return(NULL)
+  }
   spends <- df %>%
     filter(.data$type == "rawSpend") %>%
     summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE))
@@ -487,7 +494,7 @@ robyn_performance <- function(
   ) %>%
     arrange(desc(.data$spend))
   # Create TOTAL row
-  totals <- ret[1, 1:3] %>%
+  totals_df <- ret[1, 1:3] %>%
     mutate(
       channel = "PROMOTIONAL TOTAL",
       metric = metric,
@@ -531,8 +538,7 @@ robyn_performance <- function(
       response = resp_baseline + sum(ret$response)
     )
   # Join everything together
-  ret <- rbind(totals, ret)
-  if (totals) ret <- rbind(ret, totals_base, grand_total)
+  if (totals) ret <- rbind(ret, totals_df, totals_base, grand_total)
   ret <- left_join(ret, mktg_contr2, "channel")
   return(ret)
 }
