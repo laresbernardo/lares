@@ -118,10 +118,14 @@ robyn_hypsbuilder <- function(
 ####################################################################
 #' Robyn: Model Selection by Weighted Criteria Scores
 #'
+#' @description
 #' Consider N best models to select the right ones to study using
 #' several criteria/metrics such as potential improvement on budget
 #' allocator, how many non-zero coefficients there are, R squared,
 #' historical performance, baseline expectation, etc.
+#' 
+#' Read more about this functionality in Medium post: 
+#' \href{https://bit.ly/mmm-candidates}{here}.
 #'
 #' @family Robyn
 #' @inheritParams cache_write
