@@ -33,7 +33,7 @@ default budget allocator improvement using \code{allocator_limits},
 amount of models per cluster, "baseline_dist" for the difference between
 the model's baseline and \code{baseline_ref} value. You can also use the
 standard MOO errors: "nrmse", "decomp.rssd", and "mape" (the lowest the
-error, the highest the score).}
+error, the highest the score; same for "baseline_dist").}
 
 \item{wt}{Vector. Weight for each of the normalized \code{metrics} selected,
 to calculate the score and rank models. Must have the same order and length
@@ -41,7 +41,7 @@ of \code{metrics} parameter input.}
 
 \item{baseline_ref}{Numeric value. Between 0 and 1. What is the baseline
 percentage you expect? Baseline in this case are all the sales or conversions
-from non-media channels (organic & paid). Used with "baseline_dist" metric.}
+from non-media channels (organic & paid). Use with "baseline_dist" metric.}
 
 \item{top}{Integer. How many ranked models to star? The better the model
 is, the more stars it will have marked.}
