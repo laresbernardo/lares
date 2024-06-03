@@ -458,7 +458,7 @@ robyn_performance <- function(
   if (is.null(end_date)) {
     end_date <- as.Date(InputCollect$window_end)
   }
-  df <- df[df$solID == solID, ] %>%
+  df <- df[df$solID %in% solID, ] %>%
     filter(.data$ds >= InputCollect$window_start,
            .data$ds <= InputCollect$window_end,
            .data$ds >= start_date, .data$ds <= end_date) %>%
@@ -505,8 +505,9 @@ robyn_performance <- function(
       response = sum(response)
     )
   # Add marketing contribution to sales/conversions (dynamic depending on date)
-  xDecompPerc <- OutputCollect$xDecompVecCollect %>%
-    filter(.data$ds >= start_date, .data$ds <= end_date, solID == solID) %>%
+  xdvc <- OutputCollect$xDecompVecCollect
+  xDecompPerc <- xdvc[xdvc$solID %in% solID, ] %>%
+    filter(.data$ds >= start_date, .data$ds <= end_date) %>%
     summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE)) %>%
     # Divide by prediction, not real values
     mutate_all(function(x) x / .$depVarHat) %>%
