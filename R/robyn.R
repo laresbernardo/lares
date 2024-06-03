@@ -402,7 +402,7 @@ robyn_modelselector <- function(
   # Create the exported object
   ret <- invisible(list(
     data = select(dfa, "solID", "score", all_of(metrics_used$metric), everything(), -.data$note),
-    weights = wt, baseline_ref = baseline_ref,
+    metrics = metrics, weights = wt, baseline_ref = baseline_ref,
     weighted_scores = tibble(solID = dfa$solID, score = dfa$score, bind_cols(scores)),
     plot = p
   ))
