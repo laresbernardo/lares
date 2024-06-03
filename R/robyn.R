@@ -458,9 +458,10 @@ robyn_performance <- function(
   if (is.null(end_date)) {
     end_date <- as.Date(InputCollect$window_end)
   }
-  df <- df %>%
-    filter(.data$ds >= InputCollect$window_start, .data$ds <= InputCollect$window_end) %>%
-    filter(.data$solID == solID, .data$ds >= start_date, .data$ds <= end_date) %>%
+  df <- df[df$solID == solID, ] %>%
+    filter(.data$ds >= InputCollect$window_start,
+           .data$ds <= InputCollect$window_end,
+           .data$ds >= start_date, .data$ds <= end_date) %>%
     select(c("ds", "solID", "type", InputCollect$all_media))
   if (nrow(df) == 0 && !quiet) {
     warning(sprintf(
