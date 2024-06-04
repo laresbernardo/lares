@@ -34,6 +34,11 @@ only one available in OutputCollect, no need to define.}
 \value{
 data.frame with results on ROAS/CPA, spend, response, contribution
 per channel, with or without total rows.
+\dontrun{
+# You may load an exported model to recreate Robyn objects
+mod <- Robyn::robyn_recreate(json_file = "your_model.json")
+robyn_performance(mod$InputCollect, mod$OutputCollect)
+}
 }
 \description{
 Given a date range, calculate specific and total performance and
