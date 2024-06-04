@@ -118,10 +118,14 @@ robyn_hypsbuilder <- function(
 ####################################################################
 #' Robyn: Model Selection by Weighted Criteria Scores
 #'
+#' @description
 #' Consider N best models to select the right ones to study using
 #' several criteria/metrics such as potential improvement on budget
 #' allocator, how many non-zero coefficients there are, R squared,
 #' historical performance, baseline expectation, etc.
+#' 
+#' Read more about this functionality in Medium post: 
+#' \href{https://bit.ly/mmm-candidates}{here}.
 #'
 #' @family Robyn
 #' @inheritParams cache_write
@@ -134,13 +138,13 @@ robyn_hypsbuilder <- function(
 #' amount of models per cluster, "baseline_dist" for the difference between
 #' the model's baseline and \code{baseline_ref} value. You can also use the
 #' standard MOO errors: "nrmse", "decomp.rssd", and "mape" (the lowest the
-#' error, the highest the score).
+#' error, the highest the score; same for "baseline_dist").
 #' @param wt Vector. Weight for each of the normalized \code{metrics} selected,
 #' to calculate the score and rank models. Must have the same order and length
 #' of \code{metrics} parameter input.
 #' @param baseline_ref Numeric value. Between 0 and 1. What is the baseline
 #' percentage you expect? Baseline in this case are all the sales or conversions
-#' from non-media channels (organic & paid). Used with "baseline_dist" metric.
+#' from non-media channels (organic & paid). Use with "baseline_dist" metric.
 #' @param top Integer. How many ranked models to star? The better the model
 #' is, the more stars it will have marked.
 #' @param allocator_limits Numeric vector, length 2. How flexible do you
@@ -287,7 +291,7 @@ robyn_modelselector <- function(
     ungroup() %>%
     filter(.data$rn == "baseline") %>%
     arrange(abs(.data$baseline)) %>%
-    mutate(baseline_dist = 1 - normalize(abs(baseline_ref - .data$baseline))) %>%
+    mutate(baseline_dist = abs(baseline_ref - .data$baseline)) %>%
     select(c("solID", "baseline", "baseline_dist")) %>%
     arrange(desc(.data$baseline_dist))
 
@@ -313,14 +317,15 @@ robyn_modelselector <- function(
     potential_improvement = normalize(dfa$potential_improvement) * ifelse(
       !"potential_improvement" %in% metrics, 0, wt[which(metrics == "potential_improvement")]
     ),
-    baseline_dist = normalize(dfa$baseline_dist) * ifelse(
-      !"baseline_dist" %in% metrics, 0, wt[which(metrics == "baseline_dist")]
-    ),
     non_zeroes = normalize(dfa$non_zeroes) * ifelse(
       !"non_zeroes" %in% metrics, 0, wt[which(metrics == "non_zeroes")]
     ),
     incluster_models = normalize(dfa$incluster_models) * ifelse(
       !"incluster_models" %in% metrics, 0, wt[which(metrics == "incluster_models")]
+    ),
+    # The following are negative because the smaller, the better
+    baseline_dist = normalize(-dfa$baseline_dist) * ifelse(
+      !"baseline_dist" %in% metrics, 0, wt[which(metrics == "baseline_dist")]
     ),
     nrmse = normalize(-dfa$nrmse) * ifelse(
       !"nrmse" %in% metrics, 0, wt[which(metrics == "nrmse")]
@@ -398,7 +403,7 @@ robyn_modelselector <- function(
   # Create the exported object
   ret <- invisible(list(
     data = select(dfa, "solID", "score", all_of(metrics_used$metric), everything(), -.data$note),
-    weights = wt, baseline_ref = baseline_ref,
+    metrics = metrics, weights = wt, baseline_ref = baseline_ref,
     weighted_scores = tibble(solID = dfa$solID, score = dfa$score, bind_cols(scores)),
     plot = p
   ))
@@ -458,9 +463,10 @@ robyn_performance <- function(
   if (is.null(end_date)) {
     end_date <- as.Date(InputCollect$window_end)
   }
-  df <- df %>%
-    filter(.data$ds >= InputCollect$window_start, .data$ds <= InputCollect$window_end) %>%
-    filter(.data$solID == solID, .data$ds >= start_date, .data$ds <= end_date) %>%
+  df <- df[df$solID %in% solID, ] %>%
+    filter(.data$ds >= InputCollect$window_start,
+           .data$ds <= InputCollect$window_end,
+           .data$ds >= start_date, .data$ds <= end_date) %>%
     select(c("ds", "solID", "type", InputCollect$all_media))
   if (nrow(df) == 0 && !quiet) {
     warning(sprintf(
@@ -504,8 +510,9 @@ robyn_performance <- function(
       response = sum(response)
     )
   # Add marketing contribution to sales/conversions (dynamic depending on date)
-  xDecompPerc <- OutputCollect$xDecompVecCollect %>%
-    filter(.data$ds >= start_date, .data$ds <= end_date, solID == solID) %>%
+  xdvc <- OutputCollect$xDecompVecCollect
+  xDecompPerc <- xdvc[xdvc$solID %in% solID, ] %>%
+    filter(.data$ds >= start_date, .data$ds <= end_date) %>%
     summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE)) %>%
     # Divide by prediction, not real values
     mutate_all(function(x) x / .$depVarHat) %>%
