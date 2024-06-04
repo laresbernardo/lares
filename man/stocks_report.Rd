@@ -6,7 +6,7 @@
 \alias{daily_portfolio}
 \alias{stocks_obj}
 \alias{stocks_report}
-\title{Create a Personal Investing Portfolio Report}
+\title{Build a Personal Investing Portfolio Report}
 \usage{
 stocks_file(
   file = NA,

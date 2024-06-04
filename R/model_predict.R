@@ -1,7 +1,7 @@
 ####################################################################
-#' H2O Predict using MOJO file
+#' Calculate predictions of h2o Models
 #'
-#' This function lets the user predict using the h2o .zip file
+#' \code{h2o_predict_MOJO} lets the user predict using the h2o .zip file
 #' containing the MOJO files. Note that it works with the files
 #' generated when using the function export_results()
 #'
@@ -15,6 +15,7 @@
 #' @param batch Integer. Run n batches at a time for "json" method.
 #' @return data.frame with predicted results.
 #' @export
+#' @rdname h2o_predict
 h2o_predict_MOJO <- function(df, model_path, method = "mojo", batch = 300) {
   quiet(h2o.init(nthreads = -1, port = 54321))
 
@@ -67,19 +68,18 @@ h2o_predict_MOJO <- function(df, model_path, method = "mojo", batch = 300) {
 ####################################################################
 #' H2O Predict using Binary file
 #'
-#' This function lets the user predict using the h2o binary file.
+#' \code{h2o_predict_binary} lets the user predict using the h2o binary file.
 #' Note that it works with the files generated when using the
 #' function export_results(). Recommendation: use the
 #' h2o_predict_MOJO() function when possible - it let's you change
 #' h2o's version without problem.
 #'
-#' @family Machine Learning
-#' @family H2O
 #' @param df Dataframe. Data to insert into the model.
 #' @param model_path Character. Relative model path directory or zip file.
 #' @param sample Integer. How many rows should the function predict?
 #' @return vector with predicted results.
 #' @export
+#' @rdname h2o_predict
 h2o_predict_binary <- function(df, model_path, sample = NA) {
   message("Use of h2o_predict_MOJO instead highly recommended!")
   quiet(h2o.init(nthreads = -1, port = 54321))
@@ -102,14 +102,13 @@ h2o_predict_binary <- function(df, model_path, sample = NA) {
 ####################################################################
 #' H2O Predict using H2O Model Object
 #'
-#' This function lets the user get scores from a H2O Model Object.
+#' \code{h2o_predict_model} lets the user get scores from a H2O Model Object.
 #'
-#' @family Machine Learning
-#' @family H2O
 #' @param df Dataframe/Vector. Data to insert into the model.
 #' @param model h2o model Object
 #' @return data.frame with predicted results.
 #' @export
+#' @rdname h2o_predict
 h2o_predict_model <- function(df, model) {
   as.data.frame(predict(model, as.h2o(df)))
 }
@@ -118,15 +117,14 @@ h2o_predict_model <- function(df, model) {
 ####################################################################
 #' H2O Predict using API Service
 #'
-#' This function lets the user get the score from an API service
+#' \code{h2o_predict_API} lets the user get the score from an API service
 #'
-#' @family Machine Learning
-#' @family H2O
 #' @param df Dataframe/Vector. Data to insert into the model.
 #' @param api Character. API URL.
 #' @param exclude Character. Name of the variables to exclude.
 #' @return vector with predicted results.
 #' @export
+#' @rdname h2o_predict
 h2o_predict_API <- function(df, api, exclude = "tag") {
   post <- function(df, api) {
     df <- df %>%
