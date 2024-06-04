@@ -52,8 +52,7 @@ Other Credentials:
 \code{\link{mail_send}()},
 \code{\link{queryDB}()},
 \code{\link{slackSend}()},
-\code{\link{stocks_file}()},
-\code{\link{stocks_report}()}
+\code{\link{stocks_file}()}
 
 Other Google: 
 \code{\link{filesGD}()},

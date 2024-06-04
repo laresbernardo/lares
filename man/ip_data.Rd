@@ -71,7 +71,7 @@ Other Scrapper:
 \code{\link{gtrends_related}()},
 \code{\link{holidays}()},
 \code{\link{readGS}()},
-\code{\link{splot_etf}()},
+\code{\link{splot_summary}()},
 \code{\link{stocks_quote}()}
 }
 \concept{Scrapper}

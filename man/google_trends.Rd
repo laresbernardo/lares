@@ -41,7 +41,7 @@ Other Scrapper:
 \code{\link{holidays}()},
 \code{\link{ip_data}()},
 \code{\link{readGS}()},
-\code{\link{splot_etf}()},
+\code{\link{splot_summary}()},
 \code{\link{stocks_quote}()}
 
 Other Google: 

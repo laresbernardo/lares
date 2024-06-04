@@ -30,8 +30,7 @@ Other Credentials:
 \code{\link{mail_send}()},
 \code{\link{queryGA}()},
 \code{\link{slackSend}()},
-\code{\link{stocks_file}()},
-\code{\link{stocks_report}()}
+\code{\link{stocks_file}()}
 }
 \concept{Credentials}
 \concept{Database}

@@ -77,8 +77,7 @@ Other Credentials:
 \code{\link{queryDB}()},
 \code{\link{queryGA}()},
 \code{\link{slackSend}()},
-\code{\link{stocks_file}()},
-\code{\link{stocks_report}()}
+\code{\link{stocks_file}()}
 
 Other Dropbox: 
 \code{\link{db_download}()}

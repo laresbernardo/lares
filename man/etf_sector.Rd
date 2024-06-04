@@ -17,7 +17,7 @@ etf_sector(etf = "VTI", quiet = FALSE, cache = TRUE)
 data.frame with ETF break.down data by sector
 }
 \description{
-This function scraps etf.com data for sector breakdown on ETFs.
+\code{etf_sector()} scraps etf.com data for sector breakdown on ETFs.
 Use \code{splot_etf()} for visualization.
 }
 \examples{
@@ -27,18 +27,8 @@ etf_sector(etf = "VTI")
 }
 \seealso{
 Other Investment: 
-\code{\link{daily_portfolio}()},
-\code{\link{daily_stocks}()},
-\code{\link{splot_change}()},
-\code{\link{splot_divs}()},
-\code{\link{splot_etf}()},
-\code{\link{splot_growth}()},
-\code{\link{splot_roi}()},
 \code{\link{splot_summary}()},
-\code{\link{splot_types}()},
 \code{\link{stocks_file}()},
-\code{\link{stocks_obj}()},
-\code{\link{stocks_quote}()},
-\code{\link{stocks_report}()}
+\code{\link{stocks_quote}()}
 }
 \concept{Investment}

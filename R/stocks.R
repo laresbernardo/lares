@@ -1,7 +1,7 @@
 ####################################################################
-#' Get Personal Portfolio's Data
+#' Build a Personal Investing Portfolio Report
 #'
-#' This function lets the user download his personal Excel with his
+#' \code{stocks_file()} lets the user download his personal Excel with his
 #' Portfolio's data, locally or from Dropbox.
 #'
 #' @family Investment
@@ -28,6 +28,7 @@
 #' )
 #' }
 #' @export
+#' @rdname stocks_report
 stocks_file <- function(file = NA,
                         creds = NA,
                         auto = TRUE,
@@ -102,7 +103,7 @@ stocks_file <- function(file = NA,
 ####################################################################
 #' Download Stocks Historical and Current Values
 #'
-#' This function lets the user download stocks live data.
+#' \code{stocks_quote()} lets the user download stocks live data.
 #'
 #' @family Investment
 #' @family Scrapper
@@ -153,7 +154,7 @@ stocks_quote <- function(symbols, ...) {
 ####################################################################
 #' Download Stocks Historical Data
 #'
-#' This function lets the user download stocks historical data.
+#' \code{stocks_hist()} lets the user download stocks historical data.
 #'
 #' @inheritParams stocks_file
 #' @inheritParams cache_write
@@ -326,10 +327,9 @@ plot.stocks_hist <- function(x, type = 1, ...) {
 ####################################################################
 #' Daily Stocks Dataframe
 #'
-#' This function creates a dataframe with all relevant metrics and values,
+#' \code{daily_stocks()} creates a dataframe with all relevant metrics and values,
 #' for each ticker or symbol, for every day since inception.
 #'
-#' @family Investment
 #' @inheritParams cache_write
 #' @param hist Dataframe. Result from \code{stocks_hist()}
 #' @param trans Dataframe. Result from \code{stocks_file()$transactions}
@@ -337,6 +337,7 @@ plot.stocks_hist <- function(x, type = 1, ...) {
 #' @param window Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"
 #' @return data.frame. Processed at date and symbol level.
 #' @export
+#' @rdname stocks_report
 daily_stocks <- function(hist, trans, tickers = NA, window = "MAX", ...) {
   check_attr(hist, check = "stocks_hist")
   check_attr(trans, check = "stocks_file_transactions")
@@ -416,16 +417,17 @@ daily_stocks <- function(hist, trans, tickers = NA, window = "MAX", ...) {
 ####################################################################
 #' Daily Portfolio Dataframe
 #'
-#' This function creates a dataframe with all relevant metrics and values,
-#' for the overall portfolio, for every day since inception.
+#' \code{daily_portfolio()} creates a data.frame with all relevant
+#' metrics and values, for the overall portfolio, for every day
+#' since inception.
 #'
-#' @family Investment
 #' @inheritParams daily_stocks
 #' @param cash Dataframe. Result from \code{stocks_file()$cash}
 #' @param cash_fix Numeric. If, for some reason, you need to fix your
 #' cash amount for all reports, set the amount here
 #' @return data.frame. Processed at date and portfolio level.
 #' @export
+#' @rdname stocks_report
 daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
   check_attr(hist, check = "stocks_hist")
   check_attr(trans, check = "stocks_file_transactions")
@@ -571,18 +573,18 @@ weighted_value <- function(value,
 ################# PLOTTING FUNCTIONS #################
 
 ####################################################################
-#' Portfolio Plots: Total Summary
+#' Investing Portfolio Reporting Plots
 #'
-#' This function plots a summary for the whole portfolio, showing
+#' \code{splot_summary()} plots a summary for the whole portfolio, showing
 #' how much have you invested, how much has each ticker changed, etc.
 #'
 #' @family Investment
-#' @family Investment Plots
 #' @param p Dataframe. Result from \code{daily_portfolio()}
 #' @param s Dataframe. Result from \code{daily_stocks()}
 #' @param save Boolean. Save plot into a local file?
 #' @return ggplot object
 #' @export
+#' @rdname stocks_plots
 splot_summary <- function(p, s, save = FALSE) {
   check_attr(p, check = "daily_portfolio")
   check_attr(s, check = "daily_stocks")
@@ -685,11 +687,9 @@ splot_summary <- function(p, s, save = FALSE) {
 ####################################################################
 #' Portfolio Plots: Daily Change
 #'
-#' This function plots each stock's change through history, since
+#' \code{splot_change()} plots each stock's change through history, since
 #' inception, with weighted attributions or absolute values.
 #'
-#' @family Investment
-#' @family Investment Plots
 #' @inheritParams splot_summary
 #' @inheritParams stocks_file
 #' @param rel Boolean. Relative delta values (weighted with portfolio)?
@@ -697,8 +697,8 @@ splot_summary <- function(p, s, save = FALSE) {
 #' @param group Boolean. Group stocks by stocks type?
 #' @param n_days Integer. How many days back you want to see?
 #' sold entirely?
-#' @return ggplot object
 #' @export
+#' @rdname stocks_plots
 splot_change <- function(p, s,
                          rel = TRUE,
                          group = FALSE,
@@ -801,14 +801,12 @@ splot_change <- function(p, s,
 ####################################################################
 #' Portfolio Plots: Growth (Cash + Invested)
 #'
-#' This function plots your portfolio's growth, in cash and investment,
+#' \code{splot_growth()} plots your portfolio's growth, in cash and investment,
 #' since inception.
 #'
-#' @family Investment
-#' @family Investment Plots
 #' @inheritParams splot_summary
-#' @return ggplot object
 #' @export
+#' @rdname stocks_plots
 splot_growth <- function(p, save = FALSE) {
   check_attr(p, check = "daily_portfolio")
   newp <- p %>%
@@ -888,15 +886,13 @@ splot_growth <- function(p, save = FALSE) {
 ####################################################################
 #' Portfolio Plots: Dividends per Year and Quarter
 #'
-#' This function plots a portfolio's historical dividends incomes
+#' \code{stocks_plots()} plots a portfolio's historical dividends incomes
 #' grouped by quarter an year.
 #'
-#' @family Investment
-#' @family Investment Plots
 #' @inheritParams splot_summary
 #' @param type Integer. Typo of plot. 1 for incomes.
-#' @return ggplot object
 #' @export
+#' @rdname stocks_plots
 splot_divs <- function(p, type = 1) {
   if (type == 1) {
     p %>%
@@ -929,19 +925,17 @@ splot_divs <- function(p, type = 1) {
 ####################################################################
 #' Portfolio Plots: Daily ROI
 #'
-#' This function plots a portfolio's historical ROI since inception
+#' \code{splot_roi()} plots a portfolio's historical ROI since inception
 #' or since last n days, with 2 moving average lines.
 #'
-#' @family Investment
-#' @family Investment Plots
 #' @inheritParams splot_summary
 #' @param n_days Integer. How many days back you want to see?
 #' @param historical Boolean. Historical ROI metric? If not, ROI
 #' will be calculated locally for n_days parameter
 #' @param ma Numeric Vector. Select 2 values for moving averages.
 #' Set to NA to turn this metric off
-#' @return ggplot object
 #' @export
+#' @rdname stocks_plots
 splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save = FALSE) {
   check_attr(p, check = "daily_portfolio")
 
@@ -1044,13 +1038,11 @@ splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save =
 ####################################################################
 #' Portfolio Plots: Types of Stocks
 #'
-#' This function lets the user plot types or categories of tickers.
+#' \code{splot_types()} lets the user plot types or categories of tickers.
 #'
-#' @family Investment
-#' @family Investment Plots
 #' @inheritParams splot_summary
-#' @return ggplot object
 #' @export
+#' @rdname stocks_plots
 splot_types <- function(s, save = FALSE) {
   check_attr(s, check = "daily_stocks")
 
@@ -1079,7 +1071,7 @@ splot_types <- function(s, save = FALSE) {
 ####################################################################
 #' ETF's Sectors Breakdown
 #'
-#' This function scraps etf.com data for sector breakdown on ETFs.
+#' \code{etf_sector()} scraps etf.com data for sector breakdown on ETFs.
 #' Use \code{splot_etf()} for visualization.
 #'
 #' @family Investment
@@ -1153,17 +1145,15 @@ etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
 ####################################################################
 #' Portfolio's Sector Distribution (ETFs)
 #'
-#' This function lets the user plot his portfolio's distribution,
-#' specifically ETF's sectors
+#' \code{splot_etf()} lets the user plot his portfolio's distribution,
+#' specifically ETF's sectors.
 #'
-#' @family Investment
-#' @family Investment Plots
 #' @family Scrapper
 #' @inheritParams splot_summary
 #' @inheritParams stocks_file
 #' @param keep_all Boolean. Keep "Not Known / Not ETF"?
-#' @return ggplot2 object
 #' @export
+#' @rdname stocks_plots
 splot_etf <- function(s, keep_all = FALSE, cache = TRUE, save = FALSE) {
   check_attr(s, check = "daily_stocks")
 
@@ -1232,10 +1222,9 @@ splot_etf <- function(s, keep_all = FALSE, cache = TRUE, save = FALSE) {
 ####################################################################
 #' Portfolio's Calculations and Plots
 #'
-#' This function lets the user create his portfolio's calculations and
+#' \code{stocks_obj()} lets the user create his portfolio's calculations and
 #' plots for further study.
 #'
-#' @family Investment
 #' @inheritParams stocks_file
 #' @inheritParams daily_portfolio
 #' @inheritParams stocks_hist
@@ -1247,6 +1236,7 @@ splot_etf <- function(s, keep_all = FALSE, cache = TRUE, save = FALSE) {
 #' case, taxes changed from A to B in given date (hard-coded)
 #' @return List. Aggregated results and plots.
 #' @export
+#' @rdname stocks_report
 stocks_obj <- function(data = stocks_file(),
                        cash_fix = 0,
                        tax = 30,
@@ -1311,11 +1301,9 @@ stocks_obj <- function(data = stocks_file(),
 ####################################################################
 #' Portfolio's Full Report and Email
 #'
-#' This function lets the user create his portfolio's full report with
+#' \code{stocks_report()} lets the user create his portfolio's full report with
 #' plots and send it to an email with the HTML report attached
 #'
-#' @family Investment
-#' @family Credentials
 #' @inheritParams stocks_file
 #' @param data Character. \code{stocks_obj()} output. If NA, automatic
 #' parameters and \code{stocks_file()} defaults will be used.
@@ -1338,6 +1326,7 @@ stocks_obj <- function(data = stocks_file(),
 #' stocks_report(list, dir = "~/Desktop")
 #' }
 #' @export
+#' @rdname stocks_report
 stocks_report <- function(data = NA,
                           keep_old = TRUE,
                           dir = NA,

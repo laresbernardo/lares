@@ -51,9 +51,9 @@ data.frame with Symbol, Type of stock, Quote time, current value,
 Daily Change, Market, and Symbol Name.
 }
 \description{
-This function lets the user download stocks live data.
+\code{stocks_quote()} lets the user download stocks live data.
 
-This function lets the user download stocks historical data.
+\code{stocks_hist()} lets the user download stocks historical data.
 }
 \examples{
 \donttest{
@@ -68,19 +68,9 @@ plot(df)
 }
 \seealso{
 Other Investment: 
-\code{\link{daily_portfolio}()},
-\code{\link{daily_stocks}()},
 \code{\link{etf_sector}()},
-\code{\link{splot_change}()},
-\code{\link{splot_divs}()},
-\code{\link{splot_etf}()},
-\code{\link{splot_growth}()},
-\code{\link{splot_roi}()},
 \code{\link{splot_summary}()},
-\code{\link{splot_types}()},
-\code{\link{stocks_file}()},
-\code{\link{stocks_obj}()},
-\code{\link{stocks_report}()}
+\code{\link{stocks_file}()}
 
 Other Scrapper: 
 \code{\link{filesGD}()},
@@ -89,7 +79,7 @@ Other Scrapper:
 \code{\link{holidays}()},
 \code{\link{ip_data}()},
 \code{\link{readGS}()},
-\code{\link{splot_etf}()}
+\code{\link{splot_summary}()}
 }
 \concept{Investment}
 \concept{Scrapper}

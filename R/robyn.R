@@ -123,8 +123,8 @@ robyn_hypsbuilder <- function(
 #' several criteria/metrics such as potential improvement on budget
 #' allocator, how many non-zero coefficients there are, R squared,
 #' historical performance, baseline expectation, etc.
-#' 
-#' Read more about this functionality in Medium post: 
+#'
+#' Read more about this functionality in Medium post:
 #' \href{https://bit.ly/mmm-candidates}{here}.
 #'
 #' @family Robyn
@@ -465,15 +465,18 @@ robyn_performance <- function(
     end_date <- as.Date(InputCollect$window_end)
   }
   df <- df[df$solID %in% solID, ] %>%
-    filter(.data$ds >= InputCollect$window_start,
-           .data$ds <= InputCollect$window_end,
-           .data$ds >= start_date, .data$ds <= end_date) %>%
+    filter(
+      .data$ds >= InputCollect$window_start,
+      .data$ds <= InputCollect$window_end,
+      .data$ds >= start_date, .data$ds <= end_date
+    ) %>%
     select(c("ds", "solID", "type", InputCollect$all_media))
   if (nrow(df) == 0 && !quiet) {
     warning(sprintf(
       "No data for model %s within modeling window (%s:%s) and date range filtered (%s:%s)",
-      solID, InputCollect$window_start, InputCollect$window_end, 
-      start_date, end_date))
+      solID, InputCollect$window_start, InputCollect$window_end,
+      start_date, end_date
+    ))
     return(NULL)
   }
   spends <- df %>%
