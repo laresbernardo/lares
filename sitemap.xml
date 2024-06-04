@@ -232,16 +232,7 @@
     <loc>https://laresbernardo.github.io/lares/reference/h2o_explainer.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/h2o_predict_API.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/h2o_predict_MOJO.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/h2o_predict_binary.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/h2o_predict_model.html</loc>
+    <loc>https://laresbernardo.github.io/lares/reference/h2o_predict.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/h2o_results.html</loc>
