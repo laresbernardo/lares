@@ -76,12 +76,6 @@
     <loc>https://laresbernardo.github.io/lares/reference/crosstab.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/daily_portfolio.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/daily_stocks.html</loc>
-  </url>
-  <url>
     <loc>https://laresbernardo.github.io/lares/reference/dalex_local.html</loc>
   </url>
   <url>
@@ -499,40 +493,16 @@
     <loc>https://laresbernardo.github.io/lares/reference/slackSend.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/splot_change.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/splot_divs.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/splot_etf.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/splot_growth.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/splot_roi.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/splot_summary.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/splot_types.html</loc>
-  </url>
-  <url>
     <loc>https://laresbernardo.github.io/lares/reference/spread_list.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/statusbar.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/stocks_file.html</loc>
-  </url>
-  <url>
     <loc>https://laresbernardo.github.io/lares/reference/stocks_hist.html</loc>
   </url>
   <url>
-    <loc>https://laresbernardo.github.io/lares/reference/stocks_obj.html</loc>
+    <loc>https://laresbernardo.github.io/lares/reference/stocks_plots.html</loc>
   </url>
   <url>
     <loc>https://laresbernardo.github.io/lares/reference/stocks_report.html</loc>
