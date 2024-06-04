@@ -305,37 +305,40 @@ robyn_modelselector <- function(
     left_join(temp, "solID") %>%
     ungroup() %>%
     left_join(baselines, "solID")
+  
+  # The following criteria are inverted because the smaller, the better
+  inv <- c("baseline_dist", "nrmse", "decomp.rssd", "mape")
 
   # Calculate normalized and weighted scores
   scores <- list(
     rsq_train = normalize(dfa$rsq_train) * ifelse(
       !"rsq_train" %in% metrics, 0, wt[which(metrics == "rsq_train")]
-    ),
+    ) * ifelse("rsq_train" %in% inv, -1, 1),
     performance = normalize(dfa$performance, na.rm = TRUE) * ifelse(
       !"performance" %in% metrics, 0, wt[which(metrics == "performance")]
-    ),
+    ) * ifelse("performance" %in% inv, -1, 1),
     potential_improvement = normalize(dfa$potential_improvement) * ifelse(
       !"potential_improvement" %in% metrics, 0, wt[which(metrics == "potential_improvement")]
-    ),
+    ) * ifelse("potential_improvement" %in% inv, -1, 1),
     non_zeroes = normalize(dfa$non_zeroes) * ifelse(
       !"non_zeroes" %in% metrics, 0, wt[which(metrics == "non_zeroes")]
-    ),
+    ) * ifelse("non_zeroes" %in% inv, -1, 1),
     incluster_models = normalize(dfa$incluster_models) * ifelse(
       !"incluster_models" %in% metrics, 0, wt[which(metrics == "incluster_models")]
-    ),
-    # The following are negative because the smaller, the better
-    baseline_dist = normalize(-dfa$baseline_dist) * ifelse(
+    ) * ifelse("incluster_models" %in% inv, -1, 1),
+    # The following are negative/inverted criteria when scoring
+    baseline_dist = normalize(dfa$baseline_dist) * ifelse(
       !"baseline_dist" %in% metrics, 0, wt[which(metrics == "baseline_dist")]
-    ),
-    nrmse = normalize(-dfa$nrmse) * ifelse(
+    ) * ifelse("baseline_dist" %in% inv, -1, 1),
+    nrmse = normalize(dfa$nrmse) * ifelse(
       !"nrmse" %in% metrics, 0, wt[which(metrics == "nrmse")]
-    ),
-    decomp.rssd = normalize(-dfa$decomp.rssd) * ifelse(
+    ) * ifelse("nrmse" %in% inv, -1, 1),
+    decomp.rssd = normalize(dfa$decomp.rssd) * ifelse(
       !"decomp.rssd" %in% metrics, 0, wt[which(metrics == "decomp.rssd")]
-    ),
-    mape = normalize(-dfa$mape) * ifelse(
+    ) * ifelse("decomp.rssd" %in% inv, -1, 1),
+    mape = normalize(dfa$mape) * ifelse(
       !"mape" %in% metrics, 0, wt[which(metrics == "mape")]
-    )
+    ) * ifelse("mape" %in% inv, -1, 1)
   )
   dfa <- dfa %>%
     mutate(
@@ -366,6 +369,8 @@ robyn_modelselector <- function(
     pull(.data$cluster) %>%
     unique()
   pdat <- dfa %>%
+    # So that inverted variables have larger relative bars (darker blue)
+    mutate_at(all_of(inv), function(x) 1 - x) %>%
     mutate(
       cluster = factor(sprintf("%s (%s)", .data$cluster, .data$incluster_models), levels = sorting),
       incluster_models = .data$incluster_models / max(dfa$incluster_models, na.rm = TRUE)
@@ -386,7 +391,7 @@ robyn_modelselector <- function(
   p <- pdat %>%
     ggplot(aes(y = reorder(.data$solID, .data$score), x = .data$value)) +
     geom_col(aes(group = .data$name, fill = .data$top)) +
-    # geom_vline(xintercept = 1, alpha = 0.5) +
+    # geom_vline(xintercept = 1, alpha = 0.5, linetype = "dotted") +
     facet_grid(.data$cluster ~ .data$name_metrics, scales = "free") +
     labs(
       y = NULL, x = "Criteria Scores (the highest the better)",
