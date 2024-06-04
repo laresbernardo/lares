@@ -104,8 +104,6 @@ only one available in OutputCollect, no need to define.</p></dd>
 
 <p>data.frame with results on ROAS/CPA, spend, response, contribution
 per channel, with or without total rows.</p>
-
-
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -114,6 +112,15 @@ per channel, with or without total rows.</p>
 <code><a href="robyn_modelselector.html">robyn_modelselector</a>()</code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># You may load an exported model to recreate Robyn objects</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">Robyn</span><span class="fu">::</span><span class="fu">robyn_recreate</span><span class="op">(</span>json_file <span class="op">=</span> <span class="st">"your_model.json"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">robyn_performance</span><span class="op">(</span><span class="va">mod</span><span class="op">$</span><span class="va">InputCollect</span>, <span class="va">mod</span><span class="op">$</span><span class="va">OutputCollect</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
