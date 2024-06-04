@@ -435,6 +435,7 @@ plot.robyn_modelselector <- function(x, ...) {
 #' (promotional which is paid and organic channels, baseline, grand total).
 #' @return data.frame with results on ROAS/CPA, spend, response, contribution
 #' per channel, with or without total rows.
+#' @examples
 #' \dontrun{
 #' # You may load an exported model to recreate Robyn objects
 #' mod <- Robyn::robyn_recreate(json_file = "your_model.json")
