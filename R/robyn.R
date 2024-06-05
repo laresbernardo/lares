@@ -199,7 +199,7 @@ robyn_modelselector <- function(
       "R^2", ifelse(InputCollect$dep_var_type == "revenue", "High ROAS", "Low CPA"),
       "Potential Boost", "Non-Zero Betas", "Models in Cluster",
       sprintf("Baseline Distance [%.0f%%]", signif(baseline_ref * 100, 2)),
-      "NRMSE (Inverted)", "DECOMP.RSSD (Inverted)", "MAPE (Inverted)"
+      "1 - NRMSE", "1 - DECOMP.RSSD", "1 - MAPE"
     )
   )
   check_opts(metrics, metrics_df$metric)
