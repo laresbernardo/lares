@@ -27,7 +27,7 @@ remotes::install_github("laresbernardo/lares", dependencies = TRUE)
 
 - Vignette: [Introduction to AutoML using `lares`](https://laresbernardo.github.io/lares/articles/h2o_automl.html)
 
-- Medium: [Select the right MMM candidate based on your specific criteria and business knowledge](https://bit.ly/mmm-candidates)
+- Medium: [Select the right MMM candidate based on your specific criteria and business knowledge](https://medium.com/@laresbernardo/select-the-right-mmm-candidate-based-on-your-specific-criteria-and-business-knowledge-1f583c3cb97a)
 
 - DataScience+: [Visualizations for Classification Models Results](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/)
 

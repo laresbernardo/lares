@@ -125,7 +125,7 @@ robyn_hypsbuilder <- function(
 #' historical performance, baseline expectation, etc.
 #'
 #' Read more about this functionality in Medium post:
-#' \href{https://bit.ly/mmm-candidates}{here}.
+#' \href{https://medium.com/@laresbernardo/select-the-right-mmm-candidate-based-on-your-specific-criteria-and-business-knowledge-1f583c3cb97a}{here}.
 #'
 #' @family Robyn
 #' @inheritParams cache_write
