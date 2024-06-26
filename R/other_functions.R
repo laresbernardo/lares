@@ -355,7 +355,6 @@ read.file <- function(filename, current_wd = TRUE, sheet = 1, quiet = FALSE) {
       results <- data.frame(read.csv(filename))
     }
     if (filetype == "xlsx") {
-      try_require("openxlsx")
       results <- read.xlsx(filename, sheet)
     }
     if (filetype == "xls") {
