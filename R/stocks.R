@@ -147,8 +147,8 @@ stocks_quote <- function(symbols, ...) {
         origin = "1970-01-01 00:00:00"
       ))
     row.names(ret) <- NULL
-    return(ret)
   }
+  ret
 }
 
 ####################################################################
@@ -1288,7 +1288,7 @@ stocks_obj <- function(data = stocks_file(),
     plots[["History"]] <- splot_growth(p)
     plots[["Relative Growth"]] <- splot_change(p, s, rel = TRUE, n_days = NA, keep_old = FALSE)
     plots[["Absolute Growth"]] <- splot_change(p, s, rel = FALSE, n_days = NA, keep_old = FALSE)
-    return(plots)
+    plots
   })
   names(plots_relative) <- sprintf("plots_%s", window)
   ret[["plots_relative"]] <- plots_relative
@@ -1471,7 +1471,7 @@ stocks_report <- function(data = NA,
         is.numeric, function(x) 0
       ) %>% mutate(Date = .data$Date - 1))
   }
-  return(new_df)
+  new_df
 }
 
 # # TESTING

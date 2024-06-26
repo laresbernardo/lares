@@ -240,6 +240,7 @@ maze_gridsearch <- function(
 
 # Function to calculate the number of direction changes
 count_direction_changes <- function(path_coords) {
+  num_changes <- 0
   if (!is.null(path_coords)) {
     # Calculate the direction for each step
     directions <- atan2(diff(path_coords$row), diff(path_coords$col)) * (180 / pi)
@@ -249,37 +250,35 @@ count_direction_changes <- function(path_coords) {
     direction_diff <- abs(diff(directions))
     # Count the number of direction changes greater than a threshold (e.g., 45 degrees)
     num_changes <- sum(direction_diff > 30)
-    return(num_changes)
-  } else {
-    return(0)
   }
+  num_changes
 }
 
 # Function to calculate the direction of point in path
 calculate_direction <- function(row, col) {
   if (is.na(row) || is.na(col) || length(row) == 0 || length(col) == 0) {
-    return("\u003F") # ?
+    "\u003F" # ?
   }
   if (row == 0 && col == 1) {
-    return("\u2192") # Right
+    "\u2192" # Right
   } else if (row == 0 && col == -1) {
-    return("\u2190") # Left
+    "\u2190" # Left
   } else if (row == 1 && col == 0) {
-    return("\u2193") # Down
+    "\u2193" # Down
   } else if (row == -1 && col == 0) {
-    return("\u2191") # Up
+    "\u2191" # Up
   } else if (row == 1 && col == 1) {
-    return("\u2198") # Diagonal down-right
+    "\u2198" # Diagonal down-right
   } else if (row == -1 && col == 1) {
-    return("\u2197") # Diagonal up-right
+    "\u2197" # Diagonal up-right
   } else if (row == 1 && col == -1) {
-    return("\u2199") # Diagonal down-left
+    "\u2199" # Diagonal down-left
   } else if (row == -1 && col == -1) {
-    return("\u2196") # Diagonal up-left
+    "\u2196" # Diagonal up-left
   } else if (row == 0 && col == 0) {
-    return("\u2022") # Center (no movement)
+    "\u2022" # Center (no movement)
   } else {
-    return("Invalid direction")
+    "Invalid direction"
   }
 }
 
@@ -309,7 +308,7 @@ linear_extrapolation <- function(x1, y1, x2, y2) {
   next_x <- x2 + 1 # Assuming you want to extrapolate to the next integer x value
   # Calculate the corresponding y value
   next_y <- y2 + slope * (next_x - x2)
-  return(c(round(next_x), round((next_y))))
+  c(round(next_x), round((next_y)))
 }
 
 # micromouse <- matrix(c(
