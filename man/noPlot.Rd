@@ -29,10 +29,10 @@ noPlot(background = "#FF5500", size = 7)
 \seealso{
 Other Visualization: 
 \code{\link{distr}()},
+\code{\link{freqs}()},
 \code{\link{freqs_df}()},
 \code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
-\code{\link{freqs}()},
 \code{\link{plot_chord}()},
 \code{\link{plot_survey}()},
 \code{\link{plot_timeline}()},

@@ -108,10 +108,10 @@ Other Exploratory:
 \code{\link{corr_var}()},
 \code{\link{crosstab}()},
 \code{\link{df_str}()},
+\code{\link{freqs}()},
 \code{\link{freqs_df}()},
 \code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
-\code{\link{freqs}()},
 \code{\link{lasso_vars}()},
 \code{\link{missingness}()},
 \code{\link{plot_cats}()},
@@ -120,10 +120,10 @@ Other Exploratory:
 \code{\link{tree_var}()}
 
 Other Visualization: 
+\code{\link{freqs}()},
 \code{\link{freqs_df}()},
 \code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
-\code{\link{freqs}()},
 \code{\link{noPlot}()},
 \code{\link{plot_chord}()},
 \code{\link{plot_survey}()},

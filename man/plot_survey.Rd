@@ -25,10 +25,10 @@ This function lets the user plot a survey's result.
 \seealso{
 Other Visualization: 
 \code{\link{distr}()},
+\code{\link{freqs}()},
 \code{\link{freqs_df}()},
 \code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
-\code{\link{freqs}()},
 \code{\link{noPlot}()},
 \code{\link{plot_chord}()},
 \code{\link{plot_timeline}()},

@@ -1,7 +1,7 @@
 Package: lares
 Type: Package
 Title: Analytics & Machine Learning Sidekick
-Version: 5.2.7.9007
+Version: 5.2.7.9008
 Authors@R: c(
     person("Bernardo", "Lares", , "laresbernardo@gmail.com", c("aut", "cre")))
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
@@ -38,7 +38,7 @@ Suggests:
     rmarkdown
 URL: https://github.com/laresbernardo/lares, https://laresbernardo.github.io/lares/
 BugReports: https://github.com/laresbernardo/lares/issues
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 License: AGPL-3
 Encoding: UTF-8
 LazyData: true

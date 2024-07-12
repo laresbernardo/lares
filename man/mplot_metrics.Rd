@@ -37,8 +37,8 @@ the parameter \code{plot} is set to \code{TRUE}.
 \seealso{
 Other ML Visualization: 
 \code{\link{mplot_conf}()},
-\code{\link{mplot_cuts_error}()},
 \code{\link{mplot_cuts}()},
+\code{\link{mplot_cuts_error}()},
 \code{\link{mplot_density}()},
 \code{\link{mplot_full}()},
 \code{\link{mplot_gain}()},
