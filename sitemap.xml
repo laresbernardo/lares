@@ -1,564 +1,190 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://laresbernardo.github.io/lares/404.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/CONTRIBUTE.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/index.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/ROC.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/autoline.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/balance_data.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/bind_files.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/bring_api.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/cache_write.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/categ_reducer.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/checks.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/chr2num.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/ci_lower.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/ci_var.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/clean_text.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/clusterKmeans.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/clusterOptimalK.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/clusterVisualK.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/conf_mat.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/corr.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/corr_cross.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/corr_var.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/cran_logs.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/crosstab.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/dalex_local.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/dalex_residuals.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/dalex_variable.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/date_cuts.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/date_feats.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/db_download.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/db_upload.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/df_str.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/dfr.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/dft.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/dist2d.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/distr.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/errors.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/etf_sector.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/export_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/export_results.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/fb_accounts.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/fb_ads.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/fb_creatives.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/fb_insights.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/fb_process.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/fb_report_check.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/fb_rf.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/fb_token.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/file_name.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/filesGD.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/files_functions.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/filterdata.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/font_exists.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/forecast_arima.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/formatColoured.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/format_string.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/freqs.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/freqs_df.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/freqs_list.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/freqs_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/gain_lift.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/gemini_ask.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/get_credentials.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/get_currency.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/get_mp3.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/get_tweets.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/gg_fill_customs.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/glued.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/google_sheets.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/google_trends.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/gpt_ask.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/gpt_prompter.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/grepl_letters.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/grepm.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/h2o_automl.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/h2o_explainer.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/h2o_predict.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/h2o_results.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/h2o_selectmodel.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/h2o_shap.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/haveInternet.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/holidays.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/image_metadata.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/importxlsx.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/impute.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/install_recommended.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/ip_data.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/is_url.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/iter_seeds.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/json2vector.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/lares-exports.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/lares.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/lares_logo.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/lares_pal.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/lasso_vars.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/left_right.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/li_auth.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/li_profile.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/list_cats.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/listfiles.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/loglossBinary.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mail_send.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/markdown2df.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/maze_solve.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/missingness.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/model_metrics.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/model_preprocess.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/move_files.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mplot_conf.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mplot_cuts.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mplot_cuts_error.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mplot_density.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mplot_full.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mplot_gain.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mplot_importance.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mplot_lineal.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mplot_metrics.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mplot_response.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mplot_roc.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mplot_splits.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/mplot_topcats.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/msplit.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/myip.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/ngrams.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/noPlot.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/normalize.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/num_abbr.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/ohe_commas.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/ohse.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/outlier_turkey.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/outlier_zscore.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/outlier_zscore_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/plot_cats.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/plot_chord.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/plot_df.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/plot_nums.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/plot_palette.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/plot_survey.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/plot_timeline.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/prophesize.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/quants.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/queryDB.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/queryGA.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/quiet.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/read.file.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/reduce_pca.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/reduce_tsne.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/remove_stopwords.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/replaceall.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/replacefactor.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/robyn_hypsbuilder.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/robyn_modelselector.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/robyn_performance.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/rtistry_sphere.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/scale_x_comma.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/scrabble.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/sentimentBreakdown.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/shap_var.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/slackSend.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/spread_list.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/statusbar.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/stocks_hist.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/stocks_plots.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/stocks_report.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/sudoku_solver.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/target_set.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/textCloud.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/textFeats.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/textTokenizer.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/theme_lares.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/tic.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/topics_rake.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/tree_var.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/trim_mp3.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/try_require.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/updateLares.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/vector2text.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/warnifnot.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/weighted_value.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/what_size.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/winsorize.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/wordle.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/x2y.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/year_month.html</loc>
-  </url>
-  <url>
-    <loc>https://laresbernardo.github.io/lares/reference/zerovar.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://laresbernardo.github.io/lares/404.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/CONTRIBUTE.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/authors.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/index.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/ROC.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/autoline.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/balance_data.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/bind_files.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/bring_api.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/cache_write.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/categ_reducer.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/checks.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/chr2num.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/ci_lower.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/ci_var.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/clean_text.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/clusterKmeans.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/clusterOptimalK.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/clusterVisualK.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/conf_mat.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/corr.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/corr_cross.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/corr_var.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/cran_logs.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/crosstab.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/dalex_local.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/dalex_residuals.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/dalex_variable.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/date_cuts.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/date_feats.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/db_download.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/db_upload.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/df_str.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/dfr.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/dft.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/dist2d.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/distr.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/errors.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/etf_sector.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/export_plot.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/export_results.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/fb_accounts.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/fb_ads.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/fb_creatives.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/fb_insights.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/fb_process.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/fb_report_check.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/fb_rf.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/fb_token.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/file_name.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/filesGD.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/files_functions.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/filterdata.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/font_exists.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/forecast_arima.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/formatColoured.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/format_string.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/freqs.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/freqs_df.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/freqs_list.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/freqs_plot.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/gain_lift.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/gemini_ask.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/get_credentials.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/get_currency.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/get_mp3.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/get_tweets.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/gg_fill_customs.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/glued.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/google_sheets.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/google_trends.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/gpt_ask.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/gpt_prompter.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/grepl_letters.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/grepm.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/h2o_automl.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/h2o_explainer.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/h2o_predict.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/h2o_results.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/h2o_selectmodel.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/h2o_shap.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/haveInternet.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/holidays.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/image_metadata.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/importxlsx.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/impute.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/index.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/install_recommended.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/ip_data.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/is_url.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/iter_seeds.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/json2vector.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/lares-exports.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/lares.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/lares_logo.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/lares_pal.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/lasso_vars.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/left_right.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/li_auth.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/li_profile.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/list_cats.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/listfiles.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/loglossBinary.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mail_send.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/markdown2df.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/maze_solve.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/missingness.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/model_metrics.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/model_preprocess.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/move_files.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mplot_conf.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mplot_cuts.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mplot_cuts_error.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mplot_density.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mplot_full.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mplot_gain.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mplot_importance.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mplot_lineal.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mplot_metrics.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mplot_response.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mplot_roc.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mplot_splits.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mplot_topcats.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/msplit.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/myip.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/ngrams.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/noPlot.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/normalize.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/num_abbr.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/ohe_commas.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/ohse.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/outlier_turkey.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/outlier_zscore.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/outlier_zscore_plot.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/plot_cats.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/plot_chord.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/plot_df.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/plot_nums.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/plot_palette.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/plot_survey.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/plot_timeline.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/prophesize.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/quants.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/queryDB.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/queryGA.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/quiet.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/read.file.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/reduce_pca.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/reduce_tsne.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/remove_stopwords.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/replaceall.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/replacefactor.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/robyn_hypsbuilder.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/robyn_modelselector.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/robyn_performance.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/rtistry_sphere.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/scale_x_comma.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/scrabble.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/sentimentBreakdown.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/shap_var.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/slackSend.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/spread_list.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/statusbar.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/stocks_hist.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/stocks_plots.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/stocks_report.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/sudoku_solver.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/target_set.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/textCloud.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/textFeats.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/textTokenizer.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/theme_lares.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/tic.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/topics_rake.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/tree_var.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/trim_mp3.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/try_require.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/updateLares.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/vector2text.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/warnifnot.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/weighted_value.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/what_size.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/winsorize.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/wordle.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/x2y.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/year_month.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/zerovar.html</loc></url>
 </urlset>
+
