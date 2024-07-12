@@ -125,7 +125,7 @@ robyn_hypsbuilder <- function(
 #' historical performance, baseline expectation, etc.
 #'
 #' Read more about this functionality in Medium post:
-#' \href{https://bit.ly/mmm-candidates}{here}.
+#' \href{https://medium.com/@laresbernardo/select-the-right-mmm-candidate-based-on-your-specific-criteria-and-business-knowledge-1f583c3cb97a}{here}.
 #'
 #' @family Robyn
 #' @inheritParams cache_write
@@ -226,7 +226,7 @@ robyn_modelselector <- function(
       try_require("Robyn")
       defpot <- lapply(sols, function(x) {
         if (!quiet) statusbar(which(sols == x), length(sols), x)
-        return(suppressMessages(robyn_allocator(
+        suppressMessages(robyn_allocator(
           InputCollect = InputCollect,
           OutputCollect = OutputCollect,
           select_model = x,
@@ -236,7 +236,7 @@ robyn_modelselector <- function(
           export = FALSE,
           quiet = TRUE,
           ...
-        )))
+        ))
       })
       potOpt <- data.frame(
         solID = sols,
@@ -305,7 +305,7 @@ robyn_modelselector <- function(
     left_join(temp, "solID") %>%
     ungroup() %>%
     left_join(baselines, "solID")
-  
+
   # The following criteria are inverted because the smaller, the better
   inv <- c("baseline_dist", "nrmse", "decomp.rssd", "mape")
 
@@ -420,7 +420,7 @@ robyn_modelselector <- function(
 #' @rdname robyn_modelselector
 #' @export
 plot.robyn_modelselector <- function(x, ...) {
-  return(x$plot)
+  x$plot
 }
 
 ####################################################################

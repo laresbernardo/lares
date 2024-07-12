@@ -830,7 +830,7 @@ replacefactor <- function(x, original, change) {
     }
     levels(x)[levels(x) == original[i]] <- change[i]
   }
-  return(x)
+  x
 }
 
 ####################################################################

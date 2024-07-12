@@ -136,17 +136,15 @@ h2o_predict_API <- function(df, api, exclude = "tag") {
       body = as.list(df),
       encode = "json"
     )
-    return(content(x)$probabilityToOne)
+    content(x)$probabilityToOne
   }
-
   batch <- NULL
   for (i in seq_len(nrow(df))) {
     x <- df[i, ]
     score <- post(x, api)
     batch <- rbind(batch, score)
   }
-
-  return(as.vector(batch))
+  as.vector(batch)
 }
 
 
