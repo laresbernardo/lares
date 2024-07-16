@@ -230,8 +230,7 @@ listfiles <- function(folder = getwd(),
 #' @export
 myip <- function() {
   ipify <- "https://api.ipify.org/"
-  ip <- content(GET(ipify), encoding = "UTF-8")
-  return(ip)
+  content(GET(ipify), encoding = "UTF-8")
 }
 
 
@@ -255,8 +254,7 @@ json2vector <- function(json) {
   string <- gsub("True", "true", string)
   string <- gsub("False", "false", string)
   vector <- fromJSON(string)
-  df <- data.frame(t(unlist(vector)))
-  return(df)
+  data.frame(t(unlist(vector)))
 }
 
 
@@ -286,7 +284,7 @@ importxlsx <- function(file) {
   if (length(sheets) == 1) {
     mylist <- mylist[[1]][[1]]
   }
-  return(mylist)
+  mylist
 }
 
 
@@ -348,7 +346,6 @@ haveInternet <- function(thresh = 3, url = "http://www.google.com") {
 #' @export
 read.file <- function(filename, current_wd = TRUE, sheet = 1, quiet = FALSE) {
   if (current_wd) filename <- paste0(getwd(), "/", filename)
-
   if (!file.exists(filename)) {
     stop("That file doesn't exist.. try with another!")
   } else {
@@ -358,7 +355,6 @@ read.file <- function(filename, current_wd = TRUE, sheet = 1, quiet = FALSE) {
       results <- data.frame(read.csv(filename))
     }
     if (filetype == "xlsx") {
-      try_require("openxlsx")
       results <- read.xlsx(filename, sheet)
     }
     if (filetype == "xls") {
@@ -411,7 +407,7 @@ bind_files <- function(files) {
     alldat <- bind_rows(alldat, dfi)
     statusbar(i, length(files))
   }
-  return(data.frame(alldat))
+  as_tibble(alldat)
 }
 
 
@@ -486,16 +482,16 @@ autoline <- function(text, top = "auto", rel = 9) {
 #' @export
 font_exists <- function(font = "Arial Narrow", font_dirs = NULL, quiet = FALSE, ...) {
   if (isTRUE(font[1] == "")) {
-    return(FALSE)
+    FALSE
   }
   if (isTRUE(is.na(font[1]))) {
-    return(FALSE)
+    FALSE
   }
   tryCatch(
     check_font(font, font_dirs, quiet),
     error = function(err) {
       if (!quiet) message(paste("Font issue:", err))
-      return(FALSE)
+      FALSE
     }
   )
 }
@@ -560,7 +556,9 @@ check_font <- function(font, font_dirs = NULL, quiet = FALSE) {
   }
   if (grepl("^mingw", R.version$os)) {
     try_require("grDevices")
-    ret <- font %in% windowsFonts()
+    win_fonts <- unlist(windowsFonts())
+    ret <- font %in% win_fonts
+    # font_names <- c(font_names, win_fonts)
   } else {
     ret <- font %in% nice_names
   }
@@ -1092,7 +1090,7 @@ chr2num <- function(data) {
       data <- as.numeric(data)
     }
   }
-  return(data)
+  data
 }
 #' @rdname chr2num
 #' @export
@@ -1109,7 +1107,7 @@ chr2logical <- function(data) {
       data <- as.logical(toupper(data))
     }
   }
-  return(data)
+  data
 }
 #' @rdname chr2num
 #' @export

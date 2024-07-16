@@ -15,6 +15,7 @@
 #' @param font,size Character and numeric. Base font family and base size for texts.
 #' \code{Arial Narrow} is set by default when the library is loaded; you may change it
 #' with \code{Sys.setenv("LARES_FONT" = "X")} or by using this parameter manually.
+#' If \code{font} is "ignore" or NA, it'll be ignored.
 #' @param main_colour,hard_colour,soft_colour,plot_colour,panel_colour
 #' Character. Main colours for your theme.
 #' @param background Character. Main colour for your background. Overwrites
@@ -68,6 +69,7 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
                         pal = 0,
                         palette = NULL,
                         which = "fc",
+                        quiet = TRUE,
                         ...) {
   # Start from theme_minimal()
   ret <- theme_minimal(base_size = size)
@@ -78,7 +80,7 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
   if (isFALSE(legend)) legend <- "none"
 
   # Check and set font
-  font <- .font_global(font, quiet = FALSE, ...)
+  font <- .font_global(font, quiet = quiet, ...)
   ret <- ret + theme(text = element_text(family = font))
 
   # Set some defaults
@@ -374,7 +376,7 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
 }
 
 .font_global <- function(font, quiet = FALSE, when_not = NA, ask_install = FALSE, ...) {
-  if ("ignore" %in% tolower(font)) {
+  if (any(c(NA, "ignore") %in% tolower(font))) {
     return(NULL)
   } else {
     temp <- font_exists(font, ...)

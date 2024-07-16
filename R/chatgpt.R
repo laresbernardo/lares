@@ -290,7 +290,7 @@ gpt_markdown2df <- function(resp) {
   }
   df <- try(markdown2df(resp))
   attr(df, "response") <- df
-  return(df)
+  df
 }
 
 # DEPRECATED: Now using the new gpt_prompter()

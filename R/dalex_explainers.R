@@ -158,15 +158,10 @@ dalex_local <- function(explainer, observation = NA, row = 1, type = "break_down
 #' @export
 dalex_residuals <- function(explainer) {
   try_require("DALEX")
-
   resids <- model_performance(explainer)
-
   p1 <- plot(resids) + theme_lares(legend = "none")
   p2 <- plot(resids, geom = "boxplot") + theme_lares(legend = "none")
-
-  p <- p1 + p2 + plot_layout(nrow = 2)
-
-  return(p)
+  p1 + p2 + plot_layout(nrow = 2)
 }
 
 

@@ -22,13 +22,15 @@ theme_lares(
   pal = 0,
   palette = NULL,
   which = "fc",
+  quiet = TRUE,
   ...
 )
 }
 \arguments{
 \item{font, size}{Character and numeric. Base font family and base size for texts.
 \code{Arial Narrow} is set by default when the library is loaded; you may change it
-with \code{Sys.setenv("LARES_FONT" = "X")} or by using this parameter manually.}
+with \code{Sys.setenv("LARES_FONT" = "X")} or by using this parameter manually.
+If \code{font} is "ignore" or NA, it'll be ignored.}
 
 \item{main_colour, hard_colour, soft_colour, plot_colour, panel_colour}{Character. Main colours for your theme.}
 
@@ -61,6 +63,8 @@ used as fill and the values will be used as colour.}
 
 \item{which}{Character. When \code{pal = 3}, select which colours should be
 added with the custom colours palette: fill, colour, text (fct) - first letters.}
+
+\item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
 
 \item{...}{Additional parameters.}
 }
