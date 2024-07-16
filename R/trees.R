@@ -121,6 +121,7 @@ tree_var <- function(df, y, type = 2, max = 3, min = 20, cp = 0,
   return(invisible(ret))
 }
 
+#' @export
 plot.tree_var <- function(x, ...) {
   if (!inherits(x, "tree_var")) {
     stop("Object must be class tree_var")

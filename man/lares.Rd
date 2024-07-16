@@ -2,8 +2,8 @@
 % Please edit documentation in R/lares.R
 \docType{package}
 \name{lares}
-\alias{lares}
 \alias{lares-package}
+\alias{lares}
 \title{Analytics, Data Mining & Machine Learning Sidekick}
 \description{
 R library for better/faster analytics, visualization, data mining, and machine learning tasks.

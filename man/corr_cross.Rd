@@ -86,18 +86,18 @@ corr_cross(dft, type = 2, top = NA)
 }
 \seealso{
 Other Correlations: 
-\code{\link{corr_var}()},
-\code{\link{corr}()}
+\code{\link{corr}()},
+\code{\link{corr_var}()}
 
 Other Exploratory: 
 \code{\link{corr_var}()},
 \code{\link{crosstab}()},
 \code{\link{df_str}()},
 \code{\link{distr}()},
+\code{\link{freqs}()},
 \code{\link{freqs_df}()},
 \code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
-\code{\link{freqs}()},
 \code{\link{lasso_vars}()},
 \code{\link{missingness}()},
 \code{\link{plot_cats}()},

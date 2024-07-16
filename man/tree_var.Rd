@@ -113,10 +113,10 @@ Other Exploratory:
 \code{\link{crosstab}()},
 \code{\link{df_str}()},
 \code{\link{distr}()},
+\code{\link{freqs}()},
 \code{\link{freqs_df}()},
 \code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
-\code{\link{freqs}()},
 \code{\link{lasso_vars}()},
 \code{\link{missingness}()},
 \code{\link{plot_cats}()},
@@ -125,10 +125,10 @@ Other Exploratory:
 
 Other Visualization: 
 \code{\link{distr}()},
+\code{\link{freqs}()},
 \code{\link{freqs_df}()},
 \code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
-\code{\link{freqs}()},
 \code{\link{noPlot}()},
 \code{\link{plot_chord}()},
 \code{\link{plot_survey}()},

@@ -96,10 +96,10 @@ Other Exploratory:
 \code{\link{crosstab}()},
 \code{\link{df_str}()},
 \code{\link{distr}()},
+\code{\link{freqs}()},
 \code{\link{freqs_df}()},
 \code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
-\code{\link{freqs}()},
 \code{\link{lasso_vars}()},
 \code{\link{missingness}()},
 \code{\link{plot_cats}()},
@@ -108,8 +108,8 @@ Other Exploratory:
 \code{\link{tree_var}()}
 
 Other Correlations: 
-\code{\link{corr_cross}()},
-\code{\link{corr}()}
+\code{\link{corr}()},
+\code{\link{corr_cross}()}
 }
 \concept{Correlations}
 \concept{Exploratory}

@@ -43,10 +43,10 @@ plot_chord(df$from, df$to)
 \seealso{
 Other Visualization: 
 \code{\link{distr}()},
+\code{\link{freqs}()},
 \code{\link{freqs_df}()},
 \code{\link{freqs_list}()},
 \code{\link{freqs_plot}()},
-\code{\link{freqs}()},
 \code{\link{noPlot}()},
 \code{\link{plot_survey}()},
 \code{\link{plot_timeline}()},

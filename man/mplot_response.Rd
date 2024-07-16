@@ -78,8 +78,8 @@ mplot_response(dfr$class3$tag, dfr$class3$score,
 \seealso{
 Other ML Visualization: 
 \code{\link{mplot_conf}()},
-\code{\link{mplot_cuts_error}()},
 \code{\link{mplot_cuts}()},
+\code{\link{mplot_cuts_error}()},
 \code{\link{mplot_density}()},
 \code{\link{mplot_full}()},
 \code{\link{mplot_gain}()},

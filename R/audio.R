@@ -125,15 +125,24 @@ get_mp3 <- function(id,
   }
 
   # Open file once everything is done
+  mp3_file <- gsub(".info.json", ".mp3", f)
   if (open) {
-    message("Opening file: ", file)
-    browseURL(file)
+    if (file.exists(mp3_file)) {
+      message("Opening file: ", mp3_file)
+      browseURL(mp3_file) 
+    } else {
+      warning("Can't open file; possibly due to strange characters in title: ", mp3_file)
+    }
   }
   # Delete file if delete
   if (delete) {
-    message("Deleting file: ", file)
-    if (open) Sys.sleep(5)
-    file.remove(file)
+    if (file.exists(mp3_file)) {
+      message("Deleting file: ", mp3_file)
+      if (open) Sys.sleep(5)
+      file.remove(mp3_file) 
+    } else {
+      warning("Can't delete file; possibly due to strange characters in title: ", mp3_file)
+    }
   }
 
   return(invisible(infox))
