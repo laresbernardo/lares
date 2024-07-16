@@ -15,7 +15,7 @@ contribution for each of your marketing and non-marketing channels."><meta prope
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.7.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.7.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,8 @@ contribution for each of your marketing and non-marketing channels.</p>
 <span>  end_date <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  solID <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  totals <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  marginals <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  carryovers <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -79,6 +81,17 @@ only one available in OutputCollect, no need to define.</p></dd>
 <dt id="arg-totals">totals<a class="anchor" aria-label="anchor" href="#arg-totals"></a></dt>
 <dd><p>Boolean. Add total rows. This includes summary rows
 (promotional which is paid and organic channels, baseline, grand total).</p></dd>
+
+
+<dt id="arg-marginals">marginals<a class="anchor" aria-label="anchor" href="#arg-marginals"></a></dt>
+<dd><p>Boolean. Include mROAS or mCPA marginal performance metric
+as an additional column called "marginal". Calculations are based on
+mean spend and mean carryover values between <code>start_date</code> and codeend_date.</p></dd>
+
+
+<dt id="arg-carryovers">carryovers<a class="anchor" aria-label="anchor" href="#arg-carryovers"></a></dt>
+<dd><p>Boolean. Add mean percentage of carryover response for
+date range between <code>start_date</code> and codeend_date.</p></dd>
 
 
 <dt id="arg-quiet">quiet<a class="anchor" aria-label="anchor" href="#arg-quiet"></a></dt>
