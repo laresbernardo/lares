@@ -17,7 +17,7 @@ major and minor grids, legend, font and font size."><meta property="og:image" co
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.7.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.7.9009</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,6 +67,7 @@ major and minor grids, legend, font and font size.</p>
 <span>  pal <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  palette <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  which <span class="op">=</span> <span class="st">"fc"</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -78,7 +79,8 @@ major and minor grids, legend, font and font size.</p>
 <dl><dt id="arg-font-size">font, size<a class="anchor" aria-label="anchor" href="#arg-font-size"></a></dt>
 <dd><p>Character and numeric. Base font family and base size for texts.
 <code>Arial Narrow</code> is set by default when the library is loaded; you may change it
-with <code>Sys.setenv("LARES_FONT" = "X")</code> or by using this parameter manually.</p></dd>
+with <code>Sys.setenv("LARES_FONT" = "X")</code> or by using this parameter manually.
+If <code>font</code> is "ignore" or NA, it'll be ignored.</p></dd>
 
 
 <dt id="arg-main-colour-hard-colour-soft-colour-plot-colour-panel-colour">main_colour, hard_colour, soft_colour, plot_colour, panel_colour<a class="anchor" aria-label="anchor" href="#arg-main-colour-hard-colour-soft-colour-plot-colour-panel-colour"></a></dt>
@@ -133,6 +135,10 @@ used as fill and the values will be used as colour.</p></dd>
 <dt id="arg-which">which<a class="anchor" aria-label="anchor" href="#arg-which"></a></dt>
 <dd><p>Character. When <code>pal = 3</code>, select which colours should be
 added with the custom colours palette: fill, colour, text (fct) - first letters.</p></dd>
+
+
+<dt id="arg-quiet">quiet<a class="anchor" aria-label="anchor" href="#arg-quiet"></a></dt>
+<dd><p>Boolean. Keep quiet? If not, message will be shown.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
