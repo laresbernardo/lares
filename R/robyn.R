@@ -46,12 +46,12 @@ robyn_hypsbuilder <- function(
   check_opts(adstock, c("geometric", "weibull", "weibull_pdf", "weibull_cdf"))
   check_opts(date_type, c("daily", "weekly", "monthly", "skip"))
   check_opts(lagged, c(TRUE, FALSE))
-  
+
   # Hyperparameters names
   hyps <- c("alphas", "gammas")
   hyps2 <- if (adstock %in% "geometric") "thetas" else c("shapes", "scales")
   all_hyps <- c(hyps, hyps2)
-  
+
   # Repeat to all channels when provided 1 value
   if (length(media_type) == 1) {
     media_type <- rep(media_type, length(channels))
@@ -63,12 +63,12 @@ robyn_hypsbuilder <- function(
     stop("To be able to have a lagged effect you need to set 'weibull_pdf' adstock")
   }
   stopifnot(length(channels) == length(media_type))
-  
+
   # Generate all combinations and data.frame
   df <- expand.grid(channels, all_hyps)
   df$media_type <- rep(media_type, length(all_hyps))
   df$lagged <- rep(lagged, length(all_hyps))
-  
+
   # Apply default rules
   df <- df %>%
     mutate(low = case_when(
@@ -106,7 +106,7 @@ robyn_hypsbuilder <- function(
     ) %>%
     mutate(Var1 = factor(.data$Var1, levels = channels)) %>%
     arrange(.data$Var1)
-  
+
   # Return as named list
   out <- lapply(seq_along(df$Var1), function(x) c(df$low[x], df$high[x]))
   names(out) <- paste(df$Var1, df$Var2, sep = "_")
@@ -183,11 +183,11 @@ robyn_modelselector <- function(
     class(ret) <- c("robyn_modelselector", class(ret))
     return(ret)
   }
-  
+
   stopifnot(length(wt) == length(metrics))
   stopifnot(length(allocator_limits) == 2)
   stopifnot(baseline_ref >= 0 && baseline_ref <= 1)
-  
+
   # Available metrics
   metrics_df <- data.frame(
     metric = c(
@@ -203,13 +203,13 @@ robyn_modelselector <- function(
     )
   )
   check_opts(metrics, metrics_df$metric)
-  
+
   # Metrics Used
   metrics_used <- filter(metrics_df, .data$metric %in% metrics) %>%
     arrange(match(.data$metric, metrics)) %>%
     left_join(data.frame(metric = metrics, wt = wt), "metric") %>%
     filter(.data$wt > 0)
-  
+
   # Add Default Potential Improvement values
   sols <- sort(OutputCollect$allSolutions)
   if ("potential_improvement" %in% metrics & isTRUE(wt[which(metrics == "potential_improvement")] != 0)) {
@@ -249,7 +249,7 @@ robyn_modelselector <- function(
   } else {
     potOpt <- data.frame(solID = sols, potential_improvement = 0)
   }
-  
+
   # Check pareto-front models summaries to calculate performance (ROAS/CPA)
   performance <- OutputCollect$xDecompAgg %>%
     filter(!is.na(.data$mean_spend)) %>% # get rid of organic
@@ -258,7 +258,7 @@ robyn_modelselector <- function(
     summarise(
       performance = sum(.data$xDecompAgg) / sum(.data$total_spend, na.rm = TRUE)
     )
-  
+
   # Check pareto-front models to calculate non-zero betas in media channels
   non_zeroes_rate <- OutputCollect$allPareto$xDecompAgg %>%
     filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
@@ -269,7 +269,7 @@ robyn_modelselector <- function(
       ]) /
         length(InputCollect$all_media)
     )
-  
+
   # Count models per cluster
   if (!"clusters" %in% names(OutputCollect)) {
     OutputCollect$clusters$data <- data.frame(solID = sols, cluster = "None", top_sol = TRUE)
@@ -280,7 +280,7 @@ robyn_modelselector <- function(
     mutate(cluster = as.character(.data$cluster)) %>%
     left_join(select(OutputCollect$clusters$clusters_means, .data$cluster, .data$n), "cluster") %>%
     rename(incluster_models = "n")
-  
+
   # Calculate baselines
   baselines <- OutputCollect$xDecompAgg %>%
     mutate(rn = ifelse(.data$rn %in% c(InputCollect$all_media), .data$rn, "baseline")) %>%
@@ -294,7 +294,7 @@ robyn_modelselector <- function(
     mutate(baseline_dist = abs(baseline_ref - .data$baseline)) %>%
     select(c("solID", "baseline", "baseline_dist")) %>%
     arrange(desc(.data$baseline_dist))
-  
+
   # Gather everything up
   dfa <- OutputCollect$allPareto$resultHypParam %>%
     filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
@@ -305,10 +305,10 @@ robyn_modelselector <- function(
     left_join(temp, "solID") %>%
     ungroup() %>%
     left_join(baselines, "solID")
-  
+
   # The following criteria are inverted because the smaller, the better
   inv <- c("baseline_dist", "nrmse", "decomp.rssd", "mape")
-  
+
   # Calculate normalized and weighted scores
   scores <- list(
     rsq_train = normalize(dfa$rsq_train) * ifelse(
@@ -353,7 +353,7 @@ robyn_modelselector <- function(
     select(-.data$top_sol, -.data$aux) %>%
     arrange(desc(.data$score), desc(3), desc(4))
   if (!quiet) message("Recommended considering these models first: ", v2t(head(dfa$solID, top)))
-  
+
   # Generate plot/dashboard
   caption <- metrics_used %>%
     mutate(value = .data$wt / sum(.data$wt)) %>%
@@ -404,7 +404,7 @@ robyn_modelselector <- function(
     ) +
     scale_x_percent(position = "top") +
     theme_lares(legend = FALSE)
-  
+
   # Create the exported object
   ret <- invisible(list(
     data = select(dfa, "solID", "score", all_of(metrics_used$metric), everything(), -.data$note),
@@ -455,7 +455,7 @@ plot.robyn_modelselector <- function(x, ...) {
 robyn_performance <- function(
     InputCollect, OutputCollect,
     start_date = NULL, end_date = NULL,
-    solID = NULL, totals = TRUE, 
+    solID = NULL, totals = TRUE,
     marginals = FALSE, carryovers = FALSE,
     quiet = FALSE, ...) {
   df <- OutputCollect$mediaVecCollect
@@ -477,7 +477,7 @@ robyn_performance <- function(
     end_date <- as.Date(InputCollect$window_end)
   }
   stopifnot(start_date <= end_date)
-  
+
   # Filter data for ID, modeling window and selected date range
   df <- df[df$solID %in% solID, ] %>%
     filter(
@@ -567,42 +567,42 @@ robyn_performance <- function(
   # Join everything together
   if (totals) ret <- rbind(ret, totals_df, totals_base, grand_total)
   ret <- left_join(ret, mktg_contr2, "channel")
-  
+
   # Build auxiliary object with allocator metrics
   if (marginals || carryovers) {
-    temp <- suppressWarnings(robyn_allocator(
-      InputCollect = InputCollect, 
+    ba_temp <- suppressWarnings(robyn_allocator(
+      InputCollect = InputCollect,
       OutputCollect = OutputCollect,
       date_range = c(as.Date(start_date), as.Date(end_date)),
-      export = FALSE, quiet = TRUE))
-    mean_spends <- temp$mainPoints %>% 
-      filter(type == "Initial") %>%
-      select(c("channel", "spend_point", "response_point")) %>%
-      rename("mean_spend" = "spend_point", 
-             "mean_response" = "response_point")
+      export = FALSE, quiet = TRUE
+    ))
   }
-  
+
   # Add mROAS/mCPA
   if (marginals) {
-    marginal <- temp$dt_optimOut %>%
+    marginal <- ba_temp$dt_optimOut %>%
       select(c("channels", "initResponseMargUnit")) %>%
-      rename("channel" = "channels",
-             "marginal" = initResponseMargUnit)
-    mean_vals <- left_join(marginal, mean_spends, "channel") %>%
-      replace(., is.na(.), 0)
+      rename(
+        "channel" = "channels",
+        "marginal" = "initResponseMargUnit"
+      )
     ret <- left_join(ret, marginal, "channel") %>%
       dplyr::relocate("marginal", .after = "performance")
   }
   # Add carryover response percentage
   if (carryovers) {
-    mean_carryovers <- temp$plots$p3$data %>%
-      left_join(mean_spends, "channel") %>%
-      select(c("channel", "mean_spend", "mean_carryover")) %>% 
-      distinct() %>%
-      mutate(carryover = .data$mean_carryover / (.data$mean_carryover + .data$mean_spend))
-    ret <- ret %>%
-      left_join(select(mean_carryovers, c("channel", "carryover")), "channel") %>%
-      replace(., is.na(.), 0)
+    curve_points <- ba_temp$mainPoints %>%
+      filter(.data$type %in% c("Initial", "Carryover")) %>%
+      select(c("channel", "type", "mean_spend", "spend_point", "response_point")) %>%
+      arrange(.data$channel, .data$type)
+    a <- filter(curve_points, .data$type == "Carryover")
+    b <- filter(curve_points, .data$type == "Initial")
+    mean_carryovers <- data.frame(
+      channel = a$channel,
+      carryover = signif(a$response_point / b$response_point, 4)
+    )
+    ret <- left_join(ret, mean_carryovers, "channel") %>%
+      dplyr::relocate("carryover", .after = "response")
   }
   return(ret)
 }
