@@ -308,7 +308,7 @@ scrabble_words <- function(tiles = "",
   # Exclude these tiles
   force_not <- unique(tolower(unlist(strsplit(force_exclude, ""))))
 
-  message("Tiles: ", v2t(tiles))
+  message("Tiles: ", v2t(toupper(tiles)))
 
   ### WORDS
 
@@ -322,7 +322,7 @@ scrabble_words <- function(tiles = "",
       unique_new != length(words), sprintf("(%s new)", unique_new), ""
     )))
   }
-  words <- dictionary
+  words <- tolower(dictionary)
   # Words can't have more letters than inputs
   words <- words[nchar(words) <= ntiles]
   .temp_print(length(words))
@@ -350,7 +350,7 @@ scrabble_words <- function(tiles = "",
     }
   }
   # Exclude letters from positions (Wordle)
-  pos_tiles <- str_split_merge(exclude_here)
+  pos_tiles <- str_split_merge(tolower(exclude_here))
   for (i in seq_along(pos_tiles)) {
     these <- str_split(pos_tiles, "\\|")[i][[1]]
     if (!any(these %in% letters)) next
