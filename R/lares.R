@@ -52,7 +52,7 @@
 #' reorder start kmeans var xtabs as.formula prcomp p.adjust pt model.matrix qt cor.test
 #' @importFrom stringr fixed str_count str_length str_pad str_replace_all str_split
 #' str_to_title word
-#' @importFrom tidyr gather spread unite
+#' @importFrom tidyr gather pivot_longer pivot_wider spread unite
 #' @importFrom utils head tail packageVersion URLencode capture.output data download.file
 #' globalVariables installed.packages write.table install.packages remove.packages object.size
 #' type.convert flush.console read.table modifyList write.csv combn browseURL type.convert
@@ -126,7 +126,7 @@ recommended <- list(
   quantmod = c("getDividends", "getSymbols", "getQuote"),
   rdrop2 = c("drop_auth", "drop_dir", "drop_download", "drop_search", "drop_upload"),
   rgdal = c("readOGR", "project"),
-  Robyn = "robyn_allocator",
+  Robyn = c("robyn_allocator", "robyn_immcarr"),
   RPostgreSQL = "PostgreSQL",
   Rtsne = "Rtsne",
   rtweet = c("create_token", "search_tweets"),

@@ -31,10 +31,12 @@ only one available in OutputCollect, no need to define.}
 
 \item{marginals}{Boolean. Include mROAS or mCPA marginal performance metric
 as an additional column called "marginal". Calculations are based on
-mean spend and mean carryover values between \code{start_date} and code{end_date}.}
+mean spend and mean response with mean carryover results,
+between \code{start_date} and code{end_date}.}
 
 \item{carryovers}{Boolean. Add mean percentage of carryover response for
-date range between \code{start_date} and code{end_date}.}
+date range between \code{start_date} and code{end_date} on paid channels.
+Keep in mind organic variables also have carryover but currently not showing.}
 
 \item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
 

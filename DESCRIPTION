@@ -25,7 +25,7 @@ Imports:
     rpart.plot,
     rvest,
     stringr,
-    tidyr,
+    tidyr (>= 1.0.0),
     yaml
 Suggests:
     beepr,

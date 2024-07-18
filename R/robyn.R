@@ -440,9 +440,11 @@ plot.robyn_modelselector <- function(x, ...) {
 #' (promotional which is paid and organic channels, baseline, grand total).
 #' @param marginals Boolean. Include mROAS or mCPA marginal performance metric
 #' as an additional column called "marginal". Calculations are based on
-#' mean spend and mean carryover values between \code{start_date} and code{end_date}.
+#' mean spend and mean response with mean carryover results,
+#' between \code{start_date} and code{end_date}.
 #' @param carryovers Boolean. Add mean percentage of carryover response for
-#' date range between \code{start_date} and code{end_date}.
+#' date range between \code{start_date} and code{end_date} on paid channels.
+#' Keep in mind organic variables also have carryover but currently not showing.
 #' @return data.frame with results on ROAS/CPA, spend, response, contribution
 #' per channel, with or without total rows.
 #' @examples
@@ -568,18 +570,15 @@ robyn_performance <- function(
   if (totals) ret <- rbind(ret, totals_df, totals_base, grand_total)
   ret <- left_join(ret, mktg_contr2, "channel")
 
-  # Build auxiliary object with allocator metrics
-  if (marginals || carryovers) {
-    ba_temp <- suppressWarnings(robyn_allocator(
+  # Add mROAS/mCPA
+  if (marginals) {
+    try_require("Robyn")
+    ba_temp <- robyn_allocator(
       InputCollect = InputCollect,
       OutputCollect = OutputCollect,
       date_range = c(as.Date(start_date), as.Date(end_date)),
       export = FALSE, quiet = TRUE
-    ))
-  }
-
-  # Add mROAS/mCPA
-  if (marginals) {
+    )
     marginal <- ba_temp$dt_optimOut %>%
       select(c("channels", "initResponseMargUnit")) %>%
       rename(
@@ -591,15 +590,14 @@ robyn_performance <- function(
   }
   # Add carryover response percentage
   if (carryovers) {
-    curve_points <- ba_temp$mainPoints %>%
-      filter(.data$type %in% c("Initial", "Carryover")) %>%
-      select(c("channel", "type", "mean_spend", "spend_point", "response_point")) %>%
-      arrange(.data$channel, .data$type)
-    a <- filter(curve_points, .data$type == "Carryover")
-    b <- filter(curve_points, .data$type == "Initial")
+    try_require("Robyn")
+    carrov <- robyn_immcarr(
+      InputCollect, OutputCollect, solID = solID, 
+      start_date = start_date, end_date = end_date, ...) %>%
+      filter(.data$type == "Carryover")
     mean_carryovers <- data.frame(
-      channel = a$channel,
-      carryover = signif(a$response_point / b$response_point, 4)
+      channel = carrov$rn,
+      carryover = signif(carrov$carryover_pct, 4)
     )
     ret <- left_join(ret, mean_carryovers, "channel") %>%
       dplyr::relocate("carryover", .after = "response")
