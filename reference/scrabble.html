@@ -33,7 +33,7 @@ place to post your tiles."><meta property="og:image" content="https://laresberna
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.8.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.8.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,6 +89,7 @@ place to post your tiles.</p>
 <span>  exclude_here <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  force_n <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  force_max <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  repeated <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"LARES_LANG"</span><span class="op">)</span>,</span>
 <span>  scores <span class="op">=</span> <span class="va">language</span>,</span>
 <span>  words <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -121,9 +122,10 @@ letter of the alphabet and "scores" for each letter's score.</p></dd>
 
 
 <dt id="arg-lang">lang<a class="anchor" aria-label="anchor" href="#arg-lang"></a></dt>
-<dd><p>Character. Any of "en","es". Set to NULL
+<dd><p>Character. Any of "en","es" or "chars". Set to NULL
 if you wish to skip this step (and use <code>words</code> parameter in
-<code>scrabble_words()</code> instead).</p></dd>
+<code>scrabble_words()</code> instead). The "chars" parameter will
+score the number of characters a word has.</p></dd>
 
 
 <dt id="arg-tiles">tiles<a class="anchor" aria-label="anchor" href="#arg-tiles"></a></dt>
@@ -155,6 +157,11 @@ these tiles (and positions). Not very relevant on Scrabble but for Wordle.</p></
 <dt id="arg-force-n-force-max">force_n, force_max<a class="anchor" aria-label="anchor" href="#arg-force-n-force-max"></a></dt>
 <dd><p>Integer. Force words to be n or max n characters
 long. Leave 0 to ignore parameter.</p></dd>
+
+
+<dt id="arg-repeated">repeated<a class="anchor" aria-label="anchor" href="#arg-repeated"></a></dt>
+<dd><p>Boolean. By default, no replacement allowed. When activated,
+a single tile can be repeated and won't be "used and discarded".</p></dd>
 
 
 <dt id="arg-scores-language">scores, language<a class="anchor" aria-label="anchor" href="#arg-scores-language"></a></dt>
@@ -192,7 +199,7 @@ You might also want to set this parameter globally with
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># For Spanish words (default)</span></span></span>
 <span class="r-in"><span><span class="va">es_scores</span> <span class="op">&lt;-</span> <span class="fu">scrabble_points</span><span class="op">(</span><span class="st">"es"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Loaded points for 'es'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Points system: 'es'</span>
 <span class="r-in"><span><span class="co"># Custom scores for each letter</span></span></span>
 <span class="r-in"><span><span class="va">cu_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  tiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">)</span>,</span></span>
@@ -213,7 +220,7 @@ You might also want to set this parameter globally with
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 R is great      7     10</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="fu">scrabble_points</span><span class="op">(</span><span class="st">"es"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Loaded points for 'es'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Points system: 'es'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    tiles scores</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      a      1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      b      3</span>
@@ -243,7 +250,7 @@ You might also want to set this parameter globally with
 <span class="r-out co"><span class="r-pr">#&gt;</span> 26     y      5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 27     z     10</span>
 <span class="r-in"><span><span class="fu">scrabble_points</span><span class="op">(</span><span class="st">"en"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Loaded points for 'en'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Points system: 'en'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    tiles scores</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      a      1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      b      4</span>
@@ -273,7 +280,7 @@ You might also want to set this parameter globally with
 <span class="r-out co"><span class="r-pr">#&gt;</span> 26     z     10</span>
 <span class="r-in"><span><span class="co"># Not yet available</span></span></span>
 <span class="r-in"><span><span class="fu">scrabble_points</span><span class="op">(</span><span class="st">"fr"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> We do not have the points for this language yet!</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> There are no points structure for this language/system yet</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># Automatic use of languages and scores</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span><span class="st">"LARES_LANG"</span> <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span></span></span>
@@ -285,7 +292,7 @@ You might also want to set this parameter globally with
 <span class="r-in"><span>  force_str <span class="op">=</span> <span class="st">"_o_a"</span>,</span></span>
 <span class="r-in"><span>  exclude_here <span class="op">=</span> <span class="st">"__z|j"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Loaded points for 'es'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Points system: 'es'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Setting up tiles...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Tiles: 'H', 'O', 'L', 'A', '_', '_'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; Cache loaded succesfully: lares_cache_es</span>

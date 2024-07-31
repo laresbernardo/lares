@@ -15,7 +15,7 @@ It also lets filter files which contains a string."><meta property="og:image" co
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.8.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.8.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,25 +120,25 @@ It also lets filter files which contains a string.</p>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">listfiles</span><span class="op">(</span>recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       filename size isdir mode               mtime               ctime</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     ROC.html   16 FALSE  644 2024-07-18 13:04:44 2024-07-18 13:04:44</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Rplot001.png    0 FALSE  644 2024-07-18 13:05:20 2024-07-18 13:05:20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Rplot002.png    9 FALSE  644 2024-07-18 13:05:12 2024-07-18 13:05:12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     ROC.html   16 FALSE  644 2024-07-31 12:32:39 2024-07-31 12:32:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Rplot001.png    0 FALSE  644 2024-07-31 12:33:16 2024-07-31 12:33:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Rplot002.png    9 FALSE  644 2024-07-31 12:33:08 2024-07-31 12:33:08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 atime  uid gid  uname grname</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2024-07-18 13:04:44 1001 127 runner docker</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2024-07-18 13:04:43 1001 127 runner docker</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2024-07-18 13:04:48 1001 127 runner docker</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2024-07-31 12:32:39 1001 127 runner docker</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2024-07-31 12:32:39 1001 127 runner docker</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2024-07-31 12:32:43 1001 127 runner docker</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># All files in current directory (with recursive files)</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">listfiles</span><span class="op">(</span>recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            filename size isdir mode               mtime               ctime</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 137    li_auth.html    6 FALSE  644 2024-07-18 13:05:20 2024-07-18 13:05:20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 138 li_profile.html    6 FALSE  644 2024-07-18 13:05:20 2024-07-18 13:05:20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 139  list_cats.html   11 FALSE  644 2024-07-18 13:05:20 2024-07-18 13:05:20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 137    li_auth.html    6 FALSE  644 2024-07-31 12:33:16 2024-07-31 12:33:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 138 li_profile.html    6 FALSE  644 2024-07-31 12:33:16 2024-07-31 12:33:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 139  list_cats.html   11 FALSE  644 2024-07-31 12:33:17 2024-07-31 12:33:17</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   atime  uid gid  uname grname</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 137 2024-07-18 13:05:20 1001 127 runner docker</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 138 2024-07-18 13:05:20 1001 127 runner docker</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 139 2024-07-18 13:05:20 1001 127 runner docker</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 137 2024-07-31 12:33:16 1001 127 runner docker</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 138 2024-07-31 12:33:16 1001 127 runner docker</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 139 2024-07-31 12:33:17 1001 127 runner docker</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Check R files using regex</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">listfiles</span><span class="op">(</span>regex <span class="op">=</span> <span class="st">"\\.R$"</span><span class="op">)</span></span></span>
