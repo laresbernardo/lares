@@ -123,7 +123,7 @@ scrabble_points <- function(lang) {
     message(">>> Skipping points schema...")
     return(invisible(NULL))
   }
-  if (!lang %in% c("en", "es", "chars")) {
+  if (!lang %in% c("en", "es", "chars", "unique")) {
     message("There are no points structure for this language/system yet")
     return(invisible(NULL))
   }
@@ -144,7 +144,7 @@ scrabble_points <- function(lang) {
                  2, 1, 4, 10, 1, 1, 1, 2, 5, 4, 8, 3, 10)
     )
   }
-  if (lang == "chars") {
+  if (lang %in% c("chars", "unique")) {
     scores <- data.frame(
       tiles = tolower(LETTERS)
     ) %>% mutate(scores = 1)
@@ -296,7 +296,7 @@ scrabble_words <- function(tiles = "",
       stop("Please, provide a valid scores data.frame with 'tiles' and 'scores' columns")
     }
   } else {
-    scores <- scrabble_points(scores)
+    scores.df <- scrabble_points(scores)
   }
 
   ### TILES
@@ -372,7 +372,14 @@ scrabble_words <- function(tiles = "",
 
   .temp_print(length(words), last = TRUE)
   if (length(words) > 0) {
-    done <- scrabble_score(words, scores)
+    if ("unique" %in% scores) {
+      this <- lapply(words, function(x) sum(!!str_count(x, letters)))
+      done <- data.frame(word = words, scores = unlist(this)) %>%
+        mutate(length = str_length(.data$word)) %>%
+        arrange(desc(.data$scores))
+    } else {
+      done <- scrabble_score(words, scores.df) 
+    }
     if (sum(done$scores) == 0) done$scores <- NULL
     return(as_tibble(done))
   } else {
