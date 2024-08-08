@@ -376,7 +376,7 @@ scrabble_words <- function(tiles = "",
       this <- lapply(words, function(x) sum(!!str_count(x, letters)))
       done <- data.frame(word = words, scores = unlist(this)) %>%
         mutate(length = str_length(.data$word)) %>%
-        arrange(desc(.data$scores))
+        arrange(desc(.data$scores), desc(.data$length))
     } else {
       done <- scrabble_score(words, scores.df) 
     }
