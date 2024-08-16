@@ -33,7 +33,7 @@ place to post your tiles."><meta property="og:image" content="https://laresberna
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.8.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.8.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,6 +89,7 @@ place to post your tiles.</p>
 <span>  exclude_here <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  force_n <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  force_max <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  pattern <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  repeated <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"LARES_LANG"</span><span class="op">)</span>,</span>
 <span>  scores <span class="op">=</span> <span class="va">language</span>,</span>
@@ -159,6 +160,10 @@ these tiles (and positions). Not very relevant on Scrabble but for Wordle.</p></
 long. Leave 0 to ignore parameter.</p></dd>
 
 
+<dt id="arg-pattern">pattern<a class="anchor" aria-label="anchor" href="#arg-pattern"></a></dt>
+<dd><p>Character string. Custom regex patterns you'd like to match.</p></dd>
+
+
 <dt id="arg-repeated">repeated<a class="anchor" aria-label="anchor" href="#arg-repeated"></a></dt>
 <dd><p>Boolean. By default, no replacement allowed. When activated,
 a single tile can be repeated and won't be "used and discarded".</p></dd>
@@ -193,8 +198,8 @@ You might also want to set this parameter globally with
 <span class="r-in"><span><span class="co"># For Spanish words</span></span></span>
 <span class="r-in"><span><span class="va">dictionary</span> <span class="op">&lt;-</span> <span class="fu">scrabble_dictionary</span><span class="op">(</span><span class="st">"es"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Downloading 'es' words. Source: github.com/lorenbrichter/Words</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>URL 'https://raw.githubusercontent.com/lorenbrichter/Words/master/Words/es.txt': Timeout of 60 seconds was reached</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in file(file, "rt"):</span> cannot open the connection to 'https://raw.githubusercontent.com/lorenbrichter/Words/master/Words/es.txt'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; Cache saved succesfully: lares_cache_es</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Saved (636,598 words) into cache</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># For Spanish words (default)</span></span></span>
@@ -295,9 +300,8 @@ You might also want to set this parameter globally with
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Points system: 'es'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Setting up tiles...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Tiles: 'H', 'O', 'L', 'A', '_', '_'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Downloading 'es' words. Source: github.com/lorenbrichter/Words</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; Cache saved succesfully: lares_cache_es</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Saved (636,598 words) into cache</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; Cache loaded succesfully: lares_cache_es</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Loaded 636,598 'es' words</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">39735 &gt; 39735 &gt; 2927 &gt; 2927 &gt; 853 &gt; 71 &gt; 71 &gt; 6 &gt; 4 &gt; 4 </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 3</span></span>
@@ -317,7 +321,7 @@ You might also want to set this parameter globally with
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Skipping points schema...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Setting up tiles...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> o and r were not in your tiles: now included</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> O and R were not in your tiles: now included</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Tiles: 'O', 'R', '_', '_', '_'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Added 4 custom words </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">4 &gt; 4 &gt; 4 &gt; 4 &gt; 2 &gt; 2 &gt; 2 &gt; 2 &gt; 2 </span></span>
