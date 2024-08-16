@@ -23,6 +23,7 @@ scrabble_words(
   exclude_here = "",
   force_n = 0,
   force_max = 0,
+  pattern = "",
   repeated = FALSE,
   language = Sys.getenv("LARES_LANG"),
   scores = language,
@@ -66,6 +67,8 @@ these tiles (and positions). Not very relevant on Scrabble but for Wordle.}
 
 \item{force_n, force_max}{Integer. Force words to be n or max n characters
 long. Leave 0 to ignore parameter.}
+
+\item{pattern}{Character string. Custom regex patterns you'd like to match.}
 
 \item{repeated}{Boolean. By default, no replacement allowed. When activated,
 a single tile can be repeated and won't be "used and discarded".}

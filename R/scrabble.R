@@ -233,6 +233,7 @@ grepl_letters <- function(x, pattern, blank = "_") {
 #' these tiles (and positions). Not very relevant on Scrabble but for Wordle.
 #' @param force_n,force_max Integer. Force words to be n or max n characters
 #' long. Leave 0 to ignore parameter.
+#' @param pattern Character string. Custom regex patterns you'd like to match.
 #' @param repeated Boolean. By default, no replacement allowed. When activated,
 #' a single tile can be repeated and won't be "used and discarded".
 #' @param scores,language Character. Any of "en","es","de","fr".
@@ -282,6 +283,7 @@ scrabble_words <- function(tiles = "",
                            exclude_here = "",
                            force_n = 0,
                            force_max = 0,
+                           pattern = "",
                            repeated = FALSE,
                            language = Sys.getenv("LARES_LANG"),
                            scores = language,
@@ -359,15 +361,26 @@ scrabble_words <- function(tiles = "",
       .temp_print(length(words))
     }
   }
+  # Force custom patterns that must be contained
+  if (pattern[1] != "") {
+    for (str in pattern) {
+      words <- words[grep(tolower(str), words, perl = TRUE)]
+      .temp_print(length(words))
+    }
+  }
   # Exclude letters from positions (Wordle)
-  pos_tiles <- str_split_merge(tolower(exclude_here))
-  for (i in seq_along(pos_tiles)) {
-    these <- str_split(pos_tiles, "\\|")[i][[1]]
-    if (!any(these %in% letters)) next
-    located <- stringr::str_locate_all(words, pos_tiles[i])
-    these <- !unlist(lapply(located, function(x) sum(x[, 1] == i) > 0))
-    words <- words[these]
-    .temp_print(length(words))
+  if (exclude_here[1] != "") {
+   for (eh in exclude_here) {
+    pos_tiles <- str_split_merge(tolower(eh))
+    for (i in seq_along(pos_tiles)) {
+      these <- str_split(pos_tiles, "\\|")[i][[1]]
+      if (!any(these %in% letters)) next
+      located <- stringr::str_locate_all(words, pos_tiles[i])
+      these <- !unlist(lapply(located, function(x) sum(x[, 1] == i) > 0))
+      words <- words[these]
+      .temp_print(length(words))
+    }
+   } 
   }
 
   .temp_print(length(words), last = TRUE)
@@ -422,15 +435,17 @@ scrabble_words <- function(tiles = "",
 }
 
 .add_letters <- function(str, tiles) {
-  if (str != "") {
+  if (str[1] != "") {
     str_tiles <- tolower(unlist(strsplit(str, "")))
+    # Get rid of non alpha-numeric values
+    str_tiles <- str_tiles[grepl("[[:alnum:]]", str_tiles)]
     which <- !str_tiles %in% c(tiles, "_")
     if (any(which)) {
       new <- str_tiles[which]
       tiles <- c(tiles, new)
       message(sprintf(
         "%s %s not in your tiles: now included",
-        v2t(new, and = "and"),
+        v2t(toupper(new), and = "and"),
         ifelse(length(new) > 1, "were", "was")
       ))
     }
