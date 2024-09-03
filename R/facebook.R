@@ -1,7 +1,7 @@
 # Auxiliary constant values
 # META_GRAPH_URL <- "https://graph.intern.facebook.com"
 META_GRAPH_URL <- "https://graph.facebook.com"
-META_API_VER <- "v17.0"
+META_API_VER <- "v20.0"
 
 ####################################################################
 #' Paginate and Process Facebook's API Results
