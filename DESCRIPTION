@@ -1,14 +1,15 @@
 Package: lares
 Type: Package
 Title: Analytics & Machine Learning Sidekick
-Version: 5.2.9
+Version: 5.2.9.9000
 Authors@R: c(
     person("Bernardo", "Lares", , "laresbernardo@gmail.com", c("aut", "cre")))
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
 Description: Auxiliary package for better/faster analytics, visualization, data mining, and machine
     learning tasks. With a wide variety of family functions, like Machine Learning, Data Wrangling,
-    MMM, Exploratory, API, and Scrapper, it helps the analyst or data scientist to get quick and 
-    robust results, without the need of repetitive coding or advanced R programming skills.
+    Marketing Mix Modeling (Robyn), Exploratory, API, and Scrapper, it helps the analyst or 
+    data scientist to get quick and robust results, without the need of repetitive coding or 
+    advanced R programming skills.
 Depends:
     R (>= 3.5.0)
 Imports:
