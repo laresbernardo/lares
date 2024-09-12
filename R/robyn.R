@@ -592,8 +592,10 @@ robyn_performance <- function(
   if (carryovers) {
     try_require("Robyn")
     carrov <- robyn_immcarr(
-      InputCollect, OutputCollect, solID = solID, 
-      start_date = start_date, end_date = end_date, ...) %>%
+      InputCollect, OutputCollect,
+      solID = solID,
+      start_date = start_date, end_date = end_date, ...
+    ) %>%
       filter(.data$type == "Carryover")
     mean_carryovers <- data.frame(
       channel = carrov$rn,

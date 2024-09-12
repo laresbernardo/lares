@@ -108,7 +108,7 @@ scrabble_score <- function(words, scores.df) {
 #' @family Scrabble
 #' @param lang Character. Any of "en","es" or "chars". Set to NULL
 #' if you wish to skip this step (and use \code{words} parameter in
-#' \code{scrabble_words()} instead). The "chars" parameter will 
+#' \code{scrabble_words()} instead). The "chars" parameter will
 #' score the number of characters a word has.
 #' @return data.frame with tiles and scores for each alphabet letter.
 #' @examples
@@ -133,15 +133,19 @@ scrabble_points <- function(lang) {
         tolower(LETTERS)[1:14], intToUtf8(241),
         tolower(LETTERS)[15:length(LETTERS)]
       ),
-      scores = c(1, 3, 2, 2, 1, 4, 3, 4, 1, 8, 10, 1, 3, 1, 
-                 8, 1, 3, 5, 1, 1, 1, 2, 4, 10, 10, 5, 10)
+      scores = c(
+        1, 3, 2, 2, 1, 4, 3, 4, 1, 8, 10, 1, 3, 1,
+        8, 1, 3, 5, 1, 1, 1, 2, 4, 10, 10, 5, 10
+      )
     )
   }
   if (lang == "en") {
     scores <- data.frame(
       tiles = tolower(LETTERS),
-      scores = c(1, 4, 4, 2, 1, 4, 3, 3, 1, 10, 5, 2, 4, 
-                 2, 1, 4, 10, 1, 1, 1, 2, 5, 4, 8, 3, 10)
+      scores = c(
+        1, 4, 4, 2, 1, 4, 3, 3, 1, 10, 5, 2, 4,
+        2, 1, 4, 10, 1, 1, 1, 2, 5, 4, 8, 3, 10
+      )
     )
   }
   if (lang %in% c("chars", "unique")) {
@@ -370,17 +374,17 @@ scrabble_words <- function(tiles = "",
   }
   # Exclude letters from positions (Wordle)
   if (exclude_here[1] != "") {
-   for (eh in exclude_here) {
-    pos_tiles <- str_split_merge(tolower(eh))
-    for (i in seq_along(pos_tiles)) {
-      these <- str_split(pos_tiles, "\\|")[i][[1]]
-      if (!any(these %in% letters)) next
-      located <- stringr::str_locate_all(words, pos_tiles[i])
-      these <- !unlist(lapply(located, function(x) sum(x[, 1] == i) > 0))
-      words <- words[these]
-      .temp_print(length(words))
+    for (eh in exclude_here) {
+      pos_tiles <- str_split_merge(tolower(eh))
+      for (i in seq_along(pos_tiles)) {
+        these <- str_split(pos_tiles, "\\|")[i][[1]]
+        if (!any(these %in% letters)) next
+        located <- stringr::str_locate_all(words, pos_tiles[i])
+        these <- !unlist(lapply(located, function(x) sum(x[, 1] == i) > 0))
+        words <- words[these]
+        .temp_print(length(words))
+      }
     }
-   } 
   }
 
   .temp_print(length(words), last = TRUE)
@@ -391,7 +395,7 @@ scrabble_words <- function(tiles = "",
         mutate(length = str_length(.data$word)) %>%
         arrange(desc(.data$scores), desc(.data$length))
     } else {
-      done <- scrabble_score(words, scores.df) 
+      done <- scrabble_score(words, scores.df)
     }
     if (sum(done$scores) == 0) done$scores <- NULL
     return(as_tibble(done))

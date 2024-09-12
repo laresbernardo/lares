@@ -129,7 +129,7 @@ get_mp3 <- function(id,
   if (open) {
     if (file.exists(mp3_file)) {
       message("Opening file: ", mp3_file)
-      browseURL(mp3_file) 
+      browseURL(mp3_file)
     } else {
       warning("Can't open file; possibly due to strange characters in title: ", mp3_file)
     }
@@ -139,7 +139,7 @@ get_mp3 <- function(id,
     if (file.exists(mp3_file)) {
       message("Deleting file: ", mp3_file)
       if (open) Sys.sleep(5)
-      file.remove(mp3_file) 
+      file.remove(mp3_file)
     } else {
       warning("Can't delete file; possibly due to strange characters in title: ", mp3_file)
     }

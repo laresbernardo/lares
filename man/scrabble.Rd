@@ -46,7 +46,7 @@ letter of the alphabet and "scores" for each letter's score.}
 
 \item{lang}{Character. Any of "en","es" or "chars". Set to NULL
 if you wish to skip this step (and use \code{words} parameter in
-\code{scrabble_words()} instead). The "chars" parameter will 
+\code{scrabble_words()} instead). The "chars" parameter will
 score the number of characters a word has.}
 
 \item{tiles}{Character. The letters you wish to consider.}
