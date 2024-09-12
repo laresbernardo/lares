@@ -129,7 +129,7 @@ gpt_ask <- function(ask,
   }
 
   # Save historical answers
-  cache <- bind_rows(
+  cache <- rbind(
     data.frame(ts = ts, reply = toJSON(ret)),
     cache_read("GPT_HIST_REPLY", quiet = TRUE, ...)
   ) %>%
