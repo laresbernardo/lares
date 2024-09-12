@@ -130,7 +130,7 @@ gpt_ask <- function(ask,
 
   # Save historical answers
   cache <- bind_rows(
-    data.frame(ts = ts, reply = ret),
+    data.frame(ts = ts, reply = toJSON(ret)),
     cache_read("GPT_HIST_REPLY", quiet = TRUE, ...)
   ) %>%
     as_tibble()
