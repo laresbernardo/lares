@@ -15,7 +15,7 @@ rate between two currencies."><meta property="og:image" content="https://laresbe
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.9.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +35,7 @@ rate between two currencies."><meta property="og:image" content="https://laresbe
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Download Historical Currency Exchange Rate</h1>
-      <small class="dont-index">Source: <a href="https://github.com/laresbernardo/lares/blob/main/R/currency.R" class="external-link"><code>R/currency.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/laresbernardo/lares/blob/v5.2.9/R/currency.R" class="external-link"><code>R/currency.R</code></a></small>
       <div class="d-none name"><code>get_currency.Rd</code></div>
     </div>
 
@@ -92,19 +92,19 @@ grouped by date.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># For today (or any one single date)</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"USD/COP"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         date rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2024-09-12 4267</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         date    rate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2024-09-13 4208.39</span>
 <span class="r-in"><span><span class="co"># For multiple dates</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"EUR/USD"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         date     rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2024-09-05 1.111111</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2024-09-06 1.111111</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2024-09-07 1.111111</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2024-09-08 1.108721</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2024-09-09 1.103753</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2024-09-10 1.102098</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2024-09-11 1.102098</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 2024-09-12 1.101686</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2024-09-06 1.108721</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2024-09-07 1.108721</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2024-09-08 1.108721</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2024-09-09 1.103753</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2024-09-10 1.102098</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2024-09-11 1.101091</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2024-09-12 1.101091</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8 2024-09-13 1.107788</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
