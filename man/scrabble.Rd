@@ -23,6 +23,8 @@ scrabble_words(
   exclude_here = "",
   force_n = 0,
   force_max = 0,
+  pattern = "",
+  repeated = FALSE,
   language = Sys.getenv("LARES_LANG"),
   scores = language,
   words = NULL,
@@ -42,9 +44,10 @@ if you wish to skip this step (and use \code{words} parameter in
 \item{scores.df}{Dataframe. Must contain two columns: "tiles" with every
 letter of the alphabet and "scores" for each letter's score.}
 
-\item{lang}{Character. Any of "en","es". Set to NULL
+\item{lang}{Character. Any of "en","es" or "chars". Set to NULL
 if you wish to skip this step (and use \code{words} parameter in
-\code{scrabble_words()} instead).}
+\code{scrabble_words()} instead). The "chars" parameter will
+score the number of characters a word has.}
 
 \item{tiles}{Character. The letters you wish to consider.}
 
@@ -64,6 +67,11 @@ these tiles (and positions). Not very relevant on Scrabble but for Wordle.}
 
 \item{force_n, force_max}{Integer. Force words to be n or max n characters
 long. Leave 0 to ignore parameter.}
+
+\item{pattern}{Character string. Custom regex patterns you'd like to match.}
+
+\item{repeated}{Boolean. By default, no replacement allowed. When activated,
+a single tile can be repeated and won't be "used and discarded".}
 
 \item{scores, language}{Character. Any of "en","es","de","fr".
 If scores is not any of those languages, must be a data.frame that

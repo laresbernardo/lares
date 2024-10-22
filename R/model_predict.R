@@ -17,6 +17,7 @@
 #' @export
 #' @rdname h2o_predict
 h2o_predict_MOJO <- function(df, model_path, method = "mojo", batch = 300) {
+  try_require("h2o")
   quiet(h2o.init(nthreads = -1, port = 54321))
 
   files <- list.files(model_path)
@@ -82,6 +83,7 @@ h2o_predict_MOJO <- function(df, model_path, method = "mojo", batch = 300) {
 #' @rdname h2o_predict
 h2o_predict_binary <- function(df, model_path, sample = NA) {
   message("Use of h2o_predict_MOJO instead highly recommended!")
+  try_require("h2o")
   quiet(h2o.init(nthreads = -1, port = 54321))
 
   if (!right(model_path, 4) == ".zip") {

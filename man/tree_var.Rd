@@ -83,12 +83,6 @@ predictions, performance metrics, and interpret auxiliary text.
 Fit and plot a \code{rpart} model for exploratory purposes using
 \code{rpart} and \code{rpart.plot} libraries.
 }
-\details{
-This differs from the \code{tree} function in S mainly in its handling
-  of surrogate variables.  In most details it follows Breiman
-  \emph{et. al} (1984) quite closely.  \R package \pkg{tree} provides a
-  re-implementation of \code{tree}.
-}
 \examples{
 data(dft)
 # Regression Tree
@@ -100,11 +94,6 @@ tree$performance # metrics
 tree_var(dft, Survived_TRUE, explain = FALSE, cex = 0.8)$plot()
 # Multiclass tree
 tree_var(dft[, c("Pclass", "Fare", "Age")], Pclass, ohse = FALSE)$plot()
-}
-\references{
-Breiman L., Friedman J. H., Olshen R. A., and Stone, C. J. (1984)
-  \emph{Classification and Regression Trees.}
-  Wadsworth.
 }
 \seealso{
 Other Exploratory: 
@@ -133,11 +122,6 @@ Other Visualization:
 \code{\link{plot_chord}()},
 \code{\link{plot_survey}()},
 \code{\link{plot_timeline}()}
-}
-\author{
-Stephen Milborrow, borrowing heavily from the \code{\link{rpart}}
-  package by Terry M. Therneau and Beth Atkinson,
-  and the R port of that package by Brian Ripley.
 }
 \concept{Exploratory}
 \concept{Visualization}

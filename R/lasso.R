@@ -41,6 +41,7 @@ lasso_vars <- function(df, variable,
                        quiet = FALSE,
                        seed = 123, ...) {
   tic("lasso_vars")
+  try_require("h2o")
   quiet(h2o.init(nthreads = -1, port = 54321))
   h2o.no_progress()
   on.exit(set.seed(seed))

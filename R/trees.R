@@ -7,9 +7,9 @@
 #' @family Exploratory
 #' @family Visualization
 #' @inheritParams h2o_automl
-#' @inherit rpart::rpart
-#' @inherit rpart::rpart.control
-#' @inherit rpart.plot::rpart.plot
+#' @inheritParams rpart::rpart
+#' @inheritParams rpart::rpart.control
+#' @inheritParams rpart.plot::rpart.plot
 #' @param df Data frame
 #' @param max Integer. Maximal depth of the tree.
 #' @param min Integer. The minimum number of observations that must

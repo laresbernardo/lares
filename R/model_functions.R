@@ -726,6 +726,7 @@ export_results <- function(results,
                            save = TRUE,
                            seed = 0) {
   if (save) {
+    try_require("h2o")
     quiet(h2o.init(nthreads = -1, port = 54321))
 
     pass <- !is.null(attr(results, "type"))

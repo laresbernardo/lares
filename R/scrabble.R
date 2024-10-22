@@ -106,9 +106,10 @@ scrabble_score <- function(words, scores.df) {
 #' Dataframe for every letter and points given a language.
 #'
 #' @family Scrabble
-#' @param lang Character. Any of "en","es". Set to NULL
+#' @param lang Character. Any of "en","es" or "chars". Set to NULL
 #' if you wish to skip this step (and use \code{words} parameter in
-#' \code{scrabble_words()} instead).
+#' \code{scrabble_words()} instead). The "chars" parameter will
+#' score the number of characters a word has.
 #' @return data.frame with tiles and scores for each alphabet letter.
 #' @examples
 #' scrabble_points("es")
@@ -122,8 +123,8 @@ scrabble_points <- function(lang) {
     message(">>> Skipping points schema...")
     return(invisible(NULL))
   }
-  if (!lang %in% c("en", "es")) {
-    message("We do not have the points for this language yet!")
+  if (!lang %in% c("en", "es", "chars", "unique")) {
+    message("There are no points structure for this language/system yet")
     return(invisible(NULL))
   }
   if (lang == "es") {
@@ -132,17 +133,27 @@ scrabble_points <- function(lang) {
         tolower(LETTERS)[1:14], intToUtf8(241),
         tolower(LETTERS)[15:length(LETTERS)]
       ),
-      scores = c(1, 3, 2, 2, 1, 4, 3, 4, 1, 8, 10, 1, 3, 1, 8, 1, 3, 5, 1, 1, 1, 2, 4, 10, 10, 5, 10)
+      scores = c(
+        1, 3, 2, 2, 1, 4, 3, 4, 1, 8, 10, 1, 3, 1,
+        8, 1, 3, 5, 1, 1, 1, 2, 4, 10, 10, 5, 10
+      )
     )
   }
   if (lang == "en") {
     scores <- data.frame(
       tiles = tolower(LETTERS),
-      scores = c(1, 4, 4, 2, 1, 4, 3, 3, 1, 10, 5, 2, 4, 2, 1, 4, 10, 1, 1, 1, 2, 5, 4, 8, 3, 10)
+      scores = c(
+        1, 4, 4, 2, 1, 4, 3, 3, 1, 10, 5, 2, 4,
+        2, 1, 4, 10, 1, 1, 1, 2, 5, 4, 8, 3, 10
+      )
     )
   }
-
-  message(sprintf(">>> Loaded points for '%s'", lang))
+  if (lang %in% c("chars", "unique")) {
+    scores <- data.frame(
+      tiles = tolower(LETTERS)
+    ) %>% mutate(scores = 1)
+  }
+  message(sprintf(">>> Points system: '%s'", lang))
   return(scores)
 }
 
@@ -226,6 +237,9 @@ grepl_letters <- function(x, pattern, blank = "_") {
 #' these tiles (and positions). Not very relevant on Scrabble but for Wordle.
 #' @param force_n,force_max Integer. Force words to be n or max n characters
 #' long. Leave 0 to ignore parameter.
+#' @param pattern Character string. Custom regex patterns you'd like to match.
+#' @param repeated Boolean. By default, no replacement allowed. When activated,
+#' a single tile can be repeated and won't be "used and discarded".
 #' @param scores,language Character. Any of "en","es","de","fr".
 #' If scores is not any of those languages, must be a data.frame that
 #' contains two columns: "tiles" with every letter of the alphabet and
@@ -273,6 +287,8 @@ scrabble_words <- function(tiles = "",
                            exclude_here = "",
                            force_n = 0,
                            force_max = 0,
+                           pattern = "",
+                           repeated = FALSE,
                            language = Sys.getenv("LARES_LANG"),
                            scores = language,
                            words = NULL,
@@ -286,7 +302,7 @@ scrabble_words <- function(tiles = "",
       stop("Please, provide a valid scores data.frame with 'tiles' and 'scores' columns")
     }
   } else {
-    scores <- scrabble_points(scores)
+    scores.df <- scrabble_points(scores)
   }
 
   ### TILES
@@ -323,8 +339,8 @@ scrabble_words <- function(tiles = "",
     )))
   }
   words <- tolower(dictionary)
-  # Words can't have more letters than inputs
-  words <- words[nchar(words) <= ntiles]
+  # Words can't have more letters than inputs by default
+  if (!repeated) words <- words[nchar(words) <= ntiles]
   .temp_print(length(words))
   # Exclude specific tiles (Wordle)
   if (length(force_not) > 0) words <- words[!grepl(paste(force_not, collapse = "|"), words)]
@@ -332,10 +348,10 @@ scrabble_words <- function(tiles = "",
   # You may want to force their lengths
   if (force_n > 0) words <- words[nchar(words) == force_n]
   .temp_print(length(words))
-  if (force_max > 0) words <- words[nchar(words) <= force_max]
+  if (force_max > 0 && !repeated) words <- words[nchar(words) <= force_max]
   .temp_print(length(words))
   # Words can't have different letters than inputs
-  words <- words[.all_tiles_present(words, tiles, free = 0)]
+  words <- words[.all_tiles_present(words, tiles, free = 0, repeated = repeated)]
   .temp_print(length(words))
   # Force start/end strings
   words <- .force_words(words, force_start)
@@ -349,20 +365,38 @@ scrabble_words <- function(tiles = "",
       .temp_print(length(words))
     }
   }
+  # Force custom patterns that must be contained
+  if (pattern[1] != "") {
+    for (str in pattern) {
+      words <- words[grep(tolower(str), words, perl = TRUE)]
+      .temp_print(length(words))
+    }
+  }
   # Exclude letters from positions (Wordle)
-  pos_tiles <- str_split_merge(tolower(exclude_here))
-  for (i in seq_along(pos_tiles)) {
-    these <- str_split(pos_tiles, "\\|")[i][[1]]
-    if (!any(these %in% letters)) next
-    located <- stringr::str_locate_all(words, pos_tiles[i])
-    these <- !unlist(lapply(located, function(x) sum(x[, 1] == i) > 0))
-    words <- words[these]
-    .temp_print(length(words))
+  if (exclude_here[1] != "") {
+    for (eh in exclude_here) {
+      pos_tiles <- str_split_merge(tolower(eh))
+      for (i in seq_along(pos_tiles)) {
+        these <- str_split(pos_tiles, "\\|")[i][[1]]
+        if (!any(these %in% letters)) next
+        located <- stringr::str_locate_all(words, pos_tiles[i])
+        these <- !unlist(lapply(located, function(x) sum(x[, 1] == i) > 0))
+        words <- words[these]
+        .temp_print(length(words))
+      }
+    }
   }
 
   .temp_print(length(words), last = TRUE)
   if (length(words) > 0) {
-    done <- scrabble_score(words, scores)
+    if ("unique" %in% scores) {
+      this <- lapply(words, function(x) sum(!!str_count(x, letters)))
+      done <- data.frame(word = words, scores = unlist(this)) %>%
+        mutate(length = str_length(.data$word)) %>%
+        arrange(desc(.data$scores), desc(.data$length))
+    } else {
+      done <- scrabble_score(words, scores.df)
+    }
     if (sum(done$scores) == 0) done$scores <- NULL
     return(as_tibble(done))
   } else {
@@ -374,10 +408,11 @@ scrabble_words <- function(tiles = "",
   if (print) if (!last) formatColoured(paste(x, "> ")) else formatColoured(paste(x, "\n"))
 }
 
-# Tile used, tile that must be skipped on next iterations
-.all_tiles_present <- function(words, tiles, free = 0) {
+# Tile used, tile that must be skipped on next iterations (when repeated is TRUE)
+.all_tiles_present <- function(words, tiles, free = 0, repeated = FALSE) {
   free <- free + sum(tiles == "_")
-  for (x in tiles) words <- sub(x, "", words)
+  fx <- ifelse(repeated, gsub, sub)
+  for (x in tiles) words <- fx(x, "", words)
   nchar(words) <= free
 }
 
@@ -404,15 +439,17 @@ scrabble_words <- function(tiles = "",
 }
 
 .add_letters <- function(str, tiles) {
-  if (str != "") {
+  if (str[1] != "") {
     str_tiles <- tolower(unlist(strsplit(str, "")))
+    # Get rid of non alpha-numeric values
+    str_tiles <- str_tiles[grepl("[[:alnum:]]", str_tiles)]
     which <- !str_tiles %in% c(tiles, "_")
     if (any(which)) {
       new <- str_tiles[which]
       tiles <- c(tiles, new)
       message(sprintf(
         "%s %s not in your tiles: now included",
-        v2t(new, and = "and"),
+        v2t(toupper(new), and = "and"),
         ifelse(length(new) > 1, "were", "was")
       ))
     }
