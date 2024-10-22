@@ -118,6 +118,7 @@ recommended <- list(
   knitr = c("kable", "knit"),
   methods = "as",
   mice = c("mice", "complete"),
+  parallel = c("makeCluster", "setDefaultCluster", "stopCluster"),
   plotly = c("ggplotly", "plot_ly", "add_markers", "add_markers"),
   prophet = c(
     "prophet", "fit.prophet", "prophet_plot_components",
