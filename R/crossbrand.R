@@ -202,7 +202,7 @@ robyn_crossmmm <- function(
       if (is.null(cores)) cores <- min(10, detectCores() - 1)
       cl <- makeCluster(cores)
       setDefaultCluster(cl)
-      optimfx <- optimParallel::optimParallel
+      optimfx <- optimParallel
     } else {
       optimfx <- stats::optim
       cl <- NULL
@@ -375,7 +375,7 @@ if (FALSE) {
   # Import and recreate the models
   dir <- "C:/Users/bl896211/OneDrive - GSK/MMM CoE EU Launch/3. Project Decks/4. Pilot Decks/Models/"
   files <- c("Finland.json", "Greece.json", "Germany.json", "France.json")
-  models <- lapply(paste0(dir, files), function(x) Robyn::robyn_recreate(x))
+  models <- lapply(paste0(dir, files), function(x) robyn_recreate(x))
   names(models) <- gsub("\\.json", "", files)
 
   # Calculate cross-brand optimal allocation
