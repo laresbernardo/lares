@@ -2,7 +2,8 @@
 #' Cross-MMM Budget Optimization
 #'
 #' Given a list of recreated Robyn models, this function optimizes budget
-#' allocation across MMMs with respective constraints. The method
+#' allocation across MMMs with respective constraints by maximizing
+#' incremental revenue/conversions. This method
 #' assumes each model is independent and can be compared given its
 #' spends were cleanly and properly split.
 #'
@@ -361,36 +362,4 @@ Optimized State:
     }))),
     bi = round(sum(x$summary$optbudget) - x$inputs$total_budget)
   ))
-}
-
-##### PLAY ZONE #####
-
-if (FALSE) {
-  library(dplyr)
-  library(Robyn)
-  library(lares)
-  library(parallel)
-  library(optimParallel)
-
-  # Import and recreate the models
-  dir <- "C:/Users/bl896211/OneDrive - GSK/MMM CoE EU Launch/3. Project Decks/4. Pilot Decks/Models/"
-  files <- c("Finland.json", "Greece.json", "Germany.json", "France.json")
-  models <- lapply(paste0(dir, files), function(x) robyn_recreate(x))
-  names(models) <- gsub("\\.json", "", files)
-
-  # Calculate cross-brand optimal allocation
-  res <- robyn_crossmmm(
-    models,
-    cores = 10,
-    start_dates = "2023-01-01",
-    end_dates = "2023-12-01"
-  )
-  print(res)
-  res$summary
-  res$optimization$loginfo <- as.data.frame(res$optimization$loginfo)
-  plot(c(res$optimization$loginfo$step, res$optimization$loginfo$fn))
-
-  # Marginal Response Units should always increase:
-  sum(res$allocations$Finland$dt_optimOut$initResponseMargUnit)
-  sum(res$allocations$Finland$dt_optimOut$optmResponseMargUnit)
 }

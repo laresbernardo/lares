@@ -59,7 +59,8 @@ Invisible vector with results by letter.
 }
 \description{
 Given a list of recreated Robyn models, this function optimizes budget
-allocation across MMMs with respective constraints. The method
+allocation across MMMs with respective constraints by maximizing
+incremental revenue/conversions. This method
 assumes each model is independent and can be compared given its
 spends were cleanly and properly split.
 }
