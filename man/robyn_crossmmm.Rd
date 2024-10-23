@@ -81,9 +81,5 @@ res <- robyn_crossmmm(
 )
 print(res)
 res$summary
-
-# Marginal Response Units should always increase:
-sum(res$allocations$BrandN$dt_optimOut$initResponseMargUnit)
-sum(res$allocations$BrandN$dt_optimOut$optmResponseMargUnit)
 }
 }
