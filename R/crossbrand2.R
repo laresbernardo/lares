@@ -276,7 +276,7 @@ robyn_crossmmm2 <- function(models,
       # Spend calculations
       initSpend = initial$spend[channel_for_allocation_ids],
       initSpendUnit = initial$spend[channel_for_allocation_ids] / .data$periods,
-      initSpendDistr = initSpend / sum(initSpend),
+      initSpendDistr = .data$initSpend / sum(.data$initSpend),
       optmSpendUnit = optmSpendUnit,
       optmSpendDistr = optmSpendUnit / sum(optmSpendUnit),
       optmSpendChg = optmSpendUnit / initSpendUnit,
@@ -286,10 +286,10 @@ robyn_crossmmm2 <- function(models,
       optmResponseUnit = optmResponseUnit,
       optmResponseMargUnit = optmResponseMargUnit,
       # Performance metrics
-      initROAS = initResponse / initSpend,
-      optmROAS = optmResponseUnit / optmSpendUnit,
-      initCPA = initSpend / initResponse,
-      optmCPA = optmSpendUnit / optmResponseUnit
+      initROAS = .data$initResponse / .data$initSpend,
+      optmROAS = .data$optmResponseUnit / .data$optmSpendUnit,
+      initCPA = .data$initSpend / .data$initResponse,
+      optmCPA = .data$optmSpendUnit / .data$optmResponseUnit
     ) %>%
     select("model", everything(), -contains("constr"))
 
@@ -297,14 +297,14 @@ robyn_crossmmm2 <- function(models,
   mod <- res %>%
     group_by(.data$model, .data$periods, .data$start_date, .data$end_date) %>%
     summarize(
-      initSpend = sum(initSpend),
-      initSpendUnit = sum(initSpendUnit),
+      initSpend = sum(.data$initSpend),
+      initSpendUnit = sum(.data$initSpendUnit),
       initSpendDistr = 0,
-      optmSpendUnit = sum(optmSpendUnit),
+      optmSpendUnit = sum(.data$optmSpendUnit),
       optmSpendDistr = 0,
       optmSpendChg = 0,
-      initResponseUnit = sum(initResponseUnit),
-      optmResponseUnit = sum(optmResponseUnit),
+      initResponseUnit = sum(.data$initResponseUnit),
+      optmResponseUnit = sum(.data$optmResponseUnit),
       optmRespChange = 0,
       incrementalUnit = 0
     ) %>%
