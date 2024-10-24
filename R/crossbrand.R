@@ -2,26 +2,17 @@
 #' Cross-MMM Budget Optimization
 #'
 #' Given a list of recreated Robyn models, this function optimizes budget
-#' allocation across MMMs with respective constraints by maximizing
-#' incremental revenue/conversions. This method
-#' assumes each model is independent and can be compared given its
-#' spends were cleanly and properly split.
+#' allocation across MMM with respective constraints by maximizing
+#' incremental revenue/conversions. This method assumes each model is 
+#' independent, that can be compared given its spends were cleanly and 
+#' properly split, they modeled the same metric (revenue or conversion) 
+#' and units (currency or type of conversion), and date granularity. 
+#' Recommended to have same channels granularity across markets 
+#' to simplify results readings and application.
 #'
-#' @param models Lists. Recreated Robyn models with \code{robyn_recreate()}.
-#' @param initial_budgets Numeric vector. Default will use the total spends
-#' per model for the specified or total date range.
-#' Must be length 1 or same as \code{models}.
-#' @param start_dates,end_dates Character vector. Start and end dates for each
-#' specific model. You can specify a single date and will be used in all models.
-#' Default empty value will assume you want all available data and date range.
-#' Must be length 1 or same as \code{models}.
 #' @param budget_constr_low,budget_constr_up Numeric vector. Relative minimum
 #' and maximum budgets to consider based on \code{initial_budgets}.
 #' By default it'll consider 50% and 150% budget constraints.
-#' Must be length 1 or same as \code{models}.
-#' @param channel_constr_low,channel_constr_up Numeric vector. Relative minimum
-#' and maximum budgets to consider per channel.
-#' By default it'll consider 50% and 150% channel constraints.
 #' Must be length 1 or same as \code{models}.
 #' @param cores Integer. How many cores to use for parallel computations?
 #' Set to 1 to not use this option.
@@ -70,34 +61,24 @@ robyn_crossmmm <- function(
       filter(.data$channel == "PROMOTIONAL TOTAL")
   })
 
-  # Extract start dates when not provided
-  if (is.null(start_dates)) {
-    start_dates <- as.Date(
-      unlist(lapply(
-        perfs, function(x) unlist(pull(x, .data$start_date))
-      )),
-      origin = "1970-01-01"
-    )
-    if (!quiet) {
-      message("Extracted start dates: ", v2t(sprintf("%s (%s)", start_dates, names(start_dates))))
+  # Extract start and end dates when not provided
+  extract_dates <- function(dates, perfs, date_col, quiet) {
+    if (is.null(dates)) {
+      dates <- as.Date(
+        unlist(lapply(perfs, function(x) unlist(pull(x, .data[[date_col]])))),
+        origin = "1970-01-01"
+      )
+      if (!quiet) {
+        message("Extracted ", date_col, ": ", v2t(sprintf("%s (%s)", dates, names(dates))))
+      }
+    } else {
+      if (length(dates) == 1) dates <- rep(dates, length(models))
     }
-  } else {
-    if (length(start_dates) == 1) start_dates <- rep(start_dates, length(models))
+    dates
   }
-  # Extract end dates when not provided
-  if (is.null(start_dates)) {
-    end_dates <- as.Date(
-      unlist(lapply(
-        perfs, function(x) unlist(pull(x, .data$end_date))
-      )),
-      origin = "1970-01-01"
-    )
-    if (!quiet) {
-      message("Extracted end dates: ", v2t(sprintf("%s (%s)", end_dates, names(end_dates))))
-    }
-  } else {
-    if (length(end_dates) == 1) end_dates <- rep(end_dates, length(models))
-  }
+  start_dates <- extract_dates(start_dates, perfs, "start_date", quiet)
+  end_dates <- extract_dates(end_dates, perfs, "end_date", quiet)
+  
   # Extract initial budgets for the date range
   if (is.null(initial_budgets)) {
     for (i in seq_along(models)) {
@@ -118,6 +99,7 @@ robyn_crossmmm <- function(
   } else {
     if (length(initial_budgets) == 1) initial_budgets <- rep(initial_budgets, length(models))
   }
+  
   # Total budget across brands
   total_budget <- sum(initial_budgets)
 
