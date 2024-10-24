@@ -9,7 +9,7 @@
 #' @importFrom dplyr %>% all_of any_of arrange as_tibble bind_cols bind_rows case_when
 #' contains count desc distinct distinct_at everything filter first group_by inner_join
 #' lag last left_join mutate mutate_all mutate_at mutate_if n ntile ensym
-#' one_of pull rename rename_at right_join row_number rowwise sample_n
+#' one_of pull rename rename_at right_join row_number rowwise sample_n matches
 #' select select_if slice slice_head starts_with summarise summarise_all
 #' summarise_if summarize summarize_all tally tibble transmute_if ungroup vars
 #' @importFrom ggplot2 aes after_stat annotate coord_equal coord_flip
@@ -118,6 +118,8 @@ recommended <- list(
   knitr = c("kable", "knit"),
   methods = "as",
   mice = c("mice", "complete"),
+  optimParallel = "optimParallel",
+  nloptr = "nloptr",
   parallel = c("detectCores", "makeCluster", "setDefaultCluster", "stopCluster"),
   plotly = c("ggplotly", "plot_ly", "add_markers", "add_markers"),
   prophet = c(
@@ -127,7 +129,7 @@ recommended <- list(
   quantmod = c("getDividends", "getSymbols", "getQuote"),
   rdrop2 = c("drop_auth", "drop_dir", "drop_download", "drop_search", "drop_upload"),
   rgdal = c("readOGR", "project"),
-  Robyn = c("robyn_allocator", "robyn_immcarr"),
+  Robyn = c("robyn_allocator", "robyn_immcarr", "robyn_response"),
   RPostgreSQL = "PostgreSQL",
   Rtsne = "Rtsne",
   rtweet = c("create_token", "search_tweets"),

@@ -47,6 +47,9 @@ robyn_crossmmm2 <- function(models,
                             channel_constr_up = 2,
                             quiet = FALSE,
                             ...) {
+  try_require("Robyn")
+  try_require("nloptr")
+  
   # Check all models are same type: metric and interval type
   stopifnot(length(unique(unlist(lapply(models, function(x) x$InputCollect$dep_var_type)))) == 1)
   stopifnot(length(unique(unlist(lapply(models, function(x) x$InputCollect$intervalType)))) == 1)
@@ -226,7 +229,6 @@ robyn_crossmmm2 <- function(models,
   options("ROBYN_TEMP" = eval_list)
 
   ## Bounded optimization
-  try_require("nloptr")
   nlsMod <- nloptr(
     x0 = x0 * channel_constr_low,
     eval_f = eval_f,
@@ -308,12 +310,12 @@ robyn_crossmmm2 <- function(models,
     ) %>%
     ungroup() %>%
     mutate(
-      initSpendDistr = initSpend / sum(initSpend),
-      optmSpendDistr = optmSpendUnit / sum(initSpendUnit),
-      optmSpendChg = optmSpendUnit / initSpendUnit,
-      optmRespChange = optmResponseUnit / initResponseUnit,
-      incrementalUnit = optmResponseUnit - initResponseUnit,
-      incrementalTotal = incrementalUnit * .data$periods
+      initSpendDistr = .data$initSpend / sum(.data$initSpend),
+      optmSpendDistr = .data$optmSpendUnit / sum(.data$initSpendUnit),
+      optmSpendChg = .data$optmSpendUnit / .data$initSpendUnit,
+      optmRespChange = .data$optmResponseUnit / .data$initResponseUnit,
+      incrementalUnit = .data$optmResponseUnit - .data$initResponseUnit,
+      incrementalTotal = .data$incrementalUnit * .data$periods
     )
 
   # Build total summary
