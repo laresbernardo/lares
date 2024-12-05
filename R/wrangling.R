@@ -424,8 +424,7 @@ formatNum <- function(x, decimals = 2, signif = NULL,
         } else {
           y <- format(as.numeric(y), big.mark = ",", decimal.mark = ".", ...)
         }
-        y <- trimws(y)
-        return(y) 
+        trimws(y)
       }
     }))
   }

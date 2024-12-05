@@ -372,9 +372,7 @@ eval_f <- function(X, target_value) {
     x_hist_carryover = hist_carryover_eval,
     SIMPLIFY = TRUE
   )
-
-  optm <- list(objective = objective, gradient = gradient, objective.channel = objective.channel)
-  return(optm)
+  list(objective = objective, gradient = gradient, objective.channel = objective.channel)
 }
 
 fx_objective <- function(x, coeff, alpha, inflexion, x_hist_carryover, get_sum = TRUE) {
@@ -384,13 +382,12 @@ fx_objective <- function(x, coeff, alpha, inflexion, x_hist_carryover, get_sum =
   } else {
     xOut <- coeff * ((1 + inflexion**alpha / xAdstocked**alpha)**-1)
   }
-  return(xOut)
+  xOut
 }
 
 fx_gradient <- function(x, coeff, alpha, inflexion, x_hist_carryover) {
   xAdstocked <- x + mean(x_hist_carryover)
-  xOut <- -coeff * sum((alpha * (inflexion**alpha) * (xAdstocked**(alpha - 1))) / (xAdstocked**alpha + inflexion**alpha)**2)
-  return(xOut)
+  -coeff * sum((alpha * (inflexion**alpha) * (xAdstocked**(alpha - 1))) / (xAdstocked**alpha + inflexion**alpha)**2)
 }
 
 fx_objective.chanel <- function(x, coeff, alpha, inflexion, x_hist_carryover) {
@@ -403,10 +400,10 @@ eval_g_eq <- function(X, target_value) {
   eval_list <- getOption("ROBYN_TEMP")
   constr <- sum(X) - eval_list$total_budget_unit
   grad <- rep(1, length(X))
-  return(list(
+  list(
     "constraints" = constr,
     "jacobian" = grad
-  ))
+  )
 }
 
 extract_dates <- function(dates, history, date_col, quiet) {
@@ -446,11 +443,11 @@ inflextion_points <- function(model) {
   gammas <- model$OutputCollect$resultHypParam %>%
     select(all_of(paste0(model$InputCollect$paid_media_spends, "_gammas"))) %>%
     unlist()
-  inflexions <- unlist(lapply(seq(ncol(chnAdstocked)), function(i) {
+  inflexions <- unlist(lapply(seq_along(chnAdstocked), function(i) {
     c(range(chnAdstocked[, i]) %*% c(1 - gammas[i], gammas[i]))
   }))
   names(inflexions) <- names(gammas)
-  return(inflexions)
+  inflexions
 }
 
 hist_carryover_calc <- function(model) {
