@@ -392,8 +392,7 @@ fx_gradient <- function(x, coeff, alpha, inflexion, x_hist_carryover) {
 
 fx_objective.chanel <- function(x, coeff, alpha, inflexion, x_hist_carryover) {
   xAdstocked <- x + mean(x_hist_carryover)
-  xOut <- -coeff * sum((1 + inflexion**alpha / xAdstocked**alpha)**-1)
-  return(xOut)
+  -coeff * sum((1 + inflexion**alpha / xAdstocked**alpha)**-1)
 }
 
 eval_g_eq <- function(X, target_value) {
