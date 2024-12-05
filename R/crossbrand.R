@@ -1,5 +1,5 @@
 ####################################################################
-#' Cross-MMM Budget Optimization
+#' Cross-MMM Budget Optimization across Models
 #'
 #' Given a list of recreated Robyn models, this function optimizes budget
 #' allocation across MMM with respective constraints by maximizing
@@ -30,7 +30,7 @@
 #' names(models) <- gsub("\\.json", "", files)
 #' 
 #' # Calculate cross-brand optimal allocation
-#' res <- robyn_crossmmm(
+#' res <- robyn_xmodels(
 #'   models,
 #'   cores = 10,
 #'   start_dates = "2023-01-01",
@@ -41,7 +41,7 @@
 #' }
 #' @export
 #' @rdname robyn_crossmmm
-robyn_crossmmm <- function(
+robyn_xmodels <- function(
     models, initial_budgets = NULL,
     start_dates = NULL,
     end_dates = NULL,

@@ -1,5 +1,5 @@
 ####################################################################
-#' Cross-MMM Budget Allocator by Channel
+#' Cross-MMM Budget Optimization across Channels (fast)
 #' 
 #' Given a list of recreated Robyn models, this function optimizes budget
 #' allocation across MMM with respective constraints by maximizing
@@ -11,7 +11,7 @@
 #' to simplify results readings and application.
 #' 
 #' This approach is faster and cleaner compared with previous proposal
-#' using \code{robyn_crossmmm()}.
+#' using \code{robyn_xmodels()}.
 #'
 #' @param models Lists. Recreated Robyn models with \code{robyn_recreate()}.
 #' @param initial_budgets Numeric vector. Default will use the total spends
@@ -31,7 +31,7 @@
 #' @examples
 #' \dontrun{
 #' # Calculate cross-brand optimal allocation
-#' res <- robyn_crossmmm2(
+#' res <- robyn_xchannels(
 #'   models,
 #'   start_dates = "2023-01-01",
 #'   end_dates = "2023-12-01"
@@ -39,14 +39,15 @@
 #' }
 #' @rdname robyn_crossmmm
 #' @export
-robyn_crossmmm2 <- function(models,
-                            initial_budgets = NULL,
-                            start_dates = NULL,
-                            end_dates = NULL,
-                            channel_constr_low = 0.5,
-                            channel_constr_up = 2,
-                            quiet = FALSE,
-                            ...) {
+robyn_xchannels <- function(
+    models,
+    initial_budgets = NULL,
+    start_dates = NULL,
+    end_dates = NULL,
+    channel_constr_low = 0.5,
+    channel_constr_up = 2,
+    quiet = FALSE,
+    ...) {
   try_require("Robyn")
   try_require("nloptr")
   
