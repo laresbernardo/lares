@@ -387,19 +387,21 @@ v2t <- vector2text
 #' formatNum(1.23456, type = 1)
 #' formatNum(1.23456, pre = "$", pos = "/person")
 #' formatNum(123456, abbr = TRUE)
-#' formatNum(1234567890, abbr = TRUE, signif = 2)
+#' formatNum(c(123123, 123.123, 0.123123), signif = 2)
+#' formatNum(1234567890, abbr = TRUE, signif = 3)
 #' formatNum(1234567890, decimals = 0, abbr = TRUE)
 #' formatNum(c(-3:3), sign = TRUE)
 #' @export
 #' @rdname format_string
-formatNum <- function(x, decimals = 2, signif = NULL,
+formatNum <- function(x, decimals = 2, signif = NULL, 
                       type = Sys.getenv("LARES_NUMFORMAT"),
                       pre = "", pos = "", sign = FALSE,
                       abbr = FALSE,
                       ...) {
-  if (is.null(x)) {
+  if (is.null(x) || !is.numeric(x)) {
     return(x)
   }
+  
   # Auxiliary function to save signs
   if (sign) signs <- ifelse(x > 0, "+", "")
 
@@ -408,18 +410,23 @@ formatNum <- function(x, decimals = 2, signif = NULL,
   x <- base::round(x, digits = decimals)
 
   # Significant digits
-  if (!is.null(signif)) x <- base::signif(x, signif)
+  if (!is.null(signif)) {
+    x <- lapply(x, function(y) if (is.na(y)) y else base::signif(y, signif))
+  }
 
   if (abbr) {
-    x <- num_abbr(x, n = decimals + 1)
+    x <- unlist(lapply(x, function(y) if (is.na(y)) y else num_abbr(y, n = decimals + 1)))
   } else {
-    if (is.null(decimals)) decimals <- 0L
-    if (type == 1) {
-      x <- format(as.numeric(x), big.mark = ".", decimal.mark = ",", ...)
-    } else {
-      x <- format(as.numeric(x), big.mark = ",", decimal.mark = ".", ...)
-    }
-    x <- trimws(x)
+    x <- unlist(lapply(x, function(y) {
+      if (is.na(y)) y else {
+        if (type == 1) {
+          y <- format(as.numeric(y), big.mark = ".", decimal.mark = ",", ...)
+        } else {
+          y <- format(as.numeric(y), big.mark = ",", decimal.mark = ".", ...)
+        }
+        trimws(y)
+      }
+    }))
   }
 
   if (pre == "$") x <- gsub("\\$-", "-$", x)
