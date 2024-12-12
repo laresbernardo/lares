@@ -2,7 +2,7 @@
 % Please edit documentation in R/family.R
 \name{seq_surnames}
 \alias{seq_surnames}
-\title{Family Tree and Surnames Sequence}
+\title{Family Tree Surnames Sequence}
 \usage{
 seq_surnames(n = 1)
 }
@@ -14,7 +14,7 @@ of 2^n integer values.}
 Integer vector.
 }
 \description{
-Family Tree and Surnames Sequence
+Family Tree Surnames Sequence
 }
 \examples{
 seq_surnames(1) # Expected: 1

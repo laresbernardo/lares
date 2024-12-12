@@ -1,5 +1,5 @@
 ####################################################################
-#' Family Tree and Surnames Sequence
+#' Family Tree Surnames Sequence
 #'
 #' @param n Integer. Number of generations. Notice this will generate sequences
 #' of 2^n integer values.
