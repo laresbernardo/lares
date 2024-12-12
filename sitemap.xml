@@ -88,7 +88,6 @@
 <url><loc>https://laresbernardo.github.io/lares/reference/index.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/install_recommended.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/ip_data.html</loc></url>
-<url><loc>https://laresbernardo.github.io/lares/reference/is_url.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/iter_seeds.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/json2vector.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/lares-exports.html</loc></url>
@@ -159,6 +158,7 @@
 <url><loc>https://laresbernardo.github.io/lares/reference/scale_x_comma.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/scrabble.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/sentimentBreakdown.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/seq_surnames.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/shap_var.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/slackSend.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/spread_list.html</loc></url>

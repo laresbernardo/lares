@@ -3,11 +3,19 @@
 and return error/message with possible options to use. Similar
 to match.arg() but more flexible.
 This function checks if an object has a specific attribute and
-stops if not."><meta property="og:description" content="This function validates if inputs match all/any of your options
+stops if not.
+Check whether a value or vector is or is not following a set
+of rules. For example: is an URL, is an ID vector, are non-variant or
+constant values, are binary values... Notice that is_ will return
+the result for each observation and are_ for the whole vector."><meta property="og:description" content="This function validates if inputs match all/any of your options
 and return error/message with possible options to use. Similar
 to match.arg() but more flexible.
 This function checks if an object has a specific attribute and
-stops if not."><meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png"><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-166493168-2"></script><script>
+stops if not.
+Check whether a value or vector is or is not following a set
+of rules. For example: is an URL, is an ID vector, are non-variant or
+constant values, are binary values... Notice that is_ will return
+the result for each observation and are_ for the whole vector."><meta property="og:image" content="https://laresbernardo.github.io/lares/logo.png"><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-166493168-2"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -21,7 +29,7 @@ stops if not."><meta property="og:image" content="https://laresbernardo.github.i
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.9.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.9.9009</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,6 +59,10 @@ and return error/message with possible options to use. Similar
 to <code><a href="https://rdrr.io/r/base/match.arg.html" class="external-link">match.arg()</a></code> but more flexible.</p>
 <p>This function checks if an object has a specific attribute and
 stops if not.</p>
+<p>Check whether a value or vector is or is not following a set
+of rules. For example: is an URL, is an ID vector, are non-variant or
+constant values, are binary values... Notice that <code>is_</code> will return
+the result for each observation and <code>are_</code> for the whole vector.</p>
     </div>
 
     <div class="section level2">
@@ -64,7 +76,21 @@ stops if not.</p>
 <span>  quiet <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">check_attr</span><span class="op">(</span><span class="va">object</span>, attr <span class="op">=</span> <span class="st">"type"</span>, check <span class="op">=</span> <span class="cn">NULL</span>, stop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">check_attr</span><span class="op">(</span><span class="va">object</span>, attr <span class="op">=</span> <span class="st">"type"</span>, check <span class="op">=</span> <span class="cn">NULL</span>, stop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">is_url</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">is_ip</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">are_id</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">are_constant</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">are_binary</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">is_even</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">is_odd</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -111,6 +137,14 @@ for any other string. For example: "column names".</p></dd>
 <dt id="arg-stop">stop<a class="anchor" aria-label="anchor" href="#arg-stop"></a></dt>
 <dd><p>Boolean. Stop if doesn't check?</p></dd>
 
+
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>Vector</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Additional parameters passed to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl()</a></code></p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -118,6 +152,11 @@ for any other string. For example: "column names".</p></dd>
 Depending on <code>type</code> and/or <code>stop</code> arguments,
 errors or messages will be shown.</p>
 <p>No return value, called for side effects.</p>
+<p><code>is_url</code>. Boolean. Result of checking if <code>x</code> is a valid URL string.</p>
+<p><code>is_ip</code>. Boolean. Result of checking if <code>x</code> is a valid IP string.</p>
+<p><code>are_id</code>. Boolean. Result of checking if <code>x</code> is a potential ID vector</p>
+<p><code>are_constant</code>. Boolean. Result of checking if <code>x</code> is a constant vector</p>
+<p><code>are_binary</code>. Boolean. Result of checking if <code>x</code> is a binary vector</p>
     </div>
 
     <div class="section level2">
@@ -151,6 +190,31 @@ errors or messages will be shown.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">check_attr</span><span class="op">(</span><span class="va">test</span>, <span class="st">"class"</span>, <span class="st">"data.frame"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># check_attr(test, "class", "not.data.frame")</span></span></span>
+<span class="r-in"><span><span class="fu">is_url</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"google.com"</span>, <span class="st">"http://google.com"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE  TRUE</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">is_ip</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"163.114.132.0"</span>, <span class="st">"7.114.132"</span>, <span class="st">"0.0.0.0"</span>, <span class="st">"1.1.1.1."</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  TRUE FALSE  TRUE FALSE</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">are_id</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-in"><span><span class="fu">are_id</span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">are_constant</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span><span class="fu">are_constant</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">are_binary</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">is_even</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE  TRUE FALSE  TRUE FALSE</span>
+<span class="r-in"><span><span class="fu">is_odd</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  TRUE FALSE  TRUE FALSE  TRUE</span>
+<span class="r-in"><span><span class="fu">is_odd</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1.5</span>, <span class="fl">2.5</span>, <span class="cn">NA</span>, <span class="cn">Inf</span>, <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE FALSE FALSE    NA    NA</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
