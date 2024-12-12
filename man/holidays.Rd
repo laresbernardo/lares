@@ -34,7 +34,8 @@ any country and year within +- 5 years. Thanks to timeanddate.com!
 \examples{
 \donttest{
 holidays(countries = "Argentina")
-holidays(countries = c("Spain", "Venezuela"), years = year(Sys.Date()) + 1)
+year <- as.integer(format(Sys.Date(), format = "\%Y"))
+holidays(countries = c("Spain", "Venezuela"), years = year)
 holidays(countries = "Germany", include_regions = TRUE)
 }
 }
