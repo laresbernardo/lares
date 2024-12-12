@@ -5,6 +5,7 @@
 #' and return error/message with possible options to use. Similar
 #' to \code{match.arg()} but more flexible.
 #'
+#' @family Checks
 #' @param inputs Vector character. Check options.
 #' @param opts Vector character. Valid options.
 #' @param input_name Character. Custom your message and change "input"
@@ -58,6 +59,7 @@ check_opts <- function(inputs, opts,
 #' This function checks if an object has a specific attribute and
 #' stops if not.
 #'
+#' @family Checks
 #' @param object Object of any kind
 #' @param attr Character. Attribute to check
 #' @param check Character. Attribute value
@@ -99,6 +101,7 @@ check_attr <- function(object, attr = "type", check = NULL, stop = TRUE) {
 #' constant values, are binary values... Notice that \code{is_} will return
 #' the result for each observation and \code{are_} for the whole vector.
 #'
+#' @family Checks
 #' @param x Vector
 #' @param ... Additional parameters passed to \code{grepl()}
 #' @return \code{is_url}. Boolean. Result of checking if \code{x} is a valid URL string.
@@ -114,12 +117,17 @@ check_attr <- function(object, attr = "type", check = NULL, stop = TRUE) {
 #' are_constant(1:10)
 #'
 #' are_binary(c("A", "B", "A"))
+#' 
+#' is_even(1:5)
+#' is_odd(1:5)
+#' is_odd(c(0, 1.5, 2.5, NA, Inf, NULL))
+#' @rdname checks
 #' @export
 is_url <- function(x, ...) {
   return(grepl("(http|https)://[a-zA-Z0-9./?=_%:-]*", x, ...))
 }
 
-#' @rdname is_url
+#' @rdname checks
 #' @return \code{is_ip}. Boolean. Result of checking if \code{x} is a valid IP string.
 #' @export
 is_ip <- function(x, ...) {
@@ -130,23 +138,30 @@ is_ip <- function(x, ...) {
   return(grepl(regex, x, ...))
 }
 
-#' @rdname is_url
+#' @rdname checks
 #' @return \code{are_id}. Boolean. Result of checking if \code{x} is a potential ID vector
 #' @export
 are_id <- function(x) {
   return(is.character(x) && length(unique(x)) == length(x))
 }
 
-#' @rdname is_url
+#' @rdname checks
 #' @return \code{are_constant}. Boolean. Result of checking if \code{x} is a constant vector
 #' @export
 are_constant <- function(x) {
   return(length(unique(x)) == 1)
 }
 
-#' @rdname is_url
+#' @rdname checks
 #' @return \code{are_binary}. Boolean. Result of checking if \code{x} is a binary vector
 #' @export
 are_binary <- function(x) {
   return(length(unique(x)) == 2)
 }
+
+#' @rdname checks
+#' @export
+is_even <- function(x) x %% 2 == 0
+#' @rdname checks
+#' @export
+is_odd <- function(x) x %% 2 == 1
