@@ -117,7 +117,7 @@ check_attr <- function(object, attr = "type", check = NULL, stop = TRUE) {
 #' are_constant(1:10)
 #'
 #' are_binary(c("A", "B", "A"))
-#' 
+#'
 #' is_even(1:5)
 #' is_odd(1:5)
 #' is_odd(c(0, 1.5, 2.5, NA, Inf, NULL))

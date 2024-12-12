@@ -393,7 +393,7 @@ v2t <- vector2text
 #' formatNum(c(-3:3), sign = TRUE)
 #' @export
 #' @rdname format_string
-formatNum <- function(x, decimals = 2, signif = NULL, 
+formatNum <- function(x, decimals = 2, signif = NULL,
                       type = Sys.getenv("LARES_NUMFORMAT"),
                       pre = "", pos = "", sign = FALSE,
                       abbr = FALSE,
@@ -401,7 +401,7 @@ formatNum <- function(x, decimals = 2, signif = NULL,
   if (is.null(x) || !is.numeric(x)) {
     return(x)
   }
-  
+
   # Auxiliary function to save signs
   if (sign) signs <- ifelse(x > 0, "+", "")
 
@@ -418,7 +418,9 @@ formatNum <- function(x, decimals = 2, signif = NULL,
     x <- unlist(lapply(x, function(y) if (is.na(y)) y else num_abbr(y, n = decimals + 1)))
   } else {
     x <- unlist(lapply(x, function(y) {
-      if (is.na(y)) y else {
+      if (is.na(y)) {
+        y
+      } else {
         if (type == 1) {
           y <- format(as.numeric(y), big.mark = ".", decimal.mark = ",", ...)
         } else {

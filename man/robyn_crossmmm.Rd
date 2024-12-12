@@ -50,11 +50,11 @@ and maximum budgets to consider based on \code{initial_budgets}.
 By default it'll consider 50% and 150% budget constraints.
 Must be length 1 or same as \code{models}.}
 
-\item{channel_constr_low, channel_constr_up}{Numeric vector. 
+\item{channel_constr_low, channel_constr_up}{Numeric vector.
 Relative lower and upper constraints per channel compared with mean
-spend during the time period defined. 
+spend during the time period defined.
 If mean was zero for date range, historical mean spend value will be used.
-Must have length 1 to replicate for all channels or same length 
+Must have length 1 to replicate for all channels or same length
 (and order )as \code{paid_media_spends}.}
 
 \item{cores}{Integer. How many cores to use for parallel computations?
@@ -76,20 +76,20 @@ List. Contains optimized allocation results and plots.
 \description{
 Given a list of recreated Robyn models, this function optimizes budget
 allocation across MMM with respective constraints by maximizing
-incremental revenue/conversions. This method assumes each model is 
-independent, that can be compared given its spends were cleanly and 
-properly split, they modeled the same metric (revenue or conversion) 
-and units (currency or type of conversion), and date granularity. 
-Recommended to have same channels granularity across markets 
-to simplify results readings and application.
+incremental revenue/conversions. This method assumes each model is
+independent, that can be compared given its spends were cleanly and
+properly split, they modeled the same metric (revenue or conversion)
+and units (currency or type of conversion), and date granularity.
+For best results, ensure channels have similar granularity across
+markets to simplify interpretation and application of the outputs.
 
 Given a list of recreated Robyn models, this function optimizes budget
 allocation across MMM with respective constraints by maximizing
-response across all channels. This method assumes each model is 
-independent, that can be compared given its spends were cleanly and 
-properly split, they modeled the same metric (revenue or conversion) 
-and units (currency or type of conversion), and date granularity. 
-Recommended to have same channels granularity across markets 
+response across all channels. This method assumes each model is
+independent, that can be compared given its spends were cleanly and
+properly split, they modeled the same metric (revenue or conversion)
+and units (currency or type of conversion), and date granularity.
+Recommended to have same channels granularity across markets
 to simplify results readings and application.
 }
 \details{

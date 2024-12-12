@@ -471,7 +471,7 @@ holidays <- function(countries = "Venezuela",
       } else {
         c("Date", "Holiday", "Holiday.Type")
       }
-      
+
       # the table might contain comment about interstate holidays like
       # '* Observed only in some communities of this state.
       # Hover your mouse over the region or click on the holiday for details.'
@@ -491,7 +491,7 @@ holidays <- function(countries = "Venezuela",
           )
         }
       )
-      
+
       result <- data.frame(
         holiday = holidays$Date,
         holiday_name = holidays$Holiday,
@@ -520,7 +520,7 @@ holidays <- function(countries = "Venezuela",
     results <- results %>%
       filter(!is.na(.data$holiday)) %>%
       cleanNames() %>%
-      as_tibble() 
-    }
+      as_tibble()
+  }
   return(results)
 }

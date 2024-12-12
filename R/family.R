@@ -1,12 +1,12 @@
 ####################################################################
 #' Surnames Order Sequence
-#' 
-#' Generate a sequence of numbers that determines the order in which 
-#' surnames should be listed based on the number of generations of 
-#' ancestors you wish to include. This sequence follows the traditional 
-#' Latin custom of assigning the father's surname first, followed by 
-#' the mother's surname. The same logic extends systematically to higher 
-#' generations, ensuring that the order of surnames remains consistent 
+#'
+#' Generate a sequence of numbers that determines the order in which
+#' surnames should be listed based on the number of generations of
+#' ancestors you wish to include. This sequence follows the traditional
+#' Latin custom of assigning the father's surname first, followed by
+#' the mother's surname. The same logic extends systematically to higher
+#' generations, ensuring that the order of surnames remains consistent
 #' as you move upward through the family tree.
 #'
 #' @param n Integer. Number of generations to include in the sequence.

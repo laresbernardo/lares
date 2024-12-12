@@ -1,15 +1,15 @@
 ####################################################################
 #' Cross-MMM Budget Optimization across Channels (fast)
-#' 
+#'
 #' Given a list of recreated Robyn models, this function optimizes budget
 #' allocation across MMM with respective constraints by maximizing
-#' response across all channels. This method assumes each model is 
-#' independent, that can be compared given its spends were cleanly and 
-#' properly split, they modeled the same metric (revenue or conversion) 
-#' and units (currency or type of conversion), and date granularity. 
-#' Recommended to have same channels granularity across markets 
+#' response across all channels. This method assumes each model is
+#' independent, that can be compared given its spends were cleanly and
+#' properly split, they modeled the same metric (revenue or conversion)
+#' and units (currency or type of conversion), and date granularity.
+#' Recommended to have same channels granularity across markets
 #' to simplify results readings and application.
-#' 
+#'
 #' This approach is faster and cleaner compared with previous proposal
 #' using \code{robyn_xmodels()}.
 #'
@@ -21,12 +21,12 @@
 #' specific model. You can specify a single date and will be used in all models.
 #' Default empty value will assume you want all available data and date range.
 #' Must be length 1 or same as \code{models}.
-#' @param channel_constr_low,channel_constr_up Numeric vector. 
+#' @param channel_constr_low,channel_constr_up Numeric vector.
 #' Relative lower and upper constraints per channel compared with mean
-#' spend during the time period defined. 
+#' spend during the time period defined.
 #' If mean was zero for date range, historical mean spend value will be used.
-#' Must have length 1 to replicate for all channels or same length 
-#' (and order )as \code{paid_media_spends}. 
+#' Must have length 1 to replicate for all channels or same length
+#' (and order )as \code{paid_media_spends}.
 #' @return List. Contains optimized allocation results and plots.
 #' @examples
 #' \dontrun{
@@ -50,7 +50,7 @@ robyn_xchannels <- function(
     ...) {
   try_require("Robyn")
   try_require("nloptr")
-  
+
   # Check all models are same type: metric and interval type
   stopifnot(length(unique(unlist(lapply(models, function(x) x$InputCollect$dep_var_type)))) == 1)
   stopifnot(length(unique(unlist(lapply(models, function(x) x$InputCollect$intervalType)))) == 1)

@@ -3,12 +3,12 @@
 #'
 #' Given a list of recreated Robyn models, this function optimizes budget
 #' allocation across MMM with respective constraints by maximizing
-#' incremental revenue/conversions. This method assumes each model is 
-#' independent, that can be compared given its spends were cleanly and 
-#' properly split, they modeled the same metric (revenue or conversion) 
-#' and units (currency or type of conversion), and date granularity. 
-#' Recommended to have same channels granularity across markets 
-#' to simplify results readings and application.
+#' incremental revenue/conversions. This method assumes each model is
+#' independent, that can be compared given its spends were cleanly and
+#' properly split, they modeled the same metric (revenue or conversion)
+#' and units (currency or type of conversion), and date granularity.
+#' For best results, ensure channels have similar granularity across
+#' markets to simplify interpretation and application of the outputs.
 #'
 #' @param budget_constr_low,budget_constr_up Numeric vector. Relative minimum
 #' and maximum budgets to consider based on \code{initial_budgets}.
@@ -28,7 +28,7 @@
 #' files <- c("BrandA.json", "BrandB.json", "BrandC.json", "BrandN.json")
 #' models <- lapply(files, function(x) Robyn::robyn_recreate(x))
 #' names(models) <- gsub("\\.json", "", files)
-#' 
+#'
 #' # Calculate cross-brand optimal allocation
 #' res <- robyn_xmodels(
 #'   models,
@@ -78,7 +78,7 @@ robyn_xmodels <- function(
   }
   start_dates <- extract_dates(start_dates, perfs, "start_date", quiet)
   end_dates <- extract_dates(end_dates, perfs, "end_date", quiet)
-  
+
   # Extract initial budgets for the date range
   if (is.null(initial_budgets)) {
     for (i in seq_along(models)) {
@@ -99,7 +99,7 @@ robyn_xmodels <- function(
   } else {
     if (length(initial_budgets) == 1) initial_budgets <- rep(initial_budgets, length(models))
   }
-  
+
   # Total budget across brands
   total_budget <- sum(initial_budgets)
 
@@ -109,14 +109,13 @@ robyn_xmodels <- function(
   stopifnot(length(models) == length(initial_budgets))
 
   # Function to calculate total incremental sales given a budget distribution
-  calculate_isales <- function(
-      models, budgets, isales = TRUE,
-      start_dates = NULL, end_dates = NULL,
-      budget_constr_low = 0.5,
-      budget_constr_up = 1.5,
-      channel_constr_low = budget_constr_low,
-      channel_constr_up = budget_constr_up,
-      quiet = FALSE, ...) {
+  calculate_isales <- function(models, budgets, isales = TRUE,
+                               start_dates = NULL, end_dates = NULL,
+                               budget_constr_low = 0.5,
+                               budget_constr_up = 1.5,
+                               channel_constr_low = budget_constr_low,
+                               channel_constr_up = budget_constr_up,
+                               quiet = FALSE, ...) {
     try_require("Robyn")
     stopifnot(length(models) == length(budgets))
     bas <- list()
@@ -145,15 +144,14 @@ robyn_xmodels <- function(
   }
 
   # Function to be optimized (minimized)
-  objective_function <- function(
-      budgets, total_budget, models,
-      start_dates = NULL, end_dates = NULL,
-      budget_constr_low = 0.5,
-      budget_constr_up = 1.5,
-      channel_constr_low = budget_constr_low,
-      channel_constr_up = budget_constr_up,
-      cores = 10, quiet = FALSE,
-      ...) {
+  objective_function <- function(budgets, total_budget, models,
+                                 start_dates = NULL, end_dates = NULL,
+                                 budget_constr_low = 0.5,
+                                 budget_constr_up = 1.5,
+                                 channel_constr_low = budget_constr_low,
+                                 channel_constr_up = budget_constr_up,
+                                 cores = 10, quiet = FALSE,
+                                 ...) {
     # Value to minimize: penalty (tends to zero) - incremental total sales (max)
     isales <- calculate_isales(
       models, budgets,
