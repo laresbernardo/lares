@@ -134,25 +134,10 @@ holidays apply.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 10 variables: holiday &lt;date&gt;, holiday_name &lt;chr&gt;, holiday_type &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   national &lt;lgl&gt;, observance &lt;lgl&gt;, bank &lt;lgl&gt;, nonwork &lt;lgl&gt;, season &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   hother &lt;lgl&gt;, county &lt;fct&gt;</span></span>
-<span class="r-in"><span><span class="fu">holidays</span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Argentina"</span>, <span class="st">"Venezuela"</span><span class="op">)</span>, years <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2019</span>, <span class="fl">2020</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Argentina's holidays for 2019</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Argentina's holidays for 2020</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Venezuela's holidays for 2019</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Venezuela's holidays for 2020</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 0 × 11</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 variables: holiday &lt;date&gt;, holiday_name &lt;chr&gt;, holiday_type &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   national &lt;lgl&gt;, observance &lt;lgl&gt;, bank &lt;lgl&gt;, nonwork &lt;lgl&gt;, season &lt;lgl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   hother &lt;lgl&gt;, country &lt;fct&gt;, county &lt;fct&gt;</span></span>
-<span class="r-in"><span><span class="fu">holidays</span><span class="op">(</span>countries <span class="op">=</span> <span class="st">"Germany"</span>, years <span class="op">=</span> <span class="fl">2021</span><span class="op">:</span><span class="fl">2023</span>, include_regions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Germany's holidays for 2021</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Germany's holidays for 2022</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Germany's holidays for 2023</span>
+<span class="r-in"><span><span class="fu">holidays</span><span class="op">(</span>countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Spain"</span>, <span class="st">"Venezuela"</span><span class="op">)</span>, years <span class="op">=</span> <span class="fu">year</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in year(Sys.Date()):</span> could not find function "year"</span>
+<span class="r-in"><span><span class="fu">holidays</span><span class="op">(</span>countries <span class="op">=</span> <span class="st">"Germany"</span>, include_regions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Extracting Germany's holidays for 2024</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All formats failed to parse. No formats found.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 0 × 11</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 variables: holiday &lt;date&gt;, holiday_name &lt;chr&gt;, holiday_type &lt;chr&gt;,</span></span>
