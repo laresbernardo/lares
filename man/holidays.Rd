@@ -34,8 +34,8 @@ any country and year within +- 5 years. Thanks to timeanddate.com!
 \examples{
 \donttest{
 holidays(countries = "Argentina")
-holidays(countries = c("Argentina", "Venezuela"), years = c(2019, 2020))
-holidays(countries = "Germany", years = 2021:2023, include_regions = TRUE)
+holidays(countries = c("Spain", "Venezuela"), years = year(Sys.Date()) + 1)
+holidays(countries = "Germany", include_regions = TRUE)
 }
 }
 \seealso{

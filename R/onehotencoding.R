@@ -425,8 +425,8 @@ date_feats <- function(dates,
 #' @examples
 #' \donttest{
 #' holidays(countries = "Argentina")
-#' holidays(countries = c("Argentina", "Venezuela"), years = c(2019, 2020))
-#' holidays(countries = "Germany", years = 2021:2023, include_regions = TRUE)
+#' holidays(countries = c("Spain", "Venezuela"), years = year(Sys.Date()) + 1)
+#' holidays(countries = "Germany", include_regions = TRUE)
 #' }
 #' @export
 holidays <- function(countries = "Venezuela",
@@ -450,76 +450,76 @@ holidays <- function(countries = "Venezuela",
       message(paste0(">>> Extracting ", combs$country[i], "'s holidays for ", combs$year[i]))
     }
     url <- paste0("https://www.timeanddate.com/holidays/", tolower(combs$country[i]), "/", combs$year[i])
-
     # call httr's GET however set header to only accept English named date parts (months)
     # otherwise if user uses own locale, for instance German, an error can occur parsing dates of holidays
     # compare with plain call without additional headers in different locale: holidays <- content(GET(url))
-    ret <- content(GET(url, add_headers("Accept-Language" = "en")))
-    holidays <- ret %>%
-      html_nodes(".table") %>%
-      html_table(fill = TRUE) %>%
-      data.frame(.) %>%
-      filter(!is.na(.data$Date)) %>%
-      select(-2L) %>%
-      mutate(Date = paste(.data$Date, combs$year[i])) %>%
-      .[-1L, ] %>%
-      removenacols(all = TRUE) %>%
-      removenarows(all = TRUE)
-    colnames(holidays) <- if (include_regions & ncol(holidays) > 3) {
-      c("Date", "Holiday", "Holiday.Type", "Holiday.Details")
-    } else {
-      c("Date", "Holiday", "Holiday.Type")
-    }
-
-    # the table might contain comment about interstate holidays like
-    # '* Observed only in some communities of this state.
-    # Hover your mouse over the region or click on the holiday for details.'
-    # this will not parse as Date but create a warning, hence handling it here
-    grep_comment <- grep("*", holidays$Date, fixed = TRUE)
-    if (length(grep_comment) != 0L) {
-      holidays <- holidays[-grep_comment, ]
-    }
-    holidays$Date <- tryCatch(
-      {
-        lubridate::dmy(holidays$Date)
-      },
-      error = function(cond) {
-        stop(
-          "Unaccounted problem(s) occurred parsing the date column.\n Check sample: ",
-          v2t(head(holidays$Date, 3))
-        )
+    ret <- try(content(GET(url, add_headers("Accept-Language" = "en"))))
+    if ("xml_document" %in% class(ret)) {
+      holidays <- ret %>%
+        html_nodes(".table") %>%
+        html_table(fill = TRUE) %>%
+        data.frame(.) %>%
+        filter(!is.na(.data$Date)) %>%
+        select(-2L) %>%
+        mutate(Date = paste(.data$Date, combs$year[i])) %>%
+        .[-1L, ] %>%
+        removenacols(all = TRUE) %>%
+        removenarows(all = TRUE)
+      colnames(holidays) <- if (include_regions & ncol(holidays) > 3) {
+        c("Date", "Holiday", "Holiday.Type", "Holiday.Details")
+      } else {
+        c("Date", "Holiday", "Holiday.Type")
       }
-    )
-
-    result <- data.frame(
-      holiday = holidays$Date,
-      holiday_name = holidays$Holiday,
-      holiday_type = holidays$Holiday.Type
-    )
-    if (include_regions) result$holiday_details <- holidays$Holiday.Details
-    result <- result %>%
-      mutate(
-        national = grepl("National|Federal", holidays$Holiday.Type),
-        observance = grepl("Observance", holidays$Holiday.Type),
-        bank = grepl("Bank", holidays$Holiday.Type),
-        nonwork = grepl("Non-working", holidays$Holiday.Type),
-        season = grepl("Season", holidays$Holiday.Type),
-        hother = !grepl("National|Federal|Observance|Season", holidays$Holiday.Type)
-      ) %>%
-      {
-        if (length(unique(countries)) > 1L) {
-          mutate(., country = combs$country[i])
-        } else {
-          .
+      
+      # the table might contain comment about interstate holidays like
+      # '* Observed only in some communities of this state.
+      # Hover your mouse over the region or click on the holiday for details.'
+      # this will not parse as Date but create a warning, hence handling it here
+      grep_comment <- grep("*", holidays$Date, fixed = TRUE)
+      if (length(grep_comment) != 0L) {
+        holidays <- holidays[-grep_comment, ]
+      }
+      holidays$Date <- tryCatch(
+        {
+          lubridate::dmy(holidays$Date)
+        },
+        error = function(cond) {
+          stop(
+            "Unaccounted problem(s) occurred parsing the date column.\n Check sample: ",
+            v2t(head(holidays$Date, 3))
+          )
         }
-      }
-    result$county <- combs$country[i]
-    results <- bind_rows(results, result)
-  }
-  results <- results %>%
-    filter(!is.na(.data$holiday)) %>%
-    cleanNames() %>%
-    as_tibble()
-
+      )
+      
+      result <- data.frame(
+        holiday = holidays$Date,
+        holiday_name = holidays$Holiday,
+        holiday_type = holidays$Holiday.Type
+      )
+      if (include_regions) result$holiday_details <- holidays$Holiday.Details
+      result <- result %>%
+        mutate(
+          national = grepl("National|Federal", holidays$Holiday.Type),
+          observance = grepl("Observance", holidays$Holiday.Type),
+          bank = grepl("Bank", holidays$Holiday.Type),
+          nonwork = grepl("Non-working", holidays$Holiday.Type),
+          season = grepl("Season", holidays$Holiday.Type),
+          hother = !grepl("National|Federal|Observance|Season", holidays$Holiday.Type)
+        ) %>%
+        {
+          if (length(unique(countries)) > 1L) {
+            mutate(., country = combs$country[i])
+          } else {
+            .
+          }
+        }
+      result$county <- combs$country[i]
+      results <- bind_rows(results, result)
+    }
+    results <- results %>%
+      filter(!is.na(.data$holiday)) %>%
+      cleanNames() %>%
+      as_tibble() 
+    }
   return(results)
 }
