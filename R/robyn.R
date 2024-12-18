@@ -136,7 +136,9 @@ robyn_hypsbuilder <- function(
 #' default budget allocator improvement using \code{allocator_limits},
 #' "non_zeroes" for non-zero beta coefficients, "incluster_models" for
 #' amount of models per cluster, "baseline_dist" for the difference between
-#' the model's baseline and \code{baseline_ref} value. You can also use the
+#' the model's baseline and \code{baseline_ref} value, "cluster_certainty"
+#' for minimizing the channels' distance to their cluster's mean performance
+#' weighted by spends. You can also use the
 #' standard MOO errors: "nrmse", "decomp.rssd", and "mape" (the lowest the
 #' error, the highest the score; same for "baseline_dist").
 #' @param wt Vector. Weight for each of the normalized \code{metrics} selected,
@@ -163,9 +165,9 @@ robyn_modelselector <- function(
       "rsq_train", "performance",
       "potential_improvement",
       "non_zeroes", "incluster_models",
-      "baseline_dist"
+      "baseline_dist", "cluster_certainty"
     ),
-    wt = c(2, 1, 0, 1, 0.1, 0),
+    wt = c(2, 1, 0, 1, 0.1, 0, 1),
     baseline_ref = 0,
     top = 4,
     n_per_cluster = 5,
@@ -192,13 +194,15 @@ robyn_modelselector <- function(
   metrics_df <- data.frame(
     metric = c(
       "rsq_train", "performance", "potential_improvement",
-      "non_zeroes", "incluster_models", "baseline_dist",
+      "non_zeroes", "incluster_models",
+      "baseline_dist", "cluster_certainty",
       "nrmse", "decomp.rssd", "mape"
     ),
     metric_name = c(
       "R^2", ifelse(InputCollect$dep_var_type == "revenue", "High ROAS", "Low CPA"),
       "Potential Boost", "Non-Zero Betas", "Models in Cluster",
       sprintf("Baseline Distance [%.0f%%]", signif(baseline_ref * 100, 2)),
+      "Certainty within Cluster",
       "1 - NRMSE", "1 - DECOMP.RSSD", "1 - MAPE"
     )
   )
@@ -295,6 +299,10 @@ robyn_modelselector <- function(
     select(c("solID", "baseline", "baseline_dist")) %>%
     arrange(desc(.data$baseline_dist))
 
+  # Certainty Criteria: distance to cluster's mean weighted by spend
+  certainty <- certainty_score(InputCollect, OutputCollect, ...) %>%
+    select("solID", "cluster_certainty" = "certainty")
+
   # Gather everything up
   dfa <- OutputCollect$allPareto$resultHypParam %>%
     filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
@@ -303,6 +311,7 @@ robyn_modelselector <- function(
     left_join(non_zeroes_rate, "solID") %>%
     left_join(potOpt, "solID") %>%
     left_join(temp, "solID") %>%
+    left_join(certainty, "solID") %>%
     ungroup() %>%
     left_join(baselines, "solID")
 
@@ -326,6 +335,9 @@ robyn_modelselector <- function(
     incluster_models = normalize(dfa$incluster_models) * ifelse(
       !"incluster_models" %in% metrics, 0, wt[which(metrics == "incluster_models")]
     ) * ifelse("incluster_models" %in% inv, -1, 1),
+    cluster_certainty = normalize(dfa$cluster_certainty) * ifelse(
+      !"cluster_certainty" %in% metrics, 0, wt[which(metrics == "cluster_certainty")]
+    ) * ifelse("cluster_certainty" %in% inv, -1, 1),
     # The following are negative/inverted criteria when scoring
     baseline_dist = normalize(dfa$baseline_dist) * ifelse(
       !"baseline_dist" %in% metrics, 0, wt[which(metrics == "baseline_dist")]
@@ -414,6 +426,67 @@ robyn_modelselector <- function(
   ))
   class(ret) <- c("robyn_modelselector", class(ret))
   return(ret)
+}
+
+### Certainty Criteria: distance to cluster's mean weighted by spend
+#
+# Formula: within interval distance + outside interval distance * penalization
+# Channel Score = Xi = Si * (abs(P - Pi) + (P - Pc) * 2)
+# Model Score = Mi = norm(-sum(Xi))
+#
+# Where:
+# Pi is model's Performance
+# P is mean Performance in Cluster
+# Pmin, Pmax are Lower and Upper CI Performance in Cluster
+# Pc = min(Pi - Pmin, Pi - Pmax)
+# Si is % of total spend per channel
+#
+# So we need:
+# 1) cluster's mean, low and up CI per cluster and channel
+# 2) model's paid channels performance and spends
+certainty_score <- function(InputCollect, OutputCollect, penalization = 2, ...) {
+  clusters <- OutputCollect$clusters$df_cluster_ci
+  perfs <- OutputCollect$xDecompAgg %>%
+    filter(!is.na(.data$mean_spend)) %>% # get rid of organic
+    filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
+    mutate(performance = .data$xDecompAgg / .data$total_spend) %>%
+    select("solID", "channel" = "rn", "spend" = "total_spend", "performance")
+  df <- perfs %>%
+    left_join(select(OutputCollect$clusters$data, "solID", "cluster"), "solID") %>%
+    left_join(clusters, by = c("cluster", "channel" = "rn")) %>%
+    select("solID", "channel", "cluster", "spend",
+      "Pi" = "performance",
+      "P" = "boot_mean", "Pmin" = "ci_low", "Pmax" = "ci_up"
+    )
+  res <- df %>%
+    group_by(.data$cluster, .data$solID) %>%
+    mutate(Si = .data$spend / sum(.data$spend)) %>%
+    ungroup() %>%
+    mutate(
+      Pc = ifelse(.data$P < .data$Pmax & .data$P > .data$Pmin, 0,
+        min(.data$Pi - .data$Pmin, .data$Pi - .data$Pmax)
+      ),
+      Xi = .data$Si * (abs(.data$P - .data$Pi) + penalization * (.data$P - .data$Pc))
+    ) %>%
+    group_by(.data$solID, .data$cluster) %>%
+    summarize(Mi = sum(.data$Xi, na.rm = TRUE), .groups = "drop") %>%
+    ungroup() %>%
+    mutate(certainty = lares::normalize(-.data$Mi)) %>%
+    arrange(desc(.data$certainty))
+
+  if (FALSE) {
+    # Check best and worst
+    GeMMMa_onepagers(InputCollect, OutputCollect, res$solID[res$certainty == 1], export = FALSE)[[2]][[2]]
+    GeMMMa_onepagers(InputCollect, OutputCollect, res$solID[res$certainty == 0], export = FALSE)[[2]][[2]]
+
+    # Viz distribution of scores per cluster
+    ggplot(res, aes(x = as.character(.data$cluster), y = .data$certainty)) +
+      geom_boxplot() +
+      lares::theme_lares() +
+      lares::scale_y_percent()
+  }
+
+  return(res)
 }
 
 #' @param x robyn_modelselector object
