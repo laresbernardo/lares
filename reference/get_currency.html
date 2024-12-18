@@ -15,7 +15,7 @@ rate between two currencies."><meta property="og:image" content="https://laresbe
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.10.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +35,7 @@ rate between two currencies."><meta property="og:image" content="https://laresbe
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Download Historical Currency Exchange Rate</h1>
-      <small class="dont-index">Source: <a href="https://github.com/laresbernardo/lares/blob/v5.2.10/R/currency.R" class="external-link"><code>R/currency.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/laresbernardo/lares/blob/main/R/currency.R" class="external-link"><code>R/currency.R</code></a></small>
       <div class="d-none name"><code>get_currency.Rd</code></div>
     </div>
 
@@ -93,18 +93,18 @@ grouped by date.</p>
 <span class="r-in"><span><span class="co"># For today (or any one single date)</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"USD/COP"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         date    rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2024-12-13 4341.52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2024-12-18 4345.42</span>
 <span class="r-in"><span><span class="co"># For multiple dates</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"EUR/USD"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         date     rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2024-12-06 1.058560</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2024-12-07 1.058560</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2024-12-08 1.058560</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2024-12-09 1.056546</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2024-12-10 1.055520</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2024-12-11 1.053297</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2024-12-12 1.050685</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 2024-12-13 1.047230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2024-12-11 1.053297</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2024-12-12 1.050685</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2024-12-13 1.047406</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2024-12-14 1.047406</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2024-12-15 1.047406</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2024-12-16 1.051005</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2024-12-17 1.051735</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8 2024-12-18 1.049759</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
