@@ -23,7 +23,7 @@ here."><meta property="og:image" content="https://laresbernardo.github.io/lares/
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.10.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.10.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,8 +62,8 @@ historical performance, baseline expectation, etc.</p>
 <span>  <span class="va">InputCollect</span>,</span>
 <span>  <span class="va">OutputCollect</span>,</span>
 <span>  metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rsq_train"</span>, <span class="st">"performance"</span>, <span class="st">"potential_improvement"</span>, <span class="st">"non_zeroes"</span>,</span>
-<span>    <span class="st">"incluster_models"</span>, <span class="st">"baseline_dist"</span>, <span class="st">"certainty"</span><span class="op">)</span>,</span>
-<span>  wt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>    <span class="st">"incluster_models"</span>, <span class="st">"cluster_sd"</span>, <span class="st">"certainty"</span>, <span class="st">"baseline_dist"</span><span class="op">)</span>,</span>
+<span>  wt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.5</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>  baseline_ref <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  top <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  n_per_cluster <span class="op">=</span> <span class="fl">5</span>,</span>
@@ -94,9 +94,11 @@ default budget allocator improvement using <code>allocator_limits</code>,
 amount of models per cluster, "baseline_dist" for the difference between
 the model's baseline and <code>baseline_ref</code> value, "certainty" metric
 to minimize the channels' distance to their cluster's mean performance,
-weighted by spends <code>spend_wt = TRUE</code>. Additionally, you can use the
-standard MOO errors: "nrmse", "decomp.rssd", and "mape" (the lowest the
-error, the highest the score; same for "baseline_dist").</p></dd>
+weighted by spends <code>spend_wt = TRUE</code>, "cluster_sd" metric to score
+based on the paid channels' performance standard deviations in clusters.
+Additionally, you can use the standard MOO errors:
+"nrmse", "decomp.rssd", and "mape" (the lowest the error, the highest
+the score; same for "baseline_dist" and "cluster_sd").</p></dd>
 
 
 <dt id="arg-wt">wt<a class="anchor" aria-label="anchor" href="#arg-wt"></a></dt>
