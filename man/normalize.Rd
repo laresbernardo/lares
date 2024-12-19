@@ -11,6 +11,8 @@ normalize(x, range = c(0, 1), ...)
 
 \item{range}{A numeric vector of length 2 specifying the desired range 
 for normalization. Default is c(0, 1).}
+
+\item{...}{Additional parameters.}
 }
 \value{
 A numeric vector with normalized \code{x} values.

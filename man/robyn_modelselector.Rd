@@ -9,8 +9,8 @@ robyn_modelselector(
   InputCollect,
   OutputCollect,
   metrics = c("rsq_train", "performance", "potential_improvement", "non_zeroes",
-    "incluster_models", "baseline_dist", "certainty"),
-  wt = c(2, 1, 0, 1, 0.1, 0, 1),
+    "incluster_models", "cluster_sd", "certainty", "baseline_dist"),
+  wt = c(2, 0.5, 0, 1, 0.1, 0, 0, 0),
   baseline_ref = 0,
   top = 4,
   n_per_cluster = 5,
@@ -33,9 +33,11 @@ default budget allocator improvement using \code{allocator_limits},
 amount of models per cluster, "baseline_dist" for the difference between
 the model's baseline and \code{baseline_ref} value, "certainty" metric
 to minimize the channels' distance to their cluster's mean performance,
-weighted by spends \code{spend_wt = TRUE}. Additionally, you can use the
-standard MOO errors: "nrmse", "decomp.rssd", and "mape" (the lowest the
-error, the highest the score; same for "baseline_dist").}
+weighted by spends \code{spend_wt = TRUE}, "cluster_sd" metric to score
+based on the paid channels' performance standard deviations in clusters.
+Additionally, you can use the standard MOO errors: 
+"nrmse", "decomp.rssd", and "mape" (the lowest the error, the highest 
+the score; same for "baseline_dist" and "cluster_sd").}
 
 \item{wt}{Vector. Weight for each of the normalized \code{metrics} selected,
 to calculate the score and rank models. Must have the same order and length
