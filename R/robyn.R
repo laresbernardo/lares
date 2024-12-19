@@ -136,9 +136,9 @@ robyn_hypsbuilder <- function(
 #' default budget allocator improvement using \code{allocator_limits},
 #' "non_zeroes" for non-zero beta coefficients, "incluster_models" for
 #' amount of models per cluster, "baseline_dist" for the difference between
-#' the model's baseline and \code{baseline_ref} value, "cluster_certainty"
-#' for minimizing the channels' distance to their cluster's mean performance
-#' weighted by spends. You can also use the
+#' the model's baseline and \code{baseline_ref} value, "certainty" metric
+#' to minimize the channels' distance to their cluster's mean performance,
+#' weighted by spends \code{spend_wt = TRUE}. Additionally, you can use the
 #' standard MOO errors: "nrmse", "decomp.rssd", and "mape" (the lowest the
 #' error, the highest the score; same for "baseline_dist").
 #' @param wt Vector. Weight for each of the normalized \code{metrics} selected,
@@ -165,7 +165,7 @@ robyn_modelselector <- function(
       "rsq_train", "performance",
       "potential_improvement",
       "non_zeroes", "incluster_models",
-      "baseline_dist", "cluster_certainty"
+      "baseline_dist", "certainty"
     ),
     wt = c(2, 1, 0, 1, 0.1, 0, 1),
     baseline_ref = 0,
@@ -195,7 +195,7 @@ robyn_modelselector <- function(
     metric = c(
       "rsq_train", "performance", "potential_improvement",
       "non_zeroes", "incluster_models",
-      "baseline_dist", "cluster_certainty",
+      "baseline_dist", "certainty",
       "nrmse", "decomp.rssd", "mape"
     ),
     metric_name = c(
@@ -301,7 +301,7 @@ robyn_modelselector <- function(
 
   # Certainty Criteria: distance to cluster's mean weighted by spend
   certainty <- certainty_score(InputCollect, OutputCollect, ...) %>%
-    select("solID", "cluster_certainty" = "certainty")
+    select("solID", "certainty" = "certainty")
 
   # Gather everything up
   dfa <- OutputCollect$allPareto$resultHypParam %>%
@@ -335,9 +335,9 @@ robyn_modelselector <- function(
     incluster_models = normalize(dfa$incluster_models) * ifelse(
       !"incluster_models" %in% metrics, 0, wt[which(metrics == "incluster_models")]
     ) * ifelse("incluster_models" %in% inv, -1, 1),
-    cluster_certainty = normalize(dfa$cluster_certainty) * ifelse(
-      !"cluster_certainty" %in% metrics, 0, wt[which(metrics == "cluster_certainty")]
-    ) * ifelse("cluster_certainty" %in% inv, -1, 1),
+    certainty = normalize(dfa$certainty) * ifelse(
+      !"certainty" %in% metrics, 0, wt[which(metrics == "certainty")]
+    ) * ifelse("certainty" %in% inv, -1, 1),
     # The following are negative/inverted criteria when scoring
     baseline_dist = normalize(dfa$baseline_dist) * ifelse(
       !"baseline_dist" %in% metrics, 0, wt[which(metrics == "baseline_dist")]
@@ -444,7 +444,9 @@ robyn_modelselector <- function(
 # So we need:
 # 1) cluster's mean, low and up CI per cluster and channel
 # 2) model's paid channels performance and spends
-certainty_score <- function(InputCollect, OutputCollect, penalization = 2, ...) {
+certainty_score <- function(
+    InputCollect, OutputCollect, 
+    penalization = 2, spend_wt = TRUE, ...) {
   clusters <- OutputCollect$clusters$df_cluster_ci
   perfs <- OutputCollect$xDecompAgg %>%
     filter(!is.na(.data$mean_spend)) %>% # get rid of organic
@@ -460,7 +462,7 @@ certainty_score <- function(InputCollect, OutputCollect, penalization = 2, ...) 
     )
   res <- df %>%
     group_by(.data$cluster, .data$solID) %>%
-    mutate(Si = .data$spend / sum(.data$spend)) %>%
+    mutate(Si = ifelse(spend_wt == FALSE, 1, .data$spend / sum(.data$spend))) %>%
     ungroup() %>%
     mutate(
       Pc = ifelse(.data$P < .data$Pmax & .data$P > .data$Pmin, 0,
