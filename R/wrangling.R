@@ -115,28 +115,32 @@ zerovar <- function(df) {
 ####################################################################
 #' Normalize Vector
 #'
-#' This function lets the user normalize numerical values into
-#' the 0 to 1 range
+#' This function normalizes numerical values into a specified range, 
+#' defaulting to the 0 to 1 range.
 #'
 #' @family Data Wrangling
-#' @inheritParams corr_var
-#' @param x Numeric Vector. Numbers to be transformed into
-#' normalized vector
-#' @return Vector with normalized \code{x} values
+#' @param x Numeric vector. The numbers to be normalized.
+#' @param range A numeric vector of length 2 specifying the desired range 
+#' for normalization. Default is c(0, 1).
+#' @return A numeric vector with normalized \code{x} values.
 #' @examples
 #' x <- c(0, 1, 4, 7.5, 10)
 #' normalize(x)
+#' normalize(x, range = c(-1, 1))
 #' @export
-normalize <- function(x, ...) {
-  if (is.numeric(x)) {
-    if (length(unique(x)) == 1) {
-      return(rep(1, length(x)))
-    }
-    x <- (x - min(x, ...)) / (max(x, ...) - min(x, ...))
-    return(x)
-  } else {
-    stop("Try with a numerical vector!")
+normalize <- function(x, range = c(0, 1), ...) {
+  if (!is.numeric(x)) {
+    stop("Input must be a numeric vector!")
   }
+  if (length(unique(x)) == 1) {
+    return(rep(range[2], length(x)))
+  }
+  if (!is.numeric(range) || length(range) != 2 || range[1] >= range[2]) {
+    stop("Parameter 'range' must be a numeric vector of length 2 with range[1] < range[2].")
+  }
+  scaled_x <- (x - min(x, ...)) / (max(x, ...) - min(x, ...))
+  normalized_x <- scaled_x * (range[2] - range[1]) + range[1]
+  return(normalized_x)
 }
 
 

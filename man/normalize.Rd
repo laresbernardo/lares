@@ -4,24 +4,25 @@
 \alias{normalize}
 \title{Normalize Vector}
 \usage{
-normalize(x, ...)
+normalize(x, range = c(0, 1), ...)
 }
 \arguments{
-\item{x}{Numeric Vector. Numbers to be transformed into
-normalized vector}
+\item{x}{Numeric vector. The numbers to be normalized.}
 
-\item{...}{Additional parameters passed to \code{corr} and \code{cor.test}}
+\item{range}{A numeric vector of length 2 specifying the desired range 
+for normalization. Default is c(0, 1).}
 }
 \value{
-Vector with normalized \code{x} values
+A numeric vector with normalized \code{x} values.
 }
 \description{
-This function lets the user normalize numerical values into
-the 0 to 1 range
+This function normalizes numerical values into a specified range, 
+defaulting to the 0 to 1 range.
 }
 \examples{
 x <- c(0, 1, 4, 7.5, 10)
 normalize(x)
+normalize(x, range = c(-1, 1))
 }
 \seealso{
 Other Data Wrangling: 
