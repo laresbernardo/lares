@@ -423,15 +423,13 @@ robyn_modelselector <- function(
 
 ### Certainty Criteria: distance to cluster's mean weighted by spend
 #
-# Formula: within interval distance ^2 + outside interval distance ^2 * penalization
-# Channel Score = Xi = Si * ((P - Pi)^2 + 2 * (P - Pc)^2)
+# Formula: spend rate * mean to models' performance distance ^2 * penalization
+# Channel Score = Xi = Si * (P - Pi)^2 * Penalization if outside CI
 # Model Score = Mi = norm(-sum(Xi)) between 0 and 1, being 1 a perfect certainty.
 #
 # Where:
 # Pi is model's Performance
 # P is mean Performance in Cluster
-# Pmin, Pmax are Lower and Upper CI Performance in Cluster
-# Pc = min(Pi - Pmin, Pi - Pmax)
 # Si is % of total spend per channel
 #
 # So we need:
@@ -463,10 +461,8 @@ certainty_score <- function(
     mutate(Si = ifelse(spend_wt == FALSE, 1, .data$spend / sum(.data$spend))) %>%
     ungroup() %>%
     mutate(
-      Pc = ifelse(.data$P < .data$Pmax & .data$P > .data$Pmin, 0,
-        min(.data$Pi - .data$Pmin, .data$Pi - .data$Pmax)
-      ),
-      Xi = .data$Si * ((.data$P - .data$Pi)^2 + (.data$P - .data$Pc)^2 * penalization)
+      pen = ifelse(.data$P < .data$Pmax & .data$P > .data$Pmin, 0, penalization),
+      Xi = .data$Si * ((.data$P - .data$Pi)^2 * pen)
     ) %>%
     group_by(.data$solID, .data$cluster) %>%
     summarize(Mi = sum(.data$Xi, na.rm = TRUE), .groups = "drop") %>%
