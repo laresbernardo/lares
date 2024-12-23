@@ -461,8 +461,8 @@ certainty_score <- function(
     mutate(Si = ifelse(spend_wt == FALSE, 1, .data$spend / sum(.data$spend))) %>%
     ungroup() %>%
     mutate(
-      pen = ifelse(.data$P < .data$Pmax & .data$P > .data$Pmin, 0, penalization),
-      Xi = .data$Si * ((.data$P - .data$Pi)^2 * pen)
+      pen = ifelse(.data$P < .data$Pmax & .data$P > .data$Pmin, 1, penalization),
+      Xi = .data$Si * ((.data$P - .data$Pi)^2 * .data$pen)
     ) %>%
     group_by(.data$solID, .data$cluster) %>%
     summarize(Mi = sum(.data$Xi, na.rm = TRUE), .groups = "drop") %>%
