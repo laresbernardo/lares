@@ -423,15 +423,13 @@ robyn_modelselector <- function(
 
 ### Certainty Criteria: distance to cluster's mean weighted by spend
 #
-# Formula: within interval distance ^2 + outside interval distance ^2 * penalization
-# Channel Score = Xi = Si * ((P - Pi)^2 + 2 * (P - Pc)^2)
+# Formula: spend rate * mean to models' performance distance ^2 * penalization
+# Channel Score = Xi = Si * (P - Pi)^2 * Penalization if outside CI
 # Model Score = Mi = norm(-sum(Xi)) between 0 and 1, being 1 a perfect certainty.
 #
 # Where:
 # Pi is model's Performance
 # P is mean Performance in Cluster
-# Pmin, Pmax are Lower and Upper CI Performance in Cluster
-# Pc = min(Pi - Pmin, Pi - Pmax)
 # Si is % of total spend per channel
 #
 # So we need:
@@ -463,10 +461,8 @@ certainty_score <- function(
     mutate(Si = ifelse(spend_wt == FALSE, 1, .data$spend / sum(.data$spend))) %>%
     ungroup() %>%
     mutate(
-      Pc = ifelse(.data$P < .data$Pmax & .data$P > .data$Pmin, 0,
-        min(.data$Pi - .data$Pmin, .data$Pi - .data$Pmax)
-      ),
-      Xi = .data$Si * ((.data$P - .data$Pi)^2 + (.data$P - .data$Pc)^2 * penalization)
+      pen = ifelse(.data$P < .data$Pmax & .data$P > .data$Pmin, 1, penalization),
+      Xi = .data$Si * ((.data$P - .data$Pi)^2 * .data$pen)
     ) %>%
     group_by(.data$solID, .data$cluster) %>%
     summarize(Mi = sum(.data$Xi, na.rm = TRUE), .groups = "drop") %>%
@@ -534,6 +530,7 @@ robyn_performance <- function(
     solID = NULL, totals = TRUE, non_promo = FALSE,
     marginals = FALSE, carryovers = FALSE,
     quiet = FALSE, ...) {
+  dt_mod <- InputCollect$dt_mod
   df <- OutputCollect$mediaVecCollect
   if (!is.null(solID)) {
     if (length(solID) > 1) {
@@ -555,6 +552,14 @@ robyn_performance <- function(
   stopifnot(start_date <= end_date)
 
   # Filter data for ID, modeling window and selected date range
+  dt_mod <- dt_mod %>%
+    filter(
+      .data$ds >= InputCollect$window_start,
+      .data$ds <= InputCollect$window_end,
+      .data$ds >= start_date, .data$ds <= end_date
+    ) %>%
+    mutate(solID = solID, type = "rawSpend") %>%
+    select(c("ds", "solID", "type", InputCollect$all_media))
   df <- df[df$solID %in% solID, ] %>%
     filter(
       .data$ds >= InputCollect$window_start,
@@ -562,7 +567,7 @@ robyn_performance <- function(
       .data$ds >= start_date, .data$ds <= end_date
     ) %>%
     select(c("ds", "solID", "type", InputCollect$all_media))
-  if (nrow(df) == 0 && !quiet) {
+  if (nrow(dt_mod) == 0 && !quiet) {
     warning(sprintf(
       "No data for model %s within modeling window (%s:%s) and date range filtered (%s:%s)",
       solID, InputCollect$window_start, InputCollect$window_end,
@@ -570,7 +575,7 @@ robyn_performance <- function(
     ))
     return(NULL)
   }
-  spends <- df %>%
+  spends <- dt_mod %>%
     filter(.data$type == "rawSpend") %>%
     summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE))
   response <- df %>%
