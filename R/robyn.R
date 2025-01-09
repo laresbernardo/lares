@@ -289,7 +289,7 @@ robyn_modelselector <- function(
     group_by(.data$cluster) %>%
     summarise(mean_sd = mean(.data$sd, na.rm = TRUE), .groups = "drop") %>%
     mutate(cluster_sd = normalize(-.data$mean_sd, range = c(0.01, 1)),
-           cluster = as.character(cluster))
+           cluster = as.character(.data$cluster))
   temp <- OutputCollect$clusters$data %>%
     select(.data$solID, .data$cluster) %>%
     mutate(cluster = as.character(.data$cluster)) %>%
@@ -511,6 +511,7 @@ plot.robyn_modelselector <- function(x, ...) {
 #' only one available in OutputCollect, no need to define.
 #' @param totals Boolean. Add total rows. This includes summary rows
 #' (promotional which is paid and organic channels, baseline, grand total).
+#' @param non_promo Boolean. Add non-promotional responses as well?
 #' @param marginals Boolean. Include mROAS or mCPA marginal performance metric
 #' as an additional column called "marginal". Calculations are based on
 #' mean spend and mean response with mean carryover results,
@@ -530,7 +531,7 @@ plot.robyn_modelselector <- function(x, ...) {
 robyn_performance <- function(
     InputCollect, OutputCollect,
     start_date = NULL, end_date = NULL,
-    solID = NULL, totals = TRUE,
+    solID = NULL, totals = TRUE, non_promo = FALSE,
     marginals = FALSE, carryovers = FALSE,
     quiet = FALSE, ...) {
   df <- OutputCollect$mediaVecCollect
@@ -605,12 +606,15 @@ robyn_performance <- function(
     )
   # Add marketing contribution to sales/conversions (dynamic depending on date)
   xdvc <- OutputCollect$xDecompVecCollect
-  xDecompPerc <- xdvc[xdvc$solID %in% solID, ] %>%
+  xDecompTotal <- xdvc[xdvc$solID %in% solID, ] %>%
     filter(.data$ds >= start_date, .data$ds <= end_date) %>%
-    summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE)) %>%
+    summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE))
+  xDecompPerc <- xDecompTotal %>%
     # Divide by prediction, not real values
     mutate_all(function(x) x / .$depVarHat) %>%
-    tidyr::gather(key = "channel", value = "contribution")
+    tidyr::gather(key = "channel", value = "contribution") %>%
+    mutate(response = t(xDecompTotal)[,1]) %>%
+    filter(!.data$channel %in% c("dep_var", "depVarHat"))
   mktg_contr <- filter(xDecompPerc, .data$channel %in% InputCollect$all_media)
   mksum <- sum(mktg_contr$contribution)
   mktg_contr2 <- rbind(
@@ -618,18 +622,24 @@ robyn_performance <- function(
       channel = c("PROMOTIONAL TOTAL", "BASELINE", "GRAND TOTAL"),
       contribution = c(mksum, 1 - mksum, 1)
     ),
-    mktg_contr
+    xDecompPerc[,1:2]
   )
   # Create Baseline row
   resp_baseline <- (1 - mksum) * sum(ret$response) / mksum
-  totals_base <- ret[1, 1:3] %>%
-    mutate(
-      channel = "BASELINE",
-      metric = "",
-      performance = NA,
-      spend = 0,
-      response = resp_baseline
-    )
+  base_df <- ret[1, 1:3] %>% mutate(
+    channel = "BASELINE",
+    metric = "",
+    performance = NA,
+    spend = 0,
+    response = resp_baseline
+  )
+  # Baseline (L4 - until contextual) variables
+  if (non_promo) {
+    baseL4_contr <- filter(xDecompPerc, !.data$channel %in% InputCollect$all_media)
+    base_df <- bind_rows(baseL4_contr, base_df) %>%
+      select(all_of(colnames(base_df))) %>%
+      tidyr::fill(c("solID", "start_date", "end_date", "metric", "spend"), .direction = "up") 
+  }
   # Create TOTAL row
   grand_total <- ret[1, 1:3] %>%
     mutate(
@@ -640,7 +650,7 @@ robyn_performance <- function(
       response = resp_baseline + sum(ret$response)
     )
   # Join everything together
-  if (totals) ret <- rbind(ret, totals_df, totals_base, grand_total)
+  if (totals) ret <- rbind(ret, totals_df, base_df, grand_total)
   ret <- left_join(ret, mktg_contr2, "channel")
 
   # Add mROAS/mCPA

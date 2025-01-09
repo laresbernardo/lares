@@ -11,6 +11,7 @@ robyn_performance(
   end_date = NULL,
   solID = NULL,
   totals = TRUE,
+  non_promo = FALSE,
   marginals = FALSE,
   carryovers = FALSE,
   quiet = FALSE,
@@ -28,6 +29,8 @@ only one available in OutputCollect, no need to define.}
 
 \item{totals}{Boolean. Add total rows. This includes summary rows
 (promotional which is paid and organic channels, baseline, grand total).}
+
+\item{non_promo}{Boolean. Add non-promotional responses as well?}
 
 \item{marginals}{Boolean. Include mROAS or mCPA marginal performance metric
 as an additional column called "marginal". Calculations are based on
