@@ -998,7 +998,7 @@ warnifnot <- function(...) if (!isTRUE(...)) warning(paste(deparse(...), "is not
 #' what_size(seq(1:1e3), "Kb")
 #' what_size(seq(1:1e6))
 #' what_size(as.character(seq(1:1e6)))
-#' what_size(path = ".")
+#' # what_size(path = ".")
 #' @export
 what_size <- function(x = NULL, units = "Mb", path = NULL, recursive = TRUE, ...) {
   if (!is.null(path)) {

@@ -15,8 +15,7 @@
 #' @param ask Character. Redacted prompt to ask. If multiple asks are
 #' requested, they will be concatenated with "+" into a single request.
 #' @param secret_key Character. Secret Key. Get yours in:
-#' \href{https://platform.openai.com/docs/overview}{platform.openai.com} for OpenAI or
-#' \href{https://makersuite.google.com/app/apikey}{makersuite.google.com}
+#' platform.openai.com for OpenAI or makersuite.google.com/app/apikey
 #' for Gemini.
 #' @param url Character. Base API URL.
 #' @param model Character. OpenAI model to use. This can be adjusted

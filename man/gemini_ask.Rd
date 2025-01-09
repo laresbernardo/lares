@@ -31,8 +31,7 @@ gemini_image(
 requested, they will be concatenated with "+" into a single request.}
 
 \item{secret_key}{Character. Secret Key. Get yours in:
-\href{https://platform.openai.com/docs/overview}{platform.openai.com} for OpenAI or
-\href{https://makersuite.google.com/app/apikey}{makersuite.google.com}
+platform.openai.com for OpenAI or makersuite.google.com/app/apikey
 for Gemini.}
 
 \item{url}{Character. Base API URL.}

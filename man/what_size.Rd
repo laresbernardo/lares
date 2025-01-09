@@ -30,7 +30,7 @@ Calculate the size of any R object or directory
 what_size(seq(1:1e3), "Kb")
 what_size(seq(1:1e6))
 what_size(as.character(seq(1:1e6)))
-what_size(path = ".")
+# what_size(path = ".")
 }
 \seealso{
 Other Tools: 
