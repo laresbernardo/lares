@@ -672,7 +672,7 @@ robyn_performance <- function(
       rename(
         "channel" = "channels",
         "marginal" = "initResponseMargUnit"
-      )
+      ) %>% {if (metric == "CPA") mutate(., marginal = 1/.data$marginal) else .}
     ret <- left_join(ret, marginal, "channel") %>%
       dplyr::relocate("marginal", .after = "performance")
   }
