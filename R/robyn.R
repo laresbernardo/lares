@@ -664,8 +664,9 @@ robyn_performance <- function(
     ba_temp <- robyn_allocator(
       InputCollect = InputCollect,
       OutputCollect = OutputCollect,
+      select_model = solID,
       date_range = c(as.Date(start_date), as.Date(end_date)),
-      export = FALSE, quiet = TRUE
+      export = FALSE, quiet = TRUE, ...
     )
     marginal <- ba_temp$dt_optimOut %>%
       select(c("channels", "initResponseMargUnit")) %>%
