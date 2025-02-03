@@ -335,6 +335,7 @@ robyn_modelselector <- function(
       normalized_value <- normalize(data[[metric_name]], na.rm = TRUE)
       weight <- weights[which(metrics == metric_name)]
       sign <- ifelse(metric_name %in% invert_criteria, -1, 1)
+      normalized_value[is.na(normalized_value)] <- 0
       return(normalized_value * weight * sign)
     }
     return(0)
