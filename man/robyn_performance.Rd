@@ -14,6 +14,7 @@ robyn_performance(
   non_promo = FALSE,
   marginals = FALSE,
   carryovers = FALSE,
+  new_version = TRUE,
   quiet = FALSE,
   ...
 )
@@ -40,6 +41,9 @@ between \code{start_date} and \code{end_date}.}
 \item{carryovers}{Boolean. Add mean percentage of carryover response for
 date range between \code{start_date} and \code{end_date} on paid channels.
 Keep in mind organic variables also have carryover but currently not showing.}
+
+\item{new_version}{Boolean. Use dev version's new function for marginal
+calculations (if available)?}
 
 \item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
 

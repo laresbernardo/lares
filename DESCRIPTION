@@ -39,7 +39,7 @@ Suggests:
     rmarkdown
 URL: https://github.com/laresbernardo/lares, https://laresbernardo.github.io/lares/
 BugReports: https://github.com/laresbernardo/lares/issues
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.1
 License: AGPL-3
 Encoding: UTF-8
 LazyData: true

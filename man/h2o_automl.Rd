@@ -93,6 +93,9 @@ have in \code{'tag'} (more than: regression; less than: classification)}
 guarantee reproducibility if max_models is used because max_time is
 resource limited.}
 
+\item{nfolds}{Number of folds for k-fold cross-validation. Must be >= 2; defaults to 5. Use 0 to disable cross-validation;
+this will also disable Stacked Ensemble (thus decreasing the overall model performance).}
+
 \item{max_models, max_time}{Numeric. Max number of models and seconds
 you wish for the function to iterate. Note that max_models guarantees
 reproducibility and max_time not (because it depends entirely on your
@@ -122,6 +125,9 @@ working directory?}
 the results? Working directory as default.}
 
 \item{project}{Character. Your project's name}
+
+\item{verbosity}{Verbosity of the backend messages printed during training; Optional.
+Must be one of NULL (live log disabled), "debug", "info", "warn", "error". Defaults to "warn".}
 
 \item{...}{Additional parameters on \code{h2o::h2o.automl}}
 

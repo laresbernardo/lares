@@ -516,6 +516,8 @@ plot.robyn_modelselector <- function(x, ...) {
 #' @param carryovers Boolean. Add mean percentage of carryover response for
 #' date range between \code{start_date} and \code{end_date} on paid channels.
 #' Keep in mind organic variables also have carryover but currently not showing.
+#' @param new_version Boolean. Use dev version's new function for marginal
+#' calculations (if available)?
 #' @return data.frame with results on ROAS/CPA, spend, response, contribution
 #' per channel, with or without total rows.
 #' @examples
@@ -530,6 +532,7 @@ robyn_performance <- function(
     start_date = NULL, end_date = NULL,
     solID = NULL, totals = TRUE, non_promo = FALSE,
     marginals = FALSE, carryovers = FALSE,
+    new_version = TRUE,
     quiet = FALSE, ...) {
   dt_mod <- InputCollect$dt_mod
   df <- OutputCollect$mediaVecCollect
@@ -662,7 +665,7 @@ robyn_performance <- function(
   # Add mROAS/mCPA
   if (marginals) {
     try_require("Robyn")
-    if (packageVersion("Robyn") >= "3.12.0.9007") {
+    if (packageVersion("Robyn") >= "3.12.0.9007" && new_version) {
       temp <- lapply(InputCollect$all_media, function(x) robyn_marginal(
         InputCollect = InputCollect,
         OutputCollect = OutputCollect,
@@ -746,7 +749,8 @@ robyn_marginal <- function(..., marginal_unit = 1) {
   args$metric_value <- metric_value + marginal_unit
   args$quiet <- TRUE
   Response2 <- do.call(robyn_response, args)
-  ret <- list(Response1 = Response1, Response2 = Response2)
+  ret <- list(Response1 = Response1, Response2 = Response2, args = args)
+  ret$args$marginal_unit <- marginal_unit
   if (args$InputCollect$dep_var_type == "revenue") {
     ret$marginal_metric <- "mROAS"
     ret$marginal <- (Response2$sim_mean_response - Response1$sim_mean_response) /
@@ -756,11 +760,10 @@ robyn_marginal <- function(..., marginal_unit = 1) {
     ret$marginal <- (Response2$sim_mean_spend - Response1$sim_mean_spend) /
       (Response2$sim_mean_response - Response1$sim_mean_response)
   }
-  ret$marginal_unit <- marginal_unit
   cap <- sprintf("\n%s: %s (marginal units: %s)", 
                  ret$marginal_metric, 
                  num_abbr(ret$marginal), 
-                 num_abbr(ret$marginal_unit))
+                 num_abbr(marginal_unit))
   ret$plot <- ret$Response1$plot + labs(caption = paste0(
     ret$Response1$plot$labels$caption, cap
   ))
