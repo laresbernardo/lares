@@ -767,6 +767,5 @@ robyn_marginal <- function(..., marginal_unit = 1) {
   ret$plot <- ret$Response1$plot + labs(caption = paste0(
     ret$Response1$plot$labels$caption, cap
   ))
-  ret$Response1$plot <- ret$Response2$plot <- NULL
   return(ret)
 }
