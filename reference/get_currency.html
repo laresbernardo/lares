@@ -96,15 +96,18 @@ grouped by date.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 2025-02-06 4173.47</span>
 <span class="r-in"><span><span class="co"># For multiple dates</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"EUR/USD"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         date     rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2025-01-30 1.042525</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2025-01-31 1.039728</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2025-02-01 1.039728</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2025-02-02 1.039728</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2025-02-03 1.024779</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2025-02-04 1.032738</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2025-02-05 1.037280</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 2025-02-06 1.040691</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in getSymbols.yahoo(Symbols = "EURUSD=X", env = NULL, verbose = FALSE,  : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Unable to import “EURUSD=X”.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cannot open the connection</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Error in getSymbols.yahoo(Symbols = "EURUSD=X", env = NULL, verbose = FALSE,  : </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   Unable to import “EURUSD=X”.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> cannot open the connection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Error in getSymbols.yahoo(Symbols = \"EURUSD=X\", env = NULL, verbose = FALSE,  : \n  Unable to import “EURUSD=X”.\ncannot open the connection\n"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "try-error"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"condition")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;simpleError in getSymbols.yahoo(Symbols = "EURUSD=X", env = NULL, verbose = FALSE,     warnings = TRUE, auto.assign = FALSE, from = structure(20118, class = "Date"),     to = structure(20125, class = "Date"), .has1sym. = TRUE): Unable to import “EURUSD=X”.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cannot open the connection&gt;</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
