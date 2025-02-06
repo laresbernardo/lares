@@ -176,11 +176,6 @@ guarantee reproducibility if max_models is used because max_time is
 resource limited.</p></dd>
 
 
-<dt id="arg-nfolds">nfolds<a class="anchor" aria-label="anchor" href="#arg-nfolds"></a></dt>
-<dd><p>Number of folds for k-fold cross-validation. Must be &gt;= 2; defaults to 5. Use 0 to disable cross-validation;
-this will also disable Stacked Ensemble (thus decreasing the overall model performance).</p></dd>
-
-
 <dt id="arg-max-models-max-time">max_models, max_time<a class="anchor" aria-label="anchor" href="#arg-max-models-max-time"></a></dt>
 <dd><p>Numeric. Max number of models and seconds
 you wish for the function to iterate. Note that max_models guarantees
@@ -229,11 +224,6 @@ the results? Working directory as default.</p></dd>
 
 <dt id="arg-project">project<a class="anchor" aria-label="anchor" href="#arg-project"></a></dt>
 <dd><p>Character. Your project's name</p></dd>
-
-
-<dt id="arg-verbosity">verbosity<a class="anchor" aria-label="anchor" href="#arg-verbosity"></a></dt>
-<dd><p>Verbosity of the backend messages printed during training; Optional.
-Must be one of NULL (live log disabled), "debug", "info", "warn", "error". Defaults to "warn".</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
