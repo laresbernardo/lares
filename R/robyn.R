@@ -744,13 +744,13 @@ robyn_marginal <- function(..., marginal_unit = 1) {
   stopifnot(packageVersion("Robyn") >= "3.12.0")
   stopifnot(marginal_unit != 0)
   args <- list(...)
+  args$marginal_unit <- marginal_unit
   metric_value <- args$metric_value
   Response1 <- robyn_response(...)
   args$metric_value <- metric_value + marginal_unit
   args$quiet <- TRUE
   Response2 <- do.call(robyn_response, args)
-  ret <- list(Response1 = Response1, Response2 = Response2, args = args)
-  ret$args$marginal_unit <- marginal_unit
+  ret <- list(Response1 = Response1, Response2 = Response2, inputs = args)
   if (args$InputCollect$dep_var_type == "revenue") {
     ret$marginal_metric <- "mROAS"
     ret$marginal <- (Response2$sim_mean_response - Response1$sim_mean_response) /
