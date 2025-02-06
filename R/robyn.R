@@ -744,6 +744,7 @@ robyn_marginal <- function(..., marginal_unit = 1) {
   stopifnot(packageVersion("Robyn") >= "3.12.0")
   stopifnot(marginal_unit != 0)
   args <- list(...)
+  stopifnot(!is.null(args$metric_value))
   args$marginal_unit <- marginal_unit
   metric_value <- args$metric_value
   Response1 <- robyn_response(...)
