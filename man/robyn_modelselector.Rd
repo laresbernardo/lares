@@ -81,6 +81,7 @@ Read more about this functionality in Medium post:
 \seealso{
 Other Robyn: 
 \code{\link{robyn_hypsbuilder}()},
+\code{\link{robyn_marginal}()},
 \code{\link{robyn_performance}()}
 }
 \concept{Robyn}

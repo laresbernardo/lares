@@ -662,19 +662,34 @@ robyn_performance <- function(
   # Add mROAS/mCPA
   if (marginals) {
     try_require("Robyn")
-    ba_temp <- robyn_allocator(
-      InputCollect = InputCollect,
-      OutputCollect = OutputCollect,
-      select_model = solID,
-      date_range = c(as.Date(start_date), as.Date(end_date)),
-      export = FALSE, quiet = TRUE, ...
-    )
-    marginal <- ba_temp$dt_optimOut %>%
-      select(c("channels", "initResponseMargUnit")) %>%
-      rename(
-        "channel" = "channels",
-        "marginal" = "initResponseMargUnit"
-      ) %>% {if (metric == "CPA") mutate(., marginal = 1/.data$marginal) else .}
+    if (packageVersion("Robyn") >= "3.12.0.9007") {
+      temp <- lapply(InputCollect$all_media, function(x) robyn_marginal(
+        InputCollect = InputCollect,
+        OutputCollect = OutputCollect,
+        select_model = solID,
+        metric_name = x,
+        metric_value = NULL,
+        date_range = c(as.Date(start_date), as.Date(end_date)),
+        marginal_unit = 1,
+        plots = FALSE, quiet = TRUE))
+      marginal <- data.frame(
+        channel = InputCollect$all_media,
+        marginal = unlist(lapply(temp, function(x) x$marginal)))
+    } else {
+      ba_temp <- robyn_allocator(
+        InputCollect = InputCollect,
+        OutputCollect = OutputCollect,
+        select_model = solID,
+        date_range = c(as.Date(start_date), as.Date(end_date)),
+        export = FALSE, quiet = TRUE, ...
+      )
+      marginal <- ba_temp$dt_optimOut %>%
+        select(c("channels", "initResponseMargUnit")) %>%
+        rename(
+          "channel" = "channels",
+          "marginal" = "initResponseMargUnit"
+        ) %>% {if (metric == "CPA") mutate(., marginal = 1/.data$marginal) else .}
+    }
     ret <- left_join(ret, marginal, "channel") %>%
       dplyr::relocate("marginal", .after = "performance")
   }
@@ -694,5 +709,61 @@ robyn_performance <- function(
     ret <- left_join(ret, mean_carryovers, "channel") %>%
       dplyr::relocate("carryover", .after = "response")
   }
+  return(ret)
+}
+
+####################################################################
+#' Robyn: Marginal Performance (mROAS & mCPA)
+#'
+#' Calculate and plot marginal performance of any spend or organic variable.
+#'
+#' @family Robyn
+#' @inheritParams cache_write
+#' @inheritParams robyn_modelselector
+#' @param marginal_unit Additional units to calculate the marginal performance.
+#' @return list with base and marginal response results, marginal performance
+#' metric and value, and plot.
+#' @examples
+#' \dontrun{
+#' # You may load an exported model to recreate Robyn objects
+#' mod <- Robyn::robyn_recreate(json_file = "your_model.json")
+#' robyn_marginal(
+#'   InputCollect = mod$InputCollect,
+#'   OutputCollect = mod$OutputCollect, 
+#'   metric_name = "emails_O", 
+#'   metric_value = 100000, 
+#'   date_range = "all",
+#'   marginal_unit = 10000000)
+#' }
+#' @export
+robyn_marginal <- function(..., marginal_unit = 1) {
+  try_require("Robyn")
+  stopifnot(packageVersion("Robyn") >= "3.12.0")
+  stopifnot(marginal_unit != 0)
+  args <- list(...)
+  metric_value <- args$metric_value
+  Response1 <- robyn_response(...)
+  args$metric_value <- metric_value + marginal_unit
+  args$quiet <- TRUE
+  Response2 <- do.call(robyn_response, args)
+  ret <- list(Response1 = Response1, Response2 = Response2)
+  if (args$InputCollect$dep_var_type == "revenue") {
+    ret$marginal_metric <- "mROAS"
+    ret$marginal <- (Response2$sim_mean_response - Response1$sim_mean_response) /
+      (Response2$sim_mean_spend - Response1$sim_mean_spend)
+  } else {
+    ret$marginal_metric <- "mCPA"
+    ret$marginal <- (Response2$sim_mean_spend - Response1$sim_mean_spend) /
+      (Response2$sim_mean_response - Response1$sim_mean_response)
+  }
+  ret$marginal_unit <- marginal_unit
+  cap <- sprintf("\n%s: %s (marginal units: %s)", 
+                 ret$marginal_metric, 
+                 num_abbr(ret$marginal), 
+                 num_abbr(ret$marginal_unit))
+  ret$plot <- ret$Response1$plot + labs(caption = paste0(
+    ret$Response1$plot$labels$caption, cap
+  ))
+  ret$Response1$plot <- ret$Response2$plot <- NULL
   return(ret)
 }
