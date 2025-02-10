@@ -2,7 +2,7 @@
 % Please edit documentation in R/robyn.R
 \name{robyn_marginal}
 \alias{robyn_marginal}
-\title{Robyn: Marginal Performance (mROAS & mCPA)}
+\title{Robyn: Marginal Performance (mROAS & mCPA) [Experimental]}
 \usage{
 robyn_marginal(..., marginal_unit = 1)
 }

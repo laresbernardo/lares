@@ -716,7 +716,7 @@ robyn_performance <- function(
 }
 
 ####################################################################
-#' Robyn: Marginal Performance (mROAS & mCPA)
+#' Robyn: Marginal Performance (mROAS & mCPA) [Experimental]
 #'
 #' Calculate and plot marginal performance of any spend or organic variable.
 #'
@@ -741,17 +741,18 @@ robyn_performance <- function(
 #' @export
 robyn_marginal <- function(..., marginal_unit = 1) {
   try_require("Robyn")
-  stopifnot(packageVersion("Robyn") >= "3.12.0")
-  stopifnot(marginal_unit != 0)
-  args <- list(...)
-  stopifnot(!is.null(args$metric_value))
-  args$marginal_unit <- marginal_unit
-  metric_value <- args$metric_value
+  stopifnot(packageVersion("Robyn") >= "3.12.0.9007")
+  args <- args2 <- list(...)
   Response1 <- robyn_response(...)
-  args$metric_value <- metric_value + marginal_unit
-  args$quiet <- TRUE
-  Response2 <- do.call(robyn_response, args)
+  if (is.null(list(...)$metric_value)) {
+    args$metric_value <- Response1$metric_value
+    Response1 <- do.call(robyn_response, args) 
+  }
+  args2$metric_value <- Response1$metric_value + marginal_unit
+  args2$quiet <- TRUE
+  Response2 <- do.call(robyn_response, args2)
   ret <- list(Response1 = Response1, Response2 = Response2, inputs = args)
+  ret$inputs$marginal_unit <- marginal_unit
   if (args$InputCollect$dep_var_type == "revenue") {
     ret$marginal_metric <- "mROAS"
     ret$marginal <- (Response2$sim_mean_response - Response1$sim_mean_response) /
