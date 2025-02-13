@@ -14,7 +14,7 @@ robyn_performance(
   non_promo = FALSE,
   marginals = FALSE,
   carryovers = FALSE,
-  new_version = TRUE,
+  new_version = FALSE,
   quiet = FALSE,
   ...
 )

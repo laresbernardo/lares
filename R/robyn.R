@@ -532,7 +532,7 @@ robyn_performance <- function(
     start_date = NULL, end_date = NULL,
     solID = NULL, totals = TRUE, non_promo = FALSE,
     marginals = FALSE, carryovers = FALSE,
-    new_version = TRUE,
+    new_version = FALSE,
     quiet = FALSE, ...) {
   dt_mod <- InputCollect$dt_mod
   df <- OutputCollect$mediaVecCollect
@@ -744,10 +744,8 @@ robyn_marginal <- function(..., marginal_unit = 1) {
   stopifnot(packageVersion("Robyn") >= "3.12.0.9007")
   args <- args2 <- list(...)
   Response1 <- robyn_response(...)
-  if (is.null(list(...)$metric_value)) {
-    args$metric_value <- Response1$metric_value
-    Response1 <- do.call(robyn_response, args) 
-  }
+  args$metric_value <- Response1$metric_value
+  Response1 <- do.call(robyn_response, args) 
   args2$metric_value <- Response1$metric_value + marginal_unit
   args2$quiet <- TRUE
   Response2 <- do.call(robyn_response, args2)
