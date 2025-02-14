@@ -182,10 +182,7 @@ stocks_hist <- function(symbols = c("VTI", "META"),
                         cache = TRUE,
                         quiet = FALSE,
                         ...) {
-  cache_file <- c(
-    as.character(Sys.Date()), "stocks_hist",
-    symbols, sum(as.integer(as.Date(from)), as.integer(as.Date(to)))
-  )
+  cache_file <- c(as.character(Sys.Date()), "stocks_hist")
   if (cache_exists(cache_file) && cache) {
     results <- cache_read(cache_file, quiet = quiet)
     return(results)
@@ -1087,7 +1084,6 @@ etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
   if ("daily_stocks" %in% attr(etf, "type")) {
     etf <- as.character(unique(etf$Symbol[etf$Date == max(etf$Date)]))
   }
-
   cache_file <- c(as.character(Sys.Date()), "etf_sector", etf)
   if (cache_exists(cache_file) && cache) {
     results <- cache_read(cache_file, quiet = quiet)
@@ -1156,9 +1152,7 @@ etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
 #' @rdname stocks_plots
 splot_etf <- function(s, keep_all = FALSE, cache = TRUE, save = FALSE) {
   check_attr(s, check = "daily_stocks")
-
   if (!"Date" %in% colnames(s)) s$Date <- Sys.Date()
-
   cache_file <- c(as.character(Sys.Date()), "splot_etf", s)
   if (cache_exists(cache_file) && cache) {
     etfs <- cache_read(cache_file, quiet = quiet)
