@@ -33,7 +33,7 @@ plots and send it to an email with the HTML report attached"><meta property="og:
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.11.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.11.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +80,8 @@ plots and send it to an email with the HTML report attached</p>
 <span>  sheets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Portafolio"</span>, <span class="st">"Fondos"</span>, <span class="st">"Transacciones"</span><span class="op">)</span>,</span>
 <span>  keep_old <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cache <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">daily_stocks</span><span class="op">(</span><span class="va">hist</span>, <span class="va">trans</span>, tickers <span class="op">=</span> <span class="cn">NA</span>, window <span class="op">=</span> <span class="st">"MAX"</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -148,6 +149,10 @@ Cash, and Transactions information. Please, keep the order of these tabs.</p></d
 <dd><p>Boolean. Keep quiet? If not, informative messages will be printed.</p></dd>
 
 
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Additional parameters.</p></dd>
+
+
 <dt id="arg-hist">hist<a class="anchor" aria-label="anchor" href="#arg-hist"></a></dt>
 <dd><p>Dataframe. Result from <code><a href="stocks_hist.html">stocks_hist()</a></code></p></dd>
 
@@ -162,10 +167,6 @@ Cash, and Transactions information. Please, keep the order of these tabs.</p></d
 
 <dt id="arg-window">window<a class="anchor" aria-label="anchor" href="#arg-window"></a></dt>
 <dd><p>Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"</p></dd>
-
-
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional parameters.</p></dd>
 
 
 <dt id="arg-cash">cash<a class="anchor" aria-label="anchor" href="#arg-cash"></a></dt>
