@@ -15,7 +15,8 @@ stocks_file(
   sheets = c("Portafolio", "Fondos", "Transacciones"),
   keep_old = TRUE,
   cache = TRUE,
-  quiet = FALSE
+  quiet = FALSE,
+  ...
 )
 
 daily_stocks(hist, trans, tickers = NA, window = "MAX", ...)
@@ -65,6 +66,8 @@ Cash, and Transactions information. Please, keep the order of these tabs.}
 
 \item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed.}
 
+\item{...}{Additional parameters.}
+
 \item{hist}{Dataframe. Result from \code{stocks_hist()}}
 
 \item{trans}{Dataframe. Result from \code{stocks_file()$transactions}}
@@ -72,8 +75,6 @@ Cash, and Transactions information. Please, keep the order of these tabs.}
 \item{tickers}{Dataframe. Result from \code{stocks_file()$portfolio}}
 
 \item{window}{Character. Choose any of: "1W", "1M", "6M", "1Y", "YTD", "5Y", "MAX"}
-
-\item{...}{Additional parameters.}
 
 \item{cash}{Dataframe. Result from \code{stocks_file()$cash}}
 

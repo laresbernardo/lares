@@ -18,6 +18,8 @@
 #' if the cache should be used to proceed or ignored; when writing, (interactive)
 #' ask the user if the cache should be overwritten. Note that you can only ask for
 #' one cache file at a time because vectors are concatenated.
+#' @param overwrite Boolean. Set to overwrite existing cache file. When reading,
+#' this parameter answers to ask prompt instead.
 #' @param ... Additional parameters.
 #' @return \code{cache_write}. No return value, called for side effects.
 #' @examples
@@ -32,6 +34,7 @@ cache_write <- function(data,
                         base = "temp",
                         cache_dir = getOption("LARES_CACHE_DIR"),
                         ask = FALSE,
+                        overwrite = NULL,
                         quiet = FALSE,
                         ...) {
   if (is.null(cache_dir)) {
@@ -51,11 +54,11 @@ cache_write <- function(data,
     } else {
       answer <- "use"
     }
-    if (answer != "i") {
+    if (answer != "i" && isTRUE(overwrite)) {
       saveRDS(data, file = file)
       if (!quiet) message("> Cache saved succesfully: ", base)
     } else {
-      if (!quiet) message("> Skipped cache for: ", base)
+      if (!quiet) message("> Skipped writing cache for: ", base)
       return(invisible(NULL))
     }
   } else {
@@ -69,6 +72,7 @@ cache_write <- function(data,
 cache_read <- function(base,
                        cache_dir = getOption("LARES_CACHE_DIR"),
                        ask = FALSE,
+                       overwrite = TRUE,
                        quiet = FALSE,
                        ...) {
   base <- paste(base, collapse = ".")
@@ -78,13 +82,13 @@ cache_read <- function(base,
   if (exists) {
     file <- attr(exists, "filename")
     base <- attr(exists, "base")
-    if (ask == TRUE) {
+    if (ask) {
       message("> Cache found: ", base)
       answer <- readline("Press ENTER to use cache or type [i] to ignore: ")
     } else {
       answer <- "use"
     }
-    if (answer != "i") {
+    if (answer != "i" && isTRUE(overwrite)) {
       data <- readRDS(file)
       if (!quiet) message("> Cache loaded succesfully: ", base)
       return(data)

@@ -27,7 +27,7 @@ default z-score is higher then the threshold (popular choice is 3).
 }
 \seealso{
 Other Outliers: 
-\code{\link{outlier_turkey}()},
+\code{\link{outlier_tukey}()},
 \code{\link{outlier_zscore_plot}()},
 \code{\link{winsorize}()}
 }
