@@ -606,9 +606,9 @@ robyn_performance <- function(
     channel = InputCollect$all_media,
     type = factor(case_when(
       InputCollect$all_media %in% InputCollect$paid_media_spends ~ "Paid",
-      InputCollect$all_media %in% InputCollect$organic_vars ~ "Organic",
+      InputCollect$all_media %in% InputCollect$organic_vars ~ "Organic"),
       levels = c("Paid", "Organic")
-    )),
+    ),
     metric = ifelse(InputCollect$all_media %in% InputCollect$paid_media_spends, metric, ""),
     performance = unlist(performance),
     spend = unlist(spends),
