@@ -13,6 +13,7 @@ cache_write(
   base = "temp",
   cache_dir = getOption("LARES_CACHE_DIR"),
   ask = FALSE,
+  overwrite = NULL,
   quiet = FALSE,
   ...
 )
@@ -21,6 +22,7 @@ cache_read(
   base,
   cache_dir = getOption("LARES_CACHE_DIR"),
   ask = FALSE,
+  overwrite = TRUE,
   quiet = FALSE,
   ...
 )
@@ -47,6 +49,9 @@ using this parameter or setting a global option called \code{"LARES_CACHE_DIR"}.
 if the cache should be used to proceed or ignored; when writing, (interactive)
 ask the user if the cache should be overwritten. Note that you can only ask for
 one cache file at a time because vectors are concatenated.}
+
+\item{overwrite}{Boolean. Set to overwrite existing cache file. When reading,
+this parameter answers to ask prompt instead.}
 
 \item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
 

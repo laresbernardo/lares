@@ -6,6 +6,7 @@
 #'
 #' @family Investment
 #' @family Credentials
+#' @inheritParams cache_write
 #' @param file Character. Import an Excel file, local or from URL.
 #' @param creds Character. Dropbox's credentials (see \code{get_creds()})
 #' @param auto Boolean. Automatically use my local personal file? You might want
@@ -35,7 +36,8 @@ stocks_file <- function(file = NA,
                         sheets = c("Portafolio", "Fondos", "Transacciones"),
                         keep_old = TRUE,
                         cache = TRUE,
-                        quiet = FALSE) {
+                        quiet = FALSE,
+                        ...) {
   cache_file <- c(as.character(Sys.Date()), "stocks_file")
   if (cache_exists(cache_file) && cache) {
     results <- cache_read(cache_file, quiet = quiet)
@@ -46,12 +48,15 @@ stocks_file <- function(file = NA,
       as_tibble(read.xlsx(
         file,
         sheet = x,
-        skipEmptyRows = TRUE, detectDates = TRUE
+        skipEmptyRows = TRUE,
+        detectDates = TRUE
       ))
     })
     if (length(mylist) == 3) {
       names(mylist) <- c("port", "cash", "trans")
-      mylist$trans$Date <- try(as.Date(mylist$trans$Date, origin = "1970-01-01"))
+      mylist$port$StartDate <- try(as.Date(mylist$port$StartDate, origin = "1889-12-31", ...))
+      mylist$trans$Date <- try(as.Date(mylist$trans$Date, origin = "1889-12-31", ...))
+      mylist$cash$Date <- try(as.Date(mylist$cash$Date, origin = "1889-12-31", ...))
       if ("Value" %in% colnames(mylist$trans)) {
         mylist$trans <- rename(mylist$trans, Each = .data$Value, Invested = .data$Amount)
       }
@@ -96,7 +101,7 @@ stocks_file <- function(file = NA,
     attr(results$cash, "type") <- "stocks_file_cash"
   }
   attr(results, "type") <- "stocks_file"
-  cache_write(results, cache_file, quiet = TRUE)
+  cache_write(results, cache_file, quiet = TRUE, ...)
   return(results)
 }
 
@@ -182,10 +187,7 @@ stocks_hist <- function(symbols = c("VTI", "META"),
                         cache = TRUE,
                         quiet = FALSE,
                         ...) {
-  cache_file <- c(
-    as.character(Sys.Date()), "stocks_hist",
-    symbols, sum(as.integer(as.Date(from)), as.integer(as.Date(to)))
-  )
+  cache_file <- c(as.character(Sys.Date()), "stocks_hist")
   if (cache_exists(cache_file) && cache) {
     results <- cache_read(cache_file, quiet = quiet)
     return(results)
@@ -1087,7 +1089,6 @@ etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
   if ("daily_stocks" %in% attr(etf, "type")) {
     etf <- as.character(unique(etf$Symbol[etf$Date == max(etf$Date)]))
   }
-
   cache_file <- c(as.character(Sys.Date()), "etf_sector", etf)
   if (cache_exists(cache_file) && cache) {
     results <- cache_read(cache_file, quiet = quiet)
@@ -1156,9 +1157,7 @@ etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
 #' @rdname stocks_plots
 splot_etf <- function(s, keep_all = FALSE, cache = TRUE, save = FALSE) {
   check_attr(s, check = "daily_stocks")
-
   if (!"Date" %in% colnames(s)) s$Date <- Sys.Date()
-
   cache_file <- c(as.character(Sys.Date()), "splot_etf", s)
   if (cache_exists(cache_file) && cache) {
     etfs <- cache_read(cache_file, quiet = quiet)

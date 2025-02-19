@@ -25,7 +25,7 @@ Thereby the substitute values are the most extreme retained values.
 }
 \seealso{
 Other Outliers: 
-\code{\link{outlier_turkey}()},
+\code{\link{outlier_tukey}()},
 \code{\link{outlier_zscore}()},
 \code{\link{outlier_zscore_plot}()}
 }

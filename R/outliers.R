@@ -172,8 +172,11 @@ outlier_zscore_plot <- function(df, var, group = NULL,
 #' @param k Positive Numeric. K-multiplier.
 #' @return Boolean vector detecting outliers.
 #' @export
-outlier_turkey <- function(x, k = 1.5) {
+outlier_tukey <- function(x, k = 1.5) {
   quar <- quantile(x, probs = c(0.25, 0.75), na.rm = TRUE)
   iqr <- diff(quar)
   !((quar[1] - k * iqr <= x) & (x <= quar[2] + k * iqr))
 }
+#' @rdname outlier_tukey
+#' @export
+outlier_turkey <- outlier_tukey
