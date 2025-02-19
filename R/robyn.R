@@ -598,12 +598,18 @@ robyn_performance <- function(
     start_date = min(df$ds, na.rm = TRUE),
     end_date = max(df$ds, na.rm = TRUE),
     channel = InputCollect$all_media,
+    type = factor(case_match(
+      InputCollect$all_media, 
+      InputCollect$paid_media_spends ~ "Paid",
+      InputCollect$organic_vars ~ "Organic",
+      InputCollect$context_vars ~ "Context"),
+      levels = c("Paid", "Organic", "Context", NA)),
     metric = metric,
     performance = unlist(performance),
     spend = unlist(spends),
     response = unlist(response)
   ) %>%
-    arrange(desc(.data$spend))
+    arrange(.data$type, desc(.data$spend))
   # Create TOTAL row
   totals_df <- ret[1, 1:3] %>%
     mutate(
@@ -659,12 +665,13 @@ robyn_performance <- function(
       response = resp_baseline + sum(ret$response)
     )
   # Join everything together
-  if (totals) ret <- rbind(ret, totals_df, base_df, grand_total)
+  if (totals) ret <- bind_rows(ret, totals_df, base_df, grand_total)
   ret <- left_join(ret, mktg_contr2, "channel")
 
   # Add mROAS/mCPA
   if (marginals) {
     try_require("Robyn")
+    # Experimental approach to add organic vars too
     if (packageVersion("Robyn") >= "3.12.0.9007" && new_version) {
       temp <- lapply(InputCollect$all_media, function(x) robyn_marginal(
         InputCollect = InputCollect,
