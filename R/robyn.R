@@ -598,13 +598,8 @@ robyn_performance <- function(
     start_date = min(df$ds, na.rm = TRUE),
     end_date = max(df$ds, na.rm = TRUE),
     channel = InputCollect$all_media,
-    type = factor(case_match(
-      InputCollect$all_media, 
-      InputCollect$paid_media_spends ~ "Paid",
-      InputCollect$organic_vars ~ "Organic",
-      InputCollect$context_vars ~ "Context"),
-      levels = c("Paid", "Organic", "Context", NA)),
-    metric = metric,
+    type = "Promotional",
+    metric = ifelse(InputCollect$all_media %in% InputCollect$paid_media_spends, metric, ""),
     performance = unlist(performance),
     spend = unlist(spends),
     response = unlist(response)
@@ -666,7 +661,14 @@ robyn_performance <- function(
     )
   # Join everything together
   if (totals) ret <- bind_rows(ret, totals_df, base_df, grand_total)
-  ret <- left_join(ret, mktg_contr2, "channel")
+  ret <- left_join(ret, mktg_contr2, "channel") %>%
+    mutate(
+      type = factor(case_when(
+        .data$channel %in% InputCollect$paid_media_spends ~ "Paid",
+        .data$channel %in% InputCollect$organic_vars ~ "Organic",
+        .data$channel %in% InputCollect$context_vars ~ "Context",
+        .data$channel %in% c("intercept", InputCollect$prophet_vars) ~ "Context"),
+        levels = c("Paid", "Organic", "Context", NA)))
 
   # Add mROAS/mCPA
   if (marginals) {

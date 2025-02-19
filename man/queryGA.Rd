@@ -40,8 +40,7 @@ data.frame with the API GET request tabulated results.
 \description{
 This function lets the user query Google Analytics with its API.
 More about the documentation and parameters in
-\code{googleAnalyticsR::google_analytics()} or Google Analytics'
-\href{https://ga-dev-tools.google/dimensions-metrics-explorer/}{API}
+\code{googleAnalyticsR::google_analytics()} or Google Analytics' API.
 }
 \seealso{
 Other Credentials: 
