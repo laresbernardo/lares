@@ -140,8 +140,8 @@ robyn_hypsbuilder <- function(
 #' to minimize the channels' distance to their cluster's mean performance,
 #' weighted by spends \code{spend_wt = TRUE}, "cluster_sd" metric to score
 #' based on the paid channels' performance standard deviations in clusters.
-#' Additionally, you can use the standard MOO errors: 
-#' "nrmse", "decomp.rssd", and "mape" (the lowest the error, the highest 
+#' Additionally, you can use the standard MOO errors:
+#' "nrmse", "decomp.rssd", and "mape" (the lowest the error, the highest
 #' the score; same for "baseline_dist" and "cluster_sd").
 #' @param wt Vector. Weight for each of the normalized \code{metrics} selected,
 #' to calculate the score and rank models. Must have the same order and length
@@ -166,7 +166,7 @@ robyn_modelselector <- function(
     metrics = c(
       "rsq_train", "performance",
       "potential_improvement",
-      "non_zeroes", 
+      "non_zeroes",
       "incluster_models", "cluster_sd",
       "certainty", "baseline_dist"
     ),
@@ -288,8 +288,10 @@ robyn_modelselector <- function(
   clus_mean_sd <- OutputCollect$clusters$df_cluster_ci %>%
     group_by(.data$cluster) %>%
     summarise(mean_sd = mean(.data$sd, na.rm = TRUE), .groups = "drop") %>%
-    mutate(cluster_sd = normalize(-.data$mean_sd, range = c(0.01, 1)),
-           cluster = as.character(.data$cluster))
+    mutate(
+      cluster_sd = normalize(-.data$mean_sd, range = c(0.01, 1)),
+      cluster = as.character(.data$cluster)
+    )
   temp <- OutputCollect$clusters$data %>%
     select(.data$solID, .data$cluster) %>%
     mutate(cluster = as.character(.data$cluster)) %>%
@@ -307,9 +309,12 @@ robyn_modelselector <- function(
     ungroup() %>%
     filter(.data$rn == "baseline") %>%
     arrange(abs(.data$baseline)) %>%
-    mutate(baseline_dist_real = abs(baseline_ref - .data$baseline),
-           baseline_dist = normalize(-.data$baseline_dist_real, range = c(
-             0, 1 - min(.data$baseline_dist_real) / max(.data$baseline_dist_real)))) %>%
+    mutate(
+      baseline_dist_real = abs(baseline_ref - .data$baseline),
+      baseline_dist = normalize(-.data$baseline_dist_real, range = c(
+        0, 1 - min(.data$baseline_dist_real) / max(.data$baseline_dist_real)
+      ))
+    ) %>%
     select(c("solID", "baseline", "baseline_dist")) %>%
     arrange(.data$baseline_dist)
 
@@ -340,7 +345,7 @@ robyn_modelselector <- function(
     }
     return(0)
   }
-  
+
   # Calculate scores
   scores <- list()
   for (metric in metrics_df$metric) {
@@ -442,7 +447,8 @@ certainty_score <- function(
   if (!"clusters" %in% names(OutputCollect)) {
     return(data.frame(
       solID = unique(OutputCollect$xDecompAgg$solID),
-      certainty = 0))
+      certainty = 0
+    ))
   }
   clusters <- OutputCollect$clusters$df_cluster_ci
   perfs <- OutputCollect$xDecompAgg %>%
@@ -598,13 +604,18 @@ robyn_performance <- function(
     start_date = min(df$ds, na.rm = TRUE),
     end_date = max(df$ds, na.rm = TRUE),
     channel = InputCollect$all_media,
-    type = "Promotional",
+    type = factor(case_when(
+      InputCollect$all_media %in% InputCollect$paid_media_spends ~ "Paid",
+      InputCollect$all_media %in% InputCollect$organic_vars ~ "Organic",
+      levels = c("Paid", "Organic")
+    )),
     metric = ifelse(InputCollect$all_media %in% InputCollect$paid_media_spends, metric, ""),
     performance = unlist(performance),
     spend = unlist(spends),
     response = unlist(response)
   ) %>%
     arrange(.data$type, desc(.data$spend))
+
   # Create TOTAL row
   totals_df <- ret[1, 1:3] %>%
     mutate(
@@ -623,7 +634,7 @@ robyn_performance <- function(
     # Divide by prediction, not real values
     mutate_all(function(x) x / .$depVarHat) %>%
     tidyr::gather(key = "channel", value = "contribution") %>%
-    mutate(response = t(xDecompTotal)[,1]) %>%
+    mutate(response = t(xDecompTotal)[, 1]) %>%
     filter(!.data$channel %in% c("dep_var", "depVarHat"))
   mktg_contr <- filter(xDecompPerc, .data$channel %in% InputCollect$all_media)
   mksum <- sum(mktg_contr$contribution)
@@ -632,7 +643,7 @@ robyn_performance <- function(
       channel = c("PROMOTIONAL TOTAL", "BASELINE", "GRAND TOTAL"),
       contribution = c(mksum, 1 - mksum, 1)
     ),
-    xDecompPerc[,1:2]
+    xDecompPerc[, 1:2]
   )
   # Create Baseline row
   resp_baseline <- (1 - mksum) * sum(ret$response) / mksum
@@ -648,7 +659,7 @@ robyn_performance <- function(
     baseL4_contr <- filter(xDecompPerc, !.data$channel %in% InputCollect$all_media)
     base_df <- bind_rows(baseL4_contr, base_df) %>%
       select(all_of(colnames(base_df))) %>%
-      tidyr::fill(c("solID", "start_date", "end_date", "metric", "spend"), .direction = "up") 
+      tidyr::fill(c("solID", "start_date", "end_date", "metric", "spend"), .direction = "up")
   }
   # Create TOTAL row
   grand_total <- ret[1, 1:3] %>%
@@ -663,30 +674,38 @@ robyn_performance <- function(
   if (totals) ret <- bind_rows(ret, totals_df, base_df, grand_total)
   ret <- left_join(ret, mktg_contr2, "channel") %>%
     mutate(
-      type = factor(case_when(
-        .data$channel %in% InputCollect$paid_media_spends ~ "Paid",
-        .data$channel %in% InputCollect$organic_vars ~ "Organic",
-        .data$channel %in% InputCollect$context_vars ~ "Context",
-        .data$channel %in% c("intercept", InputCollect$prophet_vars) ~ "Context"),
-        levels = c("Paid", "Organic", "Context", NA)))
+      type = factor(
+        case_when(
+          .data$channel %in% InputCollect$paid_media_spends ~ "Paid",
+          .data$channel %in% InputCollect$organic_vars ~ "Organic",
+          .data$channel %in% InputCollect$context_vars ~ "Context",
+          .data$channel %in% c("intercept", InputCollect$prophet_vars) ~ "Context"
+        ),
+        levels = c("Paid", "Organic", "Context", NA)
+      )
+    )
 
   # Add mROAS/mCPA
   if (marginals) {
     try_require("Robyn")
     # Experimental approach to add organic vars too
     if (packageVersion("Robyn") >= "3.12.0.9007" && new_version) {
-      temp <- lapply(InputCollect$all_media, function(x) robyn_marginal(
-        InputCollect = InputCollect,
-        OutputCollect = OutputCollect,
-        select_model = solID,
-        metric_name = x,
-        metric_value = NULL,
-        date_range = c(as.Date(start_date), as.Date(end_date)),
-        marginal_unit = 1,
-        plots = FALSE, quiet = TRUE))
+      temp <- lapply(InputCollect$all_media, function(x) {
+        robyn_marginal(
+          InputCollect = InputCollect,
+          OutputCollect = OutputCollect,
+          select_model = solID,
+          metric_name = x,
+          metric_value = NULL,
+          date_range = c(as.Date(start_date), as.Date(end_date)),
+          marginal_unit = 1,
+          plots = FALSE, quiet = TRUE
+        )
+      })
       marginal <- data.frame(
         channel = InputCollect$all_media,
-        marginal = unlist(lapply(temp, function(x) x$marginal)))
+        marginal = unlist(lapply(temp, function(x) x$marginal))
+      )
     } else {
       ba_temp <- robyn_allocator(
         InputCollect = InputCollect,
@@ -700,7 +719,10 @@ robyn_performance <- function(
         rename(
           "channel" = "channels",
           "marginal" = "initResponseMargUnit"
-        ) %>% {if (metric == "CPA") mutate(., marginal = 1/.data$marginal) else .}
+        ) %>%
+        {
+          if (metric == "CPA") mutate(., marginal = 1 / .data$marginal) else .
+        }
     }
     ret <- left_join(ret, marginal, "channel") %>%
       dplyr::relocate("marginal", .after = "performance")
@@ -741,11 +763,12 @@ robyn_performance <- function(
 #' mod <- Robyn::robyn_recreate(json_file = "your_model.json")
 #' robyn_marginal(
 #'   InputCollect = mod$InputCollect,
-#'   OutputCollect = mod$OutputCollect, 
-#'   metric_name = "emails_O", 
-#'   metric_value = 100000, 
+#'   OutputCollect = mod$OutputCollect,
+#'   metric_name = "emails_O",
+#'   metric_value = 100000,
 #'   date_range = "all",
-#'   marginal_unit = 10000000)
+#'   marginal_unit = 10000000
+#' )
 #' }
 #' @export
 robyn_marginal <- function(..., marginal_unit = 1) {
@@ -754,7 +777,7 @@ robyn_marginal <- function(..., marginal_unit = 1) {
   args <- args2 <- list(...)
   Response1 <- robyn_response(...)
   args$metric_value <- Response1$metric_value
-  Response1 <- do.call(robyn_response, args) 
+  Response1 <- do.call(robyn_response, args)
   args2$metric_value <- Response1$metric_value + marginal_unit
   args2$quiet <- TRUE
   Response2 <- do.call(robyn_response, args2)
@@ -769,10 +792,12 @@ robyn_marginal <- function(..., marginal_unit = 1) {
     ret$marginal <- (Response2$sim_mean_spend - Response1$sim_mean_spend) /
       (Response2$sim_mean_response - Response1$sim_mean_response)
   }
-  cap <- sprintf("\n%s: %s (marginal units: %s)", 
-                 ret$marginal_metric, 
-                 num_abbr(ret$marginal), 
-                 num_abbr(marginal_unit))
+  cap <- sprintf(
+    "\n%s: %s (marginal units: %s)",
+    ret$marginal_metric,
+    num_abbr(ret$marginal),
+    num_abbr(marginal_unit)
+  )
   ret$plot <- ret$Response1$plot + labs(caption = paste0(
     ret$Response1$plot$labels$caption, cap
   ))

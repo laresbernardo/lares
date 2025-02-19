@@ -115,13 +115,13 @@ zerovar <- function(df) {
 ####################################################################
 #' Normalize Vector
 #'
-#' This function normalizes numerical values into a specified range, 
+#' This function normalizes numerical values into a specified range,
 #' defaulting to the 0 to 1 range.
 #'
 #' @inheritParams ohse
 #' @family Data Wrangling
 #' @param x Numeric vector. The numbers to be normalized.
-#' @param range A numeric vector of length 2 specifying the desired range 
+#' @param range A numeric vector of length 2 specifying the desired range
 #' for normalization. Default is c(0, 1).
 #' @return A numeric vector with normalized \code{x} values.
 #' @examples
