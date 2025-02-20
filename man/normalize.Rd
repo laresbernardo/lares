@@ -9,7 +9,7 @@ normalize(x, range = c(0, 1), ...)
 \arguments{
 \item{x}{Numeric vector. The numbers to be normalized.}
 
-\item{range}{A numeric vector of length 2 specifying the desired range 
+\item{range}{A numeric vector of length 2 specifying the desired range
 for normalization. Default is c(0, 1).}
 
 \item{...}{Additional parameters.}
@@ -18,7 +18,7 @@ for normalization. Default is c(0, 1).}
 A numeric vector with normalized \code{x} values.
 }
 \description{
-This function normalizes numerical values into a specified range, 
+This function normalizes numerical values into a specified range,
 defaulting to the 0 to 1 range.
 }
 \examples{

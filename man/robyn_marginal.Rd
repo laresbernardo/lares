@@ -24,11 +24,12 @@ Calculate and plot marginal performance of any spend or organic variable.
 mod <- Robyn::robyn_recreate(json_file = "your_model.json")
 robyn_marginal(
   InputCollect = mod$InputCollect,
-  OutputCollect = mod$OutputCollect, 
-  metric_name = "emails_O", 
-  metric_value = 100000, 
+  OutputCollect = mod$OutputCollect,
+  metric_name = "emails_O",
+  metric_value = 100000,
   date_range = "all",
-  marginal_unit = 10000000)
+  marginal_unit = 10000000
+)
 }
 }
 \seealso{

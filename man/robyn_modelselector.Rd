@@ -35,8 +35,8 @@ the model's baseline and \code{baseline_ref} value, "certainty" metric
 to minimize the channels' distance to their cluster's mean performance,
 weighted by spends \code{spend_wt = TRUE}, "cluster_sd" metric to score
 based on the paid channels' performance standard deviations in clusters.
-Additionally, you can use the standard MOO errors: 
-"nrmse", "decomp.rssd", and "mape" (the lowest the error, the highest 
+Additionally, you can use the standard MOO errors:
+"nrmse", "decomp.rssd", and "mape" (the lowest the error, the highest
 the score; same for "baseline_dist" and "cluster_sd").}
 
 \item{wt}{Vector. Weight for each of the normalized \code{metrics} selected,
