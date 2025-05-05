@@ -1,8 +1,8 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.1.2
 pkgdown_sha: ~
 articles: {}
-last_built: 2025-02-20T19:47Z
+last_built: 2025-05-05T13:38Z
 urls:
   reference: https://laresbernardo.github.io/lares/reference
   article: https://laresbernardo.github.io/lares/articles
