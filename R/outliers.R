@@ -153,7 +153,7 @@ outlier_zscore_plot <- function(df, var, group = NULL,
     ))
   }
 
-  attr(p, "labels") <- select(df, !!var, one_of(paste0("Z-", thresh)), starts_with("outlier_"))
+  # attr(p, "labels") <- select(df, !!var, one_of(paste0("Z-", thresh)), starts_with("outlier_"))
   attr(p, "z_values") <- zs
   return(p)
 }

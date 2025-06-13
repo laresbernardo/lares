@@ -548,8 +548,8 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
   }
 
   p <- (p1 / p2)
-  attr(p, "data") <- aux
-  attr(p, "labels") <- labels
+  # attr(p, "data") <- aux
+  # attr(p, "labels") <- labels
   return(p)
 }
 
