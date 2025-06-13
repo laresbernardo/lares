@@ -81,6 +81,10 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
 
   # Check and set font
   font <- .font_global(font, quiet = quiet, ...)
+  if (isTRUE(any(is.na(font)))) {
+    font <- ""
+  }
+  
   ret <- ret + theme(text = element_text(family = font))
 
   # Set some defaults
