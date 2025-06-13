@@ -10,7 +10,7 @@ robyn_modelselector(
   OutputCollect,
   metrics = c("rsq_train", "performance", "potential_improvement", "non_zeroes",
     "incluster_models", "cluster_sd", "certainty", "baseline_dist"),
-  wt = c(2, 0.5, 0, 1, 0.1, 0, 0, 0),
+  wt = c(2, 0.1, 0, 1, 0.1, 0, 1.5, 0),
   baseline_ref = 0,
   top = 4,
   n_per_cluster = 5,
@@ -33,7 +33,7 @@ default budget allocator improvement using \code{allocator_limits},
 amount of models per cluster, "baseline_dist" for the difference between
 the model's baseline and \code{baseline_ref} value, "certainty" metric
 to minimize the channels' distance to their cluster's mean performance,
-weighted by spends \code{spend_wt = TRUE}, "cluster_sd" metric to score
+weighted by spends if \code{spend_wt = TRUE}, "cluster_sd" metric to score
 based on the paid channels' performance standard deviations in clusters.
 Additionally, you can use the standard MOO errors:
 "nrmse", "decomp.rssd", and "mape" (the lowest the error, the highest

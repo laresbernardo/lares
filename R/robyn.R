@@ -138,7 +138,7 @@ robyn_hypsbuilder <- function(
 #' amount of models per cluster, "baseline_dist" for the difference between
 #' the model's baseline and \code{baseline_ref} value, "certainty" metric
 #' to minimize the channels' distance to their cluster's mean performance,
-#' weighted by spends \code{spend_wt = TRUE}, "cluster_sd" metric to score
+#' weighted by spends if \code{spend_wt = TRUE}, "cluster_sd" metric to score
 #' based on the paid channels' performance standard deviations in clusters.
 #' Additionally, you can use the standard MOO errors:
 #' "nrmse", "decomp.rssd", and "mape" (the lowest the error, the highest
