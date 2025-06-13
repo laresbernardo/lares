@@ -14,7 +14,7 @@ Depends:
     R (>= 3.5.0)
 Imports:
     dplyr (>= 1.0.0),
-    ggplot2,
+    ggplot2 (>= 3.4.0),
     httr,
     jsonlite,
     lubridate,
