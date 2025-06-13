@@ -170,7 +170,7 @@ robyn_modelselector <- function(
       "incluster_models", "cluster_sd",
       "certainty", "baseline_dist"
     ),
-    wt = c(2, 0.5, 0, 1, 0.1, 0, 0, 0),
+    wt = c(2, 0.1, 0, 1, 0.1, 0, 1.5, 0),
     baseline_ref = 0,
     top = 4,
     n_per_cluster = 5,
