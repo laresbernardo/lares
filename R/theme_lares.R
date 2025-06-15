@@ -81,6 +81,7 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
 
   # Check and set font
   font <- .font_global(font, quiet = quiet, ...)
+  font <- ifelse(is.na(font), "", font)
   ret <- ret + theme(text = element_text(family = font))
 
   # Set some defaults
@@ -128,9 +129,9 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
 
   if (inherits(grid, "character") || grid) {
     grid_col <- "#CCCCCC"
-    ret <- ret + theme(panel.grid = element_line(color = grid_col, size = 0.2))
-    ret <- ret + theme(panel.grid.major = element_line(color = grid_col, size = 0.1))
-    ret <- ret + theme(panel.grid.minor = element_line(color = grid_col, size = 0.05))
+    ret <- ret + theme(panel.grid = element_line(color = grid_col, linewidth = 0.2))
+    ret <- ret + theme(panel.grid.major = element_line(color = grid_col, linewidth = 0.1))
+    ret <- ret + theme(panel.grid.minor = element_line(color = grid_col, linewidth = 0.05))
     if (inherits(grid, "character")) {
       if (regexpr("X", grid)[1] < 0) ret <- ret + theme(panel.grid.major.x = element_blank())
       if (regexpr("Y", grid)[1] < 0) ret <- ret + theme(panel.grid.major.y = element_blank())
@@ -376,8 +377,8 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
 }
 
 .font_global <- function(font, quiet = FALSE, when_not = NA, ask_install = FALSE, ...) {
-  if (any(c(NA, "ignore") %in% tolower(font))) {
-    return(NULL)
+  if (is.null(font) || any(c(NA, "ignore") %in% tolower(font))) {
+    return("")
   } else {
     temp <- font_exists(font, quiet = quiet, ...)
     if (!any(isTRUE(temp))) {

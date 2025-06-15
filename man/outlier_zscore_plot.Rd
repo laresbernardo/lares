@@ -32,7 +32,7 @@ outlier_zscore_plot(dft, Fare)
 p <- outlier_zscore_plot(dft, Fare, Pclass, thresh = c(3, 5))
 plot(p)
 attr(p, "z_values")
-head(attr(p, "labels"))
+head(attr(p, "z_labels"))
 }
 \seealso{
 Other Outliers: 
