@@ -9,7 +9,7 @@ etf_sector(etf = "VTI", quiet = FALSE, cache = TRUE)
 \arguments{
 \item{etf}{Character Vector. Which ETFs you wish to scrap?}
 
-\item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{cache}{Boolean. Use daily cache if available?}
 }

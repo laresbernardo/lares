@@ -35,6 +35,7 @@ Suggests:
     googlesheets4,
     h2o,
     knitr,
+    MASS,
     quantmod,
     rmarkdown
 URL: https://github.com/laresbernardo/lares, https://laresbernardo.github.io/lares/

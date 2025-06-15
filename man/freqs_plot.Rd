@@ -11,7 +11,8 @@ freqs_plot(
   rm.na = FALSE,
   abc = FALSE,
   title = NA,
-  subtitle = NA
+  subtitle = NA,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ numerical output; use na.omit() or filter() if needed)}
 \item{title}{Character. Overwrite plot's title with.}
 
 \item{subtitle}{Character. Overwrite plot's subtitle with.}
+
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
 \value{
 Plot. Result of the frequency of combined variables.

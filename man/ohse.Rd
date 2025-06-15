@@ -59,7 +59,7 @@ the filtered values with?}
 
 \item{sep}{Character. Separator's string}
 
-\item{quiet}{Boolean. Quiet all messages and summaries?}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{...}{Additional parameters.}
 }

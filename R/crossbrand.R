@@ -10,6 +10,7 @@
 #' For best results, ensure channels have similar granularity across
 #' markets to simplify interpretation and application of the outputs.
 #'
+#' @inheritParams get_mp3
 #' @param budget_constr_low,budget_constr_up Numeric vector. Relative minimum
 #' and maximum budgets to consider based on \code{initial_budgets}.
 #' By default it'll consider 50% and 150% budget constraints.
@@ -17,8 +18,6 @@
 #' @param cores Integer. How many cores to use for parallel computations?
 #' Set to 1 to not use this option.
 #' Default will the minimum between 10 cores and all available cores - 1.
-#' @param quiet Boolean. Keep quiet? If not,
-#' informative messages will be printed.
 #' @param ... Additional parameters to be passed to internal functions.
 #' @return Invisible vector with results by letter.
 #' @examples

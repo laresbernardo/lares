@@ -73,7 +73,7 @@ have in \code{'tag'} (more than: regression; less than: classification)}
 guarantee reproducibility if max_models is used because max_time is
 resource limited.}
 
-\item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
 \value{
 List. Contains original data.frame \code{df}, an index

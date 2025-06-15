@@ -27,6 +27,7 @@
 #'
 #' @family Machine Learning
 #' @inheritParams h2o::h2o.automl
+#' @inheritParams get_mp3
 #' @param df Dataframe. Dataframe containing all your data, including
 #' the dependent variable labeled as \code{'tag'}. If you want to define
 #' which variable should be used instead, use the \code{y} parameter.
@@ -75,7 +76,6 @@
 #' When both are defined, only \code{include_algos} will be valid.
 #' @param plots Boolean. Create plots objects?
 #' @param alarm Boolean. Ping (sound) when done. Requires \code{beepr}.
-#' @param quiet Boolean. Quiet all messages, warnings, recommendations?
 #' @param print Boolean. Print summary when process ends?
 #' @param save Boolean. Do you wish to save/export results into your
 #' working directory?
@@ -904,13 +904,13 @@ msplit <- function(df, size = 0.7, seed = 0, print = TRUE) {
 #' This function detects or forces the target value when predicting
 #' a categorical binary model. This is an auxiliary function.
 #'
+#' @inheritParams get_mp3
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param target Value. Which is your target positive value? If
 #' set to 'auto', the target with largest mean(score) will be
 #' selected. Change the value to overwrite. Only used when binary
 #' categorical model.
-#' @param quiet Boolean. Do not show message for auto target?
 #' @return List. Contains original data.frame \code{df} and
 #' \code{which} with the target variable.
 #' @export

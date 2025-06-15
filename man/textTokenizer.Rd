@@ -54,7 +54,7 @@ results? Each word is a column and returns if word is contained.}
 
 \item{h2o}{Boolean. Return \code{H2OFrame}?}
 
-\item{quiet}{Boolean. Keep quiet? If not, print messages}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
 \value{
 data.frame. Tokenized words with counters.

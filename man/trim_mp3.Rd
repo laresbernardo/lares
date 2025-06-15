@@ -23,7 +23,7 @@ to trim the audio output in seconds.}
 
 \item{ext}{Character. File extension/type.}
 
-\item{quiet}{Boolean. Keep quiet? If not, print messages.}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
 \description{
 This function trims MP3 files given a start and/or end numeric

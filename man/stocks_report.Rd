@@ -64,7 +64,7 @@ Cash, and Transactions information. Please, keep the order of these tabs.}
 
 \item{cache}{Boolean. Use daily cache if available?}
 
-\item{quiet}{Boolean. Keep quiet? If not, informative messages will be printed.}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{...}{Additional parameters.}
 

@@ -25,7 +25,7 @@
 #' file be opened? Should it be deleted?
 #' @param info Boolean. Import and return metadata?
 #' @param cover Boolean. Google Search its squared cover?
-#' @param quiet Boolean. Keep quiet? If not, print messages.
+#' @param quiet Boolean. Keep quiet? If not, informative messages will be shown.
 #' @return (Invisible) list with id's meta-data.
 #' @examples
 #' # You must have "youtube-dl" installed in your OS:

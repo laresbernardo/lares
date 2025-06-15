@@ -15,7 +15,7 @@ impute(df, m = 5, iters = 5, seed = 0, quiet = FALSE)
 
 \item{seed}{Integer. Set a seed for reproducibility.}
 
-\item{quiet}{Boolean. Keep quiet? (or print replacements).}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
 \value{
 data.frame with imputed values.

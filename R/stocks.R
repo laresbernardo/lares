@@ -16,7 +16,6 @@
 #' Cash, and Transactions information. Please, keep the order of these tabs.
 #' @param keep_old Boolean. Include sold tickers even though not currently in portfolio?
 #' @param cache Boolean. Use daily cache if available?
-#' @param quiet Boolean. Keep quiet? If not, informative messages will be printed.
 #' @return List with portfolio, transactions, and cash data.frames.
 #' @examples
 #' \dontrun{

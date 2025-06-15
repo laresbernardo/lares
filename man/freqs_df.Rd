@@ -31,7 +31,7 @@ These values will be grouped into a high frequency (HF) value}
 
 \item{top}{Integer. Plot most relevant (less categories) variables}
 
-\item{quiet}{Boolean. Keep quiet? (or show variables exclusions)}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{save}{Boolean. Save the output plot in our working directory}
 

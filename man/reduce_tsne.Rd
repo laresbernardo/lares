@@ -13,7 +13,7 @@ reduce_tsne(df, n = 2, ignore = NULL, quiet = FALSE, plot = TRUE, ...)
 
 \item{ignore}{Character vector. Names of columns to ignore.}
 
-\item{quiet}{Boolean. Keep quiet? If not, print messages.}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{plot}{Boolean. Create plots?}
 

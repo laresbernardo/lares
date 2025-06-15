@@ -44,7 +44,7 @@ best value, "none" to turn off or the number of split.}
 
 \item{file_name}{Character. File name as you wish to save the plot}
 
-\item{quiet}{Boolean. Do not show message for auto target?}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
 \value{
 Plot with gain and performance results by cuts.

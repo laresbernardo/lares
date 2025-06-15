@@ -16,7 +16,7 @@ integer value, will process the first N paginations.}
 \item{sleep}{Numeric value. How much should each loop wait until until running
 the next pagination query?}
 
-\item{quiet}{Boolean. Quiet messages?}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{...}{Additional parameters.}
 }

@@ -54,7 +54,7 @@ two variables by name or column position.}
 
 \item{seed}{Numeric. Seed for reproducibility}
 
-\item{quiet}{Boolean. Keep quiet? If not, print messages.}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{...}{Additional parameters to pass sub-functions.}
 }

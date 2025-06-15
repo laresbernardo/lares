@@ -30,7 +30,7 @@ process categorical values, and values will be standardize automatically.}
 
 \item{top}{Integer. Plot top n results only.}
 
-\item{quiet}{Boolean. Keep quiet? Else, show messages.}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{seed}{Numeric.}
 

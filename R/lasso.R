@@ -9,6 +9,7 @@
 #'
 #' @family Machine Learning
 #' @family Exploratory
+#' @inheritParams get_mp3
 #' @param df Dataframe. Any dataframe is valid as \code{ohse} will be applied to
 #' process categorical values, and values will be standardize automatically.
 #' @param variable Variable. Dependent variable or response.
@@ -16,7 +17,6 @@
 #' @param nlambdas Integer. Number of lambdas to be used in a search.
 #' @param nfolds Integer. Number of folds for K-fold cross-validation (>= 2).
 #' @param top Integer. Plot top n results only.
-#' @param quiet Boolean. Keep quiet? Else, show messages.
 #' @param seed Numeric.
 #' @param ... Additional parameters passed to \code{ohse()}.
 #' @return List. Contains lasso model coefficients, performance metrics, the

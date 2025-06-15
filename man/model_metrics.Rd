@@ -52,7 +52,7 @@ categorical model.}
 
 \item{plots}{Boolean. Create plots objects?}
 
-\item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{subtitle}{Character. Subtitle for plots}
 }

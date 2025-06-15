@@ -5,6 +5,7 @@
 #' improve timings and UX.
 #'
 #' @family Cache
+#' @inheritParams get_mp3
 #' @param data Object
 #' @param base Character vector. Unique name for your cache file. You can pass
 #' a character vector with multiple elements that will be concatenated.
@@ -13,7 +14,6 @@
 #' @param cache_dir Character. Where do you want to save you cache files?
 #' By default they'll be stored on \code{tempdir()} but you can change it
 #' using this parameter or setting a global option called \code{"LARES_CACHE_DIR"}.
-#' @param quiet Boolean. Keep quiet? If not, message will be shown.
 #' @param ask Boolean. If cache exists, when reading: (interactive) ask the user
 #' if the cache should be used to proceed or ignored; when writing, (interactive)
 #' ask the user if the cache should be overwritten. Note that you can only ask for

@@ -18,7 +18,7 @@ replaceall(df, original, change, which = "all", fixclass = TRUE, quiet = TRUE)
 \item{fixclass}{Boolean. Try to detect logical classes after transformations (or
 leave as default classes as character)?}
 
-\item{quiet}{Boolean. Keep quiet? (or print replacements)}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
 \value{
 data.frame with replaced values based on inputs.

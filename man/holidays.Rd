@@ -18,7 +18,7 @@ holidays be imported?}
 \item{years}{Character or vector. For which year(s) do you wish to import
 holiday dates?}
 
-\item{quiet}{Boolean. Default FALSE which disables verbosity of the function.}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{include_regions}{Boolean. Default FALSE. If TRUE, for countries with
 internal subdivisions, it will provide details on which sub-state the found

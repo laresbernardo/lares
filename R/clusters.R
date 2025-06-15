@@ -11,6 +11,7 @@
 #'
 #' @family Clusters
 #' @inheritParams stats::kmeans
+#' @inheritParams get_mp3
 #' @param df Dataframe
 #' @param k Integer. Number of clusters
 #' @param wss_var Numeric. Used to pick automatic \code{k} value,
@@ -28,7 +29,6 @@
 #' @param comb Vector. Which columns do you wish to plot? Select which
 #' two variables by name or column position.
 #' @param seed Numeric. Seed for reproducibility
-#' @param quiet Boolean. Keep quiet? If not, print messages.
 #' @param ... Additional parameters to pass sub-functions.
 #' @return List. If no \code{k} is provided, contains \code{nclusters} and
 #' \code{nclusters_plot} to determine optimal \code{k} given their WSS (Within

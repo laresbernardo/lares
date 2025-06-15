@@ -114,7 +114,7 @@ When both are defined, only \code{include_algos} will be valid.}
 
 \item{alarm}{Boolean. Ping (sound) when done. Requires \code{beepr}.}
 
-\item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{print}{Boolean. Print summary when process ends?}
 

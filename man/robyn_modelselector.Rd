@@ -58,7 +58,7 @@ for the calculations.}
 want to be with the budget allocator? By default, we'll consider a
 0.5X and 2X range to let the budget shift across channels.}
 
-\item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{cache}{Use cache functionality for allocator's results?}
 

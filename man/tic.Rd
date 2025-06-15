@@ -21,7 +21,7 @@ toc(
 
 \item{start}{Start time. Now is default.}
 
-\item{quiet}{Boolean. Quiet messages?}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{msg}{Character. Custom message shown}
 

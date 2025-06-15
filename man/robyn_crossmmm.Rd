@@ -61,8 +61,7 @@ Must have length 1 to replicate for all channels or same length
 Set to 1 to not use this option.
 Default will the minimum between 10 cores and all available cores - 1.}
 
-\item{quiet}{Boolean. Keep quiet? If not,
-informative messages will be printed.}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{...}{Additional parameters to be passed to internal functions.}
 

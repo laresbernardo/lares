@@ -36,7 +36,7 @@ be included?}
 \item{currency_pair}{Character. Which currency exchange do you
 wish to get the history from? i.e, USD/COP, EUR/USD...}
 
-\item{quiet}{Boolean. Quiet all messages?}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
 \value{
 data.frame with additional features calculated out of time or date vectors.

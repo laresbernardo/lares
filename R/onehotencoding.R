@@ -31,7 +31,6 @@
 #' @param other_label Character. With which text do you wish to replace
 #' the filtered values with?
 #' @param sep Character. Separator's string
-#' @param quiet Boolean. Quiet all messages and summaries?
 #' @return data.frame on which all features are numerical by nature or
 #' transformed with one hot encoding.
 #' @examples
@@ -260,6 +259,7 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
 #' @family Data Wrangling
 #' @family Feature Engineering
 #' @family One Hot Encoding
+#' @inheritParams get_mp3
 #' @param dates Vector or dataframe. Non-date/time columns will be
 #' automatically ignored/extracted.
 #' @param drop Boolean. Should the original date/time columns be
@@ -273,7 +273,6 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
 #' be included?
 #' @param currency_pair Character. Which currency exchange do you
 #' wish to get the history from? i.e, USD/COP, EUR/USD...
-#' @param quiet Boolean. Quiet all messages?
 #' @return data.frame with additional features calculated out of time or date vectors.
 #' @examples
 #' df <- data.frame(
@@ -413,11 +412,11 @@ date_feats <- function(dates,
 #' @family Feature Engineering
 #' @family Scrapper
 #' @family One Hot Encoding
+#' @inheritParams get_mp3
 #' @param years Character or vector. For which year(s) do you wish to import
 #' holiday dates?
 #' @param countries Character or vector. For which country(ies) should the
 #' holidays be imported?
-#' @param quiet Boolean. Default FALSE which disables verbosity of the function.
 #' @param include_regions Boolean. Default FALSE. If TRUE, for countries with
 #' internal subdivisions, it will provide details on which sub-state the found
 #' holidays apply.
@@ -434,6 +433,10 @@ holidays <- function(countries = "Venezuela",
                      years = year(Sys.Date()),
                      quiet = FALSE,
                      include_regions = FALSE) {
+  if (!haveInternet()) {
+    message("No internet connetion...")
+    return(invisible(NULL))
+  }
   # Further improvement: let the user bring more than +-5 years
   results <- NULL
   if (any(!years %in% (year(Sys.Date()) - 5):(year(Sys.Date()) + 5))) {

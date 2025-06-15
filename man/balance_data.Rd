@@ -20,7 +20,7 @@ more than 2 unique values, rate will represent percentage for number of rows}
 
 \item{seed}{Numeric. Seed to replicate and obtain same values}
 
-\item{quiet}{Boolean. Keep quiet? If not, messages will be printed}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
 \value{
 data.frame. Reduced sampled data.frame following the \code{rate} of

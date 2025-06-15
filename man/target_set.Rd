@@ -16,7 +16,7 @@ set to 'auto', the target with largest mean(score) will be
 selected. Change the value to overwrite. Only used when binary
 categorical model.}
 
-\item{quiet}{Boolean. Do not show message for auto target?}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
 \value{
 List. Contains original data.frame \code{df} and

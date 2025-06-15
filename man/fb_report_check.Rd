@@ -27,7 +27,7 @@ to acquire one.}
 \item{sleep}{Boolean. If \code{live=TRUE}, then how many seconds should
 we wait until next check?}
 
-\item{quiet}{Boolean. Quiet messages?}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
 \value{
 List with API status results.

@@ -34,7 +34,7 @@ plot as PNG or data.frame as CSV, respectively.}
 \item{creds}{Character. Credential's user (see \code{get_creds()}).
 Must contain: url (POST address), api (API key).}
 
-\item{quiet}{Boolean. Keep quite or display messages?}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{...}{Additional parameters.}
 }

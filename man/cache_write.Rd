@@ -53,7 +53,7 @@ one cache file at a time because vectors are concatenated.}
 \item{overwrite}{Boolean. Set to overwrite existing cache file. When reading,
 this parameter answers to ask prompt instead.}
 
-\item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{...}{Additional parameters.}
 

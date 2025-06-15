@@ -1094,6 +1094,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
 #'
 #' @family ML Visualization
 #' @inheritParams mplot_roc
+#' @inheritParams get_mp3
 #' @param target Value. Which is your target positive value? If
 #' set to 'auto', the target with largest mean(score) will be
 #' selected. Change the value to overwrite. Only works for binary classes
@@ -1102,7 +1103,6 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
 #' for the automatic conclussion in the plot? Set to "auto" for
 #' best value, "none" to turn off or the number of split.
 #' @param caption Character. Caption to show in plot
-#' @param quiet Boolean. Do not show message for auto target?
 #' @return Plot with gain and performance results by cuts.
 #' @examples
 #' Sys.unsetenv("LARES_FONT") # Temporal

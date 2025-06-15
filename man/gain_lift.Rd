@@ -27,7 +27,7 @@ categorical model.}
 
 \item{plot}{Boolean. Plot results? Uses \code{mplot_gain()}}
 
-\item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
 \value{
 data.frame when \code{plot=FALSE} or plot when \code{plot=TRUE}.

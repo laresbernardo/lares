@@ -7,6 +7,7 @@
 #' @family Tools
 #' @family Credentials
 #' @family Dropbox
+#' @inheritParams get_mp3
 #' @param query Search string. This string is split (on spaces) into
 #' individual words. Files will be used if they contain
 #' all words in the search string.
@@ -20,7 +21,6 @@
 #' @param token_dir Character. RDS with token local directory. You may set to
 #' NA if you already set your credentials (see \code{get_creds()})
 #' @param token_name Character. RDS file name with your token's data.
-#' @param quiet Boolean. Keep quiet? If not, show informative messages.
 #' @return If \code{query} returns a .xlsx file and \code{xlsx=TRUE}, will
 #' return a data.frame. Else, \code{local_path} string.
 #' @examples

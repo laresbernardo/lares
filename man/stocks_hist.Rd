@@ -40,7 +40,7 @@ case, taxes changed from A to B in given date (hard-coded)}
 
 \item{cache}{Boolean. Use daily cache if available?}
 
-\item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{x}{stocks_hist object}
 

@@ -24,7 +24,7 @@ reduce_pca(
 \item{comb}{Vector. Which columns do you wish to plot? Select which
 two variables by name or column position.}
 
-\item{quiet}{Boolean. Keep quiet? If not, print messages.}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{plot}{Boolean. Create plots?}
 

@@ -29,6 +29,10 @@
 #' @export
 #' @rdname wordle
 wordle_check <- function(input, word, dictionary = NULL, lang_dic = "en", method = 3, print = TRUE) {
+  if (!haveInternet()) {
+    message("No internet connetion...")
+    return(invisible(NULL))
+  }
   wordle_valid(input, dictionary, lang_dic, method)
   out <- pos_check(input, word, len = 5, print = print)
   return(invisible(out))
@@ -113,6 +117,10 @@ wordle_dictionary <- function(lang_dic = "en", method = 3, quiet = TRUE) {
 #' # hist(sapply(x, function(x) x$iters))
 #' @rdname wordle
 wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
+  if (!haveInternet()) {
+    message("No internet connetion...")
+    return(invisible(NULL))
+  }
   tic("wordle_simulation")
   output <- NULL
   if (is.null(seed)) seed <- sample(1:100, 1)

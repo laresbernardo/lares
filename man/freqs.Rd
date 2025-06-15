@@ -18,7 +18,8 @@ freqs(
   top = 20,
   abc = FALSE,
   save = FALSE,
-  subdir = NA
+  subdir = NA,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -53,6 +54,8 @@ categorical values. Set to NA to return all values}
 
 \item{subdir}{Character. Into which subdirectory do you wish to
 save the plot to?}
+
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
 \value{
 Plot when \code{plot=TRUE} and data.frame with grouped frequency results

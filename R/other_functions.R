@@ -65,6 +65,10 @@ try_require <- function(package, stop = TRUE, load = TRUE, lib.loc = NULL, ...) 
 #' }
 #' @export
 ip_data <- function(ip = myip(), quiet = FALSE) {
+  if (!haveInternet()) {
+    message("No internet connetion...")
+    return(invisible(NULL))
+  }
   ip <- ip[!is.na(ip)]
   ip <- ip[is_ip(ip)]
   ip <- unique(ip)
@@ -229,6 +233,10 @@ listfiles <- function(folder = getwd(),
 #' }
 #' @export
 myip <- function() {
+  if (!haveInternet()) {
+    message("No internet connetion...")
+    return(invisible(NULL))
+  }
   ipify <- "https://api.ipify.org/"
   content(GET(ipify), encoding = "UTF-8")
 }

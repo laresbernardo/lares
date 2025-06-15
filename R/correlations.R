@@ -136,6 +136,7 @@ corr <- function(df, method = "pearson",
 #' @family Exploratory
 #' @family Correlations
 #' @inheritParams corr
+#' @inheritParams get_mp3
 #' @param var Variable. Name of the variable to correlate. Note that if the
 #' variable \code{var} is not numerical, 1. you may define which category to select
 #' from using `var_category`; 2. You may have to add \code{redundant = TRUE} to
@@ -156,7 +157,6 @@ corr <- function(df, method = "pearson",
 #' @param ranks Boolean. Add ranking numbers?
 #' @param zeroes Do you wish to keep zeroes in correlations too?
 #' @param save Boolean. Save output plot into working directory
-#' @param quiet Boolean. Keep quiet? If not, show messages
 #' @param ... Additional parameters passed to \code{corr} and \code{cor.test}
 #' @return data.frame. With variables, correlation and p-value results
 #' for each feature, arranged by descending absolute correlation value.

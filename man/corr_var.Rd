@@ -61,7 +61,7 @@ values of each column. Set to \code{NA} to ignore argument.}
 
 \item{save}{Boolean. Save output plot into working directory}
 
-\item{quiet}{Boolean. Keep quiet? If not, show messages}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{...}{Additional parameters passed to \code{corr} and \code{cor.test}}
 

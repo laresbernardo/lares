@@ -7,6 +7,7 @@
 #' @family Frequency
 #' @family Exploratory
 #' @family Visualization
+#' @inheritParams get_mp3
 #' @param df Data.frame
 #' @param ... Variables. Variables you wish to process. Order matters.
 #' If no variables are passed, the whole data.frame will be considered
@@ -70,7 +71,8 @@ freqs <- function(df, ..., wt = NULL,
                   plot = FALSE, rm.na = FALSE,
                   title = NA, subtitle = NA,
                   top = 20, abc = FALSE,
-                  save = FALSE, subdir = NA) {
+                  save = FALSE, subdir = NA, 
+                  quiet = FALSE) {
   vars <- quos(...)
   weight <- enquo(wt)
 
@@ -142,7 +144,7 @@ freqs <- function(df, ..., wt = NULL,
       output <- output %>%
         arrange(desc(.data$n)) %>%
         slice(1:top)
-      message(
+      if (!quiet) message(
         sprintf(
           "Slicing the top %s (out of %s) values; use 'top' parameter to overrule.",
           top, nrow(values)
@@ -292,6 +294,7 @@ scale_x_reordered <- function(..., sep = "___") {
 #' @family Frequency
 #' @family Exploratory
 #' @family Visualization
+#' @inheritParams get_mp3
 #' @param df Data.frame
 #' @param max Numeric. Top variance threshold. Range: (0-1].
 #' These variables will be excluded
@@ -300,7 +303,6 @@ scale_x_reordered <- function(..., sep = "___") {
 #' @param novar Boolean. Remove no variance columns?
 #' @param plot Boolean. Do you want to see a plot? Three variables tops
 #' @param top Integer. Plot most relevant (less categories) variables
-#' @param quiet Boolean. Keep quiet? (or show variables exclusions)
 #' @param save Boolean. Save the output plot in our working directory
 #' @param subdir Character. Into which subdirectory do you wish to
 #' save the plot to?
@@ -462,7 +464,7 @@ freqs_df <- function(df,
 #' freqs_plot(dft, Pclass, Survived, Sex, Embarked, top = 15)
 #' @export
 freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
-                       title = NA, subtitle = NA) {
+                       title = NA, subtitle = NA, quiet = FALSE) {
   vars <- quos(...)
 
   if (length(vars) == 0) {
@@ -474,7 +476,7 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
     mutate_if(is.factor, as.character) %>%
     mutate_at(seq_along(vars), as.character) %>%
     mutate(order = ifelse(.data$order > top, "...", .data$order))
-  if ("..." %in% aux$order) {
+  if ("..." %in% aux$order & !quiet) {
     message(paste(
       "Showing", top, "most frequent values. Tail of",
       nrow(aux) - top,
@@ -548,7 +550,6 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
   }
 
   p <- (p1 / p2)
-  attr(p, "freqs_data") <- aux
   attr(p, "freqs_labels") <- labels
   return(p)
 }

@@ -21,6 +21,10 @@ cran_logs <- function(input = "lares",
                       to = Sys.Date() - 1,
                       type = "daily",
                       plot = TRUE) {
+  if (!haveInternet()) {
+    message("No internet connetion...")
+    return(invisible(NULL))
+  }
   if (is.vector(input)) {
     check_opts(type, c("daily", "total"))
     base <- sprintf("https://cranlogs.r-pkg.org/downloads/%s", type)

@@ -89,6 +89,7 @@ cleanNames <- function(df, num = "x", keep = "_", ...) {
 #'
 #' @family Data Wrangling
 #' @family Text Mining
+#' @inheritParams get_mp3
 #' @param text Character vector. Sentences or texts you wish to tokenize.
 #' @param exclude Character vector. Which words do you wish to exclude?
 #' @param lang Character. Language in text (used for stop words). Example:
@@ -108,7 +109,6 @@ cleanNames <- function(df, num = "x", keep = "_", ...) {
 #' @param df Boolean. Return a dataframe with a one-hot-encoding kind of
 #' results? Each word is a column and returns if word is contained.
 #' @param h2o Boolean. Return \code{H2OFrame}?
-#' @param quiet Boolean. Keep quiet? If not, print messages
 #' @return data.frame. Tokenized words with counters.
 #' @export
 textTokenizer <- function(text,

@@ -46,7 +46,7 @@ with its real split rate.}
 
 \item{ignore}{Character vector. Columns too ignore}
 
-\item{quiet}{Boolean. Quiet all messages, warnings, recommendations?}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{project}{Character. Your project's name}
 

@@ -26,7 +26,7 @@ encoding to non-numerical columns?}
 
 \item{norm}{Boolean. Should the data be normalized?}
 
-\item{quiet}{Boolean. Keep quiet? If not, print messages.}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{...}{Additional parameters passed to \code{factoextra::fviz_nbclust}}
 }

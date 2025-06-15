@@ -114,11 +114,11 @@ missingness <- function(df, plot = FALSE, full = FALSE,
 #' @family Data Wrangling
 #' @family Machine Learning
 #' @family Missing Values
+#' @inheritParams get_mp3
 #' @param df Dataframe. Dataframe to transform.
 #' @param m Integer. Number of multiple imputations.
 #' @param iters Integer. Number of iterations.
 #' @param seed Integer. Set a seed for reproducibility.
-#' @param quiet Boolean. Keep quiet? (or print replacements).
 #' @return data.frame with imputed values.
 #' @export
 impute <- function(df, m = 5, iters = 5, seed = 0, quiet = FALSE) {

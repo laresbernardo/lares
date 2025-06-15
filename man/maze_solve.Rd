@@ -51,7 +51,7 @@ randomly.}
 \item{timeout}{Numeric. How many seconds set for timeout to force
 algorithm to stop trying new paths?}
 
-\item{quiet}{Boolean. Keep quiet? If not, show messages}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{seed}{Numeric. Seed to replicate random results.}
 

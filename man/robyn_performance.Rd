@@ -45,7 +45,7 @@ Keep in mind organic variables also have carryover but currently not showing.}
 \item{new_version}{Boolean. Use dev version's new function for marginal
 calculations (if available)?}
 
-\item{quiet}{Boolean. Keep quiet? If not, message will be shown.}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 
 \item{...}{Additional parameters.}
 }

@@ -10,13 +10,7 @@
 #' @param lang_dic Character. Any of "en","es","de","fr". Set to NULL
 #' if you wish to skip this step (and use \code{words} parameter in
 #' \code{scrabble_words} instead).
-#' @param quiet Boolean. Keep quiet? If not, print informative messages.
 #' @return data.frame with words and language columns.
-#' @examples
-#' \donttest{
-#' # For Spanish words
-#' dictionary <- scrabble_dictionary("es")
-#' }
 #' @export
 #' @rdname scrabble
 scrabble_dictionary <- function(lang_dic, quiet = FALSE) {
@@ -36,6 +30,10 @@ scrabble_dictionary <- function(lang_dic, quiet = FALSE) {
       ))
     }
     return(words)
+  }
+  if (!haveInternet()) {
+    message("No internet connetion...")
+    return(invisible(NULL))
   }
   message(sprintf(
     ">>> Downloading '%s' words. Source: %s",
@@ -67,18 +65,21 @@ scrabble_dictionary <- function(lang_dic, quiet = FALSE) {
 #' @return data.frame with word, scores, and length values for each \code{word}.
 #' @examples
 #' \donttest{
-#' # For Spanish words (default)
-#' es_scores <- scrabble_points("es")
-#' # Custom scores for each letter
-#' cu_scores <- data.frame(
-#'   tiles = tolower(LETTERS),
-#'   scores = c(1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5, 2, 4, 2, 1, 4, 10, 1, 1, 1, 2, 5, 4, 8, 3, 10)
-#' )
-#'
-#' # Score values for each set of rules
-#' words <- c("Bernardo", "Whiskey", "R is great")
-#' scrabble_score(words, es_scores)
-#' scrabble_score(words, cu_scores)
+#' if (haveInternet()) {
+#'   # For Spanish words (default)
+#'   es_scores <- scrabble_points("es")
+#'   # Custom scores for each letter
+#'   cu_scores <- data.frame(
+#'     tiles = tolower(LETTERS),
+#'     scores = c(1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5, 2, 4, 2, 1, 
+#'                4, 10, 1, 1, 1, 2, 5, 4, 8, 3, 10)
+#'   )
+#'   
+#'   # Score values for each set of rules
+#'   words <- c("Bernardo", "Whiskey", "R is great")
+#'   scrabble_score(words, es_scores)
+#'   scrabble_score(words, cu_scores) 
+#' }
 #' }
 #' @export
 #' @rdname scrabble
@@ -254,27 +255,29 @@ grepl_letters <- function(x, pattern, blank = "_") {
 #' @return data.frame with matching words found, sorted by higher points.
 #' @examples
 #' \donttest{
-#' # Automatic use of languages and scores
-#' Sys.setenv("LARES_LANG" = "es")
-#' scrabble_words(
-#'   tiles = "hola",
-#'   free = 2,
-#'   force_start = "h",
-#'   force_n = 4,
-#'   force_str = "_o_a",
-#'   exclude_here = "__z|j"
-#' )
-#'
-#' wordle <- c("board", "tempo", "shoes", "hoard")
-#' scrabble_words(
-#'   language = NULL,
-#'   words = wordle,
-#'   force_n = 5,
-#'   force_str = "O_R"
-#' )
-#'
-#' # Words considered for a language (you can custom it too!)
-#' es_words <- scrabble_dictionary("es")
+#' if (haveInternet()) {
+#'   # Automatic use of languages and scores
+#'   Sys.setenv("LARES_LANG" = "es")
+#'   scrabble_words(
+#'     tiles = "hola",
+#'     free = 2,
+#'     force_start = "h",
+#'     force_n = 4,
+#'     force_str = "_o_a",
+#'     exclude_here = "__z|j"
+#'   )
+#'   
+#'   wordle <- c("board", "tempo", "shoes", "hoard")
+#'   scrabble_words(
+#'     language = NULL,
+#'     words = wordle,
+#'     force_n = 5,
+#'     force_str = "O_R"
+#'   )
+#'   
+#'   # Words considered for a language (you can custom it too!)
+#'   es_words <- scrabble_dictionary("es")
+#' }
 #' }
 #' @export
 #' @rdname scrabble

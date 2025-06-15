@@ -27,7 +27,7 @@ test dataset or pass a valid dataframe.}
 
 \item{top}{Integer. Plot only top n values (as in importance)}
 
-\item{quiet}{Boolean. Print messages?}
+\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
 \value{
 H2OFrame with shap values for every observation and feature.

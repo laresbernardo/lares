@@ -450,6 +450,7 @@ formatNum <- function(x, decimals = 2, signif = NULL,
 #' with a given relation rate and a binary feature.
 #'
 #' @family Data Wrangling
+#' @inheritParams get_mp3
 #' @param df Vector or Dataframe. Contains different variables in each
 #' column, separated by a specific character
 #' @param var Variable. Which variable should we used to re-sample dataset?
@@ -458,7 +459,6 @@ formatNum <- function(x, decimals = 2, signif = NULL,
 #' @param target Character. If binary, which value should be reduced? If kept in
 #' \code{"auto"}, then the most frequent value will be reduced.
 #' @param seed Numeric. Seed to replicate and obtain same values
-#' @param quiet Boolean. Keep quiet? If not, messages will be printed
 #' @return data.frame. Reduced sampled data.frame following the \code{rate} of
 #' appearance of a specific variable.
 #' @examples
@@ -531,13 +531,13 @@ balance_data <- function(df, var, rate = 1, target = "auto", seed = 0, quiet = F
 #'
 #' @family Data Wrangling
 #' @family Text Mining
+#' @inheritParams get_mp3
 #' @param df Data.frame or Vector
 #' @param original String or Vector. Original text you wish to replace
 #' @param change String or Vector. Values you wish to replace the originals with
 #' @param which Character vector. Name of columns to use. Leave "all" for everything
 #' @param fixclass Boolean. Try to detect logical classes after transformations (or
 #' leave as default classes as character)?
-#' @param quiet Boolean. Keep quiet? (or print replacements)
 #' @return data.frame with replaced values based on inputs.
 #' @examples
 #' df <- data.frame(
