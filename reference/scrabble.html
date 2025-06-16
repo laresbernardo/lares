@@ -201,14 +201,16 @@ You might also want to set this parameter globally with
 <span class="r-in"><span>  <span class="co"># Custom scores for each letter</span></span></span>
 <span class="r-in"><span>  <span class="va">cu_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    tiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    scores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">1</span>, </span></span>
-<span class="r-in"><span>               <span class="fl">4</span>, <span class="fl">10</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">8</span>, <span class="fl">3</span>, <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    scores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>      <span class="fl">4</span>, <span class="fl">10</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">8</span>, <span class="fl">3</span>, <span class="fl">10</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span>  </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Score values for each set of rules</span></span></span>
 <span class="r-in"><span>  <span class="va">words</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Bernardo"</span>, <span class="st">"Whiskey"</span>, <span class="st">"R is great"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">scrabble_score</span><span class="op">(</span><span class="va">words</span>, <span class="va">es_scores</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">scrabble_score</span><span class="op">(</span><span class="va">words</span>, <span class="va">cu_scores</span><span class="op">)</span> </span></span>
+<span class="r-in"><span>  <span class="fu">scrabble_score</span><span class="op">(</span><span class="va">words</span>, <span class="va">cu_scores</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Points system: 'es'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         word scores length</span>
@@ -290,7 +292,7 @@ You might also want to set this parameter globally with
 <span class="r-in"><span>    force_str <span class="op">=</span> <span class="st">"_o_a"</span>,</span></span>
 <span class="r-in"><span>    exclude_here <span class="op">=</span> <span class="st">"__z|j"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span>  </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">wordle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"board"</span>, <span class="st">"tempo"</span>, <span class="st">"shoes"</span>, <span class="st">"hoard"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">scrabble_words</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    language <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
@@ -298,7 +300,7 @@ You might also want to set this parameter globally with
 <span class="r-in"><span>    force_n <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>    force_str <span class="op">=</span> <span class="st">"O_R"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span>  </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Words considered for a language (you can custom it too!)</span></span></span>
 <span class="r-in"><span>  <span class="va">es_words</span> <span class="op">&lt;-</span> <span class="fu">scrabble_dictionary</span><span class="op">(</span><span class="st">"es"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
