@@ -81,7 +81,7 @@ dft \%>\% freqs(Pclass, Survived, abc = TRUE, rel = TRUE)
 # Using a weighted feature
 dft \%>\% freqs(Pclass, Survived, wt = Fare / 100)
 
-# Let's check the results with plots:
+### Let's check the results with plots:
 
 # How many survived and see plot?
 dft \%>\% freqs(Survived, plot = TRUE)

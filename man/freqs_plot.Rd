@@ -47,9 +47,9 @@ no limits on amount of features to evaluate.
 Sys.unsetenv("LARES_FONT") # Temporal
 data(dft) # Titanic dataset
 
-df <- freqs_plot(dft, Pclass, Survived)
-head(df$data)
-plot(df)
+x <- freqs_plot(dft, Pclass, Survived)
+x$data
+plot(x)
 
 freqs_plot(dft, Pclass, Survived, Sex, Embarked)
 

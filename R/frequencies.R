@@ -44,7 +44,7 @@
 #' # Using a weighted feature
 #' dft %>% freqs(Pclass, Survived, wt = Fare / 100)
 #'
-#' # Let's check the results with plots:
+#' ### Let's check the results with plots:
 #'
 #' # How many survived and see plot?
 #' dft %>% freqs(Survived, plot = TRUE)
@@ -269,8 +269,8 @@ freqs <- function(df, ..., wt = NULL,
         }
         # Export file name and folder for plot
         if (save) export_plot(p, "viz_freqs", vars, subdir = subdir)
-        p
       }
+      p
     }
   }
 }
@@ -457,9 +457,9 @@ freqs_df <- function(df,
 #' Sys.unsetenv("LARES_FONT") # Temporal
 #' data(dft) # Titanic dataset
 #'
-#' df <- freqs_plot(dft, Pclass, Survived)
-#' head(df$data)
-#' plot(df)
+#' x <- freqs_plot(dft, Pclass, Survived)
+#' x$data
+#' plot(x)
 #'
 #' freqs_plot(dft, Pclass, Survived, Sex, Embarked)
 #'
