@@ -143,9 +143,10 @@ x2y <- function(df, target = NULL, symmetric = FALSE,
   attr(results, "symmetric") <- symmetric
   class(results) <- c("x2y", class(results))
   if (plot) {
-    return(plot(results))
+    plot(results)
+  } else {
+    results 
   }
-  return(results)
 }
 
 .x2y_addcorr <- function(x2y, df) {
@@ -166,7 +167,7 @@ x2y <- function(df, target = NULL, symmetric = FALSE,
       mean_abs_corr = as.numeric(eval(.data$mean_abs_corr)),
       mean_pvalue = as.numeric(eval(.data$mean_pvalue))
     )
-  return(results)
+  results
 }
 
 
@@ -201,7 +202,7 @@ x2y_metric <- function(x, y, confidence = FALSE, bootstraps = 20, max_cat = 20) 
     attr(results, "bootstraps") <- bootstraps
   }
   class(results) <- c("x2y_metric", class(results))
-  return(results)
+  results
 }
 
 #' @rdname x2y
@@ -224,7 +225,7 @@ plot.x2y_preds <- function(x, corr = FALSE, ...) {
     p <- p + labs(caption = paste("Correlation:", signif(cor(x$x, x$y), 1))) +
       geom_smooth(aes(y = .data$y), method = "lm", formula = "y ~ x", size = 0.5)
   }
-  return(p)
+  p
 }
 
 #' @rdname x2y
@@ -292,7 +293,7 @@ plot.x2y <- function(x, type = 1, ...) {
         theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 1)) +
         coord_equal()
     }
-    return(p)
+    p
   }
 }
 
@@ -318,7 +319,7 @@ x2y_preds <- function(x, y, max_cat = 10) {
     mutate(p = preds)
   attr(preds, "max_cat") <- max_cat
   class(preds) <- c("x2y_preds", class(preds))
-  return(preds)
+  preds
 }
 
 .x2y_vals <- function(x, y, ...) {

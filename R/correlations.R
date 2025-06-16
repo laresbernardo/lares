@@ -497,8 +497,9 @@ corr_cross <- function(df, plot = TRUE,
       p <- p + labs(caption = paste("Correlations with p-value <", max_pvalue))
     }
     p
+  } else {
+    ret
   }
-  ret
 }
 
 .transf <- function(x, max = 1, contains = NA, cluster = FALSE, rm.na = FALSE) {

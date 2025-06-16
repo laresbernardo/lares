@@ -648,13 +648,9 @@ quants <- function(values, splits = 10, return = "labels", n = 2) {
   if (splits > length(unique(values[!is.na(values)])) - 1) {
     stop("There are not enough observations to split the data in ", splits)
   }
-
   cuts <- quantile(values, probs = seq(0, 1, length = splits + 1), na.rm = TRUE)
   labels <- cut(values, unique(cuts), dig.lab = n, include.lowest = TRUE, ordered_result = TRUE)
-
-  if (return == "labels") {
-    labels
-  }
+  output <- labels
   if (return == "summary") {
     output <- data.frame(percentile = names(cuts)[-1], cut = cuts[-1]) %>%
       mutate(
@@ -662,8 +658,8 @@ quants <- function(values, splits = 10, return = "labels", n = 2) {
         label = gsub("\\(NA", paste0("[", signif(min(.data$cut), n)), .data$label),
         label = factor(.data$label, levels = unique(.data$label), ordered = TRUE)
       )
-    output
   }
+  output
 }
 
 

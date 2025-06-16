@@ -35,7 +35,7 @@ wordle_check <- function(input, word, dictionary = NULL, lang_dic = "en", method
   }
   wordle_valid(input, dictionary, lang_dic, method)
   out <- pos_check(input, word, len = 5, print = print)
-  return(invisible(out))
+  invisible(out)
 }
 
 pos_check <- function(input, solution, len = 5, print = TRUE) {
@@ -49,7 +49,7 @@ pos_check <- function(input, solution, len = 5, print = TRUE) {
   names(out) <- in_tiles
   class(out) <- c("wordle_check", class(out))
   print(out, print = print)
-  return(out)
+  out
 }
 
 #' @rdname wordle
@@ -61,7 +61,7 @@ print.wordle_check <- function(x, print = TRUE, ...) {
     texts <- c(texts, formatColoured(names(x)[i], x[i], bold = TRUE, cat = FALSE))
   }
   txt <- paste(texts, collapse = " ")
-  if (print) cat(txt) else return(txt)
+  if (print) cat(txt) else txt
 }
 
 wordle_valid <- function(input, dictionary, lang_dic = "en", method = 3) {
@@ -102,7 +102,7 @@ wordle_dictionary <- function(lang_dic = "en", method = 3, quiet = TRUE) {
   out <- toupper(words[nchar(words) == 5])
   cache_write(out, cache_name, quiet = quiet)
   if (!quiet) message(sprintf(">>> Saved (%s words) into cache", formatNum(length(out), 0)))
-  return(out)
+  out
 }
 
 #' @inheritParams cache_write
@@ -158,7 +158,7 @@ wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
   attr(output, "iterations") <- length(seed)
   attr(output, "elapsed") <- toc("wordle_simulation", quiet = quiet)$time
   class(output) <- c("wordle_simulation", class(output))
-  return(invisible(output))
+  invisible(output)
 }
 
 #' @rdname wordle
@@ -221,8 +221,7 @@ wordle_opts <- function(input, word, dictionary = NULL, lang_dic = "en", method 
   }
   attr(dictionary, "answer") <- word
   attr(dictionary, "last_word") <- input
-
-  return(dictionary)
+  dictionary
 }
 
 discard_words <- function(input, word, dictionary, check) {
@@ -259,7 +258,7 @@ discard_words <- function(input, word, dictionary, check) {
   } else {
     dictionary <- word
   }
-  return(dictionary)
+  dictionary
 }
 
 ############ PLAY AREA ############

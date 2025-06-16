@@ -401,9 +401,9 @@ distr <- function(data, ...,
   }
 
   if (!plot) {
-    return(select(freqs, -.data$order, -.data$row))
+    select(freqs, -.data$order, -.data$row)
   } else {
-    return(p)
+    p
   }
 }
 
