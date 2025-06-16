@@ -33,7 +33,7 @@ place to post your tiles."><meta property="og:image" content="https://laresberna
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.14.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.15</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -195,30 +195,22 @@ You might also want to set this parameter globally with
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="co"># For Spanish words</span></span></span>
-<span class="r-in"><span><span class="va">dictionary</span> <span class="op">&lt;-</span> <span class="fu">scrabble_dictionary</span><span class="op">(</span><span class="st">"es"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Downloading 'es' words. Source: github.com/lorenbrichter/Words</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; Skipped writing cache for: lares_cache_es</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Saved (636,598 words) into cache</span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="co"># For Spanish words (default)</span></span></span>
-<span class="r-in"><span><span class="va">es_scores</span> <span class="op">&lt;-</span> <span class="fu">scrabble_points</span><span class="op">(</span><span class="st">"es"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="haveInternet.html">haveInternet</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># For Spanish words (default)</span></span></span>
+<span class="r-in"><span>  <span class="va">es_scores</span> <span class="op">&lt;-</span> <span class="fu">scrabble_points</span><span class="op">(</span><span class="st">"es"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># Custom scores for each letter</span></span></span>
+<span class="r-in"><span>  <span class="va">cu_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    tiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    scores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">1</span>, </span></span>
+<span class="r-in"><span>               <span class="fl">4</span>, <span class="fl">10</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">8</span>, <span class="fl">3</span>, <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="co"># Score values for each set of rules</span></span></span>
+<span class="r-in"><span>  <span class="va">words</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Bernardo"</span>, <span class="st">"Whiskey"</span>, <span class="st">"R is great"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">scrabble_score</span><span class="op">(</span><span class="va">words</span>, <span class="va">es_scores</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">scrabble_score</span><span class="op">(</span><span class="va">words</span>, <span class="va">cu_scores</span><span class="op">)</span> </span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Points system: 'es'</span>
-<span class="r-in"><span><span class="co"># Custom scores for each letter</span></span></span>
-<span class="r-in"><span><span class="va">cu_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  tiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  scores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">10</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">8</span>, <span class="fl">3</span>, <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Score values for each set of rules</span></span></span>
-<span class="r-in"><span><span class="va">words</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Bernardo"</span>, <span class="st">"Whiskey"</span>, <span class="st">"R is great"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">scrabble_score</span><span class="op">(</span><span class="va">words</span>, <span class="va">es_scores</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         word scores length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Whiskey     22      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 R is great      9     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Bernardo      8      8</span>
-<span class="r-in"><span><span class="fu">scrabble_score</span><span class="op">(</span><span class="va">words</span>, <span class="va">cu_scores</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         word scores length</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    Whiskey     16      7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   Bernardo      8      8</span>
@@ -287,16 +279,29 @@ You might also want to set this parameter globally with
 <span class="r-in"><span><span class="fu">scrabble_points</span><span class="op">(</span><span class="st">"fr"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> There are no points structure for this language/system yet</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="co"># Automatic use of languages and scores</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span><span class="st">"LARES_LANG"</span> <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">scrabble_words</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  tiles <span class="op">=</span> <span class="st">"hola"</span>,</span></span>
-<span class="r-in"><span>  free <span class="op">=</span> <span class="fl">2</span>,</span></span>
-<span class="r-in"><span>  force_start <span class="op">=</span> <span class="st">"h"</span>,</span></span>
-<span class="r-in"><span>  force_n <span class="op">=</span> <span class="fl">4</span>,</span></span>
-<span class="r-in"><span>  force_str <span class="op">=</span> <span class="st">"_o_a"</span>,</span></span>
-<span class="r-in"><span>  exclude_here <span class="op">=</span> <span class="st">"__z|j"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="haveInternet.html">haveInternet</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># Automatic use of languages and scores</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span><span class="st">"LARES_LANG"</span> <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">scrabble_words</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    tiles <span class="op">=</span> <span class="st">"hola"</span>,</span></span>
+<span class="r-in"><span>    free <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>    force_start <span class="op">=</span> <span class="st">"h"</span>,</span></span>
+<span class="r-in"><span>    force_n <span class="op">=</span> <span class="fl">4</span>,</span></span>
+<span class="r-in"><span>    force_str <span class="op">=</span> <span class="st">"_o_a"</span>,</span></span>
+<span class="r-in"><span>    exclude_here <span class="op">=</span> <span class="st">"__z|j"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="va">wordle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"board"</span>, <span class="st">"tempo"</span>, <span class="st">"shoes"</span>, <span class="st">"hoard"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">scrabble_words</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    language <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>    words <span class="op">=</span> <span class="va">wordle</span>,</span></span>
+<span class="r-in"><span>    force_n <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>    force_str <span class="op">=</span> <span class="st">"O_R"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="co"># Words considered for a language (you can custom it too!)</span></span></span>
+<span class="r-in"><span>  <span class="va">es_words</span> <span class="op">&lt;-</span> <span class="fu">scrabble_dictionary</span><span class="op">(</span><span class="st">"es"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Points system: 'es'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Setting up tiles...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Tiles: 'H', 'O', 'L', 'A', '_', '_'</span>
@@ -305,21 +310,6 @@ You might also want to set this parameter globally with
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Saved (636,598 words) into cache</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">39735 &gt; 39735 &gt; 2927 &gt; 2927 &gt; 853 &gt; 71 &gt; 71 &gt; 6 &gt; 4 &gt; 4 </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   word  scores length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> hoya      11      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> hopa       9      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> hola       7      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> hora       7      4</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">wordle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"board"</span>, <span class="st">"tempo"</span>, <span class="st">"shoes"</span>, <span class="st">"hoard"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">scrabble_words</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  language <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
-<span class="r-in"><span>  words <span class="op">=</span> <span class="va">wordle</span>,</span></span>
-<span class="r-in"><span>  force_n <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>  force_str <span class="op">=</span> <span class="st">"O_R"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Skipping points schema...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Setting up tiles...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> O and R were not in your tiles: now included</span>
@@ -327,14 +317,6 @@ You might also want to set this parameter globally with
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Added 4 custom words </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">4 &gt; 4 &gt; 4 &gt; 4 &gt; 2 &gt; 2 &gt; 2 &gt; 2 &gt; 2 </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   word  length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> board      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> hoard      5</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Words considered for a language (you can custom it too!)</span></span></span>
-<span class="r-in"><span><span class="va">es_words</span> <span class="op">&lt;-</span> <span class="fu">scrabble_dictionary</span><span class="op">(</span><span class="st">"es"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Downloading 'es' words. Source: github.com/lorenbrichter/Words</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; Skipped writing cache for: lares_cache_es</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Saved (636,598 words) into cache</span>
