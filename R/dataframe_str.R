@@ -124,7 +124,7 @@ df_str <- function(df,
       geom_text(aes(hjust = .data$x), size = 3) +
       theme_lares(pal = 1)
     if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
-    return(p)
+    p
   }
 }
 
@@ -160,7 +160,7 @@ plot_nums <- function(df) {
         strip.text = element_text(size = 10, vjust = -1.3)
       ) +
       coord_flip()
-    return(p)
+    p
   } else {
     message("No numerical variables found!")
   }
@@ -180,9 +180,8 @@ plot_nums <- function(df) {
 plot_cats <- function(df) {
   plot <- df %>% select_if(Negate(is.numeric))
   if (length(plot) > 0) {
-    p <- plot %>% freqs(plot = TRUE) +
+    plot %>% freqs(plot = TRUE) +
       labs(title = "Categorical Features Frequencies")
-    return(p)
   } else {
     message("No categorical variables found!")
   }
@@ -226,6 +225,5 @@ plot_df <- function(df) {
 
   margin <- theme(plot.margin = unit(c(0.1, 0.5, 0.1, 0.5), "cm"))
   plots <- lapply(plots, "+", margin)
-  p <- wrap_plots(plots, heights = heights)
-  return(p)
+  wrap_plots(plots, heights = heights)
 }

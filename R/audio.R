@@ -145,7 +145,7 @@ get_mp3 <- function(id,
     }
   }
 
-  return(invisible(infox))
+  invisible(infox)
 }
 
 

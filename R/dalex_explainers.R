@@ -99,8 +99,7 @@ h2o_explainer <- function(df, model, y = "tag", ignore = NULL, ...) {
     label = label
   )
   explainer$model_info$package <- "h2o"
-
-  return(explainer)
+  explainer
 }
 
 
@@ -143,7 +142,7 @@ dalex_local <- function(explainer, observation = NA, row = 1, type = "break_down
 
   return <- list(observation = observation, breakdown = breakdown, plot = p)
   toc("dalex_local")
-  return(return)
+  return
 }
 
 
@@ -213,6 +212,5 @@ dalex_variable <- function(explainer, vars, force_class = NA, seed = 123, ...) {
   p <- plot(aux) + theme_lares(legend = "top") +
     labs(y = "Average Prediction") +
     scale_y_formatNum(signif = 2)
-  pdp <- list(pdp = aux, plot = p, vars = vars)
-  return(pdp)
+  list(pdp = aux, plot = p, vars = vars)
 }

@@ -84,8 +84,7 @@ reduce_pca <- function(df, n = NULL, ignore = NULL,
       ) +
       theme_lares(pal = 2)
   }
-
-  return(PCA)
+  PCA
 }
 
 
@@ -145,8 +144,7 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
       ) +
       theme_lares(pal = 2)
   }
-
-  return(tSNE$tsne)
+  tSNE$tsne
 }
 
 .prepare_reduce <- function(df, ignore = NULL, quiet = FALSE, norm = TRUE, ...) {
@@ -164,5 +162,5 @@ reduce_tsne <- function(df, n = 2, ignore = NULL,
       transmute_if(is.numeric, normalize) %>%
       replace(., is.na(.), 0)
   }
-  return(df)
+  df
 }

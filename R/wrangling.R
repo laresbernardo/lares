@@ -85,7 +85,7 @@ left <- function(string, n = 1) {
 #' @export
 right <- function(string, n = 1) {
   string <- as.character(string)
-  substr(string, nchar(string) - n + 1, nchar(string)
+  substr(string, nchar(string) - n + 1, nchar(string))
 }
 
 

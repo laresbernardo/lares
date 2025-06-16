@@ -68,6 +68,5 @@ get_currency <- function(currency_pair,
       mutate(date = as.Date(date)) %>%
       filter(date >= as.Date(from))
   }
-
-  return(rate)
+  rate
 }

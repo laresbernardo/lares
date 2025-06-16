@@ -94,8 +94,6 @@ crosstab <- function(df, ..., wt = NULL,
     ret <- ret %>% mutate_if(is.numeric, list(~ round(100 * . / all, decimals)))
   }
   ret <- arrange(ret, desc(.data$total))
-
   if (!total) ret <- ret %>% select(-.data$total)
-
-  return(as_tibble(ret))
+  as_tibble(ret)
 }

@@ -59,7 +59,7 @@ cache_write <- function(data,
       if (!quiet) message("> Cache saved succesfully: ", base)
     } else {
       if (!quiet) message("> Skipped writing cache for: ", base)
-      return(invisible(NULL))
+      invisible(NULL)
     }
   } else {
     stop("Not a valid directory: ", cache_dir)
@@ -91,7 +91,7 @@ cache_read <- function(base,
     if (answer != "i" && isTRUE(overwrite)) {
       data <- readRDS(file)
       if (!quiet) message("> Cache loaded succesfully: ", base)
-      return(data)
+      data
     }
   } else {
     if (!quiet) {
@@ -101,7 +101,7 @@ cache_read <- function(base,
         message("No cache file found for ", base)
       }
     }
-    return(invisible(NULL))
+    invisible(NULL)
   }
 }
 
@@ -126,7 +126,7 @@ cache_exists <- function(base = NULL, cache_dir = getOption("LARES_CACHE_DIR"), 
   attr(exists, "filename") <- filename
   attr(exists, "base") <- base
   attr(exists, "cache_dir") <- cache_dir
-  return(exists)
+  exists
 }
 
 #' @rdname cache_write
@@ -146,7 +146,7 @@ cache_clear <- function(cache_dir = getOption("LARES_CACHE_DIR"), quiet = FALSE,
       message("No cache files available to be removed.")
     }
   }
-  return(invisible(caches))
+  invisible(caches)
 }
 
 #' @rdname cache_write
@@ -155,13 +155,12 @@ cache_clear <- function(cache_dir = getOption("LARES_CACHE_DIR"), quiet = FALSE,
 #' @export
 cache_pipe <- function(data, base = "cache_pipe", read = TRUE, write = TRUE, ...) {
   if (isTRUE(read) && lares::cache_exists(base, ...)) {
-    y <- cache_read(base, ...)
-    return(y)
+    cache_read(base, ...)
   } else {
     if (isTRUE(write)) {
       data <- eval(data)
       cache_write(data, base, ...)
     }
-    return(data)
+    data
   }
 }

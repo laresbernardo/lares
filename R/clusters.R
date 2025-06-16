@@ -188,8 +188,7 @@ clusterKmeans <- function(df, k = NULL, wss_var = 0, limit = 15, drop_na = TRUE,
       results[["tSNE"]] <- tsne
     }
   }
-
-  return(results)
+  results
 }
 
 
@@ -250,7 +249,7 @@ clusterVisualK <- function(df, ks = 2:6, ...) {
     )
 
   ret <- list(plot = wrapped, data = dats)
-  return(invisible(ret))
+  invisible(ret)
 }
 
 ####################################################################
@@ -280,10 +279,9 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
                             quiet = TRUE, ...) {
   try_require("factoextra")
   df <- .prepare_cluster(df, drop_na = drop_na, ohse = ohse, norm = norm, quiet = quiet)
-  plots <- lapply(method, function(x) {
+  lapply(method, function(x) {
     fviz_nbclust(df, kmeans, method = x, ...) + theme_lares(pal = 2, ...)
   })
-  return(plots)
 }
 
 .prepare_cluster <- function(df, drop_na = TRUE, ohse = TRUE,
@@ -341,7 +339,5 @@ clusterOptimalK <- function(df, method = c("wss", "silhouette", "gap_stat"),
       message(paste(">>> Removed duplicate obserations:", nrow(df) - nrow(new_df)))
     }
   }
-  df <- new_df
-
-  return(df)
+  new_df
 }

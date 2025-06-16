@@ -333,7 +333,7 @@ robyn_xchannels <- function(
 
   output <- list(total = tot, models = mod, channels = res)
   class(output) <- c("robyn_crossmmm2", class(output))
-  return(output)
+  output
 }
 
 eval_f <- function(X, target_value) {
