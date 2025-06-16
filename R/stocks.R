@@ -65,7 +65,7 @@ stocks_file <- function(file = NA,
     if (length(mylist) == 1) {
       mylist <- mylist[[1]]
     }
-    return(mylist)
+    mylist
   }
 
   # FOR PERSONAL USE
@@ -101,7 +101,7 @@ stocks_file <- function(file = NA,
   }
   attr(results, "type") <- "stocks_file"
   cache_write(results, cache_file, quiet = TRUE, ...)
-  return(results)
+  results
 }
 
 ####################################################################
@@ -128,7 +128,7 @@ stocks_quote <- function(symbols, ...) {
   for (i in seq_along(symbols)) {
     z <- try(data.frame(getQuote(symbols[i], ...)))
     if ("try-error" %in% class(z)) {
-      return(invisible(ret))
+      invisible(ret)
     }
     if (length(z) > 0) {
       z <- data.frame(Symbol = symbols[i], z)
@@ -289,7 +289,7 @@ stocks_hist <- function(symbols = c("VTI", "META"),
   attr(results, "type") <- "stocks_hist"
   class(results) <- c("stocks_hist", class(results))
   cache_write(results, cache_file, quiet = TRUE)
-  return(results)
+  results
 }
 
 #' @rdname stocks_hist
@@ -412,7 +412,7 @@ daily_stocks <- function(hist, trans, tickers = NA, window = "MAX", ...) {
     ungroup()
 
   attr(daily, "type") <- "daily_stocks"
-  return(daily)
+  daily
 }
 
 ####################################################################
@@ -495,7 +495,7 @@ daily_portfolio <- function(hist, trans, cash, cash_fix = 0, window = "MAX") {
     ungroup()
 
   attr(ret, "type") <- "daily_portfolio"
-  return(ret)
+  ret
 }
 
 
@@ -562,12 +562,12 @@ weighted_value <- function(value,
     ret <- sum(df$value * df$total, na.rm = TRUE) / sum(df$total, na.rm = TRUE)
     attr(ret, "df") <- select(df, -any_of(c("id", "cum")))
     if (type == 2) {
-      return(attr(ret, "df"))
+      attr(ret, "df")
     } else {
-      return(ret)
+      ret
     }
   } else {
-    return(0)
+    0
   }
 }
 
@@ -681,7 +681,7 @@ splot_summary <- function(p, s, save = FALSE) {
       ggsave("portf_stocks_change.png", width = 8, height = 8, dpi = 300)
   }
 
-  return(plot)
+  plot
 }
 
 
@@ -795,7 +795,7 @@ splot_change <- function(p, s,
     plot <- plot +
       ggsave("portf_stocks_histchange.png", width = 8, height = 5, dpi = 300)
   }
-  return(plot)
+  plot
 }
 
 
@@ -880,7 +880,7 @@ splot_growth <- function(p, save = FALSE) {
     plot <- plot +
       ggsave("portf_total_hist.png", width = 8, height = 5, dpi = 300)
   }
-  return(plot)
+  plot
 }
 
 
@@ -1032,7 +1032,7 @@ splot_roi <- function(p, n_days = 365, historical = TRUE, ma = c(12, 50), save =
       }
   }
 
-  return(plot)
+  plot
 }
 
 
@@ -1065,7 +1065,7 @@ splot_types <- function(s, save = FALSE) {
     plot <- plot +
       ggsave("portf_distribution.png", width = 8, height = 5, dpi = 300)
   }
-  return(plot)
+  plot
 }
 
 
@@ -1107,7 +1107,7 @@ etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
         closeAllConnections()
         gc()
         nodata <- c(nodata, info)
-        return(NULL)
+        NULL
       }
     )
     if (is.null(sector)) next
@@ -1134,10 +1134,10 @@ etf_sector <- function(etf = "VTI", quiet = FALSE, cache = TRUE) {
   }
   if (nrow(ret) == 0) {
     if (!quiet) message("No data found for given Tickers!")
-    invisible(return(NULL))
+    invisible(NULL)
   } else {
     cache_write(ret, cache_file, quiet = TRUE)
-    return(ret)
+    ret
   }
 }
 
@@ -1210,9 +1210,9 @@ splot_etf <- function(s, keep_all = FALSE, cache = TRUE, save = FALSE) {
       plot <- plot +
         ggsave("portf_distribution_etfs.png", width = 8, height = 5, dpi = 300)
     }
-    return(plot)
+    plot
   } else {
-    return(noPlot("No data here!"))
+    noPlot("No data here!")
   }
 }
 
@@ -1292,7 +1292,7 @@ stocks_obj <- function(data = stocks_file(),
   ret[["plots_relative"]] <- plots_relative
 
   attr(ret, "type") <- "stocks_obj"
-  return(ret)
+  ret
 }
 # x <- stocks_obj(window = c("1M","1Y","YTD"))
 
@@ -1432,7 +1432,7 @@ stocks_report <- function(data = NA,
   }
 
   toc("stocks_report")
-  return(invisible(data))
+  invisible(data)
 }
 
 .filter_window <- function(df, window) {

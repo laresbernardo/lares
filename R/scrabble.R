@@ -71,14 +71,16 @@ scrabble_dictionary <- function(lang_dic, quiet = FALSE) {
 #'   # Custom scores for each letter
 #'   cu_scores <- data.frame(
 #'     tiles = tolower(LETTERS),
-#'     scores = c(1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5, 2, 4, 2, 1, 
-#'                4, 10, 1, 1, 1, 2, 5, 4, 8, 3, 10)
+#'     scores = c(
+#'       1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5, 2, 4, 2, 1,
+#'       4, 10, 1, 1, 1, 2, 5, 4, 8, 3, 10
+#'     )
 #'   )
-#'   
+#'
 #'   # Score values for each set of rules
 #'   words <- c("Bernardo", "Whiskey", "R is great")
 #'   scrabble_score(words, es_scores)
-#'   scrabble_score(words, cu_scores) 
+#'   scrabble_score(words, cu_scores)
 #' }
 #' }
 #' @export
@@ -266,7 +268,7 @@ grepl_letters <- function(x, pattern, blank = "_") {
 #'     force_str = "_o_a",
 #'     exclude_here = "__z|j"
 #'   )
-#'   
+#'
 #'   wordle <- c("board", "tempo", "shoes", "hoard")
 #'   scrabble_words(
 #'     language = NULL,
@@ -274,7 +276,7 @@ grepl_letters <- function(x, pattern, blank = "_") {
 #'     force_n = 5,
 #'     force_str = "O_R"
 #'   )
-#'   
+#'
 #'   # Words considered for a language (you can custom it too!)
 #'   es_words <- scrabble_dictionary("es")
 #' }

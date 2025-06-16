@@ -111,7 +111,7 @@ robyn_hypsbuilder <- function(
   out <- lapply(seq_along(df$Var1), function(x) c(df$low[x], df$high[x]))
   names(out) <- paste(df$Var1, df$Var2, sep = "_")
   out <- append(out, list(train_size = c(0.5, 0.8)))
-  return(out)
+  out
 }
 
 
@@ -336,14 +336,15 @@ robyn_modelselector <- function(
 
   # Helper function to calculate normalized and weighted scores
   calculate_score <- function(metric_name, data, metrics, weights, invert_criteria) {
+    score <- 0
     if (metric_name %in% metrics) {
       normalized_value <- normalize(data[[metric_name]], na.rm = TRUE)
       weight <- weights[which(metrics == metric_name)]
       sign <- ifelse(metric_name %in% invert_criteria, -1, 1)
       normalized_value[is.na(normalized_value)] <- 0
-      return(normalized_value * weight * sign)
+      score <- normalized_value * weight * sign
     }
-    return(0)
+    score
   }
 
   # Calculate scores
@@ -424,7 +425,7 @@ robyn_modelselector <- function(
     plot = p
   ))
   class(ret) <- c("robyn_modelselector", class(ret))
-  return(ret)
+  ret
 }
 
 ### Certainty Criteria: distance to cluster's mean weighted by spend
@@ -489,7 +490,7 @@ certainty_score <- function(
       lares::scale_y_percent()
   }
 
-  return(res)
+  res
 }
 
 #' @param x robyn_modelselector object
@@ -604,9 +605,11 @@ robyn_performance <- function(
     start_date = min(df$ds, na.rm = TRUE),
     end_date = max(df$ds, na.rm = TRUE),
     channel = InputCollect$all_media,
-    type = factor(case_when(
-      InputCollect$all_media %in% InputCollect$paid_media_spends ~ "Paid",
-      InputCollect$all_media %in% InputCollect$organic_vars ~ "Organic"),
+    type = factor(
+      case_when(
+        InputCollect$all_media %in% InputCollect$paid_media_spends ~ "Paid",
+        InputCollect$all_media %in% InputCollect$organic_vars ~ "Organic"
+      ),
       levels = c("Paid", "Organic")
     ),
     metric = ifelse(InputCollect$all_media %in% InputCollect$paid_media_spends, metric, ""),
@@ -743,7 +746,7 @@ robyn_performance <- function(
     ret <- left_join(ret, mean_carryovers, "channel") %>%
       dplyr::relocate("carryover", .after = "response")
   }
-  return(ret)
+  ret
 }
 
 ####################################################################
@@ -801,5 +804,5 @@ robyn_marginal <- function(..., marginal_unit = 1) {
   ret$plot <- ret$Response1$plot + labs(caption = paste0(
     ret$Response1$plot$labels$caption, cap
   ))
-  return(ret)
+  ret
 }

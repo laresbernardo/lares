@@ -57,7 +57,7 @@ date_cuts <- function(date = Sys.Date(), type = "Q") {
       paste0(toupper(type), i), .data$cut
     ))
   }
-  return(df$cut)
+  df$cut
 }
 
 
@@ -78,16 +78,14 @@ date_cuts <- function(date = Sys.Date(), type = "Q") {
 #' @rdname left_right
 left <- function(string, n = 1) {
   string <- as.character(string)
-  l <- substr(string, 1, n)
-  return(l)
+  substr(string, 1, n)
 }
 
 #' @rdname left_right
 #' @export
 right <- function(string, n = 1) {
   string <- as.character(string)
-  r <- substr(string, nchar(string) - n + 1, nchar(string))
-  return(r)
+  substr(string, nchar(string) - n + 1, nchar(string)
 }
 
 
@@ -141,7 +139,7 @@ normalize <- function(x, range = c(0, 1), ...) {
   }
   scaled_x <- (x - min(x, ...)) / (max(x, ...) - min(x, ...))
   normalized_x <- scaled_x * (range[2] - range[1]) + range[1]
-  return(normalized_x)
+  normalized_x
 }
 
 
@@ -191,10 +189,10 @@ num_abbr <- function(x, n = 3, numeric = FALSE, ...) {
         abbr == "Qi" ~ 1E18,
         TRUE ~ NA
       )
-      return(as.numeric(av))
+      as.numeric(av)
     }))
     output <- num * abbr_value
-    return(output)
+    output
   } else {
     # # To handle scientific notation inputs correctly
     # on.exit(options("scipen" = getOption('scipen')))
@@ -222,8 +220,7 @@ num_abbr <- function(x, n = 3, numeric = FALSE, ...) {
 
     output <- paste0(negative_positions, x)
     output[grepl("NA", output)] <- NA
-
-    return(output)
+    output
   }
 }
 
@@ -299,7 +296,7 @@ categ_reducer <- function(df, var,
   }
 
   df[[as.character(name)]] <- new_vector
-  return(df)
+  df
 }
 
 
@@ -360,7 +357,7 @@ vector2text <- function(vector, sep = ", ", quotes = TRUE, force_single = FALSE,
     output <- gsub('\"', "'", output)
   }
 
-  return(output)
+  output
 }
 #' @rdname vector2text
 #' @export
@@ -439,7 +436,7 @@ formatNum <- function(x, decimals = 2, signif = NULL,
   if (pre == "$") x <- gsub("\\$-", "-$", x)
   if (sign) x <- paste0(signs, x)
   ret <- paste0(pre, x, pos)
-  return(ret)
+  ret
 }
 
 
@@ -517,7 +514,7 @@ balance_data <- function(df, var, rate = 1, target = "auto", seed = 0, quiet = F
     }
   }
   balanced <- rename_at(balanced, vars("tag"), list(~ paste0(var)))
-  return(as_tibble(balanced))
+  as_tibble(balanced)
 }
 
 
@@ -617,9 +614,9 @@ replaceall <- function(df, original, change, which = "all",
     df <- suppressMessages(type.convert(df, numerals = "no.loss", as.is = TRUE))
   }
   if (vector) {
-    return(as.vector(df))
+    as.vector(df)
   } else {
-    return(as_tibble(df))
+    as_tibble(df)
   }
 }
 
@@ -656,7 +653,7 @@ quants <- function(values, splits = 10, return = "labels", n = 2) {
   labels <- cut(values, unique(cuts), dig.lab = n, include.lowest = TRUE, ordered_result = TRUE)
 
   if (return == "labels") {
-    return(labels)
+    labels
   }
   if (return == "summary") {
     output <- data.frame(percentile = names(cuts)[-1], cut = cuts[-1]) %>%
@@ -665,7 +662,7 @@ quants <- function(values, splits = 10, return = "labels", n = 2) {
         label = gsub("\\(NA", paste0("[", signif(min(.data$cut), n)), .data$label),
         label = factor(.data$label, levels = unique(.data$label), ordered = TRUE)
       )
-    return(output)
+    output
   }
 }
 
@@ -693,7 +690,7 @@ dist2d <- function(x, a = c(0, 0), b = c(1, 1)) {
     v2 <- x - a
     m <- cbind(v1, v2)
     d <- abs(det(m)) / sqrt(sum(v1 * v1))
-    return(d)
+    d
   } else {
     stop("Every point most consist of 2 values (X & Y), thus all input lengths must be 2.")
   }
@@ -747,9 +744,9 @@ removenarows <- function(df, all = TRUE) {
   }
   if (!is.data.frame(df)) stop("df must be a valid data.frame")
   if (all) {
-    return(df[rowSums(is.na(df)) != ncol(df), ])
+    df[rowSums(is.na(df)) != ncol(df), ]
   } else {
-    return(df[complete.cases(df), ])
+    df[complete.cases(df), ]
   }
 }
 
@@ -809,7 +806,7 @@ numericalonly <- function(df, dropnacols = TRUE, logs = FALSE, natransform = NA)
       }
     }
   }
-  return(d)
+  d
 }
 
 

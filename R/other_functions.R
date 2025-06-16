@@ -85,7 +85,7 @@ ip_data <- function(ip = myip(), quiet = FALSE) {
   }
   output <- cleanNames(output)
   row.names(output) <- NULL
-  return(output)
+  output
 }
 
 
@@ -158,7 +158,7 @@ image_metadata <- function(files) {
           beep()
         })
       }
-      return(df)
+      df
     }
   } else {
     message("No images found to process...")
@@ -215,8 +215,7 @@ listfiles <- function(folder = getwd(),
 
   row.names(df) <- NULL
   df$address <- NULL
-
-  return(df)
+  df
 }
 
 
@@ -308,9 +307,7 @@ importxlsx <- function(file) {
 #' @return Same as \code{fx} but with no messages or prints.
 #' @export
 quiet <- function(fx, quiet = TRUE) {
-  if (!quiet) {
-    return(fx)
-  }
+  if (!quiet) return(fx)
   invisible(capture.output(fx))
 }
 
@@ -393,7 +390,7 @@ read.file <- function(filename, current_wd = TRUE, sheet = 1, quiet = FALSE) {
     }
   }
   if (nrow(results) == 0) warning("There is no data in that file...")
-  return(results)
+  results
 }
 
 
@@ -466,7 +463,7 @@ autoline <- function(text, top = "auto", rel = 9) {
       unique()
     ret <- factor(ret, levels = aux$ret)
   }
-  return(ret)
+  ret
 }
 
 
@@ -580,7 +577,7 @@ check_font <- function(font, font_dirs = NULL, quiet = FALSE) {
       message("Maybe you meant one of these:\n", v2t(sort(gsub("\\..*", "", font_names))))
     }
   }
-  return(ret)
+  ret
 }
 
 
@@ -614,7 +611,7 @@ list_cats <- function(df, ..., abc = TRUE) {
     colnames(aux)[1] <- which
     ret[[which]] <- aux
   }
-  return(ret)
+  ret
 }
 
 
@@ -666,7 +663,7 @@ files_functions <- function(filename, abc = TRUE, quiet = FALSE) {
       statusbar(i, length(filename), filename[i])
     }
   }
-  return(results)
+  results
 }
 
 
@@ -804,7 +801,7 @@ spread_list <- function(df, col, str = NULL, replace = TRUE) {
   original <- which(cols == col)
   done <- done %>% select(1:original, starts_with(str), (original + 1):ncol(done))
   if (replace) done <- done[, -original]
-  return(as_tibble(done))
+  as_tibble(done)
 }
 
 
@@ -855,7 +852,7 @@ formatHTML <- function(text, color = "black", size = 20, bold = FALSE) {
   closing_span <- "</span>"
   text <- paste(text, collapse = "<br/>")
   ret <- paste0(opening_span, text, closing_span)
-  return(ret)
+  ret
 }
 
 
@@ -914,7 +911,7 @@ glued <- function(..., .sep = "", empty_lines = "keep", .envir = parent.frame())
     lines <- stringr::str_split(output, "\n")[[1]]
     output <- glued(paste(lines[trimws(lines) != ""], collapse = "\n"))
   }
-  return(output)
+  output
 }
 
 
@@ -974,7 +971,7 @@ formatColoured <- function(txt, colour = c("yellow", "blue", "grey"), bold = FAL
   if (colour == opts[7]) code <- 36
   if (colour == opts[8]) code <- 37
   out <- paste0("\033[", ifelse(!bold, 0, 1), ";", code, "m", txt, "\033[0m")
-  if (cat) cat(out) else return(out)
+  if (cat) cat(out) else out
 }
 
 ####################################################################
@@ -1033,7 +1030,7 @@ dir_size <- function(path = getwd(), recursive = TRUE, pattern = NULL, ...) {
   size_files <- gsub("\\\t.*", "", as.numeric(size_files))
   size_files <- num_abbr(size_files, numeric = TRUE)
   class(size_files) <- "object_size"
-  return(size_files)
+  size_files
 }
 
 ####################################################################
@@ -1062,7 +1059,7 @@ markdown2df <- function(text, autoformat = TRUE) {
       chr2logical() %>%
       chr2date()
   }
-  return(df)
+  df
 }
 
 ####################################################################
@@ -1135,5 +1132,5 @@ chr2date <- function(data) {
       data <- as.Date(data, origin = "1970-01-01")
     }
   }
-  return(data)
+  data
 }

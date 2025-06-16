@@ -114,10 +114,8 @@ mplot_density <- function(tag,
     if (!is.na(model_name)) p <- p + labs(caption = model_name)
     if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   }
-
   if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
-
-  return(p)
+  p
 }
 
 
@@ -213,10 +211,8 @@ mplot_importance <- function(var,
 
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
-
   if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
-
-  return(p)
+  p
 }
 
 
@@ -328,8 +324,7 @@ mplot_roc <- function(tag,
     try_require("plotly")
     p <- ggplotly(p)
   }
-
-  return(p)
+  p
 }
 
 
@@ -397,9 +392,9 @@ mplot_cuts <- function(score,
   if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
 
   if (table) {
-    return(deciles)
+    deciles
   } else {
-    return(p)
+    p
   }
 }
 
@@ -456,7 +451,7 @@ mplot_cuts_error <- function(tag,
     cuts$gg_pos <- ifelse(cuts$cut > thresh, 1 + just, -just)
     cuts$colour <- ifelse(cuts$gg_pos < 0, "f", "m")
     row.names(cuts) <- NULL
-    return(cuts)
+    cuts
   }
 
   # First: absolute errors
@@ -518,8 +513,7 @@ mplot_cuts_error <- function(tag,
     plot(p)
     dev.off()
   }
-
-  return(p)
+  p
 }
 
 
@@ -639,7 +633,7 @@ mplot_splits <- function(tag,
 
   if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
 
-  return(p)
+  p
 }
 
 
@@ -739,7 +733,7 @@ mplot_metrics <- function(results,
     dev.off()
   }
 
-  return(plot(p))
+  plot(p)
 }
 
 
@@ -822,8 +816,7 @@ mplot_lineal <- function(tag,
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   if (!is.na(model_name)) p <- p + labs(caption = model_name)
   if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
-
-  return(p)
+  p
 }
 
 
@@ -924,7 +917,7 @@ mplot_full <- function(tag,
 
   if (save) export_plot(p, file_name, subdir = subdir, width = 15, height = 10)
 
-  if (plot) plot(p) else return(p)
+  if (plot) plot(p) else p
 }
 
 
@@ -1075,10 +1068,8 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
 
   if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
   if (squared) p <- p + coord_equal()
-
   if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
-
-  return(p)
+  p
 }
 
 
@@ -1222,10 +1213,8 @@ mplot_gain <- function(tag, score, multis = NA, target = "auto",
   )
   if (!is.na(caption)) caption <- paste(text, caption, sep = "\n") else caption <- text
   p <- p + labs(caption = caption)
-
   if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
-
-  return(p)
+  p
 }
 
 
@@ -1369,10 +1358,8 @@ mplot_response <- function(tag, score, multis = NA, target = "auto",
   )
   if (!is.na(caption)) caption <- paste(text, caption, sep = "\n") else caption <- text
   p <- p + labs(caption = caption)
-
   if (save) export_plot(p, file_name, subdir = subdir, width = 6, height = 6)
-
-  return(p)
+  p
 }
 
 
@@ -1458,7 +1445,6 @@ mplot_topcats <- function(tag, score, multis, model_name = NA) {
     ) +
     scale_y_percent(limits = c(0, 1)) +
     theme_lares()
-
   p <- p1 + p2
-  return(p)
+  p
 }
