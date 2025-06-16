@@ -19,7 +19,7 @@ of functions."><meta property="og:image" content="https://laresbernardo.github.i
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.2.15</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,9 +85,11 @@ something followed by "b", anywhere in the string.</p></dd>
 <span class="r-in"><span><span class="fu">grepl_letters</span><span class="op">(</span><span class="va">x</span>, <span class="st">"ab"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE FALSE  TRUE  TRUE FALSE  TRUE</span>
 <span class="r-in"><span><span class="fu">grepl_letters</span><span class="op">(</span><span class="va">x</span>, <span class="st">"_ab"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE FALSE  TRUE  TRUE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  aaaa  bbbb  baba  aabb     a    ab </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> FALSE FALSE  TRUE  TRUE FALSE FALSE </span>
 <span class="r-in"><span><span class="fu">grepl_letters</span><span class="op">(</span><span class="va">x</span>, <span class="st">"a_a"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  TRUE FALSE  TRUE FALSE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  aaaa  bbbb  baba  aabb     a    ab </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  TRUE FALSE  TRUE FALSE FALSE FALSE </span>
 <span class="r-in"><span><span class="fu">grepl_letters</span><span class="op">(</span><span class="va">x</span>, <span class="st">"c"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE FALSE FALSE FALSE FALSE FALSE</span>
 </code></pre></div>
