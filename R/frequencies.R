@@ -71,7 +71,7 @@ freqs <- function(df, ..., wt = NULL,
                   plot = FALSE, rm.na = FALSE,
                   title = NA, subtitle = NA,
                   top = 20, abc = FALSE,
-                  save = FALSE, subdir = NA, 
+                  save = FALSE, subdir = NA,
                   quiet = FALSE) {
   vars <- quos(...)
   weight <- enquo(wt)
@@ -144,12 +144,14 @@ freqs <- function(df, ..., wt = NULL,
       output <- output %>%
         arrange(desc(.data$n)) %>%
         slice(1:top)
-      if (!quiet) message(
-        sprintf(
-          "Slicing the top %s (out of %s) values; use 'top' parameter to overrule.",
-          top, nrow(values)
+      if (!quiet) {
+        message(
+          sprintf(
+            "Slicing the top %s (out of %s) values; use 'top' parameter to overrule.",
+            top, nrow(values)
+          )
         )
-      )
+      }
       note <- sprintf("[%s most frequent]", top)
       obs <- sprintf("Obs.: %s (out of %s)", formatNum(sum(output$n), 0), formatNum(obs_total, 0))
     }

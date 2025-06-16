@@ -378,7 +378,7 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
 
 .font_global <- function(font, quiet = FALSE, when_not = NA, ask_install = FALSE, ...) {
   if (is.null(font) || any(c(NA, "ignore") %in% tolower(font))) {
-    return("")
+    ""
   } else {
     temp <- font_exists(font, quiet = quiet, ...)
     if (!any(isTRUE(temp))) {
