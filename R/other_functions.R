@@ -238,7 +238,7 @@ myip <- function() {
     invisible(NULL)
   } else {
     ipify <- "https://api.ipify.org/"
-    content(GET(ipify), encoding = "UTF-8")
+    try(content(GET(ipify), encoding = "UTF-8"))
   }
 }
 
@@ -510,48 +510,41 @@ font_exists <- function(font = "Arial Narrow", font_dirs = NULL, quiet = FALSE, 
 
 # Thanks to extrafont for the idea for this code
 ttf_find_default_path <- function(font_dirs = NULL) {
-  if (grepl("^darwin", R.version$os)) {
-    paths <-
-      c(
-        "/Library/Fonts/", # System fonts
-        "/System/Library/Fonts", # More system fonts
-        "/System/Library/Fonts/Supplemental", # More system fonts
-        "~/Library/Fonts/", # User fonts
-        font_dirs
-      )
-    return(paths[file.exists(paths)])
-  } else if (grepl("^linux-gnu", R.version$os)) {
-    paths <-
-      c(
-        "/usr/share/fonts/", # Ubuntu/Debian/Arch/Gentoo
-        "/usr/local/share/fonts/", # system-admin-guide/stable/fonts.html.en
-        "/usr/X11R6/lib/X11/fonts/TrueType/", # RH 6
-        "~/.local/share/fonts/", # Added with Gnome font viewer
-        "~/.fonts/", # User fonts
-        font_dirs
-      )
-    return(paths[file.exists(paths)])
-  } else if (grepl("^freebsd", R.version$os)) {
-    # Possible font paths, depending on installed ports
-    paths <-
-      c(
-        "/usr/local/share/fonts/truetype/",
-        "/usr/local/lib/X11/fonts/",
-        "~/.fonts/", # User fonts
-        font_dirs
-      )
-    return(paths[file.exists(paths)])
-  } else if (grepl("^mingw", R.version$os)) {
-    paths <-
-      c(
-        file.path(Sys.getenv("SystemRoot"), "Fonts"),
-        file.path(Sys.getenv("LOCALAPPDATA"), "Microsoft", "Windows", "Fonts"),
-        font_dirs
-      )
-    return(paths[file.exists(paths)])
+  os <- R.version$os
+  paths <- if (grepl("^darwin", os)) {
+    c(
+      "/Library/Fonts/",
+      "/System/Library/Fonts",
+      "/System/Library/Fonts/Supplemental",
+      "~/Library/Fonts/",
+      font_dirs
+    )
+  } else if (grepl("^linux-gnu", os)) {
+    c(
+      "/usr/share/fonts/",
+      "/usr/local/share/fonts/",
+      "/usr/X11R6/lib/X11/fonts/TrueType/",
+      "~/.local/share/fonts/",
+      "~/.fonts/",
+      font_dirs
+    )
+  } else if (grepl("^freebsd", os)) {
+    c(
+      "/usr/local/share/fonts/truetype/",
+      "/usr/local/lib/X11/fonts/",
+      "~/.fonts/",
+      font_dirs
+    )
+  } else if (grepl("^mingw", os)) {
+    c(
+      file.path(Sys.getenv("SystemRoot"), "Fonts"),
+      file.path(Sys.getenv("LOCALAPPDATA"), "Microsoft", "Windows", "Fonts"),
+      font_dirs
+    )
   } else {
     stop("Unknown platform. Don't know where to look for truetype fonts. Sorry!")
   }
+  paths[file.exists(paths)]
 }
 
 check_font <- function(font, font_dirs = NULL, quiet = FALSE) {
@@ -714,19 +707,19 @@ move_files <- function(from, to) {
   # Final check for all files
   if (length(froms) == 0) {
     warning(sprintf("No files to move from %s...", from))
-    return(invisible(NULL))
-  }
-  if (length(tos) != length(froms)) {
-    stop("Every 'from' must have a respective 'to' filename")
-  }
-
-  # Now move/rename all files
-  for (i in seq_along(froms)) {
-    todir <- dirname(tos[i])
-    if (!isTRUE(file.info(todir)$isdir)) {
-      dir.create(todir, recursive = FALSE)
+    invisible(NULL)
+  } else {
+    if (length(tos) != length(froms)) {
+      stop("Every 'from' must have a respective 'to' filename")
     }
-    file.rename(from = froms[i], to = basename(tos[i]))
+    # Now move/rename all files
+    for (i in seq_along(froms)) {
+      todir <- dirname(tos[i])
+      if (!isTRUE(file.info(todir)$isdir)) {
+        dir.create(todir, recursive = FALSE)
+      }
+      file.rename(from = froms[i], to = basename(tos[i]))
+    }
   }
 }
 

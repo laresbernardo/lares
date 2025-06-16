@@ -8,8 +8,8 @@
 #' @author Bernardo Lares (laresbernardo@@gmail.com)
 #' @importFrom dplyr %>% all_of any_of arrange as_tibble bind_cols bind_rows case_when
 #' contains count desc distinct distinct_at everything filter first group_by inner_join
-#' lag last left_join mutate mutate_all mutate_at mutate_if n ntile ensym
-#' one_of pull rename rename_at right_join row_number rowwise sample_n matches
+#' lag last left_join mutate mutate_all mutate_at mutate_if n ntile ensym across
+#' one_of pull rename rename_at right_join row_number rowwise sample_n matches sym
 #' select select_if slice slice_head starts_with summarise summarise_all case_match
 #' summarise_if summarize summarize_all tally tibble transmute_if ungroup vars
 #' @importFrom ggplot2 aes after_stat annotate coord_equal coord_flip

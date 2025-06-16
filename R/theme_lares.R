@@ -277,8 +277,7 @@ theme_lares <- function(font = Sys.getenv("LARES_FONT"),
       if (grepl("t", which)) ret <- append(ret, gg_text_customs())
     })
   }
-
-  return(ret)
+  ret
 }
 
 ####################################################################

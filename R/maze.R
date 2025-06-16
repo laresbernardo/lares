@@ -134,61 +134,54 @@ maze_solve_recursive <- function(
     timeout = 10,
     path_coords = data.frame(row = integer(0), col = integer(0)),
     prev_direction = NULL) {
-  # When solution found or timeout reached, return results
+  # Check for timeout or goal reached
   toci <- toc("maze_solve_timeout", quiet = TRUE)
   timeout_reached <- any(toci$toc - toci$tic > timeout)
-  if (any(c(identical(current, end), timeout_reached))) {
-    if (timeout_reached) {
-      return(FALSE)
-    }
+
+  if (timeout_reached) {
+    FALSE
+  } else if (identical(current, end)) {
     list(maze = maze, path_coords = path_coords)
-  }
+  } else {
+    row <- current[1]
+    col <- current[2]
+    maze[row, col] <- "X"
+    path_coords <- rbind(path_coords, c(row, col))
 
-  # Mark the current cell as part of the solution path
-  row <- current[1]
-  col <- current[2]
-  maze[row, col] <- "X"
+    target <- if (aim) end else c(row, col)
+    positions <- rank_positions(row, col, target[1], target[2], diagonal)
+    if (random) positions <- positions[sample(nrow(positions)), ]
 
-  # Update path coordinates
-  path_coords <- rbind(path_coords, c(row, col))
-
-  # Rank next positions based on minimum distance to goal
-  temp <- if (aim) end else c(row, col)
-  positions <- rank_positions(row, col, temp[1], temp[2], diagonal)
-  if (random) positions <- positions[sample(seq_len(nrow(positions))), ]
-
-  # Ensure that the direction it came from is the first move if inertia is TRUE
-  if (!is.null(prev_direction) & isTRUE(inertia)) {
-    first_point <- linear_extrapolation(prev_direction[1], prev_direction[2], row, col)
-    if (all(!is.na(first_point))) {
-      skip <- which(positions$x == first_point[1] & positions$y == first_point[2])
-      if (length(skip) > 0) {
-        positions <- rbind(first_point, positions[-skip, -3])
+    if (!is.null(prev_direction) && isTRUE(inertia)) {
+      first_point <- linear_extrapolation(prev_direction[1], prev_direction[2], row, col)
+      if (all(!is.na(first_point))) {
+        skip <- which(positions$x == first_point[1] & positions$y == first_point[2])
+        if (length(skip) > 0) {
+          positions <- rbind(first_point, positions[-skip, -3])
+        }
       }
     }
-  }
 
-  for (i in seq_len(nrow(positions))) {
-    next_row <- positions$x[i]
-    next_col <- positions$y[i]
+    results <- lapply(seq_len(nrow(positions)), function(i) {
+      next_row <- positions$x[i]
+      next_col <- positions$y[i]
 
-    # Check if the next cell is within bounds and is an open path
-    if (next_row > 0 && next_row <= nrow(maze) &&
-      next_col > 0 && next_col <= ncol(maze) &&
-      maze[next_row, next_col] == 0) {
-      # Recursively explore the next cell
-      nexti <- c(next_row, next_col)
-      result <- maze_solve_recursive(
-        maze, nexti, end, aim, inertia, diagonal, random,
-        timeout, path_coords,
-        prev_direction = c(row, col)
-      )
-      if (!is.logical(result)) {
-        return(result)
+      if (next_row > 0 && next_row <= nrow(maze) &&
+        next_col > 0 && next_col <= ncol(maze) &&
+        maze[next_row, next_col] == 0) {
+        maze_solve_recursive(
+          maze, c(next_row, next_col), end,
+          aim, inertia, diagonal, random,
+          timeout, path_coords,
+          prev_direction = c(row, col)
+        )
+      } else {
+        FALSE
       }
-    }
+    })
+    match_found <- Filter(function(res) !is.logical(res), results)
+    if (length(match_found) > 0) match_found[[1]] else FALSE
   }
-  FALSE # No solution found from this point
 }
 
 #' @rdname maze_solve

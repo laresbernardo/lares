@@ -280,7 +280,7 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
 #' )
 #'
 #' # Input as a vector or dataframe
-#' date_feats(df, drop = TRUE) %>% head(10)
+#' date_feats(df, drop = TRUE, quiet = TRUE) %>% head(10)
 #'
 #' # Holidays given a date range and country
 #' \dontrun{
@@ -313,90 +313,95 @@ date_feats <- function(dates,
     }
 
     iters <- ifelse(date_cols == "df", 1, length(date_cols))[1]
-    if (!is.na(iters)) {
-      if (!quiet) {
-        message(paste(">>> Processing", iters, "date/time columns:", vector2text(date_cols)))
-      }
+
+    if (is.na(iters)) {
+      dates
     } else {
-      return(dates)
-    }
+      if (!quiet) message(paste(">>> Processing", iters, "date/time columns:", vector2text(date_cols)))
 
-    if (!"data.frame" %in% class(dates) && iters == 1) {
-      dates <- data.frame(values_date = dates)
-      date_cols <- "values_date"
-    }
+      if (!"data.frame" %in% class(dates) && iters == 1) {
+        dates <- data.frame(values_date = dates)
+        date_cols <- "values_date"
+      }
 
-    if (holidays || !is.na(currency_pair)) {
-      search_dates <- dates[, c(colnames(dates) %in% date_cols)]
-      search_dates[] <- unlist(lapply(search_dates, function(x) gsub(" .*", "", as.character(x))))
-      alldates <- as.Date(unlist(search_dates, use.names = FALSE))
-      alldates <- alldates[!is.na(alldates)]
-    }
+      alldates <- NULL
+      if (holidays || !is.na(currency_pair)) {
+        search_dates <- dates[, date_cols, drop = FALSE]
+        search_dates[] <- lapply(search_dates, function(x) gsub(" .*", "", as.character(x)))
+        alldates <- as.Date(unlist(search_dates, use.names = FALSE))
+        alldates <- alldates[!is.na(alldates)]
+      }
 
-    if (holidays) {
-      years <- sort(unique(year(alldates)))
-      holidays_dates <- holidays(countries = country, years)
-      colnames(holidays_dates)[1] <- "values_date"
-      holidays_dates$values_date <- as.character(as.Date(holidays_dates$values_date))
-      cols <- paste0("values_date_holiday_", colnames(holidays_dates)[4:ncol(holidays_dates)])
-      colnames(holidays_dates)[-(1:3)] <- cols
-    }
+      holidays_dates <- NULL
+      if (holidays && length(alldates) > 0) {
+        years <- sort(unique(year(alldates)))
+        holidays_dates <- holidays(countries = country, years)
+        colnames(holidays_dates)[1] <- "values_date"
+        holidays_dates$values_date <- as.character(as.Date(holidays_dates$values_date))
+        cols <- paste0("values_date_holiday_", colnames(holidays_dates)[4:ncol(holidays_dates)])
+        colnames(holidays_dates)[-(1:3)] <- cols
+      }
 
-    # Features creator
-    for (col in 1:iters) {
-      col_name <- date_cols[col]
-      result <- dates %>% select(!!as.name(col_name))
-      values <- result[, 1]
-      result$values_date <- as.character(as.Date(values))
+      for (col in date_cols) {
+        result <- dates %>% select(!!sym(col))
+        values <- result[[1]]
+        result$values_date <- as.character(as.Date(values))
 
-      result$values_date_year <- year(values)
-      result$values_date_month <- month(values)
-      result$values_date_day <- day(values)
-      result$values_date_week <- week(values)
-      result$values_date_weekday <- weekdays(values, abbreviate = TRUE)
-      result$values_date_weekend <- format(values, "%u") %in% c(6, 7)
-      result$values_date_year_day <- as.integer(difftime(
-        values, floor_date(values, unit = "year"),
-        units = "day"
-      ))
-
-      if (any(grepl(class(values), "POSIX"))) {
-        result$values_date_hour <- hour(values)
-        result$values_date_minute <- minute(values)
-        result$values_date_minutes <- as.integer(difftime(
-          values, floor_date(values, unit = "day"),
-          units = "mins"
+        result$values_date_year <- year(values)
+        result$values_date_month <- month(values)
+        result$values_date_day <- day(values)
+        result$values_date_week <- week(values)
+        result$values_date_weekday <- weekdays(values, abbreviate = TRUE)
+        result$values_date_weekend <- format(values, "%u") %in% c("6", "7")
+        result$values_date_year_day <- as.integer(difftime(
+          values, floor_date(values, unit = "year"),
+          units = "day"
         ))
-        result$values_date_second <- second(values)
+
+        if (any(grepl("POSIX", class(values)))) {
+          result$values_date_hour <- hour(values)
+          result$values_date_minute <- minute(values)
+          result$values_date_minutes <- as.integer(difftime(
+            values, floor_date(values, unit = "day"),
+            units = "mins"
+          ))
+          result$values_date_second <- second(values)
+        }
+
+        if (!is.null(holidays_dates)) {
+          result <- result %>%
+            left_join(holidays_dates, by = "values_date", relationship = "many-to-many") %>%
+            mutate(values_date_holiday_county = as.character(.data$values_date_holiday_county)) %>%
+            mutate(across(starts_with("values_date_holiday_"), ~ replace(., is.na(.), FALSE)))
+        }
+
+        if (!is.na(currency_pair) && length(alldates) > 0) {
+          currency <- get_currency(currency_pair, from = min(alldates), to = max(alldates))
+          colnames(currency) <- c("values_date", paste0("values_date_", tolower(cleanText(currency_pair))))
+          currency[[1]] <- as.character(currency[[1]])
+          result <- result %>% left_join(currency, by = "values_date")
+        }
+
+        prefix <- if (col == "values_date") "" else paste0(col, "_")
+        colnames(result)[-1] <- gsub("^values_date_", prefix, colnames(result)[-1])
+
+        results <- results %>%
+          bind_cols(result) %>%
+          select(-contains("values_date"))
+
+        if (vector) colnames(results)[1] <- "values"
       }
 
-      # Holidays data
-      if (holidays) {
-        result <- result %>%
-          left_join(holidays_dates, by = "values_date", relationship = "many-to-many") %>%
-          mutate(values_date_holiday_county = as.character(.data$values_date_holiday_county)) %>%
-          mutate_at(vars(cols), list(~ replace(., which(is.na(.)), FALSE)))
+      if (append) {
+        results <- bind_cols(original, select(results, -any_of(colnames(original))))
       }
 
-      # Currencies data
-      if (!is.na(currency_pair)) {
-        currency <- get_currency(currency_pair, from = min(alldates), to = max(alldates))
-        colnames(currency) <- c("values_date", paste0("values_date_", tolower(cleanText(currency_pair))))
-        currency[, 1] <- as.character(currency[, 1])
-        result <- result %>% left_join(currency, by = "values_date")
+      if (drop) {
+        results <- results[, !colnames(results) %in% date_cols, drop = FALSE]
       }
 
-      col_name <- ifelse(col_name == "values_date", "", paste0(col_name, "_"))
-      colnames(result)[-1] <- gsub("values_date_", col_name, colnames(result)[-1])
-      results <- results %>%
-        bind_cols(result) %>%
-        select(-contains("values_date"))
-      if (vector) colnames(results)[1] <- "values"
+      as_tibble(results)
     }
-
-    if (append) results <- bind_cols(original, select(results, -any_of(colnames(original))))
-    if (drop) results <- results[, !colnames(results) %in% date_cols]
-    as_tibble(results)
   }
 }
 

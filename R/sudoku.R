@@ -12,7 +12,7 @@
 #' in your \code{.GlobalEnv}.
 #' @examples
 #' \donttest{
-#' # board <- c(0,0,0,0,0,6,000,
+#' # board <- c(0,0,0,0,0,6,0,0,0,
 #' #            0,9,5,7,0,0,3,0,0,
 #' #            4,0,0,0,9,2,0,0,5,
 #' #            7,6,4,0,0,0,0,0,3,
@@ -35,55 +35,51 @@
 #' }
 #' @export
 sudoku_solver <- function(board, needed_cells = NULL, index = 1, quiet = FALSE) {
-  # 0. Conveert vector to matrix
+  # Convert vector to matrix
   if (is.vector(board)) {
     ints_split <- as.integer(unlist(str_split(board, pattern = "", n = 9 * 9)))
     board <- matrix(ints_split, byrow = TRUE, ncol = 9)
   }
+
   if (!all(dim(board) == 9)) {
     stop("Check your input's dimensions. 9x9 digits needed.")
   }
-  # 1. Check needed cells
+
+  # Determine empty cells to fill
   if (is.null(needed_cells)) {
     needed_cells <- which(board == 0, arr.ind = TRUE)
   }
-  # 2. Auto-Iterate
+
+  # Base case: all cells filled
   if (index > nrow(needed_cells)) {
     if (!quiet) print(board)
-    return(invisible(TRUE))
+    TRUE
   } else {
     row <- needed_cells[index, 1]
     col <- needed_cells[index, 2]
-  }
-  for (num in 1:9) {
-    if (!.sudoku_valid_input(board, num, row, col)) next
-    board2 <- board
-    board2[row, col] <- num
-    # Return TRUE if valid and solvable
-    if (sudoku_solver(board2, needed_cells, index + 1)) {
-      return(TRUE)
+
+    # Try digits 1 through 9
+    solved <- FALSE
+    for (num in 1:9) {
+      if (.sudoku_valid_input(board, num, row, col)) {
+        board2 <- board
+        board2[row, col] <- num
+        solved <- sudoku_solver(board2, needed_cells, index + 1, quiet)
+        if (isTRUE(solved)) break
+      }
     }
+    solved
   }
-  # Return FALSE if not valid and not solvable
-  return(FALSE)
 }
 
 .sudoku_valid_input <- function(board, i, row, col) {
-  # 1. Check if any cell in the same row has value = i
-  if (any(board[row, ] == i)) {
-    return(FALSE)
-  }
-  # 2. Check if any cell in the same column has value = i
-  if (any(board[, col] == i)) {
-    return(FALSE)
-  }
-  # 3. Check boxes
+  invalid_row <- any(board[row, ] == i)
+  invalid_col <- any(board[, col] == i)
+
   box_x <- floor((row - 1) / 3) + 1
   box_y <- floor((col - 1) / 3) + 1
   box <- board[(3 * box_x - 2):(3 * box_x), (3 * box_y - 2):(3 * box_y)]
-  if (any(box == i)) {
-    return(FALSE)
-  }
-  # If everything passes, then valid digit
-  return(TRUE)
+  invalid_box <- any(box == i)
+
+  !(invalid_row || invalid_col || invalid_box)
 }

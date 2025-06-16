@@ -52,7 +52,7 @@ df <- data.frame(
 )
 
 # Input as a vector or dataframe
-date_feats(df, drop = TRUE) \%>\% head(10)
+date_feats(df, drop = TRUE, quiet = TRUE) \%>\% head(10)
 
 # Holidays given a date range and country
 \dontrun{

@@ -367,5 +367,5 @@ x2y_preds <- function(x, y, max_cat = 10) {
     top <- head(names(sort(table(x), decreasing = TRUE)), max_cat)
     x[!x %in% top] <- ""
   }
-  return(x)
+  x
 }
