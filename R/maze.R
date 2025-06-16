@@ -100,7 +100,7 @@ maze_solve <- function(
 
   class(result) <- c("maze_solve", class(result))
   if (!quiet) print(result)
-  return(invisible(result))
+  invisible(result)
 }
 
 #' @rdname maze_solve
@@ -141,7 +141,7 @@ maze_solve_recursive <- function(
     if (timeout_reached) {
       return(FALSE)
     }
-    return(list(maze = maze, path_coords = path_coords))
+    list(maze = maze, path_coords = path_coords)
   }
 
   # Mark the current cell as part of the solution path
@@ -188,7 +188,7 @@ maze_solve_recursive <- function(
       }
     }
   }
-  return(FALSE) # No solution found from this point
+  FALSE # No solution found from this point
 }
 
 #' @rdname maze_solve
@@ -235,7 +235,7 @@ maze_gridsearch <- function(
     arrange(.data$steps_counter, .data$turns_counter) %>%
     select(.data$id, contains("counter"), everything(), .data$start, .data$end) %>%
     data.frame()
-  return(list(solutions = results, results = counters))
+  list(solutions = results, results = counters)
 }
 
 # Function to calculate the number of direction changes
@@ -297,7 +297,7 @@ rank_positions <- function(x1, y1, x2, y2, diagonal = TRUE) {
   }
   positions$d <- sqrt((positions$x - x2)^2 + (positions$y - y2)^2)
   ranked_positions <- positions[order(positions$d), ]
-  return(ranked_positions)
+  ranked_positions
 }
 
 # Function to perform linear extrapolation and return the next integer point

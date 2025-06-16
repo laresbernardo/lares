@@ -186,246 +186,247 @@ robyn_modelselector <- function(
       plot = noPlot(msg)
     ))
     class(ret) <- c("robyn_modelselector", class(ret))
-    return(ret)
-  }
-  if (length(metrics) == 1) wt <- 1
-  stopifnot(length(wt) == length(metrics))
-  stopifnot(length(allocator_limits) == 2)
-  stopifnot(baseline_ref >= 0 && baseline_ref <= 1)
-
-  # Available metrics
-  metrics_df <- data.frame(
-    metric = c(
-      "rsq_train", "performance", "potential_improvement",
-      "non_zeroes", "incluster_models",
-      "baseline_dist", "certainty", "cluster_sd",
-      "nrmse", "decomp.rssd", "mape"
-    ),
-    metric_name = c(
-      "R^2", ifelse(InputCollect$dep_var_type == "revenue", "High ROAS", "Low CPA"),
-      "Potential Boost", "Non-Zero Betas", "Models in Cluster",
-      sprintf("Baseline Distance [%.0f%%]", signif(baseline_ref * 100, 2)),
-      "Certainty in Cluster", "Cluster Mean Std Dev",
-      "1 - NRMSE", "1 - DECOMP.RSSD", "1 - MAPE"
-    )
-  )
-  # The following criteria are inverted because the smaller, the better
-  invert_criteria <- c("nrmse", "decomp.rssd", "mape")
-  check_opts(metrics, metrics_df$metric)
-
-  # Metrics Used
-  metrics_used <- filter(metrics_df, .data$metric %in% metrics) %>%
-    arrange(match(.data$metric, metrics)) %>%
-    left_join(data.frame(metric = metrics, wt = wt), "metric") %>%
-    filter(.data$wt > 0)
-
-  # Add Default Potential Improvement values
-  sols <- sort(OutputCollect$allSolutions)
-  if ("potential_improvement" %in% metrics & isTRUE(wt[which(metrics == "potential_improvement")] != 0)) {
-    cache_name <- c("robyn_modelselector", length(sols))
-    if (cache & cache_exists(cache_name, ...)) {
-      potOpt <- cache_read(cache_name, quiet = quiet, ...)
-    } else {
-      if (!quiet) {
-        message(sprintf(
-          ">>> Calculating potential performance improvements on %s Pareto-front models...",
-          length(sols)
-        ))
-      }
-      try_require("Robyn")
-      defpot <- lapply(sols, function(x) {
-        if (!quiet) statusbar(which(sols == x), length(sols), x)
-        suppressMessages(robyn_allocator(
-          InputCollect = InputCollect,
-          OutputCollect = OutputCollect,
-          select_model = x,
-          channel_constr_low = min(allocator_limits),
-          channel_constr_up = max(allocator_limits),
-          plots = FALSE,
-          export = FALSE,
-          quiet = TRUE,
-          ...
-        ))
-      })
-      potOpt <- data.frame(
-        solID = sols,
-        potential_improvement = unlist(lapply(defpot, function(x) {
-          x$dt_optimOut$optmResponseUnitTotalLift[1]
-        }))
-      )
-      if (cache) cache_write(potOpt, cache_name, quiet = quiet, ...)
-    }
+    ret
   } else {
-    potOpt <- data.frame(solID = sols, potential_improvement = 0)
-  }
+    if (length(metrics) == 1) wt <- 1
+    stopifnot(length(wt) == length(metrics))
+    stopifnot(length(allocator_limits) == 2)
+    stopifnot(baseline_ref >= 0 && baseline_ref <= 1)
 
-  # Check pareto-front models summaries to calculate performance (ROAS/CPA)
-  performance <- OutputCollect$xDecompAgg %>%
-    filter(!is.na(.data$mean_spend)) %>% # get rid of organic
-    filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
-    group_by(.data$solID) %>%
-    summarise(
-      performance = sum(.data$xDecompAgg) / sum(.data$total_spend, na.rm = TRUE)
-    )
-
-  # Check pareto-front models to calculate non-zero betas in media channels
-  non_zeroes_rate <- OutputCollect$allPareto$xDecompAgg %>%
-    filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
-    group_by(.data$solID) %>%
-    summarise(
-      non_zeroes = length(.data$rn[
-        round(.data$coef, 6) > 0 & .data$rn %in% InputCollect$all_media
-      ]) /
-        length(InputCollect$all_media)
-    )
-
-  # Count models per cluster
-  if (!"clusters" %in% names(OutputCollect)) {
-    OutputCollect$clusters$data <- data.frame(solID = sols, cluster = "None")
-    OutputCollect$clusters$clusters_means <- data.frame(cluster = "None", n = length(sols))
-    OutputCollect$clusters$df_cluster_ci <- data.frame(cluster = "None", sd = 0)
-  }
-  clus_mean_sd <- OutputCollect$clusters$df_cluster_ci %>%
-    group_by(.data$cluster) %>%
-    summarise(mean_sd = mean(.data$sd, na.rm = TRUE), .groups = "drop") %>%
-    mutate(
-      cluster_sd = normalize(-.data$mean_sd, range = c(0.01, 1)),
-      cluster = as.character(.data$cluster)
-    )
-  temp <- OutputCollect$clusters$data %>%
-    select(.data$solID, .data$cluster) %>%
-    mutate(cluster = as.character(.data$cluster)) %>%
-    left_join(select(OutputCollect$clusters$clusters_means, .data$cluster, .data$n), "cluster") %>%
-    left_join(clus_mean_sd, "cluster") %>%
-    rename(incluster_models = "n")
-
-  # Calculate baselines
-  baselines <- OutputCollect$xDecompAgg %>%
-    mutate(rn = ifelse(.data$rn %in% c(InputCollect$all_media), .data$rn, "baseline")) %>%
-    group_by(.data$solID, .data$rn) %>%
-    summarize(contribution = sum(.data$xDecompAgg), .groups = "drop") %>%
-    group_by(.data$solID) %>%
-    mutate(baseline = .data$contribution / sum(.data$contribution)) %>%
-    ungroup() %>%
-    filter(.data$rn == "baseline") %>%
-    arrange(abs(.data$baseline)) %>%
-    mutate(
-      baseline_dist_real = abs(baseline_ref - .data$baseline),
-      baseline_dist = normalize(-.data$baseline_dist_real, range = c(
-        0, 1 - min(.data$baseline_dist_real) / max(.data$baseline_dist_real)
-      ))
-    ) %>%
-    select(c("solID", "baseline", "baseline_dist")) %>%
-    arrange(.data$baseline_dist)
-
-  # Certainty Criteria: distance to cluster's mean weighted by spend
-  certainty <- certainty_score(InputCollect, OutputCollect, ...) %>%
-    select("solID", "certainty")
-
-  # Gather everything up
-  dfa <- OutputCollect$allPareto$resultHypParam %>%
-    filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
-    select(.data$solID, .data$rsq_train, .data$nrmse, .data$decomp.rssd, .data$mape) %>%
-    left_join(performance, "solID") %>%
-    left_join(non_zeroes_rate, "solID") %>%
-    left_join(potOpt, "solID") %>%
-    left_join(temp, "solID") %>%
-    left_join(certainty, "solID") %>%
-    ungroup() %>%
-    left_join(baselines, "solID")
-
-  # Helper function to calculate normalized and weighted scores
-  calculate_score <- function(metric_name, data, metrics, weights, invert_criteria) {
-    score <- 0
-    if (metric_name %in% metrics) {
-      normalized_value <- normalize(data[[metric_name]], na.rm = TRUE)
-      weight <- weights[which(metrics == metric_name)]
-      sign <- ifelse(metric_name %in% invert_criteria, -1, 1)
-      normalized_value[is.na(normalized_value)] <- 0
-      score <- normalized_value * weight * sign
-    }
-    score
-  }
-
-  # Calculate scores
-  scores <- list()
-  for (metric in metrics_df$metric) {
-    scores[[metric]] <- calculate_score(metric, dfa, metrics, wt, invert_criteria)
-  }
-  dfa <- dfa %>%
-    mutate(
-      score = normalize(rowSums(bind_cols(scores))),
-      aux = rank(-.data$score, ties.method = "first")
-    ) %>%
-    rowwise() %>%
-    mutate(note = ifelse(.data$aux %in% 1:top, paste(
-      rep("*", (top + 1) - .data$aux),
-      collapse = ""
-    ), "")) %>%
-    select(-.data$aux) %>%
-    arrange(desc(.data$score), desc(3), desc(4))
-  if (!quiet) message("Recommended considering these models first: ", v2t(head(dfa$solID, top)))
-
-  # Generate plot/dashboard
-  caption <- metrics_used %>%
-    mutate(value = .data$wt / sum(.data$wt)) %>%
-    arrange(desc(.data$value)) %>%
-    mutate(lab = sprintf("%s%% %s", round(100 * .data$value), .data$metric_name)) %>%
-    pull(.data$lab) %>%
-    paste(., collapse = " | ")
-  sorting <- dfa %>%
-    mutate(cluster = sprintf("%s (%s)", .data$cluster, .data$incluster_models)) %>%
-    group_by(.data$cluster, .data$note) %>%
-    tally() %>%
-    arrange(desc(.data$note)) %>%
-    pull(.data$cluster) %>%
-    unique()
-  pdat <- dfa %>%
-    # So that inverted variables have larger relative bars (darker blue)
-    mutate_at(all_of(invert_criteria), function(x) 1 - x) %>%
-    mutate(
-      cluster = factor(sprintf("%s (%s)", .data$cluster, .data$incluster_models), levels = sorting),
-      incluster_models = .data$incluster_models / max(dfa$incluster_models, na.rm = TRUE)
-    ) %>%
-    tidyr::pivot_longer(any_of(metrics_used$metric)) %>%
-    filter(.data$name %in% metrics_used$metric) %>%
-    mutate(
-      name_metrics = rep(metrics_used$metric_name, length.out = nrow(.)),
-      name = factor(.data$name, levels = metrics_used$metric),
-      name_metrics = factor(.data$name_metrics, levels = metrics_used$metric_name)
-    ) %>%
-    group_by(.data$name) %>%
-    mutate(top = rank(-.data$value)) %>%
-    left_join(select(dfa, .data$solID, .data$rsq_train), "solID") %>%
-    group_by(.data$cluster) %>%
-    slice(1:((length(metrics_used$metric)) * n_per_cluster)) %>%
-    mutate(solID = paste(.data$note, .data$solID))
-  p <- pdat %>%
-    ggplot(aes(y = reorder(.data$solID, .data$score), x = .data$value)) +
-    geom_col(aes(group = .data$name, fill = .data$top)) +
-    # geom_vline(xintercept = 1, alpha = 0.5, linetype = "dotted") +
-    facet_grid(.data$cluster ~ .data$name_metrics, scales = "free") +
-    labs(
-      y = NULL, x = "Criteria Scores (the highest the better)",
-      title = "Select a model based on these metrics and rankings",
-      subtitle = paste(
-        "Showing up to", n_per_cluster,
-        "models per cluster and ranked solutions marked with stars"
+    # Available metrics
+    metrics_df <- data.frame(
+      metric = c(
+        "rsq_train", "performance", "potential_improvement",
+        "non_zeroes", "incluster_models",
+        "baseline_dist", "certainty", "cluster_sd",
+        "nrmse", "decomp.rssd", "mape"
       ),
-      caption = paste("Weights:", caption)
-    ) +
-    scale_x_percent(position = "top") +
-    theme_lares(legend = FALSE)
+      metric_name = c(
+        "R^2", ifelse(InputCollect$dep_var_type == "revenue", "High ROAS", "Low CPA"),
+        "Potential Boost", "Non-Zero Betas", "Models in Cluster",
+        sprintf("Baseline Distance [%.0f%%]", signif(baseline_ref * 100, 2)),
+        "Certainty in Cluster", "Cluster Mean Std Dev",
+        "1 - NRMSE", "1 - DECOMP.RSSD", "1 - MAPE"
+      )
+    )
+    # The following criteria are inverted because the smaller, the better
+    invert_criteria <- c("nrmse", "decomp.rssd", "mape")
+    check_opts(metrics, metrics_df$metric)
 
-  # Create the exported object
-  ret <- invisible(list(
-    data = select(dfa, "solID", "score", all_of(metrics_used$metric), everything(), -.data$note),
-    metrics = metrics, weights = wt, baseline_ref = baseline_ref,
-    weighted_scores = tibble(solID = dfa$solID, score = dfa$score, bind_cols(scores)),
-    plot = p
-  ))
-  class(ret) <- c("robyn_modelselector", class(ret))
-  ret
+    # Metrics Used
+    metrics_used <- filter(metrics_df, .data$metric %in% metrics) %>%
+      arrange(match(.data$metric, metrics)) %>%
+      left_join(data.frame(metric = metrics, wt = wt), "metric") %>%
+      filter(.data$wt > 0)
+
+    # Add Default Potential Improvement values
+    sols <- sort(OutputCollect$allSolutions)
+    if ("potential_improvement" %in% metrics & isTRUE(wt[which(metrics == "potential_improvement")] != 0)) {
+      cache_name <- c("robyn_modelselector", length(sols))
+      if (cache & cache_exists(cache_name, ...)) {
+        potOpt <- cache_read(cache_name, quiet = quiet, ...)
+      } else {
+        if (!quiet) {
+          message(sprintf(
+            ">>> Calculating potential performance improvements on %s Pareto-front models...",
+            length(sols)
+          ))
+        }
+        try_require("Robyn")
+        defpot <- lapply(sols, function(x) {
+          if (!quiet) statusbar(which(sols == x), length(sols), x)
+          suppressMessages(robyn_allocator(
+            InputCollect = InputCollect,
+            OutputCollect = OutputCollect,
+            select_model = x,
+            channel_constr_low = min(allocator_limits),
+            channel_constr_up = max(allocator_limits),
+            plots = FALSE,
+            export = FALSE,
+            quiet = TRUE,
+            ...
+          ))
+        })
+        potOpt <- data.frame(
+          solID = sols,
+          potential_improvement = unlist(lapply(defpot, function(x) {
+            x$dt_optimOut$optmResponseUnitTotalLift[1]
+          }))
+        )
+        if (cache) cache_write(potOpt, cache_name, quiet = quiet, ...)
+      }
+    } else {
+      potOpt <- data.frame(solID = sols, potential_improvement = 0)
+    }
+
+    # Check pareto-front models summaries to calculate performance (ROAS/CPA)
+    performance <- OutputCollect$xDecompAgg %>%
+      filter(!is.na(.data$mean_spend)) %>% # get rid of organic
+      filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
+      group_by(.data$solID) %>%
+      summarise(
+        performance = sum(.data$xDecompAgg) / sum(.data$total_spend, na.rm = TRUE)
+      )
+
+    # Check pareto-front models to calculate non-zero betas in media channels
+    non_zeroes_rate <- OutputCollect$allPareto$xDecompAgg %>%
+      filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
+      group_by(.data$solID) %>%
+      summarise(
+        non_zeroes = length(.data$rn[
+          round(.data$coef, 6) > 0 & .data$rn %in% InputCollect$all_media
+        ]) /
+          length(InputCollect$all_media)
+      )
+
+    # Count models per cluster
+    if (!"clusters" %in% names(OutputCollect)) {
+      OutputCollect$clusters$data <- data.frame(solID = sols, cluster = "None")
+      OutputCollect$clusters$clusters_means <- data.frame(cluster = "None", n = length(sols))
+      OutputCollect$clusters$df_cluster_ci <- data.frame(cluster = "None", sd = 0)
+    }
+    clus_mean_sd <- OutputCollect$clusters$df_cluster_ci %>%
+      group_by(.data$cluster) %>%
+      summarise(mean_sd = mean(.data$sd, na.rm = TRUE), .groups = "drop") %>%
+      mutate(
+        cluster_sd = normalize(-.data$mean_sd, range = c(0.01, 1)),
+        cluster = as.character(.data$cluster)
+      )
+    temp <- OutputCollect$clusters$data %>%
+      select(.data$solID, .data$cluster) %>%
+      mutate(cluster = as.character(.data$cluster)) %>%
+      left_join(select(OutputCollect$clusters$clusters_means, .data$cluster, .data$n), "cluster") %>%
+      left_join(clus_mean_sd, "cluster") %>%
+      rename(incluster_models = "n")
+
+    # Calculate baselines
+    baselines <- OutputCollect$xDecompAgg %>%
+      mutate(rn = ifelse(.data$rn %in% c(InputCollect$all_media), .data$rn, "baseline")) %>%
+      group_by(.data$solID, .data$rn) %>%
+      summarize(contribution = sum(.data$xDecompAgg), .groups = "drop") %>%
+      group_by(.data$solID) %>%
+      mutate(baseline = .data$contribution / sum(.data$contribution)) %>%
+      ungroup() %>%
+      filter(.data$rn == "baseline") %>%
+      arrange(abs(.data$baseline)) %>%
+      mutate(
+        baseline_dist_real = abs(baseline_ref - .data$baseline),
+        baseline_dist = normalize(-.data$baseline_dist_real, range = c(
+          0, 1 - min(.data$baseline_dist_real) / max(.data$baseline_dist_real)
+        ))
+      ) %>%
+      select(c("solID", "baseline", "baseline_dist")) %>%
+      arrange(.data$baseline_dist)
+
+    # Certainty Criteria: distance to cluster's mean weighted by spend
+    certainty <- certainty_score(InputCollect, OutputCollect, ...) %>%
+      select("solID", "certainty")
+
+    # Gather everything up
+    dfa <- OutputCollect$allPareto$resultHypParam %>%
+      filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
+      select(.data$solID, .data$rsq_train, .data$nrmse, .data$decomp.rssd, .data$mape) %>%
+      left_join(performance, "solID") %>%
+      left_join(non_zeroes_rate, "solID") %>%
+      left_join(potOpt, "solID") %>%
+      left_join(temp, "solID") %>%
+      left_join(certainty, "solID") %>%
+      ungroup() %>%
+      left_join(baselines, "solID")
+
+    # Helper function to calculate normalized and weighted scores
+    calculate_score <- function(metric_name, data, metrics, weights, invert_criteria) {
+      score <- 0
+      if (metric_name %in% metrics) {
+        normalized_value <- normalize(data[[metric_name]], na.rm = TRUE)
+        weight <- weights[which(metrics == metric_name)]
+        sign <- ifelse(metric_name %in% invert_criteria, -1, 1)
+        normalized_value[is.na(normalized_value)] <- 0
+        score <- normalized_value * weight * sign
+      }
+      score
+    }
+
+    # Calculate scores
+    scores <- list()
+    for (metric in metrics_df$metric) {
+      scores[[metric]] <- calculate_score(metric, dfa, metrics, wt, invert_criteria)
+    }
+    dfa <- dfa %>%
+      mutate(
+        score = normalize(rowSums(bind_cols(scores))),
+        aux = rank(-.data$score, ties.method = "first")
+      ) %>%
+      rowwise() %>%
+      mutate(note = ifelse(.data$aux %in% 1:top, paste(
+        rep("*", (top + 1) - .data$aux),
+        collapse = ""
+      ), "")) %>%
+      select(-.data$aux) %>%
+      arrange(desc(.data$score), desc(3), desc(4))
+    if (!quiet) message("Recommended considering these models first: ", v2t(head(dfa$solID, top)))
+
+    # Generate plot/dashboard
+    caption <- metrics_used %>%
+      mutate(value = .data$wt / sum(.data$wt)) %>%
+      arrange(desc(.data$value)) %>%
+      mutate(lab = sprintf("%s%% %s", round(100 * .data$value), .data$metric_name)) %>%
+      pull(.data$lab) %>%
+      paste(., collapse = " | ")
+    sorting <- dfa %>%
+      mutate(cluster = sprintf("%s (%s)", .data$cluster, .data$incluster_models)) %>%
+      group_by(.data$cluster, .data$note) %>%
+      tally() %>%
+      arrange(desc(.data$note)) %>%
+      pull(.data$cluster) %>%
+      unique()
+    pdat <- dfa %>%
+      # So that inverted variables have larger relative bars (darker blue)
+      mutate_at(all_of(invert_criteria), function(x) 1 - x) %>%
+      mutate(
+        cluster = factor(sprintf("%s (%s)", .data$cluster, .data$incluster_models), levels = sorting),
+        incluster_models = .data$incluster_models / max(dfa$incluster_models, na.rm = TRUE)
+      ) %>%
+      tidyr::pivot_longer(any_of(metrics_used$metric)) %>%
+      filter(.data$name %in% metrics_used$metric) %>%
+      mutate(
+        name_metrics = rep(metrics_used$metric_name, length.out = nrow(.)),
+        name = factor(.data$name, levels = metrics_used$metric),
+        name_metrics = factor(.data$name_metrics, levels = metrics_used$metric_name)
+      ) %>%
+      group_by(.data$name) %>%
+      mutate(top = rank(-.data$value)) %>%
+      left_join(select(dfa, .data$solID, .data$rsq_train), "solID") %>%
+      group_by(.data$cluster) %>%
+      slice(1:((length(metrics_used$metric)) * n_per_cluster)) %>%
+      mutate(solID = paste(.data$note, .data$solID))
+    p <- pdat %>%
+      ggplot(aes(y = reorder(.data$solID, .data$score), x = .data$value)) +
+      geom_col(aes(group = .data$name, fill = .data$top)) +
+      # geom_vline(xintercept = 1, alpha = 0.5, linetype = "dotted") +
+      facet_grid(.data$cluster ~ .data$name_metrics, scales = "free") +
+      labs(
+        y = NULL, x = "Criteria Scores (the highest the better)",
+        title = "Select a model based on these metrics and rankings",
+        subtitle = paste(
+          "Showing up to", n_per_cluster,
+          "models per cluster and ranked solutions marked with stars"
+        ),
+        caption = paste("Weights:", caption)
+      ) +
+      scale_x_percent(position = "top") +
+      theme_lares(legend = FALSE)
+
+    # Create the exported object
+    ret <- invisible(list(
+      data = select(dfa, "solID", "score", all_of(metrics_used$metric), everything(), -.data$note),
+      metrics = metrics, weights = wt, baseline_ref = baseline_ref,
+      weighted_scores = tibble(solID = dfa$solID, score = dfa$score, bind_cols(scores)),
+      plot = p
+    ))
+    class(ret) <- c("robyn_modelselector", class(ret))
+    ret
+  }
 }
 
 ### Certainty Criteria: distance to cluster's mean weighted by spend

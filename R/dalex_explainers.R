@@ -88,7 +88,7 @@ h2o_explainer <- function(df, model, y = "tag", ignore = NULL, ...) {
       }
     }
     results <- results[[2L]]
-    return(results)
+    results
   }
 
   explainer <- explain.default(

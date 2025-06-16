@@ -24,7 +24,7 @@ winsorize <- function(x, thresh = c(0.05, 0.95), na.rm = FALSE) {
   i <- which(x >= cut_point_top)
   x[i] <- cut_point_top
   attr(x, "thresh") <- thresh
-  return(x)
+  x
 }
 
 ####################################################################
@@ -58,7 +58,7 @@ outlier_zscore <- function(x, thresh = 3, mad = FALSE) {
     ret <- !abs(x - calc) <= z
     attr(ret, "values") <- data.frame(z = z, mad = mad, med = calc)
   }
-  return(ret)
+  ret
 }
 
 ####################################################################
@@ -155,7 +155,7 @@ outlier_zscore_plot <- function(df, var, group = NULL,
 
   attr(p, "z_labels") <- select(df, !!var, one_of(paste0("Z-", thresh)), starts_with("outlier_"))
   attr(p, "z_values") <- zs
-  return(p)
+  p
 }
 
 ####################################################################

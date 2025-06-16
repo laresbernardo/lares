@@ -134,11 +134,11 @@ robyn_xmodels <- function(
       )
     }
     if (isales) {
-      return(unlist(lapply(bas, function(x) {
+      unlist(lapply(bas, function(x) {
         x$dt_optimOut$optmResponseTotal[1] - x$dt_optimOut$initResponseTotal[1]
-      })))
+      }))
     } else {
-      return(bas)
+      bas
     }
   }
 
@@ -161,12 +161,9 @@ robyn_xmodels <- function(
       channel_constr_low = channel_constr_low,
       channel_constr_up = channel_constr_up, ...
     )
-
     # Calculate the penalty for not using the total budget
     budget_penalty <- abs(sum(budgets) - total_budget)
-
-    # return(isales - budget_penalty)
-    return(sum(isales) - budget_penalty)
+    sum(isales) - budget_penalty
   }
 
   # Optimize budgets across brands
@@ -290,7 +287,7 @@ robyn_xmodels <- function(
     other_arguments = list(...)
   )
   class(out) <- c("robyn_crossmmm", class(out))
-  return(out)
+  out
 }
 
 #' @rdname robyn_crossmmm

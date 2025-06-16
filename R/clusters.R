@@ -222,7 +222,7 @@ clusterVisualK <- function(df, ks = 2:6, ...) {
     pca <- clusters$PCA$pcadf %>%
       mutate(cluster = clusters$df$cluster, k = k)
     explained <<- clusters$PCA$pca_explained[1:2]
-    return(pca)
+    pca
   }
   clus_plot <- function(clus_dat, ...) {
     clus_dat %>%

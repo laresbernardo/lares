@@ -17,21 +17,23 @@
 #' @export
 ci_lower <- function(mean, ssd, n, conf = 0.95) {
   if (is.na(ssd)[1]) {
-    return(NA)
+    NA
+  } else {
+    se <- ssd / sqrt(n)
+    ci <- mean - qt(1 - ((1 - conf) / 2), n - 1) * se
+    ci
   }
-  se <- ssd / sqrt(n)
-  ci <- mean - qt(1 - ((1 - conf) / 2), n - 1) * se
-  ci
 }
 #' @rdname ci_lower
 #' @export
 ci_upper <- function(mean, ssd, n, conf = 0.95) {
   if (is.na(ssd)[1]) {
-    return(NA)
+    NA
+  } else {
+    se <- ssd / sqrt(n)
+    ci <- mean + qt(1 - ((1 - conf) / 2), n - 1) * se
+    ci
   }
-  se <- ssd / sqrt(n)
-  ci <- mean + qt(1 - ((1 - conf) / 2), n - 1) * se
-  ci
 }
 
 ####################################################################

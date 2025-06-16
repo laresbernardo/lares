@@ -62,7 +62,7 @@ h2o_predict_MOJO <- function(df, model_path, method = "mojo", batch = 300) {
       output <- cbind(output[, c(1, 2)], aux)
     }
   }
-  return(as_tibble(output))
+  as_tibble(output)
 }
 
 
@@ -97,8 +97,7 @@ h2o_predict_binary <- function(df, model_path, sample = NA) {
   if (!is.na(sample)) df <- df[1:sample, ]
 
   score_binary <- as.vector(predict(model, as.h2o(df))[, 3])
-
-  return(score_binary)
+  score_binary
 }
 
 ####################################################################
@@ -160,5 +159,5 @@ h2o_predict_API <- function(df, api, exclude = "tag") {
     if (n > 500 && !quiet) statusbar(i, n, i)
     if (i == n) ret <- as_tibble(ret)
   }
-  return(ret)
+  ret
 }

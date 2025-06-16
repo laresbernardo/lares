@@ -241,5 +241,5 @@ model_preprocess <- function(df,
   results <- list(data = df, train_index = train_index, model_type = model_type)
   attr(results, "type") <- "model_preprocess"
   toc(id = "model_preprocess", msg = "Pre-processed in", quiet = TRUE)
-  return(invisible(results))
+  invisible(results)
 }

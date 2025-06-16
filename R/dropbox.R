@@ -79,9 +79,9 @@ db_download <- function(query,
     results <- importxlsx(local_path)
     invisible(file.remove(local_path))
     if (!quiet) message("> File imported succesfully as an object!")
-    return(results)
+    results
   } else {
-    return(invisible(local_path))
+    invisible(local_path)
   }
 }
 
@@ -104,7 +104,6 @@ db_upload <- function(filename, dir, delete_file = FALSE,
                       token_dir = NA,
                       token_name = "token_pers.rds") {
   try_require("rdrop2")
-
   if (is.na(token_dir)) {
     load(paste0(Sys.getenv("LARES_CREDS"), "/", token_name))
   } else {
@@ -115,9 +114,7 @@ db_upload <- function(filename, dir, delete_file = FALSE,
       token <- drop_auth()
     }
   }
-
   invisible(drop_upload(filename, path = dir, dtoken = token))
-
   if (delete_file) file.remove(filename)
-  return(invisible(TRUE))
+  invisible(TRUE)
 }

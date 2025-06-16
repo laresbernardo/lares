@@ -44,7 +44,7 @@ gemini_ask <- function(ask,
     candidates <- this$candidates
     if (!quiet) cat(unlist(lapply(candidates, function(candidate) candidate$content$parts)))
   }
-  return(invisible(this))
+  invisible(this)
 }
 
 
@@ -79,5 +79,5 @@ gemini_image <- function(ask, image,
     candidates <- this$candidates
     if (!quiet) cat(unlist(lapply(candidates, function(candidate) candidate$content$parts)))
   }
-  return(invisible(this))
+  invisible(this)
 }

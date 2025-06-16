@@ -48,5 +48,5 @@ seq_surnames <- function(n = 1) {
       vals <- c(vals, vals + 2^(i - 1))
     }
   }
-  return(vals)
+  vals
 }

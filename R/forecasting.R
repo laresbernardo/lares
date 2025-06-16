@@ -163,8 +163,7 @@ forecast_arima <- function(time, values, n_future = 30,
     }
     plot(output$plot)
   }
-
-  return(output)
+  output
 }
 
 
@@ -233,7 +232,7 @@ prophesize <- function(df, n_future = 60, country = NULL,
   plot2 <- wrap_plots(plots2, ncol = 1) +
     plot_annotation(title = "Forecast components", theme = theme_lares())
 
-  return(list(result = forecast, model = m, plot = p, components = plot2))
+  list(result = forecast, model = m, plot = p, components = plot2)
 }
 
 #' ####################################################################

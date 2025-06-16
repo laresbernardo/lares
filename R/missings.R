@@ -99,10 +99,10 @@ missingness <- function(df, plot = FALSE, full = FALSE,
       labs(title = "Missing values", x = "", subtitle = if (!is.na(subtitle)) subtitle) +
       theme_lares(legend = "top") +
       theme(axis.text.y = element_text(size = 8))
-
-    return(p)
+    p
+  } else {
+    m
   }
-  return(m)
 }
 
 
@@ -125,6 +125,5 @@ impute <- function(df, m = 5, iters = 5, seed = 0, quiet = FALSE) {
   try_require("mice")
   on.exit(set.seed(seed))
   aux <- mice(df, seed = seed, m = m, maxit = iters, printFlag = !quiet)
-  ret <- complete(aux)
-  return(ret)
+  complete(aux)
 }

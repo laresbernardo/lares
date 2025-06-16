@@ -92,60 +92,59 @@ get_mp3 <- function(id,
   )
 
   if (1 %in% ret) {
-    return(invisible(NULL))
-  }
+    invisible(NULL)
+  } else {
+    f <- listfiles(getwd(), recursive = FALSE) %>%
+      filter(grepl("\\.info\\.json", .data$filename)) %>%
+      arrange(desc(.data$mtime)) %>%
+      .[1, 1]
 
-  f <- listfiles(getwd(), recursive = FALSE) %>%
-    filter(grepl("\\.info\\.json", .data$filename)) %>%
-    arrange(desc(.data$mtime)) %>%
-    .[1, 1]
+    infox <- jsonlite::read_json(f)
+    invisible(file.remove(f))
+    infox[["formats"]] <- NULL
 
-  infox <- jsonlite::read_json(f)
-  invisible(file.remove(f))
-  infox[["formats"]] <- NULL
-
-  if (cover && mp3 && info) {
-    aux <- gsub("\\.mp3", "", infox$title)
-    aux <- gsub("lyrics|lyric|official|video", "", tolower(aux))
-    aux <- gsub(" ", "\\+", cleanText(aux))
-    url <- glued("https://www.google.com/search?q={aux}&tbm=isch&tbs=iar%3As")
-    browseURL(url)
-  }
-
-  # TRIM START AND/OR END OF AUDIO FILE
-  file <- sprintf("%s.mp3", infox$title)
-  if (any(c(start_time > 0, !is.na(end_time)))) {
-    message(">>> Trimming audio file: ", file)
-    trim_mp3(file,
-      start_time = start_time,
-      end_time = end_time,
-      overwrite = overwrite,
-      quiet = quiet
-    )
-  }
-
-  # Open file once everything is done
-  mp3_file <- gsub(".info.json", ".mp3", f)
-  if (open) {
-    if (file.exists(mp3_file)) {
-      message("Opening file: ", mp3_file)
-      browseURL(mp3_file)
-    } else {
-      warning("Can't open file; possibly due to strange characters in title: ", mp3_file)
+    if (cover && mp3 && info) {
+      aux <- gsub("\\.mp3", "", infox$title)
+      aux <- gsub("lyrics|lyric|official|video", "", tolower(aux))
+      aux <- gsub(" ", "\\+", cleanText(aux))
+      url <- glued("https://www.google.com/search?q={aux}&tbm=isch&tbs=iar%3As")
+      browseURL(url)
     }
-  }
-  # Delete file if delete
-  if (delete) {
-    if (file.exists(mp3_file)) {
-      message("Deleting file: ", mp3_file)
-      if (open) Sys.sleep(5)
-      file.remove(mp3_file)
-    } else {
-      warning("Can't delete file; possibly due to strange characters in title: ", mp3_file)
-    }
-  }
 
-  invisible(infox)
+    # TRIM START AND/OR END OF AUDIO FILE
+    file <- sprintf("%s.mp3", infox$title)
+    if (any(c(start_time > 0, !is.na(end_time)))) {
+      message(">>> Trimming audio file: ", file)
+      trim_mp3(file,
+        start_time = start_time,
+        end_time = end_time,
+        overwrite = overwrite,
+        quiet = quiet
+      )
+    }
+
+    # Open file once everything is done
+    mp3_file <- gsub(".info.json", ".mp3", f)
+    if (open) {
+      if (file.exists(mp3_file)) {
+        message("Opening file: ", mp3_file)
+        browseURL(mp3_file)
+      } else {
+        warning("Can't open file; possibly due to strange characters in title: ", mp3_file)
+      }
+    }
+    # Delete file if delete
+    if (delete) {
+      if (file.exists(mp3_file)) {
+        message("Deleting file: ", mp3_file)
+        if (open) Sys.sleep(5)
+        file.remove(mp3_file)
+      } else {
+        warning("Can't delete file; possibly due to strange characters in title: ", mp3_file)
+      }
+    }
+    invisible(infox)
+  }
 }
 
 

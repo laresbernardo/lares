@@ -91,7 +91,7 @@ gtrends_related <- function(gtrend, top = NA, title = NA, note = NA, exclude = N
         breaks = seq(0, 100, 20)
       )
     if (more2 > 1) plot <- plot + facet_grid(.data$keyword ~ ., scales = "free")
-    return(plot)
+    plot
   }
 
   if (t) {
@@ -120,12 +120,9 @@ gtrends_related <- function(gtrend, top = NA, title = NA, note = NA, exclude = N
     rq1 <- rq1 + guides(fill = "none") + labs(caption = NULL)
     rq2 <- rq2 + labs(title = range) +
       theme(plot.title = element_text(size = 9))
-    p <- rq1 + rq2 + plot_layout(nrow = 1, ncol = 2)
-    return(p)
-  }
-
-  if (t || q) {
-    return(rq1)
+    rq1 + rq2 + plot_layout(nrow = 1, ncol = 2)
+  } else {
+    if (t || q) rq1
   }
 }
 
@@ -186,5 +183,5 @@ gtrends_time <- function(gtrend, title = NA) {
   if (!is.na(title)) int1 <- int1 + labs(title = title, subtitle = "Real hits scale")
 
   p <- int1 + int2 + int3 + plot_layout(nrow = 3, ncol = 1)
-  return(p)
+  p
 }

@@ -114,7 +114,7 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
   attr(ret, "paging") <- out[["paging"]]
 
   toc(paste0("fb_process_", input$url), quiet = quiet, ...)
-  return(ret)
+  ret
 }
 
 list_flattener <- function(x, i = 1, first = FALSE) {
@@ -178,7 +178,7 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
     }
     if (keep_running) Sys.sleep(sleep)
   }
-  return(resp)
+  resp
 }
 
 
@@ -324,10 +324,10 @@ fb_insights <- function(token,
   )
 
   if (!process) {
-    invisible(return(import))
+    invisible(import)
+  } else {
+    fb_process(import, ...)
   }
-  output <- fb_process(import, ...)
-  return(output)
 }
 
 ####################################################################
@@ -520,9 +520,10 @@ fb_rf <- function(token,
 
     attr(curves, "prediction") <- prediction
     class(curves) <- c(class(curves), "fb_rf")
-    return(curves)
+    curves
+  } else {
+    prediction
   }
-  return(prediction)
 }
 
 
@@ -606,8 +607,7 @@ fb_accounts <- function(token,
   )) %>%
     arrange(desc(.data$amount_spent)) %>%
     as_tibble()
-
-  return(output)
+  output
 }
 
 ####################################################################
@@ -643,10 +643,10 @@ fb_token <- function(app_id, app_secret, token, api_version = NULL) {
     message(sprintf("Your token was created succesfully. It will expire on %s", expiration))
     output <- ret$access_token
     attr(output, "expiration") <- expiration
-    return(output)
+    output
   } else {
     message(ret$error$message)
-    return(ret)
+    ret
   }
 }
 
@@ -694,10 +694,10 @@ fb_creatives <- function(token, which,
   )
   import <- GET(linkurl)
   if (!process) {
-    return(import)
+    import
+  } else {
+    fb_process(import, ...)
   }
-  ret <- fb_process(import, ...)
-  return(ret)
 }
 
 ####################################################################
@@ -757,8 +757,8 @@ fb_ads <- function(token,
   )
 
   if (!process) {
-    return(import)
+    import
+  } else {
+    fb_process(import, ...)
   }
-  ret <- fb_process(import, ...)
-  return(ret)
 }

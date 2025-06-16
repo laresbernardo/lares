@@ -37,7 +37,7 @@ readGS <- function(title, sheet = "Hoja 1", range = NULL, drop_nas = TRUE,
     if (length(df) > 0 && nrow(df) == 0) {
       df <- names(df)
     }
-    return(df)
+    df
   }
 }
 
@@ -63,22 +63,20 @@ writeGS <- function(data, title, sheet = "Hoja 1", range = "A1",
     if (nrow(files) == 0) {
       message("Google Sheet filename not found: created one for you!")
       gs4_create(title, sheets = data, col_names = col_names)
-      return(invisible(NULL))
-    }
-
-    message(sprintf("Using: %s (%s)", files$name[1], files$id[1]))
-
-    if (append) {
-      invisible(
-        sheet_append(files$id[1], sheet = sheet, data = data)
-      )
+      invisible(NULL)
     } else {
-      invisible(
-        range_write(files$id[1],
-          sheet = sheet, data = data,
-          range = range, reformat = reformat, col_names = col_names, ...
+      message(sprintf("Using: %s (%s)", files$name[1], files$id[1]))
+      if (append) {
+        invisible(sheet_append(files$id[1], sheet = sheet, data = data))
+      } else {
+        invisible(
+          range_write(files$id[1],
+            sheet = sheet, data = data,
+            range = range, reformat = reformat,
+            col_names = col_names, ...
+          )
         )
-      )
+      }
     }
   }
 }

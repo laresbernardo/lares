@@ -145,7 +145,7 @@ x2y <- function(df, target = NULL, symmetric = FALSE,
   if (plot) {
     plot(results)
   } else {
-    results 
+    results
   }
 }
 

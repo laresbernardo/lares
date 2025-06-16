@@ -78,31 +78,33 @@ wordle_valid <- function(input, dictionary, lang_dic = "en", method = 3) {
 #' @rdname wordle
 wordle_dictionary <- function(lang_dic = "en", method = 3, quiet = TRUE) {
   if (is.null(lang_dic)) {
-    return(NULL)
-  }
-  check_opts(lang_dic, c("en", "es"))
-  cache_name <- c(lang_dic, method)
-  if (cache_exists(cache_name)) {
-    words <- cache_read(cache_name, quiet = quiet)
-    if (!quiet) {
-      message(sprintf(
-        ">>> Loaded %s '%s' words",
-        formatNum(length(words), 0), lang_dic
-      ))
+    NULL
+  } else {
+    check_opts(lang_dic, c("en", "es"))
+    cache_name <- c(lang_dic, method)
+    if (cache_exists(cache_name)) {
+      words <- cache_read(cache_name, quiet = quiet)
+      if (!quiet) {
+        message(sprintf(
+          ">>> Loaded %s '%s' words",
+          formatNum(length(words), 0), lang_dic
+        ))
+      }
+      words
+    } else {
+      if (method == 1) {
+        words <- scrabble_dictionary(lang_dic, quiet)[[1]]
+      }
+      if (method == 3) {
+        url <- "https://raw.githubusercontent.com/tabatkins/wordle-list/main/words"
+        words <- readLines(url, warn = FALSE)
+      }
+      out <- toupper(words[nchar(words) == 5])
+      cache_write(out, cache_name, quiet = quiet)
+      if (!quiet) message(sprintf(">>> Saved (%s words) into cache", formatNum(length(out), 0)))
+      out
     }
-    return(words)
   }
-  if (method == 1) {
-    words <- scrabble_dictionary(lang_dic, quiet)[[1]]
-  }
-  if (method == 3) {
-    url <- "https://raw.githubusercontent.com/tabatkins/wordle-list/main/words"
-    words <- readLines(url, warn = FALSE)
-  }
-  out <- toupper(words[nchar(words) == 5])
-  cache_write(out, cache_name, quiet = quiet)
-  if (!quiet) message(sprintf(">>> Saved (%s words) into cache", formatNum(length(out), 0)))
-  out
 }
 
 #' @inheritParams cache_write
@@ -111,7 +113,6 @@ wordle_dictionary <- function(lang_dic = "en", method = 3, quiet = TRUE) {
 #' run as many seeds there are.
 #' @export
 #' @examples
-#'
 #' x <- wordle_simulation(input = "SAINT", word = "ABBEY", seed = 1:3)
 #' print(x)
 #' # hist(sapply(x, function(x) x$iters))

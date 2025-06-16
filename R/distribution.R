@@ -420,7 +420,7 @@ distr <- function(data, ...,
       value <- lubridate::date(value)
     }
   }
-  return(value)
+  value
 }
 
 .fxtrim <- function(value, trim, targets = NA) {
@@ -433,7 +433,7 @@ distr <- function(data, ...,
     }
     message(paste("Chopping everything to", trim, "characters..."))
   }
-  return(value)
+  value
 }
 
 .fxclean <- function(value, clean = FALSE, targets = NA) {
@@ -445,14 +445,14 @@ distr <- function(data, ...,
       targets <- cleanText(targets, spaces = FALSE)
     }
   }
-  return(value)
+  value
 }
 
 .fxna_rm <- function(df, na.rm = FALSE) {
   if (na.rm) {
     df <- df[complete.cases(df), ]
   }
-  return(df)
+  df
 }
 
 # options(lifecycle_repeat_warnings = TRUE)

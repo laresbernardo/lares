@@ -219,7 +219,7 @@ model_metrics <- function(tag, score, multis = NA,
     metrics$dictionary <- NULL
   }
 
-  return(metrics)
+  metrics
 }
 
 
@@ -288,8 +288,7 @@ conf_mat <- function(tag, score, thresh = 0.5,
   myCols <- colnames(ret[, -1])
   ret <- ret[, c("Real x Pred", myCols[order(match(myCols, myRows))])]
   ret[is.na(ret)] <- 0
-
-  return(as_tibble(ret))
+  as_tibble(ret)
 }
 
 
@@ -375,9 +374,10 @@ gain_lift <- function(tag, score, target = "auto", splits = 10,
       tag, score,
       target = which, splits = splits
     )
-    return(plots)
+    plots
+  } else {
+    gains
   }
-  return(gains)
 }
 
 
@@ -463,7 +463,7 @@ ROC <- function(tag, score, multis = NA) {
   if (!is.na(multis)[1]) {
     ret[["rocs"]] <- rocs
   }
-  return(ret)
+  ret
 }
 
 
@@ -602,8 +602,7 @@ loglossBinary <- function(tag, score, eps = 0.001) {
 
   score <- pmax(pmin(score, 1 - eps), eps)
   output <- -mean(tag * log(score) + (1 - tag) * log(1 - score))
-
-  return(output)
+  output
 }
 
 .square_table <- function(x, y) {

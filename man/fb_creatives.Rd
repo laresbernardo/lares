@@ -49,8 +49,6 @@ Other API:
 \code{\link{fb_token}()},
 \code{\link{gemini_ask}()},
 \code{\link{gpt_ask}()},
-\code{\link{li_auth}()},
-\code{\link{li_profile}()},
 \code{\link{queryGA}()},
 \code{\link{slackSend}()}
 

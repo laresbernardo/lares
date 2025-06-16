@@ -198,8 +198,7 @@ plot_timeline <- function(event,
     try_require("plotly")
     p <- ggplotly(p)
   }
-
-  return(p)
+  p
 }
 
 

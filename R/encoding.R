@@ -18,5 +18,5 @@ encodeit <- function(x, from = "UTF-8", to = "latin1",
     x <- gsub("(\\?){2,}", sub, x)
     if (is_factor) x <- factor(x, levels = encodeit(levs))
   }
-  return(x)
+  x
 }

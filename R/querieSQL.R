@@ -28,5 +28,5 @@ queryDB <- function(query, from, creds = NA) {
   dbDisconnect(con)
 
   toc(id = "queryDummy", msg = "Query duration:")
-  return(q)
+  q
 }

@@ -123,10 +123,10 @@ lasso_vars <- function(df, variable,
 
   toc("lasso_vars", quiet = quiet)
 
-  return(list(
+  list(
     coef = as_tibble(t_lasso_model_coeff),
     metrics = as_tibble(rsq$metrics),
     model = invisible(t_lasso_model_val),
     plot = p
-  ))
+  )
 }

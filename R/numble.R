@@ -23,5 +23,5 @@ numble_check <- function(input, solution, len = 7, print = TRUE) {
     print(out)
     cat(paste(" =", result))
   }
-  return(invisible(out))
+  invisible(out)
 }
