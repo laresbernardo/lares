@@ -260,35 +260,35 @@ conf_mat <- function(tag, score, thresh = 0.5,
   df <- data.frame(tag, score)
   if (!diagonal) df <- filter(df, .data$tag != .data$score)
   if (plot) {
-    return(mplot_conf(df$tag, df$score, thresh = thresh))
-  }
-
-  # About tags
-  labels <- df %>%
-    group_by(.data$tag, .drop = FALSE) %>%
-    tally(wt = NULL) %>%
-    arrange(desc(.data$n)) %>%
-    .$tag
-  df <- df %>% mutate(tag = factor(.data$tag, levels = unique(.data$tag)))
-
-  # About scores
-  if (is.numeric(df$score) && length(unique(tag)) == 2) {
-    check_opts(sense, c("<", "<=", ">=", ">"))
-    s <- do.call(sense, list(df$score, thresh))
-    df <- mutate(df, pred = ifelse(s, as.character(labels[1]), as.character(labels[2])))
+    mplot_conf(df$tag, df$score, thresh = thresh)
   } else {
-    df <- mutate(df, pred = .data$score)
-  }
+    # About tags
+    labels <- df %>%
+      group_by(.data$tag, .drop = FALSE) %>%
+      tally(wt = NULL) %>%
+      arrange(desc(.data$n)) %>%
+      .$tag
+    df <- df %>% mutate(tag = factor(.data$tag, levels = unique(.data$tag)))
 
-  # Confusion Matrix
-  ret <- df %>%
-    rename("Real" = .data$tag, "Pred" = .data$pred) %>%
-    crosstab(.data$Real, .data$Pred, total = FALSE)
-  myRows <- as.character(unlist(ret[, 1]))
-  myCols <- colnames(ret[, -1])
-  ret <- ret[, c("Real x Pred", myCols[order(match(myCols, myRows))])]
-  ret[is.na(ret)] <- 0
-  as_tibble(ret)
+    # About scores
+    if (is.numeric(df$score) && length(unique(tag)) == 2) {
+      check_opts(sense, c("<", "<=", ">=", ">"))
+      s <- do.call(sense, list(df$score, thresh))
+      df <- mutate(df, pred = ifelse(s, as.character(labels[1]), as.character(labels[2])))
+    } else {
+      df <- mutate(df, pred = .data$score)
+    }
+
+    # Confusion Matrix
+    ret <- df %>%
+      rename("Real" = .data$tag, "Pred" = .data$pred) %>%
+      crosstab(.data$Real, .data$Pred, total = FALSE)
+    myRows <- as.character(unlist(ret[, 1]))
+    myCols <- colnames(ret[, -1])
+    ret <- ret[, c("Real x Pred", myCols[order(match(myCols, myRows))])]
+    ret[is.na(ret)] <- 0
+    as_tibble(ret)
+  }
 }
 
 

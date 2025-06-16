@@ -373,7 +373,7 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
   # Final values vector
   values <- as.character(t(cols[, column])[1, ])
   names(values) <- cols$values
-  return(values)
+  values
 }
 
 .font_global <- function(font, quiet = FALSE, when_not = NA, ask_install = FALSE, ...) {
@@ -398,7 +398,7 @@ gg_vals <- function(layer = "fill", column = layer, cols = NULL, ...) {
       # Return first one that is found
       font <- font[head(which(temp), 1)]
     }
-    return(font)
+    font
   }
 }
 

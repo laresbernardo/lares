@@ -144,44 +144,44 @@ gtrends_time <- function(gtrend, title = NA) {
     geom_hline(yintercept = 100, alpha = 0.5)
 
   if (length(unique(gtrend$interest_over_time$keyword)) == 1) {
-    return(int1)
+    int1
+  } else {
+    start <- as.Date(min(gtrend$interest_over_time$date))
+    end <- as.Date(max(gtrend$interest_over_time$date))
+    range <- paste0(start, " - ", end, " (", as.integer(end - start), "d)")
+
+    int2 <- gtrend$interest_over_time %>%
+      mutate(hits = ifelse(.data$hits == "<1", "0.5", as.character(.data$hits))) %>%
+      mutate(hits = as.numeric(as.character(.data$hits))) %>%
+      group_by(.data$keyword) %>%
+      mutate(legend = paste0(.data$keyword, " (", .data$geo, ")")) %>%
+      ggplot(aes(x = .data$date, y = .data$hits, fill = .data$legend)) +
+      geom_area(alpha = 0.9) +
+      theme_lares() +
+      guides(fill = "none") +
+      labs(x = "", y = "Search hits", fill = "", subtitle = "Mixed hits scale")
+
+    int3 <- gtrend$interest_over_time %>%
+      mutate(hits = ifelse(.data$hits == "<1", "0.5", as.character(.data$hits))) %>%
+      mutate(hits = as.numeric(as.character(.data$hits))) %>%
+      group_by(.data$keyword) %>%
+      mutate(hits = 100 * .data$hits / max(.data$hits)) %>%
+      mutate(legend = paste0(.data$keyword, " (", .data$geo, ")")) %>%
+      ggplot(aes(x = .data$date, y = .data$hits, colour = .data$legend)) +
+      geom_line() +
+      theme_minimal() +
+      guides(colour = "none") +
+      labs(
+        x = "", y = "Search hits",
+        subtitle = "Normalized hit scale",
+        caption = range
+      ) +
+      geom_hline(yintercept = 100, alpha = 0.5) +
+      theme_lares()
+
+    if (!is.na(title)) int1 <- int1 + labs(title = title, subtitle = "Real hits scale")
+
+    p <- int1 + int2 + int3 + plot_layout(nrow = 3, ncol = 1)
+    p
   }
-
-  start <- as.Date(min(gtrend$interest_over_time$date))
-  end <- as.Date(max(gtrend$interest_over_time$date))
-  range <- paste0(start, " - ", end, " (", as.integer(end - start), "d)")
-
-  int2 <- gtrend$interest_over_time %>%
-    mutate(hits = ifelse(.data$hits == "<1", "0.5", as.character(.data$hits))) %>%
-    mutate(hits = as.numeric(as.character(.data$hits))) %>%
-    group_by(.data$keyword) %>%
-    mutate(legend = paste0(.data$keyword, " (", .data$geo, ")")) %>%
-    ggplot(aes(x = .data$date, y = .data$hits, fill = .data$legend)) +
-    geom_area(alpha = 0.9) +
-    theme_lares() +
-    guides(fill = "none") +
-    labs(x = "", y = "Search hits", fill = "", subtitle = "Mixed hits scale")
-
-  int3 <- gtrend$interest_over_time %>%
-    mutate(hits = ifelse(.data$hits == "<1", "0.5", as.character(.data$hits))) %>%
-    mutate(hits = as.numeric(as.character(.data$hits))) %>%
-    group_by(.data$keyword) %>%
-    mutate(hits = 100 * .data$hits / max(.data$hits)) %>%
-    mutate(legend = paste0(.data$keyword, " (", .data$geo, ")")) %>%
-    ggplot(aes(x = .data$date, y = .data$hits, colour = .data$legend)) +
-    geom_line() +
-    theme_minimal() +
-    guides(colour = "none") +
-    labs(
-      x = "", y = "Search hits",
-      subtitle = "Normalized hit scale",
-      caption = range
-    ) +
-    geom_hline(yintercept = 100, alpha = 0.5) +
-    theme_lares()
-
-  if (!is.na(title)) int1 <- int1 + labs(title = title, subtitle = "Real hits scale")
-
-  p <- int1 + int2 + int3 + plot_layout(nrow = 3, ncol = 1)
-  p
 }

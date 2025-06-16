@@ -38,5 +38,5 @@ plot_survey <- function(answers, ignore = 1, title = NA, subtitle = NA) {
   if (!is.na(subtitle)) {
     p <- p + labs(subtitle = subtitle)
   }
-  return(p)
+  p
 }

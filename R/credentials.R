@@ -85,7 +85,6 @@ get_credentials <- function(from = NA, dir = NA,
             "No credentials for", from, "found in your YML file.",
             "\nTry any of the following:", v2t(trues)
           ))
-          return(invisible(NULL))
         }
         if (!is.na(from)) credentials <- credentials[[from]]
         credentials

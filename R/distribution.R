@@ -129,281 +129,282 @@ distr <- function(data, ...,
     }
     # Return table with results?
     if (!plot) {
-      output <- df %>% freqs(value, top = top)
-      return(output)
-    }
-    return(p)
-  }
-
-  # Check if secondary variable exists and fix if possible
-  var <- gsub('"', "", as_label(var2))
-  if (!var %in% colnames(data)) {
-    msg <- paste("Not a valid input:", var, "was transformed or does not exist.")
-    maybes <- colnames(data)[grepl(var, colnames(data))]
-    if (length(maybes) > 0 && maybes[1] %in% colnames(data)) {
-      message(paste0(
-        "Maybe you meant one of: ", vector2text(maybes), ". ",
-        "Automatically using '", maybes[1], "'"
-      ))
-      var2 <- quos(maybes[1])
-      warning(msg)
+      df %>% freqs(value, top = top)
     } else {
-      stop(msg)
+      p
     }
-  }
-
-  targets <- select(data, !!var1)
-  targets_name <- colnames(targets)
-  targets <- targets[, 1]
-  value <- select(data, !!var2)
-  variable_name <- colnames(value)
-  # Transformations
-  value <- value[, 1] # do.call("c", value)
-  value <- .force_class(value, force)
-  value <- .fxtrim(value, trim)
-  value <- .fxclean(value, clean)
-
-  if (length(targets) != length(value)) {
-    message("The targets and value vectors should be the same length.")
-    stop(message(paste(
-      "Currently, targets has", length(targets),
-      "rows and value has", length(value)
-    )))
-  }
-
-  # For num-num distributions or too many unique target variables
-  if (length(unique(targets)) >= 8) {
-    if (is.numeric(targets) && is.numeric(value)) {
-      subtitle <- paste0(
-        "Variables: ", variable_name, " vs. ", targets_name,
-        ". Obs: ", formatNum(length(value), 0)
-      )
-      df <- data.frame(x = targets, y = value)
-      df <- .fxna_rm(df, na.rm = TRUE)
-      p <- df %>%
-        ggplot(aes(x = .data$x, y = .data$y)) +
-        stat_density_2d(aes(fill = after_stat(.data$level)), geom = "polygon") +
-        labs(
-          title = "2D Density Distribution",
-          x = targets_name, y = variable_name,
-          subtitle = subtitle
-        ) +
-        scale_x_comma() +
-        scale_y_comma() +
-        theme_lares()
-      return(p)
-    }
-    message("You should try a 'target' variable with max 8 different values.")
-    message("Automatically trying a chords plot...")
-    chords <- TRUE
-  }
-
-  # Chords plot
-  if (chords) {
-    df <- data.frame(value = value, targets = targets)
-    output <- freqs(df, targets, value)
-    if (!na.rm) {
-      output <- output %>% replaceall(NA, "NA")
-    }
-    title <- "Frequency Chords Diagram"
-    subtitle <- paste("Variables:", targets_name, "to", variable_name)
-    if (!plot) {
-      return(output)
-    }
-    return(plot_chord(
-      output$targets, output$value, output$n,
-      mg = 13, title = title, subtitle = subtitle
-    ))
-  }
-
-  # Only n numeric values, really numeric?
-  if (is.numeric(value) && length(unique(value)) <= 8) {
-    value <- .force_class(value, class = "char")
-  }
-
-  # Turn numeric variables into quantiles
-  if (is.numeric(value)) {
-    breaks <- ifelse(top != 10, top, breaks)
-    value <- quants(value, breaks, return = "labels")
-    cuts <- length(unique(value[!is.na(value)]))
-    if (cuts != breaks) {
-      message(paste(
-        "When dividing", variable_name, "into", breaks, "quantiles,",
-        cuts, "cuts/groups are possible."
-      ))
-    }
-    top <- top + 1
-  }
-
-  # Finally, we have our data.frame
-  df <- data.frame(targets = targets, value = value)
-  df <- .fxna_rm(df, na.rm)
-
-  # Captions for plots
-  subtitle <- paste0(
-    "Variables: ", targets_name, " vs. ", variable_name,
-    ". Obs: ", formatNum(nrow(df), 0)
-  )
-
-  freqs <- df %>%
-    group_by(.data$targets, .data$value) %>%
-    count() %>%
-    ungroup() %>%
-    arrange(desc(.data$n)) %>%
-    group_by(.data$value) %>%
-    mutate(
-      p = round(100 * .data$n / sum(.data$n), 2),
-      pcum = cumsum(.data$p)
-    ) %>%
-    ungroup() %>%
-    filter(!is.na(.data$value)) %>%
-    mutate(
-      row = row_number(),
-      order = suppressWarnings(ifelse(
-        grepl("\\(|\\)", .data$value),
-        as.numeric(as.character(substr(gsub(",.*", "", .data$value), 2, 100))),
-        .data$row
-      ))
-    )
-  if (length(unique(value)) > top && !is.numeric(value)) {
-    message(paste("Filtering the", top, "most frequent values. Use 'top' to overrule."))
-    which <- freqs(df, .data$value) %>% slice(1:top)
-    freqs <- freqs %>%
-      mutate(value = ifelse(.data$value %in% which$value, as.character(.data$value), "OTHERS")) %>%
-      group_by(.data$value, .data$targets) %>%
-      select(-.data$row, -.data$order) %>%
-      summarise(n = sum(.data$n)) %>%
-      mutate(p = round(100 * n / sum(.data$n), 2)) %>%
-      ungroup() %>%
-      arrange(desc(.data$n)) %>%
-      mutate(
-        row = row_number(),
-        order = row_number()
-      )
-  }
-
-  # Sort values alphabetically or ascending if numeric
-  if (abc) freqs <- mutate(freqs, order = rank(.data$value))
-
-  # Counter plot
-  if (type %in% c(1, 2)) {
-    vadj <- ifelse(type == 1, -0.15, 0.5)
-    hadj <- ifelse(type == 1, 0.5, -0.15)
-    count <- ggplot(freqs, aes(
-      x = reorder(as.character(.data$value), .data$order), y = .data$n,
-      fill = as.character(.data$targets),
-      label = formatNum(.data$n, 0), ymax = max(.data$n) * 1.1
-    )) +
-      geom_col(position = "dodge", colour = "transparent") +
-      geom_text(
-        colour = "black",
-        check_overlap = TRUE,
-        position = position_dodge(0.9),
-        size = 3, vjust = vadj, hjust = hadj
-      ) +
-      labs(x = NULL, y = "Counter [#]", fill = targets_name, caption = note) +
-      theme(legend.position = "top") +
-      guides(colour = "none") +
-      theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
-      scale_y_comma(expand = c(0, 0)) +
-      theme_lares(pal = 1)
-    # Give an angle to labels when more than...
-    if (length(unique(value)) >= 7) {
-      count <- count + theme(axis.text.x = element_text(angle = 30, hjust = 1))
-    }
-    # Custom colours if wanted...
-    if (custom_colours) {
-      count <- count + suppressWarnings(gg_fill_customs())
-    }
-  }
-
-  # Proportions (%) plot
-  if (type %in% c(1, 3)) {
-    prop <- freqs %>%
-      group_by(.data$value) %>%
-      mutate(size = sum(.data$n) / sum(freqs$n)) %>%
-      mutate(ptag = ifelse(p < 3, "", as.character(round(.data$p, 1)))) %>%
-      ggplot(aes(
-        x = reorder(.data$value, -.data$order),
-        y = .data$p / 100, label = .data$ptag,
-        fill = as.character(.data$targets)
-      )) +
-      geom_col(position = "fill", colour = "transparent") +
-      geom_text(aes(size = .data$size, colour = as.character(.data$targets)),
-        position = position_stack(vjust = 0.5)
-      ) +
-      scale_size(range = c(2.2, 3)) +
-      coord_flip() +
-      labs(x = "Proportions [%]", y = NULL, fill = targets_name, caption = note) +
-      theme(legend.position = "top") +
-      guides(colour = "none", size = "none") +
-      scale_y_percent(expand = c(0, 0)) +
-      theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
-      theme_lares(pal = 1)
-
-    # Show a reference line if levels = 2; quite useful when data is unbalanced (not 50/50)
-    if (length(unique(targets)) == 2 && ref) {
-      distr <- df %>%
-        freqs(.data$targets) %>%
-        arrange(as.character(.data$targets))
-      h <- signif(100 - distr$p[1], 3)
-      prop <- prop +
-        geom_hline(
-          yintercept = h / 100, colour = "purple",
-          linetype = "dotted", alpha = 0.8
-        ) +
-        geom_label(aes(0, h / 100, label = h, vjust = -0.05),
-          size = 2.5, fill = "white", alpha = 0.8
-        )
-    }
-    # Custom colours if wanted...
-    if (custom_colours) {
-      prop <- prop + suppressMessages(gg_fill_customs())
-    }
-  }
-
-  # Export file name and folder
-  if (save) {
-    file_name <- paste0(
-      "viz_distr_",
-      cleanText(targets_name), ".vs.",
-      cleanText(variable_name),
-      case_when(type == 2 ~ "_c", type == 3 ~ "_p", TRUE ~ ""), ".png"
-    )
-    if (!is.na(subdir)) {
-      # dir.create(file.path(getwd(), subdir), recursive = TRUE)
-      file_name <- paste(subdir, file_name, sep = "/")
-    }
-  }
-
-  # Plot the results and save if needed
-  if (type == 1) {
-    count <- count + labs(
-      title = "Distribution and Proportions",
-      subtitle = subtitle, caption = ""
-    ) +
-      theme(plot.margin = margin(10, 15, -15, 15))
-    prop <- prop + guides(fill = "none") + labs(caption = note) +
-      theme(plot.margin = margin(-5, 15, -15, 15))
-    p <- (count / prop) + plot_layout(ncol = 1, nrow = 2)
-    if (save) p <- p + ggsave(file_name, width = 10, height = 7)
-  }
-  if (type == 2) {
-    count <- count + coord_flip() +
-      labs(title = "Distribution Plot", subtitle = subtitle, caption = "")
-    if (save) count <- count + ggsave(file_name, width = 8, height = 6)
-    p <- count
-  }
-  if (type == 3) {
-    prop <- prop + labs(title = "Proportions Plot", subtitle = subtitle, caption = "")
-    if (save) prop <- prop + ggsave(file_name, width = 8, height = 6)
-    p <- prop
-  }
-
-  if (!plot) {
-    select(freqs, -.data$order, -.data$row)
   } else {
-    p
+    # Check if secondary variable exists and fix if possible
+    var <- gsub('"', "", as_label(var2))
+    if (!var %in% colnames(data)) {
+      msg <- paste("Not a valid input:", var, "was transformed or does not exist.")
+      maybes <- colnames(data)[grepl(var, colnames(data))]
+      if (length(maybes) > 0 && maybes[1] %in% colnames(data)) {
+        message(paste0(
+          "Maybe you meant one of: ", vector2text(maybes), ". ",
+          "Automatically using '", maybes[1], "'"
+        ))
+        var2 <- quos(maybes[1])
+        warning(msg)
+      } else {
+        stop(msg)
+      }
+    }
+
+    targets <- select(data, !!var1)
+    targets_name <- colnames(targets)
+    targets <- targets[, 1]
+    value <- select(data, !!var2)
+    variable_name <- colnames(value)
+    # Transformations
+    value <- value[, 1] # do.call("c", value)
+    value <- .force_class(value, force)
+    value <- .fxtrim(value, trim)
+    value <- .fxclean(value, clean)
+
+    if (length(targets) != length(value)) {
+      message("The targets and value vectors should be the same length.")
+      stop(message(paste(
+        "Currently, targets has", length(targets),
+        "rows and value has", length(value)
+      )))
+    }
+
+    # For num-num distributions or too many unique target variables
+    if (length(unique(targets)) >= 8) {
+      if (is.numeric(targets) && is.numeric(value)) {
+        subtitle <- paste0(
+          "Variables: ", variable_name, " vs. ", targets_name,
+          ". Obs: ", formatNum(length(value), 0)
+        )
+        df <- data.frame(x = targets, y = value)
+        df <- .fxna_rm(df, na.rm = TRUE)
+        p <- df %>%
+          ggplot(aes(x = .data$x, y = .data$y)) +
+          stat_density_2d(aes(fill = after_stat(.data$level)), geom = "polygon") +
+          labs(
+            title = "2D Density Distribution",
+            x = targets_name, y = variable_name,
+            subtitle = subtitle
+          ) +
+          scale_x_comma() +
+          scale_y_comma() +
+          theme_lares()
+        p
+      } else {
+        message("You should try a 'target' variable with max 8 different values.")
+        message("Automatically trying a chords plot...")
+        chords <- TRUE
+      }
+    } else if (chords) {
+      df <- data.frame(value = value, targets = targets)
+      output <- freqs(df, targets, value)
+      if (!na.rm) {
+        output <- output %>% replaceall(NA, "NA")
+      }
+      title <- "Frequency Chords Diagram"
+      subtitle <- paste("Variables:", targets_name, "to", variable_name)
+      if (!plot) {
+        output
+      } else {
+        plot_chord(
+          output$targets, output$value, output$n,
+          mg = 13, title = title, subtitle = subtitle
+        )
+      }
+    } else {
+      # Only n numeric values, really numeric?
+      if (is.numeric(value) && length(unique(value)) <= 8) {
+        value <- .force_class(value, class = "char")
+      }
+
+      # Turn numeric variables into quantiles
+      if (is.numeric(value)) {
+        breaks <- ifelse(top != 10, top, breaks)
+        value <- quants(value, breaks, return = "labels")
+        cuts <- length(unique(value[!is.na(value)]))
+        if (cuts != breaks) {
+          message(paste(
+            "When dividing", variable_name, "into", breaks, "quantiles,",
+            cuts, "cuts/groups are possible."
+          ))
+        }
+        top <- top + 1
+      }
+
+      # Finally, we have our data.frame
+      df <- data.frame(targets = targets, value = value)
+      df <- .fxna_rm(df, na.rm)
+
+      # Captions for plots
+      subtitle <- paste0(
+        "Variables: ", targets_name, " vs. ", variable_name,
+        ". Obs: ", formatNum(nrow(df), 0)
+      )
+
+      freqs <- df %>%
+        group_by(.data$targets, .data$value) %>%
+        count() %>%
+        ungroup() %>%
+        arrange(desc(.data$n)) %>%
+        group_by(.data$value) %>%
+        mutate(
+          p = round(100 * .data$n / sum(.data$n), 2),
+          pcum = cumsum(.data$p)
+        ) %>%
+        ungroup() %>%
+        filter(!is.na(.data$value)) %>%
+        mutate(
+          row = row_number(),
+          order = suppressWarnings(ifelse(
+            grepl("\\(|\\)", .data$value),
+            as.numeric(as.character(substr(gsub(",.*", "", .data$value), 2, 100))),
+            .data$row
+          ))
+        )
+      if (length(unique(value)) > top && !is.numeric(value)) {
+        message(paste("Filtering the", top, "most frequent values. Use 'top' to overrule."))
+        which <- freqs(df, .data$value) %>% slice(1:top)
+        freqs <- freqs %>%
+          mutate(value = ifelse(.data$value %in% which$value, as.character(.data$value), "OTHERS")) %>%
+          group_by(.data$value, .data$targets) %>%
+          select(-.data$row, -.data$order) %>%
+          summarise(n = sum(.data$n)) %>%
+          mutate(p = round(100 * n / sum(.data$n), 2)) %>%
+          ungroup() %>%
+          arrange(desc(.data$n)) %>%
+          mutate(
+            row = row_number(),
+            order = row_number()
+          )
+      }
+
+      # Sort values alphabetically or ascending if numeric
+      if (abc) freqs <- mutate(freqs, order = rank(.data$value))
+
+      # Counter plot
+      if (type %in% c(1, 2)) {
+        vadj <- ifelse(type == 1, -0.15, 0.5)
+        hadj <- ifelse(type == 1, 0.5, -0.15)
+        count <- ggplot(freqs, aes(
+          x = reorder(as.character(.data$value), .data$order), y = .data$n,
+          fill = as.character(.data$targets),
+          label = formatNum(.data$n, 0), ymax = max(.data$n) * 1.1
+        )) +
+          geom_col(position = "dodge", colour = "transparent") +
+          geom_text(
+            colour = "black",
+            check_overlap = TRUE,
+            position = position_dodge(0.9),
+            size = 3, vjust = vadj, hjust = hadj
+          ) +
+          labs(x = NULL, y = "Counter [#]", fill = targets_name, caption = note) +
+          theme(legend.position = "top") +
+          guides(colour = "none") +
+          theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
+          scale_y_comma(expand = c(0, 0)) +
+          theme_lares(pal = 1)
+        # Give an angle to labels when more than...
+        if (length(unique(value)) >= 7) {
+          count <- count + theme(axis.text.x = element_text(angle = 30, hjust = 1))
+        }
+        # Custom colours if wanted...
+        if (custom_colours) {
+          count <- count + suppressWarnings(gg_fill_customs())
+        }
+      }
+
+      # Proportions (%) plot
+      if (type %in% c(1, 3)) {
+        prop <- freqs %>%
+          group_by(.data$value) %>%
+          mutate(size = sum(.data$n) / sum(freqs$n)) %>%
+          mutate(ptag = ifelse(p < 3, "", as.character(round(.data$p, 1)))) %>%
+          ggplot(aes(
+            x = reorder(.data$value, -.data$order),
+            y = .data$p / 100, label = .data$ptag,
+            fill = as.character(.data$targets)
+          )) +
+          geom_col(position = "fill", colour = "transparent") +
+          geom_text(aes(size = .data$size, colour = as.character(.data$targets)),
+            position = position_stack(vjust = 0.5)
+          ) +
+          scale_size(range = c(2.2, 3)) +
+          coord_flip() +
+          labs(x = "Proportions [%]", y = NULL, fill = targets_name, caption = note) +
+          theme(legend.position = "top") +
+          guides(colour = "none", size = "none") +
+          scale_y_percent(expand = c(0, 0)) +
+          theme(axis.title.y = element_text(size = rel(0.8), angle = 90)) +
+          theme_lares(pal = 1)
+
+        # Show a reference line if levels = 2; quite useful when data is unbalanced (not 50/50)
+        if (length(unique(targets)) == 2 && ref) {
+          distr <- df %>%
+            freqs(.data$targets) %>%
+            arrange(as.character(.data$targets))
+          h <- signif(100 - distr$p[1], 3)
+          prop <- prop +
+            geom_hline(
+              yintercept = h / 100, colour = "purple",
+              linetype = "dotted", alpha = 0.8
+            ) +
+            geom_label(
+              data = data.frame(x = 0),
+              aes(0, h / 100, label = h, vjust = -0.05),
+              size = 2.5, fill = "white", alpha = 0.8
+            )
+        }
+        # Custom colours if wanted...
+        if (custom_colours) {
+          prop <- prop + suppressMessages(gg_fill_customs())
+        }
+      }
+
+      # Export file name and folder
+      if (save) {
+        file_name <- paste0(
+          "viz_distr_",
+          cleanText(targets_name), ".vs.",
+          cleanText(variable_name),
+          case_when(type == 2 ~ "_c", type == 3 ~ "_p", TRUE ~ ""), ".png"
+        )
+        if (!is.na(subdir)) {
+          # dir.create(file.path(getwd(), subdir), recursive = TRUE)
+          file_name <- paste(subdir, file_name, sep = "/")
+        }
+      }
+
+      # Plot the results and save if needed
+      if (type == 1) {
+        count <- count + labs(
+          title = "Distribution and Proportions",
+          subtitle = subtitle, caption = ""
+        ) +
+          theme(plot.margin = margin(10, 15, -15, 15))
+        prop <- prop + guides(fill = "none") + labs(caption = note) +
+          theme(plot.margin = margin(-5, 15, -15, 15))
+        p <- (count / prop) + plot_layout(ncol = 1, nrow = 2)
+        if (save) p <- p + ggsave(file_name, width = 10, height = 7)
+      }
+      if (type == 2) {
+        count <- count + coord_flip() +
+          labs(title = "Distribution Plot", subtitle = subtitle, caption = "")
+        if (save) count <- count + ggsave(file_name, width = 8, height = 6)
+        p <- count
+      }
+      if (type == 3) {
+        prop <- prop + labs(title = "Proportions Plot", subtitle = subtitle, caption = "")
+        if (save) prop <- prop + ggsave(file_name, width = 8, height = 6)
+        p <- prop
+      }
+
+      if (!plot) {
+        select(freqs, -.data$order, -.data$row)
+      } else {
+        p
+      }
+    }
   }
 }
 

@@ -47,74 +47,73 @@ fb_process <- function(input, paginate = TRUE, sleep = 0, quiet = FALSE, ...) {
         browseURL("https://developers.facebook.com/tools/explorer")
       }
     }
-    invisible(return(import))
+    invisible(import)
   }
 
   # Check for no-data (user might think there was an error on GET request - warn him!)
   if (length(import[[1]]) == 0) {
     message("NO DATA: No results found for this request")
-    invisible(return(import))
-  }
-
-  # Deal with GET + response vs jsonlite
-  out <- fromJSON(toJSON(import))
-  if (all(lapply(out, length) == 1)) {
-    return(out)
-  }
-
-  # First pagination
-  results <- list()
-  i <- 1
-  results[[i]] <- list_flattener(out[[1]], first = TRUE)
-  if (!quiet) show_pag_status(results, i, sleep, quiet)
-
-  # Following iterations
-  if (exists("paging", out) && as.integer(paginate) >= 1) {
-    if (exists("next", out$paging)) {
-      i <- i + 1
-      out <- fromJSON(out$paging[["next"]])
-      results[[i]] <- list_flattener(out$data, i)
+    invisible(import)
+  } else {
+    # Deal with GET + response vs jsonlite
+    out <- fromJSON(toJSON(import))
+    if (all(lapply(out, length) == 1)) {
+      out
+    } else {
+      # First pagination
+      results <- list()
+      i <- 1
+      results[[i]] <- list_flattener(out[[1]], first = TRUE)
       if (!quiet) show_pag_status(results, i, sleep, quiet)
-      # Re-run first iteration and overwrite as everything MUST match to bind
-      if (i == 2) {
-        out <- fromJSON(out$paging[["previous"]])
-        results[[1]] <- list_flattener(out$data, i)
-        if (!quiet) show_pag_status(results, i, sleep, quiet)
-      }
-      while (exists("next", out$paging) && (i < as.integer(paginate) || isTRUE(paginate))) {
-        i <- i + 1
-        res <- try(
-          {
-            out <- fromJSON(out$paging[["next"]])
-            results[[i]] <- list_flattener(out$data, i)
+
+      # Following iterations
+      if (exists("paging", out) && as.integer(paginate) >= 1) {
+        if (exists("next", out$paging)) {
+          i <- i + 1
+          out <- fromJSON(out$paging[["next"]])
+          results[[i]] <- list_flattener(out$data, i)
+          if (!quiet) show_pag_status(results, i, sleep, quiet)
+          # Re-run first iteration and overwrite as everything MUST match to bind
+          if (i == 2) {
+            out <- fromJSON(out$paging[["previous"]])
+            results[[1]] <- list_flattener(out$data, i)
             if (!quiet) show_pag_status(results, i, sleep, quiet)
-          },
-          silent = TRUE
-        )
-        if (inherits(res, "try-error")) {
-          warning(paste0("Returning partial results given last pagination (", i, ") returned error"))
-          break
+          }
+          while (exists("next", out$paging) && (i < as.integer(paginate) || isTRUE(paginate))) {
+            i <- i + 1
+            res <- try(
+              {
+                out <- fromJSON(out$paging[["next"]])
+                results[[i]] <- list_flattener(out$data, i)
+                if (!quiet) show_pag_status(results, i, sleep, quiet)
+              },
+              silent = TRUE
+            )
+            if (inherits(res, "try-error")) {
+              warning(paste0("Returning partial results given last pagination (", i, ") returned error"))
+              break
+            }
+          }
         }
       }
+      done <- bind_rows(results)
+      ret <- suppressMessages(type.convert(
+        done,
+        numerals = "no.loss", as.is = TRUE
+      )) %>%
+        mutate_at(vars(contains("date")), list(as.Date)) %>%
+        mutate_at(vars(contains("id")), list(as.character)) %>%
+        mutate_at(vars(contains("url")), list(as.character)) %>%
+        mutate_at(vars(contains("name")), list(as.character)) %>%
+        as_tibble()
+
+      # Save last pagination and if it returned complete results
+      attr(ret, "paging_done") <- !("next" %in% names(out[["paging"]]))
+      attr(ret, "paging") <- out[["paging"]]
+      toc(paste0("fb_process_", input$url), quiet = quiet, ...)
+      ret
     }
   }
-  done <- bind_rows(results)
-  ret <- suppressMessages(type.convert(
-    done,
-    numerals = "no.loss", as.is = TRUE
-  )) %>%
-    mutate_at(vars(contains("date")), list(as.Date)) %>%
-    mutate_at(vars(contains("id")), list(as.character)) %>%
-    mutate_at(vars(contains("url")), list(as.character)) %>%
-    mutate_at(vars(contains("name")), list(as.character)) %>%
-    as_tibble()
-
-  # Save last pagination and if it returned complete results
-  attr(ret, "paging_done") <- !("next" %in% names(out[["paging"]]))
-  attr(ret, "paging") <- out[["paging"]]
-
-  toc(paste0("fb_process_", input$url), quiet = quiet, ...)
-  ret
 }
 
 list_flattener <- function(x, i = 1, first = FALSE) {
@@ -482,47 +481,48 @@ fb_rf <- function(token,
         prediction$error_user_msg,
         sep = "\n"
       ))
-      invisible(return(prediction))
-    }
-    message(glued("Prediction created: {prediction}"))
-  }
+      invisible(prediction)
+    } else {
+      message(glued("Prediction created: {prediction}"))
 
-  if (curve) {
-    if (length(prediction) > 1) {
-      stop("Please, provide only 1 prediction per query")
-    }
-    api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
-    curves <- GET(
-      glued("{META_GRAPH_URL}/{api_version}/{prediction}"),
-      query = list(
-        fields = "curve_budget_reach",
-        access_token = token
-      )
-    )
-
-    if (process) {
-      this <- fb_process(curves, ...)
-      curves <- this %>%
-        select(-one_of(zerovar(.))) %>%
-        mutate(
-          budget = .data$budget / 100,
-          frequency = .data$impression / .data$reach,
-          weekly_frequency = .data$frequency / (days / 7),
-          cpm = 1000 * .data$budget / .data$impression,
-          prediction = prediction
+      if (curve) {
+        if (length(prediction) > 1) {
+          stop("Please, provide only 1 prediction per query")
+        }
+        api_version <- ifelse(is.null(api_version), META_API_VER, api_version)
+        curves <- GET(
+          glued("{META_GRAPH_URL}/{api_version}/{prediction}"),
+          query = list(
+            fields = "curve_budget_reach",
+            access_token = token
+          )
         )
-      curves <- curves %>%
-        as.matrix() %>%
-        data.frame() %>%
-        as_tibble() %>%
-        mutate_at(colnames(.)[-c(1, ncol(.))], as.numeric)
-    }
 
-    attr(curves, "prediction") <- prediction
-    class(curves) <- c(class(curves), "fb_rf")
-    curves
-  } else {
-    prediction
+        if (process) {
+          this <- fb_process(curves, ...)
+          curves <- this %>%
+            select(-one_of(zerovar(.))) %>%
+            mutate(
+              budget = .data$budget / 100,
+              frequency = .data$impression / .data$reach,
+              weekly_frequency = .data$frequency / (days / 7),
+              cpm = 1000 * .data$budget / .data$impression,
+              prediction = prediction
+            )
+          curves <- curves %>%
+            as.matrix() %>%
+            data.frame() %>%
+            as_tibble() %>%
+            mutate_at(colnames(.)[-c(1, ncol(.))], as.numeric)
+        }
+
+        attr(curves, "prediction") <- prediction
+        class(curves) <- c(class(curves), "fb_rf")
+        curves
+      } else {
+        prediction
+      }
+    }
   }
 }
 
@@ -584,30 +584,28 @@ fb_accounts <- function(token,
   }
 
   if (!inherits(output, "data.frame")) {
-    return(invisible(NULL))
+    invisible(NULL)
+  } else {
+    # Account status dictionary
+    output <- mutate(output, account_status = case_when(
+      account_status == "1" ~ "ACTIVE",
+      account_status == "2" ~ "DISABLED",
+      account_status == "3" ~ "UNSETTLED",
+      account_status == "7" ~ "PENDING_RISK_REVIEW",
+      account_status == "8" ~ "PENDING_SETTLEMENT",
+      account_status == "9" ~ "IN_GRACE_PERIOD",
+      account_status == "100" ~ "PENDING_CLOSURE",
+      account_status == "101" ~ "CLOSED",
+      account_status == "201" ~ "ANY_ACTIVE",
+      account_status == "202" ~ "ANY_CLOSED"
+    ))
+    suppressMessages(type.convert(
+      output,
+      numerals = "no.loss", as.is = TRUE
+    )) %>%
+      arrange(desc(.data$amount_spent)) %>%
+      as_tibble()
   }
-
-  # Account status dictionary
-  output <- mutate(output, account_status = case_when(
-    account_status == "1" ~ "ACTIVE",
-    account_status == "2" ~ "DISABLED",
-    account_status == "3" ~ "UNSETTLED",
-    account_status == "7" ~ "PENDING_RISK_REVIEW",
-    account_status == "8" ~ "PENDING_SETTLEMENT",
-    account_status == "9" ~ "IN_GRACE_PERIOD",
-    account_status == "100" ~ "PENDING_CLOSURE",
-    account_status == "101" ~ "CLOSED",
-    account_status == "201" ~ "ANY_ACTIVE",
-    account_status == "202" ~ "ANY_CLOSED"
-  ))
-
-  output <- suppressMessages(type.convert(
-    output,
-    numerals = "no.loss", as.is = TRUE
-  )) %>%
-    arrange(desc(.data$amount_spent)) %>%
-    as_tibble()
-  output
 }
 
 ####################################################################

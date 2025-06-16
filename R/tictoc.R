@@ -90,5 +90,5 @@ toc <- function(id = 1, msg = "Elapsed time:", type = "units", signif = 3, quiet
   if (which[1] == "TOC") temp <- data.frame(TIC = aux[[id]]$TIC, TOC = start)
   aux[[id]] <- temp
   options("LARES_TICTOC" = aux)
-  return(aux[id])
+  aux[id]
 }

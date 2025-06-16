@@ -320,6 +320,7 @@ freqs_df <- function(df,
                      quiet = FALSE,
                      save = FALSE,
                      subdir = NA) {
+  out <- NULL
   if (is.vector(df)) {
     temp <- data.frame(values = df)
     freqs(temp, .data$values)
@@ -370,7 +371,6 @@ freqs_df <- function(df,
 
     if (length(which) > 0) {
       for (i in seq_along(which)) {
-        if (i == 1) out <- NULL
         iter <- which[i]
         counter <- table(df[iter], useNA = "ifany")
         res <- data.frame(
@@ -390,10 +390,10 @@ freqs_df <- function(df,
         ungroup()
     } else {
       warning("No relevant information to display regarding your data.frame!")
-      return(invisible(NULL))
+      out <- invisible(NULL)
     }
 
-    if (plot) {
+    if (plot & !is.null(out)) {
       out <- out %>%
         mutate(value = ifelse(is.na(.data$value), "NA", as.character(.data$value))) %>%
         mutate(col = factor(.data$col, levels = which)) %>%
@@ -409,7 +409,7 @@ freqs_df <- function(df,
       )) +
         geom_col(aes(alpha = .data$alpha),
           position = "fill",
-          colour = "80000000", width = 0.95, size = 0.1
+          colour = "80000000", width = 0.95
         ) +
         geom_text(position = position_fill(vjust = .5), size = 3) +
         coord_flip() +
@@ -424,15 +424,17 @@ freqs_df <- function(df,
         ) +
         geom_hline(
           yintercept = c(0.25, 0.5, 0.75), linetype = "dashed",
-          color = "black", size = 0.5, alpha = 0.3
+          color = "black", linewidth = 0.5, alpha = 0.3
         )
       if (save) export_plot(p, "viz_freqs_df", subdir = subdir)
       p
     } else {
-      out <- select(out, .data$col, .data$value, .data$count, .data$p) %>%
-        rename(n = .data$count, variable = .data$col) %>%
-        group_by(.data$variable) %>%
-        mutate(pcum = signif(cumsum(.data$p), 3))
+      if (!is.null(out)) {
+        out <- select(out, .data$col, .data$value, .data$count, .data$p) %>%
+          rename(n = .data$count, variable = .data$col) %>%
+          group_by(.data$variable) %>%
+          mutate(pcum = signif(cumsum(.data$p), 3))
+      }
       out
     }
   }

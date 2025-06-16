@@ -37,7 +37,7 @@ cleanText <- function(text, spaces = TRUE, keep = "", lower = TRUE,
   if (isFALSE(spaces)) text <- gsub(" ", "", text)
   text <- trimws(gsub("[[:space:].]+", " ", text))
   if (title) text <- stringr::str_to_title(text)
-  return(text)
+  text
 }
 
 
@@ -78,7 +78,7 @@ cleanNames <- function(df, num = "x", keep = "_", ...) {
     # Keep tibble if original data.frame is tibble
     if ("tbl_df" %in% class(df)) df <- as_tibble(df)
   }
-  return(df)
+  df
 }
 
 ####################################################################
@@ -237,9 +237,9 @@ textTokenizer <- function(text,
       statusbar(i, nrow(d), word)
     }
     toksdf <- data.frame(texts = texts, toksdf)
-    return(as_tibble(toksdf))
+    as_tibble(toksdf)
   } else {
-    return(as_tibble(d))
+    as_tibble(d)
   }
 }
 
@@ -306,7 +306,7 @@ textFeats <- function(text, auto = TRUE, contains = NA, prc = FALSE) {
       ungroup()
   }
 
-  return(as_tibble(ret))
+  as_tibble(ret)
 }
 
 ####################################################################
@@ -448,7 +448,7 @@ sentimentBreakdown <- function(text, lang = "spanish",
     #                  match.colors = TRUE,
     #                  title.bg.colors = "transparent")
   }
-  return(ret)
+  ret
 }
 
 
@@ -486,7 +486,7 @@ topics_rake <- function(text, file = "english-ewt-ud-2.4-190531.udpipe", lang = 
     x = aux, term = "lemma", group = "doc_id",
     relevant = aux$upos %in% c("NOUN", "ADJ")
   )
-  return(topics)
+  topics
 }
 
 
@@ -558,5 +558,5 @@ remove_stopwords <- function(text, stop_words, exclude = NULL, sep = " ") {
     tok <- lapply(tok, function(i) i[!tolower(i) %in% unique(c("", tolower(stop_words)))])
   }
   fin <- lapply(tok, function(i) paste(i, collapse = sep))
-  return(unlist(fin))
+  unlist(fin)
 }

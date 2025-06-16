@@ -302,35 +302,37 @@ plot.x2y <- function(x, type = 1, ...) {
 x2y_preds <- function(x, y, max_cat = 10) {
   # If no variance
   if (length(unique(x)) == 1 || length(unique(y)) == 1) {
-    return(NA)
-  }
-  # If x is categorical
-  x <- .reduce_cats(x, max_cat)
-  # If y is continuous
-  if (is.numeric(y)) {
-    preds <- predict(rpart(y ~ x, method = "anova"), type = "vector")
+    NA
   } else {
-    # If y is categorical
-    y <- .reduce_cats(y, max_cat)
-    preds <- predict(rpart(y ~ x, method = "class"), type = "class")
+    # If x is categorical
+    x <- .reduce_cats(x, max_cat)
+    # If y is continuous
+    if (is.numeric(y)) {
+      preds <- predict(rpart(y ~ x, method = "anova"), type = "vector")
+    } else {
+      # If y is categorical
+      y <- .reduce_cats(y, max_cat)
+      preds <- predict(rpart(y ~ x, method = "class"), type = "class")
+    }
+    preds <- as_tibble(data.frame(x = x, y = y)) %>%
+      removenarows(all = FALSE) %>%
+      mutate(p = preds)
+    attr(preds, "max_cat") <- max_cat
+    class(preds) <- c("x2y_preds", class(preds))
+    preds
   }
-  preds <- as_tibble(data.frame(x = x, y = y)) %>%
-    removenarows(all = FALSE) %>%
-    mutate(p = preds)
-  attr(preds, "max_cat") <- max_cat
-  class(preds) <- c("x2y_preds", class(preds))
-  preds
 }
 
 .x2y_vals <- function(x, y, ...) {
   if (length(unique(x)) == 1 || length(unique(y)) == 1) {
-    return(NA)
-  }
-  preds <- x2y_preds(x, y, ...)$p
-  if (is.numeric(y)) {
-    .mae_reduction(preds, y)
+    NA
   } else {
-    .misclass_reduction(preds, y)
+    preds <- x2y_preds(x, y, ...)$p
+    if (is.numeric(y)) {
+      .mae_reduction(preds, y)
+    } else {
+      .misclass_reduction(preds, y)
+    }
   }
 }
 

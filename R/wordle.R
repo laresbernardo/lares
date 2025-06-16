@@ -31,11 +31,12 @@
 wordle_check <- function(input, word, dictionary = NULL, lang_dic = "en", method = 3, print = TRUE) {
   if (!haveInternet()) {
     message("No internet connetion...")
-    return(invisible(NULL))
+    invisible(NULL)
+  } else {
+    wordle_valid(input, dictionary, lang_dic, method)
+    out <- pos_check(input, word, len = 5, print = print)
+    invisible(out)
   }
-  wordle_valid(input, dictionary, lang_dic, method)
-  out <- pos_check(input, word, len = 5, print = print)
-  invisible(out)
 }
 
 pos_check <- function(input, solution, len = 5, print = TRUE) {
@@ -120,46 +121,47 @@ wordle_dictionary <- function(lang_dic = "en", method = 3, quiet = TRUE) {
 wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
   if (!haveInternet()) {
     message("No internet connetion...")
-    return(invisible(NULL))
-  }
-  tic("wordle_simulation")
-  output <- NULL
-  if (is.null(seed)) seed <- sample(1:100, 1)
-  # First iteration with picked word (no random stuff happens here)
-  iter_first <- wordle_opts(input, word, quiet = quiet, ...)
-  for (s in seed) {
-    # Print first word for nicer and more informative output
-    if (s != seed[1]) {
-      wordle_check(input, word, ...)
-      if (!isFALSE(list(...)[["print"]])) cat("\n")
-    }
-    set.seed(s) # s = seed[1]
-    seed_loop <- NULL
-    i <- 1
-    used_words <- input
-    iter <- iter_first
-    # Second iteration onwards
-    while (length(iter) > 1) {
-      random_word <- sample(iter, 1)
-      used_words <- c(used_words, random_word)
-      iter <- wordle_opts(random_word, word, iter, quiet = quiet, ...)
-      # If random word picked is the word
-      if (random_word == word) break
-      # If last word remaining is the one
-      if (length(iter) == 1 && all(iter == word)) {
-        iter <- wordle_opts(word, word, iter, quiet = quiet, ...)
+    invisible(NULL)
+  } else {
+    tic("wordle_simulation")
+    output <- NULL
+    if (is.null(seed)) seed <- sample(1:100, 1)
+    # First iteration with picked word (no random stuff happens here)
+    iter_first <- wordle_opts(input, word, quiet = quiet, ...)
+    for (s in seed) {
+      # Print first word for nicer and more informative output
+      if (s != seed[1]) {
+        wordle_check(input, word, ...)
+        if (!isFALSE(list(...)[["print"]])) cat("\n")
       }
-      i <- i + 1
+      set.seed(s) # s = seed[1]
+      seed_loop <- NULL
+      i <- 1
+      used_words <- input
+      iter <- iter_first
+      # Second iteration onwards
+      while (length(iter) > 1) {
+        random_word <- sample(iter, 1)
+        used_words <- c(used_words, random_word)
+        iter <- wordle_opts(random_word, word, iter, quiet = quiet, ...)
+        # If random word picked is the word
+        if (random_word == word) break
+        # If last word remaining is the one
+        if (length(iter) == 1 && all(iter == word)) {
+          iter <- wordle_opts(word, word, iter, quiet = quiet, ...)
+        }
+        i <- i + 1
+      }
+      output[[paste0("seed_", s)]] <- list(words = used_words, iters = sum(used_words != word) + 1)
+      if (!quiet) message(sprintf(">> Iterations (seed = %s): %s\n", s, i + 1))
     }
-    output[[paste0("seed_", s)]] <- list(words = used_words, iters = sum(used_words != word) + 1)
-    if (!quiet) message(sprintf(">> Iterations (seed = %s): %s\n", s, i + 1))
+    attr(output, "input") <- input
+    attr(output, "word") <- word
+    attr(output, "iterations") <- length(seed)
+    attr(output, "elapsed") <- toc("wordle_simulation", quiet = quiet)$time
+    class(output) <- c("wordle_simulation", class(output))
+    invisible(output)
   }
-  attr(output, "input") <- input
-  attr(output, "word") <- word
-  attr(output, "iterations") <- length(seed)
-  attr(output, "elapsed") <- toc("wordle_simulation", quiet = quiet)$time
-  class(output) <- c("wordle_simulation", class(output))
-  invisible(output)
 }
 
 #' @rdname wordle

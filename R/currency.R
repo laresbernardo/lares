@@ -49,7 +49,7 @@ get_currency <- function(currency_pair,
   ))))
   if ("try-error" %in% class(x)) {
     warning(x)
-    return(x)
+    x
   }
   dates <- as.Date(gsub("\\.", "\\-", gsub("X", "", rownames(x))))
   rate <- data.frame(date = dates, rate = x[, 1])

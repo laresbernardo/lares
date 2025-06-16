@@ -447,51 +447,51 @@ certainty_score <- function(
     InputCollect, OutputCollect,
     penalization = 2, spend_wt = TRUE, ...) {
   if (!"clusters" %in% names(OutputCollect)) {
-    return(data.frame(
+    data.frame(
       solID = unique(OutputCollect$xDecompAgg$solID),
       certainty = 0
-    ))
-  }
-  clusters <- OutputCollect$clusters$df_cluster_ci
-  perfs <- OutputCollect$xDecompAgg %>%
-    filter(!is.na(.data$mean_spend)) %>% # get rid of organic
-    filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
-    mutate(performance = .data$xDecompAgg / .data$total_spend) %>%
-    select("solID", "channel" = "rn", "spend" = "total_spend", "performance")
-  df <- perfs %>%
-    left_join(select(OutputCollect$clusters$data, "solID", "cluster"), "solID") %>%
-    left_join(clusters, by = c("cluster", "channel" = "rn")) %>%
-    select("solID", "channel", "cluster", "spend",
-      "Pi" = "performance",
-      "P" = "boot_mean", "Pmin" = "ci_low", "Pmax" = "ci_up"
     )
-  res <- df %>%
-    group_by(.data$cluster, .data$solID) %>%
-    mutate(Si = ifelse(spend_wt == FALSE, 1, .data$spend / sum(.data$spend))) %>%
-    ungroup() %>%
-    mutate(
-      pen = ifelse(.data$P < .data$Pmax & .data$P > .data$Pmin, 1, penalization),
-      Xi = .data$Si * ((.data$P - .data$Pi)^2 * .data$pen)
-    ) %>%
-    group_by(.data$solID, .data$cluster) %>%
-    summarize(Mi = sum(.data$Xi, na.rm = TRUE), .groups = "drop") %>%
-    ungroup() %>%
-    mutate(certainty = normalize(-.data$Mi, range = c(0, 1 - min(.data$Mi) / max(.data$Mi)))) %>%
-    arrange(desc(.data$certainty))
+  } else {
+    clusters <- OutputCollect$clusters$df_cluster_ci
+    perfs <- OutputCollect$xDecompAgg %>%
+      filter(!is.na(.data$mean_spend)) %>% # get rid of organic
+      filter(.data$solID %in% OutputCollect$clusters$data$solID) %>%
+      mutate(performance = .data$xDecompAgg / .data$total_spend) %>%
+      select("solID", "channel" = "rn", "spend" = "total_spend", "performance")
+    df <- perfs %>%
+      left_join(select(OutputCollect$clusters$data, "solID", "cluster"), "solID") %>%
+      left_join(clusters, by = c("cluster", "channel" = "rn")) %>%
+      select("solID", "channel", "cluster", "spend",
+        "Pi" = "performance",
+        "P" = "boot_mean", "Pmin" = "ci_low", "Pmax" = "ci_up"
+      )
+    res <- df %>%
+      group_by(.data$cluster, .data$solID) %>%
+      mutate(Si = ifelse(spend_wt == FALSE, 1, .data$spend / sum(.data$spend))) %>%
+      ungroup() %>%
+      mutate(
+        pen = ifelse(.data$P < .data$Pmax & .data$P > .data$Pmin, 1, penalization),
+        Xi = .data$Si * ((.data$P - .data$Pi)^2 * .data$pen)
+      ) %>%
+      group_by(.data$solID, .data$cluster) %>%
+      summarize(Mi = sum(.data$Xi, na.rm = TRUE), .groups = "drop") %>%
+      ungroup() %>%
+      mutate(certainty = normalize(-.data$Mi, range = c(0, 1 - min(.data$Mi) / max(.data$Mi)))) %>%
+      arrange(desc(.data$certainty))
 
-  if (FALSE) {
-    # Check best and worst
-    GeMMMa_onepagers(InputCollect, OutputCollect, res$solID[res$certainty == 1], export = FALSE)[[2]][[2]]
-    GeMMMa_onepagers(InputCollect, OutputCollect, res$solID[res$certainty == 0], export = FALSE)[[2]][[2]]
+    if (FALSE) {
+      # Check best and worst
+      GeMMMa_onepagers(InputCollect, OutputCollect, res$solID[res$certainty == 1], export = FALSE)[[2]][[2]]
+      GeMMMa_onepagers(InputCollect, OutputCollect, res$solID[res$certainty == 0], export = FALSE)[[2]][[2]]
 
-    # Viz distribution of scores per cluster
-    ggplot(res, aes(x = as.character(.data$cluster), y = .data$certainty)) +
-      geom_boxplot() +
-      lares::theme_lares() +
-      lares::scale_y_percent()
+      # Viz distribution of scores per cluster
+      ggplot(res, aes(x = as.character(.data$cluster), y = .data$certainty)) +
+        geom_boxplot() +
+        lares::theme_lares() +
+        lares::scale_y_percent()
+    }
+    res
   }
-
-  res
 }
 
 #' @param x robyn_modelselector object
@@ -585,169 +585,170 @@ robyn_performance <- function(
       solID, InputCollect$window_start, InputCollect$window_end,
       start_date, end_date
     ))
-    return(NULL)
-  }
-  spends <- dt_mod %>%
-    filter(.data$type == "rawSpend") %>%
-    summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE))
-  response <- df %>%
-    filter(.data$type == "decompMedia") %>%
-    summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE))
-  metric <- ifelse(InputCollect$dep_var_type == "revenue", "ROAS", "CPA")
-  if (metric == "ROAS") {
-    performance <- response / spends
-    total <- sum(response) / sum(spends)
+    NULL
   } else {
-    performance <- spends / response
-    total <- sum(spends) / sum(response)
-  }
-  ret <- dplyr::tibble(
-    solID = solID,
-    start_date = min(df$ds, na.rm = TRUE),
-    end_date = max(df$ds, na.rm = TRUE),
-    channel = InputCollect$all_media,
-    type = factor(
-      case_when(
-        InputCollect$all_media %in% InputCollect$paid_media_spends ~ "Paid",
-        InputCollect$all_media %in% InputCollect$organic_vars ~ "Organic"
-      ),
-      levels = c("Paid", "Organic")
-    ),
-    metric = ifelse(InputCollect$all_media %in% InputCollect$paid_media_spends, metric, ""),
-    performance = unlist(performance),
-    spend = unlist(spends),
-    response = unlist(response)
-  ) %>%
-    arrange(.data$type, desc(.data$spend))
-
-  # Create TOTAL row
-  totals_df <- ret[1, 1:3] %>%
-    mutate(
-      channel = "PROMOTIONAL TOTAL",
-      metric = metric,
-      performance = total,
-      spend = sum(spends),
-      response = sum(response)
-    )
-  # Add marketing contribution to sales/conversions (dynamic depending on date)
-  xdvc <- OutputCollect$xDecompVecCollect
-  xDecompTotal <- xdvc[xdvc$solID %in% solID, ] %>%
-    filter(.data$ds >= start_date, .data$ds <= end_date) %>%
-    summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE))
-  xDecompPerc <- xDecompTotal %>%
-    # Divide by prediction, not real values
-    mutate_all(function(x) x / .$depVarHat) %>%
-    tidyr::gather(key = "channel", value = "contribution") %>%
-    mutate(response = t(xDecompTotal)[, 1]) %>%
-    filter(!.data$channel %in% c("dep_var", "depVarHat"))
-  mktg_contr <- filter(xDecompPerc, .data$channel %in% InputCollect$all_media)
-  mksum <- sum(mktg_contr$contribution)
-  mktg_contr2 <- rbind(
-    data.frame(
-      channel = c("PROMOTIONAL TOTAL", "BASELINE", "GRAND TOTAL"),
-      contribution = c(mksum, 1 - mksum, 1)
-    ),
-    xDecompPerc[, 1:2]
-  )
-  # Create Baseline row
-  resp_baseline <- (1 - mksum) * sum(ret$response) / mksum
-  base_df <- ret[1, 1:3] %>% mutate(
-    channel = "BASELINE",
-    metric = "",
-    performance = NA,
-    spend = 0,
-    response = resp_baseline
-  )
-  # Baseline (L4 - until contextual) variables
-  if (non_promo) {
-    baseL4_contr <- filter(xDecompPerc, !.data$channel %in% InputCollect$all_media)
-    base_df <- bind_rows(baseL4_contr, base_df) %>%
-      select(all_of(colnames(base_df))) %>%
-      tidyr::fill(c("solID", "start_date", "end_date", "metric", "spend"), .direction = "up")
-  }
-  # Create TOTAL row
-  grand_total <- ret[1, 1:3] %>%
-    mutate(
-      channel = "GRAND TOTAL",
-      metric = metric,
-      performance = (resp_baseline + sum(ret$response)) / sum(ret$spend),
-      spend = sum(ret$spend),
-      response = resp_baseline + sum(ret$response)
-    )
-  # Join everything together
-  if (totals) ret <- bind_rows(ret, totals_df, base_df, grand_total)
-  ret <- left_join(ret, mktg_contr2, "channel") %>%
-    mutate(
+    spends <- dt_mod %>%
+      filter(.data$type == "rawSpend") %>%
+      summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE))
+    response <- df %>%
+      filter(.data$type == "decompMedia") %>%
+      summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE))
+    metric <- ifelse(InputCollect$dep_var_type == "revenue", "ROAS", "CPA")
+    if (metric == "ROAS") {
+      performance <- response / spends
+      total <- sum(response) / sum(spends)
+    } else {
+      performance <- spends / response
+      total <- sum(spends) / sum(response)
+    }
+    ret <- dplyr::tibble(
+      solID = solID,
+      start_date = min(df$ds, na.rm = TRUE),
+      end_date = max(df$ds, na.rm = TRUE),
+      channel = InputCollect$all_media,
       type = factor(
         case_when(
-          .data$channel %in% InputCollect$paid_media_spends ~ "Paid",
-          .data$channel %in% InputCollect$organic_vars ~ "Organic",
-          .data$channel %in% InputCollect$context_vars ~ "Context",
-          .data$channel %in% c("intercept", InputCollect$prophet_vars) ~ "Context"
+          InputCollect$all_media %in% InputCollect$paid_media_spends ~ "Paid",
+          InputCollect$all_media %in% InputCollect$organic_vars ~ "Organic"
         ),
-        levels = c("Paid", "Organic", "Context", NA)
-      )
-    )
+        levels = c("Paid", "Organic")
+      ),
+      metric = ifelse(InputCollect$all_media %in% InputCollect$paid_media_spends, metric, ""),
+      performance = unlist(performance),
+      spend = unlist(spends),
+      response = unlist(response)
+    ) %>%
+      arrange(.data$type, desc(.data$spend))
 
-  # Add mROAS/mCPA
-  if (marginals) {
-    try_require("Robyn")
-    # Experimental approach to add organic vars too
-    if (packageVersion("Robyn") >= "3.12.0.9007" && new_version) {
-      temp <- lapply(InputCollect$all_media, function(x) {
-        robyn_marginal(
+    # Create TOTAL row
+    totals_df <- ret[1, 1:3] %>%
+      mutate(
+        channel = "PROMOTIONAL TOTAL",
+        metric = metric,
+        performance = total,
+        spend = sum(spends),
+        response = sum(response)
+      )
+    # Add marketing contribution to sales/conversions (dynamic depending on date)
+    xdvc <- OutputCollect$xDecompVecCollect
+    xDecompTotal <- xdvc[xdvc$solID %in% solID, ] %>%
+      filter(.data$ds >= start_date, .data$ds <= end_date) %>%
+      summarise_if(is.numeric, function(x) sum(x, na.rm = TRUE))
+    xDecompPerc <- xDecompTotal %>%
+      # Divide by prediction, not real values
+      mutate_all(function(x) x / .$depVarHat) %>%
+      tidyr::gather(key = "channel", value = "contribution") %>%
+      mutate(response = t(xDecompTotal)[, 1]) %>%
+      filter(!.data$channel %in% c("dep_var", "depVarHat"))
+    mktg_contr <- filter(xDecompPerc, .data$channel %in% InputCollect$all_media)
+    mksum <- sum(mktg_contr$contribution)
+    mktg_contr2 <- rbind(
+      data.frame(
+        channel = c("PROMOTIONAL TOTAL", "BASELINE", "GRAND TOTAL"),
+        contribution = c(mksum, 1 - mksum, 1)
+      ),
+      xDecompPerc[, 1:2]
+    )
+    # Create Baseline row
+    resp_baseline <- (1 - mksum) * sum(ret$response) / mksum
+    base_df <- ret[1, 1:3] %>% mutate(
+      channel = "BASELINE",
+      metric = "",
+      performance = NA,
+      spend = 0,
+      response = resp_baseline
+    )
+    # Baseline (L4 - until contextual) variables
+    if (non_promo) {
+      baseL4_contr <- filter(xDecompPerc, !.data$channel %in% InputCollect$all_media)
+      base_df <- bind_rows(baseL4_contr, base_df) %>%
+        select(all_of(colnames(base_df))) %>%
+        tidyr::fill(c("solID", "start_date", "end_date", "metric", "spend"), .direction = "up")
+    }
+    # Create TOTAL row
+    grand_total <- ret[1, 1:3] %>%
+      mutate(
+        channel = "GRAND TOTAL",
+        metric = metric,
+        performance = (resp_baseline + sum(ret$response)) / sum(ret$spend),
+        spend = sum(ret$spend),
+        response = resp_baseline + sum(ret$response)
+      )
+    # Join everything together
+    if (totals) ret <- bind_rows(ret, totals_df, base_df, grand_total)
+    ret <- left_join(ret, mktg_contr2, "channel") %>%
+      mutate(
+        type = factor(
+          case_when(
+            .data$channel %in% InputCollect$paid_media_spends ~ "Paid",
+            .data$channel %in% InputCollect$organic_vars ~ "Organic",
+            .data$channel %in% InputCollect$context_vars ~ "Context",
+            .data$channel %in% c("intercept", InputCollect$prophet_vars) ~ "Context"
+          ),
+          levels = c("Paid", "Organic", "Context", NA)
+        )
+      )
+
+    # Add mROAS/mCPA
+    if (marginals) {
+      try_require("Robyn")
+      # Experimental approach to add organic vars too
+      if (packageVersion("Robyn") >= "3.12.0.9007" && new_version) {
+        temp <- lapply(InputCollect$all_media, function(x) {
+          robyn_marginal(
+            InputCollect = InputCollect,
+            OutputCollect = OutputCollect,
+            select_model = solID,
+            metric_name = x,
+            metric_value = NULL,
+            date_range = c(as.Date(start_date), as.Date(end_date)),
+            marginal_unit = 1,
+            plots = FALSE, quiet = TRUE
+          )
+        })
+        marginal <- data.frame(
+          channel = InputCollect$all_media,
+          marginal = unlist(lapply(temp, function(x) x$marginal))
+        )
+      } else {
+        ba_temp <- robyn_allocator(
           InputCollect = InputCollect,
           OutputCollect = OutputCollect,
           select_model = solID,
-          metric_name = x,
-          metric_value = NULL,
           date_range = c(as.Date(start_date), as.Date(end_date)),
-          marginal_unit = 1,
-          plots = FALSE, quiet = TRUE
+          export = FALSE, quiet = TRUE, ...
         )
-      })
-      marginal <- data.frame(
-        channel = InputCollect$all_media,
-        marginal = unlist(lapply(temp, function(x) x$marginal))
-      )
-    } else {
-      ba_temp <- robyn_allocator(
-        InputCollect = InputCollect,
-        OutputCollect = OutputCollect,
-        select_model = solID,
-        date_range = c(as.Date(start_date), as.Date(end_date)),
-        export = FALSE, quiet = TRUE, ...
-      )
-      marginal <- ba_temp$dt_optimOut %>%
-        select(c("channels", "initResponseMargUnit")) %>%
-        rename(
-          "channel" = "channels",
-          "marginal" = "initResponseMargUnit"
-        ) %>%
-        {
-          if (metric == "CPA") mutate(., marginal = 1 / .data$marginal) else .
-        }
+        marginal <- ba_temp$dt_optimOut %>%
+          select(c("channels", "initResponseMargUnit")) %>%
+          rename(
+            "channel" = "channels",
+            "marginal" = "initResponseMargUnit"
+          ) %>%
+          {
+            if (metric == "CPA") mutate(., marginal = 1 / .data$marginal) else .
+          }
+      }
+      ret <- left_join(ret, marginal, "channel") %>%
+        dplyr::relocate("marginal", .after = "performance")
     }
-    ret <- left_join(ret, marginal, "channel") %>%
-      dplyr::relocate("marginal", .after = "performance")
+    # Add carryover response percentage
+    if (carryovers) {
+      try_require("Robyn")
+      carrov <- robyn_immcarr(
+        InputCollect, OutputCollect,
+        solID = solID,
+        start_date = start_date, end_date = end_date, ...
+      ) %>%
+        filter(.data$type == "Carryover")
+      mean_carryovers <- data.frame(
+        channel = carrov$rn,
+        carryover = signif(carrov$carryover_pct, 4)
+      )
+      ret <- left_join(ret, mean_carryovers, "channel") %>%
+        dplyr::relocate("carryover", .after = "response")
+    }
+    ret
   }
-  # Add carryover response percentage
-  if (carryovers) {
-    try_require("Robyn")
-    carrov <- robyn_immcarr(
-      InputCollect, OutputCollect,
-      solID = solID,
-      start_date = start_date, end_date = end_date, ...
-    ) %>%
-      filter(.data$type == "Carryover")
-    mean_carryovers <- data.frame(
-      channel = carrov$rn,
-      carryover = signif(carrov$carryover_pct, 4)
-    )
-    ret <- left_join(ret, mean_carryovers, "channel") %>%
-      dplyr::relocate("carryover", .after = "response")
-  }
-  ret
 }
 
 ####################################################################

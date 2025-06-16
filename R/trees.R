@@ -118,7 +118,7 @@ tree_var <- function(df, y, type = 2, max = 3, min = 20, cp = 0,
     interpret = interpret
   )
   attr(ret, "type") <- "tree_var"
-  return(invisible(ret))
+  invisible(ret)
 }
 
 #' @export

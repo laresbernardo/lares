@@ -35,97 +35,93 @@ df_str <- function(df,
                    quiet = FALSE) {
   if (!quiet) {
     rets <- c("skimr", "numbers", "names", "distr", "plot")
-    message(paste("Other available 'return' options:", vector2text(rets[rets != return])))
+    message(paste("Other available 'return' options:", v2t(rets[rets != return])))
   }
 
   df <- data.frame(df)
 
   if (return == "skimr") {
     try_require("skimr")
-    return(skim(df))
-  }
-
-  if (return == "distr") {
+    output <- skim(df)
+  } else if (return == "distr") {
     p <- plot_df(df)
-    return(p)
+    output <- p
+  } else {
+    names <- list(
+      cols = colnames(df),
+      nums = colnames(df)[unlist(lapply(df, is.numeric))],
+      char = colnames(df)[unlist(lapply(df, is.character))],
+      factor = colnames(df)[unlist(lapply(df, is.factor))],
+      logic = colnames(df)[unlist(lapply(df, is.logical))]
+    )
+    names[["time"]] <- names$cols[!colnames(df) %in% c(
+      names$nums, names$char, names$factor, names$logic
+    )]
+    names[["allnas"]] <- names$cols[unlist(lapply(df, function(x) all(is.na(x))))]
+
+    if (return == "names") {
+      output <- names
+    } else {
+      numbers <- data.frame(
+        "Total Values" = nrow(df) * ncol(df),
+        "Total Rows" = nrow(df),
+        "Total Columns" = ncol(df),
+        "Numeric Columns" = length(names$nums),
+        "Character Columns" = length(names$char),
+        "Factor Columns" = length(names$factor),
+        "Logical Columns" = length(names$logic),
+        "Time/Date Columns" = length(names$time),
+        "All Missing Columns" = length(names$allnas),
+        "Missing Values" = sum(is.na(df)),
+        "Complete Rows" = sum(complete.cases(df)),
+        "Memory Usage" = as.numeric(object.size(df))
+      )
+      intro2 <- data.frame(counter = t(numbers)) %>%
+        mutate(
+          metric = row.names(.),
+          type = ifelse(grepl("Column", colnames(numbers)), "Columns",
+            ifelse(grepl("Rows", colnames(numbers)), "Rows", "Values")
+          ),
+          p = ifelse(.data$type == "Columns", 100 * .data$counter / numbers$Total.Columns,
+            ifelse(.data$type == "Rows", 100 * .data$counter / numbers$Total.Rows,
+              100 * .data$counter / numbers$Total.Values
+            )
+          ),
+          p = round(.data$p, 2),
+          type = factor(.data$type, levels = c("Values", "Columns", "Rows"))
+        ) %>%
+        select(.data$metric, .data$counter, .data$type, .data$p)
+
+      if (return == "numbers") {
+        output <- select(intro2, -.data$type)
+      } else if (return == "plot") {
+        p <- intro2 %>%
+          filter(!.data$metric %in% "Memory.Usage") %>%
+          mutate(x = ifelse(.data$p < 75, -0.15, 1.15)) %>%
+          ggplot(aes(
+            x = reorder(.data$metric, as.integer(.data$counter)),
+            y = .data$p, fill = .data$type,
+            label = formatNum(.data$counter, 0)
+          )) +
+          geom_col() +
+          coord_flip() +
+          ylim(0, 100) +
+          theme_minimal() +
+          guides(fill = "none") +
+          labs(
+            title = "Dataset overall structure",
+            x = "", y = "% of total", fill = "",
+            caption = paste("Memory Usage:", formatNum(numbers$Memory.Usage / (1024 * 1024)), "Mb")
+          ) +
+          facet_grid(type ~ ., scales = "free", space = "free") +
+          geom_text(aes(hjust = .data$x), size = 3) +
+          theme_lares(pal = 1)
+        if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
+        output <- p
+      }
+    }
   }
-
-  names <- list(
-    cols = colnames(df),
-    nums = colnames(df)[unlist(lapply(df, is.numeric))],
-    char = colnames(df)[unlist(lapply(df, is.character))],
-    factor = colnames(df)[unlist(lapply(df, is.factor))],
-    logic = colnames(df)[unlist(lapply(df, is.logical))]
-  )
-  names[["time"]] <- names$cols[!colnames(df) %in% c(
-    names$nums, names$char, names$factor, names$logic
-  )]
-  names[["allnas"]] <- names$cols[unlist(lapply(df, function(x) all(is.na(x))))]
-
-  if (return == "names") {
-    return(names)
-  }
-
-  numbers <- data.frame(
-    "Total Values" = nrow(df) * ncol(df),
-    "Total Rows" = nrow(df),
-    "Total Columns" = ncol(df),
-    "Numeric Columns" = length(names$nums),
-    "Character Columns" = length(names$char),
-    "Factor Columns" = length(names$factor),
-    "Logical Columns" = length(names$logic),
-    "Time/Date Columns" = length(names$time),
-    "All Missing Columns" = length(names$allnas),
-    "Missing Values" = sum(is.na(df)),
-    "Complete Rows" = sum(complete.cases(df)),
-    "Memory Usage" = as.numeric(object.size(df))
-  )
-
-  intro2 <- data.frame(counter = t(numbers)) %>%
-    mutate(
-      metric = row.names(.),
-      type = ifelse(grepl("Column", colnames(numbers)), "Columns",
-        ifelse(grepl("Rows", colnames(numbers)), "Rows", "Values")
-      ),
-      p = ifelse(.data$type == "Columns", 100 * .data$counter / numbers$Total.Columns,
-        ifelse(.data$type == "Rows", 100 * .data$counter / numbers$Total.Rows,
-          100 * .data$counter / numbers$Total.Values
-        )
-      ),
-      p = round(.data$p, 2),
-      type = factor(.data$type, levels = c("Values", "Columns", "Rows"))
-    ) %>%
-    select(.data$metric, .data$counter, .data$type, .data$p)
-
-  if (return == "numbers") {
-    return(select(intro2, -.data$type))
-  }
-
-  if (return == "plot") {
-    p <- intro2 %>%
-      filter(!.data$metric %in% "Memory.Usage") %>%
-      mutate(x = ifelse(.data$p < 75, -0.15, 1.15)) %>%
-      ggplot(aes(
-        x = reorder(.data$metric, as.integer(.data$counter)),
-        y = .data$p, fill = .data$type,
-        label = formatNum(.data$counter, 0)
-      )) +
-      geom_col() +
-      coord_flip() +
-      ylim(0, 100) +
-      theme_minimal() +
-      guides(fill = "none") +
-      labs(
-        title = "Dataset overall structure",
-        x = "", y = "% of total", fill = "",
-        caption = paste("Memory Usage:", formatNum(numbers$Memory.Usage / (1024 * 1024)), "Mb")
-      ) +
-      facet_grid(type ~ ., scales = "free", space = "free") +
-      geom_text(aes(hjust = .data$x), size = 3) +
-      theme_lares(pal = 1)
-    if (!is.na(subtitle)) p <- p + labs(subtitle = subtitle)
-    p
-  }
+  output
 }
 
 

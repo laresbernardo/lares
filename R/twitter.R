@@ -13,7 +13,6 @@
 get_tweets <- function(q, n = 10000, creds = NA) {
   try_require("rtweet")
   c <- get_credentials(from = "twitter", dir = creds)
-
   token <- create_token(
     app = c$app,
     consumer_key = c$consumer_key,
@@ -21,8 +20,5 @@ get_tweets <- function(q, n = 10000, creds = NA) {
     access_token = c$access_token,
     access_secret = c$access_secret
   )
-
-  out <- search_tweets(q = as.character(q), n = n, retryonratelimit = T)
-
-  return(out)
+  search_tweets(q = as.character(q), n = n, retryonratelimit = T)
 }

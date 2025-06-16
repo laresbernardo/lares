@@ -123,5 +123,5 @@ filesGD <- function(title, server = FALSE, json = NULL, api_key = NULL, email = 
 
   nfiles <- nrow(files)
   if (nfiles != 1) message(glued("{nfiles} files found with pattern: {title}"))
-  return(files)
+  files
 }
