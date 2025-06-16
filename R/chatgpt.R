@@ -134,7 +134,7 @@ gpt_ask <- function(ask,
   ) %>%
     as_tibble()
   cache_write(distinct(cache), "GPT_HIST_REPLY", quiet = TRUE, ...)
-  return(invisible(ret))
+  invisible(ret)
 }
 
 #' @rdname gpt_ask
@@ -144,15 +144,14 @@ gpt_history <- function(quiet = TRUE, ...) {
   replies <- cache_read("GPT_HIST_REPLY", quiet = quiet, ...)
   if (!is.null(asks)) {
     if (!is.null(replies)) {
-      hist <- left_join(asks, replies, by = "ts") %>%
+      left_join(asks, replies, by = "ts") %>%
         select(.data$ts, .data$prompt, contains("message.content"), everything())
-      return(hist)
     } else {
-      return(asks)
+      asks
     }
   } else {
     message("No historical prompts nor replies registered yet")
-    return(invisible(NULL))
+    invisible(NULL)
   }
 }
 
@@ -162,8 +161,7 @@ gpt_history <- function(quiet = TRUE, ...) {
 gpt_table <- function(x, cols = NULL, quiet = TRUE, ...) {
   p <- gpt_prompter(instruction = x, output = "table", cols = cols, ...)
   resp <- gpt_ask(p$prompt, quiet = quiet, ...)
-  df <- gpt_markdown2df(resp)
-  return(df)
+  gpt_markdown2df(resp)
 }
 
 #' @param x Vector. List items you wish to process in your instruction
@@ -182,8 +180,7 @@ gpt_classify <- function(x, categories, quiet = TRUE, ...) {
     ...
   )
   resp <- gpt_ask(p$prompt, quiet = quiet, ...)
-  df <- gpt_markdown2df(resp)
-  return(df)
+  gpt_markdown2df(resp)
 }
 
 #' @rdname gpt_ask
@@ -199,8 +196,7 @@ gpt_tag <- function(x, tags, quiet = TRUE, ...) {
     ...
   )
   resp <- gpt_ask(p$prompt, quiet = quiet, ...)
-  df <- gpt_markdown2df(resp)
-  return(df)
+  gpt_markdown2df(resp)
 }
 
 #' @param extract,format,unit Character. Length 1 or same as x to extract/format/unit
@@ -221,8 +217,7 @@ gpt_extract <- function(x, extract, quiet = TRUE, ...) {
     ...
   )
   resp <- gpt_ask(p$prompt, quiet = quiet, ...)
-  df <- gpt_markdown2df(resp)
-  return(df)
+  gpt_markdown2df(resp)
 }
 
 #' @rdname gpt_ask
@@ -240,8 +235,7 @@ gpt_format <- function(x, format, quiet = TRUE, ...) {
     ...
   )
   resp <- gpt_ask(p$prompt, quiet = quiet, ...)
-  df <- gpt_markdown2df(resp)
-  return(df)
+  gpt_markdown2df(resp)
 }
 
 #' @rdname gpt_ask
@@ -259,8 +253,7 @@ gpt_convert <- function(x, unit, quiet = TRUE, ...) {
     ...
   )
   resp <- gpt_ask(p$prompt, quiet = quiet, ...)
-  df <- gpt_markdown2df(resp)
-  return(df)
+  gpt_markdown2df(resp)
 }
 
 #' @param language Character. Language to translate to
@@ -279,8 +272,7 @@ gpt_translate <- function(x, language, quiet = TRUE, ...) {
     ...
   )
   resp <- gpt_ask(p$prompt, quiet = quiet, ...)
-  df <- gpt_markdown2df(resp)
-  return(df)
+  gpt_markdown2df(resp)
 }
 
 gpt_markdown2df <- function(resp) {
@@ -459,10 +451,10 @@ gpt_prompter <- function(instruction = NULL,
   are_null <- unlist(lapply(elements, is.null))
   if (all(are_null)) warning("No prompt provided. Set any of the elements: ", v2t(names(elements)))
   if (!quiet) cat(paste(paste(elements[!are_null], collapse = "\n"), "\n"))
-  return(invisible(
+  invisible(
     list(
       prompt = v2t(elements[!are_null], quotes = FALSE, sep = " ### "),
       elements = list(instruction = instruction, input = input, context = context, output = output, ...)
     )
-  ))
+  )
 }

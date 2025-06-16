@@ -119,10 +119,9 @@ corr <- function(df, method = "pearson",
         dimnames = list(names(output$cor), names(output$cor))
       )
     }
-    return(output)
+    output
   }
-
-  return(cor)
+  cor
 }
 
 
@@ -271,10 +270,10 @@ corr_var <- function(df, var,
   class(d) <- c("corr_var", class(d))
 
   if (plot) {
-    p <- plot(d, var, max_pvalue = max_pvalue, top = top, limit = original_n)
-    return(p)
+    plot(d, var, max_pvalue = max_pvalue, top = top, limit = original_n)
+  } else {
+    d
   }
-  return(d)
 }
 
 #' @param x corr_var object
@@ -316,7 +315,7 @@ plot.corr_var <- function(x, var, max_pvalue = 1, top = NA, limit = NULL, ...) {
   if (max_pvalue < 1) {
     p <- p + labs(caption = paste("Correlations with p-value <", max_pvalue))
   }
-  return(p)
+  p
 }
 
 
@@ -497,9 +496,9 @@ corr_cross <- function(df, plot = TRUE,
     if (max_pvalue < 1) {
       p <- p + labs(caption = paste("Correlations with p-value <", max_pvalue))
     }
-    return(p)
+    p
   }
-  return(ret)
+  ret
 }
 
 .transf <- function(x, max = 1, contains = NA, cluster = FALSE, rm.na = FALSE) {
@@ -530,7 +529,7 @@ corr_cross <- function(df, plot = TRUE,
     rename(corr = .data$value) %>%
     mutate(value = paste(.data$key, .data$mix)) %>%
     select(.data$key, .data$mix, .data$corr)
-  return(ret)
+  ret
 }
 
 
@@ -554,5 +553,5 @@ corr_cross <- function(df, plot = TRUE,
     }
   }
   colnames(p.mat) <- rownames(p.mat) <- colnames(mat)
-  return(p.mat)
+  p.mat
 }

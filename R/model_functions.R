@@ -266,7 +266,7 @@ h2o_automl <- function(df, y = "tag",
   }
 
   attr(results, "type") <- "h2o_automl"
-  return(results)
+  results
 }
 
 #' @rdname h2o_automl
@@ -599,8 +599,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
 
   attr(results, "type") <- "h2o_automl"
   class(results) <- c("h2o_automl", class(results))
-
-  return(results)
+  results
 }
 
 .get_scores <- function(predictions,
@@ -641,8 +640,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   } else {
     scores <- data.frame(score = as.vector(scores))
   }
-  ret <- list(scores = scores, multis = multis)
-  return(ret)
+  list(scores = scores, multis = multis)
 }
 
 
@@ -687,7 +685,7 @@ h2o_selectmodel <- function(results, which_model = 1, quiet = FALSE, ...) {
   )
 
   if (!quiet) print(output)
-  return(output)
+  output
 }
 
 
@@ -886,15 +884,13 @@ msplit <- function(df, size = 0.7, seed = 0, print = TRUE) {
 
   if (print == TRUE) print(summary)
 
-  sets <- list(
+  list(
     train = train,
     test = test,
     summary = summary,
     split_size = size,
     train_index = ind
   )
-
-  return(sets)
 }
 
 
@@ -942,8 +938,7 @@ target_set <- function(tag, score, target = "auto", quiet = FALSE) {
   if (!quiet) message(paste("Target value:", target))
   # If the forced target value is the "lower scores" value, invert scores
   if (auto != target) df$score <- df$score * (-1) + 1
-  ret <- list(df = df, which = target)
-  return(ret)
+  list(df = df, which = target)
 }
 
 
@@ -967,12 +962,12 @@ iter_seeds <- function(df, y, tries = 10, ...) {
     seeds <- arrange(seeds, desc(2))
     statusbar(i, tries, seeds[1, 1])
   }
-  return(seeds)
+  seeds
 }
 
 .quiet_h2o <- function(..., quiet = TRUE) {
   if (quiet) on.exit(h2o.no_progress())
   x <- eval(...)
   h2o.show_progress()
-  return(x)
+  x
 }

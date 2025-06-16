@@ -149,7 +149,7 @@ lares_pal <- function(return = "list") {
 
   structure(pal, class = "lares_pal")
   attr("type", return)
-  return(pal)
+  pal
 }
 
 
@@ -182,7 +182,7 @@ plot_palette <- function(fill, colour = "black", id = NA, limit = 12, ...) {
     message(paste("Limited to", limit, "colours. Overwrite with 'limit' parameter"))
   }
   if (is.na(id[1])) id <- seq_along(fill)
-  p <- data.frame(fill = fill, colour = colour, id = id) %>%
+  data.frame(fill = fill, colour = colour, id = id) %>%
     distinct(.keep_all = TRUE) %>%
     ggplot(aes(x = reorder(fill, -id), y = 1)) +
     geom_bar(aes(fill = fill), stat = "identity", position = "dodge") +
@@ -193,5 +193,4 @@ plot_palette <- function(fill, colour = "black", id = NA, limit = 12, ...) {
     labs(x = NULL, y = NULL) +
     guides(fill = "none", colour = "none") +
     theme_lares(font = NA, axis = "Y", ...)
-  return(p)
 }

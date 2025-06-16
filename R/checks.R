@@ -48,9 +48,7 @@ check_opts <- function(inputs, opts,
       "these options:", formatColoured(v2t(opts), colour = "green", cat = FALSE)
     ))
   }
-  if (!quiet) {
-    return(isit)
-  }
+  if (!quiet) isit
 }
 
 ####################################################################
@@ -124,7 +122,7 @@ check_attr <- function(object, attr = "type", check = NULL, stop = TRUE) {
 #' @rdname checks
 #' @export
 is_url <- function(x, ...) {
-  return(grepl("(http|https)://[a-zA-Z0-9./?=_%:-]*", x, ...))
+  grepl("(http|https)://[a-zA-Z0-9./?=_%:-]*", x, ...)
 }
 
 #' @rdname checks
@@ -135,28 +133,28 @@ is_ip <- function(x, ...) {
     "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.)",
     "{3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
   )
-  return(grepl(regex, x, ...))
+  grepl(regex, x, ...)
 }
 
 #' @rdname checks
 #' @return \code{are_id}. Boolean. Result of checking if \code{x} is a potential ID vector
 #' @export
 are_id <- function(x) {
-  return(is.character(x) && length(unique(x)) == length(x))
+  is.character(x) && length(unique(x)) == length(x)
 }
 
 #' @rdname checks
 #' @return \code{are_constant}. Boolean. Result of checking if \code{x} is a constant vector
 #' @export
 are_constant <- function(x) {
-  return(length(unique(x)) == 1)
+  length(unique(x)) == 1
 }
 
 #' @rdname checks
 #' @return \code{are_binary}. Boolean. Result of checking if \code{x} is a binary vector
 #' @export
 are_binary <- function(x) {
-  return(length(unique(x)) == 2)
+  length(unique(x)) == 2
 }
 
 #' @rdname checks

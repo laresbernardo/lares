@@ -21,7 +21,7 @@ ci_lower <- function(mean, ssd, n, conf = 0.95) {
   }
   se <- ssd / sqrt(n)
   ci <- mean - qt(1 - ((1 - conf) / 2), n - 1) * se
-  return(ci)
+  ci
 }
 #' @rdname ci_lower
 #' @export
@@ -31,7 +31,7 @@ ci_upper <- function(mean, ssd, n, conf = 0.95) {
   }
   se <- ssd / sqrt(n)
   ci <- mean + qt(1 - ((1 - conf) / 2), n - 1) * se
-  return(ci)
+  ci
 }
 
 ####################################################################
@@ -81,6 +81,5 @@ ci_var <- function(df, var, group_var = NULL, conf = 0.95) {
   cols <- colnames(aux)
   colnames(aux)[cols == "smean"] <- sprintf("%s_mean", varname)
   colnames(aux)[cols == "ssd"] <- sprintf("%s_sd", varname)
-
-  return(as_tibble(aux))
+  as_tibble(aux)
 }
