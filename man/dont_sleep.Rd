@@ -34,7 +34,6 @@ from the corner or when the specified off-time is reached.
 Requires \code{cliclick} installed on macOS (install via Homebrew:
 \code{brew install cliclick}), and the \code{KeyboardSimulator}
 package on Windows.
-Also requires the \code{lares} package for timing messages.
 }
 \examples{
 \dontrun{

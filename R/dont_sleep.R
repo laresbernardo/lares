@@ -14,7 +14,6 @@
 #' Requires \code{cliclick} installed on macOS (install via Homebrew:
 #' \code{brew install cliclick}), and the \code{KeyboardSimulator}
 #' package on Windows.
-#' Also requires the \code{lares} package for timing messages.
 #'
 #' @family Tools
 #' @param sec_range Numeric vector of length 2. Range (in seconds) of
