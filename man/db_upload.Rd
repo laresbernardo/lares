@@ -38,6 +38,7 @@ Other Tools:
 \code{\link{bring_api}()},
 \code{\link{chr2num}()},
 \code{\link{db_download}()},
+\code{\link{dont_sleep}()},
 \code{\link{export_plot}()},
 \code{\link{export_results}()},
 \code{\link{files_functions}()},

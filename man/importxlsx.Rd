@@ -24,6 +24,7 @@ Other Tools:
 \code{\link{chr2num}()},
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
+\code{\link{dont_sleep}()},
 \code{\link{export_plot}()},
 \code{\link{export_results}()},
 \code{\link{files_functions}()},

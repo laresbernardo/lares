@@ -115,6 +115,7 @@ recommended <- list(
     "predict_contributions.H2OModel", "h2o.import_mojo", "h2o.no_progress",
     "h2o.show_progress"
   ),
+  KeyboardSimulator = c("mouse.click", "mouse.get_cursor", "mouse.move"),
   knitr = c("kable", "knit"),
   methods = "as",
   mice = c("mice", "complete"),
