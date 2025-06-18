@@ -71,7 +71,8 @@ wordle_check("KEBAB", word, print = FALSE)
 wordle_check("ABYSS", word)
 wordle_check("ABBEY", word)
 # Feel free to use scrabble_words() for hints
+\donttest{
 x <- wordle_simulation(input = "SAINT", word = "ABBEY", seed = 1:3)
 print(x)
-# hist(sapply(x, function(x) x$iters))
+}
 }

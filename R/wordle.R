@@ -114,9 +114,10 @@ wordle_dictionary <- function(lang_dic = "en", method = 3, quiet = TRUE) {
 #' run as many seeds there are.
 #' @export
 #' @examples
+#' \donttest{
 #' x <- wordle_simulation(input = "SAINT", word = "ABBEY", seed = 1:3)
 #' print(x)
-#' # hist(sapply(x, function(x) x$iters))
+#' }
 #' @rdname wordle
 wordle_simulation <- function(input, word, seed = NULL, quiet = FALSE, ...) {
   if (!haveInternet()) {
