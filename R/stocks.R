@@ -116,7 +116,7 @@ stocks_file <- function(file = NA,
 #' @return data.frame with Symbol, Type of stock, Quote time, current value,
 #' Daily Change, Market, and Symbol Name.
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Multiple quotes at the same time
 #' stocks_quote(c("VTI", "VOO", "TSLA"))
 #' }

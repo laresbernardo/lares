@@ -56,7 +56,7 @@ Daily Change, Market, and Symbol Name.
 \code{stocks_hist()} lets the user download stocks historical data.
 }
 \examples{
-\donttest{
+\dontrun{
 # Multiple quotes at the same time
 stocks_quote(c("VTI", "VOO", "TSLA"))
 }

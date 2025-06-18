@@ -2,9 +2,12 @@
 % Please edit documentation in R/dont_sleep.R
 \name{dont_sleep}
 \alias{dont_sleep}
+\alias{dont_sleep_time}
 \title{Prevent Computer from Sleeping by Simulating Mouse Activity}
 \usage{
 dont_sleep(sec_range = c(20, 60), off_time = 18.5, quiet = FALSE)
+
+dont_sleep_time(quiet = FALSE)
 }
 \arguments{
 \item{sec_range}{Numeric vector of length 2. Range (in seconds) of
@@ -39,6 +42,8 @@ package on Windows.
 \dontrun{
 # Keep the computer awake until 8:00 PM, with mouse actions every 30 to 60 seconds
 dont_sleep(sec_range = c(30, 60), off_time = 20)
+# Summary of amount of daily time running function
+dont_sleep_time()
 }
 }
 \seealso{
