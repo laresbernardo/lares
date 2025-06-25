@@ -121,7 +121,7 @@ corr <- function(df, method = "pearson",
     }
     output
   } else {
-   cor 
+    cor
   }
 }
 

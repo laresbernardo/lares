@@ -34,7 +34,7 @@ cache_write <- function(data,
                         base = "temp",
                         cache_dir = getOption("LARES_CACHE_DIR"),
                         ask = FALSE,
-                        overwrite = NULL,
+                        overwrite = TRUE,
                         quiet = FALSE,
                         ...) {
   if (is.null(cache_dir)) {
@@ -54,7 +54,7 @@ cache_write <- function(data,
     } else {
       answer <- "use"
     }
-    if (answer != "i" && isTRUE(overwrite)) {
+    if (answer != "i" && !isFALSE(overwrite)) {
       saveRDS(data, file = file)
       if (!quiet) message("> Cache saved succesfully: ", base)
     } else {

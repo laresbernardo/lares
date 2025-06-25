@@ -455,8 +455,8 @@ formatNum <- function(x, decimals = 2, signif = NULL,
 #' appearance of a specific variable.
 #' @examples
 #' data(dft) # Titanic dataset
-#' df <- balance_data(dft, Survived, rate = 0.5)
-#' df <- balance_data(dft, .data$Survived, rate = 0.1, target = "TRUE")
+#' df <- balance_data(dft, Survived, rate = 1)
+#' df <- balance_data(dft, .data$Survived, rate = 0.5, target = "TRUE")
 #' @export
 balance_data <- function(df, var, rate = 1, target = "auto", seed = 0, quiet = FALSE) {
   on.exit(set.seed(seed))

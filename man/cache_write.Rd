@@ -13,7 +13,7 @@ cache_write(
   base = "temp",
   cache_dir = getOption("LARES_CACHE_DIR"),
   ask = FALSE,
-  overwrite = NULL,
+  overwrite = TRUE,
   quiet = FALSE,
   ...
 )
