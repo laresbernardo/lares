@@ -115,14 +115,14 @@ appearance of a specific variable.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dft</span><span class="op">)</span> <span class="co"># Titanic dataset</span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">balance_data</span><span class="op">(</span><span class="va">dft</span>, <span class="va">Survived</span>, rate <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">balance_data</span><span class="op">(</span><span class="va">dft</span>, <span class="va">Survived</span>, rate <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampled from: 549 v 342</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Reducing size for label: FALSE</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> New label distribution: 171 v 342</span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">balance_data</span><span class="op">(</span><span class="va">dft</span>, <span class="va">.data</span><span class="op">$</span><span class="va">Survived</span>, rate <span class="op">=</span> <span class="fl">0.1</span>, target <span class="op">=</span> <span class="st">"TRUE"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> New label distribution: 342 v 342</span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">balance_data</span><span class="op">(</span><span class="va">dft</span>, <span class="va">.data</span><span class="op">$</span><span class="va">Survived</span>, rate <span class="op">=</span> <span class="fl">0.5</span>, target <span class="op">=</span> <span class="st">"TRUE"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampled from: 549 v 342</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Reducing size for label: TRUE</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> New label distribution: 549 v 55</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> New label distribution: 549 v 274</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
