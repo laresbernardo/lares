@@ -1,8 +1,8 @@
 ####################################################################
 #' Robyn: Generate default hyperparameters
 #'
-#' Generate a list with hyperparameter default values, ready to be
-#' passed to \code{Robyn::robyn_inputs()}.
+#' @description Generate a list with hyperparameter default values,
+#' ready to be passed to \code{Robyn::robyn_inputs()}.
 #'
 #' @family Robyn
 #' @param channels Character vector. Paid media and organic variables names.
@@ -16,7 +16,14 @@
 #' @param lagged Boolean vector. Must be length 1 or same as
 #' \code{channels}. Pick, for every \code{channels} value,
 #' if you wish to have a lagged effect. Only valid for Weibull adstock.
-#' @return list with default hyperparameters ranges.
+#' @param periods,peaks Integer. How many periods/rows are within the modeling
+#' window? When would you expect to have the peak(s) of adstocked conversions/revenue?
+#' Input is used only when adstock type is weibull, periods and peaks > 0.
+#' When monthly data the default range will be 0.001 to (peaks - 1) / (periods - 1)
+#' to give peak at month 3 (default monthly peak) and 98pc within 6 months).
+#' When weekly data the default range will be 0.001 to (peaks - 1) / (periods - 1)
+#' to give peak at week 12 (default weekly peak) and 98pc within 26 weeks).
+#' @return List with default hyperparameters ranges.
 #' @examples
 #' robyn_hypsbuilder(
 #'   channels = c(
@@ -40,17 +47,30 @@ robyn_hypsbuilder <- function(
     media_type = "default",
     adstock = "geometric",
     date_type = "weekly",
-    lagged = FALSE) {
+    lagged = FALSE,
+    periods = 0L,
+    peaks = ifelse(date_type == "weekly", 12L, ifelse(date_type == "monthly", 3L, 0L))) {
   # Check inputs validity
   check_opts(media_type, c("default", "online", "offline"))
   check_opts(adstock, c("geometric", "weibull", "weibull_pdf", "weibull_cdf"))
   check_opts(date_type, c("daily", "weekly", "monthly", "skip"))
   check_opts(lagged, c(TRUE, FALSE))
+  periods <- round(periods[1], 0)
+  peaks <- round(peaks, 0)
+  stopifnot(length(peaks) %in% c(1, length(channels)))
 
   # Hyperparameters names
   hyps <- c("alphas", "gammas")
   hyps2 <- if (adstock %in% "geometric") "thetas" else c("shapes", "scales")
   all_hyps <- c(hyps, hyps2)
+
+  # If peaks and periods provided (when weibull)
+  if (all(peaks > 0) && periods > 0) {
+    scale_max <- signif((peaks - 1) / (periods - 1), 2)
+  } else {
+    scale_max <- ifelse(lagged, 0.05, 0.2)
+  }
+  shape_max <- ifelse(lagged, 10, 1)
 
   # Repeat to all channels when provided 1 value
   if (length(media_type) == 1) {
@@ -83,13 +103,7 @@ robyn_hypsbuilder <- function(
       .data$Var2 == "alphas" & .data$media_type %in% c("online", "default") ~ 3,
       .data$Var2 == "alphas" & .data$media_type == "offline" ~ 1,
       .data$Var2 == "gammas" ~ 1,
-      .data$Var2 == "thetas" ~ 0.5,
-      .data$Var2 == "shapes" & isTRUE(.data$lagged) ~ 10,
-      .data$Var2 == "shapes" & isFALSE(.data$lagged) ~ 1,
-      .data$Var2 == "shapes" ~ 10,
-      .data$Var2 == "scales" & isTRUE(.data$lagged) ~ 0.05,
-      .data$Var2 == "scales" & isFALSE(.data$lagged) ~ 0.2,
-      .data$Var2 == "scales" ~ 0.2
+      .data$Var2 == "thetas" ~ 0.5
     )) %>%
     # Applies only for geometric adstock
     mutate(
@@ -106,6 +120,9 @@ robyn_hypsbuilder <- function(
     ) %>%
     mutate(Var1 = factor(.data$Var1, levels = channels)) %>%
     arrange(.data$Var1)
+  # Replace shape_max & scales_max given they can be different
+  df$high[df$Var2 == "scales"] <- scale_max
+  df$high[df$Var2 == "shapes"] <- shape_max
 
   # Return as named list
   out <- lapply(seq_along(df$Var1), function(x) c(df$low[x], df$high[x]))
@@ -604,9 +621,11 @@ robyn_performance <- function(
     start_date = min(df$ds, na.rm = TRUE),
     end_date = max(df$ds, na.rm = TRUE),
     channel = InputCollect$all_media,
-    type = factor(case_when(
-      InputCollect$all_media %in% InputCollect$paid_media_spends ~ "Paid",
-      InputCollect$all_media %in% InputCollect$organic_vars ~ "Organic"),
+    type = factor(
+      case_when(
+        InputCollect$all_media %in% InputCollect$paid_media_spends ~ "Paid",
+        InputCollect$all_media %in% InputCollect$organic_vars ~ "Organic"
+      ),
       levels = c("Paid", "Organic")
     ),
     metric = ifelse(InputCollect$all_media %in% InputCollect$paid_media_spends, metric, ""),

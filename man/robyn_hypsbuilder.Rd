@@ -9,7 +9,9 @@ robyn_hypsbuilder(
   media_type = "default",
   adstock = "geometric",
   date_type = "weekly",
-  lagged = FALSE
+  lagged = FALSE,
+  periods = 0L,
+  peaks = ifelse(date_type == "weekly", 12L, ifelse(date_type == "monthly", 3L, 0L))
 )
 }
 \arguments{
@@ -28,13 +30,21 @@ in case you wish to leave default weekly values.}
 \item{lagged}{Boolean vector. Must be length 1 or same as
 \code{channels}. Pick, for every \code{channels} value,
 if you wish to have a lagged effect. Only valid for Weibull adstock.}
+
+\item{periods, peaks}{Integer. How many periods/rows are within the modeling
+window? When would you expect to have the peak(s) of adstocked conversions/revenue?
+Input is used only when adstock type is weibull, periods and peaks > 0.
+When monthly data the default range will be 0.001 to (peaks - 1) / (periods - 1)
+to give peak at month 3 (default monthly peak) and 98pc within 6 months).
+When weekly data the default range will be 0.001 to (peaks - 1) / (periods - 1)
+to give peak at week 12 (default weekly peak) and 98pc within 26 weeks).}
 }
 \value{
-list with default hyperparameters ranges.
+List with default hyperparameters ranges.
 }
 \description{
-Generate a list with hyperparameter default values, ready to be
-passed to \code{Robyn::robyn_inputs()}.
+Generate a list with hyperparameter default values,
+ready to be passed to \code{Robyn::robyn_inputs()}.
 }
 \examples{
 robyn_hypsbuilder(
