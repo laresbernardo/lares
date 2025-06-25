@@ -222,12 +222,12 @@ complements our <code><a href="corr_cross.html">lares::corr_cross()</a></code> o
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   x     y        obs_p   x2y mean_abs_corr mean_pvalue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Fare  Pclass     100  65.2         0.375           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Fare  Embarked   100  45.3         0.150           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Fare  Parch      100  40.0         0.216           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Fare  SibSp      100  35.4         0.160           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Fare  Survived   100  20.5         0.257           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Fare  Sex        100  13.7         0.182           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Fare  Pclass     100  65.2         0.375    1.30<span style="color: #949494;">e</span><span style="color: #BB0000;">- 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Fare  Embarked   100  45.3         0.150    4.35<span style="color: #949494;">e</span><span style="color: #BB0000;">- 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Fare  Parch      100  40.0         0.216    6.92<span style="color: #949494;">e</span><span style="color: #BB0000;">-11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Fare  SibSp      100  35.4         0.160    1.67<span style="color: #949494;">e</span><span style="color: #BB0000;">- 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Fare  Survived   100  20.5         0.257    6.12<span style="color: #949494;">e</span><span style="color: #BB0000;">-15</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Fare  Sex        100  13.7         0.182    4.23<span style="color: #949494;">e</span><span style="color: #BB0000;">- 8</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Plot (symmetric) results</span></span></span>
 <span class="r-in"><span><span class="va">symm</span> <span class="op">&lt;-</span> <span class="fu">x2y</span><span class="op">(</span><span class="va">dft</span>, target <span class="op">=</span> <span class="st">"Survived"</span>, symmetric <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
