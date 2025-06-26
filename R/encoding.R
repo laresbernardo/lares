@@ -39,10 +39,18 @@
 #' # Decrypt the file directly to a list or vector
 #' secrets <- read_encrypted(temp_output, raw_key)
 #' unlist(secrets)
+#' 
+#' # Example using a JSON string
+#' writeLines(jsonlite::toJSON(list(a=1, list(b=2, c=1:3))), temp_input)
+#' raw_key2 <- rand_bytes(32)
+#' encrypt_file(temp_input, temp_output, raw_key2)
+#' read_encrypted(temp_output, raw_key2)
 #' }
 #' @export
 encrypt_file <- function(input_file, output_file, key) {
   try_require("openssl")
+  # Check key type
+  if ("character" %in% class(key)) key <- hex_to_raw(key)
   # Read binary file
   data <- readBin(input_file, what = "raw", n = file.info(input_file)$size)
   # Pad the data
@@ -60,6 +68,10 @@ encrypt_file <- function(input_file, output_file, key) {
 #' @export
 read_encrypted <- function(input_file, key) {
   try_require("openssl")
+  # Check key type
+  print(class(key))
+  if ("character" %in% class(key)) key <- hex_to_raw(key)
+  print(class(key))
   # Read binary file
   encrypted_data <- readBin(input_file, what = "raw", n = file.info(input_file)$size)
   # Extract IV (first 16 bytes) and encrypted content (remaining bytes)
@@ -86,6 +98,34 @@ read_encrypted <- function(input_file, key) {
     ))
   }
   return(parsed_list)
+}
+
+#' Write a vector or list into an encoded file in JSON format
+#' @rdname encrypt_file
+#' @export
+write_encrypted <- function(x, key = NULL, output_file = "encrypted.enc", quiet = FALSE) {
+  try_require("openssl")
+  # 1. Convert R object to JSON string
+  json_string <- jsonlite::toJSON(x, auto_unbox = TRUE, pretty = FALSE)
+  # 2. Convert JSON string to raw vector
+  data_raw <- charToRaw(json_string)
+  # 3. Generate a new 32-byte (256-bit) AES key
+  if (is.null(key)) {
+    key <- rand_bytes(32)
+  } else {
+    if ("character" %in% class(key)) key <- hex_to_raw(key)
+  }
+  # 4. Pad the raw data
+  padded_data <- pad(data_raw)
+  # 5. Generate random IV
+  iv <- rand_bytes(16)
+  # 6. Encrypt using AES-256-CBC
+  encrypted <- aes_cbc_encrypt(padded_data, key = key, iv = iv)
+  # 7. Write IV + encrypted data to output file
+  writeBin(c(iv, encrypted), output_file)
+  # 8. Return the hexadecimal key string
+  if (!quiet) message("KEY: ", raw_to_hex(key))
+  return(key)
 }
 
 # Convert Hexadecimal String to Raw Vector
@@ -139,3 +179,32 @@ convert_to_list <- function(decrypted_file) {
   )
   return(parsed_list)
 }
+
+
+# # Encrypt the list and get the encryption key
+# 
+# message("Encryption successful! Key (hex): ", encryption_key_hex)
+# 
+# # --- To decrypt and read back (requires the key) ---
+# 
+# # Convert the hex key back to raw format
+# decryption_key_raw <- hex_to_raw(encryption_key_hex)
+# 
+# # Decrypt the file and read its content as a raw vector
+# # (Note: decrypt_file is internal, but shown for illustration)
+# temp_decrypted_raw_file <- tempfile(fileext = ".raw")
+# decrypt_file(decryption_key_raw, output_enc_file, temp_decrypted_raw_file)
+# 
+# # Read the raw content and convert it back to character JSON
+# decrypted_raw_content <- readBin(temp_decrypted_raw_file, what = "raw",
+#                                  n = file.info(temp_decrypted_raw_file)$size)
+# decrypted_json_string <- rawToChar(decrypted_raw_content)
+# 
+# # Parse the JSON string back into an R list
+# library(jsonlite)
+# retrieved_secrets <- fromJSON(decrypted_json_string)
+# print(retrieved_secrets)
+# 
+# # Clean up generated files
+# unlink(output_enc_file)
+# unlink(temp_decrypted_raw_file)
