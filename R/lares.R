@@ -49,7 +49,7 @@
 #' @importFrom rpart.plot rpart.rules rpart.plot
 #' @importFrom rvest html_node html_nodes html_attrs html_attr html_table html_text
 #' @importFrom stats cor quantile complete.cases na.omit sd median dist end lm predict runif
-#' reorder start kmeans var xtabs as.formula prcomp p.adjust pt model.matrix qt cor.test
+#' reorder start kmeans var xtabs as.formula prcomp p.adjust pt model.matrix qt cor.test setNames
 #' @importFrom stringr fixed str_count str_length str_pad str_replace_all str_split
 #' str_to_title word
 #' @importFrom tidyr gather pivot_longer pivot_wider spread unite
@@ -119,8 +119,9 @@ recommended <- list(
   knitr = c("kable", "knit"),
   methods = "as",
   mice = c("mice", "complete"),
-  optimParallel = "optimParallel",
   nloptr = "nloptr",
+  openssl = c("rand_bytes", "aes_cbc_encrypt", "aes_cbc_decrypt"),
+  optimParallel = "optimParallel",
   parallel = c("detectCores", "makeCluster", "setDefaultCluster", "stopCluster"),
   plotly = c("ggplotly", "plot_ly", "add_markers", "add_markers"),
   prophet = c(

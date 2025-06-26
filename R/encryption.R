@@ -8,10 +8,9 @@
 #' Initialization Vector (IV), and encrypts the content. The IV is
 #' prepended to the encrypted data in the output file.
 #' Decryption involves extracting the IV, decrypting, and unpadding the data.
-#' A specialized decryption function (`read_encrypted`) is provided
+#' A specialized decryption function (`decrypt_to_list`) is provided
 #' to directly parse decrypted content (assumed to be `key=value` pairs)
-#' into a named R list. If no "=" sign found in the first line, text will be
-#' imported as string character.
+#' into a named R list.
 #' @keywords Encryption Decryption Security
 #' @family Credentials
 #' @param input_file Character string. The path to the file to be encrypted.

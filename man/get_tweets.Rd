@@ -23,6 +23,7 @@ This function downloads tweets with personal credentials
 Other Credentials: 
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
+\code{\link{encrypt_file}()},
 \code{\link{get_credentials}()},
 \code{\link{mail_send}()},
 \code{\link{queryDB}()},

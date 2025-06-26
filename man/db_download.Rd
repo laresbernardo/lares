@@ -64,7 +64,6 @@ Other Tools:
 \code{\link{font_exists}()},
 \code{\link{formatColoured}()},
 \code{\link{formatHTML}()},
-\code{\link{get_credentials}()},
 \code{\link{glued}()},
 \code{\link{grepm}()},
 \code{\link{h2o_selectmodel}()},
@@ -91,6 +90,7 @@ Other Tools:
 
 Other Credentials: 
 \code{\link{db_upload}()},
+\code{\link{encrypt_file}()},
 \code{\link{get_credentials}()},
 \code{\link{get_tweets}()},
 \code{\link{mail_send}()},

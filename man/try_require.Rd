@@ -48,7 +48,6 @@ Other Tools:
 \code{\link{font_exists}()},
 \code{\link{formatColoured}()},
 \code{\link{formatHTML}()},
-\code{\link{get_credentials}()},
 \code{\link{glued}()},
 \code{\link{grepm}()},
 \code{\link{h2o_selectmodel}()},

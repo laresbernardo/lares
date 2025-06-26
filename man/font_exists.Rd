@@ -42,7 +42,6 @@ Other Tools:
 \code{\link{files_functions}()},
 \code{\link{formatColoured}()},
 \code{\link{formatHTML}()},
-\code{\link{get_credentials}()},
 \code{\link{glued}()},
 \code{\link{grepm}()},
 \code{\link{h2o_selectmodel}()},

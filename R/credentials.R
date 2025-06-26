@@ -20,7 +20,6 @@
 #' \href{https://raw.githubusercontent.com/laresbernardo/lares/master/inst/docs/config.yml}{here}
 #' or find it locally using \code{system.file("docs", "config.yml", package = "lares")}.
 #'
-#' @family Tools
 #' @family Credentials
 #' @inheritParams cache_write
 #' @param from Character. Family of values to import from the YML file.

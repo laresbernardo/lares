@@ -49,6 +49,7 @@ Other API:
 Other Credentials: 
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
+\code{\link{encrypt_file}()},
 \code{\link{get_credentials}()},
 \code{\link{get_tweets}()},
 \code{\link{mail_send}()},
