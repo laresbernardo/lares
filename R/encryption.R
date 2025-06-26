@@ -1,6 +1,7 @@
 ####################################################################
 #' File Encryption and Decryption (AES-256-CBC)
-#' 
+#'
+#' @rdname encrypt_file
 #' @description This set of functions provides utilities for encrypting
 #' and decrypting files using AES-256 in CBC mode, primarily for
 #' handling key-value pair "secrets" files.
@@ -40,12 +41,12 @@
 #' # Import the data from encrypted file to list or vector
 #' secrets <- read_encrypted(temp_output, raw_key)
 #' unlist(secrets)
-#' 
+#'
 #' # Example using a string (JSON in this case)
-#' writeLines(jsonlite::toJSON(list(a=1, list(b=2, c=1:3))), temp_input)
+#' writeLines(jsonlite::toJSON(list(a = 1, list(b = 2, c = 1:3))), temp_input)
 #' encrypt_file(temp_input, temp_output, raw_key)
 #' read_encrypted(temp_output, raw_key)
-#' 
+#'
 #' # Example writing a file from a list or vector directly from R
 #' my_secrets <- list(
 #'   api_key = "some_secret_api_key_123",
@@ -53,7 +54,7 @@
 #'   server = "production.server.com"
 #' )
 #' raw_key <- write_encrypted(my_secrets, temp_output, quiet = FALSE)
-#' jsonlite::fromJSON(read_encrypted(temp_output, key = raw_key))
+#' fromJSON(read_encrypted(temp_output, key = raw_key)
 #' }
 #' @export
 encrypt_file <- function(input_file, output_file, key) {
@@ -108,6 +109,7 @@ read_encrypted <- function(input_file, key) {
 }
 
 #' Write a vector or list into an encoded file in JSON format
+#' @inheritParams get_mp3
 #' @rdname encrypt_file
 #' @export
 write_encrypted <- function(x, output_file = "encrypted.enc", key = NULL, quiet = FALSE) {
@@ -153,6 +155,7 @@ hex_to_raw <- function(x) {
 
 # Convert Raw Vector to Hexadecimal String
 #' @rdname encrypt_file
+#' @export
 raw_to_hex <- function(x) {
   stopifnot("raw" %in% class(x))
   paste0(as.character(x), collapse = "")
