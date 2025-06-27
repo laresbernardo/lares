@@ -9,17 +9,17 @@
 #' Initialization Vector (IV), and encrypts the content. The IV is
 #' prepended to the encrypted data in the output file.
 #' Decryption involves extracting the IV, decrypting, and unpadding the data.
-#' A specialized decryption function (`read_encrypted`) is provided
-#' to directly parse decrypted content (assumed to be `key=value` pairs)
+#' A specialized decryption function \code{read_encrypted} is provided
+#' to directly parse decrypted content (assumed to be \code{key=value} pairs)
 #' into a named R list. If no "=" sign found in the first line, text will be
-#' imported as string character.
+#' imported as character vector.
 #' @keywords Encryption Decryption Security
 #' @family Credentials
 #' @param input_file Character string. The path to the file to be encrypted.
 #' @param output_file Character string. The path where the encrypted
 #' file will be saved.
 #' @param key A raw vector of 32 bytes (256 bits) to be used as the encryption key.
-#' @return No return value, called for side effects (writes to `output_file`).
+#' @return No return value, called for side effects (writes to \code{output_file}).
 #' @examples
 #' \dontrun{
 #' # Create dummy files for demonstration
@@ -53,7 +53,7 @@
 #'   server = "production.server.com"
 #' )
 #' raw_key <- write_encrypted(my_secrets, temp_output, quiet = FALSE)
-#' fromJSON(read_encrypted(temp_output, key = raw_key)
+#' fromJSON(read_encrypted(temp_output, key = raw_key))
 #' }
 #' @export
 encrypt_file <- function(input_file, output_file, key) {
@@ -123,6 +123,7 @@ write_encrypted <- function(data, output_file = "encrypted.enc", key = NULL, qui
     key <- rand_bytes(32)
   } else {
     if ("character" %in% class(key)) key <- hex_to_raw(key)
+    quiet <- TRUE
   }
   # 4. Pad the raw data
   padded_data <- pad(data_raw)

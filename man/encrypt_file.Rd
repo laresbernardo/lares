@@ -33,7 +33,7 @@ file will be saved.}
 \item{x}{Character string or hex vector to convert.}
 }
 \value{
-No return value, called for side effects (writes to `output_file`).
+No return value, called for side effects (writes to \code{output_file}).
 }
 \description{
 This set of functions provides utilities for encrypting
@@ -45,10 +45,10 @@ The encryption process pads the data, generates a random
 Initialization Vector (IV), and encrypts the content. The IV is
 prepended to the encrypted data in the output file.
 Decryption involves extracting the IV, decrypting, and unpadding the data.
-A specialized decryption function (`read_encrypted`) is provided
-to directly parse decrypted content (assumed to be `key=value` pairs)
+A specialized decryption function \code{read_encrypted} is provided
+to directly parse decrypted content (assumed to be \code{key=value} pairs)
 into a named R list. If no "=" sign found in the first line, text will be
-imported as string character.
+imported as character vector.
 }
 \examples{
 \dontrun{
@@ -83,7 +83,7 @@ my_secrets <- list(
   server = "production.server.com"
 )
 raw_key <- write_encrypted(my_secrets, temp_output, quiet = FALSE)
-fromJSON(read_encrypted(temp_output, key = raw_key)
+fromJSON(read_encrypted(temp_output, key = raw_key))
 }
 }
 \seealso{
