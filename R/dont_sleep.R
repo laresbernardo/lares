@@ -17,11 +17,11 @@
 #'
 #' @family Tools
 #' @param sec_range Numeric vector of length 2. Range (in seconds) of
-#'   random intervals between mouse movements and clicks. Default is \code{c(20, 60)}.
+#' random intervals between mouse movements and clicks. Default is \code{c(20, 60)}.
 #' @param off_time Numeric. Decimal hour (24h format) to stop the function
-#'   automatically, e.g. 18.5 means 18:30 (6:30 PM). Default is \code{18.5}.
+#' automatically, e.g. 18.5 means 18:30 (6:30 PM). Default is \code{18.5}.
 #' @param quiet Logical. If \code{TRUE}, suppresses progress messages.
-#'   Default is \code{FALSE}.
+#' Default is \code{FALSE}.
 #' @return Invisibly returns \code{NULL} when the function exits.
 #' @examples
 #' \dontrun{
@@ -96,6 +96,7 @@ dont_sleep_time <- function(quiet = FALSE) {
 
   start_time <- Sys.time()
   tic(paste(label, start_time))
+  timeout <- moved <- FALSE
 
   # Ensure time is tracked even if user stops manually
   on.exit(
@@ -105,6 +106,8 @@ dont_sleep_time <- function(quiet = FALSE) {
         lap <- toc(paste(label, start_time), quiet = TRUE)
         now_fmt <- format(start_time, format = "%Y-%M-%d %H:%M:%S")
         cat(sprintf("\rStarted %s ago (%s)    \n", lap$time, now_fmt))
+        if (moved) message("\nMouse moved by user. Exiting at ", now)
+        if (timeout) message("\nOff-time triggered at ", format(now_posix, "%Y-%m-%d %H:%M:%S"))
       }
     },
     add = TRUE
@@ -114,7 +117,7 @@ dont_sleep_time <- function(quiet = FALSE) {
     now <- format(Sys.time(), format = "%Y-%M-%d %H:%M:%S")
     pos <- get_mouse_position()
     if (length(pos) != 2 || any(pos != c(0, 0))) {
-      message("Mouse moved by user. Exiting at ", now)
+      moved <- TRUE
       break
     }
 
@@ -131,10 +134,11 @@ dont_sleep_time <- function(quiet = FALSE) {
 
     now_posix <- as.POSIXlt(Sys.time())
     if ((now_posix$hour + now_posix$min / 60 + now_posix$sec / 3600) >= off_time) {
-      message("\nOff-time triggered at ", format(now_posix, "%Y-%m-%d %H:%M:%S"))
+      timeout <- TRUE
       break
     }
 
+    if (length(sec_range) == 1) sec_range <- rep(sec_range, 2)
     Sys.sleep(runif(1, sec_range[1], sec_range[2]))
   }
 
