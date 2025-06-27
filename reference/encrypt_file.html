@@ -91,7 +91,7 @@ file will be saved.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>No return value, called for side effects (writes to `output_file`).</p>
+    <p>No return value, called for side effects (writes to <code>output_file</code>).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -99,10 +99,10 @@ file will be saved.</p></dd>
 Initialization Vector (IV), and encrypts the content. The IV is
 prepended to the encrypted data in the output file.
 Decryption involves extracting the IV, decrypting, and unpadding the data.
-A specialized decryption function (`read_encrypted`) is provided
-to directly parse decrypted content (assumed to be `key=value` pairs)
+A specialized decryption function <code>read_encrypted</code> is provided
+to directly parse decrypted content (assumed to be <code>key=value</code> pairs)
 into a named R list. If no "=" sign found in the first line, text will be
-imported as string character.</p>
+imported as character vector.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -120,7 +120,41 @@ imported as string character.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># Create dummy files for demonstration</span></span></span>
+<span class="r-in"><span><span class="va">temp_input</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".txt"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">temp_output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".enc"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="st">"library=lares \nversion=5.3.0 \n pass=123"</span>, <span class="va">temp_input</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">temp_input</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Generate a random 32-byte key (and save it in a secure place)</span></span></span>
+<span class="r-in"><span><span class="va">raw_key</span> <span class="op">&lt;-</span> <span class="fu">openssl</span><span class="fu">::</span><span class="fu"><a href="https://jeroen.r-universe.dev/openssl/reference/rand_bytes.html" class="external-link">rand_bytes</a></span><span class="op">(</span><span class="fl">32</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># You can convert from hex to raw and viceversa</span></span></span>
+<span class="r-in"><span><span class="fu">raw_to_hex</span><span class="op">(</span><span class="va">raw_key</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">hex_to_raw</span><span class="op">(</span><span class="fu">raw_to_hex</span><span class="op">(</span><span class="va">raw_key</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Encrypt the file</span></span></span>
+<span class="r-in"><span><span class="fu">encrypt_file</span><span class="op">(</span><span class="va">temp_input</span>, <span class="va">temp_output</span>, <span class="va">raw_key</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Import the data from encrypted file to list or vector</span></span></span>
+<span class="r-in"><span><span class="va">secrets</span> <span class="op">&lt;-</span> <span class="fu">read_encrypted</span><span class="op">(</span><span class="va">temp_output</span>, <span class="va">raw_key</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">secrets</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example using a string (JSON in this case)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">toJSON</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fl">2</span>, c <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, <span class="va">temp_input</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">encrypt_file</span><span class="op">(</span><span class="va">temp_input</span>, <span class="va">temp_output</span>, <span class="va">raw_key</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">read_encrypted</span><span class="op">(</span><span class="va">temp_output</span>, <span class="va">raw_key</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example writing a file from a list or vector directly from R</span></span></span>
+<span class="r-in"><span><span class="va">my_secrets</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  api_key <span class="op">=</span> <span class="st">"some_secret_api_key_123"</span>,</span></span>
+<span class="r-in"><span>  username <span class="op">=</span> <span class="st">"data_analyst"</span>,</span></span>
+<span class="r-in"><span>  server <span class="op">=</span> <span class="st">"production.server.com"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">raw_key</span> <span class="op">&lt;-</span> <span class="fu">write_encrypted</span><span class="op">(</span><span class="va">my_secrets</span>, <span class="va">temp_output</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">fromJSON</span><span class="op">(</span><span class="fu">read_encrypted</span><span class="op">(</span><span class="va">temp_output</span>, key <span class="op">=</span> <span class="va">raw_key</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
