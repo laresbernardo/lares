@@ -29,8 +29,7 @@
 #' readLines(temp_input)
 #'
 #' # Generate a random 32-byte key (and save it in a secure place)
-#' library(openssl)
-#' raw_key <- rand_bytes(32)
+#' raw_key <- openssl::rand_bytes(32)
 #' # You can convert from hex to raw and viceversa
 #' raw_to_hex(raw_key)
 #' hex_to_raw(raw_to_hex(raw_key))
@@ -110,12 +109,13 @@ read_encrypted <- function(input_file, key) {
 
 #' Write a vector or list into an encoded file in JSON format
 #' @inheritParams get_mp3
+#' @param data List, vector or any json-able object to write into encrypted file.
 #' @rdname encrypt_file
 #' @export
-write_encrypted <- function(x, output_file = "encrypted.enc", key = NULL, quiet = FALSE) {
+write_encrypted <- function(data, output_file = "encrypted.enc", key = NULL, quiet = FALSE) {
   try_require("openssl")
   # 1. Convert R object to JSON string
-  json_string <- jsonlite::toJSON(x, auto_unbox = TRUE, pretty = FALSE)
+  json_string <- jsonlite::toJSON(data, auto_unbox = TRUE, pretty = FALSE)
   # 2. Convert JSON string to raw vector
   data_raw <- charToRaw(json_string)
   # 3. Generate a new 32-byte (256-bit) AES key

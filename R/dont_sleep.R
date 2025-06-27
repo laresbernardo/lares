@@ -106,8 +106,8 @@ dont_sleep_time <- function(quiet = FALSE) {
         lap <- toc(paste(label, start_time), quiet = TRUE)
         now_fmt <- format(start_time, format = "%Y-%M-%d %H:%M:%S")
         cat(sprintf("\rStarted %s ago (%s)    \n", lap$time, now_fmt))
-        if (moved) message("\nMouse moved by user. Exiting at ", now)
-        if (timeout) message("\nOff-time triggered at ", format(now_posix, "%Y-%m-%d %H:%M:%S"))
+        if (moved) message("Mouse moved by user. Exiting at ", now)
+        if (timeout) message("Off-time triggered at ", format(now_posix, "%Y-%m-%d %H:%M:%S"))
       }
     },
     add = TRUE

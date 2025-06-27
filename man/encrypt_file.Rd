@@ -12,7 +12,7 @@ encrypt_file(input_file, output_file, key)
 
 read_encrypted(input_file, key)
 
-write_encrypted(x, output_file = "encrypted.enc", key = NULL, quiet = FALSE)
+write_encrypted(data, output_file = "encrypted.enc", key = NULL, quiet = FALSE)
 
 hex_to_raw(x)
 
@@ -26,9 +26,11 @@ file will be saved.}
 
 \item{key}{A raw vector of 32 bytes (256 bits) to be used as the encryption key.}
 
-\item{x}{Character string or hex vector to convert.}
+\item{data}{List, vector or any json-able object to write into encrypted file.}
 
 \item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
+
+\item{x}{Character string or hex vector to convert.}
 }
 \value{
 No return value, called for side effects (writes to `output_file`).
@@ -57,8 +59,7 @@ writeLines("library=lares \nversion=5.3.0 \n pass=123", temp_input)
 readLines(temp_input)
 
 # Generate a random 32-byte key (and save it in a secure place)
-library(openssl)
-raw_key <- rand_bytes(32)
+raw_key <- openssl::rand_bytes(32)
 # You can convert from hex to raw and viceversa
 raw_to_hex(raw_key)
 hex_to_raw(raw_to_hex(raw_key))
