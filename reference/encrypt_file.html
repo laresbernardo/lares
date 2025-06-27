@@ -53,7 +53,7 @@ handling key-value pair "secrets" files.</p>
 <span></span>
 <span><span class="fu">read_encrypted</span><span class="op">(</span><span class="va">input_file</span>, <span class="va">key</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">write_encrypted</span><span class="op">(</span><span class="va">x</span>, output_file <span class="op">=</span> <span class="st">"encrypted.enc"</span>, key <span class="op">=</span> <span class="cn">NULL</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">write_encrypted</span><span class="op">(</span><span class="va">data</span>, output_file <span class="op">=</span> <span class="st">"encrypted.enc"</span>, key <span class="op">=</span> <span class="cn">NULL</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">hex_to_raw</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
@@ -77,12 +77,16 @@ file will be saved.</p></dd>
 <dd><p>A raw vector of 32 bytes (256 bits) to be used as the encryption key.</p></dd>
 
 
-<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>Character string or hex vector to convert.</p></dd>
+<dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
+<dd><p>List, vector or any json-able object to write into encrypted file.</p></dd>
 
 
 <dt id="arg-quiet">quiet<a class="anchor" aria-label="anchor" href="#arg-quiet"></a></dt>
 <dd><p>Boolean. Keep quiet? If not, informative messages will be shown.</p></dd>
+
+
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>Character string or hex vector to convert.</p></dd>
 
 </dl></div>
     <div class="section level2">
