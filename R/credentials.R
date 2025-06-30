@@ -71,22 +71,22 @@ get_credentials <- function(from = NA, dir = NA,
         write(line, file = "~/.Renviron", append = TRUE)
         message("ALL's SET! But, you must reset your session for it to work!")
         invisible(NULL)
-      }
-    } else {
-      file <- paste0(dir, "/", filename)
-      if (!file.exists(file)) {
-        message(sprintf("YML file with credentials not found in %s", dir))
       } else {
-        credentials <- yaml::read_yaml(file)$default
-        if (is.null(credentials)) {
-          trues <- names(credentials)
-          warning(paste(
-            "No credentials for", from, "found in your YML file.",
-            "\nTry any of the following:", v2t(trues)
-          ))
+        file <- paste0(dir, "/", filename)
+        if (!file.exists(file)) {
+          message(sprintf("YML file with credentials not found in %s", dir))
+        } else {
+          credentials <- yaml::read_yaml(file)$default
+          if (is.null(credentials)) {
+            trues <- names(credentials)
+            warning(paste(
+              "No credentials for", from, "found in your YML file.",
+              "\nTry any of the following:", v2t(trues)
+            ))
+          }
+          if (!is.na(from)) credentials <- credentials[[from]]
+          credentials
         }
-        if (!is.na(from)) credentials <- credentials[[from]]
-        credentials
       }
     }
   }
