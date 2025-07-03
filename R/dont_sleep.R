@@ -72,13 +72,37 @@ dont_sleep_time <- function(quiet = FALSE) {
 .dont_sleep_tracker <- new.env(parent = emptyenv())
 
 .track_dont_sleep <- function(start_time) {
-  elapsed <- as.numeric(difftime(Sys.time(), start_time, units = "secs"))
-  today <- as.character(Sys.Date())
-  if (!exists(today, envir = .dont_sleep_tracker)) {
-    assign(today, elapsed, envir = .dont_sleep_tracker)
+  end_time <- Sys.time()
+  start_date <- as.Date(start_time)
+  end_date <- as.Date(end_time)
+  if (start_date == end_date) {
+    # Same day, assign normally
+    elapsed <- as.numeric(difftime(end_time, start_time, units = "secs"))
+    if (!exists(as.character(start_date), envir = .dont_sleep_tracker)) {
+      assign(as.character(start_date), elapsed, envir = .dont_sleep_tracker)
+    } else {
+      previous <- get(as.character(start_date), envir = .dont_sleep_tracker)
+      assign(as.character(start_date), previous + elapsed, envir = .dont_sleep_tracker)
+    }
   } else {
-    previous <- get(today, envir = .dont_sleep_tracker)
-    assign(today, previous + elapsed, envir = .dont_sleep_tracker)
+    # Crosses midnight, split time by day
+    midnight <- as.POSIXct(paste0(start_date + 1, " 00:00:00"), tz = attr(start_time, "tzone"))
+    first_day_secs <- as.numeric(difftime(midnight, start_time, units = "secs"))
+    second_day_secs <- as.numeric(difftime(end_time, midnight, units = "secs"))
+    # Assign first day
+    if (!exists(as.character(start_date), envir = .dont_sleep_tracker)) {
+      assign(as.character(start_date), first_day_secs, envir = .dont_sleep_tracker)
+    } else {
+      previous <- get(as.character(start_date), envir = .dont_sleep_tracker)
+      assign(as.character(start_date), previous + first_day_secs, envir = .dont_sleep_tracker)
+    }
+    # Assign second day
+    if (!exists(as.character(end_date), envir = .dont_sleep_tracker)) {
+      assign(as.character(end_date), second_day_secs, envir = .dont_sleep_tracker)
+    } else {
+      previous <- get(as.character(end_date), envir = .dont_sleep_tracker)
+      assign(as.character(end_date), previous + second_day_secs, envir = .dont_sleep_tracker)
+    }
   }
 }
 
