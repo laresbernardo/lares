@@ -1,3 +1,9 @@
+CRAN release: 5.3.1 (2025-07-04)
+feat: new encrypted family of functions encrypt_file(), read_encrypted(), write_encrypted(), hex_to_raw(), raw_to_hex()
+fix: get_creds() and cache returns objects correctly
+fix: improved order of messages in dont_sleep() + allow single value for sec_range
+fix: track correctly change of date while asleep in dont_sleep_time()
+
 CRAN release: 5.3.0 (2025-06-25)
 fix: prepare compatibility with ggplot2 4.0.0 #59
 feat: improve robyn_modelselector()'s weights based on experience, mainly confidence criteria
