@@ -128,7 +128,7 @@ dont_sleep_time <- function(quiet = FALSE) {
       .track_dont_sleep(start_time)
       if (!quiet) {
         lap <- toc(paste(label, start_time), quiet = TRUE)
-        now_fmt <- format(start_time, format = "%Y-%M-%d %H:%M:%S")
+        now_fmt <- format(start_time, format = "%Y-%m-%d %H:%M:%S")
         cat(sprintf("\rStarted %s ago (%s)    \n", lap$time, now_fmt))
         if (moved) message("Mouse moved by user. Exiting at ", now)
         if (timeout) message("Off-time triggered at ", format(now_posix, "%Y-%m-%d %H:%M:%S"))
@@ -138,7 +138,7 @@ dont_sleep_time <- function(quiet = FALSE) {
   )
 
   repeat {
-    now <- format(Sys.time(), format = "%Y-%M-%d %H:%M:%S")
+    now <- format(Sys.time(), format = "%Y-%m-%d %H:%M:%S")
     pos <- get_mouse_position()
     if (length(pos) != 2 || any(pos != c(0, 0))) {
       moved <- TRUE
@@ -146,7 +146,7 @@ dont_sleep_time <- function(quiet = FALSE) {
     }
 
     lap <- toc(paste(label, start_time), quiet = TRUE)
-    now_fmt <- format(start_time, format = "%Y-%M-%d %H:%M:%S")
+    now_fmt <- format(start_time, format = "%Y-%m-%d %H:%M:%S")
     if (!quiet) cat(sprintf("\rStarted %s ago (%s)    ", lap$time, now_fmt))
     .track_dont_sleep(start_time)
 
