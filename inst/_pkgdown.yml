@@ -8,3 +8,5 @@ template:
     docsearch:
       api_key: 450df2517b72ae878fd4539ca2060332
       index_name: lares
+
+favicon: man/figures/logo.png
