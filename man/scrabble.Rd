@@ -159,4 +159,10 @@ if (haveInternet()) {
 }
 }
 }
-\concept{Scrabble}
+\seealso{
+Other Games: 
+\code{\link{maze_solve}()},
+\code{\link{sudoku_solver}()},
+\code{\link{wordle_check}()}
+}
+\concept{Games}

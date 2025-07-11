@@ -5,6 +5,7 @@
 #' rules: correct letter in correct placement (green), correct letter in wrong
 #' placement (yellow), letter is not present (red).
 #'
+#' @family Games
 #' @param input Character. Word to validate (5-letters)
 #' @param word Character. Word actually answer (5-letters).
 #' @param dictionary Character vector. List of valid words. If set to NULL

@@ -76,3 +76,10 @@ x <- wordle_simulation(input = "SAINT", word = "ABBEY", seed = 1:3)
 print(x)
 }
 }
+\seealso{
+Other Games: 
+\code{\link{maze_solve}()},
+\code{\link{scrabble_dictionary}()},
+\code{\link{sudoku_solver}()}
+}
+\concept{Games}

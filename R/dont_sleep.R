@@ -119,13 +119,14 @@ dont_sleep_time <- function(quiet = FALSE) {
   message("Mouse moved to (0,0). Starting loop...")
 
   start_time <- Sys.time()
+  last_time <- start_time
   tic(paste(label, start_time))
   timeout <- moved <- FALSE
 
   # Ensure time is tracked even if user stops manually
   on.exit(
     {
-      .track_dont_sleep(start_time)
+      .track_dont_sleep(last_time)
       if (!quiet) {
         lap <- toc(paste(label, start_time), quiet = TRUE)
         now_fmt <- format(start_time, format = "%Y-%m-%d %H:%M:%S")
@@ -138,7 +139,7 @@ dont_sleep_time <- function(quiet = FALSE) {
   )
 
   repeat {
-    now <- format(Sys.time(), format = "%Y-%m-%d %H:%M:%S")
+    now <- Sys.time()
     pos <- get_mouse_position()
     if (length(pos) != 2 || any(pos != c(0, 0))) {
       moved <- TRUE
@@ -148,7 +149,8 @@ dont_sleep_time <- function(quiet = FALSE) {
     lap <- toc(paste(label, start_time), quiet = TRUE)
     now_fmt <- format(start_time, format = "%Y-%m-%d %H:%M:%S")
     if (!quiet) cat(sprintf("\rStarted %s ago (%s)    ", lap$time, now_fmt))
-    .track_dont_sleep(start_time)
+    .track_dont_sleep(last_time)
+    last_time <- now
 
     dx <- sample(-20:20, 1)
     dy <- sample(-20:20, 1)
@@ -156,7 +158,7 @@ dont_sleep_time <- function(quiet = FALSE) {
     move_to_origin()
     click_mouse()
 
-    now_posix <- as.POSIXlt(Sys.time())
+    now_posix <- as.POSIXlt(now)
     if ((now_posix$hour + now_posix$min / 60 + now_posix$sec / 3600) >= off_time) {
       timeout <- TRUE
       break

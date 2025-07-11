@@ -88,4 +88,10 @@ micromouse <- matrix(c(
 ), nrow = 12, byrow = TRUE)
 maze_solve(micromouse, start = c(2, 2), end = c(7, 7))
 }
-\concept{Maze}
+\seealso{
+Other Games: 
+\code{\link{scrabble_dictionary}()},
+\code{\link{sudoku_solver}()},
+\code{\link{wordle_check}()}
+}
+\concept{Games}

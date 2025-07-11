@@ -8,7 +8,7 @@
 #' turns that chooses next step pointing towards the end point, and a grid
 #' search combining parameters to find best route.
 #'
-#' @family Maze
+#' @family Games
 #' @inheritParams corr_cross
 #' @param maze Matrix. Using 0 for open space and 1 for walls.
 #' @param start,end Integer vector, length 2. Start and end coordinates.

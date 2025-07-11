@@ -6,7 +6,7 @@
 #' This is an auxiliary function. You may want to use \code{scrabble_words}
 #' directly if you are searching for the highest score words!
 #'
-#' @family Scrabble
+#' @family Games
 #' @param lang_dic Character. Any of "en","es","de","fr". Set to NULL
 #' if you wish to skip this step (and use \code{words} parameter in
 #' \code{scrabble_words} instead).
@@ -61,7 +61,6 @@ scrabble_dictionary <- function(lang_dic, quiet = FALSE) {
 #' on the rules and languages you are playing with. Check the examples
 #' for Spanish and English values when I played Words With Friends.
 #'
-#' @family Scrabble
 #' @param words Character vector. Words to score
 #' @param scores.df Dataframe. Must contain two columns: "tiles" with every
 #' letter of the alphabet and "scores" for each letter's score.
@@ -110,7 +109,6 @@ scrabble_score <- function(words, scores.df) {
 #'
 #' Dataframe for every letter and points given a language.
 #'
-#' @family Scrabble
 #' @param lang Character. Any of "en","es" or "chars". Set to NULL
 #' if you wish to skip this step (and use \code{words} parameter in
 #' \code{scrabble_words()} instead). The "chars" parameter will
@@ -217,7 +215,6 @@ grepl_letters <- function(x, pattern, blank = "_") {
 #' language to win at Scrabble! You just have to find the best
 #' place to post your tiles.
 #'
-#' @family Scrabble
 #' @param tiles Character. The letters you wish to consider.
 #' @param free Integer. How many free blank tiles you have?
 #' @param force_start,force_end Character. Force words to start or end with

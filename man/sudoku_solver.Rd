@@ -46,3 +46,10 @@ imp
 sudoku_solver(imp)
 }
 }
+\seealso{
+Other Games: 
+\code{\link{maze_solve}()},
+\code{\link{scrabble_dictionary}()},
+\code{\link{wordle_check}()}
+}
+\concept{Games}

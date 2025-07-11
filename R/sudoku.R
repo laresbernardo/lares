@@ -4,6 +4,7 @@
 #' Solve a Sudoku puzzle, where empty values are represented by 0s
 #' into a matrix object.
 #'
+#' @family Games
 #' @param board Matrix. 9x9 matrix or vector length 81, with only digits from 0 to 9.
 #' @param needed_cells,index Auxiliary parameters to auto-iterate using this same fx.
 #' @param quiet Boolean. Keep quiet? If not, plot results.
