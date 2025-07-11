@@ -10,6 +10,9 @@
 ^\.github$
 ^\._pkgdown.yml
 ^\.DS_Store
-^doc$
+^docs$
 ^Meta$
 ^GithubStars$
+NEWS.md
+^pkgdown.*
+_pkgdown.yml
