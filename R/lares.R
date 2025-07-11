@@ -1,4 +1,4 @@
-#' Analytics, Data Mining & Machine Learning Sidekick
+#' Lean Analytics and Robust Exploration Sidekick
 #'
 #' R library for better/faster analytics, visualization, data mining, and machine learning tasks.
 #'

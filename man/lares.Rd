@@ -4,7 +4,7 @@
 \name{lares}
 \alias{lares-package}
 \alias{lares}
-\title{Analytics, Data Mining & Machine Learning Sidekick}
+\title{Lean Analytics and Robust Exploration Sidekick}
 \description{
 R library for better/faster analytics, visualization, data mining, and machine learning tasks.
 }

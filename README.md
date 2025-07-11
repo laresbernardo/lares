@@ -1,73 +1,75 @@
 # lares <a href='https://laresbernardo.github.io/lares/index.html' target="_blank"><img src='man/figures/logo.png' align="right" height="139" /></a>
 
-### R Package for Analytics and Machine Learning
+### Lean Analytics and Robust Exploration Sidekick
 [![R-CMD-check](https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg)](https://github.com/laresbernardo/lares/actions?query=workflow%3AR-CMD-check) [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version-ago/lares)](https://cran.r-project.org/package=lares) [![](https://cranlogs.r-pkg.org/badges/lares)](https://cran.r-project.org/package=lares) [![docs](https://github.com/laresbernardo/lares/workflows/documentation/badge.svg)](https://laresbernardo.github.io/lares/reference/index.html) [![CodeFactor](https://www.codefactor.io/repository/github/laresbernardo/lares/badge)](https://www.codefactor.io/repository/github/laresbernardo/lares/overview/main)
+
 ----
 
-R package built to automate, improve, and speed everyday **Analysis and Machine Learning** tasks. With a wide variety of family functions like Machine Learning, data cleaning and processing, EDA, Investment, NLP, Queries, Scrappers, API interactions, `lares` helps the analyst or data scientist get quick, reproducible, robust results, without the need of repetitive coding nor extensive programming skills. Feel free to install, use, and/or comment on any of the code and functionalities. And if you are also colourblind, be sure to check the colour palettes!
+**lares** is an R package designed to automate, improve, and accelerate everyday **analytics and machine learning** tasks. It offers a wide variety of functions grouped in families for:
 
-Don't hesitate to contact me, and please when you do, let me know where did you first hear from the library and which family of functions you are most interested in.
+- **Machine Learning**: Streamlined model training and evaluation, including friendly AutoML pipelines.
+- **Data Cleaning & Processing**: Functions to quickly prepare your data for modeling or analyzes.
+- **Exploratory Data Analysis (EDA)**: Instantly visualize and summarize your data.
+- **Reporting**: Easily generate comprehensive reports to share insights for MMM and ML models.
+- **Visualization**: Out-of-the-box plotting for classification and regression models, timelines, and more.
+- **API Integrations & Scrapers**: Simplify data collection from various sources.
+- **Time Series & Portfolio Analysis**: Specialized utilities for financial and temporal data.
+- **Credentials & Secrets Management**: Securely handle sensitive information in your analytics pipelines.
+- **NLP & Text Analytics**: Tools to analyze and process text data.
+
+> **Tip:** See all available functions and documentation [here](https://laresbernardo.github.io/lares/reference/index.html) or type `?lares::` in RStudio to explore interactively.
+
+----
 
 ## Installation
 
-```{r}
-## CRAN VERSION
+```r
+# CRAN VERSION
 install.packages("lares")
 
-## DEV VERSION
-# If you don't have remotes yet, run: install.packages('remotes')
+# DEV VERSION (latest updates)
+# If you don't have remotes installed yet, run: install.packages('remotes')
 remotes::install_github("laresbernardo/lares")
-# Full installation with recommended dependencies (takes more time)
+# For a full installation with recommended dependencies:
 remotes::install_github("laresbernardo/lares", dependencies = TRUE)
 ```
 
-**Windows users**: you MAY have to install `RTools` before installing the dev version. Download it [here](https://cran.r-project.org/bin/windows/Rtools/).
+**Windows users:** You may need to install [RTools](https://cran.r-project.org/bin/windows/Rtools/) to build the dev version.
 
-## See the library in action!
+----
 
-- Vignette: [Introduction to AutoML using `lares`](https://laresbernardo.github.io/lares/articles/h2o_automl.html)
+## Read about `lares` in action!
 
-- Medium: [Select the right MMM candidate based on your specific criteria and business knowledge](https://medium.com/@laresbernardo/select-the-right-mmm-candidate-based-on-your-specific-criteria-and-business-knowledge-1f583c3cb97a)
+- **AutoML Quickstart:** [Introduction to AutoML using `lares`](https://laresbernardo.github.io/lares/articles/h2o_automl.html)
+- **Model Results Visualization:** [Classification](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/) | [Regression](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/)
+- **Marketing Mix Model Selection:** [Select the right MMM candidate](https://medium.com/@laresbernardo/select-the-right-mmm-candidate-based-on-your-specific-criteria-and-business-knowledge-1f583c3cb97a)
+- **Cross-Correlations:** [Find Insights with Ranked Cross-Correlations](https://datascienceplus.com/find-insights-with-ranked-cross-correlations/)
+- **Secure Credentials:** [Manage Secrets in R](https://datascienceplus.com/how-to-manage-credentials-and-secrets-safely-in-r/)
+- **Portfolio Analysis:** [Performance & Reporting](https://datascienceplus.com/visualize-your-portfolios-performance-and-generate-a-nice-report-with-r/)
+- **Fun games**: [Wordle](https://datascienceplus.com/how-i-selected-my-starting-word-for-wordle-using-simulations-and-r/), [Scrabble](https://laresbernardo.github.io/lares/reference/scrabble.html), [Sudoku](https://laresbernardo.github.io/lares/reference/sudoku_solver.html), [Mazes](https://laresbernardo.github.io/lares/reference/maze_solve.html), etc.
+- **More Examples:** [Read other posts](https://datascienceplus.com/author/bernardo-lares/)
 
-- DataScience+: [Visualizations for Classification Models Results](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/)
+----
 
-- DataScience+: [Visualizations for Regression Models Results](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/)
+## Popular Functions
 
-- DataScience+: [AutoML and DALEX for Dataset Understanding](https://datascienceplus.com/understanding-titanic-dataset-with-h2os-automl-dalex-and-lares-library/)
+- `h2o_automl()`, `plot_model_results()` – Automated machine learning pipeline with optimal model selection and visualizations.
+- `freqs()`, `distr()`, `corr_var()`, `corr_cross()` – Instantly summarize, visualize, and uncover relationships in your data.
+- `ohse()` – Efficient and smart one-hot encoding for categorical variables.
+- `cache_*` – Speed up workflows by caching expensive computations.
+- `robyn_*` – Additional functions to support [Robyn](https://github.com/facebookexperimental/Robyn) inputs and outputs.
+- `fb_*` – Interact with Meta's Marketing API
+- `gpt_*` – Structured prompts builder and interact with OpenAI's API
+- `read_encrypted()`, `write_encrypted()` – Interact with encrypted files to keep secrets safe
+- ...and [many more!](https://laresbernardo.github.io/lares/reference/index.html)
 
-- DataScience+: [Find Insights with Ranked Cross-Correlations](https://datascienceplus.com/find-insights-with-ranked-cross-correlations/)
-
-- DataScience+: [Portfolio's Performance and Reporting](https://datascienceplus.com/visualize-your-portfolios-performance-and-generate-a-nice-report-with-r/)
-
-- DataScience+: [Manage Credentials Safely in R](https://datascienceplus.com/how-to-manage-credentials-and-secrets-safely-in-r/)
-
-- DataScience+: [Using cache to avoid re-processing in R](https://datascienceplus.com/using-cache-to-avoid-re-processing-improve-ux-and-quicken-results-in-r/)
-
-- DataScience+: [Best/Worst starting words for Wordle using simulations](https://datascienceplus.com/how-i-selected-my-starting-word-for-wordle-using-simulations-and-r/)
-
-- DataScience+: [Plot Timelines with Gantt Charts](https://datascienceplus.com/visualize-your-cvs-timeline-with-r-gantt-style/)
-
-- RPubs: [freqs(), distr(), and corr_var() Examples](http://rpubs.com/laresbernardo/freqs-distr-corr)
-
-### AutoML Simplified Map [`h2o_automl()`](https://laresbernardo.github.io/lares/reference/h2o_automl.html)
 ![AutoML Map (lares)](man/figures/automl_map.png?raw=true)
 
-### Insights While Understanding
-To get insights and value out of your dataset, first you need to understand its structure, types of data, empty values, interactions between variables... `corr_cross()` and `freqs()` are here to give you just that! They show a wide perspective of your dataset content, correlations, and frequencies. Additionally, with the `missingness()` function to detect all missing values and `df_str()` to break down you data frame's structure, you will be ready to squeeze valuable insights out of your data. If you'd like to go deeper, try the `x2y()`, `lasso_vars()` and `tree_var()` to use Machine Learning to detect patterns, predictive powers, and variables importance.
+----
 
-![Cross-Correlations and Frequencies (lares)](man/figures/titanic_df.png?raw=true)
+## Getting Started & Help
 
-### Kings of Data Mining
-My favourite and most used functions are `freqs()`, `distr()`, and `corr_var()`. In this [RMarkdown](http://rpubs.com/laresbernardo/freqs-distr-corr) you can see them in action. Basically, they group and count values within variables, show distributions of one variable vs another one (numerical or categorical), and calculate/plot correlations of one variables vs all others, no matter what type of data you insert. 
-
-If there is space for one more, I would add `ohse()` (One Hot Smart Encoding), which has made my life much easier and my work much valuable. It converts a whole data frame into numerical values by making dummy variables (categoricals turned into new columns with 1s and 0s, ordered by frequencies and grouping less frequent into a single column) and dates into new features (such as month, year, week of the year, minutes if time is present, holidays given a country, currency exchange rates, etc).
-
-## What else is there? 
-
-You can check all active functions and documentations [here](https://laresbernardo.github.io/lares/reference/index.html) or type `lares::` in **RStudio** and you will get a pop-up with all the functions that are currently available within the package. You might also want to check the whole documentation by running `help(package = "lares")` in your RStudio or in the [Online Official Documentation](https://laresbernardo.github.io/lares/reference/index.html). Remember to check the families and similar functions on the **See Also** sections as well.
-
-### Getting further help
-
-If you need help with any of the functions when using RStudio, use the `?` function (i.e. `?lares::function`) and the **Help** tab will display a short explanation on each function and its parameters. You might also be interested in the [online documentation](https://laresbernardo.github.io/lares/reference/index.html) to check all functions and parameters.
-
-If you encounter a bug, please share with me a reproducible example on [Github issues](https://github.com/laresbernardo/lares/issues) and I'll take care of it. For inquiries, and other matters, you can contact me on LinkedIn anytime!
+- Browse all functions in the [online reference](https://laresbernardo.github.io/lares/reference/index.html).
+- Use `?lares::function_name` in RStudio for detailed help on any function.
+- Found a bug or have a feature request? [Open an issue](https://github.com/laresbernardo/lares/issues).
+- For questions or suggestions, reach out to [laresbernardo](mailto:laresbernardo@gmail.com).
