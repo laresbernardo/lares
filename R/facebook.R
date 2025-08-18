@@ -651,7 +651,7 @@ fb_token <- function(app_id, app_secret, token, api_version = NULL) {
 ####################################################################
 #' Facebook Creatives API
 #'
-#' For more information: \href{https://developers.facebook.com/docs/marketing-apis}{Marketing API}
+#' For more information: \href{https://developers.facebook.com/docs/marketing-api}{Marketing API}
 #'
 #' @family API
 #' @family Meta

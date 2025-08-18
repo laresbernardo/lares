@@ -26,47 +26,52 @@ get_currency <- function(currency_pair,
                          from = Sys.Date() - 99,
                          to = Sys.Date(),
                          fill = FALSE, ...) {
-  try_require("quantmod")
+  if (!haveInternet()) {
+    message("No internet connetion...")
+    invisible(NULL)
+  } else {
+    try_require("quantmod")
 
-  string <- paste0(toupper(cleanText(currency_pair)), "=X")
+    string <- paste0(toupper(cleanText(currency_pair)), "=X")
 
-  if (is.na(from) || is.na(to)) {
-    stop("You must insert a valid date")
+    if (is.na(from) || is.na(to)) {
+      stop("You must insert a valid date")
+    }
+
+    from <- as.Date(from)
+    to <- as.Date(to)
+
+    if (from == to) to <- from + 1
+    if (to > Sys.Date()) to <- Sys.Date()
+
+    x <- try(data.frame(suppressWarnings(getSymbols(
+      string,
+      env = NULL,
+      from = from,
+      to = to,
+      ...
+    ))))
+    if ("try-error" %in% class(x)) {
+      warning(x)
+      x
+    }
+    dates <- as.Date(gsub("\\.", "\\-", gsub("X", "", rownames(x))))
+    rate <- data.frame(date = dates, rate = x[, 1])
+    # Sometimes, the last date is repeated
+    if (tail(rate$date, 1) == tail(rate$date, 2)[1] && nrow(rate) > 1) {
+      rate <- rate[-nrow(rate), ]
+    }
+
+    if (fill) {
+      rate <- data.frame(date = as.character(
+        as.Date(as.Date(from):Sys.Date(), origin = "1970-01-01")
+      )) %>%
+        left_join(rate %>% mutate(date = as.character(date)), "date") %>%
+        tidyr::fill(rate, .direction = "down") %>%
+        tidyr::fill(rate, .direction = "up") %>%
+        mutate(date = as.Date(date)) %>%
+        filter(date >= as.Date(from))
+    }
+    rate
   }
-
-  from <- as.Date(from)
-  to <- as.Date(to)
-
-  if (from == to) to <- from + 1
-  if (to > Sys.Date()) to <- Sys.Date()
-
-  x <- try(data.frame(suppressWarnings(getSymbols(
-    string,
-    env = NULL,
-    from = from,
-    to = to,
-    ...
-  ))))
-  if ("try-error" %in% class(x)) {
-    warning(x)
-    x
-  }
-  dates <- as.Date(gsub("\\.", "\\-", gsub("X", "", rownames(x))))
-  rate <- data.frame(date = dates, rate = x[, 1])
-  # Sometimes, the last date is repeated
-  if (tail(rate$date, 1) == tail(rate$date, 2)[1] && nrow(rate) > 1) {
-    rate <- rate[-nrow(rate), ]
-  }
-
-  if (fill) {
-    rate <- data.frame(date = as.character(
-      as.Date(as.Date(from):Sys.Date(), origin = "1970-01-01")
-    )) %>%
-      left_join(rate %>% mutate(date = as.character(date)), "date") %>%
-      tidyr::fill(rate, .direction = "down") %>%
-      tidyr::fill(rate, .direction = "up") %>%
-      mutate(date = as.Date(date)) %>%
-      filter(date >= as.Date(from))
-  }
-  rate
 }
