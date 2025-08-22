@@ -111,23 +111,65 @@ get_mp3 <- function(id,
     if (metadata) {
       try_require("spotifyr")
       message(">>> Adding metadata...")
-      sp <- search_spotify(
-        q = gsub("\\.mp3", "", mp3_file),
-        type = "track",
-        limit = 1,
-        authorization = get_spotify_access_token(
-          client_id = get_creds("spotify")$SPOTIFY_CLIENT_ID,
-          client_secret = get_creds("spotify")$SPOTIFY_CLIENT_SECRET
-        )
+      authorization <- get_spotify_access_token(
+        client_id = get_creds("spotify")$SPOTIFY_CLIENT_ID,
+        client_secret = get_creds("spotify")$SPOTIFY_CLIENT_SECRET
       )
-      update_tags_mp3(
+      sp <- search_spotify(
+        q = infox$title,
+        type = "track",
+        limit = 3,
+        authorization = authorization
+      )
+      sp <- rowwise(sp) %>%
+        mutate(matching = grepl(.data$name, infox$title) |
+          grepl(.data$album.name, infox$title)) %>%
+        arrange(desc(.data$matching)) %>%
+        head(1)
+      album <- get_album(sp$album.id, authorization = authorization)
+
+      # Fetch (first) artist's genre if no genre album genres available
+      if (length(album$genres) == 0) {
+        artist <- search_spotify(
+          sp$artists[[1]]$name[1],
+          type = "artist", limit = 1,
+          authorization = authorization
+        )
+        genres <- cleanText(artist$genres[[1]][1],
+          spaces = TRUE, keep = c("&", "/"), title = TRUE
+        )
+        if (genres == "Null") genres <- ""
+      } else {
+        genres <- v2t(album$genres, sep = " / ")
+        artist <- NULL
+      }
+
+      # Update all metadata
+      infox$audio <- update_tags_mp3(
         mp3_file,
         title = sp$name,
         artist = v2t(sp$artists[[1]]$name, quotes = FALSE),
-        album = sp$album.name
+        album = sp$album.name,
+        # release_date = lubridate::year(sp$album.release_date),
+        release_date = sp$album.release_date,
+        recording_date = sp$album.release_date,
+        track_num = tuple(count = sp$track_number, total = sp$album.total_tracks),
+        genre = genres,
+        label = album$label
       )
-      if (cover) browseURL(sp$album.images[[1]]$url[1])
-      cover <- FALSE
+
+      # Handle cover art from URL
+      cover_url <- sp$album.images[[1]]$url[1]
+      if (!is.null(cover_url)) {
+        message(">>> Adding cover...")
+        tmp_img <- tempfile(fileext = ".jpg")
+        httr::GET(cover_url, httr::write_disk(tmp_img, overwrite = TRUE))
+        img_bytes <- readBin(tmp_img, what = "raw", n = file.info(tmp_img)$size)
+        infox$audio$tag$images$set(3L, img_bytes, "image/jpeg", "Cover")
+        infox$audio$tag$save()
+        cover <- FALSE
+      }
+      infox$metadata <- list(track = sp, artist = artist, album = album)
     }
 
     if (cover && mp3 && info) {
@@ -236,13 +278,13 @@ trim_mp3 <- function(file, start_time = 0, end_time = NA,
 #'   title = "My Jazz Song",
 #'   artist = "Bernardo",
 #'   album = "Smooth Album",
-#'   genre = "Jazz",
-#'   composer = "Bernardo"
-#' ) # If metadata field exists
+#'   genre = "Jazz"
+#' )
 #' }
 #' @return Invisibly returns \code{NULL}. The MP3 file is updated in-place.
 #' @export
 update_tags_mp3 <- function(filename, title = NULL, artist = NULL, album = NULL, genre = NULL, ...) {
+  # filename <- "Steve Kroeger x Life of Kai - Summer (Lyrics).mp3"
   if (!file.exists(filename)) {
     message("File does not exist. Check filename input and working directory....")
   } else {
@@ -255,10 +297,24 @@ update_tags_mp3 <- function(filename, title = NULL, artist = NULL, album = NULL,
     valid_tags <- names(audio$tag)
     for (n in names(tag_args)) {
       if (!is.null(tag_args[[n]]) && n %in% valid_tags) {
+        # message("... ", n)
         audio$tag[[n]] <- tag_args[[n]]
       }
     }
     audio$tag$save()
   }
   invisible(audio)
+}
+
+get_artist_genre <- function(artist) {
+  result <- tryCatch(
+    {
+      sp <- search_spotify(artist, type = "artist", limit = 1)
+      if (nrow(sp) > 0 && length(sp$genres[[1]]) > 0) {
+        return(lares::cleanText(sp$genres[[1]][1], spaces = TRUE, keep = c("&", "/"), title = TRUE))
+      }
+      NA_character_
+    },
+    error = function(e) NA_character_
+  )
 }

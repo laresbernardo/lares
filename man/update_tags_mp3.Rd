@@ -48,8 +48,8 @@ update_tags_mp3(
   title = "My Jazz Song",
   artist = "Bernardo",
   album = "Smooth Album",
-  genre = "Jazz",
-  composer = "Bernardo") # If metadata field exists
+  genre = "Jazz"
+)
 }
 }
 \seealso{

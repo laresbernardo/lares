@@ -130,7 +130,7 @@ recommended <- list(
   ),
   quantmod = c("getDividends", "getSymbols", "getQuote"),
   rdrop2 = c("drop_auth", "drop_dir", "drop_download", "drop_search", "drop_upload"),
-  reticulate = "import",
+  reticulate = c("import", "tuple"),
   rgdal = c("readOGR", "project"),
   Robyn = c("robyn_allocator", "robyn_immcarr", "robyn_response"),
   RPostgreSQL = "PostgreSQL",
