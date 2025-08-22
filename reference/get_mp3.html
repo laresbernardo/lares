@@ -19,7 +19,7 @@ playlist. It also returns metadata into an (invisible) list."><meta property="og
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,6 +65,7 @@ playlist. It also returns metadata into an (invisible) list.</p>
 <span>  delete <span class="op">=</span> <span class="va">open</span>,</span>
 <span>  info <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cover <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  metadata <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -113,6 +114,11 @@ file be opened? Should it be deleted?</p></dd>
 <dd><p>Boolean. Google Search its squared cover?</p></dd>
 
 
+<dt id="arg-metadata">metadata<a class="anchor" aria-label="anchor" href="#arg-metadata"></a></dt>
+<dd><p>Boolean. Use "spotifyr" to extract "track" data using Spotify's
+API. Needs credentials.</p></dd>
+
+
 <dt id="arg-quiet">quiet<a class="anchor" aria-label="anchor" href="#arg-quiet"></a></dt>
 <dd><p>Boolean. Keep quiet? If not, informative messages will be shown.</p></dd>
 
@@ -139,7 +145,8 @@ file be opened? Should it be deleted?</p></dd>
 <code><a href="stocks_plots.html">splot_summary</a>()</code>,
 <code><a href="stocks_hist.html">stocks_quote</a>()</code></p>
 <p>Other Audio:
-<code><a href="trim_mp3.html">trim_mp3</a>()</code></p></div>
+<code><a href="trim_mp3.html">trim_mp3</a>()</code>,
+<code><a href="update_tags_mp3.html">update_tags_mp3</a>()</code></p></div>
     </div>
 
     <div class="section level2">
