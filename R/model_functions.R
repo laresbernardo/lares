@@ -27,7 +27,7 @@
 #'
 #' @family Machine Learning
 #' @inheritParams h2o::h2o.automl
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param df Dataframe. Dataframe containing all your data, including
 #' the dependent variable labeled as \code{'tag'}. If you want to define
 #' which variable should be used instead, use the \code{y} parameter.
@@ -900,7 +900,7 @@ msplit <- function(df, size = 0.7, seed = 0, print = TRUE) {
 #' This function detects or forces the target value when predicting
 #' a categorical binary model. This is an auxiliary function.
 #'
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param tag Vector. Real known label
 #' @param score Vector. Predicted value or model's result
 #' @param target Value. Which is your target positive value? If

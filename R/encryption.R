@@ -108,7 +108,7 @@ read_encrypted <- function(input_file, key) {
 }
 
 #' Write a vector or list into an encoded file in JSON format
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param data List, vector or any json-able object to write into encrypted file.
 #' @rdname encrypt_file
 #' @export

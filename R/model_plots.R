@@ -1086,7 +1086,7 @@ mplot_conf <- function(tag, score, thresh = 0.5, abc = TRUE,
 #'
 #' @family ML Visualization
 #' @inheritParams mplot_roc
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param target Value. Which is your target positive value? If
 #' set to 'auto', the target with largest mean(score) will be
 #' selected. Change the value to overwrite. Only works for binary classes

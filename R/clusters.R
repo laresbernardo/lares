@@ -11,7 +11,7 @@
 #'
 #' @family Clusters
 #' @inheritParams stats::kmeans
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param df Dataframe
 #' @param k Integer. Number of clusters
 #' @param wss_var Numeric. Used to pick automatic \code{k} value,

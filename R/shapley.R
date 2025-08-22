@@ -83,7 +83,7 @@ h2o_shap <- function(model, test = "auto", scores = "auto", y = "y", ...) {
 ####################################################################
 #' @rdname h2o_shap
 #' @aliases h2o_shap
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param x h2o_shap object
 #' @param relevant Boolean. Keep only relevant non-trivial (>0) features
 #' @param top Integer. Plot only top n values (as in importance)

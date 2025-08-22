@@ -7,7 +7,7 @@
 #' @family Tools
 #' @family Credentials
 #' @family Dropbox
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param query Search string. This string is split (on spaces) into
 #' individual words. Files will be used if they contain
 #' all words in the search string.

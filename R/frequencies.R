@@ -7,7 +7,7 @@
 #' @family Frequency
 #' @family Exploratory
 #' @family Visualization
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param df Data.frame
 #' @param ... Variables. Variables you wish to process. Order matters.
 #' If no variables are passed, the whole data.frame will be considered
@@ -295,7 +295,7 @@ scale_x_reordered <- function(..., sep = "___") {
 #' @family Frequency
 #' @family Exploratory
 #' @family Visualization
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param df Data.frame
 #' @param max Numeric. Top variance threshold. Range: (0-1].
 #' These variables will be excluded

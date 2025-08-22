@@ -5,7 +5,7 @@
 #'
 #' @family Time
 #' @family Tools
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param id Define ID if multiple \code{tic} & \code{toc} are being used.
 #' @param start Start time. Now is default.
 #' @return Invisible list. Contains tic (start time), toc (stop time),

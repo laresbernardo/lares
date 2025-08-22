@@ -10,7 +10,7 @@
 #' For best results, ensure channels have similar granularity across
 #' markets to simplify interpretation and application of the outputs.
 #'
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param budget_constr_low,budget_constr_up Numeric vector. Relative minimum
 #' and maximum budgets to consider based on \code{initial_budgets}.
 #' By default it'll consider 50% and 150% budget constraints.

@@ -5,7 +5,7 @@
 #' improve timings and UX.
 #'
 #' @family Cache
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param data Object
 #' @param base Character vector. Unique name for your cache file. You can pass
 #' a character vector with multiple elements that will be concatenated.

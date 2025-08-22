@@ -136,7 +136,7 @@ corr <- function(df, method = "pearson",
 #' @family Exploratory
 #' @family Correlations
 #' @inheritParams corr
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param var Variable. Name of the variable to correlate. Note that if the
 #' variable \code{var} is not numerical, 1. you may define which category to select
 #' from using `var_category`; 2. You may have to add \code{redundant = TRUE} to

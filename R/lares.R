@@ -138,7 +138,7 @@ recommended <- list(
   rtweet = c("create_token", "search_tweets"),
   rmarkdown = "render",
   skimr = "skim",
-  spotifyr = c("get_spotify_access_token", "search_spotify"),
+  spotifyr = c("get_album", "get_spotify_access_token", "search_spotify"),
   syuzhet = "get_sentiment_dictionary",
   # sp = c("CRS", "over", "coordinates", "proj4string", "proj4string<-", "coordinates<-", "spTransform"),
   threed = c("mesh3dobj", "transform_by", "invert_matrix", "perspective_projection", "look_at_matrix"),

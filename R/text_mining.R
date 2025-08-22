@@ -89,7 +89,7 @@ cleanNames <- function(df, num = "x", keep = "_", ...) {
 #'
 #' @family Data Wrangling
 #' @family Text Mining
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param text Character vector. Sentences or texts you wish to tokenize.
 #' @param exclude Character vector. Which words do you wish to exclude?
 #' @param lang Character. Language in text (used for stop words). Example:

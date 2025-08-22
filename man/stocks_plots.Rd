@@ -92,10 +92,10 @@ Other Investment:
 
 Other Scrapper: 
 \code{\link{filesGD}()},
-\code{\link{get_mp3}()},
 \code{\link{gtrends_related}()},
 \code{\link{holidays}()},
 \code{\link{ip_data}()},
+\code{\link{mp3_get}()},
 \code{\link{readGS}()},
 \code{\link{stocks_quote}()}
 }

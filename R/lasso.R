@@ -9,7 +9,7 @@
 #'
 #' @family Machine Learning
 #' @family Exploratory
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param df Dataframe. Any dataframe is valid as \code{ohse} will be applied to
 #' process categorical values, and values will be standardize automatically.
 #' @param variable Variable. Dependent variable or response.

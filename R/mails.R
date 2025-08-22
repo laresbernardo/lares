@@ -7,7 +7,7 @@
 #' @family Tools
 #' @family Credentials
 #' @inheritParams cache_write
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param from,to,cc,bcc Character. Emails
 #' @param subject Character. Subject for the email.
 #' @param text,html Character. Text or HTML to send in the body.

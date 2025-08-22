@@ -442,7 +442,7 @@ formatNum <- function(x, decimals = 2, signif = NULL,
 #' with a given relation rate and a binary feature.
 #'
 #' @family Data Wrangling
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param df Vector or Dataframe. Contains different variables in each
 #' column, separated by a specific character
 #' @param var Variable. Which variable should we used to re-sample dataset?
@@ -523,7 +523,7 @@ balance_data <- function(df, var, rate = 1, target = "auto", seed = 0, quiet = F
 #'
 #' @family Data Wrangling
 #' @family Text Mining
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param df Data.frame or Vector
 #' @param original String or Vector. Original text you wish to replace
 #' @param change String or Vector. Values you wish to replace the originals with

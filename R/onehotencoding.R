@@ -258,7 +258,7 @@ ohe_commas <- function(df, ..., sep = ",", noval = "NoVal", remove = FALSE) {
 #' @family Data Wrangling
 #' @family Feature Engineering
 #' @family One Hot Encoding
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param dates Vector or dataframe. Non-date/time columns will be
 #' automatically ignored/extracted.
 #' @param drop Boolean. Should the original date/time columns be
@@ -416,7 +416,7 @@ date_feats <- function(dates,
 #' @family Feature Engineering
 #' @family Scrapper
 #' @family One Hot Encoding
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param years Character or vector. For which year(s) do you wish to import
 #' holiday dates?
 #' @param countries Character or vector. For which country(ies) should the

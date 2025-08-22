@@ -33,14 +33,14 @@
 #' # You must have "youtube-dl" installed in your OS:
 #' \dontrun{
 #' # Download video from YouTube and convert to MP3
-#' get_mp3("https://www.youtube.com/watch?v=lrlKcCdVw9Q")
+#' mp3_get("https://www.youtube.com/watch?v=lrlKcCdVw9Q")
 #' # OR simply
-#' get_mp3("lrlKcCdVw9Q")
+#' mp3_get("lrlKcCdVw9Q")
 #' # For dev version, use:
-#' get_mp3("m3RX4LJh0iI", repo = "yt-dlp")
+#' mp3_get("m3RX4LJh0iI", repo = "yt-dlp")
 #' }
 #' @export
-get_mp3 <- function(id,
+mp3_get <- function(id,
                     mp3 = TRUE,
                     repo = "yt-dlp",
                     params = "--no-check-certificate",
@@ -145,7 +145,7 @@ get_mp3 <- function(id,
       }
 
       # Update all metadata
-      infox$audio <- update_tags_mp3(
+      infox$audio <- mp3_update_tags(
         mp3_file,
         title = sp$name,
         artist = v2t(sp$artists[[1]]$name, quotes = FALSE),
@@ -183,7 +183,7 @@ get_mp3 <- function(id,
     # TRIM START AND/OR END OF AUDIO FILE
     if (any(c(start_time > 0, !is.na(end_time)))) {
       message(">>> Trimming audio file: ", filename)
-      trim_mp3(file,
+      mp3_trim(file,
         start_time = start_time,
         end_time = end_time,
         overwrite = overwrite,
@@ -223,11 +223,11 @@ get_mp3 <- function(id,
 #' timestamp. Requires \code{ffmpeg} installed in your machine.
 #'
 #' @family Audio
-#' @inheritParams get_mp3
+#' @inheritParams mp3_get
 #' @param file Character. File name to trim.
 #' @param ext Character. File extension/type.
 #' @export
-trim_mp3 <- function(file, start_time = 0, end_time = NA,
+mp3_trim <- function(file, start_time = 0, end_time = NA,
                      overwrite = FALSE, ext = "mp3",
                      quiet = FALSE) {
   start <- paste("-ss", start_time)
@@ -273,7 +273,7 @@ trim_mp3 <- function(file, start_time = 0, end_time = NA,
 #'   Only tags that exist in the MP3 file will be updated.
 #' @examples
 #' \dontrun{
-#' update_tags_mp3(
+#' mp3_update_tags(
 #'   "song.mp3",
 #'   title = "My Jazz Song",
 #'   artist = "Bernardo",
@@ -283,7 +283,7 @@ trim_mp3 <- function(file, start_time = 0, end_time = NA,
 #' }
 #' @return Invisibly returns \code{NULL}. The MP3 file is updated in-place.
 #' @export
-update_tags_mp3 <- function(filename, title = NULL, artist = NULL, album = NULL, genre = NULL, ...) {
+mp3_update_tags <- function(filename, title = NULL, artist = NULL, album = NULL, genre = NULL, ...) {
   # filename <- "Steve Kroeger x Life of Kai - Summer (Lyrics).mp3"
   if (!file.exists(filename)) {
     message("File does not exist. Check filename input and working directory....")
@@ -304,17 +304,4 @@ update_tags_mp3 <- function(filename, title = NULL, artist = NULL, album = NULL,
     audio$tag$save()
   }
   invisible(audio)
-}
-
-get_artist_genre <- function(artist) {
-  result <- tryCatch(
-    {
-      sp <- search_spotify(artist, type = "artist", limit = 1)
-      if (nrow(sp) > 0 && length(sp$genres[[1]]) > 0) {
-        return(lares::cleanText(sp$genres[[1]][1], spaces = TRUE, keep = c("&", "/"), title = TRUE))
-      }
-      NA_character_
-    },
-    error = function(e) NA_character_
-  )
 }
