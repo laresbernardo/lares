@@ -31,6 +31,7 @@ timestamp. Requires \code{ffmpeg} installed in your machine.
 }
 \seealso{
 Other Audio: 
-\code{\link{get_mp3}()}
+\code{\link{get_mp3}()},
+\code{\link{update_tags_mp3}()}
 }
 \concept{Audio}

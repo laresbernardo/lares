@@ -16,6 +16,7 @@ get_mp3(
   delete = open,
   info = TRUE,
   cover = FALSE,
+  metadata = FALSE,
   quiet = FALSE
 )
 }
@@ -41,6 +42,9 @@ file be opened? Should it be deleted?}
 \item{info}{Boolean. Import and return metadata?}
 
 \item{cover}{Boolean. Google Search its squared cover?}
+
+\item{metadata}{Boolean. Use "spotifyr" to extract "track" data using Spotify's
+API. Needs credentials.}
 
 \item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
@@ -81,7 +85,8 @@ Other Scrapper:
 \code{\link{stocks_quote}()}
 
 Other Audio: 
-\code{\link{trim_mp3}()}
+\code{\link{trim_mp3}()},
+\code{\link{update_tags_mp3}()}
 }
 \concept{Audio}
 \concept{Scrapper}

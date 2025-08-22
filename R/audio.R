@@ -25,6 +25,8 @@
 #' file be opened? Should it be deleted?
 #' @param info Boolean. Import and return metadata?
 #' @param cover Boolean. Google Search its squared cover?
+#' @param metadata Boolean. Use "spotifyr" to extract "track" data using Spotify's
+#' API. Needs credentials.
 #' @param quiet Boolean. Keep quiet? If not, informative messages will be shown.
 #' @return (Invisible) list with id's meta-data.
 #' @examples
@@ -49,6 +51,7 @@ get_mp3 <- function(id,
                     delete = open,
                     info = TRUE,
                     cover = FALSE,
+                    metadata = FALSE,
                     quiet = FALSE) {
   # Build query's parameters
   query <- "--rm-cache-dir"
@@ -102,6 +105,30 @@ get_mp3 <- function(id,
     infox <- jsonlite::read_json(f)
     invisible(file.remove(f))
     infox[["formats"]] <- NULL
+    filename <- sprintf("%s.mp3", infox$title)
+    mp3_file <- gsub(".info.json", ".mp3", f)
+
+    if (metadata) {
+      try_require("spotifyr")
+      message(">>> Adding metadata...")
+      sp <- search_spotify(
+        q = gsub("\\.mp3", "", mp3_file),
+        type = "track",
+        limit = 1,
+        authorization = get_spotify_access_token(
+          client_id = get_creds("spotify")$SPOTIFY_CLIENT_ID,
+          client_secret = get_creds("spotify")$SPOTIFY_CLIENT_SECRET
+        )
+      )
+      update_tags_mp3(
+        mp3_file,
+        title = sp$name,
+        artist = v2t(sp$artists[[1]]$name, quotes = FALSE),
+        album = sp$album.name
+      )
+      if (cover) browseURL(sp$album.images[[1]]$url[1])
+      cover <- FALSE
+    }
 
     if (cover && mp3 && info) {
       aux <- gsub("\\.mp3", "", infox$title)
@@ -112,9 +139,8 @@ get_mp3 <- function(id,
     }
 
     # TRIM START AND/OR END OF AUDIO FILE
-    file <- sprintf("%s.mp3", infox$title)
     if (any(c(start_time > 0, !is.na(end_time)))) {
-      message(">>> Trimming audio file: ", file)
+      message(">>> Trimming audio file: ", filename)
       trim_mp3(file,
         start_time = start_time,
         end_time = end_time,
@@ -180,4 +206,59 @@ trim_mp3 <- function(file, start_time = 0, end_time = NA,
     system(query2)
     if (overwrite) file.remove(gsub("_trimmed", "", file))
   }
+}
+
+
+####################################################################
+#' Update MP3 Metadata Tags
+#'
+#' Updates the ID3 metadata tags of an MP3 file using the Python `eyeD3` library
+#' via the `reticulate` package. You can modify standard fields such as
+#' \code{title}, \code{artist}, \code{album}, and \code{genre}, as well as
+#' additional tags passed through \code{...} if they exist in the MP3 file.
+#' @details
+#' The function requires Python and the \code{eyeD3} package installed. It will
+#' automatically initialize ID3 tags if they do not exist. Tags provided via
+#' \code{...} are checked against the existing tag names to avoid errors.
+#'
+#' @family Audio
+#' @param filename Character. Path to the MP3 file to update.
+#' @param title Character. New title of the track (optional).
+#' @param artist Character. New artist name (optional).
+#' @param album Character. New album name (optional).
+#' @param genre Character. New genre name (optional).
+#' @param ... Additional named arguments corresponding to other ID3 tags.
+#'   Only tags that exist in the MP3 file will be updated.
+#' @examples
+#' \dontrun{
+#' update_tags_mp3(
+#'   "song.mp3",
+#'   title = "My Jazz Song",
+#'   artist = "Bernardo",
+#'   album = "Smooth Album",
+#'   genre = "Jazz",
+#'   composer = "Bernardo"
+#' ) # If metadata field exists
+#' }
+#' @return Invisibly returns \code{NULL}. The MP3 file is updated in-place.
+#' @export
+update_tags_mp3 <- function(filename, title = NULL, artist = NULL, album = NULL, genre = NULL, ...) {
+  if (!file.exists(filename)) {
+    message("File does not exist. Check filename input and working directory....")
+  } else {
+    try_require("reticulate")
+    eyeD3 <- NULL # To avoid check() issues
+    eyeD3 <- import("eyed3")
+    audio <- eyeD3$load(normalizePath(filename))
+    if (is.null(audio$tag)) audio$initTag()
+    tag_args <- list(title = title, artist = artist, album = album, genre = genre, ...)
+    valid_tags <- names(audio$tag)
+    for (n in names(tag_args)) {
+      if (!is.null(tag_args[[n]]) && n %in% valid_tags) {
+        audio$tag[[n]] <- tag_args[[n]]
+      }
+    }
+    audio$tag$save()
+  }
+  invisible(audio)
 }
