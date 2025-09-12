@@ -110,7 +110,7 @@ mp3_get <- function(id,
 
     if (metadata) {
       try_require("spotifyr")
-      message(">>> Adding metadata...")
+      message(">>> Adding metadata: ", infox$title)
       authorization <- get_spotify_access_token(
         client_id = get_creds("spotify")$SPOTIFY_CLIENT_ID,
         client_secret = get_creds("spotify")$SPOTIFY_CLIENT_SECRET
@@ -120,10 +120,10 @@ mp3_get <- function(id,
         type = "track",
         limit = 3,
         authorization = authorization
-      )
-      sp <- rowwise(sp) %>%
+      ) %>%
+        rowwise() %>%
         mutate(matching = grepl(.data$name, infox$title) |
-          grepl(.data$album.name, infox$title)) %>%
+               grepl(.data$album.name, infox$title)) %>%
         arrange(desc(.data$matching)) %>%
         head(1)
       album <- get_album(sp$album.id, authorization = authorization)
