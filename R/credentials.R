@@ -59,34 +59,34 @@ get_credentials <- function(from = NA, dir = NA,
   } else {
     if (isTRUE(is.na(dir)) || isTRUE(is.null(dir))) {
       dir <- Sys.getenv(env)
-      if (dir == "") {
-        message(sprintf(
-          "Please, set your creds directory (one-time only step to set %s):", env
-        ))
-        dir <- readline(sprintf("Set directory where your %s file is saved: ", filename))
-        if (!dir.exists(dir)) {
-          stop(sprintf("Directory: %s. \nCan't find or does not exist. Please try again...", dir))
-        }
-        line <- sprintf("%s=%s", env, dir)
-        write(line, file = "~/.Renviron", append = TRUE)
-        message("ALL's SET! But, you must reset your session for it to work!")
-        invisible(NULL)
+    }
+    if (dir == "") {
+      message(sprintf(
+        "Please, set your creds directory (one-time only step to set %s):", env
+      ))
+      dir <- readline(sprintf("Set directory where your %s file is saved: ", filename))
+      if (!dir.exists(dir)) {
+        stop(sprintf("Directory: %s. \nCan't find or does not exist. Please try again...", dir))
+      }
+      line <- sprintf("%s=%s", env, dir)
+      write(line, file = "~/.Renviron", append = TRUE)
+      message("ALL's SET! But, you must reset your session for it to work!")
+      invisible(NULL)
+    } else {
+      file <- paste0(dir, "/", filename)
+      if (!file.exists(file)) {
+        message(sprintf("YML file with credentials not found in %s", dir))
       } else {
-        file <- paste0(dir, "/", filename)
-        if (!file.exists(file)) {
-          message(sprintf("YML file with credentials not found in %s", dir))
-        } else {
-          credentials <- yaml::read_yaml(file)$default
-          if (is.null(credentials)) {
-            trues <- names(credentials)
-            warning(paste(
-              "No credentials for", from, "found in your YML file.",
-              "\nTry any of the following:", v2t(trues)
-            ))
-          }
-          if (!is.na(from)) credentials <- credentials[[from]]
-          credentials
+        credentials <- yaml::read_yaml(file)$default
+        if (is.null(credentials)) {
+          trues <- names(credentials)
+          warning(paste(
+            "No credentials for", from, "found in your YML file.",
+            "\nTry any of the following:", v2t(trues)
+          ))
         }
+        if (!is.na(from)) credentials <- credentials[[from]]
+        credentials
       }
     }
   }
