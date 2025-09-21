@@ -1,6 +1,8 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://laresbernardo.github.io/lares/404.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/CONTRIBUTE.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/LICENSE-text.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/LICENSE.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/authors.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/index.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/news/index.html</loc></url>
@@ -67,7 +69,6 @@
 <url><loc>https://laresbernardo.github.io/lares/reference/gemini_ask.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/get_credentials.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/get_currency.html</loc></url>
-<url><loc>https://laresbernardo.github.io/lares/reference/get_mp3.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/get_tweets.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/gg_fill_customs.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/glued.html</loc></url>
@@ -109,6 +110,9 @@
 <url><loc>https://laresbernardo.github.io/lares/reference/model_metrics.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/model_preprocess.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/move_files.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mp3_get.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mp3_trim.html</loc></url>
+<url><loc>https://laresbernardo.github.io/lares/reference/mp3_update_tags.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/mplot_conf.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/mplot_cuts.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/mplot_cuts_error.html</loc></url>
@@ -177,7 +181,6 @@
 <url><loc>https://laresbernardo.github.io/lares/reference/tic.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/topics_rake.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/tree_var.html</loc></url>
-<url><loc>https://laresbernardo.github.io/lares/reference/trim_mp3.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/try_require.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/updateLares.html</loc></url>
 <url><loc>https://laresbernardo.github.io/lares/reference/vector2text.html</loc></url>

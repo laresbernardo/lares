@@ -15,7 +15,7 @@ of a dataframe or vector with date/time variables."><meta property="og:image" co
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,7 @@ of a dataframe or vector with date/time variables."><meta property="og:image" co
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>One Hot Encoding for Date/Time Variables (Dummy Variables)</h1>
-      <small class="dont-index">Source: <a href="https://github.com/laresbernardo/lares/blob/v5.3.2/R/onehotencoding.R" class="external-link"><code>R/onehotencoding.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/laresbernardo/lares/blob/main/R/onehotencoding.R" class="external-link"><code>R/onehotencoding.R</code></a></small>
       <div class="d-none name"><code>date_feats.Rd</code></div>
     </div>
 
@@ -151,16 +151,16 @@ wish to get the history from? i.e, USD/COP, EUR/USD...</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    dates_year dates_month dates_day dates_week dates_weekday dates_weekend</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>       <span style="text-decoration: underline;">2</span>024          12        11         50 Wed           FALSE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>       <span style="text-decoration: underline;">2</span>025           8        25         34 Mon           FALSE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>       <span style="text-decoration: underline;">2</span>025           1        26          4 Sun           TRUE         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>       <span style="text-decoration: underline;">2</span>025           9         1         35 Mon           FALSE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>       <span style="text-decoration: underline;">2</span>025           8         5         31 Tue           FALSE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>       <span style="text-decoration: underline;">2</span>024          10         7         41 Mon           FALSE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>       <span style="text-decoration: underline;">2</span>024           9        18         38 Wed           FALSE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>       <span style="text-decoration: underline;">2</span>025           9        10         37 Wed           FALSE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>       <span style="text-decoration: underline;">2</span>025           5        23         21 Fri           FALSE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>       <span style="text-decoration: underline;">2</span>025           4        10         15 Thu           FALSE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>       <span style="text-decoration: underline;">2</span>024          12        20         51 Fri           FALSE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>       <span style="text-decoration: underline;">2</span>025           9         3         36 Wed           FALSE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>       <span style="text-decoration: underline;">2</span>025           2         4          5 Tue           FALSE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>       <span style="text-decoration: underline;">2</span>025           9        10         37 Wed           FALSE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>       <span style="text-decoration: underline;">2</span>025           8        14         33 Thu           FALSE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>       <span style="text-decoration: underline;">2</span>024          10        16         42 Wed           FALSE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>       <span style="text-decoration: underline;">2</span>024           9        27         39 Fri           FALSE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>       <span style="text-decoration: underline;">2</span>025           9        19         38 Fri           FALSE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>       <span style="text-decoration: underline;">2</span>025           6         1         22 Sun           TRUE         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>       <span style="text-decoration: underline;">2</span>025           4        19         16 Sat           TRUE         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 12 more variables: dates_year_day &lt;int&gt;, times_year &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   times_month &lt;dbl&gt;, times_day &lt;int&gt;, times_week &lt;dbl&gt;, times_weekday &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   times_weekend &lt;lgl&gt;, times_year_day &lt;int&gt;, times_hour &lt;int&gt;,</span></span>
