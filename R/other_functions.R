@@ -1133,3 +1133,29 @@ chr2date <- function(data) {
   }
   data
 }
+
+####################################################################
+#' Calculate Character Reduction from R Object to TOON Format
+#'
+#' Calculates the percentage reduction in the number of characters when
+#' converting an R object to its TOON string representation compared to
+#' its JSON representation (or the string itself if the input is a single string).
+#'
+#' @param obj Any R object (list, vector, data frame, or string).
+#' @param ... Additional arguments passed to jsonlite::toJSON()
+#' @return A numeric value representing the character reduction ratio (0 to 1).
+#' @export
+toon_reduction <- function(obj, ...) {
+  toon_str <- as_toon(obj)
+  toon_nchar <- nchar(toon_str)
+  if (length(obj) == 1 && is.character(obj) && !is.na(obj)) {
+    original_str <- obj 
+  } else {
+    original_str <- jsonlite::toJSON(obj, ...)
+  }
+  original_nchar <- nchar(original_str)
+  if (original_nchar == 0) return(0)
+  reduction_amount <- original_nchar - toon_nchar
+  reduction_ratio <- reduction_amount / original_nchar
+  return(reduction_ratio)
+}

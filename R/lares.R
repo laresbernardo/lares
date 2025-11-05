@@ -148,6 +148,7 @@ recommended <- list(
     "removeWords", "readPlain", "stopwords", "stripWhitespace", "TermDocumentMatrix",
     "tm_map", "VectorSource", "VCorpus"
   ),
+  toon = "as_toon",
   udpipe = c("keywords_rake", "udpipe_annotate", "udpipe_download_model", "udpipe_load_model"),
   wordcloud = c("wordcloud", "textplot")
 )
