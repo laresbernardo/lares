@@ -15,6 +15,7 @@ mp3_get(
   open = FALSE,
   delete = open,
   info = TRUE,
+  title = NULL,
   cover = FALSE,
   metadata = FALSE,
   quiet = FALSE
@@ -41,10 +42,14 @@ file be opened? Should it be deleted?}
 
 \item{info}{Boolean. Import and return metadata?}
 
-\item{cover}{Boolean. Google Search its squared cover?}
+\item{title}{Character. Title of the track to search for cover, metadata, and
+name the file.}
+
+\item{cover}{Boolean. Google Search its squared cover? Uses \code{title}
+input when provided.}
 
 \item{metadata}{Boolean. Use "spotifyr" to extract "track" data using Spotify's
-API. Needs credentials.}
+API. Needs credentials. Uses \code{title} input when provided.}
 
 \item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
