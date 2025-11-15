@@ -1,0 +1,603 @@
+# lares
+
+### Lean Analytics and Robust Exploration Sidekick
+
+[![R-CMD-check](https://github.com/laresbernardo/lares/workflows/R-CMD-check/badge.svg)](https://github.com/laresbernardo/lares/actions?query=workflow%3AR-CMD-check)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version-ago/lares)](https://cran.r-project.org/package=lares)
+[![](https://cranlogs.r-pkg.org/badges/lares)](https://cran.r-project.org/package=lares)
+[![docs](https://github.com/laresbernardo/lares/workflows/documentation/badge.svg)](https://laresbernardo.github.io/lares/reference/index.html)
+[![CodeFactor](https://www.codefactor.io/repository/github/laresbernardo/lares/badge)](https://www.codefactor.io/repository/github/laresbernardo/lares/overview/main)
+
+------------------------------------------------------------------------
+
+**lares** is an R package designed to automate, improve, and accelerate
+everyday **analytics and machine learning** tasks. It offers a wide
+variety of functions grouped in families for:
+
+- **Machine Learning**: Streamlined model training and evaluation,
+  including friendly AutoML pipelines.
+- **Data Cleaning & Processing**: Functions to quickly prepare your data
+  for modeling or analyzes.
+- **Exploratory Data Analysis (EDA)**: Instantly visualize and summarize
+  your data.
+- **Reporting**: Easily generate comprehensive reports to share insights
+  for MMM and ML models.
+- **Visualization**: Out-of-the-box plotting for classification and
+  regression models, timelines, and more.
+- **API Integrations & Scrapers**: Simplify data collection from various
+  sources.
+- **Time Series & Portfolio Analysis**: Specialized utilities for
+  financial and temporal data.
+- **Credentials & Secrets Management**: Securely handle sensitive
+  information in your analytics pipelines.
+- **NLP & Text Analytics**: Tools to analyze and process text data.
+
+> **Tip:** See all available functions and documentation
+> [here](https://laresbernardo.github.io/lares/reference/index.html) or
+> type `?lares::` in RStudio to explore interactively.
+
+------------------------------------------------------------------------
+
+## Installation
+
+``` r
+# CRAN VERSION
+install.packages("lares")
+
+# DEV VERSION (latest updates)
+# If you don't have remotes installed yet, run: install.packages('remotes')
+remotes::install_github("laresbernardo/lares")
+# For a full installation with recommended dependencies:
+remotes::install_github("laresbernardo/lares", dependencies = TRUE)
+```
+
+**Windows users:** You may need to install
+[RTools](https://cran.r-project.org/bin/windows/Rtools/) to build the
+dev version.
+
+------------------------------------------------------------------------
+
+## Read about `lares` in action!
+
+- **AutoML Quickstart:** [Introduction to AutoML using
+  `lares`](https://laresbernardo.github.io/lares/articles/h2o_automl.html)
+- **Model Results Visualization:**
+  [Classification](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/)
+  \|
+  [Regression](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/)
+- **Marketing Mix Model Selection:** [Select the right MMM
+  candidate](https://medium.com/@laresbernardo/select-the-right-mmm-candidate-based-on-your-specific-criteria-and-business-knowledge-1f583c3cb97a)
+- **Cross-Correlations:** [Find Insights with Ranked
+  Cross-Correlations](https://datascienceplus.com/find-insights-with-ranked-cross-correlations/)
+- **Secure Credentials:** [Manage Secrets in
+  R](https://datascienceplus.com/how-to-manage-credentials-and-secrets-safely-in-r/)
+- **Portfolio Analysis:** [Performance &
+  Reporting](https://datascienceplus.com/visualize-your-portfolios-performance-and-generate-a-nice-report-with-r/)
+- **Fun games**:
+  [Wordle](https://datascienceplus.com/how-i-selected-my-starting-word-for-wordle-using-simulations-and-r/),
+  [Scrabble](https://laresbernardo.github.io/lares/reference/scrabble.html),
+  [Sudoku](https://laresbernardo.github.io/lares/reference/sudoku_solver.html),
+  [Mazes](https://laresbernardo.github.io/lares/reference/maze_solve.html),
+  etc.
+- **More Examples:** [Read other
+  posts](https://datascienceplus.com/author/bernardo-lares/)
+
+------------------------------------------------------------------------
+
+## Popular Functions
+
+- [`h2o_automl()`](https://laresbernardo.github.io/lares/reference/h2o_automl.md),
+  `plot_model_results()` – Automated machine learning pipeline with
+  optimal model selection and visualizations.
+- [`freqs()`](https://laresbernardo.github.io/lares/reference/freqs.md),
+  [`distr()`](https://laresbernardo.github.io/lares/reference/distr.md),
+  [`corr_var()`](https://laresbernardo.github.io/lares/reference/corr_var.md),
+  [`corr_cross()`](https://laresbernardo.github.io/lares/reference/corr_cross.md)
+  – Instantly summarize, visualize, and uncover relationships in your
+  data.
+- [`ohse()`](https://laresbernardo.github.io/lares/reference/ohse.md) –
+  Efficient and smart one-hot encoding for categorical variables.
+- `cache_*` – Speed up workflows by caching expensive computations.
+- `robyn_*` – Additional functions to support
+  [Robyn](https://github.com/facebookexperimental/Robyn) inputs and
+  outputs.
+- `fb_*` – Interact with Meta’s Marketing API
+- `gpt_*` – Structured prompts builder and interact with OpenAI’s API
+- [`read_encrypted()`](https://laresbernardo.github.io/lares/reference/encrypt_file.md),
+  [`write_encrypted()`](https://laresbernardo.github.io/lares/reference/encrypt_file.md)
+  – Interact with encrypted files to keep secrets safe
+- …and [many
+  more!](https://laresbernardo.github.io/lares/reference/index.html)
+
+![AutoML Map (lares)](reference/figures/automl_map.png?raw=true)
+
+AutoML Map (lares)
+
+------------------------------------------------------------------------
+
+## Getting Started & Help
+
+- Browse all functions in the [online
+  reference](https://laresbernardo.github.io/lares/reference/index.html).
+- Use `?lares::function_name` in RStudio for detailed help on any
+  function.
+- Found a bug or have a feature request? [Open an
+  issue](https://github.com/laresbernardo/lares/issues).
+- For questions or suggestions, reach out to
+  [laresbernardo](mailto:laresbernardo@gmail.com).
+
+# Package index
+
+## All functions
+
+- [`ROC()`](https://laresbernardo.github.io/lares/reference/ROC.md) :
+  AUC and ROC Curves Data
+- [`autoline()`](https://laresbernardo.github.io/lares/reference/autoline.md)
+  : New Line Feed for Long Strings (Wrapper)
+- [`balance_data()`](https://laresbernardo.github.io/lares/reference/balance_data.md)
+  : Balance Binary Data by Resampling: Under-Over Sampling
+- [`bind_files()`](https://laresbernardo.github.io/lares/reference/bind_files.md)
+  : Bind Files into Dataframe
+- [`bring_api()`](https://laresbernardo.github.io/lares/reference/bring_api.md)
+  : Get API (JSON) and Transform into data.frame
+- [`cache_write()`](https://laresbernardo.github.io/lares/reference/cache_write.md)
+  [`cache_read()`](https://laresbernardo.github.io/lares/reference/cache_write.md)
+  [`cache_exists()`](https://laresbernardo.github.io/lares/reference/cache_write.md)
+  [`cache_clear()`](https://laresbernardo.github.io/lares/reference/cache_write.md)
+  [`cache_pipe()`](https://laresbernardo.github.io/lares/reference/cache_write.md)
+  : Cache Save and Load (Write and Read)
+- [`categ_reducer()`](https://laresbernardo.github.io/lares/reference/categ_reducer.md)
+  : Reduce categorical values
+- [`check_opts()`](https://laresbernardo.github.io/lares/reference/checks.md)
+  [`check_attr()`](https://laresbernardo.github.io/lares/reference/checks.md)
+  [`is_url()`](https://laresbernardo.github.io/lares/reference/checks.md)
+  [`is_ip()`](https://laresbernardo.github.io/lares/reference/checks.md)
+  [`are_id()`](https://laresbernardo.github.io/lares/reference/checks.md)
+  [`are_constant()`](https://laresbernardo.github.io/lares/reference/checks.md)
+  [`are_binary()`](https://laresbernardo.github.io/lares/reference/checks.md)
+  [`is_even()`](https://laresbernardo.github.io/lares/reference/checks.md)
+  [`is_odd()`](https://laresbernardo.github.io/lares/reference/checks.md)
+  : Validate inputs (attributions, options, ...)
+- [`chr2num()`](https://laresbernardo.github.io/lares/reference/chr2num.md)
+  [`chr2logical()`](https://laresbernardo.github.io/lares/reference/chr2num.md)
+  [`chr2date()`](https://laresbernardo.github.io/lares/reference/chr2num.md)
+  : Check character values for date/numeric/logical and change datatype
+- [`ci_lower()`](https://laresbernardo.github.io/lares/reference/ci_lower.md)
+  [`ci_upper()`](https://laresbernardo.github.io/lares/reference/ci_lower.md)
+  : Lower/Upper Confidence Intervals
+- [`ci_var()`](https://laresbernardo.github.io/lares/reference/ci_var.md)
+  : Confidence Intervals on Dataframe
+- [`cleanText()`](https://laresbernardo.github.io/lares/reference/clean_text.md)
+  [`cleanNames()`](https://laresbernardo.github.io/lares/reference/clean_text.md)
+  : Clean text strings automatically
+- [`clusterKmeans()`](https://laresbernardo.github.io/lares/reference/clusterKmeans.md)
+  : Automated K-Means Clustering + PCA/t-SNE
+- [`clusterOptimalK()`](https://laresbernardo.github.io/lares/reference/clusterOptimalK.md)
+  : Visualize K-Means Clusters for Several K Methods
+- [`clusterVisualK()`](https://laresbernardo.github.io/lares/reference/clusterVisualK.md)
+  : Visualize K-Means Clusters for Several K
+- [`conf_mat()`](https://laresbernardo.github.io/lares/reference/conf_mat.md)
+  : Confussion Matrix
+- [`corr()`](https://laresbernardo.github.io/lares/reference/corr.md) :
+  Correlation table
+- [`corr_cross()`](https://laresbernardo.github.io/lares/reference/corr_cross.md)
+  : Ranked cross-correlation across all variables
+- [`corr_var()`](https://laresbernardo.github.io/lares/reference/corr_var.md)
+  [`plot(`*`<corr_var>`*`)`](https://laresbernardo.github.io/lares/reference/corr_var.md)
+  : Correlation between variable and dataframe
+- [`cran_logs()`](https://laresbernardo.github.io/lares/reference/cran_logs.md)
+  : Download and plot daily downloads of CRAN packages
+- [`crosstab()`](https://laresbernardo.github.io/lares/reference/crosstab.md)
+  : Weighted Cross Tabulation
+- [`dalex_local()`](https://laresbernardo.github.io/lares/reference/dalex_local.md)
+  : DALEX Local
+- [`dalex_residuals()`](https://laresbernardo.github.io/lares/reference/dalex_residuals.md)
+  : DALEX Residuals
+- [`dalex_variable()`](https://laresbernardo.github.io/lares/reference/dalex_variable.md)
+  : DALEX Partial Dependency Plots (PDP)
+- [`date_cuts()`](https://laresbernardo.github.io/lares/reference/date_cuts.md)
+  : Convert Date into Year + Cut
+- [`date_feats()`](https://laresbernardo.github.io/lares/reference/date_feats.md)
+  : One Hot Encoding for Date/Time Variables (Dummy Variables)
+- [`db_download()`](https://laresbernardo.github.io/lares/reference/db_download.md)
+  : Download/Import Dropbox File by File's Name
+- [`db_upload()`](https://laresbernardo.github.io/lares/reference/db_upload.md)
+  : Upload Local Files to Dropbox
+- [`df_str()`](https://laresbernardo.github.io/lares/reference/df_str.md)
+  : Dataset columns and rows structure
+- [`dfr`](https://laresbernardo.github.io/lares/reference/dfr.md) :
+  Results for AutoML Predictions
+- [`dft`](https://laresbernardo.github.io/lares/reference/dft.md) :
+  Titanic Dataset
+- [`dist2d()`](https://laresbernardo.github.io/lares/reference/dist2d.md)
+  : Distance from specific point to line
+- [`distr()`](https://laresbernardo.github.io/lares/reference/distr.md)
+  : Compare Variables with their Distributions
+- [`dont_sleep()`](https://laresbernardo.github.io/lares/reference/dont_sleep.md)
+  [`dont_sleep_time()`](https://laresbernardo.github.io/lares/reference/dont_sleep.md)
+  : Prevent Computer from Sleeping by Simulating Mouse Activity
+- [`encrypt_file()`](https://laresbernardo.github.io/lares/reference/encrypt_file.md)
+  [`read_encrypted()`](https://laresbernardo.github.io/lares/reference/encrypt_file.md)
+  [`write_encrypted()`](https://laresbernardo.github.io/lares/reference/encrypt_file.md)
+  [`hex_to_raw()`](https://laresbernardo.github.io/lares/reference/encrypt_file.md)
+  [`raw_to_hex()`](https://laresbernardo.github.io/lares/reference/encrypt_file.md)
+  : File Encryption and Decryption (AES-256-CBC)
+- [`errors()`](https://laresbernardo.github.io/lares/reference/errors.md)
+  [`rmse()`](https://laresbernardo.github.io/lares/reference/errors.md)
+  [`mae()`](https://laresbernardo.github.io/lares/reference/errors.md)
+  [`mse()`](https://laresbernardo.github.io/lares/reference/errors.md)
+  [`mape()`](https://laresbernardo.github.io/lares/reference/errors.md)
+  [`rsq()`](https://laresbernardo.github.io/lares/reference/errors.md)
+  [`rsqa()`](https://laresbernardo.github.io/lares/reference/errors.md)
+  : Calculate Continuous Values Errors
+- [`etf_sector()`](https://laresbernardo.github.io/lares/reference/etf_sector.md)
+  : ETF's Sectors Breakdown
+- [`export_plot()`](https://laresbernardo.github.io/lares/reference/export_plot.md)
+  : Export ggplot2, gridExtra, or any plot object into rendered file
+- [`export_results()`](https://laresbernardo.github.io/lares/reference/export_results.md)
+  : Export h2o_automl's Results
+- [`fb_accounts()`](https://laresbernardo.github.io/lares/reference/fb_accounts.md)
+  : Facebook Ad Accounts
+- [`fb_ads()`](https://laresbernardo.github.io/lares/reference/fb_ads.md)
+  : Facebook Ads API
+- [`fb_creatives()`](https://laresbernardo.github.io/lares/reference/fb_creatives.md)
+  : Facebook Creatives API
+- [`fb_insights()`](https://laresbernardo.github.io/lares/reference/fb_insights.md)
+  : Facebook Insights API
+- [`fb_process()`](https://laresbernardo.github.io/lares/reference/fb_process.md)
+  : Paginate and Process Facebook's API Results
+- [`fb_report_check()`](https://laresbernardo.github.io/lares/reference/fb_report_check.md)
+  : Facebook API Report Status Check
+- [`fb_rf()`](https://laresbernardo.github.io/lares/reference/fb_rf.md)
+  : Facebook Reach and Frequency API
+- [`fb_token()`](https://laresbernardo.github.io/lares/reference/fb_token.md)
+  : Facebook's Long-Life User API Token
+- [`file_name()`](https://laresbernardo.github.io/lares/reference/file_name.md)
+  [`file_type()`](https://laresbernardo.github.io/lares/reference/file_name.md)
+  : Extract file raw name and type from file names
+- [`filesGD()`](https://laresbernardo.github.io/lares/reference/filesGD.md)
+  : Google Drive Files (API v4)
+- [`files_functions()`](https://laresbernardo.github.io/lares/reference/files_functions.md)
+  : List all functions used in R script files by package
+- [`removenacols()`](https://laresbernardo.github.io/lares/reference/filterdata.md)
+  [`removenarows()`](https://laresbernardo.github.io/lares/reference/filterdata.md)
+  [`numericalonly()`](https://laresbernardo.github.io/lares/reference/filterdata.md)
+  : Remove/Drop Columns in which ALL or SOME values are NAs
+- [`font_exists()`](https://laresbernardo.github.io/lares/reference/font_exists.md)
+  : Check if Font is Installed
+- [`forecast_arima()`](https://laresbernardo.github.io/lares/reference/forecast_arima.md)
+  : ARIMA Forecast
+- [`formatColoured()`](https://laresbernardo.github.io/lares/reference/formatColoured.md)
+  : Print Coloured Messages
+- [`formatHTML()`](https://laresbernardo.github.io/lares/reference/format_string.md)
+  [`formatNum()`](https://laresbernardo.github.io/lares/reference/format_string.md)
+  : Format a string text as markdown/HTML
+- [`freqs()`](https://laresbernardo.github.io/lares/reference/freqs.md)
+  : Frequencies Calculations and Plot
+- [`freqs_df()`](https://laresbernardo.github.io/lares/reference/freqs_df.md)
+  : Plot for All Frequencies on Dataframe
+- [`freqs_list()`](https://laresbernardo.github.io/lares/reference/freqs_list.md)
+  : Frequencies on Lists and UpSet Plot
+- [`freqs_plot()`](https://laresbernardo.github.io/lares/reference/freqs_plot.md)
+  : Combined Frequencies Plot for Categorical Features
+- [`gain_lift()`](https://laresbernardo.github.io/lares/reference/gain_lift.md)
+  : Cumulative Gain, Lift and Response
+- [`gemini_ask()`](https://laresbernardo.github.io/lares/reference/gemini_ask.md)
+  [`gemini_image()`](https://laresbernardo.github.io/lares/reference/gemini_ask.md)
+  : Gemini API Interaction with R
+- [`get_credentials()`](https://laresbernardo.github.io/lares/reference/get_credentials.md)
+  [`get_creds()`](https://laresbernardo.github.io/lares/reference/get_credentials.md)
+  : Load Credentials from a YML File
+- [`get_currency()`](https://laresbernardo.github.io/lares/reference/get_currency.md)
+  : Download Historical Currency Exchange Rate
+- [`get_tweets()`](https://laresbernardo.github.io/lares/reference/get_tweets.md)
+  : Get Tweets
+- [`gg_fill_customs()`](https://laresbernardo.github.io/lares/reference/gg_fill_customs.md)
+  [`gg_colour_customs()`](https://laresbernardo.github.io/lares/reference/gg_fill_customs.md)
+  [`gg_text_customs()`](https://laresbernardo.github.io/lares/reference/gg_fill_customs.md)
+  [`gg_vals()`](https://laresbernardo.github.io/lares/reference/gg_fill_customs.md)
+  : Custom fill, colour and text colours for ggplot2
+- [`glued()`](https://laresbernardo.github.io/lares/reference/glued.md)
+  : Interpolate a string \[glue wrapper\]
+- [`readGS()`](https://laresbernardo.github.io/lares/reference/google_sheets.md)
+  [`writeGS()`](https://laresbernardo.github.io/lares/reference/google_sheets.md)
+  : Google Sheets Reading and Writing (API v4)
+- [`gtrends_related()`](https://laresbernardo.github.io/lares/reference/google_trends.md)
+  [`gtrends_time()`](https://laresbernardo.github.io/lares/reference/google_trends.md)
+  : Google Trends: Related and Time Plots
+- [`gpt_ask()`](https://laresbernardo.github.io/lares/reference/gpt_ask.md)
+  [`gpt_history()`](https://laresbernardo.github.io/lares/reference/gpt_ask.md)
+  [`gpt_table()`](https://laresbernardo.github.io/lares/reference/gpt_ask.md)
+  [`gpt_classify()`](https://laresbernardo.github.io/lares/reference/gpt_ask.md)
+  [`gpt_tag()`](https://laresbernardo.github.io/lares/reference/gpt_ask.md)
+  [`gpt_extract()`](https://laresbernardo.github.io/lares/reference/gpt_ask.md)
+  [`gpt_format()`](https://laresbernardo.github.io/lares/reference/gpt_ask.md)
+  [`gpt_convert()`](https://laresbernardo.github.io/lares/reference/gpt_ask.md)
+  [`gpt_translate()`](https://laresbernardo.github.io/lares/reference/gpt_ask.md)
+  : ChatGPT API Interaction with R
+- [`gpt_prompter()`](https://laresbernardo.github.io/lares/reference/gpt_prompter.md)
+  : Structured Prompt Builder for LLM (ChatGPT)
+- [`grepl_letters()`](https://laresbernardo.github.io/lares/reference/grepl_letters.md)
+  : Pattern Matching for Letters considering Blanks
+- [`grepm()`](https://laresbernardo.github.io/lares/reference/grepm.md)
+  : Pattern Matching for Any or All Multiple Matches
+- [`h2o_automl()`](https://laresbernardo.github.io/lares/reference/h2o_automl.md)
+  [`plot(`*`<h2o_automl>`*`)`](https://laresbernardo.github.io/lares/reference/h2o_automl.md)
+  [`print(`*`<h2o_automl>`*`)`](https://laresbernardo.github.io/lares/reference/h2o_automl.md)
+  : Automated H2O's AutoML
+- [`h2o_explainer()`](https://laresbernardo.github.io/lares/reference/h2o_explainer.md)
+  : DALEX Explainer for H2O
+- [`h2o_predict_MOJO()`](https://laresbernardo.github.io/lares/reference/h2o_predict.md)
+  [`h2o_predict_binary()`](https://laresbernardo.github.io/lares/reference/h2o_predict.md)
+  [`h2o_predict_model()`](https://laresbernardo.github.io/lares/reference/h2o_predict.md)
+  [`h2o_predict_API()`](https://laresbernardo.github.io/lares/reference/h2o_predict.md)
+  : Calculate predictions of h2o Models
+- [`h2o_results()`](https://laresbernardo.github.io/lares/reference/h2o_results.md)
+  : Automated H2O's AutoML Results
+- [`h2o_selectmodel()`](https://laresbernardo.github.io/lares/reference/h2o_selectmodel.md)
+  : Select Model from h2o_automl's Leaderboard
+- [`h2o_shap()`](https://laresbernardo.github.io/lares/reference/h2o_shap.md)
+  [`plot(`*`<h2o_shap>`*`)`](https://laresbernardo.github.io/lares/reference/h2o_shap.md)
+  : SHAP values for H2O Models
+- [`haveInternet()`](https://laresbernardo.github.io/lares/reference/haveInternet.md)
+  : Internet Connection Check
+- [`holidays()`](https://laresbernardo.github.io/lares/reference/holidays.md)
+  : Holidays in your Country
+- [`image_metadata()`](https://laresbernardo.github.io/lares/reference/image_metadata.md)
+  : Get Meta Data from Image Files
+- [`importxlsx()`](https://laresbernardo.github.io/lares/reference/importxlsx.md)
+  : Import Excel File with All Its Tabs
+- [`impute()`](https://laresbernardo.github.io/lares/reference/impute.md)
+  : Impute Missing Values (using MICE)
+- [`install_recommended()`](https://laresbernardo.github.io/lares/reference/install_recommended.md)
+  : Install/Update Additional Recommended Libraries
+- [`ip_data()`](https://laresbernardo.github.io/lares/reference/ip_data.md)
+  : Scrap data based on IP address
+- [`iter_seeds()`](https://laresbernardo.github.io/lares/reference/iter_seeds.md)
+  : Iterate Seeds on AutoML
+- [`json2vector()`](https://laresbernardo.github.io/lares/reference/json2vector.md)
+  : Convert Python JSON string to R vector (data.frame with 1 row)
+- [`lares-exports`](https://laresbernardo.github.io/lares/reference/lares-exports.md)
+  [`%>%`](https://laresbernardo.github.io/lares/reference/lares-exports.md)
+  : Pipe operator
+- [`lares-package`](https://laresbernardo.github.io/lares/reference/lares.md)
+  [`lares`](https://laresbernardo.github.io/lares/reference/lares.md) :
+  Lean Analytics and Robust Exploration Sidekick
+- [`lares_logo()`](https://laresbernardo.github.io/lares/reference/lares_logo.md)
+  : Print lares R library Logo
+- [`lares_pal()`](https://laresbernardo.github.io/lares/reference/lares_pal.md)
+  : Personal Colours Palette
+- [`lasso_vars()`](https://laresbernardo.github.io/lares/reference/lasso_vars.md)
+  : Most Relevant Features Using Lasso Regression
+- [`left()`](https://laresbernardo.github.io/lares/reference/left_right.md)
+  [`right()`](https://laresbernardo.github.io/lares/reference/left_right.md)
+  : Left or Right N characters of a string
+- [`list_cats()`](https://laresbernardo.github.io/lares/reference/list_cats.md)
+  : List categorical values for data.frame
+- [`listfiles()`](https://laresbernardo.github.io/lares/reference/listfiles.md)
+  : List files in a directory
+- [`loglossBinary()`](https://laresbernardo.github.io/lares/reference/loglossBinary.md)
+  : Logarithmic Loss Function for Binary Models
+- [`mail_send()`](https://laresbernardo.github.io/lares/reference/mail_send.md)
+  : Send Emails with Attachments (POST)
+- [`markdown2df()`](https://laresbernardo.github.io/lares/reference/markdown2df.md)
+  : Convert markdown string tables to data.frame
+- [`maze_solve()`](https://laresbernardo.github.io/lares/reference/maze_solve.md)
+  [`print(`*`<maze_solve>`*`)`](https://laresbernardo.github.io/lares/reference/maze_solve.md)
+  [`maze_gridsearch()`](https://laresbernardo.github.io/lares/reference/maze_solve.md)
+  : Maze Solver, inspired by Micromouse competitions
+- [`missingness()`](https://laresbernardo.github.io/lares/reference/missingness.md)
+  : Calculate and Visualize Missingness
+- [`model_metrics()`](https://laresbernardo.github.io/lares/reference/model_metrics.md)
+  : Model Metrics and Performance
+- [`model_preprocess()`](https://laresbernardo.github.io/lares/reference/model_preprocess.md)
+  : Automate Data Preprocess for Modeling
+- [`move_files()`](https://laresbernardo.github.io/lares/reference/move_files.md)
+  : Move files from A to B
+- [`mp3_get()`](https://laresbernardo.github.io/lares/reference/mp3_get.md)
+  : Download MP3 from URL
+- [`mp3_trim()`](https://laresbernardo.github.io/lares/reference/mp3_trim.md)
+  : Trim MP3 Audio File
+- [`mp3_update_tags()`](https://laresbernardo.github.io/lares/reference/mp3_update_tags.md)
+  : Update MP3 Metadata Tags
+- [`mplot_conf()`](https://laresbernardo.github.io/lares/reference/mplot_conf.md)
+  : Confussion Matrix Plot
+- [`mplot_cuts()`](https://laresbernardo.github.io/lares/reference/mplot_cuts.md)
+  : Cuts by quantiles for score plot
+- [`mplot_cuts_error()`](https://laresbernardo.github.io/lares/reference/mplot_cuts_error.md)
+  : Cuts by quantiles on absolute and percentual errors plot
+- [`mplot_density()`](https://laresbernardo.github.io/lares/reference/mplot_density.md)
+  : Density plot for discrete and continuous values
+- [`mplot_full()`](https://laresbernardo.github.io/lares/reference/mplot_full.md)
+  : MPLOTS Score Full Report Plots
+- [`mplot_gain()`](https://laresbernardo.github.io/lares/reference/mplot_gain.md)
+  : Cumulative Gain Plot
+- [`mplot_importance()`](https://laresbernardo.github.io/lares/reference/mplot_importance.md)
+  : Variables Importances Plot
+- [`mplot_lineal()`](https://laresbernardo.github.io/lares/reference/mplot_lineal.md)
+  : Linear Regression Results Plot
+- [`mplot_metrics()`](https://laresbernardo.github.io/lares/reference/mplot_metrics.md)
+  : Model Metrics and Performance Plots
+- [`mplot_response()`](https://laresbernardo.github.io/lares/reference/mplot_response.md)
+  : Cumulative Response Plot
+- [`mplot_roc()`](https://laresbernardo.github.io/lares/reference/mplot_roc.md)
+  : ROC Curve Plot
+- [`mplot_splits()`](https://laresbernardo.github.io/lares/reference/mplot_splits.md)
+  : Split and compare quantiles plot
+- [`mplot_topcats()`](https://laresbernardo.github.io/lares/reference/mplot_topcats.md)
+  : Top Hit Ratios for Multi-Classification Models
+- [`msplit()`](https://laresbernardo.github.io/lares/reference/msplit.md)
+  : Split a dataframe for training and testing sets
+- [`myip()`](https://laresbernardo.github.io/lares/reference/myip.md) :
+  What's my IP?
+- [`ngrams()`](https://laresbernardo.github.io/lares/reference/ngrams.md)
+  : Build N-grams and keep most frequent
+- [`noPlot()`](https://laresbernardo.github.io/lares/reference/noPlot.md)
+  : Plot Result with Nothing to Plot
+- [`normalize()`](https://laresbernardo.github.io/lares/reference/normalize.md)
+  : Normalize Vector
+- [`num_abbr()`](https://laresbernardo.github.io/lares/reference/num_abbr.md)
+  : Abbreviate or dis-abbreviate numerical values
+- [`ohe_commas()`](https://laresbernardo.github.io/lares/reference/ohe_commas.md)
+  : One Hot Encoding for a Vector with Comma Separated Values
+- [`ohse()`](https://laresbernardo.github.io/lares/reference/ohse.md) :
+  One Hot Smart Encoding (Dummy Variables)
+- [`outlier_tukey()`](https://laresbernardo.github.io/lares/reference/outlier_tukey.md)
+  [`outlier_turkey()`](https://laresbernardo.github.io/lares/reference/outlier_tukey.md)
+  : Outliers: Tukey’s fences
+- [`outlier_zscore()`](https://laresbernardo.github.io/lares/reference/outlier_zscore.md)
+  : Outliers: Z-score method
+- [`outlier_zscore_plot()`](https://laresbernardo.github.io/lares/reference/outlier_zscore_plot.md)
+  : Outliers: Z-score method plot
+- [`plot_cats()`](https://laresbernardo.github.io/lares/reference/plot_cats.md)
+  : Plot All Categorical Features (Frequencies)
+- [`plot_chord()`](https://laresbernardo.github.io/lares/reference/plot_chord.md)
+  : Chords Plot
+- [`plot_df()`](https://laresbernardo.github.io/lares/reference/plot_df.md)
+  : Plot Summary of Numerical and Categorical Features
+- [`plot_nums()`](https://laresbernardo.github.io/lares/reference/plot_nums.md)
+  : Plot All Numerical Features (Boxplots)
+- [`plot_palette()`](https://laresbernardo.github.io/lares/reference/plot_palette.md)
+  : Plot Palette Colours
+- [`plot_survey()`](https://laresbernardo.github.io/lares/reference/plot_survey.md)
+  : Visualize Survey Results
+- [`plot_timeline()`](https://laresbernardo.github.io/lares/reference/plot_timeline.md)
+  : Plot timeline as Gantt Plot
+- [`prophesize()`](https://laresbernardo.github.io/lares/reference/prophesize.md)
+  : Facebook's Prophet Forecast
+- [`quants()`](https://laresbernardo.github.io/lares/reference/quants.md)
+  : Calculate cuts by quantiles
+- [`queryDB()`](https://laresbernardo.github.io/lares/reference/queryDB.md)
+  : PostgreSQL Queries on Database (Read)
+- [`queryGA()`](https://laresbernardo.github.io/lares/reference/queryGA.md)
+  : Queries on Google Analytics
+- [`quiet()`](https://laresbernardo.github.io/lares/reference/quiet.md)
+  : Quiet prints and verbose noise
+- [`read.file()`](https://laresbernardo.github.io/lares/reference/read.file.md)
+  : Read Files Quickly (Auto-detected)
+- [`reduce_pca()`](https://laresbernardo.github.io/lares/reference/reduce_pca.md)
+  : Reduce Dimensionality with PCA
+- [`reduce_tsne()`](https://laresbernardo.github.io/lares/reference/reduce_tsne.md)
+  : Reduce Dimensionality with t-SNE
+- [`remove_stopwords()`](https://laresbernardo.github.io/lares/reference/remove_stopwords.md)
+  : Remove stop-words and patterns from character vector
+- [`replaceall()`](https://laresbernardo.github.io/lares/reference/replaceall.md)
+  : Replace Values With
+- [`replacefactor()`](https://laresbernardo.github.io/lares/reference/replacefactor.md)
+  : Replace Factor Values
+- [`robyn_xmodels()`](https://laresbernardo.github.io/lares/reference/robyn_crossmmm.md)
+  [`print(`*`<robyn_crossmmm>`*`)`](https://laresbernardo.github.io/lares/reference/robyn_crossmmm.md)
+  [`robyn_xchannels()`](https://laresbernardo.github.io/lares/reference/robyn_crossmmm.md)
+  : Cross-MMM Budget Optimization across Models
+- [`robyn_hypsbuilder()`](https://laresbernardo.github.io/lares/reference/robyn_hypsbuilder.md)
+  : Robyn: Generate default hyperparameters
+- [`robyn_marginal()`](https://laresbernardo.github.io/lares/reference/robyn_marginal.md)
+  : Robyn: Marginal Performance (mROAS & mCPA) \[Experimental\]
+- [`robyn_modelselector()`](https://laresbernardo.github.io/lares/reference/robyn_modelselector.md)
+  [`plot(`*`<robyn_modelselector>`*`)`](https://laresbernardo.github.io/lares/reference/robyn_modelselector.md)
+  : Robyn: Model Selection by Weighted Criteria Scores
+- [`robyn_performance()`](https://laresbernardo.github.io/lares/reference/robyn_performance.md)
+  : Robyn: Dynamic Performance and Contribution Report
+- [`rtistry_sphere()`](https://laresbernardo.github.io/lares/reference/rtistry_sphere.md)
+  : Generative Art: Sphere XmodY
+- [`scale_x_comma()`](https://laresbernardo.github.io/lares/reference/scale_x_comma.md)
+  [`scale_y_comma()`](https://laresbernardo.github.io/lares/reference/scale_x_comma.md)
+  [`scale_x_percent()`](https://laresbernardo.github.io/lares/reference/scale_x_comma.md)
+  [`scale_y_percent()`](https://laresbernardo.github.io/lares/reference/scale_x_comma.md)
+  [`scale_x_dollar()`](https://laresbernardo.github.io/lares/reference/scale_x_comma.md)
+  [`scale_y_dollar()`](https://laresbernardo.github.io/lares/reference/scale_x_comma.md)
+  [`scale_x_abbr()`](https://laresbernardo.github.io/lares/reference/scale_x_comma.md)
+  [`scale_y_abbr()`](https://laresbernardo.github.io/lares/reference/scale_x_comma.md)
+  [`scale_x_formatNum()`](https://laresbernardo.github.io/lares/reference/scale_x_comma.md)
+  [`scale_y_formatNum()`](https://laresbernardo.github.io/lares/reference/scale_x_comma.md)
+  : Axis scales format
+- [`scrabble_dictionary()`](https://laresbernardo.github.io/lares/reference/scrabble.md)
+  [`scrabble_score()`](https://laresbernardo.github.io/lares/reference/scrabble.md)
+  [`scrabble_points()`](https://laresbernardo.github.io/lares/reference/scrabble.md)
+  [`scrabble_words()`](https://laresbernardo.github.io/lares/reference/scrabble.md)
+  : Scrabble: Dictionaries
+- [`sentimentBreakdown()`](https://laresbernardo.github.io/lares/reference/sentimentBreakdown.md)
+  : Sentiment Breakdown on Text
+- [`seq_surnames()`](https://laresbernardo.github.io/lares/reference/seq_surnames.md)
+  : Surnames Order Sequence
+- [`shap_var()`](https://laresbernardo.github.io/lares/reference/shap_var.md)
+  : SHAP-based dependence plots for categorical/numerical features (PDP)
+- [`slackSend()`](https://laresbernardo.github.io/lares/reference/slackSend.md)
+  : Send Slack Message (Webhook)
+- [`spread_list()`](https://laresbernardo.github.io/lares/reference/spread_list.md)
+  : Spread list column into new columns
+- [`statusbar()`](https://laresbernardo.github.io/lares/reference/statusbar.md)
+  : Progressive Status Bar (Loading)
+- [`stocks_quote()`](https://laresbernardo.github.io/lares/reference/stocks_hist.md)
+  [`stocks_hist()`](https://laresbernardo.github.io/lares/reference/stocks_hist.md)
+  [`plot(`*`<stocks_hist>`*`)`](https://laresbernardo.github.io/lares/reference/stocks_hist.md)
+  : Download Stocks Historical and Current Values
+- [`splot_summary()`](https://laresbernardo.github.io/lares/reference/stocks_plots.md)
+  [`splot_change()`](https://laresbernardo.github.io/lares/reference/stocks_plots.md)
+  [`splot_growth()`](https://laresbernardo.github.io/lares/reference/stocks_plots.md)
+  [`splot_divs()`](https://laresbernardo.github.io/lares/reference/stocks_plots.md)
+  [`splot_roi()`](https://laresbernardo.github.io/lares/reference/stocks_plots.md)
+  [`splot_types()`](https://laresbernardo.github.io/lares/reference/stocks_plots.md)
+  [`splot_etf()`](https://laresbernardo.github.io/lares/reference/stocks_plots.md)
+  : Investing Portfolio Reporting Plots
+- [`stocks_file()`](https://laresbernardo.github.io/lares/reference/stocks_report.md)
+  [`daily_stocks()`](https://laresbernardo.github.io/lares/reference/stocks_report.md)
+  [`daily_portfolio()`](https://laresbernardo.github.io/lares/reference/stocks_report.md)
+  [`stocks_obj()`](https://laresbernardo.github.io/lares/reference/stocks_report.md)
+  [`stocks_report()`](https://laresbernardo.github.io/lares/reference/stocks_report.md)
+  : Build a Personal Investing Portfolio Report
+- [`sudoku_solver()`](https://laresbernardo.github.io/lares/reference/sudoku_solver.md)
+  : Solve Sudoku Puzzles
+- [`target_set()`](https://laresbernardo.github.io/lares/reference/target_set.md)
+  : Set Target Value in Target Variable
+- [`textCloud()`](https://laresbernardo.github.io/lares/reference/textCloud.md)
+  : Wordcloud Plot
+- [`textFeats()`](https://laresbernardo.github.io/lares/reference/textFeats.md)
+  : Create features out of text
+- [`textTokenizer()`](https://laresbernardo.github.io/lares/reference/textTokenizer.md)
+  : Tokenize Vectors into Words
+- [`theme_lares()`](https://laresbernardo.github.io/lares/reference/theme_lares.md)
+  : Theme for ggplot2 (lares)
+- [`tic()`](https://laresbernardo.github.io/lares/reference/tic.md)
+  [`toc()`](https://laresbernardo.github.io/lares/reference/tic.md) :
+  Stopwatch to measure timings in R
+- [`toon_reduction()`](https://laresbernardo.github.io/lares/reference/toon_reduction.md)
+  : Calculate Character Reduction from R Object to TOON Format
+- [`topics_rake()`](https://laresbernardo.github.io/lares/reference/topics_rake.md)
+  : Keyword/Topic identification using RAKE
+- [`tree_var()`](https://laresbernardo.github.io/lares/reference/tree_var.md)
+  : Recursive Partitioning and Regression Trees
+- [`try_require()`](https://laresbernardo.github.io/lares/reference/try_require.md)
+  : Check if Specific Package is Installed
+- [`updateLares()`](https://laresbernardo.github.io/lares/reference/updateLares.md)
+  : Update the library (dev or CRAN version)
+- [`vector2text()`](https://laresbernardo.github.io/lares/reference/vector2text.md)
+  [`v2t()`](https://laresbernardo.github.io/lares/reference/vector2text.md)
+  : Convert a vector into a comma separated text
+- [`warnifnot()`](https://laresbernardo.github.io/lares/reference/warnifnot.md)
+  : Test the Truth of R Expressions and Warn
+- [`weighted_value()`](https://laresbernardo.github.io/lares/reference/weighted_value.md)
+  : Calculate weighted stock values using FIFO/LIFO
+- [`what_size()`](https://laresbernardo.github.io/lares/reference/what_size.md)
+  : Calculate the size of any R object or directory
+- [`winsorize()`](https://laresbernardo.github.io/lares/reference/winsorize.md)
+  : Outliers: Winsorize
+- [`wordle_check()`](https://laresbernardo.github.io/lares/reference/wordle.md)
+  [`print(`*`<wordle_check>`*`)`](https://laresbernardo.github.io/lares/reference/wordle.md)
+  [`wordle_dictionary()`](https://laresbernardo.github.io/lares/reference/wordle.md)
+  [`wordle_simulation()`](https://laresbernardo.github.io/lares/reference/wordle.md)
+  [`print(`*`<wordle_simulation>`*`)`](https://laresbernardo.github.io/lares/reference/wordle.md)
+  : Wordle Game Validation
+- [`x2y()`](https://laresbernardo.github.io/lares/reference/x2y.md)
+  [`x2y_metric()`](https://laresbernardo.github.io/lares/reference/x2y.md)
+  [`plot(`*`<x2y_preds>`*`)`](https://laresbernardo.github.io/lares/reference/x2y.md)
+  [`plot(`*`<x2y>`*`)`](https://laresbernardo.github.io/lares/reference/x2y.md)
+  [`x2y_preds()`](https://laresbernardo.github.io/lares/reference/x2y.md)
+  : Ranked Predictive Power of Cross-Features (x2y)
+- [`year_month()`](https://laresbernardo.github.io/lares/reference/year_month.md)
+  [`year_quarter()`](https://laresbernardo.github.io/lares/reference/year_month.md)
+  [`year_week()`](https://laresbernardo.github.io/lares/reference/year_month.md)
+  : Convert Date into Year-Month, Year-Quarter or Year-Week Format
+- [`zerovar()`](https://laresbernardo.github.io/lares/reference/zerovar.md)
+  : Zero Variance Columns
+

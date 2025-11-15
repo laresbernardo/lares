@@ -1,0 +1,108 @@
+# Robyn: Model Selection by Weighted Criteria Scores
+
+Consider N best models to select the right ones to study using several
+criteria/metrics such as potential improvement on budget allocator, how
+many non-zero coefficients there are, R squared, historical performance,
+baseline expectation, etc.
+
+Read more about this functionality in Medium post:
+[here](https://medium.com/@laresbernardo/select-the-right-mmm-candidate-based-on-your-specific-criteria-and-business-knowledge-1f583c3cb97a).
+
+## Usage
+
+``` r
+robyn_modelselector(
+  InputCollect,
+  OutputCollect,
+  metrics = c("rsq_train", "performance", "potential_improvement", "non_zeroes",
+    "incluster_models", "cluster_sd", "certainty", "baseline_dist"),
+  wt = c(2, 0.1, 0, 1, 0.1, 0, 1.5, 0),
+  baseline_ref = 0,
+  top = 4,
+  n_per_cluster = 5,
+  allocator_limits = c(0.5, 2),
+  quiet = FALSE,
+  cache = TRUE,
+  ...
+)
+
+# S3 method for class 'robyn_modelselector'
+plot(x, ...)
+```
+
+## Arguments
+
+- InputCollect, OutputCollect:
+
+  Robyn output objects.
+
+- metrics:
+
+  Character vector. Which metrics do you want to consider? Pick any
+  combination from: "rsq_train" for trained R squared, "performance" for
+  ROAS or (inverse) CPA, "potential_improvement" for default budget
+  allocator improvement using `allocator_limits`, "non_zeroes" for
+  non-zero beta coefficients, "incluster_models" for amount of models
+  per cluster, "baseline_dist" for the difference between the model's
+  baseline and `baseline_ref` value, "certainty" metric to minimize the
+  channels' distance to their cluster's mean performance, weighted by
+  spends if `spend_wt = TRUE`, "cluster_sd" metric to score based on the
+  paid channels' performance standard deviations in clusters.
+  Additionally, you can use the standard MOO errors: "nrmse",
+  "decomp.rssd", and "mape" (the lowest the error, the highest the
+  score; same for "baseline_dist" and "cluster_sd").
+
+- wt:
+
+  Vector. Weight for each of the normalized `metrics` selected, to
+  calculate the score and rank models. Must have the same order and
+  length of `metrics` parameter input.
+
+- baseline_ref:
+
+  Numeric value. Between 0 and 1. What is the baseline percentage you
+  expect? Baseline in this case are all the sales or conversions from
+  non-media channels (organic & paid). Use with "baseline_dist" metric.
+
+- top:
+
+  Integer. How many ranked models to star? The better the model is, the
+  more stars it will have marked.
+
+- n_per_cluster:
+
+  Integer. How many models per cluster do you want to plot? Default: 5.
+  Keep in mind they will all be considered for the calculations.
+
+- allocator_limits:
+
+  Numeric vector, length 2. How flexible do you want to be with the
+  budget allocator? By default, we'll consider a 0.5X and 2X range to
+  let the budget shift across channels.
+
+- quiet:
+
+  Boolean. Keep quiet? If not, informative messages will be shown.
+
+- cache:
+
+  Use cache functionality for allocator's results?
+
+- ...:
+
+  Additional parameters.
+
+- x:
+
+  robyn_modelselector object
+
+## Value
+
+list with resulting ranked data.frames, weights and plot.
+
+## See also
+
+Other Robyn:
+[`robyn_hypsbuilder()`](https://laresbernardo.github.io/lares/reference/robyn_hypsbuilder.md),
+[`robyn_marginal()`](https://laresbernardo.github.io/lares/reference/robyn_marginal.md),
+[`robyn_performance()`](https://laresbernardo.github.io/lares/reference/robyn_performance.md)
