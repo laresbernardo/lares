@@ -16,10 +16,6 @@ which variable should be used instead, use the \code{y} parameter.}
 \item{tries}{Integer. Number of iterations}
 
 \item{...}{Additional arguments passed to \code{h2o_automl}}
-
-\item{verbosity}{Character. Verbosity of the output.}
-
-\item{model_name}{Character. Name of the model to be saved.}
 }
 \value{
 data.frame with performance results by seed tried on every row.

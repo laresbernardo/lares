@@ -354,6 +354,7 @@ plot.corr_var <- function(x, var, max_pvalue = 1, top = NA, limit = NULL, ...) {
 #' with variables that contains certain strings (using any value if vector used).
 #' @param grid Boolean. Separate into grids?
 #' @param rm.na Boolean. Remove NAs?
+#' @param quiet Boolean. Keep quiet? If not, show messages
 #' @param ... Additional parameters passed to \code{corr}
 #' @return Depending on input \code{plot}, we get correlation and p-value results for
 #' every combination of features, arranged by descending absolute correlation value,

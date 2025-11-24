@@ -49,6 +49,8 @@ with variables that contains certain strings (using any value if vector used).}
 
 \item{rm.na}{Boolean. Remove NAs?}
 
+\item{quiet}{Boolean. Keep quiet? If not, show messages}
+
 \item{...}{Additional parameters passed to \code{corr}}
 }
 \value{

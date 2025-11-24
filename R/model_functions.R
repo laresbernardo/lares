@@ -965,8 +965,6 @@ target_set <- function(tag, score, target = "auto", quiet = FALSE) {
 #'
 #' @family Machine Learning
 #' @inheritParams h2o_automl
-#' @param verbosity Character. Verbosity of the output.
-#' @param model_name Character. Name of the model to be saved.
 #' @param tries Integer. Number of iterations
 #' @param ... Additional arguments passed to \code{h2o_automl}
 #' @return data.frame with performance results by seed tried on every row.

@@ -44,11 +44,11 @@ automatically initialize ID3 tags if they do not exist. Tags provided via
 \examples{
 \dontrun{
 mp3_update_tags(
-"song.mp3",
-title = "My Jazz Song",
-artist = "Bernardo",
-album = "Smooth Album",
-genre = "Jazz"
+  "song.mp3",
+  title = "My Jazz Song",
+  artist = "Bernardo",
+  album = "Smooth Album",
+  genre = "Jazz"
 )
 }
 }

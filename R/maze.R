@@ -22,6 +22,7 @@
 #' randomly.
 #' @param timeout Numeric. How many seconds set for timeout to force
 #' algorithm to stop trying new paths?
+#' @param quiet Boolean. Keep quiet? If not, print results
 #' @param seed Numeric. Seed to replicate random results.
 #' @return List with data.frame containing solved solution, data.frame with
 #' path coordinates and directions, steps counter and turns counter.

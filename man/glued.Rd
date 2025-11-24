@@ -44,10 +44,10 @@ glued("My name is {name}, not {{name}}.")
 
 # You can also used named arguments
 glued(
-    "Her name is {name}, ",
-    "and her age next year will be {age + 1}.",
-    name = "Maru",
-    age = 6
+  "Her name is {name}, ",
+  "and her age next year will be {age + 1}.",
+  name = "Maru",
+  age = 6
 )
 
 # And run operations with memories (beware!)

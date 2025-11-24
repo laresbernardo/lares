@@ -14,3 +14,7 @@ CRAN-SUBMISSION
 GithubStars
 lares.Rproj
 pkgdown
+
+# Vignette build artifacts
+vignettes/*.html
+vignettes/*.R
