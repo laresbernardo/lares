@@ -90,7 +90,7 @@ ip_data("163.114.132.0")
 #> 1 en-US, es-US, haw, fr Dollar (USD)
 ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
 #>                id addresstype                                asn            isp
-#> 1 172.182.195.229        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK      Microsoft
+#> 1 172.182.224.198        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK      Microsoft
 #> 2 201.244.197.199        IPv4                    19429 - AS19429 ETB - Colombia
 #>   connection      organization       country stateregion districtcounty
 #> 1    Hosting Microsoft Limited United States     Arizona       Maricopa

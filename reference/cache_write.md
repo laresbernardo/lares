@@ -108,11 +108,11 @@ cache_read(base, ask = FALSE)
 cache_exists(base)
 #> [1] TRUE
 #> attr(,"filename")
-#> [1] "/tmp/RtmpOPpQVw/lares_cache_2025-11-24.A.B.RDS"
+#> [1] "/tmp/RtmpPvDP3u/lares_cache_2025-11-24.A.B.RDS"
 #> attr(,"base")
 #> [1] "lares_cache_2025-11-24.A.B"
 #> attr(,"cache_dir")
-#> [1] "/tmp/RtmpOPpQVw"
+#> [1] "/tmp/RtmpPvDP3u"
 cache_clear()
 #> Removed 1 cache files succesfully!
 

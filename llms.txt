@@ -87,8 +87,9 @@ dev version.
 ## Popular Functions
 
 - [`h2o_automl()`](https://laresbernardo.github.io/lares/reference/h2o_automl.md),
-  `plot_model_results()` – Automated machine learning pipeline with
-  optimal model selection and visualizations.
+  [`mplot_full()`](https://laresbernardo.github.io/lares/reference/mplot_full.md)
+  – Automated machine learning pipeline with optimal model selection and
+  visualizations.
 - [`freqs()`](https://laresbernardo.github.io/lares/reference/freqs.md),
   [`distr()`](https://laresbernardo.github.io/lares/reference/distr.md),
   [`corr_var()`](https://laresbernardo.github.io/lares/reference/corr_var.md),

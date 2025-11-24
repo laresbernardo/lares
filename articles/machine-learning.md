@@ -28,14 +28,14 @@ h2o.init(nthreads = -1, max_mem_size = "2G")
 #> H2O is not running yet, starting it now...
 #> 
 #> Note:  In case of errors look at the following log files:
-#>     /tmp/RtmpY7mKct/file26ab600df539/h2o_runner_started_from_r.out
-#>     /tmp/RtmpY7mKct/file26ab2b108cd1/h2o_runner_started_from_r.err
+#>     /tmp/RtmpUogh8o/file25986fd68e3f/h2o_runner_started_from_r.out
+#>     /tmp/RtmpUogh8o/file2598709da87b/h2o_runner_started_from_r.err
 #> 
 #> 
 #> Starting H2O JVM and connecting: ... Connection successful!
 #> 
 #> R is connected to the H2O cluster: 
-#>     H2O cluster uptime:         1 seconds 540 milliseconds 
+#>     H2O cluster uptime:         1 seconds 617 milliseconds 
 #>     H2O cluster timezone:       UTC 
 #>     H2O data parsing timezone:  UTC 
 #>     H2O cluster version:        3.44.0.3 
@@ -53,91 +53,6 @@ h2o.init(nthreads = -1, max_mem_size = "2G")
 #>     R Version:                  R version 4.5.2 (2025-10-31)
 h2o.no_progress() # Disable progress bars
 ```
-
-## Quick Start: Binary Classification
-
-Let’s build a model to predict Titanic survival:
-
-``` r
-data(dft)
-
-# Train an AutoML model
-# Binary classification
-model <- h2o_automl(
-  df = dft,
-  y = "Survived",
-  max_models = 10,
-  max_time = 120,
-  impute = FALSE, # Set TRUE to use MICE imputation (requires mice package)
-  target = "TRUE"
-)
-#> # A tibble: 2 × 5
-#>   tag       n     p order  pcum
-#>   <lgl> <int> <dbl> <int> <dbl>
-#> 1 FALSE   549  61.6     1  61.6
-#> 2 TRUE    342  38.4     2 100
-#> train_size  test_size 
-#>        623        268
-#>                             model_id       auc   logloss     aucpr
-#> 1     GLM_1_AutoML_1_20251124_182815 0.8699841 0.4228230 0.8192417
-#> 2 XGBoost_1_AutoML_1_20251124_182815 0.8558074 0.4445878 0.8002379
-#> 3     DRF_1_AutoML_1_20251124_182815 0.8513537 1.0500736 0.7633683
-#>   mean_per_class_error      rmse       mse
-#> 1            0.1994995 0.3641748 0.1326233
-#> 2            0.2103911 0.3751306 0.1407230
-#> 3            0.1899749 0.4062189 0.1650138
-#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/10): GLM_1_AutoML_1_20251124_182815
-#> Dependent Variable: Survived
-#> Type: Classification (2 classes)
-#> Algorithm: GLM
-#> Split: 70% training data (of 891 observations)
-#> Seed: 0
-#> 
-#> Test metrics:
-#>    AUC = 0.83147
-#>    ACC = 0.30597
-#>    PRC = 0.16071
-#>    TPR = 0.16364
-#>    TNR = 0.40506
-#> 
-#> Most important variables:
-#>    Ticket.1601 (1.1%)
-#>    Ticket.C.A. 37671 (0.8%)
-#>    Sex.female (0.8%)
-#>    Sex.male (0.8%)
-#>    Ticket.347077 (0.7%)
-
-# View results
-print(model)
-#> Model (1/10): GLM_1_AutoML_1_20251124_182815
-#> Dependent Variable: Survived
-#> Type: Classification (2 classes)
-#> Algorithm: GLM
-#> Split: 70% training data (of 891 observations)
-#> Seed: 0
-#> 
-#> Test metrics:
-#>    AUC = 0.83147
-#>    ACC = 0.30597
-#>    PRC = 0.16071
-#>    TPR = 0.16364
-#>    TNR = 0.40506
-#> 
-#> Most important variables:
-#>    Ticket.1601 (1.1%)
-#>    Ticket.C.A. 37671 (0.8%)
-#>    Sex.female (0.8%)
-#>    Sex.male (0.8%)
-#>    Ticket.347077 (0.7%)
-```
-
-That’s it!
-[`h2o_automl()`](https://laresbernardo.github.io/lares/reference/h2o_automl.md)
-handles: - Train/test split - One-hot encoding of categorical
-variables - Model training with multiple algorithms - Hyperparameter
-tuning - Model selection
 
 ## Pipeline
 
@@ -186,6 +101,91 @@ In short, these are the steps that happen on `h2o_automl`’s backend:
 8.  **Results**: Returns a list with inputs, leaderboard, best model,
     metrics, and plots. Export with
     [`export_results()`](https://laresbernardo.github.io/lares/reference/export_results.md).
+
+## Quick Start: Binary Classification
+
+Let’s build a model to predict Titanic survival:
+
+``` r
+data(dft)
+
+# Train an AutoML model
+# Binary classification
+model <- h2o_automl(
+  df = dft,
+  y = "Survived",
+  max_models = 10,
+  max_time = 120,
+  impute = FALSE, # Set TRUE to use MICE imputation (requires mice package)
+  target = "TRUE"
+)
+#> # A tibble: 2 × 5
+#>   tag       n     p order  pcum
+#>   <lgl> <int> <dbl> <int> <dbl>
+#> 1 FALSE   549  61.6     1  61.6
+#> 2 TRUE    342  38.4     2 100
+#> train_size  test_size 
+#>        623        268
+#>                             model_id       auc   logloss     aucpr
+#> 1     GLM_1_AutoML_1_20251124_193034 0.8699841 0.4228230 0.8192417
+#> 2 XGBoost_1_AutoML_1_20251124_193034 0.8558074 0.4445878 0.8002379
+#> 3     DRF_1_AutoML_1_20251124_193034 0.8513537 1.0500736 0.7633683
+#>   mean_per_class_error      rmse       mse
+#> 1            0.1994995 0.3641748 0.1326233
+#> 2            0.2103911 0.3751306 0.1407230
+#> 3            0.1899749 0.4062189 0.1650138
+#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
+#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
+#> Model (1/10): GLM_1_AutoML_1_20251124_193034
+#> Dependent Variable: Survived
+#> Type: Classification (2 classes)
+#> Algorithm: GLM
+#> Split: 70% training data (of 891 observations)
+#> Seed: 0
+#> 
+#> Test metrics:
+#>    AUC = 0.83147
+#>    ACC = 0.30597
+#>    PRC = 0.16071
+#>    TPR = 0.16364
+#>    TNR = 0.40506
+#> 
+#> Most important variables:
+#>    Ticket.1601 (1.1%)
+#>    Ticket.C.A. 37671 (0.8%)
+#>    Sex.female (0.8%)
+#>    Sex.male (0.8%)
+#>    Ticket.347077 (0.7%)
+
+# View results
+print(model)
+#> Model (1/10): GLM_1_AutoML_1_20251124_193034
+#> Dependent Variable: Survived
+#> Type: Classification (2 classes)
+#> Algorithm: GLM
+#> Split: 70% training data (of 891 observations)
+#> Seed: 0
+#> 
+#> Test metrics:
+#>    AUC = 0.83147
+#>    ACC = 0.30597
+#>    PRC = 0.16071
+#>    TPR = 0.16364
+#>    TNR = 0.40506
+#> 
+#> Most important variables:
+#>    Ticket.1601 (1.1%)
+#>    Ticket.C.A. 37671 (0.8%)
+#>    Sex.female (0.8%)
+#>    Sex.male (0.8%)
+#>    Ticket.347077 (0.7%)
+```
+
+That’s it!
+[`h2o_automl()`](https://laresbernardo.github.io/lares/reference/h2o_automl.md)
+handles: - Train/test split - One-hot encoding of categorical
+variables - Model training with multiple algorithms - Hyperparameter
+tuning - Model selection
 
 ## Understanding the Output
 
@@ -406,16 +406,16 @@ model <- h2o_automl(
 #> train_size  test_size 
 #>        623        268
 #>                             model_id       auc   logloss     aucpr
-#> 1 XGBoost_1_AutoML_2_20251124_182845 0.8377463 0.4560571 0.8160543
-#> 2     GLM_1_AutoML_2_20251124_182845 0.8361554 0.4620718 0.8207185
-#> 3     GBM_1_AutoML_2_20251124_182845 0.8336275 0.4836041 0.8116186
+#> 1 XGBoost_1_AutoML_2_20251124_193103 0.8377463 0.4560571 0.8160543
+#> 2     GLM_1_AutoML_2_20251124_193103 0.8361554 0.4620718 0.8207185
+#> 3     GBM_1_AutoML_2_20251124_193103 0.8336275 0.4836041 0.8116186
 #>   mean_per_class_error      rmse       mse
 #> 1            0.2084750 0.3775965 0.1425791
 #> 2            0.2032231 0.3816752 0.1456760
 #> 3            0.2355409 0.3938464 0.1551150
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/3): XGBoost_1_AutoML_2_20251124_182845
+#> Model (1/3): XGBoost_1_AutoML_2_20251124_193103
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
 #> Algorithm: XGBOOST
@@ -455,16 +455,16 @@ model_rf <- h2o_automl(
 #> train_size  test_size 
 #>        623        268
 #>                         model_id       auc   logloss     aucpr
-#> 1 GBM_3_AutoML_3_20251124_182856 0.8645854 0.5134859 0.8100255
-#> 2 GBM_2_AutoML_3_20251124_182856 0.8507630 0.5597124 0.7941386
-#> 3 GBM_4_AutoML_3_20251124_182856 0.8424007 0.5379671 0.7881927
+#> 1 GBM_3_AutoML_3_20251124_193113 0.8645854 0.5134859 0.8100255
+#> 2 GBM_2_AutoML_3_20251124_193113 0.8507630 0.5597124 0.7941386
+#> 3 GBM_4_AutoML_3_20251124_193113 0.8424007 0.5379671 0.7881927
 #>   mean_per_class_error      rmse       mse
 #> 1            0.1773573 0.4112747 0.1691469
 #> 2            0.1795763 0.4359639 0.1900645
 #> 3            0.1830196 0.4234422 0.1793033
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/5): GBM_3_AutoML_3_20251124_182856
+#> Model (1/5): GBM_3_AutoML_3_20251124_193113
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
 #> Algorithm: GBM
@@ -500,16 +500,16 @@ model_no_dl <- h2o_automl(
 #> train_size  test_size 
 #>        623        268
 #>                                                  model_id       auc   logloss
-#> 1    StackedEnsemble_AllModels_1_AutoML_4_20251124_182902 0.8652643 0.4167762
-#> 2                          DRF_1_AutoML_4_20251124_182902 0.8638642 0.9250470
-#> 3 StackedEnsemble_BestOfFamily_1_AutoML_4_20251124_182902 0.8630579 0.4230030
+#> 1    StackedEnsemble_AllModels_1_AutoML_4_20251124_193120 0.8652643 0.4167762
+#> 2                          DRF_1_AutoML_4_20251124_193120 0.8638642 0.9250470
+#> 3 StackedEnsemble_BestOfFamily_1_AutoML_4_20251124_193120 0.8630579 0.4230030
 #>       aucpr mean_per_class_error      rmse       mse
 #> 1 0.8536071            0.1910521 0.3608505 0.1302131
 #> 2 0.8234600            0.1748278 0.3925871 0.1541246
 #> 3 0.8487459            0.1923978 0.3630551 0.1318090
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/12): StackedEnsemble_AllModels_1_AutoML_4_20251124_182902
+#> Model (1/12): StackedEnsemble_AllModels_1_AutoML_4_20251124_193120
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
 #> Algorithm: STACKEDENSEMBLE
@@ -540,16 +540,16 @@ model <- h2o_automl(
 #> train_size  test_size 
 #>        623        268
 #>                             model_id       auc   logloss     aucpr
-#> 1     GLM_1_AutoML_5_20251124_182923 0.8566401 0.4331878 0.8468753
-#> 2 XGBoost_1_AutoML_5_20251124_182923 0.8454934 0.4493601 0.8102068
-#> 3     GBM_1_AutoML_5_20251124_182923 0.8088444 0.6286836 0.7275233
+#> 1     GLM_1_AutoML_5_20251124_193144 0.8566401 0.4331878 0.8468753
+#> 2 XGBoost_1_AutoML_5_20251124_193144 0.8454934 0.4493601 0.8102068
+#> 3     GBM_1_AutoML_5_20251124_193144 0.8088444 0.6286836 0.7275233
 #>   mean_per_class_error      rmse       mse
 #> 1            0.1914171 0.3680368 0.1354511
 #> 2            0.2036480 0.3743833 0.1401629
 #> 3            0.2309482 0.4661593 0.2173045
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/3): GLM_1_AutoML_5_20251124_182923
+#> Model (1/3): GLM_1_AutoML_5_20251124_193144
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
 #> Algorithm: GLM
@@ -592,16 +592,16 @@ model_multiclass <- h2o_automl(
 #> train_size  test_size 
 #>        623        268
 #>                         model_id mean_per_class_error   logloss      rmse
-#> 1 DRF_1_AutoML_6_20251124_182933            0.4514265 2.1881142 0.5149851
-#> 2 GBM_2_AutoML_6_20251124_182933            0.4596244 0.9079795 0.5237358
-#> 3 GBM_1_AutoML_6_20251124_182933            0.4596244 0.9799792 0.5327525
+#> 1 DRF_1_AutoML_6_20251124_193154            0.4514265 2.1881142 0.5149851
+#> 2 GBM_4_AutoML_6_20251124_193154            0.4596244 0.8911328 0.5206654
+#> 3 GBM_2_AutoML_6_20251124_193154            0.4596244 0.9079795 0.5237358
 #>         mse
 #> 1 0.2652097
-#> 2 0.2742992
-#> 3 0.2838252
+#> 2 0.2710924
+#> 3 0.2742992
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/10): DRF_1_AutoML_6_20251124_182933
+#> Model (1/10): DRF_1_AutoML_6_20251124_193154
 #> Dependent Variable: Pclass
 #> Type: Classification (3 classes)
 #> Algorithm: DRF
@@ -699,16 +699,16 @@ model_regression <- h2o_automl(
 #> train_size  test_size 
 #>        609        262
 #>                                                  model_id     rmse      mse
-#> 1    StackedEnsemble_AllModels_1_AutoML_7_20251124_182950 11.43342 130.7231
-#> 2 StackedEnsemble_BestOfFamily_1_AutoML_7_20251124_182950 12.07742 145.8640
-#> 3                          GBM_1_AutoML_7_20251124_182950 14.52611 211.0080
+#> 1    StackedEnsemble_AllModels_1_AutoML_7_20251124_193210 11.43342 130.7231
+#> 2 StackedEnsemble_BestOfFamily_1_AutoML_7_20251124_193210 12.07742 145.8640
+#> 3                          GBM_1_AutoML_7_20251124_193210 14.52611 211.0080
 #>        mae     rmsle mean_residual_deviance
 #> 1 6.240817 0.4653345               130.7231
 #> 2 7.011522 0.4877838               145.8640
 #> 3 8.984404       NaN               211.0080
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/12): StackedEnsemble_AllModels_1_AutoML_7_20251124_182950
+#> Model (1/12): StackedEnsemble_AllModels_1_AutoML_7_20251124_193210
 #> Dependent Variable: Fare
 #> Type: Regression
 #> Algorithm: STACKEDENSEMBLE
@@ -782,16 +782,16 @@ model <- h2o_automl(
 #>  test train 
 #>   179   712
 #>                             model_id       auc   logloss     aucpr
-#> 1     DRF_1_AutoML_8_20251124_183003 0.8680875 0.7855203 0.8270861
-#> 2     GLM_1_AutoML_8_20251124_183003 0.8654726 0.4253319 0.8491966
-#> 3 XGBoost_2_AutoML_8_20251124_183003 0.8552476 0.4437635 0.8198820
+#> 1     DRF_1_AutoML_8_20251124_193226 0.8680875 0.7855203 0.8270861
+#> 2     GLM_1_AutoML_8_20251124_193226 0.8654726 0.4253319 0.8491966
+#> 3 XGBoost_2_AutoML_8_20251124_193226 0.8552476 0.4437635 0.8198820
 #>   mean_per_class_error      rmse       mse
 #> 1            0.1775527 0.3813365 0.1454175
 #> 2            0.1923547 0.3652137 0.1333811
 #> 3            0.2036507 0.3736082 0.1395831
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/5): DRF_1_AutoML_8_20251124_183003
+#> Model (1/5): DRF_1_AutoML_8_20251124_193226
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
 #> Algorithm: DRF
@@ -912,16 +912,16 @@ model <- h2o_automl(dft, "Survived", max_models = 3, max_time = 30)
 #> train_size  test_size 
 #>        623        268
 #>                             model_id       auc   logloss     aucpr
-#> 1     GLM_1_AutoML_9_20251124_183026 0.8566401 0.4331878 0.8468753
-#> 2 XGBoost_1_AutoML_9_20251124_183026 0.8410859 0.4576161 0.8238591
-#> 3     GBM_1_AutoML_9_20251124_183026 0.8159377 0.6451460 0.7378534
+#> 1     GLM_1_AutoML_9_20251124_193249 0.8566401 0.4331878 0.8468753
+#> 2 XGBoost_1_AutoML_9_20251124_193249 0.8410859 0.4576161 0.8238591
+#> 3     GBM_1_AutoML_9_20251124_193249 0.8159377 0.6451460 0.7378534
 #>   mean_per_class_error      rmse       mse
 #> 1            0.1914171 0.3680368 0.1354511
 #> 2            0.2036044 0.3771717 0.1422585
 #> 3            0.2218336 0.4732407 0.2239567
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/3): GLM_1_AutoML_9_20251124_183026
+#> Model (1/3): GLM_1_AutoML_9_20251124_193249
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
 #> Algorithm: GLM
@@ -963,9 +963,9 @@ model <- h2o_automl(
 #> train_size  test_size 
 #>        623        268
 #>                          model_id       auc   logloss     aucpr
-#> 1 GBM_3_AutoML_10_20251124_183036 0.8575063 0.4316748 0.8410436
-#> 2 GBM_2_AutoML_10_20251124_183036 0.8571250 0.4270731 0.8442881
-#> 3 GBM_4_AutoML_10_20251124_183036 0.8561498 0.4266892 0.8469913
+#> 1 GBM_3_AutoML_10_20251124_193259 0.8575063 0.4316748 0.8410436
+#> 2 GBM_2_AutoML_10_20251124_193259 0.8571250 0.4270731 0.8442881
+#> 3 GBM_4_AutoML_10_20251124_193259 0.8561498 0.4266892 0.8469913
 #>   mean_per_class_error      rmse       mse
 #> 1            0.1887694 0.3656777 0.1337202
 #> 2            0.1944735 0.3641046 0.1325721
@@ -1109,14 +1109,14 @@ h2o::h2o.init(max_mem_size = "8G", nthreads = -1)
 #>  Connection successful!
 #> 
 #> R is connected to the H2O cluster: 
-#>     H2O cluster uptime:         2 minutes 55 seconds 
+#>     H2O cluster uptime:         2 minutes 59 seconds 
 #>     H2O cluster timezone:       UTC 
 #>     H2O data parsing timezone:  UTC 
 #>     H2O cluster version:        3.44.0.3 
 #>     H2O cluster version age:    1 year, 11 months and 4 days 
 #>     H2O cluster name:           H2O_started_from_R_runner_mwl453 
 #>     H2O cluster total nodes:    1 
-#>     H2O cluster total memory:   1.80 GB 
+#>     H2O cluster total memory:   1.91 GB 
 #>     H2O cluster total cores:    4 
 #>     H2O cluster allowed cores:  4 
 #>     H2O cluster healthy:        TRUE 
@@ -1158,17 +1158,17 @@ h2o::h2o.shutdown(prompt = FALSE)
 
 ### Blog Posts & Tutorials
 
-- **[Machine Learning Results: One Plot to Rule Them
-  All](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/)** -
+- [Machine Learning Results: One Plot to Rule Them
+  All](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/) -
   Visualizing binary classification results
-- **[Machine Learning Results in R: One Plot to Rule Them All (Part 2 -
+- [Machine Learning Results in R: One Plot to Rule Them All (Part 2 -
   Regression
-  Models)](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/)** -
+  Models)](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/) -
   Regression model visualization
-- **[Understanding Titanic Dataset with H2O’s AutoML, DALEX and lares
-  Library](https://datascienceplus.com/understanding-titanic-dataset-with-h2os-automl-dalex-and-lares-library/)** -
+- [Understanding Titanic Dataset with H2O’s AutoML, DALEX and lares
+  Library](https://datascienceplus.com/understanding-titanic-dataset-with-h2os-automl-dalex-and-lares-library/) -
   Complete Titanic analysis walkthrough
-- **All lares articles:** [Author page on
+- Other lares articles [on
   DataScience+](https://datascienceplus.com/author/bernardo-lares/)
 
 ## Next Steps
