@@ -23,6 +23,7 @@ h2o_results(
   seed = 0,
   leaderboard = list(),
   plots = TRUE,
+  model_name = NULL,
   ...
 )
 ```
@@ -89,6 +90,13 @@ h2o_results(
 - plots:
 
   Boolean. Create plots objects?
+
+- model_name:
+
+  Character. Optional custom name for the model. If provided, this name
+  will be used when saving the model with
+  [`export_results()`](https://laresbernardo.github.io/lares/reference/export_results.md).
+  If NULL (default), the H2O-generated model ID will be used.
 
 - ...:
 

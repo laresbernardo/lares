@@ -107,6 +107,7 @@ may get more dimensions.
 ## See also
 
 Other Calculus:
+[`corr_cross()`](https://laresbernardo.github.io/lares/reference/corr_cross.md),
 [`dist2d()`](https://laresbernardo.github.io/lares/reference/dist2d.md),
 [`model_metrics()`](https://laresbernardo.github.io/lares/reference/model_metrics.md),
 [`quants()`](https://laresbernardo.github.io/lares/reference/quants.md)

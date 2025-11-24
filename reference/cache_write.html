@@ -15,7 +15,7 @@ improve timings and UX."><meta property="og:image" content="https://laresbernard
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,6 +24,14 @@ improve timings and UX."><meta property="og:image" content="https://laresbernard
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/api-integrations.html">API Integrations</a></li>
+    <li><a class="dropdown-item" href="../articles/data-wrangling.html">Data Wrangling &amp; Visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/games.html">Games &amp; Puzzles</a></li>
+    <li><a class="dropdown-item" href="../articles/machine-learning.html">Machine Learning</a></li>
+    <li><a class="dropdown-item" href="../articles/robyn_lares.html">Robyn Enhancers</a></li>
+  </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -132,9 +140,9 @@ this parameter answers to ask prompt instead.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, <span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">cache_write</span><span class="op">(</span><span class="va">x</span>, <span class="va">base</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; Cache saved succesfully: lares_cache_2025-11-15.A.B</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; Cache saved succesfully: lares_cache_2025-11-24.A.B</span>
 <span class="r-in"><span><span class="fu">cache_read</span><span class="op">(</span><span class="va">base</span>, ask <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; Cache loaded succesfully: lares_cache_2025-11-15.A.B</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; Cache loaded succesfully: lares_cache_2025-11-24.A.B</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $a</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -144,11 +152,11 @@ this parameter answers to ask prompt instead.</p></dd>
 <span class="r-in"><span><span class="fu">cache_exists</span><span class="op">(</span><span class="va">base</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"filename")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmpoj7e10/lares_cache_2025-11-15.A.B.RDS"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpOPpQVw/lares_cache_2025-11-24.A.B.RDS"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"base")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "lares_cache_2025-11-15.A.B"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "lares_cache_2025-11-24.A.B"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"cache_dir")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmpoj7e10"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpOPpQVw"</span>
 <span class="r-in"><span><span class="fu">cache_clear</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 1 cache files succesfully!</span>
 <span class="r-in"><span></span></span>

@@ -73,7 +73,7 @@ maze_gridsearch(
 
 - quiet:
 
-  Boolean. Keep quiet? If not, informative messages will be shown.
+  Boolean. Keep quiet? If not, print results
 
 - seed:
 

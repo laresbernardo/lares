@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,6 +22,14 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/api-integrations.html">API Integrations</a></li>
+    <li><a class="dropdown-item" href="../articles/data-wrangling.html">Data Wrangling &amp; Visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/games.html">Games &amp; Puzzles</a></li>
+    <li><a class="dropdown-item" href="../articles/machine-learning.html">Machine Learning</a></li>
+    <li><a class="dropdown-item" href="../articles/robyn_lares.html">Robyn Enhancers</a></li>
+  </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -37,6 +45,20 @@
       <small>Source: <a href="https://github.com/laresbernardo/lares/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="5.3.3" id="lares-533-development">lares 5.3.3 (Development)<a class="anchor" aria-label="anchor" href="#lares-533-development"></a></h2>
+<ul><li>docs: created comprehensive new vignettes</li>
+<li>docs: added minimum version requirement <code>fansi (&gt;= 1.0.0)</code> in DESCRIPTION for colored output support</li>
+<li>feat: new experimental <code><a href="../reference/mp3_update_tags.html">mp3_update_tags()</a></code> function and <code>get_mp3(..., metadata = TRUE, cover = TRUE, title = NULL)</code> parameters</li>
+<li>feat: new parameter <code>model_name</code> in <code><a href="../reference/h2o_automl.html">h2o_automl()</a></code> and <code><a href="../reference/h2o_results.html">h2o_results()</a></code> for cleaner, more intuitive API</li>
+<li>feat: added <code>model_name</code> parameter to enable custom model naming for better file organization with <code><a href="../reference/export_results.html">export_results()</a></code>
+</li>
+<li>feat: new <code><a href="../reference/toon_reduction.html">toon_reduction()</a></code> to calculate size reduction of JSON vs TOON format. See new toon package</li>
+<li>fix: resolved scoping issue in <code><a href="../reference/h2o_results.html">h2o_results()</a></code> that caused <code>object 'model_name_input' not found</code> error</li>
+<li>fix: improved <code><a href="../reference/mplot_metrics.html">mplot_metrics()</a></code> robustness to handle missing validation metrics without crashing</li>
+<li>fix: parameter <code>dir</code> passed correctly in <code><a href="../reference/get_credentials.html">get_creds()</a></code>
+</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="5.3.2" id="lares-532-2025-08-18">lares 5.3.2 (2025-08-18)<a class="anchor" aria-label="anchor" href="#lares-532-2025-08-18"></a></h2><p class="text-muted">CRAN release: 2025-08-18</p>
 <ul><li>fix: month format on dont_sleep_time()’s print</li>

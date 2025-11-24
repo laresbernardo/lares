@@ -15,7 +15,7 @@ It also lets filter files which contains a string."><meta property="og:image" co
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,6 +24,14 @@ It also lets filter files which contains a string."><meta property="og:image" co
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/api-integrations.html">API Integrations</a></li>
+    <li><a class="dropdown-item" href="../articles/data-wrangling.html">Data Wrangling &amp; Visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/games.html">Games &amp; Puzzles</a></li>
+    <li><a class="dropdown-item" href="../articles/machine-learning.html">Machine Learning</a></li>
+    <li><a class="dropdown-item" href="../articles/robyn_lares.html">Robyn Enhancers</a></li>
+  </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -36,7 +44,7 @@ It also lets filter files which contains a string."><meta property="og:image" co
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>List files in a directory</h1>
-      <small class="dont-index">Source: <a href="https://github.com/laresbernardo/lares/blob/main/R/other_functions.R" class="external-link"><code>R/other_functions.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/laresbernardo/lares/blob/main/R/utils_system.R" class="external-link"><code>R/utils_system.R</code></a></small>
       <div class="d-none name"><code>listfiles.Rd</code></div>
     </div>
 
@@ -121,25 +129,25 @@ It also lets filter files which contains a string.</p>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">listfiles</span><span class="op">(</span>recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            filename size isdir mode               mtime               ctime</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          ROC.html   16 FALSE  644 2025-11-15 18:28:24 2025-11-15 18:28:24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     autoline.html   20 FALSE  644 2025-11-15 18:28:24 2025-11-15 18:28:24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 balance_data.html    9 FALSE  644 2025-11-15 18:28:25 2025-11-15 18:28:25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          ROC.html   17 FALSE  644 2025-11-24 18:25:52 2025-11-24 18:25:52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     autoline.html   21 FALSE  644 2025-11-24 18:25:53 2025-11-24 18:25:53</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 balance_data.html   10 FALSE  644 2025-11-24 18:25:53 2025-11-24 18:25:53</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 atime  uid  gid  uname grname</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2025-11-15 18:28:24 1001 1001 runner runner</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2025-11-15 18:28:24 1001 1001 runner runner</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2025-11-15 18:28:25 1001 1001 runner runner</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2025-11-24 18:25:52 1001 1001 runner runner</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2025-11-24 18:25:53 1001 1001 runner runner</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2025-11-24 18:25:53 1001 1001 runner runner</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># All files in current directory (with recursive files)</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">listfiles</span><span class="op">(</span>recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            filename size isdir mode               mtime               ctime</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 128 lasso_vars.html   11 FALSE  644 2025-11-15 18:29:05 2025-11-15 18:29:05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 129 left_right.html    7 FALSE  644 2025-11-15 18:29:05 2025-11-15 18:29:05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 130  list_cats.html   11 FALSE  644 2025-11-15 18:29:05 2025-11-15 18:29:05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 128 lasso_vars.html   12 FALSE  644 2025-11-24 18:26:36 2025-11-24 18:26:36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 129 left_right.html    8 FALSE  644 2025-11-24 18:26:36 2025-11-24 18:26:36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 130  list_cats.html   11 FALSE  644 2025-11-24 18:26:36 2025-11-24 18:26:36</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   atime  uid  gid  uname grname</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 128 2025-11-15 18:29:05 1001 1001 runner runner</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 129 2025-11-15 18:29:05 1001 1001 runner runner</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 130 2025-11-15 18:29:05 1001 1001 runner runner</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 128 2025-11-24 18:26:36 1001 1001 runner runner</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 129 2025-11-24 18:26:36 1001 1001 runner runner</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 130 2025-11-24 18:26:36 1001 1001 runner runner</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Check R files using regex</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">listfiles</span><span class="op">(</span>regex <span class="op">=</span> <span class="st">"\\.R$"</span><span class="op">)</span></span></span>

@@ -45,20 +45,20 @@ List with data.frame and plot if `plot=TRUE`.
 # \donttest{
 cran_logs(c("lares", "dplyr"), from = "2021-05-31")
 #> $df
-#> # A tibble: 3,244 × 3
+#> # A tibble: 3,262 × 3
 #>    date       count package
 #>    <date>     <int> <chr>  
-#>  1 2025-11-14   244 lares  
-#>  2 2025-11-14 67645 dplyr  
-#>  3 2025-11-13   321 lares  
-#>  4 2025-11-13 77061 dplyr  
-#>  5 2025-11-12   325 lares  
-#>  6 2025-11-12 87576 dplyr  
-#>  7 2025-11-11   358 lares  
-#>  8 2025-11-11 81530 dplyr  
-#>  9 2025-11-10   328 lares  
-#> 10 2025-11-10 74422 dplyr  
-#> # ℹ 3,234 more rows
+#>  1 2025-11-23    43 lares  
+#>  2 2025-11-23 53870 dplyr  
+#>  3 2025-11-22    96 lares  
+#>  4 2025-11-22 50088 dplyr  
+#>  5 2025-11-21   271 lares  
+#>  6 2025-11-21 64568 dplyr  
+#>  7 2025-11-20   206 lares  
+#>  8 2025-11-20 71656 dplyr  
+#>  9 2025-11-19   259 lares  
+#> 10 2025-11-19 74441 dplyr  
+#> # ℹ 3,252 more rows
 #> 
 #> $plot
 

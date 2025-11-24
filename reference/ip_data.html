@@ -19,7 +19,7 @@ weather station, coordinates, Timezone, local time, languages, and currency."><m
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,6 +28,14 @@ weather station, coordinates, Timezone, local time, languages, and currency."><m
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/api-integrations.html">API Integrations</a></li>
+    <li><a class="dropdown-item" href="../articles/data-wrangling.html">Data Wrangling &amp; Visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/games.html">Games &amp; Puzzles</a></li>
+    <li><a class="dropdown-item" href="../articles/machine-learning.html">Machine Learning</a></li>
+    <li><a class="dropdown-item" href="../articles/robyn_lares.html">Robyn Enhancers</a></li>
+  </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -40,7 +48,7 @@ weather station, coordinates, Timezone, local time, languages, and currency."><m
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Scrap data based on IP address</h1>
-      <small class="dont-index">Source: <a href="https://github.com/laresbernardo/lares/blob/main/R/other_functions.R" class="external-link"><code>R/other_functions.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/laresbernardo/lares/blob/main/R/utils_data.R" class="external-link"><code>R/utils_data.R</code></a></small>
       <div class="d-none name"><code>ip_data.Rd</code></div>
     </div>
 
@@ -135,17 +143,17 @@ and columns will bee created for all the additional information found.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 en-US, es-US, haw, fr Dollar (USD)</span>
 <span class="r-in"><span><span class="fu">ip_data</span><span class="op">(</span>ip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="myip.html">myip</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"201.244.197.199"</span><span class="op">)</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                id addresstype                                asn            isp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  172.184.211.34        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK      Microsoft</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 172.182.195.229        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK      Microsoft</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 201.244.197.199        IPv4                    19429 - AS19429 ETB - Colombia</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   connection      organization       country stateregion districtcounty</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Hosting Microsoft Limited United States  California    Santa Clara</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Hosting Microsoft Limited United States     Arizona       Maricopa</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       &lt;NA&gt;              &lt;NA&gt;      Colombia Bogota D.C.   Bogotá  D.C.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              city zippostalcode            weatherstation       coordinates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        San Jose         95141       USCA0993 - San Jose 37.3387, -121.885</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         Phoenix         85001        USAZ0166 - Phoenix 33.4483, -112.073</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 Barrio San Luis          &lt;NA&gt; COXX7742 - Vereda El Hato 4.66779, -74.0215</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      timezone localtime             languages     currency</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 America/Los_Angeles (UTC-8)           en-US, es-US, haw, fr Dollar (USD)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      America/Bogota (UTC-5)                           es-CO   Peso (COP)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  timezone localtime             languages     currency</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 America/Phoenix (UTC-7)           en-US, es-US, haw, fr Dollar (USD)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  America/Bogota (UTC-5)                           es-CO   Peso (COP)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     hostname</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                                       &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 dynamic-201-244-197-199.dynamic.etb.net.co</span>

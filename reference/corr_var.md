@@ -111,7 +111,6 @@ feature, arranged by descending absolute correlation value.
 ## See also
 
 Other Exploratory:
-[`corr_cross()`](https://laresbernardo.github.io/lares/reference/corr_cross.md),
 [`crosstab()`](https://laresbernardo.github.io/lares/reference/crosstab.md),
 [`df_str()`](https://laresbernardo.github.io/lares/reference/df_str.md),
 [`distr()`](https://laresbernardo.github.io/lares/reference/distr.md),

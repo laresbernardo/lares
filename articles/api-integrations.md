@@ -1,0 +1,475 @@
+# API Integrations
+
+## Introduction
+
+`lares` provides convenient wrappers for popular APIs, making it easy to
+integrate AI services, financial data, and more into your R workflows.
+
+## Credential Management
+
+### Setup Credentials Securely
+
+`lares` uses a YAML configuration file to store credentials:
+
+``` r
+library(lares)
+```
+
+Create a `config.yml` file:
+
+``` yaml
+default:
+  openai:
+    secret_key: "sk-your-openai-key-here"
+  
+  gemini:
+    api_key: "your-gemini-key-here"
+  
+  database:
+    server: "localhost"
+    database: "mydb"
+    uid: "user"
+    pwd: "password"
+```
+
+Set the credentials directory (one-time setup):
+
+``` r
+# lares will prompt you to set the directory
+creds <- get_credentials("openai")
+
+# Or specify manually
+creds <- get_credentials("openai", dir = "~/my_credentials")
+```
+
+## ChatGPT Integration
+
+### Basic Usage
+
+``` r
+# Simple question
+response <- gpt_ask("Explain linear regression in 2 sentences")
+```
+
+### Structured Prompts
+
+Use
+[`gpt_prompter()`](https://laresbernardo.github.io/lares/reference/gpt_prompter.md)
+to build better prompts:
+
+``` r
+# Create a structured prompt
+prompt <- gpt_prompter(
+  instruction = "Classify these items",
+  input = c("Dog", "Rose", "Car", "Oak"),
+  context = c("Animal", "Plant", "Object"),
+  output = "table",
+  cols = c("Item", "Category")
+)
+
+# Send to ChatGPT
+result <- gpt_ask(prompt$prompt)
+```
+
+### Specialized Functions
+
+#### Classification
+
+``` r
+# Classify text into categories
+items <- c("Python tutorial", "R package", "Java course", "Statistics book")
+categories <- c("Programming", "Statistics", "Other")
+
+result <- gpt_classify(items, categories)
+print(result)
+```
+
+#### Data Extraction
+
+``` r
+# Extract specific information
+texts <- c(
+  "My email is john@example.com",
+  "Call me at +1-555-0123",
+  "Visit us at 123 Main St, NYC"
+)
+
+extractions <- c("email", "phone number", "city")
+
+result <- gpt_extract(texts, extractions)
+print(result)
+```
+
+#### Translation
+
+``` r
+# Translate text
+text <- rep("Hello, how are you?", 3)
+languages <- c("Spanish", "French", "German")
+
+result <- gpt_translate(text, languages)
+print(result)
+```
+
+#### Formatting
+
+``` r
+# Standardize date formats
+dates <- c("March 15, 2024", "15/03/2024", "2024-03-15")
+format_spec <- "ISO 8601 (YYYY-MM-DD)"
+
+result <- gpt_format(dates, format = format_spec)
+print(result)
+```
+
+#### Tagging
+
+``` r
+# Tag items with multiple labels
+items <- c("Machine learning tutorial", "Data visualization guide")
+tags <- c("AI", "Statistics", "Programming", "Visualization")
+
+result <- gpt_tag(items, tags)
+print(result)
+```
+
+### View Conversation History
+
+``` r
+# See all previous prompts and responses from this session
+history <- gpt_history()
+head(history)
+```
+
+### Advanced Configuration
+
+``` r
+# Customize model and parameters
+response <- gpt_ask(
+  "Write a haiku about data science",
+  model = "gpt-4",
+  temperature = 0.9, # More creative (0-2)
+  num_retries = 3
+)
+```
+
+## Google Gemini Integration
+
+### Basic Usage
+
+``` r
+# Text generation
+response <- gemini_ask(
+  "Explain the Central Limit Theorem",
+  api_key = get_credentials("gemini")$api_key
+)
+```
+
+### Image Analysis
+
+``` r
+# Analyze an image
+response <- gemini_image(
+  prompt = "Describe this plot in detail",
+  image_path = "path/to/plot.png",
+  api_key = get_credentials("gemini")$api_key
+)
+```
+
+## Financial Data: Stocks
+
+### Get Stock Historical Data
+
+``` r
+# Fetch Apple stock data
+aapl <- stocks_hist(
+  symbols = "AAPL",
+  from = Sys.Date() - 90, # Last 90 days
+  to = Sys.Date()
+)
+
+head(aapl, 3)
+```
+
+### Multiple Stocks
+
+``` r
+# Compare multiple stocks
+tech_stocks <- stocks_hist(
+  symbols = c("AAPL", "GOOGL", "MSFT"),
+  from = "2024-01-01"
+)
+
+head(tech_stocks, 3)
+```
+
+### Stock Quotes
+
+``` r
+# Real-time quotes
+quote <- stocks_quote("AAPL")
+print(quote)
+```
+
+### Portfolio Analysis
+
+``` r
+# Track a portfolio
+portfolio <- daily_portfolio(
+  symbols = c("AAPL", "GOOGL", "TSLA"),
+  shares = c(10, 5, 8),
+  from = "2024-01-01"
+)
+
+# Visualize performance
+splot_summary(portfolio)
+```
+
+### Stock Visualizations
+
+``` r
+# Growth over time
+splot_growth(tech_stocks, symbols = c("AAPL", "GOOGL"))
+
+# Returns on investment
+splot_roi(tech_stocks, investment = 10000)
+
+# Sector performance
+splot_types(tech_stocks)
+```
+
+## Google Sheets Integration
+
+### Read from Google Sheets
+
+``` r
+# Read a Google Sheet
+data <- readGS(
+  title = "My Spreadsheet",
+  sheet = "Sheet1",
+  creds = get_credentials("google")
+)
+```
+
+### Write to Google Sheets
+
+``` r
+# Write data to Google Sheets
+writeGS(
+  data = mtcars,
+  title = "My Data",
+  sheet = "Cars",
+  creds = get_credentials("google")
+)
+```
+
+## Database Queries
+
+### PostgreSQL
+
+``` r
+# Query a database
+query <- "SELECT * FROM users WHERE active = TRUE LIMIT 10"
+result <- queryDB(
+  query = query,
+  from = "my_database_creds"
+)
+```
+
+## Google Trends
+
+### Search Trends Over Time
+
+``` r
+# Get trend data
+trends <- gtrends_time(
+  keyword = "machine learning",
+  from = "2023-01-01",
+  to = "2024-01-01"
+)
+
+head(trends)
+```
+
+### Related Queries
+
+``` r
+# Find related search terms
+related <- gtrends_related(
+  keyword = "data science",
+  categories = c("top", "rising")
+)
+```
+
+## Best Practices
+
+### 1. Secure Your Credentials
+
+``` r
+# ❌ DON'T hardcode
+# api_key <- "sk-1234567890"
+
+# ✅ DO use credential management
+api_key <- get_credentials("openai")$secret_key
+```
+
+### 2. Handle API Errors
+
+``` r
+# Wrap in try-catch
+result <- tryCatch(
+  {
+    gpt_ask("Your question here")
+  },
+  error = function(e) {
+    message("API error: ", e$message)
+    NULL
+  }
+)
+```
+
+### 3. Rate Limiting
+
+``` r
+# Add delays for bulk operations
+items <- c("item1", "item2", "item3")
+
+results <- lapply(items, function(item) {
+  result <- gpt_ask(item)
+  Sys.sleep(1) # 1 second delay
+  result
+})
+```
+
+### 4. Cache Results
+
+``` r
+# Cache expensive API calls
+result <- cache_pipe(
+  {
+    # This only runs once, then cached and loaded on subsequent calls
+    gpt_ask("Expensive query here")
+  },
+  base = "my_gpt_query"
+)
+```
+
+### 5. Monitor Costs
+
+``` r
+# Use cheaper models for simple tasks
+simple_task <- gpt_ask(
+  "Summarize: The meeting is at 3pm",
+  model = "gpt-3.5-turbo" # Cheaper than gpt-4
+)
+
+# Use expensive models only when needed
+complex_task <- gpt_ask(
+  "Analyze this complex dataset: ...",
+  model = "gpt-4"
+)
+```
+
+## Environment Variables
+
+Set global defaults via environment variables:
+
+``` r
+# In .Renviron file:
+# LARES_GPT_MODEL=gpt-4
+# LARES_GPT_URL=https://api.openai.com/v1/chat/completions
+# LARES_GEMINI_API=https://generativelanguage.googleapis.com/v1beta/models/
+
+# Check current settings
+Sys.getenv(c("LARES_GPT_MODEL", "LARES_GEMINI_API"))
+#>                                            LARES_GPT_MODEL 
+#>                                            "gpt-3.5-turbo" 
+#>                                           LARES_GEMINI_API 
+#> "https://generativelanguage.googleapis.com/v1beta/models/"
+```
+
+## Troubleshooting
+
+### API Key Issues
+
+``` r
+# Verify credentials are loaded
+creds <- get_credentials("openai")
+if (is.null(creds$secret_key)) {
+  stop("OpenAI API key not found!")
+}
+```
+
+### Network Issues
+
+``` r
+# Check internet connection
+if (haveInternet()) {
+  message("Connected to internet")
+} else {
+  stop("No internet connection")
+}
+```
+
+### Rate Limit Errors
+
+If you hit rate limits: 1. Add
+[`Sys.sleep()`](https://rdrr.io/r/base/Sys.sleep.html) between calls 2.
+Use batch processing 3. Upgrade your API plan
+
+## Complete Example: Data Analysis with AI
+
+``` r
+# 1. Load data
+data(dft)
+
+# 2. Get AI summary of data structure
+prompt <- sprintf(
+  "Summarize this dataset structure: %d rows, columns: %s",
+  nrow(dft),
+  paste(colnames(dft), collapse = ", ")
+)
+summary <- gpt_ask(prompt)
+
+# 3. Get stock data
+stocks <- stocks_hist("AAPL", from = Sys.Date() - 30)
+
+# 4. Cache the analysis
+analysis <- cache_pipe(
+  {
+    gpt_ask(sprintf(
+      "Analyze this stock: Recent high: $%.2f, Low: $%.2f",
+      max(stocks$High, na.rm = TRUE),
+      min(stocks$Low, na.rm = TRUE)
+    ))
+  },
+  base = "aapl_analysis"
+)
+
+print(analysis)
+```
+
+## Further Reading
+
+### API Documentation
+
+- **OpenAI API Docs:** <https://platform.openai.com/docs>
+- **Gemini API Docs:** <https://ai.google.dev/docs>
+- **lares Functions:**
+  [`?gpt_ask`](https://laresbernardo.github.io/lares/reference/gpt_ask.md),
+  [`?gemini_ask`](https://laresbernardo.github.io/lares/reference/gemini_ask.md),
+  [`?stocks_hist`](https://laresbernardo.github.io/lares/reference/stocks_hist.md),
+  [`?get_credentials`](https://laresbernardo.github.io/lares/reference/get_credentials.md)
+
+### Blog Posts & Tutorials
+
+- **All lares articles:** [Author page on
+  DataScience+](https://datascienceplus.com/author/bernardo-lares/)
+- **Package website:** <https://laresbernardo.github.io/lares/>
+
+## Next Steps
+
+- Explore data wrangling (see Data Wrangling vignette)
+- Learn machine learning (see Machine Learning vignette)
+- Review credential management:
+  [`?get_credentials`](https://laresbernardo.github.io/lares/reference/get_credentials.md)

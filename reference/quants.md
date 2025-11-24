@@ -64,6 +64,7 @@ Other Data Wrangling:
 
 Other Calculus:
 [`corr()`](https://laresbernardo.github.io/lares/reference/corr.md),
+[`corr_cross()`](https://laresbernardo.github.io/lares/reference/corr_cross.md),
 [`dist2d()`](https://laresbernardo.github.io/lares/reference/dist2d.md),
 [`model_metrics()`](https://laresbernardo.github.io/lares/reference/model_metrics.md)
 

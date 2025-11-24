@@ -1,5 +1,35 @@
 # Changelog
 
+## lares 5.3.3 (Development)
+
+- docs: created comprehensive new vignettes
+- docs: added minimum version requirement `fansi (>= 1.0.0)` in
+  DESCRIPTION for colored output support
+- feat: new experimental
+  [`mp3_update_tags()`](https://laresbernardo.github.io/lares/reference/mp3_update_tags.md)
+  function and
+  `get_mp3(..., metadata = TRUE, cover = TRUE, title = NULL)` parameters
+- feat: new parameter `model_name` in
+  [`h2o_automl()`](https://laresbernardo.github.io/lares/reference/h2o_automl.md)
+  and
+  [`h2o_results()`](https://laresbernardo.github.io/lares/reference/h2o_results.md)
+  for cleaner, more intuitive API
+- feat: added `model_name` parameter to enable custom model naming for
+  better file organization with
+  [`export_results()`](https://laresbernardo.github.io/lares/reference/export_results.md)
+- feat: new
+  [`toon_reduction()`](https://laresbernardo.github.io/lares/reference/toon_reduction.md)
+  to calculate size reduction of JSON vs TOON format. See new toon
+  package
+- fix: resolved scoping issue in
+  [`h2o_results()`](https://laresbernardo.github.io/lares/reference/h2o_results.md)
+  that caused `object 'model_name_input' not found` error
+- fix: improved
+  [`mplot_metrics()`](https://laresbernardo.github.io/lares/reference/mplot_metrics.md)
+  robustness to handle missing validation metrics without crashing
+- fix: parameter `dir` passed correctly in
+  [`get_creds()`](https://laresbernardo.github.io/lares/reference/get_credentials.md)
+
 ## lares 5.3.2 (2025-08-18)
 
 CRAN release: 2025-08-18

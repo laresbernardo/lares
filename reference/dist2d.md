@@ -32,6 +32,7 @@ Numeric value result
 
 Other Calculus:
 [`corr()`](https://laresbernardo.github.io/lares/reference/corr.md),
+[`corr_cross()`](https://laresbernardo.github.io/lares/reference/corr_cross.md),
 [`model_metrics()`](https://laresbernardo.github.io/lares/reference/model_metrics.md),
 [`quants()`](https://laresbernardo.github.io/lares/reference/quants.md)
 

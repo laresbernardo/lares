@@ -118,6 +118,7 @@ Other Model metrics:
 
 Other Calculus:
 [`corr()`](https://laresbernardo.github.io/lares/reference/corr.md),
+[`corr_cross()`](https://laresbernardo.github.io/lares/reference/corr_cross.md),
 [`dist2d()`](https://laresbernardo.github.io/lares/reference/dist2d.md),
 [`quants()`](https://laresbernardo.github.io/lares/reference/quants.md)
 

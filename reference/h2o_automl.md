@@ -4,7 +4,7 @@ This function lets the user create a robust and fast model, using H2O's
 AutoML function. The result is a list with the best model, its
 parameters, datasets, performance metrics, variables importance, and
 plots. Read more about the `h2o_automl()` pipeline
-[here](https://laresbernardo.github.io/lares/articles/h2o_automl.html).
+[here](https://laresbernardo.github.io/lares/articles/machine-learning.html).
 
 ## Usage
 
@@ -38,6 +38,7 @@ h2o_automl(
   save = FALSE,
   subdir = NA,
   project = "AutoML Results",
+  model_name = NULL,
   verbosity = NULL,
   ...
 )
@@ -183,11 +184,18 @@ print(x, importance = TRUE, ...)
 
   Character. Your project's name
 
+- model_name:
+
+  Character. Optional custom name for the model. If provided, this name
+  will be used when saving the model with
+  [`export_results()`](https://laresbernardo.github.io/lares/reference/export_results.md).
+  If NULL (default), the H2O-generated model ID will be used.
+
 - verbosity:
 
-  Verbosity of the backend messages printed during training; Optional.
+  Character. Verbosity of the backend messages printed during training.
   Must be one of NULL (live log disabled), "debug", "info", "warn",
-  "error". Defaults to "warn".
+  "error". Defaults to NULL.
 
 - ...:
 
@@ -207,6 +215,16 @@ print(x, importance = TRUE, ...)
 List. Trained model, predicted scores and datasets used, performance
 metrics, parameters, importance data.frame, seed, and plots when
 `plots=TRUE`.
+
+## Details
+
+For additional tutorials and examples:
+
+- [Machine Learning with H2O
+  Package](https://datascienceplus.com/machine-learning-with-r-h2o-package/)
+
+- [Understanding ROC
+  Curves](https://datascienceplus.com/understanding-roc-curves-with-lares/)
 
 ## List of algorithms
 

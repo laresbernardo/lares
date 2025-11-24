@@ -21,7 +21,7 @@ here."><meta property="og:image" content="https://laresbernardo.github.io/lares/
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,6 +30,14 @@ here."><meta property="og:image" content="https://laresbernardo.github.io/lares/
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/api-integrations.html">API Integrations</a></li>
+    <li><a class="dropdown-item" href="../articles/data-wrangling.html">Data Wrangling &amp; Visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/games.html">Games &amp; Puzzles</a></li>
+    <li><a class="dropdown-item" href="../articles/machine-learning.html">Machine Learning</a></li>
+    <li><a class="dropdown-item" href="../articles/robyn_lares.html">Robyn Enhancers</a></li>
+  </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -51,7 +59,7 @@ here."><meta property="og:image" content="https://laresbernardo.github.io/lares/
 H2O's AutoML function. The result is a list with the best model,
 its parameters, datasets, performance metrics, variables
 importance, and plots. Read more about the <code>h2o_automl()</code> pipeline
-<a href="https://laresbernardo.github.io/lares/articles/h2o_automl.html">here</a>.</p>
+<a href="https://laresbernardo.github.io/lares/articles/machine-learning.html">here</a>.</p>
     </div>
 
     <div class="section level2">
@@ -85,6 +93,7 @@ importance, and plots. Read more about the <code>h2o_automl()</code> pipeline
 <span>  save <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  subdir <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  project <span class="op">=</span> <span class="st">"AutoML Results"</span>,</span>
+<span>  model_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbosity <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -232,9 +241,15 @@ the results? Working directory as default.</p></dd>
 <dd><p>Character. Your project's name</p></dd>
 
 
+<dt id="arg-model-name">model_name<a class="anchor" aria-label="anchor" href="#arg-model-name"></a></dt>
+<dd><p>Character. Optional custom name for the model. If provided,
+this name will be used when saving the model with <code><a href="export_results.html">export_results()</a></code>. If NULL
+(default), the H2O-generated model ID will be used.</p></dd>
+
+
 <dt id="arg-verbosity">verbosity<a class="anchor" aria-label="anchor" href="#arg-verbosity"></a></dt>
-<dd><p>Verbosity of the backend messages printed during training; Optional.
-Must be one of NULL (live log disabled), "debug", "info", "warn", "error". Defaults to "warn".</p></dd>
+<dd><p>Character. Verbosity of the backend messages printed during training.
+Must be one of NULL (live log disabled), "debug", "info", "warn", "error". Defaults to NULL.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -254,6 +269,11 @@ Must be one of NULL (live log disabled), "debug", "info", "warn", "error". Defau
     <p>List. Trained model, predicted scores and datasets used, performance
 metrics, parameters, importance data.frame, seed, and plots when <code>plots=TRUE</code>.</p>
     </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>For additional tutorials and examples:</p><ul><li><p><a href="https://datascienceplus.com/machine-learning-with-r-h2o-package/" class="external-link">Machine Learning with H2O Package</a></p></li>
+<li><p><a href="https://datascienceplus.com/understanding-roc-curves-with-lares/" class="external-link">Understanding ROC Curves</a></p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="list-of-algorithms">List of algorithms<a class="anchor" aria-label="anchor" href="#list-of-algorithms"></a></h2>
 

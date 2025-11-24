@@ -64,7 +64,6 @@ counting how many observations (rows) fall into each criteria.
 ## See also
 
 Other Exploratory:
-[`corr_cross()`](https://laresbernardo.github.io/lares/reference/corr_cross.md),
 [`corr_var()`](https://laresbernardo.github.io/lares/reference/corr_var.md),
 [`df_str()`](https://laresbernardo.github.io/lares/reference/df_str.md),
 [`distr()`](https://laresbernardo.github.io/lares/reference/distr.md),

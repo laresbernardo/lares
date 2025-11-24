@@ -73,3 +73,18 @@ Other Tools:
 [`try_require()`](https://laresbernardo.github.io/lares/reference/try_require.md),
 [`warnifnot()`](https://laresbernardo.github.io/lares/reference/warnifnot.md),
 [`what_size()`](https://laresbernardo.github.io/lares/reference/what_size.md)
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+# Update to CRAN version
+updateLares(dev = FALSE)
+
+# Update to development version from GitHub
+updateLares(dev = TRUE)
+
+# Install with all recommended packages
+updateLares(all = TRUE)
+} # }
+```

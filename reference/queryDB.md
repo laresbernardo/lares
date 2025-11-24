@@ -42,3 +42,14 @@ Other Credentials:
 [`queryGA()`](https://laresbernardo.github.io/lares/reference/queryGA.md),
 [`slackSend()`](https://laresbernardo.github.io/lares/reference/slackSend.md),
 [`stocks_file()`](https://laresbernardo.github.io/lares/reference/stocks_report.md)
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+# Query a PostgreSQL database
+query <- "SELECT * FROM my_table LIMIT 10"
+result <- queryDB(query, from = "my_database")
+head(result)
+} # }
+```
