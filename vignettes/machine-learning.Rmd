@@ -1,10 +1,10 @@
 ---
-title: "Machine Learning with lares and h2o"
+title: "Machine Learning"
 author: "Bernardo Lares"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Machine Learning with lares and h2o}
+  %\VignetteIndexEntry{Machine Learning}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

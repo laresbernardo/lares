@@ -1,10 +1,10 @@
 ---
-title: "Games & Puzzles with lares"  
+title: "Games & Puzzles"  
 author: "Bernardo Lares"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Games & Puzzles with lares}
+  %\VignetteIndexEntry{Games & Puzzles}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -29,7 +29,7 @@ if (require("fansi", quietly = TRUE)) {
 
 ## Introduction
 
-Beyond data analysis and machine learning, `lares` includes a collection of fun game solvers and helpers! Challenge yourself with Wordle, Scrabble, Sudoku, mazes, Numble.
+Beyond data analysis and machine learning, `lares` includes a collection of fun game solvers and helpers! Challenge yourself with Wordle, Scrabble, Sudoku, mazes...
 
 ```{r}
 library(lares)
@@ -253,47 +253,6 @@ maze_solve(
   timeout = 5 # Max 5 seconds
 )
 ```
-
-## Numble
-
-A number-based puzzle game!
-
-### Play Numble
-
-```{r eval=FALSE}
-# Check your mathematical expression
-numble_check(
-  input = "3 + 4 = 7",
-  solution = "5 + 2 = 7",
-  len = 7
-)
-```
-
-## Tips & Tricks
-
-### Wordle Strategy
-
-1. **Start with vowel-rich words:** "AUDIO", "ADIEU", "OUIJA"
-2. **Use common consonants:** R, S, T, L, N
-3. **Eliminate letters quickly:** Use `scrabble_words()` with constraints
-
-### Scrabble Pro Tips
-
-1. **Learn 2-letter words:** QI, XU, ZA
-2. **Use all 7 tiles:** 50-point bonus!
-3. **Q without U:** QI, QOPH, QAT, QAID
-
-### Sudoku Solving
-
-1. **Start with constrained cells:** Rows/columns with few options
-2. **Use candidate elimination:** Mark impossibilities
-3. **Let the algorithm work:** `sudoku_solver()` handles it!
-
-### Maze Navigation
-
-1. **Right-hand rule:** Keep hand on wall
-2. **Breadth-first search:** Guarantees shortest path
-3. **Use `aim = TRUE`:** Guides toward goal
 
 ## Combining Games & Data Science
 

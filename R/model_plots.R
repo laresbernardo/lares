@@ -658,9 +658,24 @@ mplot_metrics <- function(results,
                           file_name = "viz_metrics.png") {
   scoring_history <- results$model@model$scoring_history
 
+  # Determine x-axis variable (trees or iterations)
+  if ("number_of_trees" %in% names(scoring_history)) {
+    x_var <- "number_of_trees"
+    x_label <- "# of trees"
+  } else if ("iteration" %in% names(scoring_history)) {
+    x_var <- "iteration"
+    x_label <- "# of iterations"
+  } else if ("iterations" %in% names(scoring_history)) {
+    x_var <- "iterations"
+    x_label <- "# of iterations"
+  } else {
+    warning("No trees or iterations found in scoring history")
+    return(NULL)
+  }
+
   # Safely extract metrics, handling missing validation data
   plots_data <- data.frame(
-    trees = scoring_history$number_of_trees,
+    trees = scoring_history[[x_var]],
     train_ll = scoring_history$training_logloss,
     train_auc = scoring_history$training_auc
   )
@@ -677,8 +692,8 @@ mplot_metrics <- function(results,
     geom_hline(yintercept = 0.69315, alpha = 0.5, linetype = "dotted") +
     geom_line(aes(x = .data$trees, y = .data$train_ll, colour = "Train"), size = 0.5) +
     labs(
-      title = "Logarithmic Loss vs Number of Trees",
-      colour = "Dataset", x = "# of trees", y = "LogLoss"
+      title = paste("Logarithmic Loss vs", x_label),
+      colour = "Dataset", x = x_label, y = "LogLoss"
     ) +
     scale_colour_brewer(palette = "Set1") +
     geom_text(

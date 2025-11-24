@@ -12,6 +12,7 @@ template:
     left:
       - home
       - reference
+      - articles
       - news
   components:
     news:

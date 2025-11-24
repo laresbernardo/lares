@@ -1,10 +1,10 @@
 ---
-title: "Data Wrangling & Visualization with lares"
+title: "Data Wrangling & Visualization"
 author: "Bernardo Lares"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Data Wrangling & Visualization with lares}
+  %\VignetteIndexEntry{Data Wrangling & Visualization}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -1,10 +1,10 @@
 ---
-title: "API Integrations with lares"
+title: "API Integrations"
 author: "Bernardo Lares"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{API Integrations with lares}
+  %\VignetteIndexEntry{API Integrations}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -323,7 +323,7 @@ related <- gtrends_related(
 
 ### 1. Secure Your Credentials
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 # ❌ DON'T hardcode
 # api_key <- "sk-1234567890"
 
