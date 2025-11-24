@@ -21,11 +21,10 @@ knitr::opts_chunk$set(
 
 # Enable ANSI color output in HTML vignettes
 options(crayon.enabled = TRUE)
-if (require("fansi", quietly = TRUE)) {
-  old_hooks <- fansi::set_knit_hooks(knitr::knit_hooks,
-    which = c("output", "message", "error")
-  )
-}
+library(fansi)
+old_hooks <- fansi::set_knit_hooks(knitr::knit_hooks,
+  which = c("output", "message", "error")
+)
 ```
 
 ## Introduction
