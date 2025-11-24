@@ -18,7 +18,6 @@ categorical and numerical respectively.
 }
 \seealso{
 Other Exploratory: 
-\code{\link{corr_cross}()},
 \code{\link{corr_var}()},
 \code{\link{crosstab}()},
 \code{\link{df_str}()},

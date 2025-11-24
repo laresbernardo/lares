@@ -35,6 +35,7 @@ h2o_automl(
   save = FALSE,
   subdir = NA,
   project = "AutoML Results",
+  model_name = NULL,
   verbosity = NULL,
   ...
 )
@@ -126,8 +127,12 @@ the results? Working directory as default.}
 
 \item{project}{Character. Your project's name}
 
-\item{verbosity}{Verbosity of the backend messages printed during training; Optional.
-Must be one of NULL (live log disabled), "debug", "info", "warn", "error". Defaults to "warn".}
+\item{model_name}{Character. Optional custom name for the model. If provided,
+this name will be used when saving the model with \code{export_results()}. If NULL
+(default), the H2O-generated model ID will be used.}
+
+\item{verbosity}{Character. Verbosity of the backend messages printed during training.
+Must be one of NULL (live log disabled), "debug", "info", "warn", "error". Defaults to NULL.}
 
 \item{...}{Additional parameters on \code{h2o::h2o.automl}}
 
@@ -144,7 +149,14 @@ This function lets the user create a robust and fast model, using
 H2O's AutoML function. The result is a list with the best model,
 its parameters, datasets, performance metrics, variables
 importance, and plots. Read more about the \code{h2o_automl()} pipeline
-\href{https://laresbernardo.github.io/lares/articles/h2o_automl.html}{here}.
+\href{https://laresbernardo.github.io/lares/articles/machine-learning.html}{here}.
+}
+\details{
+For additional tutorials and examples:
+\itemize{
+  \item \href{https://datascienceplus.com/machine-learning-with-r-h2o-package/}{Machine Learning with H2O Package}
+  \item \href{https://datascienceplus.com/understanding-roc-curves-with-lares/}{Understanding ROC Curves}
+}
 }
 \section{List of algorithms}{
 

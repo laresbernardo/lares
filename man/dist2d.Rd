@@ -29,6 +29,7 @@ dist2d(x = c(5, 2), a = c(0, 0), b = c(1, 0))
 \seealso{
 Other Calculus: 
 \code{\link{corr}()},
+\code{\link{corr_cross}()},
 \code{\link{model_metrics}()},
 \code{\link{quants}()}
 }

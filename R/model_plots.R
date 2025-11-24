@@ -656,17 +656,26 @@ mplot_metrics <- function(results,
                           save = FALSE,
                           subdir = NA,
                           file_name = "viz_metrics.png") {
+  scoring_history <- results$model@model$scoring_history
+
+  # Safely extract metrics, handling missing validation data
   plots_data <- data.frame(
-    trees = results$model@model$scoring_history$number_of_trees,
-    train_ll = results$model@model$scoring_history$training_logloss,
-    test_ll = results$model@model$scoring_history$validation_logloss,
-    train_auc = results$model@model$scoring_history$training_auc,
-    test_auc = results$model@model$scoring_history$validation_auc
+    trees = scoring_history$number_of_trees,
+    train_ll = scoring_history$training_logloss,
+    train_auc = scoring_history$training_auc
   )
+
+  # Add validation metrics if they exist
+  if (!is.null(scoring_history$validation_logloss)) {
+    plots_data$test_ll <- scoring_history$validation_logloss
+  }
+  if (!is.null(scoring_history$validation_auc)) {
+    plots_data$test_auc <- scoring_history$validation_auc
+  }
+
   ll <- ggplot(plots_data) +
     geom_hline(yintercept = 0.69315, alpha = 0.5, linetype = "dotted") +
     geom_line(aes(x = .data$trees, y = .data$train_ll, colour = "Train"), size = 0.5) +
-    geom_line(aes(x = .data$trees, y = .data$test_ll, colour = "Test"), size = 1) +
     labs(
       title = "Logarithmic Loss vs Number of Trees",
       colour = "Dataset", x = "# of trees", y = "LogLoss"
@@ -678,50 +687,66 @@ mplot_metrics <- function(results,
         label = round(.data$train_ll, 2)
       ),
       check_overlap = TRUE, nudge_y = 0.03, size = 3
-    ) +
-    geom_text(
-      aes(
-        x = .data$trees, y = .data$test_ll, colour = "Test",
-        label = round(.data$test_ll, 2)
-      ),
-      check_overlap = TRUE, nudge_y = 0.03, size = 3
-    ) +
+    )
+
+  if ("test_ll" %in% names(plots_data)) {
+    ll <- ll +
+      geom_line(aes(x = .data$trees, y = .data$test_ll, colour = "Test"), size = 1) +
+      geom_text(
+        aes(
+          x = .data$trees, y = .data$test_ll, colour = "Test",
+          label = round(.data$test_ll, 2)
+        ),
+        check_overlap = TRUE, nudge_y = 0.03, size = 3
+      )
+  }
+
+  ll <- ll +
     theme_lares(pal = 1) +
     theme(
       strip.text.x = element_blank(),
       strip.background = element_rect(colour = "white", fill = "white"),
       legend.position = c(0.1, 0.05)
     )
+
   au <- ggplot(plots_data) +
     geom_line(aes(x = .data$trees, y = .data$train_auc * 100, colour = "Train"), size = 0.5) +
-    geom_line(aes(x = .data$trees, y = .data$test_auc * 100, colour = "Test"), size = 1) +
-    geom_hline(yintercept = 50, alpha = 0.5, linetype = "dotted", colour = "black") +
     labs(
       title = "Area Under the Curve vs Number of Trees",
       colour = "Dataset", x = "# of trees", y = "AUC"
     ) +
     scale_colour_brewer(palette = "Set1") +
-    guides(colour = "none") +
     geom_text(
       aes(
         x = .data$trees, y = .data$train_auc * 100, colour = "Train",
         label = round(.data$train_auc * 100, 2)
       ),
-      check_overlap = TRUE, nudge_y = 3, size = 3
-    ) +
-    geom_text(
-      aes(
-        x = .data$trees, y = .data$test_auc * 100, colour = "Test",
-        label = round(.data$test_auc * 100, 2)
-      ),
-      check_overlap = TRUE, nudge_y = 3, size = 3
-    ) +
-    theme_lares(pal = 1)
+      check_overlap = TRUE, nudge_y = 0.03, size = 3
+    )
+
+  if ("test_auc" %in% names(plots_data)) {
+    au <- au +
+      geom_line(aes(x = .data$trees, y = .data$test_auc * 100, colour = "Test"), size = 1) +
+      geom_text(
+        aes(
+          x = .data$trees, y = .data$test_auc * 100, colour = "Test",
+          label = round(.data$test_auc * 100, 2)
+        ),
+        check_overlap = TRUE, nudge_y = 0.03, size = 3
+      )
+  }
+
+  au <- au +
+    theme_lares(pal = 1) +
+    theme(
+      strip.text.x = element_blank(),
+      strip.background = element_rect(colour = "white", fill = "white"),
+      legend.position = c(0.9, 0.05)
+    )
+  p <- (ll / au) + plot_layout(ncol = 1)
 
   if (!is.na(subtitle)) ll <- ll + labs(subtitle = subtitle)
   if (!is.na(model_name)) au <- au + labs(caption = model_name)
-
-  p <- (ll / au) + plot_layout(ncol = 1)
 
   if (save) {
     if (!is.na(subdir)) {

@@ -11,6 +11,17 @@
 #' @param local Boolean. Install package with local files? (or Github repo).
 #' @param fb Boolean. From FB instance? Personal internal use.
 #' @return No return value, called for side effects.
+#' @examples
+#' \dontrun{
+#' # Update to CRAN version
+#' updateLares(dev = FALSE)
+#'
+#' # Update to development version from GitHub
+#' updateLares(dev = TRUE)
+#'
+#' # Install with all recommended packages
+#' updateLares(all = TRUE)
+#' }
 #' @export
 updateLares <- function(force = FALSE, dev = TRUE, all = FALSE, local = FALSE, fb = FALSE) {
   try_require("devtools")

@@ -59,6 +59,7 @@ Other Data Wrangling:
 
 Other Calculus: 
 \code{\link{corr}()},
+\code{\link{corr_cross}()},
 \code{\link{dist2d}()},
 \code{\link{model_metrics}()}
 }

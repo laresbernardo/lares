@@ -11,6 +11,13 @@
 #' @param from Character. Credential's user (see \code{get_creds()})
 #' @param creds Character. Credential's directory (see \code{get_creds()})
 #' @return data.frame. Result of fetching the \code{query} data.
+#' @examples
+#' \dontrun{
+#' # Query a PostgreSQL database
+#' query <- "SELECT * FROM my_table LIMIT 10"
+#' result <- queryDB(query, from = "my_database")
+#' head(result)
+#' }
 #' @export
 queryDB <- function(query, from, creds = NA) {
   try_require("RPostgreSQL")

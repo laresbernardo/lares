@@ -22,8 +22,7 @@ corr_cross(
 )
 }
 \arguments{
-\item{df}{Dataframe. It doesn't matter if it's got non-numerical
-columns: they will be filtered.}
+\item{df}{data.frame}
 
 \item{plot}{Boolean. Show and return a plot?}
 
@@ -50,8 +49,6 @@ with variables that contains certain strings (using any value if vector used).}
 
 \item{rm.na}{Boolean. Remove NAs?}
 
-\item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
-
 \item{...}{Additional parameters passed to \code{corr}}
 }
 \value{
@@ -64,9 +61,8 @@ This function creates a correlation full study and returns a rank
 of the highest correlation variables obtained in a cross-table.
 }
 \details{
-DataScience+ Post:
-\href{https://datascienceplus.com/find-insights-with-ranked-cross-correlations/}{Find
-Insights with Ranked Cross-Correlations}
+For a detailed tutorial on using this function, see:
+\href{https://datascienceplus.com/find-insights-with-ranked-cross-correlations/}{Find Insights with Ranked Cross-Correlations}
 }
 \examples{
 Sys.unsetenv("LARES_FONT") # Temporal
@@ -85,25 +81,15 @@ corr_cross(dft, contains = c("Survived", "Fare"))
 corr_cross(dft, type = 2, top = NA)
 }
 \seealso{
+Other Calculus: 
+\code{\link{corr}()},
+\code{\link{dist2d}()},
+\code{\link{model_metrics}()},
+\code{\link{quants}()}
+
 Other Correlations: 
 \code{\link{corr}()},
 \code{\link{corr_var}()}
-
-Other Exploratory: 
-\code{\link{corr_var}()},
-\code{\link{crosstab}()},
-\code{\link{df_str}()},
-\code{\link{distr}()},
-\code{\link{freqs}()},
-\code{\link{freqs_df}()},
-\code{\link{freqs_list}()},
-\code{\link{freqs_plot}()},
-\code{\link{lasso_vars}()},
-\code{\link{missingness}()},
-\code{\link{plot_cats}()},
-\code{\link{plot_df}()},
-\code{\link{plot_nums}()},
-\code{\link{tree_var}()}
 }
+\concept{Calculus}
 \concept{Correlations}
-\concept{Exploratory}

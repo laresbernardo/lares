@@ -1,0 +1,267 @@
+---
+title: "Data Wrangling & Visualization with lares"
+author: "Bernardo Lares"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Data Wrangling & Visualization with lares}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5,
+  warning = FALSE,
+  message = FALSE
+)
+library(dplyr)
+```
+
+## Install and Load
+
+Install `lares` from CRAN or get the development version from GitHub. Then, load the package:
+
+```{r}
+library(lares)
+```
+
+## Quick Start with Built-in Data
+
+We'll use the Titanic dataset included in `lares`:
+
+```{r}
+data(dft)
+head(dft, 3)
+```
+
+## Frequency Analysis
+
+### Basic Frequencies
+
+The `freqs()` function provides quick frequency tables with percentages and cumulative values:
+
+```{r}
+# How many survived?
+freqs(dft, Survived)
+```
+
+### Multi-variable Frequencies
+
+```{r}
+# Survival by passenger class
+freqs(dft, Pclass, Survived)
+```
+
+### Visual Frequencies
+
+```{r fig.width=7, fig.height=4}
+# Visualize survival by class
+freqs(dft, Pclass, Survived, plot = TRUE)
+```
+
+### Dataframe-wide Frequencies
+
+Analyze all variables at once:
+
+```{r fig.width=7, fig.height=5}
+freqs_df(dft, plot = TRUE, top = 10)
+```
+
+## Correlation Analysis
+
+### Correlation Matrix
+
+Get correlations between all variables (automatically handles categorical variables):
+
+```{r}
+# Correlation matrix of numeric variables
+cors <- corr(dft[, 2:5], method = "pearson")
+head(cors, 3)
+```
+
+### Correlate One Variable with All Others
+
+```{r fig.width=7, fig.height=5}
+# Which variables correlate most with Survival?
+corr_var(dft, Survived, top = 10)
+```
+
+### Cross-Correlations
+
+Find the strongest correlations across the entire dataset:
+
+```{r fig.width=7, fig.height=5}
+# Top cross-correlations
+corr_cross(dft[, 2:6], top = 8)
+```
+
+## Data Transformation
+
+### Categorical Reduction
+
+Reduce categories in high-cardinality variables:
+
+```{r}
+# Reduce ticket categories (keep top 5, group rest as "other")
+dft_reduced <- categ_reducer(dft, Ticket, top = 5)
+freqs(dft_reduced, Ticket, top = 10)
+```
+
+### Normalization
+
+Normalize numeric variables to [0, 1] range:
+
+```{r}
+# Normalize age
+dft$Age_norm <- normalize(dft$Age)
+head(dft[, c("Age", "Age_norm")], 5)
+```
+
+### One-Hot Encoding
+
+Convert categorical variables to binary columns:
+
+```{r}
+# One-hot encode passenger class
+dft_encoded <- ohse(dft[, c("Pclass", "Survived")], limit = 5)
+colnames(dft_encoded)
+```
+
+## Date Manipulation
+
+Create date features for time series analysis:
+
+```{r}
+# Create sample dates
+dates <- seq(as.Date("2024-01-01"), as.Date("2024-12-31"), by = "day")
+
+# Extract year-month
+ym <- year_month(dates[1:5])
+ym
+
+# Extract year-quarter
+yq <- year_quarter(dates[1:5])
+yq
+
+# Cut dates into quarters
+quarters <- date_cuts(dates[c(1, 100, 200, 300)], type = "Q")
+quarters
+```
+
+## Visualization with theme_lares
+
+### Custom ggplot2 Theme
+
+`lares` includes a clean, professional theme:
+
+```{r fig.width=7, fig.height=4}
+library(ggplot2)
+
+ggplot(dft, aes(x = Age, y = Fare, color = Survived)) +
+  geom_point(alpha = 0.6) +
+  labs(title = "Age vs Fare by Survival") +
+  theme_lares()
+```
+
+### Distribution Plots
+
+Visualize distributions quickly:
+
+```{r fig.width=7, fig.height=5}
+# Analyze Fare distribution
+distr(dft, Fare, breaks = 20)
+```
+
+### Number Formatting
+
+Format numbers for better readability:
+
+```{r}
+# Format large numbers
+formatNum(c(1234567, 987654.321), decimals = 2)
+
+# Abbreviate numbers
+num_abbr(c(1500, 2500000, 1.5e9))
+
+# Convert abbreviations back to numbers
+num_abbr(c("1.5K", "2.5M", "1.5B"), numeric = TRUE)
+```
+
+### Custom Scales
+
+Use lares scales for better axis formatting:
+
+```{r fig.width=7, fig.height=4}
+df_summary <- dft %>%
+  group_by(Pclass) %>%
+  summarize(avg_fare = mean(Fare, na.rm = TRUE), .groups = "drop")
+
+ggplot(df_summary, aes(x = factor(Pclass), y = avg_fare)) +
+  geom_col(fill = "#00B1DA") +
+  labs(title = "Average Fare by Class", x = "Class", y = NULL) +
+  scale_y_dollar() + # Format as currency
+  theme_lares()
+```
+
+## Text and Vector Utilities
+
+### Vector to Text
+
+Convert vectors to readable text:
+
+```{r}
+# Simple comma-separated
+vector2text(c("apple", "banana", "cherry"))
+
+# With "and" before last item
+vector2text(c("red", "green", "blue"), and = "and")
+
+# Shorter alias
+v2t(LETTERS[1:5])
+```
+
+## Putting It All Together
+
+Here's a complete analysis workflow:
+
+```{r fig.width=7, fig.height=5}
+library(dplyr)
+
+# 1. Load and prepare data
+data(dft)
+
+# 2. Clean and transform
+dft_clean <- dft %>%
+  mutate(Age_Group = cut(Age,
+    breaks = c(0, 18, 35, 60, 100),
+    labels = c("Child", "Young", "Adult", "Senior")
+  ))
+
+# 3. Analyze frequencies
+freqs(dft_clean, Age_Group, Survived, plot = TRUE)
+
+# 4. Check correlations
+corr_var(dft_clean, Survived_TRUE, top = 8, max_pvalue = 0.05)
+```
+
+## Further Reading
+
+### Package Resources
+- **Package documentation:** [https://laresbernardo.github.io/lares/](https://laresbernardo.github.io/lares/)
+- **GitHub repository:** [https://github.com/laresbernardo/lares](https://github.com/laresbernardo/lares)
+- **Report issues:** [https://github.com/laresbernardo/lares/issues](https://github.com/laresbernardo/lares/issues)
+
+### Blog Posts & Tutorials
+- **Find Insights with Ranked Cross-Correlations:** [DataScience+](https://datascienceplus.com/find-insights-with-ranked-cross-correlations/)
+- **Visualize Monthly Income Distribution and Spend Curve:** [DataScience+](https://datascienceplus.com/visualize-monthly-income-distribution-and-spend-curve/)
+- **All lares articles:** [Author page on DataScience+](https://datascienceplus.com/author/bernardo-lares/)
+
+## Next Steps
+
+- Explore machine learning with `h2o_automl()` (see Machine Learning vignette)
+- Learn about API integrations with ChatGPT and Gemini (see API Integrations vignette)
+- Check individual function documentation: `?freqs`, `?corr`, `?theme_lares`

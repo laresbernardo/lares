@@ -1,7 +1,7 @@
 Package: lares
 Type: Package
 Title: Lean Analytics and Robust Exploration Sidekick
-Version: 5.3.3.9005
+Version: 5.3.3.9006
 Authors@R: c(
     person("Bernardo", "Lares", , "laresbernardo@gmail.com", c("aut", "cre")))
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>
@@ -31,6 +31,7 @@ Imports:
 Suggests:
     beepr (>= 0.1.5),
     DALEX (>= 1.0.0),
+    fansi (>= 1.0.0),
     googleAuthR (>= 1.0.0),
     googlesheets4 (>= 1.0.0),
     h2o (>= 3.24.0),
@@ -38,6 +39,7 @@ Suggests:
     MASS,
     quantmod (>= 0.4.20),
     rmarkdown (>= 2.7)
+VignetteBuilder: knitr
 URL: https://github.com/laresbernardo/lares, https://laresbernardo.github.io/lares/
 BugReports: https://github.com/laresbernardo/lares/issues
 RoxygenNote: 7.3.3

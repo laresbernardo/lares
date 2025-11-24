@@ -92,6 +92,7 @@ corr(df, method = "spearman")
 }
 \seealso{
 Other Calculus: 
+\code{\link{corr_cross}()},
 \code{\link{dist2d}()},
 \code{\link{model_metrics}()},
 \code{\link{quants}()}

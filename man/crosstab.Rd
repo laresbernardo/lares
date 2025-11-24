@@ -55,7 +55,6 @@ crosstab(dft, Survived, Pclass, wt = Fare, prow = TRUE)
 }
 \seealso{
 Other Exploratory: 
-\code{\link{corr_cross}()},
 \code{\link{corr_var}()},
 \code{\link{df_str}()},
 \code{\link{distr}()},

@@ -97,7 +97,6 @@ tree_var(dft[, c("Pclass", "Fare", "Age")], Pclass, ohse = FALSE)$plot()
 }
 \seealso{
 Other Exploratory: 
-\code{\link{corr_cross}()},
 \code{\link{corr_var}()},
 \code{\link{crosstab}()},
 \code{\link{df_str}()},

@@ -75,7 +75,6 @@ Other Machine Learning:
 \code{\link{msplit}()}
 
 Other Exploratory: 
-\code{\link{corr_cross}()},
 \code{\link{corr_var}()},
 \code{\link{crosstab}()},
 \code{\link{df_str}()},

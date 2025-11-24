@@ -43,7 +43,6 @@ df_str(dft, "plot", quiet = TRUE)
 }
 \seealso{
 Other Exploratory: 
-\code{\link{corr_cross}()},
 \code{\link{corr_var}()},
 \code{\link{crosstab}()},
 \code{\link{distr}()},

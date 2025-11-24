@@ -24,6 +24,18 @@ No return value, called for side effects.
 This auxiliary function lets the user update \code{lares} to latest
 CRAN or developer version.
 }
+\examples{
+\dontrun{
+# Update to CRAN version
+updateLares(dev = FALSE)
+
+# Update to development version from GitHub
+updateLares(dev = TRUE)
+
+# Install with all recommended packages
+updateLares(all = TRUE)
+}
+}
 \seealso{
 Other Tools: 
 \code{\link{autoline}()},

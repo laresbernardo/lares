@@ -21,6 +21,14 @@ This function lets the user query a PostgreSQL database. Previously
 was called \code{queryDummy} but was replaced and deprecated for a
 more general function by using the \code{from} parameter.
 }
+\examples{
+\dontrun{
+# Query a PostgreSQL database
+query <- "SELECT * FROM my_table LIMIT 10"
+result <- queryDB(query, from = "my_database")
+head(result)
+}
+}
 \seealso{
 Other Credentials: 
 \code{\link{db_download}()},

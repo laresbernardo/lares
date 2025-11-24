@@ -370,17 +370,15 @@ freqs_df <- function(df,
     }
 
     if (length(which) > 0) {
-      for (i in seq_along(which)) {
-        iter <- which[i]
-        counter <- table(df[iter], useNA = "ifany")
-        res <- data.frame(
+      out <- lapply(which, function(iter) {
+        counter <- table(df[[iter]], useNA = "ifany")
+        data.frame(
           value = names(counter),
           count = as.vector(counter),
-          col = iter
-        ) %>%
-          arrange(desc(.data$count))
-        out <- rbind(out, res)
-      }
+          col = iter,
+          stringsAsFactors = FALSE
+        ) %>% arrange(desc(.data$count))
+      }) %>% bind_rows()
       out <- out %>%
         mutate(p = signif(100 * .data$count / nrow(df), 3)) %>%
         mutate(value = ifelse(.data$p > min * 100, as.character(.data$value), "(HF)")) %>%
@@ -484,9 +482,11 @@ freqs_plot <- function(df, ..., top = 10, rm.na = FALSE, abc = FALSE,
         "other values grouped into one"
       ))
     }
-    for (i in 1:(ncol(aux) - 4)) {
-      aux[, i][aux$order == "...", ] <- "Tail"
-    }
+    aux <- aux %>%
+      mutate(across(
+        seq_len(ncol(aux) - 4),
+        ~ ifelse(order == "...", "Tail", .)
+      ))
     aux <- aux %>%
       group_by(!!!vars, .data$order) %>%
       summarise_all(sum) %>%
@@ -644,10 +644,9 @@ freqs_list <- function(df,
     duos <- rownames(duos)
     message(paste(">>> Binary columns detected:", v2t(duos)))
     which <- unlist(lapply(df[, duos], function(x) x == 1))
-    result <- NULL
-    for (i in seq_len(nrow(df[, duos]))) {
-      result <- c(result, v2t(colnames(df[, duos])[which[i, ]], quotes = FALSE))
-    }
+    result <- vapply(seq_len(nrow(df[, duos])), function(i) {
+      v2t(colnames(df[, duos])[which[i, ]], quotes = FALSE)
+    }, FUN.VALUE = character(1))
     df$which <- result
   }
 

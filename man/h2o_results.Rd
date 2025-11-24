@@ -19,6 +19,7 @@ h2o_results(
   seed = 0,
   leaderboard = list(),
   plots = TRUE,
+  model_name = NULL,
   ...
 )
 }
@@ -58,6 +59,10 @@ resource limited.}
 \code{h2o_selectmodel} as it contains plain model and no leader board.}
 
 \item{plots}{Boolean. Create plots objects?}
+
+\item{model_name}{Character. Optional custom name for the model. If provided,
+this name will be used when saving the model with \code{export_results()}. If NULL
+(default), the H2O-generated model ID will be used.}
 
 \item{...}{Additional parameters on \code{h2o::h2o.automl}}
 }

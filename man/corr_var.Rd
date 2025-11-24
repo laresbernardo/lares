@@ -92,7 +92,6 @@ dft \%>\% corr_var(Survived_TRUE, ceiling = .6, top = 15, ranks = TRUE)
 }
 \seealso{
 Other Exploratory: 
-\code{\link{corr_cross}()},
 \code{\link{crosstab}()},
 \code{\link{df_str}()},
 \code{\link{distr}()},

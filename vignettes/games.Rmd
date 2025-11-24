@@ -1,0 +1,342 @@
+---
+title: "Games & Puzzles with lares"  
+author: "Bernardo Lares"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Games & Puzzles with lares}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5,
+  warning = FALSE,
+  message = FALSE
+)
+
+# Enable ANSI color output in HTML vignettes
+if (require("fansi", quietly = TRUE)) {
+  old_hooks <- fansi::set_knit_hooks(knitr::knit_hooks,
+    which = c("output", "message", "error")
+  )
+}
+```
+
+## Introduction
+
+Beyond data analysis and machine learning, `lares` includes a collection of fun game solvers and helpers! Challenge yourself with Wordle, Scrabble, Sudoku, mazes, Numble.
+
+```{r}
+library(lares)
+```
+
+## Wordle
+
+Play or solve Wordle puzzles with validation, hints, and simulations.
+
+### Basic Wordle Validation
+
+```{r, eval=TRUE}
+# Check your guess against a word
+wordle_check("OPENS", "ABBEY")
+wordle_check("BABES", "ABBEY")
+wordle_check("ABBEY", "ABBEY")
+```
+
+### Get Wordle Hints
+
+Use `scrabble_words()` to find possible words:
+
+```{r}
+# After OPENS: O is not in word, P/E/N/S are not in positions 2/3/4/5
+hints <- scrabble_words(
+  tiles = "abcdefghijklmrtuvwxyz", # Available letters
+  exclude_here = list("2" = "p", "3" = "e", "4" = "n", "5" = "s"),
+  force_exclude = c("o"),
+  force_n = 5, # 5-letter words
+  language = "en"
+)
+head(hints, 10)
+```
+
+### Wordle Simulation
+
+Simulate solving a Wordle puzzle:
+
+```{r}
+# Simulate solving with different starting words
+simulation <- wordle_simulation(
+  input = "SAINT",
+  word = "ABBEY",
+  seed = 123
+)
+print(simulation)
+```
+
+### Wordle Dictionary
+
+Access word lists for different languages:
+
+```{r eval=FALSE}
+# Get English 5-letter words
+en_words <- wordle_dictionary("en")
+head(en_words, 20)
+
+# Spanish words
+es_words <- wordle_dictionary("es")
+```
+
+## Scrabble
+
+Maximize your Scrabble score with word finders and calculators!
+
+### Find Highest-Scoring Words
+
+```{r}
+# Find best words from your tiles
+scrabble_words(
+  tiles = "aeiourtn",
+  force_max = 8, # Max 8 letters
+  language = "en",
+  scores = "en"
+)
+```
+
+### With Board Constraints
+
+```{r}
+# Must contain specific letters
+scrabble_words(
+  tiles = "bernardo",
+  force_str = "arn",
+  force_max = 7,
+  language = "en"
+)
+```
+
+### Calculate Word Scores
+
+```{r}
+# Get point values for each letter
+en_scores <- scrabble_points("en")
+print(en_scores)
+
+# Calculate scores for words
+words <- c("QUEEN", "QUIZ", "HELLO")
+scrabble_score(words, en_scores)
+```
+
+### Multi-Language Support
+
+```{r eval=FALSE}
+# Spanish Scrabble
+scrabble_words(
+  tiles = "españa",
+  language = "es",
+  scores = "es"
+)
+
+# French Scrabble
+scrabble_words(
+  tiles = "bonjour",
+  language = "fr",
+  scores = "fr"
+)
+```
+
+## Sudoku
+
+Solve Sudoku puzzles automatically!
+
+### Simple Sudoku
+
+```{r}
+# Easy puzzle (0 represents empty cells)
+trivial <- matrix(c(
+  0, 9, 0, 7, 0, 0, 8, 6, 0,
+  0, 3, 1, 0, 0, 5, 0, 2, 0,
+  8, 0, 6, 0, 0, 0, 0, 0, 0,
+  0, 0, 7, 0, 5, 0, 0, 0, 6,
+  0, 0, 0, 3, 0, 7, 0, 0, 0,
+  5, 0, 0, 0, 1, 0, 7, 0, 0,
+  0, 0, 0, 0, 0, 0, 1, 0, 9,
+  0, 2, 0, 6, 0, 0, 3, 5, 0,
+  0, 5, 4, 0, 0, 8, 0, 7, 0
+), nrow = 9, byrow = TRUE)
+
+solution <- sudoku_solver(trivial)
+print(solution)
+```
+
+### Complex Sudoku
+
+```{r eval=FALSE}
+# Harder puzzle
+difficult <- matrix(c(
+  5, 3, 0, 0, 7, 0, 0, 0, 0,
+  6, 0, 0, 1, 9, 5, 0, 0, 0,
+  0, 9, 8, 0, 0, 0, 0, 6, 0,
+  8, 0, 0, 0, 6, 0, 0, 0, 3,
+  4, 0, 0, 8, 0, 3, 0, 0, 1,
+  7, 0, 0, 0, 2, 0, 0, 0, 6,
+  0, 6, 0, 0, 0, 0, 2, 8, 0,
+  0, 0, 0, 4, 1, 9, 0, 0, 5,
+  0, 0, 0, 0, 8, 0, 0, 7, 9
+), nrow = 9, byrow = TRUE)
+
+sudoku_solver(difficult)
+```
+
+## Maze Solver
+
+Solve mazes using depth-first search algorithms!
+
+### Basic Maze
+
+```{r}
+# Create a simple maze (0 = path, 1 = wall)
+simple_maze <- matrix(c(
+  0, 1, 0, 0, 0,
+  0, 1, 0, 1, 0,
+  0, 0, 0, 1, 0,
+  1, 1, 0, 0, 0,
+  0, 0, 0, 1, 0
+), nrow = 5, byrow = TRUE)
+
+solution <- maze_solve(
+  simple_maze,
+  start = c(1, 1),
+  end = c(5, 5)
+)
+print(solution)
+```
+
+### Micromouse Competition Maze
+
+```{r eval=FALSE}
+# Classic Micromouse-style maze
+micromouse <- matrix(c(
+  1, 1, 1, 1, 1, 1, 1, 1,
+  1, 0, 0, 0, 0, 0, 0, 1,
+  1, 0, 1, 1, 1, 1, 0, 1,
+  1, 0, 1, 0, 0, 0, 0, 1,
+  1, 0, 1, 0, 1, 1, 0, 1,
+  1, 0, 0, 0, 0, 1, 0, 1,
+  1, 0, 1, 1, 0, 0, 0, 1,
+  1, 1, 1, 1, 1, 1, 1, 1
+), nrow = 8, byrow = TRUE)
+
+maze_solve(
+  micromouse,
+  start = c(2, 2),
+  end = c(7, 7),
+  diagonal = FALSE
+)
+```
+
+### Advanced Options
+
+```{r eval=FALSE}
+# With diagonal movement and aiming toward goal
+maze_solve(
+  micromouse,
+  start = c(2, 2),
+  end = c(7, 7),
+  diagonal = TRUE, # Allow diagonal moves
+  aim = TRUE, # Prefer directions toward goal
+  inertia = TRUE, # Prefer continuing in same direction
+  timeout = 5 # Max 5 seconds
+)
+```
+
+## Numble
+
+A number-based puzzle game!
+
+### Play Numble
+
+```{r eval=FALSE}
+# Check your mathematical expression
+numble_check(
+  input = "3 + 4 = 7",
+  solution = "5 + 2 = 7",
+  len = 7
+)
+```
+
+## Tips & Tricks
+
+### Wordle Strategy
+
+1. **Start with vowel-rich words:** "AUDIO", "ADIEU", "OUIJA"
+2. **Use common consonants:** R, S, T, L, N
+3. **Eliminate letters quickly:** Use `scrabble_words()` with constraints
+
+### Scrabble Pro Tips
+
+1. **Learn 2-letter words:** QI, XU, ZA
+2. **Use all 7 tiles:** 50-point bonus!
+3. **Q without U:** QI, QOPH, QAT, QAID
+
+### Sudoku Solving
+
+1. **Start with constrained cells:** Rows/columns with few options
+2. **Use candidate elimination:** Mark impossibilities
+3. **Let the algorithm work:** `sudoku_solver()` handles it!
+
+### Maze Navigation
+
+1. **Right-hand rule:** Keep hand on wall
+2. **Breadth-first search:** Guarantees shortest path
+3. **Use `aim = TRUE`:** Guides toward goal
+
+## Combining Games & Data Science
+
+Use game functions for:
+
+**Text Analysis:**
+```{r eval=FALSE}
+# Find anagrams in your dataset
+words <- c("listen", "silent", "hello")
+scrabble_words(tiles = "listen", language = "en")
+```
+
+**Algorithm Teaching:**
+```{r eval=FALSE}
+# Demonstrate recursion with maze solving
+maze_solve(simple_maze, start = c(1, 1), end = c(5, 5))
+```
+
+**Pattern Recognition:**
+```{r eval=FALSE}
+# Wordle simulations for optimal starting words
+seeds <- 1:100
+results <- lapply(seeds, function(s) {
+  wordle_simulation("SAINT", "ABBEY", seed = s, quiet = TRUE)
+})
+```
+
+## Further Reading
+
+### Package Resources
+- **Package documentation:** [https://laresbernardo.github.io/lares/](https://laresbernardo.github.io/lares/)
+- **GitHub repository:** [https://github.com/laresbernardo/lares](https://github.com/laresbernardo/lares)
+- **Report issues:** [https://github.com/laresbernardo/lares/issues](https://github.com/laresbernardo/lares/issues)
+
+### Game References
+- **Wordle:** The viral word game by Josh Wardle
+- **Sudoku:** Japanese number puzzle
+- **Scrabble:** Classic word board game
+- **Micromouse:** Autonomous maze-solving competition
+
+## Next Steps
+
+- Explore data analysis features (see Data Wrangling vignette)
+- Learn machine learning (see Machine Learning vignette)
+- Try API integrations (see API Integrations vignette)
+- Check game function documentation: `?wordle_check`, `?scrabble_words`, `?sudoku_solver`, `?maze_solve`

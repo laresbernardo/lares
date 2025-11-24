@@ -5,7 +5,13 @@
 #' H2O's AutoML function. The result is a list with the best model,
 #' its parameters, datasets, performance metrics, variables
 #' importance, and plots. Read more about the \code{h2o_automl()} pipeline
-#' \href{https://laresbernardo.github.io/lares/articles/h2o_automl.html}{here}.
+#' \href{https://laresbernardo.github.io/lares/articles/machine-learning.html}{here}.
+#'
+#' For additional tutorials and examples:
+#' \itemize{
+#'   \item \href{https://datascienceplus.com/machine-learning-with-r-h2o-package/}{Machine Learning with H2O Package}
+#'   \item \href{https://datascienceplus.com/understanding-roc-curves-with-lares/}{Understanding ROC Curves}
+#' }
 #'
 #' @section List of algorithms:
 #' \href{https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}{-> Read more here}
@@ -82,6 +88,11 @@
 #' @param subdir Character. In which directory do you wish to save
 #' the results? Working directory as default.
 #' @param project Character. Your project's name
+#' @param model_name Character. Optional custom name for the model. If provided,
+#' this name will be used when saving the model with \code{export_results()}. If NULL
+#' (default), the H2O-generated model ID will be used.
+#' @param verbosity Character. Verbosity of the backend messages printed during training.
+#' Must be one of NULL (live log disabled), "debug", "info", "warn", "error". Defaults to NULL.
 #' @param ... Additional parameters on \code{h2o::h2o.automl}
 #' @return List. Trained model, predicted scores and datasets used, performance
 #' metrics, parameters, importance data.frame, seed, and plots when \code{plots=TRUE}.
@@ -139,6 +150,7 @@ h2o_automl <- function(df, y = "tag",
                        save = FALSE,
                        subdir = NA,
                        project = "AutoML Results",
+                       model_name = NULL,
                        verbosity = NULL,
                        ...) {
   try_require("h2o")
@@ -250,7 +262,8 @@ h2o_automl <- function(df, y = "tag",
     project = project,
     ignore = ignore,
     seed = seed,
-    quiet = quiet
+    quiet = quiet,
+    model_name = model_name
   )
 
   if (save) {
@@ -376,6 +389,7 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
                         project = "ML Project", seed = 0,
                         leaderboard = list(),
                         plots = TRUE,
+                        model_name = NULL,
                         ...) {
   # MODEL TYPE
   types <- c("Classification", "Regression")
@@ -549,7 +563,8 @@ h2o_results <- function(h2o_object, test, train, y = "tag", which = 1,
   if (model_type == "Classification") {
     results[["threshold"]] <- thresh
   }
-  results[["model_name"]] <- as.vector(m@model_id)
+  use_model_name <- if (!is.null(model_name)) model_name else as.vector(m@model_id)
+  results[["model_name"]] <- use_model_name
   results[["algorithm"]] <- m@algorithm
   if (any(c("H2OFrame", "H2OAutoML") %in% class(h2o_object))) {
     results[["leaderboard"]] <- h2o_object@leaderboard
@@ -950,6 +965,8 @@ target_set <- function(tag, score, target = "auto", quiet = FALSE) {
 #'
 #' @family Machine Learning
 #' @inheritParams h2o_automl
+#' @param verbosity Character. Verbosity of the output.
+#' @param model_name Character. Name of the model to be saved.
 #' @param tries Integer. Number of iterations
 #' @param ... Additional arguments passed to \code{h2o_automl}
 #' @return data.frame with performance results by seed tried on every row.
