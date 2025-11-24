@@ -361,13 +361,11 @@ results <- lapply(items, function(item) {
 
 ### 4. Cache Results
 
-```{r eval=TRUE}
-library(lares)
-
+```{r eval=FALSE}
 # Cache expensive API calls
 result <- cache_pipe(
   {
-    # This only runs once, then cached
+    # This only runs once, then cached and loaded on subsequent calls
     gpt_ask("Expensive query here")
   },
   base = "my_gpt_query"
@@ -437,9 +435,6 @@ If you hit rate limits:
 ## Complete Example: Data Analysis with AI
 
 ```{r}
-library(lares)
-library(dplyr)
-
 # 1. Load data
 data(dft)
 
