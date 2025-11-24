@@ -48,6 +48,36 @@ h2o.init(nthreads = -1, max_mem_size = "2G")
 h2o.no_progress() # Disable progress bars
 ```
 
+## Pipeline
+
+<img src="../man/figures/automl_map.png" alt="h2o_automl workflow" width="100%" />
+
+In short, these are the steps that happen on `h2o_automl`'s backend:
+
+1. **Input Processing**: The function receives a dataframe `df` and the dependent variable `y` to predict. Set `seed` for reproducibility.
+
+2. **Model Type Detection**: Automatically decides between classification (categorical) or regression (continuous) based on `y`'s class and unique values (controlled by `thresh` parameter).
+
+3. **Data Splitting**: Splits data into test and train datasets. Control the proportion with `split` parameter. Replicate this with `msplit()`.
+
+4. **Preprocessing**: 
+   - Center and scale numerical values
+   - Remove outliers with `no_outliers`
+   - Impute missing values with MICE (`impute = TRUE`)
+   - Balance training data for classification (`balance = TRUE`)
+   - Replicate with `model_preprocess()`
+
+5. **Model Training**: Runs `h2o::h2o.automl()` to train multiple models and generate a leaderboard sorted by performance. Customize with:
+   - `max_models` or `max_time`
+   - `nfolds` for k-fold cross-validation
+   - `exclude_algos` and `include_algos`
+
+6. **Model Selection**: Selects the best model based on performance metric (change with `stopping_metric`). Use `h2o_selectmodel()` to choose an alternative.
+
+7. **Performance Evaluation**: Calculates metrics and plots using test predictions (unseen data). Replicate with `model_metrics()`.
+
+8. **Results**: Returns a list with inputs, leaderboard, best model, metrics, and plots. Export with `export_results()`.
+
 ## Quick Start: Binary Classification
 
 Let's build a model to predict Titanic survival:
@@ -76,36 +106,6 @@ That's it! `h2o_automl()` handles:
 - Model training with multiple algorithms
 - Hyperparameter tuning
 - Model selection
-
-## Pipeline
-
-<img src="../man/figures/automl_map.png" alt="h2o_automl workflow" width="70%" />
-
-In short, these are the steps that happen on `h2o_automl`'s backend:
-
-1. **Input Processing**: The function receives a dataframe `df` and the dependent variable `y` to predict. Set `seed` for reproducibility.
-
-2. **Model Type Detection**: Automatically decides between classification (categorical) or regression (continuous) based on `y`'s class and unique values (controlled by `thresh` parameter).
-
-3. **Data Splitting**: Splits data into test and train datasets. Control the proportion with `split` parameter. Replicate this with `msplit()`.
-
-4. **Preprocessing**: 
-   - Center and scale numerical values
-   - Remove outliers with `no_outliers`
-   - Impute missing values with MICE (`impute = TRUE`)
-   - Balance training data for classification (`balance = TRUE`)
-   - Replicate with `model_preprocess()`
-
-5. **Model Training**: Runs `h2o::h2o.automl()` to train multiple models and generate a leaderboard sorted by performance. Customize with:
-   - `max_models` or `max_time`
-   - `nfolds` for k-fold cross-validation
-   - `exclude_algos` and `include_algos`
-
-6. **Model Selection**: Selects the best model based on performance metric (change with `stopping_metric`). Use `h2o_selectmodel()` to choose an alternative.
-
-7. **Performance Evaluation**: Calculates metrics and plots using test predictions (unseen data). Replicate with `model_metrics()`.
-
-8. **Results**: Returns a list with inputs, leaderboard, best model, metrics, and plots. Export with `export_results()`.
 
 ## Understanding the Output
 
@@ -473,10 +473,10 @@ h2o::h2o.shutdown(prompt = FALSE)
 - **SHAP explanations:** [https://github.com/slundberg/shap](https://github.com/slundberg/shap)
 
 ### Blog Posts & Tutorials
-- **[Machine Learning Results: One Plot to Rule Them All](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/)** - Visualizing binary classification results
-- **[Machine Learning Results in R: One Plot to Rule Them All (Part 2 - Regression Models)](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/)** - Regression model visualization
-- **[Understanding Titanic Dataset with H2O's AutoML, DALEX and lares Library](https://datascienceplus.com/understanding-titanic-dataset-with-h2os-automl-dalex-and-lares-library/)** - Complete Titanic analysis walkthrough
-- **All lares articles:** [Author page on DataScience+](https://datascienceplus.com/author/bernardo-lares/)
+- [Machine Learning Results: One Plot to Rule Them All](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/) - Visualizing binary classification results
+- [Machine Learning Results in R: One Plot to Rule Them All (Part 2 - Regression Models)](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/) - Regression model visualization
+- [Understanding Titanic Dataset with H2O's AutoML, DALEX and lares Library](https://datascienceplus.com/understanding-titanic-dataset-with-h2os-automl-dalex-and-lares-library/) - Complete Titanic analysis walkthrough
+- Other lares articles [on DataScience+](https://datascienceplus.com/author/bernardo-lares/)
 
 ## Next Steps
 

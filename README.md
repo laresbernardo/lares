@@ -53,7 +53,7 @@ remotes::install_github("laresbernardo/lares", dependencies = TRUE)
 
 ## Popular Functions
 
-- `h2o_automl()`, `plot_model_results()` – Automated machine learning pipeline with optimal model selection and visualizations.
+- `h2o_automl()`, `mplot_full()` – Automated machine learning pipeline with optimal model selection and visualizations.
 - `freqs()`, `distr()`, `corr_var()`, `corr_cross()` – Instantly summarize, visualize, and uncover relationships in your data.
 - `ohse()` – Efficient and smart one-hot encoding for categorical variables.
 - `cache_*` – Speed up workflows by caching expensive computations.
