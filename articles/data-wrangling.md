@@ -198,10 +198,13 @@ quarters
 ``` r
 library(ggplot2)
 
-ggplot(dft, aes(x = Age, y = Fare, color = Survived)) +
+ggplot(dft, aes(x = Age, y = Fare * 1000, color = Survived)) +
   geom_point(alpha = 0.6) +
   labs(title = "Age vs Fare by Survival") +
-  theme_lares()
+  # Customize theme with several available options
+  theme_lares(legend = "top", grid = "Yy", pal = 2, background = "#f2f2f2") +
+  # Customize axis scales to look nicer
+  scale_y_abbr()
 ```
 
 ![](data-wrangling_files/figure-html/unnamed-chunk-14-1.png)
