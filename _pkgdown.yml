@@ -18,5 +18,3 @@ template:
     news:
       text: "Changelog"
       href: news/index.html
-      
-favicon: man/figures/logo.png

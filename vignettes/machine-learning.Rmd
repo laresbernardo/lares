@@ -90,10 +90,11 @@ data(dft)
 model <- h2o_automl(
   df = dft,
   y = "Survived",
+  target = "TRUE",
+  ignore = c("Ticket", "Cabin", "PassengerId"),
   max_models = 10,
   max_time = 120,
-  impute = FALSE, # Set TRUE to use MICE imputation (requires mice package)
-  target = "TRUE"
+  impute = FALSE
 )
 
 # View results
@@ -101,6 +102,7 @@ print(model)
 ```
 
 That's it! `h2o_automl()` handles:
+
 - Train/test split
 - One-hot encoding of categorical variables
 - Model training with multiple algorithms
@@ -205,6 +207,10 @@ plot(shap)
 model <- h2o_automl(
   df = dft,
   y = "Survived",
+  # Ignore specific columns
+  ignore = c("Ticket", "Cabin", "PassengerId"),
+  # Use only specific algorithms (exclude_algos also available)
+  include_algos = c("GBM", "DRF"), # Gradient Boosting & Random Forest
   # Data split
   split = 0.7,
   # Handle imbalanced data
@@ -215,38 +221,8 @@ model <- h2o_automl(
   impute = FALSE,
   # Keep only unique training rows
   unique_train = TRUE,
-  # Ignore specific columns
-  ignore = c("PassengerId", "Name", "Ticket")
-)
-```
-
-### Algorithm Selection
-
-```{r}
-# Use only specific algorithms
-model_rf <- h2o_automl(
-  df = dft,
-  y = "Survived",
-  include_algos = c("GBM", "DRF"), # Gradient Boosting & Random Forest
-  max_models = 5
-)
-
-# Exclude specific algorithms
-model_no_dl <- h2o_automl(
-  df = dft,
-  y = "Survived",
-  exclude_algos = c("DeepLearning"),
-  max_models = 10
-)
-```
-
-### Seed for Reproducibility
-
-```{r}
-model <- h2o_automl(
-  df = dft,
-  y = "Survived",
-  seed = 123 # Reproducible results
+  # Reproducible results
+  seed = 123
 )
 ```
 
@@ -258,7 +234,7 @@ Predict passenger class (3 categories):
 model_multiclass <- h2o_automl(
   df = dft,
   y = "Pclass",
-  ignore = c("Fare", "Cabin"),
+  ignore = c("Cabin", "PassengerId"),
   max_models = 10,
   max_time = 60
 )
@@ -281,6 +257,7 @@ Predict fare prices:
 model_regression <- h2o_automl(
   df = dft,
   y = "Fare",
+  ignore = c("Cabin", "PassengerId"),
   max_models = 10,
   exclude_algos = NULL
 )

@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 )
 
 # Enable ANSI color output in HTML vignettes
+Sys.setenv(CLICOLOR_FORCE = "1")
 options(crayon.enabled = TRUE)
 library(fansi)
 old_hooks <- fansi::set_knit_hooks(knitr::knit_hooks,
