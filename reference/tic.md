@@ -104,16 +104,16 @@ Other Tools:
 tic()
 Sys.sleep(0.1)
 toc()
-#> Elapsed time: 0.102s
+#> Elapsed time: 0.101s
 
 # Multiple tic tocs
 tic(id = "two", quiet = FALSE)
-#> Tic `id = two` start time: 2025-11-25 17:50:41.060949
+#> Tic `id = two` start time: 2025-11-25 18:13:02.725251
 Sys.sleep(0.2)
 toc(id = "two")
 #> Elapsed time: 0.202s
 
 # Global is still working (id = 1)
 toc(msg = "The function finished its work in")
-#> The function finished its work in 0.307s
+#> The function finished its work in 0.305s
 ```
