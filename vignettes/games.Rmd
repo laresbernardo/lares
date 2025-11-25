@@ -24,7 +24,8 @@ Sys.setenv(CLICOLOR_FORCE = "1")
 options(crayon.enabled = TRUE)
 library(fansi)
 old_hooks <- fansi::set_knit_hooks(knitr::knit_hooks,
-  which = c("output", "message", "error")
+  which = c("output", "message", "error"),
+  class = c("fansi", "fansi", "fansi")
 )
 ```
 

@@ -1,0 +1,11 @@
+/* ANSI Colors for fansi output */
+.fansi-color-30 { color: #555555; } /* Grey */
+.fansi-color-31 { color: #d9534f; } /* Red */
+.fansi-color-32 { color: #5cb85c; } /* Green */
+.fansi-color-33 { color: #f0ad4e; } /* Yellow */
+.fansi-color-34 { color: #428bca; } /* Blue */
+.fansi-color-35 { color: #9933cc; } /* Purple */
+.fansi-color-36 { color: #5bc0de; } /* Cyan */
+.fansi-color-37 { color: #ffffff; } /* White */
+
+.fansi-bold { font-weight: bold; }
