@@ -44,7 +44,9 @@ h2o must be installed separately:
 library(h2o)
 
 # Initialize h2o quietly for vignette
-h2o.init(nthreads = -1, max_mem_size = "2G")
+Sys.unsetenv("http_proxy")
+Sys.unsetenv("https_proxy")
+h2o.init(nthreads = -1, max_mem_size = "2G", ip = "localhost")
 h2o.no_progress() # Disable progress bars
 ```
 

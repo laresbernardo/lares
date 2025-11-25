@@ -13,7 +13,7 @@ CRAN-SUBMISSION
 /Meta/
 GithubStars
 lares.Rproj
-pkgdown
+
 
 # Vignette build artifacts
 vignettes/*.html
