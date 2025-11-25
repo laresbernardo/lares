@@ -89,14 +89,14 @@ ip_data("163.114.132.0")
 #>               languages     currency
 #> 1 en-US, es-US, haw, fr Dollar (USD)
 ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
-#>                id addresstype                                asn
-#> 1  145.132.103.22        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK
-#> 2 201.244.197.199        IPv4                    19429 - AS19429
-#>                   isp organization       country stateregion districtcounty
-#> 1 Koninklijke KPN N.V     Kpn B.v. United States    Virginia    Mecklenburg
-#> 2      ETB - Colombia         <NA>      Colombia Bogota D.C.   Bogotá  D.C.
+#>                id addresstype                                asn            isp
+#> 1   172.172.158.1        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK      Microsoft
+#> 2 201.244.197.199        IPv4                    19429 - AS19429 ETB - Colombia
+#>   connection      organization       country stateregion districtcounty
+#> 1    Hosting Microsoft Limited United States    Virginia   Rappahannock
+#> 2       <NA>              <NA>      Colombia Bogota D.C.   Bogotá  D.C.
 #>              city zippostalcode            weatherstation       coordinates
-#> 1         Boydton         23917        USVA0084 - Boydton 36.6676, -78.3875
+#> 1      Washington         22747     USVA0810 - Washington 38.7134, -78.1591
 #> 2 Barrio San Luis          <NA> COXX7742 - Vereda El Hato 4.66779, -74.0215
 #>                   timezone localtime             languages     currency
 #> 1 America/New_York (UTC-5)           en-US, es-US, haw, fr Dollar (USD)

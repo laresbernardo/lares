@@ -28,18 +28,18 @@ h2o.init(nthreads = -1, max_mem_size = "2G")
 #> H2O is not running yet, starting it now...
 #> 
 #> Note:  In case of errors look at the following log files:
-#>     /tmp/RtmpV51NqR/file25a1b4e8dbc/h2o_runner_started_from_r.out
-#>     /tmp/RtmpV51NqR/file25a12aa87d13/h2o_runner_started_from_r.err
+#>     /tmp/RtmpQojIkp/file25ed46ca53c8/h2o_runner_started_from_r.out
+#>     /tmp/RtmpQojIkp/file25ed5380bdac/h2o_runner_started_from_r.err
 #> 
 #> 
-#> Starting H2O JVM and connecting: .... Connection successful!
+#> Starting H2O JVM and connecting: ... Connection successful!
 #> 
 #> R is connected to the H2O cluster: 
-#>     H2O cluster uptime:         1 seconds 841 milliseconds 
+#>     H2O cluster uptime:         1 seconds 672 milliseconds 
 #>     H2O cluster timezone:       UTC 
 #>     H2O data parsing timezone:  UTC 
 #>     H2O cluster version:        3.44.0.3 
-#>     H2O cluster version age:    1 year, 11 months and 4 days 
+#>     H2O cluster version age:    1 year, 11 months and 5 days 
 #>     H2O cluster name:           H2O_started_from_R_runner_mwl453 
 #>     H2O cluster total nodes:    1 
 #>     H2O cluster total memory:   2.00 GB 
@@ -114,10 +114,11 @@ data(dft)
 model <- h2o_automl(
   df = dft,
   y = "Survived",
+  target = "TRUE",
+  ignore = c("Ticket", "Cabin", "PassengerId"),
   max_models = 10,
   max_time = 120,
-  impute = FALSE, # Set TRUE to use MICE imputation (requires mice package)
-  target = "TRUE"
+  impute = FALSE
 )
 #> # A tibble: 2 × 5
 #>   tag       n     p order  pcum
@@ -126,66 +127,70 @@ model <- h2o_automl(
 #> 2 TRUE    342  38.4     2 100
 #> train_size  test_size 
 #>        623        268
-#>                             model_id       auc   logloss     aucpr
-#> 1     GLM_1_AutoML_1_20251124_202853 0.8699841 0.4228230 0.8192417
-#> 2 XGBoost_1_AutoML_1_20251124_202853 0.8558074 0.4445878 0.8002379
-#> 3     DRF_1_AutoML_1_20251124_202853 0.8513537 1.0500736 0.7633683
+#>                         model_id       auc   logloss     aucpr
+#> 1 XRT_1_AutoML_1_20251125_175125 0.8613359 0.4448440 0.8211963
+#> 2 GBM_2_AutoML_1_20251125_175125 0.8583649 0.4320854 0.8205075
+#> 3 GBM_3_AutoML_1_20251125_175125 0.8575161 0.4377482 0.8097954
 #>   mean_per_class_error      rmse       mse
-#> 1            0.1994995 0.3641748 0.1326233
-#> 2            0.2103911 0.3751306 0.1407230
-#> 3            0.1899749 0.4062189 0.1650138
+#> 1            0.1982924 0.3732340 0.1393036
+#> 2            0.1918985 0.3664474 0.1342837
+#> 3            0.2041406 0.3698799 0.1368111
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/10): GLM_1_AutoML_1_20251124_202853
+#> Model (1/10): XRT_1_AutoML_1_20251125_175125
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
-#> Algorithm: GLM
+#> Algorithm: DRF
 #> Split: 70% training data (of 891 observations)
 #> Seed: 0
 #> 
 #> Test metrics:
-#>    AUC = 0.83147
-#>    ACC = 0.30597
-#>    PRC = 0.16071
-#>    TPR = 0.16364
-#>    TNR = 0.40506
+#>    AUC = 0.87014
+#>    ACC = 0.16045
+#>    PRC = 0.12903
+#>    TPR = 0.18182
+#>    TNR = 0.14557
 #> 
 #> Most important variables:
-#>    Ticket.1601 (1.1%)
-#>    Ticket.C.A. 37671 (0.8%)
-#>    Sex.female (0.8%)
-#>    Sex.male (0.8%)
-#>    Ticket.347077 (0.7%)
+#>    Sex (27.1%)
+#>    Fare (23.6%)
+#>    Age (21.4%)
+#>    Pclass (13.1%)
+#>    SibSp (5.6%)
 
 # View results
 print(model)
-#> Model (1/10): GLM_1_AutoML_1_20251124_202853
+#> Model (1/10): XRT_1_AutoML_1_20251125_175125
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
-#> Algorithm: GLM
+#> Algorithm: DRF
 #> Split: 70% training data (of 891 observations)
 #> Seed: 0
 #> 
 #> Test metrics:
-#>    AUC = 0.83147
-#>    ACC = 0.30597
-#>    PRC = 0.16071
-#>    TPR = 0.16364
-#>    TNR = 0.40506
+#>    AUC = 0.87014
+#>    ACC = 0.16045
+#>    PRC = 0.12903
+#>    TPR = 0.18182
+#>    TNR = 0.14557
 #> 
 #> Most important variables:
-#>    Ticket.1601 (1.1%)
-#>    Ticket.C.A. 37671 (0.8%)
-#>    Sex.female (0.8%)
-#>    Sex.male (0.8%)
-#>    Ticket.347077 (0.7%)
+#>    Sex (27.1%)
+#>    Fare (23.6%)
+#>    Age (21.4%)
+#>    Pclass (13.1%)
+#>    SibSp (5.6%)
 ```
 
 That’s it!
 [`h2o_automl()`](https://laresbernardo.github.io/lares/reference/h2o_automl.md)
-handles: - Train/test split - One-hot encoding of categorical
-variables - Model training with multiple algorithms - Hyperparameter
-tuning - Model selection
+handles:
+
+- Train/test split
+- One-hot encoding of categorical variables
+- Model training with multiple algorithms
+- Hyperparameter tuning
+- Model selection
 
 ## Understanding the Output
 
@@ -197,7 +202,7 @@ names(model)
 #>  [5] "parameters"      "importance"      "datasets"        "scoring_history"
 #>  [9] "categoricals"    "type"            "split"           "threshold"      
 #> [13] "model_name"      "algorithm"       "leaderboard"     "project"        
-#> [17] "seed"            "h2o"             "plots"
+#> [17] "ignored"         "seed"            "h2o"             "plots"
 ```
 
 Key components: - `model`: Best h2o model - `metrics`: Performance
@@ -226,64 +231,73 @@ model$metrics
 #> $confusion_matrix
 #>        Pred
 #> Real    FALSE TRUE
-#>   FALSE    64   94
-#>   TRUE     92   18
+#>   FALSE    23  135
+#>   TRUE     90   20
 #> 
 #> $gain_lift
 #> # A tibble: 10 × 10
-#>    percentile value random target total  gain optimal   lift response  score
-#>    <fct>      <chr>  <dbl>  <int> <int> <dbl>   <dbl>  <dbl>    <dbl>  <dbl>
-#>  1 1          TRUE    10.1     26    27  23.6    24.5 135.      23.6  97.1  
-#>  2 2          TRUE    20.1     22    27  43.6    49.1 117.      20    93.2  
-#>  3 3          TRUE    30.2     18    27  60      73.6  98.5     16.4  87.9  
-#>  4 4          TRUE    39.9     15    26  73.6    97.3  84.4     13.6  77.7  
-#>  5 5          TRUE    50        8    27  80.9   100    61.8      7.27 62.6  
-#>  6 6          TRUE    60.1      4    27  84.5   100    40.7      3.64 48.5  
-#>  7 7          TRUE    69.8      6    26  90     100    29.0      5.45 42.4  
-#>  8 8          TRUE    79.9      2    27  91.8   100    15.0      1.82 36.2  
-#>  9 9          TRUE    89.9      6    27  97.3   100     8.17     5.45 21.6  
-#> 10 10         TRUE   100        3    27 100     100     0        2.73  0.751
+#>    percentile value random target total  gain optimal   lift response score
+#>    <fct>      <chr>  <dbl>  <int> <int> <dbl>   <dbl>  <dbl>    <dbl> <dbl>
+#>  1 1          TRUE    10.1     26    27  23.6    24.5 135.      23.6  85.9 
+#>  2 2          TRUE    20.1     25    27  46.4    49.1 130.      22.7  77.1 
+#>  3 3          TRUE    30.2     19    27  63.6    73.6 111.      17.3  62.9 
+#>  4 4          TRUE    39.9     18    26  80      97.3 100.      16.4  53.6 
+#>  5 5          TRUE    50        5    27  84.5   100    69.1      4.55 37.1 
+#>  6 6          TRUE    60.1      4    27  88.2   100    46.8      3.64 22.2 
+#>  7 7          TRUE    69.8      3    26  90.9   100    30.3      2.73 17.6 
+#>  8 8          TRUE    79.9      3    27  93.6   100    17.3      2.73 11.8 
+#>  9 9          TRUE    89.9      2    27  95.5   100     6.15     1.82  9.25
+#> 10 10         TRUE   100        5    27 100     100     0        4.55  3.05
 #> 
 #> $metrics
 #>       AUC     ACC     PRC     TPR     TNR
-#> 1 0.83147 0.30597 0.16071 0.16364 0.40506
+#> 1 0.87014 0.16045 0.12903 0.18182 0.14557
 #> 
 #> $cv_metrics
-#> # A tibble: 22 × 8
+#> # A tibble: 20 × 8
 #>    metric     mean     sd cv_1_valid cv_2_valid cv_3_valid cv_4_valid cv_5_valid
 #>    <chr>     <dbl>  <dbl>      <dbl>      <dbl>      <dbl>      <dbl>      <dbl>
-#>  1 accuracy  0.830 0.0435      0.848      0.784      0.784      0.879      0.855
-#>  2 auc       0.877 0.0313      0.868      0.880      0.828      0.902      0.905
-#>  3 err       0.170 0.0435      0.152      0.216      0.216      0.121      0.145
-#>  4 err_cou… 21.2   5.50       19         27         27         15         18    
-#>  5 f0point5  0.773 0.0844      0.797      0.640      0.752      0.863      0.813
-#>  6 f1        0.774 0.0538      0.753      0.710      0.748      0.819      0.839
-#>  7 f2        0.780 0.0582      0.714      0.797      0.743      0.780      0.867
-#>  8 lift_to…  2.41  0.510       2.98       1.64       2.31       2.76       2.34 
-#>  9 logloss   0.423 0.0514      0.420      0.424      0.506      0.371      0.393
-#> 10 max_per…  0.247 0.0505      0.310      0.253      0.259      0.244      0.169
-#> # ℹ 12 more rows
+#>  1 accuracy  0.824 0.0430      0.84       0.8        0.76       0.855      0.863
+#>  2 auc       0.863 0.0306      0.850      0.848      0.835      0.868      0.913
+#>  3 err       0.176 0.0430      0.16       0.2        0.24       0.145      0.137
+#>  4 err_cou… 22     5.43       20         25         30         18         17    
+#>  5 f0point5  0.753 0.0638      0.780      0.662      0.710      0.806      0.804
+#>  6 f1        0.771 0.0566      0.744      0.713      0.746      0.795      0.857
+#>  7 f2        0.794 0.0755      0.711      0.771      0.786      0.785      0.917
+#>  8 lift_to…  2.74  0.418       2.98       3.29       2.31       2.76       2.34 
+#>  9 logloss   0.445 0.0311      0.443      0.447      0.495      0.429      0.412
+#> 10 max_per…  0.246 0.0464      0.310      0.207      0.282      0.222      0.211
+#> 11 mcc       0.632 0.0858      0.632      0.574      0.528      0.683      0.745
+#> 12 mean_pe…  0.818 0.0411      0.803      0.804      0.767      0.838      0.875
+#> 13 mean_pe…  0.182 0.0411      0.197      0.196      0.233      0.162      0.125
+#> 14 mse       0.140 0.0125      0.139      0.142      0.160      0.132      0.127
+#> 15 pr_auc    0.821 0.0639      0.789      0.726      0.842      0.859      0.887
+#> 16 precisi…  0.742 0.0792      0.806      0.633      0.688      0.814      0.773
+#> 17 r2        0.394 0.0620      0.375      0.331      0.350      0.430      0.483
+#> 18 recall    0.812 0.0982      0.690      0.816      0.815      0.778      0.962
+#> 19 rmse      0.374 0.0166      0.373      0.376      0.399      0.363      0.356
+#> 20 specifi…  0.823 0.0827      0.916      0.793      0.718      0.899      0.789
 #> 
 #> $max_metrics
-#>                         metric   threshold       value idx
-#> 1                       max f1 0.397387367   0.7494737 182
-#> 2                       max f2 0.210748279   0.8083596 254
-#> 3                 max f0point5 0.708579153   0.7989691  90
-#> 4                 max accuracy 0.505773856   0.8218299 149
-#> 5                max precision 0.886615048   0.9672131  38
-#> 6                   max recall 0.047175178   1.0000000 375
-#> 7              max specificity 0.989924900   0.9974425   0
-#> 8             max absolute_mcc 0.505773856   0.6123614 149
-#> 9   max min_per_class_accuracy 0.344723188   0.7877238 198
-#> 10 max mean_per_class_accuracy 0.397387367   0.8005005 182
-#> 11                     max tns 0.989924900 390.0000000   0
-#> 12                     max fns 0.989924900 232.0000000   0
-#> 13                     max fps 0.003791211 391.0000000 399
-#> 14                     max tps 0.047175178 232.0000000 375
-#> 15                     max tnr 0.989924900   0.9974425   0
-#> 16                     max fnr 0.989924900   1.0000000   0
-#> 17                     max fpr 0.003791211   1.0000000 399
-#> 18                     max tpr 0.047175178   1.0000000 375
+#>                         metric  threshold       value idx
+#> 1                       max f1 0.44946127   0.7510730 177
+#> 2                       max f2 0.25424888   0.8025177 253
+#> 3                 max f0point5 0.55592053   0.7894737 142
+#> 4                 max accuracy 0.55592053   0.8250401 142
+#> 5                max precision 0.97353023   1.0000000   0
+#> 6                   max recall 0.03556724   1.0000000 397
+#> 7              max specificity 0.97353023   1.0000000   0
+#> 8             max absolute_mcc 0.55592053   0.6183650 142
+#> 9   max min_per_class_accuracy 0.38891733   0.7902813 197
+#> 10 max mean_per_class_accuracy 0.44946127   0.8017076 177
+#> 11                     max tns 0.97353023 391.0000000   0
+#> 12                     max fns 0.97353023 230.0000000   0
+#> 13                     max fps 0.02230149 391.0000000 399
+#> 14                     max tps 0.03556724 232.0000000 397
+#> 15                     max tnr 0.97353023   1.0000000   0
+#> 16                     max fnr 0.97353023   0.9913793   0
+#> 17                     max fpr 0.02230149   1.0000000 399
+#> 18                     max tpr 0.03556724   1.0000000 397
 
 # Specific metrics
 model$metrics$AUC
@@ -338,22 +352,14 @@ See which features matter most:
 ``` r
 # Variable importance dataframe
 head(model$importance, 15)
-#>                    variable relative_importance scaled_importance  importance
-#> 1               Ticket.1601            2.043497         1.0000000 0.011023368
-#> 2         Ticket.C.A. 37671            1.522223         0.7449107 0.008211425
-#> 3                Sex.female            1.421250         0.6954992 0.007666743
-#> 4                  Sex.male            1.392674         0.6815152 0.007512592
-#> 5             Ticket.347077            1.311348         0.6417175 0.007073888
-#> 6             Ticket.367226            1.236230         0.6049581 0.006668675
-#> 7             Ticket.347054            1.177082         0.5760138 0.006349612
-#> 8             Ticket.347082            1.168587         0.5718565 0.006303785
-#> 9               Ticket.2678            1.158702         0.5670191 0.006250460
-#> 10              Ticket.7598            1.092944         0.5348403 0.005895741
-#> 11                   Cabin.            1.088916         0.5328689 0.005874009
-#> 12             Ticket.29106            1.081590         0.5292840 0.005834492
-#> 13 Ticket.STON/O 2. 3101289            1.069045         0.5231450 0.005766820
-#> 14            Ticket.347083            1.031387         0.5047169 0.005563680
-#> 15            Ticket.347089            1.030504         0.5042847 0.005558915
+#>   variable relative_importance scaled_importance importance
+#> 1      Sex           573.43451         1.0000000 0.27116769
+#> 2     Fare           498.60776         0.8695113 0.23578336
+#> 3      Age           452.46356         0.7890414 0.21396253
+#> 4   Pclass           277.21085         0.4834220 0.13108842
+#> 5    SibSp           118.29958         0.2063001 0.05594192
+#> 6 Embarked           114.79391         0.2001866 0.05428414
+#> 7    Parch            79.87578         0.1392936 0.03777193
 
 # Plot top 15 important variables
 top15 <- head(model$importance, 15)
@@ -385,6 +391,10 @@ plot(shap)
 model <- h2o_automl(
   df = dft,
   y = "Survived",
+  # Ignore specific columns
+  ignore = c("Ticket", "Cabin", "PassengerId"),
+  # Use only specific algorithms (exclude_algos also available)
+  include_algos = c("GBM", "DRF"), # Gradient Boosting & Random Forest
   # Data split
   split = 0.7,
   # Handle imbalanced data
@@ -395,57 +405,8 @@ model <- h2o_automl(
   impute = FALSE,
   # Keep only unique training rows
   unique_train = TRUE,
-  # Ignore specific columns
-  ignore = c("PassengerId", "Name", "Ticket")
-)
-#> # A tibble: 2 × 5
-#>   tag       n     p order  pcum
-#>   <lgl> <int> <dbl> <int> <dbl>
-#> 1 FALSE   549  61.6     1  61.6
-#> 2 TRUE    342  38.4     2 100
-#> train_size  test_size 
-#>        623        268
-#>                             model_id       auc   logloss     aucpr
-#> 1 XGBoost_1_AutoML_2_20251124_202924 0.8377463 0.4560571 0.8160543
-#> 2     GLM_1_AutoML_2_20251124_202924 0.8361554 0.4620718 0.8207185
-#> 3     GBM_1_AutoML_2_20251124_202924 0.8336275 0.4836041 0.8116186
-#>   mean_per_class_error      rmse       mse
-#> 1            0.2084750 0.3775965 0.1425791
-#> 2            0.2032231 0.3816752 0.1456760
-#> 3            0.2355409 0.3938464 0.1551150
-#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/3): XGBoost_1_AutoML_2_20251124_202924
-#> Dependent Variable: Survived
-#> Type: Classification (2 classes)
-#> Algorithm: XGBOOST
-#> Split: 70% training data (of 891 observations)
-#> Seed: 0
-#> 
-#> Test metrics:
-#>    AUC = 0.87187
-#>    ACC = 0.83582
-#>    PRC = 0.85542
-#>    TPR = 0.68932
-#>    TNR = 0.92727
-#> 
-#> Most important variables:
-#>    Sex.male (24.7%)
-#>    Sex.female (22%)
-#>    Pclass.3 (13%)
-#>    Age (11.2%)
-#>    Fare (9.9%)
-```
-
-### Algorithm Selection
-
-``` r
-# Use only specific algorithms
-model_rf <- h2o_automl(
-  df = dft,
-  y = "Survived",
-  include_algos = c("GBM", "DRF"), # Gradient Boosting & Random Forest
-  max_models = 5
+  # Reproducible results
+  seed = 123
 )
 #> # A tibble: 2 × 5
 #>   tag       n     p order  pcum
@@ -455,120 +416,35 @@ model_rf <- h2o_automl(
 #> train_size  test_size 
 #>        623        268
 #>                         model_id       auc   logloss     aucpr
-#> 1 GBM_3_AutoML_3_20251124_202936 0.8645854 0.5134859 0.8100255
-#> 2 GBM_2_AutoML_3_20251124_202936 0.8507630 0.5597124 0.7941386
-#> 3 GBM_4_AutoML_3_20251124_202936 0.8424007 0.5379671 0.7881927
+#> 1 GBM_2_AutoML_2_20251125_175152 0.8596583 0.4248255 0.8431084
+#> 2 DRF_1_AutoML_2_20251125_175152 0.8564385 0.4488829 0.8421588
+#> 3 GBM_1_AutoML_2_20251125_175152 0.8328975 0.4839880 0.8085889
 #>   mean_per_class_error      rmse       mse
-#> 1            0.1773573 0.4112747 0.1691469
-#> 2            0.1795763 0.4359639 0.1900645
-#> 3            0.1830196 0.4234422 0.1793033
+#> 1            0.1960698 0.3625182 0.1314194
+#> 2            0.1961569 0.3699173 0.1368388
+#> 3            0.2342388 0.3942838 0.1554597
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/5): GBM_3_AutoML_3_20251124_202936
+#> Model (1/3): GBM_2_AutoML_2_20251125_175152
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
 #> Algorithm: GBM
 #> Split: 70% training data (of 891 observations)
-#> Seed: 0
-#> 
-#> Test metrics:
-#>    AUC = 0.83214
-#>    ACC = 0.6791
-#>    PRC = 0.72093
-#>    TPR = 0.29524
-#>    TNR = 0.92638
-#> 
-#> Most important variables:
-#>    Ticket (57.3%)
-#>    Sex (18.8%)
-#>    Cabin (14.7%)
-#>    Age (3.2%)
-#>    Pclass (2.5%)
-
-# Exclude specific algorithms
-model_no_dl <- h2o_automl(
-  df = dft,
-  y = "Survived",
-  exclude_algos = c("DeepLearning"),
-  max_models = 10
-)
-#> # A tibble: 2 × 5
-#>   tag       n     p order  pcum
-#>   <lgl> <int> <dbl> <int> <dbl>
-#> 1 FALSE   549  61.6     1  61.6
-#> 2 TRUE    342  38.4     2 100
-#> train_size  test_size 
-#>        623        268
-#>                                                  model_id       auc   logloss
-#> 1    StackedEnsemble_AllModels_1_AutoML_4_20251124_202943 0.8652643 0.4167762
-#> 2                          DRF_1_AutoML_4_20251124_202943 0.8638642 0.9250470
-#> 3 StackedEnsemble_BestOfFamily_1_AutoML_4_20251124_202943 0.8630579 0.4230030
-#>       aucpr mean_per_class_error      rmse       mse
-#> 1 0.8536071            0.1910521 0.3608505 0.1302131
-#> 2 0.8234600            0.1748278 0.3925871 0.1541246
-#> 3 0.8487459            0.1923978 0.3630551 0.1318090
-#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/12): StackedEnsemble_AllModels_1_AutoML_4_20251124_202943
-#> Dependent Variable: Survived
-#> Type: Classification (2 classes)
-#> Algorithm: STACKEDENSEMBLE
-#> Split: 70% training data (of 891 observations)
-#> Seed: 0
-#> 
-#> Test metrics:
-#>    AUC = 0.88726
-#>    ACC = 0.82463
-#>    PRC = 0.85
-#>    TPR = 0.66019
-#>    TNR = 0.92727
-```
-
-### Seed for Reproducibility
-
-``` r
-model <- h2o_automl(
-  df = dft,
-  y = "Survived",
-  seed = 123 # Reproducible results
-)
-#> # A tibble: 2 × 5
-#>   tag       n     p order  pcum
-#>   <lgl> <int> <dbl> <int> <dbl>
-#> 1 FALSE   549  61.6     1  61.6
-#> 2 TRUE    342  38.4     2 100
-#> train_size  test_size 
-#>        623        268
-#>                             model_id       auc   logloss     aucpr
-#> 1     GLM_1_AutoML_5_20251124_203006 0.8566401 0.4331878 0.8468753
-#> 2 XGBoost_1_AutoML_5_20251124_203006 0.8454934 0.4493601 0.8102068
-#> 3     GBM_1_AutoML_5_20251124_203006 0.8088444 0.6286836 0.7275233
-#>   mean_per_class_error      rmse       mse
-#> 1            0.1914171 0.3680368 0.1354511
-#> 2            0.2036480 0.3743833 0.1401629
-#> 3            0.2309482 0.4661593 0.2173045
-#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/3): GLM_1_AutoML_5_20251124_203006
-#> Dependent Variable: Survived
-#> Type: Classification (2 classes)
-#> Algorithm: GLM
-#> Split: 70% training data (of 891 observations)
 #> Seed: 123
 #> 
 #> Test metrics:
-#>    AUC = 0.87979
-#>    ACC = 0.79851
-#>    PRC = 0.90164
-#>    TPR = 0.53398
-#>    TNR = 0.96364
+#>    AUC = 0.87879
+#>    ACC = 0.86567
+#>    PRC = 0.88506
+#>    TPR = 0.74757
+#>    TNR = 0.93939
 #> 
 #> Most important variables:
-#>    Ticket.1601 (0.9%)
-#>    Ticket.2661 (0.9%)
-#>    Ticket.C.A. 37671 (0.8%)
-#>    Cabin.C22 C26 (0.8%)
-#>    Sex.female (0.7%)
+#>    Sex (37.5%)
+#>    Fare (22.7%)
+#>    Age (17.3%)
+#>    Pclass (12.2%)
+#>    Embarked (4.1%)
 ```
 
 ## Multi-Class Classification
@@ -579,7 +455,7 @@ Predict passenger class (3 categories):
 model_multiclass <- h2o_automl(
   df = dft,
   y = "Pclass",
-  ignore = c("Fare", "Cabin"),
+  ignore = c("Cabin", "PassengerId"),
   max_models = 10,
   max_time = 60
 )
@@ -591,33 +467,33 @@ model_multiclass <- h2o_automl(
 #> 3 n_2     184  20.6     3 100
 #> train_size  test_size 
 #>        623        268
-#>                         model_id mean_per_class_error   logloss      rmse
-#> 1 DRF_1_AutoML_6_20251124_203016            0.4514265 2.1881142 0.5149851
-#> 2 GBM_1_AutoML_6_20251124_203016            0.4596244 0.9799792 0.5327525
-#> 3 GBM_2_AutoML_6_20251124_203016            0.4596244 0.9079795 0.5237358
-#>         mse
-#> 1 0.2652097
-#> 2 0.2838252
-#> 3 0.2742992
+#>                             model_id mean_per_class_error   logloss      rmse
+#> 1 XGBoost_3_AutoML_3_20251125_175203           0.09289876 0.1804007 0.2314263
+#> 2 XGBoost_2_AutoML_3_20251125_175203           0.10536260 0.2187613 0.2551008
+#> 3 XGBoost_1_AutoML_3_20251125_175203           0.12322558 0.2639068 0.2795409
+#>          mse
+#> 1 0.05355812
+#> 2 0.06507641
+#> 3 0.07814310
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/10): DRF_1_AutoML_6_20251124_203016
+#> Model (1/10): XGBoost_3_AutoML_3_20251125_175203
 #> Dependent Variable: Pclass
 #> Type: Classification (3 classes)
-#> Algorithm: DRF
+#> Algorithm: XGBOOST
 #> Split: 70% training data (of 891 observations)
 #> Seed: 0
 #> 
 #> Test metrics:
-#>    AUC = 0.835
-#>    ACC = 0.73881
+#>    AUC = 0.98276
+#>    ACC = 0.93284
 #> 
 #> Most important variables:
-#>    Ticket (85.3%)
-#>    Age (5.9%)
-#>    Embarked (3%)
-#>    Survived (2.3%)
-#>    PassengerId (1.8%)
+#>    Fare (69.3%)
+#>    Age (13.5%)
+#>    SibSp (7.4%)
+#>    Parch (4.3%)
+#>    Survived.TRUE (1.7%)
 
 # Multi-class metrics
 model_multiclass$metrics
@@ -635,43 +511,43 @@ model_multiclass$metrics
 #> # A tibble: 3 × 4
 #>   `Real x Pred`   n_3   n_1   n_2
 #>   <fct>         <int> <int> <int>
-#> 1 n_3             149     0     0
-#> 2 n_1              32    30     0
-#> 3 n_2              38     0    19
+#> 1 n_3             137     2     3
+#> 2 n_1               1    61     1
+#> 3 n_2               5     6    52
 #> 
 #> $metrics
-#>     AUC     ACC
-#> 1 0.835 0.73881
+#>       AUC     ACC
+#> 1 0.98276 0.93284
 #> 
 #> $metrics_tags
 #> # A tibble: 3 × 9
 #>   tag       n     p   AUC order   ACC   PRC   TPR   TNR
 #>   <chr> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-#> 1 n_3     149  55.6 0.857     1 0.739 0.680 1     0.412
-#> 2 n_1      62  23.1 0.922     2 0.881 1     0.484 1    
-#> 3 n_2      57  21.3 0.726     3 0.858 1     0.333 1    
+#> 1 n_3     142  53.0 0.986     1 0.959 0.958 0.965 0.952
+#> 2 n_1      63  23.5 0.984     2 0.963 0.884 0.968 0.961
+#> 3 n_2      63  23.5 0.979     3 0.944 0.929 0.825 0.980
 #> 
 #> $cv_metrics
 #> # A tibble: 12 × 8
 #>    metric     mean     sd cv_1_valid cv_2_valid cv_3_valid cv_4_valid cv_5_valid
 #>    <chr>     <dbl>  <dbl>      <dbl>      <dbl>      <dbl>      <dbl>      <dbl>
-#>  1 accura…   0.697 0.0287      0.728      0.664      0.704      0.669      0.718
-#>  2 auc     NaN     0         NaN        NaN        NaN        NaN        NaN    
-#>  3 err       0.303 0.0287      0.272      0.336      0.296      0.331      0.282
-#>  4 err_co…  37.8   3.56       34         42         37         41         35    
-#>  5 logloss   2.19  0.215       2.06       2.02       2.30       2.52       2.05 
-#>  6 max_pe…   0.725 0.0173      0.739      0.708      0.704      0.733      0.739
-#>  7 mean_p…   0.549 0.0126      0.536      0.545      0.565      0.558      0.539
-#>  8 mean_p…   0.451 0.0126      0.464      0.455      0.435      0.442      0.461
-#>  9 mse       0.265 0.0347      0.230      0.298      0.274      0.297      0.228
-#> 10 pr_auc  NaN     0         NaN        NaN        NaN        NaN        NaN    
-#> 11 r2        0.622 0.0364      0.650      0.612      0.604      0.576      0.667
-#> 12 rmse      0.514 0.0339      0.479      0.546      0.523      0.545      0.477
+#>  1 accur…   0.931  0.0290     0.944      0.944      0.944      0.879      0.944 
+#>  2 auc    NaN      0        NaN        NaN        NaN        NaN        NaN     
+#>  3 err      0.0691 0.0290     0.056      0.056      0.056      0.121      0.0565
+#>  4 err_c…   8.6    3.58       7          7          7         15          7     
+#>  5 loglo…   0.181  0.0898     0.152      0.195      0.124      0.329      0.102 
+#>  6 max_p…   0.183  0.0823     0.133      0.125      0.136      0.32       0.2   
+#>  7 mean_…   0.907  0.0444     0.933      0.926      0.936      0.830      0.909 
+#>  8 mean_…   0.0931 0.0444     0.0666     0.0739     0.0640     0.170      0.0905
+#>  9 mse      0.0536 0.0268     0.0429     0.0559     0.0399     0.0987     0.0306
+#> 10 pr_auc NaN      0        NaN        NaN        NaN        NaN        NaN     
+#> 11 r2       0.924  0.0381     0.934      0.919      0.944      0.861      0.960 
+#> 12 rmse     0.226  0.0537     0.207      0.236      0.200      0.314      0.175 
 #> 
 #> $hit_ratio
 #>   k hit_ratio
-#> 1 1 0.6966292
-#> 2 2 0.8764045
+#> 1 1 0.9309791
+#> 2 2 0.9919743
 #> 3 3 1.0000000
 
 # Confusion matrix for multi-class
@@ -681,7 +557,7 @@ mplot_conf(
 )
 ```
 
-![](machine-learning_files/figure-html/unnamed-chunk-14-1.png)
+![](machine-learning_files/figure-html/unnamed-chunk-12-1.png)
 
 ## Regression Example
 
@@ -691,6 +567,7 @@ Predict fare prices:
 model_regression <- h2o_automl(
   df = dft,
   y = "Fare",
+  ignore = c("Cabin", "PassengerId"),
   max_models = 10,
   exclude_algos = NULL
 )
@@ -699,16 +576,16 @@ model_regression <- h2o_automl(
 #> train_size  test_size 
 #>        609        262
 #>                                                  model_id     rmse      mse
-#> 1    StackedEnsemble_AllModels_1_AutoML_7_20251124_203034 11.43342 130.7231
-#> 2 StackedEnsemble_BestOfFamily_1_AutoML_7_20251124_203034 12.07742 145.8640
-#> 3                          GBM_1_AutoML_7_20251124_203034 14.52611 211.0080
+#> 1 StackedEnsemble_BestOfFamily_1_AutoML_4_20251125_175223 10.34827 107.0866
+#> 2    StackedEnsemble_AllModels_1_AutoML_4_20251125_175223 10.51049 110.4704
+#> 3                          GBM_3_AutoML_4_20251125_175223 12.44341 154.8385
 #>        mae     rmsle mean_residual_deviance
-#> 1 6.240817 0.4653345               130.7231
-#> 2 7.011522 0.4877838               145.8640
-#> 3 8.984404       NaN               211.0080
+#> 1 5.531397 0.4519830               107.0866
+#> 2 5.671656 0.4547420               110.4704
+#> 3 5.769395 0.4650435               154.8385
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/12): StackedEnsemble_AllModels_1_AutoML_7_20251124_203034
+#> Model (1/12): StackedEnsemble_BestOfFamily_1_AutoML_4_20251125_175223
 #> Dependent Variable: Fare
 #> Type: Regression
 #> Algorithm: STACKEDENSEMBLE
@@ -716,12 +593,12 @@ model_regression <- h2o_automl(
 #> Seed: 0
 #> 
 #> Test metrics:
-#>    rmse = 6.9954
-#>    mae = 4.4921
-#>    mape = 0.01428
-#>    mse = 48.936
-#>    rsq = 0.9364
-#>    rsqa = 0.9361
+#>    rmse = 6.7991
+#>    mae = 4.258
+#>    mape = 0.012981
+#>    mse = 46.228
+#>    rsq = 0.9357
+#>    rsqa = 0.9355
 
 # Regression metrics
 model_regression$metrics
@@ -734,21 +611,21 @@ model_regression$metrics
 #> [6] "RSQA: Adjusted R Squared"            
 #> 
 #> $metrics
-#>       rmse      mae       mape      mse    rsq   rsqa
-#> 1 6.995405 4.492092 0.01427959 48.93569 0.9364 0.9361
+#>       rmse   mae       mape      mse    rsq   rsqa
+#> 1 6.799092 4.258 0.01298087 46.22766 0.9357 0.9355
 #> 
 #> $cv_metrics
 #> # A tibble: 8 × 8
 #>   metric     mean      sd cv_1_valid cv_2_valid cv_3_valid cv_4_valid cv_5_valid
 #>   <chr>     <dbl>   <dbl>      <dbl>      <dbl>      <dbl>      <dbl>      <dbl>
-#> 1 mae     6.27e+0 8.32e-1      6.16       5.35       6.48       7.55       5.80 
-#> 2 mean_r… 1.30e+2 5.21e+1     95.0       64.7      150.       200.       138.   
-#> 3 mse     1.30e+2 5.21e+1     95.0       64.7      150.       200.       138.   
-#> 4 null_d… 1.19e+5 3.04e+4 122980.     67161.    134804.    145678.    123512.   
-#> 5 r2      8.67e-1 2.55e-2      0.903      0.861      0.870      0.832      0.871
-#> 6 residu… 1.56e+4 6.00e+3  11872.      8539.     17257.     24394.     15918.   
-#> 7 rmse    1.12e+1 2.35e+0      9.75       8.04      12.2       14.1       11.8  
-#> 8 rmsle   4.62e-1 9.88e-2      0.531      0.492      0.537      0.454      0.295
+#> 1 mae     5.56e+0 6.45e-1      5.38       4.79       5.50       6.58       5.56 
+#> 2 mean_r… 1.07e+2 5.02e+1     77.3       76.0      108.       194.        81.8  
+#> 3 mse     1.07e+2 5.02e+1     77.3       76.0      108.       194.        81.8  
+#> 4 null_d… 1.19e+5 2.29e+4  89084.    111869.    147015.    109745.    135751.   
+#> 5 r2      8.85e-1 5.96e-2      0.887      0.910      0.915      0.782      0.930
+#> 6 residu… 1.30e+4 6.06e+3   9745.     10030.     12320.     23686.      9412.   
+#> 7 rmse    1.02e+1 2.21e+0      8.79       8.72      10.4       13.9        9.05 
+#> 8 rmsle   4.44e-1 1.21e-1      0.456      0.264      0.425      0.473      0.601
 ```
 
 ## Using Pre-Split Data
@@ -782,16 +659,16 @@ model <- h2o_automl(
 #>  test train 
 #>   179   712
 #>                             model_id       auc   logloss     aucpr
-#> 1     DRF_1_AutoML_8_20251124_203049 0.8680875 0.7855203 0.8270861
-#> 2     GLM_1_AutoML_8_20251124_203049 0.8654726 0.4253319 0.8491966
-#> 3 XGBoost_2_AutoML_8_20251124_203049 0.8552476 0.4437635 0.8198820
+#> 1     DRF_1_AutoML_5_20251125_175238 0.8680875 0.7855203 0.8270861
+#> 2     GLM_1_AutoML_5_20251125_175238 0.8654726 0.4253319 0.8491966
+#> 3 XGBoost_2_AutoML_5_20251125_175238 0.8552476 0.4437635 0.8198820
 #>   mean_per_class_error      rmse       mse
 #> 1            0.1775527 0.3813365 0.1454175
 #> 2            0.1923547 0.3652137 0.1333811
 #> 3            0.2036507 0.3736082 0.1395831
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/5): DRF_1_AutoML_8_20251124_203049
+#> Model (1/5): DRF_1_AutoML_5_20251125_175238
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
 #> Algorithm: DRF
@@ -861,7 +738,7 @@ mplot_full(
 )
 ```
 
-![](machine-learning_files/figure-html/unnamed-chunk-19-1.png)
+![](machine-learning_files/figure-html/unnamed-chunk-17-1.png)
 
 ### Metrics Comparison
 
@@ -870,7 +747,7 @@ mplot_full(
 mplot_metrics(model)
 ```
 
-![](machine-learning_files/figure-html/unnamed-chunk-20-1.png)
+![](machine-learning_files/figure-html/unnamed-chunk-18-1.png)
 
 ## Saving and Loading Models
 
@@ -912,16 +789,16 @@ model <- h2o_automl(dft, "Survived", max_models = 3, max_time = 30)
 #> train_size  test_size 
 #>        623        268
 #>                             model_id       auc   logloss     aucpr
-#> 1     GLM_1_AutoML_9_20251124_203113 0.8566401 0.4331878 0.8468753
-#> 2 XGBoost_1_AutoML_9_20251124_203113 0.8410859 0.4576161 0.8238591
-#> 3     GBM_1_AutoML_9_20251124_203113 0.8159377 0.6451460 0.7378534
+#> 1     GLM_1_AutoML_6_20251125_175303 0.8566401 0.4331878 0.8468753
+#> 2 XGBoost_1_AutoML_6_20251125_175303 0.8410859 0.4576161 0.8238591
+#> 3     GBM_1_AutoML_6_20251125_175303 0.8159377 0.6451460 0.7378534
 #>   mean_per_class_error      rmse       mse
 #> 1            0.1914171 0.3680368 0.1354511
 #> 2            0.2036044 0.3771717 0.1422585
 #> 3            0.2218336 0.4732407 0.2239567
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/3): GLM_1_AutoML_9_20251124_203113
+#> Model (1/3): GLM_1_AutoML_6_20251125_175303
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
 #> Algorithm: GLM
@@ -962,10 +839,10 @@ model <- h2o_automl(
 #> 2 TRUE    342  38.4     2 100
 #> train_size  test_size 
 #>        623        268
-#>                          model_id       auc   logloss     aucpr
-#> 1 GBM_3_AutoML_10_20251124_203124 0.8575063 0.4316748 0.8410436
-#> 2 GBM_2_AutoML_10_20251124_203124 0.8571250 0.4270731 0.8442881
-#> 3 GBM_4_AutoML_10_20251124_203124 0.8561498 0.4266892 0.8469913
+#>                         model_id       auc   logloss     aucpr
+#> 1 GBM_3_AutoML_7_20251125_175314 0.8575063 0.4316748 0.8410436
+#> 2 GBM_2_AutoML_7_20251125_175314 0.8571250 0.4270731 0.8442881
+#> 3 GBM_4_AutoML_7_20251125_175314 0.8561498 0.4266892 0.8469913
 #>   mean_per_class_error      rmse       mse
 #> 1            0.1887694 0.3656777 0.1337202
 #> 2            0.1944735 0.3641046 0.1325721
@@ -1067,7 +944,7 @@ mplot_full(
 )
 ```
 
-![](machine-learning_files/figure-html/unnamed-chunk-25-1.png)
+![](machine-learning_files/figure-html/unnamed-chunk-23-1.png)
 
 ``` r
 
@@ -1078,7 +955,7 @@ mplot_importance(
 )
 ```
 
-![](machine-learning_files/figure-html/unnamed-chunk-25-2.png)
+![](machine-learning_files/figure-html/unnamed-chunk-23-2.png)
 
 ### Score Distribution
 
@@ -1090,7 +967,7 @@ mplot_density(
 )
 ```
 
-![](machine-learning_files/figure-html/unnamed-chunk-26-1.png)
+![](machine-learning_files/figure-html/unnamed-chunk-24-1.png)
 
 ### 4. Document Your Process
 
@@ -1109,14 +986,14 @@ h2o::h2o.init(max_mem_size = "8G", nthreads = -1)
 #>  Connection successful!
 #> 
 #> R is connected to the H2O cluster: 
-#>     H2O cluster uptime:         3 minutes 6 seconds 
+#>     H2O cluster uptime:         2 minutes 24 seconds 
 #>     H2O cluster timezone:       UTC 
 #>     H2O data parsing timezone:  UTC 
 #>     H2O cluster version:        3.44.0.3 
-#>     H2O cluster version age:    1 year, 11 months and 4 days 
+#>     H2O cluster version age:    1 year, 11 months and 5 days 
 #>     H2O cluster name:           H2O_started_from_R_runner_mwl453 
 #>     H2O cluster total nodes:    1 
-#>     H2O cluster total memory:   1.94 GB 
+#>     H2O cluster total memory:   1.93 GB 
 #>     H2O cluster total cores:    4 
 #>     H2O cluster allowed cores:  4 
 #>     H2O cluster healthy:        TRUE 
