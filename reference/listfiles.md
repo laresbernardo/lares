@@ -77,25 +77,25 @@ Other Tools:
 df <- listfiles(recursive = TRUE)
 head(df, 3)
 #>            filename size isdir mode               mtime               ctime
-#> 1          ROC.html   17 FALSE  644 2025-11-25 18:33:27 2025-11-25 18:33:27
-#> 2     autoline.html   22 FALSE  644 2025-11-25 18:33:28 2025-11-25 18:33:28
-#> 3 balance_data.html   10 FALSE  644 2025-11-25 18:33:28 2025-11-25 18:33:28
+#> 1          ROC.html   17 FALSE  644 2025-11-26 16:33:26 2025-11-26 16:33:26
+#> 2     autoline.html   21 FALSE  644 2025-11-26 16:33:26 2025-11-26 16:33:26
+#> 3 balance_data.html   10 FALSE  644 2025-11-26 16:33:26 2025-11-26 16:33:26
 #>                 atime  uid  gid  uname grname
-#> 1 2025-11-25 18:33:27 1001 1001 runner runner
-#> 2 2025-11-25 18:33:28 1001 1001 runner runner
-#> 3 2025-11-25 18:33:28 1001 1001 runner runner
+#> 1 2025-11-26 16:33:26 1001 1001 runner runner
+#> 2 2025-11-26 16:33:26 1001 1001 runner runner
+#> 3 2025-11-26 16:33:26 1001 1001 runner runner
 
 # All files in current directory (with recursive files)
 df <- listfiles(recursive = TRUE)
 tail(df, 3)
 #>            filename size isdir mode               mtime               ctime
-#> 128 lasso_vars.html   12 FALSE  644 2025-11-25 18:34:10 2025-11-25 18:34:10
-#> 129 left_right.html    9 FALSE  644 2025-11-25 18:34:10 2025-11-25 18:34:10
-#> 130  list_cats.html   12 FALSE  644 2025-11-25 18:34:10 2025-11-25 18:34:10
+#> 128 lasso_vars.html   12 FALSE  644 2025-11-26 16:34:12 2025-11-26 16:34:12
+#> 129 left_right.html    9 FALSE  644 2025-11-26 16:34:12 2025-11-26 16:34:12
+#> 130  list_cats.html   12 FALSE  644 2025-11-26 16:34:12 2025-11-26 16:34:12
 #>                   atime  uid  gid  uname grname
-#> 128 2025-11-25 18:34:10 1001 1001 runner runner
-#> 129 2025-11-25 18:34:10 1001 1001 runner runner
-#> 130 2025-11-25 18:34:10 1001 1001 runner runner
+#> 128 2025-11-26 16:34:12 1001 1001 runner runner
+#> 129 2025-11-26 16:34:12 1001 1001 runner runner
+#> 130 2025-11-26 16:34:12 1001 1001 runner runner
 
 # Check R files using regex
 df <- listfiles(regex = "\\.R$")
