@@ -46,7 +46,7 @@ library(h2o)
 # Initialize h2o quietly for vignette
 Sys.unsetenv("http_proxy")
 Sys.unsetenv("https_proxy")
-h2o.init(nthreads = -1, max_mem_size = "2G", ip = "localhost")
+h2o.init(nthreads = -1, max_mem_size = "2G", ip = "127.0.0.1")
 h2o.no_progress() # Disable progress bars
 ```
 
@@ -422,7 +422,7 @@ export_results(model, subdir = "my_project", thresh = 0.5)
 
 ### h2o Initialization Issues
 
-```{r}
+```{r, eval=FALSE}
 # Manually initialize h2o with more memory
 h2o::h2o.init(max_mem_size = "8G", nthreads = -1)
 ```

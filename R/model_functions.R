@@ -159,7 +159,7 @@ h2o_automl <- function(df, y = "tag",
 
   if (!quiet) message(paste(Sys.time(), "| Started process..."))
 
-  quiet(h2o.init(nthreads = -1, port = 54321))
+  quiet(h2o.init(nthreads = -1, port = 54321, ip = "127.0.0.1"))
 
   df <- as.data.frame(df)
   y <- gsub('"', "", as_label(enquo(y)))
@@ -740,7 +740,7 @@ export_results <- function(results,
                            seed = 0) {
   if (save) {
     try_require("h2o")
-    quiet(h2o.init(nthreads = -1, port = 54321))
+    quiet(h2o.init(nthreads = -1, port = 54321, ip = "127.0.0.1"))
 
     pass <- !is.null(attr(results, "type"))
     if (!pass) results <- list(model = results)
