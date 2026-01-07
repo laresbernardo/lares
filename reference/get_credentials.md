@@ -38,11 +38,13 @@ get_creds(
   Character. Credentials directory where your YML file is. If used
   frequently, set your directory by using the `.Renviron` file. To do
   so, leave `dir` as `NA` and follow the steps. If `dir` is a list,
-  it'll return `dir` (manual credentials input).
+  it'll return `dir` (manual credentials input). If `dir` ends with
+  `.yml` or `.yaml`, `filename` will be ignored.
 
 - filename:
 
-  Character. YML filename with your credentials.
+  Character. YML filename with your credentials. Ignored if `dir`
+  contains the file path.
 
 - env:
 

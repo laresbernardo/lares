@@ -8,7 +8,7 @@ logic.
 ## Usage
 
 ``` r
-dont_sleep(sec_range = c(20, 60), off_time = 18.5, quiet = FALSE)
+dont_sleep(sec_range = c(20, 60), off_time = 18.5, click = TRUE, quiet = FALSE)
 
 dont_sleep_time(quiet = FALSE)
 ```
@@ -24,6 +24,10 @@ dont_sleep_time(quiet = FALSE)
 
   Numeric. Decimal hour (24h format) to stop the function automatically,
   e.g. 18.5 means 18:30 (6:30 PM). Default is `18.5`.
+
+- click:
+
+  Logical. If `TRUE`, clicks the mouse. Default is `TRUE`.
 
 - quiet:
 

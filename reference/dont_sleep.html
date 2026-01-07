@@ -19,7 +19,7 @@ underlying logic."><meta property="og:image" content="https://laresbernardo.gith
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@ underlying logic.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dont_sleep</span><span class="op">(</span>sec_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">60</span><span class="op">)</span>, off_time <span class="op">=</span> <span class="fl">18.5</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dont_sleep</span><span class="op">(</span>sec_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">60</span><span class="op">)</span>, off_time <span class="op">=</span> <span class="fl">18.5</span>, click <span class="op">=</span> <span class="cn">TRUE</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">dont_sleep_time</span><span class="op">(</span>quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -78,6 +78,10 @@ random intervals between mouse movements and clicks. Default is <code>c(20, 60)<
 <dt id="arg-off-time">off_time<a class="anchor" aria-label="anchor" href="#arg-off-time"></a></dt>
 <dd><p>Numeric. Decimal hour (24h format) to stop the function
 automatically, e.g. 18.5 means 18:30 (6:30 PM). Default is <code>18.5</code>.</p></dd>
+
+
+<dt id="arg-click">click<a class="anchor" aria-label="anchor" href="#arg-click"></a></dt>
+<dd><p>Logical. If <code>TRUE</code>, clicks the mouse. Default is <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-quiet">quiet<a class="anchor" aria-label="anchor" href="#arg-quiet"></a></dt>

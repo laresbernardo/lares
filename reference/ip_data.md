@@ -89,18 +89,18 @@ ip_data("163.114.132.0")
 #>               languages     currency
 #> 1 en-US, es-US, haw, fr Dollar (USD)
 ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
-#>                id addresstype                                asn
-#> 1    52.225.25.96        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK
-#> 2 201.244.197.199        IPv4                    19429 - AS19429
-#>                     isp connection       country stateregion districtcounty
-#> 1 Microsoft Corporation    Hosting United States  California    Santa Clara
-#> 2        ETB - Colombia       <NA>      Colombia Bogota D.C.   Bogotá  D.C.
-#>              city zippostalcode            weatherstation       coordinates
-#> 1        San Jose         95141       USCA0993 - San Jose 37.3387, -121.885
-#> 2 Barrio San Luis          <NA> COXX7742 - Vereda El Hato 4.66779, -74.0215
-#>                      timezone localtime             languages     currency
-#> 1 America/Los_Angeles (UTC-8)           en-US, es-US, haw, fr Dollar (USD)
-#> 2      America/Bogota (UTC-5)                           es-CO   Peso (COP)
+#>                id addresstype                                asn            isp
+#> 1  135.232.200.69        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK      Microsoft
+#> 2 201.244.197.199        IPv4                    19429 - AS19429 ETB - Colombia
+#>   connection       country stateregion districtcounty            city
+#> 1    Hosting United States    Illinois           Cook         Chicago
+#> 2       <NA>      Colombia Bogota D.C.   Bogotá  D.C. Barrio San Luis
+#>   zippostalcode            weatherstation       coordinates
+#> 1         60666        USIL0225 - Chicago 41.8781, -87.6298
+#> 2          <NA> COXX7742 - Vereda El Hato 4.66779, -74.0215
+#>                  timezone localtime             languages     currency
+#> 1 America/Chicago (UTC-6)           en-US, es-US, haw, fr Dollar (USD)
+#> 2  America/Bogota (UTC-5)                           es-CO   Peso (COP)
 #>                                     hostname
 #> 1                                       <NA>
 #> 2 dynamic-201-244-197-199.dynamic.etb.net.co
