@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +75,7 @@
                         <h4 data-toc-skip class="author">Bernardo
 Lares</h4>
             
-            <h4 data-toc-skip class="date">2025-11-26</h4>
+            <h4 data-toc-skip class="date">2026-01-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/laresbernardo/lares/blob/main/vignettes/data-wrangling.Rmd" class="external-link"><code>vignettes/data-wrangling.Rmd</code></a></small>
       <div class="d-none name"><code>data-wrangling.Rmd</code></div>
@@ -146,7 +146,7 @@ with percentages and cumulative values:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Visualize survival by class</span></span>
 <span><span class="fu"><a href="../reference/freqs.html">freqs</a></span><span class="op">(</span><span class="va">dft</span>, <span class="va">Pclass</span>, <span class="va">Survived</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-wrangling_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="672"></p>
+<p><img src="data-wrangling_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="dataframe-wide-frequencies">Dataframe-wide Frequencies<a class="anchor" aria-label="anchor" href="#dataframe-wide-frequencies"></a>
@@ -154,7 +154,7 @@ with percentages and cumulative values:</p>
 <p>Analyze all variables at once:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/freqs_df.html">freqs_df</a></span><span class="op">(</span><span class="va">dft</span>, plot <span class="op">=</span> <span class="cn">TRUE</span>, top <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-wrangling_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="672"></p>
+<p><img src="data-wrangling_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
 <div class="section level2">
@@ -180,7 +180,7 @@ categorical variables):</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Which variables correlate most with Survival?</span></span>
 <span><span class="fu"><a href="../reference/corr_var.html">corr_var</a></span><span class="op">(</span><span class="va">dft</span>, <span class="va">Survived</span>, top <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-wrangling_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" width="672"></p>
+<p><img src="data-wrangling_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="cross-correlations">Cross-Correlations<a class="anchor" aria-label="anchor" href="#cross-correlations"></a>
@@ -189,7 +189,7 @@ categorical variables):</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Top cross-correlations</span></span>
 <span><span class="fu"><a href="../reference/corr_cross.html">corr_cross</a></span><span class="op">(</span><span class="va">dft</span><span class="op">[</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, top <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-wrangling_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" width="672"></p>
+<p><img src="data-wrangling_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
 <div class="section level2">
@@ -279,7 +279,7 @@ categorical variables):</p>
 <span>  <span class="fu"><a href="../reference/theme_lares.html">theme_lares</a></span><span class="op">(</span>legend <span class="op">=</span> <span class="st">"top"</span>, grid <span class="op">=</span> <span class="st">"Yy"</span>, pal <span class="op">=</span> <span class="fl">2</span>, background <span class="op">=</span> <span class="st">"#f2f2f2"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># Customize axis scales to look nicer</span></span>
 <span>  <span class="fu"><a href="../reference/scale_x_comma.html">scale_y_abbr</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-wrangling_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" width="672"></p>
+<p><img src="data-wrangling_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="distribution-plots">Distribution Plots<a class="anchor" aria-label="anchor" href="#distribution-plots"></a>
@@ -288,7 +288,7 @@ categorical variables):</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Analyze Fare distribution</span></span>
 <span><span class="fu"><a href="../reference/distr.html">distr</a></span><span class="op">(</span><span class="va">dft</span>, <span class="va">Fare</span>, breaks <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-wrangling_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" width="672"></p>
+<p><img src="data-wrangling_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="number-formatting">Number Formatting<a class="anchor" aria-label="anchor" href="#number-formatting"></a>
@@ -321,7 +321,7 @@ categorical variables):</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Average Fare by Class"</span>, x <span class="op">=</span> <span class="st">"Class"</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/scale_x_comma.html">scale_y_dollar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># Format as currency</span></span>
 <span>  <span class="fu"><a href="../reference/theme_lares.html">theme_lares</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-wrangling_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" width="672"></p>
+<p><img src="data-wrangling_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
 <div class="section level2">
@@ -364,12 +364,12 @@ categorical variables):</p>
 <span></span>
 <span><span class="co"># 3. Analyze frequencies</span></span>
 <span><span class="fu"><a href="../reference/freqs.html">freqs</a></span><span class="op">(</span><span class="va">dft_clean</span>, <span class="va">Age_Group</span>, <span class="va">Survived</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-wrangling_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" width="672"></p>
+<p><img src="data-wrangling_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="672"></p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># 4. Check correlations</span></span>
 <span><span class="fu"><a href="../reference/corr_var.html">corr_var</a></span><span class="op">(</span><span class="va">dft_clean</span>, <span class="va">Survived_TRUE</span>, top <span class="op">=</span> <span class="fl">8</span>, max_pvalue <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-wrangling_files/figure-html/unnamed-chunk-19-2.png" class="r-plt" width="672"></p>
+<p><img src="data-wrangling_files/figure-html/unnamed-chunk-19-2.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="further-reading">Further Reading<a class="anchor" aria-label="anchor" href="#further-reading"></a>

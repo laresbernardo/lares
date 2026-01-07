@@ -54,7 +54,7 @@ Other Data Wrangling:
 
 ``` r
 date_cuts(Sys.Date(), type = "Q")
-#> [1] "Q4"
+#> [1] "Q1"
 date_cuts(Sys.Date(), type = "H")
-#> [1] "H2"
+#> [1] "H1"
 ```

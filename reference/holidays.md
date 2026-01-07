@@ -89,7 +89,7 @@ Other One Hot Encoding:
 ``` r
 # \donttest{
 holidays(countries = "Argentina")
-#> >>> Extracting Argentina's holidays for 2025
+#> >>> Extracting Argentina's holidays for 2026
 #> Warning: All formats failed to parse. No formats found.
 #> # A tibble: 0 × 10
 #> # ℹ 10 variables: holiday <date>, holiday_name <chr>, holiday_type <chr>,
@@ -97,16 +97,16 @@ holidays(countries = "Argentina")
 #> #   hother <lgl>, county <fct>
 year <- as.integer(format(Sys.Date(), format = "%Y"))
 holidays(countries = c("Spain", "Venezuela"), years = year)
-#> >>> Extracting Spain's holidays for 2025
+#> >>> Extracting Spain's holidays for 2026
 #> Warning: All formats failed to parse. No formats found.
-#> >>> Extracting Venezuela's holidays for 2025
+#> >>> Extracting Venezuela's holidays for 2026
 #> Warning: All formats failed to parse. No formats found.
 #> # A tibble: 0 × 11
 #> # ℹ 11 variables: holiday <date>, holiday_name <chr>, holiday_type <chr>,
 #> #   national <lgl>, observance <lgl>, bank <lgl>, nonwork <lgl>, season <lgl>,
 #> #   hother <lgl>, country <fct>, county <fct>
 holidays(countries = "Germany", include_regions = TRUE)
-#> >>> Extracting Germany's holidays for 2025
+#> >>> Extracting Germany's holidays for 2026
 #> Warning: All formats failed to parse. No formats found.
 #> # A tibble: 0 × 11
 #> # ℹ 11 variables: holiday <date>, holiday_name <chr>, holiday_type <chr>,

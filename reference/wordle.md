@@ -144,7 +144,7 @@ x <- wordle_simulation(input = "SAINT", word = "ABBEY", seed = 1:3)
 #> A B B E Y reduced from 1 to 1
 #> 
 #> >> Iterations (seed = 3): 4
-#> Elapsed time: 3.65s
+#> Elapsed time: 1.61s
 print(x)
 #> Seed Word: SAINT
 #> Objective Word: ABBEY
