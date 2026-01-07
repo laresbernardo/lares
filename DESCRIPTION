@@ -1,7 +1,7 @@
 Package: lares
 Type: Package
 Title: Lean Analytics and Robust Exploration Sidekick
-Version: 5.3.3.9006
+Version: 5.3.3.9007
 Authors@R: c(
     person("Bernardo", "Lares", , "laresbernardo@gmail.com", c("aut", "cre")))
 Maintainer: Bernardo Lares <laresbernardo@gmail.com>

@@ -29,7 +29,9 @@
 #' If used frequently, set your directory by using the \code{.Renviron} file.
 #' To do so, leave \code{dir} as \code{NA} and follow the steps.
 #' If \code{dir} is a list, it'll return \code{dir} (manual credentials input).
+#' If \code{dir} ends with \code{.yml} or \code{.yaml}, \code{filename} will be ignored.
 #' @param filename Character. YML filename with your credentials.
+#' Ignored if \code{dir} contains the file path.
 #' @param env Character. Environment variable name. No need to set differently
 #' for any function that uses this library. Only for external use.
 #' @return List. Result of reading your credential's YML file, filtered by your
@@ -73,7 +75,16 @@ get_credentials <- function(from = NA, dir = NA,
       message("ALL's SET! But, you must reset your session for it to work!")
       invisible(NULL)
     } else {
-      file <- paste0(dir, "/", filename)
+      # Handle .yml file in dir parameter
+      if (grepl("\\.ya?ml$", dir)) {
+        file <- dir
+      } else {
+        # Normalize paths to handle slash inconsistencies
+        dir <- gsub("/+$", "", dir)
+        filename <- gsub("^/+", "", filename)
+        file <- file.path(dir, filename)
+      }
+
       if (!file.exists(file)) {
         message(sprintf("YML file with credentials not found in %s", dir))
       } else {
