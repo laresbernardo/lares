@@ -20,6 +20,7 @@
 #' random intervals between mouse movements and clicks. Default is \code{c(20, 60)}.
 #' @param off_time Numeric. Decimal hour (24h format) to stop the function
 #' automatically, e.g. 18.5 means 18:30 (6:30 PM). Default is \code{18.5}.
+#' @param click Logical. If \code{TRUE}, clicks the mouse. Default is \code{TRUE}.
 #' @param quiet Logical. If \code{TRUE}, suppresses progress messages.
 #' Default is \code{FALSE}.
 #' @return Invisibly returns \code{NULL} when the function exits.
@@ -31,12 +32,12 @@
 #' dont_sleep_time()
 #' }
 #' @export
-dont_sleep <- function(sec_range = c(20, 60), off_time = 18.5, quiet = FALSE) {
+dont_sleep <- function(sec_range = c(20, 60), off_time = 18.5, click = TRUE, quiet = FALSE) {
   os <- Sys.info()[["sysname"]]
   if (os == "Darwin") {
-    stay_awake_mac(sec_range, off_time, quiet)
+    stay_awake_mac(sec_range, off_time, quiet, click)
   } else if (os == "Windows") {
-    stay_awake_windows(sec_range, off_time, quiet)
+    stay_awake_windows(sec_range, off_time, quiet, click)
   } else {
     stop("Unsupported OS: ", os)
   }
@@ -107,16 +108,18 @@ dont_sleep_time <- function(quiet = FALSE) {
 }
 
 .stay_awake_core <- function(
-    get_mouse_position,
-    move_mouse,
-    click_mouse,
-    move_to_origin,
-    sec_range = c(20, 60),
-    off_time = 18.5,
-    quiet = FALSE,
-    label = "stay_awake") {
+  get_mouse_position,
+  move_mouse,
+  click_mouse,
+  move_to_origin,
+  sec_range = c(20, 60),
+  off_time = 18.5,
+  quiet = FALSE,
+  click = TRUE,
+  label = "stay_awake"
+) {
   move_to_origin()
-  message("Mouse moved to (0,0). Starting loop...")
+  message(sprintf("Mouse moved to (0,0). Starting loop... %s clicks.", ifelse(click, "Enabled", "Disabled")))
 
   start_time <- Sys.time()
   last_time <- start_time
@@ -156,7 +159,7 @@ dont_sleep_time <- function(quiet = FALSE) {
     dy <- sample(-20:20, 1)
     move_mouse(dx, dy)
     move_to_origin()
-    click_mouse()
+    if (click) click_mouse()
 
     now_posix <- as.POSIXlt(now)
     if ((now_posix$hour + now_posix$min / 60 + now_posix$sec / 3600) >= off_time) {
@@ -173,9 +176,13 @@ dont_sleep_time <- function(quiet = FALSE) {
 
 
 # macOS wrapper
-stay_awake_mac <- function(sec_range = c(20, 60), off_time = 18.5, quiet = FALSE) {
-  if (Sys.info()[["sysname"]] != "Darwin") stop("This function is for macOS only.")
-  if (system("which cliclick", intern = TRUE) == "") stop("Install cliclick first: brew install cliclick")
+stay_awake_mac <- function(sec_range = c(20, 60), off_time = 18.5, click = TRUE, quiet = FALSE) {
+  if (Sys.info()[["sysname"]] != "Darwin") {
+    stop("This function is for macOS only.")
+  }
+  if (system("which cliclick", intern = TRUE) == "") {
+    stop("Install cliclick first: brew install cliclick")
+  }
 
   get_mouse_position <- function() {
     out <- system2("cliclick", args = "p:", stdout = TRUE)
@@ -190,13 +197,13 @@ stay_awake_mac <- function(sec_range = c(20, 60), off_time = 18.5, quiet = FALSE
   click_mouse <- function() system2("cliclick", args = "c:0,0")
 
   .stay_awake_core(get_mouse_position, move_mouse, click_mouse, move_to_origin,
-    sec_range, off_time, quiet,
+    sec_range, off_time, quiet, click,
     label = "stay_awake_mac"
   )
 }
 
 # Windows wrapper
-stay_awake_windows <- function(sec_range = c(20, 60), off_time = 18.5, quiet = FALSE) {
+stay_awake_windows <- function(sec_range = c(20, 60), off_time = 18.5, quiet = FALSE, click = TRUE) {
   if (Sys.info()[["sysname"]] != "Windows") stop("This function is for Windows only.")
   try_require("KeyboardSimulator")
 
@@ -206,7 +213,7 @@ stay_awake_windows <- function(sec_range = c(20, 60), off_time = 18.5, quiet = F
   click_mouse <- function() mouse.click(button = "left")
 
   .stay_awake_core(get_mouse_position, move_mouse, click_mouse, move_to_origin,
-    sec_range, off_time, quiet,
+    sec_range, off_time, quiet, click,
     label = "stay_awake_windows"
   )
 }

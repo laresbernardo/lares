@@ -29,9 +29,11 @@ and a warning will display all possible values, depending on your YML file.}
 \item{dir}{Character. Credentials directory where your YML file is.
 If used frequently, set your directory by using the \code{.Renviron} file.
 To do so, leave \code{dir} as \code{NA} and follow the steps.
-If \code{dir} is a list, it'll return \code{dir} (manual credentials input).}
+If \code{dir} is a list, it'll return \code{dir} (manual credentials input).
+If \code{dir} ends with \code{.yml} or \code{.yaml}, \code{filename} will be ignored.}
 
-\item{filename}{Character. YML filename with your credentials.}
+\item{filename}{Character. YML filename with your credentials.
+Ignored if \code{dir} contains the file path.}
 
 \item{env}{Character. Environment variable name. No need to set differently
 for any function that uses this library. Only for external use.}

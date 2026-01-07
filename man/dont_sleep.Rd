@@ -5,7 +5,7 @@
 \alias{dont_sleep_time}
 \title{Prevent Computer from Sleeping by Simulating Mouse Activity}
 \usage{
-dont_sleep(sec_range = c(20, 60), off_time = 18.5, quiet = FALSE)
+dont_sleep(sec_range = c(20, 60), off_time = 18.5, click = TRUE, quiet = FALSE)
 
 dont_sleep_time(quiet = FALSE)
 }
@@ -15,6 +15,8 @@ random intervals between mouse movements and clicks. Default is \code{c(20, 60)}
 
 \item{off_time}{Numeric. Decimal hour (24h format) to stop the function
 automatically, e.g. 18.5 means 18:30 (6:30 PM). Default is \code{18.5}.}
+
+\item{click}{Logical. If \code{TRUE}, clicks the mouse. Default is \code{TRUE}.}
 
 \item{quiet}{Logical. If \code{TRUE}, suppresses progress messages.
 Default is \code{FALSE}.}
