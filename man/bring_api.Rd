@@ -23,6 +23,7 @@ transform it into data.frame.
 Other Tools: 
 \code{\link{autoline}()},
 \code{\link{bind_files}()},
+\code{\link{cal_split}()},
 \code{\link{chr2num}()},
 \code{\link{db_download}()},
 \code{\link{db_upload}()},

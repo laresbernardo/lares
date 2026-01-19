@@ -20,6 +20,7 @@ data.frame. Files must be inserted with absolute roots files names.
 Other Tools: 
 \code{\link{autoline}()},
 \code{\link{bring_api}()},
+\code{\link{cal_split}()},
 \code{\link{chr2num}()},
 \code{\link{db_download}()},
 \code{\link{db_upload}()},

@@ -35,6 +35,7 @@ Other Tools:
 \code{\link{autoline}()},
 \code{\link{bind_files}()},
 \code{\link{bring_api}()},
+\code{\link{cal_split}()},
 \code{\link{db_download}()},
 \code{\link{db_upload}()},
 \code{\link{dont_sleep}()},
