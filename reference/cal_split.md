@@ -1,58 +1,42 @@
-# Select Model from h2o_automl's Leaderboard
+# Split ICS File
 
-Select wich model from the h2o_automl function to use
+This function splits a large ICS calendar file into smaller files.
 
 ## Usage
 
 ``` r
-h2o_selectmodel(results, which_model = 1, quiet = FALSE, ...)
+cal_split(file, n_splits = 5, prefix = "calendar_split_", dir = NULL)
 ```
 
 ## Arguments
 
-- results:
+- file:
 
-  [`h2o_automl()`](https://laresbernardo.github.io/lares/reference/h2o_automl.md)
-  object.
+  Character. Path to the ICS file to split.
 
-- which_model:
+- n_splits:
 
-  Integer. Which model from the leaderboard you wish to use?
+  Integer. Number of files to split into.
 
-- quiet:
+- prefix:
 
-  Boolean. Keep quiet? If not, informative messages will be shown.
+  Character. Prefix for the output filenames.
 
-- ...:
+- dir:
 
-  Additional parameters on
-  [`h2o::h2o.automl`](https://rdrr.io/pkg/h2o/man/h2o.automl.html)
+  Character. Directory to save the output files. Defaults to same
+  directory as input file.
 
 ## Value
 
-H2O processed model
+Invisible list. The paths of the created files.
 
 ## See also
-
-Other Machine Learning:
-[`ROC()`](https://laresbernardo.github.io/lares/reference/ROC.md),
-[`conf_mat()`](https://laresbernardo.github.io/lares/reference/conf_mat.md),
-[`export_results()`](https://laresbernardo.github.io/lares/reference/export_results.md),
-[`gain_lift()`](https://laresbernardo.github.io/lares/reference/gain_lift.md),
-[`h2o_automl()`](https://laresbernardo.github.io/lares/reference/h2o_automl.md),
-[`h2o_predict_MOJO()`](https://laresbernardo.github.io/lares/reference/h2o_predict.md),
-[`impute()`](https://laresbernardo.github.io/lares/reference/impute.md),
-[`iter_seeds()`](https://laresbernardo.github.io/lares/reference/iter_seeds.md),
-[`lasso_vars()`](https://laresbernardo.github.io/lares/reference/lasso_vars.md),
-[`model_metrics()`](https://laresbernardo.github.io/lares/reference/model_metrics.md),
-[`model_preprocess()`](https://laresbernardo.github.io/lares/reference/model_preprocess.md),
-[`msplit()`](https://laresbernardo.github.io/lares/reference/msplit.md)
 
 Other Tools:
 [`autoline()`](https://laresbernardo.github.io/lares/reference/autoline.md),
 [`bind_files()`](https://laresbernardo.github.io/lares/reference/bind_files.md),
 [`bring_api()`](https://laresbernardo.github.io/lares/reference/bring_api.md),
-[`cal_split()`](https://laresbernardo.github.io/lares/reference/cal_split.md),
 [`chr2num()`](https://laresbernardo.github.io/lares/reference/chr2num.md),
 [`db_download()`](https://laresbernardo.github.io/lares/reference/db_download.md),
 [`db_upload()`](https://laresbernardo.github.io/lares/reference/db_upload.md),
@@ -65,6 +49,7 @@ Other Tools:
 [`formatHTML()`](https://laresbernardo.github.io/lares/reference/format_string.md),
 [`glued()`](https://laresbernardo.github.io/lares/reference/glued.md),
 [`grepm()`](https://laresbernardo.github.io/lares/reference/grepm.md),
+[`h2o_selectmodel()`](https://laresbernardo.github.io/lares/reference/h2o_selectmodel.md),
 [`haveInternet()`](https://laresbernardo.github.io/lares/reference/haveInternet.md),
 [`image_metadata()`](https://laresbernardo.github.io/lares/reference/image_metadata.md),
 [`importxlsx()`](https://laresbernardo.github.io/lares/reference/importxlsx.md),

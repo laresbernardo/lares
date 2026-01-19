@@ -147,6 +147,8 @@ AutoML Map (lares)
   [`cache_clear()`](https://laresbernardo.github.io/lares/reference/cache_write.md)
   [`cache_pipe()`](https://laresbernardo.github.io/lares/reference/cache_write.md)
   : Cache Save and Load (Write and Read)
+- [`cal_split()`](https://laresbernardo.github.io/lares/reference/cal_split.md)
+  : Split ICS File
 - [`categ_reducer()`](https://laresbernardo.github.io/lares/reference/categ_reducer.md)
   : Reduce categorical values
 - [`check_opts()`](https://laresbernardo.github.io/lares/reference/checks.md)

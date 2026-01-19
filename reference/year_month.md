@@ -57,5 +57,5 @@ year_month(Sys.Date())
 year_quarter(Sys.Date())
 #> [1] "2026-Q1"
 year_week(Sys.Date())
-#> [1] "2026-01"
+#> [1] "2026-03"
 ```

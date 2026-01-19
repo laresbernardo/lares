@@ -24,6 +24,7 @@ data.frame with data joined from all `files` passed.
 Other Tools:
 [`autoline()`](https://laresbernardo.github.io/lares/reference/autoline.md),
 [`bring_api()`](https://laresbernardo.github.io/lares/reference/bring_api.md),
+[`cal_split()`](https://laresbernardo.github.io/lares/reference/cal_split.md),
 [`chr2num()`](https://laresbernardo.github.io/lares/reference/chr2num.md),
 [`db_download()`](https://laresbernardo.github.io/lares/reference/db_download.md),
 [`db_upload()`](https://laresbernardo.github.io/lares/reference/db_upload.md),

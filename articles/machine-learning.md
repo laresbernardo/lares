@@ -30,18 +30,18 @@ h2o.init(nthreads = -1, max_mem_size = "2G", ip = "127.0.0.1")
 #> H2O is not running yet, starting it now...
 #> 
 #> Note:  In case of errors look at the following log files:
-#>     /tmp/RtmpaK70uu/file282d7c6761fc/h2o_runner_started_from_r.out
-#>     /tmp/RtmpaK70uu/file282d47b6b4a5/h2o_runner_started_from_r.err
+#>     /tmp/RtmpB4q5xP/file28721369f137/h2o_runner_started_from_r.out
+#>     /tmp/RtmpB4q5xP/file28727ecea4a1/h2o_runner_started_from_r.err
 #> 
 #> 
 #> Starting H2O JVM and connecting: ... Connection successful!
 #> 
 #> R is connected to the H2O cluster: 
-#>     H2O cluster uptime:         1 seconds 662 milliseconds 
+#>     H2O cluster uptime:         1 seconds 538 milliseconds 
 #>     H2O cluster timezone:       UTC 
 #>     H2O data parsing timezone:  UTC 
 #>     H2O cluster version:        3.44.0.3 
-#>     H2O cluster version age:    2 years and 17 days 
+#>     H2O cluster version age:    2 years and 29 days 
 #>     H2O cluster name:           H2O_started_from_R_runner_mwl453 
 #>     H2O cluster total nodes:    1 
 #>     H2O cluster total memory:   2.00 GB 
@@ -129,17 +129,17 @@ model <- h2o_automl(
 #> 2 TRUE    342  38.4     2 100
 #> train_size  test_size 
 #>        623        268
-#>                         model_id       auc   logloss     aucpr
-#> 1 XRT_1_AutoML_1_20260107_124719 0.8613359 0.4448440 0.8211963
-#> 2 GBM_2_AutoML_1_20260107_124719 0.8583649 0.4320854 0.8205075
-#> 3 GBM_3_AutoML_1_20260107_124719 0.8575161 0.4377482 0.8097954
+#>                        model_id       auc   logloss     aucpr
+#> 1 XRT_1_AutoML_1_20260119_92718 0.8613359 0.4448440 0.8211963
+#> 2 GBM_2_AutoML_1_20260119_92718 0.8583649 0.4320854 0.8205075
+#> 3 GBM_3_AutoML_1_20260119_92718 0.8575161 0.4377482 0.8097954
 #>   mean_per_class_error      rmse       mse
 #> 1            0.1982924 0.3732340 0.1393036
 #> 2            0.1918985 0.3664474 0.1342837
 #> 3            0.2041406 0.3698799 0.1368111
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/10): XRT_1_AutoML_1_20260107_124719
+#> Model (1/10): XRT_1_AutoML_1_20260119_92718
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
 #> Algorithm: DRF
@@ -162,7 +162,7 @@ model <- h2o_automl(
 
 # View results
 print(model)
-#> Model (1/10): XRT_1_AutoML_1_20260107_124719
+#> Model (1/10): XRT_1_AutoML_1_20260119_92718
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
 #> Algorithm: DRF
@@ -417,17 +417,17 @@ model <- h2o_automl(
 #> 2 TRUE    342  38.4     2 100
 #> train_size  test_size 
 #>        623        268
-#>                         model_id       auc   logloss     aucpr
-#> 1 GBM_2_AutoML_2_20260107_124747 0.8596583 0.4248255 0.8431084
-#> 2 DRF_1_AutoML_2_20260107_124747 0.8564385 0.4488829 0.8421588
-#> 3 GBM_1_AutoML_2_20260107_124747 0.8328975 0.4839880 0.8085889
+#>                        model_id       auc   logloss     aucpr
+#> 1 GBM_2_AutoML_2_20260119_92746 0.8596583 0.4248255 0.8431084
+#> 2 DRF_1_AutoML_2_20260119_92746 0.8564385 0.4488829 0.8421588
+#> 3 GBM_1_AutoML_2_20260119_92746 0.8328975 0.4839880 0.8085889
 #>   mean_per_class_error      rmse       mse
 #> 1            0.1960698 0.3625182 0.1314194
 #> 2            0.1961569 0.3699173 0.1368388
 #> 3            0.2342388 0.3942838 0.1554597
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/3): GBM_2_AutoML_2_20260107_124747
+#> Model (1/3): GBM_2_AutoML_2_20260119_92746
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
 #> Algorithm: GBM
@@ -469,17 +469,17 @@ model_multiclass <- h2o_automl(
 #> 3 n_2     184  20.6     3 100
 #> train_size  test_size 
 #>        623        268
-#>                             model_id mean_per_class_error   logloss      rmse
-#> 1 XGBoost_3_AutoML_3_20260107_124758           0.09289876 0.1804007 0.2314263
-#> 2 XGBoost_2_AutoML_3_20260107_124758           0.10536260 0.2187613 0.2551008
-#> 3 XGBoost_1_AutoML_3_20260107_124758           0.12322558 0.2639068 0.2795409
+#>                            model_id mean_per_class_error   logloss      rmse
+#> 1 XGBoost_3_AutoML_3_20260119_92757           0.09289876 0.1804007 0.2314263
+#> 2 XGBoost_2_AutoML_3_20260119_92757           0.10536260 0.2187613 0.2551008
+#> 3 XGBoost_1_AutoML_3_20260119_92757           0.12322558 0.2639068 0.2795409
 #>          mse
 #> 1 0.05355812
 #> 2 0.06507641
 #> 3 0.07814310
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/10): XGBoost_3_AutoML_3_20260107_124758
+#> Model (1/10): XGBoost_3_AutoML_3_20260119_92757
 #> Dependent Variable: Pclass
 #> Type: Classification (3 classes)
 #> Algorithm: XGBOOST
@@ -577,17 +577,17 @@ model_regression <- h2o_automl(
 #>    0.00    7.91   14.45   32.20   31.00  512.33
 #> train_size  test_size 
 #>        609        262
-#>                                                  model_id     rmse      mse
-#> 1 StackedEnsemble_BestOfFamily_1_AutoML_4_20260107_124818 10.34827 107.0866
-#> 2    StackedEnsemble_AllModels_1_AutoML_4_20260107_124818 10.51049 110.4704
-#> 3                          GBM_3_AutoML_4_20260107_124818 12.44341 154.8385
+#>                                                 model_id     rmse      mse
+#> 1 StackedEnsemble_BestOfFamily_1_AutoML_4_20260119_92816 10.34827 107.0866
+#> 2    StackedEnsemble_AllModels_1_AutoML_4_20260119_92816 10.51049 110.4704
+#> 3                          GBM_3_AutoML_4_20260119_92816 12.44341 154.8385
 #>        mae     rmsle mean_residual_deviance
 #> 1 5.531397 0.4519830               107.0866
 #> 2 5.671656 0.4547420               110.4704
 #> 3 5.769395 0.4650435               154.8385
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/12): StackedEnsemble_BestOfFamily_1_AutoML_4_20260107_124818
+#> Model (1/12): StackedEnsemble_BestOfFamily_1_AutoML_4_20260119_92816
 #> Dependent Variable: Fare
 #> Type: Regression
 #> Algorithm: STACKEDENSEMBLE
@@ -660,17 +660,17 @@ model <- h2o_automl(
 #> 
 #>  test train 
 #>   179   712
-#>                             model_id       auc   logloss     aucpr
-#> 1     DRF_1_AutoML_5_20260107_124832 0.8680875 0.7855203 0.8270861
-#> 2     GLM_1_AutoML_5_20260107_124832 0.8654726 0.4253319 0.8491966
-#> 3 XGBoost_2_AutoML_5_20260107_124832 0.8552476 0.4437635 0.8198820
+#>                            model_id       auc   logloss     aucpr
+#> 1     DRF_1_AutoML_5_20260119_92830 0.8680875 0.7855203 0.8270861
+#> 2     GLM_1_AutoML_5_20260119_92830 0.8654726 0.4253319 0.8491966
+#> 3 XGBoost_2_AutoML_5_20260119_92830 0.8552476 0.4437635 0.8198820
 #>   mean_per_class_error      rmse       mse
 #> 1            0.1775527 0.3813365 0.1454175
 #> 2            0.1923547 0.3652137 0.1333811
 #> 3            0.2036507 0.3736082 0.1395831
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/5): DRF_1_AutoML_5_20260107_124832
+#> Model (1/5): DRF_1_AutoML_5_20260119_92830
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
 #> Algorithm: DRF
@@ -790,17 +790,17 @@ model <- h2o_automl(dft, "Survived", max_models = 3, max_time = 30)
 #> 2 TRUE    342  38.4     2 100
 #> train_size  test_size 
 #>        623        268
-#>                             model_id       auc   logloss     aucpr
-#> 1     GLM_1_AutoML_6_20260107_124856 0.8566401 0.4331878 0.8468753
-#> 2 XGBoost_1_AutoML_6_20260107_124856 0.8410859 0.4576161 0.8238591
-#> 3     GBM_1_AutoML_6_20260107_124856 0.8159377 0.6451460 0.7378534
+#>                            model_id       auc   logloss     aucpr
+#> 1     GLM_1_AutoML_6_20260119_92853 0.8566401 0.4331878 0.8468753
+#> 2 XGBoost_1_AutoML_6_20260119_92853 0.8410859 0.4576161 0.8238591
+#> 3     GBM_1_AutoML_6_20260119_92853 0.8159377 0.6451460 0.7378534
 #>   mean_per_class_error      rmse       mse
 #> 1            0.1914171 0.3680368 0.1354511
 #> 2            0.2036044 0.3771717 0.1422585
 #> 3            0.2218336 0.4732407 0.2239567
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
 #>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#> Model (1/3): GLM_1_AutoML_6_20260107_124856
+#> Model (1/3): GLM_1_AutoML_6_20260119_92853
 #> Dependent Variable: Survived
 #> Type: Classification (2 classes)
 #> Algorithm: GLM
@@ -841,10 +841,10 @@ model <- h2o_automl(
 #> 2 TRUE    342  38.4     2 100
 #> train_size  test_size 
 #>        623        268
-#>                         model_id       auc   logloss     aucpr
-#> 1 GBM_3_AutoML_7_20260107_124906 0.8575063 0.4316748 0.8410436
-#> 2 GBM_2_AutoML_7_20260107_124906 0.8571250 0.4270731 0.8442881
-#> 3 GBM_4_AutoML_7_20260107_124906 0.8561498 0.4266892 0.8469913
+#>                        model_id       auc   logloss     aucpr
+#> 1 GBM_3_AutoML_7_20260119_92903 0.8575063 0.4316748 0.8410436
+#> 2 GBM_2_AutoML_7_20260119_92903 0.8571250 0.4270731 0.8442881
+#> 3 GBM_4_AutoML_7_20260119_92903 0.8561498 0.4266892 0.8469913
 #>   mean_per_class_error      rmse       mse
 #> 1            0.1887694 0.3656777 0.1337202
 #> 2            0.1944735 0.3641046 0.1325721

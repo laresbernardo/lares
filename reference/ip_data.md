@@ -33,6 +33,7 @@ Other Tools:
 [`autoline()`](https://laresbernardo.github.io/lares/reference/autoline.md),
 [`bind_files()`](https://laresbernardo.github.io/lares/reference/bind_files.md),
 [`bring_api()`](https://laresbernardo.github.io/lares/reference/bring_api.md),
+[`cal_split()`](https://laresbernardo.github.io/lares/reference/cal_split.md),
 [`chr2num()`](https://laresbernardo.github.io/lares/reference/chr2num.md),
 [`db_download()`](https://laresbernardo.github.io/lares/reference/db_download.md),
 [`db_upload()`](https://laresbernardo.github.io/lares/reference/db_upload.md),
@@ -89,20 +90,20 @@ ip_data("163.114.132.0")
 #>               languages     currency
 #> 1 en-US, es-US, haw, fr Dollar (USD)
 ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
-#>                id addresstype                                asn            isp
-#> 1  135.232.200.69        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK      Microsoft
-#> 2 201.244.197.199        IPv4                    19429 - AS19429 ETB - Colombia
-#>   connection       country stateregion districtcounty            city
-#> 1    Hosting United States    Illinois           Cook         Chicago
-#> 2       <NA>      Colombia Bogota D.C.   Bogotá  D.C. Barrio San Luis
-#>   zippostalcode            weatherstation       coordinates
-#> 1         60666        USIL0225 - Chicago 41.8781, -87.6298
-#> 2          <NA> COXX7742 - Vereda El Hato 4.66779, -74.0215
-#>                  timezone localtime             languages     currency
-#> 1 America/Chicago (UTC-6)           en-US, es-US, haw, fr Dollar (USD)
-#> 2  America/Bogota (UTC-5)                           es-CO   Peso (COP)
-#>                                     hostname
-#> 1                                       <NA>
-#> 2 dynamic-201-244-197-199.dynamic.etb.net.co
+#>                id addresstype                                asn
+#> 1  64.236.140.210        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK
+#> 2 201.244.197.199        IPv4                    19429 - AS19429
+#>                     isp      organization       country stateregion
+#> 1 Microsoft Corporation Microsoft Limited United States    Illinois
+#> 2        ETB - Colombia              <NA>      Colombia Bogota D.C.
+#>   districtcounty            city zippostalcode            weatherstation
+#> 1           Cook         Chicago         60666        USIL0225 - Chicago
+#> 2   Bogotá  D.C. Barrio San Luis          <NA> COXX7742 - Vereda El Hato
+#>         coordinates                timezone localtime             languages
+#> 1 41.8781, -87.6298 America/Chicago (UTC-6)           en-US, es-US, haw, fr
+#> 2 4.66779, -74.0215  America/Bogota (UTC-5)                           es-CO
+#>       currency                                   hostname
+#> 1 Dollar (USD)                                       <NA>
+#> 2   Peso (COP) dynamic-201-244-197-199.dynamic.etb.net.co
 # }
 ```

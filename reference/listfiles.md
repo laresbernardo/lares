@@ -37,6 +37,7 @@ Other Tools:
 [`autoline()`](https://laresbernardo.github.io/lares/reference/autoline.md),
 [`bind_files()`](https://laresbernardo.github.io/lares/reference/bind_files.md),
 [`bring_api()`](https://laresbernardo.github.io/lares/reference/bring_api.md),
+[`cal_split()`](https://laresbernardo.github.io/lares/reference/cal_split.md),
 [`chr2num()`](https://laresbernardo.github.io/lares/reference/chr2num.md),
 [`db_download()`](https://laresbernardo.github.io/lares/reference/db_download.md),
 [`db_upload()`](https://laresbernardo.github.io/lares/reference/db_upload.md),
@@ -77,25 +78,25 @@ Other Tools:
 df <- listfiles(recursive = TRUE)
 head(df, 3)
 #>            filename size isdir mode               mtime               ctime
-#> 1          ROC.html   17 FALSE  644 2026-01-07 12:44:58 2026-01-07 12:44:58
-#> 2     autoline.html   21 FALSE  644 2026-01-07 12:44:59 2026-01-07 12:44:59
-#> 3 balance_data.html   10 FALSE  644 2026-01-07 12:44:59 2026-01-07 12:44:59
+#> 1          ROC.html   17 FALSE  644 2026-01-19 09:25:02 2026-01-19 09:25:02
+#> 2     autoline.html   22 FALSE  644 2026-01-19 09:25:03 2026-01-19 09:25:03
+#> 3 balance_data.html   10 FALSE  644 2026-01-19 09:25:03 2026-01-19 09:25:03
 #>                 atime  uid  gid  uname grname
-#> 1 2026-01-07 12:44:58 1001 1001 runner runner
-#> 2 2026-01-07 12:44:59 1001 1001 runner runner
-#> 3 2026-01-07 12:44:59 1001 1001 runner runner
+#> 1 2026-01-19 09:25:02 1001 1001 runner runner
+#> 2 2026-01-19 09:25:03 1001 1001 runner runner
+#> 3 2026-01-19 09:25:03 1001 1001 runner runner
 
 # All files in current directory (with recursive files)
 df <- listfiles(recursive = TRUE)
 tail(df, 3)
 #>            filename size isdir mode               mtime               ctime
-#> 128 lasso_vars.html   12 FALSE  644 2026-01-07 12:45:41 2026-01-07 12:45:41
-#> 129 left_right.html    9 FALSE  644 2026-01-07 12:45:41 2026-01-07 12:45:41
-#> 130  list_cats.html   12 FALSE  644 2026-01-07 12:45:41 2026-01-07 12:45:41
+#> 129 lasso_vars.html   12 FALSE  644 2026-01-19 09:25:44 2026-01-19 09:25:44
+#> 130 left_right.html    9 FALSE  644 2026-01-19 09:25:44 2026-01-19 09:25:44
+#> 131  list_cats.html   12 FALSE  644 2026-01-19 09:25:44 2026-01-19 09:25:44
 #>                   atime  uid  gid  uname grname
-#> 128 2026-01-07 12:45:41 1001 1001 runner runner
-#> 129 2026-01-07 12:45:41 1001 1001 runner runner
-#> 130 2026-01-07 12:45:41 1001 1001 runner runner
+#> 129 2026-01-19 09:25:44 1001 1001 runner runner
+#> 130 2026-01-19 09:25:44 1001 1001 runner runner
+#> 131 2026-01-19 09:25:44 1001 1001 runner runner
 
 # Check R files using regex
 df <- listfiles(regex = "\\.R$")

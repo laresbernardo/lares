@@ -96,9 +96,9 @@ cache_pipe(data, base = "cache_pipe", read = TRUE, write = TRUE, ...)
 x <- list(a = 1, b = 2:4)
 base <- c(as.character(Sys.Date()), "A", "B")
 cache_write(x, base)
-#> > Cache saved succesfully: lares_cache_2026-01-07.A.B
+#> > Cache saved succesfully: lares_cache_2026-01-19.A.B
 cache_read(base, ask = FALSE)
-#> > Cache loaded succesfully: lares_cache_2026-01-07.A.B
+#> > Cache loaded succesfully: lares_cache_2026-01-19.A.B
 #> $a
 #> [1] 1
 #> 
@@ -108,11 +108,11 @@ cache_read(base, ask = FALSE)
 cache_exists(base)
 #> [1] TRUE
 #> attr(,"filename")
-#> [1] "/tmp/Rtmplxgjxe/lares_cache_2026-01-07.A.B.RDS"
+#> [1] "/tmp/RtmpsfOBrR/lares_cache_2026-01-19.A.B.RDS"
 #> attr(,"base")
-#> [1] "lares_cache_2026-01-07.A.B"
+#> [1] "lares_cache_2026-01-19.A.B"
 #> attr(,"cache_dir")
-#> [1] "/tmp/Rtmplxgjxe"
+#> [1] "/tmp/RtmpsfOBrR"
 cache_clear()
 #> Removed 1 cache files succesfully!
 
