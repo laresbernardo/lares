@@ -9,6 +9,7 @@
 - fix: resolved scoping issue in `h2o_results()` that caused `object 'model_name_input' not found` error
 - fix: improved `mplot_metrics()` robustness to handle missing validation metrics without crashing
 - fix: parameter `dir` passed correctly in `get_creds()`
+- fix: high-quality audio trimming (V0) and file handling in `mp3_trim()`
 
 # lares 5.3.2 (2025-08-18)
 

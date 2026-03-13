@@ -263,20 +263,30 @@ mp3_trim <- function(file, start_time = 0, end_time = NA,
   start <- paste("-ss", start_time)
   end <- ifelse(!is.na(end_time), paste("-to", end_time), "")
   for (i in file) {
-    file <- ifelse(endsWith(i, ext), i, sprintf("%s.%s", file_name(i), ext))
-    if (!file.exists(file)) {
-      message(paste("File", file, "does not exist or can't be found."))
+    f <- ifelse(endsWith(i, ext), i, sprintf("%s.%s", file_name(i), ext))
+    if (!file.exists(f)) {
+      message(paste("File", f, "does not exist or can't be found."))
       next
+    }
+    # Quality for MP3: -q:a 0 is best VBR quality (~245kbps)
+    # Preservation of path and renaming
+    file_trimmed <- paste0(file_name(f), "_trimmed.", ext)
+    if (dirname(f) != ".") {
+      file_trimmed <- file.path(dirname(f), file_trimmed)
     }
     query2 <- paste(
       "ffmpeg -hide_banner -loglevel panic -y",
       start, end, "-i",
-      sprintf("'%s'", file),
-      sprintf("'%s'", paste0(file_name(file), "_trimmed.mp3"))
+      sprintf("'%s'", f),
+      "-q:a 0",
+      sprintf("'%s'", file_trimmed)
     )
     if (!quiet) message("Query: ", query2)
     system(query2)
-    if (overwrite) file.remove(gsub("_trimmed", "", file))
+    if (overwrite && file.exists(file_trimmed)) {
+      file.remove(f)
+      file.rename(file_trimmed, f)
+    }
   }
 }
 
