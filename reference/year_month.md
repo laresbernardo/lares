@@ -53,9 +53,9 @@ Other Data Wrangling:
 
 ``` r
 year_month(Sys.Date())
-#> [1] "2026-01"
+#> [1] "2026-03"
 year_quarter(Sys.Date())
 #> [1] "2026-Q1"
 year_week(Sys.Date())
-#> [1] "2026-03"
+#> [1] "2026-11"
 ```

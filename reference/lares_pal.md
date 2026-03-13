@@ -68,10 +68,10 @@ lapply(list(nice_palette, nice_palette_ctr), head)
 # Personal colours by name
 df <- lares_pal("custom")
 df[sample(nrow(df), 5), ]
-#>      values    fill  colour
-#> 25   summer #E63946 #F6F5F5
-#> 21 negative #E5586E #0c0c0c
-#> 45 facebook #4267B2 #0c0c0c
-#> 18  rechaza #E5586E #0c0c0c
-#> 42      fb1 #405996 #F6F5F5
+#>       values    fill  colour
+#> 8      false #E63946 #0c0c0c
+#> 46 instagram #E95950 #0c0c0c
+#> 21  negative #E5586E #0c0c0c
+#> 45  facebook #4267B2 #0c0c0c
+#> 2          f #F6B8B8 #0c0c0c
 ```

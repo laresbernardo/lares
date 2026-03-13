@@ -51,15 +51,15 @@ plot(result$plot)
 # You can use the data generated as well
 lapply(result$data, function(x) head(x$cluster, 10))
 #> [[1]]
-#>  [1] 1 2 1 1 2 2 2 2 2 2
+#>  [1] 2 2 1 2 1 1 1 1 1 1
 #> Levels: 1 2
 #> 
 #> [[2]]
-#>  [1] 2 1 2 2 1 3 3 1 3 1
+#>  [1] 3 3 1 3 2 1 2 2 2 2
 #> Levels: 1 2 3
 #> 
 #> [[3]]
-#>  [1] 2 4 2 2 4 3 3 4 1 4
+#>  [1] 3 3 1 3 2 1 2 2 2 2
 #> Levels: 1 2 3 4
 #> 
 ```

@@ -29,6 +29,8 @@
   robustness to handle missing validation metrics without crashing
 - fix: parameter `dir` passed correctly in
   [`get_creds()`](https://laresbernardo.github.io/lares/reference/get_credentials.md)
+- fix: high-quality audio trimming (V0) and file handling in
+  [`mp3_trim()`](https://laresbernardo.github.io/lares/reference/mp3_trim.md)
 
 ## lares 5.3.2 (2025-08-18)
 

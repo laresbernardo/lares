@@ -83,27 +83,27 @@ Other Scrapper:
 ip_data("163.114.132.0")
 #>              id addresstype                   asn          isp connection
 #> 1 163.114.132.0        IPv4 54115 - FACEBOOK-CORP Facebook Inc    Hosting
-#>    organization       country stateregion districtcounty           city
-#> 1 Facebook Corp United States  California      San Mateo East Palo Alto
-#>         weatherstation       coordinates                    timezone localtime
-#> 1 USCA0830 - Palo Alto 37.4688, -122.141 America/Los_Angeles (UTC-8)          
-#>               languages     currency
-#> 1 en-US, es-US, haw, fr Dollar (USD)
+#>    organization       country stateregion        city zippostalcode
+#> 1 Facebook Corp United States  California Santa Clara         95052
+#>           weatherstation       coordinates                    timezone
+#> 1 USCA1018 - Santa Clara 37.3541, -121.955 America/Los_Angeles (UTC-7)
+#>   localtime             languages     currency
+#> 1           en-US, es-US, haw, fr Dollar (USD)
 ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
 #>                id addresstype                                asn
-#> 1  64.236.140.210        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK
+#> 1     20.29.29.20        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK
 #> 2 201.244.197.199        IPv4                    19429 - AS19429
-#>                     isp      organization       country stateregion
-#> 1 Microsoft Corporation Microsoft Limited United States    Illinois
-#> 2        ETB - Colombia              <NA>      Colombia Bogota D.C.
-#>   districtcounty            city zippostalcode            weatherstation
-#> 1           Cook         Chicago         60666        USIL0225 - Chicago
-#> 2   Bogotá  D.C. Barrio San Luis          <NA> COXX7742 - Vereda El Hato
-#>         coordinates                timezone localtime             languages
-#> 1 41.8781, -87.6298 America/Chicago (UTC-6)           en-US, es-US, haw, fr
-#> 2 4.66779, -74.0215  America/Bogota (UTC-5)                           es-CO
-#>       currency                                   hostname
-#> 1 Dollar (USD)                                       <NA>
-#> 2   Peso (COP) dynamic-201-244-197-199.dynamic.etb.net.co
+#>                     isp connection       country stateregion districtcounty
+#> 1 Microsoft Corporation    Hosting United States        Iowa           Polk
+#> 2        ETB - Colombia       <NA>      Colombia Bogota D.C.   Bogotá  D.C.
+#>              city zippostalcode            weatherstation       coordinates
+#> 1      Des Moines         50307     USIA0231 - Des Moines  41.5868, -93.625
+#> 2 Barrio San Luis          <NA> COXX7742 - Vereda El Hato 4.66779, -74.0215
+#>                  timezone localtime             languages     currency
+#> 1 America/Chicago (UTC-5)           en-US, es-US, haw, fr Dollar (USD)
+#> 2  America/Bogota (UTC-5)                           es-CO   Peso (COP)
+#>                                     hostname
+#> 1                                       <NA>
+#> 2 dynamic-201-244-197-199.dynamic.etb.net.co
 # }
 ```

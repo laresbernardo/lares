@@ -151,7 +151,7 @@ model_preprocess(dft, "Survived", balance = TRUE)
 #> >>> Splitting data: train = 0.7 &&  test = 0.3
 #> train_size  test_size 
 #>        623        268 
-#> - BALANCE: Training set balanced: 243 observations for each (2) category; using 78.01% of training data
+#> - BALANCE: Training set balanced: 244 observations for each (2) category; using 78.33% of training data
 
 model_preprocess(dft, "Fare", split = 0.5, scale = TRUE)
 #> - DEPENDENT VARIABLE: Fare

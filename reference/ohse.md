@@ -171,9 +171,9 @@ ohse(dft, limit = 3) %>% head(3)
 #> # A tibble: 3 × 11
 #>     Age  Fare no_variance3    no_variance4 Survived_TRUE no_variance2_B Pclass_1
 #>   <dbl> <dbl> <chr>           <chr>                <dbl>          <dbl>    <dbl>
-#> 1    22  7.25 0.153373117836… A                        0              0        0
-#> 2    38 71.3  -1.13813693701… A                        1              1        1
-#> 3    26  7.92 1.253814921069… A                        1              1        0
+#> 1    22  7.25 -1.06782370598… A                        0              0        0
+#> 2    38 71.3  -0.21797491465… A                        1              1        1
+#> 3    26  7.92 -1.02600444830… A                        1              1        0
 #> # ℹ 4 more variables: Pclass_2 <dbl>, Embarked_C <dbl>, Embarked_OTHER <dbl>,
 #> #   Embarked_Q <dbl>
 ```
