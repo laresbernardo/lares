@@ -48,8 +48,10 @@ name the file.}
 \item{cover}{Boolean. Google Search its squared cover? Uses \code{title}
 input when provided.}
 
-\item{metadata}{Boolean. Use "spotifyr" to extract "track" data using Spotify's
-API. Needs credentials. Uses \code{title} input when provided.}
+\item{metadata}{Boolean. Use iTunes Search API (free) to extract "track" 
+data and high-res cover art. Falls back to "spotifyr" if no results
+are found (requires credentials and, since 2026-03-09, Spotify Premium 
+linked to the client id). Uses \code{title} input when provided.}
 
 \item{quiet}{Boolean. Keep quiet? If not, informative messages will be shown.}
 }
