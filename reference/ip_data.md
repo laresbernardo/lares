@@ -91,19 +91,19 @@ ip_data("163.114.132.0")
 #> 1           en-US, es-US, haw, fr Dollar (USD)
 ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
 #>                id addresstype                                asn
-#> 1     20.29.29.20        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK
+#> 1  128.24.161.179        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK
 #> 2 201.244.197.199        IPv4                    19429 - AS19429
-#>                     isp connection       country stateregion districtcounty
-#> 1 Microsoft Corporation    Hosting United States        Iowa           Polk
-#> 2        ETB - Colombia       <NA>      Colombia Bogota D.C.   Bogotá  D.C.
-#>              city zippostalcode            weatherstation       coordinates
-#> 1      Des Moines         50307     USIA0231 - Des Moines  41.5868, -93.625
-#> 2 Barrio San Luis          <NA> COXX7742 - Vereda El Hato 4.66779, -74.0215
-#>                  timezone localtime             languages     currency
-#> 1 America/Chicago (UTC-5)           en-US, es-US, haw, fr Dollar (USD)
-#> 2  America/Bogota (UTC-5)                           es-CO   Peso (COP)
-#>                                     hostname
-#> 1                                       <NA>
-#> 2 dynamic-201-244-197-199.dynamic.etb.net.co
+#>                     isp connection      organization       country stateregion
+#> 1 Microsoft Corporation    Hosting Microsoft Limited United States     Wyoming
+#> 2        ETB - Colombia       <NA>              <NA>      Colombia Bogota D.C.
+#>   districtcounty            city zippostalcode            weatherstation
+#> 1        Laramie        Cheyenne         82002       USWY0032 - Cheyenne
+#> 2   Bogotá  D.C. Barrio San Luis          <NA> COXX7742 - Vereda El Hato
+#>         coordinates               timezone localtime             languages
+#> 1    41.14, -104.82 America/Denver (UTC-6)           en-US, es-US, haw, fr
+#> 2 4.66779, -74.0215 America/Bogota (UTC-5)                           es-CO
+#>       currency                                   hostname
+#> 1 Dollar (USD)                                       <NA>
+#> 2   Peso (COP) dynamic-201-244-197-199.dynamic.etb.net.co
 # }
 ```

@@ -19,7 +19,7 @@ playlist. It also returns metadata into an (invisible) list."><meta property="og
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,8 +130,10 @@ input when provided.</p></dd>
 
 
 <dt id="arg-metadata">metadata<a class="anchor" aria-label="anchor" href="#arg-metadata"></a></dt>
-<dd><p>Boolean. Use "spotifyr" to extract "track" data using Spotify's
-API. Needs credentials. Uses <code>title</code> input when provided.</p></dd>
+<dd><p>Boolean. Use iTunes Search API (free) to extract "track"
+data and high-res cover art. Falls back to "spotifyr" if no results
+are found (requires credentials and, since 2026-03-09, Spotify Premium
+linked to the client id). Uses <code>title</code> input when provided.</p></dd>
 
 
 <dt id="arg-quiet">quiet<a class="anchor" aria-label="anchor" href="#arg-quiet"></a></dt>

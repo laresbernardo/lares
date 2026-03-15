@@ -74,8 +74,10 @@ mp3_get(
 
 - metadata:
 
-  Boolean. Use "spotifyr" to extract "track" data using Spotify's API.
-  Needs credentials. Uses `title` input when provided.
+  Boolean. Use iTunes Search API (free) to extract "track" data and
+  high-res cover art. Falls back to "spotifyr" if no results are found
+  (requires credentials and, since 2026-03-09, Spotify Premium linked to
+  the client id). Uses `title` input when provided.
 
 - quiet:
 
