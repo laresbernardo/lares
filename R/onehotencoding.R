@@ -409,8 +409,10 @@ date_feats <- function(dates,
 ####################################################################
 #' Holidays in your Country
 #'
-#' This function lets the user automatically scrap holiday dates from
-#' any country and year within +- 5 years. Thanks to timeanddate.com!
+#' This function lets the user automatically retrieve public holiday dates
+#' for any country supported by the Nager.Date API. Accepts country names
+#' (e.g., "Portugal") or ISO 3166-1 alpha-2 codes (e.g., "PT").
+#' Thanks to \href{https://date.nager.at}{Nager.Date}!
 #'
 #' @family Data Wrangling
 #' @family Feature Engineering
@@ -420,7 +422,7 @@ date_feats <- function(dates,
 #' @param years Character or vector. For which year(s) do you wish to import
 #' holiday dates?
 #' @param countries Character or vector. For which country(ies) should the
-#' holidays be imported?
+#' holidays be imported? Accepts country names or ISO 3166-1 alpha-2 codes.
 #' @param include_regions Boolean. Default FALSE. If TRUE, for countries with
 #' internal subdivisions, it will provide details on which sub-state the found
 #' holidays apply.
@@ -431,6 +433,7 @@ date_feats <- function(dates,
 #' year <- as.integer(format(Sys.Date(), format = "%Y"))
 #' holidays(countries = c("Spain", "Venezuela"), years = year)
 #' holidays(countries = "Germany", include_regions = TRUE)
+#' holidays(countries = "PT") # Also accepts ISO country codes
 #' }
 #' @export
 holidays <- function(countries = "Venezuela",
@@ -438,97 +441,111 @@ holidays <- function(countries = "Venezuela",
                      quiet = FALSE,
                      include_regions = FALSE) {
   if (!haveInternet()) {
-    message("No internet connetion...")
+    message("No internet connection...")
     invisible(NULL)
   } else {
-    # Further improvement: let the user bring more than +-5 years
     results <- NULL
-    if (any(!years %in% (year(Sys.Date()) - 5):(year(Sys.Date()) + 5))) {
-      warning(paste(
-        "Only allowing \u00b1 5 years from today. Check:", v2t(years)
-      ))
-    }
-    year <- year(Sys.Date())
-    years <- years[years %in% ((year - 5L):(year + 5L))]
-    combs <- expand.grid(years, countries) %>%
-      dplyr::rename(year = "Var1", country = "Var2")
+
+    # Resolve country names to ISO codes via Nager.Date API
+    available <- tryCatch(
+      jsonlite::fromJSON("https://date.nager.at/api/v3/AvailableCountries"),
+      error = function(e) {
+        stop("Failed to fetch available countries from Nager.Date API: ", e$message)
+      }
+    )
+
+    country_codes <- vapply(countries, function(cntry) {
+      # If already a valid 2-letter ISO code, use directly
+      if (nchar(cntry) == 2 && toupper(cntry) %in% available$countryCode) {
+        return(toupper(cntry))
+      }
+      # Match by name (case-insensitive)
+      match_idx <- which(tolower(available$name) == tolower(cntry))
+      if (length(match_idx) == 1) return(available$countryCode[match_idx])
+      # Partial match fallback
+      match_idx <- grep(cntry, available$name, ignore.case = TRUE)
+      if (length(match_idx) >= 1) return(available$countryCode[match_idx[1]])
+      warning(
+        "Country '", cntry, "' not found in Nager.Date API. ",
+        "Use a supported country name or ISO code."
+      )
+      NA_character_
+    }, character(1))
+
+    combs <- expand.grid(year = years, country = countries, stringsAsFactors = FALSE)
+    combs$code <- country_codes[combs$country]
 
     for (i in seq_len(nrow(combs))) {
+      if (is.na(combs$code[i])) next
       if (!quiet) {
-        message(paste0(">>> Extracting ", combs$country[i], "'s holidays for ", combs$year[i]))
+        message(
+          ">>> Extracting ", combs$country[i],
+          "'s holidays for ", combs$year[i]
+        )
       }
-      url <- paste0("https://www.timeanddate.com/holidays/", tolower(combs$country[i]), "/", combs$year[i])
-      # call httr's GET however set header to only accept English named date parts (months)
-      # otherwise if user uses own locale, for instance German, an error can occur parsing dates of holidays
-      # compare with plain call without additional headers in different locale: holidays <- content(GET(url))
-      ret <- try(content(GET(url, add_headers("Accept-Language" = "en"))))
-      if ("xml_document" %in% class(ret)) {
-        holidays <- ret %>%
-          html_nodes(".table") %>%
-          html_table(fill = TRUE) %>%
-          data.frame(.) %>%
-          filter(!is.na(.data$Date)) %>%
-          select(-2L) %>%
-          mutate(Date = paste(.data$Date, combs$year[i])) %>%
-          .[-1L, ] %>%
-          removenacols(all = TRUE) %>%
-          removenarows(all = TRUE)
-        colnames(holidays) <- if (include_regions & ncol(holidays) > 3) {
-          c("Date", "Holiday", "Holiday.Type", "Holiday.Details")
-        } else {
-          c("Date", "Holiday", "Holiday.Type")
+      url <- sprintf(
+        "https://date.nager.at/api/v3/PublicHolidays/%s/%s",
+        combs$year[i], combs$code[i]
+      )
+      hol_data <- tryCatch(
+        jsonlite::fromJSON(url),
+        error = function(e) {
+          warning(
+            "Failed to fetch holidays for ", combs$country[i],
+            " (", combs$year[i], "): ", e$message
+          )
+          NULL
         }
+      )
+      if (is.null(hol_data) || nrow(hol_data) == 0) next
 
-        # the table might contain comment about interstate holidays like
-        # '* Observed only in some communities of this state.
-        # Hover your mouse over the region or click on the holiday for details.'
-        # this will not parse as Date but create a warning, hence handling it here
-        grep_comment <- grep("*", holidays$Date, fixed = TRUE)
-        if (length(grep_comment) != 0L) {
-          holidays <- holidays[-grep_comment, ]
-        }
-        holidays$Date <- tryCatch(
-          {
-            lubridate::dmy(holidays$Date)
-          },
-          error = function(cond) {
-            stop(
-              "Unaccounted problem(s) occurred parsing the date column.\n Check sample: ",
-              v2t(head(holidays$Date, 3))
-            )
-          }
+      # Flatten the types list-column into a single string per row
+      hol_types <- vapply(hol_data$types, function(x) {
+        paste(x, collapse = ", ")
+      }, character(1))
+
+      result <- data.frame(
+        holiday = as.Date(hol_data$date),
+        holiday_name = hol_data$name,
+        holiday_type = hol_types,
+        stringsAsFactors = FALSE
+      )
+
+      if (include_regions) {
+        result$holiday_details <- vapply(hol_data$counties, function(x) {
+          if (is.null(x)) NA_character_ else paste(x, collapse = ", ")
+        }, character(1))
+      }
+
+      result <- result %>%
+        mutate(
+          national = grepl("Public", .data$holiday_type) & hol_data$global,
+          observance = grepl("Observance", .data$holiday_type),
+          bank = grepl("Bank", .data$holiday_type),
+          nonwork = grepl("Optional", .data$holiday_type),
+          season = grepl("School|Authorities", .data$holiday_type),
+          hother = !grepl("Public|Observance|Bank|Optional", .data$holiday_type)
         )
 
-        result <- data.frame(
-          holiday = holidays$Date,
-          holiday_name = holidays$Holiday,
-          holiday_type = holidays$Holiday.Type
-        )
-        if (include_regions) result$holiday_details <- holidays$Holiday.Details
-        result <- result %>%
-          mutate(
-            national = grepl("National|Federal", holidays$Holiday.Type),
-            observance = grepl("Observance", holidays$Holiday.Type),
-            bank = grepl("Bank", holidays$Holiday.Type),
-            nonwork = grepl("Non-working", holidays$Holiday.Type),
-            season = grepl("Season", holidays$Holiday.Type),
-            hother = !grepl("National|Federal|Observance|Season", holidays$Holiday.Type)
-          ) %>%
-          {
-            if (length(unique(countries)) > 1L) {
-              mutate(., country = combs$country[i])
-            } else {
-              .
-            }
-          }
-        result$county <- combs$country[i]
-        results <- bind_rows(results, result)
+      if (length(unique(countries)) > 1L) {
+        result$country <- combs$country[i]
       }
-      results <- results %>%
-        filter(!is.na(.data$holiday)) %>%
-        cleanNames() %>%
-        as_tibble()
+      result$county <- combs$country[i]
+      results <- bind_rows(results, result)
     }
-    results
+
+    if (is.null(results) || nrow(results) == 0) {
+      return(as_tibble(data.frame(
+        holiday = as.Date(character()),
+        holiday_name = character(),
+        holiday_type = character(),
+        stringsAsFactors = FALSE
+      )))
+    }
+
+    results %>%
+      filter(!is.na(.data$holiday)) %>%
+      cleanNames() %>%
+      as_tibble()
   }
 }

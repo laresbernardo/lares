@@ -13,7 +13,7 @@ holidays(
 }
 \arguments{
 \item{countries}{Character or vector. For which country(ies) should the
-holidays be imported?}
+holidays be imported? Accepts country names or ISO 3166-1 alpha-2 codes.}
 
 \item{years}{Character or vector. For which year(s) do you wish to import
 holiday dates?}
@@ -28,8 +28,10 @@ holidays apply.}
 \code{data.frame} with holidays data for given \code{countries} and \code{years}.
 }
 \description{
-This function lets the user automatically scrap holiday dates from
-any country and year within +- 5 years. Thanks to timeanddate.com!
+This function lets the user automatically retrieve public holiday dates
+for any country supported by the Nager.Date API. Accepts country names
+(e.g., "Portugal") or ISO 3166-1 alpha-2 codes (e.g., "PT").
+Thanks to \href{https://date.nager.at}{Nager.Date}!
 }
 \examples{
 \donttest{
@@ -37,6 +39,7 @@ holidays(countries = "Argentina")
 year <- as.integer(format(Sys.Date(), format = "\%Y"))
 holidays(countries = c("Spain", "Venezuela"), years = year)
 holidays(countries = "Germany", include_regions = TRUE)
+holidays(countries = "PT") # Also accepts ISO country codes
 }
 }
 \seealso{
