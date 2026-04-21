@@ -1,7 +1,9 @@
 # Holidays in your Country
 
-This function lets the user automatically scrap holiday dates from any
-country and year within +- 5 years. Thanks to timeanddate.com!
+This function lets the user automatically retrieve public holiday dates
+for any country supported by the Nager.Date API. Accepts country names
+(e.g., "Portugal") or ISO 3166-1 alpha-2 codes (e.g., "PT"). Thanks to
+[Nager.Date](https://date.nager.at)!
 
 ## Usage
 
@@ -19,7 +21,7 @@ holidays(
 - countries:
 
   Character or vector. For which country(ies) should the holidays be
-  imported?
+  imported? Accepts country names or ISO 3166-1 alpha-2 codes.
 
 - years:
 
@@ -90,27 +92,93 @@ Other One Hot Encoding:
 # \donttest{
 holidays(countries = "Argentina")
 #> >>> Extracting Argentina's holidays for 2026
-#> Warning: All formats failed to parse. No formats found.
-#> # A tibble: 0 × 10
-#> # ℹ 10 variables: holiday <date>, holiday_name <chr>, holiday_type <chr>,
-#> #   national <lgl>, observance <lgl>, bank <lgl>, nonwork <lgl>, season <lgl>,
-#> #   hother <lgl>, county <fct>
+#> # A tibble: 16 × 10
+#>    holiday    holiday_name holiday_type national observance bank  nonwork season
+#>    <date>     <chr>        <chr>        <lgl>    <lgl>      <lgl> <lgl>   <lgl> 
+#>  1 2026-01-01 New Year's … Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  2 2026-02-16 Carnival     Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  3 2026-02-17 Carnival     Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  4 2026-03-24 Day of Reme… Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  5 2026-04-02 Day of the … Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  6 2026-04-03 Good Friday  Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  7 2026-05-01 Labour Day   Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  8 2026-05-25 May Revolut… Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  9 2026-06-15 Anniversary… Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> 10 2026-06-20 General Man… Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> 11 2026-07-09 Independenc… Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> 12 2026-08-17 General Jos… Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> 13 2026-10-12 Day of Resp… Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> 14 2026-11-23 National So… Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> 15 2026-12-08 Immaculate … Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> 16 2026-12-25 Christmas D… Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> # ℹ 2 more variables: hother <lgl>, county <chr>
 year <- as.integer(format(Sys.Date(), format = "%Y"))
 holidays(countries = c("Spain", "Venezuela"), years = year)
 #> >>> Extracting Spain's holidays for 2026
-#> Warning: All formats failed to parse. No formats found.
 #> >>> Extracting Venezuela's holidays for 2026
-#> Warning: All formats failed to parse. No formats found.
-#> # A tibble: 0 × 11
-#> # ℹ 11 variables: holiday <date>, holiday_name <chr>, holiday_type <chr>,
-#> #   national <lgl>, observance <lgl>, bank <lgl>, nonwork <lgl>, season <lgl>,
-#> #   hother <lgl>, country <fct>, county <fct>
+#> # A tibble: 66 × 11
+#>    holiday    holiday_name holiday_type national observance bank  nonwork season
+#>    <date>     <chr>        <chr>        <lgl>    <lgl>      <lgl> <lgl>   <lgl> 
+#>  1 2026-01-01 New Year's … Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  2 2026-01-06 Epiphany     Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  3 2026-02-28 Day of Anda… Public       FALSE    FALSE      FALSE FALSE   FALSE 
+#>  4 2026-03-01 Day of the … Public       FALSE    FALSE      FALSE FALSE   FALSE 
+#>  5 2026-04-02 Maundy Thur… Public       FALSE    FALSE      FALSE FALSE   FALSE 
+#>  6 2026-04-03 Good Friday  Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  7 2026-04-06 Easter Mond… Public       FALSE    FALSE      FALSE FALSE   FALSE 
+#>  8 2026-04-23 Castile and… Public       FALSE    FALSE      FALSE FALSE   FALSE 
+#>  9 2026-04-23 Day of Arag… Public       FALSE    FALSE      FALSE FALSE   FALSE 
+#> 10 2026-05-01 Labour Day   Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> # ℹ 56 more rows
+#> # ℹ 3 more variables: hother <lgl>, country <chr>, county <chr>
 holidays(countries = "Germany", include_regions = TRUE)
 #> >>> Extracting Germany's holidays for 2026
-#> Warning: All formats failed to parse. No formats found.
-#> # A tibble: 0 × 11
-#> # ℹ 11 variables: holiday <date>, holiday_name <chr>, holiday_type <chr>,
-#> #   holiday_details <chr>, national <lgl>, observance <lgl>, bank <lgl>,
-#> #   nonwork <lgl>, season <lgl>, hother <lgl>, county <fct>
+#> # A tibble: 19 × 11
+#>    holiday    holiday_name      holiday_type holiday_details national observance
+#>    <date>     <chr>             <chr>        <chr>           <lgl>    <lgl>     
+#>  1 2026-01-01 New Year's Day    Public       NA              TRUE     FALSE     
+#>  2 2026-01-06 Epiphany          Public       DE-BW, DE-BY, … FALSE    FALSE     
+#>  3 2026-03-08 International Wo… Public       DE-BE, DE-MV    FALSE    FALSE     
+#>  4 2026-04-03 Good Friday       Public       NA              TRUE     FALSE     
+#>  5 2026-04-05 Easter Sunday     Public       DE-BB           FALSE    FALSE     
+#>  6 2026-04-06 Easter Monday     Public       NA              TRUE     FALSE     
+#>  7 2026-05-01 Labour Day        Public       NA              TRUE     FALSE     
+#>  8 2026-05-14 Ascension Day     Public       NA              TRUE     FALSE     
+#>  9 2026-05-24 Pentecost         Public       DE-BB           FALSE    FALSE     
+#> 10 2026-05-25 Whit Monday       Public       NA              TRUE     FALSE     
+#> 11 2026-06-04 Corpus Christi    Public       DE-BW, DE-BY, … FALSE    FALSE     
+#> 12 2026-08-15 Assumption Day    Public       DE-SL           FALSE    FALSE     
+#> 13 2026-09-20 World Children's… Public       DE-TH           FALSE    FALSE     
+#> 14 2026-10-03 German Unity Day  Public       NA              TRUE     FALSE     
+#> 15 2026-10-31 Reformation Day   Public       DE-BB, DE-MV, … FALSE    FALSE     
+#> 16 2026-11-01 All Saints' Day   Public       DE-BW, DE-BY, … FALSE    FALSE     
+#> 17 2026-11-18 Repentance and P… Public       DE-SN           FALSE    FALSE     
+#> 18 2026-12-25 Christmas Day     Public       NA              TRUE     FALSE     
+#> 19 2026-12-26 St. Stephen's Day Public       NA              TRUE     FALSE     
+#> # ℹ 5 more variables: bank <lgl>, nonwork <lgl>, season <lgl>, hother <lgl>,
+#> #   county <chr>
+holidays(countries = "PT") # Also accepts ISO country codes
+#> >>> Extracting PT's holidays for 2026
+#> # A tibble: 17 × 10
+#>    holiday    holiday_name holiday_type national observance bank  nonwork season
+#>    <date>     <chr>        <chr>        <lgl>    <lgl>      <lgl> <lgl>   <lgl> 
+#>  1 2026-01-01 New Year's … Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  2 2026-02-17 Carnival     Optional     FALSE    FALSE      FALSE TRUE    FALSE 
+#>  3 2026-04-03 Good Friday  Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  4 2026-04-05 Easter Sund… Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  5 2026-04-25 Freedom Day  Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  6 2026-05-01 Labour Day   Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  7 2026-06-01 Azores Day   Public       FALSE    FALSE      FALSE FALSE   FALSE 
+#>  8 2026-06-04 Corpus Chri… Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#>  9 2026-06-10 National Day Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> 10 2026-07-01 Madeira Day  Public       FALSE    FALSE      FALSE FALSE   FALSE 
+#> 11 2026-08-15 Assumption … Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> 12 2026-10-05 Republic Day Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> 13 2026-11-01 All Saints … Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> 14 2026-12-01 Restoration… Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> 15 2026-12-08 Immaculate … Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> 16 2026-12-25 Christmas D… Public       TRUE     FALSE      FALSE FALSE   FALSE 
+#> 17 2026-12-26 St. Stephen… Public       FALSE    FALSE      FALSE FALSE   FALSE 
+#> # ℹ 2 more variables: hother <lgl>, county <chr>
 # }
 ```

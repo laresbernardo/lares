@@ -106,7 +106,7 @@ Other Tools:
 ``` r
 p <- noPlot()
 export_plot(p, name = "noplot", width = 10, height = 8, res = 300, dir = tempdir())
-#> Plot saved as /tmp/Rtmp3CJyxf/noplot.png
+#> Plot saved as /tmp/Rtmp1j8Jr3/noplot.png
 export_plot(p, name = "noplot2", subdir = "newplots", dir = tempdir())
-#> Plot saved as /tmp/Rtmp3CJyxf/newplots/noplot2.png
+#> Plot saved as /tmp/Rtmp1j8Jr3/newplots/noplot2.png
 ```
