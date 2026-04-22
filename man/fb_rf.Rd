@@ -64,7 +64,7 @@ raw API results as list when \code{process=FALSE}.
 \description{
 Create or query reach and frequency predictions using Facebook's
 Reach and Frequency API. For more information on the API and its parameters, go to the
-\href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}.
+\href{https://developers.facebook.com/documentation/ads-commerce/marketing-api/insights/}{original documentaion}.
 }
 \examples{
 \dontrun{

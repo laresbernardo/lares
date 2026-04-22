@@ -64,7 +64,7 @@ of the highest correlation variables obtained in a cross-table.
 }
 \details{
 For a detailed tutorial on using this function, see:
-\href{https://datascienceplus.com/find-insights-with-ranked-cross-correlations/}{Find Insights with Ranked Cross-Correlations}
+\href{https://www.r-bloggers.com/2019/08/find-insights-with-ranked-cross-correlations/}{Find Insights with Ranked Cross-Correlations}
 }
 \examples{
 Sys.unsetenv("LARES_FONT") # Temporal

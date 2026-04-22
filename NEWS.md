@@ -1,15 +1,22 @@
-# lares 5.3.3 (Development)
+# lares 5.4.0 (2026-04-23)
 
-- docs: created comprehensive new vignettes
-- docs: added minimum version requirement `fansi (>= 1.0.0)` in DESCRIPTION for colored output support
-- feat: new experimental `mp3_update_tags()` function and `get_mp3(..., metadata = TRUE, cover = TRUE, title = NULL)` parameters
+- feat: migrate `holidays()` function to Nager.Date API and add support for ISO country codes #61
+- feat: `mp3_get()` prioritizes iTunes Search API for metadata extraction with Spotify as a fallback
+- feat: new `mp3_update_tags()` function to update MP3 metadata tags using eyeD3
+- fix: high-quality audio trimming (V0) and file handling in `mp3_trim()`
+- feat: new `cal_split()` function to split dates into multiple columns (year, month, week, day, etc)
 - feat: new parameter `model_name` in `h2o_automl()` and `h2o_results()` for cleaner, more intuitive API
 - feat: added `model_name` parameter to enable custom model naming for better file organization with `export_results()`
-- feat: new `toon_reduction()` to calculate size reduction of JSON vs TOON format. See new toon package
+- feat: new `toon_reduction()` to calculate size reduction of JSON vs TOON format
+- feat: new `click` parameter on `dont_sleep()` to disable mouse clicks while keeping screen awake
 - fix: resolved scoping issue in `h2o_results()` that caused `object 'model_name_input' not found` error
 - fix: improved `mplot_metrics()` robustness to handle missing validation metrics without crashing
-- fix: parameter `dir` passed correctly in `get_creds()`
-- fix: high-quality audio trimming (V0) and file handling in `mp3_trim()`
+- fix: parameter `dir` passed correctly in `get_creds()` and allows full YAML file path
+- docs: added minimum version requirement `fansi (>= 1.0.0)` in DESCRIPTION for colored output support
+- docs: created comprehensive new vignettes for API integrations, Data Wrangling, Games, Machine Learning, and Robyn
+- docs: fixed some links avoiding crawlers in README.md and documentation
+- recode: split `other_functions.R` into `utils_data.R`, `utils_system.R`, and `utils_text.R` for better maintainability
+- recode: renamed `get_mp3()` and `trim_mp3()` to `mp3_get()` and `mp3_trim()` for consistency
 
 # lares 5.3.2 (2025-08-18)
 

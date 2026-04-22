@@ -50,7 +50,7 @@ segmentation results. Set to NA for no breakdowns}
 
 \item{filtering}{List. Each filter will be a list containing "field",
 "operator", and "value". Read more about the operators in the official
-\href{https://developers.facebook.com/docs/marketing-api/insights}{docs}.
+\href{https://developers.facebook.com/documentation/ads-commerce/marketing-api/insights}{docs}.
 Example: \code{dplyr::tibble(field = "country", operator = "IN", value = list("PE")))}.}
 
 \item{limit}{Integer. Query limit by pagination.}
@@ -72,7 +72,7 @@ raw API results as list when \code{process=FALSE}.
 This returns all available FB insights per day including any given
 breakdown to the specified report level, and place into a data frame.
 For more information on Ad Insights' API, go to the original
-\href{https://developers.facebook.com/docs/marketing-api/insights/}{documentaion}.
+\href{https://developers.facebook.com/documentation/ads-commerce/marketing-api/insights/}{documentaion}.
 }
 \examples{
 \dontrun{

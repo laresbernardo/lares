@@ -43,7 +43,7 @@ raw API results as list when \code{process=FALSE}.
 \description{
 This returns all available FB ads for any account, campaign, or ad set id.
 For more information on Ad' API, go to the
-\href{https://developers.facebook.com/docs/marketing-api/reference/adgroup}{original documentaion}
+\href{https://developers.facebook.com/documentation/ads-commerce/marketing-api/reference/adgroup/}{original documentaion}
 }
 \details{
 This function was based on FBinsightsR.

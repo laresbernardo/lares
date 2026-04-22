@@ -36,7 +36,7 @@ List with API status results.
 This returns all available FB insights per day including any given
 breakdown to the specified report level, and place into a data frame.
 For more information on Ad Insights' API, go to the original
-\href{https://developers.facebook.com/docs/marketing-api/insights/}{documentaion}.
+\href{https://developers.facebook.com/documentation/ads-commerce/marketing-api/insights/}{documentaion}.
 }
 \examples{
 \dontrun{

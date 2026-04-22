@@ -337,7 +337,7 @@ plot.corr_var <- function(x, var, max_pvalue = 1, top = NA, limit = NULL, ...) {
 #' of the highest correlation variables obtained in a cross-table.
 #'
 #' For a detailed tutorial on using this function, see:
-#' \href{https://datascienceplus.com/find-insights-with-ranked-cross-correlations/}{Find Insights with Ranked Cross-Correlations}
+#' \href{https://www.r-bloggers.com/2019/08/find-insights-with-ranked-cross-correlations/}{Find Insights with Ranked Cross-Correlations}
 #'
 #' @family Calculus
 #' @family Correlations

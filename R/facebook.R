@@ -144,7 +144,7 @@ show_pag_status <- function(results, i = 1, sleep = 0, quiet = FALSE) {
 #' This returns all available FB insights per day including any given
 #' breakdown to the specified report level, and place into a data frame.
 #' For more information on Ad Insights' API, go to the original
-#' \href{https://developers.facebook.com/docs/marketing-api/insights/}{documentaion}.
+#' \href{https://developers.facebook.com/documentation/ads-commerce/marketing-api/insights/}{documentaion}.
 #'
 #' @family API
 #' @family Meta
@@ -187,7 +187,7 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
 #' This returns all available FB insights per day including any given
 #' breakdown to the specified report level, and place into a data frame.
 #' For more information on Ad Insights' API, go to the original
-#' \href{https://developers.facebook.com/docs/marketing-api/insights/}{documentaion}.
+#' \href{https://developers.facebook.com/documentation/ads-commerce/marketing-api/insights/}{documentaion}.
 #'
 #' @family API
 #' @family Meta
@@ -211,7 +211,7 @@ fb_report_check <- function(token, report_run_id, api_version = NULL,
 #' \code{NULL} to ignore.
 #' @param filtering List. Each filter will be a list containing "field",
 #' "operator", and "value". Read more about the operators in the official
-#' \href{https://developers.facebook.com/docs/marketing-api/insights}{docs}.
+#' \href{https://developers.facebook.com/documentation/ads-commerce/marketing-api/insights}{docs}.
 #' Example: \code{dplyr::tibble(field = "country", operator = "IN", value = list("PE")))}.
 #' @param limit Integer. Query limit by pagination.
 #' @param api_version Character. Facebook API version.
@@ -334,7 +334,7 @@ fb_insights <- function(token,
 #'
 #' Create or query reach and frequency predictions using Facebook's
 #' Reach and Frequency API. For more information on the API and its parameters, go to the
-#' \href{https://developers.facebook.com/docs/marketing-api/insights}{original documentaion}.
+#' \href{https://developers.facebook.com/documentation/ads-commerce/marketing-api/insights/}{original documentaion}.
 #'
 #' @family API
 #' @family Meta
@@ -532,7 +532,7 @@ fb_rf <- function(token,
 #'
 #' This returns all ad accounts for a FB Business Account FB.
 #' For more information on Ad Insights' API, go to the
-#' \href{https://developers.facebook.com/docs/marketing-api/insights/}{original documentaion}
+#' \href{https://developers.facebook.com/documentation/ads-commerce/marketing-api/insights/}{original documentaion}
 #'
 #' @family API
 #' @family Meta
@@ -616,7 +616,7 @@ fb_accounts <- function(token,
 #' Generate a new valid User Token with the
 #' \href{https://developers.facebook.com/tools/explorer}{API Graph}.
 #'
-#' More info: \href{https://developers.facebook.com/docs/facebook-login/guides/access-tokens/get-long-lived}{Long-Lived Access Tokens}
+#' More info: \href{https://developers.facebook.com/documentation/facebook-login/guides/access-tokens/get-long-lived/}{Long-Lived Access Tokens}
 #'
 #' @family API
 #' @family Meta
@@ -651,7 +651,7 @@ fb_token <- function(app_id, app_secret, token, api_version = NULL) {
 ####################################################################
 #' Facebook Creatives API
 #'
-#' For more information: \href{https://developers.facebook.com/docs/marketing-api}{Marketing API}
+#' For more information: \href{https://developers.facebook.com/documentation/ads-commerce/marketing-api/}{Marketing API}
 #'
 #' @family API
 #' @family Meta
@@ -703,7 +703,7 @@ fb_creatives <- function(token, which,
 #'
 #' This returns all available FB ads for any account, campaign, or ad set id.
 #' For more information on Ad' API, go to the
-#' \href{https://developers.facebook.com/docs/marketing-api/reference/adgroup}{original documentaion}
+#' \href{https://developers.facebook.com/documentation/ads-commerce/marketing-api/reference/adgroup/}{original documentaion}
 #'
 #' This function was based on FBinsightsR.
 #'

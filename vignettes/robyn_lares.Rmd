@@ -145,7 +145,7 @@ These functions streamline the post-modeling analysis in Robyn, making it easier
 For more information on Robyn and MMM, check out the following resources:
 
 -   [Robyn GitHub Repository](https://github.com/facebookexperimental/Robyn)
--   [Robyn: Analyst's Guide to MMM](https://facebookexperimental.github.io/Robyn/docs/analysts-guide-to-MMM)
+-   [Robyn: Analyst's Guide to MMM](https://facebookexperimental.github.io/Robyn/docs/analysts-guide-to-MMM/)
 -   [Select the right MMM candidate based on your specific criteria and business knowledge](https://medium.com/@laresbernardo/select-the-right-mmm-candidate-based-on-your-specific-criteria-and-business-knowledge-1f583c3cb97a)
 -   [Stop building MMMs without business-backed hypotheses](https://medium.com/@laresbernardo/stop-building-mmms-without-business-backed-hypotheses-0e8a9fa9a375)
 -   [Hitting ROAS Target Using Robyn’s Budget Allocator](https://medium.com/@gufengzhou/hitting-roas-target-using-robyns-budget-allocator-274ace3add4f)

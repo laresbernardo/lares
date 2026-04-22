@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   eval = TRUE, # Show actual results like old vignette
-  cache = TRUE, # Cache results to avoid re-running h2o every build
+  cache = FALSE, # Disabled for CRAN to avoid massive tarball sizes
   cache.lazy = FALSE
 )
 ```
@@ -449,13 +449,8 @@ h2o::h2o.shutdown(prompt = FALSE)
 ### Package & ML Resources
 - **h2o AutoML Documentation:** [https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html](https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html)
 - **lares ML functions:** `?h2o_automl`, `?h2o_explainer`, `?mplot_full`
-- **SHAP explanations:** [https://github.com/slundberg/shap](https://github.com/slundberg/shap)
+- **SHAP explanations:** [https://github.com/shap/shap](https://github.com/shap/shap)
 
-### Blog Posts & Tutorials
-- [Machine Learning Results: One Plot to Rule Them All](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/) - Visualizing binary classification results
-- [Machine Learning Results in R: One Plot to Rule Them All (Part 2 - Regression Models)](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/) - Regression model visualization
-- [Understanding Titanic Dataset with H2O's AutoML, DALEX and lares Library](https://datascienceplus.com/understanding-titanic-dataset-with-h2os-automl-dalex-and-lares-library/) - Complete Titanic analysis walkthrough
-- Other lares articles [on DataScience+](https://datascienceplus.com/author/bernardo-lares/)
 
 ## Next Steps
 

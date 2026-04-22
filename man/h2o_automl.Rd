@@ -154,8 +154,8 @@ importance, and plots. Read more about the \code{h2o_automl()} pipeline
 \details{
 For additional tutorials and examples:
 \itemize{
-  \item \href{https://datascienceplus.com/machine-learning-with-r-h2o-package/}{Machine Learning with H2O Package}
-  \item \href{https://datascienceplus.com/understanding-roc-curves-with-lares/}{Understanding ROC Curves}
+  \item \href{https://laresbernardo.github.io/lares/articles/machine-learning.html}{Machine Learning with H2O Package}
+  \item \href{https://laresbernardo.github.io/lares/reference/mplot_roc.html}{Understanding ROC Curves}
 }
 }
 \section{List of algorithms}{

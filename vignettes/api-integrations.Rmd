@@ -472,7 +472,7 @@ print(analysis)
 - **lares Functions:** `?gpt_ask`, `?gemini_ask`, `?stocks_hist`, `?get_credentials`
 
 ### Blog Posts & Tutorials  
-- **All lares articles:** [Author page on DataScience+](https://datascienceplus.com/author/bernardo-lares/)
+- **All lares articles:** [Author page on R-bloggers](https://www.r-bloggers.com/author/bernardo-lares/)
 - **Package website:** [https://laresbernardo.github.io/lares/](https://laresbernardo.github.io/lares/)
 
 ## Next Steps
